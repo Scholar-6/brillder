@@ -1,19 +1,17 @@
 import React, { useState } from "react";
-import { Grid } from "@material-ui/core";
 import { History } from "history";
 import axios from 'axios';
 
 import "./activateAccountPage.scss";
-import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import map from "components/map";
-import { Redirect, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { isPhone } from "services/phone";
-import DesktopActivateAccountPage from "./DesktopActivateAccountPage";
+import DesktopActivateAccountPage from "./desktop/DesktopActivateAccountPage";
 import { connect } from "react-redux";
 import auth from "redux/actions/auth";
 import { UserType } from "model/user";
-import MobileEmailActivate from "./MobileEmailActivate";
+import ActivateAccountPhonePage from "./phone/ActivateAccountPhonePage";
 
 export enum LoginState {
   ChooseLoginAnimation,
@@ -29,13 +27,7 @@ interface ActivateAccountProps {
 }
 
 const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
-  let initPolicyOpen = false;
-  if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
-    initPolicyOpen = true;
-  }
-
   const [email, setEmail] = useState('');
-  const [isPolicyOpen, setPolicyDialog] = useState(initPolicyOpen);
   const [valid, setValid] = React.useState<boolean>();
 
   const { search } = useLocation();
@@ -71,27 +63,7 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   if (!isPhone()) {
     return <DesktopActivateAccountPage history={props.history} token={token} match={props.match} email={email} />;
   }
-
-  return (
-    <Grid
-      className="auth-page login-page"
-      container
-      item
-      justify="center"
-      alignItems="center"
-    >
-      {valid && token ? <>
-        <MobileEmailActivate
-          token={token}
-          history={props.history}
-          email={email}
-          setPolicyDialog={setPolicyDialog}
-        />
-        <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
-      </>
-      : <Redirect to={map.Login} />}
-    </Grid>
-  );
+  return <ActivateAccountPhonePage history={props.history} match={props.match} token={token} email={email} />
 };
 
 const mapDispatch = (dispatch: any) => ({

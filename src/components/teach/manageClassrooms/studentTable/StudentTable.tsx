@@ -11,6 +11,7 @@ import StudentTableHead from "./StudentTableHead";
 import './StudentTable.scss';
 import map from "components/map";
 import ClassroomNames from "./ClassroomNames";
+import { ClassroomApi } from "components/teach/service";
 
 interface StudentTableProps {
   history: any;
@@ -28,7 +29,7 @@ interface StudentTableProps {
   sort(sortBy: UserSortBy): void;
   unassign(student: MUser): void;
   togglePageStudents(): void;
-  resendInvitation(email: string): void;
+  resendInvitation(email: string, classroom?: ClassroomApi): void;
 }
 
 const StudentTable: React.FC<StudentTableProps> = props => {
@@ -117,7 +118,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 isPending={props.isPending}
                 studyClassrooms={user.studyClassrooms}
                 hasInvitation={user.hasInvitation}
-                resendInvitation={() => props.resendInvitation(user.email)}
+                resendInvitation={() => props.resendInvitation(user.email, user.classroom)}
               />
             </div>
             <div className="selected-column">

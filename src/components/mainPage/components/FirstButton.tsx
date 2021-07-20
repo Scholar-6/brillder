@@ -61,18 +61,6 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
         <div className="eye-glass-frame svgOnHover">
           <SpriteIcon name="glasses-home" className="active text-theme-orange" />
         </div>
-        <div className="glass-eyes-left svgOnHover">
-          <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
-          <div className="glass-left-inside svgOnHover">
-            <SpriteIcon name="eye-pupil" className="eye-pupil" />
-          </div>
-        </div>
-        <div className="glass-eyes-right svgOnHover">
-          <SpriteIcon name="eye-ball" className="active eye-ball text-white" />
-          <div className="glass-right-inside svgOnHover">
-            <SpriteIcon name="eye-pupil" className="eye-pupil" />
-          </div>
-        </div>
       </div>
       <span className="item-description">{renderViewAllLabel()}</span>
     </a>

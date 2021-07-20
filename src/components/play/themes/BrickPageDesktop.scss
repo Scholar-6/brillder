@@ -922,6 +922,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             margin-left: 0.3vw;
           }
         }
+        &.provisional-score-page .introduction-page .question-live-play {
+          margin-top: calc(6vw + 11vh) !important;
+        }
         &.provisional-score-page .introduction-page .circle-progress-container {
           margin-bottom: 2vh;
           $height: 45vh;
@@ -1205,7 +1208,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           height: calc(100vh - 4vw) !important;
           padding-left: 0 !important;
           .question-live-play {
-            margin-top: $header-height !important;
             height: calc(100vh - 4vw - #{$header-height} - #{$foter-height}) !important;
           }
         }
@@ -1335,7 +1337,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         }
         .introduction-info .stepper {
           width: 100%;
-          margin-top: 0.7vw;
+          margin-top: 0.3vw;
           height: calc(#{$step-height} + 0.7vw) !important;
           padding: 0 !important;
           overflow-x: auto;
@@ -1457,9 +1459,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       // only synthesis score
       .synthesis-container {
         .synthesis-content {
+          position: fixed;
+          top: 0;
+          margin-top: 6vw !important;
           height: calc(100vh - 8vw - 4vw) !important;
-          padding: 8vh 7vw 6vw 7vw;
-          width: 100%;
+          padding: 8vh 9.3vw 6vw 7vw;
+          width: 80vw;
         }
       }
     }
@@ -1767,6 +1772,19 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       font-size: 6vh !important;
       font-family: $font-family-bold;
     }
+    &.count-down-content {
+      .title {
+        font-size: 4vh !important;
+      }
+      .footer {
+        margin-top: 9vh;
+        font-family: $font-family-bold;
+        font-size: 4vh !important;
+      }
+      .hourglass-container {
+        height: 30vh;
+      }
+    }
     .like-buttons-container {
       margin-bottom: 10vh;
       .x-center {
@@ -1828,11 +1846,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 // brief and new-prep pages
-.play-preview-pages .sorted-row .brick-row-container .brick-container.play-brief-page {
+.play-preview-pages .sorted-row .brick-row-container .brick-container.play-brief-page{
   .introduction-page {
     padding-top: 0 !important;
     .open-question {
-      padding: 0 7vw !important;
       > div {
         $font-size: 2vw;
         font-size: $font-size !important;
@@ -1842,7 +1859,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
     .introduction-content {
-      padding: 0 7vw !important;
       .brief-title {
         .italic {
           color: var(--theme-dark-blue);
@@ -1852,9 +1868,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
   }
   .scrollable {
-    padding: 4vh 0 !important;
-    height: calc(100vh - 15vh) !important;
+    width: 100% !important;
+    overflow-x: hidden;
     overflow-y: scroll;
+    > div {
+      width: calc(100% - 2.3vw) !important;
+      overflow-x: auto;
+      padding-left: 7vw;
+      padding-right: 7vw;
+    }
   }
 
   .new-layout-footer {

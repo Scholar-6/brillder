@@ -5,6 +5,7 @@ export interface MUser extends User {
   selected: boolean;
   studyClassrooms: ClassroomApi[];
   hasInvitation: boolean;
+  classroom?: ClassroomApi; // for pending invitations
   selectHovered?: boolean;
 }
 

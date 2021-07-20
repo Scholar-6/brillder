@@ -2,7 +2,6 @@ import React from "react";
 
 import { Brick } from "model/brick";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
-import { getSynthesisTime } from "../services/playTimes";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface Props {
@@ -32,11 +31,6 @@ const PhonePreSynthesisPage: React.FC<Props> = ({ brick, moveNext }) => {
         <div className="ss-phone-between-button" />
         <div className="like-button animate-v1">Review</div>
         <div className="ss-phone-after-buttons" />
-        <div className="new-layout-footer">
-          <div className="time-container">
-            <DummyProgressbarCountdown value={100} deadline={true} />
-          </div>
-        </div>
       </div>
     </div>
   );

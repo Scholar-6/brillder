@@ -76,22 +76,24 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
       <div className="brick-container play-preview-panel live-page play-brief-page">
         <div className="introduction-page">
           <div className="scrollable">
-            <div className="open-question">
-              <MathInHtml value={brick.openQuestion} />
-            </div>
-            <div className="introduction-content">
-              {renderBriefTitle()}
-              {renderBriefExpandText()}
+            <div>
+              <div className="open-question">
+                <MathInHtml value={brick.openQuestion} />
+              </div>
+              <div className="introduction-content">
+                {renderBriefTitle()}
+                {renderBriefExpandText()}
+              </div>
             </div>
             <div className="new-layout-footer" style={{ display: 'none' }}>
               <div className="title-column">
                 Now you’re ready for preparatory tasks
-            </div>
+              </div>
               <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg" />
               <div className="new-navigation-buttons">
                 <div className="n-btn next" onClick={props.moveNext}>
                   Next
-                <SpriteIcon name="arrow-right" />
+                  <SpriteIcon name="arrow-right" />
                 </div>
               </div>
             </div>

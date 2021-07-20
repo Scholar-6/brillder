@@ -112,8 +112,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         </div>
         `,
       },{
-        element: '.view-item-container',
-        intro: `<p>Welcome to brillder!</p>`,
+        element: '.back-item-container',
+        intro: `<p>Find and Play your assigned ‘bricks’ here</p>`,
+      }, {
+        element: '.zendesk-position',
+        intro: `<p>If you spot anything that doesn't look right, or experience a technical issue, click here to create a help ticket</p>`
       }]
     } as any;
 
@@ -227,13 +230,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     this.setState({isNewStudent: false});
   }
 
-  onIntroChanged(e: any) {
-    if (e !== 0) {
-      this.props.history.push(map.ViewAllPage);
-      this.setState({isNewStudent: false});
-    }
-  }
-
   renderNewStudentPage() {
     return (
       <div className="mobile-main-page new-student">
@@ -243,13 +239,13 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             history={this.props.history}
             disabled={this.state.isSwiping}
           />
+          <div className="zendesk-position" />
         </MobileButtonWrap>
         {this.renderAssignmentsButton()}
         <Steps
           enabled={this.state.isNewStudent}
           steps={this.state.steps}
           initialStep={0}
-          onChange={this.onIntroChanged.bind(this)}
           onExit={this.onIntroExit.bind(this)}
           onComplete={() => {}}
         />

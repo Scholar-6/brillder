@@ -164,6 +164,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderContent() {
+    const {finalBricks} = this.state;
     if (this.state.searchString === "") {
       return (
         <div className="ba-content empty">
@@ -183,7 +184,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
         </div>
       );
     }
-    if (this.state.isLoading === false && this.state.finalBricks.length === 0) {
+    if (this.state.isLoading === false && finalBricks.length === 0) {
       return (
         <div className="ba-content empty">
           <div>
@@ -193,9 +194,16 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
         </div>
       );
     }
+    let text = '';
+    if (finalBricks.length === 1) {
+      text = `${finalBricks.length} brick found`;
+    } else if (finalBricks.length > 1) {
+      text = `${finalBricks.length} bricks found`;
+    }
     return (
       <div className="ba-content full" onScroll={this.hideKeyboard.bind(this)}>
-        {this.state.finalBricks.map((b, i) => {
+        <span className="bold ff-found-text">{text}</span>
+        {finalBricks.map((b, i) => {
           const color = getBrickColor(b as Brick);
           return (
             <PhoneTopBrick16x9

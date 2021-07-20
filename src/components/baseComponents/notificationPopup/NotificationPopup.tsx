@@ -73,7 +73,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           }
         } else if (type === NotificationType.InvitedToPlayBrick) {
           if (isPhone()) {
-            history.push(map.playIntro(brick.id));
+            history.push(routes.playNewPrep(brick.id));
           } else {
             history.push(routes.playCover(brick.id));
           }
@@ -98,7 +98,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           type === NotificationType.StudentAssignedBrick
         ) {
           if (isPhone()) {
-            history.push(map.playIntro(brick.id));
+            history.push(routes.playNewPrep(brick.id));
           } else {
             history.push(routes.playCover(brick.id));
           }

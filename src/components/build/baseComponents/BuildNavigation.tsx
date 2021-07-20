@@ -12,6 +12,7 @@ import SendToPublisherButton from "./SendToPublisherButton";
 import ReturnToEditorButton from "./ReturnToEditorButton";
 import BuildPublishButton from "./PublishButton";
 import { User } from "model/user";
+import routes from "components/play/routes";
 
 
 interface NavigationProps {
@@ -48,8 +49,8 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
   }
 
   renderReturnToAuthorButton() {
-    const {brick} = this.props;
-    const {brickStatus} = this.state;
+    const { brick } = this.props;
+    const { brickStatus } = this.state;
     let disabled = brickStatus === BrickStatus.Draft;
     return <ReturnToAuthorButton
       disabled={disabled} history={this.props.history} brick={brick}
@@ -58,8 +59,8 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
   }
 
   renderReturnToEditorButton() {
-    const {brick} = this.props;
-    const {brickStatus} = this.state;
+    const { brick } = this.props;
+    const { brickStatus } = this.state;
     let disabled = brickStatus === BrickStatus.Build || brickStatus === BrickStatus.Publish;
     if (!this.props.isValid) {
       disabled = true;
@@ -86,7 +87,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
   }
 
   renderSendToPublisherButton() {
-    const {brick} = this.props;
+    const { brick } = this.props;
     let disabled = this.state.brickStatus === BrickStatus.Review || !this.props.isValid;
 
     return (
@@ -94,7 +95,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         disabled={disabled}
         brick={brick}
         onFinish={() => {
-          this.setState({brickStatus: BrickStatus.Review});
+          this.setState({ brickStatus: BrickStatus.Review });
           this.props.history.push(map.backToWorkUserBased(this.props.user));
         }}
       />
@@ -102,7 +103,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
   }
 
   renderPublisherButtons() {
-    const {brickStatus} = this.state;
+    const { brickStatus } = this.state;
     let publishDisabled = brickStatus === BrickStatus.Publish;
     if (!this.props.isValid) {
       publishDisabled = true;
@@ -119,8 +120,8 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           brick={this.props.brick}
           history={this.props.history}
           onFinish={() => {
-            this.setState({brickStatus: BrickStatus.Publish});
-            this.props.history.push(map.playCover(this.props.brick.id));
+            this.setState({ brickStatus: BrickStatus.Publish });
+            this.props.history.push(routes.playCover(this.props.brick.id));
           }}
         />
       );
@@ -128,10 +129,24 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
     return '';
   }
 
+  renderSelfPublishButton() {
+    return (
+      <BuildPublishButton
+        disabled={!this.props.isValid}
+        brick={this.props.brick}
+        history={this.props.history}
+        onFinish={() => {
+          this.setState({ brickStatus: BrickStatus.Publish });
+          this.props.history.push(routes.playCover(this.props.brick.id));
+        }}
+      />
+    );
+  }
+
   render() {
     return (
       <div>
-        <HomeButton history={this.props.history} onClick={() => this.setState({saveDialogOpen: true})} />
+        <HomeButton history={this.props.history} onClick={() => this.setState({ saveDialogOpen: true })} />
         <PlayButton
           tutorialStep={this.props.tutorialStep}
           isTutorialSkipped={this.props.isTutorialSkipped}
@@ -140,15 +155,19 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         />
         <SaveDialog
           open={this.state.saveDialogOpen}
-          close={() => this.setState({saveDialogOpen: false})}
+          close={() => this.setState({ saveDialogOpen: false })}
           save={this.props.exitAndSave}
         />
-        <div className="build-navigation-buttons">
-          {(this.props.isEditor || this.props.isAdmin) && this.renderReturnToAuthorButton()}
-          {(this.props.isPublisher || this.props.isAuthor) && this.renderReturnToEditorButton()}
-          {(this.props.isEditor || this.props.isAdmin || this.props.isPublisher) && this.renderSendToPublisherButton()}
-          {this.props.isPublisher && this.renderPublisherButtons()}
-        </div>
+        {this.props.brick.isCore ?
+          <div className="build-navigation-buttons">
+            {(this.props.isEditor || this.props.isAdmin) && this.renderReturnToAuthorButton()}
+            {(this.props.isPublisher || this.props.isAuthor) && this.renderReturnToEditorButton()}
+            {(this.props.isEditor || this.props.isAdmin || this.props.isPublisher) && this.renderSendToPublisherButton()}
+            {this.props.isPublisher && this.renderPublisherButtons()}
+          </div>
+          : <div className="build-navigation-buttons">
+            {this.renderSelfPublishButton()}
+          </div>}
       </div>
     );
   }
