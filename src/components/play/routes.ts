@@ -17,6 +17,7 @@ export const PlayPreSynthesisLastPrefix = '/pre-synthesis';
 export const PlayTimeSynthesisLastPrefix = '/time-synthesis';
 export const PlaySynthesisLastPrefix = '/synthesis';
 export const PlayPreReviewLastPrefix = '/pre-review';
+export const PlayTimeReviewLastPrefix = '/review-countdown';
 export const PlayReviewLastPrefix = '/review';
 export const PlayFinalStepLastPrefix = '/finalStep';
 
@@ -31,6 +32,7 @@ export const preSynthesisRoute = basePlayRoute + PlayPreSynthesisLastPrefix;
 export const timeSynthesisRoute = basePlayRoute + PlayTimeSynthesisLastPrefix;
 export const synthesisRoute = basePlayRoute + PlaySynthesisLastPrefix;
 export const preReviewRoute = basePlayRoute + PlayPreReviewLastPrefix;
+export const timeReviewRoute = basePlayRoute + PlayTimeReviewLastPrefix;
 export const reviewRoute = basePlayRoute + PlayReviewLastPrefix;
 
 export const playCover = (brickId: number) => realPlay(brickId) + PlayCoverLastPrefix;
@@ -46,6 +48,7 @@ export const playPreSynthesis = (brickId: number) => realPlay(brickId) + PlayPre
 export const playTimeSynthesis = (brickId: number) => realPlay(brickId) + PlayTimeSynthesisLastPrefix;
 export const playSynthesis = (brickId: number) => realPlay(brickId) + PlaySynthesisLastPrefix;
 export const playPreReview = (brickId: number) => realPlay(brickId) + PlayPreReviewLastPrefix;
+export const playTimeReview = (brickId: number) => realPlay(brickId) + PlayTimeReviewLastPrefix;
 export const playReview = (brickId: number) => realPlay(brickId) + PlayReviewLastPrefix;
 export const playFinalStep = (brickId: number) => realPlay(brickId) + PlayFinalStepLastPrefix;
 
@@ -93,6 +96,7 @@ export default {
   timeSynthesisRoute,
   synthesisRoute,
   preReviewRoute,
+  timeReviewRoute,
   reviewRoute,
 
   playCover,
@@ -108,6 +112,7 @@ export default {
   playTimeSynthesis,
   playSynthesis,
   playPreReview,
+  playTimeReview,
   playReview,
   playFinalStep,
 

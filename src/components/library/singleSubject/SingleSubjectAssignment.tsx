@@ -8,6 +8,7 @@ import { AcademyDifficulty } from "../base/AcademyDifficulty";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import routes from "components/play/routes";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -87,7 +88,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
           if (assignment.maxScore) {
             props.history.push(map.postPlay(brick.id, props.userId));
           } else {
-            props.history.push(map.playIntro(brick.id));
+            props.history.push(routes.playNewPrep(brick.id));
           }
         }}
         style={{ background: color }}

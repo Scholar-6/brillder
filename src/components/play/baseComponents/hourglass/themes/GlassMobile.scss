@@ -1,0 +1,46 @@
+.gg-hourglass {
+  $time: 10s; // including 1 flip
+
+  margin-left: -6vmin;
+  margin-top: 0;
+  padding: 0 1vmin;
+  $height: 15vh;
+  $width: 15vh;
+
+  .background-icon {
+    $border: 4vh;
+    top: -$border;
+    left: -0.6vh;
+    height: calc(#{$height * 2} + #{$border * 2});
+  }
+
+  .top,
+  .bottom {
+    height: $height;
+    overflow: hidden;
+    position: relative;
+    width: $width;
+  }
+
+
+  $glass-border: 2vh;
+
+  .top {
+    border-top-left-radius: $glass-border;
+    border-top-right-radius: $glass-border;
+  }
+  .bottom {
+    border-bottom-left-radius: $glass-border;
+    border-bottom-right-radius: $glass-border;
+  }
+
+  .top:before {
+    height: $height;
+    width: $width;
+  }
+
+  .bottom:before {
+    height: $height;
+    width: $width;
+  }
+}
