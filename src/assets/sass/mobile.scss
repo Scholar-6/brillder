@@ -185,19 +185,48 @@
       display: none;
     }
 
+    .quill-document-editor {
+      border-radius: 2vw;
+    }
+
     .ql-editor {
       padding-top: 1vh;
       padding-bottom: 1vh;
+      border-radius: 2vw;
     }
 
     .ql-blank::before {
       font-size: $mbase-font-size;
+    }
+
+    // reivew border
+    &.each {
+      .quill-document-editor {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        .ql-editor {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+      .question-hint {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
     }
   }
 
   .question-hint-global {
     border-radius: $border-radius;
     padding: 2vw;
+  }
+}
+
+// live exception
+.real-live-page .short-answer-live .short-answer-input .quill-document-editor {
+  border-radius: 2vw;
+  .ql-editor {
+    border-radius: 2vw;
   }
 }
 
