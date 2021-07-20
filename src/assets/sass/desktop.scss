@@ -524,39 +524,16 @@
   }
 
   .ql-custom-toolbar {
-    position: absolute;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    padding: 0 !important;
-    overflow: hidden;
-    height: 100%;
-    z-index: 10;
-    right: 0;
-    display: flex;
-    align-items: center;
-    width: 6vw;
-
-    .formats {
-      height: 4vw;
-      width: 100%;
-
-      button {
-        height: 2vw;
-        width: 80%;
-        display: flex;
-        justify-content: center;
-      }
-    }
+    display: none !important;
   }
 
   .ql-container {
     min-height: 4vw;
-    width: calc(100% - 6vw);
+    width: 100%;
 
     .ql-editor {
       text-align: center;
-      border-top-left-radius: 0.6vw !important;
-      border-bottom-left-radius: 0.6vw !important;
+      border-radius: 0.6vw !important;
     }
   }
 
