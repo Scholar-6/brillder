@@ -6,6 +6,7 @@ import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademyDifficulty } from "../base/AcademyDifficulty";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import routes from "components/play/routes";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -59,7 +60,7 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           if (assignment.maxScore) {
             props.history.push(map.postPlay(brick.id, props.userId));
           } else {
-            props.history.push(map.playIntro(brick.id));
+            props.history.push(routes.playNewPrep(brick.id));
           }
         }}
         style={{ background: color }}

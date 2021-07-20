@@ -162,10 +162,13 @@ const NotificationItem: React.FC<Props> = ({
       <Swiper
         key={notification.id}
         slidesPerView={1}
+        initialSlide={1}
+        onReachBeginning={() => markAsRead(notification.id)}
         onReachEnd={() => markAsRead(notification.id)}
       >
+        <SwiperSlide />
         <SwiperSlide>{renderElement()}</SwiperSlide>
-        <SwiperSlide></SwiperSlide>
+        <SwiperSlide />
       </Swiper>
     );
   }

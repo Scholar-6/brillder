@@ -104,6 +104,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                     <Radio checked={this.state.isCore === false} />
                     <span className="radio-text pointer">Keep Control</span>
                     <SpriteIcon name="key" className="active" />
+                    <span className="black second-text">PERSONAL</span>
                   </div>
                   <div className="inner-radio-text pointer" onClick={() => this.setState({ isCore: false })}>
                     Share on your favourite platforms, invite anyone to play or comment
@@ -112,6 +113,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                     <Radio checked={this.state.isCore === true} />
                     <span className="radio-text">Educate the World</span>
                     <SpriteIcon name="globe" className="active" />
+                    <span className="black second-text">PUBLIC</span>
                   </div>
                   <div className="inner-radio-text pointer" onClick={() => this.setState({ isCore: true })}>
                     Submit for peer review, be considered for our core catalogue and get paid for your work

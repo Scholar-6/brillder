@@ -223,7 +223,10 @@ class ProvisionalScore extends React.Component<
               <div className="introduction-page">
                 <h1 className="title">Provisional Score</h1>
                 {this.state.score < this.state.maxScore &&
-                  <div className="hr-sub-title">You can improve this when reviewing your answers</div>
+                  <div className="hr-sub-title">
+                    <div>To improve your score, now read the author's <span className="bold">Synthesis</span></div>
+                    <div>after which you can use the <span className="bold">Review</span> stage to adjust your answers.</div>
+                  </div>
                 }
                 <div className="question-live-play">
                   <Grid
