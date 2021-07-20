@@ -107,7 +107,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       showToolbar={true}
       data={value}
       placeholder={placeholder}
-      toolbar={['superscript', 'subscript']}
+      toolbar={[]}
       onChange={v => this.setUserAnswer(v, index)}
     />
   }

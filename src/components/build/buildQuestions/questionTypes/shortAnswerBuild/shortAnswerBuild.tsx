@@ -87,7 +87,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
           validate={props.validationRequired}
           isValid={!!stripHtml(answer.value)}
           data={answer.value}
-          toolbar={["superscript", "subscript"]}
+          toolbar={[]}
           onChange={(value) => changed(answer, value)}
         />
       </div>
