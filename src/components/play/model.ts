@@ -21,7 +21,7 @@ export enum PlayMode {
 }
 
 export interface BrickAttempt {
-  mongoId?: string;
+  id?: string;
   brickId?: number;
   studentId?: number;
   brick?: Brick;
