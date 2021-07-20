@@ -676,11 +676,13 @@
 .play-preview-pages .play-brief-page .introduction-page {
   position: fixed !important; 
   top: 2vw;
-  width: 80vw;
+  width: 79.3vw;
   .scrollable {
     height: calc(100vh - 8vw) !important;
   }
   .new-layout-footer {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     border-bottom-left-radius: 2vw;
     border-bottom-right-radius: 2vw;
   }

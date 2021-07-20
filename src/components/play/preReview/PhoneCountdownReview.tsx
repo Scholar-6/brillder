@@ -26,7 +26,7 @@ const CountdownReview: React.FC<Props> = ({ brick, ...props }) => {
         </div>
         <div className="ss-phone-after-title" />
         <div className="flex-center">
-          <Hourglass />
+          <Hourglass isRed={true} />
         </div>
         <div className="ss-after-glasses" />
         <div className="last-text s-fade3">

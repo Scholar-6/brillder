@@ -50,7 +50,7 @@ const PhoneTimeSynthesisPage: React.FC<Props> = ({ brick, moveNext }) => {
         </div>
         <div className="new-layout-footer">
           <div className="time-container">
-            <DummyProgressbarCountdown value={100} deadline={true} />
+            <DummyProgressbarCountdown value={50} />
           </div>
         </div>
       </div>
