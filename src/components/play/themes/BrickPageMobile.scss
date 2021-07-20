@@ -215,6 +215,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .count-introduction-page {
       height: calc(100% - 4vh - 7.5vw) !important;
     }
+
+    .s-fade2 {
+      animation-delay: 0.5s;
+    }
     
     .ss-phone-before-title {
       height: 9%;
@@ -236,13 +240,13 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       }
     }
     .ss-phone-after-title {
-      height: 7%;
+      height: 10%;
     }
     .hourglass {
       height: 30%;
     }
     .ss-after-glasses {
-      height: 7%;
+      height: 10%;
     }
     .last-text {
       line-height: 0;
@@ -337,6 +341,32 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
           align-items: center;
           justify-content: center;
         }
+      }
+    }
+  }
+  .pre-review .introduction-page  {
+    .ss-phone-before-title {
+      height: 4%;
+    }
+    .dd-question-container {
+      height: 21%;
+      svg {
+        position: absolute;
+        stroke-width: 2.2;
+      }
+      .smaller {
+        color: var(--tab-gray);
+        $size: 7vh;
+        left: calc(50% - 4vh - #{$size / 2});
+        width: $size;
+        height: $size;
+      }
+      .bigger {
+        top: 0;
+        $size: 15vh;
+        left: calc(50% - #{$size / 2});
+        width: $size;
+        height: $size;
       }
     }
   }
@@ -1941,7 +1971,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .attempted-text {
       text-align: center;
       font-size: 7vw;
-      font-family: $font-family-bold;
     }
     .duration {
       margin-top: 1vh;
@@ -2033,21 +2062,21 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
 @keyframes floating-few {
   0% {
-    bottom: 2vh;
+    bottom: calc(18vw + 26px);
   }
   50% {
-    bottom: 1vh;
+    bottom: calc(19.5vw + 26px);
   }
   100% {
-    bottom: 2vh;
+    bottom: calc(18vw + 26px);
   }
 }
 
 .play-preview-pages .fe-arrow-container {
-  width: calc(100% - 20.5vw);
+  width: calc(100%);
   display: flex;
   justify-content: center;
-  position: absolute;
+  position: fixed;
   animation: floating-few 1.6s infinite;
   svg {
     transform: rotate(180deg);
@@ -2098,7 +2127,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
     &.orange {
       opacity: 0;
-      animation: greyToOrange 2s 0.5s forwards !important;
+      animation: greyToOrange 1s 0.5s forwards !important;
     }
   }
 }

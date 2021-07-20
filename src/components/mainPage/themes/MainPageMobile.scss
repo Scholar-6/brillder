@@ -282,6 +282,16 @@
   .back-item-container {
     width: 70vw;
   }
+  .blocks-icon {
+    width: 100% !important;
+  }
+  .zendesk-position {
+    position: fixed;
+    bottom: 2.5vw;
+    left: 2.5vw;
+    height: 12.5vw;
+    width: 12.5vw;
+  }
 }
 
 .ggf-new-student-popup {

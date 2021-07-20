@@ -162,7 +162,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       subjectId={currentBrick.subjectId}
                       onChange={subjectId => changeBrick((brick) => ({ ...brick, subjectId, subject: apiSubjects.find(sub => sub.id === subjectId) }))}
                     />
-                    <CoreSelect disabled={locked} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({...brick, isCore}))} />
+                    <CoreSelect disabled={locked} brickStatus={currentBrick.status} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({...brick, isCore}))} />
                   </div>
                   <div className="level-and-length-container">
                     <DifficultySelect

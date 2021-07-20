@@ -1963,3 +1963,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     color: var(--white);
   }
 }
+
+.play-preview-pages .play-question-container {
+  width: 100% !important;
+}

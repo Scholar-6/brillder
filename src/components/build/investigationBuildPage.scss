@@ -860,3 +860,25 @@ $space-between-boxes: 0.1vw;
 .build-image-caption {
   font-size: 1.05vw;
 }
+
+.phone-question-preview {
+  .short-answer-input {
+    .quill-document-editor {
+      $border: 0.6vw;
+      border-top-right-radius: $border;
+      border-top-left-radius: $border;
+      .ql-custom-toolbar {
+        display: none;
+      }
+      .ql-container {
+        .ql-editor {
+          border-top-right-radius: $border;
+          border-top-left-radius: $border;
+        }
+        .ql-editor::before {
+          font-size: 1vw !important;
+        }
+      }
+    }
+  }
+}
