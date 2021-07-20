@@ -3,7 +3,7 @@ import { History } from "history";
 import { Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 
-import 'components/loginPage/desktop/LoginDesktopPage.scss';
+import 'components/loginPage/desktop/loginDesktopPage/LoginDesktopPage.scss';
 import TermsLink from "components/baseComponents/TermsLink"
 import TypingLabel from "components/baseComponents/TypingLabel";
 import EmailActivateDesktopPage from "./EmailActivateDesktopPage";
