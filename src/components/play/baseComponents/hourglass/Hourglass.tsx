@@ -25,8 +25,12 @@ const Hourglass: React.FC<Props> = (props) => {
             />
           </g>
         </svg>
-        <div className="top"></div>
-        <div className="bottom"></div>
+        <div className="top">
+          <div className="top-inner" />
+        </div>
+        <div className="bottom">
+          <div className="bottom-inner" />
+        </div>
       </div>
     </React.Suspense>
   )

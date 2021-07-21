@@ -17,20 +17,28 @@
     height: calc(#{$height * 2} + #{$border * 2});
   }
 
+  $inner-padding: 0.5vh;
+
   .top,
+  .top-inner,
+  .bottom-inner,
   .bottom {
     height: $height;
     overflow: hidden;
     position: relative;
     width: $width;
   }
-
-  .top:before {
-    height: $height;
-    width: $width;
+  .bottom-inner,
+  .top-inner {
+    height: calc(#{$height} - #{$inner-padding});
   }
 
-  .bottom:before {
+  .bottom-inner {
+    top: $inner-padding;
+  }
+
+  .top-inner:before,
+  .bottom-inner:before {
     height: $height;
     width: $width;
   }
