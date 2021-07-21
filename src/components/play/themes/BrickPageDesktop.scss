@@ -1868,6 +1868,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
   }
   .scrollable {
+    padding-top: 6vh;
     width: 100% !important;
     overflow-x: hidden;
     overflow-y: scroll;
