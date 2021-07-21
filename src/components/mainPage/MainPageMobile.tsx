@@ -247,7 +247,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           steps={this.state.steps}
           initialStep={0}
           onExit={this.onIntroExit.bind(this)}
-          onComplete={() => {}}
+          onComplete={() => this.props.history.push(map.ViewAllPage)}
+          options={{
+            nextLabel: 'Next',
+            doneLabel: 'Explore Brillder'
+          }}
         />
       </div>
     );
