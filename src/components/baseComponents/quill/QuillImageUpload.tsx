@@ -158,6 +158,8 @@ export default class ImageUpload {
 
     uploadHandler(toolbarNode: any) {
         if (!toolbarNode) return;
+        const selection = this.quill.getSelection(false);
+        if(selection && this.quill.getFormat(selection)["table-cell-line"]) return;
         let fileInput = toolbarNode.querySelector("input.ql-image[type=file]");
         if (fileInput === null) {
             fileInput = document.createElement("input");
