@@ -108,7 +108,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         element: '.view-item-container',
         intro: `<div class="ggf-new-student-popup">
           <p class="bold">Welcome to brillder!</p>
-          <p>Explore our catalogue of 'bricks' by clicking <span class="bold">View & Play</span></p>
+          <p>Explore our catalogue of ‘bricks’ by clicking <span class="bold">View & Play</span></p>
         </div>
         `,
       },{
