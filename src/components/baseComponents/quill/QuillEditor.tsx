@@ -88,16 +88,18 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const [imageInvalid, setImageInvalid] = React.useState(false);
 
     const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
+    const [imageDialogShouldUpdate, setImageDialogShouldUpdate] = React.useState(false);
     const [imageDialogFile, setImageDialogFile] = React.useState<File>();
     const [imageDialogData, setImageDialogData] = React.useState<any>(null);
     const [imageDialogBlot, setImageDialogBlot] = React.useState<CustomImageBlot>();
     const [imageModule, setImageModule] = React.useState<ImageUpload>();
     React.useEffect(() => {
         if(imageModule) {
-            imageModule.openDialog = (file?: File, data?: any, blot?: CustomImageBlot) => {
+            imageModule.openDialog = (file?: File, data?: any, blot?: CustomImageBlot, shouldUpdate?: boolean) => {
                 setImageDialogFile(file);
                 setImageDialogData(data);
                 setImageDialogOpen(true);
+                setImageDialogShouldUpdate(shouldUpdate ?? false);
                 setImageDialogBlot(blot);
             }
         }
@@ -260,6 +262,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                     initData={imageDialogData ?? {}}
                     initFile={imageDialogFile ?? null}
                     open={imageDialogOpen}
+                    alwaysUpdate={imageDialogShouldUpdate}
                     upload={async(...args) => {
                         if(imageModule) {
                             const res = await imageModule.uploadImages.bind(imageModule)(...args);
@@ -272,9 +275,9 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                         setImageDialogFile(undefined);
                         return true;
                     }}
-                    updateData={(source, caption, align, height) => {
+                    updateData={(source, caption, align, height, newImageFile) => {
                         if(imageModule) {
-                            imageModule.updateImage.bind(imageModule)(imageDialogBlot, {source, caption, align, height});
+                            imageModule.updateImage.bind(imageModule)(imageDialogBlot, {source, caption, align, height, newImageFile});
                         }
                         setImageDialogOpen(false);
                         setImageDialogFile(undefined);

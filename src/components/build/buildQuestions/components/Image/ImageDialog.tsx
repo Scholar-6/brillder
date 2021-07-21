@@ -12,6 +12,7 @@ import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
 
 interface DialogProps {
   open: boolean;
+  alwaysUpdate?: boolean;
   initFile: File | null;
   initData: ImageComponentData;
   upload(
@@ -25,13 +26,15 @@ interface DialogProps {
     source: string,
     caption: string,
     align: ImageAlign,
-    height: number
+    height: number,
+    newImageFile?: File,
   ): void;
   setDialog(open: boolean): void;
 }
 
 const ImageDialog: React.FC<DialogProps> = ({
   open,
+  alwaysUpdate,
   initFile,
   initData,
   upload,
@@ -212,13 +215,13 @@ const ImageDialog: React.FC<DialogProps> = ({
           onClick={async() => {
             if (!isSaving) {
               setSaving(true);
-              if (cropedFile && canUpload) {
+              if (cropedFile && canUpload && !alwaysUpdate) {
                 const res = await upload(cropedFile, source, caption, align, height);
                 if (res) {
                   setSaving(false);
                 }
               } else if (canUpload) {
-                updateData(source, caption, align, height);
+                updateData(source, caption, align, height, cropedFile ?? undefined);
                 setSaving(false);
               } else {
                 setValidation(true);
