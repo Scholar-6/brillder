@@ -104,6 +104,12 @@
     position: relative;
     display: flex;
     flex-direction: row;
+
+    text-align: center;
+
+    p {
+      text-align: center;
+    }
   }
 }
 
