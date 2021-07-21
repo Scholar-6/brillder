@@ -8,6 +8,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 import axios from "axios";
 import { hideZendesk, showZendesk } from "services/zendesk";
+import { isPhone } from "services/phone";
 
 interface MobileLoginProps {
   email: string;
@@ -52,11 +53,15 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps, State> {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.state.resizeHandler);
+    if (isPhone()) {
+      window.addEventListener("resize", this.state.resizeHandler);
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.state.resizeHandler);
+    if (isPhone()) {
+      window.removeEventListener("resize", this.state.resizeHandler);
+    }
   }
 
   render() {
