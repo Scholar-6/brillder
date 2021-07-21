@@ -312,6 +312,10 @@
     font-size: $mbase-font-size !important;
   }
 
+  &:focus-within .ql-blank::before {
+    display: none !important;
+  }
+
   p {
     font-size: $mbase-font-size !important;
   }
