@@ -4,7 +4,6 @@ import 'intro.js/introjs.css';
 // @ts-ignore
 import { Steps } from 'intro.js-react';
 
-import './IntroJs.scss';
 import { RolePreference, User } from 'model/user';
 
 interface Props {
