@@ -151,22 +151,32 @@
 
 @keyframes bottom-drip {
   0% {
+    height: 100%;
     left: 45%;
     transform: translateY(-100%);
     width: 10%;
   }
 
   5% {
+    height: 100%;
     transform: translateY(0);
   }
 
   45% {
+    height: 100%;
     left: 50%;
     transform: translateY(0);
     width: 0;
   }
+  46% {
+    left: 45%;
+    height: 10%;
+    transform: translateY(0);
+    width: 10%;
+  }
   100% {
     left: 50%;
+    height: 10%;
     transform: translateY(0);
     width: 0;
   }
