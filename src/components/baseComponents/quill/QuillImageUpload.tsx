@@ -107,7 +107,7 @@ const imageUrlRegex = new RegExp(`${process.env.REACT_APP_BACKEND_HOST}/files/(.
 
 export default class ImageUpload {
     quill: Quill;
-    openDialog: (file?: File, data?: any, blot?: CustomImageBlot) => void;
+    openDialog: (file?: File, data?: any, blot?: CustomImageBlot, shouldUpdate?: boolean) => void;
 
     constructor(quill: Quill, options: any) {
         this.quill = quill;
@@ -184,7 +184,7 @@ export default class ImageUpload {
     }
 
     existingImageSelected(data: any, blot: any) {
-        this.openDialog(undefined, data, blot);
+        this.openDialog(undefined, data, blot, true);
     }
 
     /**
@@ -231,8 +231,18 @@ export default class ImageUpload {
     async updateImage(leaf: any, data: any) {
         if (leaf instanceof CustomImageBlot) {
             const leafData = CustomImageBlot.value(leaf.domNode);
+
+            let fileName = null;
+            if(data.newImageFile) {
+                const res = await new Promise<any>((resolve, reject) => uploadFile(data.newImageFile, resolve, reject));
+                if(!res) {
+                    return false;
+                }
+                fileName = res.data.fileName;
+            }
+
             const newData = {
-                url: data.value ? fileUrl(data.value) : leafData.url,
+                url: fileName ? fileUrl(fileName) : leafData.url,
                 imageSource: data.source ?? leafData.imageSource,
                 imageCaption: data.caption ?? leafData.imageCaption,
                 imageAlign: data.align ?? leafData.imageAlign,
