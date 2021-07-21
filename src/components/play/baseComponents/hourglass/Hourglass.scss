@@ -15,7 +15,8 @@
     position: absolute;
   }
   .top {
-    border-radius:0 0 50% 50%;    
+    border-radius:0 0 50% 50%;
+    transform: translateZ(0);
     &:before {
       animation:top $time linear infinite;
       background-color: $sand-color;
@@ -41,6 +42,7 @@
     }
   }
   .bottom {
+    transform: translateZ(0);
     border-radius:50% 50% 0 0;
     &:before {
       animation:bottom $time linear infinite;
