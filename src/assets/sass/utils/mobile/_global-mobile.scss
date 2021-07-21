@@ -397,3 +397,12 @@ h3 {
   margin-top: 1.5vw;
   margin-bottom: 1.5vw;
 }
+
+.vertical-shuffle-choice,
+.choose-choice {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  p {
+    text-align: center !important;
+  }
+}

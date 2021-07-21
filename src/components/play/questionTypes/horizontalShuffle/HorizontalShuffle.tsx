@@ -11,6 +11,7 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
+import {ReactComponent as DragIcon} from'assets/img/drag.svg';
 
 
 enum DragAndDropStatus {
@@ -168,7 +169,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     const correct = this.props.attempt?.correct;
     return (
       <div className="question-unique-play horizontal-shuffle-play">
-        <p><span className="help-text">Drag to rearrange.</span></p>
+        <p><span className="help-text"><DragIcon />Drag to rearrange.</span></p>
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>
         ) : (

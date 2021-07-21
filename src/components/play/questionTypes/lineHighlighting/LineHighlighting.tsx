@@ -4,6 +4,7 @@ import "./LineHighlighting.scss";
 import CompComponent from "../Comp";
 import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/model";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface LineHighlightingProps extends CompQuestionProps {
@@ -137,7 +138,7 @@ class LineHighlighting extends CompComponent<
 
     return (
       <div className={className}>
-        <p><span className="help-text">Click to highlight.</span></p>
+        <p><span className="help-text"><SpriteIcon name="highlighter" /> Click to highlight.</span></p>
         <div className="lines-container">
           {component.lines.map((line: any, index: number) => (
             this.renderLine(line, index)

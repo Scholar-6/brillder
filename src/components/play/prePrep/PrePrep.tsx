@@ -59,7 +59,7 @@ const PrePrepPage: React.FC<Props> = ({ brick, ...props }) => {
           </div>}
           <div className="new-layout-footer" style={{ display: 'none' }}>
             <div className="title-column">
-              <DummyProgressbarCountdown value={23} />
+              <DummyProgressbarCountdown value={50} />
             </div>
             <div className="minutes-footer">
               {minutes}:00

@@ -16,6 +16,7 @@ import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import { getValidationClassName } from '../service';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
+import {ReactComponent as DragIcon} from'assets/img/drag.svg';
 
 
 interface UserCategory {
@@ -313,7 +314,7 @@ class Sort extends CompComponent<SortProps, SortState> {
 
     return (
       <div className="question-unique-play sort-play">
-        <p><span className="help-text">Drag to rearrange.</span></p>
+        <p><span className="help-text"><DragIcon />Drag to rearrange.</span></p>
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>
