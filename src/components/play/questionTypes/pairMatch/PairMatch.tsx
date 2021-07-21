@@ -38,10 +38,13 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         userAnswers = component.choices ? component.choices : [];
       }
     }
-    let canDrag = true;
-    if (this.props.attempt?.correct) {
-      canDrag = false;
+
+    //#3682 fix
+    if (userAnswers.length == 0) {
+      userAnswers = component.list;
     }
+
+    const canDrag = this.props.attempt?.correct ? false : true;
     this.state = { status, userAnswers, canDrag };
   }
 
