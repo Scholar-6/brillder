@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { History } from "history";
 import { Snackbar } from "@material-ui/core";
@@ -10,6 +10,8 @@ import { login } from "services/axios/auth";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 import DesktopLoginForm from "../desktop/DesktopLoginForm";
+import { isPhone } from "services/phone";
+import { hideZendesk, showZendesk } from "services/zendesk";
 
 
 interface MobileLoginProps {
@@ -24,6 +26,28 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
+  const [keyboardShown, mobileKeyboard] =  useState(false);
+  const [originalHeight, setOrigininalHeight] = useState(window.innerHeight);
+
+  const resizeHandler = () => {
+    if (originalHeight > window.innerHeight + 60) {
+      hideZendesk();
+      mobileKeyboard(true);
+    } else {
+      mobileKeyboard(false);
+      showZendesk();
+    }
+  }
+
+  useEffect(() => {
+    if (isPhone()) {
+      window.addEventListener("resize", resizeHandler);
+
+      return () => {
+        window.removeEventListener("resize", resizeHandler);
+      }
+    }
+  }, []);
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -132,9 +156,10 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
             handleSubmit={handleLoginSubmit}
             register={() => register(email, password)}
           />
+          {!keyboardShown &&
           <div className="mobile-policy-text">
             <TermsLink history={props.history} />
-          </div>
+          </div>}
         </div>
       </div>
       <Snackbar
