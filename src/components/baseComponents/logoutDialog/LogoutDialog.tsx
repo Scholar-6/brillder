@@ -24,7 +24,7 @@ const LogoutDialog: React.FC<LogoutComponentProps> = (props) => {
   }
 
   return (
-    <BaseDialogWrapper open={props.isOpen} close={props.close} submit={logout}>
+    <BaseDialogWrapper className="logout-dialog" open={props.isOpen} close={props.close} submit={logout}>
       <div className="dialog-header">
         <div>Are you sure</div>
         <div>you want to log out?</div>
