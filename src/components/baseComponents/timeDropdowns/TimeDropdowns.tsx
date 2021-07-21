@@ -91,7 +91,7 @@ class TimeDropdowns extends React.Component<Props, State> {
     return (
       <div className="inline">
         {this.renderSelect(this.props.date.getDate(), this.state.days, (newDay: number) => this.setDay(newDay), 'first')}
-        {this.renderSelect(this.props.date.getMonth(), this.state.months, (newMonth: number) => this.setMonth(newMonth), 'second')}
+        {this.renderSelect(this.props.date.getMonth() + 1, this.state.months, (newMonth: number) => this.setMonth(newMonth - 1), 'second') /* Months are 0-indexed */}
         {this.renderSelect(this.props.date.getFullYear(), this.state.years, (newYear: number) => this.setYear(newYear), 'last')}
       </div>
     );
