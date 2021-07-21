@@ -14,32 +14,28 @@
     height: calc(#{$height * 2} + #{$border * 2});
   }
 
+  $inner-padding: 0.5vh;
+
   .top,
+  .top-inner,
+  .bottom-inner,
   .bottom {
     height: $height;
     overflow: hidden;
     position: relative;
     width: $width;
   }
-
-
-  $glass-border: 2vh;
-
-  .top {
-    border-top-left-radius: $glass-border;
-    border-top-right-radius: $glass-border;
-  }
-  .bottom {
-    border-bottom-left-radius: $glass-border;
-    border-bottom-right-radius: $glass-border;
+  .bottom-inner,
+  .top-inner {
+    height: calc(#{$height} - #{$inner-padding});
   }
 
-  .top:before {
-    height: $height;
-    width: $width;
+  .bottom-inner {
+    top: $inner-padding;
   }
 
-  .bottom:before {
+  .top-inner:before,
+  .bottom-inner:before {
     height: $height;
     width: $width;
   }
