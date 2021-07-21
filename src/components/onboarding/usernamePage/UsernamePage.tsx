@@ -101,8 +101,9 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
       <div className="username-page">
         <form>
           <div>
+            {isPhone() && <div className="wef-user-icon-container flex-center"><SpriteIcon name="user" /></div>}
             <h1>
-              <LabelTyping start={true} value="Please enter your full name" onFinish={() => setStep(AnimationStep.TitleFinished)} />
+              <LabelTyping start={true} value="Please enter your full name." onFinish={() => setStep(AnimationStep.TitleFinished)} />
             </h1>
             <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
               <Input

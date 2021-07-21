@@ -759,3 +759,21 @@
     padding-right: 7vw !important;
   }
 }
+
+.question-live-play .question-unique-play .help-text {
+  font-family: $font-family-regular-italic;
+  display: flex;
+  align-items: center;
+  padding-bottom: 1vw;
+  span {
+    display: flex;
+    align-items: center;
+    padding-right: 0.3vw;
+  }
+  svg {
+    padding-right: 0.3vw;
+    height: 1.2vw;
+    width: 1.2vw;
+    fill: var(--theme-dark-blue);
+  }
+}

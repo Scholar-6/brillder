@@ -295,7 +295,22 @@
 }
 
 .question-live-play .question-unique-play .help-text {
+  display: flex;
+  align-items: center;
   font-family: $font-family-regular-italic;
+  font-size: 4.2vw !important;
+  padding-bottom: 3vw;
+  span {
+    display: flex;
+    align-items: center;
+    padding-right: 1vw;
+  }
+  svg {
+    padding-right: 1vw;
+    height: 6vw;
+    width: 6vw;
+    fill: var(--theme-dark-blue);
+  }
 }
 
 .image-source {
@@ -920,4 +935,14 @@
       }
     }
   }
+}
+
+// user profile page
+.user-profile-page .profile-block .big-input-container textarea.bio-container {
+  padding-left: 2vw;
+  font-size: 5vw;
+}
+
+.play-preview-pages .real-introduction-page .introduction-content {
+  padding-bottom: 4vw !important;
 }
