@@ -412,20 +412,25 @@
       }
     }
 
-    .footer {
-      filter: drop-shadow(0mm -10px 8px rgba(0, 0, 0, 0.2));
-      border-bottom-left-radius: $panel-radius;
-      border-bottom-right-radius: $panel-radius;
-      width: 100%;
-      background: var(--tab-gray);
-      position: absolute;
-      bottom: 0;
-      font-size: 6.5vw;
+    .footer,
+    .footer-question {
       height: $footer-height;
+      filter: drop-shadow(0mm -10px 8px rgba(0, 0, 0, 0.2));
       display: flex;
-      text-align: center;
       align-items: center;
       justify-content: center;
+      position: absolute;
+      background: var(--tab-gray);
+      width: 100%;
+      bottom: 0;
+      border-bottom-left-radius: $panel-radius;
+      border-bottom-right-radius: $panel-radius;
+    }
+
+    .footer {
+      font-size: 6.5vw;
+      text-align: center;
+      
       font-family: $font-family-bold;
 
       @keyframes right-left {
@@ -454,11 +459,6 @@
     }
     .footer-question {
       padding-left: 4vw;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: $footer-height;
       .MuiFormControlLabel-root {
         .MuiButtonBase-root {
           padding: 1vw;
