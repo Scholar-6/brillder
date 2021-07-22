@@ -30,11 +30,11 @@ import TeachTab from "components/teach/TeachTab";
 import { TeachActiveTab } from "components/teach/model";
 import { getSubjects } from "services/axios/subject";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuccessDialog";
 import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
-import { isArchived } from "./service/service";
+import EmptyTabContent from "./components/EmptyTabContent";
+import ArchiveToggle from "./components/ArchiveToggle";
 
 
 interface RemindersData {
@@ -129,7 +129,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       steps: [{
         element: '.archive-toggle-button',
         intro: `<p>Find your archived assignments here</p>`,
-      },{
+      }, {
         element: '.archive-toggle-button',
         intro: `<p>Find your archived assignments here</p>`,
       }],
@@ -225,12 +225,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   onIntroExit() {
-    this.setState({stepsEnabled: false});
+    this.setState({ stepsEnabled: false });
   }
 
   onIntroChanged(e: any) {
     if (e !== 0) {
-      this.setState({stepsEnabled: false});
+      this.setState({ stepsEnabled: false });
     }
   }
 
@@ -335,69 +335,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
     return itemsCount;
   }
 
-  getArchiveClassCount(classroom: TeachClassroom) {
-    let count = 0;
-    for (const assignment of classroom.assignments) {
-      const archived = isArchived(assignment);
-      if (archived) {
-        count += 1;
-      }
-    }
-    return count;
-  }
-
-  getArchiveClassesCount() {
-    let count = 0;
-    for (const classroom of this.state.classrooms) {
-      count += this.getArchiveClassCount(classroom);
-    }
-    return count;
-  }
-
-  getArchivedAssigmentsCount() {
-    if (this.state.activeStudent) {
-      return '';
-    }
-    if (this.state.activeClassroom) {
-      return this.getArchiveClassCount(this.state.activeClassroom);
-    } else {
-      return this.getArchiveClassesCount();
-    }
-  }
-
-  getLiveClassCount(classroom: TeachClassroom) {
-    let count = 0;
-    for (const assignment of classroom.assignments) {
-      const archived = isArchived(assignment);
-      if (!archived) {
-        count += 1;
-      }
-    }
-    return count;
-  }
-
-  getLiveClassesCount() {
-    let count = 0;
-    for (const classroom of this.state.classrooms) {
-      count += this.getLiveClassCount(classroom);
-    }
-    return count;
-  }
-
-  getLiveAssignmentsCount() {
-    if (this.state.activeStudent) {
-      return '';
-    }
-    if (this.state.activeClassroom) {
-      return this.getLiveClassCount(this.state.activeClassroom);
-    } else {
-      return this.getLiveClassesCount();
-    }
-  }
-
   searching(searchString: string) {
     if (searchString.length === 0) {
-      this.setState({ ...this.state, searchString,
+      this.setState({
+        ...this.state, searchString,
         isSearching: true,
         activeClassroom: null,
         activeAssignment: null,
@@ -412,40 +353,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async search() {
     const classrooms = await searchClassrooms(this.state.searchString) as TeachClassroom[] | null;
     if (classrooms) {
-      this.setState({ ...this.state, classrooms});
+      this.setState({ ...this.state, classrooms });
     } else {
       // failed
     }
-  }
-
-  renderArchiveButton() {
-    const className = this.state.isArchive ? "archive-toggle-button active" : "archive-toggle-button";
-    return (
-      <div
-        className={className}
-        onClick={() => {
-          this.props.history.push(map.TeachAssignedArchiveTab);
-          this.setState({ isArchive: true });
-        }}
-      >
-        {this.getArchivedAssigmentsCount()} ARCHIVED
-      </div>
-    );
-  }
-
-  renderLiveBricksButton() {
-    const className = this.state.isArchive ? "" : "active";
-    return (
-      <div
-        className={className}
-        onClick={() => {
-          this.props.history.push(map.TeachAssignedTab);
-          this.setState({ isArchive: false })
-        }}
-      >
-        {this.getLiveAssignmentsCount()} LIVE BRICKS
-      </div>
-    );
   }
 
   renderAssignmentPagination = (classroom: TeachClassroom) => {
@@ -489,61 +400,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
   //#endregion
 
-  renderEmptyTabContent() {
-    const { activeClassroom } = this.state;
-    if (this.state.classrooms.length === 0) {
-      return (
-        <div className="tab-content">
-          <div className={"tab-content-centered " + (activeClassroom ? 'empty-tab-content' : '')}>
-            <div className="new-class-container" onClick={() => this.setState({ createClassOpen: true })}>
-              <div className="icon-container">
-                <SpriteIcon
-                  name="users-custom"
-                  className="stroke-1"
-                />
-              </div>
-              <div className="bold-hover">+ Create Class</div>
-              <div className="text-center f-s-2 m-t-2vh">You can invite between 1 and 50 students to a class</div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className="tab-content">
-        <div className={"tab-content-centered " + (activeClassroom ? 'empty-tab-content' : '')}>
-          <div>
-            {activeClassroom && <div className="bold"> {activeClassroom.name} has no assignments for the moment</div>}
-            <div className="icon-container glasses-icon-container" onClick={() => this.props.history.push(map.ViewAllPage)}>
-              <SpriteIcon name="glasses-home-blue" className="glasses-icon" />
-              <div className="glass-eyes-inside">
-                <div className="glass-eyes-left svgOnHover">
-                  <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                    <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-                  </svg>
-                  <div className="glass-left-inside svgOnHover">
-                    {/* <SpriteIcon name="aperture" className="aperture" /> */}
-                    <SpriteIcon name="eye-pupil" className="eye-pupil" />
-                  </div>
-                </div>
-                <div className="glass-eyes-right svgOnHover">
-                  <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                    <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-                  </svg>
-                  <div className="glass-right-inside svgOnHover">
-                    {/* <SpriteIcon name="aperture" className="aperture" /> */}
-                    <SpriteIcon name="eye-pupil" className="eye-pupil" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="bold">Click the icon above to search for brick to assign</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   setReminderNotification(count: number, isDeadlinePassed: boolean) {
     this.setState(state => ({ ...state, remindersData: { isOpen: true, count, isDeadlinePassed } }));
   }
@@ -556,16 +412,27 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const { activeClassroom } = this.state;
 
     if (this.state.isLoaded && (this.state.classrooms.length === 0 || (activeClassroom && activeClassroom?.assignments.length === 0))) {
-      return this.renderEmptyTabContent();
+      return (
+        <EmptyTabContent
+          history={this.props.history}
+          classrooms={this.state.classrooms}
+          activeClassroom={this.state.activeClassroom}
+          openClass={() => this.setState({ createClassOpen: true })}
+        />
+      );
     }
 
     return (
       <div className="tab-content">
-        <div className="classroom-list-buttons">
-          {this.renderLiveBricksButton()}
-          {this.renderArchiveButton()}
-        </div>
-        { this.state.activeStudent ?
+        <ArchiveToggle
+          isArchive={this.state.isArchive}
+          history={this.props.history}
+          activeStudent={this.state.activeStudent}
+          classrooms={this.state.classrooms}
+          activeClassroom={this.state.activeClassroom}
+          setArchive={isArchive => this.setState({ isArchive })}
+        />
+        {this.state.activeStudent ?
           <ActiveStudentBricks
             subjects={this.state.subjects}
             isArchive={this.state.isArchive}
@@ -616,7 +483,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   render() {
     const { history } = this.props;
-    const {remindersData} = this.state;
+    const { remindersData } = this.state;
 
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
@@ -635,7 +502,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             isLoaded={this.state.isLoaded}
             activeStudent={this.state.activeStudent}
             activeClassroom={this.state.activeClassroom}
-            hideIntro={() => this.setState({isNewTeacher: false})}
+            hideIntro={() => this.setState({ isNewTeacher: false })}
             isArchive={this.state.isArchive}
             setActiveClassroom={this.setActiveClassroom.bind(this)}
             setActiveStudent={this.setActiveStudent.bind(this)}
