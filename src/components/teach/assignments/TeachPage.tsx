@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import queryString from 'query-string';
+// @ts-ignore
+import { Steps } from 'intro.js-react';
 
 import './TeachPage.scss';
 import { ReduxCombinedState } from "redux/reducers";
@@ -73,6 +75,10 @@ interface TeachState {
 
   isNewTeacher: boolean;
 
+  haveArchivedBrick: boolean;
+  stepsEnabled: boolean;
+  steps: any[];
+
   filters: TeachFilters;
   handleKey(e: any): void;
 }
@@ -117,6 +123,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
       searchString: '',
       isSearching: false,
       subjects: [],
+
+      haveArchivedBrick: false,
+      stepsEnabled: false,
+      steps: [{
+        element: '.archive-toggle-button',
+        intro: `<p>Find your archived assignments here</p>`,
+      },{
+        element: '.archive-toggle-button',
+        intro: `<p>Find your archived assignments here</p>`,
+      }],
 
       pageSize: 6,
       classPageSize: 5,
@@ -181,7 +197,17 @@ class TeachPage extends Component<TeachProps, TeachState> {
         }
       }
 
-      this.setState({ classrooms, activeClassroom, isLoaded: true });
+      const haveArchivedBrick = !!classrooms.find(c => c.assignments.find(a => a.isArchived === true));
+
+      // if reloading
+      let stepsEnabled = false;
+      if (this.state.isLoaded === true) {
+        if (haveArchivedBrick === true && haveArchivedBrick !== this.state.haveArchivedBrick) {
+          stepsEnabled = true;
+        }
+      }
+
+      this.setState({ classrooms, haveArchivedBrick, stepsEnabled, activeClassroom, isLoaded: true });
       return classrooms;
     } else {
       this.props.requestFailed('can`t get classrooms');
@@ -195,6 +221,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
       if (classroom) {
         this.setState({ activeClassroom: classroom });
       }
+    }
+  }
+
+  onIntroExit() {
+    this.setState({stepsEnabled: false});
+  }
+
+  onIntroChanged(e: any) {
+    if (e !== 0) {
+      this.setState({stepsEnabled: false});
     }
   }
 
@@ -383,7 +419,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   renderArchiveButton() {
-    const className = this.state.isArchive ? "active" : "";
+    const className = this.state.isArchive ? "archive-toggle-button active" : "archive-toggle-button";
     return (
       <div
         className={className}
@@ -624,6 +660,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
             this.setState({ createClassOpen: false })
           }}
           close={() => { this.setState({ createClassOpen: false }) }}
+        />
+        <Steps
+          enabled={this.state.stepsEnabled}
+          steps={this.state.steps}
+          initialStep={0}
+          onChange={this.onIntroChanged.bind(this)}
+          onExit={this.onIntroExit.bind(this)}
         />
       </div>
     );

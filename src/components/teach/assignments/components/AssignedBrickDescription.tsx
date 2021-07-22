@@ -10,6 +10,8 @@ import { archiveAssignment, sendAssignmentReminder } from "services/axios/brick"
 import { getTotalStudentsCount } from "../service/service";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import ArchiveWarningDialog from "components/baseComponents/dialogs/ArchiveWarningDialog";
+import ArchiveButton from "./ArchiveButton";
+import ReminderButton from "./ReminderButton";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -37,7 +39,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
     this.state = {
       warningOpen: false,
-      archiveHovered: false
+      archiveHovered: false,
     }
   }
 
@@ -89,24 +91,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     return false;
   }
 
-  renderReminderIcon(className: string) {
-    const realClassName = 'reminder-brick-actions-container completed ' + className;
-    const isPlural = getTotalStudentsCount(this.props.classroom) > 1 ? true : false;
-    return (
-      <div className={realClassName}>
-        <div className="reminder-button-container" onClick={this.sendNotifications.bind(this)} >
-          <div className="green-hover">
-            <div />
-          </div>
-          <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2" />
-        </div>
-        <div className="css-custom-tooltip">
-          Send Reminder{isPlural ? 's' : ''}
-        </div>
-      </div>
-    );
-  }
-
   renderStatus(assignment: Assignment) {
     const { studentStatus } = assignment;
     let everyoneFinished = true;
@@ -125,13 +109,11 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       // everyone has completed the assignment, so the button is disabled.
       return <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2 finished" />;
     } else {
-      if (assignment.deadline) {
-        if (this.isDeadlinePassed(assignment)) {
-          return this.renderReminderIcon("deadline");
-        }
-      } else {
-        return this.renderReminderIcon("");
+      let className = '';
+      if (assignment.deadline && this.isDeadlinePassed(assignment)) {
+        className = 'deadline';
       }
+      return <ReminderButton className={className} classroom={this.props.classroom} sendNotifications={this.sendNotifications.bind(this)} />
     }
   }
 
@@ -197,7 +179,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     if (completed) {
       this.archiveAssignment();
     } else {
-      this.setState({warningOpen: true});
+      this.setState({ warningOpen: true });
     }
   }
 
@@ -227,7 +209,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   }
 
   render() {
-    const {classroom} = this.props as any;
+    const { classroom } = this.props as any;
     let subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
 
@@ -263,30 +245,19 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             <div className="users-complete-count">
               <span>{this.getCompleteStudents()}/{getTotalStudentsCount(this.props.classroom)}</span>
               <SpriteIcon name="users" className="text-theme-dark-blue" />
-              {classroom && classroom.studentsInvitations && <span style={{marginLeft: '1vw'}}>{classroom.studentsInvitations.length} Invited</span>}
+              {classroom && classroom.studentsInvitations && <span style={{ marginLeft: '1vw' }}>{classroom.studentsInvitations.length} Invited</span>}
             </div>}
           <div className="average">
             {this.getAverageScore()}
           </div>
           {this.renderStudentStatus()}
         </div>
-        {!this.props.isArchive &&
-          <div className={`teach-brick-actions-container ${this.isCompleted() && 'completed'}`}>
-            <div className="archive-button-container" onClick={this.checkArchive.bind(this)}>
-              <div className="green-hover">
-                <div />
-              </div>
-              <SpriteIcon name="archive" className="text-gray" />
-            </div>
-            <div className="css-custom-tooltip">
-              Archive brick
-            </div>
-          </div>}
-          <ArchiveWarningDialog
-            isOpen={this.state.warningOpen}
-            submit={this.archiveAssignment.bind(this)}
-            close={() => this.setState({ warningOpen: false})}
-          />
+        {!this.props.isArchive && <ArchiveButton isCompleted={this.isCompleted.bind(this)} checkArchive={this.checkArchive.bind(this)} />}
+        <ArchiveWarningDialog
+          isOpen={this.state.warningOpen}
+          submit={this.archiveAssignment.bind(this)}
+          close={() => this.setState({ warningOpen: false })}
+        />
       </div>
     );
   }
