@@ -12,39 +12,14 @@ interface Props {
   setMode(value: boolean | undefined): void;
 }
 
-const PhoneQuestionHeader: React.FC<Props> = ({mode, i, activeAttempt, title, setMode}) => {
+const PhoneQuestionHeader: React.FC<Props> = ({ mode, i, activeAttempt, title, setMode }) => {
   return (
     <div className="header">
       <div className="header-absolute">
-      <div className="question-header">
-        <div className="round-question-num">{i + 1}</div>
-        <span className="title" dangerouslySetInnerHTML={{__html: title}} />
-      </div>
-      <div className="switch-container">
-        <div className="col">
-          Investigation
-          <div>
-            <LiveEye mode={mode} setMode={setMode} />
-            {activeAttempt?.liveAnswers[i].correct
-              ? <SpriteIcon name="ok" className="text-theme-green" />
-              : <SpriteIcon name="cancel-thick" className="ew-cancel text-theme-orange" />
-            }
-          </div>
+        <div className="question-header">
+          <div className="round-question-num">{i + 1}</div>
+          <span className="title" dangerouslySetInnerHTML={{ __html: title }} />
         </div>
-        <div className="col">
-          Review Answer
-          <div>
-            <ReviewEye mode={mode} setMode={setMode} />
-            {activeAttempt?.answers[i].correct
-              ? <SpriteIcon name="ok" className="text-theme-green" />
-              : <SpriteIcon name="cancel-thick" className="ew-cancel text-theme-orange" />
-            }
-          </div>
-        </div>
-      </div>
-      <div className="text">
-        Click the eye icons to see your answer
-      </div>
       </div>
     </div>
   );
