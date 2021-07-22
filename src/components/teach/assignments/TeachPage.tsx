@@ -35,6 +35,7 @@ import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuc
 import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
 import EmptyTabContent from "./components/EmptyTabContent";
 import ArchiveToggle from "./components/ArchiveToggle";
+import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 
 
 interface RemindersData {
@@ -409,10 +410,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   renderTabContent(showedClasses: TeachClassroom[]) {
-    let {isArchive} = this.state;
+    let { isArchive } = this.state;
 
     if (!this.state.isLoaded) {
-      return <div className="tab-content" />
+      return (
+        <div className="tab-content">
+          <div className="f-top-loader">
+            <PageLoaderBlue content="" />
+          </div>
+        </div>
+      );
     }
 
     const { activeClassroom } = this.state;
@@ -487,7 +494,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   render() {
-    const {isArchive} = this.state;
+    const { isArchive } = this.state;
     let showedClasses = this.state.classrooms;
     if (isArchive) {
       showedClasses = this.state.classrooms.filter(this.findClassArchive);

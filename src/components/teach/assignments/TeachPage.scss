@@ -519,6 +519,15 @@
       margin-bottom: 1.5vw;
     }
   }
+
+  .f-top-loader {
+    height: 100% !important;
+    .page-loader {
+      position: relative !important;
+      height: 100% !important;
+      background: var(--white);
+    }
+  }
 }
 
 // view all button
