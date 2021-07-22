@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
-import { TeachClassroom, Assignment, StudentStatus } from "model/classroom";
+import { TeachClassroom, Assignment, StudentStatus, StudentAssignmentStatus } from "model/classroom";
 import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
@@ -135,28 +135,36 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     }
   }
 
+  countNumberOfCompleted(studentStatuses: StudentStatus[]) {
+    let completedNumber = 0;
+
+    for (let studentStatus of studentStatuses) {
+      if (studentStatus.status === StudentAssignmentStatus.Completed) {
+        completedNumber += 1;
+      }
+    }
+    return completedNumber;
+  }
+
   isCompleted() {
     const { assignment } = this.props;
     if (assignment.deadline) {
-      let endTime = new Date(assignment.deadline).getTime();
-      let nowTime = new Date().getTime();
+      const endTime = new Date(assignment.deadline).getTime();
+      const nowTime = new Date().getTime();
       if (endTime < nowTime) {
         return true;
       }
     }
+    
     const { studentStatus } = assignment;
     if (this.props.classroom) {
-      let { length } = this.props.classroom.students;
-      if (length !== studentStatus.length) {
-        return false;
-      }
-    } else {
-      // if student assignment
-      if (!this.isStudentCompleted(studentStatus)) {
-        return false;
+      const { length } = this.props.classroom.students;
+      const completedNumber = this.countNumberOfCompleted(studentStatus);
+      if (length === completedNumber) {
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   getCompleteStudents() {
@@ -263,7 +271,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           {this.renderStudentStatus()}
         </div>
         {!this.props.isArchive &&
-          <div className={`teach-brick-actions-container completed`}>
+          <div className={`teach-brick-actions-container ${this.isCompleted() && 'completed'}`}>
             <div className="archive-button-container" onClick={this.checkArchive.bind(this)}>
               <div className="green-hover">
                 <div />
