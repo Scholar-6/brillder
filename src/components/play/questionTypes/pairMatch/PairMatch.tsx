@@ -42,7 +42,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
 
     //#3682 fix
-    if (userAnswers.length == 0) {
+    if (userAnswers.length === 0) {
       userAnswers = component.list;
     }
 
