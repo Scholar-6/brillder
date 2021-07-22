@@ -240,13 +240,13 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             search={() => { }}
             searching={() => { }}
           />
-          {this.state.bookHovered &&
-            <div className="book-navigator">
-              <div className="prep-tab first" onClick={this.moveToContent.bind(this)}>
-                <div className="fg-icon-container">
-                  <SpriteIcon name="list" />
-                </div>
+          {this.state.bookHovered && <div className="full-book-navigator">
+            <div className="prep-tab first" onClick={this.moveToContent.bind(this)}>
+              <div className="fg-icon-container">
+                <SpriteIcon name="list" />
               </div>
+            </div>
+            <div className="book-navigator">
               <div className="prep-tab middle" onClick={this.moveToBrief.bind(this)}>
                 <SpriteIcon name="crosshair" />
               </div>
@@ -256,7 +256,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
               {questions.map((q, i) => <div className="question-tab" key={i} onClick={() => this.moveToQuestion(i)}>
                 {i + 1} {this.state.attempts[0].answers[i].correct ? <SpriteIcon name="ok" className="text-theme-green" /> : <SpriteIcon name="cancel-custom" className="text-orange" />}
               </div>)}
-            </div>}
+            </div>
+          </div>
+          }
           {!this.state.bookHovered ?
             <div className="wefw-book-container">
               <div className="main-text-container">
@@ -329,9 +331,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       <div className="header-absolute">Contents</div>
                     </div>
                     <div className="scroll-content pages-list">
-                      <div><SpriteIcon name="crosshair" /><span className="bold">Brief</span> {stripHtml(brick.brief)}</div>
-                      <div><SpriteIcon name="file-text" /><span className="bold">Prep</span> {stripHtml(brick.prep)}</div>
-                      {questions.map((q, i) => <div className="question-link"><span className="bold">{i + 1}</span></div>)}
+                      <div onClick={() => this.moveToBrief()}><SpriteIcon name="crosshair" /><span className="bold">Brief</span> <span className="ellipsis">{stripHtml(brick.brief)}</span></div>
+                      <div onClick={() => this.moveToPrep()}><SpriteIcon name="file-text" /><span className="bold">Prep</span> <span className="ellipsis">{stripHtml(brick.prep)}</span></div>
+                      {questions.map((q, i) => <div className="question-link" onClick={() => this.moveToQuestion(i)}><span className="bold">{i + 1}</span><span className="ellipsis">{stripHtml(q.firstComponent.value)}</span></div>)}
                     </div>
                     <div className="footer">
                       Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
