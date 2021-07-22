@@ -10,7 +10,7 @@ describe("Home Button", () => {
     
     const { container } = render(
       <Router history={history}>
-        <HomeButton link={"/test"} />
+        <HomeButton link={"/test"} history={history} />
       </Router>
     );
 

@@ -11,6 +11,24 @@
     margin-bottom: 0.5vh;
     background-color: var(--tab-gray);
     @extend %themeRadius;
+    
+    .quill-document-editor .ql-editor::before {
+      font-size: 1.4vw;
+    }
+
+    &.correct .quill-document-editor .ql-editor{
+      background: var(--theme-green-alpha5) !important;
+    }
+    &.wrong .quill-document-editor .ql-editor{
+      &::before {
+        color: var(--white) !important;
+      }
+      color: var(--white) !important;
+      p, span {
+        color: var(--white) !important;
+      }
+      background: var(--theme-orange) !important;
+    }
   }
   $toolbar-width: 5vw;
   $border-radius: 0.6vw;

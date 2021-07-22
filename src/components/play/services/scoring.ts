@@ -12,6 +12,7 @@ import MissingWordMark from './scoring/MissingWordScoring';
 import LineHighlightingMark from './scoring/LineHighlightingScoring';
 import WordHighlightingMark from './scoring/WordHighlightingScoring';
 
+
 export type ScoreFunction<C extends QuestionComponent, A> = (component: C, attempt: ComponentAttempt<A>) => ComponentAttempt<A>;
 export type QuestionComponent = { type: QuestionTypeEnum };
 

@@ -17,12 +17,12 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { User } from 'model/user';
 
-import Introduction from 'components/play/introduction/Introduction';
+import Introduction from 'components/play/newPrep/PhonePrep';
 import Live from 'components/play/live/Live';
-import ProvisionalScore from 'components/play/provisionalScore/ProvisionalScore';
+import ProvisionalScore from 'components/play/scorePages/provisionalScore/ProvisionalScore';
 import Synthesis from 'components/play/synthesis/Synthesis';
 import Review from 'components/play/review/ReviewPage';
-import Ending from 'components/play/ending/Ending'
+import Ending from 'components/play/scorePages/ending/Ending'
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
@@ -206,30 +206,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const renderHead = () => {
-    let isMobileHidden = false;
     const live = location.pathname.search(playRoutes.PlayLiveLastPrefix);
-    const score = location.pathname.search("/provisionalScore");
-    const synthesis = location.pathname.search(playRoutes.PlaySynthesisLastPrefix);
-    const review = location.pathname.search(playRoutes.PlayReviewLastPrefix);
-    const ending = location.pathname.search("/ending");
-    const publish = location.pathname.search("/publish");
-    const finish = location.pathname.search("/finish");
-    if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0 || publish > 0 || finish > 0) {
-      isMobileHidden = true;
-    }
     if (live && !sidebarRolledUp) {
       toggleSideBar(true);
     }
 
     if (!isMobile && sidebarRolledUp) {
-      return <HomeButton link={map.MainPage} />;
+      return <HomeButton history={history} link={map.MainPage} />;
     }
     if (isMobile && headerHidden) {
       return <div></div>;
     }
     return (
       <PageHeadWithMenu
-        isMobileHidden={isMobileHidden}
         page={PageEnum.Play}
         user={props.user}
         history={history}

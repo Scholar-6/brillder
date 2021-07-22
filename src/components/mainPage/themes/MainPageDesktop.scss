@@ -124,6 +124,14 @@
     }
   }
 
+  .second-button {
+    .disabled {
+      .bl {
+        background: var(--theme-dark-blue);
+      }
+    }
+  }
+
   .second-col {
     color: var(--white);
     letter-spacing: 0.3vw;

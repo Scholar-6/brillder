@@ -417,7 +417,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderPendingFilter() {
-    let className = "m-view-all index-box hover-light item-box2";
+    let className = "m-view-all index-box yellow item-box2";
     if (this.state.isPending) {
       className += " active";
     }

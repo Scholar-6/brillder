@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import { Brick, BrickStatus, Subject, SubjectItem } from "model/brick";
+import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus, Subject, SubjectItem } from "model/brick";
 import { User } from 'model/user';
 
 export const getCheckedSubjectIds = (subjects: Subject[]) => {
@@ -238,4 +238,46 @@ export const onlyPrepareUserSubjects = (subjects: SubjectItem[], userSubjects: S
   }
   subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
   return ss;
+}
+
+/**
+ * Phone filters
+ * @param arr array with values
+ * @param value value
+ * @returns array with filtered value
+ */
+export const toggleElement = (arr: any[], value: any) => {
+  const found = arr.find((l) => l === value);
+  if (found) {
+    arr = arr.filter((l) => l !== value);
+  } else {
+    arr.push(value);
+  }
+  return arr;
+}
+
+/**
+ * Check if brick is visible by level
+ * @param brick Brick
+ * @param levels array of numeric levels
+ * @returns true if present if level is in array, false if not. if array empty than true.
+ */
+export const isLevelVisible = (brick: Brick, levels: AcademicLevel[]) => {
+  if (levels.length > 0) {
+    return !!levels.find(l => l === brick.academicLevel);
+  }
+  return true;
+}
+
+/**
+ * Check if brick is visible by length
+ * @param brick Brick
+ * @param levels array of numeric length in minutes
+ * @returns true if present if length is in array, false if not. if array empty than true.
+ */
+ export const isLengthVisible = (brick: Brick, lengths: BrickLengthEnum[]) => {
+  if (lengths.length > 0) {
+    return !!lengths.find(l => l === brick.brickLength);
+  }
+  return true;
 }

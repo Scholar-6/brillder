@@ -10,8 +10,10 @@ interface StepProps {
 const FailedStep: React.FC<StepProps> = ({ index, handleStep }) => {
   return (
     <div className="step" onClick={() => handleStep(index - 1)}>
-      <span className="blue">{index}</span>
-      <SpriteIcon name="cancel" className="active text-theme-orange" />
+      <div>
+        <span className="blue">{index}</span>
+        <SpriteIcon name="cancel-custom" className="active text-theme-orange" />
+      </div>
     </div>
   );
 };
