@@ -254,7 +254,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           {this.renderStudentStatus()}
         </div>
         {this.props.isArchive
-          ? <UnarchiveButton onClick={() => {}} />
+          ? <div /> // <UnarchiveButton onClick={() => {}} />
           : <ArchiveButton isCompleted={this.isCompleted.bind(this)} checkArchive={this.checkArchive.bind(this)} />
         }
         <ArchiveWarningDialog
