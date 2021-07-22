@@ -12,6 +12,7 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import ArchiveWarningDialog from "components/baseComponents/dialogs/ArchiveWarningDialog";
 import ArchiveButton from "./ArchiveButton";
 import ReminderButton from "./ReminderButton";
+import UnarchiveButton from "./UnarchiveButton";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -252,7 +253,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           </div>
           {this.renderStudentStatus()}
         </div>
-        {!this.props.isArchive && <ArchiveButton isCompleted={this.isCompleted.bind(this)} checkArchive={this.checkArchive.bind(this)} />}
+        {this.props.isArchive
+          ? <UnarchiveButton onClick={() => {}} />
+          : <ArchiveButton isCompleted={this.isCompleted.bind(this)} checkArchive={this.checkArchive.bind(this)} />
+        }
         <ArchiveWarningDialog
           isOpen={this.state.warningOpen}
           submit={this.archiveAssignment.bind(this)}
