@@ -8,9 +8,13 @@ export enum ClassroomStatus {
   Deleted
 }
 
+export enum StudentAssignmentStatus {
+  Completed = 2
+}
+
 export interface StudentStatus {
   studentId: number;
-  status: number;
+  status: StudentAssignmentStatus;
   numberOfAttempts: number;
   avgScore: number;
 }
@@ -57,7 +61,7 @@ export interface ClassroomInvitation {
 
 export interface StudentStatus {
   studentId: number;
-  status: number;
+  status: StudentAssignmentStatus;
   bestScore: number;
 }
 
