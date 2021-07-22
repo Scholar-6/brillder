@@ -27,7 +27,7 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
   const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
   const [keyboardShown, mobileKeyboard] =  useState(false);
-  const [originalHeight, setOrigininalHeight] = useState(window.innerHeight);
+  const [originalHeight] = useState(window.innerHeight);
 
   const resizeHandler = () => {
     if (originalHeight > window.innerHeight + 60) {
@@ -47,6 +47,7 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
         window.removeEventListener("resize", resizeHandler);
       }
     }
+  /*eslint-disable-next-line*/
   }, []);
 
   const validateForm = () => {

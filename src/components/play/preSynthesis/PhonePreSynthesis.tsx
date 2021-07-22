@@ -1,7 +1,6 @@
 import React from "react";
 
 import { Brick } from "model/brick";
-import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface Props {

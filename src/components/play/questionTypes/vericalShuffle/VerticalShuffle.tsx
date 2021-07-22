@@ -229,7 +229,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   renderPhone() {
-    const haveImage = this.checkImages();
+    //const haveImage = this.checkImages();
     return (
       <div className="question-unique-play vertical-shuffle-play">
         <ZoomHelpText />
