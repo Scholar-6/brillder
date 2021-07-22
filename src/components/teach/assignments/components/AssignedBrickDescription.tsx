@@ -94,11 +94,11 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     const isPlural = getTotalStudentsCount(this.props.classroom) > 1 ? true : false;
     return (
       <div className={realClassName}>
-        <div className="reminder-button-container" onClick={this.archiveAssignment.bind(this)}>
+        <div className="reminder-button-container" onClick={this.sendNotifications.bind(this)} >
           <div className="green-hover">
             <div />
           </div>
-          <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2" onClick={this.sendNotifications.bind(this)} />
+          <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2" />
         </div>
         <div className="css-custom-tooltip">
           Send Reminder{isPlural ? 's' : ''}
@@ -155,7 +155,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         return true;
       }
     }
-    
+
     const { studentStatus } = assignment;
     if (this.props.classroom) {
       const { length } = this.props.classroom.students;
