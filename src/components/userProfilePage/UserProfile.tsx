@@ -323,12 +323,21 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   render() {
     const { user } = this.state;
+    const canMove = user.username ? true : false;
+
+    console.log(canMove, user)
+
+    const mockHistory = {
+      location: this.props.history.location,
+      push() {}
+    } as any;
+
     return (
       <div className="main-listing user-profile-page">
         <PageHeadWithMenu
           page={PageEnum.Profile}
           user={this.props.user}
-          history={this.props.history}
+          history={canMove ? this.props.history : mockHistory}
           search={() => { }}
           searching={() => { }}
         />

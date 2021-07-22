@@ -524,15 +524,32 @@
 // view all button
 .manage-classrooms-page {
   .m-view-all {
+    cursor: pointer;
     display: flex;
     align-items: center;
     font-size: 1.05vw;
     font-family: $font-family-regular;
     padding-left: 1.4vw;
     height: 4.7vh !important;
+
+    &.yellow {
+      background: var(--theme-yellow);
+      color: var(--theme-dark-blue);
+
+      .right-index {
+        color: var(--theme-dark-blue) !important;
+      }
+
+      &:hover {
+        background: var(--theme-yellow);
+      }
+    }
     
     &.active {
       background-color: var(--theme-orange);
+      &:hover {
+        background: var(--theme-orange);
+      }
     }
     .right-index {
       display: flex;

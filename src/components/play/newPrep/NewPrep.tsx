@@ -37,7 +37,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
-    briefExpanded: true,
+    briefExpanded: false,
     duration: null,
   } as IntroductionState);
 
@@ -170,7 +170,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
             <div className="time-container">
               <TimeProgressbarV2 isIntro={true} setEndTime={() => {}} minutes={minutes} onEnd={() => { }} brickLength={brick.brickLength} />
             </div>
-            <div className="footer-space"><span className="scroll-text">Scroll down</span></div>
+            <div className="footer-space"/>
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={props.moveNext}>
                 Investigation

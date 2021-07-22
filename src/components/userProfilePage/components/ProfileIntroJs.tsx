@@ -74,6 +74,10 @@ class ProfileIntroJs extends React.Component<Props, State> {
           intro: 'Write an academic bio (in the third person) so that the Brillder community can know more about your intellectual background'
         },
         {
+          element: '.profile-username',
+          intro: "This is your username that others see, it's only useful if your name is very common like John, or Smith.' to the tutorial on the profile page."
+        },
+        {
           element: '.save-button-container',
           intro: 'Click here to save changes',
         },

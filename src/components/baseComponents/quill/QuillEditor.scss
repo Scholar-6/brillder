@@ -123,6 +123,33 @@ s {
   text-decoration: line-through;
 }
 
+.link-embed {
+  background-color: var(--tab-gray);
+  border-radius: $editor-radius;
+  overflow: hidden;
+  display: block;
+  color: var(--text-blue) !important;
+  text-decoration: none !important;
+  img {
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
+    object-position: top;
+  }
+  .embed-title {
+    font-family: $font-family-bold;
+    padding: 0 1rem;
+  }
+  .embed-description {
+    padding: 0 1rem;
+  }
+  .embed-url {
+    text-decoration: underline;
+    color: var(--blue);
+    padding: 0.5rem 1rem;
+  }
+}
+
 .quill-document-editor {
   border-radius: $editor-radius;
   background-color: var(--tab-gray);

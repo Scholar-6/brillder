@@ -27,29 +27,8 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
     </div>
   }
 
-  findStudent(a: LibraryAssignmentBrick) {
-    if (a.brick.assignments && a.brick.assignments.length > 0) {
-      const { assignments } = a.brick;
-      for (let a2 of assignments) {
-        if (a2.student) {
-          if (a2.student.id === this.props.userId) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
-  }
-
   render() {
-    let { assignments } = this.props.subjectAssignment;
-
-    assignments.sort(a => {
-      if (a.maxScore && a.maxScore >= 0) {
-        return -1;
-      }
-      return 1;
-    });
+    const { assignments } = this.props.subjectAssignment;
 
     return (
       <div className="libary-container">

@@ -22,7 +22,6 @@
   width: 100%;
   color: var(--theme-dark-blue);
   @extend %themeRadius;
-  padding: 0.3vw;
   @include tabletP {
     font-size: 0.8vw;
   }
@@ -119,6 +118,6 @@
 
 @include phone_and_tabletP {
   .question-unique-play {
-    font-size: 4.5vw !important;
+    font-size: $mbase-font-size !important;
   }
 }

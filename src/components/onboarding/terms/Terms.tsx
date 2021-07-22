@@ -99,8 +99,8 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
           <Grid className="user-preference-container terms-page-container onboarding-terms" item>
             <div className="terms-page">
               <div>
-                {this.state.parts.map((p) => (
-                  <div ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
+                {this.state.parts.map((p, i) => (
+                  <div key={i} ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
                 ))}
               </div>
             </div>

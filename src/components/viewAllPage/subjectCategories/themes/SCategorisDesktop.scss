@@ -30,7 +30,7 @@
           cursor: pointer;
         }
       }
-      img {
+      svg {
         width: 18vw;
         max-width: 18vw;
         max-height: 20vh;
@@ -44,6 +44,21 @@
       .two-circles {
         width: auto;
         height: 6vw;
+      }
+    }
+    .zoom-item {
+      transition: all 300ms ease-out;
+    }
+    .zoom-item:hover {
+      transform: scale(1.2);
+    }
+    .subject-category {
+      color: var(--theme-dark-blue);
+    }
+    .subject-category.disabled {
+      color: var(--dark-gray);
+      .zoom-item:hover {
+        transform: unset;
       }
     }
   }

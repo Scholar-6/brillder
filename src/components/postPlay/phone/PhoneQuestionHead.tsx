@@ -15,6 +15,7 @@ interface Props {
 const PhoneQuestionHeader: React.FC<Props> = ({mode, i, activeAttempt, title, setMode}) => {
   return (
     <div className="header">
+      <div className="header-absolute">
       <div className="question-header">
         <div className="round-question-num">{i + 1}</div>
         <span className="title" dangerouslySetInnerHTML={{__html: title}} />
@@ -26,7 +27,7 @@ const PhoneQuestionHeader: React.FC<Props> = ({mode, i, activeAttempt, title, se
             <LiveEye mode={mode} setMode={setMode} />
             {activeAttempt?.liveAnswers[i].correct
               ? <SpriteIcon name="ok" className="text-theme-green" />
-              : <SpriteIcon name="cancel" className="text-theme-orange" />
+              : <SpriteIcon name="cancel-thick" className="ew-cancel text-theme-orange" />
             }
           </div>
         </div>
@@ -36,13 +37,14 @@ const PhoneQuestionHeader: React.FC<Props> = ({mode, i, activeAttempt, title, se
             <ReviewEye mode={mode} setMode={setMode} />
             {activeAttempt?.answers[i].correct
               ? <SpriteIcon name="ok" className="text-theme-green" />
-              : <SpriteIcon name="cancel" className="text-theme-orange" />
+              : <SpriteIcon name="cancel-thick" className="ew-cancel text-theme-orange" />
             }
           </div>
         </div>
       </div>
       <div className="text">
         Click the eye icons to see your answer
+      </div>
       </div>
     </div>
   );

@@ -182,7 +182,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
               </div>
             </div>
             <p>Well done for completing</p>
-            “<BrickTitle title={brick.title} />”!
+            <p className="gge-break-line">“<BrickTitle title={brick.title} />”!</p>
             {renderActionColumns()}
             <div className="introduction-info">
               <div className="intro-text-row"></div>

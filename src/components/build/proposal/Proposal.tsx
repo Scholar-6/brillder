@@ -25,14 +25,9 @@ import { getBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, SubjectRoutePart, TitleRoutePart } from "./model";
-import {
-  parseQuestion,
-  ApiQuestion,
-} from "components/build/questionService/QuestionService";
 import map from "components/map";
 
 import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
-import { Question } from "model/question";
 import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { buildQuesitonType } from "../routes";
@@ -44,7 +39,6 @@ interface ProposalProps {
   location: Location;
 
   //redux
-  brick: Brick;
   user: User;
   saveBrick(brick: Brick): Promise<Brick | null>;
   createBrick(brick: Brick): Promise<Brick | null>;
@@ -66,7 +60,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
     let subjectId = undefined;
-    const { user, brick } = props;
+    const { user } = props;
     const { subjects } = user;
     if (subjects.length === 1) {
       subjectId = subjects[0].id;
@@ -89,6 +83,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       synthesis: "",
     } as Brick;
 
+    if (props.match.params.brickId) {
+      initBrick.id = props.match.params.brickId;
+    }
+
+
     if (user) {
       initBrick.author = (user as any) as Author;
     }
@@ -97,12 +96,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     let localBrick = getLocalBrick();
     if (localBrick) {
       initBrick = localBrick;
-    }
-
-    // if brick is fetched then set this brick and save in local storage
-    if (brick) {
-      initBrick = brick;
-      setLocalBrick(brick);
     }
 
     if (initBrick.id) {
@@ -193,11 +186,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     try {
       if (this.state.saving === true) { return; }
       this.setState({saving: true});
-      const { brick } = this.props;
       if (tempBrick.id) {
-        newBrick = await this.props.saveBrick(tempBrick);
-      } else if (brick && brick.id) {
-        tempBrick.id = brick.id;
         newBrick = await this.props.saveBrick(tempBrick);
       } else {
         newBrick = await this.props.createBrick(tempBrick);
@@ -266,9 +255,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   setPrepAndSave = async (prep: string) => {
     const brick = { ...this.state.brick, prep } as Brick;
     this.saveLocalBrick(brick);
-    const newBrick = await this.saveBrick(brick);
-    console.log(newBrick);
-    this.props.history.push(buildQuesitonType(brick.id));
+    await this.saveBrick(brick);
+    this.props.history.push(buildQuesitonType(this.state.brick.id));
   };
 
   saveAndMove = async () => {
@@ -287,22 +275,31 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   render() {
-    const {brickId} = this.props.match.params;
+    let brickId = this.props.match.params.brickId as any;
+
+    if (brickId) {
+      brickId = parseInt(brickId);
+    }
 
     if(!brickId) {
       const callback = async () => {
-        const newBrick = await this.saveBrick(this.state.brick);
-        if(newBrick) {
-          const values = queryString.parse(this.props.location.search);
-          const isCore = this.getCore(values);
-          if (this.state.brick.subjectId) {
-            history.push(map.ProposalTitle(newBrick.id) + '?isCore=' + isCore);
-          } else {
-            history.push(map.ProposalSubject(newBrick.id) + '?isCore=' + isCore);
+        if (this.state.brick.subjectId) {
+          const newBrick = await this.saveBrick(this.state.brick);
+          if(newBrick) {
+            const values = queryString.parse(this.props.location.search);
+            const isCore = this.getCore(values);
+            if (this.state.brick.subjectId) {
+              history.push(map.ProposalTitle(newBrick.id) + '?isCore=' + isCore);
+            } else {
+              history.push(map.ProposalSubject(newBrick.id) + '?isCore=' + isCore);
+            }
           }
         }
       }
       callback();
+    } else if (!this.state.brick.id) {
+      /* eslint-disable-next-line */
+      this.state.brick.id = parseInt(brickId);
     }
 
     const baseUrl = this.getBaseUrl();
@@ -312,11 +309,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     if (this.state.saved && this.state.moving === false) {
       this.setState({moving: true});
 
-      if (this.props.brick) {
-        history.push(
-          `/build/brick/${this.props.brick.id}/investigation/question`
-        );
-      } else if (this.state.brick.id) {
+      if (this.state.brick.id) {
         history.push(
           `/build/brick/${this.state.brick.id}/investigation/question`
         );
@@ -328,23 +321,13 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const localBrick = this.state.brick;
     const { user } = this.props;
 
-    const { brick } = this.props;
-    if (brick && brick.questions && brick.questions.length > 0) {
-      const parsedQuestions: Question[] = [];
-      for (const question of brick.questions) {
-        try {
-          parseQuestion(question as ApiQuestion, parsedQuestions);
-        } catch (e) { }
-      }
-    }
-
     return (
       <MuiThemeProvider>
         <div>
           <Helmet>
             <title>{getBrillderTitle()}</title>
           </Helmet>
-          <HomeButton onClick={() => this.openDialog()} />
+          <HomeButton history={this.props.history} onClick={() => this.openDialog()} />
           <div
             style={{ width: "100%", height: "100%" }}
             className="proposal-router"
@@ -364,6 +347,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             <Route path={[baseUrl + '/brick-title']}>
               <BrickTitle
                 user={user}
+                brickId={brickId}
                 history={history}
                 baseUrl={baseUrl}
                 parentState={localBrick}
@@ -376,7 +360,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             </Route>
             <Route path={[baseUrl + '/length']}>
               <BrickLength
-                updated={brick ? brick.updated : localBrick.updated}
+                updated={localBrick.updated}
                 baseUrl={baseUrl}
                 length={localBrick.brickLength}
                 canEdit={canEdit}

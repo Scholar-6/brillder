@@ -16,14 +16,8 @@
       line-height: 1.75;
       text-align: center;
       @include phone_and_tabletP {
-        font-size: 4.5vw !important;
+        font-size: $mbase-font-size !important;
       }
-    }
-    .question-hint {
-      text-align: center;
-    }
-    .question-hint.correct {
-      padding: 0.3vw;
     }
   }
   .MuiCard-root {
