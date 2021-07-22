@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { Brick } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import HighlightQuoteHtml from "components/play/baseComponents/HighlightQuoteHtml";
+import HighlightHtml from "components/play/baseComponents/HighlightHtml";
 import { PlayMode } from "components/play/model";
 
 interface IntroPageProps {
@@ -46,7 +46,7 @@ const IntroPage: React.FC<IntroPageProps> = ({ brick, color, ...props }) => {
     if (state.prepExpanded) {
       return (
         <div className="expanded-text prep-box">
-          <HighlightQuoteHtml
+          <HighlightHtml
             value={brick.prep}
             mode={PlayMode.Normal}
             onHighlight={() => { }}

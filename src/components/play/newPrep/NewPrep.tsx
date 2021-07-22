@@ -9,9 +9,8 @@ import { BrickFieldNames } from 'components/build/proposal/model';
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
-import HighlightHtml from "../baseComponents/HighlightHtml";
 import { PlayMode } from "../model";
-import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
+import HighlightHtml from "../baseComponents/HighlightHtml";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import { getPrepareTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
@@ -131,7 +130,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
     if (state.prepExpanded) {
       return (
         <div className="expanded-text prep-box">
-          <HighlightQuoteHtml
+          <HighlightHtml
             value={brick.prep}
             mode={props.mode}
             onHighlight={value => {

@@ -1,0 +1,6 @@
+.highlight-html {
+    mark,
+    &.highlight-on ::selection {
+        background-color: var(--highlight-yellow);
+    }
+}
