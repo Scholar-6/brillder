@@ -66,9 +66,9 @@ class TeachFilterSidebar extends Component<
   }
 
   async resendInvitation(s: any) {
-    if(this.props.activeClassroom) {
+    if (this.props.activeClassroom) {
       await resendInvitation(this.props.activeClassroom as any, s.email);
-      this.setState({isInviteOpen: true});
+      this.setState({ isInviteOpen: true });
     }
   }
 
@@ -209,67 +209,65 @@ class TeachFilterSidebar extends Component<
       totalCount += classroom.students.length;
       totalBricks += this.getClassAssignedCount(classroom);
     }
+    let label = '1 ASSIGNMENT';
+    if (totalBricks > 1) {
+      label = `${totalBricks} ASSIGNMENTS`;
+    }
     return (
       <div className="sort-box teach-sort-box flex-height-box">
-      <div className="sort-box">
-        <div className="filter-container sort-by-box">
-          <div style={{ display: "flex" }}>
-            {totalBricks > 1 ? (
+        <div className="sort-box">
+          <div className="filter-container sort-by-box">
+            <div style={{ display: "flex" }}>
               <div className="class-header" style={{ width: "100%" }}>
-                {totalBricks} ASSIGNMENTS
+                {label}
               </div>
-            ) : (
-              <div className="class-header" style={{ width: "50%" }}>
-                1 ASSIGNMENT
-              </div>
-            )}
-          </div>
-        </div>
-        <div
-          className="create-class-button assign"
-          onClick={() => this.setState({ createClassOpen: true })}
-        >
-          In {finalClasses.length} Classes
-          <div className="flex-relative">
-            <SpriteIcon name="plus-circle" />
-            <div className="custom-tooltip">Create Class</div>
-          </div>
-        </div>
-        <div
-          className={
-            "index-box m-view-all " +
-            (!this.props.activeClassroom ? "active" : "")
-          }
-          onClick={this.removeClassrooms.bind(this)}
-        >
-          View All Classes
-          <div className="right-index">
-            {totalCount}
-            <SpriteIcon name="users-custom" className="active" />
-            <div className="classrooms-box">
-              {totalBricks}
-              <div />
             </div>
           </div>
-          <div className="m-absolute-sort">
-            <SpriteIcon
-              name={
-                this.state.ascending
-                  ? "hero-sort-ascending"
-                  : "hero-sort-descending"
-              }
-              onClick={() =>
-                this.setState({ ascending: !this.state.ascending })
-              }
-            />
+          <div
+            className="create-class-button assign"
+            onClick={() => this.setState({ createClassOpen: true })}
+          >
+            In {finalClasses.length} Classes
+            <div className="flex-relative">
+              <SpriteIcon name="plus-circle" />
+              <div className="custom-tooltip">Create Class</div>
+            </div>
+          </div>
+          <div
+            className={
+              "index-box m-view-all " +
+              (!this.props.activeClassroom ? "active" : "")
+            }
+            onClick={this.removeClassrooms.bind(this)}
+          >
+            View All Classes
+            <div className="right-index">
+              {totalCount}
+              <SpriteIcon name="users-custom" className="active" />
+              <div className="classrooms-box">
+                {totalBricks}
+                <div />
+              </div>
+            </div>
+            <div className="m-absolute-sort">
+              <SpriteIcon
+                name={
+                  this.state.ascending
+                    ? "hero-sort-ascending"
+                    : "hero-sort-descending"
+                }
+                onClick={() =>
+                  this.setState({ ascending: !this.state.ascending })
+                }
+              />
+            </div>
           </div>
         </div>
+        <div className="sort-box subject-scrollable">
+          <div className="filter-container indexes-box classrooms-filter">
+            {finalClasses.map(this.renderClassroom.bind(this))}
+          </div>
         </div>
-      <div className="sort-box subject-scrollable">
-        <div className="filter-container indexes-box classrooms-filter">
-          {finalClasses.map(this.renderClassroom.bind(this))}
-        </div>
-      </div>
       </div>
     );
   }
@@ -315,23 +313,23 @@ class TeachFilterSidebar extends Component<
           }}
         />
         {this.props.isNewTeacher &&
-         <Steps
-          enabled={this.props.isNewTeacher}
-          steps={[{
-            element: '.classes-box',
-            intro: `<p>Invited students will remain amber until they accept to join your class</p>`,
-          },{
-            element: '.classes-box',
-            intro: `<p>Invited students will remain amber until they accept to join your class</p>`,
-          }]}
-          initialStep={0}
-          onChange={this.onIntroChanged.bind(this)}
-          onExit={this.onIntroExit.bind(this)}
-          onComplete={() => {}}
-        />}
+          <Steps
+            enabled={this.props.isNewTeacher}
+            steps={[{
+              element: '.classes-box',
+              intro: `<p>Invited students will remain amber until they accept to join your class</p>`,
+            }, {
+              element: '.classes-box',
+              intro: `<p>Invited students will remain amber until they accept to join your class</p>`,
+            }]}
+            initialStep={0}
+            onChange={this.onIntroChanged.bind(this)}
+            onExit={this.onIntroExit.bind(this)}
+            onComplete={() => { }}
+          />}
         <StudentInviteSuccessDialog
           numStudentsInvited={this.state.isInviteOpen ? 1 : 0}
-          close={() => this.setState({isInviteOpen: false})}
+          close={() => this.setState({ isInviteOpen: false })}
         />
       </Grid>
     );

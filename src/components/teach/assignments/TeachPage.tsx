@@ -182,6 +182,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
     this.loadClasses();
   }
 
+  findClassArchive(c: TeachClassroom) {
+    return c.assignments.find(a => a.isArchived === true);
+  }
+
   async loadClasses(activeClassId?: number) {
     let classrooms = await getAllClassrooms() as TeachClassroom[] | null;
     if (classrooms) {
@@ -197,7 +201,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         }
       }
 
-      const haveArchivedBrick = !!classrooms.find(c => c.assignments.find(a => a.isArchived === true));
+      const haveArchivedBrick = !!classrooms.find(this.findClassArchive);
 
       // if reloading
       let stepsEnabled = false;
@@ -404,7 +408,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
     this.setState(state => ({ ...state, remindersData: { isOpen: true, count, isDeadlinePassed } }));
   }
 
-  renderTabContent() {
+  renderTabContent(showedClasses: TeachClassroom[]) {
+    let {isArchive} = this.state;
+
     if (!this.state.isLoaded) {
       return <div className="tab-content" />
     }
@@ -425,17 +431,17 @@ class TeachPage extends Component<TeachProps, TeachState> {
     return (
       <div className="tab-content">
         <ArchiveToggle
-          isArchive={this.state.isArchive}
+          isArchive={isArchive}
           history={this.props.history}
           activeStudent={this.state.activeStudent}
           classrooms={this.state.classrooms}
           activeClassroom={this.state.activeClassroom}
-          setArchive={isArchive => this.setState({ isArchive })}
+          setArchive={v => this.setState({ isArchive: v })}
         />
         {this.state.activeStudent ?
           <ActiveStudentBricks
             subjects={this.state.subjects}
-            isArchive={this.state.isArchive}
+            isArchive={isArchive}
             classroom={activeClassroom}
             activeStudent={this.state.activeStudent}
             onRemind={this.setReminderNotification.bind(this)}
@@ -455,7 +461,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             : activeClassroom ?
               <ClassroomList
                 subjects={this.state.subjects}
-                isArchive={this.state.isArchive}
+                isArchive={isArchive}
                 expand={this.setActiveAssignment.bind(this)}
                 startIndex={this.state.sortedIndex}
                 activeClassroom={activeClassroom}
@@ -466,11 +472,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
               :
               <ClassroomsList
                 subjects={this.state.subjects}
-                isArchive={this.state.isArchive}
+                isArchive={isArchive}
                 expand={this.setActiveAssignment.bind(this)}
                 startIndex={this.state.sortedIndex}
-                classrooms={this.state.classrooms}
-                activeClassroom={activeClassroom}
+                classrooms={showedClasses}
                 pageSize={this.state.pageSize}
                 reloadClasses={this.loadClasses.bind(this)}
                 onRemind={this.setReminderNotification.bind(this)}
@@ -482,6 +487,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   render() {
+    const {isArchive} = this.state;
+    let showedClasses = this.state.classrooms;
+    if (isArchive) {
+      showedClasses = this.state.classrooms.filter(this.findClassArchive);
+    }
+
     const { history } = this.props;
     const { remindersData } = this.state;
 
@@ -498,12 +509,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <TeachFilterSidebar
             isNewTeacher={this.state.isNewTeacher}
-            classrooms={this.state.classrooms}
+            classrooms={showedClasses}
             isLoaded={this.state.isLoaded}
             activeStudent={this.state.activeStudent}
             activeClassroom={this.state.activeClassroom}
             hideIntro={() => this.setState({ isNewTeacher: false })}
-            isArchive={this.state.isArchive}
+            isArchive={isArchive}
             setActiveClassroom={this.setActiveClassroom.bind(this)}
             setActiveStudent={this.setActiveStudent.bind(this)}
             filterChanged={this.teachFilterUpdated.bind(this)}
@@ -511,7 +522,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <TeachTab activeTab={TeachActiveTab.Assignments} history={history} assignmentsEnabled={true} />
-            {this.renderTabContent()}
+            {this.renderTabContent(showedClasses)}
           </Grid>
         </Grid>
         <ReminderSuccessDialog
