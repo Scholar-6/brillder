@@ -97,10 +97,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   setHighlightMode() {
     if (this.props.setMode) {
-      if (this.props.mode === PlayMode.Highlighting) {
-        this.props.setMode(PlayMode.Normal);
-      } else {
+      if (this.props.mode === PlayMode.Normal) {
         this.props.setMode(PlayMode.Highlighting);
+      } else if (this.props.mode === PlayMode.Highlighting) {
+        this.props.setMode(PlayMode.UnHighlighting);
+      } else {
+        this.props.setMode(PlayMode.Normal);
       }
     }
   }
