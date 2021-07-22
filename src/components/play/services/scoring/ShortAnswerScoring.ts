@@ -10,14 +10,7 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
     
     component.list.forEach((answer, index) => {
         const correctAnswer = stripHtml(answer.value);
-        if(correctAnswer.toLowerCase().length<4){
-            //2 marks for each of the first 3 symbols
-            attempt.maxMarks += 2 * correctAnswer.toLowerCase().length;
-        }
-        else{
-            //2 marks for each of the first 3 symbols and 1 for each after
-            attempt.maxMarks += 6 + (correctAnswer.toLowerCase().length - 3);
-        }
+        attempt.maxMarks += correctAnswer.length;
 
         if (attempt.answer[index]) {
             const givenAnswer = stripHtml(attempt.answer[index]);
@@ -42,15 +35,10 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
             //1 for each of remaining
             for(let i=0; i<end; i++){
                 if(givenAnswer.toLowerCase()[i]===correctAnswer.toLowerCase()[i]){
-                    if(i<3){
-                        attempt.marks += 2;
-                    }
-                    else{
-                        attempt.marks += 1;
-                    }
+                    attempt.marks += 1;
                 }
                 else{
-                    attempt.correct = false;
+                    attempt.marks -= 1;
                 }
             }
         } 
@@ -59,6 +47,14 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
             attempt.correct = false;
         } 
     });
+
+    if(attempt.marks<0){
+        attempt.marks = 0;
+        attempt.correct = false;
+    }
+    else if (attempt.marks < attempt.maxMarks){
+        attempt.correct = false;
+    }
     return attempt;
 }
 
