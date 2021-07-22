@@ -3,6 +3,7 @@ import { History } from "history";
 import { connect } from "react-redux";
 import queryString from 'query-string';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { FormControlLabel, Radio } from "@material-ui/core";
 import 'swiper/swiper.scss';
 
 import { PlayMode } from "components/play/model";
@@ -414,8 +415,15 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                           prevQuestion={this.prevQuestion.bind(this)}
                         />
                       </div>
-                      <div className="footer">
-                        Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
+                      <div className="footer-question">
+                        <FormControlLabel
+                          checked={this.state.mode === false}
+                          control={<Radio onClick={() => this.setState({mode: false})} />}
+                          label="Investigation" />
+                        <FormControlLabel
+                          checked={this.state.mode === true}
+                          control={<Radio onClick={() => this.setState({mode: true})} />}
+                          label="Review" />
                       </div>
                     </div>
                   </SwiperSlide>
