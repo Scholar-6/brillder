@@ -35,6 +35,7 @@ import PhoneQuestionHead from "./phone/PhoneQuestionHead";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PhoneQuestionPage from "./phone/PhoneQuestionPage";
 import map from "components/map";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
 
@@ -133,14 +134,26 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   moveToQuestion(questionIndex: number) {
     if (this.state.swiper) {
-      this.state.swiper.slideTo(questionIndex + 3, 200);
+      this.state.swiper.slideTo(questionIndex + 4, 200);
     }
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true, questionIndex });
   }
 
-  moveToPrep() {
+  moveToContent() {
     if (this.state.swiper) {
       this.state.swiper.slideTo(1, 200);
+    }
+  }
+
+  moveToBrief() {
+    if (this.state.swiper) {
+      this.state.swiper.slideTo(2, 200);
+    }
+  }
+
+  moveToPrep() {
+    if (this.state.swiper) {
+      this.state.swiper.slideTo(3, 200);
     }
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true });
   }
@@ -229,7 +242,15 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
           />
           {this.state.bookHovered &&
             <div className="book-navigator">
-              <div className="prep-tab" onClick={this.moveToPrep.bind(this)}>
+              <div className="prep-tab first" onClick={this.moveToContent.bind(this)}>
+                <div className="fg-icon-container">
+                  <SpriteIcon name="list" />
+                </div>
+              </div>
+              <div className="prep-tab middle" onClick={this.moveToBrief.bind(this)}>
+                <SpriteIcon name="crosshair" />
+              </div>
+              <div className="prep-tab last" onClick={this.moveToPrep.bind(this)}>
                 <SpriteIcon name="file-text" />
               </div>
               {questions.map((q, i) => <div className="question-tab" key={i} onClick={() => this.moveToQuestion(i)}>
@@ -297,6 +318,21 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       setActiveAttempt={this.setActiveAttempt.bind(this)}
                       onClick={this.moveToIntroduction.bind(this)}
                     />
+                    <div className="footer">
+                      Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
+                    </div>
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="mobile-attempts">
+                    <div className="header">
+                      <div className="header-absolute">Contents</div>
+                    </div>
+                    <div className="scroll-content pages-list">
+                      <div><SpriteIcon name="crosshair" /><span className="bold">Brief</span> {stripHtml(brick.brief)}</div>
+                      <div><SpriteIcon name="file-text" /><span className="bold">Prep</span> {stripHtml(brick.prep)}</div>
+                      {questions.map((q, i) => <div className="question-link"><span className="bold">{i + 1}</span></div>)}
+                    </div>
                     <div className="footer">
                       Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
                     </div>

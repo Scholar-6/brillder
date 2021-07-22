@@ -81,21 +81,59 @@
     font-size: 7vw;
 
     svg {
-      margin-left: 4vw;
-      margin-right: 4vw;
+      margin-left: 2vw;
+      margin-right: 2vw;
       height: 10vw;
       width: 10vw;
     }
 
     .prep-tab {
-      width: 22vw;
+      width: 13.5vw;
       display: flex;
       justify-content: center;
       align-items: center;
+
+      &.first {
+        justify-content: flex-end;
+        margin-right: 2vw;
+        width: 13vw;
+        color: var(--theme-dark-blue);
+       
+        .fg-icon-container {
+          $size: 11vw;
+          width: $size;
+          height: $size;
+          border-radius: 50%;
+          background: var(--white);
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          svg {
+            $size: 8vw;
+            width: $size;
+            height: $size;
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
+
+      &.middle {
+        svg {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+      &.last {
+        svg {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
     }
 
     .question-tab {
-      width: 15vw;
+      width: 14vw;
       display: flex;
       font-family: $font-family-bold;
       justify-content: center;
@@ -321,6 +359,41 @@
 
         p {
           font-size: inherit;
+        }
+      }
+
+      &.pages-list {
+        padding: 0 !important;
+        > div {
+          overflow-x:hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          height: 13vw;
+          padding-left: 2.7vw;
+          border-bottom: 2px solid var(--tab-gray);
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          .bold {
+            margin-left: 2.7vw;
+            margin-right: 1vw;
+            font-size: 6vw;
+          }
+          svg {
+            stroke-width: 1.5;
+            $size: 8vw;
+            width: $size;
+            height: $size;
+          }
+        }
+        .question-link {
+          padding-left: 0;
+          .bold {
+            margin-left: 0;
+            width: 12vw;
+            display: flex;
+            justify-content: center;
+          }
         }
       }
     }

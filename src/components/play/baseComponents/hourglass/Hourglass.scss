@@ -87,9 +87,9 @@
 
   &.sand-red {
 
-    .top:before,
+    .top-inner:before,
     .top:after,
-    .bottom:before,
+    .bottom-inner:before,
     .bottom:after {
       background-color: var(--theme-orange);
     }
