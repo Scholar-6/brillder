@@ -144,7 +144,7 @@
       display: flex;
       margin-right: 0;
       width: 42vw;
-      margin-top: 3px;
+      margin-top: 10px;
       flex-wrap: wrap;
       .bell-button {
         width: 56%;
@@ -156,13 +156,13 @@
       }
     }
     &.notification-expanded {
-      height: 64px;
+      height: 74px;
     }
   }
   .main-page-menu {
     position: absolute;
     width: 42vw;
-    height: 64px;
+    height: 74px;
     bottom: 0;
     border-bottom-left-radius: 0;
     border-top-left-radius: 6vw;
@@ -296,10 +296,14 @@
 
 .ggf-new-student-popup {
   p {
-    $fontss: 5.3vw;
+    $fontss: 4.8vw;
     font-size: $fontss !important;
     span {
       font-size: $fontss !important;
+    }
+    &.bold {
+      font-family: $font-family-bold;
+      font-size: 6.7vw !important;
     }
   }
 }

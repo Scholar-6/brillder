@@ -1,8 +1,10 @@
 import React from "react";
 import Grow from "@material-ui/core/Grow";
 import { Box } from "@material-ui/core";
+import { connect } from "react-redux";
 import queryString from 'query-string';
 
+import brickActions from "redux/actions/brickActions";
 import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 
@@ -31,6 +33,8 @@ interface BrickBlockProps {
   handleDeleteOpen(brickId: number): void;
   handleMouseHover(e: any): void;
   handleMouseLeave(e: any): void;
+
+  forgetBrick(): void;
 }
 
 const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
@@ -58,6 +62,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
   }
 
   const moveToBuild = () => {
+    props.forgetBrick();
     props.history.push(buildRoutes.buildQuesitonType(brick.id));
   }
 
@@ -107,4 +112,8 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
   );
 }
 
-export default BrickBlockComponent;
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(brickActions.forgetBrick()),
+});
+
+export default connect(null, mapDispatch)(BrickBlockComponent);

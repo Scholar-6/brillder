@@ -108,7 +108,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         element: '.view-item-container',
         intro: `<div class="ggf-new-student-popup">
           <p class="bold">Welcome to brillder!</p>
-          <p>Explore our catalogue of 'bricks' by clicking <span class="bold">View & Play</span></p>
+          <p>Explore our catalogue of ‘bricks’ by clicking <span class="bold">View & Play</span></p>
         </div>
         `,
       },{
@@ -247,7 +247,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           steps={this.state.steps}
           initialStep={0}
           onExit={this.onIntroExit.bind(this)}
-          onComplete={() => {}}
+          onComplete={() => this.props.history.push(map.ViewAllPage)}
+          options={{
+            nextLabel: 'Next',
+            doneLabel: 'Explore Brillder'
+          }}
         />
       </div>
     );

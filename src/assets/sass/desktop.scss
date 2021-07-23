@@ -2,6 +2,7 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 @import 'src/assets/sass/component/authpages';
+@import 'src/assets/sass/introjs/desktopIntrojs';
 
 @import 'src/assets/sass/animations/animations';
 
@@ -395,6 +396,10 @@
     display: inline;
   }
 
+  br {
+    display: none;
+  }
+
   span,
   p {
     color: var(--theme-dark-blue) !important;
@@ -756,5 +761,25 @@
   > div {
     padding-left: 7vw !important;
     padding-right: 7vw !important;
+  }
+}
+
+
+.post-play-page .book-main-container .book-container .help-text,
+.question-live-play .question-unique-play .help-text {
+  font-family: $font-family-regular-italic;
+  display: flex;
+  align-items: center;
+  padding-bottom: 1vw;
+  span {
+    display: flex;
+    align-items: center;
+    padding-right: 0.3vw;
+  }
+  svg {
+    padding-right: 0.3vw;
+    height: 1.2vw;
+    width: 1.2vw;
+    fill: var(--theme-dark-blue);
   }
 }

@@ -30,6 +30,7 @@ interface HeaderMenuProps {
   user: User;
   placeholder?: string;
   page: PageEnum;
+  menuClass?: string;
   search?(): void;
   searching?(v: string): void;
   toggleSearch?(v:boolean): void;
@@ -115,6 +116,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           user={this.props.user}
           page={this.props.page}
           history={this.props.history}
+          className={this.props.menuClass}
           onLogout={() => this.handleLogoutOpen()}
         />}
         {this.props.user &&

@@ -177,6 +177,7 @@ class ExpandedStudentAssignment extends Component<
             minimize={this.props.minimize}
             assignment={this.props.assignment}
             archive={() => {}}
+            unarchive={() => {}}
           />
         </div>
         <div className="assignments-table">

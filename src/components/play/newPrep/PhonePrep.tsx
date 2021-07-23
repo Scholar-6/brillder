@@ -6,7 +6,6 @@ import { BrickFieldNames } from 'components/build/proposal/model';
 
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
 import { isPhone } from "services/phone";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import BrickTitle from "components/baseComponents/BrickTitle";
@@ -140,7 +139,7 @@ const PhonePrepPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderPrepExpandText = () => {
     return (
       <div className="expanded-text prep-box">
-        <HighlightQuoteHtml
+        <HighlightHtml
           value={brick.prep}
           mode={props.mode}
           onHighlight={value => {

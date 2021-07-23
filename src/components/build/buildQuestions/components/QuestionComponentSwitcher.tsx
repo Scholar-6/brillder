@@ -51,8 +51,6 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     return count;
   }
 
-  console.log(type);
-
   if (type === QuestionComponentTypeEnum.None) {
     return <div></div>;
   } else if (type === QuestionComponentTypeEnum.Text) {

@@ -36,6 +36,7 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, updat
       <div className="proposal-phone-preview">
         {!savedHidden && updated &&
           <LastSave
+            isEditor={false}
             isSaving={false}
             updated={updated}
             saveError={false}

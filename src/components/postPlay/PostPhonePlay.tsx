@@ -3,6 +3,7 @@ import { History } from "history";
 import { connect } from "react-redux";
 import queryString from 'query-string';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { FormControlLabel, Radio } from "@material-ui/core";
 import 'swiper/swiper.scss';
 
 import { PlayMode } from "components/play/model";
@@ -35,6 +36,7 @@ import PhoneQuestionHead from "./phone/PhoneQuestionHead";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PhoneQuestionPage from "./phone/PhoneQuestionPage";
 import map from "components/map";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
 
@@ -133,14 +135,26 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   moveToQuestion(questionIndex: number) {
     if (this.state.swiper) {
-      this.state.swiper.slideTo(questionIndex + 3, 200);
+      this.state.swiper.slideTo(questionIndex + 4, 200);
     }
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true, questionIndex });
   }
 
-  moveToPrep() {
+  moveToContent() {
     if (this.state.swiper) {
       this.state.swiper.slideTo(1, 200);
+    }
+  }
+
+  moveToBrief() {
+    if (this.state.swiper) {
+      this.state.swiper.slideTo(2, 200);
+    }
+  }
+
+  moveToPrep() {
+    if (this.state.swiper) {
+      this.state.swiper.slideTo(3, 200);
     }
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true });
   }
@@ -227,15 +241,25 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             search={() => { }}
             searching={() => { }}
           />
-          {this.state.bookHovered &&
+          {this.state.bookHovered && <div className="full-book-navigator">
+            <div className="prep-tab first" onClick={this.moveToContent.bind(this)}>
+              <div className="fg-icon-container">
+                <SpriteIcon name="list" />
+              </div>
+            </div>
             <div className="book-navigator">
-              <div className="prep-tab" onClick={this.moveToPrep.bind(this)}>
+              <div className="prep-tab middle" onClick={this.moveToBrief.bind(this)}>
+                <SpriteIcon name="crosshair" />
+              </div>
+              <div className="prep-tab last" onClick={this.moveToPrep.bind(this)}>
                 <SpriteIcon name="file-text" />
               </div>
               {questions.map((q, i) => <div className="question-tab" key={i} onClick={() => this.moveToQuestion(i)}>
                 {i + 1} {this.state.attempts[0].answers[i].correct ? <SpriteIcon name="ok" className="text-theme-green" /> : <SpriteIcon name="cancel-custom" className="text-orange" />}
               </div>)}
-            </div>}
+            </div>
+          </div>
+          }
           {!this.state.bookHovered ?
             <div className="wefw-book-container">
               <div className="main-text-container">
@@ -305,6 +329,21 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <SwiperSlide>
                   <div className="mobile-attempts">
                     <div className="header">
+                      <div className="header-absolute bigger">Contents</div>
+                    </div>
+                    <div className="scroll-content pages-list">
+                      <div onClick={() => this.moveToBrief()}><SpriteIcon name="crosshair" /><span className="bold">Brief</span> <span className="ellipsis">{stripHtml(brick.brief)}</span></div>
+                      <div onClick={() => this.moveToPrep()}><SpriteIcon name="file-text" /><span className="bold">Prep</span> <span className="ellipsis">{stripHtml(brick.prep)}</span></div>
+                      {questions.map((q, i) => <div className="question-link" onClick={() => this.moveToQuestion(i)}><span className="bold">{i + 1}</span><span className="ellipsis">{stripHtml(q.firstComponent.value)}</span></div>)}
+                    </div>
+                    <div className="footer">
+                      Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
+                    </div>
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="mobile-attempts">
+                    <div className="header">
                       <div className="header-absolute" dangerouslySetInnerHTML={{ __html: brick.title }} />
                     </div>
                     <div className="scroll-content">
@@ -360,13 +399,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 {questions.map((q, i) => (
                   <SwiperSlide key={i + 5}>
                     <div className="mobile-attempts question">
-                      <PhoneQuestionHead
-                        i={i}
-                        title={brick.title}
-                        mode={this.state.mode}
-                        activeAttempt={this.state.attempt}
-                        setMode={mode => this.setState({ mode })}
-                      />
+                      <PhoneQuestionHead i={i} title={brick.title} />
                       <div className="scroll-content">
                         <PhoneQuestionPage
                           i={i}
@@ -376,8 +409,15 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                           prevQuestion={this.prevQuestion.bind(this)}
                         />
                       </div>
-                      <div className="footer">
-                        Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
+                      <div className="footer-question">
+                        <FormControlLabel
+                          checked={this.state.mode === false}
+                          control={<Radio onClick={() => this.setState({mode: false})} />}
+                          label="Investigation" />
+                        <FormControlLabel
+                          checked={this.state.mode === true}
+                          control={<Radio onClick={() => this.setState({mode: true})} />}
+                          label="Review" />
                       </div>
                     </div>
                   </SwiperSlide>

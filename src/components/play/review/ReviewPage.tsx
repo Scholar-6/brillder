@@ -60,7 +60,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const [questionScrollRef] = React.useState(React.createRef<HTMLDivElement>());
 
   const theme = useTheme();
-  let playPath = getPlayPath(props.isPlayPreview, brick.id);
+  const playPath = getPlayPath(props.isPlayPreview, brick.id);
 
   useEffect(() => {
     function handleMove(e: any) {
