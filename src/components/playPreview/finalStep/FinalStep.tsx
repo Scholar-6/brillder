@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Chip, Avatar, Grid, Hidden } from "@material-ui/core";
 import { connect } from "react-redux";
 
@@ -12,15 +12,10 @@ import { PlayStatus } from "components/play/model";
 import { checkAdmin, checkPublisher } from "components/services/brickService";
 import { publishBrick, returnToAuthor, returnToEditor } from "services/axios/brick";
 
-import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
-import InviteEditorDialog from './InviteEditorDialog';
-import LinkDialog from 'components/play/finalStep/dialogs/LinkDialog';
-import LinkCopiedDialog from 'components/play/finalStep/dialogs/LinkCopiedDialog';
 import ExitButton from "components/play/finalStep/ExitButton";
 import ShareColumn from "components/play/finalStep/ShareColumn";
 import InviteColumn from "components/play/finalStep/InviteColumn";
 import PublishColumn from './PublishColumn';
-import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
 import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
 import CustomColumn from "./CustomColumn";
 import { ReduxCombinedState } from "redux/reducers";
@@ -31,12 +26,20 @@ import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/Return
 import ReturnAuthorSuccessDialog from "components/play/finalStep/dialogs/ReturnAuthorSuccessDialog";
 import SelfPublishColumn from "./SelfPublishColumn";
 import playRoutes from '../../play/routes';
-import routes from "../routes";
+import ShareDialogs from "components/play/finalStep/dialogs/ShareDialogs";
+import InviteDialog from "components/play/finalStep/dialogs/InviteDialog";
+import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
 
 enum PublishStatus {
   None,
   Popup,
   Published,
+}
+
+interface InviteResult {
+  isOpen: boolean;
+  accessGranted: boolean;
+  name: string;
 }
 
 interface FinalStepProps {
@@ -60,17 +63,16 @@ interface FinalStepProps {
 const FinalStep: React.FC<FinalStepProps> = ({
   user, brick, history, publisherConfirmed, sendedToPublisher, requestFailed, ...props
 }) => {
-  const [returnEditorsOpen, setEditorsReturn] = React.useState(false);
-  const [returnAuthorOpen, setAuthorReturn] = React.useState(false);
-  const [shareOpen, setShare] = React.useState(false);
-  const [inviteOpen, setInvite] = React.useState(false);
-  const [linkOpen, setLink] = React.useState(false);
-  const [linkCopiedOpen, setCopiedLink] = React.useState(false);
-  const [publishSuccess, setPublishSuccess] = React.useState(PublishStatus.None);
-  const [inviteSuccess, setInviteSuccess] = React.useState({
+  const [returnEditorsOpen, setEditorsReturn] = useState(false);
+  const [returnAuthorOpen, setAuthorReturn] = useState(false);
+  const [publishSuccess, setPublishSuccess] = useState(PublishStatus.None);
+  const [shareOpen, setShare] = useState(false);
+  const [inviteOpen, setInvite] = useState(false);
+  const [inviteResult, setInviteResult] = useState({
     isOpen: false,
+    accessGranted: false,
     name: ''
-  });
+  } as InviteResult);
 
   let isAuthor = false;
   try {
@@ -80,7 +82,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const isAdmin = checkAdmin(user.roles);
   const isPublisher = checkPublisher(user, brick);
   const isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
-  const link = routes.previewNewPrep(brick.id);
 
   if (!isAuthor && !isCurrentEditor && !isPublisher && !isAdmin) {
     return <Redirect to={map.backToWorkUserBased(user)} />;
@@ -220,8 +221,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
     if ((isCurrentEditor || isAdmin) && brick.status === BrickStatus.Build) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          { renderReturnToAuthorColumn()}
-          { renderSendToPublisherColumn()}
+          {renderReturnToAuthorColumn()}
+          {renderSendToPublisherColumn()}
         </Grid>
       );
     }
@@ -229,7 +230,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <Grid className="share-row" container direction="row" justify="center">
         {renderInviteColumn()}
-        { canPublish && brick.status === BrickStatus.Review && renderReturnToEditorColumn()}
+        {canPublish && brick.status === BrickStatus.Review && renderReturnToEditorColumn()}
       </Grid>
     );
   }
@@ -307,29 +308,23 @@ const FinalStep: React.FC<FinalStepProps> = ({
           </div>
         </div>
       </Hidden>
-      <LinkDialog
-        isOpen={linkOpen} link={document.location.host + link}
-        submit={() => setCopiedLink(true)} close={() => setLink(false)}
-      />
-      <LinkCopiedDialog isOpen={linkCopiedOpen} close={() => setCopiedLink(false)} />
-      <ShareDialog
-        isOpen={shareOpen}
-        isPrivatePreview={!brick.isCore}
-        link={() => { setShare(false); setLink(true) }}
-        invite={() => { setShare(false); setInvite(true) }}
+      <ShareDialogs
+        shareOpen={shareOpen}
+        brick={brick}
+        user={user}
         close={() => setShare(false)}
       />
-      <InviteEditorDialog
-        canEdit={true} brick={brick} isOpen={inviteOpen}
-        submit={name => { setInviteSuccess({ isOpen: true, name }); }}
-        close={() => setInvite(false)} />
+      <InviteDialog
+        canEdit={true} brick={brick} isOpen={inviteOpen} hideAccess={true} isAuthor={isAuthor}
+        submit={name => {
+          setInviteResult({ isOpen: true, name, accessGranted: false } as InviteResult);
+        }}
+        close={() => setInvite(false)}
+      />
       <InvitationSuccessDialog
         isAuthor={isAuthor}
-        isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={true}
-        close={() => {
-          setInviteSuccess({ isOpen: false, name: '' });
-          props.fetchBrick(brick.id);
-        }}
+        isOpen={inviteResult.isOpen} name={inviteResult.name} accessGranted={inviteResult.accessGranted}
+        close={() => setInviteResult({ isOpen: false, name: '', accessGranted: false } as InviteResult)}
       />
       <ReturnAuthorSuccessDialog
         isOpen={returnAuthorOpen}
