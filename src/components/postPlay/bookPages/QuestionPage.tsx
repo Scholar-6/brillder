@@ -3,16 +3,18 @@ import './QuestionPage.scss';
 import { PlayAttempt } from "model/attempt";
 import { Question } from "model/question";
 import QuestionPlay from "components/play/questionPlay/QuestionPlay";
+import { FormControlLabel, Radio } from "@material-ui/core";
 
 interface QuestionPageProps {
   i: number;
-  mode?: boolean;
   question: Question;
   activeAttempt: PlayAttempt;
+  mode?: boolean;
+  setMode(v: boolean): void;
 }
 
 const QuestionPage: React.FC<QuestionPageProps> = ({
-  i, mode, activeAttempt, question
+  i, mode, activeAttempt, question, setMode
 }) => {
   let parsedAnswers = null;
 
@@ -30,41 +32,9 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
   let attempt = Object.assign({}, activeAttempt) as any;
   attempt.answer = parsedAnswers;
 
-  const renderTitle = () => {
-    if (mode === undefined) {
-      return "Investigation";
-    } else if (mode === true) {
-      if (activeAttempt.answers[i].correct) {
-        return "Correct!"
-      }
-      return "Not quite - try again!";
-    } else if (mode === false) {
-      if (activeAttempt.liveAnswers[i].correct) {
-        return "Correct!"
-      }
-      return "Not quite - try again!";
-    }
-  }
-
-  const renderMarks = () => {
-    if (answers && answers[i]) {
-      return (
-        <div className="marks-container">
-          <div>Marks</div>
-          <div>{answers[i].marks}/{answers[i].maxMarks}</div>
-        </div>
-      )
-    }
-  }
-
-
   return (
-    <div>
+    <div className="question-page">
       <div className="real-content question-content">
-        <div className="question-title">
-          {renderTitle()}
-          {renderMarks()}
-        </div>
         {mode === undefined
           ? <QuestionPlay question={question} isPhonePreview={true} isDefaultBook={true} answers={[]} />
           :
@@ -76,8 +46,19 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
             answers={parsedAnswers}
           />
         }
-        <div className="bottom-navigator">
-          {i + 1}
+      </div>
+      <div className="bottom-navigator">
+        <div>
+          <div className="blue-circle">{i + 1}</div>
+          <div className="my-answers-label">My Answers</div>
+          <FormControlLabel
+            checked={mode === false}
+            control={<Radio onClick={() => setMode(false)} />}
+            label="Investigation" />
+          <FormControlLabel
+            checked={mode === true}
+            control={<Radio onClick={() => setMode(true)} />}
+            label="Review" />
         </div>
       </div>
       <div className="right-part"></div>
