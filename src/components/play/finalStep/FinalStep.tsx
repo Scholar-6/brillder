@@ -6,12 +6,7 @@ import "./FinalStep.scss";
 import { Brick } from "model/brick";
 import actions from "redux/actions/brickActions";
 
-import ShareDialog from './dialogs/ShareDialog';
-import LinkDialog from './dialogs/LinkDialog';
-import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
 import ShareColumn from "./ShareColumn";
-import InviteDialog from "./dialogs/InviteDialog";
-import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
 import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
@@ -27,6 +22,7 @@ import { checkTeacherOrAdmin } from "components/services/brickService";
 import { isPhone } from "services/phone";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import routes from "../routes";
+import ShareDialogs from "./dialogs/ShareDialogs";
 
 interface FinalStepProps {
   brick: Brick;
@@ -44,9 +40,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
   fetchBrick
 }) => {
   const [shareOpen, setShare] = React.useState(false);
-  const [linkOpen, setLink] = React.useState(false);
-  const [linkCopiedOpen, setCopiedLink] = React.useState(false);
-  const [inviteOpen, setInvite] = React.useState(false);
 
   const [assign, setAssign] = React.useState(false);
   const [assignItems, setAssignItems] = React.useState([] as any[]);
@@ -55,12 +48,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const [assignFailed, setAssignFailed] = React.useState(false);
   const [isAdaptBrickOpen, setIsAdaptBrickOpen] = React.useState(false);
   const [isAdapting, setIsAdapting] = React.useState(false);
-
-  const [inviteSuccess, setInviteSuccess] = React.useState({
-    isOpen: false,
-    accessGranted: false,
-    name: ''
-  });
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -75,13 +62,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
       document.removeEventListener("keydown", handleMove, false);
     };
   });
-
-  const link = routes.playCover(brick.id);
-
-  let isAuthor = false;
-  try {
-    isAuthor = brick.author.id === user.id;
-  } catch { }
 
   let canSee = false;
   try {
@@ -190,25 +170,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
           </div>
         </div>
       </Hidden>
-      <LinkDialog
-        isOpen={linkOpen} link={document.location.host + link}
-        submit={() => setCopiedLink(true)} close={() => setLink(false)}
-      />
-      <InviteDialog
-        canEdit={true} brick={brick} isOpen={inviteOpen} hideAccess={true} isAuthor={isAuthor}
-        submit={name => {
-          setInviteSuccess({ isOpen: true, name, accessGranted: false });
-        }}
-        close={() => setInvite(false)} />
-      <InvitationSuccessDialog
-        isAuthor={isAuthor}
-        isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
-        close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
-      <LinkCopiedDialog isOpen={linkCopiedOpen} close={() => setCopiedLink(false)} />
-      <ShareDialog
-        isOpen={shareOpen}
-        link={() => { setShare(false); setLink(true) }}
-        invite={() => { setShare(false); setInvite(true) }}
+      <ShareDialogs
+        shareOpen={shareOpen}
+        brick={brick}
+        user={user}
         close={() => setShare(false)}
       />
       {canSee && <div>
