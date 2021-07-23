@@ -100,6 +100,7 @@ class ClassroomList extends Component<ClassroomListProps> {
                 expand={this.props.expand.bind(this)}
                 key={i} classroom={c.classroom} assignment={c.assignment}
                 archive={() => this.props.reloadClasses()}
+                unarchive={() => {}}
                 onRemind={this.props.onRemind}
               />
             </div>
