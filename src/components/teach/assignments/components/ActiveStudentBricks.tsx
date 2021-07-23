@@ -118,6 +118,7 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
                     key={i}
                     assignment={a as any}
                     archive={this.loadAssignments.bind(this)}
+                    unarchive={() => {}}
                     onRemind={this.props.onRemind?.bind(this)}
                   />
                 </div>

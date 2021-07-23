@@ -212,6 +212,14 @@ export const archiveAssignment = async (assignmentId: number) => {
   }
 }
 
+export const unarchiveAssignment = async (assignmentId: number) => {
+  try {
+    return await post<AssignmentBrick>(`/brick/assignment/${assignmentId}/unarchive`, {});
+  } catch {
+    return false;
+  }
+}
+
 export const deleteQuestion = async (questionId: number) => {
   try {
     return await axiosDelete(`/question/${questionId}`);

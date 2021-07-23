@@ -6,7 +6,7 @@ import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { archiveAssignment, sendAssignmentReminder } from "services/axios/brick";
+import { archiveAssignment, sendAssignmentReminder, unarchiveAssignment } from "services/axios/brick";
 import { getTotalStudentsCount } from "../service/service";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import ArchiveWarningDialog from "components/baseComponents/dialogs/ArchiveWarningDialog";
@@ -25,6 +25,7 @@ interface AssignedDescriptionProps {
   move?(): void;
   expand?(classroomId: number, assignmentId: number): void;
   minimize?(): void;
+  unarchive(): void;
   archive(): void;
   onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
@@ -168,6 +169,13 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     return average;
   }
 
+  async unarchiveAssignment() {
+    const res = await unarchiveAssignment(this.props.assignment.id);
+    if (res) {
+      this.props.unarchive();
+    }
+  }
+
   async archiveAssignment() {
     const res = await archiveAssignment(this.props.assignment.id);
     if (res) {
@@ -254,7 +262,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           {this.renderStudentStatus()}
         </div>
         {this.props.isArchive
-          ? <div /> // <UnarchiveButton onClick={() => {}} />
+          ? <UnarchiveButton onClick={this.unarchiveAssignment.bind(this)} />
           : <ArchiveButton isCompleted={this.isCompleted.bind(this)} checkArchive={this.checkArchive.bind(this)} />
         }
         <ArchiveWarningDialog
