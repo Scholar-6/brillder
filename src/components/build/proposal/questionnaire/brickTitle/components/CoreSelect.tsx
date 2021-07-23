@@ -27,7 +27,7 @@ const DifficultySelect: React.FC<DifficultySelectProps> = ({isCore, ...props}) =
       </div>
       <Select value={isCore} disabled={coreSelectLocked} onChange={e => props.onChange(e.target.value as string === 'true')}>
         <MenuItem value="true">Public</MenuItem>
-        <MenuItem value="false">Private</MenuItem>
+        <MenuItem value="false">Personal</MenuItem>
       </Select>
     </div>
   );
