@@ -21,7 +21,6 @@ import AdaptBrickColumn from "./AdaptBrickColumn";
 import { checkTeacherOrAdmin } from "components/services/brickService";
 import { isPhone } from "services/phone";
 import BrickTitle from "components/baseComponents/BrickTitle";
-import routes from "../routes";
 import ShareDialogs from "./dialogs/ShareDialogs";
 
 interface FinalStepProps {

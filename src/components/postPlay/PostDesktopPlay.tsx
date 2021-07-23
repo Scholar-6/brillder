@@ -1,7 +1,6 @@
 import React from "react";
 import { History } from "history";
 import { connect } from "react-redux";
-import queryString from 'query-string';
 
 import { ReduxCombinedState } from "redux/reducers";
 import { Brick, Subject } from "model/brick";
@@ -19,14 +18,14 @@ import { PlayAttempt } from "model/attempt";
 import { Redirect } from "react-router-dom";
 import { loadSubjects } from "components/services/subject";
 
-import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 import { Helmet } from "react-helmet";
 import { isMobile } from "react-device-detect";
-import BookNavigator from "./desktop/BookNavigator";
 import BookSidebar from "./desktop/BookSidebar";
 import QuestionPage from "./bookPages/QuestionPage";
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 const TabletTheme = React.lazy(() => import('./themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/PageDesktopTheme'));
@@ -164,13 +163,14 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
           <Helmet>
             <title>{getBrillderTitle(brick.title)}</title>
           </Helmet>
-          <div className="top-menu">
-            <HomeButton history={this.props.history} onClick={() => this.props.history.push('/')} />
-            <BookNavigator
-              attempt={this.state.attempts[0]} questions={questions}
-              moveToQuestion={this.moveToQuestion.bind(this)}
-            />
-          </div>
+          <PageHeadWithMenu
+            page={PageEnum.Book}
+            user={this.props.user}
+            placeholder="Search Ongoing Projects & Published Bricks…"
+            history={this.props.history}
+            search={() => { }}
+            searching={(v: string) => { }}
+          />
           <div className="page-content">
             <BookSidebar
               brick={brick} questions={questions}
@@ -178,12 +178,27 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
               moveToQuestion={this.moveToQuestion.bind(this)}
             />
             <div className="content-area">
+              {this.state.bookState === BookState.Brief && <div className="brief-page">
+                <div className="expand-title brief-title" style={{ marginTop: '4vh' }}>
+                  <span>Brief</span>
+                  <div className="centered text-white">
+                    <div className="round-icon b-green">
+                      <SpriteIcon name="arrow-down" className="arrow" />
+                    </div>
+                  </div>
+                </div>
+                <div className="expanded-text" dangerouslySetInnerHTML={{__html: brick.brief}} />
+              </div>}
+              {this.state.bookState === BookState.Prep && <div>
+                Prep
+              </div>}
               {this.state.bookState === BookState.QuestionPage && <QuestionPage
                 i={this.state.questionIndex}
                 mode={this.state.mode}
                 activeAttempt={this.state.attempts[this.state.questionIndex]}
                 question={questions[this.state.questionIndex]}
               />}
+              {this.state.bookState === BookState.Synthesis && <div>Synthesis</div>}
             </div>
           </div>
         </div>
