@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Chip, Avatar, Grid, Hidden } from "@material-ui/core";
 import { connect } from "react-redux";
 
@@ -26,13 +26,20 @@ import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/Return
 import ReturnAuthorSuccessDialog from "components/play/finalStep/dialogs/ReturnAuthorSuccessDialog";
 import SelfPublishColumn from "./SelfPublishColumn";
 import playRoutes from '../../play/routes';
-import routes from "../routes";
 import ShareDialogs from "components/play/finalStep/dialogs/ShareDialogs";
+import InviteDialog from "components/play/finalStep/dialogs/InviteDialog";
+import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
 
 enum PublishStatus {
   None,
   Popup,
   Published,
+}
+
+interface InviteResult {
+  isOpen: boolean;
+  accessGranted: boolean;
+  name: string;
 }
 
 interface FinalStepProps {
@@ -56,10 +63,16 @@ interface FinalStepProps {
 const FinalStep: React.FC<FinalStepProps> = ({
   user, brick, history, publisherConfirmed, sendedToPublisher, requestFailed, ...props
 }) => {
-  const [returnEditorsOpen, setEditorsReturn] = React.useState(false);
-  const [returnAuthorOpen, setAuthorReturn] = React.useState(false);
-  const [shareOpen, setShare] = React.useState(false);
-  const [publishSuccess, setPublishSuccess] = React.useState(PublishStatus.None);
+  const [returnEditorsOpen, setEditorsReturn] = useState(false);
+  const [returnAuthorOpen, setAuthorReturn] = useState(false);
+  const [publishSuccess, setPublishSuccess] = useState(PublishStatus.None);
+  const [shareOpen, setShare] = useState(false);
+  const [inviteOpen, setInvite] = useState(false);
+  const [inviteResult, setInviteResult] = useState({
+    isOpen: false,
+    accessGranted: false,
+    name: ''
+  } as InviteResult);
 
   let isAuthor = false;
   try {
@@ -300,6 +313,18 @@ const FinalStep: React.FC<FinalStepProps> = ({
         brick={brick}
         user={user}
         close={() => setShare(false)}
+      />
+      <InviteDialog
+        canEdit={true} brick={brick} isOpen={inviteOpen} hideAccess={true} isAuthor={isAuthor}
+        submit={name => {
+          setInviteResult({ isOpen: true, name, accessGranted: false } as InviteResult);
+        }}
+        close={() => setInvite(false)}
+      />
+      <InvitationSuccessDialog
+        isAuthor={isAuthor}
+        isOpen={inviteResult.isOpen} name={inviteResult.name} accessGranted={inviteResult.accessGranted}
+        close={() => setInviteResult({ isOpen: false, name: '', accessGranted: false } as InviteResult)}
       />
       <ReturnAuthorSuccessDialog
         isOpen={returnAuthorOpen}
