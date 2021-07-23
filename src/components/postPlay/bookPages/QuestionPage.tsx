@@ -60,7 +60,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
 
   return (
     <div>
-      <div className="real-content">
+      <div className="real-content question-content">
         <div className="question-title">
           {renderTitle()}
           {renderMarks()}

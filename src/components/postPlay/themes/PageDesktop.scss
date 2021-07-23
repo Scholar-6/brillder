@@ -42,19 +42,8 @@
       width: $sidebar-width;
       border-top-right-radius: $radius;
 
-      .sidebar-header {
-        height: 8vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        font-size: 1.7vw;
-        text-align: center;
-        border-bottom: 0.3vh solid #294779;
-      }
-
       .scroll-content {
-        height: calc(100% - 8vh);
+        height: 100%;
         overflow-y: scroll;
 
         >div {
@@ -120,6 +109,10 @@
             padding-bottom: 0 !important;
             margin-bottom: 0 !important;
           }
+        }
+
+        .question-content {
+          font-size: 1.3vw;
         }
 
         .right-part {
