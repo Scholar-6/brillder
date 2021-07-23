@@ -6,12 +6,11 @@ interface AttemptsPageProps {
   index: number;
   attempts: PlayAttempt[];
   setActiveAttempt(attempt: PlayAttempt, index: number): void;
-  onClick(): void;
 }
 
 const AttemptsPage: React.FC<AttemptsPageProps> = (props) => {
   return (
-    <div className="attempts" onClick={props.onClick}>
+    <div className="attempts">
       {props.attempts.map((a, i) =>
         {
           const middleScore = (a.score + a.oldScore) / 2;
