@@ -396,6 +396,10 @@
     display: inline;
   }
 
+  br {
+    display: none;
+  }
+
   span,
   p {
     color: var(--theme-dark-blue) !important;
