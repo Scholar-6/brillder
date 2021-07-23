@@ -18,7 +18,6 @@ interface Props {
 const BookSidebar: React.FC<Props> = ({ brick, questions, moveToPage, moveToQuestion }) => {
   return (
     <div className="sidebar">
-      <div className="sidebar-header bold">Contents</div>
       <div className="scroll-content pages-list">
         <div onClick={() => moveToPage(BookState.Brief)}><SpriteIcon name="crosshair" /><span className="bold">Brief</span> <span className="ellipsis">{stripHtml(brick.brief)}</span></div>
         <div onClick={() => moveToPage(BookState.Prep)}><SpriteIcon name="file-text" /><span className="bold">Prep</span> <span className="ellipsis">{stripHtml(brick.prep)}</span></div>
