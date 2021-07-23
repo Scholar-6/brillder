@@ -24,7 +24,6 @@ interface ClassroomListProps {
   startIndex: number;
   pageSize: number;
   isArchive: boolean;
-  activeClassroom: TeachClassroom | null;
   expand(classroomId: number, assignmentId: number): void;
   reloadClasses(): void;
   onRemind?(count: number, isDeadlinePassed: boolean): void;
@@ -46,6 +45,16 @@ class ClassroomList extends Component<ClassroomListProps> {
     }
   }
 
+  prepareClassItems(items: TeachListItem[], classroom: TeachClassroom, notFirst: boolean) {
+    let item: TeachListItem = {
+      classroom,
+      notFirst,
+      assignment: null
+    };
+    items.push(item);
+    convertClassAssignments(items, classroom, this.props.isArchive);
+  }
+
   renderClassname(c: TeachListItem, i: number) {
     const { classroom } = c as any;
     let className = 'classroom-title one-of-many';
@@ -61,13 +70,13 @@ class ClassroomList extends Component<ClassroomListProps> {
       >
         <div className={className}>
           <div>
-          <NameAndSubjectForm
-            classroom={classroom}
-            inviteHidden={true}
-            isArchive={this.props.isArchive}
-            onAssigned={() => this.props.reloadClasses()}
-            onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
-          />
+            <NameAndSubjectForm
+              classroom={classroom}
+              inviteHidden={true}
+              isArchive={this.props.isArchive}
+              onAssigned={() => this.props.reloadClasses()}
+              onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
+            />
           </div>
         </div>
       </Grow>
@@ -91,6 +100,7 @@ class ClassroomList extends Component<ClassroomListProps> {
                 expand={this.props.expand.bind(this)}
                 key={i} classroom={c.classroom} assignment={c.assignment}
                 archive={() => this.props.reloadClasses()}
+                unarchive={() => {}}
                 onRemind={this.props.onRemind}
               />
             </div>
@@ -102,35 +112,17 @@ class ClassroomList extends Component<ClassroomListProps> {
     return "";
   }
 
-  prepareClassItems(items: TeachListItem[], classroom: TeachClassroom, notFirst: boolean) {
-    let item: TeachListItem = {
-      classroom,
-      notFirst,
-      assignment: null
-    };
-    items.push(item);
-    convertClassAssignments(items, classroom, this.props.isArchive);
-  }
-
-  renderContent() {
-    const { activeClassroom, classrooms } = this.props;
-    let items = [] as TeachListItem[];
-    if (activeClassroom) {
-      this.prepareClassItems(items, activeClassroom, false);
-    } else {
-      let notFirst = false;
-      for (let classroom of classrooms) {
-        this.prepareClassItems(items, classroom, notFirst);
-        notFirst = true;
-      }
-    }
-    return items.map(this.renderTeachListItem.bind(this));
-  }
-
   render() {
+    const { classrooms } = this.props;
+    let items = [] as TeachListItem[];
+    let notFirst = false;
+    for (let classroom of classrooms) {
+      this.prepareClassItems(items, classroom, notFirst);
+      notFirst = true;
+    }
     return (
       <div className="classroom-list many-classes">
-        {this.renderContent()}
+        {items.map(this.renderTeachListItem.bind(this))}
       </div>
     );
   }
