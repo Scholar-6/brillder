@@ -179,18 +179,32 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
             />
             <div className="content-area">
               {this.state.bookState === BookState.Brief && <div className="brief-page">
-                <div className="expand-title brief-title" style={{ marginTop: '4vh' }}>
-                  <span>Brief</span>
-                  <div className="centered text-white">
-                    <div className="round-icon b-green">
-                      <SpriteIcon name="arrow-down" className="arrow" />
+                <div>
+                  <div className="open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }}></div>
+                  <div className="expand-title brief-title">
+                    <span>Brief</span>
+                    <div className="centered text-white">
+                      <div className="round-icon b-green">
+                        <SpriteIcon name="arrow-down" className="arrow" />
+                      </div>
                     </div>
                   </div>
+                  <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.brief }} />
                 </div>
-                <div className="expanded-text" dangerouslySetInnerHTML={{__html: brick.brief}} />
               </div>}
-              {this.state.bookState === BookState.Prep && <div>
-                Prep
+              {this.state.bookState === BookState.Prep && <div className="brief-page">
+                <div>
+                  <div className="open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }}></div>
+                  <div className="expand-title brief-title">
+                    <span>Prep</span>
+                    <div className="centered text-white">
+                      <div className="round-icon b-green">
+                        <SpriteIcon name="arrow-down" className="arrow" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.prep }} />
+                </div>
               </div>}
               {this.state.bookState === BookState.QuestionPage && <QuestionPage
                 i={this.state.questionIndex}
@@ -198,7 +212,20 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                 activeAttempt={this.state.attempts[this.state.questionIndex]}
                 question={questions[this.state.questionIndex]}
               />}
-              {this.state.bookState === BookState.Synthesis && <div>Synthesis</div>}
+              {this.state.bookState === BookState.Synthesis && <div className="brief-page">
+                <div>
+                  <div className="open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }}></div>
+                  <div className="expand-title brief-title">
+                    <span>Synthesis</span>
+                    <div className="centered text-white">
+                      <div className="round-icon b-green">
+                        <SpriteIcon name="arrow-down" className="arrow" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.synthesis }} />
+                </div>
+              </div>}
             </div>
           </div>
         </div>
