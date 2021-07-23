@@ -32,6 +32,7 @@ import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import { Subject } from "model/brick";
 import ClassroomFilterItem from "./components/ClassroomFilterItem";
 import { socket } from "socket/socket";
+import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -634,7 +635,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   renderTabContent() {
     if (!this.state.isLoaded) {
-      return <div className="tab-content" />
+      return (
+        <div className="tab-content">
+          <div className="f-top-loader">
+            <PageLoaderBlue content="" />
+          </div>
+        </div>
+      );
     }
     const { activeClassroom } = this.state;
     let users = Object.assign([], this.state.users) as MUser[];

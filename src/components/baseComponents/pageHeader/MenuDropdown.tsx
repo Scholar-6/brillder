@@ -32,6 +32,7 @@ interface MenuDropdownProps {
   user: User;
   page: PageEnum;
   history: any;
+  className?: string;
   onLogout(): void;
   forgetBrick(): void;
 }
@@ -254,7 +255,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
 
   return (
     <Menu
-      className="menu-dropdown"
+      className={"menu-dropdown " + props.className}
       open={props.dropdownShown}
       onClose={props.hideDropdown}
     >

@@ -5,6 +5,7 @@ import CompComponent from "../Comp";
 import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/model";
 import { PlayWord, IPlayWordComponent } from 'components/interfaces/word';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface WordHighlightingProps extends CompQuestionProps {
   component: IPlayWordComponent;
@@ -159,7 +160,7 @@ class WordHighlighting extends CompComponent<
 
     return (
       <div className="question-unique-play word-highlighting-play">
-        <p><span className="help-text">Click to highlight.</span></p>
+        <p><span className="help-text"><SpriteIcon name="highlighter" />Click to highlight.</span></p>
         <div className={`words-container ${this.props.isPreview && 'preview'} ${!component.isPoem ? 'break-lines' : 'lines-inline'}`}>
           {this.getWords()}
         </div>

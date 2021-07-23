@@ -13,6 +13,8 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
 import PairMatchImageContent from '../pairMatch/PairMatchImageContent';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
+import ZoomHelpText from '../components/ZoomHelpText';
+import {ReactComponent as DragIcon} from'assets/img/drag.svg';
 
 
 const MobileTheme = React.lazy(() => import('./themes/Phone'));
@@ -227,11 +229,10 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   renderPhone() {
-    const haveImage = this.checkImages();
+    //const haveImage = this.checkImages();
     return (
       <div className="question-unique-play vertical-shuffle-play">
-        <p><span className="help-text">Click on two answers at a time to reorder.</span></p>
-        {haveImage && <p><span className="help-text">Double tap images to zoom.</span></p>}
+        <ZoomHelpText />
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>
         ) : (
@@ -248,7 +249,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     const haveImage = this.checkImages();
     return (
       <div className="question-unique-play vertical-shuffle-play">
-        <p><span className="help-text">Drag to rearrange.   {haveImage && <span>Hover over images to zoom.</span>}</span></p>
+        <p><span className="help-text"><DragIcon />Drag to rearrange.   {haveImage && <span>Hover over images to zoom.</span>}</span></p>
         {this.props.isBookPreview || !this.state.canDrag ? (
           <div>{this.renderAnswers()}</div>
         ) : (

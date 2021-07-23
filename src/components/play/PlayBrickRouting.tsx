@@ -37,7 +37,7 @@ import PlayLeftSidebar from './PlayLeftSidebar';
 import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames } from "components/build/proposal/model";
-import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
+import { maximizeZendeskButton, minimizeZendeskButton, showZendesk } from 'services/zendesk';
 import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
 import map from "components/map";
 import userActions from 'redux/actions/user';
@@ -220,6 +220,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       if (pathname.search(PlayCoverLastPrefix) === -1) {
         setSidebar(true);
       }
+    } else {
+      showZendesk();
     }
     /*eslint-disable-next-line*/
   }, [])
@@ -592,7 +594,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
         <Route exact path={routes.timeSynthesisRoute}>
           {isPhone()
-            ? <PhoneTimeSynthesisPage brick={brick} moveNext={moveToSynthesis} />
+            ? <PhoneTimeSynthesisPage brick={brick} />
             : <PreSynthesis brick={brick} history={history} />
           }
           {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Synthesis" next={moveToSynthesis} />}

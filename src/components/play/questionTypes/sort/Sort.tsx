@@ -16,6 +16,7 @@ import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import { getValidationClassName } from '../service';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
+import {ReactComponent as DragIcon} from'assets/img/drag.svg';
 
 
 interface UserCategory {
@@ -74,7 +75,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     // this is bad but it fixed issue. input answers should not be array.
     if (props.answers && props.answers.length !== 0) {
       this.diselectChoices(userCats);
-      this.prepareChoices(userCats);
+      this.prepareChoices(userCats, choices);
     }
 
     this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };
@@ -157,9 +158,12 @@ class Sort extends CompComponent<SortProps, SortState> {
       });
     }
 
+    console.log(hadError, choices);
+
     // if error emptify results
     if (hadError) {
       if (choices) {
+        console.log(userCats);
         userCats.forEach(cat => cat.choices = []);
         userCats[userCats.length - 1].choices = choices;
       }
@@ -310,7 +314,7 @@ class Sort extends CompComponent<SortProps, SortState> {
 
     return (
       <div className="question-unique-play sort-play">
-        <p><span className="help-text">Drag to rearrange.</span></p>
+        <p><span className="help-text"><DragIcon />Drag to rearrange.</span></p>
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>

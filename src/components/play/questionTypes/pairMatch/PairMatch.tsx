@@ -14,6 +14,8 @@ import PairMatchOption from './PairMatchOption';
 import PairMatchImageContent from './PairMatchImageContent';
 import { isPhone } from 'services/phone';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
+import {ReactComponent as DragIcon} from'assets/img/drag.svg';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
@@ -38,10 +40,13 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         userAnswers = component.choices ? component.choices : [];
       }
     }
-    let canDrag = true;
-    if (this.props.attempt?.correct) {
-      canDrag = false;
+
+    //#3682 fix
+    if (userAnswers.length === 0) {
+      userAnswers = component.list;
     }
+
+    const canDrag = this.props.attempt?.correct ? false : true;
     this.state = { status, userAnswers, canDrag };
   }
 
@@ -174,8 +179,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       <div className="question-unique-play pair-match-play">
         <p>
           <span className="help-text">
-            Drag to rearrange. {
-              haveImage && (isPhone() ? 'Double tap images to zoom.' : 'Hover over images to zoom.')
+            <DragIcon /><span>Drag to rearrange.</span> {
+              haveImage && (isPhone()
+                ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
+                : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
             }
           </span>
         </p>

@@ -10,6 +10,7 @@
     color: var(--theme-dark-blue);
   }
   .assignments-table {
+    color: var(--theme-dark-blue);
     $table-height: calc(64vh - 6.5vw);
     height: calc(#{$table-height} + 5vh) !important;
 

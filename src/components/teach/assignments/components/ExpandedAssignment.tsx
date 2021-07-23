@@ -269,6 +269,7 @@ class ExpandedAssignment extends Component<
             classroom={classroom}
             assignment={assignment}
             archive={() => { }}
+            unarchive={() => {}}
             onRemind={this.props.onRemind}
           />
         </div>

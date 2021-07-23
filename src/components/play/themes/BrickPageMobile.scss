@@ -108,9 +108,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .ss-phone-before-title {
       height: 13%;
     }
-    .fe-arrow-container {
-      width: 100vw !important;
-    }
     .dd-question-container {
       height: 15%;
       position: relative;
@@ -2073,6 +2070,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 }
 
 .play-preview-pages .fe-arrow-container {
+  left: 0;
   width: calc(100%);
   display: flex;
   justify-content: center;

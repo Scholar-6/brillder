@@ -234,6 +234,10 @@
       bottom: -1.25vw;
       left: -1.5vw;
       width: 6.4vw !important;
+      &.bigger {
+        left: -2.4vw;
+        width: 7.4vw !important;
+      }
     }
     &.completed:hover {
       .css-custom-tooltip {
