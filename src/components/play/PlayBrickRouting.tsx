@@ -594,7 +594,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
         <Route exact path={routes.timeSynthesisRoute}>
           {isPhone()
-            ? <PhoneTimeSynthesisPage brick={brick} moveNext={moveToSynthesis} />
+            ? <PhoneTimeSynthesisPage brick={brick} />
             : <PreSynthesis brick={brick} history={history} />
           }
           {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Synthesis" next={moveToSynthesis} />}
