@@ -129,6 +129,15 @@ export const inviteUser = async (brickId: number, userId: number) => {
   }
 }
 
+export const shareWithUser = async (brickId: number, userId: number) => {
+  try {
+    await post<Brick>(`/brick/share/${brickId}`, { userIds: [userId] });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export const setCoreLibrary = async (brickId: number, isCore?: boolean) => {
   try {
     const core = isCore ? true : false;
