@@ -5,29 +5,17 @@ import { isAuthenticated } from 'model/brick';
 import { Brick } from 'model/brick';
 import { User } from 'model/user';
 import { getCookies, acceptCookies } from 'localStorage/cookies';
+import { ReduxCombinedState } from 'redux/reducers';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
-import routes from '../routes';
-
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
 import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
-import ShareDialog from '../finalStep/dialogs/ShareDialog';
-import LinkDialog from '../finalStep/dialogs/LinkDialog';
-import LinkCopiedDialog from '../finalStep/dialogs/LinkCopiedDialog';
-import InviteDialog from '../finalStep/dialogs/InviteDialog';
-import InvitationSuccessDialog from '../finalStep/dialogs/InvitationSuccessDialog';
 
 import { checkTeacherOrAdmin } from 'components/services/brickService';
-
-interface InviteResult {
-  isOpen: boolean;
-  accessGranted: boolean;
-  name: string;
-}
+import ShareDialogs from '../finalStep/dialogs/ShareDialogs';
 
 interface FooterProps {
   brick: Brick;
@@ -52,14 +40,6 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
   const [cookieOpen, setCookiePopup] = React.useState(isInitCookieOpen);
 
   const [share, setShare] = React.useState(false);
-  const [linkOpen, setLink] = React.useState(false);
-  const [linkSuccess, setLinkSuccess] = React.useState(false);
-  const [invite, setInvite] = React.useState(false);
-  const [inviteResult, setInviteResult] = React.useState({
-    isOpen: false,
-    accessGranted: false,
-    name: ''
-  } as InviteResult);
 
   const [assign, setAssign] = React.useState(false);
   const [assignItems, setAssignItems] = React.useState([] as any[]);
@@ -73,13 +53,6 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
   } catch { }
 
   const renderPopups = () => {
-    let isAuthor = false;
-    try {
-      isAuthor = brick.author.id === props.user.id;
-    } catch { }
-
-    const link = routes.playCover(brick.id);
-
     return <div>
       {canSee && <div>
         <AssignPersonOrClassDialog
@@ -119,42 +92,11 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
           }}
         />
       </div>}
-      <ShareDialog
-        isOpen={share}
-        link={() => {
-          setShare(false);
-          setLink(true);
-        }}
-        invite={() => {
-          setShare(false);
-          setInvite(true);
-        }}
+      <ShareDialogs
+        shareOpen={share}
+        brick={brick}
+        user={props.user}
         close={() => setShare(false)}
-      />
-      <LinkDialog
-        isOpen={linkOpen}
-        link={document.location.host + link}
-        submit={() => {
-          setLink(false);
-          setLinkSuccess(true);
-        }}
-        close={() => setLink(false)}
-      />
-      <LinkCopiedDialog
-        isOpen={linkSuccess}
-        close={() => setLinkSuccess(false)}
-      />
-      <InviteDialog
-        canEdit={true} brick={brick} isOpen={invite} hideAccess={true} isAuthor={isAuthor}
-        submit={name => {
-          setInviteResult({ isOpen: true, name, accessGranted: false });
-        }}
-        close={() => setInvite(false)}
-      />
-      <InvitationSuccessDialog
-        isAuthor={isAuthor}
-        isOpen={inviteResult.isOpen} name={inviteResult.name} accessGranted={inviteResult.accessGranted}
-        close={() => setInviteResult({ isOpen: false, name: '', accessGranted: false })}
       />
     </div>
   }
