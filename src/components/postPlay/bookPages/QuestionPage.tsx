@@ -1,25 +1,18 @@
 import React from "react";
-
+import './QuestionPage.scss';
 import { PlayAttempt } from "model/attempt";
 import { Question } from "model/question";
-import { BookState } from "../PostPlay";
-
-import './QuestionPage.scss';
 import QuestionPlay from "components/play/questionPlay/QuestionPlay";
 
 interface QuestionPageProps {
   i: number;
   mode?: boolean;
-  questionIndex: number;
   question: Question;
   activeAttempt: PlayAttempt;
-  bookHovered: boolean;
-  bookState: BookState;
-  prevQuestion(): void;
 }
 
 const QuestionPage: React.FC<QuestionPageProps> = ({
-  i, mode, activeAttempt, questionIndex, question, bookHovered, bookState, prevQuestion
+  i, mode, activeAttempt, question
 }) => {
   let parsedAnswers = null;
 
@@ -36,20 +29,6 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
 
   let attempt = Object.assign({}, activeAttempt) as any;
   attempt.answer = parsedAnswers;
-
-  const getQuestionStyle = (index: number) => {
-    const scale = 1.15;
-    if (bookHovered && bookState === BookState.QuestionPage) {
-      if (index === questionIndex) {
-        return { transform: `rotateY(-178deg) scale(${scale})` }
-      } else if (index < questionIndex) {
-        return { transform: `rotateY(-178.2deg) scale(${scale})` };
-      } else if (index > questionIndex) {
-        return { transform: `rotateY(-3deg) scale(${scale})` };
-      }
-    }
-    return {};
-  }
 
   const renderTitle = () => {
     if (mode === undefined) {
@@ -78,36 +57,30 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
     }
   }
 
+
   return (
-    <div
-      className={`page3 ${i === 0 ? 'first' : ''}`}
-      style={getQuestionStyle(i)}
-      onClick={prevQuestion}
-    >
-      <div className="flipped-page question-page">
-        <div style={{ display: "flex" }}>
-          <div className="question-number desktop">
-            <div>{i + 1}</div>
-          </div>
-          <div className="question-scrollable">
-            <div className="question-title">
-              {renderTitle()}
-              {renderMarks()}
-            </div>
-            {mode === undefined
-              ? <QuestionPlay question={question} isPhonePreview={true} isDefaultBook={true} answers={[]} />
-              :
-              <QuestionPlay
-                question={question}
-                attempt={attempt}
-                isReview={mode}
-                isBookPreview={true}
-                answers={parsedAnswers}
-              />
-            }
-          </div>
+    <div>
+      <div className="real-content">
+        <div className="question-title">
+          {renderTitle()}
+          {renderMarks()}
+        </div>
+        {mode === undefined
+          ? <QuestionPlay question={question} isPhonePreview={true} isDefaultBook={true} answers={[]} />
+          :
+          <QuestionPlay
+            question={question}
+            attempt={attempt}
+            isReview={mode}
+            isBookPreview={true}
+            answers={parsedAnswers}
+          />
+        }
+        <div className="bottom-navigator">
+          {i + 1}
         </div>
       </div>
+      <div className="right-part"></div>
     </div>
   );
 }
