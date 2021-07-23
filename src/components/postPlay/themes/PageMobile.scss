@@ -72,7 +72,8 @@
 
   .full-book-navigator {
     height: 17.5vw;
-    > .prep-tab {
+
+    >.prep-tab {
       width: 16vw;
       height: 17.5vw;
       background: var(--theme-light-blue);
@@ -81,7 +82,7 @@
       left: 0;
       margin-right: 2vw;
       color: var(--theme-dark-blue);
-     
+
       .fg-icon-container {
         $size: 11vw;
         width: $size;
@@ -92,6 +93,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
         svg {
           $size: 8vw;
           width: $size;
@@ -149,6 +151,7 @@
         margin-right: 0;
       }
     }
+
     &.last {
       svg {
         margin-left: 0;
@@ -311,6 +314,10 @@
         text-overflow: ellipsis;
       }
 
+      &.bigger {
+        font-size: 8vw;
+      }
+
       top: 0;
       width: 100%;
       height: 100%;
@@ -373,8 +380,9 @@
 
       &.pages-list {
         padding: 0 !important;
-        > div {
-          overflow-x:hidden;
+
+        >div {
+          overflow-x: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
           height: 13vw;
@@ -385,14 +393,18 @@
           display: flex;
           align-items: center;
           justify-content: flex-start;
+
           .bold {
             margin-left: 2.7vw;
             margin-right: 1vw;
             font-size: 6vw;
           }
+
           .ellipsis {
             width: 100%;
+            font-family: $font-family-bold;
           }
+
           svg {
             stroke-width: 1.5;
             $size: 8vw;
@@ -400,8 +412,10 @@
             height: $size;
           }
         }
+
         .question-link {
           padding-left: 0;
+
           .bold {
             margin-left: 0;
             width: 12vw;
@@ -415,7 +429,6 @@
     .footer,
     .footer-question {
       height: $footer-height;
-      filter: drop-shadow(0mm -10px 8px rgba(0, 0, 0, 0.2));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -425,12 +438,24 @@
       bottom: 0;
       border-bottom-left-radius: $panel-radius;
       border-bottom-right-radius: $panel-radius;
+
+      &:after {
+        background: var(--tab-gray);
+        content: "";
+        width: 100%;
+        height: 0px;
+        top: -1px;
+        display: block;
+        position: absolute;
+        z-index: 8;
+        box-shadow: 0px 0px 15px 2px #aaa;
+      }
     }
 
     .footer {
       font-size: 6.5vw;
       text-align: center;
-      
+
       font-family: $font-family-bold;
 
       @keyframes right-left {
@@ -457,18 +482,22 @@
         color: var(--theme-dark-blue);
       }
     }
+
     .footer-question {
       padding-left: 4vw;
+
       .MuiFormControlLabel-root {
         .MuiButtonBase-root {
           padding: 1vw;
           color: var(--theme-dark-blue) !important;
+
           .MuiSvgIcon-root {
             $size: 7.5vw;
             height: $size;
             width: $size;
           }
         }
+
         .MuiTypography-root {
           font-size: 6vw;
           letter-spacing: 0;
@@ -965,7 +994,7 @@
 // questions content
 .post-play-page .mobile-attempts.question {
   $footer-height: 6vh;
-  $header-height: 10%;
+  $header-height: 6vh;
 
   .question-title {
     position: relative;
@@ -973,11 +1002,13 @@
     color: var(--theme-dark-blue);
     font-size: 7.5vw;
     margin-bottom: 2vw;
+
     .ge-phone-title {
       margin-top: 1vh;
       display: flex;
       align-items: center;
       font-size: 1.7vw;
+
       .ge-phone-circle {
         margin-right: 1vw;
         $size: 1.4vw;
@@ -987,6 +1018,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
         svg {
           color: var(--white);
           width: 62%;
@@ -995,6 +1027,7 @@
         }
       }
     }
+
     .marks-container {
       position: absolute;
       font-size: 4vw;
@@ -1125,6 +1158,7 @@
         .line {
           font-size: inherit !important;
         }
+
         .word {
           border-radius: 1.5vw;
           padding-left: 0.3vw;
