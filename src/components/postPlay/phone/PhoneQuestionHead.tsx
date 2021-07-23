@@ -1,18 +1,11 @@
 import React from "react";
 
-import SpriteIcon from "components/baseComponents/SpriteIcon";
-import ReviewEye from "../components/ReviewEye";
-import LiveEye from "../components/LiveEye";
-
 interface Props {
   i: number;
   title: string;
-  activeAttempt: any;
-  mode: boolean | undefined;
-  setMode(value: boolean | undefined): void;
 }
 
-const PhoneQuestionHeader: React.FC<Props> = ({ mode, i, activeAttempt, title, setMode }) => {
+const PhoneQuestionHeader: React.FC<Props> = ({ i, title }) => {
   return (
     <div className="header">
       <div className="header-absolute">

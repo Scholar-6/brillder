@@ -399,13 +399,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 {questions.map((q, i) => (
                   <SwiperSlide key={i + 5}>
                     <div className="mobile-attempts question">
-                      <PhoneQuestionHead
-                        i={i}
-                        title={brick.title}
-                        mode={this.state.mode}
-                        activeAttempt={this.state.attempt}
-                        setMode={mode => this.setState({ mode })}
-                      />
+                      <PhoneQuestionHead i={i} title={brick.title} />
                       <div className="scroll-content">
                         <PhoneQuestionPage
                           i={i}
