@@ -148,18 +148,24 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       } else {
         for (let s of subjects) {
           if (s.group === subjectGroup) {
-            categorySubjects.push(s);
+            categorySubjects.push({...s, bricks: []});
           }
         }
       }
 
       this.clearBricks(subjects);
 
-      for (let brick of bricks) {
-        this.addBrickBySubject(subjects, brick);
-        this.addBrickBySubject(mySubjects, brick);
-        this.addBrickBySubject(categorySubjects, brick);
+      if (this.props.user) {
+        for (let brick of bricks) {
+          this.addBrickBySubject(subjects, brick);
+          this.addBrickBySubject(mySubjects, brick);
+        }
+      } else {
+        for (let brick of bricks) {
+          this.addBrickBySubject(categorySubjects, brick);
+        }
       }
+
       this.setState({
         ...this.state,
         bricks,
