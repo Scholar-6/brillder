@@ -1944,7 +1944,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     position:absolute;
     $height-1: 38vh;
     $height-2: 8.4vw;
-    left: calc(50% - (#{$height-1} * 0.8) + (#{$height-2} * 0.8) - 17vw);
+    left: calc(50% - (#{$height-1} * 0.8) + (#{$height-2} * 0.8) - 17vw - 5vh);
     height: calc(#{$height-1} - #{$height-2});
   }
   .icon-container {
