@@ -26,7 +26,7 @@ import { loadSubjects } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
-import FrontPage from "../desktop/FrontPage";
+import FrontPage from "../FrontPage";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
 import { Helmet } from "react-helmet";
