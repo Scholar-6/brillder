@@ -1710,7 +1710,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
 .center-fixed-image {
   position: fixed;
-  z-index: 10000;
+  z-index: 300000;
   width: 100vw;
   height: 100vh;
   display: flex;
