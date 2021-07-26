@@ -6,7 +6,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
 import { getBrillderTitle } from "components/services/titleService";
-import { BrickFieldNames, PlayButtonStatus } from "../build/proposal/model";
+import { BrickFieldNames, PlayButtonStatus } from "../../build/proposal/model";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import {
   ApiQuestion,
@@ -22,13 +22,13 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 import { Helmet } from "react-helmet";
 import { isMobile } from "react-device-detect";
-import BookSidebar from "./desktop/BookSidebar";
-import QuestionPage from "./bookPages/QuestionPage";
+import BookSidebar from "./BookSidebar";
+import QuestionPage from "./QuestionPage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
-const TabletTheme = React.lazy(() => import('./themes/PageTabletTheme'));
-const DesktopTheme = React.lazy(() => import('./themes/PageDesktopTheme'));
+const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
+const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
 
 
 export enum BookState {
