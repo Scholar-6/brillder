@@ -25,7 +25,6 @@ const BookSidebar: React.FC<Props> = ({ brick, questions, moveToPage, moveToQues
           <span className="bold">{i + 1}</span><span className="ellipsis">{stripHtml(q.firstComponent.value)}</span>
         </div>)}
         <div onClick={() => moveToPage(BookState.Synthesis)}><SpriteIcon name="feather-menu" /><span className="bold">Synthesis</span><span className="ellipsis">{stripHtml(brick.synthesis)}</span></div>
-        <div></div>
       </div>
     </div >
   );

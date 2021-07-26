@@ -82,6 +82,13 @@
             }
           }
         }
+
+        &.pages-list {
+          padding-bottom: 4.5vw;
+          > div:hover {
+            background: var(--light-blue-alpha3);
+          }
+        }
       }
     }
 
