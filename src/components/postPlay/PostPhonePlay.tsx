@@ -297,7 +297,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <SwiperSlide>
                   <div className="mobile-attempts">
                     <div className="header">
-                      <div className="header-absolute">Contents</div>
+                      <div className="header-absolute bigger">Contents</div>
                     </div>
                     <div className="scroll-content pages-list">
                       <div onClick={() => this.moveToBrief()}><SpriteIcon name="crosshair" /><span className="bold">Brief</span> <span className="ellipsis">{stripHtml(brick.brief)}</span></div>

@@ -12,7 +12,9 @@ const HintBox: React.FC<ReviewHintProps> = ({ correct, value }) => {
     <div>
       <HintIcon correct={correct} />
       <span className="bold">{correct ? 'NB' : 'Hint'}: </span>
-      <MathInHtml className="inline" value={value} />
+      <div className="global-hint-container">
+        <MathInHtml className="base-hint-container" value={value} />
+      </div>
     </div>
   )
 }
