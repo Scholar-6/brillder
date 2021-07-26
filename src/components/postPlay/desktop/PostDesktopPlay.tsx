@@ -26,12 +26,16 @@ import BookSidebar from "./BookSidebar";
 import QuestionPage from "./QuestionPage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import FrontPage from "../FrontPage";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
 
+const DesktopBookTheme = React.lazy(() => import('../themes/PageBookDesktopTheme'));
+
 
 export enum BookState {
+  Front,
   Attempts,
   Brief,
   Prep,
@@ -66,7 +70,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     super(props);
 
     this.state = {
-      bookState: BookState.Brief,
+      bookState: BookState.Front,
       questionIndex: 0,
       activeAttemptIndex: 0,
       attempt: null,
@@ -144,16 +148,52 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     if (!this.state.attempt) {
       return <PageLoader content="...Getting Attempt..." />;
     }
-    const { brick } = this.state.attempt;
 
     if (!this.state.attempt.liveAnswers) {
       console.log('redirect has no live answers');
       return <Redirect to="/home" />;
     }
 
+    const { brick, student } = this.state.attempt;
+
     let questions: Question[] = [];
     for (let question of brick.questions) {
       parseQuestion(question as ApiQuestion, questions);
+    }
+
+    let color = "#B0B0AD";
+    if (brick.subjectId) {
+      const subject = this.state.subjects.find(s => s.id === brick.subjectId);
+      if (subject) {
+        color = subject.color;
+      }
+    }
+
+    if (this.state.bookState === BookState.Front) {
+      return (
+        <React.Suspense fallback={<></>}>
+          <DesktopTheme />
+          <DesktopBookTheme />
+          <div className="post-play-page">
+            <Helmet>
+              <title>{getBrillderTitle(brick.title)}</title>
+            </Helmet>
+            <PageHeadWithMenu
+              page={PageEnum.Book}
+              user={this.props.user}
+              placeholder="Search Ongoing Projects & Published Bricks…"
+              history={this.props.history}
+              search={() => { }}
+              searching={(v: string) => { }}
+            />
+            <div className="book-container">
+              <FrontPage brick={brick} student={student} color={color} onClick={() => {
+                this.setState({bookState: BookState.Brief});
+              }} />
+              </div>
+          </div>
+        </React.Suspense>
+      )
     }
 
     return (
@@ -209,7 +249,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
               {this.state.bookState === BookState.QuestionPage && <QuestionPage
                 i={this.state.questionIndex}
                 mode={this.state.mode}
-                setMode={newMode => this.setState({mode: newMode})}
+                setMode={newMode => this.setState({ mode: newMode })}
                 activeAttempt={this.state.attempts[this.state.questionIndex]}
                 question={questions[this.state.questionIndex]}
               />}
