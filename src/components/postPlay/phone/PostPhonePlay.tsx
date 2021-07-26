@@ -12,7 +12,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
 import { getBrillderTitle } from "components/services/titleService";
-import { BrickFieldNames, PlayButtonStatus } from "../build/proposal/model";
+import { BrickFieldNames, PlayButtonStatus } from "../../build/proposal/model";
 import {
   ApiQuestion,
   parseQuestion,
@@ -26,19 +26,19 @@ import { loadSubjects } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
-import FrontPage from "./bookPages/FrontPage";
+import FrontPage from "../desktop/FrontPage";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
 import { Helmet } from "react-helmet";
-import AttemptsPhonePage from "./bookPages/AttemptsPhonePage";
+import AttemptsPhonePage from "./AttemptsPhonePage";
 
-import PhoneQuestionHead from "./phone/PhoneQuestionHead";
+import PhoneQuestionHead from "./PhoneQuestionHead";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import PhoneQuestionPage from "./phone/PhoneQuestionPage";
+import PhoneQuestionPage from "./PhoneQuestionPage";
 import map from "components/map";
 import { stripHtml } from "components/build/questionService/ConvertService";
 
-const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
+const MobileTheme = React.lazy(() => import('../themes/PageMobileTheme'));
 
 export enum BookState {
   Titles,

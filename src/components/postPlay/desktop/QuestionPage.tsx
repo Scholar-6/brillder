@@ -1,5 +1,4 @@
 import React from "react";
-import './QuestionPage.scss';
 import { PlayAttempt } from "model/attempt";
 import { Question } from "model/question";
 import QuestionPlay from "components/play/questionPlay/QuestionPlay";
@@ -33,7 +32,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
   attempt.answer = parsedAnswers;
 
   return (
-    <div className="question-page">
+    <div className="book-page">
       <div className="real-content question-content">
         {mode === undefined
           ? <QuestionPlay question={question} isPhonePreview={true} isDefaultBook={true} answers={[]} />

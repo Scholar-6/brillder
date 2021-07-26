@@ -5,7 +5,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Question } from 'model/question';
 import { Brick } from 'model/brick';
 import { stripHtml } from 'components/build/questionService/ConvertService';
-import { BookState } from '../PostDesktopPlay';
+import { BookState } from './PostDesktopPlay';
 
 
 interface Props {
@@ -18,6 +18,7 @@ interface Props {
 const BookSidebar: React.FC<Props> = ({ brick, questions, moveToPage, moveToQuestion }) => {
   return (
     <div className="sidebar">
+      <div className="header flex-center">Contents</div>
       <div className="scroll-content pages-list">
         <div onClick={() => moveToPage(BookState.Brief)}><SpriteIcon name="crosshair" /><span className="bold">Brief</span> <span className="ellipsis">{stripHtml(brick.brief)}</span></div>
         <div onClick={() => moveToPage(BookState.Prep)}><SpriteIcon name="file-text" /><span className="bold">Prep</span> <span className="ellipsis">{stripHtml(brick.prep)}</span></div>
@@ -26,6 +27,7 @@ const BookSidebar: React.FC<Props> = ({ brick, questions, moveToPage, moveToQues
         </div>)}
         <div onClick={() => moveToPage(BookState.Synthesis)}><SpriteIcon name="feather-menu" /><span className="bold">Synthesis</span><span className="ellipsis">{stripHtml(brick.synthesis)}</span></div>
       </div>
+      <div className="footer"/>
     </div >
   );
 }
