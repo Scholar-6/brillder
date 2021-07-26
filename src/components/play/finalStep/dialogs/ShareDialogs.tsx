@@ -60,9 +60,10 @@ const ShareDialogs: React.FC<ShareProps> = props => {
       <ShareWithUserDialog
         brick={props.brick} isOpen={shareUserOpen} isAuthor={isAuthor}
         submit={name => {
+          console.log(name);
           //setInviteResult({ isOpen: true, name, accessGranted: false } as InviteResult);
         }}
-        close={() => setInvite(false)}
+        close={() => setShareUser(false)}
       />
       <InviteDialog
         canEdit={true} brick={props.brick} isOpen={inviteOpen} hideAccess={true} isAuthor={isAuthor}
