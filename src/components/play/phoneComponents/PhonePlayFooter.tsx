@@ -137,13 +137,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="" />
-        <button
-          type="button"
-          className="play-preview svgOnHover roller-red m-b-10"
-          onClick={props.moveToPostPlay}
-        >
-          <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
-        </button>
+        <SpriteIcon name="arrow-right" onClick={props.moveToPostPlay} />
         <span className="exit-text">See Results</span>
       </div>
     );
