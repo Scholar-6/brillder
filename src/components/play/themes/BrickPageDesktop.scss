@@ -1940,6 +1940,13 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
 // pre-prep page
 .play-preview-pages .sorted-row .brick-row-container .brick-container.play-pre-prep-page {
+  .fe-arrow {
+    position:absolute;
+    $height-1: 38vh;
+    $height-2: 8.4vw;
+    left: calc(50% - (#{$height-1} * 0.8) + (#{$height-2} * 0.8) - 17vw);
+    height: calc(#{$height-1} - #{$height-2});
+  }
   .icon-container {
     margin-top: 12.5vh;
     display: flex;
