@@ -2,8 +2,8 @@ import React from "react";
 import './BrainAnimated.scss';
 
 const PhoneTimeSynthesisPage: React.FC = () => {
-  const delay = '0.6s';
-  const duration = '0.4s';
+  const delay = '1.1s';
+  const duration = '0.6s';
   return (
     <svg className="brain errgerg-brain" viewBox="0 0 272.039 248">
       <g id="Group_514" data-name="Group 514" transform="translate(-27.955 -160.347)">
@@ -12,44 +12,44 @@ const PhoneTimeSynthesisPage: React.FC = () => {
           <path id="Shape-2" data-name="Shape" d="M72.776,41.985H59.583V12.3A3.3,3.3,0,0,0,53.6,10.383L20.614,56.562A3.3,3.3,0,0,0,23.3,61.777H36.493V91.463a3.3,3.3,0,0,0,5.984,1.916L75.463,47.2a3.3,3.3,0,0,0-2.685-5.215ZM43.089,81.168V58.478a3.3,3.3,0,0,0-3.3-3.3H29.708L52.985,22.593V45.284a3.3,3.3,0,0,0,3.3,3.3H66.367Z" transform="translate(47.855 23.985)" fill="#c43c30" />
         </g>
         <line id="Line_33" data-name="Line 33" y1="0" y2="42" transform="translate(168 164.347)" fill="none" stroke="#c43c30" stroke-linecap="round" stroke-width="8">
-          <animate attributeName="y1" from="42" to="42" begin="0s" dur={delay} />
-          <animate attributeName="y1" from="42" to="0" begin={delay} dur={duration} />
+          <animate attributeName="y1" from="42" to="42" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="y1" from="42" to="0" begin={delay} dur={duration} repeatCount="indefinite" />
         </line>
         <line id="Line_34" data-name="Line 34" x1="36.563" y2="21.266" transform="translate(257.962 236.136)" fill="none" stroke="#c43c30" stroke-linecap="round" stroke-width="8">
-          <animate attributeName="y1" from="21.266" to="21.266" begin="0s" dur={delay} />
-          <animate attributeName="y1" from="21.266" to="0" begin={delay} dur={duration} />
-          <animate attributeName="x1" from="0" to="0" begin="0s" dur={delay} />
-          <animate attributeName="x1" from="0" to="36.563" begin={delay} dur={duration} />
+          <animate attributeName="y1" from="21.266" to="21.266" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="y1" from="21.266" to="0" begin={delay} dur={duration} repeatCount="indefinite" />
+          <animate attributeName="x1" from="0" to="0" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="x1" from="0" to="36.563" begin={delay} dur={duration} repeatCount="indefinite" />
         </line>
         <line id="Line_35" data-name="Line 35" x2="37.659" y2="25.018" transform="translate(33.5 223.627)" fill="none" stroke="#c43c30" stroke-linecap="round" stroke-width="8">
-          <animate attributeName="y1" from="25.018" to="25.018" begin="0s" dur={delay} />
-          <animate attributeName="y1" from="25.018" to="0" begin={delay} dur={duration} />
-          <animate attributeName="x1" from="37.659" to="37.659" begin="0s" dur={delay} />
-          <animate attributeName="x1" from="37.659" to="0" begin={delay} dur={duration} />
+          <animate attributeName="y1" from="25.018" to="25.018" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="y1" from="25.018" to="0" begin={delay} dur={duration} repeatCount="indefinite" />
+          <animate attributeName="x1" from="37.659" to="37.659" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="x1" from="37.659" to="0" begin={delay} dur={duration} repeatCount="indefinite" />
         </line>
         <line id="Line_36" data-name="Line 36" y1="4" x2="18" transform="translate(34 291.347)" fill="none" stroke="#c43c30" stroke-linecap="round" stroke-width="8">
-          <animate attributeName="y1" from="0" to="0" begin="0s" dur={delay} />
-          <animate attributeName="y1" from="0" to="4" begin={delay} dur={duration} />
-          <animate attributeName="x1" from="18" to="18" begin="0s" dur={delay} />
-          <animate attributeName="x1" from="18" to="0" begin={delay} dur={duration} />
+          <animate attributeName="y1" from="0" to="0" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="y1" from="0" to="4" begin={delay} dur={duration} repeatCount="indefinite" />
+          <animate attributeName="x1" from="18" to="18" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="x1" from="18" to="0" begin={delay} dur={duration} repeatCount="indefinite" />
         </line>
         <line id="Line_37" data-name="Line 37" x2="14" y2="26" transform="translate(103 189.347)" fill="none" stroke="#c43c30" stroke-linecap="round" stroke-width="8">
-          <animate attributeName="y1" from="26" to="26" begin="0s" dur={delay} />
-          <animate attributeName="y1" from="26" to="0" begin={delay} dur={duration} />
-          <animate attributeName="x1" from="14" to="14" begin="0s" dur={delay} />
-          <animate attributeName="x1" from="14" to="0" begin={delay} dur={duration} />
+          <animate attributeName="y1" from="26" to="26" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="y1" from="26" to="0" begin={delay} dur={duration} repeatCount="indefinite" />
+          <animate attributeName="x1" from="14" to="14" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="x1" from="14" to="0" begin={delay} dur={duration} repeatCount="indefinite" />
         </line>
         <line id="Line_38" data-name="Line 38" x1="25" y1="4" transform="translate(269 301.347)" fill="none" stroke="#c43c30" stroke-linecap="round" stroke-width="8">
-          <animate attributeName="y1" from="0" to="0" begin="0s" dur={delay} />
-          <animate attributeName="y1" from="0" to="4" begin={delay} dur={duration} />
-          <animate attributeName="x1" from="0" to="0" begin="0s" dur={delay} />
-          <animate attributeName="x1" from="0" to="25" begin={delay} dur={duration} />
+          <animate attributeName="y1" from="0" to="0" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="y1" from="0" to="4" begin={delay} dur={duration} repeatCount="indefinite" />
+          <animate attributeName="x1" from="0" to="0" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="x1" from="0" to="25" begin={delay} dur={duration} repeatCount="indefinite" />
         </line>
         <line id="Line_39" data-name="Line 39" x1="18" y2="21" transform="translate(219 202.347)" fill="none" stroke="#c43c30" stroke-linecap="round" stroke-width="8">
-          <animate attributeName="y1" from="21" to="21" begin="0s" dur={delay} />
-          <animate attributeName="y1" from="21" to="0" begin={delay} dur={duration} />
-          <animate attributeName="x1" from="0" to="0" begin="0s" dur={delay} />
-          <animate attributeName="x1" from="0" to="18" begin={delay} dur={duration} />
+          <animate attributeName="y1" from="21" to="21" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="y1" from="21" to="0" begin={delay} dur={duration} repeatCount="indefinite" />
+          <animate attributeName="x1" from="0" to="0" begin="0s" dur={delay} repeatCount="indefinite" />
+          <animate attributeName="x1" from="0" to="18" begin={delay} dur={duration} repeatCount="indefinite" />
         </line>
       </g>
     </svg>
