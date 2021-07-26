@@ -71,13 +71,13 @@ import {
   filterByLevels,
 } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
-import AllSubjects from "./allSubjectsPage/AllSubjects";
 import MobileCategory from "./MobileCategory";
 import { playCover } from "components/play/routes";
 import { isPhone } from "services/phone";
 import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog";
 import { addSubject } from "services/axios/user";
 import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
+import PhoneSearchPage from "./PhoneSearchPage";
 
 interface ViewAllProps {
   user: User;
@@ -150,6 +150,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const isSubjectCategory =
       props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) ===
       map.SubjectCategoriesPrefix;
+    const isSearchPage = props.location.pathname.slice(-map.SearchPublishPrefix.length) === map.SearchPublishPrefix;
+    console.log(isSearchPage, props.location.pathname);
+
     if (
       !isSubjectCategory &&
       !values.isViewAll &&
@@ -160,11 +163,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       !values.subjectGroup &&
       !isPhone()
     ) {
+      console.log('move')
       let link = map.SubjectCategories;
       if (values.newTeacher) {
         link += "?" + map.NewTeachQuery;
       }
-      this.props.history.push(link);
+      //this.props.history.push(link);
     }
 
     let isViewAll = false;
@@ -511,7 +515,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     let checked = this.state.subjects.find((s) => s.checked === true);
     if (this.state.isAllSubjects && !checked) {
-      this.props.history.push(map.SubjectCategories + "?filter=true");
+      //this.props.history.push(map.SubjectCategories + "?filter=true");
     }
 
     this.setState({ ...this.state, isViewAll: false, shown: false });
@@ -1120,30 +1124,16 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
-  renderAllSubjectsPage() {
-    return (
-      <AllSubjects
-        user={this.props.user}
-        history={this.props.history}
-        location={this.props.location}
-        filterByOneSubject={this.filterByOneSubject.bind(this)}
-        setViewAll={() => this.setState({ isViewAll: true })}
-        checkSubjectsWithBricks={() =>
-          this.checkSubjectsWithBricks(this.state.subjects)
-        }
-      />
-    );
-  }
-
   render() {
     if (this.state.isLoading) {
       return <PageLoader content="...Getting Bricks..." />;
     }
 
+    const {user, history} = this.props;
+
     let bricks = this.state.finalBricks;
-    if (this.state.isSearching) {
-      bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
-    }
+
+    console.log(history.location.pathname);
 
     if (isPhone()) {
       return (
@@ -1151,30 +1141,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           <MobileTheme />
           <div className="main-listing dashboard-page">
             <Switch>
-              <Route exec path={map.AllSubjects}>
-                <PageHeadWithMenu
-                  page={PageEnum.ViewAll}
-                  user={this.props.user}
-                  placeholder={"Search Ongoing Projects & Published Bricks…"}
-                  history={this.props.history}
-                  search={() => this.search()}
-                  searching={(v: string) => this.searching(v)}
-                />
-                {this.renderAllSubjectsPage()}
-              </Route>
               <Route exec path={map.SubjectCategories}>
-                <PageHeadWithMenu
-                  page={PageEnum.ViewAll}
-                  user={this.props.user}
-                  placeholder={"Search Ongoing Projects & Published Bricks…"}
-                  history={this.props.history}
-                  search={() => this.search()}
-                  searching={(v: string) => this.searching(v)}
-                />
                 <SubjectCategoriesComponent
-                  user={this.props.user}
+                  user={user}
                   subjects={this.state.subjects}
-                  history={this.props.history}
+                  history={history}
                   location={this.props.location}
                   filterByOneSubject={this.filterByOneSubject.bind(this)}
                   setViewAll={() => this.setState({ isViewAll: true })}
@@ -1184,10 +1155,19 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                   }
                 />
               </Route>
+              <Route exec path={map.SearchPublishBrickPage}>
+                <React.Suspense fallback={<></>}>
+                  {isPhone() &&  <MobileTheme />}
+                  <PhoneSearchPage
+                    user={user} subjects={this.state.subjects}
+                    history={history}
+                    requestFailed={() => this.setState({failedRequest: true})}
+                  />
+                </React.Suspense>
+              </Route>
               <Route exec path={map.ViewAllPage}>
                 <MobileCategory
-                  history={this.props.history}
-                  isSearching={this.state.isSearching}
+                  history={history}
                   location={this.props.location}
                 />
               </Route>
@@ -1207,7 +1187,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             <NoSubjectDialog
               isOpen={this.state.noSubjectOpen}
               subject={this.state.activeSubject}
-              history={this.props.history}
+              history={history}
               close={() => this.setState({ noSubjectOpen: false })}
             />
             {this.state.isSubjectPopupOpen && (
@@ -1223,6 +1203,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       );
     }
 
+    if (this.state.isSearching) {
+      bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
@@ -1230,21 +1214,18 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           <div>
             <PageHeadWithMenu
               page={PageEnum.ViewAll}
-              user={this.props.user}
+              user={user}
               placeholder={"Search Subjects, Topics, Titles & more"}
-              history={this.props.history}
+              history={history}
               search={() => this.search()}
               searching={(v) => this.searching(v)}
             />
             <Switch>
-              <Route exec path={map.AllSubjects}>
-                {this.renderAllSubjectsPage()}
-              </Route>
               <Route exec path={map.SubjectCategories}>
                 <SubjectCategoriesComponent
-                  user={this.props.user}
+                  user={user}
                   subjects={this.state.subjects}
-                  history={this.props.history}
+                  history={history}
                   location={this.props.location}
                   filterByOneSubject={this.filterByOneSubject.bind(this)}
                   setViewAll={() => this.setState({ isViewAll: true })}
@@ -1272,7 +1253,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           <NoSubjectDialog
             isOpen={this.state.noSubjectOpen}
             subject={this.state.activeSubject}
-            history={this.props.history}
+            history={history}
             close={() => this.setState({ noSubjectOpen: false })}
           />
           {this.state.isSubjectPopupOpen && (

@@ -10,6 +10,7 @@ import SubjectCategoriesSidebar from "./SubjectCategoriesSidebar";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 interface AllSubjectsProps {
   user: User;
@@ -63,13 +64,24 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
       return (
         <React.Suspense fallback={<></>}>
           <MobileTheme />
+          <PageHeadWithMenu
+            page={PageEnum.ViewAll}
+            user={this.props.user}
+            placeholder=""
+            history={this.props.history}
+            search={() => {
+              console.log('moving', map.SearchPublishBrickPage)
+              this.props.history.push(map.SearchPublishBrickPage)
+            }}
+            searching={() => { }}
+          />
           <div className="phone-subject-category">
             <div className="title-lines">
               <div>Click to explore one of the</div>
               <div> following subject categories.</div>
             </div>
             <div className="subject-category disabled">
-              <div onClick={() => this.setState({invalidSubject: true})}>
+              <div onClick={() => this.setState({ invalidSubject: true })}>
                 <div className="flex-center">
                   <SpriteIcon name="category-canvas" />
                 </div>
@@ -117,7 +129,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
             </div>
             <div className="subject-category disabled">
-              <div onClick={() => this.setState({invalidSubject: true})}>
+              <div onClick={() => this.setState({ invalidSubject: true })}>
                 <div className="flex-center">
                   <SpriteIcon name="category-education" />
                 </div>
@@ -125,7 +137,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
             </div>
             <div className="subject-category disabled">
-              <div onClick={() => this.setState({invalidSubject: true})}>
+              <div onClick={() => this.setState({ invalidSubject: true })}>
                 <div className="flex-center">
                   <SpriteIcon name="category-economics" />
                 </div>
@@ -133,7 +145,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
             </div>
           </div>
-          <TextDialog className="bold-important" isOpen={this.state.invalidSubject} label="Hold tight, this subject category is coming soon." close={() => this.setState({invalidSubject: false})} />
+          <TextDialog className="bold-important" isOpen={this.state.invalidSubject} label="Hold tight, this subject category is coming soon." close={() => this.setState({ invalidSubject: false })} />
         </React.Suspense>
       );
     }
@@ -145,7 +157,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
           <Grid item xs={9} className="brick-row-container view-all-subjects subject-categories">
             <div className="row">
               <div className="subject-category disabled">
-                <div onClick={() => this.setState({invalidSubject: true})}>
+                <div onClick={() => this.setState({ invalidSubject: true })}>
                   <div className="flex-center zoom-item">
                     <SpriteIcon name="category-canvas" />
                   </div>
@@ -169,7 +181,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div className="subject-category disabled">
-                <div onClick={() => this.setState({invalidSubject: true})}>
+                <div onClick={() => this.setState({ invalidSubject: true })}>
                   <div className="flex-center zoom-item">
                     <SpriteIcon name="category-education" />
                   </div>
@@ -203,7 +215,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
               <div className="subject-category disabled">
-                <div onClick={() => this.setState({invalidSubject: true})}>
+                <div onClick={() => this.setState({ invalidSubject: true })}>
                   <div className="flex-center zoom-item">
                     <SpriteIcon name="category-economics" />
                   </div>
@@ -213,7 +225,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
             </div>
           </Grid>
         </Grid>
-        <TextDialog className="bold-important" isOpen={this.state.invalidSubject} label="Hold tight, this subject category is coming soon." close={() => this.setState({invalidSubject: false})} />
+        <TextDialog className="bold-important" isOpen={this.state.invalidSubject} label="Hold tight, this subject category is coming soon." close={() => this.setState({ invalidSubject: false })} />
       </React.Suspense>
     );
   }
