@@ -14,7 +14,7 @@ import { enterPressed, spaceKeyPressed } from "components/services/key";
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export interface ShareUser extends UserBase {
-  isShareInvitation?: boolean;
+  isJustEmail?: boolean;
 }
 
 interface AutocompleteProps {
@@ -28,7 +28,7 @@ interface AutocompleteProps {
   setUsers(users: ShareUser[]): void;
 }
 
-const AutocompleteUsername: React.FC<AutocompleteProps> = ({
+const AutocompleteUsernameAndEmail: React.FC<AutocompleteProps> = ({
   brick, users, setUsers,
   ...props
 }) => {
@@ -36,9 +36,9 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
 
   const onKeyPressed = (e: any) => {
     if (enterPressed(e) || spaceKeyPressed(e)) {
-      const {value} = e.target;
-      if (!emailRegex.test(value.trim())) { return; }
-      setUsers([...users, { email: value, isShareInvitation: true} as ShareUser]);
+      const email = e.target.value.trim();
+      if (!emailRegex.test(email)) { return; }
+      setUsers([...users, { email, isJustEmail: true} as ShareUser]);
     }
   }
 
@@ -85,7 +85,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
         return <>
         {value.map((user, idx) => (
           <Chip
-            label={user.isShareInvitation ? user.email : user.username}
+            label={user.isJustEmail ? user.email : user.username}
             avatar={<Avatar src={fileUrl(user.profileImage)} />}
             {...getTagProps({ index: idx })}
           />
@@ -104,4 +104,4 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
   );
 };
 
-export default AutocompleteUsername;
+export default AutocompleteUsernameAndEmail;
