@@ -205,6 +205,10 @@
             }
           }
 
+          .real-content.question-content {
+            padding: 0;
+          }
+
           .right-part {
             width: calc(100% - #{$left-part-width});
             background: var(--off-white);
