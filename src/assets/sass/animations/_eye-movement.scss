@@ -19,10 +19,6 @@
   justify-content: flex-end;
   @extend %textCenter;
   flex-direction: column;
-  .svg {
-    width: 13vw;
-    height: 6vw;
-  }
   > .svgOnHover {
     &:first-child {
       .svg {
@@ -31,8 +27,8 @@
     }
   }
   .eye-glass-frame {
-    width: 13vw;
-    height: 6vw;
+    width: 16vw;
+    height: 8vw;
     svg {
       width: 100%;
       height: auto;

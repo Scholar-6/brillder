@@ -11,10 +11,6 @@
     align-items: center;
     transition: all 400ms ease-out !important;
 
-    &:hover {
-      margin-top: calc(#{$bricks-height / -34});
-    }
-
     .publish-brick-container {
       min-width: 22vw;
       cursor: pointer;

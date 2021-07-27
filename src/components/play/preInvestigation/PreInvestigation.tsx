@@ -52,6 +52,9 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
             </div>
             <div className="footer s-fade3">
               You have<span className="underline-border"> {minutes} minutes </span>to complete the investigation. Once time is up, you will get a provisional score.
+              <svg className="svg fe-arrow">
+                <SpriteIcon name="pre-prep-arrow" />
+              </svg>
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
