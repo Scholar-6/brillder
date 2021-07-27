@@ -18,6 +18,7 @@ import { AcademicLevel, AcademicLevelLabels, Subject } from "model/brick";
 import { isLevelVisible, toggleElement } from "components/viewAllPage/service/viewAll";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
+import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 
 enum Tab {
   Assignemnts,
@@ -456,6 +457,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             hide={() => this.setState({ expandedAssignment: null })}
           />
         )}
+        <ClassInvitationDialog onFinish={() => this.getAssignments()} />
       </div>
     );
   }

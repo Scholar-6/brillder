@@ -18,6 +18,7 @@ import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { countClassAssignments, countClassroomAssignments, filter, getAssignmentsTabCount, getCompletedTabCount, isVisibled, sortAssignments, Tab } from "./service";
+import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 
 
 interface PlayProps {
@@ -231,6 +232,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
             </div>
           }
         </Grid>
+        <ClassInvitationDialog onFinish={() => this.getAssignments(-1)} />
       </Grid>
     );
   }
