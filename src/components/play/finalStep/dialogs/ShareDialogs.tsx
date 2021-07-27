@@ -10,7 +10,6 @@ import LinkCopiedDialog from './LinkCopiedDialog';
 import InviteDialog from './InviteDialog';
 import InvitationSuccessDialog from './InvitationSuccessDialog';
 import routes from 'components/play/routes';
-import ShareWithUserDialog from './ShareWithUserDialog';
 
 interface ShareProps {
   shareOpen: boolean;
