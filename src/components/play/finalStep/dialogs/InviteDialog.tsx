@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import actions from 'redux/actions/brickActions';
 import { Brick, Editor } from 'model/brick';
 import { inviteUser } from 'services/axios/brick';
-import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
+import AutocompleteUsernameAndEmail from 'components/play/baseComponents/AutocompleteUsernameAndEmail';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import PrivateConfirmDialog from 'components/baseComponents/dialogs/PrivateConfirmDialog';
 
@@ -135,7 +135,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         <div style={{ marginTop: '1.8vh' }}></div>
         <Grid item className="input-container">
           <div className="audience-inputs border-rounded">
-            <AutocompleteUsername
+            <AutocompleteUsernameAndEmail
               canEdit={props.canEdit}
               brick={brick}
               editorError={editorError}

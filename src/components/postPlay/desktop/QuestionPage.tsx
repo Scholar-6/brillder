@@ -33,7 +33,8 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
 
   return (
     <div className="book-page">
-      <div className="real-content question-content">
+      <div className="real-content question-content brief-page">
+        <div>
         {mode === undefined
           ? <QuestionPlay question={question} isPhonePreview={true} isDefaultBook={true} answers={[]} />
           :
@@ -45,6 +46,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
             answers={parsedAnswers}
           />
         }
+        </div>
       </div>
       <div className="bottom-navigator">
         <div>
