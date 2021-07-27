@@ -39,6 +39,9 @@ html {
             }
           }
         }
+        .sorted-row-expanded {
+          height: calc(100% - 2vw) !important;
+        }
       }
     }
   }
