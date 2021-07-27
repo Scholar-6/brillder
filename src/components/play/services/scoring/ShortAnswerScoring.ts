@@ -15,7 +15,7 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
         if (attempt.answer[index]) {
             const givenAnswer = stripHtml(attempt.answer[index]);
             let end = 0;
-            console.log(`${givenAnswer.toLowerCase()} ${correctAnswer.toLowerCase()}`)
+            let allow_one_mistake = 0;
 
             //check how far through letters to check
             if(givenAnswer.toLowerCase().length!==correctAnswer.toLowerCase().length){
@@ -31,14 +31,15 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
                 end=givenAnswer.toLowerCase().length;
             }
             
-            //check each symbol and compare to correct answer. 2 marks for each of first 3, 
-            //1 for each of remaining
             for(let i=0; i<end; i++){
                 if(givenAnswer.toLowerCase()[i]===correctAnswer.toLowerCase()[i]){
                     attempt.marks += 1;
                 }
                 else{
-                    attempt.marks -= 1;
+                    if (allow_one_mistake == 1){
+                        attempt.marks -= 1;
+                    }
+                    else {allow_one_mistake += 1;}
                 }
             }
         } 

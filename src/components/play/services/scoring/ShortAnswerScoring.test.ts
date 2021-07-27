@@ -4,7 +4,7 @@ import { ShortAnswerData } from 'components/build/buildQuestions/questionTypes/s
 import { ShortAnswerAnswer } from 'components/play/questionTypes/shortAnswer/ShortAnswer';
 import { ComponentAttempt } from 'components/play/model';
 
-jest.mock("desmos", );
+jest.mock("desmos");
 
 const mockComponent: ShortAnswerData = {
     list: [{ value: "test"}]
@@ -12,7 +12,7 @@ const mockComponent: ShortAnswerData = {
 
 describe("short answer scoring", () => {
 
-    it("should mark a correct answer with 6 marks", () => {
+    it("should mark a correct answer with 4 marks", () => {
         //11/4/2020
         // arrange
         const mockAttempt: ComponentAttempt<ShortAnswerAnswer> = {
@@ -23,14 +23,45 @@ describe("short answer scoring", () => {
         const result = mark(mockComponent, mockAttempt);
 
         // assert
-        expect(result.marks).toStrictEqual(6);
-        expect(result.maxMarks).toStrictEqual(6);
+        expect(result.marks).toStrictEqual(4);
+        expect(result.maxMarks).toStrictEqual(4);
         expect(result.correct).toStrictEqual(true);
         
     });
 
-    /* 11/4/2020
-    it("should mark an incorrect answer with 0.5 marks", () => {
+    it("should mark an almost correct (one wrong character) answer with 3 marks", () => {
+        //11/4/2020
+        // arrange
+        const mockAttempt: ComponentAttempt<ShortAnswerAnswer> = {
+            answer: ["tast"]
+        } as ComponentAttempt<ShortAnswerAnswer>;
+
+        // act
+        const result = mark(mockComponent, mockAttempt);
+
+        // assert
+        expect(result.marks).toStrictEqual(3);
+        expect(result.maxMarks).toStrictEqual(4);
+        expect(result.correct).toStrictEqual(false);
+    });
+
+    it("should mark a partially correct (two wrong characters out of four) answer with 1 marks", () => {
+        //11/4/2020
+        // arrange
+        const mockAttempt: ComponentAttempt<ShortAnswerAnswer> = {
+            answer: ["sast"]
+        } as ComponentAttempt<ShortAnswerAnswer>;
+
+        // act
+        const result = mark(mockComponent, mockAttempt);
+
+        // assert
+        expect(result.marks).toStrictEqual(1);
+        expect(result.maxMarks).toStrictEqual(4);
+        expect(result.correct).toStrictEqual(false);
+    });
+
+    it("should mark a totally incorrect answer with 0 marks", () => {
         // arrange
         const mockAttempt: ComponentAttempt<ShortAnswerAnswer> = {
             answer: ["incorrect"]
@@ -40,12 +71,12 @@ describe("short answer scoring", () => {
         const result = mark(mockComponent, mockAttempt);
 
         // assert
-        expect(result.marks).toStrictEqual(0.5);
-        expect(result.maxMarks).toStrictEqual(6);
+        expect(result.marks).toStrictEqual(0);
+        expect(result.maxMarks).toStrictEqual(4);
         expect(result.correct).toStrictEqual(false);
     });
 
-    it("should mark multiple incorrect answers with 0.5 marks each", () => {
+    it("should mark multiple incorrect answers with 0 marks each", () => {
         // arrange
         const mockComponent: ShortAnswerData = {
             list: [
@@ -64,8 +95,8 @@ describe("short answer scoring", () => {
         const result = mark(mockComponent, mockAttempt);
 
         // assert
-        expect(result.marks).toStrictEqual(2);
-        expect(result.maxMarks).toStrictEqual(6);
+        expect(result.marks).toStrictEqual(0);
+        expect(result.maxMarks).toStrictEqual(16);
         expect(result.correct).toStrictEqual(false);
     })
 
@@ -80,8 +111,8 @@ describe("short answer scoring", () => {
 
         // assert
         expect(result.marks).toStrictEqual(0);
-        expect(result.maxMarks).toStrictEqual(6);
+        expect(result.maxMarks).toStrictEqual(4);
         expect(result.correct).toStrictEqual(false);
     });
-    */
+    
 });
