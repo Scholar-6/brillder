@@ -9,14 +9,12 @@ interface ShareProps {
   isOpen: boolean;
   isPrivatePreview?: boolean;
   link(): void;
-  share?(): void;
   invite(): void;
   close(): void;
 }
 
 const ShareDialog: React.FC<ShareProps> = props => {
   const [linkHovered, setLinkHover] = React.useState(false);
-  const [shareHovered, setShareHover] = React.useState(false);
   const [inviteHovered, setInviteHover] = React.useState(false);
 
   return (
@@ -36,11 +34,6 @@ const ShareDialog: React.FC<ShareProps> = props => {
           <SpriteHoverIcon name="link" onClick={props.link} onHover={() => setLinkHover(true)} onBlur={() => setLinkHover(false)} />
           {linkHovered && <div className="custom-tooltip copy-tooltip">Copy Link</div>}
         </div>
-        {!props.isPrivatePreview &&
-        <div>
-          <SpriteHoverIcon name="feather-share" onClick={props.share} onBlur={() => setShareHover(false)} onHover={() => setShareHover(true)} />
-          {shareHovered && <div className="custom-tooltip share-tooltip">Share brick</div>}
-        </div>}
         {!props.isPrivatePreview &&
         <div>
           <SpriteHoverIcon name="user-plus" onClick={props.invite} onBlur={() => setInviteHover(false)} onHover={() => setInviteHover(true)} />

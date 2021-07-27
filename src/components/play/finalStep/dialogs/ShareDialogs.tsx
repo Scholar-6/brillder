@@ -28,7 +28,6 @@ interface InviteResult {
 const ShareDialogs: React.FC<ShareProps> = props => {
   const [linkOpen, setLink] = useState(false);
   const [linkCopiedOpen, setCopiedLink] = useState(false);
-  const [shareUserOpen, setShareUser] = useState(false);
   const [inviteOpen, setInvite] = useState(false);
   const [inviteResult, setInviteResult] = useState({
     isOpen: false,
@@ -48,7 +47,6 @@ const ShareDialogs: React.FC<ShareProps> = props => {
       <ShareDialog
         isOpen={props.shareOpen}
         link={() => setLink(true)}
-        share={() => setShareUser(true)}
         invite={() => setInvite(true)}
         close={props.close}
       />
@@ -57,14 +55,6 @@ const ShareDialogs: React.FC<ShareProps> = props => {
         submit={() => setCopiedLink(true)} close={() => setLink(false)}
       />
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={() => setCopiedLink(false)} />
-      <ShareWithUserDialog
-        brick={props.brick} isOpen={shareUserOpen} isAuthor={isAuthor}
-        submit={name => {
-          console.log(name);
-          //setInviteResult({ isOpen: true, name, accessGranted: false } as InviteResult);
-        }}
-        close={() => setShareUser(false)}
-      />
       <InviteDialog
         canEdit={true} brick={props.brick} isOpen={inviteOpen} hideAccess={true} isAuthor={isAuthor}
         submit={name => {
