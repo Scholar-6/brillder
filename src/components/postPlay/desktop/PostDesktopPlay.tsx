@@ -27,6 +27,8 @@ import QuestionPage from "./QuestionPage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import FrontPage from "../FrontPage";
+import { Grid } from "@material-ui/core";
+import map from "components/map";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -170,14 +172,14 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     }
 
     if (this.state.bookState === BookState.Front) {
+      let bookClass = "book-main-container";
+      bookClass += ' closed';
+
       return (
         <React.Suspense fallback={<></>}>
           <DesktopTheme />
           <DesktopBookTheme />
           <div className="post-play-page">
-            <Helmet>
-              <title>{getBrillderTitle(brick.title)}</title>
-            </Helmet>
             <PageHeadWithMenu
               page={PageEnum.Book}
               user={this.props.user}
@@ -186,11 +188,35 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
               search={() => { }}
               searching={(v: string) => { }}
             />
-            <div className="book-container">
-              <FrontPage brick={brick} student={student} color={color} onClick={() => {
-                this.setState({bookState: BookState.Brief});
-              }} />
+            <Helmet>
+              <title>{getBrillderTitle(brick.title)}</title>
+            </Helmet>
+            <Grid
+              container
+              direction="row"
+              style={{ height: "100% !important" }}
+              justify="center"
+            >
+              <Grid className="main-text-container">
+                <h1>This book is yours.</h1>
+                <h2>Hover your mouse over the cover to</h2>
+                <h2>see a summary of your results.</h2>
+                <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
+                  View it in my library
+                </button>
+              </Grid>
+              <div className={bookClass}>
+                <div className="book-container" onMouseOut={() => { }}>
+                  <div className="book" onMouseOver={() => { }}>
+                    <div className="back"></div>
+                    <div className="page6"></div>
+                    <div className="page5"></div>
+                    <div className="front-cover"></div>
+                    <FrontPage brick={brick} student={student} color={color} onClick={() => this.setState({bookState: BookState.Brief})} />
+                  </div>
+                </div>
               </div>
+            </Grid>
           </div>
         </React.Suspense>
       )
