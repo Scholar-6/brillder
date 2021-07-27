@@ -97,6 +97,10 @@
           > div:hover {
             background: var(--light-blue-alpha3);
           }
+          > div.active {
+            color: var(--theme-dark-blue);
+            background: var(--white);
+          }
         }
       }
       .footer {

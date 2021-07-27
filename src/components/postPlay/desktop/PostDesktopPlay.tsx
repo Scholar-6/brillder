@@ -54,7 +54,6 @@ interface ProposalProps {
 interface ProposalState {
   bookState: BookState;
   questionIndex: number;
-  activeAttemptIndex: number;
   subjects: Subject[];
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
@@ -69,7 +68,6 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     this.state = {
       bookState: BookState.Front,
       questionIndex: 0,
-      activeAttemptIndex: 0,
       attempt: null,
       attempts: [],
       subjects: [],
@@ -105,7 +103,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     const subjects = await loadSubjects();
     let attempts = await getAttempts(brickId, userId);
     if (subjects && attempts && attempts.length > 0) {
-      const attempt = attempts[this.state.activeAttemptIndex];
+      const attempt = attempts[0];
       this.prepareAttempt(attempt);
       this.setState({ attempt: attempt, attempts, subjects });
     }
@@ -114,7 +112,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   setActiveAttempt(attempt: PlayAttempt, i: number) {
     try {
       this.prepareAttempt(attempt);
-      this.setState({ attempt, activeAttemptIndex: i });
+      this.setState({ attempt });
     } catch { }
   }
 
@@ -199,6 +197,8 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
           <div className="page-content">
             <BookSidebar
               brick={brick} questions={questions}
+              activeQuestionIndex={this.state.questionIndex}
+              bookState={this.state.bookState}
               moveToPage={this.moveToPage.bind(this)}
               moveToQuestion={this.moveToQuestion.bind(this)}
             />
@@ -241,7 +241,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
               {this.state.bookState === BookState.Synthesis && <div className="brief-page">
                 <div>
                   <div className="open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }}></div>
-                  <div className="expand-title brief-title">
+                  <div className="expand-title brief-title synthesis-title">
                     <span>Synthesis</span>
                     <div className="centered text-white">
                       <div className="round-icon b-green">
