@@ -9,6 +9,7 @@ import { showSameAnswerPopup } from '../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 
 interface Answer {
@@ -73,8 +74,8 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
     updateComponent(state);
   }
 
-  const answerChanged = (answer: any, event: any) => {
-    answer.value = event.target.value;
+  const answerChanged = (answer: any, v: string) => {
+    answer.value = v;
     update();
   }
 
@@ -103,13 +104,13 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
     save();
   }
 
-  const beforeChanged = (choice: MissingChoice, event: any) => {
-    choice.before = event.target.value;
+  const beforeChanged = (choice: MissingChoice, v: string) => {
+    choice.before = v;
     update();
   }
 
-  const afterChanged = (choice: MissingChoice, event: any) => {
-    choice.after = event.target.value;
+  const afterChanged = (choice: MissingChoice, v: string) => {
+    choice.after = v;
     update();
   }
 
@@ -145,17 +146,19 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
 
     return (
       <div className="choose-several-box" key={key}>
-        <textarea
-          value={choice.before}
-          onChange={(event) => { beforeChanged(choice, event) }}
+        <QuillEditor
+          data={choice.before}
+          className="missing-big-text"
+          toolbar={['bold', 'italic', 'blockquote']}
+          onChange={v => beforeChanged(choice, v)}
           disabled={locked}
-          rows={3}
-          placeholder="Text before missing word..."></textarea>
+          placeholder="Text before missing word..."
+        />
         {
           (state.choices.length > 1)
-            && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
-              <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
-            </button>
+          && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
+            <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
+          </button>
         }
         {
           choice.answers.map((answer, i) => {
@@ -170,13 +173,14 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
                   checked={answer.checked}
                   onChange={(e) => onChecked(choice, e)} value={i}
                 />
-                <input
+                <QuillEditor
                   placeholder="Enter Answer..."
+                  toolbar={['bold', 'italic']}
                   className={getInputClass(answer)}
                   disabled={locked}
-                  value={answer.value}
-                  onChange={(event: any) => {
-                    answerChanged(answer, event);
+                  data={answer.value}
+                  onChange={v => {
+                    answerChanged(answer, v);
                   }}
                   onBlur={() => {
                     showSameAnswerPopup(i, choice.answers, openSameAnswerDialog);
@@ -186,13 +190,14 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
             );
           })
         }
-        <textarea
-          value={choice.after}
+        <QuillEditor
+          data={choice.after}
+          className="missing-big-text"
+          toolbar={['bold', 'italic', 'blockquote']}
+          onChange={v => afterChanged(choice, v)}
           disabled={locked}
-          rows={3}
           placeholder="Text after missing word..."
-          onChange={(event) => { afterChanged(choice, event) }}>
-        </textarea>
+        />
         <AddAnswerButton
           locked={locked} addAnswer={() => { addAnswer(choice) }} height={choice.height}
           label="+ ANSWER"
