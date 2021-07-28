@@ -22,6 +22,9 @@ const BookSidebar: React.FC<Props> = ({ bookState, brick, questions, activeQuest
     <div className="sidebar">
       <div className="header flex-center">Contents</div>
       <div className="scroll-content pages-list">
+        <div className={bookState === BookState.Attempts ? 'active attempts' : 'attempts'} onClick={() => moveToPage(BookState.Attempts)}>
+          <SpriteIcon name="play-thick" /><span className="bold">Attempts</span><span className="ellipsis"/>
+        </div>
         <div className={bookState === BookState.Brief ? 'active' : ''} onClick={() => moveToPage(BookState.Brief)}>
           <SpriteIcon name="crosshair" /><span className="bold">Brief</span> <span className="ellipsis">{stripHtml(brick.brief)}</span>
         </div>
