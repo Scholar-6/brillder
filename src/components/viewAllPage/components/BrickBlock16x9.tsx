@@ -48,11 +48,31 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     color = brick.subject.color;
   }
 
+  let isAssignment = false;
+  let assignmentId = -1;
+
+  if (brick.assignments) {
+    for (let assignmen of brick.assignments) {
+      let assignment = assignmen as any;
+      for (let student of assignment.stats.byStudent) {
+        if (student.studentId === props.user.id) {
+          assignmentId = assignment.id;
+          isAssignment = true;
+        }
+      }
+    }
+  }
+
   const moveToBuild = () => {
     props.history.push(buildRoutes.buildQuesitonType(brick.id));
   }
 
   const move = () => {
+    if (isAssignment && assignmentId) {
+      setAssignmentId(assignmentId);
+      props.history.push(map.postPlay(brick.id, props.user.id));
+      return;
+    }
     if (props.isPlay) {
       const values = queryString.parse(props.history.location.search);
       let link = playCover(brick.id);
@@ -96,19 +116,6 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       </div>
     </div>
     );
-  }
-
-  let isAssignment = false;
-
-  if (brick.assignments) {
-    for (let assignmen of brick.assignments) {
-      let assignment = assignmen as any;
-      for (let student of assignment.stats.byStudent) {
-        if (student.studentId === props.user.id) {
-          isAssignment = true;
-        }
-      }
-    }
   }
 
   return (
