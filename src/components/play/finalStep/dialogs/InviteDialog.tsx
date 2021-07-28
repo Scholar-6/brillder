@@ -18,6 +18,7 @@ interface InviteProps {
   hideAccess?: boolean;
   isAuthor: boolean;
   title?: string;
+  accessGranted?: boolean;
   submit(name: string, accessGranted: boolean): void;
   close(): void;
 
@@ -25,7 +26,8 @@ interface InviteProps {
 }
 
 const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
-  const [accessGranted, setAccess] = React.useState(null as boolean | null);
+  const initAccess = (props.accessGranted === true || props.accessGranted === false) ? props.accessGranted : null;
+  const [accessGranted, setAccess] = React.useState(initAccess);
   const [confirmPrivate, setConfirmPrivate] = React.useState(false);
 
   const [isValid, setValid] = React.useState(false);
@@ -140,7 +142,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
             />
           </div>
         </Grid>
-        {props.isAuthor ?
+        {props.isAuthor && !props.hideAccess ?
           <div>
             <div style={{ marginTop: '1.8vh' }}></div>
             <div className="title left">Grant editing access?</div>
