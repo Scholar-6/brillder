@@ -123,7 +123,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
           {renderDeadline()}
           <div className="level">
             <div style={{background: color}}>
-              {brick.assignments ? <SpriteIcon name="book-open" /> : AcademicLevelLabels[brick.academicLevel]}
+              {isAssignment ? <SpriteIcon name="book-open" /> : AcademicLevelLabels[brick.academicLevel]}
             </div>
           </div>
           {brick.coverImage ?
