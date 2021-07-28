@@ -282,10 +282,26 @@
       .MuiFormControl-root {
         margin-bottom: 0.7vh !important;
       }
+      .dialog-input {
+        .MuiInputBase-root{
+          input {
+            height: 9vw;
+            min-height: 9vw;
+          }
+        }
+      }
       .small-text-link {
         text-align: center;
         font-size: 4.5vw;
         margin-bottom: 3vh;
+      }
+      .dialog-footer {
+        > button:first-child {
+          margin-right: 1.25vw;
+        }
+        > button:last-child {
+          margin-left: 1.25vw;
+        }
       }
     }
   }
