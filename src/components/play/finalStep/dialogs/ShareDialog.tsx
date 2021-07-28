@@ -16,7 +16,6 @@ interface ShareProps {
 
 const ShareDialog: React.FC<ShareProps> = props => {
   const [linkHovered, setLinkHover] = React.useState(false);
-  const [whatsappHovered, setWhatsappHover] = React.useState(false);
   const [inviteHovered, setInviteHover] = React.useState(false);
 
   return (

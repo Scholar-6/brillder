@@ -5,7 +5,7 @@ import { Radio } from '@material-ui/core';
 import { connect } from "react-redux";
 
 import actions from 'redux/actions/brickActions';
-import { Brick, Editor } from 'model/brick';
+import { Brick } from 'model/brick';
 import { inviteUser, shareByEmails } from 'services/axios/brick';
 import AutocompleteUsernameAndEmail, { ShareUser } from 'components/play/baseComponents/AutocompleteUsernameAndEmail';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
