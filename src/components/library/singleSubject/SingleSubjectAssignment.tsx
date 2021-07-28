@@ -101,7 +101,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
 
         {hovered && height < 50 && (
           <div className="custom-tooltip subject-tooltip b-yellow text-theme-dark-blue">
-            <BrickTitle title="To add a book to your shelf, score more than 50% on this brick" />
+            <BrickTitle title="This Brick has been assigned to you by a teacher and needs to be played" />
           </div>
         )}
         <div
