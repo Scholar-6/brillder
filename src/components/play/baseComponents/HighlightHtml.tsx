@@ -23,7 +23,7 @@ const HighlightHtml: React.FC<SelectableProps> = (props) => {
     const selection = window.getSelection();
     if(selection && !selection.isCollapsed) {
       const range = selection?.getRangeAt(0);
-      document.designMode = "on";
+      textBox.contentEditable = "true";
       if (range) {
         selection.removeAllRanges();
         selection.addRange(range);
@@ -35,7 +35,7 @@ const HighlightHtml: React.FC<SelectableProps> = (props) => {
       } else if (shouldUnHighlight) {
         document.execCommand("RemoveFormat", false);
       }
-      document.designMode = "off";
+      textBox.contentEditable = "false";
       props.onHighlight(textBox?.innerHTML);
     }
   }, [shouldUnHighlight, shouldHighlight]);
@@ -51,8 +51,8 @@ const HighlightHtml: React.FC<SelectableProps> = (props) => {
   }, [setTextBox, onMouseUp]);
 
   return (
-    <div ref={textRef} className={`highlight-html${shouldHighlight ? " highlight-on" : ""}`}>
-      <YoutubeAndMathInHtml isSynthesisParser={props.isSynthesis} value={props.value} />
+    <div className={`highlight-html${shouldHighlight ? " highlight-on" : ""}`}>
+      <YoutubeAndMathInHtml ref={textRef} isSynthesisParser={props.isSynthesis} value={props.value} />
     </div>
   );
 };

@@ -12,7 +12,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
 import { getBrillderTitle } from "components/services/titleService";
-import { BrickFieldNames, PlayButtonStatus } from "../build/proposal/model";
+import { BrickFieldNames, PlayButtonStatus } from "../../build/proposal/model";
 import {
   ApiQuestion,
   parseQuestion,
@@ -26,19 +26,19 @@ import { loadSubjects } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
-import FrontPage from "./bookPages/FrontPage";
+import FrontPage from "../FrontPage";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
 import { Helmet } from "react-helmet";
-import AttemptsPhonePage from "./bookPages/AttemptsPhonePage";
+import AttemptsPhonePage from "./AttemptsPhonePage";
 
-import PhoneQuestionHead from "./phone/PhoneQuestionHead";
+import PhoneQuestionHead from "./PhoneQuestionHead";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import PhoneQuestionPage from "./phone/PhoneQuestionPage";
+import PhoneQuestionPage from "./PhoneQuestionPage";
 import map from "components/map";
 import { stripHtml } from "components/build/questionService/ConvertService";
 
-const MobileTheme = React.lazy(() => import('./themes/PageMobileTheme'));
+const MobileTheme = React.lazy(() => import('../themes/PageMobileTheme'));
 
 export enum BookState {
   Titles,
@@ -98,10 +98,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.loadData();
   }
 
-  movePage(bookState: BookState) {
-    this.setState({ bookState });
-  }
-
   prepareAttempt(attempt: PlayAttempt) {
     attempt.brick.questions = attempt.brick.questions.sort((a, b) => a.order - b.order);
   }
@@ -157,33 +153,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       this.state.swiper.slideTo(3, 200);
     }
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true });
-  }
-
-  moveToIntroduction() {
-    this.setState({ bookState: BookState.Introduction, questionIndex: 0 });
-  }
-
-  moveToSynthesis() {
-    this.setState({ bookState: BookState.Synthesis });
-  }
-
-  nextQuestion() {
-    if (!this.state.attempt) { return; }
-    const { brick } = this.state.attempt;
-    if (this.state.questionIndex < brick.questions.length - 1) {
-      this.setState({ questionIndex: this.state.questionIndex + 1, mode: undefined });
-    } else {
-      this.moveToSynthesis();
-    }
-  }
-
-  prevQuestion() {
-    if (this.state.questionIndex === 0) {
-      this.moveToIntroduction();
-    }
-    if (this.state.questionIndex > 0) {
-      this.setState({ questionIndex: this.state.questionIndex - 1, mode: undefined });
-    }
   }
 
   render() {
@@ -319,7 +288,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       attempts={this.state.attempts}
                       index={this.state.activeAttemptIndex}
                       setActiveAttempt={this.setActiveAttempt.bind(this)}
-                      onClick={this.moveToIntroduction.bind(this)}
                     />
                     <div className="footer">
                       Swipe to view Questions <SpriteIcon name="flaticon-swipe" />
@@ -406,7 +374,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                           question={q}
                           activeAttempt={this.state.attempt as any}
                           mode={this.state.mode}
-                          prevQuestion={this.prevQuestion.bind(this)}
                         />
                       </div>
                       <div className="footer-question">

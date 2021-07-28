@@ -1,0 +1,28 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.user-profile-page {
+  .user-profile-content {
+    $width: 68vw;
+    height: 100% !important;
+    .save-button-container {
+      left: 60.5vw !important;
+    }
+    .profile-block {
+      width: $width;
+      height: 100% !important;
+      $left: 3vw;
+      .profile-fields,
+      .big-input-container {
+        padding-left: $left !important;
+      }
+      .big-input-container {
+        max-width: 63.7vw;
+      }
+    }
+    .phone-question-preview-box {
+      width: calc(100vw - #{$width});
+    }
+  }
+}

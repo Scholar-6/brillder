@@ -1,26 +1,21 @@
 import React from "react";
 import { PlayAttempt } from "model/attempt";
-import { getDateString, getTime } from "components/services/brickService";
+import { getAttemptDateString, getTime } from "components/services/brickService";
 
 interface AttemptsPageProps {
   index: number;
   attempts: PlayAttempt[];
   setActiveAttempt(attempt: PlayAttempt, index: number): void;
-  onClick(): void;
 }
 
 const AttemptsPage: React.FC<AttemptsPageProps> = (props) => {
   return (
-    <div className="page4-attempts" onClick={props.onClick}>
+    <div className="attempts">
       {props.attempts.map((a, i) =>
         {
-          let percentages = 0;
-          if (typeof a.oldScore === 'undefined') {
-            percentages = Math.round(a.score * 100 / a.maxScore);
-          } else {
-            const middleScore = (a.score + a.oldScore) / 2;
-            percentages = Math.round(middleScore * 100 / a.maxScore);
-          }
+          const middleScore = (a.score + a.oldScore) / 2;
+          let percentages = Math.round(middleScore * 100 / a.maxScore) ;
+          percentages = percentages ? percentages : 0;
           return (
             <div
               key={i}
@@ -32,8 +27,8 @@ const AttemptsPage: React.FC<AttemptsPageProps> = (props) => {
             >
               <div className="percentage">{percentages}</div>
               {i === 0
-                ? <span>Your latest attempt on {getDateString(a.timestamp)} at {getTime(a.timestamp)}</span>
-                : <span>Attempt on {getDateString(a.timestamp)} at {getTime(a.timestamp)}</span>
+                ? <span className="score-text">% Score on {getAttemptDateString(a.timestamp)}<span className="clock-time">{getTime(a.timestamp)}</span></span>
+                : <span className="score-text">Attempt on {getAttemptDateString(a.timestamp)}<span className="clock-time">{getTime(a.timestamp)}</span></span>
               }
             </div>
           );

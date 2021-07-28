@@ -97,7 +97,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       >
         {choice.answers.map((a: any, i: number) => (
           <MenuItem key={i} className="missing-choice" value={i}>
-            {a.value}
+            <span dangerouslySetInnerHTML={{__html: a.value}} />
           </MenuItem>
         ))}
       </Select>
@@ -146,9 +146,9 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
         {component.choices.map((choice: any, index: number) => (
           <div key={index} className="missing-word-choice">
             <span>
-              {choice.before}
+              <span dangerouslySetInnerHTML={{__html: choice.before}} />
               {this.renderSelect(choice, index)}
-              {choice.after}
+              <span dangerouslySetInnerHTML={{__html: choice.after}} />
             </span>
             <Grid container direction="row" justify="center">
               {this.renderEachHint(index)}

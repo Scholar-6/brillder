@@ -9,6 +9,7 @@ import { HighlightMode } from '../model';
 import HighlightButton from '../components/HighlightButton';
 import LineStyleDialog from './LineStyleDialog';
 import PoemToggle from './PoemToggle';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface WordHighlightingData {

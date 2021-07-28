@@ -6,7 +6,11 @@ import axios from "axios";
 import map from 'components/map';
 import { useHistory } from 'react-router-dom';
 
-const ClassInvitationDialog: React.FC = props => {
+interface Props {
+  onFinish?(): void;
+}
+
+const ClassInvitationDialog: React.FC<Props> = props => {
   const [invitations, setInvitations] = React.useState<ClassroomInvitation[] | undefined>(undefined);
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -42,6 +46,7 @@ const ClassInvitationDialog: React.FC = props => {
             const newInvitations = await getInvitations();
             if(newInvitations && newInvitations.length <= 0) {
               history.push(map.AssignmentsPage + '/' + classId);
+              props.onFinish?.();
             }
           }
         }

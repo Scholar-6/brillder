@@ -10,11 +10,10 @@ interface QuestionPageProps {
   mode?: boolean;
   question: Question;
   activeAttempt: PlayAttempt;
-  prevQuestion(): void;
 }
 
 const QuestionPage: React.FC<QuestionPageProps> = ({
-  i, mode, activeAttempt, question, prevQuestion
+  i, mode, activeAttempt, question
 }) => {
   let parsedAnswers = null;
 
@@ -60,7 +59,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
   }
 
   return (
-    <div className="page3" onClick={prevQuestion}>
+    <div className="page3">
       <div className="flipped-page question-page">
         <div style={{ display: "flex" }}>
           <div className="question-scrollable">

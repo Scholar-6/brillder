@@ -13,8 +13,8 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
 import PairMatchImageContent from '../pairMatch/PairMatchImageContent';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
-import ZoomHelpText from '../components/ZoomHelpText';
-import {ReactComponent as DragIcon} from'assets/img/drag.svg';
+import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
+import { ReactComponent as TapIcon } from 'assets/img/tap.svg';
 
 
 const MobileTheme = React.lazy(() => import('./themes/Phone'));
@@ -229,10 +229,13 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   renderPhone() {
-    //const haveImage = this.checkImages();
+    const haveImage = this.checkImages();
     return (
       <div className="question-unique-play vertical-shuffle-play">
-        <ZoomHelpText />
+        <span className="help-text">
+          <div style={{ display: "none" }}>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+          <TapIcon />Click on two answers to reorder them.   {haveImage && <span>Double tap images to zoom.</span>}
+        </span>
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>
         ) : (

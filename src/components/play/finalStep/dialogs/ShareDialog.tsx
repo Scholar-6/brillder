@@ -2,6 +2,7 @@ import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 
 import './ShareDialog.scss';
+import { ReactComponent as WhatsappIcon } from 'assets/img/whatsapp.svg';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import SpriteHoverIcon from 'components/baseComponents/SpriteHoverIcon';
 
@@ -35,10 +36,20 @@ const ShareDialog: React.FC<ShareProps> = props => {
           {linkHovered && <div className="custom-tooltip copy-tooltip">Copy Link</div>}
         </div>
         {!props.isPrivatePreview &&
-        <div>
-          <SpriteHoverIcon name="user-plus" onClick={props.invite} onBlur={() => setInviteHover(false)} onHover={() => setInviteHover(true)} />
-          {inviteHovered && <div className="custom-tooltip invite-tooltip">Invite an existing user</div>}
-        </div>}
+          <div>
+            <div style={{display: 'none'}}>Автор иконок: <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/ru/" title="Flaticon">www.flaticon.com</a></div>
+            <WhatsappIcon onClick={() => {
+              const a = document.createElement('a');
+              a.target = "_blank";
+              a.href = "whatsapp://send?text=https://app.brillder.com" + props.link;
+              a.click();
+            }} />
+          </div>}
+        {!props.isPrivatePreview &&
+          <div>
+            <SpriteHoverIcon name="user-plus" onClick={props.invite} onBlur={() => setInviteHover(false)} onHover={() => setInviteHover(true)} />
+            {inviteHovered && <div className="custom-tooltip invite-tooltip">Invite an existing user</div>}
+          </div>}
       </div>
     </Dialog>
   );

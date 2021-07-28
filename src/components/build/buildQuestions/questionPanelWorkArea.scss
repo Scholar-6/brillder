@@ -318,6 +318,14 @@
         margin: 0;
       }
 
+      .text-toolbar {
+        svg {
+          $size: 1.3vw;
+          width: $size;
+          height: $size;
+        }
+      }
+
       .lines-input,
       .words-input {
         font-size: 1.05vw;

@@ -5,9 +5,9 @@ import { Radio } from '@material-ui/core';
 import { connect } from "react-redux";
 
 import actions from 'redux/actions/brickActions';
-import { Brick, Editor } from 'model/brick';
-import { inviteUser } from 'services/axios/brick';
-import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
+import { Brick } from 'model/brick';
+import { inviteUser, shareByEmails } from 'services/axios/brick';
+import AutocompleteUsernameAndEmail, { ShareUser } from 'components/play/baseComponents/AutocompleteUsernameAndEmail';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import PrivateConfirmDialog from 'components/baseComponents/dialogs/PrivateConfirmDialog';
 
@@ -18,6 +18,7 @@ interface InviteProps {
   hideAccess?: boolean;
   isAuthor: boolean;
   title?: string;
+  accessGranted?: boolean;
   submit(name: string, accessGranted: boolean): void;
   close(): void;
 
@@ -25,20 +26,21 @@ interface InviteProps {
 }
 
 const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
-  const [accessGranted, setAccess] = React.useState(null as boolean | null);
+  const initAccess = (props.accessGranted === true || props.accessGranted === false) ? props.accessGranted : null;
+  const [accessGranted, setAccess] = React.useState(initAccess);
   const [confirmPrivate, setConfirmPrivate] = React.useState(false);
 
   const [isValid, setValid] = React.useState(false);
-  const [editors, setEditors] = React.useState<Editor[]>([]);
+  const [editors, setEditors] = React.useState<ShareUser[]>([]);
   const [editorError, setEditorError] = React.useState("");
 
   React.useEffect(() => {
-    if(accessGranted) {
+    if (accessGranted) {
       setEditors(brick.editors ?? []);
     } else {
       setEditors([]);
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [accessGranted])
 
   const saveEditor = (editorIds: number[]) => {
@@ -56,14 +58,21 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     props.close();
   }
 
-  const onNext = () => {
+  const onNext = async () => {
     if (isValid && editors) {
       if (accessGranted) {
         saveEditor(editors.map(editor => editor.id));
         props.close();
       } else {
         if (brick.isCore) {
-          editors.forEach(editor => inviteUserById(editor.id));
+          editors.forEach(editor => {
+            if (editor.id) {
+              inviteUserById(editor.id);
+            }
+          });
+          const shareUserEmails = editors.filter(e => e.isJustEmail);
+          const shareEmails = shareUserEmails.map(u => u.email);
+          await shareByEmails(brick.id, shareEmails);
           setEditors([]);
         } else {
           setConfirmPrivate(true);
@@ -90,7 +99,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     return editors.reduce((prev, current, idx, array) => {
       if (idx === 0) {
         return `${prev}${current.username}`;
-      } else if(idx === array.length - 1) {
+      } else if (idx === array.length - 1) {
         return `${prev}, ${current.username}`;
       } else {
         return `${prev}, and ${current.username}`;
@@ -100,23 +109,10 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
 
   const renderCustomText = () => {
     let name = getNameText();
-    if(!name) {
+    if (!name) {
       name = 'Name';
     }
     return `Allow ${name} to comment on the build panels of your brick`;
-  }
-
-  const renderSendButton = () => {
-    return (
-      <button
-        className="btn bold btn-md bg-theme-orange yes-button"
-        style={{ width: 'auto', paddingLeft: '4vw' }}
-        onClick={onNext}
-      >
-        Send Invite
-        <SpriteIcon name="send" className="active send-icon" onClick={props.close} />
-      </button>
-    );
   }
 
   return (
@@ -135,18 +131,18 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         <div style={{ marginTop: '1.8vh' }}></div>
         <Grid item className="input-container">
           <div className="audience-inputs border-rounded">
-            <AutocompleteUsername
+            <AutocompleteUsernameAndEmail
               canEdit={props.canEdit}
               brick={brick}
               editorError={editorError}
-              placeholder={`Enter ${accessGranted ? "editor" : "user"}'s username here...`}
+              placeholder={`Enter email or ${accessGranted ? "editor" : "user"}'s username here...`}
               onBlur={onBlur}
               users={editors}
               setUsers={setEditors}
             />
           </div>
         </Grid>
-        {props.isAuthor ?
+        {props.isAuthor && !props.hideAccess ?
           <div>
             <div style={{ marginTop: '1.8vh' }}></div>
             <div className="title left">Grant editing access?</div>
@@ -159,7 +155,14 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
       </div>
       <div style={{ marginTop: '1.8vh' }}></div>
       <div className="dialog-footer" style={{ justifyContent: 'center' }}>
-        {renderSendButton()}
+        <button
+          className="btn bold btn-md bg-theme-orange yes-button"
+          style={{ width: 'auto', paddingLeft: '4vw' }}
+          onClick={onNext}
+        >
+          Send Invite
+          <SpriteIcon name="send" className="active send-icon" onClick={props.close} />
+        </button>
       </div>
       <PrivateConfirmDialog
         isOpen={confirmPrivate}

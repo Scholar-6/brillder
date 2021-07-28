@@ -37,7 +37,6 @@
         }
         .short-brick-info {
           padding: 0 3vw;
-          @extend %linkDescription;
           .link-info {
             width: 100%;
             color: var(--theme-light-blue);
@@ -45,12 +44,6 @@
             font-family: $font-family-regular;
             margin-bottom: 0.1vh;
             @extend %ellipsis;
-            @include phone_and_tabletP {
-              font-size: 3.8vw;
-            }
-            @include tabletP {
-              font-size: 0.9vw;
-            }
           }
         }
       }

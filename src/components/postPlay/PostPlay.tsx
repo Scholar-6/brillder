@@ -6,8 +6,8 @@ import { User } from "model/user";
 import { BrickFieldNames, PlayButtonStatus } from "../build/proposal/model";
 
 import { isPhone } from "services/phone";
-import PostPhonePlay from "./PostPhonePlay";
-import PostDesktopPlay from "./PostDesktopPlay";
+import PostPhonePlay from "./phone/PostPhonePlay";
+import PostDesktopPlay from "./desktop/PostDesktopPlay";
 
 export enum BookState {
   Titles,

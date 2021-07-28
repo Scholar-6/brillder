@@ -4,7 +4,7 @@
 
 .mainPage {
   $welcome-col-width: 35.2vw;
-  $first-col-width: 29.6vw;
+  $first-col-width: 36vw;
   background: var(--theme-dark-blue);
   position: fixed;
   width: 100%;
@@ -72,7 +72,7 @@
         margin-top: 4.3vw; //10vh;
         letter-spacing: 0.1vw;
         font-family: $font-family-light;
-        font-size: 1.5vw;
+        font-size: 1.8vw;
       }
 
       .notifications-text-2,
@@ -81,7 +81,7 @@
         color: var(--tab-gray);
         font-family: $font-family-light-italic;
         letter-spacing: 0.05vw;
-        font-size: 1.2vw;
+        font-size: 1.5vw;
       }
 
       b {
@@ -145,8 +145,8 @@
       .svg {
         @extend %transitionAll300;
         @extend %removePosition;
-        width: 13vw;
-        height: 6vw;
+        width: 16vw;
+        height: 8vw;
       }
     }
     &.disabled {
@@ -217,7 +217,7 @@
   }
   .create-item-container {
     .btn .svg {
-      height: 7.5vw;
+      height: 9vw;
     }
   }
   .create-item-container,
@@ -287,5 +287,13 @@
   // disabled button build scond column
   .second-col .create-item-container.disabled button svg {
     color: var(--theme-light-blue) !important;
+  }
+  .my-library-button {
+    button {
+      svg {
+        width: 10vw;
+        height: 10vw;
+      }
+    }
   }
 }

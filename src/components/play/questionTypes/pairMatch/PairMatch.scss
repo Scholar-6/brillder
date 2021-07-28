@@ -40,6 +40,10 @@
       width: 100%;
       overflow: scroll;
 
+      p {
+        text-align: center !important;
+      }
+
       img {
         @include tabletP {
           width: auto !important;
