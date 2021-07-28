@@ -185,11 +185,6 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         switchMode={switchMode}
       />
       <PoemToggle state={state} update={update} />
-      {state.mode === HighlightMode.Edit &&
-        <div className="text-toolbar">
-          <SpriteIcon name="ql-bold" />
-          <SpriteIcon name="ql-italic" />
-        </div>}
       <div className="input-container">
         {state.mode === HighlightMode.Edit
           ? renderEditBox()
