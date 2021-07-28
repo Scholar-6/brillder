@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { History } from "history";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import queryString from 'query-string';
@@ -45,7 +46,7 @@ interface RemindersData {
 }
 
 interface TeachProps {
-  history: any;
+  history: History;
   searchString: string;
 
   // redux
@@ -145,6 +146,35 @@ class TeachPage extends Component<TeachProps, TeachState> {
     this.loadInitData();
   }
 
+  componentDidUpdate(prevProps: TeachProps, prevState: TeachState) {
+    const value = queryString.parse(this.props.history.location.search);
+    if (value.assignmentId) {
+      const assignmentId = parseInt(value.assignmentId as string, 10);
+      if(prevState.activeAssignment?.id !== assignmentId) {
+        if(value.classroomId) {
+          const classroomId = parseInt(value.classroomId as string, 10);
+          this.setActiveAssignment(classroomId, assignmentId);
+        } else if (prevState.activeClassroom) {
+          this.setActiveAssignment(prevState.activeClassroom.id, assignmentId);
+        } else {
+          const classroomId = prevState.classrooms.find(classroom => classroom.assignments.findIndex(assignment => assignment.id === assignmentId) >= 0)?.id;
+          if(classroomId) {
+            this.setActiveAssignment(classroomId, assignmentId);
+          }
+        }
+      }
+    } else if(value.classroomId) {
+      const classroomId = parseInt(value.classroomId as string, 10);
+      if(prevState.activeClassroom?.id !== classroomId) {
+        this.loadClass(classroomId);
+      } else if (prevState.activeAssignment) {
+        this.unselectAssignment();
+      }
+    } else if(prevState.activeClassroom) {
+      this.loadClass(null);
+    }
+  }
+
   componentDidMount() {
     document.addEventListener("keydown", this.state.handleKey, false);
   }
@@ -219,12 +249,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
-  async loadClass(id: number) {
+  async loadClass(id: number | null) {
     let classrooms = await this.loadClasses();
     if (classrooms) {
       const classroom = classrooms.find(c => c.id === id);
       if (classroom) {
-        this.setState({ activeClassroom: classroom });
+        classroom.active = true;
+        this.setState({ activeClassroom: classroom, activeAssignment: null });
+      } else {
+        this.setState({ activeClassroom: null, activeAssignment: null });
       }
     }
   }
@@ -265,8 +298,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (classroom) {
       classroom.active = true;
       this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom, activeAssignment: null, activeStudent: null, assignmentStats: null });
+      this.props.history.push({ search: queryString.stringify({ classroomId: id }) });
     } else {
       this.setState({ sortedIndex: 0, activeClassroom: null, activeStudent: null, activeAssignment: null, assignmentStats: null });
+      this.props.history.push({ search: "" });
     }
   }
 
@@ -283,6 +318,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
+  moveToAssignment(classroomId: number, assignmentId: number) {
+    this.setActiveAssignment(classroomId, assignmentId);
+    this.props.history.push({ search: queryString.stringify({ classroomId, assignmentId }) });
+  }
+
   collapseClasses() {
     for (let classroom of this.state.classrooms) {
       classroom.active = false;
@@ -290,8 +330,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   unselectAssignment() {
-    this.collapseClasses();
-    this.setState({ sortedIndex: 0, activeClassroom: null, activeAssignment: null, assignmentStats: null });
+    this.setState({ sortedIndex: 0, activeAssignment: null, assignmentStats: null });
+  }
+
+  moveToNoAssignment() {
+    this.unselectAssignment();
+    this.props.history.push({ search: queryString.stringify({ classroomId: this.state.activeClassroom?.id }) });
   }
 
   teachFilterUpdated(filters: TeachFilters) {
@@ -462,14 +506,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
               startIndex={this.state.sortedIndex}
               pageSize={this.state.assignmentPageSize}
               history={this.props.history}
-              minimize={() => this.unselectAssignment()}
+              minimize={() => this.moveToNoAssignment()}
               onRemind={this.setReminderNotification.bind(this)}
             />
             : activeClassroom ?
               <ClassroomList
                 subjects={this.state.subjects}
                 isArchive={isArchive}
-                expand={this.setActiveAssignment.bind(this)}
+                expand={this.moveToAssignment.bind(this)}
                 startIndex={this.state.sortedIndex}
                 activeClassroom={activeClassroom}
                 pageSize={this.state.classPageSize}
@@ -480,7 +524,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
               <ClassroomsList
                 subjects={this.state.subjects}
                 isArchive={isArchive}
-                expand={this.setActiveAssignment.bind(this)}
+                expand={this.moveToAssignment.bind(this)}
                 startIndex={this.state.sortedIndex}
                 classrooms={showedClasses}
                 pageSize={this.state.pageSize}
