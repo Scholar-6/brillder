@@ -237,6 +237,14 @@
     }
   }
   .view-item-container {
+    .eye-glass-icon {
+      height: 2.7vw;
+    }
+    svg {
+      width: 13vw;
+      height: 5vw;
+    }
+
     &.disabled {
       .eye-glass-icon {
         .glass-eyes-left,
