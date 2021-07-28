@@ -101,6 +101,11 @@
             color: var(--theme-dark-blue);
             background: var(--white);
           }
+          .attempts {
+            svg {
+              margin-left: 2vh;
+            }
+          }
         }
       }
       .footer {
@@ -287,6 +292,36 @@
           color: var(--theme-dark-blue);
           font-family: $font-family-regular;
           font-size: 1vw;
+        }
+      }
+    }
+    .attempt-page {
+      .attempt-info {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        font-family: $font-family-bold;
+        font-size: 1.3vw;
+        color: var(--tab-gray);
+        height: 3vw;
+        .percentage {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          $size: 2.3vw;
+          background: var(--theme-green);
+          width: $size;
+          height: $size;
+          color: var(--white);
+          margin-right: 1vw;
+        }
+
+        &.active {
+          color: var(--theme-dark-blue);
+        }
+        &:hover {
+          color: var(--theme-dark-blue);
         }
       }
     }
