@@ -336,7 +336,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             search={() => { }}
             searching={() => { }}
           />
-          <Grid container direction="row">
+          <Grid container direction="row" className="user-profile-content">
             <div className="profile-block">
               <div className="profile-header">
                 {user.firstName ? user.firstName : "NAME"}
