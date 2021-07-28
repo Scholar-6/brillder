@@ -27,8 +27,8 @@ import ReturnAuthorSuccessDialog from "components/play/finalStep/dialogs/ReturnA
 import SelfPublishColumn from "./SelfPublishColumn";
 import playRoutes from '../../play/routes';
 import ShareDialogs from "components/play/finalStep/dialogs/ShareDialogs";
-import InviteDialog from "components/play/finalStep/dialogs/InviteDialog";
 import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
+import InviteEditorDialog from "./InviteEditorDialog";
 
 enum PublishStatus {
   None,
@@ -314,9 +314,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
         user={user}
         close={() => setShare(false)}
       />
-      <InviteDialog
-        canEdit={true} brick={brick} isOpen={inviteOpen} hideAccess={true} isAuthor={isAuthor}
-        accessGranted={true}
+      <InviteEditorDialog
+        canEdit={true} brick={brick} isOpen={inviteOpen} hideAccess={true}
         submit={name => {
           setInviteResult({ isOpen: true, name, accessGranted: true } as InviteResult);
         }}
