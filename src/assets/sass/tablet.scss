@@ -40,7 +40,17 @@ html {
           }
         }
         .sorted-row-expanded {
-          height: calc(100% - 2vw) !important;
+          overflow-y: hidden;
+          height: 100% !important;
+          .brick-row-container {
+            position: fixed;
+            top: 2vw;
+            left: 7vw;
+            height: calc(100% - 4vw) !important;
+            > div {
+              height: unset !important;
+            }
+          }
         }
       }
     }
