@@ -37,9 +37,11 @@
 
       .subject-name {
         color: white;
-        padding-top: 2.1vh;
-        padding-bottom: 2.1vh;
-        font-size: 3.2vh;
+        height: 6.7vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.9vw;
       }
 
       &.checked {
@@ -86,6 +88,8 @@
   margin-right: 2vw;
 
   .subject-row {
+    display: flex;
+    align-items: center;
     width: 100%;
 
     .subject-item {
