@@ -261,13 +261,13 @@ html {
 // login page
 .login-desktop-page .right-part .icons-container {
   .glasses {
-    left: 5vw;
+    left: 3vw;
   }
   .teach-icon {
     right: 5vw;
   }
   .trowel-login {
-    right: 6vw;
+    right: 5vw;
   }
 }
 
@@ -378,4 +378,24 @@ html {
 
 .bold-important {
   font-family: $font-family-bold !important;
+}
+
+.phone-question-preview .question-unique-play .help-text,
+.post-play-page .help-text,
+.question-live-play .question-unique-play .help-text {
+  font-family: $font-family-regular-italic;
+  display: flex;
+  align-items: center;
+  padding-bottom: 1vw;
+  span {
+    display: flex;
+    align-items: center;
+    padding-right: 0.3vw;
+  }
+  svg {
+    padding-right: 0.3vw;
+    height: 1.2vw;
+    width: 1.2vw;
+    fill: var(--theme-dark-blue);
+  }
 }
