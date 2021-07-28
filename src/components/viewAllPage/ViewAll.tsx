@@ -151,7 +151,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) ===
       map.SubjectCategoriesPrefix;
     const isSearchPage = props.location.pathname.slice(-map.SearchPublishPrefix.length) === map.SearchPublishPrefix;
-    console.log(isSearchPage, props.location.pathname);
 
     if (
       !isSubjectCategory &&
@@ -163,7 +162,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       !values.subjectGroup &&
       !isPhone()
     ) {
-      console.log('move')
       let link = map.SubjectCategories;
       if (values.newTeacher) {
         link += "?" + map.NewTeachQuery;
@@ -858,6 +856,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       return (
         <BrickBlock16x9
+          isViewAll={true}
           brick={item.brick}
           index={item.index}
           row={item.row + 1}
@@ -1132,8 +1131,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const {user, history} = this.props;
 
     let bricks = this.state.finalBricks;
-
-    console.log(history.location.pathname);
 
     if (isPhone()) {
       return (

@@ -32,6 +32,8 @@ interface BrickBlockProps {
 
   deadline?: string;
 
+  isViewAll?: boolean;
+
   handleDeleteOpen(brickId: number): void;
 }
 
@@ -96,6 +98,19 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     );
   }
 
+  let isAssignment = false;
+
+  if (brick.assignments) {
+    for (let assignmen of brick.assignments) {
+      let assignment = assignmen as any;
+      for (let student of assignment.stats.byStudent) {
+        if (student.studentId === props.user.id) {
+          isAssignment = true;
+        }
+      }
+    }
+  }
+
   return (
     <div className="animated-brick-container">
     <Grow
@@ -107,7 +122,9 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
         <div className="publish-brick-container">
           {renderDeadline()}
           <div className="level">
-            <div style={{background: color}}>{AcademicLevelLabels[brick.academicLevel]}</div>
+            <div style={{background: color}}>
+              {brick.assignments ? <SpriteIcon name="book-open" /> : AcademicLevelLabels[brick.academicLevel]}
+            </div>
           </div>
           {brick.coverImage ?
             <div className="scroll-block">
