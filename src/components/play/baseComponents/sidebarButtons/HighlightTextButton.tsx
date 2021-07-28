@@ -18,6 +18,9 @@ const HighlightTextButton: React.FC<ButtonProps> = (props) => {
   if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
     className += " active";
   }
+  if (mode === PlayMode.UnHighlighting) {
+    className += " unhighlight";
+  }
 
   const renderHightlightText = () => {
     if (!props.sidebarRolledUp) {
