@@ -23,7 +23,7 @@ export const isVisibled = (tab: Tab, a: AssignmentBrick) => {
 export const getAssignmentsTabCount = (assignments: AssignmentBrick[]) => {
   let count = 0;
   for (let a of assignments) {
-    if (isCompletedTab(a)) {
+    if (isAssignmentsTab(a)) {
       count += 1;
     }
   }
@@ -33,7 +33,7 @@ export const getAssignmentsTabCount = (assignments: AssignmentBrick[]) => {
 export const getCompletedTabCount = (assignments: AssignmentBrick[]) => {
   let count = 0;
   for (let a of assignments) {
-    if (isAssignmentsTab(a)) {
+    if (isCompletedTab(a)) {
       count += 1;
     }
   }

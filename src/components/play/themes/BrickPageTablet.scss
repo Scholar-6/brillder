@@ -4,7 +4,7 @@
 
 $play-base-height: 92vh;
 $play-border-radius: 3vw;
-$base-font-size: 1.4vw;
+$base-font-size: 1.6vw;
 $expanded-intro-padding: 2vw;
 $introduction-desktop-height: calc(#{$play-base-height} - #{$expanded-intro-padding} - #{$page-head-height});
 $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-padding});
@@ -477,6 +477,28 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
               font-family: $font-family-black;
               color: var(--theme-dark-blue);
               font-size: 2.5vw;
+              .ge-phone-title {
+                margin-top: 1vh;
+                display: flex;
+                align-items: center;
+                font-size: 2.5vw;
+                .ge-phone-circle {
+                  margin-right: 1vw;
+                  $size: 3vw;
+                  width: $size;
+                  height: $size;
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  svg {
+                    color: var(--white);
+                    width: 62%;
+                    height: 62%;
+                    stroke-width: 4;
+                  }
+                }
+              }
               .marks-container {
                 position: absolute;
                 font-size: 1.2vw;
@@ -853,7 +875,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
             background: var(--tab-gray);
           }
           .introduction-page {
-            height: calc(#{$play-base-height} - 4vw - 4vw) !important;
+            height: calc(100vh - 4vw - 4vw) !important;
           }
           .question-live-play {
             height: calc(100vh - 27.6vh);
@@ -993,7 +1015,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     }
     &.sorted-row-expanded {
       padding-top: $expanded-intro-padding;
-      margin-top: 0;
       .brick-row-container {
         width: calc(98vw - #{$home-button-size}) !important;
         height: calc(#{$play-base-height} - 4vw) !important;
@@ -1020,11 +1041,11 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
         }
 
         .introduction-page {
-          height: calc(#{$play-base-height} - 4vw) !important;
+          height: calc(100vh - 4vw - 4vw) !important;
           padding-left: 0 !important;
           .question-live-play {
             margin-top: $header-height !important;
-            height: calc(#{$play-base-height} - 5vw - #{$header-height} - #{$foter-height}) !important;
+            height: calc(100vh - 3vw - #{$header-height} - #{$foter-height}) !important;
           }
         }
         .new-layout-footer {
@@ -1075,8 +1096,9 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
               svg {
                 transition: all 300ms ease-out;
                 stroke-width: 3;
-                width: 2.1vw;
-                height: 2.1vw;
+                $size: 3vw;
+                width: $size;
+                height: $size;
               }
               &.back {
                 color: var(--dark-gray);
@@ -1248,7 +1270,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
       // only synthesis score
       .synthesis-container {
         .synthesis-content {
-          height: calc(#{$play-base-height} - 4vw - 4vw) !important;
+          height: calc(100vh - 4vw - 4vw - 4vw) !important;
           padding: 8vh 5vw 6vw 5vw;
           width: 100%;
         }
@@ -1357,7 +1379,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     }
 
     .introduction-info {
-      height: $introduction-expanded-height !important;
+      height: calc(100vh - 4vw) !important;
     }
 
     .circle-progress-container {
@@ -1475,12 +1497,15 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
 
 // after cover page
 .after-cover-page {
+  .hourglass-container, .flex-center {
+    height: 50vh;
+  }
   .after-cover-main-content {
     .title {
       margin-top: 7.5vh;
       margin-bottom: 10vh;
       text-align: center;
-      font-size: 6vh !important;
+      font-size: 2.5vw !important;
       font-family: $font-family-bold;
     }
     .like-buttons-container {
@@ -1490,11 +1515,11 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
 
         .like-button {
           font-family: $font-family-bold;
-          min-width: 22vw;
+          min-width: 18vw;
           text-align: center;
-          border-radius: 0.7vw;
+          border-radius: 1.3vw;
           padding: 1.5vh 1.5vw;
-          font-size: 4.5vh;
+          font-size: 4vh;
           background: var(--tab-gray);
           margin: 1vh;
           &.orange {
@@ -1506,10 +1531,17 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     }
     .footer {
       text-align: center;
-      font-size: 3vh;
+      font-size: 1.9vw;
+      position: relative;
       .underline {
         text-decoration: underline;
         text-decoration-color: var(--theme-orange);
+      }
+
+      .fe-arrow {
+        height: 12vh !important;
+        left: 0;
+        top: 2.8vw;
       }
     }
   }
@@ -1716,7 +1748,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     position: fixed;
     left: 6vw;
     color: var(--white);
-    font-size: 1.25vw;
+    font-size: 1.25vw !important;
     top: calc(2vw + 5.834vw + 4.3vw);
     text-align: center;
     .circles {
@@ -1733,6 +1765,14 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
       width: 8vw;
       padding: 0 0.5vw;
       margin-top: 0vw;
+    }
+  }
+  .count-down-content {
+    .title {
+      margin-bottom: 0 !important;
+    }
+    .footer {
+      font-size: 2.2vw !important;
     }
   }
 }
@@ -1966,4 +2006,251 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
 
 .play-preview-pages .play-question-container {
   width: 100% !important;
+}
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container.play-pre-prep-page .icon-container {
+  margin-top: 14vh !important;
+}
+
+.play-preview-pages {
+  .fe-arrow {
+    position:absolute;
+    $height-1: 28vh;
+    $height-2: 8vw;
+    left: calc(50% - (#{$height-1} * 0.8) + (#{$height-2} * 0.8) - 20vw - 5vh);
+    height: calc(#{$height-1} - #{$height-2});
+  }
+}
+
+.play-preview-pages .sorted-row.sorted-row-expanded .new-layout-footer .time-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25.6vw;
+  .united-timeprogress {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    .fixed {
+      position: absolute;
+      right: -3vw;
+    }
+  }
+}
+
+.ending-page,
+.provisional-score-page {
+  .introduction-info {
+    background-color: var(--solitude-light);
+    position: relative;
+    padding: 4vh 2vw;
+    height: $introduction-desktop-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .intro-header {
+      font-size: 2vw;
+      font-family: $font-family-black;
+      color: var(--theme-dark-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(100% - 4vw) !important;
+      position: absolute;
+      right: 2.2vw;
+      top: 2.2vw;
+      .clock-image {
+        width: 2vw;
+        height: 2vw;
+      }
+      .clock {
+        margin-left: 3vw;
+        display: flex;
+        align-items: center;
+        min-width: 6vw;
+
+        .clock-image {
+          width: 2vw;
+          height: 2vw;
+        }
+      }
+      .counter {
+        .counter-seconds {
+          font-size: 1vw;
+        }
+      }
+    }
+    .intro-text-row {
+      width: 100%;
+      font-size: 1.15vw;
+      font-family: $font-family-bold;
+      color: var(--theme-dark-blue);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      > p,
+      > ul {
+        margin: 0;
+      }
+
+      > ul {
+        margin-top: 0.5vw;
+      }
+      .stepper {
+        .step {
+          @extend %posRelative;
+          @extend %flexCenter;
+          justify-content: flex-start;
+          cursor: pointer;
+          font-size: 2vw;
+          font-family: $font-family-black;
+          color: var(--dark-gray);
+          &.current {
+            opacity: 1;
+          }
+          &.completed,
+          &.current {
+            color: var(--theme-dark-blue) !important;
+          }
+          > span {
+            width: 3vw;
+          }
+          .svg {
+            stroke-width: 2.5;
+            width: 1.5vw;
+            height: 1.5vw;
+          }
+          .blue-circle-main-container {
+            @extend %floatToXCenter;
+            width: 1.2vw;
+            height: 1.2vw;
+          }
+          .blue-circle-container {
+            padding: 0.2vw;
+            border-radius: 100vw;
+            background: var(--blue-alpha5);
+            .blue-circle {
+              height: 0.8vw;
+              width: 0.8vw;
+              border-radius: 100vw;
+              background: var(--blue);
+            }
+          }
+        }
+      }
+      .stepper {
+        .step span {
+          color: var(--theme-dark-blue) !important;
+        }
+      
+        .step.success svg {
+          color: var(--theme-green) !important;
+        }
+       
+        .step.failed svg {
+          color: var(--theme-orange) !important;
+        }
+      
+        .step.almost-failed svg {
+          color: var(--theme-yellow) !important;
+        }
+      }
+    }
+    .max-length {
+      font-family: $font-family-regular;
+      color: var(--theme-dark-blue);
+      margin-left: 0.8vw;
+      font-size: 1.8vw;
+    }
+  }
+}
+
+.play-preview-pages .sorted-row.sorted-row-expanded .provisional-score-page,
+.play-preview-pages .sorted-row.sorted-row-expanded .ending-page {
+  .MuiGrid-root .MuiGrid-root .introduction-page {
+    width: 100%;
+    .title {
+      padding: 0 !important;
+      font-size: 4vw !important;
+      position: relative !important;
+    }
+    .hr-sub-title {
+      text-align: center !important;
+    }
+    .question-live-play {
+      margin-top: 0 !important;
+      position: relative !important;
+    }
+  }
+  .attempted-numbers, .attempted-text, .duration, .review-duration {
+    opacity: 0;
+    animation: fadein 1s 1s forwards;
+  }
+  .attempted-numbers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3vh;
+    font-family: $font-family-bold;
+    > div {
+      margin-left: 1vh;
+      margin-right: 1vh;
+      display: flex;
+      align-items: center;
+    }
+    svg {
+      $size: 3vh;
+      height: $size;
+      width: $size;
+      stroke-width: 4;
+    }
+  }
+  .attempted-text {
+    text-align: center;
+    font-size: 2.5vh;
+  }
+  .duration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5vh;
+    svg {
+      stroke-width: 2.5;
+      $size: 3vh;
+      width: $size;
+      height: $size;
+    }
+    div {
+      margin-left: 1vh;
+    }
+  }
+  .review-duration {
+    margin-left: 5vh;
+    text-align: center;
+    font-size: 1.8vh;
+  }
+}
+
+.provisional-score-page {
+  .new-layout-footer {
+    .title-column {
+    width: 58vw !important;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1vw;
+    font-size: 1.55vw !important;
+    font-family: $font-family-bold;
+    }
+    .footer-arrow {
+      width: 4vw;
+    }
+    .new-navigation-buttons {
+      width: 25vw !important;
+      .next {
+        margin-left: 0 !important;
+      }
+    }
+  }
 }

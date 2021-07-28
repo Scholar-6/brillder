@@ -3,6 +3,9 @@
 @import 'src/assets/sass/partials/extensions';
 
 .missing-word-live {
+  p {
+    display: inline !important;
+  }
   line-height: 1.45;
   margin: 5px 0;
   place-content: center space-evenly;

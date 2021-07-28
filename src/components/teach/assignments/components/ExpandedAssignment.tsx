@@ -133,7 +133,9 @@ class ExpandedAssignment extends Component<
   }
 
   renderCommentIcon() {
-    return <SpriteIcon name="message-square" className="active comment-icon" />;
+    return <div className="comment-icon">
+      <SpriteIcon name="message-square" className="active" />
+    </div>;
   }
 
   renderBookIcon(studentStatus: StudentStatus, studentId: number) {
@@ -173,7 +175,7 @@ class ExpandedAssignment extends Component<
         if (attempt.marks > 0 && attempt.maxMarks > 0) {
           return <span className="bold text-theme-dark-blue">{attempt.marks}/{attempt.maxMarks}</span>;
         }
-        return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
+        return <SpriteIcon name="cancel-custom" className="text-theme-orange smaller close" />;
       } catch {
         console.log('can`t parse attempt');
       }
@@ -208,7 +210,7 @@ class ExpandedAssignment extends Component<
               </div>
             </td>
           )}
-          <td>
+          <td style={{width: '9vw'}}>
             {studentStatus && <div className="centered">{this.renderCommentIcon()}</div>}
           </td>
         </tr>

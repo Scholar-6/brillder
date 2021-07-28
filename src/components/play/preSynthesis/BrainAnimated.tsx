@@ -2,8 +2,8 @@ import React from "react";
 import './BrainAnimated.scss';
 
 const PhoneTimeSynthesisPage: React.FC = () => {
-  const delay = '0.6s';
-  const duration = '0.4s';
+  const delay = '1.1s';
+  const duration = '1s';
   return (
     <svg className="brain errgerg-brain" viewBox="0 0 272.039 248">
       <g id="Group_514" data-name="Group 514" transform="translate(-27.955 -160.347)">

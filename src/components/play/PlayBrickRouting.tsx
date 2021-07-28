@@ -293,7 +293,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
         await props.getUser();
       }
-      setAttemptId(response.data);
+      setAttemptId(response.data.id);
     }).catch(() => {
       setFailed(true);
     });
@@ -303,7 +303,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (!attemptId) {
       return createBrickAttempt(brickAttempt);
     }
-
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
@@ -311,6 +310,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (assignmentId) {
       brickAttempt.assignmentId = assignmentId;
     }
+    brickAttempt.id = attemptId;
     return axios.put(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       { id: attemptId, userId: props.user.id, body: brickAttempt },
@@ -320,7 +320,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
         await props.getUser();
       }
-      setAttemptId(response.data);
+      setAttemptId(response.data.Id);
     }).catch(() => {
       setFailed(true);
     });

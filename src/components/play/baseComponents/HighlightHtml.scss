@@ -4,3 +4,12 @@
         background-color: var(--highlight-yellow);
     }
 }
+
+.highlight-button {
+    &.unhighlight {
+        .svg {
+            transition: rotate 0.5s ease-in-out;
+            rotate: 180deg;
+        }
+    }
+}

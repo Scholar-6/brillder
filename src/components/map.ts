@@ -44,7 +44,9 @@ export const NewTeachQuery = 'newTeacher=true';
 export const ViewAllPage = '/play/dashboard';
 export const AllSubjects = ViewAllPage + '/all-subjects';
 export const SubjectCategoriesPrefix = '/subject-categories';
+export const SearchPublishPrefix = '/publish-search';
 export const SubjectCategories = ViewAllPage + SubjectCategoriesPrefix;
+export const SearchPublishBrickPage = ViewAllPage + SearchPublishPrefix;
 
 
 const investigation = (brickId: number) => {
@@ -165,6 +167,8 @@ export default {
   AllSubjects,
   SubjectCategoriesPrefix,
   SubjectCategories,
+  SearchPublishPrefix,
+  SearchPublishBrickPage,
 
   postPlay,
   Proposal,

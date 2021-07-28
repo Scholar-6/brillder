@@ -15,21 +15,20 @@ import { getBrickColor } from "services/brick";
 import { searchPublicBricks } from "services/axios/brick";
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
-import { hideZendesk } from "services/zendesk";
+import { hideZendesk, showZendesk } from "services/zendesk";
 import {
   isLevelVisible,
   isLengthVisible,
   toggleElement,
 } from "./service/viewAll";
 import { hideKeyboard } from "components/services/key";
+import map from "components/map";
 
 interface BricksListProps {
   user: User;
   subjects: Subject[];
   history: any;
-  location: any;
   requestFailed(e: string): void;
-  moveBack(): void;
 }
 
 interface BricksListState {
@@ -50,7 +49,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
 
-    const values = queryString.parse(props.location.search);
+    const values = queryString.parse(props.history.location.search);
     const searchString = (values.searchString as string) || "";
 
     hideZendesk();
@@ -68,6 +67,11 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
       isLoading: false,
       isEmpty: false,
     };
+  }
+
+  moveBack() {
+    showZendesk();
+    this.props.history.push(map.ViewAllPage);
   }
 
   async search(searchString: string) {
@@ -232,8 +236,8 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="mobile-search-page">
         <div className="ba-top-navigation">
-          <SpriteIcon name="arrow-left" onClick={() => this.props.moveBack()} />
-          <div onClick={() => this.props.moveBack()}>Go Back</div>
+          <SpriteIcon name="arrow-left" onClick={() => this.moveBack()} />
+          <div onClick={() => this.moveBack()}>Go Back</div>
         </div>
         <div className="ba-search-input-container">
           <SpriteIcon name="search" />

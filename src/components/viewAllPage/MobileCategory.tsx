@@ -30,9 +30,7 @@ import map from "components/map";
 import MobileHelp from "components/baseComponents/hoverHelp/MobileHelp";
 import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpContent";
 import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
-import PhoneSearchPage from "./PhoneSearchPage";
 import { isLevelVisible, toggleElement } from "./service/viewAll";
-import { showZendesk } from "services/zendesk";
 import routes from "components/play/routes";
 import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 
@@ -63,7 +61,6 @@ interface BricksListProps {
   user: User;
   history: any;
   location: any;
-  isSearching: boolean;
   forgetBrick(): void;
   requestFailed(e: string): void;
 }
@@ -71,7 +68,6 @@ interface BricksListProps {
 interface BricksListState {
   expandedBrick: Brick | null;
   bricks: Array<Brick>;
-  isSearching: boolean;
   finalBricks: Brick[];
   isViewAll: boolean;
   mySubjects: SubjectWithBricks[];
@@ -80,7 +76,6 @@ interface BricksListState {
   shown: boolean;
   activeTab: Tab;
   isLoading: boolean;
-  isSearchingPage: boolean;
   subjectGroup: SubjectGroup | null;
   expandedSubject: SubjectWithBricks | null;
   filterLevels: AcademicLevel[];
@@ -119,7 +114,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       isLoading: true,
       finalBricks: [],
       expandedSubject: null,
-      isSearching: this.props.isSearching ? this.props.isSearching : false,
       isViewAll,
       mySubjects: [],
       subjects: [],
@@ -128,8 +122,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       activeTab: initTab,
       subjectGroup,
       shown: false,
-
-      isSearchingPage: false,
     };
 
     this.loadData(subjectGroup);
@@ -156,27 +148,33 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       } else {
         for (let s of subjects) {
           if (s.group === subjectGroup) {
-            categorySubjects.push(s);
+            categorySubjects.push({...s, bricks: []});
           }
         }
       }
 
       this.clearBricks(subjects);
 
-      for (let brick of bricks) {
-        this.addBrickBySubject(subjects, brick);
-        this.addBrickBySubject(mySubjects, brick);
-        this.addBrickBySubject(categorySubjects, brick);
+      if (this.props.user) {
+        for (let brick of bricks) {
+          this.addBrickBySubject(subjects, brick);
+          this.addBrickBySubject(mySubjects, brick);
+        }
+      } else {
+        for (let brick of bricks) {
+          this.addBrickBySubject(categorySubjects, brick);
+        }
       }
+
       this.setState({
         ...this.state,
         bricks,
         finalBricks: bricks,
         subjects,
         mySubjects,
+        categorySubjects,
         shown: true,
         isLoading: false,
-        categorySubjects,
       });
     } else {
       this.props.requestFailed("Can`t get bricks");
@@ -438,22 +436,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       subjects = this.state.categorySubjects;
     }
 
-    if (this.state.isSearchingPage) {
-      return (
-        <React.Suspense fallback={<></>}>
-          <MobileTheme />
-          <PhoneSearchPage
-            {...this.props}
-            subjects={this.state.subjects as Subject[]}
-            moveBack={() => {
-              this.setState({ isSearchingPage: false });
-              showZendesk();
-            }}
-          />
-        </React.Suspense>
-      );
-    }
-
     return (
       <React.Suspense fallback={<></>}>
         <MobileTheme />
@@ -461,7 +443,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           <PageHeadWithMenu
             page={PageEnum.ViewAll}
             user={this.props.user}
-            toggleSearch={() => this.setState({ isSearchingPage: true })}
+            toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
             placeholder="Search Ongoing Projects & Published Bricks…"
             history={this.props.history}
             search={() => { }}

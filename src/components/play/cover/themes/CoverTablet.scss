@@ -3,6 +3,12 @@
 @import 'src/assets/sass/partials/extensions';
 
 .cover-page {
+  .c-next-btn-container button {
+    height: 6vw;
+    width: 15vw;
+    font-size: 2.6vw !important;
+    font-family: $font-family-bold;
+  }
   .brick-container {
     height: 100%;
     color: var(--theme-dark-blue);
@@ -14,13 +20,13 @@
     }
     .introduction-page {
       padding-top: 3.5vh;
-      padding-left: 3.5vh;
+      padding-left: 2vw !important;
 
       .first-row {
         display: flex;
         align-items: center;
         font-family: $font-family-black;
-        font-size: 1.1vw;
+        font-size: 1.5vw;
 
         .brick-id-container {
           border-radius: 0.7vw;
@@ -33,8 +39,9 @@
           margin-left: 2vw;
         }
         svg {
-          width: 2vw;
-          height: 2vw;
+          $size: 3vw;
+          width: $size;
+          height: $size;
           margin-left: 0.7vw;
         }
       }
@@ -44,7 +51,6 @@
         margin-top: 3.6vh;
         font-size: 2.6vw;
         @extend %ellipsis;
-        text-transform: uppercase;
         font-family: $font-family-black;
       }
       .author-row {
@@ -118,7 +124,7 @@
             border-radius: 0.5vw;
             padding: 0 !important;
             border: none !important;
-            min-height: 47vh;
+            min-height:30vh;
 
             svg {
               width: 35vh;
@@ -194,6 +200,7 @@
 
 // sponsor
 .cover-page .cover-sponsors {
+  margin-top: 5vh;
   img {
     margin-right: 0.5vw;
     height: 2.4vw;

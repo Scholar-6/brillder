@@ -8,6 +8,7 @@ import './YoutubeAndMath.scss'
 import Katex from 'components/baseComponents/katex/Katex';
 
 interface MathHtmlProps {
+  innerRef?: any;
   value: string;
   isSynthesisParser?: boolean;
 }
@@ -34,7 +35,7 @@ class YoutubeAndMathInHtmlQuote extends Component<MathHtmlProps> {
     }
 
     return (
-      <div className="youtube-video-session">
+      <div className="youtube-video-session" ref={this.props.innerRef}>
         {
           arr.map((el:any, i:number) => {
             let res = isMathJax(el);
@@ -56,4 +57,4 @@ class YoutubeAndMathInHtmlQuote extends Component<MathHtmlProps> {
   }
 }
 
-export default YoutubeAndMathInHtmlQuote;
+export default React.forwardRef((props: MathHtmlProps, ref) => <YoutubeAndMathInHtmlQuote innerRef={ref} {...props} />);

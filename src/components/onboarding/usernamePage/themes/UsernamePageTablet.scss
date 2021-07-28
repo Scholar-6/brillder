@@ -30,7 +30,7 @@
   form {
     display: flex;
     height: 100%;
-    margin-left: 10vw;
+    margin-left: 4vw;
     align-items: center;
 
     > div {
@@ -167,7 +167,8 @@
         font-family: $font-family-bold;
         transition: all 300ms ease-out !important;
         &.invalid {
-          color: var(--theme-light-blue);
+          color: var(--white);
+          background: var(--theme-light-blue);
         }
       }
 
