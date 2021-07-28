@@ -296,4 +296,7 @@
       }
     }
   }
+  .second-col .create-item-container.disabled button svg {
+    color: var(--theme-light-blue) !important;
+  }
 }
