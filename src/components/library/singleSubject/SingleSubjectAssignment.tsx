@@ -76,6 +76,47 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
     );
   };
 
+  let isAssignment = false;
+  if (brick.assignments) {
+    for (let assignment of brick.assignments) {
+      for (let student of assignment.studentStatus) {
+        if (student.studentId === props.userId) {
+          isAssignment = true;
+        }
+      }
+    }
+  }
+  console.log(isAssignment, brick.id);
+
+  const renderTooltip = () => {
+    if (hovered) {
+      if (height >= 50) {
+        return (
+          <div className="custom-tooltip subject-tooltip">
+            <BrickTitle title={brick.title} />
+          </div>
+        );
+      }
+
+      if (isAssignment) {
+        return (
+          <div className="custom-tooltip subject-tooltip b-yellow text-theme-dark-blue">
+            <BrickTitle title="This Brick has been assigned to you by a teacher and needs to be played" />
+          </div>
+        );
+      }
+
+      if (height < 50) {
+        return (
+          <div className="custom-tooltip subject-tooltip b-yellow text-theme-dark-blue">
+            <BrickTitle title="To add a book to your shelf, score more than 50% on this brick" />
+          </div>
+        );
+      }
+    }
+    return '';
+  }
+
   return (
     <div
       className="assignment-progressbar single-assignment-progressbar"
@@ -93,17 +134,7 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
         }}
         style={{ background: color }}
       >
-        {hovered && height >= 50 && (
-          <div className="custom-tooltip subject-tooltip">
-            <BrickTitle title={brick.title} />
-          </div>
-        )}
-
-        {hovered && height < 50 && (
-          <div className="custom-tooltip subject-tooltip b-yellow text-theme-dark-blue">
-            <BrickTitle title="This Brick has been assigned to you by a teacher and needs to be played" />
-          </div>
-        )}
+        {renderTooltip()}
         <div
           className="progress-value default-value"
           onMouseEnter={() => setHover(true)}
