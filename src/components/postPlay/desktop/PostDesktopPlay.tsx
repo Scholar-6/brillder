@@ -1,6 +1,7 @@
 import React from "react";
 import { History } from "history";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 
 import { ReduxCombinedState } from "redux/reducers";
 import { Brick, Subject } from "model/brick";
@@ -27,6 +28,9 @@ import QuestionPage from "./QuestionPage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BookPages from "./BookPages";
+import { getDateString, getTime } from "components/services/brickService";
+import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
+import routes from "components/play/routes";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -65,8 +69,15 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
 
+    let bookState = BookState.Front;
+
+    const values = queryString.parse(props.history.location.search);
+    if (values.contentsAttempts) {
+      bookState = BookState.Attempts;
+    }
+
     this.state = {
-      bookState: BookState.Front,
+      bookState,
       questionIndex: 0,
       attempt: null,
       attempts: [],
@@ -179,6 +190,39 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       />
     }
 
+    const renderAttempts = () => {
+      return (
+        <div>
+          {this.state.attempts.map((a, i) => {
+            let percentages = 0;
+            if (typeof a.oldScore === 'undefined') {
+              percentages = Math.round(a.score * 100 / a.maxScore);
+            } else {
+              const middleScore = (a.score + a.oldScore) / 2;
+              percentages = Math.round(middleScore * 100 / a.maxScore);
+            }
+            let isActive = a == this.state.attempt;
+            return (
+              <div
+                key={i}
+                className={`attempt-info ${isActive && 'active'}`}
+                onClick={e => {
+                  e.stopPropagation();
+                  this.setAttempt(a);
+                }}
+              >
+                <div className="percentage">{percentages}</div>
+                {i === 0
+                  ? <span>Your latest attempt on {getDateString(a.timestamp)} at {getTime(a.timestamp)}</span>
+                  : <span>Attempt on {getDateString(a.timestamp)} at {getTime(a.timestamp)}</span>
+                }
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
@@ -203,6 +247,24 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
               moveToQuestion={this.moveToQuestion.bind(this)}
             />
             <div className="content-area">
+              {this.state.bookState === BookState.Attempts && <div className="book-page">
+                <div className="real-content question-content brief-page attempt-page">
+                  {renderAttempts()}
+                </div>
+                <div className="right-part flex-center">
+                  <div className="green-button-container1" onClick={() => {
+                    this.props.history.push(routes.playAssignment(brick.id, this.state.attempts[0].assignmentId));
+                  }}>
+                    <div className="green-button-container2">
+                      <div className="play-text">Play Again</div>
+                      <div className="green-button-container3">
+                        <PlayGreenButton onClick={() => { }} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              }
               {this.state.bookState === BookState.Brief && <div className="book-page">
                 <div className="real-content question-content brief-page">
                   <div>
@@ -244,7 +306,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                 i={this.state.questionIndex}
                 mode={this.state.mode}
                 setMode={newMode => this.setState({ mode: newMode })}
-                activeAttempt={this.state.attempts[this.state.questionIndex]}
+                activeAttempt={this.state.attempt}
                 question={questions[this.state.questionIndex]}
               />}
               {this.state.bookState === BookState.Synthesis && <div className="book-page">
@@ -262,8 +324,8 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                     <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.synthesis }} />
                   </div>
                 </div>
-                  <div className="right-part">
-                  </div>
+                <div className="right-part">
+                </div>
               </div>}
             </div>
           </div>
