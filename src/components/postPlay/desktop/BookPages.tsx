@@ -8,10 +8,11 @@ import { getBrillderTitle } from 'components/services/titleService';
 import { PlayAttempt } from 'model/attempt';
 import { User } from 'model/user';
 
-import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import FrontPage from '../FrontPage';
 import routes from 'components/play/routes';
+import HomeButtonComponent from 'components/baseComponents/homeButton/HomeButton';
 
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
 const DesktopBookTheme = React.lazy(() => import('../themes/PageBookDesktopTheme'));
@@ -91,14 +92,7 @@ class BookPages extends React.Component<BookProps, BookState> {
         <DesktopTheme />
         <DesktopBookTheme />
         <div className="post-play-page">
-          <PageHeadWithMenu
-            page={PageEnum.Book}
-            user={this.props.user}
-            placeholder="Search Ongoing Projects & Published Bricks…"
-            history={history}
-            search={() => { }}
-            searching={(v: string) => { }}
-          />
+          <HomeButton history={this.props.history} link={map.MainPage} />
           <Helmet>
             <title>{getBrillderTitle(brick.title)}</title>
           </Helmet>
@@ -125,7 +119,7 @@ class BookPages extends React.Component<BookProps, BookState> {
                   <div className="front-cover"></div>
                   <div className="page1">
                     <div className="flipped-page">
-                      <div className="flex-center" style={{height: '100%'}}>
+                      <div className="flex-center" style={{ height: '100%' }}>
                         <div className="green-button-container1" onClick={() => {
                           this.props.history.push(routes.playAssignment(brick.id, this.props.attempt.assignmentId));
                         }}>
