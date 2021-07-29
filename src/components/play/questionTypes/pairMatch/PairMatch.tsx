@@ -174,26 +174,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return !!this.props.component.list.find((a: any) => a.valueFile || a.optionFile);
   }
 
-  renderBookHint() {
-    const userAnswers = this.state.userAnswers as any;
-    let correct = true;
-
-    for (let [index, answer] of userAnswers.entries()) {
-      if (index !== answer.index) {
-        correct = false;
-      }
-    }
-
-    return (
-      <ReviewGlobalHint
-        isReview={this.props.isReview}
-        correct={correct}
-        isPhonePreview={this.props.isPreview}
-        hint={this.props.question.hint}
-      />
-    );
-  }
-
   render() {
     const haveImage = this.checkImages();
     return (
@@ -242,7 +222,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
               </ReactSortable>
           }
         </Grid>
-        {this.props.isBookPreview ? this.renderBookHint() : this.renderGlobalHint()}
+        {this.renderGlobalHint()}
       </div>
     );
   }

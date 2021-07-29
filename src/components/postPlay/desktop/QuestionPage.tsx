@@ -20,7 +20,6 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
   question,
   setMode,
 }) => {
-  console.log('attempt', activeAttempt)
   let parsedAnswers = null;
 
   let answers: any[] = [];
@@ -36,6 +35,11 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
 
   let attempt = Object.assign({}, activeAttempt) as any;
   attempt.answer = parsedAnswers;
+  if (answers && answers[i]) {
+    attempt.correct = answers[i].correct;
+  }
+
+  console.log(attempt, answers);
 
   const getMarks = () => {
     let marks = 0;
