@@ -12,7 +12,6 @@ import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import FrontPage from '../FrontPage';
 import routes from 'components/play/routes';
-import HomeButtonComponent from 'components/baseComponents/homeButton/HomeButton';
 
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
 const DesktopBookTheme = React.lazy(() => import('../themes/PageBookDesktopTheme'));
@@ -74,7 +73,7 @@ class BookPages extends React.Component<BookProps, BookState> {
   }
 
   render() {
-    const { history, color } = this.props;
+    const { color } = this.props;
     const { brick, student } = this.props.attempt;
 
     let bookClass = "book-main-container";

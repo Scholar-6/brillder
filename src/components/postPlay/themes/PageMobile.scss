@@ -74,6 +74,7 @@
     height: 17.5vw;
 
     >.prep-tab {
+      min-width: 16vw;
       width: 16vw;
       height: 17.5vw;
       background: var(--theme-light-blue);
@@ -140,6 +141,7 @@
   }
 
   .prep-tab {
+    min-width: 13.5vw;
     width: 13.5vw;
     display: flex;
     justify-content: center;

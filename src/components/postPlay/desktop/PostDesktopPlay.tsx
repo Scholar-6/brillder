@@ -211,7 +211,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                   this.setAttempt(a);
                 }}
               >
-                <div className="percentage">{percentages}</div>
+                <div className="percentage">{percentages}%</div>
                 {i === 0
                   ? <span>Your latest attempt on {getDateString(a.timestamp)} at {getTime(a.timestamp)}</span>
                   : <span>Attempt on {getDateString(a.timestamp)} at {getTime(a.timestamp)}</span>
