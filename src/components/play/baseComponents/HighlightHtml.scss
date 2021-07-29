@@ -1,6 +1,6 @@
 .highlight-html {
     mark,
-    &.highlight-on ::selection {
+    .hi {
         background-color: var(--highlight-yellow);
     }
 }
