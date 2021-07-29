@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import './BrickCircle.scss';
 import SpriteIcon from "./SpriteIcon";
+import {ReactComponent as CircleCheck} from'assets/img/circle-check.svg';
 
 interface BrickCircleProps {
   color: string;
   label: string;
+  isAssignment?: boolean;
   circleIcon?: string;
   circleClass?: string;
   iconColor?: string;
@@ -21,6 +23,14 @@ class BrickCircle extends Component<BrickCircleProps> {
       svgClass += iconColor;
     } else {
       svgClass += 'text-white';
+    }
+    if (this.props.isAssignment) {
+      console.log('assignemnt 434')
+      return (
+        <div className="round-button-icon">
+          <CircleCheck />
+        </div>
+      );
     }
     if (circleIcon) {
       return (
