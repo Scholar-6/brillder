@@ -20,14 +20,14 @@
     }
 
     .rotated-text {
-      font-size: 3.5vw;
+      font-size: 4.5vw;
     }
 
     .progress-value {
       position: relative;
       .rotated-text {
+        text-align: center;
         color: var(--white);
-        text-transform: uppercase !important;
         font-family: $font-family-bold !important;
       }
     }
