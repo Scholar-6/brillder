@@ -23,7 +23,7 @@ import { getAssignmentIcon } from "components/services/brickService";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
-import { getPublicBricks } from "services/axios/brick";
+import { getPublicBricks, getPublishedBricks } from "services/axios/brick";
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
@@ -135,7 +135,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   async loadData(subjectGroup: SubjectGroup | null) {
-    const bricks = await getPublicBricks();
+    let bricks = null;
+    if (this.props.user) {
+      bricks = await getPublishedBricks();
+      if (bricks) {
+        bricks = bricks.filter(b => b.isCore = true);
+      }
+    } else {
+      bricks = await getPublicBricks();
+    }
     const subjects = (await getSubjects()) as SubjectWithBricks[] | null;
     if (bricks && subjects) {
       const mySubjects: SubjectWithBricks[] = [];
@@ -148,7 +156,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       } else {
         for (let s of subjects) {
           if (s.group === subjectGroup) {
-            categorySubjects.push({...s, bricks: []});
+            categorySubjects.push({ ...s, bricks: [] });
           }
         }
       }
@@ -187,8 +195,26 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  handleClick(brickId: number) {
-    this.props.history.push(routes.playCover(brickId));
+  handleClick(brickId: number, isAssignment: boolean) {
+    if (isAssignment) {
+      this.props.history.push(map.postAssignment(brickId, this.props.user.id));
+    } else {
+      this.props.history.push(routes.playCover(brickId));
+    }
+  }
+
+  checkAssignment(brick: Brick) {
+    if (brick.assignments) {
+      for (let assignmen of brick.assignments) {
+        let assignment = assignmen as any;
+        for (let student of assignment.stats.byStudent) {
+          if (student.studentId === this.props.user?.id) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
   }
 
   setMySubjectsTab() {
@@ -250,33 +276,26 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       (a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime()
     );
 
-    let bricksList: any[] = [];
-    for (let i = 0; i < sorted.length; i++) {
-      const brick = sorted[i];
-      if (brick) {
-        const color = getBrickColor(brick);
-        const circleIcon = getAssignmentIcon(brick);
-        bricksList.push({
-          brick,
-          elem: (
-            <PhoneTopBrick16x9
-              circleIcon={circleIcon}
-              brick={brick}
-              color={color}
-            />
-          ),
-        });
-      }
-    }
-
     return (
       <Swiper slidesPerView={1}>
-        {bricksList.map((b, i) => (
-          <SwiperSlide key={i} onClick={() => this.handleClick(b.brick.id)}>
-            {i === 0 && <div className="week-brick">Brick of the week</div>}
-            {b.elem}
-          </SwiperSlide>
-        ))}
+        {sorted.map((brick, i) => {
+          const color = getBrickColor(brick);
+          const circleIcon = getAssignmentIcon(brick);
+          const isAssignment = this.checkAssignment(brick);
+
+          return (
+            <SwiperSlide key={i} onClick={() => this.handleClick(brick.id, isAssignment)}>
+              {i === 0 && <div className="week-brick">Brick of the week</div>}
+              <PhoneTopBrick16x9
+                circleIcon={circleIcon}
+                brick={brick}
+                color={color}
+                isViewAllAssignment={isAssignment}
+                user={this.props.user}
+              />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     );
   }
@@ -302,12 +321,16 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         >
           {bricks.map((b: any, i: number) => {
             const color = getBrickColor(b as Brick);
+            const isAssignment = this.checkAssignment(b);
+            
             return (
               <PhoneTopBrick16x9
                 key={i}
                 circleIcon=""
                 brick={b}
+                user={this.props.user}
                 color={color}
+                isViewAllAssignment={isAssignment}
                 onClick={() => {
                   if (this.state.expandedBrick === b) {
                     this.setState({ expandedBrick: null });
@@ -348,6 +371,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 <PhoneExpandedBrick
                   brick={expandedBrick}
                   history={this.props.history}
+                  user={this.props.user}
                   hide={() => this.setState({ expandedBrick: null })}
                 />
               )}
@@ -502,6 +526,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               <PhoneExpandedBrick
                 brick={this.state.expandedBrick}
                 history={this.props.history}
+                user={this.props.user}
                 hide={() => this.setState({ expandedBrick: null })}
               />
             )}
