@@ -1,6 +1,7 @@
 import React from "react";
 import { History } from "history";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 
 import { ReduxCombinedState } from "redux/reducers";
 import { Brick, Subject } from "model/brick";
@@ -68,8 +69,15 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
 
+    let bookState = BookState.Front;
+
+    const values = queryString.parse(props.history.location.search);
+    if (values.contentsAttempts) {
+      bookState = BookState.Attempts;
+    }
+
     this.state = {
-      bookState: BookState.Front,
+      bookState,
       questionIndex: 0,
       attempt: null,
       attempts: [],
