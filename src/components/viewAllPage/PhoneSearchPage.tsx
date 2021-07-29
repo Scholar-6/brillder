@@ -225,6 +225,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
           <PhoneExpandedBrick
             brick={this.state.expandedBrick}
             history={this.props.history}
+            user={this.props.user}
             hide={() => this.setState({ expandedBrick: null })}
           />
         )}

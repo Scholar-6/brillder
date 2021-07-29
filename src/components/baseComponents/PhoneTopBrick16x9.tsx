@@ -26,6 +26,7 @@ interface Props {
 
   deadline?: string;
   isAssignment?: boolean;
+  isViewAllAssignment?: boolean;
 
   onClick?(): void;
   onIconClick?(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
@@ -67,21 +68,6 @@ class PhoneTopBrick16x9 extends Component<Props> {
       label = AcademicLevelLabels[brick.academicLevel];
     }
 
-    let isAssignment = false;
-    let assignmentId = -1;
-
-    if (brick.assignments) {
-      for (let assignmen of brick.assignments) {
-        let assignment = assignmen as any;
-        for (let student of assignment.stats.byStudent) {
-          if (student.studentId === this.props.user?.id) {
-            assignmentId = assignment.id;
-            isAssignment = true;
-          }
-        }
-      }
-    }
-
     return (
       <div className="phone-top-brick-16x9" onClick={() => this.props.onClick ? this.props.onClick() : {}}>
         {this.renderDeadline()}
@@ -92,7 +78,7 @@ class PhoneTopBrick16x9 extends Component<Props> {
               circleIcon={this.props.circleIcon}
               circleClass={this.props.circleClass}
               iconColor={this.props.iconColor}
-              isAssignment={isAssignment}
+              isAssignment={this.props.isViewAllAssignment}
               canHover={true}
               label={label}
               onClick={e => this.props.onIconClick?.(e)}

@@ -71,7 +71,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
   const move = () => {
     if (isAssignment && assignmentId) {
       setAssignmentId(assignmentId);
-      props.history.push(map.postPlay(brick.id, props.user.id) + '?contentsAttempts=true');
+      props.history.push(map.postAssignment(brick.id, props.user.id));
       return;
     }
     if (props.isPlay) {
