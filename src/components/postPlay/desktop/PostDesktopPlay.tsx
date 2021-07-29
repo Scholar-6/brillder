@@ -298,7 +298,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                 i={this.state.questionIndex}
                 mode={this.state.mode}
                 setMode={newMode => this.setState({ mode: newMode })}
-                activeAttempt={this.state.attempts[this.state.questionIndex]}
+                activeAttempt={this.state.attempt}
                 question={questions[this.state.questionIndex]}
               />}
               {this.state.bookState === BookState.Synthesis && <div className="book-page">
