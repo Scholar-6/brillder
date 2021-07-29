@@ -72,6 +72,26 @@
             height: $size;
           }
 
+          .hr-round-container {
+            margin-left: 1.4vh;
+            margin-right: 1.4vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--white);
+            $size: 5vh;
+            width: $size;
+            height: $size;
+
+            svg {
+              $size: 70%;
+              width: $size;
+              height: $size;
+              margin: 0 !important;
+            }
+          }
+
           .bold {
             font-size: 3vh;
             margin-right: 1vh;
@@ -217,6 +237,63 @@
           .right-part {
             width: calc(100% - #{$left-part-width});
             background: var(--off-white);
+
+            .green-button-container1 {
+              .green-button-container2 {
+                width: 100%;
+                @extend %flexCenter;
+            
+                .green-button-container3 {
+                  position: relative;
+                  width: 7vw;
+                  height: 7vw;
+            
+                  .custom-hover-container {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    opacity: 0.5 !important;
+                    background: var(--theme-green);
+                    @extend %transitionAll300;
+                    &.hovered {
+                      top: -10%;
+                      left: -10%;
+                      width: 120%;
+                      height: 120%;
+                    }
+                  }
+                }
+              }
+            
+              .play-green-button {
+                position: relative;
+                @extend %flexCenter;
+                border-radius: 50%;
+                border: none;
+                outline: none;
+                width: 7vw;
+                height: 7vw;
+                background: var(--theme-green);
+            
+                .svg {
+                  margin-left: 10% !important;
+                  width: 80%;
+                  height: 80%;
+                }
+              }
+            
+              .play-text {
+                text-align: center;
+                font-size: 2.8vw;
+                margin-right: 0.6vw;
+                margin-top: 1vh;
+                color: var(--theme-dark-blue);
+                font-family: $font-family-bold;
+              }
+            }
           }
         }
       }
