@@ -16,7 +16,7 @@ export interface ComponentAttempt<T> {
 export enum PlayMode {
   Normal = 1,
   Highlighting,
-  UnHighlighting,
+  UnHighlighting, // deprecated, use Highlighting and move cursor backwards
   Anotating
 }
 

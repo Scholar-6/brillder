@@ -15,11 +15,8 @@ const HighlightTextButton: React.FC<ButtonProps> = (props) => {
 
   let className = "highlight-button svgOnHover";
   const { mode } = props;
-  if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
+  if (mode === PlayMode.Highlighting) {
     className += " active";
-  }
-  if (mode === PlayMode.UnHighlighting) {
-    className += " unhighlight";
   }
 
   const renderHightlightText = () => {
