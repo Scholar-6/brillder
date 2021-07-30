@@ -53,7 +53,7 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     let className = "rotated-container " + name;
     let width = "calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh)";
     if (height !== 100) {
-      width = `calc((60.4vh - 13.034vw) / 100 * ${height})`;
+      width = `calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh * ${height})`;
     }
     return (
       <div className={className}>
@@ -96,6 +96,7 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           onMouseEnter={() => setHover(true)}
         >
           {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
+          {height < 50 && height > 0 && renderRotatedTitle("white", 100)}
           {height < 50 && (
             <AcademyDifficulty
               a={assignment.brick.academicLevel}
