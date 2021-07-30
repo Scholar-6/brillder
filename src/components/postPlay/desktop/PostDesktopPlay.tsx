@@ -31,6 +31,7 @@ import BookPages from "./BookPages";
 import { getDateString, getTime } from "components/services/brickService";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
+import BookAnnotationsPanel from "./BookAnnotationsPanel";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -120,7 +121,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
-  setActiveAttempt(attempt: PlayAttempt, i: number) {
+  setActiveAttempt(attempt: PlayAttempt) {
     try {
       this.prepareAttempt(attempt);
       this.setState({ attempt });
@@ -155,6 +156,17 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       this.prepareAttempt(attempt);
       this.setState({ attempt, bookState: BookState.Brief });
     } catch { }
+  }
+
+  renderAnnotationsPanel() {
+    return (
+      <BookAnnotationsPanel
+        attempt={this.state.attempt ?? undefined}
+        setAttempt={this.setActiveAttempt.bind(this)}
+        state={this.state.bookState}
+        questionIndex={this.state.questionIndex}
+      />
+    )
   }
 
   render() {
@@ -280,8 +292,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                     <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.brief }} />
                   </div>
                 </div>
-                <div className="right-part">
-                </div>
+                {this.renderAnnotationsPanel()}
               </div>}
               {this.state.bookState === BookState.Prep && <div className="book-page">
                 <div className="real-content question-content brief-page">
@@ -298,8 +309,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                     <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.prep }} />
                   </div>
                 </div>
-                <div className="right-part">
-                </div>
+                {this.renderAnnotationsPanel()}
               </div>
               }
               {this.state.bookState === BookState.QuestionPage && <QuestionPage
@@ -324,8 +334,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                     <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.synthesis }} />
                   </div>
                 </div>
-                <div className="right-part">
-                </div>
+                {this.renderAnnotationsPanel()}
               </div>}
             </div>
           </div>

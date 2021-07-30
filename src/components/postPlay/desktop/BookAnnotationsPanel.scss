@@ -1,0 +1,69 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.right-part {
+  position: relative;
+  padding: 1rem;
+  overflow-y: scroll;
+  &.empty {
+    cursor: pointer;
+    .grey-circle {
+      background-color: #e4e8ee;
+      width: 20rem;
+      height: 20rem;
+      border-radius: 10rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      .pen-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .add-annotation-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 11rem);
+    }
+  }
+  .add-annotation-text {
+    cursor: pointer;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 4rem;
+
+    span {
+      font-family: $font-family-bold;
+      font-size: 2rem;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.125rem;
+    }
+    
+    .grey-circle {
+      display: inline-block;
+      position: relative;
+      width: 4rem;
+      height: 4rem;
+      background-color: #e4e8ee;
+      border-radius: 2rem;
+      margin-right: 1rem;
+      .pen-icon {
+        position: absolute;
+        width: 2.5rem;
+        height: 2.5rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
