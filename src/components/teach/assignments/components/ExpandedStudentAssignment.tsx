@@ -100,7 +100,7 @@ class ExpandedStudentAssignment extends Component<
 
     return (
       <div className="circle" style={{ background: color }}>
-        {Math.round(studentStatus.avg_score)}
+        {studentStatus.avgScore > 0 ? Math.round(studentStatus.avgScore) : 0}
       </div>
     );
   }
