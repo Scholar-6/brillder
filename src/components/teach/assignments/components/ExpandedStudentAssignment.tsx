@@ -54,10 +54,16 @@ class ExpandedStudentAssignment extends Component<
     return st;
   }
 
+  renderCommentIcon() {
+    return <div className="comment-icon">
+      <SpriteIcon name="message-square" className="active" />
+    </div>;
+  }
+
   renderTableHead() {
-    const {sortBy} = this.state;
+    const { sortBy } = this.state;
     const name = sortBy === SortBy.AvgIncreasing ? "arrow-up" : "arrow-down";
-    
+
     let className = "btn btn-transparent svgOnHover btn-grey-circle";
     if (sortBy === SortBy.AvgIncreasing || sortBy === SortBy.AvgDecreasing) {
       className += " active";
@@ -68,7 +74,7 @@ class ExpandedStudentAssignment extends Component<
           <th></th>
           <th>
             <div className="center">
-              <button className={className} onClick={() => {}}>
+              <button className={className} onClick={() => { }}>
                 <SpriteIcon name={name} className="active text-theme-dark-blue" />
               </button>
             </div>
@@ -110,18 +116,18 @@ class ExpandedStudentAssignment extends Component<
       try {
         const attempt = studentResult.attempts[0].answers[questionNumber];
         const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
-  
+
         // yellow tick
         if (attempt.correct === true && liveAttempt.correct === false) {
           return <SpriteIcon name="check-icon" className="text-yellow" />;
         } else if (attempt.correct === false && liveAttempt.correct === true) {
           return <SpriteIcon name="check-icon" className="text-yellow" />;
         }
-  
+
         if (attempt.correct === true && liveAttempt.correct === true) {
           return <SpriteIcon name="check-icon" className="text-theme-green" />;
         }
-  
+
         return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
       } catch {
         console.log('can`t parse attempt');
@@ -138,7 +144,7 @@ class ExpandedStudentAssignment extends Component<
   }
 
   renderStudent(student: TeachStudent) {
-    const {studentResult} = student;
+    const { studentResult } = student;
 
     return (
       <tr className="user-row">
@@ -159,7 +165,8 @@ class ExpandedStudentAssignment extends Component<
               </div>
             </td>
         )}
-        <td>
+        <td style={{ width: '9vw' }}>
+          <div className="centered">{this.renderCommentIcon()}</div>
         </td>
       </tr>
     );
@@ -176,8 +183,8 @@ class ExpandedStudentAssignment extends Component<
             subjects={this.props.subjects}
             minimize={this.props.minimize}
             assignment={this.props.assignment}
-            archive={() => {}}
-            unarchive={() => {}}
+            archive={() => { }}
+            unarchive={() => { }}
           />
         </div>
         <div className="assignments-table">
