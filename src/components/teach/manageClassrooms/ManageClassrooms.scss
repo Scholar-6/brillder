@@ -301,7 +301,7 @@ $base-build-font-size: 1.25vw;
       &.pending-label {
         max-width: 6vw;
         padding: 0 0.7vw;
-        color: var(--white);
+        color: var(--white) !important;
         background: var(--theme-light-blue);
       }
       &.resend-label {
