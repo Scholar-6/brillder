@@ -13,17 +13,24 @@ interface FilterSidebarProps {
 }
 
 class PlayFilterSidebar extends Component<FilterSidebarProps> {
+  renderNumber(c: ClassroomApi) {
+    if (c.assignmentsCount && c.assignmentsCount >= 1) {
+      return (
+        <div className="right-index">
+          <div className="white-box">{c.assignmentsCount}</div>
+        </div>
+      )
+    }
+    return '';
+  }
+
   renderClassroomBox = (c: ClassroomApi, i: number) => {
     const { activeClassroomId } = this.props;
 
     return (
       <div className={`index-box ${activeClassroomId === c.id ? 'active' : ''}`} key={i} onClick={() => this.props.setActiveClassroom(c.id)}>
         {c.name}
-        {c.assignmentsCount &&
-          <div className="right-index">
-            <div className="white-box">{c.assignmentsCount}</div>
-          </div>
-        }
+        {this.renderNumber(c)}
       </div>
     )
   }
