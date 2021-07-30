@@ -555,6 +555,12 @@
       &:hover {
         background: var(--theme-yellow);
       }
+      &.active {
+        color: var(--white) !important;
+        .right-index {
+          color: var(--white) !important;
+        }
+      }
     }
     
     &.active {
