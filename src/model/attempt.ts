@@ -8,9 +8,24 @@ export interface AttemptAnswer {
   maxMarks: number;
 }
 
+export enum AnnotationLocation {
+  Brief, Prep, Question, Synthesis
+}
+
+export interface Annotation {
+  location: AnnotationLocation;
+  questionIndex?: number;
+
+  id: number;
+  user: User;
+  priority: number;
+  text: string;
+}
+
 export interface PlayAttempt {
   answers: AttemptAnswer[];
   liveAnswers: AttemptAnswer[];
+  annotations?: Annotation[];
   assignment: any;
   assignmentId: number;
   brick: Brick;
