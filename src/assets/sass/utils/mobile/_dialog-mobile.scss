@@ -291,9 +291,16 @@
         }
       }
       .small-text-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         font-size: 4.5vw;
         margin-bottom: 3vh;
+        svg {
+          width: 5.5vw;
+          height: 5.5vw;
+        }
       }
       .dialog-footer {
         > button:first-child {
