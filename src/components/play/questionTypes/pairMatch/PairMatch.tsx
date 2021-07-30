@@ -16,7 +16,6 @@ import { isPhone } from 'services/phone';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import {ReactComponent as DragIcon} from'assets/img/drag.svg';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import ReviewGlobalHint from 'components/play/baseComponents/ReviewGlobalHint';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {

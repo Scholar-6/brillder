@@ -14,7 +14,6 @@ import MathInHtml from "components/play/baseComponents/MathInHtml";
 import { getValidationClassName } from "../service";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import { HintStatus } from "model/question";
-import ReviewGlobalHint from "components/play/baseComponents/ReviewGlobalHint";
 
 export type ShortAnswerAnswer = string[];
 

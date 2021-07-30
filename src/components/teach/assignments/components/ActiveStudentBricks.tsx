@@ -57,8 +57,8 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
   async loadAssignments() {
     const res = (await getStudentAssignments(this.props.activeStudent.id)) as Assignment[] | null;
     if (res) {
-      const archived = res.filter(res => res.studentStatus && res.studentStatus.length > 0 &&  res.studentStatus[0].status === 3);
-      const assignments = res.filter(res => !res.studentStatus || !res.studentStatus[0] ||  res.studentStatus[0].status < 3);
+      const archived = res.filter(res => res.studentStatus && res.studentStatus.length > 0 && res.studentStatus[0].status === 3);
+      const assignments = res.filter(res => !res.studentStatus || !res.studentStatus[0] || res.studentStatus[0].status < 3);
       this.setState({ isLoaded: true, assignments, archived });
     }
   }
@@ -118,7 +118,7 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
                     key={i}
                     assignment={a as any}
                     archive={this.loadAssignments.bind(this)}
-                    unarchive={() => {}}
+                    unarchive={() => { }}
                     onRemind={this.props.onRemind?.bind(this)}
                   />
                 </div>
@@ -133,22 +133,25 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
 
   renderExpandedAssignment(a: Assignment) {
     return (
-      <ExpandedStudentAssignment
-        assignment={a}
-        student={this.props.activeStudent}
-        stats={this.state.assignmentStats}
-        subjects={this.props.subjects}
-        minimize={() =>
-          this.setState({ assignmentStats: null, activeAssignment: null })
-        }
-      />
+      <div>
+        <div style={{ height: 'calc(3vh + 1.5vw)' }} />
+        <ExpandedStudentAssignment
+          assignment={a}
+          student={this.props.activeStudent}
+          stats={this.state.assignmentStats}
+          subjects={this.props.subjects}
+          minimize={() =>
+            this.setState({ assignmentStats: null, activeAssignment: null })
+          }
+        />
+      </div>
     );
   }
 
   render() {
-    let list = this.state.assignments;
-    if (this.props.isArchive) {
-      list = this.state.archived;
+    let assignments: Assignment[] = [];
+    if (this.props.classroom?.assignments) {
+      assignments = this.props.classroom.assignments;
     }
     const { activeStudent } = this.props;
     const { activeAssignment } = this.state;
@@ -159,8 +162,8 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
         </div>
         {activeAssignment
           ? this.renderExpandedAssignment(activeAssignment)
-          : this.renderStudentAssignments(list)}
-        {this.renderPagination(list)}
+          : this.renderStudentAssignments(assignments)}
+        {this.renderPagination(assignments)}
       </div>
     );
   }
