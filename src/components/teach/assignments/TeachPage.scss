@@ -46,14 +46,17 @@
       width: 100%;
       height: 100%;
       background: var(--tab-gray);
-      padding-left: 1.55vw;
     }
     &.one-of-many {
       margin-top: 1vh;
       margin-bottom: 1vh;
       height: calc(calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh) / 6.35 - 2vh);
+      > div {
+        padding-left: 2.25vw !important;
+      }
     }
   }
+
   .sort-box {
     width: 100%;
 

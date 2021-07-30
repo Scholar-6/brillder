@@ -1057,7 +1057,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return (
       <div>
         <div
-          className={`brick-row-title main-title uppercase ${
+          className={`brick-row-title main-title ${
             filterSubjects.length === 1 && "subject-title"
           }`}
         >

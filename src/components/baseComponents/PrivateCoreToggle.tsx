@@ -35,9 +35,9 @@ const PrivateCoreToggle: React.FC<ToggleProps> = props => {
 
   return (
     <div className={`private-core-toggle ${props.isViewAll ? 'view-all-toggle' : ''}`}>
-      <button className="btn btn btn-transparent ">
+      <button className="btn btn btn-transparent " onClick={props.onSwitch}>
         <span className={isCore ? 'bold' : 'regular'}>Public</span>
-        <div className="svgOnHover" onClick={props.onSwitch}>
+        <div className="svgOnHover">
           {renderCoreIcon()}
           {renderPrivateIcon()}
         </div>
