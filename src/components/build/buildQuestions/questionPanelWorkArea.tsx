@@ -238,7 +238,9 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     </FormControl>
                   </Grid>
                 </Grid>
-                <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+                {props.currentBrick.isCore === true &&
+                  <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+                }
                 <StatusCircle status={props.currentBrick.status} isCore={props.currentBrick.isCore} />
               </div>
             }
