@@ -1,7 +1,10 @@
+import { getApiQuestion } from 'components/build/questionService/QuestionService';
 import { AssignmentBrick } from 'model/assignment';
 import { Brick, BrickStatus } from 'model/brick';
+import { Question } from 'model/question';
 
 import { get, put, post, axiosDelete } from './index';
+import { createQuestion } from './question';
 
 export const getPublicBrickById = async (id: number) => {
   try {
@@ -247,6 +250,29 @@ export interface CoverImageData {
 export const setBrickCover = async (data: CoverImageData) => {
   try {
     return await post<any>(`/brick/cover`, data);
+  } catch {
+    return false;
+  }
+}
+
+
+export const copyBrick = async (brick: Brick, questions: Question[]) => {
+  try {
+    const copy = Object.assign({}, brick) as any;
+    copy.isCore = true;
+    copy.status = BrickStatus.Draft;
+    copy.questions = [];
+    copy.id = null;
+    const res = await post<Brick>('/brick', copy);
+    if (res) {
+      for (let question of questions) {
+        const q = getApiQuestion(question);
+        q.brickQuestionId = undefined;
+        q.id = undefined;
+        await createQuestion(res.id, q);
+      }
+    }
+    return true;
   } catch {
     return false;
   }
