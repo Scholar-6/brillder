@@ -303,6 +303,17 @@ $base-build-font-size: 1.25vw;
         padding: 0 0.7vw;
         color: var(--white) !important;
         background: var(--theme-light-blue);
+        svg {
+          position: absolute;
+          top: 0.18vw;
+          left: 0.2vw;
+          $size: 1vw;
+          width: $size;
+          height: $size;
+        }
+        span {
+          padding-left: 0.5vw;
+        }
       }
       &.resend-label {
         color: var(--theme-dark-blue);
