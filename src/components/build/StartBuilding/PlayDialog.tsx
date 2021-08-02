@@ -16,6 +16,7 @@ import { formatTwoLastDigits } from "components/services/brickService";
 import map from "components/map";
 import PrepHoverHelp from "../baseComponents/PrepHoverHelp";
 import BriefHoverHelp from "../baseComponents/BriefHoverHelp";
+import OpenQHoverHelp from "../baseComponents/OpenQHoverHelp";
 
 interface DialogProps {
   isOpen: boolean;
@@ -135,9 +136,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
     return (
       <div className="dialog-header dialog-prep-content">
         <div className="flex">
-          <HoverHelp>
-            We see education as being a mix of open questions and closed questions. A lot of emphasis is placed on the latter in traditional schooling. While it is undoubtedly necessary to build on fundamentals, it can be stifling for both teachers and learners not to go any further and engage in more holistic discussion. A good open question may be the title for an essay or seminar, and should invite a broader dialogue or appreciation of the subject at hand.
-          </HoverHelp>
+          <OpenQHoverHelp />
           <div className="open-question" dangerouslySetInnerHTML={{__html: brick.openQuestion}} />
         </div>
         <div className="space" />
