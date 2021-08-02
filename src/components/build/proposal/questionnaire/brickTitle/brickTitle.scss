@@ -17,7 +17,7 @@
   .absolute-keyword-help {
     position: absolute;
     right: 0;
-    top: -0.5vw;
+    top: 0vw;
   }
   .absolute-difficult-help {
     position: absolute;
@@ -83,6 +83,15 @@
     .MuiInputBase-input {
       font-family: $font-family-regular;
       letter-spacing: 0.05vw;
+    }
+
+    .key-words {
+      input {
+        margin: 0.5vh 0;
+      }
+    }
+    .difficulty-select .MuiInputBase-root {
+      margin: 0.5vh 0;
     }
 
     .input-container {
