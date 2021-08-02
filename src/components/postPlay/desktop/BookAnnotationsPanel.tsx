@@ -8,6 +8,8 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
 import BookAnnotation from './BookAnnotation';
+import { HighlightRef } from 'components/play/baseComponents/HighlightHtml';
+import { useHistory } from 'react-router-dom';
 
 interface BookAnnotationsPanelProps {
   currentUser: User;
@@ -17,6 +19,8 @@ interface BookAnnotationsPanelProps {
 
   attempt?: PlayAttempt;
   setAttempt(attempt: PlayAttempt): void;
+
+  highlightRef: React.RefObject<HighlightRef>;
 }
 
 const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
@@ -35,7 +39,12 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
 
     if(!newAttempt) return;
     if(!newAttempt.annotations) newAttempt.annotations = [];
-    newAttempt.annotations.push({ id: generateId(), location, priority: 0, questionIndex: props.questionIndex, text: "&nbsp;", user: props.currentUser });
+    const newAnnotation = { id: generateId(), location, priority: 0, questionIndex: props.questionIndex, text: "", user: props.currentUser };
+    newAttempt.annotations.push(newAnnotation);
+
+    if(props.highlightRef.current) {
+      props.highlightRef.current.createAnnotation(newAnnotation);
+    }
 
     props.setAttempt(newAttempt);
   }, [props.attempt, props.setAttempt, location, props.questionIndex]);
@@ -55,7 +64,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
 
   if(!props.attempt || !props.attempt?.annotations?.filter(annotation => annotation.location === location).length) {
     return <div className="right-part empty">
-      <div className="grey-circle" onClick={addAnnotation}>
+      <div className="grey-circle" onMouseDown={e => e.preventDefault()} onClick={addAnnotation}>
         <SpriteIcon name="pen-tool" className="pen-icon" />
       </div>
       <div className="add-annotation-text">
@@ -72,7 +81,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
           <BookAnnotation key={annotation.id} annotation={annotation} updateAnnotation={updateAnnotation} />
         ))
       }
-      <div className="add-annotation-text" onClick={addAnnotation}>
+      <div className="add-annotation-text" onMouseDown={e => e.preventDefault()} onClick={addAnnotation}>
         <div className="grey-circle">
           <SpriteIcon name="pen-tool" className="pen-icon" />
         </div>

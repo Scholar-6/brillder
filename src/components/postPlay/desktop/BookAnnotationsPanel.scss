@@ -66,4 +66,19 @@
       }
     }
   }
+  .comment-text-editable {
+    &[placeholder]:empty::before {
+      content: attr(placeholder);
+      color: var(--global-light-text-gray);
+      cursor: text;
+    }
+  }
+  .comment-container {
+    &.focused .comment-item-container {
+      border: 0.25rem var(--highlight-blue) solid;
+    }
+    .comment-item-container {
+      border: 0.25rem transparent solid;
+    }
+  }
 }
