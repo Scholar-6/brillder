@@ -22,6 +22,7 @@ interface AssignemntExpandedState {
 }
 
 interface AssignmentBrickProps {
+  isStudentAssignment: boolean;
   stats: ApiAssignemntStats;
   subjects: Subject[];
   student: TeachStudent;
@@ -180,6 +181,8 @@ class ExpandedStudentAssignment extends Component<
           <AssignedBrickDescription
             isStudent={true}
             isExpanded={true}
+            activeStudent={this.props.student}
+            isStudentAssignment={this.props.isStudentAssignment}
             subjects={this.props.subjects}
             minimize={this.props.minimize}
             assignment={this.props.assignment}
