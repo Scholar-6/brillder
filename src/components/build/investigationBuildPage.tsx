@@ -820,6 +820,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         user={props.user}
         isTutorialSkipped={isTutorialPassed()}
         isValid={isValid}
+        questions={questions}
         moveToPreview={moveToPreview}
         isEditor={isCurrentEditor}
         isPublisher={isPublisher}
