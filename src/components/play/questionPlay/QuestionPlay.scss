@@ -22,9 +22,6 @@
   width: 100%;
   color: var(--theme-dark-blue);
   @extend %themeRadius;
-  @include tabletP {
-    font-size: 0.8vw;
-  }
   img {
     width: auto;
   }
@@ -79,9 +76,6 @@
   }
   p {
     line-height: initial;
-    @include tabletP {
-      font-size: 1vw;
-    }
   }
   .table {
     margin-left: 0;
