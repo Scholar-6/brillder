@@ -221,6 +221,19 @@
 .brief-page,
 .open-question-page,
 .prep-page-questionary {
+  .difficulty-select {
+    .MuiSelect-root {
+      padding-left: 1.4vw;
+    }
+    svg {
+      position: absolute;
+      left: 0 !important;
+      right: unset !important;
+      $size: 1.4vw;
+      width: $size;
+      height: $size;
+    }
+  }
   p {
     margin: 0.5vh 0;
   }
