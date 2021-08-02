@@ -22,13 +22,13 @@ const BrickCopiedDialog: React.FC<DialogProps> = (props) => {
       <div className="dialog-header">
         <ListItem>
           <ListItemText
-            primary="A copy of this brick has been created and is in the ‘Draft’ column in the 'Public' build tab"
+            primary="A copy of this brick has been created and is in the ‘Draft’ column in the ‘Public’ build tab"
             className="bold" style={{ minWidth: '30vw' }}
           />
           
           <ListItemAvatar>
             <Avatar className="circle-check">
-              <SpriteIcon name="award" className="active stroke-2 text-white" />
+              <SpriteIcon name="globe" className="active stroke-2 text-white" />
             </Avatar>
           </ListItemAvatar>
         </ListItem>
