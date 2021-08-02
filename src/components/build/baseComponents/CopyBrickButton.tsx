@@ -28,8 +28,8 @@ const CopyBrickButton: React.FC<ButtonProps> = props => {
           }
         }}
       >
-        <SpriteIcon name="copy" />
-        {hovered && <div className="custom-tooltip">Copy</div>}
+        <SpriteIcon name="globe" />
+        {hovered && <div className="custom-tooltip copy-text">Make this brick public</div>}
       </div>
       <CopyBrickDialog isOpen={open} close={() => setOpen(false)} />
     </div>

@@ -363,6 +363,11 @@ $space-between-boxes: 0.1vw;
       margin-top: 0.6vw;
       left: 0.2vw;
       width: 4vw !important;
+
+      &.copy-text {
+        left: -0.8vw;
+        width: 6vw !important;
+      }
     }
   }
   .return-to-editor-button-container,
