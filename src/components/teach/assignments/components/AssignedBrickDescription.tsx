@@ -283,7 +283,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             <div className="users-complete-count">
               <span>{this.getCompleteStudents()}/{getTotalStudentsCount(this.props.classroom)}</span>
               <SpriteIcon name="users" className="text-theme-dark-blue" />
-              {classroom && classroom.studentsInvitations && <span style={{ marginLeft: '1vw' }}>{classroom.studentsInvitations.length} Invited</span>}
+              {classroom && classroom.studentsInvitations && classroom.studentsInvitations.length > 0 && <span style={{ marginLeft: '1vw' }}>{classroom.studentsInvitations.length} Pending</span>}
             </div>}
           <div className="average">
             {this.getAverageScore()}
