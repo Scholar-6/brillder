@@ -41,17 +41,14 @@ span.bold {
     justify-content: center;
     .glasses {
       .eye-glass-icon {
+        width: 3.1vw;
+        svg {
+          margin: 0 !important;
+          width: 2.7vw;
+        }
         .glass-eyes-left,
         .glass-eyes-right {
-          animation: none;
-          transform: scale(0.23);
-          top: -2.1vw;
-        }
-        .glass-eyes-left {
-          left: -1.61vw !important;
-        }
-        .glass-eyes-right {
-          right: -1.5vw !important;
+          display: none;
         }
       }
     }

@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import './BrickBlock16x9.scss';
 import { AcademicLevelLabels, Brick } from "model/brick";
 import { User } from "model/user";
+import {ReactComponent as CircleCheck} from'assets/img/circle-check.svg';
 
 import routes, { playCover } from "components/play/routes";
 import { setAssignmentId } from "localStorage/playAssignmentId";
@@ -70,7 +71,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
   const move = () => {
     if (isAssignment && assignmentId) {
       setAssignmentId(assignmentId);
-      props.history.push(map.postPlay(brick.id, props.user.id) + '?contentsAttempts=true');
+      props.history.push(map.postAssignment(brick.id, props.user.id));
       return;
     }
     if (props.isPlay) {
@@ -130,7 +131,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
           {renderDeadline()}
           <div className="level">
             <div style={{background: color}}>
-              {isAssignment ? <SpriteIcon name="book-open" /> : AcademicLevelLabels[brick.academicLevel]}
+              {isAssignment ?  <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
             </div>
           </div>
           {brick.coverImage ?

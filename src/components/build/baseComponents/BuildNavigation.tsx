@@ -13,12 +13,15 @@ import ReturnToEditorButton from "./ReturnToEditorButton";
 import BuildPublishButton from "./PublishButton";
 import { User } from "model/user";
 import routes from "components/play/routes";
+import CopyBrickButton from "./CopyBrickButton";
+import { Question } from "model/question";
 
 
 interface NavigationProps {
   // play button
   tutorialStep: TutorialStep;
   isTutorialSkipped: boolean;
+  questions: Question[];
   isValid: boolean;
   moveToPreview(): void;
 
@@ -143,6 +146,20 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
     );
   }
 
+  renderCopyDraft() {
+    return (
+      <BuildPublishButton
+        disabled={!this.props.isValid}
+        brick={this.props.brick}
+        history={this.props.history}
+        onFinish={() => {
+          this.setState({ brickStatus: BrickStatus.Publish });
+          this.props.history.push(routes.playCover(this.props.brick.id));
+        }}
+      />
+    );
+  }
+
   render() {
     return (
       <div>
@@ -167,6 +184,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           </div>
           : <div className="build-navigation-buttons">
             {this.renderSelfPublishButton()}
+            {this.props.brick.status === BrickStatus.Publish && <CopyBrickButton history={this.props.history} brick={this.props.brick} questions={this.props.questions} />}
           </div>}
       </div>
     );

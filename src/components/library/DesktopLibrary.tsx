@@ -400,7 +400,7 @@ class Library extends Component<BricksListProps, BricksListState> {
             <Grid item xs={9} className="brick-row-container">
               <div className={
                 `
-                    brick-row-title main-title uppercase
+                  library-title
                     ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}
                   `
               }

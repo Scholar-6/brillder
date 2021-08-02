@@ -297,11 +297,19 @@
         margin-bottom: 0.7vh !important;
       }
       .small-text-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         font-size: 1vw;
         margin-bottom: 3vh;
         cursor: pointer;
         transition: all 300ms ease-out;
+
+        svg {
+          width: 1.4vw;
+          height: 1.4vw;
+        }
 
         &:hover {
           color: var(--theme-orange);

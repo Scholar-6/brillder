@@ -119,6 +119,10 @@ export const postPlay = (brickId: number, userId: number) => {
   return PostPlay + '/' + brickId + '/' + userId;
 }
 
+export const postAssignment = (brickId: number, userId: number) => {
+  return postPlay(brickId, userId) + '?contentsAttempts=true';
+}
+
 export default {
   Build,
   ActivateAccount,
@@ -171,8 +175,9 @@ export default {
   SearchPublishBrickPage,
 
   postPlay,
-  Proposal,
+  postAssignment,
 
+  Proposal,
   InvestigationBuild,
   InvestigationSynthesis,
   investigationSynthesisSuggestions,

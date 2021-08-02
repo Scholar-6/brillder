@@ -90,11 +90,18 @@
       top: 2.5vw;
       left: 2vw;
       display: flex;
-      font-size: 6vw;
+      font-size: 5.7vw;
       align-items: center;
       font-family: $font-family-bold;
 
       $circle-size: 6vw;
+
+      > span {
+        max-width: 73vw;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
       .round-button-container {
         display: flex;

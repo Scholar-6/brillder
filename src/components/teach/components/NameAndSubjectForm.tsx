@@ -154,7 +154,6 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
             <div className="btn" onClick={() => setInvite(true)}>
               Add a new student
               <SpriteIcon name="user-plus" />
-              <div className="css-custom-tooltip">Add New Student</div>
             </div>
           </div>}
           {!props.assignHidden && 
