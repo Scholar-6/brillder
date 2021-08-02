@@ -17,7 +17,7 @@ const DifficultySelect: React.FC<DifficultySelectProps> = ({isCore, ...props}) =
   
   // lock if self published
   if (isCore === false && props.brickStatus === BrickStatus.Publish) {
-    //coreSelectLocked = true;
+    coreSelectLocked = true;
   }
   
   return (

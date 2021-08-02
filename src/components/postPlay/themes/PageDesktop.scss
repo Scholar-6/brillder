@@ -72,26 +72,6 @@
             height: $size;
           }
 
-          .hr-round-container {
-            margin-left: 1.4vh;
-            margin-right: 1.4vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: var(--white);
-            $size: 5vh;
-            width: $size;
-            height: $size;
-
-            svg {
-              $size: 70%;
-              width: $size;
-              height: $size;
-              margin: 0 !important;
-            }
-          }
-
           .bold {
             font-size: 3vh;
             margin-right: 1vh;
@@ -123,7 +103,7 @@
           }
           .attempts {
             svg {
-              margin-left: 2vh;
+              margin-left: 1.8vh;
             }
           }
         }
@@ -417,20 +397,20 @@
         display: flex;
         align-items: center;
         font-family: $font-family-bold;
-        font-size: 1.3vw;
+        font-size: 1.7vw;
         color: var(--tab-gray);
-        height: 3vw;
+        height: 4vw;
         .percentage {
           display: flex;
           align-items: center;
           justify-content: center;
           border-radius: 50%;
-          $size: 2.3vw;
+          $size: 3vw;
           background: var(--theme-green);
           width: $size;
           height: $size;
           color: var(--white);
-          margin-right: 1vw;
+          margin-right: 1.1vw;
         }
 
         &.active {

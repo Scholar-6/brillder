@@ -126,10 +126,11 @@ class ExpandedAssignment extends Component<
   }
 
   renderStatus(studentStatus: StudentStatus | undefined) {
-    if (studentStatus) {
+    if (studentStatus && studentStatus.numberOfAttempts > 0) {
       return this.renderBestScore(studentStatus);
     }
-    return <SpriteIcon name="reminder" className="active reminder-icon" />;
+    return <div />
+    //return <SpriteIcon name="reminder" className="active reminder-icon" />;
   }
 
   renderCommentIcon() {

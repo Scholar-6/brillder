@@ -23,6 +23,7 @@ import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/Unauthor
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
+import HoveredImage from "../baseComponents/HoveredImage";
 
 
 interface Props {
@@ -165,6 +166,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   if (isPhone()) {
     return (
       <React.Suspense fallback={<></>}>
+        <HoveredImage />
         <MobileTheme />
         <div className="cover-page">
           {renderFirstRow()}
@@ -181,7 +183,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             />
             <div className="cover-info-row">
               {renderBrickCircle()}
-              {brick.subject?.name}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
+              <span>{brick.subject?.name}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}</span>
               <SpriteIcon name="help-circle-custom" onClick={() => setSecondPhonePopup(true)} />
               {firstPhonePopup &&
                 <div className="mobile-help-container" onClick={() => setFirstPhonePopup(false)}>
@@ -277,6 +279,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <React.Suspense fallback={<></>}>
+      <HoveredImage />
       {isMobile ? <TabletTheme /> : <DesktopTheme />}
       <div className="brick-row-container cover-page">
         <div className="brick-container">

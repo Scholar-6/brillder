@@ -26,6 +26,7 @@ interface Props {
 
   deadline?: string;
   isAssignment?: boolean;
+  isViewAllAssignment?: boolean;
 
   onClick?(): void;
   onIconClick?(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
@@ -77,6 +78,7 @@ class PhoneTopBrick16x9 extends Component<Props> {
               circleIcon={this.props.circleIcon}
               circleClass={this.props.circleClass}
               iconColor={this.props.iconColor}
+              isAssignment={this.props.isViewAllAssignment}
               canHover={true}
               label={label}
               onClick={e => this.props.onIconClick?.(e)}

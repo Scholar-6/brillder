@@ -36,6 +36,7 @@ $base-build-font-size: 1.25vw;
     padding-top: 1vh;
     padding-bottom: 1vh;
     > div {
+      padding-left: 0.7vw;
       background: var(--tab-gray);
     }
   }
@@ -284,6 +285,10 @@ $base-build-font-size: 1.25vw;
     }
   }
 
+  .hh-student-name {
+    padding-left: 1.6vw;
+  }
+
   .classroom-names {
     max-width: 19vw;
     display: flex;
@@ -300,12 +305,40 @@ $base-build-font-size: 1.25vw;
       &.pending-label {
         max-width: 6vw;
         padding: 0 0.7vw;
+        color: var(--white) !important;
+        background: var(--theme-light-blue);
+        svg {
+          position: absolute;
+          top: 0.18vw;
+          left: 0.2vw;
+          $size: 1vw;
+          width: $size;
+          height: $size;
+        }
+        span {
+          padding-left: 0.5vw;
+        }
       }
       &.resend-label {
-        background: var(--theme-dark-blue);
-        color: var(--white);
+        color: var(--theme-dark-blue);
+        background: var(--tab-gray);
+        transitioN: all 300ms ease-out;
+
+
+        > div {
+          display: flex;
+          align-items: center;
+        }
+
+        svg {
+          margin-left: 0.3vw;
+          $size: 1vw;
+          width: $size;
+          height: $size;
+        }
         &:hover {
-          background: var(--theme-light-blue);
+          color: var(--white);
+          background: var(--theme-dark-blue);
         }
       }
     }
@@ -332,21 +365,39 @@ $base-build-font-size: 1.25vw;
     text-overflow: ellipsis;
   }
   .student-row {
+    position: relative;
     .student-name {
+      display: flex;
+      align-items: center;
       max-width: 100%;
       font-size: 1.05vw;
-      white-space: nowrap;
-      overflow-x: hidden;
-      text-overflow: ellipsis;
+
+      > span {
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        width: 16.5vw;
+      }
 
       .resend-label {
+        position: absolute;
+        right: 0.45vw;
         letter-spacing: 0;
         margin-left:0.3vw;
         font-size: 1vw;
         font-family: $font-family-regular;
-        background: var(--theme-dark-blue);
-        color: var(--white);
+        background: var(--tab-gray);
+        color: var(--theme-dark-blue);
+        display: flex;
+        align-items: center;
+        svg {
+          padding-left: 0.2vw;
+          $size: 1vw;
+          width: $size;
+          height: $size;
+        }
         &:hover {
+          color: var(--white);
           background: var(--theme-light-blue);
         }
       }

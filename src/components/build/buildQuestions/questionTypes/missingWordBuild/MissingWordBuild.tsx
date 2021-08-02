@@ -149,7 +149,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
         <QuillEditor
           data={choice.before}
           className="missing-big-text"
-          toolbar={['bold', 'italic', 'blockquote']}
+          toolbar={['bold', 'italic']}
           onChange={v => beforeChanged(choice, v)}
           disabled={locked}
           placeholder="Text before missing word..."
@@ -193,7 +193,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
         <QuillEditor
           data={choice.after}
           className="missing-big-text"
-          toolbar={['bold', 'italic', 'blockquote']}
+          toolbar={['bold', 'italic']}
           onChange={v => afterChanged(choice, v)}
           disabled={locked}
           placeholder="Text after missing word..."

@@ -70,7 +70,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   checkAttemptAnswer(answer: ShortAnswerItem, index: number) {
     const answerValue = stripHtml(answer.value);
     if (this.props.attempt && this.props.attempt.answer) {
-      let attepmtValue = stripHtml(this.props.attempt.answer[index]);
+      const attepmtValue = stripHtml(this.props.attempt.answer[index]);
 
       if (
         this.props.attempt &&
@@ -89,7 +89,10 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   }
 
   renderQuill(index: number) {
-    let value = this.state.userAnswers[index];
+    let value = '';
+    if (this.state.userAnswers) {
+      value = this.state.userAnswers[index];
+    }
     if (this.props.isPreview) {
       value = this.props.component.list[index].value;
     }

@@ -26,10 +26,13 @@
       height: 1.5vw;
     }
   }
-  .MuiSelect-root {
-    padding-left: 2vw;
+  .MuiSelect-root.MuiSelect-select.MuiSelect-selectMenu.MuiInputBase-input.MuiInput-input {
+    padding-left: 2.3vw;
+    padding-right: 15px !important;
     min-height: 2vw;
-    font-size: 1.05vw;
-    font-family: $font-family-regular;
+    letter-spacing: 0.1vw;
+    font-size: 0.75vw;
+    font-family: $font-family-bold;
+    text-transform: uppercase !important;
   }
 }

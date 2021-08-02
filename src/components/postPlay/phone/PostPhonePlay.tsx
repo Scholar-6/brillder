@@ -83,12 +83,19 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       showLibraryButton = false;
     }
 
+    let bookHovered = false;
+    let bookState = BookState.Titles;
+    if (values.contentsAttempts) {
+      bookHovered = true;
+      bookState = BookState.Attempts;
+    }
+
     this.state = {
-      bookState: BookState.Titles,
+      bookState,
       questionIndex: 0,
       activeAttemptIndex: 0,
       attempt: null,
-      bookHovered: false,
+      bookHovered,
       attempts: [],
       subjects: [],
       swiper: null,

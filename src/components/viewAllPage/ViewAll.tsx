@@ -150,7 +150,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const isSubjectCategory =
       props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) ===
       map.SubjectCategoriesPrefix;
-    const isSearchPage = props.location.pathname.slice(-map.SearchPublishPrefix.length) === map.SearchPublishPrefix;
 
     if (
       !isSubjectCategory &&
@@ -166,7 +165,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (values.newTeacher) {
         link += "?" + map.NewTeachQuery;
       }
-      //this.props.history.push(link);
+      this.props.history.push(link);
     }
 
     let isViewAll = false;
@@ -908,7 +907,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (this.state.isAllSubjects) {
       return "All subjects";
     }
-    return "My subjects";
+    return "My Subjects";
   }
 
   async moveToCreateOne() {
@@ -1058,7 +1057,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return (
       <div>
         <div
-          className={`brick-row-title main-title uppercase ${
+          className={`brick-row-title main-title ${
             filterSubjects.length === 1 && "subject-title"
           }`}
         >

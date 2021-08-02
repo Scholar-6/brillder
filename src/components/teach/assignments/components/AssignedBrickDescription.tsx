@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
-import { TeachClassroom, Assignment, StudentStatus, StudentAssignmentStatus } from "model/classroom";
+import { TeachClassroom, Assignment, StudentStatus, StudentAssignmentStatus, TeachStudent } from "model/classroom";
 import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
@@ -21,6 +21,7 @@ interface AssignedDescriptionProps {
   isExpanded?: boolean;
   isStudent?: boolean;
   isStudentAssignment?: boolean;
+  activeStudent?: TeachStudent;
   isArchive?: boolean;
   move?(): void;
   expand?(classroomId: number, assignmentId: number): void;
@@ -95,6 +96,21 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
   renderStatus(assignment: Assignment) {
     const { studentStatus } = assignment;
+
+    // expanded student
+    if (this.props.isStudentAssignment) {
+      const { activeStudent } = this.props;
+
+      let res: any = null;
+      if (activeStudent) {
+        res = studentStatus.find(s => s.studentId === activeStudent.id);
+      }
+
+      if (res && res.numberOfAttempts > 0) {
+        return '';
+      }
+    }
+
     let everyoneFinished = true;
     if (this.props.classroom) {
       let { length } = this.props.classroom.students;
@@ -206,13 +222,26 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
   renderStudentStatus() {
     if (!this.props.isStudent) { return <div /> }
+    const { activeStudent } = this.props;
     const { studentStatus } = this.props.assignment;
 
-    if (!this.isStudentCompleted(studentStatus)) { return this.renderNoAttempt() }
+    let res: any = null;
+
+    if (activeStudent) {
+      res = studentStatus.find(s => s.studentId === activeStudent.id);
+    }
+
+    if (!res) {
+      return this.renderNoAttempt();
+    }
+
+    if (res.numberOfAttempts === 0) {
+      return this.renderNoAttempt();
+    }
 
     return (
       <div className="status-text-centered">
-        Completed
+        Score: {res.avgScore > 0 && Math.round(res.avgScore)}%
       </div>
     );
   }
@@ -254,7 +283,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             <div className="users-complete-count">
               <span>{this.getCompleteStudents()}/{getTotalStudentsCount(this.props.classroom)}</span>
               <SpriteIcon name="users" className="text-theme-dark-blue" />
-              {classroom && classroom.studentsInvitations && <span style={{ marginLeft: '1vw' }}>{classroom.studentsInvitations.length} Invited</span>}
+              {classroom && classroom.studentsInvitations && classroom.studentsInvitations.length > 0 && <span style={{ marginLeft: '1vw' }}>{classroom.studentsInvitations.length} Pending</span>}
             </div>}
           <div className="average">
             {this.getAverageScore()}

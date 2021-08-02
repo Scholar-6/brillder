@@ -4,14 +4,31 @@ import { Brick } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import routes from "components/play/routes";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import { User } from "model/user";
+import map from "components/map";
 
 interface BrickBlockProps {
   brick: Brick;
+  user?: User;
   history: any;
   hide(): void;
 }
 
-const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, hide }) => {
+const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user, hide }) => {
+  const checkAssignment = (brick: Brick) => {
+    if (brick.assignments && user) {
+      for (let assignmen of brick.assignments) {
+        let assignment = assignmen as any;
+        for (let student of assignment.stats.byStudent) {
+          if (student.studentId === user.id) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+  
   return (
     <div className="va-phone-expanded-brick">
       <div className="va-title-container">
@@ -24,7 +41,11 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, hide })
       <div className="va-brief" dangerouslySetInnerHTML={{__html: stripHtml(brick.brief)}} />
       <div className="va-footer">
         <button className="btn va-right-play" onClick={() => {
-          history.push(routes.playBrief(brick.id));
+          if (user && checkAssignment(brick)) {
+            history.push(map.postAssignment(brick.id, user.id));
+          } else {
+            history.push(routes.playBrief(brick.id));
+          }
         }}>Play Now</button>
       </div>
     </div>

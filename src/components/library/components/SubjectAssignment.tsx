@@ -7,6 +7,7 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademyDifficulty } from "../base/AcademyDifficulty";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import routes from "components/play/routes";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 interface LibrarySubjectsProps {
   userId: number;
@@ -48,6 +49,23 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
 
   className += " default";
 
+  const renderRotatedTitle = (name: string, height: number) => {
+    let className = "rotated-container " + name;
+    let width = "calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh)";
+    if (height !== 100) {
+      width = `calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh * ${height})`;
+    }
+    return (
+      <div className={className}>
+        <div className="rotated">
+          <div className="rotated-text" style={{ width }}>
+            {stripHtml(brick.title)}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div
       className="assignment-progressbar"
@@ -77,6 +95,8 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           className="progress-value default-value"
           onMouseEnter={() => setHover(true)}
         >
+          {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
+          {height < 50 && height > 0 && renderRotatedTitle("white", 100)}
           {height < 50 && (
             <AcademyDifficulty
               a={assignment.brick.academicLevel}
