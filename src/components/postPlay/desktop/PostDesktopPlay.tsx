@@ -81,6 +81,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       questionIndex: 0,
       attempt: null,
       attempts: [],
+      mode: true,
       subjects: [],
       handleKey: this.handleKey.bind(this)
     };
@@ -242,6 +243,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
             <BookSidebar
               brick={brick} questions={questions}
               activeQuestionIndex={this.state.questionIndex}
+              attempt={this.state.attempt}
               bookState={this.state.bookState}
               moveToPage={this.moveToPage.bind(this)}
               moveToQuestion={this.moveToQuestion.bind(this)}

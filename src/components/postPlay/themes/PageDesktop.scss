@@ -90,6 +90,26 @@
               text-align: center;
               width: 9.3vh;
             }
+            .circle {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-right: 0.3vw;
+              $size: 2vw;
+              width: $size;
+              height: $size;
+              min-width: $size;
+              border-radius: 50%;
+              background: var(--theme-orange);
+              svg {
+                color: var(--white);
+                stroke-width: 3;
+                margin: 0 !important;
+                $size: 80%;
+                width: $size;
+                height: $size;
+              }
+            }
           }
         }
 
@@ -389,6 +409,11 @@
           font-family: $font-family-regular;
           font-size: 1vw;
         }
+      }
+    }
+    .real-question-b-page {
+      > div {
+        padding-top: 2.1vw !important;
       }
     }
     .attempt-page {
