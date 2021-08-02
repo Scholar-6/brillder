@@ -42,14 +42,26 @@
       height: 100%;
       width: $sidebar-width;
       border-top-right-radius: $radius;
-      $header-height: 12vh;
+      $header-height: 14vh;
       $footer-height: 4.6vw;
       
       .header {
         height: $header-height;
         font-family: $font-family-bold;
-        font-size: 2vw;
+        font-size: 4vh;
         border-bottom: 0.3vh solid #294779;
+        line-height: 1.2;
+
+        div:first-child {
+          padding-top: 2.5vh;
+        }
+
+        .title {
+          font-size: 3vh;
+          overflow-x: hidden;
+          white-space:nowrap;
+          text-overflow: ellipsis;
+        }
       }
 
       .scroll-content {
@@ -94,8 +106,8 @@
               display: flex;
               align-items: center;
               justify-content: center;
-              margin-right: 0.3vw;
-              $size: 2vw;
+              margin-right: 0.5vw;
+              $size: 1.6vw;
               width: $size;
               height: $size;
               min-width: $size;
@@ -103,9 +115,9 @@
               background: var(--theme-orange);
               svg {
                 color: var(--white);
-                stroke-width: 3;
+                stroke-width: 4;
                 margin: 0 !important;
-                $size: 80%;
+                $size: 60%;
                 width: $size;
                 height: $size;
               }
@@ -213,6 +225,19 @@
             position: relative;
             width: $left-part-width;
             overflow-y: scroll;
+
+            .lines-container,
+            .words-container {
+              font-size: 1.2vw !important;
+            }
+
+            .short-answer-input p {
+              text-align: center !important;
+            }
+
+            .MuiButton-label {
+              font-size: $book-font-size;
+            }
 
             .question-unique-play {
               padding-bottom: 0 !important;
@@ -417,6 +442,19 @@
       }
     }
     .attempt-page {
+      > div {
+        padding-top: 0;
+      }
+      h2 {
+        margin: 0 2vw;
+        padding: 0 2vw;
+        padding-top: 3vh;
+        padding-bottom: 2vh;
+        text-align: center;
+        font-family: $font-family-bold;
+        font-size: 2vw;
+        border-bottom: 4px solid var(--tab-gray);
+      }
       .attempt-info {
         cursor: pointer;
         display: flex;
@@ -424,13 +462,14 @@
         font-family: $font-family-bold;
         font-size: 1.7vw;
         color: var(--tab-gray);
-        height: 4vw;
+        padding-top: 0.4vw;
+        padding-bottom: 0.4vw;
         .percentage {
           display: flex;
           align-items: center;
           justify-content: center;
           border-radius: 50%;
-          $size: 3vw;
+          $size: 4vw;
           background: var(--theme-green);
           width: $size;
           height: $size;

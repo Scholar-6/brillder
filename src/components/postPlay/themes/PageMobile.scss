@@ -739,7 +739,6 @@
         .brick-title {
           margin: 0 1.8vw;
           margin-left: 5vw;
-          text-transform: uppercase;
           color: var(--theme-dark-blue);
           font-size: 6vw;
           width: 80vw;
@@ -1144,12 +1143,34 @@
       }
     }
 
+    .sort-play .sort-category {
+      border-top-left-radius: 2vw !important;
+      border-top-right-radius: 2vw !important;
+    }
+
     .question-unique-play {
       font-size: inherit !important;
 
       .help-text {
         font-size: 3vw !important;
         font-family: $font-family-regular-italic !important;
+      }
+
+      .short-answer-input {
+        margin-top: 2vw;
+        border-radius: 2vw;
+        padding: 2vw 0;
+        p {
+          text-align: center !important;
+        }
+      }
+
+      .sortable-item p {
+        text-align: center !important;
+      }
+
+      .MuiTypography-root {
+        font-size:  $mbase-font-size !important;
       }
 
       .words-container,
