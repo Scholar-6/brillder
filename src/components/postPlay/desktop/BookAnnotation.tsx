@@ -6,6 +6,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
 import _ from 'lodash';
+import { useLocation } from 'react-router-dom';
 
 interface BookAnnotationProps {
   currentUser: User;
@@ -14,6 +15,9 @@ interface BookAnnotationProps {
 }
 
 const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props }) => {
+  const location = useLocation();
+  const focused = React.useMemo(() => location.hash.substr(1) === annotation.id.toString(), [location, annotation]);
+
   const textRef = React.createRef<HTMLElement>();
   const canEdit = React.useMemo(() => props.currentUser.id === annotation.user.id, [props.currentUser, annotation.user]);
   
@@ -28,7 +32,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
   const onAnnotationChangeDebounced = React.useCallback(_.debounce(onAnnotationChange, 500), [onAnnotationChange]);
 
   return (
-    <Grid className={`comment-container comment-${annotation.id}`}>
+    <Grid className={`comment-container comment-${annotation.id} ${focused ? "focused" : ""}`}>
       <div className="comment-item-container">
         <Grid container direction="column">
           <Grid item container direction="row" style={{ position: 'relative', flexWrap: 'nowrap' }}>
@@ -47,6 +51,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
             <span className="bold">Comment: </span>
             <i
               className="comment-text-editable"
+              placeholder="Type your comment here..."
               ref={textRef}
               contentEditable={canEdit}
               onInput={onAnnotationChangeDebounced}

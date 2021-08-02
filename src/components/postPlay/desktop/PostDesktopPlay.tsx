@@ -32,6 +32,8 @@ import { getDateString, getTime } from "components/services/brickService";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
 import BookAnnotationsPanel from "./BookAnnotationsPanel";
+import { PlayMode } from "components/play/model";
+import HighlightHtml, { HighlightRef } from "components/play/baseComponents/HighlightHtml";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -67,6 +69,8 @@ interface ProposalState {
 }
 
 class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
+  highlightRef: React.RefObject<HighlightRef>;
+
   constructor(props: ProposalProps) {
     super(props);
 
@@ -85,6 +89,9 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       subjects: [],
       handleKey: this.handleKey.bind(this)
     };
+    
+    this.highlightRef = React.createRef();
+
     this.loadData();
   }
 
@@ -158,9 +165,17 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     } catch { }
   }
 
+  setAttemptBrickProperty(property: "brief" | "prep" | "synthesis", value: string) {
+    const newAttempt = this.state.attempt;
+    if(!newAttempt) return;
+    newAttempt.brick[property] = value;
+    this.setActiveAttempt(newAttempt);
+  }
+
   renderAnnotationsPanel() {
     return (
       <BookAnnotationsPanel
+        highlightRef={this.highlightRef}
         attempt={this.state.attempt ?? undefined}
         setAttempt={this.setActiveAttempt.bind(this)}
         state={this.state.bookState}
@@ -289,7 +304,13 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                         </div>
                       </div>
                     </div>
-                    <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.brief }} />
+                    {/* <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.brief }} /> */}
+                    <HighlightHtml
+                      ref={this.highlightRef}
+                      value={brick.brief}
+                      mode={PlayMode.UnHighlighting}
+                      onHighlight={this.setAttemptBrickProperty.bind(this, "brief")}
+                    />
                   </div>
                 </div>
                 {this.renderAnnotationsPanel()}
@@ -306,7 +327,13 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                         </div>
                       </div>
                     </div>
-                    <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.prep }} />
+                    {/* <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.prep }} /> */}
+                    <HighlightHtml
+                      ref={this.highlightRef}
+                      value={brick.prep}
+                      mode={PlayMode.UnHighlighting}
+                      onHighlight={this.setAttemptBrickProperty.bind(this, "prep")}
+                    />
                   </div>
                 </div>
                 {this.renderAnnotationsPanel()}
@@ -331,7 +358,13 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                         </div>
                       </div>
                     </div>
-                    <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.synthesis }} />
+                    {/* <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.synthesis }} /> */}
+                    <HighlightHtml
+                      ref={this.highlightRef}
+                      value={brick.synthesis}
+                      mode={PlayMode.UnHighlighting}
+                      onHighlight={this.setAttemptBrickProperty.bind(this, "synthesis")}
+                    />
                   </div>
                 </div>
                 {this.renderAnnotationsPanel()}

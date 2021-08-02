@@ -13,3 +13,17 @@
         }
     }
 }
+
+.annotation {
+    color: var(--theme-dark-blue);
+    transition: background-color 0.05s linear;
+    background-color: var(--white-gray);
+    border-radius: 0.25rem;
+    box-sizing: content-box;
+    padding: 0.25rem 0;
+
+    &:hover,
+    &:focus {
+        background-color: var(--highlight-blue);
+    }
+}
