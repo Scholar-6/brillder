@@ -305,8 +305,8 @@ $base-build-font-size: 1.25vw;
       &.pending-label {
         max-width: 6vw;
         padding: 0 0.7vw;
-        color: var(--white) !important;
-        background: var(--theme-light-blue);
+        color: var(--theme-dark-blue) !important;
+        background-color: transparent !important;
         svg {
           position: absolute;
           top: 0.18vw;
@@ -331,6 +331,7 @@ $base-build-font-size: 1.25vw;
         }
 
         svg {
+          stroke-width: 2;
           margin-left: 0.3vw;
           $size: 1vw;
           width: $size;
