@@ -26,13 +26,13 @@ const BookSidebar: React.FC<Props> = ({ bookState, brick, questions, attempt, ac
       if (attempt.answers[i].correct === true && attempt.liveAnswers[i].correct === true) {
         return (
           <div className="circle bg-green">
-            <SpriteIcon name="check-icon" />
+            <SpriteIcon name="check-custom" />
           </div>
         );
       } else if (attempt.answers[i].correct === true || attempt.liveAnswers[i].correct === true) {
         return (
           <div className="circle b-yellow">
-            <SpriteIcon name="check-icon" />
+            <SpriteIcon name="check-custom" />
           </div>
         );
       } else if (attempt.answers[i].marks > 0) {
@@ -51,7 +51,10 @@ const BookSidebar: React.FC<Props> = ({ bookState, brick, questions, attempt, ac
   }
   return (
     <div className="sidebar">
-      <div className="header flex-center">Contents</div>
+      <div className="header">
+        <div className="flex-center">Contents</div>
+        <div className="title flex-center" dangerouslySetInnerHTML={{__html: brick.title}} />
+      </div>
       <div className="scroll-content pages-list">
         <div className={bookState === BookState.Attempts ? 'active attempts' : 'attempts'} onClick={() => moveToPage(BookState.Attempts)}>
           <div style={{display: 'none'}}>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

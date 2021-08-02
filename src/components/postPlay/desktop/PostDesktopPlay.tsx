@@ -251,6 +251,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
             <div className="content-area">
               {this.state.bookState === BookState.Attempts && <div className="book-page">
                 <div className="real-content question-content brief-page attempt-page">
+                  <h2 dangerouslySetInnerHTML={{__html: brick.title}}></h2>
                   {renderAttempts()}
                 </div>
                 <div className="right-part flex-center">
