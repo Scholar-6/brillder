@@ -5,6 +5,13 @@
 .brief-page {
   font-family: $font-family-regular;
   .left-block {
+    position: relative;
+    .hover-area {
+      z-index: 100;
+      top: calc(4.5vh + 5.5vw);
+      right: 9.7vw; 
+      position: absolute;
+    }
     margin-top: 15.5vh;
     > h1 {
       @include tabletL {

@@ -5,7 +5,7 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { ListItemIcon, ListItemText, MenuItem, SvgIcon } from '@material-ui/core';
+import { ListItemIcon, ListItemText, MenuItem, Popper, SvgIcon } from '@material-ui/core';
 
 
 import './AssignBrickClass.scss';
@@ -29,6 +29,10 @@ interface AssignPersonOrClassProps {
   close(): void;
 
   requestFailed(e: string): void;
+}
+
+const PopperMy = function (props:any) {
+  return (<Popper {...props} className="assign-brick-class-poopper" />)
 }
 
 const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
@@ -137,7 +141,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
             <p>Prefer to browse our public catalogue?</p>
             <div className="text-with-glasses">
               Click the
-              <div className="glasses">
+              <div className="glasses pointer">
                 <div className="eye-glass-icon" onClick={() => history.push(map.ViewAllPage + '?subjectId=' + props.subjectId)} >
                   <div className="eye-glass-frame svgOnHover">
                     <SpriteIcon name="glasses-home" className="active text-theme-orange" />

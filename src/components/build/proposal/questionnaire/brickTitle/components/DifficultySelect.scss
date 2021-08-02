@@ -13,6 +13,14 @@
     padding-bottom: 0;
     min-height: 2vw;
   }
+  svg {
+    right: 0;
+    position: absolute;
+    $size: 1vw;
+    width: $size;
+    height: $size;
+    color: var(--theme-dark-blue);
+  }
   .placeholder {
     display: none;
   }
@@ -21,4 +29,8 @@
       opacity: 0.42 !important;
     }
   }
+}
+
+.difficult-popper li {
+  font-size: 1.6vw !important;
 }

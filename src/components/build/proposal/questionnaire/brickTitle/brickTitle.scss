@@ -12,12 +12,12 @@
   .absolute-title-help {
     position: absolute;
     right: 0;
-    top: 1.5vw;
+    top: -0.4vw;
   }
   .absolute-keyword-help {
     position: absolute;
     right: 0;
-    top: -0.5vw;
+    top: 0vw;
   }
   .absolute-difficult-help {
     position: absolute;
@@ -85,6 +85,15 @@
       letter-spacing: 0.05vw;
     }
 
+    .key-words {
+      input {
+        margin: 0.5vh 0;
+      }
+    }
+    .difficulty-select .MuiInputBase-root {
+      margin: 0.5vh 0;
+    }
+
     .input-container {
       @extend %flexCenter;
       flex-direction: column;
@@ -106,6 +115,8 @@
         }
         .quill-document-editor,
         .ql-editor {
+          padding-top: 0;
+          padding-bottom: 0;
           padding-left: 0 !important;
           font-size: 1.6vw;
           background: none !important;
