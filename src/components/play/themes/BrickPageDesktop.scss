@@ -2221,11 +2221,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--tab-gray);
   .sd-image-container {
     position: relative;
   }
   img {
-    background: var(--white);
+    background: var(--theme-light-blue);
     border: 0.4vw solid var(--theme-light-blue);
     border-radius: 0.3vw;
     padding-right: 1vw;
@@ -2239,7 +2240,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     position: absolute;
     bottom: 0.7vw;
     right: 0;
-    height: calc(100% - 2vw);
+    height: calc(100% - 1.6vw);
     width: 2vw;
     overflow:hidden;
     text-overflow: ellipsis;
