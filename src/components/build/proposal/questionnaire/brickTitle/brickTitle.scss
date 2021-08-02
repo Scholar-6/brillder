@@ -12,7 +12,7 @@
   .absolute-title-help {
     position: absolute;
     right: 0;
-    top: 1.5vw;
+    top: -0.4vw;
   }
   .absolute-keyword-help {
     position: absolute;
@@ -106,6 +106,8 @@
         }
         .quill-document-editor,
         .ql-editor {
+          padding-top: 0;
+          padding-bottom: 0;
           padding-left: 0 !important;
           font-size: 1.6vw;
           background: none !important;

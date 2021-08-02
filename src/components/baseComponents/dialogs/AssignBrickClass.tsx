@@ -92,7 +92,6 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
           onChange={(e: any, v: any) => setBrick(v)}
           noOptionsText="Sorry, try typing something else"
           className="subject-autocomplete"
-          PopperComponent={PopperMy}
           getOptionLabel={(option: any) => stripHtml(option.title)}
           renderOption={(brick: Brick) => (
             <React.Fragment>
