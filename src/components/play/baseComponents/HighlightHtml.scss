@@ -23,7 +23,8 @@
     padding: 0.25rem 0;
 
     &:hover,
-    &:focus {
+    &:focus,
+    &.focused {
         background-color: var(--highlight-blue);
     }
 }

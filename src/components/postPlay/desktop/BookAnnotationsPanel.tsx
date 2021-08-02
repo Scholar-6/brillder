@@ -24,6 +24,8 @@ interface BookAnnotationsPanelProps {
 }
 
 const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
+  const history = useHistory();
+
   const location = React.useMemo(() => {
     switch(props.state) {
       case BookState.Brief: return AnnotationLocation.Brief;
@@ -47,6 +49,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     }
 
     props.setAttempt(newAttempt);
+    history.push("#" + newAnnotation.id);
   }, [props.attempt, props.setAttempt, location, props.questionIndex]);
 
   const updateAnnotation = React.useCallback((annotation: Annotation) => {
