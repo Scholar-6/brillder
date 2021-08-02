@@ -95,6 +95,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       questionIndex: 0,
       activeAttemptIndex: 0,
       attempt: null,
+      mode: true,
       bookHovered,
       attempts: [],
       subjects: [],

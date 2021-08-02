@@ -14,6 +14,9 @@ import DummyProgressbarCountdown from "components/play/baseComponents/timeProgre
 import { getPrepareTime } from "components/play/services/playTimes";
 import { formatTwoLastDigits } from "components/services/brickService";
 import map from "components/map";
+import PrepHoverHelp from "../baseComponents/PrepHoverHelp";
+import BriefHoverHelp from "../baseComponents/BriefHoverHelp";
+import OpenQHoverHelp from "../baseComponents/OpenQHoverHelp";
 
 interface DialogProps {
   isOpen: boolean;
@@ -133,16 +136,12 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
     return (
       <div className="dialog-header dialog-prep-content">
         <div className="flex">
-          <HoverHelp>
-            We see education as being a mix of open questions and closed questions. A lot of emphasis is placed on the latter in traditional schooling. While it is undoubtedly necessary to build on fundamentals, it can be stifling for both teachers and learners not to go any further and engage in more holistic discussion. A good open question may be the title for an essay or seminar, and should invite a broader dialogue or appreciation of the subject at hand.
-          </HoverHelp>
+          <OpenQHoverHelp />
           <div className="open-question" dangerouslySetInnerHTML={{__html: brick.openQuestion}} />
         </div>
         <div className="space" />
         <div className="flex">
-          <HoverHelp>
-            Two or three sentences is often enough. This is the first page learners will see (after the cover), so aim to hook them - interesting anecdotes, problem statements and paradoxes are most welcome!
-          </HoverHelp>
+          <BriefHoverHelp />
           <div className="expand-title brief-title">
             <span>Brief</span>
             <div className="centered text-white">
@@ -156,9 +155,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
           <div dangerouslySetInnerHTML={{__html: brick.brief}} />
         </div>
         <div className="flex">
-          <HoverHelp>
-            This is a timed section, and though learners will not be moved on to the next section automatically, we recommend that you try to be fair with your estimation of how long this section will take. This will help learners apportion 20, 40, or 60 minutes to a brick and have the satisfaction of completing them within that timeframe. Within these lengths, it should be possible to allocate 5, 10, or 15 minutes respectively to complete the prep section.
-          </HoverHelp>
+          <PrepHoverHelp />
           <div className="expand-title brief-title">
             <span>Prep</span>
             <div className="centered text-white">

@@ -7,7 +7,7 @@
 }
 
 .assign-dialog {
-  .dialog-header > div {
+  .dialog-header>div {
     width: 50vw !important;
 
     .MuiInputBase-input.MuiInput-input {
@@ -39,18 +39,34 @@ span.bold {
     display: flex;
     align-items: center;
     justify-content: center;
+
     .glasses {
       .eye-glass-icon {
         width: 3.1vw;
+
         svg {
           margin: 0 !important;
           width: 2.7vw;
         }
+
         .glass-eyes-left,
         .glass-eyes-right {
           display: none;
         }
       }
+    }
+  }
+}
+
+.assign-brick-class-poopper {
+  z-index: 1214748;
+
+  .MuiButtonBase-root {
+    &:hover {
+      background: transparent !important;
+    }
+    p {
+      font-size: 1.6vw !important;
     }
   }
 }
