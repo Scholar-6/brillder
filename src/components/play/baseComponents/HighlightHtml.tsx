@@ -10,6 +10,7 @@ import YoutubeAndMathInHtml from "./YoutubeAndMathQuote";
 
 import "./HighlightHtml.scss";
 import { Annotation } from "model/attempt";
+import { useLocation } from "react-router-dom";
 
 let annotateCreateEvent: (el: HTMLElement) => void = () => {
   console.log('asdfasdf');
@@ -87,6 +88,20 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
       setTextBox(div);
     }
   }, [setTextBox, onMouseUp]);
+
+  const location = useLocation();
+  React.useEffect(() => {
+    const id = location.hash.substr(1);
+    if(!id) return;
+    const links = textBox?.querySelectorAll(`.annotation`) as NodeListOf<HTMLAnchorElement>;
+    links?.forEach(link => {
+      if(link.dataset.id === id) {
+        link.classList.add("focused");
+      } else {
+        link.classList.remove("focused");
+      }
+    });
+  }, [location.hash]);
 
   React.useImperativeHandle(ref, () => ({
     createAnnotation(annotation: Annotation) { createAnnotation(annotation) }

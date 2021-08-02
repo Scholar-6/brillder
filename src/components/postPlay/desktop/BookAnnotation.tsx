@@ -6,7 +6,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
 import _ from 'lodash';
-import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 interface BookAnnotationProps {
   currentUser: User;
@@ -15,8 +15,8 @@ interface BookAnnotationProps {
 }
 
 const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props }) => {
-  const location = useLocation();
-  const focused = React.useMemo(() => location.hash.substr(1) === annotation.id.toString(), [location, annotation]);
+  const history = useHistory();
+  const focused = React.useMemo(() => history.location.hash.substr(1) === annotation.id.toString(), [history.location, annotation]);
 
   const textRef = React.createRef<HTMLElement>();
   const canEdit = React.useMemo(() => props.currentUser.id === annotation.user.id, [props.currentUser, annotation.user]);
@@ -55,6 +55,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
               ref={textRef}
               contentEditable={canEdit}
               onInput={onAnnotationChangeDebounced}
+              onFocus={() => history.push("#" + annotation.id)}
               onBlur={onAnnotationChangeDebounced}
               dangerouslySetInnerHTML={{ __html: annotation.text }}
             />
