@@ -276,14 +276,22 @@
       }
     }
     &.set-user-email-dialog {
+      .dialog-header {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+      }
       .bold {
         font-size: 5.5vw;
       }
       .MuiFormControl-root {
         margin-bottom: 0.7vh !important;
       }
+      .MuiInput-root {
+        border-radius: 1.8vw;
+      }
       .dialog-input {
         .MuiInputBase-root{
+          padding: 1vw 4vw !important;
           input {
             height: 9vw;
             min-height: 9vw;

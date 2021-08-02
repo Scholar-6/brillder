@@ -907,7 +907,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (this.state.isAllSubjects) {
       return "All subjects";
     }
-    return "My subjects";
+    return "My Subjects";
   }
 
   async moveToCreateOne() {
