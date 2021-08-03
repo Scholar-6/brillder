@@ -41,7 +41,6 @@ const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
   );
 
   const onChange = (content: string) => {
-    console.log(content);
     const valueString = stripHtml(content);
     const res = valueString.split(" ");
     if (res.length <= 3) {
