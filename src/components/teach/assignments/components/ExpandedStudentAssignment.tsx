@@ -8,6 +8,7 @@ import { getSubjectColor } from "components/services/subject";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import { ApiAssignemntStats } from "model/stats";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import map from "components/map";
 
 enum SortBy {
   None,
@@ -22,6 +23,7 @@ interface AssignemntExpandedState {
 }
 
 interface AssignmentBrickProps {
+  history: any;
   isStudentAssignment: boolean;
   stats: ApiAssignemntStats;
   subjects: Subject[];
@@ -112,6 +114,20 @@ class ExpandedStudentAssignment extends Component<
     );
   }
 
+  renderBookIcon(studentStatus: any, studentId: number) {
+    const { history, assignment } = this.props;
+    const moveToPostPlay = () => {
+      if (studentStatus.bestScore !== undefined) {
+        history.push(map.postPlay(assignment.brick.id, studentId) + '?fromTeach=true');
+      }
+    }
+    return (
+      <div className="round b-green centered">
+        <SpriteIcon name="book-open" className="active book-open-icon" onClick={moveToPostPlay} />
+      </div>
+    );
+  }
+
   renderQuestionAttemptIcon(studentResult: any, questionNumber: number) {
     if (studentResult) {
       try {
@@ -154,6 +170,7 @@ class ExpandedStudentAssignment extends Component<
           <div>{this.renderStatus(studentResult)}</div>
         </td>
         <td className="student-book">
+          {studentResult && studentResult.numberOfAttempts > 0 && <div className="centered">{this.renderBookIcon(studentResult, student.id)}</div>}
         </td>
         <td className={`assigned-student-name`}>
           {student.firstName} {student.lastName}

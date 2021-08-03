@@ -12,6 +12,7 @@ import { getAssignmentStats } from "services/axios/stats";
 import ExpandedStudentAssignment from "./ExpandedStudentAssignment";
 
 interface ActiveStudentBricksProps {
+  history: any;
   classroom: TeachClassroom | null;
   subjects: Subject[];
   isArchive: boolean;
@@ -139,6 +140,7 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
         <ExpandedStudentAssignment
           assignment={a}
           isStudentAssignment={true}
+          history={this.props.history}
           student={this.props.activeStudent}
           stats={this.state.assignmentStats}
           subjects={this.props.subjects}

@@ -279,6 +279,7 @@
           height: 10vw;
           @extend %flexCenter;
           margin: 8vh auto;
+          margin-bottom: 6vh;
           background: var(--white);
           border-radius: 0.4vw;
           padding: 0.4vw;
@@ -292,7 +293,7 @@
         .brick-title {
           margin: 0 1.8vw;
           color: var(--theme-dark-blue);
-          font-size: 1.8vw;
+          font-size: 2.5vw;
           overflow-x: hidden;
           height: 18vh;
         }
