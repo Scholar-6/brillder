@@ -25,12 +25,12 @@ import { getAssignedBricks } from "services/axios/brick";
 import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
 import TeachButton from "./components/TeachButton";
 import FirstButton from "./components/FirstButton";
-import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/DesktopVersionDialogV2";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import LibraryButton from "./components/LibraryButton";
 import BlocksIcon from "./components/BlocksIcon";
 import ReportsAlertDialog from "components/baseComponents/dialogs/ReportsAlertDialog";
-import { isIPad13, isTablet } from "react-device-detect";
+import { isIPad13, isMobile, isTablet } from "react-device-detect";
+import InvalidDialog from "components/build/baseComponents/dialogs/InvalidDialog";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -171,6 +171,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return (
       <div className={`create-item-container ${isActive ? '' : 'disabled'}`} onClick={() => {
         if (disabled) {
+          if (isMobile) {
+            this.setState({isDesktopOpen: true});
+          }
           return;
         }
         this.props.history.push(map.backToWorkUserBased(this.props.user));
@@ -220,7 +223,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   renderSecondButton() {
     if (this.state.isTeacher || this.state.isAdmin) {
       const isIpad = isIPad13 || isTablet;
-      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher || isIpad} />
+      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher || isIpad} onMobileClick={() => this.setState({isDesktopOpen: true})} />
     } else if (this.state.isStudent) {
       return this.renderStudentWorkButton();
     }
@@ -299,6 +302,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return (
       <div className={className} onClick={() => {
         if (disabled) {
+          if (isMobile) {
+            this.setState({isDesktopOpen: true});
+          }
           return;
         }
         if (!isActive) {
@@ -424,10 +430,10 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         <ReportsAlertDialog
           isOpen={this.state.isReportLocked}
           close={() => this.setState({ isReportLocked: false })} />
-        <DesktopVersionDialogV2
-          isOpen={this.state.isDesktopOpen} secondaryLabel={this.state.secondaryLabel}
-          onClick={() => this.setState({ isDesktopOpen: false })}
-        />
+        <InvalidDialog 
+          isOpen={this.state.isDesktopOpen} 
+          label="This feature is not available on this device, try a desktop browser."
+          close={() => this.setState({isDesktopOpen: false})} />
         <ClassInvitationDialog />
       </Grid>
       </React.Suspense>

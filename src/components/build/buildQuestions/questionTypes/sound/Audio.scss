@@ -132,14 +132,14 @@
 .introduction-page .custom-audio-controls {
   width: 85%;
   .input-container input {
-      width: 20vw;
+      width: 11vw;
   }
   .volume-container-main input {
-    width: 10vw;
+    width: 6vw;
     background: #C1C2C3;
   }
   .time-text {
-    width: 9vw;
+    width: 6vw;
     letter-spacing: -0.05vw;
     @extend %flexCenter;
   }

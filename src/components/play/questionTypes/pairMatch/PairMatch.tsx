@@ -119,7 +119,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       return (
         <div style={{ width: '100%' }}>
           <Audio src={answer.valueSoundFile} />
-          <div>{answer.valueSoundCaption ? answer.valueSoundCaption : 'Click to select'}</div>
+          <div>{answer.valueSoundCaption ? answer.valueSoundCaption : ''}</div>
         </div>
       );
     }

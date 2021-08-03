@@ -32,6 +32,9 @@ export interface AssignmentStudent {
     avg_score: number;
     status: number;
     studentId: number;
+    avgScore: number;
+    bestScore: number;
+    numberOfAttempts: number;
 }
 
 export interface ApiAssignemntStats {
