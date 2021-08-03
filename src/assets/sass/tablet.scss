@@ -471,3 +471,11 @@ html {
     color: var(--white);
   }
 }
+
+.choose-choice {
+  img {
+    max-height: 10vh;
+    max-width: 100% !important;
+    width: auto !important;
+  }
+}
