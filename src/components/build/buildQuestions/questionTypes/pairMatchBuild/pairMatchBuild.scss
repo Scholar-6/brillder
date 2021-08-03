@@ -72,6 +72,11 @@
         border-radius: 0.8vw;
         margin-bottom: 0.5vh;
         width: calc(100% - 0.4vw);
+
+        &.bigger {
+            width: 100%;
+            margin-left: 0;
+        }
         .custom-audio-controls {
             margin-left: 0.5vw !important;
             .input-container input {

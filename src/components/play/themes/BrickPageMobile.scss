@@ -1761,6 +1761,20 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       height: 5vw;
     }
   }
+  .input-container {
+    width: 25vw;
+  }
+  .MuiSlider-thumb {
+    display: none;
+  }
+  .MuiSlider-root {
+    padding: 0;
+    width: 100%;
+    .MuiSlider-track, .MuiSlider-rail {
+      border-radius: 2vw;
+      height: 1.5vw;
+    }
+  }
   .time-text {
     font-size: 3vw;
     width: 20vw;

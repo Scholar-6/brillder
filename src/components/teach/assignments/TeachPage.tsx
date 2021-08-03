@@ -492,6 +492,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         {this.state.activeStudent ?
           <ActiveStudentBricks
             subjects={this.state.subjects}
+            history={this.props.history}
             isArchive={isArchive}
             classroom={activeClassroom}
             activeStudent={this.state.activeStudent}

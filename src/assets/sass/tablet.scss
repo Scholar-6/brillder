@@ -471,3 +471,45 @@ html {
     color: var(--white);
   }
 }
+
+.choose-choice {
+  img {
+    max-height: 10vh;
+    max-width: 100% !important;
+    width: auto !important;
+  }
+}
+
+// short answer live
+.play-preview-panel .short-answer-live {
+  .ql-custom-toolbar .formats button svg {
+    height: 2vw;
+    width: 2vw;
+  }
+
+  .ql-custom-toolbar {
+    display: none !important;
+  }
+
+  .ql-container {
+    min-height: 4vw;
+    width: 100%;
+
+    .ql-editor {
+      text-align: center;
+      border-radius: 0.6vw !important;
+    }
+  }
+
+  .each {
+    .quill-document-editor {
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+
+      .ql-editor {
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
+    }
+  }
+}

@@ -740,19 +740,21 @@
           margin: 0 1.8vw;
           margin-left: 5vw;
           color: var(--theme-dark-blue);
-          font-size: 6vw;
+          $font-size: 8vw;
+          font-size: $font-size;
           width: 80vw;
           height: 18vh;
 
           p {
-            font-size: 6vw;
+            font-size: $font-size;
           }
         }
 
         .names-row {
           margin-bottom: 3vh;
-          font-size: 6vw;
+          font-size: 6.8vw;
           height: 7vh;
+          text-transform: capitalize;
           color: var(--theme-light-blue);
         }
       }
