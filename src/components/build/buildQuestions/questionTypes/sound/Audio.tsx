@@ -1,9 +1,11 @@
 import React from "react";
+import Slider from '@material-ui/core/Slider';
 
 import './Audio.scss';
 import { fileUrl } from "components/services/uploadFile";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
 
 interface SoundProps {
   src?: string;
@@ -55,7 +57,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
   }
 
   setVolume(volume: number) {
-    const {audio} = this.state;
+    const { audio } = this.state;
     audio.volume = volume;
     this.setState({ audio, volume });
   }
@@ -84,11 +86,11 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
   }
 
   setRange(e: any) {
-    const {value} = e.target;
-    const {audio} = this.state;
+    const { value } = e.target;
+    const { audio } = this.state;
     const audioValue = (value * audio.duration) / 100;
     audio.currentTime = audioValue;
-    this.setState({rangeValue: value});
+    this.setState({ rangeValue: value });
     e.stopPropagation();
     e.preventDefault();
   }
@@ -118,7 +120,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
         <div className="custom-audio-controls">
           <div className="button-container">
             {this.state.audioState === AudioState.Init ||
-            this.state.audioState === AudioState.Paused ? (
+              this.state.audioState === AudioState.Paused ? (
               <SpriteIcon name="play-thick" onClick={this.play.bind(this)} />
             ) : (
               <SpriteIcon name="pause-filled" onClick={this.pause.bind(this)} />
@@ -128,14 +130,28 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
             {this.state.currentTime} / {this.state.duration}
           </div>
           <div className="input-container">
-            <input
-              type="range"
-              draggable="true"
-              onDragStart={e => e.preventDefault()}
-              value={this.state.rangeValue}
-              onChange={this.setRange.bind(this)}
-              max={100}
-            />
+            {isPhone() ?
+              <Slider
+                value={this.state.rangeValue}
+                max={100}
+                onChange={(e, value) => {
+                  const v = value as number;
+                  const { audio } = this.state;
+                  audio.currentTime = (v * audio.duration) / 100;
+                  this.setState({ rangeValue: v });
+                  e.stopPropagation();
+                  e.preventDefault();
+                }}
+                valueLabelDisplay="auto"
+                aria-labelledby="non-linear-slider"
+              /> : <input
+                type="range"
+                draggable="true"
+                onDragStart={e => e.preventDefault()}
+                value={this.state.rangeValue}
+                onChange={this.setRange.bind(this)}
+                max={100}
+              />}
           </div>
           <div className="volume-container-main">
             <div
