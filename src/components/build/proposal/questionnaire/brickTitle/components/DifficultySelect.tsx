@@ -1,5 +1,5 @@
 import React from "react";
-import { Select, MenuItem, Popper } from "@material-ui/core";
+import { Select, MenuItem } from "@material-ui/core";
 
 import './DifficultySelect.scss';
 import { AcademicLevel } from "model/brick";

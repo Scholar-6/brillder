@@ -71,7 +71,7 @@ const validatePairMatch = (comp: any) => {
   const validateChoice = (a: Answer) => {
     if (a.answerType === QuestionValueType.Image && !a.valueFile) {
       return false;
-    } else if (a.answerType !== QuestionValueType.Image && !a.value) {
+    } else if (a.answerType !== QuestionValueType.Image && a.answerType !== QuestionValueType.Sound && !a.value) {
       return false;
     }
     return true;
@@ -80,7 +80,7 @@ const validatePairMatch = (comp: any) => {
   const validateOption = (a: Answer) => {
     if (a.optionType === QuestionValueType.Image && !a.optionFile) {
       return false;
-    } else if (a.optionType !== QuestionValueType.Image && !a.option) {
+    } else if (a.optionType !== QuestionValueType.Image && a.answerType !== QuestionValueType.Sound && !a.option) {
       return false;
     }
     return true;

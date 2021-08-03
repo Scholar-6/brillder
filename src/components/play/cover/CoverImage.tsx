@@ -7,7 +7,6 @@ import ImageCoverDialog from './ImageCoverDialog';
 import { ImageCoverData } from './model';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { setBrickCover } from 'services/axios/brick';
-import { ReduxCombinedState } from 'redux/reducers';
 import actions from 'redux/actions/play';
 import { connect } from 'react-redux';
 
