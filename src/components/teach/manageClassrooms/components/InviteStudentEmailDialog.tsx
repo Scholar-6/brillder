@@ -18,6 +18,8 @@ interface InviteStudentEmailProps {
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
+
+  const [submiting, setSubmitting] = React.useState(false);
   const [currentEmail, setCurrentEmail] = React.useState("");
   const [users, setUsers] = React.useState<User[]>([]);
 
@@ -59,6 +61,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
   }, [currentEmail]);
 
   const onSubmit = React.useCallback(async () => {
+    setSubmitting(true);
     const currentUsers = users;
     if (!emailRegex.test(currentEmail)) {
       if (users.length <= 0) {
@@ -74,6 +77,8 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
       { emails: currentUsers.map(u => u.email) },
       { withCredentials: true }
     );
+    setUsers([]);
+    setSubmitting(false);
     props.close(currentUsers.length);
   }, [users, props, currentEmail])
 
@@ -107,10 +112,12 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
           }}
         />
         <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
-          <button className="btn btn-md bg-theme-orange yes-button icon-button" style={{width: 'auto'}} onClick={onSubmit}>
+          <button className={`btn btn-md yes-button icon-button ${submiting ? 'b-dark-blue' : 'bg-theme-orange'}`} style={{width: 'auto'}} onClick={onSubmit}>
             <div className="centered">
               <span className="label">Send Invites</span>
-              <SpriteIcon name="send" />
+              {submiting ? <div className="loader-container ">
+              <SpriteIcon name="f-loader" className="spinning" />
+            </div> : <SpriteIcon name="send" />}
             </div>
           </button>
         </div>
