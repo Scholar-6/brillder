@@ -37,6 +37,12 @@
   margin-bottom: 8vw !important;
   position: relative;
   margin-bottom: 5vw;
+  .input-container {
+    width: 10vw;
+    .MuiSlider-valueLabel {
+      display: none;
+    }
+  }
   input {
     border-radius: 4vw;
     width: 23vw !important;
