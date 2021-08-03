@@ -808,3 +808,7 @@
 .animated-brick-container .flex-brick-container:hover {
   margin-top: calc(#{$bricks-height / -34});
 }
+
+.spinning {
+  animation: spinning 9s infinite linear;
+}
