@@ -200,7 +200,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
         />
         <AddAnswerButton
           locked={locked} addAnswer={() => { addAnswer(choice) }} height={choice.height}
-          label="+ ANSWER"
+          label="Add an answer"
         />
       </div>
     );
@@ -216,7 +216,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
       }
       <AddAnswerButton
         locked={locked} addAnswer={addChoice} height={height}
-        label="+ MISSING WORD"
+        label="Add a missing word"
       />
     </div>
   )

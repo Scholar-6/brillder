@@ -157,7 +157,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
         locked={locked}
         addAnswer={addAnswer}
         height="auto"
-        label="+ ANSWER" />
+        label="Add an answer" />
     </div>
   )
 }
