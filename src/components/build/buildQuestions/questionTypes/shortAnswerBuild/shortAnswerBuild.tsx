@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Snackbar from "@material-ui/core/Snackbar";
 
 import "./shortAnswerBuild.scss";
 import { UniqueComponentProps } from "../types";
@@ -8,7 +7,7 @@ import { ShortAnswerData, ShortAnswerItem } from "./interface";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import AddAnswerButton from "components/build/baseComponents/addAnswerButton/AddAnswerButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import QuillShortAnswer from "components/baseComponents/quill/QuillShortAnswer";
 
 
 export interface ShortAnswerBuildProps extends UniqueComponentProps {
@@ -25,7 +24,6 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
   if (!data.list) data.list = getDefaultShortAnswerAnswer().list;
 
   const [state, setState] = React.useState(data);
-  const [limitOverflow, setLimitOverflow] = React.useState(false);
 
   useEffect(() => setState(data), [data]);
 
@@ -37,14 +35,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
   const changed = (shortAnswer: ShortAnswerItem, htmlValue: string) => {
     if (locked) return;
     shortAnswer.value = htmlValue;
-    const valueString = stripHtml(htmlValue);
     update();
-    const res = valueString.split(" ");
-    if (res.length <= 3) {
-      setLimitOverflow(false);
-    } else {
-      setLimitOverflow(true);
-    }
     save();
   };
 
@@ -82,12 +73,11 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
     return (
       <div className={className} key={index}>
         {renderDeleteButton(index)}
-        <QuillEditor
+        <QuillShortAnswer
           disabled={locked}
           validate={props.validationRequired}
           isValid={!!stripHtml(answer.value)}
           data={answer.value}
-          toolbar={[]}
           onChange={(value) => changed(answer, value)}
         />
       </div>
@@ -106,24 +96,6 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
         addAnswer={addShortAnswer}
         height="auto"
         label="Add a short answer"
-      />
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        open={limitOverflow}
-        onClose={() => setLimitOverflow(false)}
-        action={
-          <React.Fragment>
-            <div>
-              <span className="exclamation-mark">!</span>
-              Great minds don’t think exactly alike: the learner may know the
-              right answer but use slightly different language, so there is a
-              limit of three words for short answers.
-            </div>
-          </React.Fragment>
-        }
       />
     </div>
   );
