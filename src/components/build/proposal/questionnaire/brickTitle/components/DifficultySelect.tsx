@@ -11,10 +11,6 @@ interface DifficultySelectProps {
   onChange(keyWords: AcademicLevel): void;
 }
 
-const PopperMy = function (props:any) {
-  return (<Popper {...props} className="assign-brick-class-poopper" />)
-}
-
 const DifficultySelect: React.FC<DifficultySelectProps> = (props) => {
   let {level} = props;
   if (!level) {

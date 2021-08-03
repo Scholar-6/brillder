@@ -1,0 +1,13 @@
+.add-button-container {
+  .btn-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      $size: 1.7vw;
+      width: $size;
+      height: $size;
+      margin-right: 0.3vw;
+    }
+  }
+}
