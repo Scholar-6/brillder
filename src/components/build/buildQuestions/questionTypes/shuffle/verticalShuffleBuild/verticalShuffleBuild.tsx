@@ -192,7 +192,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         locked={locked}
         addAnswer={addAnswer}
         height="auto"
-        label="+ ANSWER" />
+        label="Add an answer" />
     </div>
   )
 }

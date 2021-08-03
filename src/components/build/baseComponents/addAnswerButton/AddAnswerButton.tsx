@@ -1,3 +1,4 @@
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import React from 'react'
 import AnimateHeight from 'react-animate-height';
 
@@ -16,7 +17,7 @@ const AddAnswerButton: React.FC<AddAnswerButtonProps> = ({ label, locked, height
     <AnimateHeight className={"add-button-container unselectable " + (locked ? 'hide' : '')} duration={500} height={height}>
       <div className="button-box">
         <button className="btn btn-xl btn-block bg-light-blue"  onClick={addAnswer}>
-          <span>{label}</span>
+          <SpriteIcon name="plus-circle" /><span>{label}</span>
         </button>
       </div>
     </AnimateHeight>

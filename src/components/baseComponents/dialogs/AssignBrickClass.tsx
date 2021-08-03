@@ -31,7 +31,7 @@ interface AssignPersonOrClassProps {
   requestFailed(e: string): void;
 }
 
-const PopperMy = function (props:any) {
+const PopperCustom = function (props:any) {
   return (<Popper {...props} className="assign-brick-class-poopper" />)
 }
 
@@ -92,6 +92,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
           onChange={(e: any, v: any) => setBrick(v)}
           noOptionsText="Sorry, try typing something else"
           className="subject-autocomplete"
+          PopperComponent={PopperCustom}
           getOptionLabel={(option: any) => stripHtml(option.title)}
           renderOption={(brick: Brick) => (
             <React.Fragment>
