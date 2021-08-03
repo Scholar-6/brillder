@@ -3,11 +3,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    letter-spacing: 0 !important;
+    span {
+      font-size: 1.6vw;
+    }
     svg {
-      $size: 1.7vw;
+      $size: 2vw;
       width: $size;
       height: $size;
-      margin-right: 0.3vw;
+      margin-right: 0.6vw;
     }
   }
 }
