@@ -95,7 +95,7 @@ const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
 
   return (
     <div
-      className={`quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId} ${props.className ?? ""}`}
+      className={`quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId}`}
       data-toolbar={[]}
       ref={forwardRef}
     >
