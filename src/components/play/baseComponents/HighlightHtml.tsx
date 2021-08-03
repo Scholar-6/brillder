@@ -72,7 +72,10 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
     };
 
     const selection = window.getSelection();
-    if(selection && !selection.isCollapsed && selection.anchorNode && selection.focusNode) {
+    if(selection && !selection.isCollapsed &&
+      selection.anchorNode && textBox.contains(selection.anchorNode) &&
+      selection.focusNode && textBox.contains(selection.focusNode)
+    ) {
       annotator.applyToSelection();
       props.onHighlight(textBox?.innerHTML);
       selection.removeAllRanges();
