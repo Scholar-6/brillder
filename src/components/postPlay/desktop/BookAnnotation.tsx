@@ -48,7 +48,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
             </Grid>
           </Grid>
           <Grid className="comment-text break-word">
-            <span className="bold">Comment: </span>
+            <span className="bold">Note: </span>
             <i
               className="comment-text-editable"
               placeholder="Type your comment here..."
