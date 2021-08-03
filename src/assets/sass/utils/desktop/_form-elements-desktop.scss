@@ -99,8 +99,16 @@ input {
 .MuiAutocomplete-popper {
   z-index: 999999 !important;
   .MuiAutocomplete-option {
-    color: var(--theme-dark-blue);
     font-size: 1.6vw;
+    color: var(--theme-dark-blue);
+    .MuiButtonBase-root {
+      p {
+        font-size: 1.6vw !important;
+      }
+      &:hover {
+        background: transparent !important;
+      }
+    }
   }
   * {
     font-family: $font-family-regular !important;
