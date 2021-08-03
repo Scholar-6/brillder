@@ -267,7 +267,7 @@ export const copyBrick = async (brick: Brick, questions: Question[]) => {
     const res = await post<Brick>('/brick', copy);
     if (res) {
       res.isCore = true;
-      const res2 = await put<Brick>('/brick', res);
+      await put<Brick>('/brick', res);
       for (let question of questions) {
         const q = getApiQuestion(question);
         q.brickQuestionId = undefined;
