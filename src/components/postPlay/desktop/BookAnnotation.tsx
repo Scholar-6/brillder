@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Collapse, Grid } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Annotation } from 'model/attempt';
 import React from 'react';
@@ -7,32 +7,48 @@ import { connect } from 'react-redux';
 import { User } from 'model/user';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
+import BookAnnotationReply from './BookAnnotationReply';
+import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
+import BookAnnotationEditable from './BookAnnotationEditable';
 
 interface BookAnnotationProps {
   currentUser: User;
   annotation: Annotation;
   updateAnnotation(annotation: Annotation): void;
+  addAnnotationReply(): void;
+  updateAnnotationReply(reply: Annotation): void;
+  deleteAnnotationReply(replyId: number): void;
 }
+
 
 const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props }) => {
   const history = useHistory();
   const focused = React.useMemo(() => history.location.hash.substr(1) === annotation.id.toString(), [history.location, annotation]);
 
-  const textRef = React.createRef<HTMLElement>();
+  const textRef = React.useRef<HTMLElement>();
   const canEdit = React.useMemo(() => props.currentUser.id === annotation.user.id, [props.currentUser, annotation.user]);
-  
-  const onAnnotationChange = React.useCallback((evt) => {
+
+  const onAnnotationChange = React.useCallback(() => {
     if(!textRef.current) return;
     props.updateAnnotation({
       ...annotation,
       text: textRef.current!.innerHTML ?? "",
     });
-  }, [textRef.current, annotation]);
+  }, [annotation, props.updateAnnotation]);
 
-  const onAnnotationChangeDebounced = React.useCallback(_.debounce(onAnnotationChange, 500), [onAnnotationChange]);
+  const onAnnotationChangeRef = React.useRef<(() => void) & _.Cancelable>();
+  React.useEffect(() => {
+    if(onAnnotationChangeRef.current) {
+      onAnnotationChangeRef.current.cancel();
+    }
+    onAnnotationChangeRef.current = _.debounce(onAnnotationChange, 500);
+  }, [onAnnotationChange]);
 
   return (
-    <Grid className={`comment-container comment-${annotation.id} ${focused ? "focused" : ""}`}>
+    <Grid
+      className={`comment-container comment-${annotation.id} ${focused ? "focused" : ""}`}
+      onMouseDown={() => history.push("#" + annotation.id)}
+    >
       <div className="comment-item-container">
         <Grid container direction="column">
           <Grid item container direction="row" style={{ position: 'relative', flexWrap: 'nowrap' }}>
@@ -49,17 +65,33 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
           </Grid>
           <Grid className="comment-text break-word">
             <span className="bold">Note: </span>
-            <i
-              className="comment-text-editable"
-              placeholder="Type your comment here..."
+            <BookAnnotationEditable
+              id={annotation.id}
+              value={annotation.text}
               ref={textRef}
-              contentEditable={canEdit}
-              onInput={onAnnotationChangeDebounced}
-              onFocus={() => history.push("#" + annotation.id)}
-              onBlur={onAnnotationChangeDebounced}
-              dangerouslySetInnerHTML={{ __html: annotation.text }}
+              canEdit={canEdit}
+              onChangeRef={onAnnotationChangeRef}
             />
           </Grid>
+          <Collapse in={focused}>
+            <div className="comment-reply-container">
+              {annotation.children?.map(child => (
+                <BookAnnotationReply
+                  key={child.id}
+                  annotation={child}
+                  currentUser={props.currentUser}
+                  onDelete={props.deleteAnnotationReply}
+                  updateAnnotation={props.updateAnnotationReply}
+                />
+              ))}
+            </div>
+          </Collapse>
+          <div className="add-reply" onClick={props.addAnnotationReply}>
+            <div className="grey-circle">
+              <SpriteIcon name="corner-up-left" className="reply-icon" />
+            </div>
+            <span>Reply</span>
+          </div>
         </Grid>
       </div>
     </Grid>
@@ -70,7 +102,4 @@ const mapState = (state: ReduxCombinedState) => ({
   currentUser: state.user.user,
 });
 
-export default connect(mapState)(React.memo(BookAnnotation, (prevProps, nextProps) => {
-  const currentText = document.querySelector(`.comment-${nextProps.annotation.id} .comment-text-editable`)?.innerHTML;
-  return nextProps.annotation.text === currentText;
-}));
+export default connect(mapState)(BookAnnotation);
