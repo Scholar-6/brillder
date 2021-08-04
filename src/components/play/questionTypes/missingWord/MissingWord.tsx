@@ -175,9 +175,9 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
         {component.choices.map((choice: any, index: number) => (
           <div key={index} className="missing-word-choice">
             <span>
-              <span dangerouslySetInnerHTML={{ __html: choice.before }} />
+              <MathInHtml value={choice.before} />
               {this.renderSelect(choice, index)}
-              <span dangerouslySetInnerHTML={{ __html: choice.after }} />
+              <MathInHtml value={choice.after} />
             </span>
             <Grid container direction="row" justify="center">
               {this.renderEachHint(index)}
