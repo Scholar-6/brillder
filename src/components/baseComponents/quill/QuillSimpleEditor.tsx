@@ -42,14 +42,7 @@ const QuillSimpleEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((pr
   /*eslint-disable-next-line*/
   const [currentQuillId, setCurrentQuillId] = React.useContext(QuillEditorContext);
 
-  const callOnChange = React.useCallback(
-    _.debounce((content: string) => {
-      if (props.onChange) {
-        props.onChange(content);
-      }
-    }, 500),
-    [props.onChange]
-  );
+  const callOnChange = React.useCallback((content: string) => props.onChange?.(content), [props.onChange]);
 
   const onChange = (content: string) => {
     if (content.indexOf('class="il-image-container"') === -1) {
