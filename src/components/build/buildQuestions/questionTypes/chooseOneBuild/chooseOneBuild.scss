@@ -4,4 +4,7 @@
 
 .choose-one-build {
   @extend %textCenter;
+  .component-title {
+    margin-bottom: 0;
+  }
 }

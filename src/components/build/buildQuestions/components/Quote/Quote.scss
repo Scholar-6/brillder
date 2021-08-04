@@ -24,4 +24,9 @@
     font-size: 1.3vw;
     font-family: $font-family-bold;
   }
+  .ql-container,
+  .ql-editor {
+    border-bottom-left-radius: $editor-radius !important;
+    border-bottom-right-radius: $editor-radius !important;
+  }
 }

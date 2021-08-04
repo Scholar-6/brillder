@@ -3,7 +3,6 @@
 @import "src/assets/sass/partials/extensions";
 
 .questions {
-  padding-top: 0.2vw;
   padding-bottom: 0.2vw;
   width: 100%;
   max-height: 100%;
@@ -48,7 +47,7 @@
 }
 
 .unique-component {
-  margin: 0.5vh 0;
+  margin: $editor-spacing 0;
   margin-top: 0;
   position: relative;
   width: 100%;
@@ -161,9 +160,10 @@
 }
 
 .unique-component-wrapper {
-  margin: #{$editor-spacing} 0;
+  margin: 0;
   padding: $editor-radius;
   padding-top: 0;
+  padding-bottom: 0;
   width: 100%;
   background: var(--tab-gray);
   @extend %themeRadius;
