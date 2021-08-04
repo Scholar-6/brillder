@@ -28,6 +28,29 @@ const checkSameValue = (list: any) => {
   return false;
 }
 
+const checkSimpleValue = (list: any) => {
+  for (let [index1, item1] of list.entries()) {
+    const answerText = stripHtml(item1.value);
+    for (let [index2, item2] of list.entries()) {
+      if (index2 !== index1 && item2.value) {
+        const text = stripHtml(item2.value);
+        if (answerText === text) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
+const checkCatSameValue = (categories: any) => {
+  let answers:any = [];
+  for (let cat of categories) {
+    answers.push(...cat.answers);
+  }
+  return checkSameValue(answers);
+}
+
 const validateImageSoundAndText = (a: any) => {
   if (a.answerType === QuestionValueType.Image) {
     return !stripHtml(a.valueFile);
@@ -169,6 +192,10 @@ const validatePairMatch = (comp: any) => {
 
 const validateSort = (comp: any) => {
   if (comp.categories && comp.categories.length > 1) {
+    const same = checkCatSameValue(comp.categories);
+    if (same) {
+      return false;
+    }
     const invalid = comp.categories.find((c: any) => {
       if (!c.name) {
         return true;
@@ -213,13 +240,18 @@ const validateMissingWord = (comp: any) => {
   }
 
   for (let choice of comp.choices as MissingChoice[]) {
-    let invalid = choice.answers.find((a: any) => !a.value);
+    const invalid = choice.answers.find((a: any) => !a.value);
+
+    const same = checkSimpleValue(choice.answers);
+    if (same) {
+      return false;
+    }
 
     if (invalid) {
       return false;
     }
 
-    let checked = getChecked(choice.answers);
+    const checked = getChecked(choice.answers);
     if (!checked) {
       return false;
     }
