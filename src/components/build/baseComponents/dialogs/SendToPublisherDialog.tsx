@@ -21,11 +21,21 @@ const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
 
   const [invalid, setInvalid] = React.useState(false);
 
+  const [submiting, setSubmiting] = React.useState(false);
+
   const isValid = () => {
     if (checked1 && checked2 && checked3 && checked4) {
       return true;
     }
     return false;
+  }
+
+  const submit = async () => {
+    if (!submiting) {
+      setSubmiting(true);
+      await props.submit();
+      setSubmiting(false);
+    }
   }
 
   return (
@@ -55,19 +65,19 @@ const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
       </div>
       <div className="dialog-footer">
         <div>
-        <div>
-          <button className="btn btn-md bg-theme-orange yes-button" onClick={props.close}>
-            <span>It's not ready yet!</span>
-          </button>
-          <div className={`btn flex-button btn-md no-button ${isValid() ? 'bg-green text-white' : 'bg-gray'}`} onClick={() => {
-            isValid() ? props.submit() : setInvalid(true);
-          }}>
-            <div>{props.isPublishing ? 'Publish' : 'Send to Publisher'}</div>
-            <div className="flex-center">
-              <SpriteIcon name="send" />
+          <div>
+            <button className="btn btn-md bg-theme-orange yes-button" onClick={props.close}>
+              <span>It's not ready yet!</span>
+            </button>
+            <div className={`btn flex-button btn-md no-button ${isValid() ? 'bg-green text-white' : 'bg-gray'}`} onClick={() => {
+              isValid() ? submit() : setInvalid(true);
+            }}>
+              <div>{props.isPublishing ? 'Publish' : 'Send to Publisher'}</div>
+              <div className="flex-center">
+                {submiting ? <SpriteIcon name="f-loader" className="spinning" /> : <SpriteIcon name="send" />}
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
       <SendToPublisherDialog2 isOpen={invalid} close={() => setInvalid(false)} />
