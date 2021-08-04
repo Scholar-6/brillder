@@ -175,7 +175,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
                 />
                 <QuillEditor
                   placeholder="Enter Answer..."
-                  toolbar={['bold', 'italic']}
+                  toolbar={['bold', 'italic', 'latex']}
                   className={getInputClass(answer)}
                   disabled={locked}
                   data={answer.value}
