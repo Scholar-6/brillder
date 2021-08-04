@@ -26,6 +26,7 @@ import { getSubjects } from "services/axios/subject";
 import CoreSelect from "../proposal/questionnaire/brickTitle/components/CoreSelect";
 import { stripHtml } from "../questionService/ConvertService";
 import StatusCircle from "../baseComponents/statusCircle/StatusCircle";
+import QuillSimpleEditor from "components/baseComponents/quill/QuillSimpleEditor";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -139,7 +140,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                 <Grid container direction="row" className="inner-quills" ref={scrollArea}>
                   <div className="title-quill-container">
                     <div className="header">Title</div>
-                    <QuillEditor
+                    <QuillSimpleEditor
                       data={currentBrick.title}
                       onChange={title => changeBrick((brick) => ({ ...brick, title }))}
                       placeholder="What is your brick about?"
@@ -178,7 +179,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   </div>
                   <div className="open-question-container">
                     <div className="header">Open Question</div>
-                    <QuillEditor
+                    <QuillSimpleEditor
                       disabled={locked}
                       placeholder="Ideally, every brick should point to a bigger question."
                       data={currentBrick.openQuestion}
@@ -190,7 +191,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   </div>
                   <div className="brief-container">
                     <div className="header">Brief</div>
-                    <QuillEditor
+                    <QuillSimpleEditor
                       disabled={locked}
                       data={currentBrick.brief}
                       allowTables={true}
