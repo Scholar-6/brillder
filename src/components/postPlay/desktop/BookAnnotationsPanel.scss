@@ -79,6 +79,42 @@
     }
     .comment-item-container {
       border: 0.25rem transparent solid;
+      & > div {
+        flex-wrap: nowrap;
+      }
+      .add-reply {
+        cursor: pointer;
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: 4rem;
+        .grey-circle {
+          display: inline-block;
+          position: relative;
+          width: 2rem;
+          height: 2rem;
+          background-color: #e4e8ee;
+          border-radius: 1rem;
+          margin-right: 1rem;
+          .reply-icon {
+            stroke-width: 2;
+            position: absolute;
+            width: 1.5rem;
+            height: 1.5rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+        span {
+          font-family: $font-family-bold;
+          font-size: 1.5rem;
+          white-space: nowrap;
+          text-transform: uppercase;
+          letter-spacing: 0.125rem;
+        }
+      }
     }
   }
 }

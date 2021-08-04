@@ -41,7 +41,16 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
 
     if(!newAttempt) return;
     if(!newAttempt.annotations) newAttempt.annotations = [];
-    const newAnnotation = { id: generateId(), location, priority: 0, questionIndex: props.questionIndex, text: "", user: props.currentUser };
+    const newAnnotation: Annotation = {
+      id: generateId(),
+      location,
+      priority: 0,
+      questionIndex: props.questionIndex,
+      text: "",
+      timestamp: new Date(),
+      user: props.currentUser,
+      children: [],
+    };
     newAttempt.annotations.push(newAnnotation);
 
     if(props.highlightRef.current) {
@@ -62,8 +71,46 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     if(annotationIndex < 0) return;
 
     newAttempt.annotations[annotationIndex] = annotation;
+    console.log(annotation);
     props.setAttempt(newAttempt);
-  }, [props.attempt, props.setAttempt])
+  }, [props.attempt, props.setAttempt]);
+
+  const addAnnotationReply = React.useCallback((annotation: Annotation) => {
+    const newAnnotation: Annotation = {
+      id: generateId(),
+      location: annotation.location,
+      priority: 0,
+      questionIndex: annotation.questionIndex,
+      text: "",
+      timestamp: new Date(),
+      user: props.currentUser,
+    };
+
+    updateAnnotation({
+      ...annotation,
+      children: [...annotation.children ?? [], newAnnotation],
+    });
+  }, [updateAnnotation]);
+
+  const updateAnnotationReply = React.useCallback((annotation: Annotation, reply: Annotation) => {
+    const updatedAnnotation = annotation;
+    if(!updatedAnnotation.children) return;
+
+    const idx = updatedAnnotation.children.findIndex(child => child.id === reply.id);
+    if(idx <= -1) return;
+    updatedAnnotation.children[idx] = reply;
+    updateAnnotation(updatedAnnotation);
+  }, [updateAnnotation]);
+
+  const deleteAnnotationReply = React.useCallback((annotation: Annotation, replyId: number) => {
+    const updatedAnnotation = annotation;
+    if(!updatedAnnotation.children) return;
+
+    const idx = updatedAnnotation.children.findIndex(child => child.id === replyId);
+    if(idx <= -1) return;
+    updatedAnnotation.children.splice(idx, 1);
+    updateAnnotation(updatedAnnotation);
+  }, [updateAnnotation]);
 
   if(!props.attempt || !props.attempt?.annotations?.filter(annotation => annotation.location === location).length) {
     return <div className="right-part empty">
@@ -81,7 +128,14 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
 			{props.attempt?.annotations
         .filter(annotation => annotation.location === location)
         .map(annotation => (
-          <BookAnnotation key={annotation.id} annotation={annotation} updateAnnotation={updateAnnotation} />
+          <BookAnnotation
+            key={annotation.id}
+            annotation={annotation}
+            updateAnnotation={updateAnnotation}
+            addAnnotationReply={() => addAnnotationReply(annotation)}
+            updateAnnotationReply={(reply) => updateAnnotationReply(annotation, reply)}
+            deleteAnnotationReply={(replyId) => deleteAnnotationReply(annotation, replyId)}
+          />
         ))
       }
       <div className="add-annotation-text" onMouseDown={e => e.preventDefault()} onClick={addAnnotation}>

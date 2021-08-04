@@ -20,6 +20,9 @@ export interface Annotation {
   user: User;
   priority: number;
   text: string;
+  timestamp: Date;
+
+  children?: Annotation[];
 }
 
 export interface PlayAttempt {
