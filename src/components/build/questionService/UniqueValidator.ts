@@ -1,11 +1,31 @@
-import {QuestionValueType} from '../buildQuestions/questionTypes/types';
+import { QuestionValueType } from '../buildQuestions/questionTypes/types';
 import { Answer } from '../buildQuestions/questionTypes/pairMatchBuild/types';
 import { MissingChoice } from '../buildQuestions/questionTypes/missingWordBuild/MissingWordBuild';
 import { stripHtml } from './ConvertService';
+import { QuestionComponentTypeEnum } from 'model/question';
 
 
 const getChecked = (list: any[]) => {
-  return list.find((a:any) => a.checked === true);
+  return list.find((a: any) => a.checked === true);
+}
+
+const checkSameValue = (list: any) => {
+  for (let [index1, item1] of list.entries()) {
+    if (item1.answerType === QuestionValueType.String) {
+      const answerText = stripHtml(item1.value);
+      for (let [index2, item2] of list.entries()) {
+        if (item2.answerType === QuestionValueType.String) {
+          if (index2 !== index1 && item2.value) {
+            const text = stripHtml(item2.value);
+            if (answerText === text) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+  }
+  return false;
 }
 
 const validateImageSoundAndText = (a: any) => {
@@ -19,7 +39,12 @@ const validateImageSoundAndText = (a: any) => {
 
 const validateShortAnswerOrShuffle = (comp: any) => {
   if (comp.list && comp.list.length >= 1) {
-    let invalid = comp.list.find((a:any) => !(!!stripHtml(a.value) || !!stripHtml(a.valueFile) || !!stripHtml(a.soundFile)));
+    const same = checkSameValue(comp.list);
+    if (same) {
+      return false;
+    }
+
+    const invalid = comp.list.find((a: any) => !(!!stripHtml(a.value) || !!stripHtml(a.valueFile) || !!stripHtml(a.soundFile)));
     if (invalid) {
       return false;
     }
@@ -28,13 +53,36 @@ const validateShortAnswerOrShuffle = (comp: any) => {
   return false;
 }
 
-const validateChooseOne = (comp: any) => {
+interface ChooseAnswerObj2 {
+  answerType: QuestionValueType;
+  checked: boolean;
+  id: number;
+  soundFile: string;
+  value: string;
+  valueFile: string;
+}
+
+interface ChooseOneObj2 {
+  chosen: boolean;
+  id: number;
+  list: ChooseAnswerObj2[];
+  selected: boolean;
+  type: QuestionComponentTypeEnum;
+}
+
+const validateChooseOne = (comp: ChooseOneObj2) => {
   if (comp.list && comp.list.length > 1) {
     let invalid = comp.list.find(validateImageSoundAndText);
     if (invalid) {
       return false;
     }
-    let checked = getChecked(comp.list);
+
+    const same = checkSameValue(comp.list);
+    if (same) {
+      return false;
+    }
+
+    const checked = getChecked(comp.list);
     if (checked) {
       return true;
     }
@@ -57,10 +105,16 @@ const validateChooseSeveralChecked = (list: any[]) => {
 
 const validateChooseSeveral = (comp: any) => {
   if (comp.list && comp.list.length > 1) {
-    let invalid = comp.list.find(validateImageSoundAndText);
+    const same = checkSameValue(comp.list);
+    if (same) {
+      return false;
+    }
+
+    const invalid = comp.list.find(validateImageSoundAndText);
     if (invalid) {
       return false;
     }
+
     return validateChooseSeveralChecked(comp.list);
   }
   return false;
@@ -86,7 +140,7 @@ const validatePairMatch = (comp: any) => {
     return true;
   }
 
-  const getInvalid = (a:Answer) => {
+  const getInvalid = (a: Answer) => {
     if (!validateChoice(a)) {
       return true;
     }
@@ -99,7 +153,12 @@ const validatePairMatch = (comp: any) => {
   }
 
   if (comp.list && comp.list.length > 1) {
-    let invalid = comp.list.find(getInvalid);
+    const same = checkSameValue(comp.list);
+    if (same) {
+      return false;
+    }
+
+    const invalid = comp.list.find(getInvalid);
     if (invalid) {
       return false;
     }
@@ -110,7 +169,7 @@ const validatePairMatch = (comp: any) => {
 
 const validateSort = (comp: any) => {
   if (comp.categories && comp.categories.length > 1) {
-    const invalid = comp.categories.find((c:any) => {
+    const invalid = comp.categories.find((c: any) => {
       if (!c.name) {
         return true;
       }
@@ -130,7 +189,7 @@ const validateSort = (comp: any) => {
 
 const validateWordHighlighting = (comp: any) => {
   if (comp.words && comp.words.length > 1) {
-    const valid = comp.words.find((w:any) => w.checked);
+    const valid = comp.words.find((w: any) => w.checked);
     if (valid) {
       return true;
     }
@@ -140,26 +199,26 @@ const validateWordHighlighting = (comp: any) => {
 
 const validateLineHighlighting = (comp: any) => {
   if (comp.lines && comp.lines.length > 1) {
-    const valid = comp.lines.find((l:any) => l.checked);
+    const valid = comp.lines.find((l: any) => l.checked);
     if (valid) {
       return true;
     }
   }
   return false;
 }
-  
+
 const validateMissingWord = (comp: any) => {
   if (!comp.choices) {
     return false;
   }
 
   for (let choice of comp.choices as MissingChoice[]) {
-    let invalid = choice.answers.find((a:any) => !a.value);
-  
+    let invalid = choice.answers.find((a: any) => !a.value);
+
     if (invalid) {
       return false;
     }
-     
+
     let checked = getChecked(choice.answers);
     if (!checked) {
       return false;
