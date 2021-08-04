@@ -136,6 +136,18 @@ export function isAorP(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Publisher || role.roleId === UserType.Admin);
 }
 
+export function isAorPorE(brick: Brick, user: User) {
+  let adminOrPublisher = user.roles.some(role => role.roleId === UserType.Publisher || role.roleId === UserType.Admin);
+  if (adminOrPublisher) {
+    return true;
+  }
+  const isEditor = brick.editors && brick.editors.findIndex(e => e.id === user.id) >= 0;
+  if (isEditor) {
+    return true;
+  }
+  return false;
+}
+
 export function canEditBrick(brick: Brick, user: User) {
   let isAdmin = checkAdmin(user.roles);
   let isPublisher = checkPublisher(user, brick);
