@@ -58,7 +58,11 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
     const { history } = props;
     if (history) {
       if (notification.type === NotificationType.BrickSubmittedForReview) {
-        history.push(map.backToWorkUserBased(props.user));
+        if (isPhone()) {
+          setNeedDesktopOpen(true);
+        } else {
+          history.push(map.backToWorkUserBased(props.user));
+        }
       }
 
       if (notification.brick && notification.brick.id) {

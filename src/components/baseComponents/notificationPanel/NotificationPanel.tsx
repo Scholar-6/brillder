@@ -67,7 +67,11 @@ class NotificationPanel extends Component<
     const { history } = this.props;
     if (history) {
       if (notification.type === NotificationType.BrickSubmittedForReview) {
-        history.push(map.backToWorkUserBased(this.props.user));
+        if (isPhone()) {
+          this.setState({ needDesktopOpen: true });
+        } else {
+          history.push(map.backToWorkUserBased(this.props.user));
+        }
       }
 
       if (notification.brick && notification.brick.id) {
