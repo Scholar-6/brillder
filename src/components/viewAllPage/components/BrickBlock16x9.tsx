@@ -14,6 +14,7 @@ import buildRoutes from 'components/build/routes';
 import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getDate, getMonth, getYear } from "components/services/brickService";
+import { AssignmentBrickStatus } from "model/assignment";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -23,8 +24,6 @@ interface BrickBlockProps {
   shown: boolean;
   history: any;
   isPlay?: boolean;
-  isAssignment?: boolean;
-  assignmentId?: number;
   color?: string;
   circleIcon?: string;
   iconColor?: string;
@@ -35,10 +34,15 @@ interface BrickBlockProps {
 
   isViewAll?: boolean;
 
+  // student assignments page
+  isAssignment?: boolean;
+  assignmentStatus?: AssignmentBrickStatus;
+  assignmentId?: number;
+
   handleDeleteOpen(brickId: number): void;
 }
 
-const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
+const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
   let color = "";
   if (!brick.subject) {
     color = "#B0B0AD";
@@ -54,7 +58,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
 
   if (brick.assignments) {
     for (let assignmen of brick.assignments) {
-      let assignment = assignmen as any;
+      const assignment = assignmen as any;
       for (let student of assignment.stats.byStudent) {
         if (student.studentId === props.user.id) {
           assignmentId = assignment.id;
@@ -74,6 +78,12 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       props.history.push(map.postAssignment(brick.id, props.user.id));
       return;
     }
+    if (props.isAssignment && props.assignmentId && props.assignmentStatus != null && props.assignmentStatus !== AssignmentBrickStatus.ToBeCompleted) {
+      setAssignmentId(props.assignmentId);
+      props.history.push(map.postAssignment(brick.id, props.user.id));
+      return;
+    }
+
     if (props.isPlay) {
       const values = queryString.parse(props.history.location.search);
       let link = playCover(brick.id);
@@ -154,4 +164,4 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
   );
 }
 
-export default BrickBlockComponent;
+export default BrickBlock16x9Component;
