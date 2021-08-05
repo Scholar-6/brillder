@@ -3,6 +3,11 @@
   .MuiTypography-root.MuiListItemText-primary {
     font-size: 7.3vw;
   }
+  li .MuiListItemText-root .MuiTypography-root.MuiListItemText-primary{
+    text-align: center;
+    width: 100%;
+    font-size: 5.8vw !important;
+  }
   .MuiAvatar-root.MuiAvatar-circle.circle-orange.MuiAvatar-colorDefault {
     height: 13vw;
     width: 13vw;
@@ -11,14 +16,10 @@
       width: 10vw;
     }
   }
-  .MuiListItemText-root.bold {
-    .MuiTypography-root.MuiListItemText-primary.MuiTypography-displayBlock {
-      width: 60vw;
-    }
-  }
   .MuiListItemText-root.italic {
     .MuiTypography-root.MuiListItemText-primary {
-      font-size: 3.8vw !important;
+      text-align: center;
+      font-size: 5vw !important;
       padding-left: 2vw;
     }
   }

@@ -16,7 +16,7 @@ const DesktopVersionDialogV2:React.FC<DesktopVersionProps> = ({isOpen, secondary
     <Dialog open={isOpen} onClick={onClick} className="desktop-version-dialog dialog-box link-copied-dialog pointer">
       <div className="dialog-header">
         <ListItem>
-          <ListItemText primary="You're going to need a bigger boat" className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="You're going to need a bigger boat!" className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar style={{padding: 0}}>
             <Avatar className="circle-orange">
               <SpriteIcon name="life-buoy" className="active text-white stroke-2" />
