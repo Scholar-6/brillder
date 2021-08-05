@@ -71,7 +71,24 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     if(annotationIndex < 0) return;
 
     newAttempt.annotations[annotationIndex] = annotation;
-    console.log(annotation);
+    props.setAttempt(newAttempt);
+  }, [props.attempt, props.setAttempt]);
+
+  const deleteAnnotation = React.useCallback((annotation: Annotation) => {
+    let newAttempt = props.attempt;
+
+    if(!newAttempt) return;
+    if(!newAttempt.annotations) return;
+
+    const annotationIndex = newAttempt.annotations.findIndex(a => a.id === annotation.id);
+    if(annotationIndex < 0) return;
+
+    newAttempt.annotations.splice(annotationIndex, 1);
+
+    if(props.highlightRef.current) {
+      props.highlightRef.current.deleteAnnotation(annotation);
+    }
+
     props.setAttempt(newAttempt);
   }, [props.attempt, props.setAttempt]);
 
@@ -132,6 +149,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
             key={annotation.id}
             annotation={annotation}
             updateAnnotation={updateAnnotation}
+            deleteAnnotation={() => deleteAnnotation(annotation)}
             addAnnotationReply={() => addAnnotationReply(annotation)}
             updateAnnotationReply={(reply) => updateAnnotationReply(annotation, reply)}
             deleteAnnotationReply={(replyId) => deleteAnnotationReply(annotation, replyId)}

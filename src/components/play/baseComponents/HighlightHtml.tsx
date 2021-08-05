@@ -34,6 +34,7 @@ interface SelectableProps {
 
 export interface HighlightRef {
   createAnnotation(annotation: Annotation): void;
+  deleteAnnotation(annotation: Annotation): void;
 }
 
 const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, ref) => {
@@ -82,6 +83,22 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
     }
   }
 
+  const deleteAnnotation = (annotation: Annotation) => {
+    if(!textBox) return;
+    
+    const els = textBox.querySelectorAll(`.annotation[data-id="${annotation.id}"]`);
+
+    els.forEach(el => {
+      const range = rangy.createRange();
+      range.selectNodeContents(el);
+      const contents = range.extractContents();
+      el.parentElement?.insertBefore(contents, el);
+      el.remove();
+    });
+
+    props.onHighlight(textBox?.innerHTML);
+  }
+
   const textRef = React.useCallback((div: HTMLDivElement) => {
     if(textBox) {
       textBox.removeEventListener("mouseup", onMouseUp);
@@ -107,7 +124,8 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
   }, [location.hash]);
 
   React.useImperativeHandle(ref, () => ({
-    createAnnotation(annotation: Annotation) { createAnnotation(annotation) }
+    createAnnotation(annotation: Annotation) { createAnnotation(annotation) },
+    deleteAnnotation(annotation: Annotation) { deleteAnnotation(annotation) },
   }));
 
   return (

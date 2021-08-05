@@ -1,4 +1,4 @@
-import { Collapse, Grid } from '@material-ui/core';
+import { Collapse, Grid, IconButton, SvgIcon } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Annotation } from 'model/attempt';
 import React from 'react';
@@ -15,6 +15,7 @@ interface BookAnnotationProps {
   currentUser: User;
   annotation: Annotation;
   updateAnnotation(annotation: Annotation): void;
+  deleteAnnotation(): void;
   addAnnotationReply(): void;
   updateAnnotationReply(reply: Annotation): void;
   deleteAnnotationReply(replyId: number): void;
@@ -62,6 +63,15 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
             <Grid className="stretch" item>
               <h4>{annotation.user.firstName} {annotation.user.lastName}</h4>
             </Grid>
+            <div className="buttons-container">
+              <button
+                aria-label="delete"
+                className="cancel-button svgOnHover"
+                onClick={props.deleteAnnotation}
+              >
+                <SpriteIcon name="trash-outline" className="active" />
+              </button>
+            </div>
           </Grid>
           <Grid className="comment-text break-word">
             <span className="bold">Note: </span>
