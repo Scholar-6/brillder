@@ -26,6 +26,7 @@ export interface Annotation {
 }
 
 export interface PlayAttempt {
+  id: string;
   answers: AttemptAnswer[];
   liveAnswers: AttemptAnswer[];
   annotations?: Annotation[];
