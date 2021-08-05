@@ -7,6 +7,7 @@ export enum QuestionValueType {
 
 export interface SortAnswer {
   text: string;
+  id?: number;
   value: string;
   valueFile: string;
   answerType: QuestionValueType;
