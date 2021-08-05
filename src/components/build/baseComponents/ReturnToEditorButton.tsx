@@ -48,7 +48,7 @@ const ReturnToEditorButton: React.FC<ButtonProps> = props => {
         {hovered && <div className="custom-tooltip">Return to Editor</div>}
       </div>
       <ReturnToEditorDialog isOpen={isOpen} close={() => setState(false)} submit={async () => {
-        await returnToEditor(props.brick.id);
+        await returnToEditor(props.brick.id, props.user.id);
         setState(false);
         setSuccess(true);
       }} />
