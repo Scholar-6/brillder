@@ -123,7 +123,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         label="for futher changes"
         size={3}
         onClick={async () => {
-          await props.returnToEditors(brick);
+          await returnToEditor(brick.id);
           props.fetchBrick(brick.id);
           setEditorsReturn(true);
         }}
