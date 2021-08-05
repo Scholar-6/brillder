@@ -34,6 +34,7 @@ import routes from "components/play/routes";
 import BookAnnotationsPanel from "./BookAnnotationsPanel";
 import { PlayMode } from "components/play/model";
 import HighlightHtml, { HighlightRef } from "components/play/baseComponents/HighlightHtml";
+import axios from "axios";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -128,10 +129,37 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
+  async saveAttempt(attempt: PlayAttempt) {
+    const newAttempt = Object.assign({}, attempt);
+
+    newAttempt.answers = attempt.answers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
+    newAttempt.liveAnswers = attempt.liveAnswers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
+    newAttempt.brick.questions = attempt.brick.questions.map(question => {
+      const contentBlocks = JSON.parse(question.contentBlocks!);
+      return { ...question, ...contentBlocks };
+    });
+
+    console.log(newAttempt);
+
+    return await axios.put(
+      process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
+      { id: attempt.id, userId: this.props.user.id, body: newAttempt },
+      { withCredentials: true }
+    );
+  }
+
   setActiveAttempt(attempt: PlayAttempt) {
     try {
       this.prepareAttempt(attempt);
-      this.setState({ attempt });
+
+      const newAttempts = this.state.attempts;
+      const attemptIdx = newAttempts.findIndex(a => a.timestamp === attempt.timestamp);
+      if(attemptIdx > -1) {
+        newAttempts[attemptIdx] = attempt;
+      }
+
+      this.setState({ attempt, attempts: newAttempts });
+      this.saveAttempt(attempt);
     } catch { }
   }
 
