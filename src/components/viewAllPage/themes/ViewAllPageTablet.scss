@@ -2,7 +2,7 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-$sidebar-font-size: 1.2vw;
+$sidebar-font-size: 1.4vw;
 
 .dashboard-page {
   overflow: hidden;
@@ -13,6 +13,13 @@ $sidebar-font-size: 1.2vw;
   .sorted-row .sort-and-filter-container .subjects-toggle .toggle-button,
   .sorted-row .sort-and-filter-container .sort-box .filter-container .MuiFormControlLabel-label {
     font-size: $sidebar-font-size !important;
+  }
+  .published-count div {
+    font-size: $sidebar-font-size !important;
+  }
+
+  .brick-row-title.main-title {
+    letter-spacing: 0 !important;
   }
 
   .create-button,
@@ -265,7 +272,7 @@ $sidebar-font-size: 1.2vw;
     overflow-x: auto;
     overflow-y: hidden;
     &.subject-title {
-      letter-spacing: 0.4vw;
+      letter-spacing: 0vw;
       margin-top: 1.2vw;
       font-size: 2.9vw;
     }
@@ -375,13 +382,19 @@ $sidebar-font-size: 1.2vw;
   }
 }
 
+.sorted-row .sort-and-filter-container .sort-box .filter-header {
+  font-size: $sidebar-font-size;
+}
+
 .sorted-row .sort-and-filter-container .sort-box .filter-header.subject-category-name {
   color: gray;
   background: var(--white);
   text-align: center;
   text-transform: none;
+  letter-spacing: 0 !important;
   span {
-    letter-spacing: 0;
+    font-size: $sidebar-font-size;
+    letter-spacing: 0 !important;
     width: 100%;
     text-align: inherit;
   }

@@ -289,12 +289,13 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        font-size: 1vw;
+        font-size: 2vw;
         margin-bottom: 3vh;
         
         svg {
-          width: 1.4vw;
-          height: 1.4vw;
+          $size: 3vw;
+          width: $size;
+          height: $size;
         }
       }
     }
