@@ -10,6 +10,7 @@ import map from "components/map";
 import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/ReturnEditorsSuccessDialog";
 import { ReduxCombinedState } from "redux/reducers";
 import { User } from "model/user";
+import { returnToEditor } from "services/axios/brick";
 
 export interface ButtonProps {
   disabled: boolean;
@@ -47,7 +48,7 @@ const ReturnToEditorButton: React.FC<ButtonProps> = props => {
         {hovered && <div className="custom-tooltip">Return to Editor</div>}
       </div>
       <ReturnToEditorDialog isOpen={isOpen} close={() => setState(false)} submit={async () => {
-        await props.returnToEditors(props.brick);
+        await returnToEditor(props.brick.id);
         setState(false);
         setSuccess(true);
       }} />
