@@ -16,8 +16,8 @@ import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import { getValidationClassName } from '../service';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
-import {ReactComponent as DragIcon} from'assets/img/drag.svg';
-
+import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
+import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
 
 interface UserCategory {
   name: string;
@@ -35,7 +35,7 @@ interface SortProps extends CompQuestionProps {
   component: SortComponent;
   attempt: ComponentAttempt<any>;
   answers: any;
-  isPreview?: boolean;
+  isPreview?: boolean; // phone preview in build
 }
 
 interface SortState {
@@ -60,6 +60,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       cat.answers.forEach((a, i) => {
         let choice = Object.assign({}, a) as any;
         choice.text = choice.value;
+        choice.id = generateId();
         choice.value = this.getChoiceIndex(catIndex, i);
         choices.push(choice as SortAnswer);
       });
@@ -78,7 +79,33 @@ class Sort extends CompComponent<SortProps, SortState> {
       this.prepareChoices(userCats, choices);
     }
 
+    if (props.isPreview === true && props.component) {
+      userCats = this.getPhonePreviewCats(props);
+    }
+
     this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };
+  }
+
+  getPhonePreviewCats(props: SortProps) {
+    let userCats:UserCategory[] = [];
+    let choices: SortAnswer[] = [];
+
+    for (let [catIndex, category] of (props.component.categories as any).entries()) {
+      const cat = category as SortCategory;
+      /* eslint-disable-next-line */
+      cat.answers.forEach((a, i) => {
+        let choice = Object.assign({}, a) as any;
+        choice.text = choice.value;
+        choice.value = this.getChoiceIndex(catIndex, i);
+        choices.push(choice as SortAnswer);
+      });
+      userCats.push({ choices: [], name: cat.name });
+      catIndex++;
+    }
+    
+    userCats.push({ choices, name: Sort.unsortedTitle });
+
+    return userCats;
   }
 
   diselectChoices(userCats: UserCategory[]) {
@@ -106,25 +133,8 @@ class Sort extends CompComponent<SortProps, SortState> {
       // preview in build
       if (props.isPreview === true && props.component) {
         if (props.component !== prevProp.component) {
-          let userCats: UserCategory[] = [];
-          let choices: SortAnswer[] = [];
-
-          for (let [catIndex, category] of (props.component.categories as any).entries()) {
-            const cat = category as SortCategory;
-            /* eslint-disable-next-line */
-            cat.answers.forEach((a, i) => {
-              let choice = Object.assign({}, a) as any;
-              choice.text = choice.value;
-              choice.value = this.getChoiceIndex(catIndex, i);
-              choices.push(choice as SortAnswer);
-            });
-            userCats.push({ choices: [], name: cat.name });
-            catIndex++;
-          }
-
-          userCats.push({ choices, name: Sort.unsortedTitle });
-
-          this.setState({ userCats, choices });
+          const userCats = this.getPhonePreviewCats(props);
+          this.setState({ userCats, choices: [] });
         }
       }
     }
@@ -286,7 +296,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     const realIndex = this.getHintIndex(choice);
 
     return (
-      <div className={className} key={i}>
+      <div className={className} key={choice.id ? choice.id : i}>
         <ListItem className="sort-choice-custom">
           <ListItemText>
             {this.renderChoiceContent(choice)}
