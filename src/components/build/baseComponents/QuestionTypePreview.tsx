@@ -9,6 +9,7 @@ import ChooseSeveralPreview from "components/build/baseComponents/phonePreview/q
 import VerticalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/VerticalShufflePreview";
 import HorizontalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/HorizontalShufflePreview";
 import LogoPage from "components/logoPage/logoPage";
+import PairMatchPreview from "./phonePreview/questionPreview/PairMatchPreview";
 
 
 interface QuestionTypePreviewProps {
@@ -32,6 +33,8 @@ const QuestionTypePreview:React.FC<QuestionTypePreviewProps> = ({
       return <PhonePreview Component={VerticalShufflePreview} next={props.nextQuestion} prev={props.prevQuestion} />
     } else if (type === QuestionTypeEnum.HorizontalShuffle) {
       return <PhonePreview Component={HorizontalShufflePreview} next={props.nextQuestion} prev={props.prevQuestion} />
+    } else if (type === QuestionTypeEnum.PairMatch) {
+      return <PhonePreview Component={PairMatchPreview} next={props.nextQuestion} prev={props.prevQuestion} />
     }
     return null;
   }
