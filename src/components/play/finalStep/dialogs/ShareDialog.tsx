@@ -37,7 +37,6 @@ const ShareDialog: React.FC<ShareProps> = props => {
         </div>
         {!props.isPrivatePreview &&
           <div>
-            <div style={{display: 'none'}}>Автор иконок: <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/ru/" title="Flaticon">www.flaticon.com</a></div>
             <WhatsappIcon onClick={() => {
               const a = document.createElement('a');
               a.target = "_blank";

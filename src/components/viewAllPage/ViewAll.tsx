@@ -78,6 +78,7 @@ import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog
 import { addSubject } from "services/axios/user";
 import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 import PhoneSearchPage from "./PhoneSearchPage";
+import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 
 interface ViewAllProps {
   user: User;
@@ -1261,6 +1262,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             />
           )}
         </div>
+        <ClassInvitationDialog />
       </React.Suspense>
     );
   }

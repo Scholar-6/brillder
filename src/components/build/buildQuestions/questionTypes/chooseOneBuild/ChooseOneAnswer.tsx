@@ -137,6 +137,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           toolbar={['latex']}
           validationRequired={validationRequired}
           isValid={!!stripHtml(answer.value)}
+          onBlur={onBlur}
           onChange={value => onTextChanged(answer, value)}
         />
         <SoundRecord

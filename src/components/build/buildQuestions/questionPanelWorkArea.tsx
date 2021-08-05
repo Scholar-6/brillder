@@ -25,6 +25,7 @@ import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
 import RedoButton from '../baseComponents/redoButton';
 import StatusCircle from '../baseComponents/statusCircle/StatusCircle';
+import { checkAdmin, checkBuilder, checkEditor, isAorP, isAorPorE } from 'components/services/brickService';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -32,8 +33,7 @@ function SplitByCapitalLetters(element: string): string {
 }
 
 export interface QuestionProps {
-  brickId: number;
-  currentBrick: Brick;
+  brick: Brick;
   canEdit: boolean;
   question: Question;
   history: any;
@@ -63,7 +63,7 @@ export interface QuestionProps {
 }
 
 const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
-  brickId, question, history, validationRequired, locked, getQuestionIndex, ...props
+  brick, question, history, validationRequired, locked, getQuestionIndex, ...props
 }) => {
   const [componentTypes, setComponentType] = React.useState([
     { id: 1, type: QuestionComponentTypeEnum.Text },
@@ -111,6 +111,29 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   }
   //#endregion
 
+  /**
+   * if Admin, Publisher or Editor than true
+   * @returns 
+   */
+  const canSeeLock = () => {
+    const {currentUser} = props;
+    const adminPublisherOrEditor = isAorPorE(brick, currentUser);
+    if (adminPublisherOrEditor) {
+      return true;
+    }
+    return false;
+  }
+
+  const renderLock = () => {
+    if (brick.isCore === true) {
+      const canSee = canSeeLock();
+      if (canSee) {
+        return <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+      }
+    }
+    return ''
+  }
+
   return (
     <MuiThemeProvider>
       <div key={question?.id} className={showHelpArrow ? "build-question-page unselectable" : "build-question-page unselectable active"} style={{ width: '100%', height: '94%' }}>
@@ -147,13 +170,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   hoverMarginTop="-1.5vw"
                   value={QuestionComponentTypeEnum.Quote}
                 />
-                {/*
-                <DragBox
-                  locked={locked}
-                  name="jpg"
-                  label="IMAGE"
-                  value={QuestionComponentTypeEnum.Image}
-                />*/}
                 <DragBox
                   locked={locked}
                   isImage={true} src="/images/soundicon.png"
@@ -177,7 +193,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               locked={locked}
               scrollRef={workarea}
               editOnly={!props.canEdit}
-              brickId={brickId}
+              brickId={brick.id}
               history={history}
               question={question}
               validationRequired={validationRequired}
@@ -238,17 +254,15 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     </FormControl>
                   </Grid>
                 </Grid>
-                {props.currentBrick.isCore === true &&
-                  <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
-                }
-                <StatusCircle status={props.currentBrick.status} isCore={props.currentBrick.isCore} />
+                {renderLock()}
+                <StatusCircle status={brick.status} isCore={brick.isCore} />
               </div>
             }
             <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justify="flex-start" xs>
               <CommentPanel
                 isHidden={!commentsShown}
                 currentLocation={CommentLocation.Question}
-                currentBrick={props.currentBrick}
+                currentBrick={brick}
                 setCommentsShown={setCommentsShown}
                 haveBackButton={true}
                 currentQuestionId={question.id}
@@ -271,7 +285,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 
 const mapState = (state: ReduxCombinedState) => ({
   currentUser: state.user.user,
-  currentBrick: state.brick.brick,
   comments: state.comments.comments
 });
 

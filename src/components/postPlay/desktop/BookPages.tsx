@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { Helmet } from 'react-helmet';
 
 import map from 'components/map';
-import { getDateString, getTime } from "components/services/brickService";
+import { checkTeacher, getDateString, getTime } from "components/services/brickService";
 import { getBrillderTitle } from 'components/services/titleService';
 import { PlayAttempt } from 'model/attempt';
 import { User } from 'model/user';
@@ -12,6 +12,7 @@ import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import FrontPage from '../FrontPage';
 import routes from 'components/play/routes';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
 const DesktopBookTheme = React.lazy(() => import('../themes/PageBookDesktopTheme'));
@@ -72,6 +73,37 @@ class BookPages extends React.Component<BookProps, BookState> {
     this.setState({ closeTimeout });
   }
 
+  renderPlayButton() {
+    const { brick } = this.props.attempt;
+    const isTeacher = checkTeacher(this.props.user);
+    if (isTeacher) {
+      return (
+        <div className="green-button-container1" onClick={() => {/* commenting logic */ }}>
+          <div className="green-button-container2">
+            <div className="play-text">Add comment</div>
+            <div className="green-button-container3">
+              <button type="button" className="play-green-button bg-tab-gray">
+                <SpriteIcon name="pen-tool" className="colored w60 h60 text-white" />
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="green-button-container1" onClick={() => {
+        this.props.history.push(routes.playAssignment(brick.id, this.props.attempt.assignmentId));
+      }}>
+        <div className="green-button-container2">
+          <div className="play-text">Play Again</div>
+          <div className="green-button-container3">
+            <PlayGreenButton onClick={() => { }} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { color } = this.props;
     const { brick, student } = this.props.attempt;
@@ -119,16 +151,7 @@ class BookPages extends React.Component<BookProps, BookState> {
                   <div className="page1">
                     <div className="flipped-page">
                       <div className="flex-center" style={{ height: '100%' }}>
-                        <div className="green-button-container1" onClick={() => {
-                          this.props.history.push(routes.playAssignment(brick.id, this.props.attempt.assignmentId));
-                        }}>
-                          <div className="green-button-container2">
-                            <div className="play-text">Play Again</div>
-                            <div className="green-button-container3">
-                              <PlayGreenButton onClick={() => { }} />
-                            </div>
-                          </div>
-                        </div>
+                        {this.renderPlayButton()}
                       </div>
                     </div>
                   </div>

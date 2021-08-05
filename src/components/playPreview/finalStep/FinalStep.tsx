@@ -123,7 +123,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         label="for futher changes"
         size={3}
         onClick={async () => {
-          await props.returnToEditors(brick);
+          await returnToEditor(brick.id, user.id);
           props.fetchBrick(brick.id);
           setEditorsReturn(true);
         }}
@@ -152,7 +152,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         icon="repeat" title="Return to Editor" label="for futher changes"
         size={3}
         onClick={async () => {
-          await returnToEditor(brick.id);
+          await returnToEditor(brick.id, user.id);
           await props.fetchBrick(brick.id);
           setEditorsReturn(true);
         }}

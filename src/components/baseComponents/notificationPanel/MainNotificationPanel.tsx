@@ -294,7 +294,7 @@ class MainNotificationPanel extends Component<
         </div>
         <DesktopVersionDialogV2
           isOpen={this.state.needDesktopOpen}
-          secondaryLabel="Brick summaries have not yet been optimised for mobile devices."
+          secondaryLabel=""
           onClick={() => this.setState({ needDesktopOpen: false })}
         />
       </div>

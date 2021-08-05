@@ -58,9 +58,12 @@
 
         .title {
           font-size: 3vh;
-          overflow-x: hidden;
-          white-space:nowrap;
-          text-overflow: ellipsis;
+          p {
+            max-width: 18vw;
+            overflow-x: hidden;
+            white-space:nowrap;
+            text-overflow: ellipsis;
+          }
         }
       }
 

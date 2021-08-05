@@ -36,7 +36,7 @@ textarea {
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus {
-    -webkit-text-fill-color: var(--theme-dark-blue);
+    background: var(--theme-dark-blue) !important;
     -webkit-box-shadow: none !important;
     border: 0 !important;
   }
