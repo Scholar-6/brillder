@@ -16,6 +16,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import LibraryPhoneSubjects from "./components/LibraryPhoneSubjects";
+import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 
 interface BricksListProps {
   user: User;
@@ -181,6 +182,7 @@ class Library extends Component<BricksListProps, BricksListState> {
             close={() => this.setState({ ...this.state, failedRequest: false })}
           />
         </div>
+        <ClassInvitationDialog />
       </React.Suspense>
     );
   }

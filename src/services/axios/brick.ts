@@ -186,9 +186,9 @@ export const returnToAuthor = async (brickId: number) => {
   }
 }
 
-export const returnToEditor = async (brickId: number) => {
+export const returnToEditor = async (brickId: number, userId: number) => {
   try {
-    await post<any>(`/brick/returnToEditor`, { brickId });
+    await post<any>(`/brick/returnToEditor`, { brickId, userId });
     return true;
   } catch {
     return false;

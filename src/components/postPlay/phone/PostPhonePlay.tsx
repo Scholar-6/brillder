@@ -37,6 +37,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import PhoneQuestionPage from "./PhoneQuestionPage";
 import map from "components/map";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import { checkTeacher } from "components/services/brickService";
 
 const MobileTheme = React.lazy(() => import('../themes/PageMobileTheme'));
 
@@ -163,6 +164,40 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true });
   }
 
+  renderPlayButton(brick: Brick) {
+    const isTeacher = checkTeacher(this.props.user);
+
+    if (isTeacher) {
+      return (
+        <div className="green-button-container2">
+          <div className="play-text">Add comment</div>
+          <div className="green-button-container3"
+            onClick={() => {/* commenting logic */ }}
+          >
+            <button type="button" className="play-green-button bg-white">
+              <SpriteIcon name="pen-tool" className="colored w60 h60 text-white" />
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="green-button-container2">
+        <div className="play-text">Play Again</div>
+        <div className="green-button-container3"
+          onClick={() =>
+            this.props.history.push(
+              routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
+            )
+          }
+        >
+          <PlayGreenButton onClick={() => { }} />
+        </div>
+      </div>
+    );
+  }
+
   render() {
     if (!this.state.attempt) {
       return <PageLoader content="...Getting Attempt..." />;
@@ -279,18 +314,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <SwiperSlide>
                   <div className="mobile-attempts">
                     <div className="green-button-container1">
-                      <div className="green-button-container2">
-                        <div className="play-text">Play Again</div>
-                        <div className="green-button-container3"
-                          onClick={() =>
-                            this.props.history.push(
-                              routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
-                            )
-                          }
-                        >
-                          <PlayGreenButton onClick={() => { }} />
-                        </div>
-                      </div>
+                      {this.renderPlayButton(brick)}
                     </div>
                     <AttemptsPhonePage
                       attempts={this.state.attempts}
@@ -387,11 +411,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       <div className="footer-question">
                         <FormControlLabel
                           checked={this.state.mode === false}
-                          control={<Radio onClick={() => this.setState({mode: false})} />}
+                          control={<Radio onClick={() => this.setState({ mode: false })} />}
                           label="Investigation" />
                         <FormControlLabel
                           checked={this.state.mode === true}
-                          control={<Radio onClick={() => this.setState({mode: true})} />}
+                          control={<Radio onClick={() => this.setState({ mode: true })} />}
                           label="Review" />
                       </div>
                     </div>

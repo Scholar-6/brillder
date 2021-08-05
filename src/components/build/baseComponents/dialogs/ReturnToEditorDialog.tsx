@@ -8,7 +8,7 @@ interface DialogProps {
   submit(): void;
 }
 
-const ReturnToAuthorDialog: React.FC<DialogProps> = (props) => {
+const ReturnToEditorDialog: React.FC<DialogProps> = (props) => {
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
@@ -26,4 +26,4 @@ const ReturnToAuthorDialog: React.FC<DialogProps> = (props) => {
   );
 }
 
-export default ReturnToAuthorDialog;
+export default ReturnToEditorDialog;

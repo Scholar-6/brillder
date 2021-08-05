@@ -67,7 +67,11 @@ class NotificationPanel extends Component<
     const { history } = this.props;
     if (history) {
       if (notification.type === NotificationType.BrickSubmittedForReview) {
-        history.push(map.backToWorkUserBased(this.props.user));
+        if (isPhone()) {
+          this.setState({ needDesktopOpen: true });
+        } else {
+          history.push(map.backToWorkUserBased(this.props.user));
+        }
       }
 
       if (notification.brick && notification.brick.id) {
@@ -286,7 +290,7 @@ class NotificationPanel extends Component<
           </div>
           <DesktopVersionDialogV2
             isOpen={this.state.needDesktopOpen}
-            secondaryLabel="Brick summaries have not yet been optimised for mobile devices."
+            secondaryLabel=""
             onClick={() => this.setState({ needDesktopOpen: false })}
           />
         </Popover>

@@ -27,12 +27,14 @@ const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
         save={() => console.log('save')}
         updateComponent={c => setValue(c.value)}
       />
-      {value && <input value={caption} onChange={e => setCaption(e.target.value)} placeholder="Enter caption here..." />}
+      {value && <input value={caption} onChange={e => setCaption(e.target.value)} placeholder="Enter caption here" />}
       <div className="upload-button-container">
         <div className={`upload-button ${value ? 'active' : 'disabled'}`} onClick={() => {
           props.save(value, caption);
         }}>
+          <div className="background" />
           <SpriteIcon name="upload" />
+          <div className="css-custom-tooltip">Upload</div>
         </div>
       </div>
     </Dialog>

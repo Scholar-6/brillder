@@ -9,6 +9,7 @@ import { CompQuestionProps } from '../types';
 import { ComponentAttempt } from "components/play/model";
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import MathInHtml from "components/play/baseComponents/MathInHtml";
 
 interface MissingComponent {
   choices: any[];
@@ -131,7 +132,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       >
         {choice.answers.map((a: any, i: number) => (
           <MenuItem key={i} className="missing-choice" value={i}>
-            <span dangerouslySetInnerHTML={{ __html: a.value }} />
+            <MathInHtml value={a.value} />
           </MenuItem>
         ))}
       </Select>
@@ -174,9 +175,9 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
         {component.choices.map((choice: any, index: number) => (
           <div key={index} className="missing-word-choice">
             <span>
-              <span dangerouslySetInnerHTML={{ __html: choice.before }} />
+              <MathInHtml value={choice.before} />
               {this.renderSelect(choice, index)}
-              <span dangerouslySetInnerHTML={{ __html: choice.after }} />
+              <MathInHtml value={choice.after} />
             </span>
             <Grid container direction="row" justify="center">
               {this.renderEachHint(index)}

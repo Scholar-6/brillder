@@ -57,7 +57,6 @@ const BookSidebar: React.FC<Props> = ({ bookState, brick, questions, attempt, ac
       </div>
       <div className="scroll-content pages-list">
         <div className={bookState === BookState.Attempts ? 'active attempts' : 'attempts'} onClick={() => moveToPage(BookState.Attempts)}>
-          <div style={{display: 'none'}}>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
           <CircleCheck />
           <span className="bold">Attempts</span>
           <span className="ellipsis" />

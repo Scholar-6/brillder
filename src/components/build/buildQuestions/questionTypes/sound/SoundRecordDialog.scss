@@ -8,9 +8,15 @@
 
     .react-recording {
       padding: 0 0.5vw;
-      padding-top: 0.5vw;
     }
 
+    .dropzone {
+      margin-top: 0.5vw;
+    }
+
+    input {
+      margin-top: 0.5vw;
+    }
 
     .upload-button-container {
       margin-top: 3vw;
@@ -38,6 +44,10 @@
         position: absolute;
         width: 80%;
         height: 70%;
+      }
+
+      .css-custom-tooltip {
+        background: var(--off-white);
       }
   
       &.active {
