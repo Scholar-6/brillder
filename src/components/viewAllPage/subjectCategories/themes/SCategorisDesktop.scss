@@ -15,6 +15,11 @@
     width: calc(100vw - #{$sidebar-width} - 2.4vw);
   }
   .subject-categories {
+    margin-top: 0.5vh;
+    margin-left: 1.2vw;
+    width: calc(100vw - #{$sidebar-width} - 2.4vw);
+    border-top-left-radius: 2vw;
+    background: var(--white);
     color: var(--theme-dark-blue);
     .row {
       height: 50%;

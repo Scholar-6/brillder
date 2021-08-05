@@ -121,7 +121,8 @@
           margin-top: 1vh;
           width: 100%;
           .dropzone {
-            border-radius: 0.5vw;
+            $border: 1vw;
+            border-radius: $border;
             padding: 0 !important;
             border: none !important;
             min-height:30vh;
@@ -135,8 +136,10 @@
 
             img {
               margin-top: calc(2vw + 1vh + 0.6vw);
-              border-bottom-left-radius: 0.5vw;
-              border-bottom-right-radius: 0.5vw;
+              border-bottom-left-radius: $border;
+              border-bottom-right-radius: $border;
+              width: auto;
+              max-height: 40vh;
             }
           }
         }
