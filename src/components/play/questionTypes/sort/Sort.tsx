@@ -17,7 +17,7 @@ import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import { getValidationClassName } from '../service';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import {ReactComponent as DragIcon} from'assets/img/drag.svg';
-
+import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
 
 interface UserCategory {
   name: string;
@@ -60,6 +60,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       cat.answers.forEach((a, i) => {
         let choice = Object.assign({}, a) as any;
         choice.text = choice.value;
+        choice.id = generateId();
         choice.value = this.getChoiceIndex(catIndex, i);
         choices.push(choice as SortAnswer);
       });
@@ -286,7 +287,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     const realIndex = this.getHintIndex(choice);
 
     return (
-      <div className={className} key={i}>
+      <div className={className} key={choice.id ? choice.id : i}>
         <ListItem className="sort-choice-custom">
           <ListItemText>
             {this.renderChoiceContent(choice)}
