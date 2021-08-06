@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import './HorizontalShufflePreview.scss';
 import { Grid } from "@material-ui/core";

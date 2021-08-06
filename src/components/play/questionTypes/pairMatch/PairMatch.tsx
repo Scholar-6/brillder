@@ -12,7 +12,6 @@ import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, Pai
 import MathInHtml from '../../baseComponents/MathInHtml';
 import PairMatchOption from './PairMatchOption';
 import PairMatchImageContent from './PairMatchImageContent';
-import { isPhone } from 'services/phone';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import {ReactComponent as DragIcon} from'assets/img/drag.svg';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';

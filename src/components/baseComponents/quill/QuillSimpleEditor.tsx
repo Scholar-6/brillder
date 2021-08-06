@@ -4,7 +4,6 @@ import ReactQuill from "react-quill";
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
 import "quill-table-ui/dist/index.css";
-import _ from "lodash";
 
 import "./QuillLatex";
 import "./QuillAutoLink";

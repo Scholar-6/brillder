@@ -1698,6 +1698,48 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   }
 }
 
+.center-fixed-image {
+  position: fixed;
+  z-index: 300000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .sd-image-container {
+    position: relative;
+  }
+  img {
+    background: var(--white);
+    padding-right: 2.2vw;
+    max-width: 80vw;
+    max-height: 80vh;
+    border: 1vw solid var(--theme-light-blue);
+    border-radius: 0.8vw;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  .hover-source-container2 {
+    bottom: 1.5vw;
+    right: 1vw;
+    position: absolute;
+    height: calc(100% - 6vw);
+    width: 2.2vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    .image-source {
+      position: absolute;
+      bottom: 0vw;
+      color: var(--theme-dark-blue);
+      font-size: 1.6vw;
+      transform: rotate(-90deg);
+      text-overflow: ellipsis;
+    }
+  }
+}
+
 // basic footer with timer style
 .play-preview-pages .sorted-row .brick-row-container .brick-container .new-layout-footer {
   .minutes {

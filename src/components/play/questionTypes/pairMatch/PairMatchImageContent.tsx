@@ -5,6 +5,7 @@ import { fileUrl } from 'components/services/uploadFile';
 import actions from 'redux/actions/play';
 import { isPhone } from 'services/phone';
 import { ReduxCombinedState } from 'redux/reducers';
+import { isMobile } from 'react-device-detect';
 
 interface AnswerProps {
   fileName: string;
@@ -16,40 +17,56 @@ interface AnswerProps {
   blur(): void;
 }
 
-const PhoneImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, ...props }) => {
+const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, imageSource, ...props }) => {
   const [lastClick, setLastClick] = React.useState(0);
-
 
   const onDoubleClick = () => {
     if (props.hovered) {
       props.blur();
     } else {
-      console.log(props.imageSource);
-      props.hover(fileName, props.imageSource);
+      props.hover(fileName, imageSource);
     }
   }
 
-  return (
-    <div className="image-container">
-      <img
-        alt="" src={fileUrl(fileName)} width="100%"
-        onClick={e => {
-          if (lastClick && e.timeStamp - lastClick < 250) {
-            setLastClick(0);
-            onDoubleClick();
-          } else {
-            setLastClick(e.timeStamp);
-          }          
-        }}
-      />
-      {imageCaption && <div>{imageCaption}</div>}
-    </div>
-  );
-}
-
-const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, imageSource, ...props }) => {
   if (isPhone()) {
-    return <PhoneImageContent fileName={fileName} imageCaption={imageCaption} imageSource={imageSource} {...props} />
+    return (
+      <div className="image-container">
+        <img
+          alt="" src={fileUrl(fileName)} width="100%"
+          onClick={e => {
+            if (lastClick && e.timeStamp - lastClick < 250) {
+              setLastClick(0);
+              onDoubleClick();
+            } else {
+              setLastClick(e.timeStamp);
+            }
+          }}
+        />
+        {imageCaption && <div>{imageCaption}</div>}
+      </div>
+    );
+  }
+  if (isMobile) {
+    return (
+      <div className="image-container">
+        <div>
+          <div className="flex-align">
+            <img
+              alt="" src={fileUrl(fileName)} width="100%"
+              onClick={e => {
+                if (lastClick && e.timeStamp - lastClick < 250) {
+                  setLastClick(0);
+                  onDoubleClick();
+                } else {
+                  setLastClick(e.timeStamp);
+                }
+              }}
+            />
+          </div>
+          {imageCaption && <div>{imageCaption}</div>}
+        </div>
+      </div>
+    );
   }
   return (
     <div className="image-container">
@@ -61,7 +78,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             onMouseLeave={props.blur}
           />
         </div>
-      {imageCaption && <div>{imageCaption}</div>}
+        {imageCaption && <div>{imageCaption}</div>}
       </div>
     </div>
   );
