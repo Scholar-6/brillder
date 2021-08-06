@@ -31,7 +31,8 @@
     letter-spacing: 0.01vw;
     border-radius: 1vw;
     border: none;
-    color: white;
+    color: var(--theme-dark-blue);
+    transition: all 300ms ease-out;
   }
   button:nth-child(2) {
     padding: 0;
@@ -46,6 +47,7 @@
   .inside-green {
     button {
       font-family: $font-family-bold;
+      color: var(--white);
       animation: hor-shuf-button-color 1000ms forwards;
     }
   }
