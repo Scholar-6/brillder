@@ -4,12 +4,15 @@
 
 $margin-left: 21%;
 
-.comments-panel {
-  background-color: var(--tab-gray);
-  height: 100%;
-  margin-left: 8%;
-  width: 92% !important;
-  border-radius: $editor-radius 0 0 $editor-radius;
+.comments-panel,
+.annotations-panel {
+  &.comments-panel {
+    background-color: var(--tab-gray);
+    height: 100%;
+    margin-left: 8%;
+    width: 92% !important;
+    border-radius: $editor-radius 0 0 $editor-radius;
+  }
 
   .scroll-buttons {
     @extend %flexCenter;

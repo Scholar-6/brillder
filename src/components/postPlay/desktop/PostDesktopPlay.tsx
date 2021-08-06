@@ -31,6 +31,10 @@ import BookPages from "./BookPages";
 import { checkTeacher, getDateString, getTime } from "components/services/brickService";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
+import BookAnnotationsPanel from "./BookAnnotationsPanel";
+import { PlayMode } from "components/play/model";
+import HighlightHtml, { HighlightRef } from "components/play/baseComponents/HighlightHtml";
+import axios from "axios";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -66,6 +70,8 @@ interface ProposalState {
 }
 
 class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
+  highlightRef: React.RefObject<HighlightRef>;
+
   constructor(props: ProposalProps) {
     super(props);
 
@@ -85,6 +91,9 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       subjects: [],
       handleKey: this.handleKey.bind(this)
     };
+    
+    this.highlightRef = React.createRef();
+
     this.loadData();
   }
 
@@ -121,10 +130,41 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
-  setActiveAttempt(attempt: PlayAttempt, i: number) {
+  async saveAttempt(attempt: PlayAttempt) {
+    const newAttempt = Object.assign({}, attempt);
+
+    newAttempt.answers = attempt.answers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
+    newAttempt.liveAnswers = attempt.liveAnswers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
+    newAttempt.brick.questions = attempt.brick.questions.map(question => {
+      const contentBlocks = JSON.parse(question.contentBlocks!);
+      return { ...question, ...contentBlocks };
+    });
+
+    console.log(newAttempt);
+
+    return await axios.put(
+      process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
+      { id: attempt.id, userId: this.props.user.id, body: newAttempt },
+      { withCredentials: true }
+    ).catch(e => {
+      if(e.response.status !== 409) {
+        throw e;
+      }
+    });
+  }
+
+  setActiveAttempt(attempt: PlayAttempt) {
     try {
       this.prepareAttempt(attempt);
-      this.setState({ attempt });
+
+      const newAttempts = this.state.attempts;
+      const attemptIdx = newAttempts.findIndex(a => a.timestamp === attempt.timestamp);
+      if(attemptIdx > -1) {
+        newAttempts[attemptIdx] = attempt;
+      }
+
+      this.setState({ attempt, attempts: newAttempts });
+      this.saveAttempt(attempt);
     } catch { }
   }
 
@@ -156,6 +196,25 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       this.prepareAttempt(attempt);
       this.setState({ attempt, bookState: BookState.Brief });
     } catch { }
+  }
+
+  setAttemptBrickProperty(property: "brief" | "prep" | "synthesis", value: string) {
+    const newAttempt = this.state.attempt;
+    if(!newAttempt) return;
+    newAttempt.brick[property] = value;
+    this.setActiveAttempt(newAttempt);
+  }
+
+  renderAnnotationsPanel() {
+    return (
+      <BookAnnotationsPanel
+        highlightRef={this.highlightRef}
+        attempt={this.state.attempt ?? undefined}
+        setAttempt={this.setActiveAttempt.bind(this)}
+        state={this.state.bookState}
+        questionIndex={this.state.questionIndex}
+      />
+    )
   }
 
   renderPlayButton(brick: Brick) {
@@ -303,11 +362,16 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                         </div>
                       </div>
                     </div>
-                    <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.brief }} />
+                    {/* <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.brief }} /> */}
+                    <HighlightHtml
+                      ref={this.highlightRef}
+                      value={brick.brief}
+                      mode={PlayMode.UnHighlighting}
+                      onHighlight={this.setAttemptBrickProperty.bind(this, "brief")}
+                    />
                   </div>
                 </div>
-                <div className="right-part">
-                </div>
+                {this.renderAnnotationsPanel()}
               </div>}
               {this.state.bookState === BookState.Prep && <div className="book-page">
                 <div className="real-content question-content brief-page">
@@ -321,20 +385,29 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                         </div>
                       </div>
                     </div>
-                    <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.prep }} />
+                    {/* <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.prep }} /> */}
+                    <HighlightHtml
+                      ref={this.highlightRef}
+                      value={brick.prep}
+                      mode={PlayMode.UnHighlighting}
+                      onHighlight={this.setAttemptBrickProperty.bind(this, "prep")}
+                    />
                   </div>
                 </div>
-                <div className="right-part">
-                </div>
+                {this.renderAnnotationsPanel()}
               </div>
               }
-              {this.state.bookState === BookState.QuestionPage && <QuestionPage
-                i={this.state.questionIndex}
-                mode={this.state.mode}
-                setMode={newMode => this.setState({ mode: newMode })}
-                activeAttempt={this.state.attempt}
-                question={questions[this.state.questionIndex]}
-              />}
+              {this.state.bookState === BookState.QuestionPage && (
+                <QuestionPage
+                  i={this.state.questionIndex}
+                  mode={this.state.mode}
+                  setMode={newMode => this.setState({ mode: newMode })}
+                  activeAttempt={this.state.attempt}
+                  question={questions[this.state.questionIndex]}
+                >
+                  {this.renderAnnotationsPanel()}
+                </QuestionPage>
+              )}
               {this.state.bookState === BookState.Synthesis && <div className="book-page">
                 <div className="real-content question-content brief-page">
                   <div>
@@ -347,11 +420,16 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                         </div>
                       </div>
                     </div>
-                    <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.synthesis }} />
+                    {/* <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.synthesis }} /> */}
+                    <HighlightHtml
+                      ref={this.highlightRef}
+                      value={brick.synthesis}
+                      mode={PlayMode.UnHighlighting}
+                      onHighlight={this.setAttemptBrickProperty.bind(this, "synthesis")}
+                    />
                   </div>
                 </div>
-                <div className="right-part">
-                </div>
+                {this.renderAnnotationsPanel()}
               </div>}
             </div>
           </div>
