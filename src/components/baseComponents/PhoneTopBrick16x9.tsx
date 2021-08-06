@@ -33,10 +33,17 @@ interface Props {
 }
 
 
-class PhoneTopBrick16x9 extends Component<Props> {
-  renderDeadline() {
-    const { deadline } = this.props;
-    if (!this.props.isAssignment) {
+const PhoneTopBrick16x9: React.FC<Props> = (props) => {
+  const { color, brick } = props;
+
+  let label = '';
+  if (brick.academicLevel >= AcademicLevel.First) {
+    label = AcademicLevelLabels[brick.academicLevel];
+  }
+  
+  const renderDeadline = () => {
+    const { deadline } = props;
+    if (!props.isAssignment) {
       return '';
     }
     let res = 'NO DEADLINE';
@@ -60,40 +67,33 @@ class PhoneTopBrick16x9 extends Component<Props> {
     </div>
     );
   }
-  render() {
-    const { color, brick } = this.props;
 
-    let label = '';
-    if (brick.academicLevel >= AcademicLevel.First) {
-      label = AcademicLevelLabels[brick.academicLevel];
-    }
 
-    return (
-      <div className="phone-top-brick-16x9" onClick={() => this.props.onClick ? this.props.onClick() : {}}>
-        {this.renderDeadline()}
-        {color
-          && (
-            <BrickCircle
-              color={color}
-              circleIcon={this.props.circleIcon}
-              circleClass={this.props.circleClass}
-              iconColor={this.props.iconColor}
-              isAssignment={this.props.isViewAllAssignment}
-              canHover={true}
-              label={label}
-              onClick={e => this.props.onIconClick?.(e)}
-            />
-          )
-        }
-        <div className="p-blue-background" />
-        <img alt="" className="p-cover-image" src={fileUrl(brick.coverImage)} />
-        <div className="bottom-description-color" />
-        <div className="bottom-description">
-          <BrickTitle title={brick.title} />
-        </div>
+  return (
+    <div className="phone-top-brick-16x9" onClick={() => props.onClick ? props.onClick() : {}}>
+      {renderDeadline()}
+      {color
+        && (
+          <BrickCircle
+            color={color}
+            circleIcon={props.circleIcon}
+            circleClass={props.circleClass}
+            iconColor={props.iconColor}
+            isAssignment={props.isViewAllAssignment}
+            canHover={true}
+            label={label}
+            onClick={e => props.onIconClick?.(e)}
+          />
+        )
+      }
+      <div className="p-blue-background" />
+      <img alt="" className="p-cover-image" src={fileUrl(brick.coverImage)} />
+      <div className="bottom-description-color" />
+      <div className="bottom-description">
+        <BrickTitle title={brick.title} />
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default PhoneTopBrick16x9;

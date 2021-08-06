@@ -49,6 +49,13 @@
         width: 100%;
       }
 
+      .hidden {
+        opacity: 0;
+      }
+      .visible {
+        animation: fadein 0.5s 0s forwards;
+      }
+
       .bottom-description-color {
         height: 3vw;
         opacity: 0.8;

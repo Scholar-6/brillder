@@ -43,6 +43,7 @@ interface BrickBlockProps {
 }
 
 const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
+  const [imgLoaded, setImgLoaded] = React.useState(false);
   let color = "";
   if (!brick.subject) {
     color = "#B0B0AD";
@@ -147,7 +148,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
             {brick.coverImage ?
               <div className="p-cover-image">
                 <div className="scroll-block">
-                  <img alt="" src={fileUrl(brick.coverImage)} />
+                  <img alt="" className={imgLoaded ? 'visible' : 'hidden'} onLoad={() => setImgLoaded(true)} src={fileUrl(brick.coverImage)} />
                 </div>
               </div>
               :
