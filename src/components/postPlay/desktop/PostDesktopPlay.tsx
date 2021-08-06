@@ -145,7 +145,11 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       { id: attempt.id, userId: this.props.user.id, body: newAttempt },
       { withCredentials: true }
-    );
+    ).catch(e => {
+      if(e.response.status !== 409) {
+        throw e;
+      }
+    });
   }
 
   setActiveAttempt(attempt: PlayAttempt) {
