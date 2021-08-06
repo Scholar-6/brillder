@@ -19,6 +19,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
   activeAttempt,
   question,
   setMode,
+  ...props
 }) => {
   let parsedAnswers = null;
 
@@ -150,7 +151,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
           />
         </div>
       </div>
-      <div className="right-part"></div>
+      {props.children}
     </div>
   );
 };

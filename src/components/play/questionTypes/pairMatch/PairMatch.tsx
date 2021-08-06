@@ -12,10 +12,10 @@ import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, Pai
 import MathInHtml from '../../baseComponents/MathInHtml';
 import PairMatchOption from './PairMatchOption';
 import PairMatchImageContent from './PairMatchImageContent';
-import { isPhone } from 'services/phone';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import {ReactComponent as DragIcon} from'assets/img/drag.svg';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { isMobile } from 'react-device-detect';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
@@ -180,7 +180,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         <p>
           <span className="help-text">
             <DragIcon /><span>Drag to rearrange.</span> {
-              haveImage && (isPhone()
+              haveImage && (isMobile
                 ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
                 : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
             }

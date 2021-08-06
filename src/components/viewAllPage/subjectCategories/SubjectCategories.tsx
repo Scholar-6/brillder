@@ -154,7 +154,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
         <Grid container direction="row" className="sorted-row dashboard-all-subjects">
           <SubjectCategoriesSidebar />
-          <Grid item xs={9} className="brick-row-container view-all-subjects subject-categories">
+          <div className="subject-categories">
             <div className="row">
               <div className="subject-category disabled">
                 <div onClick={() => this.setState({ invalidSubject: true })}>
@@ -223,7 +223,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
             </div>
-          </Grid>
+          </div>
         </Grid>
         <TextDialog className="bold-important" isOpen={this.state.invalidSubject} label="Hold tight, this subject category is coming soon." close={() => this.setState({ invalidSubject: false })} />
       </React.Suspense>

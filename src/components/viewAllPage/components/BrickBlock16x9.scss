@@ -49,6 +49,13 @@
         width: 100%;
       }
 
+      .hidden {
+        opacity: 0;
+      }
+      .visible {
+        animation: fadein 0.5s 0s forwards;
+      }
+
       .bottom-description-color {
         height: 3vw;
         opacity: 0.8;
@@ -59,7 +66,7 @@
       .bottom-description {
         color: var(--theme-dark-blue);
         height: 3vw;
-        font-size: 0.95vw;
+        font-size: 1vw;
         letter-spacing: 1;
         position: absolute;
         bottom: 0;
@@ -73,6 +80,11 @@
         height: 100%;
         width: 100%;
         overflow-y: scroll;
+      }
+      
+      .p-cover-image {
+        height: 100%;
+        background: var(--tab-gray);
       }
 
       .p-cover-icon {
