@@ -64,13 +64,15 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
               <h4>{annotation.user.firstName} {annotation.user.lastName}</h4>
             </Grid>
             <div className="buttons-container">
-              <button
-                aria-label="delete"
-                className="cancel-button svgOnHover"
-                onClick={props.deleteAnnotation}
-              >
-                <SpriteIcon name="trash-outline" className="active" />
-              </button>
+              {canEdit && (
+                <button
+                  aria-label="delete"
+                  className="cancel-button svgOnHover"
+                  onClick={props.deleteAnnotation}
+                >
+                  <SpriteIcon name="trash-outline" className="active" />
+                </button>
+              )}
             </div>
           </Grid>
           <Grid className="comment-text break-word">
