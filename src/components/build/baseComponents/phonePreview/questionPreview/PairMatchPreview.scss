@@ -8,45 +8,114 @@
   color: var(--theme-dark-blue);
 
   .small-text {
-    padding: 22% 12% 23% 12%;
-    font-size: 1.1vw;
+    padding: 17% 6% 9% 6%;
+    font-size: 1vw;
     font-family: $font-family-regular;
   }
 
-  @keyframes hor-shuf-button-color {
-    from { background: var(--tab-gray); }
-    to { background: var(--theme-green); }
-  }
+  .jj-pair-content {
+    $box-height: 4vw;
+    display: flex;
+    $margin: 0.3vw;
+    $border: 0.3vw;
 
-  button {
-    position: relative;
-    font-family: $font-family-regular;
-    width: 22%;
-    @extend %textCenter;
-    margin: 1%;
-    padding: 0vw 1vw;
-    height: 4vw;
-    font-size: 2vw;
-    line-height: 1.1;
-    letter-spacing: 0.01vw;
-    border-radius: 1vw;
-    border: none;
-    color: white;
-  }
-  button:nth-child(2) {
-    padding: 0;
-    font-size: 1.9vw;
+    .jj-pair-option-col {
+      width: 50%;
+      $border: 0.3vw;
+      margin-left: 0.5vw;
 
-    > span {
-      height: 0.1vw !important;
-      overflow-y: hidden;
-      text-decoration: overline;
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: $box-height;
+        margin-top: $margin;
+        margin-bottom: $margin;
+        border-top-left-radius: $border;
+        border-bottom-left-radius: $border;
+        background: var(--tab-gray);
+      }
     }
-  }
-  .inside-green {
-    button {
-      font-family: $font-family-bold;
-      animation: hor-shuf-button-color 1000ms forwards;
+
+    .jj-pair-answer-col {
+      width: 50%;
+      margin-right: 0.5vw;
+      position: relative;
+      div {
+        position: absolute;
+        width: 100%;
+        padding-left: 1.5vw;
+        padding-right: 1.5vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: $box-height;
+        padding-left: 0.5vw;
+        margin-top: $margin;
+        margin-bottom: $margin;
+        border-top-right-radius: $border;
+        border-bottom-right-radius: $border;
+        background: var(--off-white);
+        span {
+          text-align: center;
+        }
+      }
+      $delay: 400ms;
+      $duration: 400ms;
+      $second-position: calc(#{$box-height * 1} + #{$margin * 1});
+      $third-position: calc(#{$box-height * 2} + #{$margin * 2});
+      $fourth-position: calc(#{$box-height * 3} + #{$margin * 3});
+      .jj-first {
+        @keyframes jj-first-animate {
+          from {
+            top: $third-position;
+          }
+          to {
+            top: 0;
+          }
+        }
+        top: $third-position;
+        animation: jj-first-animate $duration $delay forwards;
+      }
+      .jj-second {
+        @keyframes jj-second-animate {
+          from {
+            top: $fourth-position;
+          }
+          to {
+            top: $second-position;
+          }
+        }
+
+        top: $fourth-position;
+        animation: jj-second-animate $duration $delay forwards;
+      }
+      .jj-third {
+        @keyframes jj-third-animate {
+          from {
+            top: $second-position;
+          }
+          to {
+            top: $third-position;
+          }
+        }
+
+        top: $second-position;
+        animation: jj-third-animate $duration $delay forwards;
+      }
+      .jj-fourth {
+        @keyframes jj-fourth-animate {
+          from {
+            top: 0;
+          }
+          to {
+            top: $fourth-position;
+          }
+        }
+
+        top: 0;
+        animation: jj-fourth-animate $duration $delay forwards;
+      }
     }
   }
 }
