@@ -36,7 +36,7 @@ class ShortAnswerPreview extends Component<any, any> {
     return (
       <div className="phone-preview-component short-answer-preview">
         <Grid container justify="center" className="small-text">
-          'All art is quite useless' is a quote from an 1890 novel by which author?
+          “All art is quite useless” is a quote from an 1890 novel by which author?
         </Grid>
         <Grid container justify="center" className="big-animated-text">
           <div className={this.state.text ? '' : 'empty'}>{this.state.text}</div>
