@@ -58,7 +58,11 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
     const { history } = props;
     if (history) {
       if (notification.type === NotificationType.BrickSubmittedForReview) {
-        history.push(map.backToWorkUserBased(props.user));
+        if (isPhone()) {
+          setNeedDesktopOpen(true);
+        } else {
+          history.push(map.backToWorkUserBased(props.user));
+        }
       }
 
       if (notification.brick && notification.brick.id) {
@@ -183,7 +187,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
       </div>
       <DesktopVersionDialogV2
         isOpen={needDesktopOpen}
-        secondaryLabel="Brick summaries have not yet been optimised for mobile devices."
+        secondaryLabel=""
         onClick={() => setNeedDesktopOpen(false)}
       />
     </Popper>

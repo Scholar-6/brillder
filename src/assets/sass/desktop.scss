@@ -155,7 +155,7 @@
 .dialog-header {
   .r-popup-title {
     font-size: 2vw;
-    margin-bottom: 0.3vw !important;
+    margin-bottom: 2vh !important;
   }
 
   .r-brick-level {
@@ -628,6 +628,13 @@
   }
 }
 
+.post-play-page {
+  .question-hint-global,
+  .question-hint {
+    font-size: 1.2vw;
+  }
+}
+
 .phone-question-preview {
   .question-hint-global,
   .question-hint {
@@ -800,4 +807,8 @@
 
 .animated-brick-container .flex-brick-container:hover {
   margin-top: calc(#{$bricks-height / -34});
+}
+
+.spinning {
+  animation: spinning 9s infinite linear;
 }

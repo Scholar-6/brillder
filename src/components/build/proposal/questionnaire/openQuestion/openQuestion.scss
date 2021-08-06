@@ -4,6 +4,13 @@
 
 .open-question-page {
   .left-block {
+    position: relative;
+    .hover-area {
+      position: absolute;
+      z-index: 100;
+      top: calc(5vh + 13.1vw);
+      right: 9.7vw;
+    }
     margin-top: 15.5vh;
     > h1 {
       @extend %m0;

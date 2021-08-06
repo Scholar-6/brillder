@@ -78,6 +78,7 @@ import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog
 import { addSubject } from "services/axios/user";
 import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 import PhoneSearchPage from "./PhoneSearchPage";
+import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 
 interface ViewAllProps {
   user: User;
@@ -907,7 +908,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (this.state.isAllSubjects) {
       return "All subjects";
     }
-    return "My subjects";
+    return "My Subjects";
   }
 
   async moveToCreateOne() {
@@ -1057,7 +1058,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return (
       <div>
         <div
-          className={`brick-row-title main-title uppercase ${
+          className={`brick-row-title main-title ${
             filterSubjects.length === 1 && "subject-title"
           }`}
         >
@@ -1261,6 +1262,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             />
           )}
         </div>
+        <ClassInvitationDialog />
       </React.Suspense>
     );
   }

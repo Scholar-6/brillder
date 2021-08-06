@@ -104,7 +104,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
         locked={locked}
         addAnswer={addAnswer}
         height="auto"
-        label="+ ANSWER" />
+        label="Add an answer" />
     </div>
   )
 }

@@ -125,8 +125,8 @@ html {
 .stop-cookie-tracking {
   cursor: pointer;
   position: fixed;
-  bottom: 1.4vw;
-  left: calc(5.5vw + 0.6vw + 20px + 0.5vw + 0.5vw);
+  bottom: 4.5vw;
+  left: calc(1.5vw);
   border: none;
   height: 2.3vw;
   display: flex;
@@ -388,6 +388,7 @@ html {
   display: flex;
   align-items: center;
   padding-bottom: 1vw;
+  font-size: 1.5vw !important;
   span {
     display: flex;
     align-items: center;
@@ -395,8 +396,123 @@ html {
   }
   svg {
     padding-right: 0.3vw;
-    height: 1.2vw;
-    width: 1.2vw;
+    $size: 2vw;
+    height: $size;
+    width: $size;
     fill: var(--theme-dark-blue);
   }
 }
+
+
+
+.question-hint-global,
+.question-hint {
+  padding: 0.3vw 0.65vw;
+  font-size: 1.4vw;
+  background: #ff9d00;
+  text-align: left !important;
+
+
+  > div:nth-child(3) {
+    background: black !important;
+  }
+
+  .global-hint-container {
+    div:first-child {
+      display: inline;
+      p {
+        display: inline;
+      }
+    }
+  }
+
+  > div {
+    display: inline;
+    width: 100%;
+    height: 100%;
+    text-align: left !important;
+
+    >div {
+      text-align: left !important;
+      display: inline;
+
+      p {
+        text-align: left !important;
+      }
+    }
+
+    .hint-icon-block {
+      display: inline-block;
+
+      .ged-phone-circle {
+        $size: 1.3vw;
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0.4vw;
+
+        svg {
+          color: var(--theme-yellow);
+          width: 80%;
+          height: 80%;
+          stroke-width: 2.5;
+        }
+      }
+    }
+  }
+
+  &.correct {
+    background: var(--off-white);
+  }
+
+  &.correct>div .hint-icon-block .ged-phone-circle svg {
+    margin-top: 0.1vw;
+    color: var(--white);
+  }
+}
+
+.choose-choice {
+  img {
+    max-height: 10vh;
+    max-width: 100% !important;
+    width: auto !important;
+  }
+}
+
+// short answer live
+.play-preview-panel .short-answer-live {
+  .ql-custom-toolbar .formats button svg {
+    height: 2vw;
+    width: 2vw;
+  }
+
+  .ql-custom-toolbar {
+    display: none !important;
+  }
+
+  .ql-container {
+    min-height: 4vw;
+    width: 100%;
+
+    .ql-editor {
+      text-align: center;
+      border-radius: 0.6vw !important;
+    }
+  }
+
+  .each {
+    .quill-document-editor {
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+
+      .ql-editor {
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
+    }
+  }
+}
+

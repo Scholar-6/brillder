@@ -119,10 +119,10 @@ class TeachFilterSidebar extends Component<
     return (
       <div className="student-row invitation" key={key}>
         <span className="student-name">
-          {s.email}
+          <span>{s.email}</span>
           <button className="btn resend-label" onClick={
             () => this.resendInvitation(s)
-          }>Resend</button>
+          }>Resend<SpriteIcon name="send-custom"/></button>
         </span>
       </div>
     );

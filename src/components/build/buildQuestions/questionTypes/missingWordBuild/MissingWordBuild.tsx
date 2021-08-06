@@ -149,7 +149,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
         <QuillEditor
           data={choice.before}
           className="missing-big-text"
-          toolbar={['bold', 'italic', 'blockquote']}
+          toolbar={['bold', 'italic', 'latex']}
           onChange={v => beforeChanged(choice, v)}
           disabled={locked}
           placeholder="Text before missing word..."
@@ -175,7 +175,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
                 />
                 <QuillEditor
                   placeholder="Enter Answer..."
-                  toolbar={['bold', 'italic']}
+                  toolbar={['bold', 'italic', 'latex']}
                   className={getInputClass(answer)}
                   disabled={locked}
                   data={answer.value}
@@ -193,14 +193,14 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
         <QuillEditor
           data={choice.after}
           className="missing-big-text"
-          toolbar={['bold', 'italic', 'blockquote']}
+          toolbar={['bold', 'italic', 'latex']}
           onChange={v => afterChanged(choice, v)}
           disabled={locked}
           placeholder="Text after missing word..."
         />
         <AddAnswerButton
           locked={locked} addAnswer={() => { addAnswer(choice) }} height={choice.height}
-          label="+ ANSWER"
+          label="Add an answer"
         />
       </div>
     );
@@ -216,7 +216,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
       }
       <AddAnswerButton
         locked={locked} addAnswer={addChoice} height={height}
-        label="+ MISSING WORD"
+        label="Add a missing word"
       />
     </div>
   )

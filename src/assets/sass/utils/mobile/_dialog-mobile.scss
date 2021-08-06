@@ -276,14 +276,22 @@
       }
     }
     &.set-user-email-dialog {
+      .dialog-header {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+      }
       .bold {
         font-size: 5.5vw;
       }
       .MuiFormControl-root {
         margin-bottom: 0.7vh !important;
       }
+      .MuiInput-root {
+        border-radius: 1.8vw;
+      }
       .dialog-input {
         .MuiInputBase-root{
+          padding: 1vw 4vw !important;
           input {
             height: 9vw;
             min-height: 9vw;
@@ -291,9 +299,16 @@
         }
       }
       .small-text-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         font-size: 4.5vw;
         margin-bottom: 3vh;
+        svg {
+          width: 5.5vw;
+          height: 5.5vw;
+        }
       }
       .dialog-footer {
         > button:first-child {

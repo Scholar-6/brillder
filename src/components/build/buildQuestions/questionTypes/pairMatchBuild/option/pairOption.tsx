@@ -105,7 +105,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   if (answer.optionType === QuestionValueType.Sound) {
     return (
       <Grid container item xs={6}>
-        <div className="choose-sound">
+        <div className="choose-sound bigger">
           <SoundRecord
             locked={locked}
             answer={soundAnswer}

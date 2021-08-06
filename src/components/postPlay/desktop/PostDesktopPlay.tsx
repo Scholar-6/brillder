@@ -28,7 +28,7 @@ import QuestionPage from "./QuestionPage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BookPages from "./BookPages";
-import { getDateString, getTime } from "components/services/brickService";
+import { checkTeacher, getDateString, getTime } from "components/services/brickService";
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import routes from "components/play/routes";
 import BookAnnotationsPanel from "./BookAnnotationsPanel";
@@ -87,6 +87,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       questionIndex: 0,
       attempt: null,
       attempts: [],
+      mode: true,
       subjects: [],
       handleKey: this.handleKey.bind(this)
     };
@@ -216,6 +217,38 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     )
   }
 
+  renderPlayButton(brick: Brick) {
+    const isTeacher = checkTeacher(this.props.user);
+
+    if (isTeacher) {
+      return (
+        <div className="green-button-container1" onClick={() => {/* commenting logic */ }}>
+          <div className="green-button-container2">
+            <div className="play-text">Add comment</div>
+            <div className="green-button-container3">
+              <button type="button" className="play-green-button bg-tab-gray">
+                <SpriteIcon name="pen-tool" className="colored w60 m-0 h60 text-white" />
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="green-button-container1" onClick={() => {
+        this.props.history.push(routes.playAssignment(brick.id, this.state.attempts[0].assignmentId));
+      }}>
+        <div className="green-button-container2">
+          <div className="play-text">Play Again</div>
+          <div className="green-button-container3">
+            <PlayGreenButton onClick={() => { }} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     if (!this.state.attempt) {
       return <PageLoader content="...Getting Attempt..." />;
@@ -301,6 +334,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
             <BookSidebar
               brick={brick} questions={questions}
               activeQuestionIndex={this.state.questionIndex}
+              attempt={this.state.attempt}
               bookState={this.state.bookState}
               moveToPage={this.moveToPage.bind(this)}
               moveToQuestion={this.moveToQuestion.bind(this)}
@@ -308,19 +342,11 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
             <div className="content-area">
               {this.state.bookState === BookState.Attempts && <div className="book-page">
                 <div className="real-content question-content brief-page attempt-page">
+                  <h2 dangerouslySetInnerHTML={{ __html: brick.title }}></h2>
                   {renderAttempts()}
                 </div>
                 <div className="right-part flex-center">
-                  <div className="green-button-container1" onClick={() => {
-                    this.props.history.push(routes.playAssignment(brick.id, this.state.attempts[0].assignmentId));
-                  }}>
-                    <div className="green-button-container2">
-                      <div className="play-text">Play Again</div>
-                      <div className="green-button-container3">
-                        <PlayGreenButton onClick={() => { }} />
-                      </div>
-                    </div>
-                  </div>
+                  {this.renderPlayButton(brick)}
                 </div>
               </div>
               }

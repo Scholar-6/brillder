@@ -650,7 +650,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const renderBuildQuestion = () => {
     return (
       <QuestionPanelWorkArea
-        brickId={brickId}
+        brick={brick}
         history={history}
         synthesis={brick.synthesis}
         questionsCount={questions ? questions.length : 0}
@@ -820,6 +820,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         user={props.user}
         isTutorialSkipped={isTutorialPassed()}
         isValid={isValid}
+        questions={questions}
         moveToPreview={moveToPreview}
         isEditor={isCurrentEditor}
         isPublisher={isPublisher}
