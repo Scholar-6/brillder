@@ -25,7 +25,7 @@ import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
 import RedoButton from '../baseComponents/redoButton';
 import StatusCircle from '../baseComponents/statusCircle/StatusCircle';
-import { checkAdmin, checkBuilder, checkEditor, isAorP, isAorPorE } from 'components/services/brickService';
+import { isAorPorE } from 'components/services/brickService';
 
 
 function SplitByCapitalLetters(element: string): string {

@@ -388,6 +388,7 @@ html {
   display: flex;
   align-items: center;
   padding-bottom: 1vw;
+  font-size: 1.5vw !important;
   span {
     display: flex;
     align-items: center;
@@ -395,8 +396,9 @@ html {
   }
   svg {
     padding-right: 0.3vw;
-    height: 1.2vw;
-    width: 1.2vw;
+    $size: 2vw;
+    height: $size;
+    width: $size;
     fill: var(--theme-dark-blue);
   }
 }
