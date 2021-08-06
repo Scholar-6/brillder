@@ -129,7 +129,11 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     updateAnnotation(updatedAnnotation);
   }, [updateAnnotation]);
 
-  if(!props.attempt || !props.attempt?.annotations?.filter(annotation => annotation.location === location).length) {
+  const filteredAnnotations = props.attempt?.annotations?.filter(
+    annotation => annotation.location === location && (annotation.location !== AnnotationLocation.Question || annotation.questionIndex === props.questionIndex)
+  );
+
+  if(!props.attempt || !filteredAnnotations?.length) {
     return <div className="right-part empty">
       <div className="grey-circle" onMouseDown={e => e.preventDefault()} onClick={addAnnotation}>
         <SpriteIcon name="pen-tool" className="pen-icon" />
@@ -142,9 +146,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
 
 	return (
 		<div className="right-part annotations-panel">
-			{props.attempt?.annotations
-        .filter(annotation => annotation.location === location)
-        .map(annotation => (
+			{filteredAnnotations?.map(annotation => (
           <BookAnnotation
             key={annotation.id}
             annotation={annotation}
