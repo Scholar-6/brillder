@@ -11,8 +11,8 @@
   justify-content: flex-end;
   font-family: $font-family-bold;
   .btn {
+    cursor: pointer;
     display: flex;
-    cursor: default !important;
     letter-spacing: 0.05vw;
     align-items: center;
     span {
@@ -25,7 +25,6 @@
       }
     }
     .svgOnHover {
-      cursor: pointer;
       $icon-padding: 0.3vw;
       $icon-size: 1.9vw;
       border-radius: 40%;

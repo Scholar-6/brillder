@@ -52,7 +52,7 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
       return (
         <div style={{ width: '100%' }}>
           <Audio src={answer.optionSoundFile} />
-          <div>{answer.optionSoundCaption ? answer.optionSoundCaption : 'Click to select'}</div>
+          <div>{answer.optionSoundCaption ? answer.optionSoundCaption : ''}</div>
         </div>
       );
     }

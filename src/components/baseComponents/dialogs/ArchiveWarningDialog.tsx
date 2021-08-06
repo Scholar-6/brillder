@@ -11,8 +11,8 @@ const ArchiveWarningDialog: React.FC<DialogProps> = props => {
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
-        <div>There are students who have not yet completed it.</div>
-        <div>Are you sure you want to archive it.</div>
+        <div>Some students have not yet completed this assignment.</div>
+        <div>Are you sure you want to archive it?</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button" onClick={props.submit}>

@@ -6,9 +6,27 @@
   .MuiPaper-root.MuiDialog-paper {
     background: var(--tab-gray) !important;
 
+    .react-recording {
+      padding: 0 0.5vw;
+    }
+
+    .dropzone {
+      margin-top: 0.5vw;
+    }
+
+    input {
+      margin-top: 0.5vw;
+    }
+
     .upload-button-container {
-      margin-top: 1vw;
+      margin-top: 3vw;
+      height: 3vw;
       @extend %flexToXCenter;
+    }
+
+    .record-button-row button span {
+      font-size: 1.3vw;
+      letter-spacing: 0;
     }
 
     .upload-button {
@@ -26,6 +44,10 @@
         position: absolute;
         width: 80%;
         height: 70%;
+      }
+
+      .css-custom-tooltip {
+        background: var(--off-white);
       }
   
       &.active {

@@ -10,6 +10,7 @@ import { ProposalStep, BrickLengthRoutePart } from "../../model";
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import BriefHoverHelp from "components/build/baseComponents/BriefHoverHelp";
 
 
 interface BriefProps {
@@ -45,6 +46,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief,
             <SpriteIcon name="crosshair" />
           </div>
           <h1>Outline the purpose of this brick.</h1>
+          <BriefHoverHelp />
           <QuillEditor
             disabled={!canEdit}
             data={parentBrief}

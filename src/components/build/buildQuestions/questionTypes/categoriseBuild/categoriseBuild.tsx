@@ -286,7 +286,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           locked={locked}
           addAnswer={() => addAnswer(category)}
           height={category.height}
-          label="+ ANSWER"
+          label="Add an answer"
         />
       </div>
     );
@@ -301,7 +301,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         locked={locked}
         addAnswer={addCategory}
         height={categoryHeight}
-        label="+ CATEGORY"
+        label="Add a category"
       />
       <ValidationFailedDialog
         isOpen={sameCategoryOpen}

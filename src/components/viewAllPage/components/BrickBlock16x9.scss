@@ -74,6 +74,11 @@
         width: 100%;
         overflow-y: scroll;
       }
+      
+      .p-cover-image {
+        height: 100%;
+        background: var(--tab-gray);
+      }
 
       .p-cover-icon {
         background: var(--tab-gray);

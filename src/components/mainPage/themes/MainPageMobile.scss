@@ -276,12 +276,22 @@
 
 // only case for new students
 .mobile-main-page.new-student {
+  .view-item-container {
+    height: 33vw;
+  }
   > div {
     height: 37%;
   }
   .eye-glass-frame {
     width: 70vw;
-    height: 34vw;
+    height: 33vw;
+    position: relative;
+    > svg {
+      position: absolute;
+      top: 4vw;
+      width: 50vw;
+      height: 25vw;
+    }
   }
   .back-item-container {
     width: 70vw;

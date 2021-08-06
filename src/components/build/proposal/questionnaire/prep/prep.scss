@@ -4,6 +4,14 @@
 
 .prep-page-questionary {
   .left-block {
+    position: relative;
+    .hover-area {
+      z-index: 100;
+      position: absolute;
+      top: calc(4vh + 11.9vw);
+      right: 9.7vw;
+    }
+
     margin-top: 12.5vh;
     > h1 {
       @include tabletL {
@@ -14,6 +22,7 @@
       }
     }
   }
+  
   .proposal-phone-preview {
     @include phone_and_tabletL {
       display: none;

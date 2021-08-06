@@ -32,6 +32,41 @@
   }
 }
 
+.custom-audio-controls {
+  margin-top: 4vw;
+  margin-bottom: 8vw !important;
+  position: relative;
+  margin-bottom: 5vw;
+  .input-container {
+    width: 10vw;
+    .MuiSlider-valueLabel {
+      display: none;
+    }
+  }
+  input {
+    border-radius: 4vw;
+    width: 23vw !important;
+  }
+  .volume-container-main {
+    display: none !important;
+  }
+  .button-container {
+    margin-top: 3vw;
+    svg {
+      $size: 8vw;
+      width: $size !important;
+      height: $size !important;
+    }
+  }
+  .time-text {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 7vw;
+    margin-left: 10vw;
+  }
+}
+
 .MuiDialog-root.dialog-box.light-blue.unlimited {
   .close-button {
     top: 4vw;

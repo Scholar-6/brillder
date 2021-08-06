@@ -6,10 +6,14 @@
   @extend %textCenter;
   margin-top: 0 !important;
 
+  .component-title {
+    margin-bottom: 0.2vw;
+  }
+
   .short-answer-box {
     position: relative;
     width: 100%;
-    margin-bottom: 0.4vw;
+    margin-bottom: $editor-spacing;
     background-color: var(--white);
     @extend %themeRadius;
     .quill-document-editor {

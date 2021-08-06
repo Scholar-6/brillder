@@ -284,17 +284,18 @@
     position: absolute;
   }
   .main-title {
+    padding-top: calc(2.1vh + 0.9vw) !important;
+    letter-spacing: 0 !important;
+    font-family: $font-family-bold !important;
     @extend %transitionAll300;
     max-width: 55vw;
     font-size: 3vw !important;
-    line-height: 0;
-    min-height: 10  vh;
+    line-height: 1.2 !important;
+    min-height: 10vh;
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
     &.subject-title {
-      letter-spacing: 0.4vw;
-      margin-top: 1.2vw;
       font-size: 2.9vw;
     }
   }

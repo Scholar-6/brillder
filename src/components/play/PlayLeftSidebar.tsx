@@ -238,7 +238,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     return (
       <div className="sidebar-button">
-        {(Brillder.testing.highlighter && (this.isPrep() || this.isSynthesis())) && <HighlightTextButton
+        {(this.isPrep() || this.isSynthesis()) && <HighlightTextButton
           mode={this.props.mode}
           sidebarRolledUp={sidebarRolledUp}
           haveCircle={haveBriefCircles}

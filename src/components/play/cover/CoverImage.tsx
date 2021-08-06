@@ -7,11 +7,16 @@ import ImageCoverDialog from './ImageCoverDialog';
 import { ImageCoverData } from './model';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { setBrickCover } from 'services/axios/brick';
+import actions from 'redux/actions/play';
+import { connect } from 'react-redux';
 
 interface ImageProps {
   locked: boolean;
   brickId: number;
   data: ImageCoverData;
+
+  hover(fileName: string, imageSource: string): void;
+  blur(): void;
 }
 
 const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
@@ -98,7 +103,11 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
       }}>
         {
           fileName
-            ? <img alt="" style={{ width: '100%' }} src={fileUrl(fileName)} />
+            ? <img alt="" style={{ width: '100%' }}
+              onMouseEnter={() => props.hover(fileName, props.data.imageSource)}
+              onMouseLeave={() => props.blur()}
+              src={fileUrl(fileName)}
+            />
             : (
               <div>
                 <SpriteIcon name="image" />
@@ -127,5 +136,9 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   );
 }
 
+const mapDispatch = (dispatch: any) => ({
+  hover: (fileName: string, imageSource: string) => dispatch(actions.setImageHover(fileName, imageSource)),
+  blur: () => dispatch(actions.setImageBlur()),
+});
 
-export default CoverImageComponent
+export default connect(null, mapDispatch)(CoverImageComponent);

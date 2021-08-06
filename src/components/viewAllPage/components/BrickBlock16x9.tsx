@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import './BrickBlock16x9.scss';
 import { AcademicLevelLabels, Brick } from "model/brick";
 import { User } from "model/user";
-import {ReactComponent as CircleCheck} from'assets/img/circle-check.svg';
+import { ReactComponent as CircleCheck } from 'assets/img/circle-check.svg';
 
 import routes, { playCover } from "components/play/routes";
 import { setAssignmentId } from "localStorage/playAssignmentId";
@@ -14,6 +14,7 @@ import buildRoutes from 'components/build/routes';
 import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getDate, getMonth, getYear } from "components/services/brickService";
+import { AssignmentBrickStatus } from "model/assignment";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -23,8 +24,6 @@ interface BrickBlockProps {
   shown: boolean;
   history: any;
   isPlay?: boolean;
-  isAssignment?: boolean;
-  assignmentId?: number;
   color?: string;
   circleIcon?: string;
   iconColor?: string;
@@ -35,10 +34,15 @@ interface BrickBlockProps {
 
   isViewAll?: boolean;
 
+  // student assignments page
+  isAssignment?: boolean;
+  assignmentStatus?: AssignmentBrickStatus;
+  assignmentId?: number;
+
   handleDeleteOpen(brickId: number): void;
 }
 
-const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
+const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
   let color = "";
   if (!brick.subject) {
     color = "#B0B0AD";
@@ -54,7 +58,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
 
   if (brick.assignments) {
     for (let assignmen of brick.assignments) {
-      let assignment = assignmen as any;
+      const assignment = assignmen as any;
       for (let student of assignment.stats.byStudent) {
         if (student.studentId === props.user.id) {
           assignmentId = assignment.id;
@@ -74,6 +78,12 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       props.history.push(map.postAssignment(brick.id, props.user.id));
       return;
     }
+    if (props.isAssignment && props.assignmentId && props.assignmentStatus != null && props.assignmentStatus !== AssignmentBrickStatus.ToBeCompleted) {
+      setAssignmentId(props.assignmentId);
+      props.history.push(map.postAssignment(brick.id, props.user.id));
+      return;
+    }
+
     if (props.isPlay) {
       const values = queryString.parse(props.history.location.search);
       let link = playCover(brick.id);
@@ -95,7 +105,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
 
   const renderDeadline = () => {
     if (!props.isAssignment) { return '' }
-    let className= '';
+    let className = '';
     let res = 'NO DEADLINE';
     const { deadline } = props;
     if (deadline) {
@@ -108,7 +118,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       }
       res = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
     } else {
-      className="smaller-blue";
+      className = "smaller-blue";
     }
 
     return (<div className="fwe1-16x9-deadline">
@@ -121,37 +131,39 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
 
   return (
     <div className="animated-brick-container">
-    <Grow
-      in={props.shown}
-      style={{ transformOrigin: "0 0 0" }}
-      timeout={index * 150}
-    >
-      <a href={window.location.origin + routes.playCover(brick.id)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
-        <div className="publish-brick-container">
-          {renderDeadline()}
-          <div className="level">
-            <div style={{background: color}}>
-              {isAssignment ?  <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
+      <Grow
+        in={props.shown}
+        style={{ transformOrigin: "0 0 0" }}
+        timeout={index * 150}
+      >
+        <a href={window.location.origin + routes.playCover(brick.id)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
+          <div className="publish-brick-container">
+            {renderDeadline()}
+            <div className="level">
+              <div style={{ background: color }}>
+                {isAssignment ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
+              </div>
+            </div>
+            {brick.coverImage ?
+              <div className="p-cover-image">
+                <div className="scroll-block">
+                  <img alt="" src={fileUrl(brick.coverImage)} />
+                </div>
+              </div>
+              :
+              <div className="p-cover-icon">
+                <SpriteIcon name="image" />
+              </div>
+            }
+            <div className="bottom-description-color"></div>
+            <div className="bottom-description">
+              <div className="bold brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
             </div>
           </div>
-          {brick.coverImage ?
-            <div className="scroll-block">
-              <img alt="" src={fileUrl(brick.coverImage)} />
-            </div>
-            :
-            <div className="p-cover-icon">
-              <SpriteIcon name="image" />
-            </div>
-          }
-          <div className="bottom-description-color"></div>
-          <div className="bottom-description">
-            <div className="bold brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
-          </div>
-        </div>
-      </a>
-    </Grow>
+        </a>
+      </Grow>
     </div>
   );
 }
 
-export default BrickBlockComponent;
+export default BrickBlock16x9Component;

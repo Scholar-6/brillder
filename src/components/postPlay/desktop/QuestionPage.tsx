@@ -109,7 +109,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
 
   return (
     <div className="book-page">
-      <div className="real-content question-content brief-page">
+      <div className="real-content question-content brief-page real-question-b-page">
         {mode === undefined ? (
           <div>
             <QuestionPlay

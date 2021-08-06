@@ -8,6 +8,7 @@ import { getSubjectColor } from "components/services/subject";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import { ApiAssignemntStats } from "model/stats";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import map from "components/map";
 
 enum SortBy {
   None,
@@ -22,6 +23,8 @@ interface AssignemntExpandedState {
 }
 
 interface AssignmentBrickProps {
+  history: any;
+  isStudentAssignment: boolean;
   stats: ApiAssignemntStats;
   subjects: Subject[];
   student: TeachStudent;
@@ -54,10 +57,16 @@ class ExpandedStudentAssignment extends Component<
     return st;
   }
 
+  renderCommentIcon() {
+    return <div className="comment-icon">
+      <SpriteIcon name="message-square" className="active" />
+    </div>;
+  }
+
   renderTableHead() {
-    const {sortBy} = this.state;
+    const { sortBy } = this.state;
     const name = sortBy === SortBy.AvgIncreasing ? "arrow-up" : "arrow-down";
-    
+
     let className = "btn btn-transparent svgOnHover btn-grey-circle";
     if (sortBy === SortBy.AvgIncreasing || sortBy === SortBy.AvgDecreasing) {
       className += " active";
@@ -68,7 +77,7 @@ class ExpandedStudentAssignment extends Component<
           <th></th>
           <th>
             <div className="center">
-              <button className={className} onClick={() => {}}>
+              <button className={className} onClick={() => { }}>
                 <SpriteIcon name={name} className="active text-theme-dark-blue" />
               </button>
             </div>
@@ -105,23 +114,37 @@ class ExpandedStudentAssignment extends Component<
     );
   }
 
+  renderBookIcon(studentStatus: any, studentId: number) {
+    const { history, assignment } = this.props;
+    const moveToPostPlay = () => {
+      if (studentStatus.bestScore !== undefined) {
+        history.push(map.postPlay(assignment.brick.id, studentId) + '?fromTeach=true');
+      }
+    }
+    return (
+      <div className="round b-green centered">
+        <SpriteIcon name="book-open" className="active book-open-icon" onClick={moveToPostPlay} />
+      </div>
+    );
+  }
+
   renderQuestionAttemptIcon(studentResult: any, questionNumber: number) {
     if (studentResult) {
       try {
         const attempt = studentResult.attempts[0].answers[questionNumber];
         const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
-  
+
         // yellow tick
         if (attempt.correct === true && liveAttempt.correct === false) {
           return <SpriteIcon name="check-icon" className="text-yellow" />;
         } else if (attempt.correct === false && liveAttempt.correct === true) {
           return <SpriteIcon name="check-icon" className="text-yellow" />;
         }
-  
+
         if (attempt.correct === true && liveAttempt.correct === true) {
           return <SpriteIcon name="check-icon" className="text-theme-green" />;
         }
-  
+
         return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
       } catch {
         console.log('can`t parse attempt');
@@ -138,7 +161,7 @@ class ExpandedStudentAssignment extends Component<
   }
 
   renderStudent(student: TeachStudent) {
-    const {studentResult} = student;
+    const { studentResult } = student;
 
     return (
       <tr className="user-row">
@@ -147,6 +170,7 @@ class ExpandedStudentAssignment extends Component<
           <div>{this.renderStatus(studentResult)}</div>
         </td>
         <td className="student-book">
+          {studentResult && studentResult.numberOfAttempts > 0 && <div className="centered">{this.renderBookIcon(studentResult, student.id)}</div>}
         </td>
         <td className={`assigned-student-name`}>
           {student.firstName} {student.lastName}
@@ -159,7 +183,8 @@ class ExpandedStudentAssignment extends Component<
               </div>
             </td>
         )}
-        <td>
+        <td style={{ width: '9vw' }}>
+          <div className="centered">{this.renderCommentIcon()}</div>
         </td>
       </tr>
     );
@@ -173,11 +198,13 @@ class ExpandedStudentAssignment extends Component<
           <AssignedBrickDescription
             isStudent={true}
             isExpanded={true}
+            activeStudent={this.props.student}
+            isStudentAssignment={this.props.isStudentAssignment}
             subjects={this.props.subjects}
             minimize={this.props.minimize}
             assignment={this.props.assignment}
-            archive={() => {}}
-            unarchive={() => {}}
+            archive={() => { }}
+            unarchive={() => { }}
           />
         </div>
         <div className="assignments-table">

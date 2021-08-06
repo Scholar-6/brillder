@@ -24,6 +24,7 @@ import { TeachClassroom } from "model/classroom";
 import LibrarySubjects from "./components/LibrarySubjects";
 import SingleSubjectAssignments from "./singleSubject/SingleSubjectAssignments";
 import routes from "components/play/routes";
+import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 
 
 interface BricksListProps {
@@ -415,6 +416,7 @@ class Library extends Component<BricksListProps, BricksListState> {
             close={() => this.setState({ ...this.state, failedRequest: false })}
           />
         </div>
+        <ClassInvitationDialog />
       </React.Suspense>
     );
   }

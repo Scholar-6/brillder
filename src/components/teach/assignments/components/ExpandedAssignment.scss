@@ -31,7 +31,7 @@
       height: calc(#{$table-height / 8}) !important;
     }
     .padding-left-column {
-      width: 0.7vw;
+      width: 1.7vw;
     }
     .student-status,
     .student-book {
@@ -41,9 +41,22 @@
       }
     }
 
+    .student-book .round {
+      $size: 2.18vw;
+      width: $size !important;
+      height: $size !important;
+
+      svg {
+        $size: 70%;
+        width: $size !important;
+        height: $size !important;
+      }
+    }
+
     .assigned-student-name {
       color: var(--theme-dark-blue);
       padding-left: 0.85vw !important;
+      font-size: 1.2vw !important;
       width: 18vw;
     }
     .circle-td {
@@ -100,8 +113,11 @@
         height: 1.4vw;
       }
       .reminder-icon {
-        width: 1.35vw;
-        height: 1.35vw;
+        $padding: 0.2vw;
+        $size: 2.18vw;
+        width: calc(#{$size} - #{$padding * 2});
+        height: calc(#{$size} - #{$padding * 2});
+        padding: $padding !important;
       }
 
       .book-open-icon {

@@ -99,7 +99,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
         locked={locked}
         addAnswer={addAnswer}
         height="auto"
-        label="+ ANSWER"
+        label="Add an answer"
       />
     </div>
   )
