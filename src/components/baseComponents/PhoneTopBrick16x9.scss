@@ -1,0 +1,13 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.phone-top-brick-16x9 {
+  background: var(--tab-gray);
+  .hidden {
+    opacity: 0;
+  }
+  .visible {
+    animation: fadein 0.5s 0s forwards;
+  }
+}
