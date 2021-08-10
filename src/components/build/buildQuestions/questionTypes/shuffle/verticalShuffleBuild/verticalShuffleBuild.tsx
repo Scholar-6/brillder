@@ -163,7 +163,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           validationRequired={validationRequired}
           toolbar={['latex']}
           isValid={isValid}
-          placeholder={"Enter Answer " + (i + 1) + "..."}
+          placeholder={"Answer " + (i + 1)}
           onBlur={() => {
             showSameAnswerPopup(i, state.list, openSameAnswerDialog);
           }}
