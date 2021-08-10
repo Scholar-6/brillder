@@ -288,7 +288,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
               <div className="introduction-page">
                 {renderFirstRow()}
                 <div className="brick-title q-brick-title">
-                  <DynamicFont content={stripHtml(brick.title)} />
+                  <div className="adapted-text">ADAPTED</div>
+                  <SpriteIcon name="copy"/><DynamicFont content={stripHtml(brick.title)} />
                 </div>
                 <CoverAuthorRow brick={brick} setBio={setBio} />
                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
