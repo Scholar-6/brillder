@@ -144,7 +144,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
           validationRequired={validationRequired}
           toolbar={['latex']}
           isValid={isValid}
-          placeholder={"Option " + (index + 1) + "..."}
+          placeholder={"Option " + (index + 1)}
           onChange={value => onTextChanged(answer, value)}
         />
         <QuestionImageDropZone

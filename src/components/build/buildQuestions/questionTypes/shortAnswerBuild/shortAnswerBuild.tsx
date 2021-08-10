@@ -78,6 +78,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
           validate={props.validationRequired}
           isValid={!!stripHtml(answer.value)}
           data={answer.value}
+          placeholder="Short Answer (max. 3 words)"
           onChange={(value) => changed(answer, value)}
         />
       </div>
