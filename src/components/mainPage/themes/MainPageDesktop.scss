@@ -18,7 +18,7 @@
   .welcome-col {
     width: $welcome-col-width;
     @extend %textCenter;
-    padding-top: 15vh;
+    padding-top: 10vh;
 
     .welcome-box {
       color: white;
@@ -106,6 +106,7 @@
     height: 100%;
 
     .first-item {
+      padding-top: 4vh;
       background: var(--theme-light-blue);
       height: 89.2vh;
       border-bottom-left-radius: $border-radius;
