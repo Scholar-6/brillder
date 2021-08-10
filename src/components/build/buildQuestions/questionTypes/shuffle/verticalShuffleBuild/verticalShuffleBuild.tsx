@@ -120,6 +120,9 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     if (answer.answerType === QuestionValueType.Sound) {
       return (
         <div className="verical-sound unique-component" key={i}>
+          <div className="index-circle-container">
+            <div className="index-circle">{i + 1}</div>
+          </div>
           <RemoveButton onClick={() => changed(answer, '')} />
           <SoundRecord
             locked={locked}
@@ -133,6 +136,9 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
       return (
         <div className={className} key={i}>
           <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
+          <div className="index-circle-container">
+            <div className="index-circle">{i + 1}</div>
+          </div>
           {answer.answerType === QuestionValueType.Image && <RemoveButton onClick={() => changed(answer, '')} />}
           <QuestionImageDropzone
             answer={answer as any}
@@ -149,6 +155,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     return (
       <div className={className} key={i}>
         <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
+        {answer.value && <div className="index-circle-container"><div className="index-circle">{i + 1}</div></div>}
         <QuestionImageDropzone
           answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
