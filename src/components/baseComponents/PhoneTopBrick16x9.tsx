@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import './ShortBrickDescription.scss';
+import './PhoneTopBrick16x9.scss';
 import { AcademicLevel, AcademicLevelLabels, Brick } from "model/brick";
 
 import { User } from "model/user";
@@ -35,12 +36,13 @@ interface Props {
 
 const PhoneTopBrick16x9: React.FC<Props> = (props) => {
   const { color, brick } = props;
+  const [imgLoaded, setLoaded] = React.useState(false);
 
   let label = '';
   if (brick.academicLevel >= AcademicLevel.First) {
     label = AcademicLevelLabels[brick.academicLevel];
   }
-  
+
   const renderDeadline = () => {
     const { deadline } = props;
     if (!props.isAssignment) {
@@ -87,7 +89,7 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
         )
       }
       <div className="p-blue-background" />
-      <img alt="" className="p-cover-image" src={fileUrl(brick.coverImage)} />
+      <img alt="" className={`p-cover-image ${imgLoaded ? 'visible' : 'hidden'}`} onLoad={() => setLoaded(true)} src={fileUrl(brick.coverImage)} />
       <div className="bottom-description-color" />
       <div className="bottom-description">
         <BrickTitle title={brick.title} />

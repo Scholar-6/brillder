@@ -1041,4 +1041,34 @@
     </g>
   </svg>
   <svg id="feather-watch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-watch"><circle cx="12" cy="12" r="7"></circle><polyline points="12 9 12 12 13.5 13.5"></polyline><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"></path></svg>
+  <svg id="20min-red" viewBox="0 0 168.45 180">
+    <path d="M55.553,180h-16a4,4,0,0,1-4-4v-7.087h24V176A4,4,0,0,1,55.553,180Zm4-15h-24V154.565h24V165Zm0-14.348h-24V28.7h24V150.652Zm0-125.869h-24V14.348h24V24.782Zm0-14.348h-24V4a4,4,0,0,1,4-4h16a4,4,0,0,1,4,4v6.435Z" transform="translate(-35.554)" fill="#c43c30"/>
+    <rect width="48" height="180" rx="8" transform="translate(36.45)" fill="#c43c30"/>
+    <rect width="72" height="180" rx="10" transform="translate(96.45)" fill="#c43c30"/>
+  </svg>
+  <svg id="20min-blue" viewBox="0 0 168.45 180">
+    <path d="M55.553,180h-16a4,4,0,0,1-4-4v-7.087h24V176A4,4,0,0,1,55.553,180Zm4-15h-24V154.565h24V165Zm0-14.348h-24V28.7h24V150.652Zm0-125.869h-24V14.348h24V24.782Zm0-14.348h-24V4a4,4,0,0,1,4-4h16a4,4,0,0,1,4,4v6.435Z" transform="translate(-35.554)" fill="#193366"/>
+    <rect width="48" height="180" rx="8" transform="translate(36.45)" fill="#e1e5eb"/>
+    <rect width="72" height="180" rx="10" transform="translate(96.45)" fill="#e1e5eb"/>
+  </svg>
+  <svg id="40min-red" viewBox="0 0 169 180">
+    <path  d="M75.558,180h-32a8.009,8.009,0,0,1-8-8v-3.087h48V172A8.009,8.009,0,0,1,75.558,180Zm8-15h-48V154.565h48V165Zm0-14.348h-48V28.7h48V150.652Zm0-125.869h-48V14.348h48V24.782Zm0-14.348h-48V8a8.009,8.009,0,0,1,8-8h32a8.009,8.009,0,0,1,8,8v2.434Z" transform="translate(0.996)" fill="#c43c30"/>
+    <rect width="24" height="180" rx="4" fill="#c43c30"/>
+    <rect width="72" height="180" rx="10" transform="translate(97)" fill="#c43c30"/>
+  </svg>
+  <svg id="40min-blue" viewBox="0 0 169 180">
+    <path  d="M75.558,180h-32a8.009,8.009,0,0,1-8-8v-3.087h48V172A8.009,8.009,0,0,1,75.558,180Zm8-15h-48V154.565h48V165Zm0-14.348h-48V28.7h48V150.652Zm0-125.869h-48V14.348h48V24.782Zm0-14.348h-48V8a8.009,8.009,0,0,1,8-8h32a8.009,8.009,0,0,1,8,8v2.434Z" transform="translate(0.996)" fill="#193366"/>
+    <rect width="24" height="180" rx="4" fill="#e1e5eb"/>
+    <rect width="72" height="180" rx="10" transform="translate(97)" fill="#e1e5eb"/>
+  </svg>
+  <svg id="60min-red" viewBox="0 0 169.548 180">
+    <path d="M97.552,180h-52a10.012,10.012,0,0,1-10-10v-1.087h72V170A10.011,10.011,0,0,1,97.552,180Zm10-15h-72V154.565h72V165Zm0-14.348h-72V28.7h72V150.652Zm0-125.869h-72V14.348h72V24.782Zm0-14.348h-72V10a10.012,10.012,0,0,1,10-10h52a10.011,10.011,0,0,1,10,10v.435Z" transform="translate(61.996)" fill="#c43c30"/>
+    <rect width="24" height="180" rx="4" fill="#c43c30"/>
+    <rect width="48" height="180" rx="8" transform="translate(37)" fill="#c43c30"/>
+  </svg>
+  <svg id="60min-blue" viewBox="0 0 169.548 180">
+    <path d="M97.552,180h-52a10.012,10.012,0,0,1-10-10v-1.087h72V170A10.011,10.011,0,0,1,97.552,180Zm10-15h-72V154.565h72V165Zm0-14.348h-72V28.7h72V150.652Zm0-125.869h-72V14.348h72V24.782Zm0-14.348h-72V10a10.012,10.012,0,0,1,10-10h52a10.011,10.011,0,0,1,10,10v.435Z" transform="translate(61.996)" fill="#193366"/>
+    <rect width="24" height="180" rx="4" fill="#e1e5eb"/>
+    <rect width="48" height="180" rx="8" transform="translate(37)" fill="#e1e5eb"/>
+  </svg>
 </svg>

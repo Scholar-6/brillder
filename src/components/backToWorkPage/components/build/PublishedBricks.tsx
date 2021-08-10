@@ -8,6 +8,7 @@ import BrickBlock from "components/baseComponents/BrickBlock";
 import PublishToggle from "./PublishToggle";
 import EmptyPage from "./EmptyPage";
 import BackPagePagination from "../BackPagePagination";
+import { Grid } from "@material-ui/core";
 
 interface BuildBricksProps {
   user: User;
@@ -52,14 +53,14 @@ class PublishBricks extends Component<BuildBricksProps, State> {
   }
 
   componentDidMount() {
-    const {current} = this.state.bricksRef;
+    const { current } = this.state.bricksRef;
     if (current) {
       current.addEventListener('wheel', this.state.onBricksWheel, false);
     }
   }
 
   componentWillUnmount() {
-    const {current} = this.state.bricksRef;
+    const { current } = this.state.bricksRef;
     if (current) {
       current.removeEventListener('wheel', this.state.onBricksWheel, false);
     }
@@ -69,7 +70,7 @@ class PublishBricks extends Component<BuildBricksProps, State> {
     const wheelCoef = 40;
     if (e.wheelDeltaY < -wheelCoef) {
       this.props.moveNext(this.props.pageSize);
-    } else if (e.wheelDeltaY > wheelCoef){
+    } else if (e.wheelDeltaY > wheelCoef) {
       this.props.moveBack(this.props.pageSize);
     }
   }
@@ -103,8 +104,8 @@ class PublishBricks extends Component<BuildBricksProps, State> {
     });
   }
 
-  renderPagination () {
-    const {finalBricks} = this.props;
+  renderPagination() {
+    const { finalBricks } = this.props;
     let { sortedIndex, pageSize } = this.props;
 
     return (
@@ -127,7 +128,9 @@ class PublishBricks extends Component<BuildBricksProps, State> {
     }
 
     if (isEmpty && this.props.loaded) {
-      return <EmptyPage isPublish={this.props.filters.publish} published={this.props.published} switchPublish={this.props.switchPublish} />;
+      return <div className="publish-bricks">
+        <EmptyPage isPublish={this.props.filters.publish} published={this.props.published} switchPublish={this.props.switchPublish} />
+      </div>
     }
 
     return (

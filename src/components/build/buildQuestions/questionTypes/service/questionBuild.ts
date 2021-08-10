@@ -1,12 +1,14 @@
 import { stripHtml } from "components/build/questionService/ConvertService";
 
 export function showSameAnswerPopup(i: number, list: any, openSameAnswerDialog: Function) {
-  let answerText = stripHtml(list[i].value);
-  for (let [index, item] of list.entries()) {
-    if (index !== i && item.value) {
-      let text = stripHtml(item.value)
-      if (answerText === text) {
-        openSameAnswerDialog();
+  const answerText = stripHtml(list[i].value);
+  if (answerText) {
+    for (let [index, item] of list.entries()) {
+      if (index !== i && item.value) {
+        const text = stripHtml(item.value)
+        if (answerText === text) {
+          openSameAnswerDialog();
+        }
       }
     }
   }
@@ -17,8 +19,8 @@ const hashCode = (str: string) => {
   var hash = 0, i, chr;
   if (str.length === 0) return hash;
   for (i = 0; i < str.length; i++) {
-    chr   = str.charCodeAt(i);
-    hash  = ((hash << 5) - hash) + chr;
+    chr = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
     hash |= 0; // Convert to 32bit integer
   }
   return hash;

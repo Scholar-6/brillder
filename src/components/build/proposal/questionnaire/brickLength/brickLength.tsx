@@ -11,6 +11,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getReviewTime } from "components/play/services/playTimes";
+import LengthBox from "./LengthBox";
 
 interface Props {
   data: BrickLengthEnum;
@@ -30,23 +31,23 @@ const BrickLengthPreviewComponent: React.FC<Props> = ({ data }) => {
   } else if (data === 60) {
     prepare = 15;
     investigation = 24;
-    synthesis= 12;
+    synthesis = 12;
   }
 
   return (
     <Grid container justify="center" className="phone-preview-component">
       <SpriteIcon name="clock" className={data === 0 ? "big" : ""} />
       <div className="">{data === 0 ? "" : data + ' minutes'}</div>
-      {data !== 0 ? 
-      <div className="preview-length-list">
-        Students will have:
-        <ul>
-          <li>Around {prepare} minutes to prepare</li>
-          <li>{investigation} minutes to answer questions</li>
-          <li>{synthesis} minutes to read your Synthesis</li>
-          <li>{review} minutes to review their answers</li>
-        </ul>
-      </div> : ""}
+      {data !== 0 ?
+        <div className="preview-length-list">
+          Students will have:
+          <ul>
+            <li>Around {prepare} minutes to prepare</li>
+            <li>{investigation} minutes to answer questions</li>
+            <li>{synthesis} minutes to read your Synthesis</li>
+            <li>{review} minutes to review their answers</li>
+          </ul>
+        </div> : ""}
     </Grid>
   )
 }
@@ -80,33 +81,9 @@ const BrickLength: React.FC<BrickLengthProps> = (
           <h1>20 minutes are a taster,<br />60 minutes are a feast.</h1>
           <h2 className="length-description">Choose Brick Length. &nbsp;You can always shorten or extend later.</h2>
           <Grid container direction="row" className="brick-length-row">
-            <Grid container item xs={4} className="brick-length-image-container brick-length-image-container1">
-              <div
-                className={"brick-length-image brick-length-20-image " + ((length === BrickLengthEnum.S20min) ? "active" : "")}
-                onClick={() => setBrickLength(BrickLengthEnum.S20min)}
-              />
-              <Grid container direction="row" justify="center" className="bottom-time-description global-base-font">
-                20
-              </Grid>
-            </Grid>
-            <Grid container item xs={4} className="brick-length-image-container brick-length-image-container2">
-              <div
-                className={"brick-length-image brick-length-40-image " + ((length === BrickLengthEnum.S40min) ? "active" : "")}
-                onClick={() => setBrickLength(BrickLengthEnum.S40min)}
-              />
-              <Grid container direction="row" justify="center" className="bottom-time-description global-base-font">
-                40
-              </Grid>
-            </Grid>
-            <Grid container item xs={4} className="brick-length-image-container brick-length-image-container3">
-              <div
-                className={"brick-length-image brick-length-60-image " + ((length === BrickLengthEnum.S60min) ? "active" : "")}
-                onClick={() => setBrickLength(BrickLengthEnum.S60min)}
-              />
-              <Grid container direction="row" justify="center" className="bottom-time-description global-base-font">
-                60
-              </Grid>
-            </Grid>
+            <LengthBox activeLength={length} boxLength={BrickLengthEnum.S20min} setBrickLength={setBrickLength} />
+            <LengthBox activeLength={length} boxLength={BrickLengthEnum.S40min} setBrickLength={setBrickLength} />
+            <LengthBox activeLength={length} boxLength={BrickLengthEnum.S60min} setBrickLength={setBrickLength} />
           </Grid>
           <NavigationButtons
             step={ProposalStep.BrickLength}
@@ -118,7 +95,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
           />
         </Grid>
         <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} updated={props.updated} />
-        <Hidden only={['xs','sm']}>
+        <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>
       </Grid>
