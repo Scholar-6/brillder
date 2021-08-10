@@ -11,21 +11,21 @@
   height: 100%;
   font-family: $font-family-black;
 
+  .stats svg {
+    stroke-width:2.3;
+  }
+
   .welcome-col {
     width: $welcome-col-width;
     @extend %textCenter;
-    padding-top: 15vh;
+    padding-top: 10vh;
 
     .welcome-box {
       color: white;
       letter-spacing: 0.66vw;
-      font-size: 2.58vw;
+      font-size: 3vw;
       font-family: $font-family-bold;
       padding-right: 2.9vw;
-
-      .smaller {
-        font-size: 2.4vw;
-      }
 
       .welcome-name {
         cursor: pointer;
@@ -78,7 +78,7 @@
         margin-top: 4.3vw; //10vh;
         letter-spacing: 0.1vw;
         font-family: $font-family-light;
-        font-size: 1.5vw;
+        font-size: 2vw;
 
         &.clickable:hover {
           font-family: $font-family-bold;
@@ -106,6 +106,7 @@
     height: 100%;
 
     .first-item {
+      padding-top: 4vh;
       background: var(--theme-light-blue);
       height: 89.2vh;
       border-bottom-left-radius: $border-radius;
@@ -223,8 +224,8 @@
         letter-spacing: 5px;
       }
       @include tabletP {
-        font-size: 1.2vw;
-        letter-spacing: 0.3vw;
+        font-size: 1.5vw;
+        letter-spacing: 0.1vw;
       }
     }
     &:hover {

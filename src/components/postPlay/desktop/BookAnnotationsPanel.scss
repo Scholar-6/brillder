@@ -44,8 +44,6 @@
       font-family: $font-family-bold;
       font-size: 2rem;
       white-space: nowrap;
-      text-transform: uppercase;
-      letter-spacing: 0.125rem;
     }
     
     .grey-circle {
@@ -65,12 +63,27 @@
         transform: translate(-50%, -50%);
       }
     }
+    &:hover {
+      .gray-circle {
+        background: var(--theme-dark-blue);
+      }
+    }
   }
   .comment-text-editable {
     &[placeholder]:empty::before {
       content: attr(placeholder);
       color: var(--global-light-text-gray);
       cursor: text;
+    }
+  }
+  .comment-text {
+    padding-left:0.2vw;
+    margin-left: 2.6vw;
+  }
+  .comment-reply-container {
+    .comment-date,
+    .comment-author {
+      margin-left: 2.6vw !important;
     }
   }
   .comment-container {
@@ -96,7 +109,7 @@
           height: 2rem;
           background-color: #e4e8ee;
           border-radius: 1rem;
-          margin-right: 1rem;
+          margin-right:0.51rem;
           .reply-icon {
             stroke-width: 2;
             position: absolute;
@@ -111,8 +124,6 @@
           font-family: $font-family-bold;
           font-size: 1.5rem;
           white-space: nowrap;
-          text-transform: uppercase;
-          letter-spacing: 0.125rem;
         }
       }
     }

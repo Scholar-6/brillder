@@ -325,9 +325,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     if (this.state.isBuilder) {
       let isActive = false;
       return (
-        <div className="create-item-container">
+        <div className="create-item-container stats">
           <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
-            <SpriteIcon name="book-open" />
+            <SpriteIcon name="f-trending-up" />
             <span className={`item-description ${isActive ? '' : 'disabled'}`}>Brick Stats</span>
           </button>
         </div>
