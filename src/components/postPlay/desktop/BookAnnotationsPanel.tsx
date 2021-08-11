@@ -134,8 +134,9 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
   );
 
   if(!props.attempt || !filteredAnnotations?.length) {
-    return <div className="right-part empty">
-      <div className="grey-circle" onMouseDown={e => e.preventDefault()} onClick={addAnnotation}>
+    return <div className="right-part empty" onClick={addAnnotation}>
+      <div className="gg-background" />
+      <div className="grey-circle" onMouseDown={e => e.preventDefault()} >
         <SpriteIcon name="pen-tool" className="pen-icon" />
       </div>
       <div className="add-annotation-text">

@@ -7,7 +7,7 @@
   padding: 1rem;
   overflow-y: scroll;
   &.empty {
-    cursor: pointer;
+    cursor: pointer !important;
     .grey-circle {
       background-color: #e4e8ee;
       width: 20rem;
@@ -22,6 +22,26 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+      }
+    }
+    .gg-background {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 20rem;
+      width: 20rem;
+      border-radius: 50%;
+      background: rgba(228, 232, 238, .5) !important;
+      transition: 300ms all ease-out;
+      transform: translate(-50%, -50%);
+    }
+    &:hover {
+      .gg-background {
+        top: calc(50%);
+        left: calc(50%);
+        height: 23rem;
+        width: 23rem;
+        transition: 300ms all ease-out;
       }
     }
     .add-annotation-text {
@@ -47,6 +67,7 @@
     }
     
     .grey-circle {
+      position: relative;
       display: inline-block;
       position: relative;
       width: 4rem;
