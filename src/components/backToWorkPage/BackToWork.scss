@@ -9,6 +9,17 @@
       height: 100% !important;
     }
   }
+  .absolute-loader {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: calc(100% - 2vw);
+    display: flex;
+    z-index: 120;
+    color: var(--theme-dark-blue);
+    align-items: center;
+    justify-content: center;
+  }
   .brick-row-container {
     overflow: hidden;
     background: inherit !important;
