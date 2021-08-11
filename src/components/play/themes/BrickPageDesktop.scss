@@ -23,6 +23,20 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   font-size: 1.4vw;
   background: var(--theme-dark-blue);
   min-height: 100%;
+
+  .toggle-timer {
+    cursor: pointer;
+    color: var(--white);
+    border-radius: 0.6vw;
+    background: var(--dark-gray);
+    padding: 0.2vw 1vw;
+    font-size: 1.4vw;
+    letter-spacing: 0;
+    &:hover {
+      background: var(--theme-green);
+    }
+  }
+
   .question-unique-play {
     padding-bottom: 2vw !important;
   }

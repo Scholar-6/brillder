@@ -65,6 +65,8 @@ const LivePage: React.FC<LivePageProps> = ({
     }
   }
 
+  const [timerHidden, hideTimer] = React.useState(false);
+
   const [activeStep, setActiveStep] = React.useState(initStep);
   const [prevStep, setPrevStep] = React.useState(initStep);
   const [isShuffleOpen, setShuffleDialog] = React.useState(false);
@@ -426,6 +428,7 @@ const LivePage: React.FC<LivePageProps> = ({
             {renderQuestionContainer(questions[activeStep], activeStep)}
             <div className="new-layout-footer" style={{ display: "none" }}>
               <div className="time-container">
+                {!timerHidden &&
                 <TimeProgressbar
                   isLive={true}
                   onEnd={onEnd}
@@ -433,9 +436,12 @@ const LivePage: React.FC<LivePageProps> = ({
                   endTime={props.endTime}
                   brickLength={brick.brickLength}
                   setEndTime={props.setEndTime}
-                />
+                />}
               </div>
               <div className="footer-space">
+                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                </div>
               </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn back" onClick={prev}>

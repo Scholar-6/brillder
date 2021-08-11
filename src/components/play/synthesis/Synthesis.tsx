@@ -31,6 +31,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
   brick,
   ...props
 }) => {
+  const [timerHidden, hideTimer] = React.useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -88,8 +89,8 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
           <div className="time-container">
             <TimeProgressbarV2
               isSynthesis={true}
-              setEndTime={() => {}}
-              onEnd={() => {}}
+              setEndTime={() => { }}
+              onEnd={() => { }}
               brickLength={brick.brickLength}
             />
           </div>
@@ -114,15 +115,20 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
             {renderSynthesisContent()}
             <div className="new-layout-footer" style={{ display: "none" }}>
               <div className="time-container">
+                {!timerHidden &&
                 <TimeProgressbarV2
                   isSynthesis={true}
                   minutes={minutes}
-                  setEndTime={() => {}}
-                  onEnd={() => {}}
+                  setEndTime={() => { }}
+                  onEnd={() => { }}
                   brickLength={brick.brickLength}
-                />
+                />}
               </div>
-              <div className="footer-space" />
+              <div className="footer-space">
+                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                </div>
+              </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn next" onClick={props.moveNext}>
                   Review
