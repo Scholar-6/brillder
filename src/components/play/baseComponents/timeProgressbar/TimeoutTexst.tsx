@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { formatTwoLastDigits } from 'components/services/brickService';
 
 
@@ -12,16 +12,27 @@ const TimeoutText: React.FC<Props> = props => {
   const [timeShown, setTimeshown] = React.useState(true);
 
   const textShowtimeDuration = 3300;
+  const intervalDuration = 120000;
 
-  setTimeout(() => {
-    setTimeshown(false);
-    setInterval(() => {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setTimeshown(false);
+    }, textShowtimeDuration);
+
+    const interval = setInterval(() => {
       setTimeshown(true);
-      setTimeout(() => {
-        setTimeshown(false);
-      }, textShowtimeDuration);
-    }, 120000);
-  }, textShowtimeDuration);
+    }, intervalDuration);
+
+    const interval2 = setInterval(() => {
+      setTimeshown(false);
+    }, intervalDuration + textShowtimeDuration);
+
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(interval);
+      clearInterval(interval2);
+    }
+  }, []);
 
   if (timeShown) {
     return (

@@ -11,10 +11,9 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
 import { PlayMode } from "../model";
 import HighlightHtml from "../baseComponents/HighlightHtml";
-import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import { getPrepareTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
-
+import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 
 export interface IntroductionState {
   isStopped: boolean;
@@ -26,6 +25,9 @@ export interface IntroductionState {
 interface Props {
   brick: Brick;
   briefExpanded?: boolean;
+
+  endTime: any;
+  setEndTime(t: any): void;
 
   moveNext(): void;
   mode?: PlayMode;
@@ -169,7 +171,14 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
             <div className="new-layout-footer" style={{ display: 'none' }}>
               <div className="time-container">
                 {!timerHidden &&
-                  <TimeProgressbarV2 isIntro={true} setEndTime={() => { }} minutes={minutes} onEnd={() => { }} brickLength={brick.brickLength} />
+                  <TimeProgressbar
+                    isIntro={true}
+                    onEnd={() => {}}
+                    minutes={minutes}
+                    endTime={props.endTime}
+                    brickLength={brick.brickLength}
+                    setEndTime={props.setEndTime}
+                  />
                 }
               </div>
               <div className="footer-space">
