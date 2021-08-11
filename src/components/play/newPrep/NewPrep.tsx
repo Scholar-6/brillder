@@ -33,6 +33,8 @@ interface Props {
 }
 
 const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
+  const [timerHidden, hideTimer] = React.useState(false);
+
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
@@ -166,9 +168,15 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="new-layout-footer" style={{ display: 'none' }}>
               <div className="time-container">
-                <TimeProgressbarV2 isIntro={true} setEndTime={() => { }} minutes={minutes} onEnd={() => { }} brickLength={brick.brickLength} />
+                {!timerHidden &&
+                  <TimeProgressbarV2 isIntro={true} setEndTime={() => { }} minutes={minutes} onEnd={() => { }} brickLength={brick.brickLength} />
+                }
               </div>
-              <div className="footer-space" />
+              <div className="footer-space">
+                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                </div>
+              </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn next" onClick={props.moveNext}>
                   Investigation
