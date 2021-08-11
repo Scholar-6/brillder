@@ -252,7 +252,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
           <Switch>
             <Route exact path={routes.newPrepRoute}>
-              <NewPrep brick={brick} moveNext={moveToLive} briefExpanded={true} />
+              <NewPrep brick={brick} moveNext={moveToLive} briefExpanded={true} endTime={null} setEndTime={() => {}} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/intro">
               <Introduction
@@ -295,7 +295,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/synthesis">
-              <Synthesis status={status} brick={brick} isPlayPreview={true} moveNext={moveToReview} />
+              <Synthesis status={status} brick={brick} endTime={null} setEndTime={() => {}} isPlayPreview={true} moveNext={moveToReview} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/review">
               <Review

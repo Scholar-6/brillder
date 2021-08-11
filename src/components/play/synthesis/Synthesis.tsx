@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import "./Synthesis.scss";
 import { Brick } from "model/brick";
-import { useHistory } from "react-router-dom";
 import { PlayStatus } from "../model";
 import { PlayMode } from "../model";
 import HighlightHtml from "../baseComponents/HighlightHtml";
@@ -13,12 +13,17 @@ import { getSynthesisTime } from "../services/playTimes";
 import { isPhone } from "services/phone";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+
 import routes from "../routes";
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
+
+  endTime: any;
+  setEndTime(t: any): void;
 
   // only for real play
   mode?: PlayMode;
@@ -116,13 +121,13 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
             <div className="new-layout-footer" style={{ display: "none" }}>
               <div className="time-container">
                 {!timerHidden &&
-                <TimeProgressbarV2
-                  isSynthesis={true}
-                  minutes={minutes}
-                  setEndTime={() => { }}
-                  onEnd={() => { }}
-                  brickLength={brick.brickLength}
-                />}
+                  <TimeProgressbar
+                    minutes={minutes}
+                    setEndTime={props.setEndTime}
+                    onEnd={() => { }}
+                    endTime={props.endTime}
+                    brickLength={brick.brickLength}
+                  />}
               </div>
               <div className="footer-space">
                 <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
