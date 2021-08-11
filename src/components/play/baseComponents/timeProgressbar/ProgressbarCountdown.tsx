@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Moment } from 'moment';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import './ProgressbarCountdown.scss';
-import { formatTwoLastDigits } from 'components/services/brickService';
+import TimeoutText from './TimeoutTexst';
 let moment = require('moment');
 
 
@@ -19,6 +19,9 @@ interface CounterState {
   timerInterval: number;
   isDeadlineSoon: boolean;
 
+  textShown: boolean;
+  toggleTextTimeout: number;
+
   minutesDown: number;
   secondsDown: number;
 }
@@ -31,6 +34,8 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
       value: 0,
       isCounting: false,
       timerInterval: this.setTimer(),
+      textShown: true,
+      toggleTextTimeout: setTimeout(() => {}, 3000),
       isDeadlineSoon: false,
 
       minutesDown: props.minutes ? props.minutes : 0,
@@ -75,7 +80,7 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
       return (
         <div className="united-timeprogress">
           <LinearProgress className={className} variant="determinate" value={this.state.value} />
-          <div className="minutes-footer fixed">{this.state.minutesDown}:{formatTwoLastDigits(this.state.secondsDown)}/{this.props.minutes}:00</div>
+          <TimeoutText minutesDown={this.state.minutesDown} secondsDown={this.state.secondsDown} minutes={this.props.minutes} />
         </div>
       );
     }
