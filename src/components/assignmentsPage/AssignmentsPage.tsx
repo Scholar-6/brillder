@@ -67,7 +67,7 @@ class AssignmentsPage extends Component<AssignmentProps, AssignmentState> {
           <PageHeadWithMenu
             page={PageEnum.BackToWork}
             user={this.props.user}
-            placeholder="Search Ongoing Projects & Published Bricks…"
+            placeholder="Live & Completed Assignments"
             history={this.props.history}
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}

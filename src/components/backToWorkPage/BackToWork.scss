@@ -211,8 +211,8 @@
         cursor: pointer;
         color: var(--theme-dark-blue);
         font-family: $font-family-bold;
-        font-size: 1.1vw;
-        $size: 3vw;
+        font-size: 1.25vw;
+        $size: 4vw;
         .svg {
           color: var(--theme-orange);
           height: $size;
@@ -221,7 +221,7 @@
         }
         span {
           margin-left: 1vw;
-          height: 2.5vw;
+          height: 3.8vw;
           @extend %flexToYCenter;
         }
 

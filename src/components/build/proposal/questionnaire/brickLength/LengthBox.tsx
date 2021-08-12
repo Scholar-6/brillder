@@ -29,9 +29,12 @@ const LengthBox: React.FC<LengthBoxProps> = ({ activeLength, boxLength, setBrick
 
   if (activeLength === boxLength || hovered) {
     icon += 'red';
-    className += ' active';
   } else {
     icon += 'blue';
+  }
+
+  if (activeLength === boxLength) {
+    className += ' active';
   }
 
   return (

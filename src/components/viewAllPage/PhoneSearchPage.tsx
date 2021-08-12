@@ -249,7 +249,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
               this.setState({ searchString: e.target.value });
               this.search(e.target.value);
             }}
-            placeholder="Search for Subjects, Topics, Titles and more..."
+            placeholder="Subjects, Topics, Titles and more"
           />
           {this.state.isLoading && (
             <div className="loader-container spinning">

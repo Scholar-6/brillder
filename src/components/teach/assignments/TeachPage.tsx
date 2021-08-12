@@ -552,7 +552,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
-          placeholder="Search by Name, Email or Subject"
+          placeholder="Brick Title, Student Name, or Subject"
           user={this.props.user}
           history={history}
           search={this.search.bind(this)}

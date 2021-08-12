@@ -741,7 +741,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       <div className="main-listing user-list-page manage-classrooms-page manage-classrooms-checkboxes">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
-          placeholder="Search by Brick Title, Student Name, or Subject"
+          placeholder="Student Name or Subject"
           user={this.props.user}
           history={history}
           search={() => this.search()}
