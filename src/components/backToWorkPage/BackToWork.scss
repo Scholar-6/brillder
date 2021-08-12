@@ -494,8 +494,18 @@
   letter-spacing: 0.1vw;
   font-family: $font-family-bold;
   font-size: 0.9vw;
+  display: flex;
+
+  svg {
+    $size: 1vw;
+    stroke-width: 2;
+    width: $size;
+    height: $size;
+  }
   > span {
-    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+      cursor: pointer;
     margin-left: 1vw;
     color: var(--dark-gray);
 
