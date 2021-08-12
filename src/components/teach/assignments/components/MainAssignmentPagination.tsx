@@ -62,7 +62,7 @@ const MainAssignmentPagination: React.FC<BackPageTitleProps> = ({
         <Grid item xs={4} className="left-pagination">
           <div className="first-row">
             {classStartIndex}-{classEndIndex}
-            <span className="gray">{" "} &nbsp;|&nbsp; {classroomsLength - 1}</span>
+            <span className="gray">{" "} &nbsp;|&nbsp; {classroomsLength}</span>
           </div>
           <div>
             {(sortedIndex + pageSize) / pageSize}
