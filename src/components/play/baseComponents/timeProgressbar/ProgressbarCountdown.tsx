@@ -19,6 +19,8 @@ interface CounterState {
   timerInterval: number;
   isDeadlineSoon: boolean;
 
+  hovered: boolean;
+
   textShown: boolean;
   toggleTextTimeout: number;
 
@@ -37,6 +39,7 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
       textShown: true,
       toggleTextTimeout: setTimeout(() => {}, 3000),
       isDeadlineSoon: false,
+      hovered: false,
 
       minutesDown: props.minutes ? props.minutes : 0,
       secondsDown: 0,
@@ -78,9 +81,9 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
     }
     if (this.props.minutes) {
       return (
-        <div className="united-timeprogress">
+        <div className="united-timeprogress" onMouseOver={() => this.setState({hovered: true})} onMouseLeave={() => this.setState({hovered: false})}>
           <LinearProgress className={className} variant="determinate" value={this.state.value} />
-          <TimeoutText minutesDown={this.state.minutesDown} secondsDown={this.state.secondsDown} minutes={this.props.minutes} />
+          <TimeoutText minutesDown={this.state.minutesDown} hovered={this.state.hovered} secondsDown={this.state.secondsDown} minutes={this.props.minutes} />
         </div>
       );
     }
