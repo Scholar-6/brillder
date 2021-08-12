@@ -38,6 +38,7 @@ import EmptyTabContent from "./components/EmptyTabContent";
 import ArchiveToggle from "./components/ArchiveToggle";
 import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 import MainAssignmentPagination from "./components/MainAssignmentPagination";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface RemindersData {
@@ -545,7 +546,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       return (
         <div className="tab-content">
           <div className="f-top-loader">
-            <PageLoaderBlue content="" />
+            <SpriteIcon name="f-loader" className="spinning" />
           </div>
         </div>
       );

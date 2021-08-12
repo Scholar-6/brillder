@@ -638,7 +638,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       return (
         <div className="tab-content">
           <div className="f-top-loader">
-            <PageLoaderBlue content="" />
+            <SpriteIcon name="f-loader" className="spinning" />
           </div>
         </div>
       );
@@ -688,7 +688,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       const visibleUsers = this.getUsersByPage(this.state.pendingUsers);
 
       return (
-        <div className="tab-content">
+        <div className="tab-content students-content">
           <StudentTable
             isPending={true}
             history={this.props.history}
@@ -710,7 +710,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
 
     return (
-      <div className="tab-content">
+      <div className="tab-content students-content">
         {activeClassroom && this.renderTopRow()}
         <StudentTable
           history={this.props.history}

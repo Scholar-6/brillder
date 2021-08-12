@@ -36,7 +36,14 @@
       transform: translate(-50%, -50%);
     }
     &:hover {
+      .grey-circle {
+        background: var(--theme-light-blue) !important;
+        .pen-icon {
+          color: var(--white) !important;
+        }
+      }
       .gg-background {
+        background: var(--theme-light-blue-alpha3) !important;
         top: calc(50%);
         left: calc(50%);
         height: 23rem;
