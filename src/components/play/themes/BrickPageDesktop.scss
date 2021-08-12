@@ -2025,7 +2025,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     display: flex;
     align-items: center;
     padding-right: 5.9vw;
-    justify-content: center;
+    justify-content: flex-start;
   }
 }
 

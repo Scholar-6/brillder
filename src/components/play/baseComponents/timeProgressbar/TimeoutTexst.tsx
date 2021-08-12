@@ -6,12 +6,13 @@ interface Props {
   minutes?: number;
   minutesDown: number;
   secondsDown: number;
+  hovered: boolean;
 }
 
 const TimeoutText: React.FC<Props> = props => {
   const [timeShown, setTimeshown] = React.useState(true);
 
-  const textShowtimeDuration = 3300;
+  const textShowtimeDuration = 10700;
   const intervalDuration = 120000;
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const TimeoutText: React.FC<Props> = props => {
     }
   }, []);
 
-  if (timeShown) {
+  if (timeShown || props.hovered) {
     return (
       <div className="minutes-footer fixed">{props.minutesDown}:{formatTwoLastDigits(props.secondsDown)}/{props.minutes}:00</div>
     );
