@@ -55,7 +55,7 @@ class ClassroomList extends Component<ClassroomListProps> {
     convertClassAssignments(items, classroom, this.props.isArchive);
   }
 
-  renderClassname(c: TeachListItem, i: number) {
+  renderClassname(c: TeachListItem, index: number, i: number) {
     const { classroom } = c as any;
     let className = 'classroom-title one-of-many';
     if (i === 0) {
@@ -66,7 +66,7 @@ class ClassroomList extends Component<ClassroomListProps> {
         in={true}
         key={i}
         style={{ transformOrigin: "left 0 0" }}
-        timeout={i * 200}
+        timeout={index * 200}
       >
         <div className={className}>
           <div>
@@ -83,33 +83,41 @@ class ClassroomList extends Component<ClassroomListProps> {
     );
   }
 
-  renderTeachListItem(c: TeachListItem, i: number) {
-    if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
-      if (c.assignment && c.classroom) {
-        return (
-          <Grow
-            in={true}
-            key={i}
-            style={{ transformOrigin: "left 0 0" }}
-            timeout={i * 200}
-          >
-            <div>
-              <AssignedBrickDescription
-                subjects={this.props.subjects}
-                isArchive={this.props.isArchive}
-                expand={this.props.expand.bind(this)}
-                key={i} classroom={c.classroom} assignment={c.assignment}
-                archive={() => this.props.reloadClasses()}
-                unarchive={() => this.props.reloadClasses()}
-                onRemind={this.props.onRemind}
-              />
-            </div>
-          </Grow>
-        );
-      }
-      return this.renderClassname(c, i);
-    }
-    return "";
+  renderTeachList(items: TeachListItem[]) {
+    let index = 1;
+    return (
+      <div>
+        {items.map((c, i) => {
+          if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
+            index++;
+            if (c.assignment && c.classroom) {
+              return (
+                <Grow
+                  in={true}
+                  key={i}
+                  style={{ transformOrigin: "left 0 0" }}
+                  timeout={index * 200}
+                >
+                  <div>
+                    <AssignedBrickDescription
+                      subjects={this.props.subjects}
+                      isArchive={this.props.isArchive}
+                      expand={this.props.expand.bind(this)}
+                      key={i} classroom={c.classroom} assignment={c.assignment}
+                      archive={() => this.props.reloadClasses()}
+                      unarchive={() => this.props.reloadClasses()}
+                      onRemind={this.props.onRemind}
+                    />
+                  </div>
+                </Grow>
+              );
+            }
+            return this.renderClassname(c, index, i);
+          }
+          return "";
+        })}
+      </div>
+    );
   }
 
   render() {
@@ -122,7 +130,7 @@ class ClassroomList extends Component<ClassroomListProps> {
     }
     return (
       <div className="classroom-list many-classes">
-        {items.map(this.renderTeachListItem.bind(this))}
+        {this.renderTeachList(items)}
       </div>
     );
   }

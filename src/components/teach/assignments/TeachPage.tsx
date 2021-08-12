@@ -37,6 +37,7 @@ import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog"
 import EmptyTabContent from "./components/EmptyTabContent";
 import ArchiveToggle from "./components/ArchiveToggle";
 import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
+import MainAssignmentPagination from "./components/MainAssignmentPagination";
 
 
 interface RemindersData {
@@ -370,6 +371,19 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
+  getClassIndex(itemIndex: number) {
+    let index = 1;
+    let itemsCount = 0;
+    for (const classroom of this.state.classrooms) {
+      itemsCount += 1;
+      itemsCount += classroom.assignments.length;
+      if (itemIndex > itemsCount) {
+        index += 1;
+      }
+    }
+    return index;
+  }
+
   getTotalCount() {
     const { classrooms, activeClassroom } = this.state;
     let itemsCount = 0;
@@ -430,18 +444,24 @@ class TeachPage extends Component<TeachProps, TeachState> {
       return "";
     } else if (activeClassroom && this.state.activeAssignment) {
       return this.renderAssignmentPagination(activeClassroom);
-    } else {
-      itemsCount = this.getTotalCount();
     }
+
+    itemsCount = this.getTotalCount();
 
     if (activeClassroom) {
       pageSize = this.state.classPageSize;
     }
 
-    return <BackPagePagination
+    const classStartIndex = this.getClassIndex(this.state.sortedIndex);
+    const classEndIndex = this.getClassIndex(this.state.sortedIndex + pageSize);
+
+    return <MainAssignmentPagination
       sortedIndex={this.state.sortedIndex}
       pageSize={pageSize}
       bricksLength={itemsCount}
+      classStartIndex={classStartIndex}
+      classEndIndex={classEndIndex}
+      classroomsLength={this.state.classrooms.length}
       isRed={this.state.sortedIndex === 0}
       moveNext={() => this.moveNext(pageSize)}
       moveBack={() => this.moveBack(pageSize)}
