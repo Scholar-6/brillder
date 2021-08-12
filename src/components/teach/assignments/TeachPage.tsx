@@ -572,7 +572,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           activeStudent={this.state.activeStudent}
           classrooms={this.state.classrooms}
           activeClassroom={this.state.activeClassroom}
-          setArchive={v => this.setState({ isArchive: v })}
+          setArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
         />
         {this.state.activeStudent ?
           <ActiveStudentBricks
