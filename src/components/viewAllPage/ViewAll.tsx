@@ -1203,7 +1203,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             <PageHeadWithMenu
               page={PageEnum.ViewAll}
               user={user}
-              placeholder={"Search Subjects, Topics, Titles & more"}
+              placeholder="Subjects, Topics, Titles & more"
               history={history}
               search={() => this.search()}
               searching={this.searching.bind(this)}

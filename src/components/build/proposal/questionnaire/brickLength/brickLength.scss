@@ -111,10 +111,12 @@
     }
     &.active,
     &:hover {
-      background: var(--tab-gray);
       .length-num {
         color: var(--theme-dark-blue);
       }
+    }
+    &.active {
+      background: var(--tab-gray);
     }
   }
 

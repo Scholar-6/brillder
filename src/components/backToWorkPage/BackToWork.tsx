@@ -57,7 +57,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         <PageHeadWithMenu
           page={PageEnum.BackToWork}
           user={this.props.user}
-          placeholder="Search Ongoing Projects & Published Bricks…"
+          placeholder="Ongoing & Published Bricks"
           history={this.props.history}
           search={() => this.search()}
           searching={this.searching.bind(this)}
