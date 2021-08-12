@@ -7,6 +7,17 @@ $base-build-font-size: 1.25vw;
 .manage-classrooms-page {
   $base-filter-padding-left: 2vw;
 
+  .students-content {
+    .selected-class-name > div {
+      background: inherit !important;
+      .name-input,
+      .edit-icon,
+      .assign-button-container .btn {
+        background: var(--tab-gray);
+      }
+    }
+  }
+
   .subject-border {
     display: flex;
     align-items: center;

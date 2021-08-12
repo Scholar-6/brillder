@@ -1232,8 +1232,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           flex-direction: row;
           height: $foter-height;
           width: $width;
+          z-index: 10 !important;
+          box-shadow: 0px 0px 15px 2px #aaa;
           background: var(--tab-gray);
-
           .time-container {
             display: flex;
             align-items: center;
@@ -1345,9 +1346,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           height: $stepper-height;
           display: flex !important;
           align-items: center;
-          background: var(--tab-gray) !important;
+          background: var(--tab-gray);
           padding-left: 2.2vw !important;
           padding-right: 2.2vw !important;
+          z-index: 30 !important;
+          box-shadow: 0px 0px 15px 2px #aaa;
         }
         .introduction-info .stepper {
           width: 100%;
@@ -1887,7 +1890,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     overflow-x: hidden;
     overflow-y: scroll;
     > div {
-      width: calc(100% - 2.3vw) !important;
+      width: calc(100% - 2.25vw) !important;
       overflow-x: auto;
       padding-left: 7vw;
       padding-right: 7vw;
