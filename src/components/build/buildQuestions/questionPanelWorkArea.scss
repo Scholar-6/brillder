@@ -75,6 +75,12 @@
     text-align: center;
     font-size: 1vw;
     line-height: 2;
+    .flex-center > svg {
+      $size: 1.2vw;
+      width: $size;
+      height: $size;
+      margin-right: 0.3vw;
+    }
   }
   .select-question-type {
     margin-left: 0.2vw;

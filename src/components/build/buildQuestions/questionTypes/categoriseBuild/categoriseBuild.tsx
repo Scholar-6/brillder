@@ -207,7 +207,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           locked={locked}
           object={answer}
           fieldName="value"
-          placeholder="Enter Answer..."
+          placeholder="Enter Answer"
           toolbar={['latex']}
           validationRequired={validationRequired}
           isValid={isValid}
@@ -269,7 +269,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             locked={locked}
             object={category}
             fieldName="name"
-            placeholder="Enter Category Heading..."
+            placeholder="Enter Category Heading"
             toolbar={['latex']}
             validationRequired={validationRequired}
             onBlur={() => {

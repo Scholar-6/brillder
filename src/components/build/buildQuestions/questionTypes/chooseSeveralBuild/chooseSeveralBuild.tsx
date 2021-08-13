@@ -6,6 +6,7 @@ import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
 import validator from '../../../questionService/UniqueValidator';
 import { generateId, showSameAnswerPopup } from '../service/questionBuild';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 export interface ChooseSeveralData {
   list: ChooseOneAnswer[];
@@ -80,7 +81,12 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
 
   return (
     <div className="choose-several-build unique-component">
-      <div className="component-title unselectable">Tick Correct Answers</div>
+      <div className="component-title unselectable">
+        <div className="flex-center">
+          <SpriteIcon name="feacher-check-square"/>
+          <div>Tick Correct Answers</div>
+        </div>
+      </div>
       {
         state.list.map((answer:any, i:number) => {
           return <ChooseOneAnswerComponent
