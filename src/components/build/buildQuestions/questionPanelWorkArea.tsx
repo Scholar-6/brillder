@@ -227,7 +227,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 <Grid container direction="row" alignItems="center">
                   <Grid container justify="center" item sm={12} className="select-type-container">
                     <FormControl variant="outlined">
-                      <div className="flex-center"><SpriteIcon name="feather-refresh" /> <div>Change Answer type here:</div></div>
+                      <div className="flex-center"><SpriteIcon name="feather-refresh" /> <div>Change Answer Type</div></div>
                       <Select
                         className="select-question-type"
                         disabled={locked}

@@ -40,7 +40,7 @@ const LibraryButton: React.FC<ButtonProps> = props => {
   }
 
   return (
-    <div className="my-library-button" onClick={onClick}>
+    <div className={`my-library-button ${isActive ? '' : 'disabled'}`} onClick={onClick}>
       <button className={className}>
         {renderLibraryIcon()}
         <div>
