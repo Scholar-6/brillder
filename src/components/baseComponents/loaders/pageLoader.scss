@@ -9,11 +9,7 @@
   @extend %flexCenter;
   @extend %flexColumn;
   background-color: var(--theme-dark-blue);
-  > span {
+  svg {
     color: var(--white);
-    font-size: 2vw;
-    display: block;
-    line-height: 2.5vw;
-    margin-top: -3vw;
   }
 }

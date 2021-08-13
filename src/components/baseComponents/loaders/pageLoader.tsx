@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import './pageLoader.scss';
-import LoaderLogo from 'assets/img/dot-loader.svg';
+import SpriteIcon from '../SpriteIcon';
 
-class PageLoader extends Component<pageLoaderProps> {
-  render() {
-    return (
-      <div className="page-loader">
-        <img src={LoaderLogo} alt="Loader logo" />
-      </div>
-    );
-  }
-}
-interface pageLoaderProps {
+interface PageLoaderProps {
   content: string;
 }
+
+const PageLoader: React.FC<PageLoaderProps> = () => {
+  return (
+    <div className="page-loader">
+      <SpriteIcon name="f-loader" className="spinning" />
+    </div>
+  );
+}
+
 export default PageLoader;
