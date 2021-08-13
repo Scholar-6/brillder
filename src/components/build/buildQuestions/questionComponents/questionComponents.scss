@@ -44,6 +44,13 @@
     font-size: inherit;
     font-family: $font-family-regular;
   }
+  svg {
+    margin-right: 0.2vw;
+    stroke-width: 2;
+    $size: 1vw;
+    width: $size;
+    height: $size;
+  }
 }
 
 .unique-component {

@@ -8,6 +8,11 @@
 
   .component-title {
     margin-bottom: 0.2vw;
+    p {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   .short-answer-box {
@@ -19,6 +24,9 @@
     .quill-document-editor {
       .ql-editor {
         padding: 1vw;
+        &::before {
+          text-align: center;
+        }
       }
     }
   }

@@ -11,6 +11,7 @@ import RemoveButton from '../../components/RemoveButton';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
 import SoundRecord from '../../sound/SoundRecord';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
@@ -189,8 +190,13 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   return (
     <div className="vertical-shuffle-build unique-component">
       <div className="component-title">
-        Enter Answers in the correct order from top to bottom.<br/>
-        These will be randomised in the Play Interface.
+        <div className="flex-center">
+          <SpriteIcon name="hero-sort-descending" />
+          <div>Enter Answers in the correct order from top to bottom.</div>
+        </div>
+        <div className="flex-center">
+          These will be randomised in the Play Interface.
+        </div>
       </div>
       {
         state.list.map((answer: any, i: number) => renderAnswer(answer, i))
