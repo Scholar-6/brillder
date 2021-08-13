@@ -12,6 +12,7 @@ import { stripHtml } from 'components/build/questionService/ConvertService';
 import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
 import SoundRecord from '../../sound/SoundRecord';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import ShuffleText from '../components/ShuffleText';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
@@ -194,9 +195,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           <SpriteIcon name="hero-sort-descending" />
           <div>Enter Answers in the correct order from top to bottom.</div>
         </div>
-        <div className="flex-center">
-          These will be randomised in the Play Interface.
-        </div>
+        <ShuffleText />
       </div>
       {
         state.list.map((answer: any, i: number) => renderAnswer(answer, i))

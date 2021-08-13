@@ -70,6 +70,9 @@
       .ql-editor {
         padding-left: 2vw;
         padding-right: 10vw;
+        &::before {
+          margin-left: 4vw;
+        }
       }
       .ql-editor.ql-blank::before {
         left: 2vw;

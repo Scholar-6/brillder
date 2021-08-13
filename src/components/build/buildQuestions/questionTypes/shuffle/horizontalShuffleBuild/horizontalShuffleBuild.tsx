@@ -12,6 +12,7 @@ import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorCon
 import RemoveButton from '../../components/RemoveButton';
 import SoundRecord from '../../sound/SoundRecord';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import ShuffleText from '../components/ShuffleText';
 
 
 export const getDefaultHorizontalShuffleAnswer = () => {
@@ -126,7 +127,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
             validationRequired={validationRequired}
             toolbar={['latex']}
             isValid={isValid}
-            placeholder={"Answer" + (i + 1)}
+            placeholder={"Answer " + (i + 1)}
             onBlur={() => {
               showSameAnswerPopup(i, state.list, openSameAnswerDialog);
             }}
@@ -150,9 +151,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
           <SpriteIcon name="feather-chevrons-right"/>
           <div>Enter Answers in the correct order from left to right.</div>
         </div>
-        <div className="flex-center">
-          These will be randomised in the Play Interface.
-        </div>
+        <ShuffleText />
       </div>
       <Grid container direction="row" className="answers-container">
         {
