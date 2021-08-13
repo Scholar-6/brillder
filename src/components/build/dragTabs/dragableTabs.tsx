@@ -232,7 +232,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     };
 
     const renderSynthesisTab = () => {
-      let className = 'drag-tile-container';
+      let className = 'synthesis-tile drag-tile-container';
       if (isSynthesisPage) {
         className += ' synthesis-tab active';
       }
@@ -298,7 +298,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           </ReactSortable>
           <GridListTile
             onClick={props.createNewQuestion}
-            className={"drag-tile-container"}
+            className="drag-tile-container add-tile-container"
             cols={isSynthesisPresent || isSynthesisPage ? 1.5555 : 2}
           >
             <PlusTab tutorialStep={props.tutorialStep} />
