@@ -40,6 +40,7 @@
         font-family: $font-family-light;
         transition: font-family 0.2s ease;
         color: var(--theme-orange);
+
         .custom-tooltip {
           margin-left: -1.4vw;
           letter-spacing: 0.05vw;
@@ -54,13 +55,16 @@
           width: 3vw;
           margin-right: 1vw;
         }
+
         .svg {
           stroke-width: 1.7;
         }
+
         .profile-image-border {
           @extend %flexCenter;
           border: 0.35vw solid var(--theme-orange);
           border-radius: 50%;
+
           img {
             width: 105%;
             height: 105%;
@@ -68,6 +72,7 @@
           }
         }
       }
+
       .notifications-text {
         margin-top: 4.3vw; //10vh;
         letter-spacing: 0.1vw;
@@ -91,6 +96,8 @@
     }
   }
 
+  $font-size: 2.5vw;
+
   .first-col {
     width: $first-col-width;
     height: 100%;
@@ -103,6 +110,7 @@
       @extend %flexCenter;
       flex-direction: column;
     }
+
     .second-item {
       position: relative;
       background: var(--theme-light-blue);
@@ -114,10 +122,44 @@
     }
   }
 
+  .eye-glass-frame {
+    width: 20vw !important;
+    svg {
+      width: 20vw !important;
+      height: 20vw !important;
+    }
+  }
+
+  .item-description,
+  .my-library-button span {
+    font-size: $font-size !important;
+  }
+
+  .manage-classes svg {
+    width: 20vw !important;
+    height: 12.2vw !important;
+  }
+
+  .create-item-container .btn .svg {
+    width: 20vw !important;
+    height: 12.5vw !important;
+  }
+
+  .create-item-container.stats .btn .svg {
+    width: 17vw !important;
+    height: 15vw !important;
+  }
+
+  .my-library-button {
+    svg {
+      width: 20vw !important;
+      height: 12.5vw !important;
+    }
+  }
+
   .second-col {
     color: var(--white);
-    letter-spacing: 0.3vw;
-    font-size: 1.4vw;
+    font-size: $font-size;
     font-family: $font-family-light;
     width: calc(100vw - #{$welcome-col-width} - #{$first-col-width});
     @extend %flexCenter;
@@ -133,15 +175,15 @@
     width: auto;
     @extend %flexCenter;
     flex-direction: column;
-    @include tabletP {
-      padding: 5vh 0;
-    }
+    padding: 5vh 0;
+
     .btn {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       @extend %textCenter;
       flex-direction: column;
+
       .svg {
         @extend %transitionAll300;
         @extend %removePosition;
@@ -149,24 +191,29 @@
         height: 8vw;
       }
     }
+
     &.disabled {
       div {
         cursor: initial !important;
       }
+
       svg {
         cursor: initial !important;
         color: var(--theme-dark-blue) !important;
       }
+
       .item-description {
         font-family: $font-family-light !important;
       }
     }
+
     &.student-back-work {
       &.disabled {
         .blocks-icon .bl {
           background: var(--theme-light-blue) !important;
         }
       }
+
       .flex-number {
         display: flex;
         align-items: center;
@@ -189,25 +236,21 @@
         }
       }
     }
+
     .item-description {
       padding: 0;
       @extend %textCenter;
       margin: 0;
       font-family: $font-family-light;
       color: var(--tab-gray);
-      @include phone_and_tabletP {
-        font-size: 25px;
-        letter-spacing: 5px;
-      }
-      @include tabletP {
-        font-size: 1.2vw;
-        letter-spacing: 0.3vw;
-      }
+      font-size: 1.2vw;
     }
   }
+
   .view-item-container {
     &.disabled {
       .eye-glass-icon {
+
         .glass-eyes-left,
         .glass-eyes-right {
           display: none;
@@ -215,17 +258,17 @@
       }
     }
   }
+
   .create-item-container {
     .btn .svg {
       height: 9vw;
     }
   }
+
   .create-item-container,
   .back-item-container {
-    @include tabletP {
-      .item-description {
-        margin-top: 0.5vw;
-      }
+    .item-description {
+      margin-top: 0.5vw;
     }
   }
 
@@ -242,37 +285,52 @@
     right: 10vw;
     font-size: 1.6vw;
   }
+
   // disabled
   .manage-classes.disabled {
     cursor: inherit !important;
-    #Path_8-4, #Ellipse_12-2, #Path_8, #Ellipse_12 {
+
+    #Path_8-4,
+    #Ellipse_12-2,
+    #Path_8,
+    #Ellipse_12 {
       fill: var(--theme-dark-blue) !important;
     }
-    #Path_8-3, #Path_8-2 {
+
+    #Path_8-3,
+    #Path_8-2 {
       fill: var(--theme-light-blue) !important;
     }
+
     .right-smile path {
       stroke: var(--theme-light-blue) !important;
     }
+
     .left-class-icon {
       transform: translateX(0) !important;
     }
+
     .right-class-icon {
       transform: translateX(0) !important;
     }
+
     $smileY: 53px;
+
     .left-smile {
       transform: none;
       transform: translate(12px, $smileY) !important;
     }
+
     .right-smile {
       transform: translate(139px, $smileY) !important;
     }
+
     .item-description {
-      letter-spacing: 0.3vw !important;
       font-family: $font-family-light !important;
     }
-    .left-smile, .right-smile {
+
+    .left-smile,
+    .right-smile {
       path {
         stroke-dasharray: 1000;
         stroke-dashoffset: 1000;
@@ -280,31 +338,27 @@
       }
     }
   }
+
   // disabled third button build
   .first-col .first-item .create-item-container.disabled button svg {
     color: var(--theme-dark-blue) !important;
   }
+
   // disabled button build scond column
   .second-col .create-item-container.disabled button svg {
     color: var(--theme-light-blue) !important;
   }
-  .my-library-button {
-    button {
-      svg {
-        width: 10vw;
-        height: 10vw;
-      }
-    }
-  }
+
   .second-col .create-item-container.disabled button svg {
     color: var(--theme-light-blue) !important;
   }
+
   .second-col .my-library-button.disabled button svg {
     color: var(--theme-light-blue) !important;
   }
 }
 
-.mainPage .first-col .student-back-work  .blocks-icon.disabled {
+.mainPage .first-col .student-back-work .blocks-icon.disabled {
   .bl {
     background: var(--theme-dark-blue) !important;
   }
