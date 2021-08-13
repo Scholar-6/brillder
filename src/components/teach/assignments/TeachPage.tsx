@@ -420,7 +420,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     for (const classroom of this.state.classrooms) {
       const haveArchived = classroom.assignments.find(a => a.isArchived === true);
       if (haveArchived) {
-        items.push({classroom});
+        items.push({ classroom });
       }
       for (const assignment of classroom.assignments) {
         if (assignment.isArchived) {
@@ -447,7 +447,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   getUnarchivedItems() {
     const items = [];
     for (const classroom of this.state.classrooms) {
-      items.push({classroom});
+      items.push({ classroom });
       for (const assignment of classroom.assignments) {
         if (!assignment.isArchived) {
           items.push({ assignment });
@@ -504,7 +504,36 @@ class TeachPage extends Component<TeachProps, TeachState> {
     } else if (activeClassroom && this.state.activeAssignment) {
       return this.renderAssignmentPagination(activeClassroom);
     } else if (activeClassroom) {
-      return this.renderAssignmentPagination(activeClassroom);
+      pageSize = this.state.classPageSize;
+
+      itemsCount = this.getTotalCount();
+      let items = [];
+      if (this.state.isArchive) {
+        itemsCount = this.getArchivedTotalCount();
+        items = this.getArchivedItems() as any[];
+      } else {
+        itemsCount = this.getUnarchivedTotalCount();
+        items = this.getUnarchivedItems() as any[];
+      }
+
+      const assignmentsCount = items.filter(i => i.assignment).length;
+      let classStartIndex = this.getClassIndex(items, this.state.sortedIndex);
+      if (this.state.sortedIndex === 0) {
+        classStartIndex = 1;
+      }
+      const classEndIndex = this.getClassIndex(items, this.state.sortedIndex + pageSize);
+
+      return <MainAssignmentPagination
+        sortedIndex={this.state.sortedIndex}
+        pageSize={pageSize}
+        bricksLength={itemsCount}
+        classStartIndex={classStartIndex}
+        classEndIndex={classEndIndex}
+        classroomsLength={assignmentsCount}
+        isRed={this.state.sortedIndex === 0}
+        moveNext={() => this.moveNext(pageSize)}
+        moveBack={() => this.moveBack(pageSize)}
+      />
     }
 
     itemsCount = this.getTotalCount();
@@ -518,11 +547,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
 
     const assignmentsCount = items.filter(i => i.assignment).length;
-
-    if (activeClassroom) {
-      pageSize = this.state.classPageSize;
-    }
-
     let classStartIndex = this.getClassIndex(items, this.state.sortedIndex);
     if (this.state.sortedIndex === 0) {
       classStartIndex = 1;

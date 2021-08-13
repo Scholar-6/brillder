@@ -177,8 +177,6 @@ $tile-height: 100%;
     .css-custom-tooltip {
       top: -1.8vw;
       width: 6vw;
-      color: var(--tab-gray);
-      background: var(--theme-light-blue);
       height: 0 !important;
       height: auto;
       overflow: hidden;
@@ -202,6 +200,9 @@ $tile-height: 100%;
       position: initial !important;
       .svg {
         stroke-width: 2;
+        $size: 2vw;
+        width: $size !important;
+        height: $size !important;
         pointer-events: none;
       }
     
@@ -209,8 +210,6 @@ $tile-height: 100%;
         top: -1.8vw;
         width: 12vw;
         height: 0;
-        color: var(--tab-gray);
-        background: var(--theme-light-blue);  
         overflow: hidden;
         padding: 0 !important;
         text-align: center !important;
@@ -484,10 +483,9 @@ $tile-height: 100%;
     margin-left: -0.5vw;
     z-index: 100000;
     padding: 0 !important;
-    color: var(--tab-gray);
-    background: var(--theme-light-blue);
     text-align: center;
     overflow: hidden;
+    font-family: $font-family-bold;
     width: 3vw;
     height: 0;
   }
