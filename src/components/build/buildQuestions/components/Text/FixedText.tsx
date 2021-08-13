@@ -55,6 +55,7 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
           'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table',
           'uploadImageCustom', 'image'
         ]}
+        placeholder="Introduce your question"
         imageDialog={true}
         onChange={onChange}
       />

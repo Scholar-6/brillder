@@ -43,6 +43,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
           'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table', 
           'uploadImageCustom', 'image'
         ]}
+        placeholder="Additional text"
         imageDialog={true}
         onChange={onChange}
       />
