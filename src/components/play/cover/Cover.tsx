@@ -170,7 +170,13 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         <MobileTheme />
         <div className="cover-page">
           {renderFirstRow()}
-          <div className="brick-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+          <div className="brick-title q-brick-title">
+          {brick.adaptedFrom &&<div className="adapted-text">ADAPTED</div>}
+            <div>
+              {brick.adaptedFrom && <SpriteIcon name="copy" />}
+              <div dangerouslySetInnerHTML={{ __html: brick.title }} />
+            </div>
+          </div>
           <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
           <div className="keywords-row">
             <KeyWordsPreview keywords={brick.keywords} />
@@ -288,8 +294,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
               <div className="introduction-page">
                 {renderFirstRow()}
                 <div className="brick-title q-brick-title">
-                  <div className="adapted-text">ADAPTED</div>
-                  <SpriteIcon name="copy"/><DynamicFont content={stripHtml(brick.title)} />
+                  {brick.adaptedFrom && <div className="adapted-text">ADAPTED</div>}
+                  {brick.adaptedFrom && <SpriteIcon name="copy"/>}<DynamicFont content={stripHtml(brick.title)} />
                 </div>
                 <CoverAuthorRow brick={brick} setBio={setBio} />
                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent

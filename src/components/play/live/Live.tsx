@@ -30,6 +30,7 @@ import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
 import { getUniqueComponent } from "components/build/questionService/QuestionService";
 import CategoriseAnswersDialog from "components/baseComponents/dialogs/CategoriesAnswers";
+import { isMobile } from "react-device-detect";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -439,9 +440,10 @@ const LivePage: React.FC<LivePageProps> = ({
                 />}
               </div>
               <div className="footer-space">
+                {!isMobile &&
                 <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
                   {timerHidden ? 'Show Timer' : 'Hide Timer'}
-                </div>
+                </div>}
               </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn back" onClick={prev}>

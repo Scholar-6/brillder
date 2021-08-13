@@ -14,6 +14,7 @@ import HighlightHtml from "../baseComponents/HighlightHtml";
 import { getPrepareTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+import { isMobile } from "react-device-detect";
 
 export interface IntroductionState {
   isStopped: boolean;
@@ -182,9 +183,10 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
                 }
               </div>
               <div className="footer-space">
+                {!isMobile &&
                 <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
                   {timerHidden ? 'Show Timer' : 'Hide Timer'}
-                </div>
+                </div>}
               </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn next" onClick={props.moveNext}>
