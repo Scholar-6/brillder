@@ -829,8 +829,22 @@
     <line x1="15" x2="3" y1="14" y2="14"></line>
     <line x1="15" x2="3" y1="4" y2="4"></line>
   </svg>
-  <svg id="ql-table" viewBox="0 0 20 20" fill="currentColor" stroke-width="0">
-    <path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd" />
+  <svg id="ql-table" viewBox="-17 -17 194 194">
+    <g id="Group_478" data-name="Group 478" transform="translate(-341 -330)">
+      <g id="Rectangle_1185" data-name="Rectangle 1185" transform="translate(341 330)" fill="none" stroke="currentColor" stroke-width="8">
+        <rect width="160" height="160" rx="16" stroke="none"/>
+        <rect x="4" y="4" width="152" height="152" rx="12" fill="none"/>
+      </g>
+      <g id="Group_476" data-name="Group 476" transform="translate(-463 -533.008)">
+        <line id="Line_4" data-name="Line 4" x2="150" transform="translate(810 944.609)" fill="none" stroke="currentColor" stroke-width="8"/>
+        <line id="Line_5" data-name="Line 5" x2="150" transform="translate(810 980.609)" fill="none" stroke="currentColor" stroke-width="8"/>
+        <line id="Line_7" data-name="Line 7" x2="150" transform="translate(810 908.609)" fill="none" stroke="currentColor" stroke-width="8"/>
+        <g id="Group_477" data-name="Group 477">
+          <line id="Line_6" data-name="Line 6" y2="150.008" transform="translate(858.5 869.605)" fill="none" stroke="currentColor" stroke-width="8"/>
+          <line id="Line_8" data-name="Line 8" y2="150.008" transform="translate(908.01 869.605)" fill="none" stroke="currentColor" stroke-width="8"/>
+        </g>
+      </g>
+    </g>
   </svg>
   <svg id="ql-desmos" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <line y1="18.346716" x2="23.739717" x1="0.32480454" y2="6.6392584" />
@@ -1071,4 +1085,14 @@
     <rect width="24" height="180" rx="4" fill="#e1e5eb"/>
     <rect width="48" height="180" rx="8" transform="translate(37)" fill="#e1e5eb"/>
   </svg>
+  <svg id="feacher-check-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+  </svg>
+  <svg id="feather-chevrons-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline>
+  </svg>
+  <svg id="feather-shuffle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line>
+  </svg>
+  <svg id="feather-pointer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mouse-pointer"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path><path d="M13 13l6 6"></path></svg>
 </svg>

@@ -25,6 +25,7 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import routes from "../routes";
 import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
+import { isMobile } from "react-device-detect";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -58,6 +59,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const [answers, setAnswers] = React.useState(initAnswers);
   const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
   const [questionScrollRef] = React.useState(React.createRef<HTMLDivElement>());
+  const [timerHidden, hideTimer] = React.useState(false);
 
   const theme = useTheme();
   const playPath = getPlayPath(props.isPlayPreview, brick.id);
@@ -337,6 +339,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
             {questions.map(renderQuestionContainer)}
             <div className="new-layout-footer" style={{ display: "none" }}>
               <div className="time-container">
+                {!timerHidden &&
                 <TimeProgressbar
                   onEnd={onEnd}
                   minutes={minutes}
@@ -346,9 +349,14 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                     console.log("set end 6");
                     props.setEndTime(a);
                   }}
-                />
+                />}
               </div>
-              <div className="footer-space" />
+              <div className="footer-space">
+                {!isMobile &&
+                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                </div>}
+              </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn back" onClick={prev}>
                   <SpriteIcon name="arrow-left" />

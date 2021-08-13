@@ -37,7 +37,7 @@ interface BrickBlockProps {
   forgetBrick(): void;
 }
 
-const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
+const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, circleIcon, index, row = 0, ...props }) => {
   let color = "";
   if (brick.status === BrickStatus.Draft) {
     color = "color1";
@@ -51,6 +51,10 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
 
   if (props.color) {
     color = props.color;
+  }
+
+  if (brick.adaptedFrom) {
+    circleIcon = 'copy';
   }
 
   if (props.isPlay) {
@@ -98,7 +102,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
             <ShortBrickDescription
               user={props.user}
               searchString={props.searchString}
-              circleIcon={props.circleIcon}
+              circleIcon={circleIcon}
               iconColor={props.iconColor}
               handleDeleteOpen={props.handleDeleteOpen}
               move={move}

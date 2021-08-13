@@ -78,6 +78,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
           validate={props.validationRequired}
           isValid={!!stripHtml(answer.value)}
           data={answer.value}
+          placeholder="Short Answer (max. 3 words)"
           onChange={(value) => changed(answer, value)}
         />
       </div>
@@ -87,8 +88,8 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
   return (
     <div className="short-answer-build unique-component">
       <div className="component-title">
-        Take care to choose an unambiguous answer. <br/>
-        Specify the required form and whether an article is expected.
+        <p><SpriteIcon name="alert-triangle" />Take care to choose an unambiguous answer.</p>
+        <p>Specify the required form and whether an article is expected.</p>
       </div>
       {state.list.map((shortAnswer, i) => renderShortAnswer(shortAnswer, i))}
       <AddAnswerButton

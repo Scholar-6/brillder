@@ -153,7 +153,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
           validationRequired={validationRequired}
           toolbar={['latex']}
           isValid={isValid}
-          placeholder={"Answer " + (index + 1) + "..."}
+          placeholder={"Answer " + (index + 1)}
           onBlur={onBlur}
           onChange={value => onTextChanged(answer, value)}
         />

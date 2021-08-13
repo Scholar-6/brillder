@@ -790,15 +790,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const { searchString } = this.state;
     this.setState({ shown: false, isSearchBLoading: true });
     const bricks = await searchPublicBricks(searchString);
-    const { pathname } = this.props.location;
-    if (
-      pathname.slice(pathname.length - 13, pathname.length) === "/all-subjects"
-    ) {
-      this.setState({ isSearching: true });
-      this.props.history.push(
-        map.ViewAllPage + "?searchString=" + searchString
-      );
-    }
 
     setTimeout(() => {
       try {
@@ -1212,10 +1203,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             <PageHeadWithMenu
               page={PageEnum.ViewAll}
               user={user}
-              placeholder={"Search Subjects, Topics, Titles & more"}
+              placeholder="Subjects, Topics, Titles & more"
               history={history}
               search={() => this.search()}
-              searching={(v) => this.searching(v)}
+              searching={this.searching.bind(this)}
             />
             <Switch>
               <Route exec path={map.SubjectCategories}>

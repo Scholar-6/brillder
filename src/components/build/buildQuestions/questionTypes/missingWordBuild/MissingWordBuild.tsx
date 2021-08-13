@@ -152,7 +152,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
           toolbar={['bold', 'italic', 'latex']}
           onChange={v => beforeChanged(choice, v)}
           disabled={locked}
-          placeholder="Text before missing word..."
+          placeholder="Text before missing word"
         />
         {
           (state.choices.length > 1)
@@ -174,7 +174,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
                   onChange={(e) => onChecked(choice, e)} value={i}
                 />
                 <QuillEditor
-                  placeholder="Enter Answer..."
+                  placeholder="Enter Answer"
                   toolbar={['bold', 'italic', 'latex']}
                   className={getInputClass(answer)}
                   disabled={locked}
@@ -196,7 +196,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
           toolbar={['bold', 'italic', 'latex']}
           onChange={v => afterChanged(choice, v)}
           disabled={locked}
-          placeholder="Text after missing word..."
+          placeholder="Text after missing word"
         />
         <AddAnswerButton
           locked={locked} addAnswer={() => { addAnswer(choice) }} height={choice.height}
@@ -209,7 +209,10 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
   return (
     <div className="missing-word-build">
       <div className="component-title">
-        Tick Correct Answer
+      <div className="flex-center">
+          <SpriteIcon name="feacher-check-square"/>
+          <div>Tick Correct Answer</div>
+        </div>
       </div>
       {
         state.choices.map((choice, i) => renderChoice(choice, i))

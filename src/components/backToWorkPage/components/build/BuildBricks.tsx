@@ -11,6 +11,7 @@ import BrickColDescription from "./BrickColDescription";
 import PublishToggle from "./PublishToggle";
 import CreateBrickBlock from "../CreateBrickBlock";
 import EmptyPage from "./EmptyPage";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface BuildBricksProps {
   user: User;
@@ -418,6 +419,7 @@ class BuildBricks extends Component<BuildBricksProps, State> {
         />
         <div className={`bricks-list ${this.isThreeColumns() ? 'three-columns' : 'list'}`} ref={this.state.bricksRef}>
           {!this.isThreeColumns() && this.renderDescriptions()}
+          {!this.props.loaded && <div className="absolute-loader"><SpriteIcon name="f-loader" className="spinning" /></div>}
           {this.renderBricks()}
         </div>
       </div>

@@ -113,7 +113,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         
         value={state.text}
         onChange={updateText}
-        placeholder="Enter Text Here..."
+        placeholder="Enter or Paste Text"
       />
     );
   }

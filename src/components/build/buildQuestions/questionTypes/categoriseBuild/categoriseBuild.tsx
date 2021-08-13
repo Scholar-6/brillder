@@ -11,6 +11,7 @@ import ValidationFailedDialog from 'components/baseComponents/dialogs/Validation
 import RemoveButton from '../components/RemoveButton';
 import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
 import SoundRecord from '../sound/SoundRecord';
+import ShuffleText from '../shuffle/components/ShuffleText';
 
 
 export interface CategoriseData {
@@ -207,7 +208,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           locked={locked}
           object={answer}
           fieldName="value"
-          placeholder="Enter Answer..."
+          placeholder={`Answer ${i+1}`}
           toolbar={['latex']}
           validationRequired={validationRequired}
           isValid={isValid}
@@ -269,7 +270,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             locked={locked}
             object={category}
             fieldName="name"
-            placeholder="Enter Category Heading..."
+            placeholder={`Category ${key + 1} Heading`}
             toolbar={['latex']}
             validationRequired={validationRequired}
             onBlur={() => {
@@ -294,6 +295,10 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 
   return (
     <div className="categorise-build unique-component">
+      <div className="component-title">
+        <div>Enter relevant answers underneath each Category Heading.</div>
+        <ShuffleText />
+      </div>
       {
         state.categories.map((category, i) => renderCategory(category, i))
       }

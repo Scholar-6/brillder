@@ -68,6 +68,7 @@ import previewRoutes from 'components/playPreview/routes';
 import { deleteQuestion } from "services/axios/brick";
 import { createQuestion } from "services/axios/question";
 import { Helmet } from "react-helmet";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -810,6 +811,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const isAdmin = checkAdmin(props.user.roles);
 
   const renderBuildPage = () => {
+    console.log(props.brick);
     return (
       <div className="investigation-build-page">
       <Helmet>
@@ -850,6 +852,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               style={{ height: "100%" }}
             >
               <div className="build-brick-title">
+                {props.brick.adaptedFrom && <SpriteIcon name="copy" />}
                 <div dangerouslySetInnerHTML={{ __html: brick.title }}></div>
               </div>
               <Grid

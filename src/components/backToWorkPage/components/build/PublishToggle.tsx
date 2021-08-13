@@ -1,3 +1,4 @@
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 import React from "react";
 
 interface ToggleProps {
@@ -14,14 +15,14 @@ const PublishToggle: React.FC<ToggleProps> = ({isPublish, onSwitch, ...props}) =
           onSwitch();
         }
       }}>
-        IN PROGRESS
+        <SpriteIcon name="feather-watch" />IN PROGRESS
       </span>
       <span className={isPublish ? 'active' : ''} onClick={() => {
         if (!isPublish) {
           onSwitch();
         }
       }}>
-        PUBLISHED ({props.publishedCount})
+        <SpriteIcon name="feather-award" /> PUBLISHED ({props.publishedCount})
       </span>
     </div>
   );
