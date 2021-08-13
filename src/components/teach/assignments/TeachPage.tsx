@@ -13,7 +13,7 @@ import actions from 'redux/actions/requestFailed';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { TeachClassroom, TeachStudent } from "model/classroom";
-import { ClassroomApi, createClass, getAllClassrooms, searchClassrooms } from "components/teach/service";
+import { createClass, getAllClassrooms, searchClassrooms } from "components/teach/service";
 import { checkAdmin, checkTeacher } from "components/services/brickService";
 import { TeachFilters } from '../model';
 import { Assignment } from "model/classroom";
@@ -36,7 +36,6 @@ import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuc
 import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
 import EmptyTabContent from "./components/EmptyTabContent";
 import ArchiveToggle from "./components/ArchiveToggle";
-import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 import MainAssignmentPagination from "./components/MainAssignmentPagination";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
