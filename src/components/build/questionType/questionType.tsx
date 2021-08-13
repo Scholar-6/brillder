@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import './type.scss';
 import { QuestionTypeEnum } from 'model/question';
 import TypeButton from './TypeButton'
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface QuestionTypeProps {
@@ -39,7 +40,10 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
   return (
     <div className="question-type">
       <div className="inner-question-type">
-        <div className="label-question-type">Click to Select Answer Type</div>
+        <div className="label-question-type">
+          <div>Click to select answer type</div>
+          <SpriteIcon name="feather-pointer" />
+        </div>
         <Grid container direction="row">
           <Grid item xs={4}>
             <TypeButton
