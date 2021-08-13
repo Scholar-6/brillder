@@ -3,6 +3,39 @@
 @import "src/assets/sass/partials/extensions";
 
 .back-to-work-page {
+  .level-filter-box {
+    position: relative;
+    .MuiFormControlLabel-root {
+      width: 50% !important;
+    }
+    .MuiTypography-root {
+      font-family: $font-family-light !important;
+      font-size: 1.05vw;
+    }
+    .absolute-difficult-help {
+      width: 4vw !important;
+      position: absolute;
+      z-index: 1200;
+      right: 0;
+      top: calc(1.3vh + 0.7vw);
+      .white-circle {
+        color: var(--theme-dark-blue);
+        background: var(--white);
+      }
+      .hover-content {
+        position: fixed;
+        background: var(--theme-dark-blue);
+        color: var(--white);
+        z-index: 100000;
+        top: 5vh;
+        left: 22vw;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      }
+      .l-text.smaller {
+        width: calc(100% - 4vw);
+      }
+    }
+  }
   .publish-bricks {
     height: calc(100% - 6.6vh) !important;
     .bricks-list-container {
