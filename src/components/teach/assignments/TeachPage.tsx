@@ -36,7 +36,8 @@ import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuc
 import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
 import EmptyTabContent from "./components/EmptyTabContent";
 import ArchiveToggle from "./components/ArchiveToggle";
-import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
+import MainAssignmentPagination from "./components/MainAssignmentPagination";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface RemindersData {
@@ -150,27 +151,27 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const value = queryString.parse(this.props.history.location.search);
     if (value.assignmentId) {
       const assignmentId = parseInt(value.assignmentId as string, 10);
-      if(prevState.activeAssignment?.id !== assignmentId) {
-        if(value.classroomId) {
+      if (prevState.activeAssignment?.id !== assignmentId) {
+        if (value.classroomId) {
           const classroomId = parseInt(value.classroomId as string, 10);
           this.setActiveAssignment(classroomId, assignmentId);
         } else if (prevState.activeClassroom) {
           this.setActiveAssignment(prevState.activeClassroom.id, assignmentId);
         } else {
           const classroomId = prevState.classrooms.find(classroom => classroom.assignments.findIndex(assignment => assignment.id === assignmentId) >= 0)?.id;
-          if(classroomId) {
+          if (classroomId) {
             this.setActiveAssignment(classroomId, assignmentId);
           }
         }
       }
-    } else if(value.classroomId) {
+    } else if (value.classroomId) {
       const classroomId = parseInt(value.classroomId as string, 10);
-      if(prevState.activeClassroom?.id !== classroomId) {
+      if (prevState.activeClassroom?.id !== classroomId) {
         this.loadClass(classroomId);
       } else if (prevState.activeAssignment) {
         this.unselectAssignment();
       }
-    } else if(prevState.activeClassroom) {
+    } else if (prevState.activeClassroom) {
       this.loadClass(null);
     }
   }
@@ -370,6 +371,20 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
+  getClassIndex(items: any[], itemIndex: number) {
+    let index = 0;
+    let itemsCount = 0;
+    for (const item of items) {
+      if (itemIndex > itemsCount) {
+        if (item.assignment) {
+          index += 1;
+        }
+      }
+      itemsCount += 1;
+    }
+    return index;
+  }
+
   getTotalCount() {
     const { classrooms, activeClassroom } = this.state;
     let itemsCount = 0;
@@ -382,6 +397,64 @@ class TeachPage extends Component<TeachProps, TeachState> {
       }
     }
     return itemsCount;
+  }
+
+  getArchivedTotalCount() {
+    let itemsCount = 0;
+    for (const classroom of this.state.classrooms) {
+      for (let assignment of classroom.assignments) {
+        if (assignment.isArchived) {
+          itemsCount += 1;
+        }
+      }
+      const haveArchived = classroom.assignments.find(a => a.isArchived === true);
+      if (haveArchived) {
+        itemsCount += 1;
+      }
+    }
+    return itemsCount;
+  }
+
+  getArchivedItems() {
+    const items = [];
+    for (const classroom of this.state.classrooms) {
+      const haveArchived = classroom.assignments.find(a => a.isArchived === true);
+      if (haveArchived) {
+        items.push({ classroom });
+      }
+      for (const assignment of classroom.assignments) {
+        if (assignment.isArchived) {
+          items.push({ assignment });
+        }
+      }
+    }
+    return items;
+  }
+
+  getUnarchivedTotalCount() {
+    let itemsCount = 0;
+    for (const classroom of this.state.classrooms) {
+      itemsCount += 1;
+      for (let assignment of classroom.assignments) {
+        if (!assignment.isArchived) {
+          itemsCount += 1;
+        }
+      }
+    }
+    return itemsCount;
+  }
+
+  getUnarchivedItems() {
+    const items = [];
+    for (const classroom of this.state.classrooms) {
+      items.push({ classroom });
+      for (const assignment of classroom.assignments) {
+        if (!assignment.isArchived) {
+          items.push({ assignment });
+        }
+      }
+    }
+    return items;
   }
 
   searching(searchString: string) {
@@ -430,18 +503,63 @@ class TeachPage extends Component<TeachProps, TeachState> {
       return "";
     } else if (activeClassroom && this.state.activeAssignment) {
       return this.renderAssignmentPagination(activeClassroom);
-    } else {
-      itemsCount = this.getTotalCount();
-    }
-
-    if (activeClassroom) {
+    } else if (activeClassroom) {
       pageSize = this.state.classPageSize;
+
+      itemsCount = this.getTotalCount();
+      let items = [];
+      if (this.state.isArchive) {
+        itemsCount = this.getArchivedTotalCount();
+        items = this.getArchivedItems() as any[];
+      } else {
+        itemsCount = this.getUnarchivedTotalCount();
+        items = this.getUnarchivedItems() as any[];
+      }
+
+      const assignmentsCount = items.filter(i => i.assignment).length;
+      let classStartIndex = this.getClassIndex(items, this.state.sortedIndex);
+      if (this.state.sortedIndex === 0) {
+        classStartIndex = 1;
+      }
+      const classEndIndex = this.getClassIndex(items, this.state.sortedIndex + pageSize);
+
+      return <MainAssignmentPagination
+        sortedIndex={this.state.sortedIndex}
+        pageSize={pageSize}
+        bricksLength={itemsCount}
+        classStartIndex={classStartIndex}
+        classEndIndex={classEndIndex}
+        classroomsLength={assignmentsCount}
+        isRed={this.state.sortedIndex === 0}
+        moveNext={() => this.moveNext(pageSize)}
+        moveBack={() => this.moveBack(pageSize)}
+      />
     }
 
-    return <BackPagePagination
+    itemsCount = this.getTotalCount();
+    let items = [];
+    if (this.state.isArchive) {
+      itemsCount = this.getArchivedTotalCount();
+      items = this.getArchivedItems() as any[];
+    } else {
+      itemsCount = this.getUnarchivedTotalCount();
+      items = this.getUnarchivedItems() as any[];
+    }
+
+    const assignmentsCount = items.filter(i => i.assignment).length;
+    let classStartIndex = this.getClassIndex(items, this.state.sortedIndex);
+    if (this.state.sortedIndex === 0) {
+      classStartIndex = 1;
+    }
+    const classEndIndex = this.getClassIndex(items, this.state.sortedIndex + pageSize);
+
+    return <MainAssignmentPagination
       sortedIndex={this.state.sortedIndex}
       pageSize={pageSize}
       bricksLength={itemsCount}
+      classStartIndex={classStartIndex}
+      classEndIndex={classEndIndex}
+      classroomsLength={assignmentsCount}
       isRed={this.state.sortedIndex === 0}
       moveNext={() => this.moveNext(pageSize)}
       moveBack={() => this.moveBack(pageSize)}
@@ -460,7 +578,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       return (
         <div className="tab-content">
           <div className="f-top-loader">
-            <PageLoaderBlue content="" />
+            <SpriteIcon name="f-loader" className="spinning" />
           </div>
         </div>
       );
@@ -487,7 +605,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           activeStudent={this.state.activeStudent}
           classrooms={this.state.classrooms}
           activeClassroom={this.state.activeClassroom}
-          setArchive={v => this.setState({ isArchive: v })}
+          setArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
         />
         {this.state.activeStudent ?
           <ActiveStudentBricks
@@ -552,7 +670,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
-          placeholder="Search by Name, Email or Subject"
+          placeholder="Brick Title, Student Name, or Subject"
           user={this.props.user}
           history={history}
           search={this.search.bind(this)}

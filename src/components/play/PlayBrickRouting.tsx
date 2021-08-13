@@ -165,6 +165,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [prepEndTime, setPrepEndTime] = React.useState(initPrepEndTime);
   const [mode, setMode] = React.useState(initMode);
   const [liveEndTime, setLiveEndTime] = React.useState(initLiveEndTime);
+  const [synthesisEndTime, setSynthesisEndTime] = React.useState(null);
   const [reviewEndTime, setReviewEndTime] = React.useState(initReviewEndTime);
   const [attemptId, setAttemptId] = React.useState<string>(initAttemptId);
 
@@ -546,7 +547,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               cashAttempt={cashAttempt}
               onHighlight={onHighlight}
             />
-            : <NewPrep brick={brick} mode={mode} moveNext={moveToPreInvestigation} onHighlight={onHighlight} />
+            : <NewPrep
+              brick={brick} mode={mode} moveNext={moveToPreInvestigation} endTime={prepEndTime}
+              setEndTime={setPrepEndTime} onHighlight={onHighlight}
+            />
           }
           {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={() => history.push(routes.playPreInvesigation(brick.id))} />}
         </Route>
@@ -601,7 +605,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
 
         <Route exac path={routes.synthesisRoute}>
-          <Synthesis mode={mode} status={status} brick={brick} moveNext={moveToPreReview} onHighlight={onHighlight} />
+          <Synthesis
+            mode={mode} status={status} brick={brick}
+            moveNext={moveToPreReview} onHighlight={onHighlight}
+            endTime={synthesisEndTime}
+            setEndTime={setSynthesisEndTime}
+          />
           {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={moveToPreReview} />}
         </Route>
 

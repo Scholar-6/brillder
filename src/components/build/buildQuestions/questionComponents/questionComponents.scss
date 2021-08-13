@@ -38,11 +38,19 @@
 }
 
 .component-title {
-  margin-bottom: 0.4vw;
-  font-size: $base-sm-text-size;
+  margin-top: 0.5vw;
+  margin-bottom: 0.5vw;
+  font-size: 0.95vw;
   div {
     font-size: inherit;
     font-family: $font-family-regular;
+  }
+  svg {
+    margin-right: 0.2vw;
+    stroke-width: 2;
+    $size: 1vw;
+    width: $size;
+    height: $size;
   }
 }
 

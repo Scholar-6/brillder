@@ -10,4 +10,7 @@
   .visible {
     animation: fadein 0.5s 0s forwards;
   }
+  .left-brick-circle {
+    z-index: 10;
+  }
 }

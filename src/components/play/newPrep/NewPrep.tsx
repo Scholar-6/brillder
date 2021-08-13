@@ -11,10 +11,10 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
 import { PlayMode } from "../model";
 import HighlightHtml from "../baseComponents/HighlightHtml";
-import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import { getPrepareTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
-
+import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+import { isMobile } from "react-device-detect";
 
 export interface IntroductionState {
   isStopped: boolean;
@@ -27,12 +27,17 @@ interface Props {
   brick: Brick;
   briefExpanded?: boolean;
 
+  endTime: any;
+  setEndTime(t: any): void;
+
   moveNext(): void;
   mode?: PlayMode;
   onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
 const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
+  const [timerHidden, hideTimer] = React.useState(false);
+
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
@@ -166,9 +171,23 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="new-layout-footer" style={{ display: 'none' }}>
               <div className="time-container">
-                <TimeProgressbarV2 isIntro={true} setEndTime={() => { }} minutes={minutes} onEnd={() => { }} brickLength={brick.brickLength} />
+                {!timerHidden &&
+                  <TimeProgressbar
+                    isIntro={true}
+                    onEnd={() => {}}
+                    minutes={minutes}
+                    endTime={props.endTime}
+                    brickLength={brick.brickLength}
+                    setEndTime={props.setEndTime}
+                  />
+                }
               </div>
-              <div className="footer-space" />
+              <div className="footer-space">
+                {!isMobile &&
+                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                </div>}
+              </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn next" onClick={props.moveNext}>
                   Investigation

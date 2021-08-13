@@ -524,12 +524,11 @@
   }
 
   .f-top-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--theme-dark-blue);
     height: 100% !important;
-    .page-loader {
-      position: relative !important;
-      height: 100% !important;
-      background: var(--white);
-    }
   }
 }
 

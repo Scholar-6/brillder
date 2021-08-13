@@ -9,6 +9,28 @@
     border-radius: 0.8vw;
     background: var(--solitude-light);
   }
+  .index-circle-container {
+    top: 0;
+    left: 0.5vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    .index-circle {
+      z-index: 10;
+      border-radius: 50%;
+      $size: 1.4vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--dark-gray);
+      width: $size;
+      height: $size;
+      font-family: $font-family-bold;
+      font-size: 1.1vw;
+    }
+  }
+  
   .vertical-answer-box {
     min-height: 2vw;
     position: relative;
@@ -48,6 +70,9 @@
       .ql-editor {
         padding-left: 2vw;
         padding-right: 10vw;
+        &::before {
+          margin-left: 4vw;
+        }
       }
       .ql-editor.ql-blank::before {
         left: 2vw;

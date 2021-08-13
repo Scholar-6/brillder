@@ -30,6 +30,7 @@ import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
 import { getUniqueComponent } from "components/build/questionService/QuestionService";
 import CategoriseAnswersDialog from "components/baseComponents/dialogs/CategoriesAnswers";
+import { isMobile } from "react-device-detect";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -64,6 +65,8 @@ const LivePage: React.FC<LivePageProps> = ({
       initStep = props.previewQuestionIndex;
     }
   }
+
+  const [timerHidden, hideTimer] = React.useState(false);
 
   const [activeStep, setActiveStep] = React.useState(initStep);
   const [prevStep, setPrevStep] = React.useState(initStep);
@@ -426,6 +429,7 @@ const LivePage: React.FC<LivePageProps> = ({
             {renderQuestionContainer(questions[activeStep], activeStep)}
             <div className="new-layout-footer" style={{ display: "none" }}>
               <div className="time-container">
+                {!timerHidden &&
                 <TimeProgressbar
                   isLive={true}
                   onEnd={onEnd}
@@ -433,9 +437,13 @@ const LivePage: React.FC<LivePageProps> = ({
                   endTime={props.endTime}
                   brickLength={brick.brickLength}
                   setEndTime={props.setEndTime}
-                />
+                />}
               </div>
               <div className="footer-space">
+                {!isMobile &&
+                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                </div>}
               </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn back" onClick={prev}>

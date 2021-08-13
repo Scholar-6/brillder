@@ -43,7 +43,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         isSearching: false,
       });
     } else {
-      this.setState({ ...this.state, searchString });
+      this.setState({ ...this.state, isSearching: false, searchString });
     }
   }
 
@@ -57,10 +57,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         <PageHeadWithMenu
           page={PageEnum.BackToWork}
           user={this.props.user}
-          placeholder="Search Ongoing Projects & Published Bricks…"
+          placeholder="Ongoing & Published Bricks"
           history={this.props.history}
           search={() => this.search()}
-          searching={(v: string) => this.searching(v)}
+          searching={this.searching.bind(this)}
         />
         <BuildPage
           isSearching={this.state.isSearching}

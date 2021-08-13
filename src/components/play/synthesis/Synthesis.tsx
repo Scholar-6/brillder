@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import "./Synthesis.scss";
 import { Brick } from "model/brick";
-import { useHistory } from "react-router-dom";
 import { PlayStatus } from "../model";
 import { PlayMode } from "../model";
 import HighlightHtml from "../baseComponents/HighlightHtml";
@@ -13,12 +13,18 @@ import { getSynthesisTime } from "../services/playTimes";
 import { isPhone } from "services/phone";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+
 import routes from "../routes";
+import { isMobile } from "react-device-detect";
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
+
+  endTime: any;
+  setEndTime(t: any): void;
 
   // only for real play
   mode?: PlayMode;
@@ -31,6 +37,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
   brick,
   ...props
 }) => {
+  const [timerHidden, hideTimer] = React.useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -88,8 +95,8 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
           <div className="time-container">
             <TimeProgressbarV2
               isSynthesis={true}
-              setEndTime={() => {}}
-              onEnd={() => {}}
+              setEndTime={() => { }}
+              onEnd={() => { }}
               brickLength={brick.brickLength}
             />
           </div>
@@ -114,15 +121,21 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
             {renderSynthesisContent()}
             <div className="new-layout-footer" style={{ display: "none" }}>
               <div className="time-container">
-                <TimeProgressbarV2
-                  isSynthesis={true}
-                  minutes={minutes}
-                  setEndTime={() => {}}
-                  onEnd={() => {}}
-                  brickLength={brick.brickLength}
-                />
+                {!timerHidden &&
+                  <TimeProgressbar
+                    minutes={minutes}
+                    setEndTime={props.setEndTime}
+                    onEnd={() => { }}
+                    endTime={props.endTime}
+                    brickLength={brick.brickLength}
+                  />}
               </div>
-              <div className="footer-space" />
+              <div className="footer-space">
+                {!isMobile &&
+                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                </div>}
+              </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn next" onClick={props.moveNext}>
                   Review

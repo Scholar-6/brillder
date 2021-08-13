@@ -638,7 +638,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       return (
         <div className="tab-content">
           <div className="f-top-loader">
-            <PageLoaderBlue content="" />
+            <SpriteIcon name="f-loader" className="spinning" />
           </div>
         </div>
       );
@@ -688,7 +688,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       const visibleUsers = this.getUsersByPage(this.state.pendingUsers);
 
       return (
-        <div className="tab-content">
+        <div className="tab-content students-content">
           <StudentTable
             isPending={true}
             history={this.props.history}
@@ -710,7 +710,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
 
     return (
-      <div className="tab-content">
+      <div className="tab-content students-content">
         {activeClassroom && this.renderTopRow()}
         <StudentTable
           history={this.props.history}
@@ -741,7 +741,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       <div className="main-listing user-list-page manage-classrooms-page manage-classrooms-checkboxes">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
-          placeholder="Search by Brick Title, Student Name, or Subject"
+          placeholder="Student Name or Subject"
           user={this.props.user}
           history={history}
           search={() => this.search()}

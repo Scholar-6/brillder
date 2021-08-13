@@ -15,6 +15,25 @@
     font-size: 7vw !important;
     white-space: inherit !important;
     text-overflow: initial !important;
+
+    svg {
+      $size: 6vw;
+      stroke-width: 3;
+      margin-right: 1vw;
+      width: $size;
+      height: $size;
+    }
+
+    > div {
+      display: flex;
+      align-items: center;
+    }
+
+    .adapted-text {
+      font-size: 3.7vw;
+      line-height: 1;
+      font-family: $font-family-bold;
+    }
   }
 
 

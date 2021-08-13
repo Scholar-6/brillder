@@ -34,12 +34,24 @@
         }
       }
       .brick-title {
+        position: relative;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
         margin-top: 3.6vh;
         font-size: 2.7vw;
         @extend %ellipsis;
         font-family: $font-family-black;
+        .adapted-text {
+          font-size: .9vw;
+          font-family: $font-family-bold;
+        }
+        svg {
+          $size: 2vw;
+          margin-right: 0.4vw;
+          stroke-width: 3;
+          width: $size;
+          height: $size;
+        }
       }
       .author-row {
         display: flex;
