@@ -166,7 +166,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         onBlur={() => save()}
         value={state.text}
         onChange={updateText}
-        placeholder="Enter Text Here"
+        placeholder="Enter or Paste Text"
       />
     );
   }

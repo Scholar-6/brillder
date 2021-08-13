@@ -5,7 +5,7 @@ const ShuffleText = () => {
   return (
     <div className="flex-center">
       <SpriteIcon name="feather-shuffle" />
-      <div>These will be randomised in the Play Interface.</div>
+      <div>These will be randomised in the play Interface.</div>
     </div>
   );
 }

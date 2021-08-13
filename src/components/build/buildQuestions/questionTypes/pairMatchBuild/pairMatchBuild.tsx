@@ -9,6 +9,7 @@ import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/Add
 import PairAnswerComponent from './answer/pairAnswer';
 import PairOptionComponent from './option/pairOption';
 import { showSameAnswerPopup } from '../service/questionBuild';
+import ShuffleText from '../shuffle/components/ShuffleText';
 
 
 export interface PairMatchBuildProps extends UniqueComponentProps { }
@@ -75,8 +76,8 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   return (
     <div className="pair-match-build">
       <div className="component-title">
-        Enter Pairs below so that Option 1 matches with Answer 1 and so on.
-        These will be randomised in the play interface.
+        <div>Enter Pairs below so that Option 1 matches Answer 1 and so on.</div>
+        <ShuffleText />
       </div>
       {
         state.list.map((answer: Answer, i: number) => renderAnswer(answer, i))
