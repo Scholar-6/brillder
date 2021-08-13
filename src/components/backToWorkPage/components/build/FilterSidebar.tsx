@@ -3,13 +3,15 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
 import './FilterSidebar.scss';
-import { Brick, BrickStatus } from "model/brick";
+import { AcademicLevel, AcademicLevelLabels, Brick, BrickStatus } from "model/brick";
 import { SortBy, Filters, ThreeColumns } from '../../model';
 import { clearStatusFilters } from '../../service';
 import EmptyFilterSidebar from "../EmptyFilter";
 import { SubjectItem } from "../personalBuild/model";
 import { User } from "model/user";
 import { checkBuilder, isAorP } from "components/services/brickService";
+import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
+import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpContent";
 
 
 enum FilterFields {
@@ -60,7 +62,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   }
 
   removeSubject() {
-    this.setState({...this.state, subjectCheckedId: -1});
+    this.setState({ ...this.state, subjectCheckedId: -1 });
     this.props.filterBySubject(null);
   }
 
@@ -78,7 +80,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
         item.checked = false;
       }
     }
-    this.setState({...this.state, subjectCheckedId: isChecked ? s.id : -1});
+    this.setState({ ...this.state, subjectCheckedId: isChecked ? s.id : -1 });
     if (isChecked) {
       this.props.filterBySubject(s);
     } else {
@@ -90,7 +92,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     for (let s of this.props.subjects) {
       s.checked = false;
     }
-    this.setState({...this.state, subjectCheckedId: -1});
+    this.setState({ ...this.state, subjectCheckedId: -1 });
     this.props.filterBySubject(null);
   }
 
@@ -122,7 +124,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
   renderInbox = (draft: number, build: number, review: number) => {
     return (
-        <div>
+      <div>
         <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
@@ -169,37 +171,40 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
   renderSubjectsBox = (viewAll: number) => {
     return (
-        <AnimateHeight
-          duration={500}
-          height={this.state.subjectsHeight}
-        >
-          <div className="filter-container subjects-list indexes-box">
-            {this.renderViewAll(viewAll)}
-            {this.props.subjects.map((s, i) =>
-              <div
-                className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")}
-                onClick={() => this.filterBySubject(s)} key={i}
-              >
-                {s.name}
-                <div className="right-index outline-box">{s.count}</div>
-              </div>
-            )}
-          </div>
-        </AnimateHeight>
+      <AnimateHeight
+        duration={500}
+        height={this.state.subjectsHeight}
+      >
+        <div className="filter-container subjects-list indexes-box">
+          {this.renderViewAll(viewAll)}
+          {this.props.subjects.map((s, i) =>
+            <div
+              className={"index-box hover-light " + (s.id === this.state.subjectCheckedId ? "active" : "")}
+              onClick={() => this.filterBySubject(s)} key={i}
+            >
+              {s.name}
+              <div className="right-index outline-box">{s.count}</div>
+            </div>
+          )}
+        </div>
+      </AnimateHeight>
     );
   };
 
-  renderPublishedTopPart() {
-    let canSee = false;
-    if (canSee) {
-      return (
-        <div>
-          test
-        </div>
-      )
-    }
+  renderAcademicLevel(checked: boolean, loopLevel: AcademicLevel, level: FilterFields) {
     return (
-      <div style={{height: "10vw"}} />
+      <FormControlLabel
+        value={SortBy.Popularity}
+        style={{ marginRight: 0, width: "50%" }}
+        control={
+          <Radio
+            className="sortBy"
+            checked={checked}
+            onClick={() => this.toggleFilter(level)}
+          />
+        }
+        label={`Level ${AcademicLevelLabels[loopLevel]}`}
+      />
     );
   }
 
@@ -211,37 +216,22 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
           <div className="filter-header">
             Levels
           </div>
-          <div className="filter-container subject-indexes-box first">
-            <div className="index-box color2">
-              <FormControlLabel
-                checked={this.props.filters.level1}
-                control={<Radio onClick={() => this.toggleFilter(FilterFields.Level1)} className={"filter-radio custom-color"} />}
-                label="Level I" />
-            </div>
-            <div className="index-box color2">
-              <FormControlLabel
-                checked={this.props.filters.level2}
-                control={<Radio onClick={() => this.toggleFilter(FilterFields.Level2)} className={"filter-radio custom-color"} />}
-                label="Level II" />
-            </div>
-            <div className="index-box color2">
-              <FormControlLabel
-                checked={this.props.filters.level3}
-                control={<Radio onClick={e => this.toggleFilter(FilterFields.Level3)} className={"filter-radio custom-color"} />}
-                label="Level III" />
-            </div>
-            <div className="index-box color2">
-              <FormControlLabel
-                checked={this.props.filters.level4}
-                control={<Radio onClick={e => this.toggleFilter(FilterFields.Level4)} className={"filter-radio custom-color"} />}
-                label="Level IV" />
+          <div className="level-filter-box">
+            {this.renderAcademicLevel(this.props.filters.level1, AcademicLevel.First, FilterFields.Level1)}
+            {this.renderAcademicLevel(this.props.filters.level2, AcademicLevel.Second, FilterFields.Level2)}
+            {this.renderAcademicLevel(this.props.filters.level3, AcademicLevel.Third, FilterFields.Level3)}
+            {this.renderAcademicLevel(this.props.filters.level4, AcademicLevel.Fourth, FilterFields.Level4)}
+            <div className="absolute-difficult-help">
+              <HoverHelp>
+                <LevelHelpContent />
+              </HoverHelp>
             </div>
           </div>
         </div>
       );
     }
     return (
-      <div style={{height: "10vw"}} />
+      <div style={{ height: "10vw" }} />
     );
   }
 
@@ -254,7 +244,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     let build = 0;
     let publication = 0;
 
-    const {threeColumns, finalBricks, filters} = this.props;
+    const { threeColumns, finalBricks, filters } = this.props;
 
     if (filters.draft && filters.review && filters.build) {
       draft = threeColumns.red.finalBricks.length - 1;
