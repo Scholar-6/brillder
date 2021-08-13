@@ -148,7 +148,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     <div className="horizontal-shuffle-build">
       <div className="component-title">
         <div className="flex-center">
-          <SpriteIcon name="feather-chevrons-right"/>
+          <SpriteIcon name="arrow-right"/>
           <div>Enter Answers in the correct order from left to right.</div>
         </div>
         <ShuffleText />

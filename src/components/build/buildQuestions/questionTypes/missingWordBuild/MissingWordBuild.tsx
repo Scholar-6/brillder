@@ -209,8 +209,8 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
   return (
     <div className="missing-word-build">
       <div className="component-title">
-        <div className="flex-center">
-          <SpriteIcon name="feather-check-square" />
+      <div className="flex-center">
+          <SpriteIcon name="feacher-check-square"/>
           <div>Tick Correct Answer</div>
         </div>
       </div>
