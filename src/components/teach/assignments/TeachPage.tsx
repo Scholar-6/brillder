@@ -371,15 +371,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
-  getClassIndex(classrooms: any[], itemIndex: number) {
+  getClassIndex(items: any[], itemIndex: number) {
     let index = 0;
     let itemsCount = 0;
-    for (const classroom of classrooms) {
+    for (const item of items) {
       if (itemIndex > itemsCount) {
-        index += 1;
+        if (item.assignment) {
+          index += 1;
+        }
       }
       itemsCount += 1;
-      itemsCount += classroom.assignments.length;
     }
     return index;
   }
@@ -414,42 +415,46 @@ class TeachPage extends Component<TeachProps, TeachState> {
     return itemsCount;
   }
 
-  getArchivedClassrooms() {
-    const classrooms = [];
+  getArchivedItems() {
+    const items = [];
     for (const classroom of this.state.classrooms) {
       const haveArchived = classroom.assignments.find(a => a.isArchived === true);
       if (haveArchived) {
-        classrooms.push(classroom);
+        items.push({classroom});
+      }
+      for (const assignment of classroom.assignments) {
+        if (assignment.isArchived) {
+          items.push({ assignment });
+        }
       }
     }
-    return classrooms;
+    return items;
   }
 
   getUnarchivedTotalCount() {
     let itemsCount = 0;
     for (const classroom of this.state.classrooms) {
+      itemsCount += 1;
       for (let assignment of classroom.assignments) {
         if (!assignment.isArchived) {
           itemsCount += 1;
         }
       }
-      const haveUnarchived = classroom.assignments.length === 0 || classroom.assignments.find(a => !a.isArchived);
-      if (haveUnarchived) {
-        itemsCount += 1;
-      }
     }
     return itemsCount;
   }
 
-  getUnarchivedClassrooms() {
-    const classrooms = [];
+  getUnarchivedItems() {
+    const items = [];
     for (const classroom of this.state.classrooms) {
-      const haveUnarchived = classroom.assignments.length === 0 || classroom.assignments.find(a => !a.isArchived);
-      if (haveUnarchived) {
-        classrooms.push(classroom);
+      items.push({classroom});
+      for (const assignment of classroom.assignments) {
+        if (!assignment.isArchived) {
+          items.push({ assignment });
+        }
       }
     }
-    return classrooms;
+    return items;
   }
 
   searching(searchString: string) {
@@ -498,27 +503,31 @@ class TeachPage extends Component<TeachProps, TeachState> {
       return "";
     } else if (activeClassroom && this.state.activeAssignment) {
       return this.renderAssignmentPagination(activeClassroom);
+    } else if (activeClassroom) {
+      return this.renderAssignmentPagination(activeClassroom);
     }
 
     itemsCount = this.getTotalCount();
-    let classrooms = [];
+    let items = [];
     if (this.state.isArchive) {
       itemsCount = this.getArchivedTotalCount();
-      classrooms = this.getArchivedClassrooms();
+      items = this.getArchivedItems() as any[];
     } else {
       itemsCount = this.getUnarchivedTotalCount();
-      classrooms = this.getUnarchivedClassrooms();
+      items = this.getUnarchivedItems() as any[];
     }
+
+    const assignmentsCount = items.filter(i => i.assignment).length;
 
     if (activeClassroom) {
       pageSize = this.state.classPageSize;
     }
 
-    let classStartIndex = this.getClassIndex(classrooms, this.state.sortedIndex);
+    let classStartIndex = this.getClassIndex(items, this.state.sortedIndex);
     if (this.state.sortedIndex === 0) {
       classStartIndex = 1;
     }
-    const classEndIndex = this.getClassIndex(classrooms, this.state.sortedIndex + pageSize);
+    const classEndIndex = this.getClassIndex(items, this.state.sortedIndex + pageSize);
 
     return <MainAssignmentPagination
       sortedIndex={this.state.sortedIndex}
@@ -526,7 +535,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       bricksLength={itemsCount}
       classStartIndex={classStartIndex}
       classEndIndex={classEndIndex}
-      classroomsLength={classrooms.length}
+      classroomsLength={assignmentsCount}
       isRed={this.state.sortedIndex === 0}
       moveNext={() => this.moveNext(pageSize)}
       moveBack={() => this.moveBack(pageSize)}
