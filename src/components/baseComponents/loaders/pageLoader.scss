@@ -11,5 +11,9 @@
   background-color: var(--theme-dark-blue);
   svg {
     color: var(--white);
+
+    &.blue {
+      color: var(--theme-dark-blue);
+    }
   }
 }

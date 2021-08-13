@@ -252,8 +252,8 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
             placeholder="Subjects, Topics, Titles and more"
           />
           {this.state.isLoading && (
-            <div className="loader-container spinning">
-              <SpriteIcon name="f-loader" />
+            <div className="loader-container">
+              <SpriteIcon name="f-loader" className="spinning" />
             </div>
           )}
         </div>

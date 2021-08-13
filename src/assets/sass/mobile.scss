@@ -987,3 +987,7 @@
 .logout-dialog {
   z-index:10100 !important;
 }
+
+.spinning {
+  animation: spinning 9s infinite linear;
+}
