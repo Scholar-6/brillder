@@ -25,6 +25,7 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import routes from "../routes";
 import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
+import { isMobile } from "react-device-detect";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -351,9 +352,10 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 />}
               </div>
               <div className="footer-space">
+                {!isMobile &&
                 <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
                   {timerHidden ? 'Show Timer' : 'Hide Timer'}
-                </div>
+                </div>}
               </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn back" onClick={prev}>

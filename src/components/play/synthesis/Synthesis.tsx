@@ -16,6 +16,7 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 
 import routes from "../routes";
+import { isMobile } from "react-device-detect";
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
@@ -130,9 +131,10 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
                   />}
               </div>
               <div className="footer-space">
+                {!isMobile &&
                 <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
                   {timerHidden ? 'Show Timer' : 'Hide Timer'}
-                </div>
+                </div>}
               </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn next" onClick={props.moveNext}>
