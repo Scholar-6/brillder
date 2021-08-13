@@ -19,12 +19,11 @@
     .welcome-box {
       color: white;
       letter-spacing: 0.66vw;
-      font-size: 2.58vw;
+      font-size: 3vw;
       font-family: $font-family-bold;
-      padding-right: 2.9vw;
 
       .smaller {
-        font-size: 2.4vw;
+        font-size: 2.88vw;
       }
 
       .welcome-name {
@@ -32,7 +31,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2.5vw;
+        font-size: 2.9vw;
         letter-spacing: 0.73vw;
         margin-top: 3.2vh;
         font-weight: 600;
@@ -42,11 +41,7 @@
         color: var(--theme-orange);
 
         .custom-tooltip {
-          margin-left: -1.4vw;
-          letter-spacing: 0.05vw;
-          text-transform: none;
-          margin-top: 4.9vw;
-          font-family: $font-family-regular;
+          display: none
         }
 
         .svg,
@@ -61,23 +56,15 @@
         }
 
         .profile-image-border {
-          @extend %flexCenter;
-          border: 0.35vw solid var(--theme-orange);
-          border-radius: 50%;
-
-          img {
-            width: 105%;
-            height: 105%;
-            border-radius: 50%;
-          }
+          display: none;
         }
       }
 
       .notifications-text {
-        margin-top: 4.3vw; //10vh;
+        margin-top: 4.3vw;
         letter-spacing: 0.1vw;
         font-family: $font-family-light;
-        font-size: 1.8vw;
+        font-size: 2vw;
       }
 
       .notifications-text-2,
@@ -86,7 +73,7 @@
         color: var(--tab-gray);
         font-family: $font-family-light-italic;
         letter-spacing: 0.05vw;
-        font-size: 1.5vw;
+        font-size: 1.6vw;
       }
 
       b {
@@ -123,10 +110,10 @@
   }
 
   .eye-glass-frame {
-    width: 20vw !important;
+    width: 18vw !important;
     svg {
-      width: 20vw !important;
-      height: 20vw !important;
+      width: 18vw !important;
+      height: 12vw !important;
     }
   }
 
@@ -136,24 +123,25 @@
   }
 
   .manage-classes svg {
-    width: 20vw !important;
+    width: 17.5vw !important;
     height: 12.2vw !important;
   }
 
   .create-item-container .btn .svg {
-    width: 20vw !important;
+    width: 18vw !important;
     height: 12.5vw !important;
   }
 
   .create-item-container.stats .btn .svg {
-    width: 17vw !important;
-    height: 15vw !important;
+    stroke-width: 2;
+    width: 15vw !important;
+    height: 13vw !important;
   }
 
   .my-library-button {
     svg {
-      width: 20vw !important;
-      height: 12.5vw !important;
+      width: 17vw !important;
+      height: 11vw !important;
     }
   }
 
