@@ -10,60 +10,74 @@ $tile-height: 100%;
   width: 100%;
   background: var(--theme-dark-blue) !important;
   height: 6.2%;
-  > .MuiGridList-root {
+
+  >.MuiGridList-root {
     overflow: inherit !important;
   }
+
   .drag-container {
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     height: 100% !important;
     display: flex;
+
     .drag-tile-container {
       flex: 1;
-      > .MuiGridListTile-tile {
+
+      >.MuiGridListTile-tile {
         overflow: inherit !important;
       }
     }
   }
+
   .drag-tile-container {
     transition: all 1000ms ease-out !important;
     padding: 0 !important;
     height: 100% !important;
     margin-left: $distance !important;
+
     .drag-tile {
       cursor: pointer;
       transition: all 200ms ease-out !important;
       height: 100%;
       background-color: var(--tab-gray);
+
       &:first-child {
         border-top-left-radius: $editor-radius;
       }
+
       &:last-child {
         border-top-right-radius: $editor-radius;
       }
     }
+
     &:first-child {
       margin-left: 0 !important;
     }
+
     &.active {
       .drag-tile {
         background: var(--white);
+
         .tab-number {
           color: var(--theme-dark-blue);
           opacity: 1;
         }
+
         &.invalid {
           color: var(--theme-dark-blue) !important;
         }
       }
     }
+
     .synthesis-tab-icon {
       .svg {
         stroke-width: 2;
       }
     }
   }
+
   .draggable-tab {
     position: relative;
     width: 100%;
@@ -73,7 +87,8 @@ $tile-height: 100%;
     @extend %flexCenter;
     @extend %posRelative;
     cursor: pointer;
-    > div {
+
+    >div {
       width: 100%;
       height: 100%;
       display: flex;
@@ -82,6 +97,7 @@ $tile-height: 100%;
       @extend %textCenter;
       cursor: pointer;
     }
+
     .tab-number {
       color: var(--dark-gray);
       font-family: $font-family-bold;
@@ -89,6 +105,7 @@ $tile-height: 100%;
       user-select: none;
       opacity: 1;
     }
+
     .remove-icon {
       position: absolute;
       width: 1.2vw;
@@ -101,7 +118,7 @@ $tile-height: 100%;
         width: 8vw;
         height: 0;
         left: 1.5vw;
-        overflow:hidden;
+        overflow: hidden;
       }
 
       &.active {
@@ -119,6 +136,7 @@ $tile-height: 100%;
           height: 1.9vw !important;
         }
       }
+
       .svg {
         stroke-width: 2.2;
       }
@@ -134,6 +152,7 @@ $tile-height: 100%;
           color: var(--theme-dark-blue) !important;
           stroke-width: 3;
         }
+
         .css-custom-tooltip {
           opacity: 1;
           height: auto;
@@ -141,12 +160,68 @@ $tile-height: 100%;
       }
     }
   }
-  .add-tab {
-    .svg {
-      stroke-width: 2;
-      pointer-events: none;
+
+  .synthesis-tile {
+    .last-tab,
+    .MuiGridListTile-tile {
+      overflow: unset !important;
+    }
+    .svgOnHover {
+      position: unset !important;
+    }
+    svg {
+      $size: 2vw;
+      width: $size !important;
+      height: $size !important;
+    }
+    .css-custom-tooltip {
+      top: -1.8vw;
+      width: 6vw;
+      color: var(--tab-gray);
+      background: var(--theme-light-blue);
+      height: 0 !important;
+      height: auto;
+      overflow: hidden;
+      padding: 0 !important;
+      text-align: center !important;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        height: auto !important;
+        opacity: 1;
+      }
     }
   }
+
+  .add-tile-container {
+    .MuiGridListTile-tile {
+      overflow: unset !important;
+    }
+
+    .add-tab {
+      position: initial !important;
+      .svg {
+        stroke-width: 2;
+        pointer-events: none;
+      }
+    
+      .css-custom-tooltip {
+        top: -1.8vw;
+        width: 12vw;
+        height: 0;
+        color: var(--tab-gray);
+        background: var(--theme-light-blue);  
+        overflow: hidden;
+        padding: 0 !important;
+        text-align: center !important;
+      }
+    }
+    &:hover .add-tab .css-custom-tooltip {
+      height: auto;
+      opacity: 1;
+    }
+  }
+
   .last-tab {
     @extend %textCenter;
     color: var(--theme-dark-blue);
@@ -154,31 +229,39 @@ $tile-height: 100%;
     font-family: $font-family-bold;
     width: 2vw;
     height: 2vw;
+
     @include phone_and_tabletP {
       font-size: 2.5vw;
     }
+
     @include tabletP {
       font-size: 1.3vw;
     }
   }
+
   .synthesis-tab {
     .drag-tile {
       background: var(--white);
     }
+
     .svg {
       stroke-width: 2;
     }
   }
+
   .invalid {
     background: var(--theme-orange) !important;
+
     .inner-circle {
       background: var(--white) !important;
     }
+
     .outer-circle {
       opacity: 0.5;
       background: var(--white) !important;
     }
   }
+
   .editor-border {
     line-height: 1;
     padding: 0.25vw;
@@ -186,6 +269,7 @@ $tile-height: 100%;
     border: 0;
     border-radius: 50%;
     @extend %flexCenter;
+
     .circle-border {
       width: 2vw !important;
       height: 2vw !important;
@@ -201,41 +285,50 @@ $tile-height: 100%;
     position: absolute;
     left: 0.3vw;
     top: 0.3vw;
-    > div {
+
+    >div {
       @extend %flexCenter;
       @extend %radCircle;
       position: absolute;
+
       &.outer-circle {
         background-color: var(--theme-orange-alpha5);
         width: 100%;
         height: 100%;
       }
+
       &.inner-circle {
         background-color: var(--theme-orange);
         width: 50%;
         height: 50%;
       }
+
       @media (prefers-color-scheme: dark) {
         &.outer-circle {
           background-color: var(--theme-orange-alpha5);
         }
+
         &.inner-circle {
           background-color: var(--theme-orange);
         }
       }
     }
+
     &.has-replied {
-      > div {
+      >div {
         &.outer-circle {
           background-color: var(--theme-yellow-alpha5) !important;
         }
+
         &.inner-circle {
           background-color: var(--theme-yellow) !important;
         }
+
         @media (prefers-color-scheme: dark) {
           &.outer-circle {
             background-color: var(--theme-yellow-alpha5) !important;
           }
+
           &.inner-circle {
             background-color: var(--theme-yellow) !important;
           }
@@ -243,6 +336,7 @@ $tile-height: 100%;
       }
     }
   }
+
   .drag-tile .unread-indicator {
     .inner-circle {
       margin: 25%;
@@ -267,14 +361,17 @@ $tile-height: 100%;
       .outer-circle {
         background-color: var(--theme-orange-alpha5) !important;
       }
+
       .inner-circle {
         background-color: var(--theme-orange) !important;
       }
     }
+
     .unread-indicator.has-replied {
       .outer-circle {
         background-color: var(--theme-yellow-alpha5) !important;
       }
+
       .inner-circle {
         background-color: var(--theme-yellow) !important;
       }
@@ -288,36 +385,43 @@ $tile-height: 100%;
     .drag-tile {
       background: var(--off-white) !important;
     }
+
     .tab-number {
       opacity: 0.5;
       color: var(--theme-light-blue);
       font-family: $font-family-black !important;
     }
+
     .add-tab {
       .svg {
         stroke-width: 3;
       }
     }
+
     .synthesis-tab-icon {
       .svg {
         stroke-width: 3;
       }
     }
+
     .drag-tile.invalid {
       background: #f43c30 !important;
     }
 
     .drag-tile.invalid {
       background: #f43c30 !important;
+
       .remove-icon:hover {
         .svg {
           color: var(--white) !important;
         }
       }
+
       .tab-number {
         opacity: 1;
         color: var(--white);
       }
+
       .synthesis-tab-icon {
         .svg {
           color: var(--white) !important;
@@ -331,25 +435,32 @@ $tile-height: 100%;
       }
     }
   }
+
   .drag-tile-container.active {
     .drag-tile {
       background: white !important;
+
       .tab-number {
         font-family: $font-family-bold !important;
       }
+
       .synthesis-tab-icon {
         .svg {
           stroke-width: 3;
         }
       }
+
       &.invalid {
         .tab-number {
           color: var(--white) !important;
         }
+
         .svg {
           color: var(--white) !important;
         }
+
         background: var(--theme-orange) !important;
+
         .synthesis-tab-icon {
           .svg {
             color: var(--white) !important;
@@ -363,4 +474,32 @@ $tile-height: 100%;
 // plan tab
 .drag-tabs .drag-tile-container.plan-tab {
   margin-right: 2px;
+
+  .MuiGridListTile-tile {
+    overflow: unset !important;
+  }
+
+  .css-custom-tooltip {
+    top: -1.8vw;
+    margin-left: -0.5vw;
+    z-index: 100000;
+    padding: 0 !important;
+    color: var(--tab-gray);
+    background: var(--theme-light-blue);
+    text-align: center;
+    overflow: hidden;
+    width: 3vw;
+    height: 0;
+  }
+
+  svg {
+    $size: 1.8vw;
+    width: $size !important;
+    height: $size !important;
+  }
+
+  &:hover .css-custom-tooltip {
+    height: auto;
+    opacity: 1;
+  }
 }
