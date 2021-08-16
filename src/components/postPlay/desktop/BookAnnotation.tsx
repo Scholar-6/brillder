@@ -98,6 +98,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
             </div>
             <div className="add-reply" onClick={props.addAnnotationReply}>
               <div className="grey-circle">
+                <div className="grey-background"/>
                 <SpriteIcon name="corner-up-left" className="reply-icon" />
               </div>
               <span>Reply</span>
@@ -106,6 +107,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
           <Collapse in={!focused}>
             <div className="add-reply inactive">
               <div className="grey-circle">
+                <div className="grey-background"/>
                 <SpriteIcon name="plus" className="reply-icon" />
               </div>
               <span>{annotation.children?.length ?? 0} {annotation.children?.length === 1 ? "Reply" : "Replies"}</span>

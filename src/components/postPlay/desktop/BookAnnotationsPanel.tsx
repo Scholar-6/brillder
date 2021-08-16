@@ -161,6 +161,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
       }
       <div className="add-annotation-text" onMouseDown={e => e.preventDefault()} onClick={addAnnotation}>
         <div className="grey-circle">
+          <div className="grey-background"/>
           <SpriteIcon name="pen-tool" className="pen-icon" />
         </div>
         <span>Add Annotation</span>

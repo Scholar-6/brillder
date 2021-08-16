@@ -6,8 +6,10 @@
   position: relative;
   padding: 1rem;
   overflow-y: scroll;
+
   &.empty {
     cursor: pointer !important;
+
     .grey-circle {
       background-color: #e4e8ee;
       width: 20rem;
@@ -17,6 +19,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+
       .pen-icon {
         position: absolute;
         top: 50%;
@@ -24,6 +27,7 @@
         transform: translate(-50%, -50%);
       }
     }
+
     .gg-background {
       position: absolute;
       top: 50%;
@@ -35,13 +39,16 @@
       transition: 300ms all ease-out;
       transform: translate(-50%, -50%);
     }
+
     &:hover {
       .grey-circle {
         background: var(--theme-light-blue) !important;
+
         .pen-icon {
           color: var(--white) !important;
         }
       }
+
       .gg-background {
         background: var(--theme-light-blue-alpha3) !important;
         top: calc(50%);
@@ -51,6 +58,7 @@
         transition: 300ms all ease-out;
       }
     }
+
     .add-annotation-text {
       position: absolute;
       top: 50%;
@@ -58,6 +66,7 @@
       transform: translate(-50%, 11rem);
     }
   }
+
   .add-annotation-text {
     cursor: pointer;
     margin-top: 1rem;
@@ -72,8 +81,9 @@
       font-size: 2rem;
       white-space: nowrap;
     }
-    
+
     .grey-circle {
+      transition: all 300ms ease-out;
       position: relative;
       display: inline-block;
       position: relative;
@@ -82,6 +92,18 @@
       background-color: #e4e8ee;
       border-radius: 2rem;
       margin-right: 1rem;
+
+      .grey-background {
+        transition: 300ms all ease-out;
+        position: absolute;
+        border-radius: 50%;
+        top: 0;
+        left: 0;
+        width: 4rem;
+        height: 4rem;
+        background-color: var(--theme-light-blue-alpha3);
+      }
+
       .pen-icon {
         position: absolute;
         width: 2.5rem;
@@ -91,12 +113,25 @@
         transform: translate(-50%, -50%);
       }
     }
+
     &:hover {
-      .gray-circle {
-        background: var(--theme-dark-blue);
+      .grey-background {
+        top: -0.5rem;
+        left: -0.5rem;
+        width: 5rem;
+        height: 5rem;
+      }
+
+      .grey-circle {
+        background: var(--theme-dark-blue) !important;
+
+        .pen-icon {
+          color: var(--white);
+        }
       }
     }
   }
+
   .comment-text-editable {
     &[placeholder]:empty::before {
       content: attr(placeholder);
@@ -104,25 +139,32 @@
       cursor: text;
     }
   }
+
   .comment-text {
-    padding-left:0.2vw;
+    padding-left: 0.2vw;
     margin-left: 2.6vw;
   }
+
   .comment-reply-container {
+
     .comment-date,
     .comment-author {
       margin-left: 2.6vw !important;
     }
   }
+
   .comment-container {
     &.focused .comment-item-container {
       border: 0.25rem var(--highlight-blue) solid;
     }
+
     .comment-item-container {
       border: 0.25rem transparent solid;
-      & > div {
+
+      &>div {
         flex-wrap: nowrap;
       }
+
       .add-reply {
         cursor: pointer;
         margin-top: 1rem;
@@ -130,6 +172,7 @@
         align-items: center;
         justify-content: flex-end;
         height: 4rem;
+
         .grey-circle {
           display: inline-block;
           position: relative;
@@ -137,7 +180,20 @@
           height: 2rem;
           background-color: #e4e8ee;
           border-radius: 1rem;
-          margin-right:0.51rem;
+          margin-right: 0.51rem;
+          transition: all 300ms ease-out;
+
+          .grey-background {
+            position: absolute;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            top: 0;
+            left: 0;
+            transition: all 300ms ease-out;
+            background: var(--theme-light-blue-alpha3);
+          }
+
           .reply-icon {
             stroke-width: 2;
             position: absolute;
@@ -148,6 +204,22 @@
             transform: translate(-50%, -50%);
           }
         }
+        &:hover {
+          .grey-circle {
+            background: var(--theme-dark-blue);
+            .reply-icon {
+              color: var(--white);
+            }
+          }
+          .grey-background {
+            top: -0.25rem;
+            left: -0.25rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--theme-light-blue-alpha3);
+          }
+        }
+
         span {
           font-family: $font-family-bold;
           font-size: 1.5rem;
