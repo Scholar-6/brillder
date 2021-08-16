@@ -35,7 +35,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
   }
 
   checkIfPresent() {
-    const {keyWord} = this.state;
+    const { keyWord } = this.state;
     for (let keyword of this.state.keyWords) {
       if (keyword.name.trim() === keyWord.trim()) {
         return true;
@@ -53,7 +53,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
       return;
     }
 
-    const {keyWords} = this.state;
+    const { keyWords } = this.state;
     keyWords.push({ name: this.state.keyWord });
     this.setState({ keyWord: '', keyWords });
     this.props.onChange(keyWords);
@@ -95,7 +95,14 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
           ? <KeyWordsPlay keywords={this.state.keyWords} />
           : this.state.keyWords.map(this.renderKeyWord.bind(this))
         }
-        <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Keyword(s)" onKeyDown={this.checkKeyword.bind(this)} onChange={e => this.setState({ keyWord: e.target.value })} />
+        <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Keyword(s)"
+          onKeyDown={this.checkKeyword.bind(this)}
+          onChange={e => {
+            if (e.target.value.length <= 35) {
+              this.setState({ keyWord: e.target.value })
+            }
+          }
+          } />
       </div>
     );
   }
