@@ -32,7 +32,6 @@ export interface SynthesisProps {
 }
 
 interface SynthesisState {
-  isLoaded: boolean;
   synthesis: string;
   scrollArea: any;
   canScroll: boolean;
@@ -44,20 +43,12 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
   constructor(props: SynthesisProps) {
     super(props);
     this.state = {
-      isLoaded: false,
       synthesis: props.synthesis,
       canScroll: false,
       scrollArea: null,
       ref: React.createRef() as React.RefObject<HTMLDivElement>,
       commentsShown: props.initSuggestionExpanded
     }
-    this.setLoaded();
-  }
-
-  setLoaded () {
-    setTimeout(() => {
-      this.setState({isLoaded: true});
-    }, 500);
   }
 
   componentDidMount() {
@@ -118,10 +109,6 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
   render() {
     const {canScroll} = this.state;
     const {currentBrick} = this.props;
-
-    if (!this.state.isLoaded) {
-      return <div />
-    }
 
     return (
       <div className="question-type synthesis-page">

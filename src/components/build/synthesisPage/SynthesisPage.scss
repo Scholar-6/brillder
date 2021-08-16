@@ -88,6 +88,10 @@
       }
     }
 
+    .comments-panel {
+      height: calc(100% - 9vh) !important;
+    }
+
     .submit-button {
       margin-top: 2.4vh;
       padding: 2.7vh 1.725vw;

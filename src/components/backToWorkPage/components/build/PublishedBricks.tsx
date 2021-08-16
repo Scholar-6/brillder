@@ -8,7 +8,6 @@ import BrickBlock from "components/baseComponents/BrickBlock";
 import PublishToggle from "./PublishToggle";
 import EmptyPage from "./EmptyPage";
 import BackPagePagination from "../BackPagePagination";
-import { Grid } from "@material-ui/core";
 
 interface BuildBricksProps {
   user: User;
