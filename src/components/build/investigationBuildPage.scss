@@ -524,7 +524,7 @@ $base-build-border: $editor-radius;
     padding-bottom: 0 !important;
     padding-right: 0 !important;
     padding-left: 2vw;
-    height: calc(100% - 10vh);
+    height: calc(100% - 10vh) !important;
 
     .plan-quill-container {
       max-width: 72.5%;
