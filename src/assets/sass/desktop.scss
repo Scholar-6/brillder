@@ -835,3 +835,18 @@
     color: var(--white) !important;
   }
 }
+
+.missing-word-choice {
+  .MuiInputBase-root {
+    position: relative;
+    min-width: 5vw;
+    padding-right: 18px;
+    display: inline-block !important;
+    .MuiSelect-select {
+      display: inline-block !important;
+      padding: 0;
+      min-width: 3vw !important;
+      padding-right: 18px;
+    }
+  }
+}

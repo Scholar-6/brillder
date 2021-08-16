@@ -58,6 +58,16 @@
 .phone-question-preview {
   .missing-word-choice {
     font-size: 1vw;
+    .MuiInputBase-root {
+      position: relative;
+      display: inline-block;
+      min-width: 3vw !important;
+      .MuiSelect-select {
+        display: inline-block;
+        padding: 0;
+        min-width: 3vw !important;
+      }
+    }
   }
 }
 
@@ -65,3 +75,4 @@
   color: var(--theme-dark-blue) !important;
   font-family: $font-family-regular !important;
 }
+
