@@ -1,4 +1,4 @@
-import { Collapse, Grid, IconButton, SvgIcon } from '@material-ui/core';
+import { Collapse, Grid } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Annotation } from 'model/attempt';
 import React from 'react';
@@ -8,7 +8,6 @@ import { User } from 'model/user';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
 import BookAnnotationReply from './BookAnnotationReply';
-import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
 import BookAnnotationEditable from './BookAnnotationEditable';
 
 interface BookAnnotationProps {

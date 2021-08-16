@@ -1,17 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import './PairMatchPreview.scss';
 import { Grid } from "@material-ui/core";
 
 
 const PairMatchPreview: React.FC<any> = () => {
-  const [isGreen, setGreen] = React.useState(false);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setGreen(true), 500);
-    return () => clearTimeout(timeout);
-  });
-
   return (
     <div className="phone-preview-component pairmatch-preview">
       <Grid container justify="center" className="small-text">
