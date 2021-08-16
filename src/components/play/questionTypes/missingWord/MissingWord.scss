@@ -16,6 +16,10 @@
     color: var(--theme-dark-blue);
     font-size: 1.25vw;
 
+    div {
+      display: inline;
+    }
+
     .missing-select {
       margin-left: 10px;
       margin-right: 10px;

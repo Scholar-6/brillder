@@ -1,4 +1,4 @@
-import { Collapse, Grid, IconButton, SvgIcon } from '@material-ui/core';
+import { Collapse, Grid } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Annotation } from 'model/attempt';
 import React from 'react';
@@ -8,7 +8,6 @@ import { User } from 'model/user';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
 import BookAnnotationReply from './BookAnnotationReply';
-import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
 import BookAnnotationEditable from './BookAnnotationEditable';
 
 interface BookAnnotationProps {
@@ -99,6 +98,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
             </div>
             <div className="add-reply" onClick={props.addAnnotationReply}>
               <div className="grey-circle">
+                <div className="grey-background"/>
                 <SpriteIcon name="corner-up-left" className="reply-icon" />
               </div>
               <span>Reply</span>
@@ -107,6 +107,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
           <Collapse in={!focused}>
             <div className="add-reply inactive">
               <div className="grey-circle">
+                <div className="grey-background"/>
                 <SpriteIcon name="plus" className="reply-icon" />
               </div>
               <span>{annotation.children?.length ?? 0} {annotation.children?.length === 1 ? "Reply" : "Replies"}</span>
