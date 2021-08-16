@@ -32,7 +32,6 @@ import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import { Subject } from "model/brick";
 import ClassroomFilterItem from "./components/ClassroomFilterItem";
 import { socket } from "socket/socket";
-import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });

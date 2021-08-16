@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import './ShortBrickDescription.scss';
 import './PhoneTopBrick16x9.scss';
