@@ -119,10 +119,6 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
     const {canScroll} = this.state;
     const {currentBrick} = this.props;
 
-    if (!this.state.isLoaded) {
-      return <div />
-    }
-
     return (
       <div className="question-type synthesis-page">
         <div className="top-scroll-area">
