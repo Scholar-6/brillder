@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import './MissingWordBuild.scss'
@@ -9,7 +8,7 @@ import { showSameAnswerPopup } from '../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import QuillEditor from 'components/baseComponents/quill/QuillEditor';
+import MissingWordQuill from 'components/baseComponents/quill/MissingWordQuill';
 
 
 interface Answer {
@@ -146,7 +145,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
 
     return (
       <div className="choose-several-box" key={key}>
-        <QuillEditor
+        <MissingWordQuill
           data={choice.before}
           className="missing-big-text"
           toolbar={['bold', 'italic', 'latex']}
@@ -173,7 +172,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
                   checked={answer.checked}
                   onChange={(e) => onChecked(choice, e)} value={i}
                 />
-                <QuillEditor
+                <MissingWordQuill
                   placeholder="Enter Answer"
                   toolbar={['bold', 'italic', 'latex']}
                   className={getInputClass(answer)}
@@ -190,7 +189,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
             );
           })
         }
-        <QuillEditor
+        <MissingWordQuill
           data={choice.after}
           className="missing-big-text"
           toolbar={['bold', 'italic', 'latex']}
