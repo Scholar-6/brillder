@@ -16,6 +16,7 @@ import CountSynthesis from './WordsCount';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import { stripHtml } from '../questionService/ConvertService';
 import StatusCircle from '../baseComponents/statusCircle/StatusCircle';
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 export interface SynthesisProps {
@@ -32,6 +33,7 @@ export interface SynthesisProps {
 }
 
 interface SynthesisState {
+  isLoaded: boolean;
   synthesis: string;
   scrollArea: any;
   canScroll: boolean;
@@ -43,12 +45,14 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
   constructor(props: SynthesisProps) {
     super(props);
     this.state = {
+      isLoaded: false,
       synthesis: props.synthesis,
       canScroll: false,
       scrollArea: null,
       ref: React.createRef() as React.RefObject<HTMLDivElement>,
       commentsShown: props.initSuggestionExpanded
     }
+    setTimeout(() => this.setState({isLoaded: true}), 200);
   }
 
   componentDidMount() {
@@ -122,6 +126,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
         <div className="inner-question-type" ref={this.state.ref}>
           <Grid container direction="row" alignItems="stretch">
             <Grid item xs className="synthesis-input-container">
+              {this.state.isLoaded ?
               <QuillEditor
                 disabled={this.props.locked}
                 data={this.state.synthesis}
@@ -137,7 +142,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                   'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "table", "desmos", "caps"
                 ]}
                 imageDialog={true}
-              />
+              /> : <div className="s-loader-container"><SpriteIcon name="f-loader" className="spinning blue" /></div>}
             </Grid>
             { !this.state.commentsShown &&
               <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">

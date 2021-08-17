@@ -150,38 +150,39 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
         </span>
         <div className="classroom-btns-container">
           {!props.inviteHidden &&
-          <div className="assign-button-container">
-            <div className="btn" onClick={() => setInvite(true)}>
-              Add a new student
-              <SpriteIcon name="user-plus" />
-            </div>
-          </div>}
-          {!props.assignHidden && 
-          <div className="assign-button-container">
-            <div className="btn" onClick={() => {
-              togglePopup(true);
-            }}>
-              Assign a new brick
-            <SpriteIcon name="file-plus" />
-            </div>
-          </div>}
+            <div className="assign-button-container">
+              <div className="btn" onClick={() => setInvite(true)}>
+                Add a new student
+                <SpriteIcon name="user-plus" />
+              </div>
+            </div>}
+          {!props.assignHidden &&
+            <div className="assign-button-container">
+              <div className="btn" onClick={() => {
+                togglePopup(true);
+              }}>
+                Assign a new brick
+                <SpriteIcon name="file-plus" />
+              </div>
+            </div>}
         </div>
-        <AssignBrickClass
-          isOpen={isOpen}
-          classroomId={props.classroom.id}
-          subjectId={props.classroom.subjectId || props.classroom.subject.id}
-          success={brick => {
-            setSuccess({ isOpen: true, brick })
-            if (props.onAssigned) {
-              props.onAssigned();
-            }
-            if (props.isStudents) {
-              props.moveToAssignemts && props.moveToAssignemts();
-            }
-          }}
-          failed={brick => setFailed({ isOpen: true, brick })}
-          close={() => togglePopup(false)}
-        />
+        {isOpen &&
+          <AssignBrickClass
+            isOpen={isOpen}
+            classroomId={props.classroom.id}
+            subjectId={props.classroom.subjectId || props.classroom.subject.id}
+            success={brick => {
+              setSuccess({ isOpen: true, brick })
+              if (props.onAssigned) {
+                props.onAssigned();
+              }
+              if (props.isStudents) {
+                props.moveToAssignemts && props.moveToAssignemts();
+              }
+            }}
+            failed={brick => setFailed({ isOpen: true, brick })}
+            close={() => togglePopup(false)}
+          />}
         <AssignSuccessDialog
           isOpen={successResult.isOpen}
           brickTitle={successResult.brick?.title}

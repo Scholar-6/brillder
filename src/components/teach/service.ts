@@ -67,6 +67,25 @@ export const getAllClassrooms = async () => {
 }
 
 /**
+ * Get classroom Assignments
+ * return list of assignments if success or null if failed
+ */
+ export const getAssignmentsClassrooms = async (classId: number) => {
+  try {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/classroom/assignments/0/10/" + classId, {
+      withCredentials: true,
+    });
+    if (res.data) {
+      return res.data;
+    }
+    return null;
+  }
+  catch (e) {
+    return null;
+  }
+}
+
+/**
  * Search classroms
  * @returns list of classrooms if success or null if failed
  */
