@@ -189,14 +189,21 @@ class ClassroomList extends Component<ClassroomListProps, State> {
     if (this.state.page === 0) {
       startIndex = 1;
     }
+    let itemsCount = 0;
+    let totalCount = 0;
+    for (let cls of this.state.classrooms) {
+      totalCount += 1;
+      itemsCount += parseInt(cls.assignmentsCount);
+      totalCount += parseInt(cls.assignmentsCount);
+    }
     let endIndex = this.getClassIndex(items, start + pageSize);
     return <MainAssignmentPagination
       sortedIndex={this.state.page * this.state.pageSize}
       pageSize={this.state.pageSize}
-      bricksLength={100}
+      bricksLength={totalCount}
       classStartIndex={startIndex}
       classEndIndex={endIndex}
-      classroomsLength={100}
+      classroomsLength={itemsCount}
       isRed={false}
       moveNext={() => this.moveNext()}
       moveBack={() => this.moveBack()}
