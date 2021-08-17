@@ -164,17 +164,38 @@ class ClassroomList extends Component<ClassroomListProps, State> {
   moveBack() {
     const page = this.state.page - 1;
     if (page >= 0) {
-      this.setState({page});
+      this.setState({page})
     }
   }
 
-  renderPagination() {
+  getClassIndex(items: any[], itemIndex: number) {
+    let index = 0;
+    let itemsCount = 0;
+    for (const item of items) {
+      if (itemIndex > itemsCount) {
+        if (item.assignment) {
+          index += 1;
+        }
+      }
+      itemsCount += 1;
+    }
+    return index;
+  }
+
+  renderPagination(items: any[]) {
+    const {pageSize, page} = this.state;
+    let start = page * pageSize;
+    let startIndex = this.getClassIndex(items, start);
+    if (this.state.page === 0) {
+      startIndex = 1;
+    }
+    let endIndex = this.getClassIndex(items, start + pageSize);
     return <MainAssignmentPagination
       sortedIndex={this.state.page * this.state.pageSize}
       pageSize={this.state.pageSize}
       bricksLength={100}
-      classStartIndex={1}
-      classEndIndex={5}
+      classStartIndex={startIndex}
+      classEndIndex={endIndex}
       classroomsLength={100}
       isRed={false}
       moveNext={() => this.moveNext()}
@@ -189,7 +210,6 @@ class ClassroomList extends Component<ClassroomListProps, State> {
 
     let isLoaded = true;
     let index = 0;
-
 
     for (let classroom of classrooms) {
       index += 1;
@@ -214,18 +234,10 @@ class ClassroomList extends Component<ClassroomListProps, State> {
       notFirst = true;
     }
     
-    console.log(isLoaded, items, page);
-
-    if (!isLoaded) {
-      //return <div />;
-    }
-
-    console.log(items, page);
-
     return (
       <div className="classroom-list many-classes">
         {this.renderTeachList(items)}
-        {this.renderPagination()}
+        {this.renderPagination(items)}
       </div>
     );
   }
