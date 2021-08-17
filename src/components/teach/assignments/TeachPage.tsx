@@ -147,35 +147,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
     this.loadInitData();
   }
 
-  componentDidUpdate(prevProps: TeachProps, prevState: TeachState) {
-    const value = queryString.parse(this.props.history.location.search);
-    if (value.assignmentId) {
-      const assignmentId = parseInt(value.assignmentId as string, 10);
-      if (prevState.activeAssignment?.id !== assignmentId) {
-        if (value.classroomId) {
-          const classroomId = parseInt(value.classroomId as string, 10);
-          this.setActiveAssignment(classroomId, assignmentId);
-        } else if (prevState.activeClassroom) {
-          this.setActiveAssignment(prevState.activeClassroom.id, assignmentId);
-        } else {
-          const classroomId = prevState.classrooms.find(classroom => classroom.assignments.findIndex(assignment => assignment.id === assignmentId) >= 0)?.id;
-          if (classroomId) {
-            this.setActiveAssignment(classroomId, assignmentId);
-          }
-        }
-      }
-    } else if (value.classroomId) {
-      const classroomId = parseInt(value.classroomId as string, 10);
-      if (prevState.activeClassroom?.id !== classroomId) {
-        this.loadClass(classroomId);
-      } else if (prevState.activeAssignment) {
-        this.unselectAssignment();
-      }
-    } else if (prevState.activeClassroom) {
-      this.loadClass(null);
-    }
-  }
-
   componentDidMount() {
     document.addEventListener("keydown", this.state.handleKey, false);
   }
