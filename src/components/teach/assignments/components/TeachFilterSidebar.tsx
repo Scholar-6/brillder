@@ -176,6 +176,7 @@ class TeachFilterSidebar extends Component<
 
   getClassAssignedCount(classroom: any) {
     let classBricks = 0;
+    /*
     for (const assignment of classroom.assignments) {
       const archived = isArchived(assignment);
       if (this.props.isArchive) {
@@ -187,7 +188,7 @@ class TeachFilterSidebar extends Component<
           classBricks += 1;
         }
       }
-    }
+    }*/
     return classBricks;
   }
 
@@ -207,7 +208,7 @@ class TeachFilterSidebar extends Component<
     let totalCount = 0;
     for (let classroom of this.props.classrooms) {
       totalCount += classroom.students.length;
-      totalBricks += this.getClassAssignedCount(classroom);
+      totalBricks += 1;// this.getClassAssignedCount(classroom);
     }
     let label = '1 ASSIGNMENT';
     if (totalBricks > 1) {
