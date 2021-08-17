@@ -233,17 +233,18 @@ class TeachPage extends Component<TeachProps, TeachState> {
         }
       }
 
-      const haveArchivedBrick = !!classrooms.find(this.findClassArchive);
+      //const haveArchivedBrick = !!classrooms.find(this.findClassArchive);
 
       // if reloading
       let stepsEnabled = false;
+      /*
       if (this.state.isLoaded === true) {
         if (haveArchivedBrick === true && haveArchivedBrick !== this.state.haveArchivedBrick) {
           stepsEnabled = true;
         }
-      }
+      }*/
 
-      this.setState({ classrooms, haveArchivedBrick, stepsEnabled, activeClassroom, isLoaded: true });
+      this.setState({ classrooms, stepsEnabled, activeClassroom, isLoaded: true });
       return classrooms;
     } else {
       this.props.requestFailed('can`t get classrooms');
@@ -599,6 +600,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     return (
       <div className="tab-content">
+        {/*
         <ArchiveToggle
           isArchive={isArchive}
           history={this.props.history}
@@ -606,7 +608,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           classrooms={this.state.classrooms}
           activeClassroom={this.state.activeClassroom}
           setArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
-        />
+        />*/}
         {this.state.activeStudent ?
           <ActiveStudentBricks
             subjects={this.state.subjects}
@@ -651,7 +653,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 onRemind={this.setReminderNotification.bind(this)}
               />
         }
-        {this.renderTeachPagination()}
+        {//this.renderTeachPagination()
+        }
       </div>
     );
   }
