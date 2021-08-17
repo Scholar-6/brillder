@@ -10,6 +10,8 @@ import AssignedBrickDescription from "./AssignedBrickDescription";
 import NameAndSubjectForm from "components/teach/components/NameAndSubjectForm";
 import { updateClassroom } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
+import { getAssignmentsClassrooms } from "components/teach/service";
+import MainAssignmentPagination from "./MainAssignmentPagination";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -29,7 +31,49 @@ interface ClassroomListProps {
   onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
-class ClassroomList extends Component<ClassroomListProps> {
+interface State {
+  page: number;
+  pageSize: number;
+  toggleState: boolean;
+  classrooms: any[];
+}
+
+class ClassroomList extends Component<ClassroomListProps, State> {
+  constructor(props: ClassroomListProps) {
+    super(props);
+
+    this.state = {
+      page: 0,
+      pageSize: 6,
+      toggleState: false,
+      classrooms: props.classrooms
+    }
+
+    this.loadPageData(0, this.state.pageSize, props.classrooms);
+  }
+
+  async loadPageData(page: number, pageSize: number, classrooms: any[]) {
+    let end = (page * pageSize) + pageSize;
+    let index = 0;
+    for (let classroom of classrooms) {
+      index += 1;
+      if (index <= end) {
+        if (!classroom.assignments) {
+          const assignments = await getAssignmentsClassrooms(classroom.id);
+          if (assignments) {
+            classroom.assignments = assignments;
+          }
+        }
+      } else {
+        break;
+      }
+      if (classroom.assignments) {
+        index += classroom.assignments.length;
+      }
+    }
+    this.setState({ toggleState: !this.state.toggleState });
+  }
+
   async updateClassroom(classroom: TeachClassroom, name: string, subject: Subject) {
     let classroomApi = {
       id: classroom.id,
@@ -43,16 +87,6 @@ class ClassroomList extends Component<ClassroomListProps> {
     if (success) {
       this.props.reloadClasses();
     }
-  }
-
-  prepareClassItems(items: TeachListItem[], classroom: TeachClassroom, notFirst: boolean) {
-    let item: TeachListItem = {
-      classroom,
-      notFirst,
-      assignment: null
-    };
-    items.push(item);
-    convertClassAssignments(items, classroom, this.props.isArchive);
   }
 
   renderClassname(c: TeachListItem, index: number, i: number) {
@@ -88,7 +122,7 @@ class ClassroomList extends Component<ClassroomListProps> {
     return (
       <div>
         {items.map((c, i) => {
-          if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
+          if ((i >= (this.state.page * this.state.pageSize)) && i < ((this.state.page * this.state.pageSize) + this.state.pageSize)) {
             index++;
             if (c.assignment && c.classroom) {
               return (
@@ -120,17 +154,98 @@ class ClassroomList extends Component<ClassroomListProps> {
     );
   }
 
+  async moveNext() {
+    const page = this.state.page + 1;
+    await this.loadPageData(page, this.state.pageSize, this.state.classrooms);
+
+    this.setState({page});
+  }
+
+  moveBack() {
+    const page = this.state.page - 1;
+    if (page >= 0) {
+      this.setState({page})
+    }
+  }
+
+  getClassIndex(items: any[], itemIndex: number) {
+    let index = 0;
+    let itemsCount = 0;
+    for (const item of items) {
+      if (itemIndex > itemsCount) {
+        if (item.assignment) {
+          index += 1;
+        }
+      }
+      itemsCount += 1;
+    }
+    return index;
+  }
+
+  renderPagination(items: any[]) {
+    const {pageSize, page} = this.state;
+    let start = page * pageSize;
+    let startIndex = this.getClassIndex(items, start);
+    if (this.state.page === 0) {
+      startIndex = 1;
+    }
+    let itemsCount = 0;
+    let totalCount = 0;
+    for (let cls of this.state.classrooms) {
+      totalCount += 1;
+      if (this.props.isArchive) {
+      itemsCount += parseInt(cls.archivedAssignmentsCount);
+      totalCount += parseInt(cls.archivedAssignmentsCount);
+      } else {
+        itemsCount += parseInt(cls.assignmentsCount) - parseInt(cls.archivedAssignmentsCount);
+        totalCount += parseInt(cls.assignmentsCount) - parseInt(cls.archivedAssignmentsCount);
+      }
+    }
+    let endIndex = this.getClassIndex(items, start + pageSize);
+    return <MainAssignmentPagination
+      sortedIndex={this.state.page * this.state.pageSize}
+      pageSize={this.state.pageSize}
+      bricksLength={totalCount}
+      classStartIndex={startIndex}
+      classEndIndex={endIndex}
+      classroomsLength={itemsCount}
+      isRed={false}
+      moveNext={() => this.moveNext()}
+      moveBack={() => this.moveBack()}
+    />
+  }
+
   render() {
-    const { classrooms } = this.props;
+    const { page, pageSize, classrooms } = this.state;
     let items = [] as TeachListItem[];
     let notFirst = false;
+
+    let index = 0;
+
     for (let classroom of classrooms) {
-      this.prepareClassItems(items, classroom, notFirst);
+      index += 1;
+
+      let item: TeachListItem = {
+        classroom,
+        notFirst,
+        assignment: null
+      };
+      items.push(item);
+      if (index <= (page * pageSize) + pageSize) {
+        if (classroom.assignments) {
+          index += classroom.assignments.length;
+          convertClassAssignments(items, classroom, this.props.isArchive);
+        } else {
+          break;
+        }
+      }
       notFirst = true;
     }
+    
     return (
       <div className="classroom-list many-classes">
         {this.renderTeachList(items)}
+        {this.renderPagination(items)}
       </div>
     );
   }

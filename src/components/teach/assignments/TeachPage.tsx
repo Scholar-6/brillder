@@ -13,7 +13,7 @@ import actions from 'redux/actions/requestFailed';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { TeachClassroom, TeachStudent } from "model/classroom";
-import { createClass, getAllClassrooms, searchClassrooms } from "components/teach/service";
+import { createClass, getAllClassrooms, getAssignmentsClassrooms, searchClassrooms } from "components/teach/service";
 import { checkAdmin, checkTeacher } from "components/services/brickService";
 import { TeachFilters } from '../model';
 import { Assignment } from "model/classroom";
@@ -147,35 +147,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
     this.loadInitData();
   }
 
-  componentDidUpdate(prevProps: TeachProps, prevState: TeachState) {
-    const value = queryString.parse(this.props.history.location.search);
-    if (value.assignmentId) {
-      const assignmentId = parseInt(value.assignmentId as string, 10);
-      if (prevState.activeAssignment?.id !== assignmentId) {
-        if (value.classroomId) {
-          const classroomId = parseInt(value.classroomId as string, 10);
-          this.setActiveAssignment(classroomId, assignmentId);
-        } else if (prevState.activeClassroom) {
-          this.setActiveAssignment(prevState.activeClassroom.id, assignmentId);
-        } else {
-          const classroomId = prevState.classrooms.find(classroom => classroom.assignments.findIndex(assignment => assignment.id === assignmentId) >= 0)?.id;
-          if (classroomId) {
-            this.setActiveAssignment(classroomId, assignmentId);
-          }
-        }
-      }
-    } else if (value.classroomId) {
-      const classroomId = parseInt(value.classroomId as string, 10);
-      if (prevState.activeClassroom?.id !== classroomId) {
-        this.loadClass(classroomId);
-      } else if (prevState.activeAssignment) {
-        this.unselectAssignment();
-      }
-    } else if (prevState.activeClassroom) {
-      this.loadClass(null);
-    }
-  }
-
   componentDidMount() {
     document.addEventListener("keydown", this.state.handleKey, false);
   }
@@ -230,20 +201,22 @@ class TeachPage extends Component<TeachProps, TeachState> {
         if (classroom) {
           activeClassroom = classroom;
           activeClassroom.active = true;
+          activeClassroom.assignments = await getAssignmentsClassrooms(activeClassroom.id);
         }
       }
 
-      const haveArchivedBrick = !!classrooms.find(this.findClassArchive);
+      //const haveArchivedBrick = !!classrooms.find(this.findClassArchive);
 
       // if reloading
       let stepsEnabled = false;
+      /*
       if (this.state.isLoaded === true) {
         if (haveArchivedBrick === true && haveArchivedBrick !== this.state.haveArchivedBrick) {
           stepsEnabled = true;
         }
-      }
+      }*/
 
-      this.setState({ classrooms, haveArchivedBrick, stepsEnabled, activeClassroom, isLoaded: true });
+      this.setState({ classrooms, stepsEnabled, activeClassroom, isLoaded: true });
       return classrooms;
     } else {
       this.props.requestFailed('can`t get classrooms');
@@ -256,6 +229,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       const classroom = classrooms.find(c => c.id === id);
       if (classroom) {
         classroom.active = true;
+        classroom.assignments = await getAssignmentsClassrooms(classroom.id);
         this.setState({ activeClassroom: classroom, activeAssignment: null });
       } else {
         this.setState({ activeClassroom: null, activeAssignment: null });
@@ -292,11 +266,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
     this.setState({ activeStudent, sortedIndex: 0 });
   }
 
-  setActiveClassroom(id: number | null) {
+  async setActiveClassroom(id: number | null) {
     this.collapseClasses();
     const { classrooms } = this.state;
     let classroom = classrooms.find(c => c.id === id);
     if (classroom) {
+      if (!classroom.assignments) {
+        classroom.assignments = await getAssignmentsClassrooms(classroom.id);
+      }
       classroom.active = true;
       this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom, activeAssignment: null, activeStudent: null, assignmentStats: null });
       this.props.history.push({ search: queryString.stringify({ classroomId: id }) });
@@ -599,6 +576,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     return (
       <div className="tab-content">
+        {/*
         <ArchiveToggle
           isArchive={isArchive}
           history={this.props.history}
@@ -606,7 +584,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           classrooms={this.state.classrooms}
           activeClassroom={this.state.activeClassroom}
           setArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
-        />
+        />*/}
         {this.state.activeStudent ?
           <ActiveStudentBricks
             subjects={this.state.subjects}
@@ -651,7 +629,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 onRemind={this.setReminderNotification.bind(this)}
               />
         }
-        {this.renderTeachPagination()}
+        {//this.renderTeachPagination()
+        }
       </div>
     );
   }
