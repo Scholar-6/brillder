@@ -13,7 +13,7 @@ import actions from 'redux/actions/requestFailed';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { TeachClassroom, TeachStudent } from "model/classroom";
-import { createClass, getAllClassrooms, searchClassrooms } from "components/teach/service";
+import { createClass, getAllClassrooms, getAssignmentsClassrooms, searchClassrooms } from "components/teach/service";
 import { checkAdmin, checkTeacher } from "components/services/brickService";
 import { TeachFilters } from '../model';
 import { Assignment } from "model/classroom";
@@ -230,6 +230,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         if (classroom) {
           activeClassroom = classroom;
           activeClassroom.active = true;
+          activeClassroom.assignments = await getAssignmentsClassrooms(activeClassroom.id);
         }
       }
 
@@ -257,6 +258,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       const classroom = classrooms.find(c => c.id === id);
       if (classroom) {
         classroom.active = true;
+        classroom.assignments = await getAssignmentsClassrooms(classroom.id);
         this.setState({ activeClassroom: classroom, activeAssignment: null });
       } else {
         this.setState({ activeClassroom: null, activeAssignment: null });
@@ -293,11 +295,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
     this.setState({ activeStudent, sortedIndex: 0 });
   }
 
-  setActiveClassroom(id: number | null) {
+  async setActiveClassroom(id: number | null) {
     this.collapseClasses();
     const { classrooms } = this.state;
     let classroom = classrooms.find(c => c.id === id);
     if (classroom) {
+      if (!classroom.assignments) {
+        classroom.assignments = await getAssignmentsClassrooms(classroom.id);
+      }
       classroom.active = true;
       this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom, activeAssignment: null, activeStudent: null, assignmentStats: null });
       this.props.history.push({ search: queryString.stringify({ classroomId: id }) });
