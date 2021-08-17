@@ -165,7 +165,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
             return (
               <div style={{ position: 'relative' }} className={getAnswerClass(answer)} key={i}>
                 {
-                  (choice.answers.length > 3) && <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, i)} />
+                  (choice.answers.length > 3) && <SpriteIcon name="trash-outline" className="right-top-icon" onClick={() => removeAnswer(choice, i)} />
                 }
                 <Checkbox
                   className={`left-ckeckbox ${(validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}`}
