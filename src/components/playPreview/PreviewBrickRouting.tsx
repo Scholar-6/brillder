@@ -17,7 +17,6 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { User } from 'model/user';
 
-import Introduction from 'components/play/newPrep/PhonePrep';
 import Live from 'components/play/live/Live';
 import ProvisionalScore from 'components/play/scorePages/provisionalScore/ProvisionalScore';
 import Synthesis from 'components/play/synthesis/Synthesis';
@@ -81,7 +80,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const initAttempts = prefillAttempts(brick.questions);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
-  const [prepEndTime, setPrepEndTime] = React.useState('');
+  const [prepEndTime, setPrepEndTime] = React.useState(undefined);
+  const [synthesisEndTime, setSynthesisEndTime] = React.useState(null);
+  
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [headerHidden, hideMobileHeader] = React.useState(false);
   const [liveEndTime, setLiveEndTime] = React.useState(null as any);
@@ -252,18 +253,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
           <Switch>
             <Route exact path={routes.newPrepRoute}>
-              <NewPrep brick={brick} moveNext={moveToLive} briefExpanded={true} endTime={null} setEndTime={() => {}} />
-            </Route>
-            <Route exac path="/play-preview/brick/:brickId/intro">
-              <Introduction
-                location={location}
-                history={history}
-                brick={brick}
-                isPlayPreview={true}
-                endTime={prepEndTime}
-                setEndTime={setPrepEndTime}
-                moveNext={moveToLive}
-              />
+              <NewPrep brick={brick} moveNext={moveToLive} briefExpanded={true} endTime={prepEndTime} setEndTime={setPrepEndTime} />
             </Route>
             <Route exac path={routes.preLiveRoute}>
               <Live
@@ -295,7 +285,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/synthesis">
-              <Synthesis status={status} brick={brick} endTime={null} setEndTime={() => {}} isPlayPreview={true} moveNext={moveToReview} />
+              <Synthesis status={status} brick={brick} endTime={synthesisEndTime} setEndTime={setSynthesisEndTime} isPlayPreview={true} moveNext={moveToReview} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/review">
               <Review
