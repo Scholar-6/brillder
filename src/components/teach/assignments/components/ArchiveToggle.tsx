@@ -2,7 +2,6 @@ import React from 'react';
 
 import map from 'components/map';
 import { TeachClassroom } from 'model/classroom';
-import { isArchived } from "../service/service";
 
 interface Props {
   isArchive: boolean;
