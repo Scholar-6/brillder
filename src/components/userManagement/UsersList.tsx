@@ -90,8 +90,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       isSearching: false,
       filterHeight: "auto",
 
-      sortBy: UserSortBy.Name,
-      isAscending: false,
+      sortBy: UserSortBy.Joined,
+      isAscending: true,
       isAdmin: checkAdmin(props.user.roles),
       isClearFilter: false,
       isDeleteDialogOpen: false,
@@ -347,12 +347,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
               </Grid>
             </RadioGroup>
           </div>
-          <CustomFilterBox
-            label="Filter by: Subject"
-            isClearFilter={this.state.isClearFilter}
-            setHeight={filterHeight => this.setState({filterHeight})}
-            clear={this.clearStatus.bind(this)}
-          />
+          <div className="filter-header">
+            <span>Filter by: Subject</span>
+         </div>
         </div>
         <div className="sort-box subject-scrollable">
           <SubjectsList
@@ -535,7 +532,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderTableHeader() {
     return (
       <div className="user-header">
-        <h1 className="brick-row-title">ALL USERS</h1>
+        <h1 className="brick-row-title">All Users</h1>
         <AddUserButton history={this.props.history} />
       </div>
     );

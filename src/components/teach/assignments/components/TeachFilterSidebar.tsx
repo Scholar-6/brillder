@@ -11,7 +11,6 @@ import EmptyFilter from "../filter/EmptyFilter";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
 import { Subject } from "model/brick";
-import { isArchived } from "../service/service";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import { resendInvitation } from "services/axios/classroom";
 
@@ -175,19 +174,6 @@ class TeachFilterSidebar extends Component<
   }
 
   getClassAssignedCount(classroom: any) {
-    /*
-    for (const assignment of classroom.assignments) {
-      const archived = isArchived(assignment);
-      if (this.props.isArchive) {
-        if (archived) {
-          classBricks += 1;
-        }
-      } else {
-        if (!archived) {
-          classBricks += 1;
-        }
-      }
-    }*/
     return parseInt(classroom.assignmentsCount);
   }
 

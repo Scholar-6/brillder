@@ -1,9 +1,6 @@
-import { Assignment, TeachClassroom } from "model/classroom";
+import { TeachClassroom } from "model/classroom";
 import { TeachListItem } from "../components/ClassroomsList";
 
-export const isArchived = (assignment: Assignment) => {
-  return assignment.isArchived === true;
-}
 
 export const convertClassAssignments = (items: any[], classroom: TeachClassroom, isArchive: boolean) => {
   for (let assignment of classroom.assignments) {

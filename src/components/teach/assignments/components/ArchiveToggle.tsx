@@ -2,7 +2,6 @@ import React from 'react';
 
 import map from 'components/map';
 import { TeachClassroom } from 'model/classroom';
-import { isArchived } from "../service/service";
 
 interface Props {
   isArchive: boolean;
@@ -15,25 +14,11 @@ interface Props {
 
 const ArchiveToggle: React.FC<Props> = (props) => {
   const getLiveClassCount = (classroom: TeachClassroom) => {
-    let count = 0;
-    for (const assignment of classroom.assignments) {
-      const archived = isArchived(assignment);
-      if (!archived) {
-        count += 1;
-      }
-    }
-    return count;
+    return parseInt(classroom.assignmentsCount) - parseInt(classroom.archivedAssignmentsCount);
   }
 
   const getArchiveClassCount = (classroom: TeachClassroom) => {
-    let count = 0;
-    for (const assignment of classroom.assignments) {
-      const archived = isArchived(assignment);
-      if (archived) {
-        count += 1;
-      }
-    }
-    return count;
+    return parseInt(classroom.archivedAssignmentsCount);
   }
 
   const getLiveClassesCount = () => {
