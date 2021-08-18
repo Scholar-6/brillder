@@ -47,7 +47,7 @@ const MissingWordQuill = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
             if(props.onChange) {
                 props.onChange(content);
             }
-        }, 100),
+        },500),
         [props.onChange]
     );
 
