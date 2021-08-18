@@ -535,7 +535,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderTableHeader() {
     return (
       <div className="user-header">
-        <h1 className="brick-row-title">ALL USERS</h1>
+        <h1 className="brick-row-title">All Users</h1>
         <AddUserButton history={this.props.history} />
       </div>
     );
