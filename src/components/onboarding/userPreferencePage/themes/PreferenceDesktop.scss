@@ -10,15 +10,78 @@
   justify-content: center;
 
   h2 {
-    padding-top: 7vh;
+    padding-top: 8vh;
     padding-bottom: 4vh;
     text-align: center;
     font-size: 4vw;
     font-family: $font-family-black;
   }
 
+  .role-box {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+    width: 20vw;
+    font-size: 1.5vw;
+    text-align: center;
+
+    svg {
+      width: 79%;
+      color: var(--theme-orange);
+    }
+
+    h2 {
+      padding-top: 2vh;
+      font-size: 3vw;
+    }
+
+    p {
+      font-family: $font-family-light;
+    }
+
+    &:hover {
+      border-radius: 1vw;
+      background: var(--theme-light-blue);
+    }
+
+    .glasses {
+      width: 11vw;
+    }
+
+    .file-container {
+      align-items: flex-end;
+      svg {
+        width: 8vw;
+      }
+    }
+
+    .manage-classes {
+      width: 8vw;
+      height: 8vw;
+
+      svg {
+        width: 12vw;
+        height: 8vw;
+
+        .blue {
+          color: var(--theme-light-blue) !important;
+        }
+
+        .left-smile,
+        .right-smile {
+          display: none !important;
+        }
+      }
+
+      .item-description {
+        display: none;
+      }
+    }
+  }
 
   .ef-flex {
+    margin-top: 2vh;
     display: flex;
   }
 
@@ -64,12 +127,13 @@
       }
 
       &.active {
-        background: var(--theme-light-blue);     
+        background: var(--theme-light-blue);
       }
 
       &.disabled {
         cursor: inherit;
         color: #757575;
+
         .MuiSvgIcon-root {
           color: #757575;
         }
@@ -88,6 +152,7 @@
     letter-spacing: 0.1vw;
     font-size: 2vw;
     padding-right: 2.6vw;
+
     svg {
       position: absolute;
       top: 2vw;
