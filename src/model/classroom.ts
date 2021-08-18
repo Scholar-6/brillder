@@ -71,5 +71,6 @@ export interface TeachClassroom extends Classroom {
   subject: Subject;
   isClass?: boolean;
   assignmentsCount: string;
+  archivedAssignmentsCount: string;
   studentsInvitations: any[];
 }
