@@ -14,7 +14,7 @@ const AddUserButton: React.FC<AddUserButtonProps> = ({history}) => {
   return (
     <div className="add-user-button" onClick={moveToNewUser} >
       <img alt="" src="/feathericons/svg/user-plus-blue.svg" />
-      <span>ADD USER</span>
+      <span>Add User</span>
     </div>
   );
 }
