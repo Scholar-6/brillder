@@ -137,8 +137,8 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
     );
   }
 
-  const RoleBox: React.FC<{ roleId: RolePreference | UserType }> = ({ roleId, children }) => {
-    return <div className="role-box" onClick={async () => {
+  const RoleBox: React.FC<{ roleId: RolePreference | UserType, className: string }> = ({ roleId, className, children }) => {
+    return <div className={"role-box " + className} onClick={async () => {
       await handleChange(roleId as RolePreference, false);
       moveNext();
     }}>
@@ -156,7 +156,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
         <div className="ef-container">
           <h2>Which of the following best describes you?</h2>
           <div className="ef-flex">
-            <RoleBox roleId={RolePreference.Student}>
+            <RoleBox roleId={RolePreference.Student} className="box1">
               <div className="flex-center">
                 <SpriteIcon name="glasses" className="glasses" />
               </div>
@@ -166,7 +166,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <p>and feedback, or join</p>
               <p>a course.</p>
             </RoleBox>
-            <RoleBox roleId={RolePreference.Teacher}>
+            <RoleBox roleId={RolePreference.Teacher} className="box2">
               <div className="flex-center file-container">
                 <SpriteIcon name="file-plus" />
               </div>
@@ -175,7 +175,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <p>content and provide</p>
               <p>feedback to my students.</p>
             </RoleBox>
-            <RoleBox roleId={RolePreference.Builder}>
+            <RoleBox roleId={RolePreference.Builder} className="box3">
               <div className="flex-center">
                 <TeachButton history={historyMock} />
               </div>
@@ -184,7 +184,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <p>classes, students,</p>
               <p>and teachers.</p>
             </RoleBox>
-            <RoleBox roleId={RolePreference.Builder}>
+            <RoleBox roleId={RolePreference.Builder} className="box4">
               <div className="flex-center">
                 <SpriteIcon name="trowel" />
               </div>
