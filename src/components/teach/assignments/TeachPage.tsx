@@ -186,7 +186,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   findClassArchive(c: TeachClassroom) {
-    return c.assignments.find(a => a.isArchived === true);
+    return parseInt(c.archivedAssignmentsCount) > 0;
   }
 
   async loadClasses(activeClassId?: number) {
@@ -205,16 +205,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
         }
       }
 
-      //const haveArchivedBrick = !!classrooms.find(this.findClassArchive);
+      const haveArchivedBrick = !!classrooms.find(this.findClassArchive);
 
       // if reloading
       let stepsEnabled = false;
-      /*
       if (this.state.isLoaded === true) {
         if (haveArchivedBrick === true && haveArchivedBrick !== this.state.haveArchivedBrick) {
           stepsEnabled = true;
         }
-      }*/
+      }
 
       this.setState({ classrooms, stepsEnabled, activeClassroom, isLoaded: true });
       return classrooms;
@@ -576,7 +575,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     return (
       <div className="tab-content">
-        {/*
         <ArchiveToggle
           isArchive={isArchive}
           history={this.props.history}
@@ -584,7 +582,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           classrooms={this.state.classrooms}
           activeClassroom={this.state.activeClassroom}
           setArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
-        />*/}
+        />
         {this.state.activeStudent ?
           <ActiveStudentBricks
             subjects={this.state.subjects}
