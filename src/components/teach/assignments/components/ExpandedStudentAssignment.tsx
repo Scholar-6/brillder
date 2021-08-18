@@ -40,7 +40,8 @@ class ExpandedStudentAssignment extends Component<
     super(props);
 
     let questionCount = 0;
-    if (props.stats.byStudent[0]) {
+    const {byStudent} = props.stats;
+    if (byStudent[0] && byStudent[0].attempts && byStudent[0].attempts[0] && byStudent[0].attempts[0].answers) {
       questionCount = props.stats.byStudent[0].attempts[0].answers.length;
     }
 
