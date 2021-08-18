@@ -10,6 +10,7 @@ import BrickCircle from "./BrickCircle";
 import { canDelete } from "components/services/brickService";
 import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
 import BrickTitle from "./BrickTitle";
+import KeyWordsSearchPlay from "components/build/proposal/questionnaire/brickTitle/components/KeywordsSearchPlay";
 
 interface ShortDescriptionProps {
   brick: Brick;
@@ -74,7 +75,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
           <BrickTitle title={brick.title} />
         </div>
         <div className="link-info">
-          <KeyWordsPreview keywords={brick.keywords} />
+          <KeyWordsSearchPlay searchString={searchString} keywords={brick.keywords} />
         </div>
         <div className="link-info">
           <AuthorSearchRow searchString={searchString} brick={brick} />
