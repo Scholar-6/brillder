@@ -52,6 +52,12 @@ class ClassroomList extends Component<ClassroomListProps, State> {
     this.loadPageData(0, this.state.pageSize, props.classrooms);
   }
 
+  componentDidUpdate(prevProps: ClassroomListProps, prevState: State) {
+    if (prevProps.isArchive != this.props.isArchive) {
+      this.loadPageData(0, this.state.pageSize, this.props.classrooms);
+    }
+  }
+
   async loadPageData(page: number, pageSize: number, classrooms: any[]) {
     let end = (page * pageSize) + pageSize;
     let index = 0;
@@ -71,7 +77,7 @@ class ClassroomList extends Component<ClassroomListProps, State> {
         index += classroom.assignments.length;
       }
     }
-    this.setState({ toggleState: !this.state.toggleState });
+    this.setState({ toggleState: !this.state.toggleState, classrooms });
   }
 
   async updateClassroom(classroom: TeachClassroom, name: string, subject: Subject) {
@@ -157,14 +163,13 @@ class ClassroomList extends Component<ClassroomListProps, State> {
   async moveNext() {
     const page = this.state.page + 1;
     await this.loadPageData(page, this.state.pageSize, this.state.classrooms);
-
-    this.setState({page});
+    this.setState({ page });
   }
 
   moveBack() {
     const page = this.state.page - 1;
     if (page >= 0) {
-      this.setState({page})
+      this.setState({ page })
     }
   }
 
@@ -183,7 +188,7 @@ class ClassroomList extends Component<ClassroomListProps, State> {
   }
 
   renderPagination(items: any[]) {
-    const {pageSize, page} = this.state;
+    const { pageSize, page } = this.state;
     let start = page * pageSize;
     let startIndex = this.getClassIndex(items, start);
     if (this.state.page === 0) {
@@ -194,8 +199,8 @@ class ClassroomList extends Component<ClassroomListProps, State> {
     for (let cls of this.state.classrooms) {
       totalCount += 1;
       if (this.props.isArchive) {
-      itemsCount += parseInt(cls.archivedAssignmentsCount);
-      totalCount += parseInt(cls.archivedAssignmentsCount);
+        itemsCount += parseInt(cls.archivedAssignmentsCount);
+        totalCount += parseInt(cls.archivedAssignmentsCount);
       } else {
         itemsCount += parseInt(cls.assignmentsCount) - parseInt(cls.archivedAssignmentsCount);
         totalCount += parseInt(cls.assignmentsCount) - parseInt(cls.archivedAssignmentsCount);
@@ -223,14 +228,28 @@ class ClassroomList extends Component<ClassroomListProps, State> {
     let index = 0;
 
     for (let classroom of classrooms) {
-      index += 1;
 
-      let item: TeachListItem = {
-        classroom,
-        notFirst,
-        assignment: null
-      };
-      items.push(item);
+
+      if (this.props.isArchive) {
+        if (classroom.archivedAssignmentsCount > 0) {
+          index += 1;
+          let item: TeachListItem = {
+            classroom,
+            notFirst,
+            assignment: null
+          };
+          items.push(item);
+        }
+      } else {
+        index += 1;
+        let item: TeachListItem = {
+          classroom,
+          notFirst,
+          assignment: null
+        };
+        items.push(item);
+      }
+
       if (index <= (page * pageSize) + pageSize) {
         if (classroom.assignments) {
           index += classroom.assignments.length;
@@ -241,7 +260,7 @@ class ClassroomList extends Component<ClassroomListProps, State> {
       }
       notFirst = true;
     }
-    
+
     return (
       <div className="classroom-list many-classes">
         {this.renderTeachList(items)}
