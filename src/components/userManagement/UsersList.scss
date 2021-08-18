@@ -6,24 +6,53 @@
   .sorted-row {
     .sort-box {
       .subjects-filter {
+        margin: 0 !important;
+        width: 100% !important;
         height: calc(100vh - 38vh);
+
+        .subject-list-v2 {
+          padding-bottom: 0.5vh;
+          padding-top: 0.5vh;
+          padding-left: 1.2vw;
+          padding-right: 1.2vw;
+          margin-bottom: 0 !important;
+
+          &:hover {
+            background: var(--light-blue-alpha3);
+          }
+          &.checked {
+            background: var(--white);
+            color: var(--theme-dark-blue);
+            .MuiFormControlLabel-root .MuiTypography-root {
+              color: var(--theme-dark-blue) !important;
+            }
+            &:hover {
+              opacity: 0.9;
+            }
+          }
+        }
       }
     }
+
     .brick-row-container {
       @include tabletP {
         padding-left: 0;
       }
+
       .user-header {
         position: relative;
         @extend %flexCenter;
         justify-content: space-between;
+
         .brick-row-title {
           font-size: 3.8vw !important;
           letter-spacing: 0 !important;
+
           @include tabletP {
             padding-left: 1.18vw;
           }
         }
+
         .add-user-button {
           cursor: pointer;
           margin: 0 1.3vw;
@@ -34,24 +63,29 @@
           height: max-content;
           @extend %flexCenter;
           flex-direction: column;
-          > img {
+
+          >img {
             width: 60%;
             height: 60%;
           }
         }
       }
+
       .users-table {
         width: 100%;
         height: calc(100vh - 7.834vw - 6.5vh - 6vh) !important;
         overflow-y: auto;
-        > table {
+
+        >table {
           width: 100%;
           border: none;
+
           thead {
             color: var(--theme-dark-blue);
             font-family: $font-family-black;
             font-size: 1.3vw;
             letter-spacing: 0.25vw;
+
             tr {
               th {
                 padding-top: 0.6vh;
@@ -71,38 +105,48 @@
               .subject-title {
                 padding-left: 0.8vw;
                 width: 11.5%;
+
                 .sort-button {
                   margin-left: 0;
                 }
               }
+
               .user-full-name {
                 width: 30%;
               }
+
               .email-column {
                 width: 31.3%;
               }
+
               .edit-button-column {
                 width: 2.5vw;
               }
             }
           }
+
           tr {
             height: calc((100vh - 7.834vw - 5.2vw - 18vh)/13) !important;
             overflow-y: hidden;
+
             &.user-row {
               height: calc((100vh - 7.834vw - 5.2vw - 18vh)/13) !important;
               font-family: $font-family-regular;
+
               &:nth-child(odd) {
                 background: var(--tab-gray);
               }
+
               td {
                 padding-left: 0.5vw;
                 color: var(--theme-dark-blue);
                 font-size: 1vw;
                 padding-top: 0;
               }
+
               .user-actions-cell {
                 min-width: 5.5vw;
+
                 .delete-button,
                 .edit-button {
                   display: inline-block;
@@ -110,42 +154,50 @@
                   height: 1.85vw;
                   width: 1.85vw;
                 }
+
                 .edit-button {
                   margin-left: 1vw;
                 }
+
                 >div {
                   @extend %displayFlex;
                 }
               }
+
               .activate-button-container {
                 padding-left: 2vw;
               }
             }
+
             .user-last-name {
               font-family: $font-family-bold;
             }
           }
         }
       }
+
       .user-first-name {
         font-family: $font-family-regular !important;
       }
+
       .sort-by-box {
         height: 20vh;
         overflow-y: auto;
       }
     }
   }
+
   .users-pagination {
     position: absolute;
     bottom: 0;
     width: 100%;
   }
+
   .joing-date {
     padding-left: 1.2vw !important;
   }
 }
 
-.user-list-page ~ .beta-text {
+.user-list-page~.beta-text {
   color: var(--theme-dark-blue);
 }
