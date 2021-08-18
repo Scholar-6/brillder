@@ -482,64 +482,28 @@ class TeachPage extends Component<TeachProps, TeachState> {
     } else if (activeClassroom) {
       pageSize = this.state.classPageSize;
 
-      itemsCount = this.getTotalCount();
-      let items = [];
-      if (this.state.isArchive) {
-        itemsCount = this.getArchivedTotalCount();
-        items = this.getArchivedItems() as any[];
-      } else {
-        itemsCount = this.getUnarchivedTotalCount();
-        items = this.getUnarchivedItems() as any[];
+      let itemsCount = 100;
+      if (activeClassroom.assignments) {
+        if (this.state.isArchive) {
+          itemsCount = parseInt(activeClassroom.archivedAssignmentsCount);
+        } else {
+          itemsCount = parseInt(activeClassroom.assignmentsCount) - parseInt(activeClassroom.archivedAssignmentsCount);
+        }
       }
 
-      const assignmentsCount = items.filter(i => i.assignment).length;
-      let classStartIndex = this.getClassIndex(items, this.state.sortedIndex);
-      if (this.state.sortedIndex === 0) {
-        classStartIndex = 1;
-      }
-      const classEndIndex = this.getClassIndex(items, this.state.sortedIndex + pageSize);
+      console.log(itemsCount);
 
-      return <MainAssignmentPagination
+      return <BackPagePagination
         sortedIndex={this.state.sortedIndex}
         pageSize={pageSize}
         bricksLength={itemsCount}
-        classStartIndex={classStartIndex}
-        classEndIndex={classEndIndex}
-        classroomsLength={assignmentsCount}
         isRed={this.state.sortedIndex === 0}
         moveNext={() => this.moveNext(pageSize)}
         moveBack={() => this.moveBack(pageSize)}
       />
     }
 
-    itemsCount = this.getTotalCount();
-    let items = [];
-    if (this.state.isArchive) {
-      itemsCount = this.getArchivedTotalCount();
-      items = this.getArchivedItems() as any[];
-    } else {
-      itemsCount = this.getUnarchivedTotalCount();
-      items = this.getUnarchivedItems() as any[];
-    }
-
-    const assignmentsCount = items.filter(i => i.assignment).length;
-    let classStartIndex = this.getClassIndex(items, this.state.sortedIndex);
-    if (this.state.sortedIndex === 0) {
-      classStartIndex = 1;
-    }
-    const classEndIndex = this.getClassIndex(items, this.state.sortedIndex + pageSize);
-
-    return <MainAssignmentPagination
-      sortedIndex={this.state.sortedIndex}
-      pageSize={pageSize}
-      bricksLength={itemsCount}
-      classStartIndex={classStartIndex}
-      classEndIndex={classEndIndex}
-      classroomsLength={assignmentsCount}
-      isRed={this.state.sortedIndex === 0}
-      moveNext={() => this.moveNext(pageSize)}
-      moveBack={() => this.moveBack(pageSize)}
-    />
+    return <div />;
   }
   //#endregion
 
@@ -627,8 +591,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 onRemind={this.setReminderNotification.bind(this)}
               />
         }
-        {//this.renderTeachPagination()
-        }
+        {this.renderTeachPagination()}
       </div>
     );
   }
