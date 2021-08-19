@@ -1,4 +1,4 @@
-import { TeachClassroom } from "model/classroom";
+import { Assignment, TeachClassroom } from "model/classroom";
 import { TeachListItem } from "../components/ClassroomsList";
 
 
@@ -27,4 +27,14 @@ export const getTotalStudentsCount = (classroom?: TeachClassroom | null) => {
     studentsCount = classroom.students.length;
   }
   return studentsCount;
+}
+
+export const isDeadlinePassed = (assignment: Assignment) => {
+  if (!assignment.deadline) { return false; }
+  const endTime = new Date(assignment.deadline).getTime();
+  const nowTime = new Date().getTime();
+  if (endTime < nowTime) {
+    return true;
+  }
+  return false;
 }

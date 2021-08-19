@@ -26,7 +26,10 @@ const ReminderButton: React.FC<Props> = (props) => {
       <div className="css-custom-tooltip">
         Send Reminder{isPlural ? 's' : ''}
       </div>
-      <YesNoDialog isOpen={clicked} title={`Send Reminder to ${props.studentCount} students`} submit={props.sendNotifications} close={() => setClicked(false)} />
+      <YesNoDialog isOpen={clicked} title={`Send Reminder to ${props.studentCount} students`} submit={() => {
+        props.sendNotifications();
+        setClicked(false);
+      }} close={() => setClicked(false)} />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { archiveAssignment, sendAssignmentReminder, unarchiveAssignment } from "services/axios/brick";
-import { getTotalStudentsCount } from "../service/service";
+import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import ArchiveWarningDialog from "components/baseComponents/dialogs/ArchiveWarningDialog";
 import ArchiveButton from "./ArchiveButton";
@@ -28,7 +28,7 @@ interface AssignedDescriptionProps {
   minimize?(): void;
   unarchive(): void;
   archive(): void;
-  onRemind?(count: number, isDeadlinePassed: boolean): void;
+  onRemind?(count: number, passed: boolean): void;
 }
 
 interface State {
@@ -49,7 +49,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   sendNotifications() {
     sendAssignmentReminder(this.props.assignment.id);
     const count = getTotalStudentsCount(this.props.classroom);
-    const passed = this.isDeadlinePassed(this.props.assignment);
+    const passed = isDeadlinePassed(this.props.assignment);
     this.props.onRemind?.(count, passed);
   }
 
@@ -82,16 +82,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         </div>
       </div>
     );
-  }
-
-  isDeadlinePassed(assignment: Assignment) {
-    if (!assignment.deadline) { return false; }
-    const endTime = new Date(assignment.deadline).getTime();
-    const nowTime = new Date().getTime();
-    if (endTime < nowTime) {
-      return true;
-    }
-    return false;
   }
 
   renderStatus(assignment: Assignment) {
@@ -131,10 +121,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       return <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2 finished" />;
     } else {
       let className = '';
-      if (assignment.deadline && this.isDeadlinePassed(assignment)) {
+      if (assignment.deadline && isDeadlinePassed(assignment)) {
         className = 'deadline';
       }
-      return <ReminderButton className={className} studentCount={studentStatus.length - completedCount} classroom={this.props.classroom} sendNotifications={this.sendNotifications.bind(this)} />
+      return <ReminderButton className={className} studentCount={studentStatus.length - completedCount} sendNotifications={this.sendNotifications.bind(this)} />
     }
   }
 

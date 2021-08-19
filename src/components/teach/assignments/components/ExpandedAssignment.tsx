@@ -11,6 +11,8 @@ import { ApiAssignemntStats, AssignmentStudent } from "model/stats";
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReminderButton from "./ReminderButton";
+import { sendAssignmentReminder } from "services/axios/brick";
+import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
 
 enum SortBy {
   None,
@@ -91,6 +93,13 @@ class ExpandedAssignment extends Component<
     }
   }
 
+  sendNotifications() {
+    sendAssignmentReminder(this.props.assignment.id);
+    const count = getTotalStudentsCount(this.props.classroom);
+    const passed = isDeadlinePassed(this.props.assignment);
+    this.props.onRemind?.(count, passed);
+  }
+
   sort(sortBy: SortBy) {
     let students = this.state.students;
     if (sortBy === SortBy.AvgDecreasing) {
@@ -135,7 +144,7 @@ class ExpandedAssignment extends Component<
 
     return (
       <div className="reminder-brick-actions-container">
-        <ReminderButton className="" studentCount={statuses.length - completedCount} classroom={this.props.classroom} sendNotifications={() => { }} />
+        <ReminderButton className="" studentCount={statuses.length - completedCount} sendNotifications={this.sendNotifications.bind(this)} />
       </div>
     );
   }

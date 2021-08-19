@@ -9,6 +9,9 @@ import AssignedBrickDescription from "./AssignedBrickDescription";
 import { ApiAssignemntStats } from "model/stats";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
+import ReminderButton from "./ReminderButton";
+import { sendAssignmentReminder } from "services/axios/brick";
+import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
 
 enum SortBy {
   None,
@@ -29,6 +32,7 @@ interface AssignmentBrickProps {
   subjects: Subject[];
   student: TeachStudent;
   assignment: Assignment;
+  onRemind?(count: number, passed: boolean): void;
   minimize(): void;
 }
 
@@ -62,6 +66,13 @@ class ExpandedStudentAssignment extends Component<
     return <div className="comment-icon">
       <SpriteIcon name="message-square" className="active" />
     </div>;
+  }
+
+  sendNotifications() {
+    sendAssignmentReminder(this.props.assignment.id);
+    const count = this.props.assignment.studentStatus.length - this.props.assignment.studentStatus.filter(({ status }) => status === 2).length;
+    const passed = isDeadlinePassed(this.props.assignment);
+    this.props.onRemind?.(count, passed);
   }
 
   renderTableHead() {
@@ -158,7 +169,14 @@ class ExpandedStudentAssignment extends Component<
     if (studentStatus) {
       return this.renderAvgScore(studentStatus);
     }
-    return <SpriteIcon name="reminder" className="active reminder-icon" />;
+    const statuses = this.props.assignment.studentStatus;
+    const completedCount = statuses.filter(({ status }) => status === 2).length;
+
+    return (
+      <div className="reminder-brick-actions-container">
+        <ReminderButton className="" studentCount={statuses.length - completedCount} sendNotifications={this.sendNotifications.bind(this)} />
+      </div>
+    );
   }
 
   renderStudent(student: TeachStudent) {
@@ -206,6 +224,7 @@ class ExpandedStudentAssignment extends Component<
             assignment={this.props.assignment}
             archive={() => { }}
             unarchive={() => { }}
+            onRemind={this.props.onRemind}
           />
         </div>
         <div className="assignments-table">
