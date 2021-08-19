@@ -131,7 +131,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       if (assignment.deadline && this.isDeadlinePassed(assignment)) {
         className = 'deadline';
       }
-      return <ReminderButton className={className} classroom={this.props.classroom} sendNotifications={this.sendNotifications.bind(this)} />
+      return <ReminderButton className={className} studentCount={studentStatus.length} classroom={this.props.classroom} sendNotifications={this.sendNotifications.bind(this)} />
     }
   }
 
