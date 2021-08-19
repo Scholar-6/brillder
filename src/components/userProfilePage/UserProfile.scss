@@ -9,6 +9,13 @@
   width: 100%;
   font-family: $font-family-regular;
 
+  input:-webkit-autofill {
+    background: var(--solitude-light) !important;
+  }
+  input:autofill {
+    background: var(--solitude-light) !important ;
+  }
+
   .phone-question-preview-box {
     top: $page-head-height;
     height: calc(100vh - #{$page-head-height}) !important;
