@@ -89,10 +89,21 @@
         $size: 1.3vw;
         width: $size;
         height: $size;
+
+        &:hover {
+          color: var(--theme-orange);
+        }
       }
     }
     .book-body {
       height: calc(100% - 8vh - 5vh);
+      overflow: scroll;
+      color: var(--theme-dark-blue);
+      padding: 0 1vw;
+      padding-top: 1vh;
+      .question-unique-play {
+        padding-bottom: 0 !important;
+      }
     }
     .footer {
       padding-left: 1vw;
