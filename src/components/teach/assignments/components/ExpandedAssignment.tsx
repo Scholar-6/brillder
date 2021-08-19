@@ -10,6 +10,7 @@ import AssignedBrickDescription from "./AssignedBrickDescription";
 import { ApiAssignemntStats, AssignmentStudent } from "model/stats";
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ReminderButton from "./ReminderButton";
 
 enum SortBy {
   None,
@@ -129,7 +130,14 @@ class ExpandedAssignment extends Component<
     if (studentStatus && studentStatus.numberOfAttempts > 0) {
       return this.renderBestScore(studentStatus);
     }
-    return <SpriteIcon name="reminder" className="active reminder-icon" />;
+    const statuses = this.props.assignment.studentStatus;
+    const completedCount = statuses.filter(({ status }) => status === 2).length;
+
+    return (
+      <div className="reminder-brick-actions-container">
+        <ReminderButton className="" studentCount={statuses.length - completedCount} classroom={this.props.classroom} sendNotifications={() => { }} />
+      </div>
+    );
   }
 
   renderCommentIcon() {
@@ -210,7 +218,7 @@ class ExpandedAssignment extends Component<
               </div>
             </td>
           )}
-          <td style={{width: '9vw'}}>
+          <td style={{ width: '9vw' }}>
             {studentStatus && <div className="centered">{this.renderCommentIcon()}</div>}
           </td>
         </tr>
@@ -271,7 +279,7 @@ class ExpandedAssignment extends Component<
             classroom={classroom}
             assignment={assignment}
             archive={() => { }}
-            unarchive={() => {}}
+            unarchive={() => { }}
             onRemind={this.props.onRemind}
           />
         </div>
