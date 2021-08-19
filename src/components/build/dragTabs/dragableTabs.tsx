@@ -14,7 +14,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
 import { User } from "model/user";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
-import routes, {moveToPlan, moveToSynthesis} from "../routes";
+import routes, { moveToPlan, moveToSynthesis } from "../routes";
 import PlanTab from "./PlanTab";
 
 interface Question {
@@ -72,7 +72,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     if (e.target.classList.contains("ck-content")) { return; }
     if (e.target.classList.contains("ql-editor")) { return; }
 
-    const {pathname} = this.props.history.location;
+    const { pathname } = this.props.history.location;
 
     if (leftKeyPressed(e)) {
       if (pathname.slice(-routes.BuildSynthesisLastPrefix.length).toLowerCase() === routes.BuildSynthesisLastPrefix) {
@@ -92,8 +92,8 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       } else if (pathname.slice(-routes.BuildSynthesisLastPrefix.length).toLowerCase() === routes.BuildSynthesisLastPrefix) {
       } else {
         const keyIndex = this.props.questions.findIndex(q => q.id === this.props.questionId);
-  
-        if (keyIndex < this.props.questions.length - 1) { 
+
+        if (keyIndex < this.props.questions.length - 1) {
           this.props.selectQuestion(keyIndex + 1);
         } else {
           moveToSynthesis(this.props.history, this.props.brickId);
@@ -107,10 +107,31 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
     let isSynthesisPresent = true;
     const { props } = this;
     const { questions, isSynthesisPage, synthesis } = props;
-    
+
     let isPlanPage = false;
     if (this.props.history.location.pathname.slice(-5) === routes.BuildPlanLastPrefix) {
       isPlanPage = true;
+    }
+
+    const getRepliesStatus = (replies: Comment[] | undefined) => {
+      if (replies && replies.length > 0) {
+        const latestAuthor = replies[0].author.id;
+        const isCurrentUser = latestAuthor === props.user.id;
+        return isCurrentUser ? 1 : -1;
+      } else {
+        return 0;
+      }
+    }
+
+    const getHasPlanReplied = () => {
+      const replies = props.comments
+        ?.filter((comment) => comment.location === CommentLocation.Prep)
+        .map(getLatestChild)
+        .sort(
+          (a, b) =>
+            new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf()
+        );
+      return getRepliesStatus(replies);
     }
 
     const getHasSynthesisReplied = () => {
@@ -121,13 +142,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           (a, b) =>
             new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf()
         );
-      if (replies && replies.length > 0) {
-        const latestAuthor = replies[0].author.id;
-        const isCurrentUser = latestAuthor === props.user.id;
-        return isCurrentUser ? 1 : -1;
-      } else {
-        return 0;
-      }
+      return getRepliesStatus(replies);
     };
 
     const getHasReplied = (questionId: number) => {
@@ -138,13 +153,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           (a, b) =>
             new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf()
         );
-      if (replies && replies.length > 0) {
-        const latestAuthor = replies[0].author.id;
-        const isCurrentUser = latestAuthor === props.user.id;
-        return isCurrentUser ? 1 : -1;
-      } else {
-        return 0;
-      }
+      return getRepliesStatus(replies);
     };
 
     const getLatestChild = (comment: Comment) => {
@@ -284,7 +293,11 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             className={`drag-tile-container plan-tab ${isPlanPage ? 'active' : ''}`}
             cols={isPlanPage ? 1.5555 : 2}
           >
-            <PlanTab brickId={this.props.brickId} isValid={!props.validationRequired || props.isPlanValid} tutorialStep={props.tutorialStep} isActive={isPlanPage} history={this.props.history} />
+            <PlanTab
+              brickId={this.props.brickId} isValid={!props.validationRequired || props.isPlanValid}
+              tutorialStep={props.tutorialStep} isActive={isPlanPage} history={this.props.history}
+              getHasReplied={getHasPlanReplied}
+            />
           </GridListTile>
           <ReactSortable
             list={questions}
