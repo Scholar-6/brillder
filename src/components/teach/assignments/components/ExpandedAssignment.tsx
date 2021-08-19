@@ -318,7 +318,7 @@ class ExpandedAssignment extends Component<
             </div>
           )}
         </div>
-        <BookDialog bookData={this.state.bookData} onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />
+        {this.state.bookData.open && <BookDialog bookData={this.state.bookData} onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />}
       </div>
     );
   }
