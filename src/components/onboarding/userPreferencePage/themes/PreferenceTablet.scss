@@ -9,10 +9,11 @@
   display: flex;
   justify-content: center;
 
-  h2 {
-    padding-top: 8vh;
-    padding-bottom: 4vh;
-    text-align: center;
+  h1 {
+    height: 12vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 4vw;
     font-family: $font-family-black;
   }

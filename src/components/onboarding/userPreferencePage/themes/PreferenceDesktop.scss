@@ -9,9 +9,9 @@
   display: flex;
   justify-content: center;
 
-  h2 {
+  h1 {
     padding-top: 8vh;
-    padding-bottom: 4vh;
+    padding-bottom: 8vh;
     text-align: center;
     font-size: 4vw;
     font-family: $font-family-black;
@@ -19,7 +19,7 @@
 
   .role-box {
     padding-top: 2vh;
-    padding-bottom: 2vh;
+    padding-bottom: 3vh;
     margin-left: 0.5vw;
     margin-right: 0.5vw;
     width: 20vw;
@@ -28,32 +28,33 @@
 
     &.box1 {
       opacity: 0;
-      animation: fadein 0.3s 0.3s ease-out forwards; 
+      animation: fadein 0.3s 0.3s ease-out forwards;
     }
 
     &.box2 {
       opacity: 0;
-      animation: fadein 0.3s 0.6s ease-out forwards; 
+      animation: fadein 0.3s 0.6s ease-out forwards;
     }
 
     &.box3 {
       opacity: 0;
-      animation: fadein 0.3s 0.9s ease-out forwards; 
+      animation: fadein 0.3s 0.9s ease-out forwards;
     }
 
     &.box4 {
       opacity: 0;
-      animation: fadein 0.3s 1.2s ease-out forwards; 
+      animation: fadein 0.3s 1.2s ease-out forwards;
     }
 
     svg {
-      width: 79%;
+      width: 50%;
       color: var(--theme-orange);
     }
 
     h2 {
       padding-top: 2vh;
       font-size: 3vw;
+      font-family: $font-family-bold;
     }
 
     p {
@@ -63,6 +64,32 @@
     &:hover {
       border-radius: 1vw;
       background: var(--theme-light-blue);
+
+      @keyframes floating-54f {
+        0% {
+          transform: translate(0, 0);
+        }
+
+        50% {
+          transform: translate(0, -1.5vh);
+        }
+
+        100% {
+          transform: translate(0, 0px);
+        }
+      }
+
+      svg {
+        animation: floating-54f 1.2s ease-out infinite;
+      }
+
+      .manage-classes {
+        animation: floating-54f 1.2s ease-out infinite;
+
+        svg {
+          animation: unset;
+        }
+      }
     }
 
     .glasses {
@@ -71,6 +98,7 @@
 
     .file-container {
       align-items: flex-end;
+
       svg {
         width: 8vw;
       }
@@ -78,11 +106,11 @@
 
     .manage-classes {
       width: 8vw;
-      height: 8vw;
+      height: 150px;
 
       svg {
         width: 12vw;
-        height: 8vw;
+        height: 150px;
 
         .blue {
           color: var(--theme-light-blue) !important;

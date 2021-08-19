@@ -154,7 +154,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
       {isMobile ? <TabletTheme /> : <DesktopTheme />}
       <div className="s-user-preference-page">
         <div className="ef-container">
-          <h2>Which of the following best describes you?</h2>
+          <h1>Which of the following best describes you?</h1>
           <div className="ef-flex">
             <RoleBox roleId={RolePreference.Student} className="box1">
               <div className="flex-center">
