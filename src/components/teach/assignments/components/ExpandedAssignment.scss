@@ -53,6 +53,12 @@
       }
     }
 
+    .eye-icon {
+      $size: 1.5vw;
+      width: $size;
+      height: $size;
+    }
+
     .assigned-student-name {
       color: var(--theme-dark-blue);
       padding-left: 0.85vw !important;

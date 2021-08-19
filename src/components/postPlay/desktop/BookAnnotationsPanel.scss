@@ -101,7 +101,7 @@
         left: 0;
         width: 4rem;
         height: 4rem;
-        background-color: var(--theme-light-blue-alpha3);
+        background-color: var(--tab-gray);
       }
 
       .pen-icon {
@@ -120,6 +120,7 @@
         left: -0.5rem;
         width: 5rem;
         height: 5rem;
+        background-color: var(--theme-light-blue-alpha3);
       }
 
       .grey-circle {
@@ -191,7 +192,6 @@
             top: 0;
             left: 0;
             transition: all 300ms ease-out;
-            background: var(--theme-light-blue-alpha3);
           }
 
           .reply-icon {
