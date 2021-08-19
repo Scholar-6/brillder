@@ -2,7 +2,6 @@ import React from 'react';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { TeachClassroom } from 'model/classroom';
-import { getTotalStudentsCount } from "../service/service";
 import YesNoDialog from 'components/build/baseComponents/dialogs/YesNoDialog';
 
 interface Props {
@@ -15,7 +14,7 @@ interface Props {
 const ReminderButton: React.FC<Props> = (props) => {
   const [clicked, setClicked] = React.useState(false)
   const realClassName = 'reminder-brick-actions-container completed ' + props.className;
-  const isPlural = getTotalStudentsCount(props.classroom) > 1 ? true : false;
+  const isPlural = props.studentCount > 1 ? true : false;
   return (
     <div className={realClassName}>
       <div className="reminder-button-container" onClick={() => setClicked(true)} >
