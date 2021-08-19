@@ -111,10 +111,13 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       }
     }
 
+    let completedCount = 0;
+
     let everyoneFinished = true;
     if (this.props.classroom) {
       let { length } = this.props.classroom.students;
-      if (length !== studentStatus.filter(({ status }) => status === 2).length) {
+      completedCount = studentStatus.filter(({ status }) => status === 2).length;
+      if (length !== completedCount) {
         everyoneFinished = false;
       }
     } else {
@@ -131,7 +134,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       if (assignment.deadline && this.isDeadlinePassed(assignment)) {
         className = 'deadline';
       }
-      return <ReminderButton className={className} studentCount={studentStatus.length} classroom={this.props.classroom} sendNotifications={this.sendNotifications.bind(this)} />
+      return <ReminderButton className={className} studentCount={studentStatus.length - completedCount} classroom={this.props.classroom} sendNotifications={this.sendNotifications.bind(this)} />
     }
   }
 
