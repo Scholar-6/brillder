@@ -13,6 +13,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReminderButton from "./ReminderButton";
 import { sendAssignmentReminder } from "services/axios/brick";
 import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
+import BookDialog from "./BookDialog";
 
 enum SortBy {
   None,
@@ -20,10 +21,16 @@ enum SortBy {
   AvgDecreasing,
 }
 
+export interface BookData {
+  open: boolean;
+  student: any;
+  assignment: Assignment | null;
+}
 interface AssignemntExpandedState {
   sortBy: SortBy;
   questionCount: number;
   studentsPrepared: boolean;
+  bookData: BookData;
   students: TeachStudent[];
   shown: boolean;
 }
@@ -60,6 +67,7 @@ class ExpandedAssignment extends Component<
       sortBy: SortBy.None,
       questionCount: questionCount,
       studentsPrepared: false,
+      bookData: { open: false, student: null, assignment: null},
       students: this.prepareStudents(),
       shown: false
     };
@@ -220,6 +228,9 @@ class ExpandedAssignment extends Component<
           <td className={`assigned-student-name`}>
             {student.firstName} {student.lastName}
           </td>
+          <td>
+            {studentStatus && studentStatus.numberOfAttempts > 0 && <SpriteIcon name="eye-on" className="eye-icon" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})} />}
+          </td>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map((a, i) =>
             <td key={i} className="icon-container">
               <div className="centered">
@@ -261,6 +272,7 @@ class ExpandedAssignment extends Component<
               </button>
             </div>
           </th>
+          <th></th>
           <th></th>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
             (a, i) => <th key={i}><div className="centered">{i + 1}</div></th>
@@ -306,6 +318,7 @@ class ExpandedAssignment extends Component<
             </div>
           )}
         </div>
+        <BookDialog bookData={this.state.bookData} onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />
       </div>
     );
   }

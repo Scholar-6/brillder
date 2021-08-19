@@ -1,0 +1,130 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+
+.book-dialog {
+  .dialog-book-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.2;
+    background: black;
+  }
+  .book-box {
+    position: fixed;
+    top: calc(#{$home-button-size} + 2vw + 6.6vh + 2vh);
+    left: 53vw;
+    width: 33vw;
+    height: calc(calc(64vh - 6.5vw) + 13vh) !important;
+    background: var(--white);
+    border-radius: 1vw;
+    z-index: 100001;
+    overflow: hidden;
+    .header {
+      width: 100%;
+      padding-left: 1vw;
+      background: var(--tab-gray);
+      color: var(--theme-dark-blue);
+      height: 8vh;
+
+      .title {
+        height: 3vh;
+        display: flex;
+        align-items: center;
+        font-size: 1vw;
+
+        span {
+          margin-left: 0.2vw;
+        }
+      }
+
+      .stepper {
+        display: flex;
+        align-items: center;
+        height: 5vh;
+        .step {
+          cursor: pointer;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.1vw;
+          width: 2vw;
+
+          &.active {
+            > span {
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              $size: 1.3vw;
+              width: $size;
+              height: $size;
+              color: var(--white);
+              background: var(--theme-dark-blue);
+            }
+            .underline {
+              position: absolute;
+              bottom: -0.7vh;
+              left: 0.35vw;
+              width: 1.3vw;
+              height: 4px;
+              background: var(--theme-dark-blue);
+            }
+          }
+        }
+      }
+
+      .close-button {
+        cursor: pointer;
+        position: absolute;
+        top: 0.25vw;
+        right: 0.25vw;
+        stroke-width: 3;
+        color: var(--theme-dark-blue);
+        $size: 1.3vw;
+        width: $size;
+        height: $size;
+      }
+    }
+    .book-body {
+      height: calc(100% - 8vh - 5vh);
+    }
+    .footer {
+      padding-left: 1vw;
+      height: 5vh;
+      background: var(--tab-gray);
+      display: flex;
+      align-items: center;
+      color: var(--theme-dark-blue);
+      span {
+        font-size: 1.3vw;
+      }
+      svg {
+        width: 1.5vw;
+        height: 1.5vw;
+        color: var(--theme-dark-blue);
+      }
+      .back-btn {
+        margin-left: 6vw;
+      }
+
+      .back-btn,
+      .next-btn {
+        font-size: 1.4vw;
+        &.disabled {
+          color: var(--dark-gray);
+        }
+      }
+      .next-btn {
+        margin-left: 2vw;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
