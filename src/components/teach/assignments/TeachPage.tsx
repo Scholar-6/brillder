@@ -36,7 +36,6 @@ import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuc
 import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
 import EmptyTabContent from "./components/EmptyTabContent";
 import ArchiveToggle from "./components/ArchiveToggle";
-import MainAssignmentPagination from "./components/MainAssignmentPagination";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
