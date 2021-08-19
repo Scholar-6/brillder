@@ -121,7 +121,7 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
                     assignment={a as any}
                     archive={this.loadAssignments.bind(this)}
                     unarchive={() => { }}
-                    onRemind={this.props.onRemind?.bind(this)}
+                    onRemind={this.props.onRemind}
                   />
                 </div>
               </Grow>
@@ -144,6 +144,7 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
           student={this.props.activeStudent}
           stats={this.state.assignmentStats}
           subjects={this.props.subjects}
+          onRemind={this.props.onRemind}
           minimize={() =>
             this.setState({ assignmentStats: null, activeAssignment: null })
           }
