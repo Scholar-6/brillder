@@ -20,7 +20,7 @@
   .role-box {
     cursor: pointer;
     transition: all 300ms ease-out;
-    padding-top: 2vh;
+    padding-top: 5vh;
     padding-bottom: 3vh;
     margin-left: 0.5vw;
     margin-right: 0.5vw;
@@ -55,13 +55,18 @@
 
     svg {
       width: 50%;
-      color: var(--theme-orange);
+      color: var(--theme-light-blue);
     }
 
     h2 {
       padding-top: 2vh;
       font-size: 3vw;
       font-family: $font-family-bold;
+    }
+
+    .dd-trowel {
+      height: 150px;
+      width: 8vw !important;
     }
 
     p {
@@ -74,8 +79,12 @@
 
       width: 22vw;
       margin-top: -4vh;
-      padding-top: 2vh;
       padding-bottom: 4vh;
+      padding-top: 5vh;
+
+      svg {
+        color: var(--theme-orange);
+      }
 
       &.box1 {
         left: 4vw;
