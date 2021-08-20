@@ -13,9 +13,7 @@ export interface TutorialProps {
 const PlayPanel: React.FC<TutorialProps> = (props) => {
   const renderDashedLine = () => {
     return (
-      <div className="icon-container dashed-line">
         <div></div>
-      </div>
     );
   }
 
@@ -33,7 +31,7 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
         <div className="icons-row">
           <div className="icon-container svgOnHover">
             <SpriteIcon
-              name="edit-outline"
+              name="feather-map"
               className="w80 h80 active text-theme-dark-blue"
             />
           </div>
@@ -45,7 +43,7 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
           {renderDashedLine()}
           {renderArrow()}
           <div className="icon-container svgOnHover">
-            <SpriteIcon name="feather-menu" className="w80 h80 active text-theme-dark-blue" />
+            <SpriteIcon name="feather-menu" className="w80 h80 active text-theme-dark-blue stroke-2-5" />
           </div>
           {renderDashedLine()}
           {renderArrow()}

@@ -5,16 +5,20 @@
 .tutorial-play-panel {
   @extend %tutorialPanel;
   .tutorial-step-1 {
+    .stroke-2-5 {
+      stroke-width: 2.5;
+    }
     .icons-row {
       margin: 2vw 0 0 0;
       height: 8vw;
       @extend %flexCenter;
       .icon-container {
         @extend %flexCenter;
-        width: 5vw;
-        height: 5vw;
-        margin: 0 0.7vw 0 0;
+        width: 7vw;
+        height: 7vw;
+        margin: 0 0.7vw;
         &.play-icon {
+          margin: 0 1.4vw;
           border-radius: 100vw;
           background: var(--theme-green);
           .svg {
@@ -30,8 +34,9 @@
           }
         }
         &.arrow-icon {
-          width: 2vw;
-          height: 2vw;
+          $size: 3vw;
+          width: $size;
+          height: $size;
           margin: 0;
         }
       }
