@@ -19,6 +19,7 @@ import AutocompleteUsernameButEmail from 'components/play/baseComponents/Autocom
 import { createClass } from 'components/teach/service';
 import map from 'components/map';
 import InvalidDialog from 'components/build/baseComponents/dialogs/InvalidDialog';
+import TextDialog from './TextDialog';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
@@ -30,6 +31,7 @@ interface AssignPersonOrClassProps {
 }
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
+  const [alreadyAssigned, setAssigned] = React.useState(false);
   const [isSaving, setSaving] = React.useState(false);
   const [value] = React.useState("");
   const [existingClass, setExistingClass] = React.useState(null as any);
@@ -53,7 +55,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const addUser = (email: string) => {
     if (!emailRegex.test(email)) { return; }
     setCurrentEmail('');
-    setUsers(users => [ ...users, { email } as User]);
+    setUsers(users => [...users, { email } as User]);
   }
 
   const checkSpaces = (email: string) => {
@@ -72,8 +74,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const onAddUser = React.useCallback(() => {
     if (!emailRegex.test(currentEmail)) { return; }
     setCurrentEmail('');
-    setUsers(users => [ ...users, { email: currentEmail} as User]);
-  //eslint-disable-next-line
+    setUsers(users => [...users, { email: currentEmail } as User]);
+    //eslint-disable-next-line
   }, [currentEmail]);
 
   const createClassAndAssign = async () => {
@@ -97,8 +99,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
               return;
             }
           } else {
-            setUsers(users => [ ...users, { email: currentEmail } as User ]);
-            currentUsers.push({ email: currentEmail} as User);
+            setUsers(users => [...users, { email: currentEmail } as User]);
+            currentUsers.push({ email: currentEmail } as User);
             setCurrentEmail("");
           }
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
@@ -136,7 +138,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     for (const classroom of classrooms) {
       classroom.isClass = true;
     }
-  
+
     if (classrooms.length > 0) {
       setExistingClass(classrooms[0]);
     } else {
@@ -165,7 +167,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
     if (isCreating === false) {
       const res = await assignToExistingBrick(existingClass);
-      if (res) {
+
+      if (res && res.length > 0) {
+        setAssigned(true);
+      } else if (res !== false) {
         props.success([existingClass], []);
       }
     } else {
@@ -188,7 +193,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           {renderBrickLevel()}
         </div>
         <div className="r-regular-center">Invite between 1 and 50 students to your class</div>
-        <div className={`r-student-emails ${(validationRequired && users.length === 0) ? 'invalid' : '' }`}>
+        <div className={`r-student-emails ${(validationRequired && users.length === 0) ? 'invalid' : ''}`}>
           <AutocompleteUsernameButEmail
             placeholder="Type or paste student emails"
             currentEmail={currentEmail}
@@ -205,7 +210,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       </div>
     )
   }
-  
+
   const renderExisting = () => {
     if (classes.length <= 0) { return <div />; }
     return (
@@ -282,24 +287,27 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
-      <div className="dialog-header">
-        <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
-        <div className="r-radio-row">
-          <FormControlLabel
-            checked={!isCreating}
-            control={<Radio onClick={() => setCreating(false)} className={"filter-radio custom-color"} />}
-            label="An Existing Class" />
-          <FormControlLabel
-            checked={isCreating}
-            control={<Radio onClick={() => setCreating(true)} className={"filter-radio custom-color"} />}
-            label="Create A New Class" />
+    <div>
+      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
+        <div className="dialog-header">
+          <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
+          <div className="r-radio-row">
+            <FormControlLabel
+              checked={!isCreating}
+              control={<Radio onClick={() => setCreating(false)} className={"filter-radio custom-color"} />}
+              label="An Existing Class" />
+            <FormControlLabel
+              checked={isCreating}
+              control={<Radio onClick={() => setCreating(true)} className={"filter-radio custom-color"} />}
+              label="Create A New Class" />
+          </div>
+          {isCreating ? renderNew() : renderExisting()}
+          {renderDeadline()}
+          {renderFooter()}
         </div>
-        {isCreating ? renderNew() : renderExisting()}
-        {renderDeadline()}
-        {renderFooter()}
-      </div>
-    </Dialog>
+      </Dialog>
+      <TextDialog isOpen={alreadyAssigned} close={() => setAssigned(false)} label="This Brick has already been assigned to that class." />
+    </div>
   );
 }
 
