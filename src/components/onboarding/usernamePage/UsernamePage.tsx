@@ -130,7 +130,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
             <div className={animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}>
               <div className="submit-button" >
                 <button type="button" onClick={submit} className={lastName.value && firstName.value ? 'valid' : 'invalid'}>
-                  Save
+                  <SpriteIcon name="save-icon" /> Save
                 </button>
               </div>
             </div>
