@@ -341,6 +341,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
               id: question.id,
               type: question.type,
               hint: parsedQuestion.hint,
+              order: question.order,
               firstComponent: parsedQuestion.firstComponent ? parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
               components: parsedQuestion.components
             } as Question;
@@ -355,7 +356,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
 
   let shuffleBrick = Object.assign({}, brick);
 
-  shuffleBrick.questions = parsedQuestions;
+  shuffleBrick.questions = parsedQuestions.sort((q1, q2) => q1.order - q2.order);
 
   shuffleBrick.questions.forEach(question => {
     if (question.type === QuestionTypeEnum.ChooseOne || question.type === QuestionTypeEnum.ChooseSeveral) {
