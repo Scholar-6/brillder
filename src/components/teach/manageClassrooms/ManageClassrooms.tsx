@@ -682,6 +682,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
 
     const visibleUsers = this.getUsersByPage(users);
+    
 
     if (this.state.isPending) {
       const visibleUsers = this.getUsersByPage(this.state.pendingUsers);
@@ -703,7 +704,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             togglePageStudents={this.togglePageStudents.bind(this)}
             resendInvitation={this.resendInvitation.bind(this)}
           />
-          {this.renderPagination(visibleUsers, users)}
+          {this.renderPagination(visibleUsers, this.state.pendingUsers)}
         </div>
       );
     }
