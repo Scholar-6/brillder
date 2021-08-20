@@ -20,6 +20,7 @@ import { createClass } from 'components/teach/service';
 import map from 'components/map';
 import InvalidDialog from 'components/build/baseComponents/dialogs/InvalidDialog';
 import TextDialog from './TextDialog';
+import ValidationFailedDialog from './ValidationFailedDialog';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
@@ -306,7 +307,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           {renderFooter()}
         </div>
       </Dialog>
-      <TextDialog isOpen={alreadyAssigned} close={() => setAssigned(false)} label="This Brick has already been assigned to that class." />
+      <ValidationFailedDialog isOpen={alreadyAssigned} close={() => setAssigned(false)} header="This brick has already been assigned to this class." />
     </div>
   );
 }
