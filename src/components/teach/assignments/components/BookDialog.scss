@@ -101,8 +101,33 @@
       color: var(--theme-dark-blue);
       padding: 0 1vw;
       padding-top: 1vh;
+      $book-font-size: 1vw;
+      font-size: $book-font-size !important;
+      .vertical-shuffle-choice {
+        min-height: 5vh;
+        .vertical-content {
+          min-height: 5vh;
+        }
+      }
+      .image-play-container2 {
+        img {
+          height: auto !important;
+        }
+      }
       .question-unique-play {
+        font-size: $book-font-size !important;
         padding-bottom: 0 !important;
+
+        span,
+        p {
+          font-size: $book-font-size !important;
+        }
+
+        .words-container {
+          .word {
+            margin: 0 0.13vw;
+          }
+        }
       }
     }
     .footer {
