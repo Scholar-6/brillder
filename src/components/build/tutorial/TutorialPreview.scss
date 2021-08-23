@@ -33,4 +33,9 @@
       position: absolute !important;
     }
   }
+  &.tutorial-synthesis-preview {
+    .active.text-theme-dark-blue {
+      stroke-width: 2.5;
+    }
+  }
 }

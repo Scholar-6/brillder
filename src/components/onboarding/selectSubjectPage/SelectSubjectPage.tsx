@@ -18,6 +18,7 @@ import SubjectsColumnV2 from "./SubjectsColumnV2";
 import { isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import { isPhone } from "services/phone";
 import { hideZendesk } from "services/zendesk";
+import LabelTyping from "components/baseComponents/LabelTyping";
 
 
 interface AllSubjectsProps {
@@ -156,7 +157,9 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <Grid container direction="row" className="select-subject-page">
-          <h1>What kind of bricks will you {titleVerb}?</h1>
+          <h1>
+            <LabelTyping start={true} value={`What kind of bricks will you ${titleVerb}?`} onFinish={() => {}} />
+          </h1>
           <SubjectsColumnV2
             subjects={this.state.subjects}
             next={this.submit.bind(this)}

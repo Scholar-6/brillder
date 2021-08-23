@@ -19,7 +19,6 @@ import AddUserButton from "./components/AddUserButton";
 import UserActionsCell from "./components/UserActionsCell";
 import RoleDescription from "components/baseComponents/RoleDescription";
 import CustomToggle from './components/CustomToggle';
-import CustomFilterBox from "components/library/components/CustomFilterBox";
 import UsersListPagination from "./components/Pagination";
 
 const mapState = (state: ReduxCombinedState) => ({

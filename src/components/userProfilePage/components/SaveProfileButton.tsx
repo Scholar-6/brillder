@@ -65,7 +65,7 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
     }
     return (
       <button type="button" className={className} onClick={this.props.onClick}>
-        <SpriteIcon name="save-icon" className="active" />
+        <SpriteIcon name="feather-cloud-upload" className="active" />
       </button>
     );
   }

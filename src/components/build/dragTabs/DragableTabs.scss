@@ -270,8 +270,8 @@ $tile-height: 100%;
     @extend %flexCenter;
 
     .circle-border {
-      width: 2vw !important;
-      height: 2vw !important;
+      width: 2.5vw !important;
+      height: 2.5vw !important;
       color: var(--theme-orange) !important;
       position: absolute !important;
     }

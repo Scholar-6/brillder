@@ -43,12 +43,18 @@
       align-items: center;
       justify-content: center;
       left: 1vw;
-      background: var(--white);
-      width: 2vw;
-      height: 2vw;
-      font-family: $font-family-black;
-      border-radius: 50%;
+      height: 100%;
 
+      > div {
+        background: var(--white);
+        width: 2vw;
+        height: 2vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: $font-family-black;
+        border-radius: 50%;
+      }
       svg {
         height: 1.2vw;
         width: 1.2vw;

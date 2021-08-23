@@ -7,6 +7,8 @@ interface LabelState {
 interface LabelProps {
   className?: string;
   label: string;
+  minTime?: number;
+  maxTime?: number;
   onEnd?(): void;
 }
 
@@ -27,8 +29,9 @@ class TypingLabel extends Component<LabelProps, LabelState> {
   }
 
   printLetter (index: number) {
+    const {minTime, maxTime} = this.props;
     setTimeout(() => {
-      const {label} = this.props;
+      const {label } = this.props;
       try {
         this.setState({ label: this.state.label + label[index] });
         if (index < label.length - 1) {
@@ -39,7 +42,7 @@ class TypingLabel extends Component<LabelProps, LabelState> {
           }
         }
       } catch {}
-    }, this.randDelay(50, 90));
+    }, this.randDelay(minTime ? minTime : 50, maxTime ? maxTime : 90));
   };
 
   render() {
