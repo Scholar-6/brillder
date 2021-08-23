@@ -133,12 +133,14 @@
     }
   }
 
-  .comment-text-editable {
-    &[placeholder]:empty::before {
-      content: attr(placeholder);
-      color: var(--global-light-text-gray);
-      cursor: text;
-    }
+  .placeholder {
+    display: none;
+  }
+
+  .comment-text-editable:empty + .placeholder {
+    display: inline;
+    color: var(--global-light-text-gray);
+    cursor: text;
   }
 
   .comment-text {

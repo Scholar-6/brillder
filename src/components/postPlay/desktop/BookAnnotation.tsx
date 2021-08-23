@@ -82,6 +82,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
               ref={textRef}
               canEdit={canEdit}
               onChangeRef={onAnnotationChangeRef}
+              focusEditable={() => textRef.current?.focus()}
             />
           </Grid>
           <Collapse in={focused}>
