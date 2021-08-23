@@ -79,6 +79,7 @@ const BookAnnotationReply: React.FC<CommentChildProps> = ({ annotation, ...props
           ref={textRef}
           canEdit={canEdit}
           onChangeRef={onAnnotationChangeRef}
+          focusEditable={() => textRef.current?.focus()}
         />
       </div>
     </div>
