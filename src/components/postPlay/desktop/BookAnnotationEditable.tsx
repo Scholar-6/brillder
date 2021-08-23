@@ -10,7 +10,7 @@ const BookAnnotationEditable = React.memo(
     return (
       <i
         className="comment-text-editable"
-        placeholder="Type your comment here..."
+        placeholder="Type your comment"
         ref={ref as any}
         contentEditable={canEdit}
         onInput={onChange}

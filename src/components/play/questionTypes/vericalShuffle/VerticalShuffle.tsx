@@ -214,7 +214,9 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         <div className={`vertical-content ${hasHint ? '' : 'full-height'}`}>
           <Grid container direction="row" justify="center">
             <div className="circle-index">
-              {switchIndex === i ? <SpriteIcon name="feather-refresh" /> : i + 1}
+              <div>
+                {switchIndex === i ? <SpriteIcon name="feather-refresh" /> : i + 1}
+              </div>
             </div>
             {this.renderData(answer)}
           </Grid>

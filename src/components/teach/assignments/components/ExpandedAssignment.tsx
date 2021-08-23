@@ -10,6 +10,10 @@ import AssignedBrickDescription from "./AssignedBrickDescription";
 import { ApiAssignemntStats, AssignmentStudent } from "model/stats";
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ReminderButton from "./ReminderButton";
+import { sendAssignmentReminder } from "services/axios/brick";
+import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
+import BookDialog from "./BookDialog";
 
 enum SortBy {
   None,
@@ -17,10 +21,16 @@ enum SortBy {
   AvgDecreasing,
 }
 
+export interface BookData {
+  open: boolean;
+  student: any;
+  assignment: Assignment | null;
+}
 interface AssignemntExpandedState {
   sortBy: SortBy;
   questionCount: number;
   studentsPrepared: boolean;
+  bookData: BookData;
   students: TeachStudent[];
   shown: boolean;
 }
@@ -57,6 +67,7 @@ class ExpandedAssignment extends Component<
       sortBy: SortBy.None,
       questionCount: questionCount,
       studentsPrepared: false,
+      bookData: { open: false, student: null, assignment: null},
       students: this.prepareStudents(),
       shown: false
     };
@@ -88,6 +99,13 @@ class ExpandedAssignment extends Component<
     } else {
       this.sort(SortBy.AvgDecreasing);
     }
+  }
+
+  sendNotifications() {
+    sendAssignmentReminder(this.props.assignment.id);
+    const count = getTotalStudentsCount(this.props.classroom);
+    const passed = isDeadlinePassed(this.props.assignment);
+    this.props.onRemind?.(count, passed);
   }
 
   sort(sortBy: SortBy) {
@@ -129,7 +147,14 @@ class ExpandedAssignment extends Component<
     if (studentStatus && studentStatus.numberOfAttempts > 0) {
       return this.renderBestScore(studentStatus);
     }
-    return <SpriteIcon name="reminder" className="active reminder-icon" />;
+    const statuses = this.props.assignment.studentStatus;
+    const completedCount = statuses.filter(({ status }) => status === 2).length;
+
+    return (
+      <div className="reminder-brick-actions-container">
+        <ReminderButton className="" studentCount={statuses.length - completedCount} sendNotifications={this.sendNotifications.bind(this)} />
+      </div>
+    );
   }
 
   renderCommentIcon() {
@@ -203,6 +228,9 @@ class ExpandedAssignment extends Component<
           <td className={`assigned-student-name`}>
             {student.firstName} {student.lastName}
           </td>
+          <td>
+            {studentStatus && studentStatus.numberOfAttempts > 0 && <SpriteIcon name="eye-on" className="eye-icon" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})} />}
+          </td>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map((a, i) =>
             <td key={i} className="icon-container">
               <div className="centered">
@@ -210,7 +238,7 @@ class ExpandedAssignment extends Component<
               </div>
             </td>
           )}
-          <td style={{width: '9vw'}}>
+          <td style={{ width: '9vw' }}>
             {studentStatus && <div className="centered">{this.renderCommentIcon()}</div>}
           </td>
         </tr>
@@ -245,6 +273,7 @@ class ExpandedAssignment extends Component<
             </div>
           </th>
           <th></th>
+          <th></th>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
             (a, i) => <th key={i}><div className="centered">{i + 1}</div></th>
           )}
@@ -271,7 +300,7 @@ class ExpandedAssignment extends Component<
             classroom={classroom}
             assignment={assignment}
             archive={() => { }}
-            unarchive={() => {}}
+            unarchive={() => { }}
             onRemind={this.props.onRemind}
           />
         </div>
@@ -289,6 +318,7 @@ class ExpandedAssignment extends Component<
             </div>
           )}
         </div>
+        {this.state.bookData.open && <BookDialog bookData={this.state.bookData} onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />}
       </div>
     );
   }

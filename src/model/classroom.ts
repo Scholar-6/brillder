@@ -28,6 +28,8 @@ export interface Assignment {
   student?: User;
   isArchived: boolean;
 
+  classroom?: any;
+
   studentStatus: StudentStatus[];
   byStatus: any;
   studentStatusCount: {

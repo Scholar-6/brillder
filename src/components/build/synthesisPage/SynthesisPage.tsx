@@ -16,7 +16,6 @@ import CountSynthesis from './WordsCount';
 import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 import { stripHtml } from '../questionService/ConvertService';
 import StatusCircle from '../baseComponents/statusCircle/StatusCircle';
-import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 export interface SynthesisProps {

@@ -53,6 +53,12 @@
       }
     }
 
+    .eye-icon {
+      $size: 1.5vw;
+      width: $size;
+      height: $size;
+    }
+
     .assigned-student-name {
       color: var(--theme-dark-blue);
       padding-left: 0.85vw !important;
@@ -174,6 +180,79 @@
           height: 1.8vw;
           stroke-width: 3;
         }
+      }
+    }
+  }
+  .reminder-brick-actions-container {
+    @extend %flexCenter;
+    width: 3vw;
+    position: relative;
+    .reminder-button-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3vw;
+      height: 3vw;
+      border-radius: 50%;
+      .svg {
+        position: absolute;
+        width: 2.1vw;
+        height: 2.1vw;
+      }
+    }
+
+    &.completed .archive-button-container {
+      cursor: pointer;
+      background: var(--theme-green);
+      .svg {
+        color: var(--white) !important;
+      }
+    }
+    &.completed {
+      .green-hover {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        > div {
+          transition: all 300ms ease-out;
+          width: 2.1vw;
+          height: 2.1vw;
+          border-radius: 50%;
+          background: var(--theme-yellow-alpha3);
+        }
+      }
+    }
+    &.deadline .reminder-icon {
+      background: var(--theme-orange);
+    }
+    &.deadline .green-hover > div {
+      background: var(--theme-orange-alpha3);
+    }
+    &.completed:hover {
+      .green-hover {
+        > div {
+          width: 3vw;
+          height: 3vw;
+        }
+      }
+    }
+    // tooltip
+    .css-custom-tooltip {
+      bottom: -1.8vw;
+      left: -1.5vw;
+      padding: 0 !important;
+      text-align: center;
+      width: 7.7vw !important;
+      z-index: 100;
+      height: 0;
+      overflow: hidden;
+    }
+    &.completed:hover {
+      .css-custom-tooltip {
+        height: auto;
+        opacity: 1;
       }
     }
   }
