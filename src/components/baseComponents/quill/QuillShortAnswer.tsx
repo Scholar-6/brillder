@@ -72,6 +72,7 @@ const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
       userOnly: true,
     },
     table: false,
+  /*eslint-disable-next-line*/
   }), [uniqueId]);
 
   const ref = React.useCallback((node: ReactQuill) => {

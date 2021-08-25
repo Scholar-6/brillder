@@ -11,7 +11,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 import ReminderButton from "./ReminderButton";
 import { sendAssignmentReminder } from "services/axios/brick";
-import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
+import { isDeadlinePassed } from "../service/service";
 
 enum SortBy {
   None,
