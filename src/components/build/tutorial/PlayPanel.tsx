@@ -40,6 +40,8 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
             </div>
             {renderArrow()}
             <div className="icon-container play-icon svgOnHover">
+              <div className="hover-background" />
+              <div className="background" />
               <SpriteIcon name="play-thin" className="w80 h80 svg-default text-white" />
               <SpriteIcon name="play-thick" className="w80 h80 colored text-white" />
             </div>
