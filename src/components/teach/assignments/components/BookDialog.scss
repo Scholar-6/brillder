@@ -27,8 +27,9 @@
     .header {
       width: 100%;
       padding-left: 1vw;
-      background: var(--tab-gray);
-      color: var(--theme-dark-blue);
+      $color: var(--white);
+      background: var(--theme-light-blue);
+      color: $color;
       height: 8vh;
 
       .title {
@@ -47,13 +48,15 @@
         align-items: center;
         height: 5vh;
         .step {
+          height: 100%;
           cursor: pointer;
           position: relative;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 1.1vw;
-          width: 2vw;
+          width: 2.2vw;
+          font-family: $font-family-black;
 
           &.active {
             > span {
@@ -61,19 +64,23 @@
               display: flex;
               align-items: center;
               justify-content: center;
-              $size: 1.3vw;
+              $size: 1.8vw;
               width: $size;
               height: $size;
-              color: var(--white);
-              background: var(--theme-dark-blue);
+              border: 0.2vw solid var(--white);
             }
-            .underline {
+            .fixed-stepper-triangle {
               position: absolute;
-              bottom: -0.7vh;
-              left: 0.35vw;
-              width: 1.3vw;
-              height: 4px;
-              background: var(--theme-dark-blue);
+              z-index: 100;
+              top: 5vh !important;
+              left: -1.5vw;
+              margin-left: 2.1vw;
+              width: 0;
+              height: 0;
+              $size: 0.5vw;
+              border-left: $size solid transparent;
+              border-right: $size solid transparent;
+              border-top: $size solid var(--theme-light-blue);
             }
           }
         }
@@ -131,19 +138,20 @@
       }
     }
     .footer {
+      $color: var(--white);
+      background: var(--theme-light-blue);
       padding-left: 1vw;
       height: 5vh;
-      background: var(--tab-gray);
       display: flex;
       align-items: center;
-      color: var(--theme-dark-blue);
+      color: $color;
       span {
         font-size: 1.3vw;
       }
       svg {
         width: 1.5vw;
         height: 1.5vw;
-        color: var(--theme-dark-blue);
+        color: $color;
       }
       .back-btn {
         margin-left: 6vw;
