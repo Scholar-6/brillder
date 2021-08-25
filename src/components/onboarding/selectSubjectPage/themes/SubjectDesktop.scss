@@ -156,5 +156,29 @@
     &:nth-child(even) {
       margin-left: 12.5%;
     }
+
+    .select-all {
+      > div {
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      }
+      svg {
+        left: 0.8vw;
+        position: absolute;
+        stroke-width: 2;
+        stroke: var(--white) !important;
+        color: var(--white) !important;
+        $size: 1.3vw;
+        width: $size;
+        height: $size;
+      }
+      &:hover {
+        svg {
+          stroke: var(--theme-dark-blue) !important;
+          color: var(--theme-dark-blue) !important;
+        }
+      }
+    }
   }
 }

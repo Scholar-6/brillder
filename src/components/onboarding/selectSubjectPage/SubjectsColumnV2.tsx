@@ -52,8 +52,11 @@ const SubjectsColumn: React.FC<Props> = ({ next, onClick, selectAll, ...props })
   const renderSubject = (s: Subject | any, key: number) => {
     if (s.isAllSubjects) {
       return (
-        <div key={key} className={s.checked ? "subject-item checked" : "subject-item"} onClick={selectAll}>
-          <div className="subject-name">All Subjects</div>
+        <div key={key} className="subject-item select-all" onClick={selectAll}>
+          <div>
+            <SpriteIcon name="feacher-check-square" />
+            <div className="subject-name">All Subjects</div>
+          </div>
         </div>
       );
     }
@@ -68,13 +71,13 @@ const SubjectsColumn: React.FC<Props> = ({ next, onClick, selectAll, ...props })
     )
   }
 
-  const renderSelectAllButton = () => {
+  const renderCorporateButton = () => {
     if (isPhone()) {
       return '';
     }
     return (
-      <div className="subject-item select-all-button" onClick={next}>
-        <div className="subject-name">Select All</div>
+      <div className="subject-item select-all-button" onClick={() => {}}>
+        <div className="subject-name">Corporate</div>
       </div>
     )
   }
@@ -99,6 +102,7 @@ const SubjectsColumn: React.FC<Props> = ({ next, onClick, selectAll, ...props })
         {list.map((row, i) =>
           <div key={i} className="subject-row">
             {row.map((s, j) => renderSubject(s, j))}
+            {i === list.length - 1 && renderCorporateButton()}
             {i === list.length - 1 && renderNextButton()}
           </div>
         )}
