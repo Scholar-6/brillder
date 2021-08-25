@@ -1,5 +1,6 @@
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { Brick } from "model/brick";
+import { MaxKeywordLength } from "../questionnaire/brickTitle/components/KeyWords";
 
 export interface ValidateProposalResult {
   isValid: boolean;
@@ -22,6 +23,13 @@ export function validateProposal(brick: Brick) {
     isValid = false;
   } else if (!brick.brickLength) {
     isValid = false;
+  } else {
+    for (let k of brick.keywords) {
+      if (k.name.length >= MaxKeywordLength) {
+        isValid = false;
+        break;
+      }
+    }
   }
   return { isValid, url };
 }

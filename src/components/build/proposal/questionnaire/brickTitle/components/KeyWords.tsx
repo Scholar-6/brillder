@@ -6,6 +6,8 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyWord } from "model/brick";
 import KeyWordsPlay from "./KeywordsPlay";
 
+export const MaxKeywordLength = 35;
+
 interface KeyWordsProps {
   disabled: boolean;
   isHashtags?: boolean;
@@ -85,24 +87,34 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
   }
 
   render() {
+    let overflowKey = null;
     let invalid = false;
     if (this.props.validate && this.state.keyWords.length === 0) {
       invalid = true;
     }
-    return (
-      <div className={`key-words ${invalid ? 'content-invalid' : ''}`}>
-        {this.props.isHashtags
-          ? <KeyWordsPlay keywords={this.state.keyWords} />
-          : this.state.keyWords.map(this.renderKeyWord.bind(this))
+    if (this.props.validate) {
+      for (let k of this.state.keyWords) {
+        if (k.name.length >= MaxKeywordLength) {
+          invalid = true;
+          overflowKey = k;
         }
-        <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Keyword(s)"
-          onKeyDown={this.checkKeyword.bind(this)}
-          onChange={e => {
-            if (e.target.value.length <= 35) {
-              this.setState({ keyWord: e.target.value })
-            }
+      }
+    }
+    return (
+      <div>
+        <div className={`key-words ${invalid ? 'content-invalid' : ''}`}>
+          {this.props.isHashtags
+            ? <KeyWordsPlay keywords={this.state.keyWords} />
+            : this.state.keyWords.map(this.renderKeyWord.bind(this))
           }
-          } />
+          <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Keyword(s)"
+            onKeyDown={this.checkKeyword.bind(this)}
+            onChange={e => {
+              this.setState({ keyWord: e.target.value })
+            }}
+          />
+        </div>
+        {overflowKey && <div className="text-orange">The tag {overflowKey.name} is too long; the maximum length is {MaxKeywordLength} characters.</div>}
       </div>
     );
   }
