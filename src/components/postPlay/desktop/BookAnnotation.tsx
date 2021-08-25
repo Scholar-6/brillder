@@ -14,16 +14,17 @@ interface BookAnnotationProps {
   currentUser: User;
   annotation: Annotation;
   updateAnnotation(annotation: Annotation): void;
-  deleteAnnotation(): void;
-  addAnnotationReply(): void;
-  updateAnnotationReply(reply: Annotation): void;
-  deleteAnnotationReply(replyId: number): void;
+  deleteAnnotation?(): void;
+  addAnnotationReply?(): void;
+  updateAnnotationReply?(reply: Annotation): void;
+  deleteAnnotationReply?(replyId: number): void;
+  disableFocus?: boolean;
 }
 
 
 const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props }) => {
   const history = useHistory();
-  const focused = React.useMemo(() => history.location.hash.substr(1) === annotation.id.toString(), [history.location, annotation]);
+  const focused = React.useMemo(() => props.disableFocus ? false : (history.location.hash.substr(1) === annotation.id.toString()), [props.disableFocus, history.location, annotation]);
 
   const textRef = React.useRef<HTMLElement>();
   const canEdit = React.useMemo(() => props.currentUser.id === annotation.user.id, [props.currentUser, annotation.user]);
@@ -32,7 +33,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
     if(!textRef.current) return;
     props.updateAnnotation({
       ...annotation,
-      text: textRef.current!.innerHTML ?? "",
+      text: textRef.current!.innerText ?? "",
     });
   }, [annotation, props.updateAnnotation]);
 
@@ -41,13 +42,13 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
     if(onAnnotationChangeRef.current) {
       onAnnotationChangeRef.current.cancel();
     }
-    onAnnotationChangeRef.current = _.debounce(onAnnotationChange, 500);
+    onAnnotationChangeRef.current = _.throttle(onAnnotationChange, 500, { leading: true, trailing: true });
   }, [onAnnotationChange]);
 
   return (
     <Grid
-      className={`comment-container comment-${annotation.id} ${focused ? "focused" : ""}`}
-      onMouseDown={() => history.push("#" + annotation.id)}
+      className={`annotation-container comment-${annotation.id} ${focused ? "focused" : ""}`}
+      onMouseDown={props.disableFocus ? (() => {}) : (() => history.push("#" + annotation.id))}
     >
       <div className="comment-item-container">
         <Grid container direction="column">
@@ -63,7 +64,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
               <h4>{annotation.user.firstName} {annotation.user.lastName}</h4>
             </Grid>
             <div className="buttons-container">
-              {canEdit && (
+              {props.deleteAnnotation && canEdit && (
                 <button
                   aria-label="delete"
                   className="cancel-button svgOnHover"
@@ -74,7 +75,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
               )}
             </div>
           </Grid>
-          <Grid className="comment-text break-word">
+          <Grid className="comment-text break-word" onClick={() => textRef.current?.focus()}>
             <span className="bold">Note: </span>
             <BookAnnotationEditable
               id={annotation.id}
@@ -85,27 +86,27 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
               focusEditable={() => textRef.current?.focus()}
             />
           </Grid>
-          <Collapse in={focused}>
+          {props.addAnnotationReply && <Collapse in={focused}>
             <div className="comment-reply-container">
               {annotation.children?.map(child => (
                 <BookAnnotationReply
                   key={child.id}
                   annotation={child}
                   currentUser={props.currentUser}
-                  onDelete={props.deleteAnnotationReply}
-                  updateAnnotation={props.updateAnnotationReply}
+                  onDelete={props.deleteAnnotationReply!}
+                  updateAnnotation={props.updateAnnotationReply!}
                 />
               ))}
             </div>
-            <div className="add-reply" onClick={props.addAnnotationReply}>
+            {props.addAnnotationReply && <div className="add-reply" onClick={props.addAnnotationReply}>
               <div className="grey-circle">
                 <div className="grey-background"/>
                 <SpriteIcon name="corner-up-left" className="reply-icon" />
               </div>
               <span>Reply</span>
-            </div>
-          </Collapse>
-          <Collapse in={!focused}>
+            </div>}
+          </Collapse>}
+          {props.addAnnotationReply && <Collapse in={!focused}>
             <div className="add-reply inactive">
               <div className="grey-circle">
                 <div className="grey-background"/>
@@ -113,7 +114,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
               </div>
               <span>{annotation.children?.length ?? 0} {annotation.children?.length === 1 ? "Reply" : "Replies"}</span>
             </div>
-          </Collapse>
+          </Collapse>}
         </Grid>
       </div>
     </Grid>

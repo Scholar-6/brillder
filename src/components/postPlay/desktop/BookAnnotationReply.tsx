@@ -28,7 +28,7 @@ const BookAnnotationReply: React.FC<CommentChildProps> = ({ annotation, ...props
     if(!textRef.current) return;
     props.updateAnnotation({
       ...annotation,
-      text: textRef.current!.innerHTML ?? "",
+      text: textRef.current!.innerText ?? "",
     });
   }, [annotation, props.updateAnnotation]);
 
@@ -37,7 +37,7 @@ const BookAnnotationReply: React.FC<CommentChildProps> = ({ annotation, ...props
     if(onAnnotationChangeRef.current) {
       onAnnotationChangeRef.current.cancel();
     }
-    onAnnotationChangeRef.current = _.debounce(onAnnotationChange, 500);
+    onAnnotationChangeRef.current = _.debounce(onAnnotationChange, 200);
   }, [onAnnotationChange]);
 
   return (
@@ -71,7 +71,7 @@ const BookAnnotationReply: React.FC<CommentChildProps> = ({ annotation, ...props
       <div className="comment-date">
         {moment(annotation.timestamp).format("H:mm D MMM")}
       </div>
-      <div className="comment-text">
+      <div className="comment-text" onClick={() => textRef.current?.focus()}>
         <span className="bold">Reply: </span>
         <BookAnnotationEditable
           id={annotation.id}
