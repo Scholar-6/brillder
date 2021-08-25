@@ -7,13 +7,14 @@ import { Assignment, StudentStatus, TeachClassroom, TeachStudent } from "model/c
 import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
-import { ApiAssignemntStats, AssignmentStudent } from "model/stats";
+import { ApiAssignemntStats, AssignmentStudent, AttemptStats } from "model/stats";
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReminderButton from "./ReminderButton";
 import { sendAssignmentReminder } from "services/axios/brick";
 import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
 import BookDialog from "./BookDialog";
+import HolisticCommentPanel from "./HolisticCommentPanel";
 
 enum SortBy {
   None,
@@ -33,6 +34,8 @@ interface AssignemntExpandedState {
   bookData: BookData;
   students: TeachStudent[];
   shown: boolean;
+  currentCommentButton?: Element;
+  currentCommentStudentId?: number;
 }
 
 interface AssignmentBrickProps {
@@ -157,8 +160,8 @@ class ExpandedAssignment extends Component<
     );
   }
 
-  renderCommentIcon() {
-    return <div className="comment-icon">
+  renderCommentIcon(studentId: number) {
+    return <div className="comment-icon" onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}>
       <SpriteIcon name="message-square" className="active" />
     </div>;
   }
@@ -239,7 +242,7 @@ class ExpandedAssignment extends Component<
             </td>
           )}
           <td style={{ width: '9vw' }}>
-            {studentStatus && <div className="centered">{this.renderCommentIcon()}</div>}
+            {studentStatus && <div className="centered">{this.renderCommentIcon(student.id)}</div>}
           </td>
         </tr>
       </Grow>
@@ -319,6 +322,18 @@ class ExpandedAssignment extends Component<
           )}
         </div>
         {this.state.bookData.open && <BookDialog bookData={this.state.bookData} onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />}
+        <HolisticCommentPanel
+          currentAttempt={students.find(s => s.id === this.state.currentCommentStudentId)?.studentResult?.attempts.slice(-1)[0]}
+          setCurrentAttempt={(attempt: AttemptStats) => {
+            const newState = this.state;
+            const studentIdx = newState.students.findIndex(s => s.id == newState.currentCommentStudentId);
+            const attemptIdx = newState.students[studentIdx].studentResult!.attempts.length - 1;
+            newState.students[studentIdx].studentResult!.attempts[attemptIdx] = attempt;
+            this.setState(newState);
+          }}
+          onClose={() => this.setState({ currentCommentButton: undefined, currentCommentStudentId: undefined })}
+          anchorEl={this.state.currentCommentButton}
+        />
       </div>
     );
   }
