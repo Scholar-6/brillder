@@ -15,7 +15,7 @@ interface Props {
 
 const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
   const [activeStep, setStep] = React.useState(0);
-  const [isReview, setReview] = React.useState(false);
+  const [isReview, setReview] = React.useState(true);
 
   const [attempt, setAttempt] = React.useState(null as any);
 
@@ -33,13 +33,11 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
   const { student, assignment } = bookData;
 
   const renderHeader = () => {
-    console.log(bookData.student, bookData.assignment);
-
-    const renderStep = (answer: any, index: number) => {
+    const renderStep = (a: any, index: number) => {
       return (
         <div className={`step ${activeStep === index && 'active'}`} onClick={() => setStep(index)}>
           <span>{index + 1}</span>
-          <div className="underline"><div /></div>
+          {activeStep === index && <div className="fixed-stepper-triangle" />}
         </div>
       );
     }
@@ -59,8 +57,6 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
   if (!attempt) {
     return <div />
   }
-
-  console.log('attempt ', attempt);
 
   const question = justParseQuestion(attempt.brick.questions[activeStep]);
 
