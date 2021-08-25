@@ -123,6 +123,14 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     this.setState({ subjects });
   }
 
+  onSelectAll() {
+    const { subjects } = this.state;
+    for (let s of subjects) {
+      s.checked = true;
+    }
+    this.setState({ subjects });
+  }
+
   render() {
     let titleVerb = 'build';
     if (isTeacherPreference(this.props.user)) {
@@ -144,6 +152,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
               subjects={this.state.subjects}
               next={this.submit.bind(this)}
               onClick={this.onSubjectSelected.bind(this)}
+              selectAll={this.onSelectAll.bind(this)}
             />
             <div className="df-button-box">
               <button className="btn theme-orange" onClick={this.submit.bind(this)}>Next</button>
@@ -164,6 +173,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
             subjects={this.state.subjects}
             next={this.submit.bind(this)}
             onClick={this.onSubjectSelected.bind(this)}
+            selectAll={this.onSelectAll.bind(this)}
           />
         </Grid>
       </React.Suspense>

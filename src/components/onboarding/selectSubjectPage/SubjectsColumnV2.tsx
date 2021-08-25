@@ -10,9 +10,10 @@ interface Props {
   subjects: Subject[];
   next(): void;
   onClick(subjectId: number): void;
+  selectAll(): void;
 }
 
-const SubjectsColumn: React.FC<Props> = ({ subjects, next, onClick }) => {
+const SubjectsColumn: React.FC<Props> = ({ next, onClick, selectAll, ...props }) => {
   let list = [];
   let isOdd = false;
   let row = [];
@@ -24,6 +25,10 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, next, onClick }) => {
     max1 = 2;
     max2 = 3;
   }
+
+  const subjects = Object.assign([], props.subjects) as Subject[] | any[];
+  subjects.unshift({ isAllSubjects: true} as any);
+
   for (let subject of subjects) {
     if (subject.name === GENERAL_SUBJECT || subject.name === CURRENT_AFFAIRS_SUBJECT) {
       continue;
@@ -44,13 +49,32 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, next, onClick }) => {
     list.push(row);
   }
 
-  const renderSubject = (s: Subject, key: number) => {
+  const renderSubject = (s: Subject | any, key: number) => {
+    if (s.isAllSubjects) {
+      return (
+        <div key={key} className={s.checked ? "subject-item checked" : "subject-item"} onClick={selectAll}>
+          <div className="subject-name">All Subjects</div>
+        </div>
+      );
+    }
+
     return (
       <div key={key} className={s.checked ? "subject-item checked" : "subject-item"} onClick={() => onClick(s.id)}>
         <div className="round-circle-container">
           <div className="round-circle" style={{ ["background" as any]: s.color }} />
         </div>
         <div className="subject-name">{s.name}</div>
+      </div>
+    )
+  }
+
+  const renderSelectAllButton = () => {
+    if (isPhone()) {
+      return '';
+    }
+    return (
+      <div className="subject-item select-all-button" onClick={next}>
+        <div className="subject-name">Select All</div>
       </div>
     )
   }
