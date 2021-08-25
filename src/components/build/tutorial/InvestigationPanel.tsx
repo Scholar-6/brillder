@@ -15,7 +15,7 @@ const InvestigationPanel: React.FC<TutorialProps> = (props) => {
     <div className="tutorial-panel tutorial-investigation-panel">
       <div className="tutorial-step-1">
         <Grid container justify="center">
-          <div className="editor-border svgOnHover border-animation">
+          <div className="editor-border ">
             <SpriteIcon name="dashed-circle" className="circle-border" />
             <SpriteIcon name="plus" className="w100 h100 active text-theme-dark-blue" />
           </div>

@@ -11,12 +11,6 @@ export interface TutorialProps {
 }
 
 const PlayPanel: React.FC<TutorialProps> = (props) => {
-  const renderDashedLine = () => {
-    return (
-        <div></div>
-    );
-  }
-
   const renderArrow = () => {
     return (
       <div className="icon-container arrow-icon svgOnHover">
@@ -29,27 +23,26 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
     <div className="tutorial-panel tutorial-play-panel">
       <div className="tutorial-step-1">
         <div className="icons-row">
-          <div className="icon-container svgOnHover">
-            <SpriteIcon
-              name="feather-map"
-              className="w80 h80 active text-theme-dark-blue"
-            />
-          </div>
-          {renderDashedLine()}
-          {renderArrow()}
-          <div className="icon-container svgOnHover">
-            <SpriteIcon name="plus" className="w80 h80 active text-theme-dark-blue" />
-          </div>
-          {renderDashedLine()}
-          {renderArrow()}
-          <div className="icon-container svgOnHover">
-            <SpriteIcon name="feather-menu" className="w80 h80 active text-theme-dark-blue stroke-2-5" />
-          </div>
-          {renderDashedLine()}
-          {renderArrow()}
-          <div className="icon-container play-icon svgOnHover">
-            <SpriteIcon name="play-thin" className="w80 h80 svg-default text-white" />
-            <SpriteIcon name="play-thick" className="w80 h80 colored text-white" />
+          <div>
+            <div className="icon-container svgOnHover">
+              <SpriteIcon
+                name="feather-map"
+                className="w80 h80 active text-theme-dark-blue"
+              />
+            </div>
+            {renderArrow()}
+            <div className="icon-container svgOnHover">
+              <SpriteIcon name="plus" className="w80 h80 active text-theme-dark-blue" />
+            </div>
+            {renderArrow()}
+            <div className="icon-container svgOnHover">
+              <SpriteIcon name="feather-menu" className="w80 h80 active text-theme-dark-blue stroke-2-5" />
+            </div>
+            {renderArrow()}
+            <div className="icon-container play-icon svgOnHover">
+              <SpriteIcon name="play-thin" className="w80 h80 svg-default text-white" />
+              <SpriteIcon name="play-thick" className="w80 h80 colored text-white" />
+            </div>
           </div>
         </div>
         <p className="center">The Play Preview button will turn green once every required field has been filled.</p>

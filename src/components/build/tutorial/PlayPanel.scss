@@ -9,28 +9,48 @@
       stroke-width: 2.5;
     }
     .icons-row {
-      margin: 2vw 0 0 0;
+      @keyframes grow-23f {
+        from {
+         transform: scale(0.2, 0.2);
+        }
+        to {
+         transform: scale(1, 1);
+        }
+      }
+
+      > div {
+        display: flex;
+        @extend %flexCenter;
+        justify-content: flex-start;
+        transform-origin: left;
+        animation: grow-23f 2s ease-out forwards;
+      }
+
+
+      margin: 2vw 0 0 3vw;
       height: 8vw;
-      @extend %flexCenter;
       .icon-container {
         @extend %flexCenter;
         width: 7vw;
         height: 7vw;
         margin: 0 0.7vw;
         &.play-icon {
+          @keyframes play-animate-34d {
+            0% {
+              background: var(--theme-dark-blue);
+            }
+            90% {
+              background: var(--theme-dark-blue);
+            }
+            100% {
+              background: var(--theme-green);
+            }
+          }
+          animation: play-animate-34d 2s ease-out forwards;
           margin: 0 1.4vw;
           border-radius: 100vw;
-          background: var(--theme-green);
           .svg {
             margin-left: 0.3vw;
-          }
-        }
-        &.dashed-line {
-          margin: 0;
-          div {
-            width: 5vw;
-            height: 1px;
-            border-bottom: 0.2vw dashed var(--gray);
           }
         }
         &.arrow-icon {
