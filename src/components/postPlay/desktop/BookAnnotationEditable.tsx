@@ -13,15 +13,15 @@ const BookAnnotationEditable = React.memo(
         placeholder="Type your comment"
         ref={ref as any}
         contentEditable={canEdit}
+        suppressContentEditableWarning={true} // prevent warning for having contenteditable with children
         onInput={onChange}
         onBlur={onChange}
-        dangerouslySetInnerHTML={{ __html: value }}
-      />
+      >{value}</i>
       <i className="placeholder" onClick={focusEditable}>Type your comment</i>
     </>
   }),
   (prevProps, nextProps) => {
-    const currentText = document.querySelector(`.comment-${nextProps.id} .comment-text-editable`)?.innerHTML;
+    const currentText = (document.querySelector(`.comment-${nextProps.id} .comment-text-editable`) as HTMLElement)?.innerText;
     return nextProps.value === currentText;
   }
 );

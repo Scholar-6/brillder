@@ -13,6 +13,8 @@ import { User } from 'model/user';
 import ReplyCommentPanel from './ReplyCommentPanel';
 import SpriteIcon from '../SpriteIcon';
 
+import "./CommentItem.scss";
+
 interface CommentItemProps {
   currentUser: User;
   comment: Comment;
