@@ -16,7 +16,7 @@ const ProposalPanel: React.FC<TutorialProps> = (props) => {
       <div className="tutorial-step-1">
         <h1>There are 4 steps to the build process.</h1>
         <Grid container justify="center">
-          <div className="editor-border svgOnHover border-animation">
+          <div className="editor-border border-animation">
             <SpriteIcon name="dashed-circle" className="circle-border" />
             <SpriteIcon name="feather-map" className="w80 h80 active text-theme-dark-blue" />
           </div>
