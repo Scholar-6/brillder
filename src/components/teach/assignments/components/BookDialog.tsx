@@ -21,7 +21,7 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
 
   const getAttempt = async () => {
     if (bookData.assignment) {
-      let attempts = await getAttempts(bookData.assignment?.brick.id, bookData.student.id);
+      const attempts = await getAttempts(bookData.assignment?.brick.id, bookData.student.id);
       if (attempts) {
         setAttempt(attempts[0]);
       }
@@ -85,12 +85,81 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
     attempt2.correct = answers[activeStep].correct;
   }
 
+  const renderTitle = (attempt: any) => {
+    let correct = false;
+
+    const marks = getMarks();
+
+    if (isReview) {
+      correct = attempt.answers[activeStep].correct;
+    } else {
+      correct = attempt.liveAnswers[activeStep].correct;
+    }
+
+    let text = "Incorrect - try again!";
+    if (correct) {
+      text = "Correct!";
+    } else if (marks > 0) {
+      text = "Not quite - try again!";
+    }
+    if (correct) {
+      return (
+        <div className="ge-phone-title">
+          <div className="ge-phone-circle b-green">
+            <SpriteIcon name="check-icon" />
+          </div>
+          <div>{text}</div>
+        </div>
+      );
+    }
+    return (
+      <div className="ge-phone-title">
+        <div
+          className={`ge-phone-circle ${
+            attempt.marks > 0 ? "b-yellow" : "b-red"
+          }`}
+        >
+          <SpriteIcon name="cancel-custom" />
+        </div>
+        <div>{text}</div>
+      </div>
+    );
+  };
+
+  const getMarks = () => {
+    let marks = 0;
+    if (isReview) {
+      marks = attempt.answers[activeStep].marks;
+    } else {
+      marks = attempt.liveAnswers[activeStep].marks;
+    }
+    return marks;
+  }
+
+  const renderMarks = (attempt: any) => {
+    const marks = getMarks();
+    const maxMarks = attempt.answers[activeStep].maxMarks;
+
+    return (
+      <div className="marks-container">
+        <div>Marks</div>
+        <div>
+          {marks}/{maxMarks}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="book-dialog">
       <div className="dialog-book-background" />
       <div className="book-box">
         {renderHeader()}
         <div className="book-body">
+          <div className="question-title">
+            {renderTitle(attempt2)}
+            {renderMarks(attempt2)}
+          </div>
           <QuestionPlay
             question={question}
             attempt={attempt2}
@@ -108,8 +177,12 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
             checked={isReview === true}
             control={<Radio onClick={() => setReview(true)} />}
             label="Review" />
-          <div className={`back-btn bold ${activeStep === 0 && 'disabled'}`} onClick={() => activeStep > 0 && setStep(activeStep - 1)}>Back</div>
-          <div className="next-btn bold" onClick={() => activeStep < (student.studentStatus.attempts[0].answers.length - 1) && setStep(activeStep + 1)}>Next <SpriteIcon name="arrow-right" /></div>
+          <div className={`back-btn bold ${activeStep === 0 && 'disabled'}`} onClick={() => activeStep > 0 && setStep(activeStep - 1)}>
+            <SpriteIcon name="arrow-left" /> Back
+          </div>
+          <div className="next-btn bold" onClick={() => activeStep < (student.studentStatus.attempts[0].answers.length - 1) && setStep(activeStep + 1)}>
+            Next <SpriteIcon name="arrow-right" />
+          </div>
         </div>
       </div>
     </div>
