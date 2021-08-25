@@ -502,9 +502,16 @@ $base-build-border: $editor-radius;
     }
   }
 
+  .ql-editor.ql-blank::before {
+    font-family: $font-family-bold;
+  }
+
   .key-words {
     .MuiOutlinedInput-notchedOutline {
       border: none !important;
+    }
+    input::placeholder {
+      font-family: $font-family-bold;
     }
   }
 
