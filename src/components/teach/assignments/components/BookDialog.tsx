@@ -28,6 +28,7 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
     }
   }
 
+  /*eslint-disable-next-line*/
   useEffect(() => { getAttempt() }, []);
 
   const { student, assignment } = bookData;

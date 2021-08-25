@@ -19,7 +19,6 @@ import AutocompleteUsernameButEmail from 'components/play/baseComponents/Autocom
 import { createClass } from 'components/teach/service';
 import map from 'components/map';
 import InvalidDialog from 'components/build/baseComponents/dialogs/InvalidDialog';
-import TextDialog from './TextDialog';
 import ValidationFailedDialog from './ValidationFailedDialog';
 
 interface AssignPersonOrClassProps {
