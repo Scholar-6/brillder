@@ -69,9 +69,7 @@
         flex-direction: column;
 
         .sort-header {
-          text-transform: uppercase;
-          font-size: 1.2vw;
-          letter-spacing: 0.45vh;
+          font-size: 1.8vw;
           font-family: $font-family-bold;
         }
 
@@ -243,11 +241,9 @@
 
       .filter-header {
         position: relative;
-        text-transform: uppercase;
         background: var(--light-blue-alpha5);
         padding: 0.3vw 1.4vw;
-        font-size: 1.2vw;
-        letter-spacing: 0.22vw;
+        font-size: 1.8vw;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -737,6 +733,8 @@
     }
 
     .role-description {
+      position: absolute;
+      bottom: 5.5vh;
       width: 100%;
       height: 2.5vh;
       text-align: right;
