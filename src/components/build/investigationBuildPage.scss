@@ -882,6 +882,19 @@ $base-build-border: $editor-radius;
       margin-right: 1vw !important;
     }
   }
+  .hover-move-right {
+    cursor: pointer;
+
+    .left-arrow {
+      transition: all 300ms ease-out;
+    }
+  }
+  .hover-move-right:hover {
+    .left-arrow {
+      margin-left: 1vw !important;
+      margin-right: 2.1vw !important;
+    }
+  }
 }
 
 // #3275 highlight question font-size
