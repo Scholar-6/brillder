@@ -108,7 +108,9 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
           <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Keyword(s)"
             onKeyDown={this.checkKeyword.bind(this)}
             onChange={e => {
-              this.setState({ keyWord: e.target.value })
+              if (e.target.value.length <= MaxKeywordLength) {
+                this.setState({ keyWord: e.target.value })
+              }
             }}
           />
         </div>

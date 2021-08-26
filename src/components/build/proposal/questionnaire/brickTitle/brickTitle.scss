@@ -9,6 +9,18 @@
 }
 
 .brick-title-page {
+  .tooltip-container {
+    position: relative;
+    .css-custom-tooltip {
+      top: 2.5vw;
+      width: 7.8vw;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
+  }
   .absolute-title-help {
     position: absolute;
     right: 0;

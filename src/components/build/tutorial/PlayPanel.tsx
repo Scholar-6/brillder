@@ -68,7 +68,7 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
           className="hover-move-left"
           onClick={() => props.skip()}
         >
-          <span className="button-label bold long">BUILD QUESTIONS</span>
+          <span className="button-label bold">Build Questions</span>
           <div className="right-arrow" />
         </Grid>
       </Grid>

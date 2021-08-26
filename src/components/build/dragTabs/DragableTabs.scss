@@ -498,6 +498,16 @@ $tile-height: 100%;
     height: $size !important;
   }
 
+  .editor-border {
+    $size: 2.7vw;
+    width: $size;
+    height: $size;
+    .circle-border {
+      width: $size !important;
+      height: $size !important;
+    }
+  }
+
   &:hover .css-custom-tooltip {
     height: auto;
     opacity: 1;

@@ -91,6 +91,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
           />
           {isVisible() &&
             <div className="prep-bottom-help-text">
+              <SpriteIcon name="clock" />
               This should take the student no longer than {getPrepLength()} minutes in total
             </div>
           }
