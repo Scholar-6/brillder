@@ -14,7 +14,8 @@
          transform: scale(0.2, 0.2);
         }
         to {
-         transform: scale(1, 1);
+          opacity: 1;
+          transform: scale(1, 1);
         }
       }
 
@@ -22,19 +23,44 @@
         display: flex;
         @extend %flexCenter;
         justify-content: flex-start;
-        transform-origin: left;
-        animation: grow-23f 2s ease-out forwards;
       }
 
 
       margin: 2vw 0 0 3vw;
       height: 8vw;
       .icon-container {
+        opacity: 0;
+        transform-origin: left;
+        animation: grow-23f 1s ease-out forwards;
         @extend %flexCenter;
         width: 7vw;
         height: 7vw;
         margin: 0 0.7vw;
-        &.play-icon {
+
+        $delay: 0.25s;
+
+        &.container-2 {
+          animation: grow-23f 1s $delay ease-out forwards;
+        }
+        &.container-3 {
+          animation: grow-23f 1s ($delay * 2) ease-out forwards;
+        }
+        &.container-4 {
+          animation: grow-23f 1s ($delay * 3) ease-out forwards;
+        }
+        &.container-5 {
+          animation: grow-23f 1s ($delay * 4) ease-out forwards;
+        }
+        &.container-6 {
+          animation: grow-23f 1s ($delay * 5) ease-out forwards;
+        }
+        &.container-7 {
+          animation: grow-23f 1s ($delay * 6) ease-out forwards;
+        }
+
+        .play-icon {
+          width: 7vw;
+          height: 7vw;
           @keyframes play-animate-34d {
             0% {
               background: var(--theme-dark-blue);
@@ -46,8 +72,7 @@
               background: var(--theme-green);
             }
           }
-          animation: play-animate-34d 2s ease-out forwards;
-          margin: 0 1.4vw;
+          animation: play-animate-34d 2.6s ease-out forwards;
           border-radius: 100vw;
           .svg {
             z-index: 3;

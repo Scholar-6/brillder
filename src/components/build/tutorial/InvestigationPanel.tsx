@@ -34,7 +34,7 @@ const InvestigationPanel: React.FC<TutorialProps> = (props) => {
         </div>
       </div>
       <Grid container direction="row" className="button-row">
-        <Grid container justify="flex-start" item xs={4}>
+        <Grid container justify="flex-start" className="hover-move-right" item xs={4}>
           <div className="left-arrow" onClick={() => props.next(TutorialStep.Proposal)} />
           <span className="button-label bold">1. The Plan</span>
         </Grid>

@@ -11,9 +11,9 @@ export interface TutorialProps {
 }
 
 const PlayPanel: React.FC<TutorialProps> = (props) => {
-  const renderArrow = () => {
+  const renderArrow = (className: string) => {
     return (
-      <div className="icon-container arrow-icon svgOnHover">
+      <div className={"icon-container arrow-icon svgOnHover " + className}>
         <SpriteIcon name="arrow-right" className="w100 h100 active text-gray" />
       </div>
     );
@@ -24,26 +24,28 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
       <div className="tutorial-step-1">
         <div className="icons-row">
           <div>
-            <div className="icon-container svgOnHover">
+            <div className="icon-container container-1 svgOnHover">
               <SpriteIcon
                 name="feather-map"
                 className="w80 h80 active text-theme-dark-blue"
               />
             </div>
-            {renderArrow()}
-            <div className="icon-container svgOnHover">
+            {renderArrow('container-2')}
+            <div className="icon-container container-3 svgOnHover">
               <SpriteIcon name="plus" className="w80 h80 active text-theme-dark-blue" />
             </div>
-            {renderArrow()}
-            <div className="icon-container svgOnHover">
+            {renderArrow('container-4')}
+            <div className="icon-container container-5 svgOnHover">
               <SpriteIcon name="feather-menu" className="w80 h80 active text-theme-dark-blue stroke-2-5" />
             </div>
-            {renderArrow()}
-            <div className="icon-container play-icon svgOnHover">
+            {renderArrow('container-6')}
+            <div className="icon-container container-7">
+            <div className="play-icon svgOnHover">
               <div className="hover-background" />
               <div className="background" />
               <SpriteIcon name="play-thin" className="w80 h80 svg-default text-white" />
               <SpriteIcon name="play-thick" className="w80 h80 colored text-white" />
+            </div>
             </div>
           </div>
         </div>
