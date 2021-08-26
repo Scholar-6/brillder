@@ -6,7 +6,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyWord } from "model/brick";
 import KeyWordsPlay from "./KeywordsPlay";
 
-export const MaxKeywordLength = 25;
+export const MaxKeywordLength = 35;
 
 interface KeyWordsProps {
   disabled: boolean;
