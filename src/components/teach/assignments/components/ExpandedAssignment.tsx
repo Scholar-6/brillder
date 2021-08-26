@@ -186,8 +186,14 @@ class ExpandedAssignment extends Component<
   ) {
     if (studentResult) {
       try {
-        const attempt = studentResult.attempts[0].answers[questionNumber];
-        const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
+        let bestAttempt = studentResult.attempts[0];
+        for (let a of studentResult.attempts) {
+          if (a.percentScore > bestAttempt.percentScore) {
+            bestAttempt = a;
+          }
+        }
+        const attempt = bestAttempt.answers[questionNumber];
+        const liveAttempt = bestAttempt.liveAnswers[questionNumber];
 
         // yellow tick
         if (attempt.correct === true && liveAttempt.correct === false) {
