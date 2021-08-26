@@ -11,9 +11,12 @@ interface Props {
   next(): void;
   onClick(subjectId: number): void;
   selectAll(): void;
+  unselectAll(): void;
 }
 
-const SubjectsColumn: React.FC<Props> = ({ next, onClick, selectAll, ...props }) => {
+const SubjectsColumn: React.FC<Props> = ({ next, onClick, ...props }) => {
+  const [allSelected, toggleAll] = React.useState(false);
+
   let list = [];
   let isOdd = false;
   let row = [];
@@ -52,9 +55,17 @@ const SubjectsColumn: React.FC<Props> = ({ next, onClick, selectAll, ...props })
   const renderSubject = (s: Subject | any, key: number) => {
     if (s.isAllSubjects) {
       return (
-        <div key={key} className="subject-item select-all" onClick={selectAll}>
+        <div key={key} className={`subject-item select-all ${allSelected ? 'checked' : ''}`} onClick={() => {
+          if (allSelected) {
+            props.unselectAll();
+            toggleAll(false);
+          } else {
+            props.selectAll();
+            toggleAll(true);
+          }
+        }}>
           <div>
-            <SpriteIcon name="feacher-check-square" />
+            {allSelected ? <SpriteIcon name="radio" /> : <div className="circle" />}
             <div className="subject-name">All Subjects</div>
           </div>
         </div>
