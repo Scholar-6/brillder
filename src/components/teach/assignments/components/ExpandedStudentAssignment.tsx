@@ -12,6 +12,8 @@ import map from "components/map";
 import ReminderButton from "./ReminderButton";
 import { sendAssignmentReminder } from "services/axios/brick";
 import { isDeadlinePassed } from "../service/service";
+import { BookData } from "./ExpandedAssignment";
+import BookDialog from "./BookDialog";
 
 enum SortBy {
   None,
@@ -21,6 +23,7 @@ enum SortBy {
 
 interface AssignemntExpandedState {
   sortBy: SortBy;
+  bookData: BookData;
   questionCount: number;
   student: TeachStudent;
 }
@@ -51,6 +54,7 @@ class ExpandedStudentAssignment extends Component<
 
     this.state = {
       sortBy: SortBy.None,
+      bookData: { open: false, student: null, assignment: null},
       questionCount: questionCount,
       student: this.prepareStudent(this.props.student)
     };
@@ -101,6 +105,7 @@ class ExpandedStudentAssignment extends Component<
               </button>
             </div>
           </th>
+          <th></th>
           <th></th>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
             (a, i) => <th key={i}><div className="centered">{i + 1}</div></th>
@@ -194,6 +199,9 @@ class ExpandedStudentAssignment extends Component<
         <td className={`assigned-student-name`}>
           {student.firstName} {student.lastName}
         </td>
+        <td>
+          {studentResult && <SpriteIcon name="eye-on" className="eye-icon" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})} />}
+        </td>
         {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
           (a, i) =>
             <td key={i} className="icon-container">
@@ -233,6 +241,7 @@ class ExpandedStudentAssignment extends Component<
             <tbody>{this.renderStudent(this.props.student)}</tbody>
           </table>
         </div>
+        {this.state.bookData.open && <BookDialog bookData={this.state.bookData} onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />}
       </div>
     );
   }

@@ -2,6 +2,7 @@ import { FormControlLabel, Radio } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { justParseQuestion } from 'components/build/questionService/QuestionService';
 import QuestionPlay from 'components/play/questionPlay/QuestionPlay';
+import { AttemptStats } from 'model/stats';
 import React, { useEffect } from 'react';
 import { getAttempts } from 'services/axios/attempt';
 
@@ -18,6 +19,23 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
   const [isReview, setReview] = React.useState(true);
 
   const [attempt, setAttempt] = React.useState(null as any);
+
+  const getBestAttempt = (attempts: AttemptStats[]) => {
+    let attempt = attempts[0];
+    for (let a of attempts) {
+      if (a.percentScore > attempt.percentScore) {
+        attempt = a;
+      }
+    }
+    return attempt;
+  }
+
+  const getBestStudentAttempt = () => {
+    if (student.studentStatus) {
+      return getBestAttempt(student.studentStatus.attempts);
+    }
+    return getBestAttempt(student.studentResult.attempts);
+  }
 
   const getAttempt = async () => {
     if (bookData.assignment) {
@@ -47,7 +65,7 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
       <div className="header">
         <div className="title"><span className="bold">{student.firstName} {student.lastName} | {assignment?.classroom?.subject?.name},</span> {' '} <span dangerouslySetInnerHTML={{ __html: assignment?.brick.title || '' }} /></div>
         <div className="stepper">
-          {student.studentStatus.attempts[0].answers.map(renderStep)}
+          {getBestStudentAttempt().answers.map(renderStep)}
         </div>
         <SpriteIcon name="cancel-custom" className="close-button" onClick={onClose} />
       </div>
@@ -180,7 +198,7 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
           <div className={`back-btn bold ${activeStep === 0 && 'disabled'}`} onClick={() => activeStep > 0 && setStep(activeStep - 1)}>
             <SpriteIcon name="arrow-left" /> Back
           </div>
-          <div className="next-btn bold" onClick={() => activeStep < (student.studentStatus.attempts[0].answers.length - 1) && setStep(activeStep + 1)}>
+          <div className="next-btn bold" onClick={() => activeStep < (getBestStudentAttempt().answers.length - 1) && setStep(activeStep + 1)}>
             Next <SpriteIcon name="arrow-right" />
           </div>
         </div>
