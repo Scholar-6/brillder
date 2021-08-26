@@ -2,6 +2,7 @@ import { FormControlLabel, Radio } from '@material-ui/core';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { justParseQuestion } from 'components/build/questionService/QuestionService';
 import QuestionPlay from 'components/play/questionPlay/QuestionPlay';
+import { AttemptStats } from 'model/stats';
 import React, { useEffect } from 'react';
 import { getAttempts } from 'services/axios/attempt';
 
@@ -15,31 +16,47 @@ interface Props {
 
 const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
   const [activeStep, setStep] = React.useState(0);
-  const [isReview, setReview] = React.useState(false);
+  const [isReview, setReview] = React.useState(true);
 
   const [attempt, setAttempt] = React.useState(null as any);
 
+  const getBestAttempt = (attempts: AttemptStats[]) => {
+    let attempt = attempts[0];
+    for (let a of attempts) {
+      if (a.percentScore > attempt.percentScore) {
+        attempt = a;
+      }
+    }
+    return attempt;
+  }
+
+  const getBestStudentAttempt = () => {
+    if (student.studentStatus) {
+      return getBestAttempt(student.studentStatus.attempts);
+    }
+    return getBestAttempt(student.studentResult.attempts);
+  }
+
   const getAttempt = async () => {
     if (bookData.assignment) {
-      let attempts = await getAttempts(bookData.assignment?.brick.id, bookData.student.id);
+      const attempts = await getAttempts(bookData.assignment?.brick.id, bookData.student.id);
       if (attempts) {
         setAttempt(attempts[0]);
       }
     }
   }
 
+  /*eslint-disable-next-line*/
   useEffect(() => { getAttempt() }, []);
 
   const { student, assignment } = bookData;
 
   const renderHeader = () => {
-    console.log(bookData.student, bookData.assignment);
-
-    const renderStep = (answer: any, index: number) => {
+    const renderStep = (a: any, index: number) => {
       return (
         <div className={`step ${activeStep === index && 'active'}`} onClick={() => setStep(index)}>
           <span>{index + 1}</span>
-          <div className="underline"><div /></div>
+          {activeStep === index && <div className="fixed-stepper-triangle" />}
         </div>
       );
     }
@@ -48,7 +65,7 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
       <div className="header">
         <div className="title"><span className="bold">{student.firstName} {student.lastName} | {assignment?.classroom?.subject?.name},</span> {' '} <span dangerouslySetInnerHTML={{ __html: assignment?.brick.title || '' }} /></div>
         <div className="stepper">
-          {student.studentStatus.attempts[0].answers.map(renderStep)}
+          {getBestStudentAttempt().answers.map(renderStep)}
         </div>
         <SpriteIcon name="cancel-custom" className="close-button" onClick={onClose} />
       </div>
@@ -59,8 +76,6 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
   if (!attempt) {
     return <div />
   }
-
-  console.log('attempt ', attempt);
 
   const question = justParseQuestion(attempt.brick.questions[activeStep]);
 
@@ -88,12 +103,81 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
     attempt2.correct = answers[activeStep].correct;
   }
 
+  const renderTitle = (attempt: any) => {
+    let correct = false;
+
+    const marks = getMarks();
+
+    if (isReview) {
+      correct = attempt.answers[activeStep].correct;
+    } else {
+      correct = attempt.liveAnswers[activeStep].correct;
+    }
+
+    let text = "Incorrect - try again!";
+    if (correct) {
+      text = "Correct!";
+    } else if (marks > 0) {
+      text = "Not quite - try again!";
+    }
+    if (correct) {
+      return (
+        <div className="ge-phone-title">
+          <div className="ge-phone-circle b-green">
+            <SpriteIcon name="check-icon" />
+          </div>
+          <div>{text}</div>
+        </div>
+      );
+    }
+    return (
+      <div className="ge-phone-title">
+        <div
+          className={`ge-phone-circle ${
+            attempt.marks > 0 ? "b-yellow" : "b-red"
+          }`}
+        >
+          <SpriteIcon name="cancel-custom" />
+        </div>
+        <div>{text}</div>
+      </div>
+    );
+  };
+
+  const getMarks = () => {
+    let marks = 0;
+    if (isReview) {
+      marks = attempt.answers[activeStep].marks;
+    } else {
+      marks = attempt.liveAnswers[activeStep].marks;
+    }
+    return marks;
+  }
+
+  const renderMarks = (attempt: any) => {
+    const marks = getMarks();
+    const maxMarks = attempt.answers[activeStep].maxMarks;
+
+    return (
+      <div className="marks-container">
+        <div>Marks</div>
+        <div>
+          {marks}/{maxMarks}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="book-dialog">
       <div className="dialog-book-background" />
       <div className="book-box">
         {renderHeader()}
         <div className="book-body">
+          <div className="question-title">
+            {renderTitle(attempt2)}
+            {renderMarks(attempt2)}
+          </div>
           <QuestionPlay
             question={question}
             attempt={attempt2}
@@ -111,8 +195,12 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
             checked={isReview === true}
             control={<Radio onClick={() => setReview(true)} />}
             label="Review" />
-          <div className={`back-btn bold ${activeStep === 0 && 'disabled'}`} onClick={() => activeStep > 0 && setStep(activeStep - 1)}>Back</div>
-          <div className="next-btn bold" onClick={() => activeStep < (student.studentStatus.attempts[0].answers.length - 1) && setStep(activeStep + 1)}>Next <SpriteIcon name="arrow-right" /></div>
+          <div className={`back-btn bold ${activeStep === 0 && 'disabled'}`} onClick={() => activeStep > 0 && setStep(activeStep - 1)}>
+            <SpriteIcon name="arrow-left" /> Back
+          </div>
+          <div className="next-btn bold" onClick={() => activeStep < (getBestStudentAttempt().answers.length - 1) && setStep(activeStep + 1)}>
+            Next <SpriteIcon name="arrow-right" />
+          </div>
         </div>
       </div>
     </div>

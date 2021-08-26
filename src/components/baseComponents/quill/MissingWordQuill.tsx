@@ -63,6 +63,7 @@ const MissingWordQuill = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
       if (props.data !== data) {
         setData(props.data);
       }
+    /*eslint-disable-next-line*/
     }, [props.data]);
 
     const [quill, setQuill] = React.useState<Quill | null>(null);
@@ -96,6 +97,7 @@ const MissingWordQuill = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
         table: false,
         desmos: false,
         capitalization: true,
+    /*eslint-disable-next-line*/
     }), [uniqueId]);
 
     const ref = React.useCallback((node: ReactQuill) => {

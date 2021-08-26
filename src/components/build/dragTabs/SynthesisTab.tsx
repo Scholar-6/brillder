@@ -32,7 +32,7 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
       justify="center"
     >
       <CommentIndicator replyType={replyType} />
-      <div className={`last-tab svgOnHover ${className}`}>
+      <div className={`last-tab ${className}`}>
         {props.tutorialStep === TutorialStep.Synthesis && <SpriteIcon name="dashed-circle" className="circle-border" />}
         <SpriteIcon name="feather-menu" className={`svg ${props.tutorialStep === TutorialStep.Synthesis ? "w80 h80" : "w100 h100"} active icon text-theme-dark-blue`} />
         <div className="css-custom-tooltip">Synthesis</div>

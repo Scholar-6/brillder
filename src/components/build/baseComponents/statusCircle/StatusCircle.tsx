@@ -50,7 +50,7 @@ const StatusCircle: React.FC<Props> = ({isCore, status}) => {
         <div className="b-c-container">
           <SpriteIcon name="circle-filled" className={className} />
           {staticStatus === status &&
-            <div className="css-custom-tooltip">{getToolipText(staticStatus)} </div>
+            <div className="css-custom-tooltip bold">{getToolipText(staticStatus)} </div>
           }
         </div>
       );

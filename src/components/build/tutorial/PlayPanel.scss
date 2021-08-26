@@ -9,28 +9,99 @@
       stroke-width: 2.5;
     }
     .icons-row {
-      margin: 2vw 0 0 0;
+      @keyframes grow-23f {
+        from {
+         transform: scale(0.2, 0.2);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1, 1);
+        }
+      }
+
+      > div {
+        display: flex;
+        @extend %flexCenter;
+        justify-content: flex-start;
+      }
+
+
+      margin: 2vw 0 0 3vw;
       height: 8vw;
-      @extend %flexCenter;
       .icon-container {
+        opacity: 0;
+        transform-origin: left;
+        animation: grow-23f 1s ease-out forwards;
         @extend %flexCenter;
         width: 7vw;
         height: 7vw;
         margin: 0 0.7vw;
-        &.play-icon {
-          margin: 0 1.4vw;
+
+        $delay: 0.25s;
+
+        &.container-2 {
+          animation: grow-23f 1s $delay ease-out forwards;
+        }
+        &.container-3 {
+          animation: grow-23f 1s ($delay * 2) ease-out forwards;
+        }
+        &.container-4 {
+          animation: grow-23f 1s ($delay * 3) ease-out forwards;
+        }
+        &.container-5 {
+          animation: grow-23f 1s ($delay * 4) ease-out forwards;
+        }
+        &.container-6 {
+          animation: grow-23f 1s ($delay * 5) ease-out forwards;
+        }
+        &.container-7 {
+          animation: grow-23f 1s ($delay * 6) ease-out forwards;
+        }
+
+        .play-icon {
+          width: 7vw;
+          height: 7vw;
+          @keyframes play-animate-34d {
+            0% {
+              background: var(--theme-dark-blue);
+            }
+            90% {
+              background: var(--theme-dark-blue);
+            }
+            100% {
+              background: var(--theme-green);
+            }
+          }
+          animation: play-animate-34d 2.6s ease-out forwards;
           border-radius: 100vw;
-          background: var(--theme-green);
           .svg {
+            z-index: 3;
             margin-left: 0.3vw;
           }
-        }
-        &.dashed-line {
-          margin: 0;
-          div {
-            width: 5vw;
-            height: 1px;
-            border-bottom: 0.2vw dashed var(--gray);
+          .hover-background {
+            position: absolute;
+            height: 7vw;
+            width: 7vw;
+            z-index: 2;
+            transition: all 300ms ease-out;
+            opacity: 1;
+            border-radius: 50%;
+          }
+          &:hover {
+            .background {
+              z-index: 2;
+              position: absolute;
+              width: 7vw;
+              height: 7vw;
+              border-radius: 50%;
+              background:var(--theme-green);
+            }
+            .hover-background {
+              width: 9vw;
+              height: 9vw;
+              opacity: 0.5;
+              background: var(--theme-green);
+            }
           }
         }
         &.arrow-icon {

@@ -142,7 +142,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
         <div>
           This will be {a(subjectName)} brick
         </div>
-        <div className="icon-container" onClick={() => {
+        <div className="icon-container tooltip-container" onClick={() => {
           if (this.props.user.subjects.length > 1) {
             this.props.history.push(map.ProposalSubject(this.props.brickId));
           } else {
@@ -150,6 +150,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
           }
         }}>
           <SpriteIcon name="edit-outline-custom" />
+          <div className="css-custom-tooltip">Change subject</div>
         </div>
       </div>
     );

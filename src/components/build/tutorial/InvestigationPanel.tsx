@@ -15,7 +15,7 @@ const InvestigationPanel: React.FC<TutorialProps> = (props) => {
     <div className="tutorial-panel tutorial-investigation-panel">
       <div className="tutorial-step-1">
         <Grid container justify="center">
-          <div className="editor-border svgOnHover border-animation">
+          <div className="editor-border ">
             <SpriteIcon name="dashed-circle" className="circle-border" />
             <SpriteIcon name="plus" className="w100 h100 active text-theme-dark-blue" />
           </div>
@@ -34,7 +34,7 @@ const InvestigationPanel: React.FC<TutorialProps> = (props) => {
         </div>
       </div>
       <Grid container direction="row" className="button-row">
-        <Grid container justify="flex-start" item xs={4}>
+        <Grid container justify="flex-start" className="hover-move-right" item xs={4}>
           <div className="left-arrow" onClick={() => props.next(TutorialStep.Proposal)} />
           <span className="button-label bold">1. The Plan</span>
         </Grid>

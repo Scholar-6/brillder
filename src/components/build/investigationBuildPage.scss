@@ -316,7 +316,7 @@ $base-build-border: $editor-radius;
   position: absolute;
   $size: 4.5vw;
   $margin: 1.4vw;
-  z-index: 9999999;
+  z-index: 9999990;
   right: $margin;
   top: calc(#{$margin} + #{$size} + #{$margin} + 0.7vw);
 
@@ -357,6 +357,7 @@ $base-build-border: $editor-radius;
 
     .custom-tooltip {
       top: 100%;
+      font-family: $font-family-bold;
       z-index: 9999;
       margin-top: 0.6vw;
       left: -1.5vw;
@@ -369,6 +370,7 @@ $base-build-border: $editor-radius;
       top: 100%;
       z-index: 9999;
       margin-top: 0.6vw;
+      font-family: $font-family-bold;
       left: 0.2vw;
       width: 4vw !important;
 
@@ -502,9 +504,16 @@ $base-build-border: $editor-radius;
     }
   }
 
+  .ql-editor.ql-blank::before {
+    font-family: $font-family-bold;
+  }
+
   .key-words {
     .MuiOutlinedInput-notchedOutline {
       border: none !important;
+    }
+    input::placeholder {
+      font-family: $font-family-bold;
     }
   }
 
@@ -873,6 +882,19 @@ $base-build-border: $editor-radius;
       margin-right: 1vw !important;
     }
   }
+  .hover-move-right {
+    cursor: pointer;
+
+    .left-arrow {
+      transition: all 300ms ease-out;
+    }
+  }
+  .hover-move-right:hover {
+    .left-arrow {
+      margin-left: 1vw !important;
+      margin-right: 2.1vw !important;
+    }
+  }
 }
 
 // #3275 highlight question font-size
@@ -939,4 +961,50 @@ $base-build-border: $editor-radius;
 .pair-match-play-choice {
   width: 100% !important;
   overflow-x: hidden;
+}
+
+
+.investigation-build-page {
+  .ql-custom-toolbar .formats .q-tooltip-hover {
+    .css-custom-tooltip {
+      top: -1.7vw;
+      z-index: 100;
+      margin-left: -1vw;
+      text-transform: capitalize;
+      font-family: $font-family-bold;
+      font-size: 1vw;
+      padding: 0.3vw 1vw;
+      width: auto;
+    }
+    .tooltip-colors {
+      margin-left: -3vw;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
+  }
+  .phone-toolbar {
+    position: relative;
+    .css-custom-tooltip {
+      z-index: 9999999;
+      text-transform: capitalize;
+      font-family: $font-family-bold;
+      font-size: 1vw;
+      padding: 0.3vw 1vw;
+      width: auto;
+    }
+    .right-tooltip {
+      left: -10vw;
+    }
+    .bottom-tooltip {
+      top: 2vw;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
+  }
 }

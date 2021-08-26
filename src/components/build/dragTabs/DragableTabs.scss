@@ -176,6 +176,7 @@ $tile-height: 100%;
     }
     .css-custom-tooltip {
       top: -1.8vw;
+      margin-left: -1.9vw;
       width: 6vw;
       height: 0 !important;
       height: auto;
@@ -208,6 +209,7 @@ $tile-height: 100%;
     
       .css-custom-tooltip {
         top: -1.8vw;
+        margin-left: -5vw;
         width: 12vw;
         height: 0;
         overflow: hidden;
@@ -494,6 +496,16 @@ $tile-height: 100%;
     $size: 1.8vw;
     width: $size !important;
     height: $size !important;
+  }
+
+  .editor-border {
+    $size: 2.7vw;
+    width: $size;
+    height: $size;
+    .circle-border {
+      width: $size !important;
+      height: $size !important;
+    }
   }
 
   &:hover .css-custom-tooltip {

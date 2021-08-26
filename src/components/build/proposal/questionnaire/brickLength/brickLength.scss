@@ -12,10 +12,8 @@
       width: 100%;
       text-align: center;
     }
-    @include tabletL {
-      margin-top: 16.7vh;
-      margin-left: 12.1vw;
-    }
+    margin-top: 16.7vh;
+    margin-left: 13.4vw;
     > h1 {
       @extend %textCenter;
       color: var(--theme-dark-blue);
@@ -89,14 +87,19 @@
     }
   }
 
+  .length-description {
+    text-align: center !important;
+  }
+
   .brick-length-image-container {
     padding-top: 1vw;
-    padding-left: 0.5vw;
-    padding-right: 0.5vw;
+    padding-left: 0;
+    padding-right: 0;
     border-radius: 0.8vw;
 
     .length-num {
       margin-top: -0.3vw;
+      margin-right: 0.4vw;
       line-height: 1.2;
       font-size: 1vw;
       font-family: $font-family-bold;
@@ -105,7 +108,7 @@
     }
 
     .brick-length-image {
-      width: 9vw;
+      width: 8vw;
       height: auto;
       background-repeat: no-repeat;
     }
@@ -158,5 +161,39 @@
     top: 20.4vw !important;
     color: white;
     font-size: 1vw !important;
+
+    div {
+      font-size: 1vw !important;
+      margin-top: unset !important;
+      top: unset !important;
+      position: relative;
+    }
+
+    @keyframes transform-er23fwe {
+      from {
+        transform: scale(0.2, 0.2);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1,1);
+      }
+    }
+
+    ul {
+      opacity: 0;
+      transform-origin: 0% 50%;
+      &.a-1 {
+        animation: transform-er23fwe 1s 0.25s forwards;
+      }
+      &.a-2 {
+        animation: transform-er23fwe 1s 0.5s forwards;
+      }
+      &.a-3 {
+        animation: transform-er23fwe 1s 0.75s forwards;
+      }
+      &.a-4 {
+        animation: transform-er23fwe 1s 1s forwards;
+      }
+    }
   }
 }
