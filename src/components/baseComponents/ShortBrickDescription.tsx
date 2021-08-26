@@ -71,7 +71,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     return (
       <div className="short-brick-info">
         <div className="link-description">
-          <BrickTitle title={brick.title} />
+          <BrickTitle title={brick.title} searchString={searchString} />
         </div>
         <div className="link-info">
           <KeyWordsSearchPlay searchString={searchString} keywords={brick.keywords} />

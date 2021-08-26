@@ -27,14 +27,15 @@
     .header {
       width: 100%;
       padding-left: 1vw;
-      background: var(--tab-gray);
-      color: var(--theme-dark-blue);
+      $color: var(--white);
+      background: var(--theme-light-blue);
+      color: $color;
       height: 8vh;
 
       .title {
-        height: 3vh;
+        height: 3.5vh;
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         font-size: 1vw;
 
         span {
@@ -45,15 +46,17 @@
       .stepper {
         display: flex;
         align-items: center;
-        height: 5vh;
+        height: 4vh;
         .step {
+          height: 100%;
           cursor: pointer;
           position: relative;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 1.1vw;
-          width: 2vw;
+          width: 2.2vw;
+          font-family: $font-family-black;
 
           &.active {
             > span {
@@ -61,19 +64,23 @@
               display: flex;
               align-items: center;
               justify-content: center;
-              $size: 1.3vw;
+              $size: 1.8vw;
               width: $size;
               height: $size;
-              color: var(--white);
-              background: var(--theme-dark-blue);
+              border: 0.2vw solid var(--white);
             }
-            .underline {
+            .fixed-stepper-triangle {
               position: absolute;
-              bottom: -0.7vh;
-              left: 0.35vw;
-              width: 1.3vw;
-              height: 4px;
-              background: var(--theme-dark-blue);
+              z-index: 100;
+              top: 4.5vh !important;
+              left: -1.5vw;
+              margin-left: 2.1vw;
+              width: 0;
+              height: 0;
+              $size: 0.5vw;
+              border-left: $size solid transparent;
+              border-right: $size solid transparent;
+              border-top: $size solid var(--theme-light-blue);
             }
           }
         }
@@ -85,7 +92,7 @@
         top: 0.25vw;
         right: 0.25vw;
         stroke-width: 3;
-        color: var(--theme-dark-blue);
+        color: var(--white);
         $size: 1.3vw;
         width: $size;
         height: $size;
@@ -103,6 +110,45 @@
       padding-top: 1vh;
       $book-font-size: 1vw;
       font-size: $book-font-size !important;
+
+      .question-title {
+        margin-bottom: 2.1vh;
+        position: relative;
+        font-family: $font-family-black;
+        color: var(--theme-dark-blue);
+        font-size: 2.5vw;
+        .ge-phone-title {
+          margin-top: 1vh;
+          display: flex;
+          align-items: center;
+          font-size: 2.1vw;
+          .ge-phone-circle {
+            margin-right: 1vw;
+            $size: 2.5vw;
+            width: $size;
+            height: $size;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            svg {
+              color: var(--white);
+              width: 62%;
+              height: 62%;
+              stroke-width: 4;
+            }
+          }
+        }
+        .marks-container {
+          position: absolute;
+          font-size: 1.2vw;
+          top: 0;
+          right: 2vw;
+          text-align: center;
+          line-height: 1.3;
+        }
+      }
+
       .vertical-shuffle-choice {
         min-height: 5vh;
         .vertical-content {
@@ -118,9 +164,15 @@
         font-size: $book-font-size !important;
         padding-bottom: 0 !important;
 
-        span,
         p {
           font-size: $book-font-size !important;
+        }
+
+        .question-hint-global,
+        .question-hint {
+          span.bold {
+            font-size: $book-font-size !important;
+          }
         }
 
         .words-container {
@@ -131,19 +183,20 @@
       }
     }
     .footer {
+      $color: var(--white);
+      background: var(--theme-light-blue);
       padding-left: 1vw;
       height: 5vh;
-      background: var(--tab-gray);
       display: flex;
       align-items: center;
-      color: var(--theme-dark-blue);
+      color: $color;
       span {
         font-size: 1.3vw;
       }
       svg {
         width: 1.5vw;
         height: 1.5vw;
-        color: var(--theme-dark-blue);
+        color: $color;
       }
       .back-btn {
         margin-left: 6vw;
@@ -151,15 +204,43 @@
 
       .back-btn,
       .next-btn {
+        cursor: pointer;
+        display: flex;
+        position: relative;
+        align-items: center;
         font-size: 1.4vw;
+        svg {
+          position: absolute;
+          transition: ease-out 300ms;
+        }
         &.disabled {
           color: var(--dark-gray);
+          svg {
+            display: none;
+          }
+        }
+      }
+      .back-btn {
+        svg {
+          left: -1.5vw;
+        }
+        &:hover {
+          svg {
+            left: -2vw;
+          }
         }
       }
       .next-btn {
         margin-left: 2vw;
-        display: flex;
-        align-items: center;
+
+        svg {
+          right: -1.5vw;
+        }
+        &:hover {
+          svg {
+            right: -2vw;
+          }
+        }
       }
     }
   }

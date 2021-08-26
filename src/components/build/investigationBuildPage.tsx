@@ -811,7 +811,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const isAdmin = checkAdmin(props.user.roles);
 
   const renderBuildPage = () => {
-    console.log(props.brick);
     return (
       <div className="investigation-build-page">
       <Helmet>

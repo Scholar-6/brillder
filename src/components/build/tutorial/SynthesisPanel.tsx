@@ -16,7 +16,7 @@ const SynthesisPanel: React.FC<TutorialProps> = (props) => {
     <div className="tutorial-panel tutorial-synthesis-panel">
       <div className="tutorial-step-1">
         <Grid container justify="center">
-          <div className="editor-border svgOnHover border-animation">
+          <div className="editor-border border-animation">
             <SpriteIcon name="dashed-circle" className="circle-border" />
             <SpriteIcon name="feather-menu" className="w80 h80 active text-theme-dark-blue" />
           </div>
@@ -30,7 +30,7 @@ const SynthesisPanel: React.FC<TutorialProps> = (props) => {
         </div>
       </div>
       <Grid container direction="row" className="button-row">
-        <Grid container justify="flex-start" item xs={5}>
+        <Grid container justify="flex-start" className="hover-move-right" item xs={5}>
           <div className="left-arrow" onClick={() => props.next(TutorialStep.Investigation)} />
           <span className="button-label bold">2. The Investigation</span>
         </Grid>

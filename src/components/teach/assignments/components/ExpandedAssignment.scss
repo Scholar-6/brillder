@@ -54,6 +54,7 @@
     }
 
     .eye-icon {
+      cursor: pointer;
       $size: 1.5vw;
       width: $size;
       height: $size;
@@ -132,6 +133,7 @@
       }
 
       .comment-icon {
+        cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -256,4 +258,8 @@
       }
     }
   }
+}
+
+.holistic-comment-panel {
+  width: 25vw;
 }

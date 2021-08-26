@@ -235,7 +235,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   };
 
   const renderMyLibraryItem = () => {
-    if (page !== PageEnum.MainPage && page !== PageEnum.MyLibrary) {
+    if (page !== PageEnum.MyLibrary) {
       return (
         <MenuItem className="view-profile menu-item" onClick={() => {
           if (libraryCount > 0) {

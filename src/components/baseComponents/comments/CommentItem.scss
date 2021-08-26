@@ -1,0 +1,160 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+$margin-left: 21%;
+
+.comment-item-container {
+  padding: 0.7vh;
+  padding-left: 0.1vh;
+  width: 100%;
+  margin-bottom: 1.5vh;
+  border-radius: 1.2vh;
+  background-color: #ffffff;
+  font-size: 1vw;
+  @extend %posRelative;
+  .profile-image-container {
+    @extend %flexCenter;
+    // width: $margin-left;
+    width: 2.5vw;
+    height: 2.5vw;
+    cursor: pointer;
+    .profile-image {
+      @extend %flexCenter;
+      background: var(--tab-gray);
+      width: 2.2vw;
+      height: 2.2vw;
+      border-radius: 50%;
+      overflow: hidden;
+
+      svg,
+      img {
+        height: 1.8vw;
+        width: 1.8vw;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      $border-width: 0.2vw;
+      &.red-border {
+        border: $border-width solid var(--theme-orange);
+      }
+      &.yellow-border {
+        border: $border-width solid var(--theme-yellow);
+      }
+    }
+  }
+
+  .stretch {
+    // margin-left: $margin-left;
+    margin-left: 2.6vw;
+    flex-grow: 1;
+    line-height: 1.3;
+    font-family: $font-family-bold;
+    width: calc(12vw - 5.2vw - 12px);
+    cursor: pointer;
+    h4 {
+      width: calc(9.8vw - 2.6vw - 6px);
+      padding-left: 0.2vw;
+    }
+  }
+  .buttons-container {
+    // position: absolute;
+    // top: 0;
+    // right: 0;
+    @extend %flexToXCenter;
+    > button {
+      height: 1.3vw;
+      width: 1.3vw;
+      border: 0;
+      background-color: transparent;
+      padding: 0;
+      .svg {
+        stroke-width: 2;
+        @extend %removePosition;
+        height: 100%;
+        width: 100%;
+      }
+      &.message-button {
+        .svg {
+          color: var(--theme-dark-blue);
+        }
+      }
+      &.cancel-button {
+        .svg {
+          color: var(--theme-orange);
+        }
+      }
+    }
+  }
+  .comment-date {
+    cursor: pointer;
+    margin-left: 2.9vw;
+    white-space: nowrap;
+  }
+
+  .comment-item {
+    .comment-text {
+      margin-left: 3%;
+    }
+  }
+
+  .comment-item-collapsed {
+    padding-left: 5%;
+    padding-right: 5%;
+    cursor: pointer;
+    .comment-collapsed-row {
+      white-space: nowrap;
+      overflow: hidden;
+      flex-wrap: nowrap;
+      .comment-author {
+        font-family: $font-family-bold;
+        margin-right: 5%;
+
+        svg {
+          margin-top: 0.45vw;
+          margin-right: 0.35vw;
+          stroke-width: 2;
+          height: 1.3vw;
+          width: 1.3vw;
+        }
+      }
+      .comment-text {
+        width: 8vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    .comment-reply-count {
+      margin-left: auto;
+      right: 0;
+    }
+  }
+
+  .comment-reply-container {
+    border-top: 1px solid lightgrey;
+    padding-top: 1vh;
+    margin-top: 1vh;
+
+    .comment-child-container {
+      position: relative;
+      .comment-head-bar {
+        display: flex;
+        flex-direction: row;
+
+        .comment-author {
+          margin-left: $margin-left;
+          padding-left: 0.3vw;
+          flex-grow: 1;
+          line-height: 1.3;
+        }
+      }
+      .comment-date {
+        margin-left: $margin-left;
+        padding-left: 0.2vw;
+        line-height: 1.3;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

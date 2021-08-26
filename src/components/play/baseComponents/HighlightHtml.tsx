@@ -17,7 +17,6 @@ let annotateCreateEvent: (el: HTMLElement) => void = () => {
 };
 const onAnnotateCreate = (el: HTMLElement) => annotateCreateEvent(el);
 
-console.log(rangy);
 rangy.init();
 const classApplier = rangy.createClassApplier("hi");
 const annotator = rangy.createClassApplier("annotation", {

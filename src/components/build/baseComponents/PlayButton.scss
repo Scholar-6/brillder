@@ -1,0 +1,17 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.preview-tooltip {
+  .css-custom-tooltip {
+    font-family: $font-family-bold;
+    padding: 0;
+    right: 6.3vw;
+    width: 6.6vw;
+  }
+  &:hover {
+    .css-custom-tooltip {
+      opacity: 1;
+    }
+  }
+}

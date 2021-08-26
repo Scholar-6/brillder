@@ -13,13 +13,22 @@
     padding-bottom: 0;
     min-height: 2vw;
   }
+  &.current-placeholder {
+    .MuiSelect-root.MuiSelect-select.MuiSelect-selectMenu.MuiInputBase-input.MuiInput-input {
+      font-family: $font-family-bold;
+    }
+  }
   svg {
+    display: none;
     right: 0;
     position: absolute;
     $size: 1vw;
     width: $size;
-    height: $size;
+    height: 100% !important;
     color: var(--theme-dark-blue);
+  }
+  .arrow {
+    display: block;
   }
   .placeholder {
     display: none;

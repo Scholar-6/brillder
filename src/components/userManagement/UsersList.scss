@@ -54,8 +54,11 @@
         }
 
         .add-user-button {
+          right: 0;
+          position: absolute;
           cursor: pointer;
           margin: 0 1.3vw;
+          margin-top: 3vh;
           font-family: $font-family-black;
           color: var(--theme-dark-blue);
           font-size: 1vw;
@@ -84,7 +87,6 @@
             color: var(--theme-dark-blue);
             font-family: $font-family-black;
             font-size: 1.3vw;
-            letter-spacing: 0.25vw;
 
             tr {
               th {
@@ -95,7 +97,7 @@
 
                 .sort-button {
                   cursor: pointer;
-                  margin-top: 0.3vh;
+                  margin-top: 0.3vw;
                   margin-left: 0.4vw;
                   height: 1.5vw;
                   width: 1.5vw;
@@ -105,10 +107,6 @@
               .subject-title {
                 padding-left: 0.8vw;
                 width: 11.5%;
-
-                .sort-button {
-                  margin-left: 0;
-                }
               }
 
               .user-full-name {
@@ -145,6 +143,7 @@
               }
 
               .user-actions-cell {
+                padding-right: 1vw !important;
                 min-width: 5.5vw;
 
                 .delete-button,
@@ -165,7 +164,6 @@
               }
 
               .activate-button-container {
-                padding-left: 2vw;
               }
             }
 
