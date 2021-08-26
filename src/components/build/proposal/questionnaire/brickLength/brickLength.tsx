@@ -40,11 +40,23 @@ const BrickLengthPreviewComponent: React.FC<Props> = ({ data }) => {
       <div className="">{data === 0 ? "" : data + ' minutes'}</div>
       {data !== 0 ?
         <div className="preview-length-list">
-          Students will have:
-          <ul>
-            <li>Around {prepare} minutes to prepare</li>
-            <li>{investigation} minutes to answer questions</li>
+          <div>
+            Students will have:
+          </div>
+          <div>
+            <ul className="a-1">
+              <li>Around {prepare} minutes to prepare</li>
+            </ul>
+          </div>
+          <div>
+            <ul className="a-2">
+              <li>{investigation} minutes to answer questions</li>
+            </ul>
+          </div>
+          <ul className="a-3">
             <li>{synthesis} minutes to read your Synthesis</li>
+          </ul>
+          <ul className="a-4">
             <li>{review} minutes to review their answers</li>
           </ul>
         </div> : ""}

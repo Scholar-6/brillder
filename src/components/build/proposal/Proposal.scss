@@ -435,3 +435,25 @@
     width: 3vw;
   }
 }
+
+// quill tooltips
+.tutorial-page .ql-custom-toolbar .formats .q-tooltip-hover {
+  .css-custom-tooltip {
+    top: -1.7vw;
+    z-index: 100;
+    margin-left: -0.4vw;
+    text-transform: capitalize;
+    font-family: $font-family-bold;
+    font-size: 1vw;
+    padding: 0.3vw 1vw;
+    width: auto;
+  }
+  .tooltip-colors {
+    margin-left: -3vw;
+  }
+  &:hover {
+    .css-custom-tooltip {
+      opacity: 1;
+    }
+  }
+}
