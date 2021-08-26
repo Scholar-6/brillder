@@ -24,6 +24,7 @@ const DifficultySelect: React.FC<DifficultySelectProps> = (props) => {
 
   return (
     <div className={className}>
+      <SpriteIcon name="arrow-down" className="arrow" />
       <Select value={level} disabled={props.disabled} onChange={e => props.onChange(e.target.value as AcademicLevel)} IconComponent={() => <SpriteIcon name="arrow-down" />}
         MenuProps={{className: 'difficult-popper'}}
       >

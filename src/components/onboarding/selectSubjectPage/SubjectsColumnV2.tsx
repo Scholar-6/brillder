@@ -65,7 +65,7 @@ const SubjectsColumn: React.FC<Props> = ({ next, onClick, ...props }) => {
           }
         }}>
           <div>
-            {allSelected ? <SpriteIcon name="radio" /> : <div className="circle" />}
+            {allSelected ? <SpriteIcon name="radio" /> : <SpriteIcon name="circle-empty" />}
             <div className="subject-name">All Subjects</div>
           </div>
         </div>
