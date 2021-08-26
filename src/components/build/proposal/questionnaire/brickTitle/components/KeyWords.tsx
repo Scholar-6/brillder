@@ -92,12 +92,10 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
     if (this.props.validate && this.state.keyWords.length === 0) {
       invalid = true;
     }
-    if (this.props.validate) {
-      for (let k of this.state.keyWords) {
-        if (k.name.length >= MaxKeywordLength) {
-          invalid = true;
-          overflowKey = k;
-        }
+    for (let k of this.state.keyWords) {
+      if (k.name.length >= MaxKeywordLength) {
+        invalid = true;
+        overflowKey = k;
       }
     }
     return (
