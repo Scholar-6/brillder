@@ -316,7 +316,7 @@ $base-build-border: $editor-radius;
   position: absolute;
   $size: 4.5vw;
   $margin: 1.4vw;
-  z-index: 9999999;
+  z-index: 9999990;
   right: $margin;
   top: calc(#{$margin} + #{$size} + #{$margin} + 0.7vw);
 
@@ -963,6 +963,28 @@ $base-build-border: $editor-radius;
     }
     .tooltip-colors {
       margin-left: -3vw;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
+  }
+  .phone-toolbar {
+    position: relative;
+    .css-custom-tooltip {
+      z-index: 9999999;
+      text-transform: capitalize;
+      font-family: $font-family-bold;
+      font-size: 1vw;
+      padding: 0.3vw 1vw;
+      width: auto;
+    }
+    .right-tooltip {
+      left: -10vw;
+    }
+    .bottom-tooltip {
+      top: 2vw;
     }
     &:hover {
       .css-custom-tooltip {
