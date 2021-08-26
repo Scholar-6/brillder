@@ -12,10 +12,8 @@
       width: 100%;
       text-align: center;
     }
-    @include tabletL {
-      margin-top: 16.7vh;
-      margin-left: 12.1vw;
-    }
+    margin-top: 16.7vh;
+    margin-left: 10.4vw;
     > h1 {
       @extend %textCenter;
       color: var(--theme-dark-blue);
@@ -87,6 +85,10 @@
         background-position: left;
       }
     }
+  }
+
+  .length-description {
+    text-align: center !important;
   }
 
   .brick-length-image-container {
