@@ -357,6 +357,7 @@ $base-build-border: $editor-radius;
 
     .custom-tooltip {
       top: 100%;
+      font-family: $font-family-bold;
       z-index: 9999;
       margin-top: 0.6vw;
       left: -1.5vw;
@@ -369,6 +370,7 @@ $base-build-border: $editor-radius;
       top: 100%;
       z-index: 9999;
       margin-top: 0.6vw;
+      font-family: $font-family-bold;
       left: 0.2vw;
       width: 4vw !important;
 
