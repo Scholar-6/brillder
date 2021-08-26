@@ -72,7 +72,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     this.state = {
       users: [],
       page: 0,
-      pageSize: 12,
+      pageSize: 14,
       subjects: [],
       filterExpanded: true,
 
@@ -326,7 +326,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       <div className="flex-height-box">
         <div className="sort-box">
           <div className="filter-container sort-by-box">
-            <div className="sort-header">Filter by: Role</div>
+            <div className="sort-header">User Type</div>
+            <RoleDescription />
             <RadioGroup
               className="sort-group"
               aria-label="SortBy"
@@ -347,7 +348,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             </RadioGroup>
           </div>
           <div className="filter-header">
-            <span>Filter by: Subject</span>
+            <span>Subject</span>
          </div>
         </div>
         <div className="sort-box subject-scrollable">
@@ -433,18 +434,18 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     return (
       <tr>
         <th className="subject-title">
-          <Grid container>JOINED {this.renderSortArrow(UserSortBy.Joined)}</Grid>
+          <Grid container>Joined {this.renderSortArrow(UserSortBy.Joined)}</Grid>
         </th>
         <th className="user-full-name">
-          <Grid container>NAME {this.renderSortArrow(UserSortBy.Name)}</Grid>
+          <Grid container>Name {this.renderSortArrow(UserSortBy.Name)}</Grid>
         </th>
-        <th className="email-column">EMAIL</th>
+        <th className="email-column">Email</th>
         <th>
-          <Grid container>ROLE</Grid>
+          <Grid container>User Type</Grid>
         </th>
         <th>
           <Grid container>
-            ACTIVE?
+            Active?
           </Grid>
         </th>
         <th className="edit-button-column"></th>
@@ -557,7 +558,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           <Grid item xs={9} className="brick-row-container">
             {this.renderTableHeader()}
             {this.renderUsers()}
-            <RoleDescription />
             <UsersListPagination
               page={this.state.page}
               totalCount={this.state.totalCount}
