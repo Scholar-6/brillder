@@ -318,8 +318,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const { user } = this.state;
     const canMove = user.username ? true : false;
 
-    console.log(canMove, user)
-
     const mockHistory = {
       location: this.props.history.location,
       push() { }
@@ -350,7 +348,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               </div>
               <div className="profile-fields">
                 <ProfileImage
-                  profileImage={user.profileImage}
+                  user={user}
                   setImage={(v) => this.onProfileImageChanged(v)}
                   deleteImage={() => this.onProfileImageChanged('')}
                   suspendIntroJs={this.suspendIntroJs.bind(this)}
