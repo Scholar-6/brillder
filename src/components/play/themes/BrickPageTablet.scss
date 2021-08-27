@@ -1361,10 +1361,10 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     color: var(--theme-dark-blue);
     font-family: $font-family-regular;
     margin: 0 0 1vh 0;
-    font-size: 1.15vw;
+    font-size: 1.4vw;
     #react-mathjax-preview p,
     p {
-      font-size: 1.15vw;
+      font-size: 1.4vw;
     }
   }
 
