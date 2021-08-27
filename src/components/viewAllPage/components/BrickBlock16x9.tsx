@@ -15,6 +15,7 @@ import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getDate, getMonth, getYear } from "components/services/brickService";
 import { AssignmentBrickStatus } from "model/assignment";
+import BrickTitle from "components/baseComponents/BrickTitle";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -162,7 +163,8 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
             }
             <div className="bottom-description-color"></div>
             <div className="bottom-description">
-              <div className="bold brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+              {/* <div className="bold brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} /> */}
+              <BrickTitle className="bold brick-title" title={brick.title} searchString={props.searchString} />
             </div>
           </div>
         </a>

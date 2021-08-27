@@ -1,5 +1,6 @@
 import { Popover } from '@material-ui/core';
 import axios from 'axios';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
 import BookAnnotation from 'components/postPlay/desktop/BookAnnotation';
 import { Annotation, AnnotationLocation } from 'model/attempt';
@@ -39,6 +40,8 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
 
     const annotation = React.useMemo(() => props.currentAttempt?.annotations?.find(a => a.priority === 1), [props.currentAttempt?.annotations]);
 
+    const [currentAnnotation, setCurrentAnnotation] = React.useState<Annotation>();
+
     const saveAttempt = React.useCallback(async (attempt: AttemptStats) => {
         const newAttempt = Object.assign({}, attempt);
 
@@ -58,16 +61,17 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
         });
     }, []);
 
-    const updateAnnotation = React.useCallback((annotation: Annotation) => {
+    const updateAnnotation = React.useCallback(async () => {
         const newAttempt = props.currentAttempt;
-        if(!newAttempt || !newAttempt.annotations) return;
+        if(!newAttempt || !newAttempt.annotations || !currentAnnotation) return;
 
-        const annotationIndex = newAttempt.annotations.findIndex(a => a.id === annotation.id);
+        const annotationIndex = newAttempt.annotations.findIndex(a => a.id === currentAnnotation.id);
         if(annotationIndex < 0) return;
 
-        newAttempt.annotations[annotationIndex] = annotation;
-        saveAttempt(newAttempt);
-    }, [props.currentAttempt, saveAttempt]);
+        newAttempt.annotations[annotationIndex] = currentAnnotation;
+        await saveAttempt(newAttempt);
+        props.onClose();
+    }, [currentAnnotation, props.currentAttempt, saveAttempt]);
     
     React.useEffect(() => {
         if(props.currentAttempt && !annotation) {
@@ -96,9 +100,14 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
             <div className="holistic-comment-panel">
                 <BookAnnotation
                     annotation={annotation}
-                    updateAnnotation={updateAnnotation}
+                    updateAnnotation={(a: Annotation) => setCurrentAnnotation(a)}
                     disableFocus
                 />
+                <div className="centered" onClick={() => updateAnnotation()}>
+                    <div className="save-button b-green">
+                        <SpriteIcon name="save-icon" className="active" />
+                    </div>
+                </div>
             </div>
         </Popover>
     );
