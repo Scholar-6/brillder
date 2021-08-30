@@ -138,9 +138,10 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 isValid={!!stripHtml(this.state.synthesis)}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-                  'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "table", "desmos", "caps"
+                  'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "sound", "table", "desmos", "caps"
                 ]}
                 imageDialog={true}
+                soundDialog={true}
               /> : <div className="s-loader-container"><SpriteIcon name="f-loader" className="spinning blue" /></div>}
             </Grid>
             { !this.state.commentsShown &&
