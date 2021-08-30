@@ -30,6 +30,7 @@ import { GraphSettings } from "components/build/buildQuestions/components/Graph/
 import QuillDesmos, { DesmosBlot } from "./QuillDesmos";
 import QuillDesmosDialog from "./QuillDesmosDialog";
 import SoundRecordDialog from "components/build/buildQuestions/questionTypes/sound/SoundRecordDialog";
+import { fileUrl } from "components/services/uploadFile";
 
 function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -89,7 +90,8 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const [data, setData] = React.useState(props.data);
     const [quill, setQuill] = React.useState<Quill | null>(null);
 
-    const [soundInvalid, setSoundInvalid] = React.useState(false);
+    const [imageInvalid, setImageInvalid] = React.useState(false);
+
     const [soundDialogOpen, setSoundDialogOpen] = React.useState(false);
     const [soundDialogShouldUpdate, setSoundDialogShouldUpdate] = React.useState(false);
     const [soundDialogFile, setSoundDialogFile] = React.useState<File>();
@@ -107,7 +109,6 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         }
     }, [soundModule]);
 
-    const [imageInvalid, setImageInvalid] = React.useState(false);
     const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
     const [imageDialogShouldUpdate, setImageDialogShouldUpdate] = React.useState(false);
     const [imageDialogFile, setImageDialogFile] = React.useState<File>();
@@ -320,11 +321,13 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 <SoundRecordDialog
                   isOpen={soundDialogOpen}
                   save={async(v, caption) => {
+                      if (quill) {
+                        const range = quill.getSelection();
+                        const position = range ? range.index : 0;
+                        quill.insertEmbed(position, 'audio', fileUrl(v), 'user');
+                      }
                       if (soundModule) {
-                          const res = await soundModule.uploadImages.bind(soundModule)(v, caption);
-                          if (!res) {
-                              setSoundInvalid(true);
-                          }
+                          //const res = await soundModule.uploadImages.bind(soundModule)(v, caption);
                       }
                       setSoundDialogOpen(false);
                   }}

@@ -6,6 +6,22 @@ import axios from "axios";
 
 const Embed = GlobalQuill.import('blots/block/embed');
 
+export class AudioBlot extends Embed {
+    static create(url: string) {
+        let node = super.create();
+        node.setAttribute('src', url);
+        node.setAttribute('controls', '');
+        return node;
+    }
+
+    static value(node: any) {
+        return node.getAttribute('src');
+    }
+}
+AudioBlot.blotName = 'audio';
+AudioBlot.tagName = 'audio';
+Quill.register(AudioBlot);
+
 export class CustomSoundBlot extends Embed {
     static blotName = 'customSound';
     static tagName = 'div';
@@ -13,47 +29,48 @@ export class CustomSoundBlot extends Embed {
 
     static create(value: any) {
         const node: Element = super.create();
-        console.log(value);
-
-        node.className = node.className + " sound-play-container2";
+        node.className = node.className + " custom-audio-controls";
         node.setAttribute('data-value', value.url);
         node.setAttribute('data-caption', value.imageCaption);
 
-        const containerNode = document.createElement("audio");
-        containerNode.className = "image-play-container";
-        containerNode.src = value.url
-        containerNode.contentEditable = "false";
+        const btnContainer = document.createElement("div");
+        btnContainer.className = "button-container";
 
-        const imageContainer = document.createElement("div");
-        imageContainer.className = "il-image-container";
-        containerNode.appendChild(imageContainer);
+        const svg2 = document.createElement('svg');
+        svg2.classList.add('svg');
 
-        const imageContainer2 = document.createElement("div");
-        imageContainer2.className = "ili-image-container";
-        imageContainer.appendChild(imageContainer2);
+        const audio = new Audio(value.url);
 
-        const imageNode = document.createElement("img");
-        imageNode.className = "image-play";
-        imageNode.setAttribute('style', `max-height: ${value.imageHeight}vh`);
-        imageNode.setAttribute('src', value.url);
-        imageContainer2.appendChild(imageNode);
+        console.log('creted ');
 
-        const containerSource = document.createElement("div");
-        containerSource.className = "image-source-container";
-        imageContainer2.appendChild(containerSource);
+        const svg = document.createElement('svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '2');
+        btnContainer.onclick = (e: any) => {
+            console.log('click', e);
+            audio.play();
+        }
 
-        const source = document.createElement("div");
-        source.textContent = value.imageSource;
-        source.className = "image-source";
-        containerSource.appendChild(source);
+        btnContainer.addEventListener("click", () => {
+            console.log('click2');
+            audio.play();
+        });
 
-        const captionNode = document.createElement("figcaption");
-        captionNode.className = "image-caption";
-        captionNode.textContent = value.imageCaption;
-        captionNode.contentEditable = "false";
-        containerNode.appendChild(captionNode);
+        node.addEventListener('click', function (e) {
+            console.log('click44');
+        });
 
-        node.appendChild(containerNode);
+        const newElement = document.createElementNS("http://www.w3.org/2000/svg", 'polygon'); //Create a path in SVG's namespace
+        newElement.setAttribute("points", "5 3 19 12 5 21 5 3");
+        svg.appendChild(newElement);
+        svg2.appendChild(svg);
+        btnContainer.appendChild(svg2);
+
+        node.appendChild(btnContainer);
 
         return node;
     }
@@ -67,10 +84,12 @@ export class CustomSoundBlot extends Embed {
         blot.imageHeight = node.getAttribute('data-height');
         blot.imagePermision = node.getAttribute('data-permission');
 
+        console.log('blot value', blot);
+
         return blot;
     }
 }
-CustomSoundBlot.tagName="div";
+CustomSoundBlot.tagName = "div";
 GlobalQuill.register(CustomSoundBlot);
 
 const imageUrlRegex = new RegExp(`${process.env.REACT_APP_BACKEND_HOST}/files/(.*)`);
@@ -111,7 +130,7 @@ export default class SoundUpload {
     uploadHandler(toolbarNode: any) {
         if (!toolbarNode) return;
         const selection = this.quill.getSelection(false);
-        if(selection && this.quill.getFormat(selection)["table-cell-line"]) return;
+        if (selection && this.quill.getFormat(selection)["table-cell-line"]) return;
         this.openDialog();
         /*
         let fileInput = toolbarNode.querySelector("input.ql-image[type=file]");
@@ -160,9 +179,9 @@ export default class SoundUpload {
             const leafData = CustomSoundBlot.value(leaf.domNode);
 
             let fileName = null;
-            if(data.newSoundFile) {
+            if (data.newSoundFile) {
                 const res = await new Promise<any>((resolve, reject) => uploadFile(data.newSoundFile, resolve, reject));
-                if(!res) {
+                if (!res) {
                     return false;
                 }
                 fileName = res.data.fileName;
