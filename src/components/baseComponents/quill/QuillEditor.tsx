@@ -92,19 +92,20 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
 
     const [imageInvalid, setImageInvalid] = React.useState(false);
 
+    const [selection, setSelection] = React.useState(0);
     const [soundDialogOpen, setSoundDialogOpen] = React.useState(false);
-    const [soundDialogShouldUpdate, setSoundDialogShouldUpdate] = React.useState(false);
-    const [soundDialogFile, setSoundDialogFile] = React.useState<File>();
     const [soundDialogData, setSoundDialogData] = React.useState<any>({});
-    const [soundDialogBlot, setSoundDialogBlot] = React.useState<CustomSoundBlot>();
     const [soundModule, setSoundModule] = React.useState<SoundUpload>();
     React.useEffect(() => {
         if(soundModule) {
             soundModule.openDialog = () => {
+                if (quill) {
+                    const range = quill.getSelection();
+                    const position = range ? range.index : 0;
+                    setSelection(position);
+                }
                 setSoundDialogData({});
                 setSoundDialogOpen(true);
-                //setSoundDialogShouldUpdate(shouldUpdate ?? false);
-                //setSoundDialogBlot(blot);
             }
         }
     }, [soundModule]);
@@ -168,8 +169,6 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         props?.onBlur?.();
     /*eslint-disable-next-line*/
     }, [currentQuillId, setCurrentQuillId, uniqueId, props.onBlur])
-
-    console.log(props.soundDialog);
 
     const modules = React.useMemo(() => ({
         toolbar: (props.showToolbar ?? false) ? {
@@ -322,12 +321,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                   isOpen={soundDialogOpen}
                   save={async(v, caption) => {
                       if (quill) {
-                        const range = quill.getSelection();
-                        const position = range ? range.index : 0;
-                        quill.insertEmbed(position, 'audio', fileUrl(v), 'user');
-                      }
-                      if (soundModule) {
-                          //const res = await soundModule.uploadImages.bind(soundModule)(v, caption);
+                        quill.insertEmbed(selection, 'audio', fileUrl(v), 'user');
                       }
                       setSoundDialogOpen(false);
                   }}
