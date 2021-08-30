@@ -14,6 +14,7 @@ import "./QuillMediaEmbed";
 import "./QuillCustomClipboard";
 import "./QuillKeyboard";
 import "./QuillImageUpload";
+import "./QuillSoundUpload";
 import "./QuillDesmos";
 import "./QuillCapitalization";
 import "./QuillBlockQuote";
@@ -22,11 +23,13 @@ import ImageDialog from "components/build/buildQuestions/components/Image/ImageD
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
 import ImageUpload, { CustomImageBlot } from "./QuillImageUpload";
+import SoundUpload, { CustomSoundBlot } from "./QuillSoundUpload";
 import QuillCustomClipboard from "./QuillCustomClipboard";
 import ValidationFailedDialog from "../dialogs/ValidationFailedDialog";
 import { GraphSettings } from "components/build/buildQuestions/components/Graph/Graph";
 import QuillDesmos, { DesmosBlot } from "./QuillDesmos";
 import QuillDesmosDialog from "./QuillDesmosDialog";
+import SoundRecordDialog from "components/build/buildQuestions/questionTypes/sound/SoundRecordDialog";
 
 function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -59,6 +62,7 @@ interface QuillEditorProps {
     showToolbar?: boolean;
     className?: string;
     imageDialog?: boolean;
+    soundDialog?: boolean;
     onChange?(data: string): void;
     onBlur?(): void;
 }
@@ -85,8 +89,25 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const [data, setData] = React.useState(props.data);
     const [quill, setQuill] = React.useState<Quill | null>(null);
 
-    const [imageInvalid, setImageInvalid] = React.useState(false);
+    const [soundInvalid, setSoundInvalid] = React.useState(false);
+    const [soundDialogOpen, setSoundDialogOpen] = React.useState(false);
+    const [soundDialogShouldUpdate, setSoundDialogShouldUpdate] = React.useState(false);
+    const [soundDialogFile, setSoundDialogFile] = React.useState<File>();
+    const [soundDialogData, setSoundDialogData] = React.useState<any>({});
+    const [soundDialogBlot, setSoundDialogBlot] = React.useState<CustomSoundBlot>();
+    const [soundModule, setSoundModule] = React.useState<SoundUpload>();
+    React.useEffect(() => {
+        if(soundModule) {
+            soundModule.openDialog = () => {
+                setSoundDialogData({});
+                setSoundDialogOpen(true);
+                //setSoundDialogShouldUpdate(shouldUpdate ?? false);
+                //setSoundDialogBlot(blot);
+            }
+        }
+    }, [soundModule]);
 
+    const [imageInvalid, setImageInvalid] = React.useState(false);
     const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
     const [imageDialogShouldUpdate, setImageDialogShouldUpdate] = React.useState(false);
     const [imageDialogFile, setImageDialogFile] = React.useState<File>();
@@ -147,6 +168,8 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     /*eslint-disable-next-line*/
     }, [currentQuillId, setCurrentQuillId, uniqueId, props.onBlur])
 
+    console.log(props.soundDialog);
+
     const modules = React.useMemo(() => ({
         toolbar: (props.showToolbar ?? false) ? {
             container: `.quill-${uniqueId}`,
@@ -154,6 +177,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         autolink: props.allowLinks ?? false,
         mediaembed: props.allowMediaEmbed ?? false,
         imageupload: props.imageDialog ?? false,
+        soundupload: props.soundDialog ?? false,
         clipboard: true,
         keyboard: {
             bindings: QuillBetterTable.keyboardBindings,
@@ -203,6 +227,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         if(node) {
             const editor = node.getEditor();
             setImageModule(editor.getModule("imageupload") as ImageUpload);
+            setSoundModule(editor.getModule("soundupload") as SoundUpload);
             setDesmosModule(editor.getModule("desmos") as QuillDesmos);
             setClipboardModule(editor.getModule("clipboard") as QuillCustomClipboard);
             editor.on("editor-change", () => {
@@ -289,6 +314,24 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                     header="This image is too large, try shrinking it."
                   />
                 </div>
+            }
+            {props.soundDialog && 
+              <div>
+                <SoundRecordDialog
+                  isOpen={soundDialogOpen}
+                  save={async(v, caption) => {
+                      if (soundModule) {
+                          const res = await soundModule.uploadImages.bind(soundModule)(v, caption);
+                          if (!res) {
+                              setSoundInvalid(true);
+                          }
+                      }
+                      setSoundDialogOpen(false);
+                  }}
+                  data={soundDialogData}
+                  close={() => setSoundDialogOpen(false)}
+                />
+              </div>
             }
             {props.allowDesmos &&
                 <QuillDesmosDialog

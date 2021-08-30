@@ -10,6 +10,7 @@ import DesmosModule from './QuillDesmos';
 import { QuillValidColors } from './QuillEditor';
 import QuillCapitalization from './QuillCapitalization';
 import LineStyleDialog from 'components/build/buildQuestions/questionTypes/highlighting/wordHighlighting/LineStyleDialog';
+import SoundUpload from './QuillSoundUpload';
 
 interface QuillToolbarProps {
     className?: string;
@@ -41,22 +42,23 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
     const quillHandler = React.useCallback((format: string, value?: string) => {
         if(!props.quill) return;
         if(format === "image") {
-            const imageUpload = props.quill.getModule("imageupload") as ImageUpload
+            const imageUpload = props.quill.getModule("imageupload") as ImageUpload;
             imageUpload.uploadHandler(toolbarNode.current);
             return true;
-        }
-        if(format === "desmos") {
+        } else if(format === "sound") {
+            const soundUpload = props.quill.getModule("soundupload") as SoundUpload;
+            soundUpload.uploadHandler(toolbarNode.current);
+            return true;
+        } else if(format === "desmos") {
             const desmos = props.quill.getModule("desmos") as DesmosModule;
             desmos.newGraphHandler();
             return true;
-        }
-        if(format === "table") {
+        } else if(format === "table") {
             const betterTable = props.quill.getModule("better-table");
             betterTable.insertTable(2, 2);
             console.log(props.quill.getContents());
             return true;
-        }
-        if(format === "caps") {
+        } else if(format === "caps") {
             const capitalization = props.quill.getModule("capitalization") as QuillCapitalization;
             capitalization.format(value);
             return true;
@@ -116,6 +118,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         numberedList: (props: any) => <QuillToolbarButton name="list" label="Numbering" value="ordered" {...props} />,
         latex: (props: any) => <QuillToolbarButton name="latex" label="LaTeX" {...props} />,
         image: (props: any) => <QuillToolbarButton name="image" icon="image" {...props} />,
+        sound: (props: any) => <QuillToolbarButton name="sound" icon="image" {...props} />,
         table: (props: any) => <QuillToolbarButton name="table" {...props} />,
         desmos: (props: any) => <QuillToolbarButton name="desmos" label="Graph" {...props} />,
         caps: (props: any) => <QuillToolbarAlignSelect name="caps" label="Transform" {...props} format={{ caps: "title" }}>
