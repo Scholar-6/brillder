@@ -14,6 +14,7 @@ import "./QuillMediaEmbed";
 import "./QuillCustomClipboard";
 import "./QuillKeyboard";
 import "./QuillImageUpload";
+import "./QuillSoundUpload";
 import "./QuillDesmos";
 import "./QuillCapitalization";
 import "./QuillBlockQuote";
@@ -22,11 +23,14 @@ import ImageDialog from "components/build/buildQuestions/components/Image/ImageD
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
 import ImageUpload, { CustomImageBlot } from "./QuillImageUpload";
+import SoundUpload, { CustomSoundBlot } from "./QuillSoundUpload";
 import QuillCustomClipboard from "./QuillCustomClipboard";
 import ValidationFailedDialog from "../dialogs/ValidationFailedDialog";
 import { GraphSettings } from "components/build/buildQuestions/components/Graph/Graph";
 import QuillDesmos, { DesmosBlot } from "./QuillDesmos";
 import QuillDesmosDialog from "./QuillDesmosDialog";
+import SoundRecordDialog from "components/build/buildQuestions/questionTypes/sound/SoundRecordDialog";
+import { fileUrl } from "components/services/uploadFile";
 
 function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -59,6 +63,7 @@ interface QuillEditorProps {
     showToolbar?: boolean;
     className?: string;
     imageDialog?: boolean;
+    soundDialog?: boolean;
     onChange?(data: string): void;
     onBlur?(): void;
 }
@@ -86,6 +91,24 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     const [quill, setQuill] = React.useState<Quill | null>(null);
 
     const [imageInvalid, setImageInvalid] = React.useState(false);
+
+    const [selection, setSelection] = React.useState(0);
+    const [soundDialogOpen, setSoundDialogOpen] = React.useState(false);
+    const [soundDialogData, setSoundDialogData] = React.useState<any>({});
+    const [soundModule, setSoundModule] = React.useState<SoundUpload>();
+    React.useEffect(() => {
+        if(soundModule) {
+            soundModule.openDialog = () => {
+                if (quill) {
+                    const range = quill.getSelection();
+                    const position = range ? range.index : 0;
+                    setSelection(position);
+                }
+                setSoundDialogData({});
+                setSoundDialogOpen(true);
+            }
+        }
+    }, [soundModule]);
 
     const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
     const [imageDialogShouldUpdate, setImageDialogShouldUpdate] = React.useState(false);
@@ -154,6 +177,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         autolink: props.allowLinks ?? false,
         mediaembed: props.allowMediaEmbed ?? false,
         imageupload: props.imageDialog ?? false,
+        soundupload: props.soundDialog ?? false,
         clipboard: true,
         keyboard: {
             bindings: QuillBetterTable.keyboardBindings,
@@ -203,6 +227,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         if(node) {
             const editor = node.getEditor();
             setImageModule(editor.getModule("imageupload") as ImageUpload);
+            setSoundModule(editor.getModule("soundupload") as SoundUpload);
             setDesmosModule(editor.getModule("desmos") as QuillDesmos);
             setClipboardModule(editor.getModule("clipboard") as QuillCustomClipboard);
             editor.on("editor-change", () => {
@@ -289,6 +314,21 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                     header="This image is too large, try shrinking it."
                   />
                 </div>
+            }
+            {props.soundDialog && 
+              <div>
+                <SoundRecordDialog
+                  isOpen={soundDialogOpen}
+                  save={async(v, caption) => {
+                      if (quill) {
+                        quill.insertEmbed(selection, 'audio', fileUrl(v), 'user');
+                      }
+                      setSoundDialogOpen(false);
+                  }}
+                  data={soundDialogData}
+                  close={() => setSoundDialogOpen(false)}
+                />
+              </div>
             }
             {props.allowDesmos &&
                 <QuillDesmosDialog
