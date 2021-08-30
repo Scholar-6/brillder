@@ -23,7 +23,7 @@ import ImageDialog from "components/build/buildQuestions/components/Image/ImageD
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
 import ImageUpload, { CustomImageBlot } from "./QuillImageUpload";
-import SoundUpload, { CustomSoundBlot } from "./QuillSoundUpload";
+import SoundUpload from "./QuillSoundUpload";
 import QuillCustomClipboard from "./QuillCustomClipboard";
 import ValidationFailedDialog from "../dialogs/ValidationFailedDialog";
 import { GraphSettings } from "components/build/buildQuestions/components/Graph/Graph";
