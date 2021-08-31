@@ -6,6 +6,8 @@ const Embed = GlobalQuill.import('blots/block/embed');
 export interface AudioData {
   url: string; // full url
   caption: string;
+  source: string;
+  permision: any;
 }
 export class AudioBlot extends Embed {
   static create(data: AudioData) {
@@ -13,7 +15,8 @@ export class AudioBlot extends Embed {
     let node = super.create();
     node.classList.add('ql-sound-custom');
     node.setAttribute('data-value', data.url);
-    node.setAttribute('data-caption', data.caption)
+    node.setAttribute('data-caption', data.caption);
+    node.setAttribute('data-source', data.source);
 
     const audioElement = document.createElement("audio");
     audioElement.setAttribute('src', data.url);
@@ -31,7 +34,8 @@ export class AudioBlot extends Embed {
   static value(node: any) {
     return {
       url: node.getAttribute('data-value'),
-      caption: node.getAttribute('data-caption')
+      caption: node.getAttribute('data-caption'),
+      source: node.getAttribute('data-source')
     }
   }
 }
