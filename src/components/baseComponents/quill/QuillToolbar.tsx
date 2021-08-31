@@ -118,7 +118,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         numberedList: (props: any) => <QuillToolbarButton name="list" label="Numbering" value="ordered" {...props} />,
         latex: (props: any) => <QuillToolbarButton name="latex" label="LaTeX" {...props} />,
         image: (props: any) => <QuillToolbarButton name="image" icon="image" {...props} />,
-        sound: (props: any) => <QuillToolbarButton name="sound" icon="image" {...props} />,
+        sound: (props: any) => <QuillToolbarButton name="sound" icon="sound-icon" {...props} />,
         table: (props: any) => <QuillToolbarButton name="table" {...props} />,
         desmos: (props: any) => <QuillToolbarButton name="desmos" label="Graph" {...props} />,
         caps: (props: any) => <QuillToolbarAlignSelect name="caps" label="Transform" {...props} format={{ caps: "title" }}>
