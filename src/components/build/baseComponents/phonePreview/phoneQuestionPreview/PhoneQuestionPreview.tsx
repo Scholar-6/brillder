@@ -133,12 +133,12 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
         <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
           <div className="centered pointer phone-toolbar">
             <SpriteIcon name="arrow-left" className={`scroll-arrow ${!canGoBack && 'disabled'}`} onClick={props.prevQuestion} />
-            {canGoBack && <div className="css-custom-tooltip bottom-tooltip">Previous Question</div>}
+            {canGoBack && <div className="css-custom-tooltip left-tooltip">Previous</div>}
           </div>
           <div className="phone-question-preview">
             <div className="centered phone-toolbar">
               <SpriteIcon name="arrow-up" className={`scroll-arrow ${!canScroll && 'disabled'}`} onClick={scrollUp} />
-              <div className="css-custom-tooltip bottom-tooltip">Scroll Up</div>
+              <div className="css-custom-tooltip upper-tooltip">Scroll Up</div>
             </div>
             <div className="phone">
               <div className="phone-border">
@@ -160,7 +160,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
           </div>
           <div className="centered pointer phone-toolbar">
             <SpriteIcon name="arrow-right" className="scroll-arrow" onClick={props.nextQuestion} />
-            <div className="css-custom-tooltip right-tooltip">Next Question</div>
+            <div className="css-custom-tooltip right-tooltip">Next</div>
           </div>
         </Grid>
       </div>
