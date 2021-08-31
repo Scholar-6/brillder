@@ -3,20 +3,40 @@ import { Quill as GlobalQuill } from "react-quill";
 
 const Embed = GlobalQuill.import('blots/block/embed');
 
+export interface AudioData {
+  url: string; // full url
+  caption: string;
+}
 export class AudioBlot extends Embed {
-  static create(url: string) {
+  static create(data: AudioData) {
+    console.log(data);
     let node = super.create();
-    node.setAttribute('src', url);
-    node.setAttribute('controls', '');
+    node.classList.add('ql-sound-custom');
+    node.setAttribute('data-value', data.url);
+    node.setAttribute('data-caption', data.caption)
+
+    const audioElement = document.createElement("audio");
+    audioElement.setAttribute('src', data.url);
+    audioElement.setAttribute('controls', '');
+    node.appendChild(audioElement);
+
+    const captionElement = document.createElement("div");
+    captionElement.classList.add('sound-caption');
+    captionElement.innerHTML = data.caption;
+    node.appendChild(captionElement);
+
     return node;
   }
 
   static value(node: any) {
-    return node.getAttribute('src');
+    return {
+      url: node.getAttribute('data-value'),
+      caption: node.getAttribute('data-caption')
+    }
   }
 }
 AudioBlot.blotName = 'audio';
-AudioBlot.tagName = 'audio';
+AudioBlot.tagName = 'div';
 Quill.register(AudioBlot);
 
 export default class SoundUpload {
