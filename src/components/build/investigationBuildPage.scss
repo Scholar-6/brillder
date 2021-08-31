@@ -316,9 +316,9 @@ $base-build-border: $editor-radius;
   position: absolute;
   $size: 4.5vw;
   $margin: 1.4vw;
-  z-index: 9999990;
+  z-index: 1000;
   right: $margin;
-  top: calc(#{$margin} + #{$size} + #{$margin} + 0.7vw);
+  top: calc(#{$margin} + #{$size} + #{$margin} + 0.7vw + 4vh);
 
   .send-to-publisher-button,
   .build-publish-button,
@@ -996,15 +996,29 @@ $base-build-border: $editor-radius;
       width: auto;
     }
     .right-tooltip {
-      left: -10vw;
+      left: 2vw;
+    }
+    .left-tooltip {
+      right: 2vw;
     }
     .bottom-tooltip {
       top: 2vw;
+    }
+    .upper-tooltip {
+      bottom: 2vw;
     }
     &:hover {
       .css-custom-tooltip {
         opacity: 1;
       }
     }
+  }
+}
+
+.investigation-build-page {
+  .phone-question-preview-box {
+    right: 7vw;
+    width: 25vw;
+    z-index: 1001;
   }
 }
