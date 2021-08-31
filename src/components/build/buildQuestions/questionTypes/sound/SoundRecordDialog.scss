@@ -4,7 +4,10 @@
 
 .sound-dialog {
   .MuiPaper-root.MuiDialog-paper {
+    color: var(--theme-dark-blue);
+    max-width: 37vw !important;
     background: var(--tab-gray) !important;
+    font-size: 1.3vw;
 
     .react-recording {
       padding: 0 0.5vw;
@@ -15,6 +18,7 @@
     }
 
     input {
+      width: calc(100% - 0.9vw);
       margin-top: 0.5vw;
     }
 

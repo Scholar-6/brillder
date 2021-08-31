@@ -319,7 +319,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
               <div>
                 <SoundRecordDialog
                   isOpen={soundDialogOpen}
-                  save={async(v, caption) => {
+                  save={async(v, caption, permision, source) => {
                       if (quill) {
                         quill.insertEmbed(selection, 'audio', {url: fileUrl(v), caption}, 'user');
                       }
