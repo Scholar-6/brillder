@@ -6,7 +6,7 @@ import { Assignment, TeachStudent } from "model/classroom";
 import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
-import { ApiAssignemntStats } from "model/stats";
+import { ApiAssignemntStats, AttemptStats } from "model/stats";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 import ReminderButton from "./ReminderButton";
@@ -14,6 +14,7 @@ import { sendAssignmentReminder } from "services/axios/brick";
 import { isDeadlinePassed } from "../service/service";
 import { BookData } from "./ExpandedAssignment";
 import BookDialog from "./BookDialog";
+import HolisticCommentPanel from "./HolisticCommentPanel";
 
 enum SortBy {
   None,
@@ -26,6 +27,7 @@ interface AssignemntExpandedState {
   bookData: BookData;
   questionCount: number;
   student: TeachStudent;
+  currentCommentButton?: Element;
 }
 
 interface AssignmentBrickProps {
@@ -67,7 +69,7 @@ class ExpandedStudentAssignment extends Component<
   }
 
   renderCommentIcon() {
-    return <div className="comment-icon">
+    return <div className="comment-icon" onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget })}>
       <SpriteIcon name="message-square" className="active" />
     </div>;
   }
@@ -242,6 +244,17 @@ class ExpandedStudentAssignment extends Component<
           </table>
         </div>
         {this.state.bookData.open && <BookDialog bookData={this.state.bookData} onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />}
+        <HolisticCommentPanel
+          currentAttempt={this.state.student.studentResult?.attempts.slice(-1)[0]}
+          setCurrentAttempt={(attempt: AttemptStats) => {
+            const newState = this.state;
+            const attemptIdx = newState.student.studentResult!.attempts.length - 1;
+            newState.student.studentResult!.attempts[attemptIdx] = attempt;
+            this.setState(newState);
+          }}
+          onClose={() => this.setState({ currentCommentButton: undefined })}
+          anchorEl={this.state.currentCommentButton}
+        />
       </div>
     );
   }
