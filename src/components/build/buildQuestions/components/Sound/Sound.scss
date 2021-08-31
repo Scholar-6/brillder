@@ -74,3 +74,15 @@
     color: var(--muted) !important;
   }
 }
+
+.react-recording .stop-record {
+  position: relative;
+  .svg {
+    $size: 1.2vw;
+    stroke-width: 2.5;
+    width: $size;
+    height: $size;
+    position: absolute !important;
+    left: 0.6vw !important;
+  }
+}
