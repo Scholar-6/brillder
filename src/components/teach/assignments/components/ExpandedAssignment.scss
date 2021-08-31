@@ -266,12 +266,10 @@
   position: relative;
   .save-button {
     position: absolute;
-    margin: 0.5rem;
     top: 0;
     right: 0;
-    border-radius: 50%;
     width: 2.8vw !important;
-    height: 2.8vw !important;
+    height: 100% !important;
     display: flex;
     align-items: center;
     justify-content: center;

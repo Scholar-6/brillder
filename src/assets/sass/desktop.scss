@@ -853,3 +853,14 @@
     }
   }
 }
+
+.ql-sound-custom {
+  position: relative;
+  .sound-caption {
+    position: absolute;
+    top: 55px;
+    width: 300px;
+    text-align: center;
+    font-size: 1vw;
+  }
+}

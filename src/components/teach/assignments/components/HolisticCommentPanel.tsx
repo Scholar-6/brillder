@@ -105,7 +105,7 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
                 />
                 <div className="centered" onClick={() => updateAnnotation()}>
                     <div className="save-button b-green">
-                        <SpriteIcon name="save-icon" className="active" />
+                        <SpriteIcon name="send" className="active" />
                     </div>
                 </div>
             </div>
