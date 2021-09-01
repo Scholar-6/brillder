@@ -121,7 +121,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         sound: (props: any) => <QuillToolbarButton name="sound" icon="sound-icon" {...props} />,
         table: (props: any) => <QuillToolbarButton name="table" {...props} />,
         desmos: (props: any) => <QuillToolbarButton name="desmos" label="Graph" {...props} />,
-        caps: (props: any) => <QuillToolbarAlignSelect name="caps" label="Transform" {...props} format={{ caps: "title" }}>
+        caps: (props: any) => <QuillToolbarAlignSelect name="caps" label="Text Case" {...props} format={{ caps: "title" }}>
             <option value="upper">Upper</option>
             <option value="lower">Lower</option>
             <option value="title">Title</option>
