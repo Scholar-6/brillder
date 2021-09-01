@@ -30,20 +30,23 @@ const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
 
     if (props.sidebarRolledUp) {
         return (
-            <div className="generate-cover-small">
-                <button onClick={generateCover} className="assign-class-button svgOnHover blue" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-                    <SpriteIcon name="heroicons-qrcode" className="active" />
-                </button>
-                {hovered && <div className="custom-tooltip">
-                    <div>Create QR Cover</div>
-                </div>}
+            <div>
+                <div style={{ marginTop: "1vw" }} className="text-center">{numberOfScans}</div>
+                <div className="generate-cover-small">
+                    <button onClick={generateCover} className="assign-class-button svgOnHover blue" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+                        <SpriteIcon name="heroicons-qrcode" className="active" />
+                    </button>
+                    {hovered && <div className="custom-tooltip">
+                        <div>Create QR Cover</div>
+                    </div>}
+                </div>
             </div>
         );
     }
 
     return (
         <>
-            <div style={{ marginTop: "1vw" }}>You have had {numberOfScans} scans.</div>
+            <div style={{ marginTop: "1vw" }}>You have had {numberOfScans} scans</div>
             <button onClick={generateCover} className="assign-class-button svgOnHover blue">
                 <span>Create QR Cover</span>
             </button>
