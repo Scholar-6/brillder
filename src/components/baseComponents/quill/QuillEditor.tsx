@@ -119,6 +119,11 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     React.useEffect(() => {
         if(imageModule) {
             imageModule.openDialog = (file?: File, data?: any, blot?: CustomImageBlot, shouldUpdate?: boolean) => {
+                if (quill) {
+                  const range = quill.getSelection();
+                  const position = range ? range.index : 0;
+                  setSelection(position);
+                }
                 setImageDialogFile(file);
                 setImageDialogData(data);
                 setImageDialogOpen(true);
@@ -290,7 +295,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                     alwaysUpdate={imageDialogShouldUpdate}
                     upload={async(...args) => {
                         if(imageModule) {
-                            const res = await imageModule.uploadImages.bind(imageModule)(...args);
+                            const res = await imageModule.uploadImages.bind(imageModule)(selection, ...args);
                             if (!res) {
                               setImageInvalid(true);
                               return false;
