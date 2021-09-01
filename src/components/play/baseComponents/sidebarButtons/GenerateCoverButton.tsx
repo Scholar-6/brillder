@@ -1,11 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface GenerateCoverButtonProps {
     brickId: number;
+    sidebarRolledUp: boolean;
 }
 
 const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
+    const [hovered, setHover] = React.useState(false);
+
     const [numberOfScans, setNumberOfScans] = React.useState(0);
     React.useEffect(() => {
         (async () => {
@@ -24,11 +28,24 @@ const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
         link.click();
     }, [props.brickId]);
 
+    if (props.sidebarRolledUp) {
+        return (
+            <div className="generate-cover-small">
+                <button onClick={generateCover} className="assign-class-button svgOnHover blue" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+                    <SpriteIcon name="heroicons-qrcode" className="active" />
+                </button>
+                {hovered && <div className="custom-tooltip">
+                    <div>Create QR Cover</div>
+                </div>}
+            </div>
+        );
+    }
+
     return (
         <>
             <div style={{ marginTop: "1vw" }}>You have had {numberOfScans} scans.</div>
-            <button onClick={generateCover} className="assign-class-button svgOnHover gray">
-                <span>Generate Cover</span>
+            <button onClick={generateCover} className="assign-class-button svgOnHover blue">
+                <span>Create QR Cover</span>
             </button>
         </>
     );

@@ -265,6 +265,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           this.props.user.roles.some(r => r.roleId === UserType.Admin)
         ) &&
           <GenerateCoverButton
+            sidebarRolledUp={sidebarRolledUp}
             brickId={this.props.brick.id}
           />
         }
