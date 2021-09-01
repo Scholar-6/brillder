@@ -136,7 +136,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 
   return (
     <MuiThemeProvider>
-      <div key={question?.id} className={showHelpArrow ? "build-question-page unselectable" : "build-question-page unselectable active"} style={{ width: '100%', height: '94%' }}>
+      <div key={question?.id} className={showHelpArrow ? "build-question-page" : "build-question-page active"} style={{ width: '100%', height: '94%' }}>
         {showHelpArrow && <div className="help-arrow-text">Drag</div>}
         {showHelpArrow && <img alt="arrow" className="help-arrow" src="/images/investigation-arrow.png" />}
         <div className="top-scroll-area">
