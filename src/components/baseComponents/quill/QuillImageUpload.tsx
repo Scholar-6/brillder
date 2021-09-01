@@ -190,32 +190,14 @@ export default class ImageUpload {
     /**
      * @returns true if success false if failed
      */
-    async uploadImages(file: File, source: string, caption: string, align: ImageAlign, height: number) {
-        //const length = this.quill.getLength();
-        const range = this.quill.getSelection(true);
+    async uploadImages(selection: number, file: File, source: string, caption: string, align: ImageAlign, height: number) {
         const res = await new Promise<any>((resolve, reject) => uploadFile(file, resolve, reject));
         if (!res) {
           return false;
         }
         const fileName = res.data.fileName;
 
-        /*
-        const update = new Delta()
-            .retain(range.index)
-            .delete(range.length)
-            .insert({
-                customImage: {
-                    url: fileUrl(fileName),
-                    imageSource: source,
-                    imageCaption: caption,
-                    imageAlign: align,
-                    imageHeight: height,
-                    imagePermision: true,
-                }
-            });*/
-
-        //this.quill.updateContents(update as unknown as DeltaStatic, "user");
-        this.quill.insertEmbed(range.index, 'customImage', {
+        this.quill.insertEmbed(selection, 'customImage', {
             url: fileUrl(fileName),
             imageSource: source,
             imageCaption: caption,
@@ -223,8 +205,7 @@ export default class ImageUpload {
             imageHeight: height,
             imagePermision: true,
         });
-        this.quill.insertEmbed(range.index + 1, 'devider', '');
-        //this.quill.insertEmbed(range.index + 2, 'newline', '');
+        this.quill.insertEmbed(selection + 1, 'devider', '');
         return true;
     }
 

@@ -86,9 +86,6 @@ class ExpandedAssignment extends Component<
     students.forEach(student => {
       student.studentResult = this.props.stats.byStudent
         .find(s => s.studentId === student.id);
-
-      student.studentStatus = this.props.assignment.studentStatus
-        .find(s => s.studentId === student.id);
     });
 
     return students;
@@ -115,21 +112,21 @@ class ExpandedAssignment extends Component<
     let students = this.state.students;
     if (sortBy === SortBy.AvgDecreasing) {
       students = this.state.students.sort((a, b) => {
-        if (!a.studentStatus) { return 1; }
-        if (!b.studentStatus) { return -1; }
-        return b.studentStatus?.avgScore - a.studentStatus?.avgScore;
+        if (!a.studentResult) { return 1; }
+        if (!b.studentResult) { return -1; }
+        return b.studentResult?.avgScore - a.studentResult?.avgScore;
       });
     } else {
       students = this.state.students.sort((a, b) => {
-        if (!a.studentStatus) { return -1; }
-        if (!b.studentStatus) { return 1; }
-        return a.studentStatus?.avgScore - b.studentStatus?.avgScore;
+        if (!a.studentResult) { return -1; }
+        if (!b.studentResult) { return 1; }
+        return a.studentResult?.avgScore - b.studentResult?.avgScore;
       });
     }
     this.setState({ students, sortBy });
   }
 
-  renderBestScore(studentStatus: StudentStatus) {
+  renderBestScore(studentResult: StudentStatus) {
     const subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
 
@@ -137,7 +134,7 @@ class ExpandedAssignment extends Component<
       color = "#B0B0AD";
     }
 
-    const score = studentStatus.bestScore || studentStatus.avgScore || 0;
+    const score = studentResult.bestScore || studentResult.avgScore || 0;
 
     return (
       <div className="circle" style={{ background: color }}>
@@ -146,9 +143,9 @@ class ExpandedAssignment extends Component<
     );
   }
 
-  renderStatus(studentStatus: StudentStatus | undefined) {
-    if (studentStatus && studentStatus.numberOfAttempts > 0) {
-      return this.renderBestScore(studentStatus);
+  renderStatus(studentResult: StudentStatus | undefined) {
+    if (studentResult && studentResult.numberOfAttempts > 0) {
+      return this.renderBestScore(studentResult);
     }
     const statuses = this.props.assignment.studentStatus;
     const completedCount = statuses.filter(({ status }) => status === 2).length;
@@ -166,10 +163,10 @@ class ExpandedAssignment extends Component<
     </div>;
   }
 
-  renderBookIcon(studentStatus: StudentStatus, studentId: number) {
+  renderBookIcon(studentResult: StudentStatus, studentId: number) {
     const { history, assignment } = this.props;
     const moveToPostPlay = () => {
-      if (studentStatus.bestScore !== undefined) {
+      if (studentResult.bestScore !== undefined) {
         history.push(map.postPlay(assignment.brick.id, studentId) + '?fromTeach=true');
       }
     }
@@ -218,7 +215,7 @@ class ExpandedAssignment extends Component<
   }
 
   renderStudent(student: TeachStudent, i: number) {
-    const { studentStatus, studentResult } = student;
+    const { studentResult } = student;
     return (
       <Grow
         in={true}
@@ -229,16 +226,16 @@ class ExpandedAssignment extends Component<
         <tr className="user-row">
           <td className="padding-left-column"></td>
           <td className="student-status">
-            <div>{this.renderStatus(studentStatus)}</div>
+            <div>{this.renderStatus(studentResult)}</div>
           </td>
           <td className="student-book">
-            {studentStatus && studentStatus.numberOfAttempts > 0 && <div className="centered">{this.renderBookIcon(studentStatus, student.id)}</div>}
+            {studentResult && studentResult.numberOfAttempts > 0 && <div className="centered">{this.renderBookIcon(studentResult, student.id)}</div>}
           </td>
           <td className={`assigned-student-name`}>
             {student.firstName} {student.lastName}
           </td>
           <td>
-            {studentStatus && studentStatus.numberOfAttempts > 0 && <SpriteIcon name="eye-on" className="eye-icon" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})} />}
+            {studentResult && studentResult.numberOfAttempts > 0 && <SpriteIcon name="eye-on" className="eye-icon" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})} />}
           </td>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map((a, i) =>
             <td key={i} className="icon-container">
@@ -248,7 +245,7 @@ class ExpandedAssignment extends Component<
             </td>
           )}
           <td style={{ width: '9vw' }}>
-            {studentStatus && <div className="centered">{this.renderCommentIcon(student.id)}</div>}
+            {studentResult && <div className="centered">{this.renderCommentIcon(student.id)}</div>}
           </td>
         </tr>
       </Grow>

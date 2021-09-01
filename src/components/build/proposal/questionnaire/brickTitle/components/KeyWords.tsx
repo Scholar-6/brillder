@@ -114,7 +114,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
             }}
           />
         </div>
-        {overflowKey && <div className="text-orange">The tag {overflowKey.name} is too long; the maximum length is {MaxKeywordLength} characters.</div>}
+        {overflowKey && <div className="text-orange">The tag ❝{overflowKey.name}❞ is too long; the maximum length is {MaxKeywordLength} characters.</div>}
       </div>
     );
   }

@@ -318,6 +318,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         canEdit={true} brick={brick} isOpen={inviteOpen} hideAccess={true}
         submit={name => {
           setInviteResult({ isOpen: true, name, accessGranted: true } as InviteResult);
+          props.fetchBrick(brick.id);
         }}
         close={() => setInvite(false)}
       />

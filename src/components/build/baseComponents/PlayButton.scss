@@ -6,8 +6,9 @@
   .css-custom-tooltip {
     font-family: $font-family-bold;
     padding: 0;
-    right: 6.3vw;
+    top: 6.2vw;
     width: 6.6vw;
+    z-index: 9999991;
   }
   &:hover {
     .css-custom-tooltip {

@@ -11,8 +11,8 @@ const RecordingButton: React.FC<SoundProps> = (props) => {
   if (props.status === AudioStatus.Recording) {
     return (
       <button className="btn stop-record svgOnHover" onClick={props.onClick}>
-        <SpriteIcon name="circle-filled" className="active text-white" />
-        <span>Recording</span>
+        <SpriteIcon name="feather-stop-circle" className="active text-white" />
+        <span>Stop</span>
       </button>
     );
   }

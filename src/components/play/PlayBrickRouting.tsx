@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -112,7 +112,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const cashAttemptString = GetCashedPlayAttempt();
 
-  const [restoredFromCash, setRestored] = React.useState(false);
+  const [restoredFromCash, setRestored] = useState(false);
 
   if (cashAttemptString && !restoredFromCash) {
     // parsing cashed play
@@ -157,34 +157,36 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     initReviewAttempts = initAttempts;
   }
 
-  const [brick, setBrick] = React.useState(parsedBrick);
-  const [status, setStatus] = React.useState(initStatus);
-  const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
-  const [attempts, setAttempts] = React.useState(initAttempts);
-  const [reviewAttempts, setReviewAttempts] = React.useState(initReviewAttempts);
-  const [prepEndTime, setPrepEndTime] = React.useState(initPrepEndTime);
-  const [mode, setMode] = React.useState(initMode);
-  const [liveEndTime, setLiveEndTime] = React.useState(initLiveEndTime);
-  const [synthesisEndTime, setSynthesisEndTime] = React.useState(null);
-  const [reviewEndTime, setReviewEndTime] = React.useState(initReviewEndTime);
-  const [attemptId, setAttemptId] = React.useState<string>(initAttemptId);
+  const [isCreatingAttempt, setCreatingAttempt] = useState(false);
 
-  const [liveDuration, setLiveDuration] = React.useState(initLiveDuration);
-  const [reviewDuration, setReviewDuration] = React.useState(initReviewDuration);
+  const [brick, setBrick] = useState(parsedBrick);
+  const [status, setStatus] = useState(initStatus);
+  const [brickAttempt, setBrickAttempt] = useState({} as BrickAttempt);
+  const [attempts, setAttempts] = useState(initAttempts);
+  const [reviewAttempts, setReviewAttempts] = useState(initReviewAttempts);
+  const [prepEndTime, setPrepEndTime] = useState(initPrepEndTime);
+  const [mode, setMode] = useState(initMode);
+  const [liveEndTime, setLiveEndTime] = useState(initLiveEndTime);
+  const [synthesisEndTime, setSynthesisEndTime] = useState(null);
+  const [reviewEndTime, setReviewEndTime] = useState(initReviewEndTime);
+  const [attemptId, setAttemptId] = useState<string>(initAttemptId);
 
-  const [unauthorizedOpen, setUnauthorized] = React.useState(false);
-  const [headerHidden, setHeader] = React.useState(false);
-  const [sidebarRolledUp, toggleSideBar] = React.useState(false);
-  const [searchString, setSearchString] = React.useState("");
-  const [saveFailed, setFailed] = React.useState(false);
+  const [liveDuration, setLiveDuration] = useState(initLiveDuration);
+  const [reviewDuration, setReviewDuration] = useState(initReviewDuration);
+
+  const [unauthorizedOpen, setUnauthorized] = useState(false);
+  const [headerHidden, setHeader] = useState(false);
+  const [sidebarRolledUp, toggleSideBar] = useState(false);
+  const [searchString, setSearchString] = useState("");
+  const [saveFailed, setFailed] = useState(false);
 
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
 
   // used for unauthenticated user.
-  const [userToken, setUserToken] = React.useState<string>();
-  const [emailInvalidPopup, setInvalidEmailPopup] = React.useState(false); // null - before submit button clicked, true - invalid
-  const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
+  const [userToken, setUserToken] = useState<string>();
+  const [emailInvalidPopup, setInvalidEmailPopup] = useState(false); // null - before submit button clicked, true - invalid
+  const [emailInvalid, setInvalidEmail] = useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
   const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
     let lastPageUrl = lastUrl;
@@ -275,6 +277,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
 
   const createBrickAttempt = async (brickAttempt: BrickAttempt) => {
+    if (isCreatingAttempt) {
+      return;
+    }
+
+    setCreatingAttempt(true);
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
     if (props.user) {
@@ -295,8 +302,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         await props.getUser();
       }
       setAttemptId(response.data.id);
+      setCreatingAttempt(false);
     }).catch(() => {
       setFailed(true);
+      setCreatingAttempt(false);
     });
   };
 

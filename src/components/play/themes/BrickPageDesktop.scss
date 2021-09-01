@@ -24,6 +24,16 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   background: var(--theme-dark-blue);
   min-height: 100%;
 
+  .generate-cover-small {
+    position: relative;
+    svg {
+      //color: var(--theme-dark-blue) !important;
+    }
+    .custom-tooltip {
+      top: 5vw;
+    }
+  }
+
   .toggle-timer {
     cursor: pointer;
     color: var(--white);
@@ -242,6 +252,22 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 }
               }
             }
+            &.gray {
+              background: var(--tab-gray);
+              span {
+                color: var(--theme-dark-blue);
+              }
+              stroke-width: 2;
+              &:hover {
+                background: var(--theme-dark-blue);
+                span {
+                  color: var(--white) !important;
+                }
+                svg {
+                  color: var(--white) !important;
+                }
+              }
+            }
           }
           .prep-button {
             cursor: pointer;
@@ -389,7 +415,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             background: var(--theme-orange);
             outline: none;
             border: none;
-            margin-top: 1.5vw;
+            margin-top: 0.75vw;
+            margin-bottom: 0.75vw;
             padding: 1.3vh 0.5vw;
             border-radius: $editor-radius;
             width: 80%;

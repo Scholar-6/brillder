@@ -8,7 +8,7 @@ import { PlayMode } from './model';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
 import { checkTeacherOrAdmin } from "components/services/brickService";
-import { User } from "model/user";
+import { User, UserType } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
 import { Brick } from "model/brick";
@@ -22,6 +22,7 @@ import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 import routes, { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
 import ShareDialogs from "./finalStep/dialogs/ShareDialogs";
+import GenerateCoverButton from "./baseComponents/sidebarButtons/GenerateCoverButton";
 
 declare var Brillder: any;
 
@@ -259,6 +260,15 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           sidebarRolledUp={sidebarRolledUp}
           onClick={this.onAdaptDialog.bind(this)}
         />
+        {(
+          this.props.user.rolePreference?.roleId === UserType.Institution ||
+          this.props.user.roles.some(r => r.roleId === UserType.Admin)
+        ) &&
+          <GenerateCoverButton
+            sidebarRolledUp={sidebarRolledUp}
+            brickId={this.props.brick.id}
+          />
+        }
       </div>
     );
   }

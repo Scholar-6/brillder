@@ -179,7 +179,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
         <ValidationFailedDialog
           isOpen={this.state.cantSave}
           header="Can`t save audio file"
-          close={() => this.setState({cantSave: true})}
+          close={() => this.setState({cantSave: false})}
         />
       </div>
     );

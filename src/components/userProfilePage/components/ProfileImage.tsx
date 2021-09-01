@@ -6,9 +6,10 @@ import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 
 import { uploadFile } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { UserProfile, UserStatus } from "model/user";
 
 interface ProfileImageProps {
-  profileImage: string;
+  user: UserProfile;
   setImage(profileImage: string): void;
   deleteImage(): void;
   suspendIntroJs(): void;
@@ -25,7 +26,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   })
   const [isUploadOpen, setUploadDialog] = React.useState(false);
   const [isDeleteOpen, setDeleteDialog] = React.useState(false);
-  const { profileImage } = props;
+  const { profileImage, status } = props.user;
 
   const handleClick = () => {
     if (profileImage) {
@@ -101,7 +102,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   };
 
   let className = "add-image-button"
-  if (props.profileImage) {
+  if (profileImage) {
     className += " remove-image"
   }
 
@@ -114,8 +115,8 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
         </div>
       </div>
       <div className="status-container svgOnHover">
-        <SpriteIcon name="circle-filled" className="active text-theme-green" />
-        <span>Active</span>
+        <SpriteIcon name="circle-filled" className={`active ${status === UserStatus.Active ? 'text-theme-green' : 'text-theme-orange'}`} />
+        <span>{status === UserStatus.Active ? 'Active' : 'Inactive'}</span>
       </div>
       <Dialog
         open={isUploadOpen}

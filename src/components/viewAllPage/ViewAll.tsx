@@ -5,6 +5,8 @@ import queryString from "query-string";
 import { Route, Switch } from "react-router-dom";
 import "swiper/swiper.scss";
 import { isMobile } from "react-device-detect";
+// @ts-ignore
+import { Steps } from 'intro.js-react';
 
 import brickActions from "redux/actions/brickActions";
 import userActions from "../../redux/actions/user";
@@ -117,6 +119,10 @@ interface ViewAllState {
 
   handleKey(e: any): void;
 
+  isNewTeacher: boolean;
+  stepsEnabled: boolean;
+  teachSteps: any[];
+
   isClearFilter: any;
   failedRequest: boolean;
   pageSize: number;
@@ -207,6 +213,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isLoading: true,
       subjectGroup,
 
+      stepsEnabled: false,
+      isNewTeacher: !!values.newTeacher,
+      teachSteps: [{
+        element: '.bricks-list',
+        intro: `<p>Click a brick you would like to assign</p>`,
+      },{
+        element: '.bricks-list',
+        intro: `<p>Click a brick you would like to assign</p>`,
+      }],
       isAllCategory,
 
       filterLevels: [],
@@ -380,8 +395,24 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       } else {
         this.setState({ ...this.state, isLoading: false, failedRequest: true });
       }
+      setTimeout(() => {
+        if (values) {
+          let newTeacher = values.newTeacher as any;
+          this.setState({stepsEnabled: !!newTeacher});
+        }
+      }, 300);
     } else {
       this.setState({ isLoading: false });
+    }
+  }
+
+  onIntroExit() {
+    this.setState({stepsEnabled: false});
+  }
+
+  onIntroChanged(e: any) {
+    if (e !== 0) {
+      this.setState({stepsEnabled: false});
     }
   }
 
@@ -1254,6 +1285,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           )}
         </div>
         <ClassInvitationDialog />
+        {this.state.isNewTeacher &&
+        <Steps
+          enabled={this.state.stepsEnabled}
+          steps={this.state.teachSteps}
+          initialStep={0}
+          onChange={this.onIntroChanged.bind(this)}
+          onExit={this.onIntroExit.bind(this)}
+          onComplete={() => {}}
+        />}
       </React.Suspense>
     );
   }
