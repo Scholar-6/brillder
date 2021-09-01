@@ -35,10 +35,10 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
         <div className="small-text-link" onClick={() => props.history.push(map.Login)}>Already a member? Sign in here<SpriteIcon name="arrow-right" /></div>
         <div className="dialog-footer">
           <button className="btn btn-md bg-gray no-button" onClick={props.notyet}>
-            <span className="bold">Not yet</span>
+            <span className="bold">Not yet!</span>
           </button>
           <button type="submit" className="btn btn-md bg-theme-orange yes-button">
-            <span className="bold">Sure</span>
+            <span className="bold">Yes</span>
           </button>
         </div>
       </form>

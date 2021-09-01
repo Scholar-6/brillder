@@ -40,7 +40,7 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
             <span className="bold">Create Account</span>
           </button>
           <button className="btn btn-md bg-gray no-button" onClick={props.again}>
-            <span className="bold">Try another brick</span>
+            <span className="bold">Try more bricks</span>
           </button>
         </div>
       </form>
