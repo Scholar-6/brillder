@@ -46,7 +46,7 @@ const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
 
     return (
         <>
-            <div style={{ marginTop: "1vw" }}>You have had {numberOfScans} scans</div>
+            <div style={{ marginTop: "1vw" }}>{numberOfScans} Scans</div>
             <button onClick={generateCover} className="assign-class-button svgOnHover blue">
                 <span>Create QR Cover</span>
             </button>
