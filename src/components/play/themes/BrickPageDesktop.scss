@@ -24,6 +24,16 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   background: var(--theme-dark-blue);
   min-height: 100%;
 
+  .generate-cover-small {
+    position: relative;
+    svg {
+      //color: var(--theme-dark-blue) !important;
+    }
+    .custom-tooltip {
+      top: 5vw;
+    }
+  }
+
   .toggle-timer {
     cursor: pointer;
     color: var(--white);
