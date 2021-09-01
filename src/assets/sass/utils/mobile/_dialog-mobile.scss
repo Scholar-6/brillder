@@ -318,6 +318,13 @@
           margin-left: 1.25vw;
         }
       }
+      .big-footer {
+        button {
+          margin: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+        }
+      }
     }
   }
   &.unlimited {

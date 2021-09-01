@@ -262,4 +262,23 @@
 
 .holistic-comment-panel {
   width: 25vw;
+  overflow: hidden;
+  position: relative;
+  .save-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.8vw !important;
+    height: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .svg {
+      width: 70%;
+      height: 70%;
+      color: var(--white);
+    }
+  }
 }

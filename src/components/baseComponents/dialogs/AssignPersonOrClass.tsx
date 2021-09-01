@@ -160,6 +160,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     return await assignClasses(props.brick.id, data);
   }
 
+  /**
+   * Assign brick to class
+   * @returns 
+   */
   const assign = async () => {
     // prevent from double click
     if (isSaving) { return; }
@@ -169,7 +173,17 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       const res = await assignToExistingBrick(existingClass);
 
       if (res && res.length > 0) {
-        setAssigned(true);
+        let allArchived = true;
+        for (let a of res) {
+          if (a.isArchived !== true) {
+            allArchived = false;
+          }
+        }
+        if (allArchived) {
+          props.success([existingClass], []);
+        } else {
+          setAssigned(true);
+        }
       } else if (res !== false) {
         props.success([existingClass], []);
       }
