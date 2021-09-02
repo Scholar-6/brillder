@@ -266,7 +266,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         ) &&
           <GenerateCoverButton
             sidebarRolledUp={sidebarRolledUp}
-            brickId={this.props.brick.id}
+            brick={this.props.brick}
           />
         }
       </div>
