@@ -70,9 +70,6 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
 
   const RadioContainer: React.FC<{ roleId: RolePreference | UserType, name: string }> = ({ roleId, name, children }) => {
     let disabled = false;
-    if (!isAdmin && roleId === UserType.Institution) {
-      disabled = true;
-    }
 
     let className = 'radio-container';
     if (disabled) {
@@ -119,7 +116,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
                 <RadioContainer roleId={RolePreference.Teacher} name="Teacher / Tutor">
                   I want to assign Brillder content and provide feedback to my students.<br />
                 </RadioContainer>
-                <RadioContainer roleId={UserType.Institution} name="Institution">
+                <RadioContainer roleId={RolePreference.Institution} name="Institution">
                   I want to manage classes, students, and teachers.<br />
                 </RadioContainer>
               </div>
@@ -178,7 +175,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <p>content and provide</p>
               <p>feedback to my students.</p>
             </RoleBox>
-            <RoleBox roleId={RolePreference.Builder} className="box3">
+            <RoleBox roleId={RolePreference.Institution} className="box3">
               <div className="flex-center">
                 <TeachButton history={historyMock} />
               </div>
