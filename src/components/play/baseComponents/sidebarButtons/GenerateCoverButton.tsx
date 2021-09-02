@@ -5,13 +5,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Brick } from 'model/brick';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { Grid } from '@material-ui/core';
 
 
 interface GenerateCoverButtonProps {
     brick: Brick;
+
+    // ways to display
     sidebarRolledUp?: boolean;
     isSvg?: boolean;
     isMenuItem?: boolean;
+    isFinal?: boolean;
 }
 
 const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
@@ -44,6 +48,19 @@ const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
             <MenuItem onClick={generateCover}>
                 Create QR Cover
             </MenuItem>
+        )
+    }
+
+    if (props.isFinal) {
+        return (
+            <Grid className="share-column final-assign-brick-column" onClick={generateCover} container item xs={6} justify="center">
+            <div>
+              <div className="button-container">
+                <SpriteIcon name="heroicons-qrcode" className="active" />
+              </div>
+              <div className="link-text">Create QR Cover</div>
+            </div>
+          </Grid>
         )
     }
 
