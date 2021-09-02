@@ -46,7 +46,7 @@ const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
     if (props.isMenuItem) {
         return (
             <MenuItem onClick={generateCover}>
-                Create QR Cover
+                Create QR Cover <SpriteIcon name="heroicons-qrcode" className="active" />
             </MenuItem>
         )
     }
