@@ -4,8 +4,15 @@
 
 
 .animated-brick-container {
-
+  .absolute-assignment-title {
+    top: 0;
+    left: 0;
+    position: absolute;
+    margin-left: 0.9vw;
+    color: var(--theme-dark-blue);
+  }
   .flex-brick-container {
+    position: relative;
     height: calc(#{$bricks-height / 2.5});
     display: flex;
     align-items: center;
