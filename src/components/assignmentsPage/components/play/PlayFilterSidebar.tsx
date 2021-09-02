@@ -29,7 +29,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps> {
 
     return (
       <div className={`index-box ${activeClassroomId === c.id ? 'active' : ''}`} key={i} onClick={() => this.props.setActiveClassroom(c.id)}>
-        {c.name}
+        {c.name} {" created By "} {c.teacher?.firstName} {c.teacher?.lastName}
         {this.renderNumber(c)}
       </div>
     )
