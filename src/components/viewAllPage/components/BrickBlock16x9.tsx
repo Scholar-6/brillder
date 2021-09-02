@@ -143,6 +143,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
         timeout={index * 150}
       >
         <a href={window.location.origin + routes.playCover(brick.id)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
+          {props.isAssignment && <div className="absolute-assignment-title">Created By Teacher</div>}
           <div className="publish-brick-container">
             {renderDeadline()}
             <div className="level">
