@@ -862,7 +862,8 @@ $base-build-border: $editor-radius;
 
   .synthesis-page {
     .bs-circles-container {
-      margin-top: 10vh;
+      position: absolute;
+      bottom: 20.1vh;
     }
   }
 }

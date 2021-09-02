@@ -1,7 +1,9 @@
 .build-status-circles {
   margin-top: 2vw;
   min-width: 16vw;
+
   .status-label {
+    color: var(--theme-dark-blue);
     font-size: 1.3vw;
     text-align: center;
   }
