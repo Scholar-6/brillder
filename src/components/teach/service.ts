@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Subject } from "model/brick";
+import { User } from "model/user";
 
 import { MUser } from "./model";
 
@@ -15,6 +16,7 @@ export interface ClassroomApi {
   isActive: boolean;
   assignmentsCount?: number;
   studentsInvitations?: MUser[];
+  teacher?: User;
 }
 
 /**
