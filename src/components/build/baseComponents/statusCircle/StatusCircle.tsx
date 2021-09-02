@@ -10,7 +10,7 @@ interface Props {
   status: BrickStatus;
 }
 
-const StatusCircle: React.FC<Props> = ({isCore, status}) => {
+const StatusCircle: React.FC<Props> = ({ isCore, status }) => {
   if (isCore) {
     const getColor = (loopStatus: BrickStatus) => {
       let color = '';
@@ -57,11 +57,14 @@ const StatusCircle: React.FC<Props> = ({isCore, status}) => {
     }
 
     return (
-      <div className="build-status-circle-container">
-        {renderCircle(BrickStatus.Draft)}
-        {renderCircle(BrickStatus.Build)}
-        {renderCircle(BrickStatus.Review)}
-        {renderCircle(BrickStatus.Publish)}
+      <div className="build-status-circles">
+        <div className="status-label">Brick Status</div>
+        <div className="build-status-circle-container">
+          {renderCircle(BrickStatus.Draft)}
+          {renderCircle(BrickStatus.Build)}
+          {renderCircle(BrickStatus.Review)}
+          {renderCircle(BrickStatus.Publish)}
+        </div>
       </div>
     );
   }

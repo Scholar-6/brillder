@@ -1,49 +1,59 @@
-.build-status-circle-container {
-  width: 100%;
-  margin-top: 1.5vw;
-  display: flex;
-  justify-content: center;
-
-  .b-c-container {
-    .css-custom-tooltip {
-      padding-left: 0.2vw;
-      padding-right: 0.2vw;
-    }
-    &:hover .css-custom-tooltip {
-      height: auto;
-      opacity: 1;
-    }
-
-    &:nth-child(2n) .css-custom-tooltip {
-      margin-left: -3vw;
-    }
-
-    &:nth-child(3n) .css-custom-tooltip {
-      margin-left: -6.5vw;
-    }
-
-    &:last-child .css-custom-tooltip {
-      margin-left: -8.5vw;
-    }
+.build-status-circles {
+  margin-top: 2vw;
+  .status-label {
+    font-size: 1.3vw;
+    text-align: center;
   }
-  .build-status-circle {
-    margin: 0.25vw;
-    $size: 2.4vw;
-    height: $size;
-    width: $size;
+  .build-status-circle-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 
+    .b-c-container {
+      .css-custom-tooltip {
+        padding-left: 0.2vw;
+        padding-right: 0.2vw;
+        //min-width: 11vw;
+      }
 
-    &.border-green {
-      $size: 1.9vw;
+      &:hover .css-custom-tooltip {
+        height: auto;
+        opacity: 1;
+      }
+
+      &:nth-child(2n) .css-custom-tooltip {
+        margin-left: -3vw;
+      }
+
+      &:nth-child(3n) .css-custom-tooltip {
+        margin-left: -6.5vw;
+      }
+
+      &:last-child .css-custom-tooltip {
+        margin-left: -8.5vw;
+      }
+    }
+
+    .build-status-circle {
+      margin: 0.25vw;
+      $size: 2.4vw;
       height: $size;
       width: $size;
-      border-radius: 50%;
-      border: 0.25vw solid var(--theme-green);
-    }
 
-    opacity: 0.25;
-    &.active {
-      opacity: 1;
+
+      &.border-green {
+        $size: 1.9vw;
+        height: $size;
+        width: $size;
+        border-radius: 50%;
+        border: 0.25vw solid var(--theme-green);
+      }
+
+      opacity: 0.25;
+
+      &.active {
+        opacity: 1;
+      }
     }
   }
 }
