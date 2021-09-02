@@ -1,13 +1,17 @@
 import React from 'react';
 import axios from 'axios';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import { Brick } from 'model/brick';
 import { stripHtml } from 'components/build/questionService/ConvertService';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+
 
 interface GenerateCoverButtonProps {
     brick: Brick;
     sidebarRolledUp?: boolean;
     isSvg?: boolean;
+    isMenuItem?: boolean;
 }
 
 const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
@@ -33,6 +37,14 @@ const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
 
     if (props.isSvg) {
         return <SpriteIcon name="heroicons-qrcode" onClick={generateCover} />;
+    }
+
+    if (props.isMenuItem) {
+        return (
+            <MenuItem onClick={generateCover}>
+                Create QR Cover
+            </MenuItem>
+        )
     }
 
     if (props.sidebarRolledUp) {
