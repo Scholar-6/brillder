@@ -10,6 +10,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
+import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
 
 
 interface FooterProps {
@@ -39,7 +40,7 @@ const PhonePlaySimpleFooter: React.FC<FooterProps> = (props) => {
         <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
         <SpriteIcon name="" />
         <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
-        <SpriteIcon name="" />
+        <GenerateCoverButton brick={brick} isSvg={true} />
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="" />

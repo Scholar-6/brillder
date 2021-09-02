@@ -10,16 +10,17 @@ import { User } from 'model/user';
 import actions from "redux/actions/brickActions";
 import { checkTeacherOrAdmin } from 'components/services/brickService';
 import { getCookies, clearCookiePolicy, acceptCookies } from 'localStorage/cookies';
+import routes from 'components/play/routes';
+import { ReduxCombinedState } from 'redux/reducers';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
 import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
-import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
-import routes from 'components/play/routes';
 import ShareDialogs from '../finalStep/dialogs/ShareDialogs';
+import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
 
 interface FooterProps {
   brick: Brick;
@@ -204,6 +205,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         }}>
           Stop Tracking <SpriteIcon name="feather-x-octagon" />
         </MenuItem>}
+      {canSee && <GenerateCoverButton brick={brick} isMenuItem={true} />}
     </Menu>
     {renderPopups()}
     <CookiePolicyDialog isOpen={cookieOpen} isReOpened={cookieReOpen} close={() => {
