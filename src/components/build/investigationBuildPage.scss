@@ -525,7 +525,6 @@ $base-build-border: $editor-radius;
   .bs-circles-container {
     position: absolute;
     bottom: 15.1vh;
-    right: 1.8vw;
   }
 
   .inner-question-type {
@@ -536,7 +535,7 @@ $base-build-border: $editor-radius;
     height: calc(100% - 10vh) !important;
 
     .plan-quill-container {
-      max-width: 72.5%;
+      max-width: 71%;
       background: var(--tab-gray);
       border-radius: $editor-radius;
     }
@@ -692,7 +691,7 @@ $base-build-border: $editor-radius;
             z-index: 100;
             height: 2vw;
             position: absolute;
-            width: 27%;
+            width: 29%;
             border-top-left-radius: $base-build-border;
             border-bottom-left-radius: $base-build-border;
             pointer-events: none;
@@ -775,7 +774,9 @@ $base-build-border: $editor-radius;
     }
 
     .right-sidebar {
-      width: 27.5%;
+      max-width: 29% !important;
+      flex-basis: 29% !important;
+      width: 29%;
     }
 
     .plan-comments-panel {
