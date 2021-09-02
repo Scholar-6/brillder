@@ -32,4 +32,5 @@ export interface AssignmentBrickData {
   assignmentId: number;
   status: AssignmentBrickStatus;
   isInvitation: boolean;
+  teacher?: any;
 }
