@@ -8,7 +8,7 @@ import { PlayMode } from './model';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
 import { checkTeacherOrAdmin } from "components/services/brickService";
-import { User, UserType } from "model/user";
+import { RolePreference, User, UserType } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
 import { Brick } from "model/brick";
@@ -261,7 +261,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           onClick={this.onAdaptDialog.bind(this)}
         />
         {(
-          this.props.user.rolePreference?.roleId === UserType.Institution ||
+          this.props.user.rolePreference?.roleId === RolePreference.Institution ||
           this.props.user.roles.some(r => r.roleId === UserType.Admin)
         ) &&
           <GenerateCoverButton

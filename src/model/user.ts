@@ -4,13 +4,13 @@ export enum UserType {
   Builder,
   Admin,
   Publisher,
-  Institution,
 }
 
 export enum RolePreference {
   Student = 1,
   Teacher,
   Builder,
+  Institution
 }
 
 export enum UserStatus {

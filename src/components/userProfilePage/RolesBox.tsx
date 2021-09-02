@@ -82,11 +82,19 @@ class RolesBox extends Component<BoxProps, BoxState> {
             label="Builder"
           />
         </Grid>
+        <Grid item>
+          <FormControlLabel
+            className="filter-container"
+            checked={rolePreference === RolePreference.Institution}
+            onClick={() => this.onPreferenceChange(RolePreference.Institution)}
+            control={<Radio className="filter-radio" />}
+            label="Institution"
+          />
+        </Grid>
 
-        {/* Publisher, Institution and Admin roles */}
+        {/* Publisher and Admin roles */}
         <Grid item>{this.renderRole(this.props.roles[0])}</Grid>
         <Grid item>{this.renderRole(this.props.roles[1])}</Grid>
-        <Grid item>{this.renderRole(this.props.roles[2])}</Grid>
       </Grid>
     );
   }
