@@ -16,6 +16,7 @@ import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDi
 
 import { checkTeacherOrAdmin } from 'components/services/brickService';
 import ShareDialogs from '../finalStep/dialogs/ShareDialogs';
+import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
 
 interface FooterProps {
   brick: Brick;
@@ -112,7 +113,7 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
           ? <SpriteIcon name="file-plus" className="gt-smaller" onClick={() => setAssign(true)} />
           : <SpriteIcon name="" />
         }
-        {props.isCover ? <svg /> : <SpriteIcon name="arrow-right" onClick={props.next} />}
+        {props.isCover ? canSee ? <GenerateCoverButton brick={brick} isSvg={true} /> : <svg /> : <SpriteIcon name="arrow-right" onClick={props.next} />}
       </div>
     );
   }

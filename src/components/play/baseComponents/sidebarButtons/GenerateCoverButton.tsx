@@ -6,7 +6,8 @@ import { stripHtml } from 'components/build/questionService/ConvertService';
 
 interface GenerateCoverButtonProps {
     brick: Brick;
-    sidebarRolledUp: boolean;
+    sidebarRolledUp?: boolean;
+    isSvg?: boolean;
 }
 
 const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
@@ -29,6 +30,10 @@ const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
         document.body.appendChild(link);
         link.click();
     }, [props.brick]);
+
+    if (props.isSvg) {
+        return <SpriteIcon name="heroicons-qrcode" onClick={generateCover} />;
+    }
 
     if (props.sidebarRolledUp) {
         return (
