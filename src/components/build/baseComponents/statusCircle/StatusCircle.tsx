@@ -58,7 +58,7 @@ const StatusCircle: React.FC<Props> = ({ isCore, status }) => {
 
     return (
       <div className="build-status-circles">
-        <div className="status-label">Brick Status</div>
+        <div className="status-label bold">Brick Status</div>
         <div className="build-status-circle-container">
           {renderCircle(BrickStatus.Draft)}
           {renderCircle(BrickStatus.Build)}
