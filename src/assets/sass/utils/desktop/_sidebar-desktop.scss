@@ -323,9 +323,8 @@
       }
 
       .create-icon-label {
-        writing-mode: vertical-rl;
-        text-orientation: upright;
-        overflow: hidden;
+        text-align: center;
+        line-height: 1;
         letter-spacing: -0.6vh;
         @-moz-document url-prefix() {
           letter-spacing: 0.8vh;

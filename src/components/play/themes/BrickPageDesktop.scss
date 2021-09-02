@@ -712,6 +712,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             font-size: 1.15vw;
             font-family: $font-family-bold;
             color: var(--theme-dark-blue);
+            border-top-left-radius: 1.9vw;
+            border-top-right-radius: 1.9vw;
             display: flex;
             flex-direction: column;
             justify-content: center;

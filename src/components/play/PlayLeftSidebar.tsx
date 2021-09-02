@@ -211,7 +211,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
               <SpriteIcon name="trowel" className="w100 h100 active" />
             </div>
             <div className="create-icon-label">
-              BACK TO BUILD
+              B<br/>A<br/>C<br/>K<br/><br/>T<br/>O<br/><br/>B<br/>U<br/>I<br/>L<br/>D
             </div>
           </div>
         );
