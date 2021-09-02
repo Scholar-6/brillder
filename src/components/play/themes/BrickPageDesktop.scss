@@ -1108,7 +1108,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
 
           .share-row {
-            margin-top: 12.5vh;
+            margin-top: 5vh;
+
+            .share-column {
+              margin-bottom: 3vh;
+            }
 
             .button-container {
               @extend %flexToXCenter;
