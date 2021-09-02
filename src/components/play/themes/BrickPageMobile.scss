@@ -1472,7 +1472,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 // phone menu in play
 .phone-down-play-menu {
   .MuiPaper-root {
-    width: 55vw !important;
+    width: 65vw !important;
   }
   .MuiPaper-root.MuiMenu-paper.MuiPopover-paper {
     bottom: $play-footer-height !important;

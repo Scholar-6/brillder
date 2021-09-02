@@ -747,3 +747,19 @@ html {
     }
   }
 }
+
+// tables in play
+.question-live-play {
+  table {
+    color: var(--theme-dark-blue);
+    background: var(--off-white);
+    font-size: 1.05vw;
+    tr {
+      border: 3px solid var(--white) !important;
+    }
+    td {
+      border: 3px solid var(--white) !important;
+      padding: 4px 8px !important;
+    }
+  }
+}

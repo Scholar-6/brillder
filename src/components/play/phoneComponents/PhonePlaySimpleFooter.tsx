@@ -40,7 +40,7 @@ const PhonePlaySimpleFooter: React.FC<FooterProps> = (props) => {
         <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
         <SpriteIcon name="" />
         <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
-        <GenerateCoverButton brick={brick} isSvg={true} />
+        <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="" />
