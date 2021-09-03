@@ -991,6 +991,9 @@ $base-build-border: $editor-radius;
       }
     }
   }
+  .q-caps.q-tooltip-hover .css-custom-tooltip {
+    padding: 0.3vw 0.4vw !important;
+  }
   .phone-toolbar {
     position: relative;
     .css-custom-tooltip {

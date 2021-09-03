@@ -1265,8 +1265,14 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           flex-direction: row;
           height: $foter-height;
           width: $width;
+          overflow: visible !important;
           z-index: 10 !important;
-          box-shadow: 0px 0px 15px 2px #aaa;
+          &::before {
+            position: absolute;
+            width: 100%;
+            content: '' !important;
+            box-shadow: 0px 0px 15px 2px #aaa;
+          }
           background: var(--tab-gray);
           .time-container {
             display: flex;
