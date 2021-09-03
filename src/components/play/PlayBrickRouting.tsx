@@ -594,7 +594,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             liveDuration={liveDuration}
             moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}
           />
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={() => history.push(routes.playPreSynthesis(brick.id))} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} showQRCode={true} btnText="Next" next={() => history.push(routes.playPreSynthesis(brick.id))} />}
         </Route>
 
         <Route exact path={routes.preSynthesisRoute}>
@@ -602,7 +602,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             ? <PhonePreSynthesisPage brick={brick} moveNext={moveToTimeSynthesis} />
             : <PreSynthesis brick={brick} history={history} />
           }
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={moveToTimeSynthesis} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} showQRCode={true} btnText="Next" next={moveToTimeSynthesis} />}
         </Route>
 
         <Route exact path={routes.timeSynthesisRoute}>

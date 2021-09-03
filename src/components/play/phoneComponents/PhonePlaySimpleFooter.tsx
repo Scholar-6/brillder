@@ -19,6 +19,8 @@ interface FooterProps {
   btnText: string;
   next(): void;
 
+  showQRCode?: boolean;
+
   isAuthenticated: isAuthenticated;
   user: User;
 }
@@ -42,6 +44,7 @@ const PhonePlaySimpleFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
         <SpriteIcon name="" />
         <SpriteIcon name="" />
+        {props.showQRCode && <GenerateCoverButton brick={brick} isSvg={true} />}
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <div

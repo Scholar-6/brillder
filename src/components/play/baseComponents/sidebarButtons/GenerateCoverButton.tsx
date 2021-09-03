@@ -40,7 +40,7 @@ const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
     }, [props.brick]);
 
     if (props.isSvg) {
-        return <SpriteIcon name="heroicons-qrcode" onClick={generateCover} />;
+        return <SpriteIcon name="heroicons-qrcode" className="svg-qrcode" onClick={generateCover} />;
     }
 
     if (props.isMenuItem) {
