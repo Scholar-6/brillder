@@ -25,7 +25,7 @@ import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
 import { getLiveTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
-import routes from "../routes";
+import routes, { playNewPrep } from "../routes";
 import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
 import { getUniqueComponent } from "components/build/questionService/QuestionService";
@@ -412,8 +412,19 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   }
 
+  const renderPrepButton = () => {
+    return (
+      <div>
+        <div className="prep-button" onClick={() => history.push(playNewPrep(brick.id))}>
+          <SpriteIcon name="file-text" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="brick-row-container live-container">
+      {renderPrepButton()}
       <div className="fixed-upper-b-title">
         <BrickTitle title={brick.title} />
       </div>

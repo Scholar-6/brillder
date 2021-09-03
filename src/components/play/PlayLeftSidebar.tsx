@@ -182,26 +182,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return this.props.history.location.pathname.slice(-7) === '/ending';
   }
 
-  renderPrepButton() {
-    const isLive = this.isLive() || this.isPreInvesigation();
-    if (isLive && this.props.sidebarRolledUp) {
-      return (
-        <div>
-          <div className="prep-button" onClick={() => this.props.history.push(playNewPrep(this.props.brick.id))}>
-            <SpriteIcon name="file-text" />
-            <div>Prep</div>
-            <div className="absolute-circle">
-              <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg" />
-              <div className="prep-help-text">Click here to go back to Prep tasks</div>
-            </div>
-          </div>
-          {<div className="grey-line"><div /></div>}
-        </div>
-      );
-    }
-    return <div />
-  }
-
   renderButtons() {
     if (this.props.isPreview) {
       if (this.props.sidebarRolledUp) {
@@ -245,7 +225,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           haveCircle={haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />}
-        {this.renderPrepButton()}
         <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
         <AssignButton
           sidebarRolledUp={sidebarRolledUp}
