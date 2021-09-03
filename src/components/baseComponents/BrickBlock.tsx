@@ -67,7 +67,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, circleIcon, ind
 
   const moveToBuild = () => {
     props.forgetBrick();
-    props.history.push(buildRoutes.buildQuesitonType(brick.id));
+    props.history.push(buildRoutes.buildPlan(brick.id));
   }
 
   const move = () => {

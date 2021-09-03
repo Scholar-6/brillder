@@ -73,7 +73,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
   }
 
   const moveToBuild = () => {
-    props.history.push(buildRoutes.buildQuesitonType(brick.id));
+    props.history.push(buildRoutes.buildPlan(brick.id));
   }
 
   /**
