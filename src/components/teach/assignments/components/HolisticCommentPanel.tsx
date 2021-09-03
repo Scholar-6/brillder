@@ -62,14 +62,16 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
     }, []);
 
     const updateAnnotation = React.useCallback(async () => {
-        const newAttempt = props.currentAttempt;
-        if(!newAttempt || !newAttempt.annotations || !currentAnnotation) return;
+        await (async () => {
+            const newAttempt = props.currentAttempt;
+            if(!newAttempt || !newAttempt.annotations || !currentAnnotation) return;
 
-        const annotationIndex = newAttempt.annotations.findIndex(a => a.id === currentAnnotation.id);
-        if(annotationIndex < 0) return;
+            const annotationIndex = newAttempt.annotations.findIndex(a => a.id === currentAnnotation.id);
+            if(annotationIndex < 0) return;
 
-        newAttempt.annotations[annotationIndex] = currentAnnotation;
-        await saveAttempt(newAttempt);
+            newAttempt.annotations[annotationIndex] = currentAnnotation;
+            await saveAttempt(newAttempt);
+        })();
         props.onClose();
     }, [currentAnnotation, props.currentAttempt, saveAttempt]);
     
