@@ -15,6 +15,10 @@ import { sendAssignmentReminder } from "services/axios/brick";
 import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
 import BookDialog from "./BookDialog";
 import HolisticCommentPanel from "./HolisticCommentPanel";
+import { Annotation } from "model/attempt";
+import { ReduxCombinedState } from "redux/reducers";
+import { connect } from "react-redux";
+import { User } from "model/user";
 
 enum SortBy {
   None,
@@ -46,6 +50,7 @@ interface AssignmentBrickProps {
   classroom: TeachClassroom;
   assignment: Assignment;
   history: any;
+  currentUser: User;
   minimize(): void;
   onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
@@ -158,8 +163,23 @@ class ExpandedAssignment extends Component<
   }
 
   renderCommentIcon(studentId: number) {
-    return <div className="comment-icon" onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}>
+    const annotations = this.state.students.find(s => s.id === studentId)?.studentResult?.attempts.slice(-1)[0].annotations;
+    const flattenAnnotation = (annotation: Annotation): Annotation[] => {
+      const arr = [annotation];
+      annotation.children?.forEach((a) => arr.push(...flattenAnnotation(a)))
+      return arr;
+    }
+    const flattenedAnnotations: Annotation[] = [];
+    annotations?.forEach(a => flattenedAnnotations.push(...flattenAnnotation(a)));
+
+    const latestAnnotation = flattenedAnnotations.sort((a, b) => b.timestamp.valueOf() - a.timestamp.valueOf())[0];
+    const className = latestAnnotation ? 
+      (latestAnnotation.user.id === this.props.currentUser.id ? " yellow" : " red")
+      : "";
+
+    return <div className={"comment-icon" + className} onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}>
       <SpriteIcon name="message-square" className="active" />
+      <span className="annotation-count">{this.state.students.find(s => s.id === studentId)?.studentResult?.attempts.slice(-1)[0].annotations.length}</span>
     </div>;
   }
 
@@ -342,4 +362,8 @@ class ExpandedAssignment extends Component<
   }
 }
 
-export default ExpandedAssignment;
+const mapState = (state: ReduxCombinedState) => ({
+    currentUser: state.user.user,
+});
+
+export default connect(mapState)(ExpandedAssignment);
