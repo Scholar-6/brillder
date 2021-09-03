@@ -151,6 +151,28 @@ s {
   }
 }
 
+.inline-link {
+  position: relative;
+  background-color: var(--tab-gray);
+  // font-size: 1.35vw;
+  border-radius: 1.35vw;
+  margin: 0 0.5rem;
+  padding-left: 2.1vw;
+  padding-right: 0.85vw;
+  text-decoration: none !important;
+  color: var(--text-blue) !important;
+  img {
+    position: absolute;
+    top: 50%;
+    left: 1.15vw;
+    transform: translate(-50%, -50%);
+    width: 1.35vw;
+    height: 1.35vw;
+    border-radius: 1.15vw;
+    object-fit: cover;
+  }
+}
+
 .quill-document-editor {
   border-radius: $editor-radius;
   background-color: var(--tab-gray);
