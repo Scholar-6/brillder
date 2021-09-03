@@ -504,6 +504,10 @@ $base-build-border: $editor-radius;
     }
   }
 
+  .right-sidebar {
+    position: relative;
+  }
+
   .ql-editor.ql-blank::before {
     font-family: $font-family-bold;
   }
@@ -524,7 +528,7 @@ $base-build-border: $editor-radius;
 
   .bs-circles-container {
     position: absolute;
-    bottom: 15.1vh;
+    bottom: 10.1vh;
   }
 
   .inner-question-type {
