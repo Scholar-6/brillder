@@ -221,6 +221,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       disabled={locked}
                       data={currentBrick.brief}
                       allowTables={true}
+                      allowLinks={true}
                       onChange={data => changeBrick((brick) => ({ ...brick, brief: data }))}
                       placeholder="Outline the purpose of this brick."
                       validate={validationRequired}

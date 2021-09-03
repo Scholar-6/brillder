@@ -166,8 +166,8 @@ s {
     top: 50%;
     left: 1.15vw;
     transform: translate(-50%, -50%);
-    width: 1.35vw;
-    height: 1.35vw;
+    width: 1.35vw !important;
+    height: 1.35vw !important;
     border-radius: 1.15vw;
     object-fit: cover;
   }
