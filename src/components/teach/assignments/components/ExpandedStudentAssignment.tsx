@@ -15,6 +15,10 @@ import { isDeadlinePassed } from "../service/service";
 import { BookData } from "./ExpandedAssignment";
 import BookDialog from "./BookDialog";
 import HolisticCommentPanel from "./HolisticCommentPanel";
+import { Annotation } from "model/attempt";
+import { connect } from "react-redux";
+import { ReduxCombinedState } from "redux/reducers";
+import { User } from "model/user";
 
 enum SortBy {
   None,
@@ -37,6 +41,7 @@ interface AssignmentBrickProps {
   subjects: Subject[];
   student: TeachStudent;
   assignment: Assignment;
+  currentUser: User;
   onRemind?(count: number, passed: boolean): void;
   minimize(): void;
 }
@@ -69,8 +74,23 @@ class ExpandedStudentAssignment extends Component<
   }
 
   renderCommentIcon() {
-    return <div className="comment-icon" onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget })}>
+    const annotations = this.state.student.studentResult?.attempts.slice(-1)[0].annotations;
+    const flattenAnnotation = (annotation: Annotation): Annotation[] => {
+      const arr = [annotation];
+      annotation.children?.forEach((a) => arr.push(...flattenAnnotation(a)))
+      return arr;
+    }
+    const flattenedAnnotations: Annotation[] = [];
+    annotations?.forEach(a => flattenedAnnotations.push(...flattenAnnotation(a)));
+
+    const latestAnnotation = flattenedAnnotations.sort((a, b) => b.timestamp.valueOf() - a.timestamp.valueOf())[0];
+    const className = latestAnnotation ? 
+      (latestAnnotation.user.id === this.props.currentUser.id ? " yellow" : " red")
+      : "";
+
+    return <div className={"comment-icon" + className} onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget })}>
       <SpriteIcon name="message-square" className="active" />
+      <span className="annotation-count">{this.state.student.studentResult?.attempts.slice(-1)[0].annotations.length}</span>
     </div>;
   }
 
@@ -260,4 +280,8 @@ class ExpandedStudentAssignment extends Component<
   }
 }
 
-export default ExpandedStudentAssignment;
+const mapState = (state: ReduxCombinedState) => ({
+    currentUser: state.user.user,
+});
+
+export default connect(mapState)(ExpandedStudentAssignment);
