@@ -52,7 +52,7 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
         isValid={!!stripHtml(data.value)}
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table',
+          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table', 'align',
           'uploadImageCustom', 'image'
         ]}
         placeholder="Introduce your question"
