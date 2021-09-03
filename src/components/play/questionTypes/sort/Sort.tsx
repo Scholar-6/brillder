@@ -243,10 +243,12 @@ class Sort extends CompComponent<SortProps, SortState> {
   renderChoiceContent(choice: SortAnswer) {
     if (choice.answerType === QuestionValueType.Image) {
       return (
-        <img
-          alt="" className="sort-image-choice"
-          src={`${process.env.REACT_APP_BACKEND_HOST}/files/${choice.valueFile}`}
-        />
+        <div className="sort-image-container">
+          <img
+            alt="" className="sort-image-choice"
+            src={`${process.env.REACT_APP_BACKEND_HOST}/files/${choice.valueFile}`}
+          />
+        </div>
       );
     } else if (choice.answerType === QuestionValueType.Sound) {
       return (
