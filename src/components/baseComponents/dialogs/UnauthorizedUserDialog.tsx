@@ -38,7 +38,7 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
           onChange={evt => setEmail(evt.target.value)}
         />
         <div className="small-text-link" onClick={() => {
-          SetLoginRedirectUrl(playRoutes.playReview(props.brickId));
+          SetLoginRedirectUrl(playRoutes.playTimeReview(props.brickId));
           props.history.push(map.Login);
         }}>Already a member? Sign in here<SpriteIcon name="arrow-right" /></div>
         <div className="dialog-footer big-footer">

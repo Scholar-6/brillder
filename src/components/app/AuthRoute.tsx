@@ -3,7 +3,6 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import { isAuthenticated } from 'model/brick';
 import { ReduxCombinedState } from 'redux/reducers';
-import { GetLoginRedirectUrl, UnsetLoginRedirectUrl } from 'localStorage/login';
 
 
 interface AuthRouteProps {
@@ -18,11 +17,6 @@ const AuthRoute: React.FC<AuthRouteProps> = ({ component: Component, ...rest }) 
   if (rest.isAuthenticated === isAuthenticated.None || rest.isAuthenticated === isAuthenticated.False) {
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else {
-    const redirectUrl = GetLoginRedirectUrl();
-    if (redirectUrl) {
-      UnsetLoginRedirectUrl();
-      return <Redirect to={{ pathname: redirectUrl }} />;
-    }
     return <Redirect to={{ pathname: rest.intendedPath ?? "/home" }} />;
   }
 }

@@ -196,7 +196,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         lastPageUrl = '/' + found[0];
       }
     }
-    if (tempStatus) {
+    if (!tempStatus) {
       tempStatus = status;
     }
     CashAttempt(JSON.stringify({
