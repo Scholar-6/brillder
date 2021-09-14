@@ -711,6 +711,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {renderRouter()}
         </div>
         <UnauthorizedUserDialog
+          brickId={brick.id}
           history={history}
           isOpen={unauthorizedOpen}
           emailInvalid={emailInvalid}
