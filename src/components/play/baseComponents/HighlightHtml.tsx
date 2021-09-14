@@ -6,11 +6,10 @@ import { PlayMode } from "../model";
 import rangy from "rangy";
 import "rangy/lib/rangy-classapplier";
 
-import YoutubeAndMathInHtml from "./YoutubeAndMathQuote";
-
 import "./HighlightHtml.scss";
 import { Annotation } from "model/attempt";
 import { useLocation } from "react-router-dom";
+import YoutubeMathDesmos from "./YoutubeMathDesmos";
 
 let annotateCreateEvent: (el: HTMLElement) => void = () => {
   console.log('asdfasdf');
@@ -129,7 +128,7 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
 
   return (
     <div className={`highlight-html${shouldHighlight ? " highlight-on" : ""}`}>
-      <YoutubeAndMathInHtml ref={textRef} isSynthesisParser={props.isSynthesis} value={props.value} />
+      <YoutubeMathDesmos ref={textRef} isSynthesisParser={props.isSynthesis} value={props.value} />
     </div>
   );
 });
