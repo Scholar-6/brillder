@@ -3,8 +3,11 @@ import Dialog from "@material-ui/core/Dialog";
 import { TextField } from "@material-ui/core";
 import map from "components/map";
 import SpriteIcon from "../SpriteIcon";
+import playRoutes from 'components/play/routes';
+import { SetLoginRedirectUrl } from "localStorage/login";
 
 interface UnauthorizedProps {
+  brickId: number;
   emailInvalid: boolean | null; // null - before submit
   isOpen: boolean;
   history: any;
@@ -34,7 +37,10 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
           value={email}
           onChange={evt => setEmail(evt.target.value)}
         />
-        <div className="small-text-link" onClick={() => props.history.push(map.Login)}>Already a member? Sign in here<SpriteIcon name="arrow-right" /></div>
+        <div className="small-text-link" onClick={() => {
+          SetLoginRedirectUrl(playRoutes.playReview(props.brickId));
+          props.history.push(map.Login);
+        }}>Already a member? Sign in here<SpriteIcon name="arrow-right" /></div>
         <div className="dialog-footer big-footer">
           <button type="submit" className="btn btn-md bg-theme-orange yes-button">
             <span className="bold">Create Account</span>
