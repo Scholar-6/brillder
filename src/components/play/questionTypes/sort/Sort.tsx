@@ -18,6 +18,7 @@ import { getValidationClassName } from '../service';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
 import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
+import SortImage from './SortImage';
 
 interface UserCategory {
   name: string;
@@ -242,12 +243,10 @@ class Sort extends CompComponent<SortProps, SortState> {
 
   renderChoiceContent(choice: SortAnswer) {
     if (choice.answerType === QuestionValueType.Image) {
+      console.log(choice)
       return (
         <div className="sort-image-container">
-          <img
-            alt="" className="sort-image-choice"
-            src={`${process.env.REACT_APP_BACKEND_HOST}/files/${choice.valueFile}`}
-          />
+          <SortImage valueFile={choice.valueFile} imageSource={choice.imageSource} />
         </div>
       );
     } else if (choice.answerType === QuestionValueType.Sound) {
