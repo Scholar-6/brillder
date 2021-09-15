@@ -10,6 +10,7 @@ export interface SortAnswer {
   id?: number;
   value: string;
   valueFile: string;
+  imageSource?: string;
   answerType: QuestionValueType;
   soundFile?: string;
   soundCaption?: string;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { isMobile } from 'react-device-detect';
 
 import { fileUrl } from 'components/services/uploadFile';
-import actions from 'redux/actions/play';
 import { isPhone } from 'services/phone';
+import actions from 'redux/actions/play';
 import { ReduxCombinedState } from 'redux/reducers';
-import { isMobile } from 'react-device-detect';
 
 interface AnswerProps {
   fileName: string;
