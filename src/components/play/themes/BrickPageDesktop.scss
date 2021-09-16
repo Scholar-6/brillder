@@ -2430,3 +2430,41 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .play-preview-pages .sorted-row.sorted-row-expanded .live-container .intro-text-row {
   padding-left: 3vw !important;
 }
+
+.play-preview-pages .sorted-row.sorted-row-expanded .real-live-container {
+  background: none !important;
+  overflow: visible !important;
+  .absolute-prep-text {
+    position: absolute;
+    color: var(--white);
+    z-index: 100;
+    text-align: center;
+    left: -7vw;
+    width: 6vw;
+    font-size: 1.1vw;
+  }
+
+  .introduction-info {
+    background: none;
+    border-top-left-radius: 1.9vw;
+    border-top-right-radius: 1.9vw;
+    height: 4vw !important;
+    padding: 0 !important;
+
+    .intro-text-row {
+      box-shadow: none !important;
+      z-index: 2;
+    }
+    &:after {
+      content:"";
+      position:absolute;
+      width:100%;
+      bottom:1px;
+      z-index:20 !important;
+      box-shadow: 0px 0px 15px 2px #333;
+    }
+  }
+  .introduction-page .question-live-play > div {
+    background: white;
+  }
+}
