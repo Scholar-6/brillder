@@ -4,7 +4,7 @@ import queryString from 'query-string';
 
 import './BrickBlock16x9.scss';
 import { AcademicLevelLabels, Brick } from "model/brick";
-import { User, UserType } from "model/user";
+import { RolePreference, User } from "model/user";
 import { ReactComponent as CircleCheck } from 'assets/img/circle-check.svg';
 
 import routes, { playCover } from "components/play/routes";
@@ -81,7 +81,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
    * @returns void
    */
   const move = () => {
-    if (isAssignment && assignmentId && props.user.rolePreference?.roleId !== UserType.Teacher) {
+    if (isAssignment && assignmentId && props.user.rolePreference?.roleId !== RolePreference.Teacher) {
       setAssignmentId(assignmentId);
       props.history.push(map.postAssignment(brick.id, props.user.id));
       return;
