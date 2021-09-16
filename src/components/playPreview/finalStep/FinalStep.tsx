@@ -246,7 +246,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                   key={i}
                   avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${e.profileImage}`} />}
                   label={`${e.firstName} ${e.lastName}`}
-                  onDelete={brick.editors?.length === 1 ? undefined : () => removeEditor(e)}
+                  onDelete={brick.editors?.length === 1 && brick.status !== BrickStatus.Draft ? undefined : () => removeEditor(e)}
                 />
               )}
               {brick.editors.length === 1
