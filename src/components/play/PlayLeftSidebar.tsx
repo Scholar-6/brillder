@@ -7,8 +7,8 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { PlayMode } from './model';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
-import { checkTeacherOrAdmin } from "components/services/brickService";
-import { RolePreference, User, UserType } from "model/user";
+import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
+import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
 import { Brick } from "model/brick";
@@ -23,6 +23,7 @@ import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDi
 import routes, { PlayPreInvestigationLastPrefix } from "./routes";
 import ShareDialogs from "./finalStep/dialogs/ShareDialogs";
 import GenerateCoverButton from "./baseComponents/sidebarButtons/GenerateCoverButton";
+import { isInstitutionPreference } from "components/services/preferenceService";
 
 interface SidebarProps {
   history: any;
@@ -112,7 +113,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   moveToBuild() {
-    console.log('move to build')
     if (this.props.moveToBuild) {
       this.props.moveToBuild();
     }
@@ -237,10 +237,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           sidebarRolledUp={sidebarRolledUp}
           onClick={this.onAdaptDialog.bind(this)}
         />
-        {(
-          this.props.user.rolePreference?.roleId === RolePreference.Institution ||
-          this.props.user.roles.some(r => r.roleId === UserType.Admin)
-        ) &&
+        {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) &&
           <GenerateCoverButton
             sidebarRolledUp={sidebarRolledUp}
             brick={this.props.brick}
