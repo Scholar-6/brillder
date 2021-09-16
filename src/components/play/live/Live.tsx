@@ -4,6 +4,7 @@ import { useTheme } from "@material-ui/core/styles";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import { Moment } from "moment";
+import { isMobile } from "react-device-detect";
 
 import "./Live.scss";
 
@@ -14,6 +15,7 @@ import { CashQuestionFromPlay } from "localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
 import { PlayMode } from "../model";
 import { getPlayPath, scrollToStep } from "../service";
+import actions from 'redux/actions/play';
 
 import LiveStepper from "./components/LiveStepper";
 import TabPanel from "../baseComponents/QuestionTabPanel";
@@ -30,7 +32,8 @@ import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
 import { getUniqueComponent } from "components/build/questionService/QuestionService";
 import CategoriseAnswersDialog from "components/baseComponents/dialogs/CategoriesAnswers";
-import { isMobile } from "react-device-detect";
+import { ReduxCombinedState } from "redux/reducers";
+import { connect } from "react-redux";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -50,6 +53,11 @@ interface LivePageProps {
 
   // only for real play
   mode?: PlayMode;
+
+  // redux
+  liveBrickId: number;
+  liveStep: number;
+  storeLiveStep(liveStep: number, brickId: number): void;
 }
 
 const LivePage: React.FC<LivePageProps> = ({
@@ -104,7 +112,11 @@ const LivePage: React.FC<LivePageProps> = ({
   useEffect(() => {
     const values = queryString.parse(location.search);
     if (values.activeStep) {
-      setActiveStep(parseInt(values.activeStep as string));
+      const nextStep = parseInt(values.activeStep as string);
+      props.storeLiveStep(nextStep, brick.id);
+      setActiveStep(nextStep);
+    } else if (props.liveStep >= 0 && props.liveBrickId === brick.id) {
+      setActiveStep(props.liveStep);
     }
   }, [location.search]);
 
@@ -489,4 +501,13 @@ const LivePage: React.FC<LivePageProps> = ({
   );
 };
 
-export default LivePage;
+const mapState = (state: ReduxCombinedState) => ({
+  liveBrickId: state.play.brickId,
+  liveStep: state.play.liveStep,
+});
+
+const mapDispatch = (dispatch: any) => ({
+  storeLiveStep: (liveStep: number, brickId: number) => dispatch(actions.storeLiveStep(liveStep, brickId)),
+});
+
+export default connect(mapState, mapDispatch)(LivePage);
