@@ -7,7 +7,6 @@ import { ReduxCombinedState } from 'redux/reducers';
 import userActions from 'redux/actions/user';
 import map from 'components/map';
 import { RolePreference, User, UserType } from 'model/user';
-import { checkAdmin } from 'components/services/brickService';
 import { setUserPreference } from 'services/axios/user';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
@@ -29,7 +28,6 @@ const TabletTheme = React.lazy(() => import('./themes/PreferenceTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/PreferenceDesktopTheme'));
 
 const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
-  const isAdmin = checkAdmin(props.user.roles);
   const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId ?? props.defaultPreference ?? UserType.Student);
 
   const handleChange = async (roleId: RolePreference, disabled: boolean) => {

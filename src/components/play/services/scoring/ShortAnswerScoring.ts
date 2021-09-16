@@ -36,6 +36,7 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
                     attempt.marks += 1;
                 }
                 else{
+                    /*eslint-disable-next-line*/
                     if (allow_one_mistake == 1){
                         attempt.marks -= 1;
                     }

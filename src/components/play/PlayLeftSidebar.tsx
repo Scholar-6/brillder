@@ -20,11 +20,9 @@ import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
-import routes, { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
+import routes, { PlayPreInvestigationLastPrefix } from "./routes";
 import ShareDialogs from "./finalStep/dialogs/ShareDialogs";
 import GenerateCoverButton from "./baseComponents/sidebarButtons/GenerateCoverButton";
-
-declare var Brillder: any;
 
 interface SidebarProps {
   history: any;

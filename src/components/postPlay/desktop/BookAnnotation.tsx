@@ -35,6 +35,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
       ...annotation,
       text: textRef.current!.innerText ?? "",
     });
+  /*eslint-disable-next-line*/
   }, [annotation, props.updateAnnotation]);
 
   const onAnnotationChangeRef = React.useRef<(() => void) & _.Cancelable>();

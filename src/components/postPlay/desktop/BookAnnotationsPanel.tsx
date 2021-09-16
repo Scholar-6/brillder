@@ -59,6 +59,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
 
     props.setAttempt(newAttempt);
     history.push("#" + newAnnotation.id);
+  /*eslint-disable-next-line*/
   }, [props.attempt, props.setAttempt, location, props.questionIndex]);
 
   const updateAnnotation = React.useCallback((annotation: Annotation) => {
@@ -72,6 +73,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
 
     newAttempt.annotations[annotationIndex] = annotation;
     props.setAttempt(newAttempt);
+  /*eslint-disable-next-line*/
   }, [props.attempt, props.setAttempt]);
 
   const deleteAnnotation = React.useCallback((annotation: Annotation) => {
@@ -90,6 +92,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     }
 
     props.setAttempt(newAttempt);
+  /*eslint-disable-next-line*/
   }, [props.attempt, props.setAttempt]);
 
   const addAnnotationReply = React.useCallback((annotation: Annotation) => {
@@ -107,6 +110,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
       ...annotation,
       children: [...annotation.children ?? [], newAnnotation],
     });
+  /*eslint-disable-next-line*/
   }, [updateAnnotation]);
 
   const updateAnnotationReply = React.useCallback((annotation: Annotation, reply: Annotation) => {
