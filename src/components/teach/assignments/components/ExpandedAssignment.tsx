@@ -172,7 +172,7 @@ class ExpandedAssignment extends Component<
     const flattenedAnnotations: Annotation[] = [];
     annotations?.forEach(a => flattenedAnnotations.push(...flattenAnnotation(a)));
 
-    const latestAnnotation = flattenedAnnotations.sort((a, b) => b.timestamp.valueOf() - a.timestamp.valueOf())[0];
+    const latestAnnotation = flattenedAnnotations.sort((a: any, b: any) => new Date(b.timestamp) > new Date(a.timestamp) ? 1 : -1)[0];
     const className = latestAnnotation ? 
       (latestAnnotation.user.id === this.props.currentUser.id ? " yellow" : " red")
       : "";
