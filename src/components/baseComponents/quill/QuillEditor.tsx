@@ -108,6 +108,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 setSoundDialogOpen(true);
             }
         }
+    /*eslint-disable-next-line*/
     }, [soundModule]);
 
     const [imageDialogOpen, setImageDialogOpen] = React.useState(false);
@@ -131,6 +132,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 setImageDialogBlot(blot);
             }
         }
+    /*eslint-disable-next-line*/
     }, [imageModule]);
 
     const [desmosDialogOpen, setDesmosDialogOpen] = React.useState(false);
@@ -199,6 +201,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         desmos: props.allowDesmos ?? false,
         // tableUI: props.allowTables,
         capitalization: true,
+    /*eslint-disable-next-line*/
     }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.allowTables, props.allowDesmos, props.imageDialog]);
     
     /*

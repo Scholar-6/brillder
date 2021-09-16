@@ -61,6 +61,7 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
       props.onHighlight(textBox?.innerHTML);
       selection.removeAllRanges();
     }
+  /*eslint-disable-next-line*/
   }, [shouldHighlight]);
 
   const createAnnotation = (annotation: Annotation) => {
@@ -105,6 +106,7 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
       div.addEventListener("mouseup", onMouseUp);
       setTextBox(div);
     }
+  /*eslint-disable-next-line*/
   }, [setTextBox, onMouseUp]);
 
   const location = useLocation();
@@ -119,6 +121,7 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
         link.classList.remove("focused");
       }
     });
+  /*eslint-disable-next-line*/
   }, [location.hash]);
 
   React.useImperativeHandle(ref, () => ({

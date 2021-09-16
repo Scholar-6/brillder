@@ -53,7 +53,7 @@ class ClassroomList extends Component<ClassroomListProps, State> {
   }
 
   componentDidUpdate(prevProps: ClassroomListProps, prevState: State) {
-    if (prevProps.isArchive != this.props.isArchive) {
+    if (prevProps.isArchive !== this.props.isArchive) {
       this.loadPageData(0, this.state.pageSize, this.props.classrooms);
     }
   }

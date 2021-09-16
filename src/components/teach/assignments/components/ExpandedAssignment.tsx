@@ -349,6 +349,7 @@ class ExpandedAssignment extends Component<
           currentAttempt={students.find(s => s.id === this.state.currentCommentStudentId)?.studentResult?.attempts.slice(-1)[0]}
           setCurrentAttempt={(attempt: AttemptStats) => {
             const newState = this.state;
+            /* eslint-disable-next-line */
             const studentIdx = newState.students.findIndex(s => s.id == newState.currentCommentStudentId);
             const attemptIdx = newState.students[studentIdx].studentResult!.attempts.length - 1;
             newState.students[studentIdx].studentResult!.attempts[attemptIdx] = attempt;
