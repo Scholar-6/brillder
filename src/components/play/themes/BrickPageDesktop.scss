@@ -2444,6 +2444,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     width: 6vw;
     font-size: 1.1vw;
   }
+  
 
   .introduction-info {
     background: none;
@@ -2467,5 +2468,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
   .introduction-page .question-live-play > div {
     background: white;
+    height: 100%;
+    width: calc(100vw - 5.834vw - 8vw - 7vw - 2.1vw) !important;
   }
 }
