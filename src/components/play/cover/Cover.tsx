@@ -274,6 +274,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         </div>
         <UnauthorizedUserDialogV2
           history={props.history}
+          brickId={brick.id}
           isOpen={unauthorizedOpenV2}
           emailInvalid={emailInvalid}
           login={(email) => createInactiveAccountV2(email)}
@@ -365,6 +366,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       </div>
       <UnauthorizedUserDialogV2
         history={props.history}
+        brickId={brick.id}
         isOpen={unauthorizedOpenV2}
         emailInvalid={emailInvalid}
         login={(email) => createInactiveAccountV2(email)}
