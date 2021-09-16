@@ -36,6 +36,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       $icons-size: 2vw;
       color: var(--theme-dark-blue);
       padding: 0 0.5vw;
+      stroke-width: 1.6;
       margin-top: 0.6vw;
       padding-bottom: 0.2vw;
       width: calc(#{$icons-size} * 1.4) !important;
@@ -1460,8 +1461,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
             &.current {
               span {
-                color: var(--white);
-                background: var(--theme-dark-blue);
+                color: var(--theme-dark-blue);
+                border: 0.25vw solid var(--theme-dark-blue);
               }
               .underline {
                 position: absolute;
