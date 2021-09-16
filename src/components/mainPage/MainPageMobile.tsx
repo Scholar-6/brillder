@@ -10,7 +10,7 @@ import { Steps } from 'intro.js-react';
 
 import "./themes/MainPageMobile.scss";
 import actions from "redux/actions/auth";
-import { RolePreference, User, UserType } from "model/user";
+import { RolePreference, User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import map from "components/map";
 import { Notification } from "model/notifications";
@@ -179,7 +179,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         <button className="btn btn-transparent zoom-item">
           <BlocksIcon disabled={this.state.assignedCount === 0} />
           <span className="item-description flex-number">
-            {this.props.user.rolePreference?.roleId === UserType.Teacher
+            {this.props.user.rolePreference?.roleId === RolePreference.Teacher
               ? "Shared with Me"
               : "My Assignments"}
             {this.state.assignedCount > 0 && (
@@ -338,11 +338,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             this.setState({ ...this.state, swiper });
           }}
         >
-          {user.rolePreference?.roleId === UserType.Student &&
+          {user.rolePreference?.roleId === RolePreference.Student &&
             renderStudentButtons()}
-          {user.rolePreference?.roleId === UserType.Builder &&
+          {user.rolePreference?.roleId === RolePreference.Builder &&
             renderBuildButtons()}
-          {user.rolePreference?.roleId === UserType.Teacher &&
+          {user.rolePreference?.roleId === RolePreference.Teacher || user.rolePreference?.roleId === RolePreference.Institution &&
             renderTeachButtons()}
         </Swiper>
         <button

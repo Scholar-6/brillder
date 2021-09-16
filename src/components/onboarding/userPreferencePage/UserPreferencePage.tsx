@@ -28,7 +28,7 @@ const TabletTheme = React.lazy(() => import('./themes/PreferenceTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/PreferenceDesktopTheme'));
 
 const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
-  const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId ?? props.defaultPreference ?? UserType.Student);
+  const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId ?? props.defaultPreference ?? RolePreference.Student);
 
   const handleChange = async (roleId: RolePreference, disabled: boolean) => {
     if (disabled || !roleId) {

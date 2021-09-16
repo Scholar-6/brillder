@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import actions from "redux/actions/brickActions";
 
-import { RolePreference, User, UserType } from "model/user";
+import { RolePreference, User } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'localStorage/proposal';
 
@@ -69,7 +69,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   }, []);
 
   let isStudent = false;
-  if (props.user.rolePreference?.roleId === UserType.Student) {
+  if (props.user.rolePreference?.roleId === RolePreference.Student) {
     isStudent = true;
   }
 
