@@ -11,3 +11,15 @@ export const isTeacherPreference = (user: User) => {
     return true;
   }
 }
+
+export const isBuilderPreference = (user: User) => {
+  if (user.rolePreference && user.rolePreference.roleId === RolePreference.Builder) {
+    return true;
+  }
+}
+
+export const isInstitutionPreference = (user: User) => {
+  if (user.rolePreference && user.rolePreference.roleId === RolePreference.Institution) {
+    return true;
+  }
+}

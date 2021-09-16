@@ -9,7 +9,7 @@ import DynamicFont from 'react-dynamic-font';
 
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
-import { RolePreference, User } from "model/user";
+import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
@@ -31,6 +31,7 @@ import BlocksIcon from "./components/BlocksIcon";
 import ReportsAlertDialog from "components/baseComponents/dialogs/ReportsAlertDialog";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import InvalidDialog from "components/build/baseComponents/dialogs/InvalidDialog";
+import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -98,9 +99,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isNewTeacher = true;
     }
 
-    const { rolePreference } = props.user;
-    const isStudent = rolePreference?.roleId === RolePreference.Student;
-    const isBuilder = rolePreference?.roleId === RolePreference.Builder;
+    const isStudent = isStudentPreference(props.user);
+    const isBuilder = isBuilderPreference(props.user);
 
     this.state = {
       createHober: false,
@@ -114,7 +114,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isReportLocked: false,
       isNewTeacher,
 
-      isTeacher: rolePreference?.roleId === RolePreference.Teacher,
+      isTeacher: isTeacherPreference(props.user) || isInstitutionPreference(props.user),
       isAdmin: checkAdmin(props.user.roles),
       isStudent,
       isBuilder,
