@@ -415,6 +415,11 @@ const LivePage: React.FC<LivePageProps> = ({
   const renderPrepButton = () => {
     return (
       <div>
+        <div className="absolute-prep-text">
+          Click here to
+          go back to
+          Prep tasks
+        </div>
         <div className="prep-button" onClick={() => history.push(playNewPrep(brick.id))}>
           <SpriteIcon name="file-text" />
         </div>
@@ -423,7 +428,7 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   return (
-    <div className="brick-row-container live-container">
+    <div className="brick-row-container live-container real-live-container">
       {renderPrepButton()}
       <div className="fixed-upper-b-title">
         <BrickTitle title={brick.title} />
