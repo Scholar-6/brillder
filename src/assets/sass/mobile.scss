@@ -991,3 +991,7 @@
 .spinning {
   animation: spinning 9s infinite linear;
 }
+
+.MuiLinearProgress-bar {
+  border-radius: 0.8vw !important;
+}

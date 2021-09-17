@@ -254,7 +254,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (index !== -1) {
       // publisher can`t remove his publisher role
       if (roleId === UserType.Publisher) {
-        const foundUpperRole = this.props.user.roles.find(r => r.roleId === UserType.Admin || r.roleId === UserType.Institution);
+        const foundUpperRole = this.props.user.roles.find(r => r.roleId === UserType.Admin);
         if (!foundUpperRole) {
           return;
         }

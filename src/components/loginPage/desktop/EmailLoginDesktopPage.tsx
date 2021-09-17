@@ -67,7 +67,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
   }
 
   const sendLogin = async (email: string, password: string) => {
-    let data = await login(email, password);
+    const data = await login(email, password);
     if (!data.isError) {
       if (data === "OK") {
         props.loginSuccess();

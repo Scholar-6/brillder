@@ -9,7 +9,7 @@ export const prepareVisibleAssignments = (sortedIndex: number, pageSize: number,
     if (assignment) {
       let row = Math.floor(count / 3);
       data.push({
-        brick: assignment.brick, key: i, index: count, assignmentId: assignment.id, status: assignment.status, row, deadline: assignment.deadline
+        brick: assignment.brick, key: i, index: count, assignmentId: assignment.id, status: assignment.status, row, deadline: assignment.deadline, teacher: assignment.teacher
       } as AssignmentBrickData);
       count++;
     }

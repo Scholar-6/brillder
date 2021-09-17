@@ -1,12 +1,16 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import { TextField } from "@material-ui/core";
+
 import map from "components/map";
 import SpriteIcon from "../SpriteIcon";
+import playRoutes from 'components/play/routes';
+import { SetLoginRedirectUrl } from "localStorage/login";
 
 interface UnauthorizedProps {
   emailInvalid: boolean | null; // null - before submit
   isOpen: boolean;
+  brickId: number;
   history: any;
   login(email: string): void;
   notyet(): void;
@@ -32,13 +36,16 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
           value={email}
           onChange={evt => setEmail(evt.target.value)}
         />
-        <div className="small-text-link" onClick={() => props.history.push(map.Login)}>Already a member? Sign in here<SpriteIcon name="arrow-right" /></div>
+        <div className="small-text-link" onClick={() => {
+          SetLoginRedirectUrl(playRoutes.playCover(props.brickId));
+          props.history.push(map.Login);
+        }}>Already a member? Sign in here<SpriteIcon name="arrow-right" /></div>
         <div className="dialog-footer">
           <button className="btn btn-md bg-gray no-button" onClick={props.notyet}>
-            <span className="bold">Not yet</span>
+            <span className="bold">Not yet!</span>
           </button>
           <button type="submit" className="btn btn-md bg-theme-orange yes-button">
-            <span className="bold">Sure</span>
+            <span className="bold">Yes</span>
           </button>
         </div>
       </form>

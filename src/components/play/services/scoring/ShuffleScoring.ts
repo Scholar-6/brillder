@@ -2,6 +2,7 @@ import { ComponentAttempt } from "components/play/model";
 import { HorizontalShuffleComponent } from "components/play/questionTypes/horizontalShuffle/HorizontalShuffle";
 import { VerticalShuffleComponent } from "components/play/questionTypes/vericalShuffle/VerticalShuffle";
 
+/*
 const permute = (n: number): [number, number][] => {
     const permutations: [number, number][] = [];
     for(let i = 0; i < n - 1; i++) {
@@ -10,7 +11,7 @@ const permute = (n: number): [number, number][] => {
         }
     }
     return permutations;
-}
+}*/
 
 const mark = (component: HorizontalShuffleComponent | VerticalShuffleComponent, attempt: ComponentAttempt<any>) => {
     const n = component.list.length;

@@ -27,6 +27,8 @@ import CoreSelect from "../proposal/questionnaire/brickTitle/components/CoreSele
 import { stripHtml } from "../questionService/ConvertService";
 import StatusCircle from "../baseComponents/statusCircle/StatusCircle";
 import QuillSimpleEditor from "components/baseComponents/quill/QuillSimpleEditor";
+import LockComponent from "../buildQuestions/lock/Lock";
+import { isAorPorE } from "components/services/brickService";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -35,6 +37,7 @@ export interface PlanProps {
   locked: boolean;
   editOnly: boolean;
   validationRequired: boolean;
+  toggleLock(): void;
   initSuggestionExpanded?: boolean;
   selectFirstQuestion(): void;
 }
@@ -96,6 +99,29 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     };
   /*eslint-disable-next-line*/
   }, [currentBrick, props.saveBrick]);
+
+   /**
+   * if Admin, Publisher or Editor than true
+   * @returns 
+   */
+    const canSeeLock = () => {
+      const {user} = props;
+      const adminPublisherOrEditor = isAorPorE(currentBrick, user);
+      if (adminPublisherOrEditor) {
+        return true;
+      }
+      return false;
+    }
+
+  const renderLock = () => {
+    if (currentBrick.isCore === true) {
+      const canSee = canSeeLock();
+      if (canSee) {
+        return <LockComponent locked={locked} disabled={props.editOnly} onChange={props.toggleLock} />
+      }
+    }
+    return ''
+  }
 
   return (
     <div className="question-type plan-page">
@@ -195,6 +221,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       disabled={locked}
                       data={currentBrick.brief}
                       allowTables={true}
+                      allowLinks={true}
                       onChange={data => changeBrick((brick) => ({ ...brick, brief: data }))}
                       placeholder="Outline the purpose of this brick."
                       validate={validationRequired}
@@ -266,6 +293,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                 </div>
                 <div style={{ width: "100%" }}></div>
               </div>
+              {renderLock()}
               <div className="bs-circles-container">
                 <StatusCircle status={currentBrick.status} isCore={currentBrick.isCore} />
               </div>

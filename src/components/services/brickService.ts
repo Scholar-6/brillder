@@ -1,5 +1,6 @@
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType, UserRole, RolePreference } from 'model/user';
+import { isInstitutionPreference, isTeacherPreference } from './preferenceService';
 
 export function formatTwoLastDigits(twoLastDigits: number) {
   var formatedTwoLastDigits = "";
@@ -82,7 +83,10 @@ export function getAttemptDateString(inputDateString: string) {
 }
 
 export function checkTeacherOrAdmin(user: User) {
-  if (user.rolePreference?.roleId === RolePreference.Teacher) {
+  if (isTeacherPreference(user)) {
+    return true;
+  }
+  if (isInstitutionPreference(user)) {
     return true;
   }
   return user.roles.some(r => r.roleId === UserType.Admin);
@@ -206,6 +210,3 @@ export function canTeach(user: User) {
   return canTeach;
 }
 
-export function isInstitution(user: User) {
-  return user.roles.some(role => role.roleId === UserType.Institution);
-}

@@ -44,7 +44,6 @@ const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
       <div key={key} className={className} onClick={props.handleStep(index - 1)}>
         <span>{questionIndex}</span>
         {question.edited && <PulsingCircle isPulsing={props.previousStep === questionIndex - 1} />}
-        <div className="underline"><div/></div>
         {isActive && <div className="fixed-stepper-triangle" />}
       </div>
     );

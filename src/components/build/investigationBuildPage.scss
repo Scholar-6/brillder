@@ -504,6 +504,10 @@ $base-build-border: $editor-radius;
     }
   }
 
+  .right-sidebar {
+    position: relative;
+  }
+
   .ql-editor.ql-blank::before {
     font-family: $font-family-bold;
   }
@@ -524,8 +528,7 @@ $base-build-border: $editor-radius;
 
   .bs-circles-container {
     position: absolute;
-    bottom: 15.1vh;
-    right: 1.8vw;
+    bottom: 10.1vh;
   }
 
   .inner-question-type {
@@ -536,7 +539,7 @@ $base-build-border: $editor-radius;
     height: calc(100% - 10vh) !important;
 
     .plan-quill-container {
-      max-width: 72.5%;
+      max-width: 71%;
       background: var(--tab-gray);
       border-radius: $editor-radius;
     }
@@ -692,7 +695,7 @@ $base-build-border: $editor-radius;
             z-index: 100;
             height: 2vw;
             position: absolute;
-            width: 27%;
+            width: 29%;
             border-top-left-radius: $base-build-border;
             border-bottom-left-radius: $base-build-border;
             pointer-events: none;
@@ -775,7 +778,9 @@ $base-build-border: $editor-radius;
     }
 
     .right-sidebar {
-      width: 27.5%;
+      max-width: 29% !important;
+      flex-basis: 29% !important;
+      width: 29%;
     }
 
     .plan-comments-panel {
@@ -814,8 +819,8 @@ $base-build-border: $editor-radius;
 
     button,
     .picker.q-color {
-      width: 1.8vw !important;
-      height: 1.8vw !important;
+      width: 1.6vw !important;
+      height: 1.6vw !important;
 
       svg {
         height: 100% !important;
@@ -828,8 +833,8 @@ $base-build-border: $editor-radius;
     }
 
     .picker.q-align {
-      width: 1.8vw !important;
-      height: 1.8vw !important;
+      width: 1.7vw !important;
+      height: 1.7vw !important;
 
       .svg {
         height: 100%;
@@ -861,7 +866,8 @@ $base-build-border: $editor-radius;
 
   .synthesis-page {
     .bs-circles-container {
-      margin-top: 10vh;
+      position: absolute;
+      bottom: 20.1vh;
     }
   }
 }
@@ -984,6 +990,9 @@ $base-build-border: $editor-radius;
         opacity: 1;
       }
     }
+  }
+  .q-caps.q-tooltip-hover .css-custom-tooltip {
+    padding: 0.3vw 0.4vw !important;
   }
   .phone-toolbar {
     position: relative;

@@ -10,7 +10,7 @@ import { Steps } from 'intro.js-react';
 
 import "./themes/MainPageMobile.scss";
 import actions from "redux/actions/auth";
-import { RolePreference, User, UserType } from "model/user";
+import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import map from "components/map";
 import { Notification } from "model/notifications";
@@ -26,6 +26,7 @@ import ClassInvitationDialog from "components/baseComponents/classInvitationDial
 import LibraryButton from "./components/LibraryButton";
 import BlocksIcon from "./components/BlocksIcon";
 import { getAssignedBricks } from "services/axios/brick";
+import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -74,10 +75,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   constructor(props: MainPageProps) {
     super(props);
 
-    const { rolePreference } = props.user;
-
-    const isStudent = rolePreference?.roleId === RolePreference.Student;
-    const isBuilder = rolePreference?.roleId === RolePreference.Builder;
+    const isStudent = isStudentPreference(props.user);
+    const isBuilder = isBuilderPreference(props.user);
 
     // onboarding users logic
     let isNewStudent = false;
@@ -179,7 +178,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         <button className="btn btn-transparent zoom-item">
           <BlocksIcon disabled={this.state.assignedCount === 0} />
           <span className="item-description flex-number">
-            {this.props.user.rolePreference?.roleId === UserType.Teacher
+            {(isTeacherPreference(this.props.user) || isInstitutionPreference(this.props.user))
               ? "Shared with Me"
               : "My Assignments"}
             {this.state.assignedCount > 0 && (
@@ -338,11 +337,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             this.setState({ ...this.state, swiper });
           }}
         >
-          {user.rolePreference?.roleId === UserType.Student &&
-            renderStudentButtons()}
-          {user.rolePreference?.roleId === UserType.Builder &&
-            renderBuildButtons()}
-          {user.rolePreference?.roleId === UserType.Teacher &&
+          {isStudentPreference(user) && renderStudentButtons()}
+          {isBuilderPreference(user) && renderBuildButtons()}
+          {(isTeacherPreference(user) || isInstitutionPreference(user)) &&
             renderTeachButtons()}
         </Swiper>
         <button

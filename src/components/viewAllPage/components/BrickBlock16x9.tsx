@@ -4,7 +4,7 @@ import queryString from 'query-string';
 
 import './BrickBlock16x9.scss';
 import { AcademicLevelLabels, Brick } from "model/brick";
-import { User, UserType } from "model/user";
+import { RolePreference, User } from "model/user";
 import { ReactComponent as CircleCheck } from 'assets/img/circle-check.svg';
 
 import routes, { playCover } from "components/play/routes";
@@ -40,6 +40,8 @@ interface BrickBlockProps {
   assignmentStatus?: AssignmentBrickStatus;
   assignmentId?: number;
 
+  teacher?: User;
+
   handleDeleteOpen(brickId: number): void;
 }
 
@@ -71,7 +73,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
   }
 
   const moveToBuild = () => {
-    props.history.push(buildRoutes.buildQuesitonType(brick.id));
+    props.history.push(buildRoutes.buildPlan(brick.id));
   }
 
   /**
@@ -79,7 +81,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
    * @returns void
    */
   const move = () => {
-    if (isAssignment && assignmentId && props.user.rolePreference?.roleId !== UserType.Teacher) {
+    if (isAssignment && assignmentId && props.user.rolePreference?.roleId !== RolePreference.Teacher) {
       setAssignmentId(assignmentId);
       props.history.push(map.postAssignment(brick.id, props.user.id));
       return;
@@ -143,6 +145,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
         timeout={index * 150}
       >
         <a href={window.location.origin + routes.playCover(brick.id)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
+          {props.isAssignment && props.teacher && <div className="absolute-assignment-title">Created By {props.teacher.firstName} {props.teacher.lastName}</div>}
           <div className="publish-brick-container">
             {renderDeadline()}
             <div className="level">

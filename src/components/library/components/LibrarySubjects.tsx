@@ -1,13 +1,11 @@
 import React from "react";
 
 import { Subject } from "model/brick";
-
 import { SubjectAssignments } from "../service/model";
 import LibrarySubject from "./LibrarySubject";
 import { getSubjectWidth } from "../service/css";
 
 interface LibrarySubjectsProps {
-  userId: number;
   pageSize: number;
   sortedIndex: number;
   subjects: Subject[];
@@ -19,7 +17,7 @@ const LibrarySubjects: React.FC<LibrarySubjectsProps> = (props) => {
   const renderSubject = (item: SubjectAssignments, key: number) => {
     const width = getSubjectWidth(item);
     return <div key={key} className="libary-container-1" style={{ width: width + 'vw', display: 'inline-flex' }}>
-      <LibrarySubject userId={props.userId} subjectAssignment={item} history={props.history} />
+      <LibrarySubject subjectAssignment={item} history={props.history} />
     </div>
   }
 

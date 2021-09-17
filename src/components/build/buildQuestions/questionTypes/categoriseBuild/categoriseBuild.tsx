@@ -89,7 +89,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 
   const removeAnswer = (category: SortCategory, index: number) => {
     category.answers.splice(index, 1);
-    
+
     const catIndex = state.categories.indexOf(category);
     let hintIndex = state.categories.slice(0, catIndex).reduce((idx, cat) => idx + cat.answers.length, 0);
     hintIndex += index;
@@ -194,6 +194,27 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       );
     }
 
+    if (answer.answerType === QuestionValueType.Image) {
+      return (
+        <div key={i} className={customClass}>
+          {
+            (category.answers.length > 1)
+            && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeAnswer(category, i)}>
+              <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
+            </button>
+          }
+          <RemoveButton onClick={() => answerChanged(answer, '')} />
+          <QuestionImageDropZone
+            answer={answer as any}
+            type={answer.answerType || QuestionValueType.None}
+            fileName={answer.valueFile}
+            locked={locked}
+            update={setImage}
+          />
+        </div>
+      );
+    }
+
     return (
       <div key={i} className={customClass}>
         {
@@ -202,13 +223,11 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
           </button>
         }
-        {answer.answerType === QuestionValueType.Image && <RemoveButton onClick={() => answerChanged(answer, '')} />}
-        {answer.answerType !== QuestionValueType.Image &&
         <QuillEditorContainer
           locked={locked}
           object={answer}
           fieldName="value"
-          placeholder={`Answer ${i+1}`}
+          placeholder={`Answer ${i + 1}`}
           toolbar={['latex']}
           validationRequired={validationRequired}
           isValid={isValid}
@@ -218,7 +237,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             save();
           }}
           onChange={value => { answerChanged(answer, value) }}
-        />}
+        />
         <QuestionImageDropZone
           answer={answer as any}
           type={answer.answerType || QuestionValueType.None}

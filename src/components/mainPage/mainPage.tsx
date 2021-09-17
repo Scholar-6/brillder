@@ -5,6 +5,7 @@ import MainPageMobile from "./MainPageMobile";
 import MainPageDesktop from './MainPageDesktop';
 import { isPhone } from "services/phone";
 import { showZendesk } from "services/zendesk";
+import { GetLoginRedirectUrl, UnsetLoginRedirectUrl } from "localStorage/login";
 
 interface MainPageProps {
   history: any;
@@ -12,6 +13,12 @@ interface MainPageProps {
 
 class MainPage extends Component<MainPageProps> {
   componentDidMount() {
+    const redirectUrl = GetLoginRedirectUrl();
+    if (redirectUrl) {
+      UnsetLoginRedirectUrl();
+      this.props.history.push(redirectUrl);
+    }
+
     if (isPhone()) {
       showZendesk();
     }

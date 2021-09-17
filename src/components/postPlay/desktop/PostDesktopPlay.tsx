@@ -293,7 +293,8 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
               const middleScore = (a.score + a.oldScore) / 2;
               percentages = Math.round(middleScore * 100 / a.maxScore);
             }
-            let isActive = a == this.state.attempt;
+            /* eslint-disable-next-line */
+            const isActive = a == this.state.attempt;
             return (
               <div
                 key={i}

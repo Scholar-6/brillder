@@ -10,7 +10,6 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const roles = [
   { roleId: UserType.Publisher, name: "Publisher", disabled: false },
-  { roleId: UserType.Institution, name: "Institution", disabled: false },
   { roleId: UserType.Admin, name: "Admin", disabled: false },
 ];
 
@@ -94,7 +93,7 @@ describe("Roles Box", () => {
     const component = shallow(
       <RolesBox
         roles={roles}
-        userRoles={[UserType.Admin, UserType.Publisher, UserType.Institution]}
+        userRoles={[UserType.Admin, UserType.Publisher]}
         rolePreference={RolePreference.Builder}
         toggleRole={() => {}}
       />

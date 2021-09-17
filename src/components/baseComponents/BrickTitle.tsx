@@ -34,6 +34,7 @@ const BrickTitle:React.FC<BrickTitleProps> = ({title, className = "brick-inline"
       withinRange: parentRange,
     });
     classApplier.applyToRange(range);
+  /*eslint-disable-next-line*/
   }, [textRef, title, searchString]);
 
   React.useLayoutEffect(() => {

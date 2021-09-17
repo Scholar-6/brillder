@@ -1,12 +1,9 @@
-import Quill, { Sources } from "quill";
-import Delta from "quill-delta";
+import Quill from "quill";
 import React, { useEffect } from "react";
 import ReactQuill from "react-quill"; 
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
 import "quill-table-ui/dist/index.css";
-import _ from "lodash";
-//import { ReactComponent as LatexIcon } from "assets/img/latex.svg";
 
 import "./QuillLatex";
 import "./QuillAutoLink";
@@ -38,22 +35,24 @@ interface QuillEditorProps {
 }
 
 const MissingWordQuill = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, forwardRef) => {
+    const [updateTimeout, setUpdateTimeout] = React.useState(-1);
 
     /*eslint-disable-next-line*/
     const [currentQuillId, setCurrentQuillId] = React.useContext(QuillEditorContext);
 
-    const callOnChange = React.useCallback(
-        _.debounce((content: string, delta: Delta, source: Sources) => {
-            if(props.onChange) {
+    const onChange = (content: string) => {
+        setData(content);
+        
+        if (updateTimeout) {
+          clearTimeout(updateTimeout);
+        }
+
+        const timeout = setTimeout(() => {
+            if (props.onChange) {
                 props.onChange(content);
             }
-        },500),
-        [props.onChange]
-    );
-
-    const onChange = (content: string, delta: any, source: Sources) => {
-        setData(content);
-        callOnChange(content, delta, source);
+        }, 150);
+        setUpdateTimeout(timeout);
     }
 
     const [uniqueId] = React.useState(randomEditorId());

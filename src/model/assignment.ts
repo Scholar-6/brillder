@@ -1,4 +1,5 @@
 import { Brick } from './brick';
+import { User } from './user';
 
 export enum isAuthenticated {
   None,
@@ -22,6 +23,7 @@ export interface AssignmentBrick {
   expandFinished?: boolean;
   isInvitation: boolean;
   classroom?: any;
+  teacher?: User;
 }
 
 export interface LibraryAssignmentBrick extends AssignmentBrick {

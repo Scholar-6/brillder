@@ -7,8 +7,8 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { PlayMode } from './model';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
-import { checkTeacherOrAdmin } from "components/services/brickService";
-import { User, UserType } from "model/user";
+import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
+import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
 import { Brick } from "model/brick";
@@ -20,11 +20,10 @@ import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
-import routes, { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
+import routes, { PlayPreInvestigationLastPrefix } from "./routes";
 import ShareDialogs from "./finalStep/dialogs/ShareDialogs";
 import GenerateCoverButton from "./baseComponents/sidebarButtons/GenerateCoverButton";
-
-declare var Brillder: any;
+import { isInstitutionPreference } from "components/services/preferenceService";
 
 interface SidebarProps {
   history: any;
@@ -114,7 +113,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   moveToBuild() {
-    console.log('move to build')
     if (this.props.moveToBuild) {
       this.props.moveToBuild();
     }
@@ -182,26 +180,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return this.props.history.location.pathname.slice(-7) === '/ending';
   }
 
-  renderPrepButton() {
-    const isLive = this.isLive() || this.isPreInvesigation();
-    if (isLive && this.props.sidebarRolledUp) {
-      return (
-        <div>
-          <div className="prep-button" onClick={() => this.props.history.push(playNewPrep(this.props.brick.id))}>
-            <SpriteIcon name="file-text" />
-            <div>Prep</div>
-            <div className="absolute-circle">
-              <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg" />
-              <div className="prep-help-text">Click here to go back to Prep tasks</div>
-            </div>
-          </div>
-          {<div className="grey-line"><div /></div>}
-        </div>
-      );
-    }
-    return <div />
-  }
-
   renderButtons() {
     if (this.props.isPreview) {
       if (this.props.sidebarRolledUp) {
@@ -211,7 +189,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
               <SpriteIcon name="trowel" className="w100 h100 active" />
             </div>
             <div className="create-icon-label">
-              BACK TO BUILD
+              B<br/>A<br/>C<br/>K<br/><br/>T<br/>O<br/><br/>B<br/>U<br/>I<br/>L<br/>D
             </div>
           </div>
         );
@@ -245,7 +223,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           haveCircle={haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />}
-        {this.renderPrepButton()}
         <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
         <AssignButton
           sidebarRolledUp={sidebarRolledUp}
@@ -260,13 +237,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           sidebarRolledUp={sidebarRolledUp}
           onClick={this.onAdaptDialog.bind(this)}
         />
-        {(
-          this.props.user.rolePreference?.roleId === UserType.Institution ||
-          this.props.user.roles.some(r => r.roleId === UserType.Admin)
-        ) &&
+        {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) &&
           <GenerateCoverButton
             sidebarRolledUp={sidebarRolledUp}
-            brickId={this.props.brick.id}
+            brick={this.props.brick}
           />
         }
       </div>

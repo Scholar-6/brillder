@@ -735,6 +735,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             locked={locked}
             editOnly={!canEdit}
             user={props.user}
+            toggleLock={toggleLock}
             validationRequired={validationRequired}
             initSuggestionExpanded={initSuggestionExpanded}
             selectFirstQuestion={() => selectQuestion(0)}

@@ -5,6 +5,7 @@ const BookAnnotationEditable = React.memo(
     const onChange = React.useCallback(() => {
       if(!onChangeRef.current) return;
       onChangeRef.current();
+    /*eslint-disable-next-line*/
     }, []);
 
     return <>
