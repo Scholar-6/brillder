@@ -1,5 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 
+import { ReduxCombinedState } from 'redux/reducers';
 import { AcademicLevel, BrickLengthEnum, Subject } from "model/brick";
 import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";
@@ -8,15 +10,18 @@ import { AcademyDifficulty } from "../base/AcademyDifficulty";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import routes from "components/play/routes";
+import { User } from "model/user";
+import { isTeacherPreference } from "components/services/preferenceService";
 
 interface LibrarySubjectsProps {
-  userId: number;
   subject: Subject;
   assignment: LibraryAssignmentBrick;
   history: any;
+
+  user: User;
 }
 
-export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
+const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   let className = "assignment";
 
   const { assignment, subject } = props;
@@ -88,7 +93,11 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         className={className}
         onClick={() => {
           if (assignment.maxScore) {
-            props.history.push(map.postPlay(brick.id, props.userId));
+            if (isTeacherPreference(props.user)) {
+              props.history.push(map.postAssignment(brick.id, props.user.id));
+            } else {
+              props.history.push(map.postPlay(brick.id, props.user.id));
+            }
           } else {
             props.history.push(routes.playNewPrep(brick.id));
           }
@@ -119,4 +128,8 @@ export const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   );
 };
 
-export default SubjectAssignment;
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+});
+
+export default connect(mapState)(SubjectPhoneAssignment);

@@ -1,5 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 
+import { ReduxCombinedState } from 'redux/reducers';
 import { AcademicLevel, BrickLengthEnum, Subject } from "model/brick";
 import { LibraryAssignmentBrick } from "model/assignment";
 import map from "components/map";
@@ -9,15 +11,18 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import routes from "components/play/routes";
+import { User } from "model/user";
+import { isTeacherPreference } from "components/services/preferenceService";
 
 interface LibrarySubjectsProps {
-  userId: number;
   subject: Subject;
   assignment: LibraryAssignmentBrick;
   history: any;
+
+  user: User;
 }
 
-export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
+const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
   props
 ) => {
   const [hovered, setHover] = React.useState(false);
@@ -80,13 +85,12 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
   if (brick.assignments) {
     for (let assignment of brick.assignments) {
       for (let student of assignment.studentStatus) {
-        if (student.studentId === props.userId) {
+        if (student.studentId === props.user.id) {
           isAssignment = true;
         }
       }
     }
   }
-  console.log(isAssignment, brick.id);
 
   const renderTooltip = () => {
     if (hovered) {
@@ -127,7 +131,11 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
         className={className}
         onClick={() => {
           if (assignment.maxScore) {
-            props.history.push(map.postPlay(brick.id, props.userId));
+            if (isTeacherPreference(props.user)) {
+              props.history.push(map.postAssignment(brick.id, props.user.id));
+            } else {
+              props.history.push(map.postAssignment(brick.id, props.user.id));
+            }
           } else {
             props.history.push(routes.playNewPrep(brick.id));
           }
@@ -176,4 +184,8 @@ export const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
   );
 };
 
-export default SingleSubjectAssignment;
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+});
+
+export default connect(mapState)(SingleSubjectAssignment);

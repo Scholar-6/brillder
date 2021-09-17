@@ -20,7 +20,6 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
   renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
     return <div key={key}>
       <SubjectPhoneAssignment
-        userId={this.props.userId}
         subject={this.props.subjectAssignment.subject}
         history={this.props.history} assignment={assignment}
       />

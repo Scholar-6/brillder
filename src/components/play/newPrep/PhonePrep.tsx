@@ -9,7 +9,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import BrickTitle from "components/baseComponents/BrickTitle";
-import { GetYoutubeClick } from "localStorage/play";
 
 interface IntroductionProps {
   isPlayPreview?: boolean;
