@@ -9,6 +9,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
 import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import { GetYoutubeClick } from "localStorage/play";
 
 interface IntroductionProps {
   isPlayPreview?: boolean;
@@ -41,6 +42,24 @@ const PhonePrepPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     briefExpanded: false,
     duration: null,
   } as IntroductionState);
+
+  const isHorizontal = () => {
+    // Apple does not seem to have the window.screen api so we have to use deprecated window.orientation instead.
+    if (window.orientation && typeof window.orientation === "number" && Math.abs(window.orientation) === 90) {
+      return true;
+    }
+    if (window.screen.orientation && window.screen.orientation.type.includes('/^landscape-.+$/') === true) {
+      return true;
+    }
+    return false;
+  };
+  const [horizontal, setHorizontal] = React.useState(isHorizontal());
+
+  useEffect(() => {
+    window.addEventListener("orientationchange", (event: any) => {
+      setHorizontal(isHorizontal());
+    });
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -152,8 +171,29 @@ const PhonePrepPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     );
   };
 
+  const rotateScreen = () => {
+    if (document.body.requestFullscreen) {
+      document.body.requestFullscreen().then(() => {
+        window.screen.orientation.lock('portrait-primary');
+      });
+    }
+  }
+
   return (
     <div className="brick-row-container real-introduction-page">
+      {horizontal && <div className="fixed-alert-popup">
+        <div className="rotate-instruction-page">
+          <div>
+            <div className="rotate-button-container">
+              <div className="rotate-button" onClick={rotateScreen}>
+                <SpriteIcon name="undo" />
+                <div className="dot"></div>
+              </div>
+            </div>
+            <div className="rotate-text">We think you will enjoy Brillder more with your device in landscape mode.</div>
+          </div>
+        </div>
+      </div>}
       <div className="brick-container">
         <div className="introduction-page">
           <div className="fixed-upper-b-title">
