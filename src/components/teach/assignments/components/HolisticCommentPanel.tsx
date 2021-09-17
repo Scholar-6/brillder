@@ -36,8 +36,10 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
 
         props.setCurrentAttempt(newAttempt);
         saveAttempt(newAttempt);
+    /*eslint-disable-next-line*/
     }, [props.currentAttempt]);
 
+    /*eslint-disable-next-line*/
     const annotation = React.useMemo(() => props.currentAttempt?.annotations?.find(a => a.priority === 1), [props.currentAttempt?.annotations]);
 
     const [currentAnnotation, setCurrentAnnotation] = React.useState<Annotation>();
@@ -59,24 +61,29 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
                 throw e;
             }
         });
+    /*eslint-disable-next-line*/
     }, []);
 
     const updateAnnotation = React.useCallback(async () => {
-        const newAttempt = props.currentAttempt;
-        if(!newAttempt || !newAttempt.annotations || !currentAnnotation) return;
+        await (async () => {
+            const newAttempt = props.currentAttempt;
+            if(!newAttempt || !newAttempt.annotations || !currentAnnotation) return;
 
-        const annotationIndex = newAttempt.annotations.findIndex(a => a.id === currentAnnotation.id);
-        if(annotationIndex < 0) return;
+            const annotationIndex = newAttempt.annotations.findIndex(a => a.id === currentAnnotation.id);
+            if(annotationIndex < 0) return;
 
-        newAttempt.annotations[annotationIndex] = currentAnnotation;
-        await saveAttempt(newAttempt);
+            newAttempt.annotations[annotationIndex] = currentAnnotation;
+            await saveAttempt(newAttempt);
+        })();
         props.onClose();
+    /*eslint-disable-next-line*/
     }, [currentAnnotation, props.currentAttempt, saveAttempt]);
     
     React.useEffect(() => {
         if(props.currentAttempt && !annotation) {
             createHolisticComment();
         }
+    /*eslint-disable-next-line*/
     }, [props.currentAttempt, annotation])
 
     if(!annotation) {

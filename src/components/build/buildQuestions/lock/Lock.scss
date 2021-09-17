@@ -4,6 +4,8 @@
 
 .lock-container {
   display: block !important;
+  position: absolute;
+  bottom: 28vh;
   font-size: 0.9vw;
   @extend %textCenter;
   font-family: $font-family-regular;

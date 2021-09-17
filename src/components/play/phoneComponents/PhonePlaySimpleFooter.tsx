@@ -10,6 +10,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
+import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
 
 
 interface FooterProps {
@@ -17,6 +18,8 @@ interface FooterProps {
   history: any;
   btnText: string;
   next(): void;
+
+  showQRCode?: boolean;
 
   isAuthenticated: isAuthenticated;
   user: User;
@@ -41,6 +44,7 @@ const PhonePlaySimpleFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
         <SpriteIcon name="" />
         <SpriteIcon name="" />
+        {props.showQRCode && <GenerateCoverButton brick={brick} isSvg={true} />}
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <div

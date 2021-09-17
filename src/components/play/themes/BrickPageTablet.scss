@@ -185,49 +185,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
               stroke-width: 2;
             }
           }
-          .prep-button {
-            cursor: pointer;
-            position: relative;
-            justify-content: center;
-            color: var(--tab-gray);
-            svg {
-              color: var(--tab-gray);
-              padding: 0 0.5vw;
-              padding-top: 1vh;
-              padding-bottom: 0.2vw;
-              width: calc(#{$icons-size} * 1.4) !important;
-              height: calc(#{$icons-size} * 1.4) !important;
-            }
-            .absolute-circle {
-              top: 0;
-              left: -0.6vw;
-              position: absolute;
-              img {
-                width: 5vw;
-                height: 5vw;
-              }
-              .prep-help-text {
-                position: absolute;
-                top: 0;
-                height: 5vw;
-                left: 5.7vw;
-                width: 7.4vw;
-                line-height: 1.3;
-                display: flex;
-                font-size: 1.25vw;
-                align-items: center;
-              }
-            }
-            div {
-              width: 100%;
-              position: absolute;
-              bottom: -0.3vw;
-              font-size: 1vw;
-              text-align: center;
-              line-height: 1;
-              font-family: $font-family-regular;
-            }
-          }
           .grey-line {
             display: flex;
             justify-content: center;
@@ -2292,6 +2249,64 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
       width: 25vw !important;
       .next {
         margin-left: 0 !important;
+      }
+    }
+  }
+}
+
+.play-preview-pages {
+  .prep-button {
+    z-index:99999;
+    cursor: pointer;
+    left: 0;
+    top: 0;
+    position: absolute;
+    justify-content: center;
+    color: var(--tab-gray);
+    svg {
+      $icons-size: 2vw;
+      color: var(--theme-dark-blue);
+      padding: 0 0.5vw;
+      stroke-width: 1.6;
+      margin-top: 0.6vw;
+      padding-bottom: 0.2vw;
+      width: calc(#{$icons-size} * 1.4) !important;
+      height: calc(#{$icons-size} * 1.4) !important;
+    }
+    .absolute-circle {
+      top: 0.3vw;
+      left: 0vw;
+      position: absolute;
+      img {
+        width: 3.4vw;
+        height: 3.4vw;
+      }
+      .prep-help-text {
+        position: absolute;
+        top: 0;
+        height: 5vw;
+        left: -5.7vw;
+        width: 7.4vw;
+        line-height: 1.3;
+        display: flex;
+        font-size: 1.25vw;
+        align-items: center;
+      }
+    }
+    div {
+      width: 100%;
+      position: absolute;
+      bottom: -0.3vw;
+      font-size: 1vw;
+      text-align: center;
+      line-height: 1;
+      font-family: $font-family-regular;
+    }
+
+    &:hover {
+      color: var(--white);
+      svg {
+        color: var(--white);
       }
     }
   }

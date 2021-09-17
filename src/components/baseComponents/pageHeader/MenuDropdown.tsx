@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import actions from "redux/actions/brickActions";
 
-import { RolePreference, User, UserType } from "model/user";
+import { User } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'localStorage/proposal';
 
@@ -19,6 +19,7 @@ import PlaySkipDialog from "../dialogs/PlaySkipDialog";
 import { isPhone } from "services/phone";
 import { getAssignedBricks, getLibraryBricks } from "services/axios/brick";
 import LockedDialog from "../dialogs/LockedDialog";
+import { isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick())
@@ -64,14 +65,9 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     }
   }
 
-  useEffect(() => {
-    prepare();
-  }, []);
+  useEffect(() => { prepare() }, []);
 
-  let isStudent = false;
-  if (props.user.rolePreference?.roleId === UserType.Student) {
-    isStudent = true;
-  }
+  const isStudent = isStudentPreference(props.user);
 
   const checkPlay = () => {
     const {pathname} = props.history.location;
@@ -155,8 +151,8 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     const {user} = props;
     if (page !== PageEnum.ManageClasses && page !== PageEnum.MainPage && user) {
       let canSee = checkTeacherOrAdmin(user);
-      if (!canSee && user.rolePreference) {
-        if (user.rolePreference.roleId === RolePreference.Teacher) {
+      if (!canSee) {
+        if (isTeacherPreference(user) || isInstitutionPreference(user)) {
           canSee = true
         }
       }

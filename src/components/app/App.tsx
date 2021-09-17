@@ -188,7 +188,11 @@ const App: React.FC<AppProps> = props => {
   
   // If is mobile and landscape tell them to go to portrait
   else if (isMobileOnly && horizontal && !iframeFullScreen) {
-    return <RotateInstruction />;
+    if (location.pathname.search('/prep') !== -1 && location.pathname.search('/play/brick') !== -1) {
+      // allow rotation on prep
+    } else {
+      return <RotateInstruction />;
+    }
   }
 
   // get terms version

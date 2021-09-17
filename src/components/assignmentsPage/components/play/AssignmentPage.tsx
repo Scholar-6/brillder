@@ -106,6 +106,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     const classrooms: any[] = [];
     for (let assignment of assignments) {
       if (assignment.classroom) {
+        assignment.classroom.teacher = assignment.teacher;
         const found = classrooms.find(c => c.id === assignment.classroom.id);
         if (!found) {
           classrooms.push(assignment.classroom);

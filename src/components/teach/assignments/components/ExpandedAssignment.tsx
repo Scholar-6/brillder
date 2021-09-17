@@ -15,6 +15,10 @@ import { sendAssignmentReminder } from "services/axios/brick";
 import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
 import BookDialog from "./BookDialog";
 import HolisticCommentPanel from "./HolisticCommentPanel";
+import { Annotation } from "model/attempt";
+import { ReduxCombinedState } from "redux/reducers";
+import { connect } from "react-redux";
+import { User } from "model/user";
 
 enum SortBy {
   None,
@@ -46,6 +50,7 @@ interface AssignmentBrickProps {
   classroom: TeachClassroom;
   assignment: Assignment;
   history: any;
+  currentUser: User;
   minimize(): void;
   onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
@@ -158,8 +163,23 @@ class ExpandedAssignment extends Component<
   }
 
   renderCommentIcon(studentId: number) {
-    return <div className="comment-icon" onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}>
+    const annotations = this.state.students.find(s => s.id === studentId)?.studentResult?.attempts.slice(-1)[0].annotations;
+    const flattenAnnotation = (annotation: Annotation): Annotation[] => {
+      const arr = [annotation];
+      annotation.children?.forEach((a) => arr.push(...flattenAnnotation(a)))
+      return arr;
+    }
+    const flattenedAnnotations: Annotation[] = [];
+    annotations?.forEach(a => flattenedAnnotations.push(...flattenAnnotation(a)));
+
+    const latestAnnotation = flattenedAnnotations.sort((a: any, b: any) => new Date(b.timestamp) > new Date(a.timestamp) ? 1 : -1)[0];
+    const className = latestAnnotation ? 
+      (latestAnnotation.user.id === this.props.currentUser.id ? " yellow" : " red")
+      : "";
+
+    return <div className={"comment-icon" + className} onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}>
       <SpriteIcon name="message-square" className="active" />
+      <span className="annotation-count">{this.state.students.find(s => s.id === studentId)?.studentResult?.attempts.slice(-1)[0].annotations?.length}</span>
     </div>;
   }
 
@@ -167,7 +187,7 @@ class ExpandedAssignment extends Component<
     const { history, assignment } = this.props;
     const moveToPostPlay = () => {
       if (studentResult.bestScore !== undefined) {
-        history.push(map.postPlay(assignment.brick.id, studentId) + '?fromTeach=true');
+        history.push(map.postAssignment(assignment.brick.id, studentId) + '?fromTeach=true');
       }
     }
     return (
@@ -329,6 +349,7 @@ class ExpandedAssignment extends Component<
           currentAttempt={students.find(s => s.id === this.state.currentCommentStudentId)?.studentResult?.attempts.slice(-1)[0]}
           setCurrentAttempt={(attempt: AttemptStats) => {
             const newState = this.state;
+            /* eslint-disable-next-line */
             const studentIdx = newState.students.findIndex(s => s.id == newState.currentCommentStudentId);
             const attemptIdx = newState.students[studentIdx].studentResult!.attempts.length - 1;
             newState.students[studentIdx].studentResult!.attempts[attemptIdx] = attempt;
@@ -342,4 +363,8 @@ class ExpandedAssignment extends Component<
   }
 }
 
-export default ExpandedAssignment;
+const mapState = (state: ReduxCombinedState) => ({
+    currentUser: state.user.user,
+});
+
+export default connect(mapState)(ExpandedAssignment);

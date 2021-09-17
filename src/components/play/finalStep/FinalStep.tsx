@@ -22,6 +22,7 @@ import { checkTeacherOrAdmin } from "components/services/brickService";
 import { isPhone } from "services/phone";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import ShareDialogs from "./dialogs/ShareDialogs";
+import GenerateCoverButton from "../baseComponents/sidebarButtons/GenerateCoverButton";
 
 interface FinalStepProps {
   brick: Brick;
@@ -96,6 +97,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           <div>
             <ShareColumn onClick={() => setShare(true)} />
             {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
+            {canSee && <GenerateCoverButton brick={brick} isFinal={true} />}
           </div>
         </Grid>
       );
@@ -105,6 +107,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         <ShareColumn onClick={() => setShare(true)} />
         {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
         {canSee && <AdaptBrickColumn onClick={() => setIsAdaptBrickOpen(true)} />}
+        {canSee && <GenerateCoverButton brick={brick} isFinal={true} />}
       </Grid>
     );
   }

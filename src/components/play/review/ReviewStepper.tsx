@@ -53,9 +53,6 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
         <div className={className} key={key} onClick={handleStep(index - 1)}>
           <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
           <SpriteIcon name="cancel" className="active text-theme-orange" />
-          <div className="underline">
-            <div />
-          </div>
         </div>
       );
     }
@@ -77,9 +74,6 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
             name={attempt.correct ? "ok" : "cancel-custom"}
             className="svg active"
           />
-          <div className="underline">
-            <div />
-          </div>
           {isActive && <div className="fixed-stepper-triangle" />}
         </div>
       </div>

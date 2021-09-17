@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
 import { isAuthenticated } from 'model/brick';
 import { Brick } from 'model/brick';
 import { User } from 'model/user';
 import { getCookies, acceptCookies } from 'localStorage/cookies';
 import { ReduxCombinedState } from 'redux/reducers';
+import { checkTeacherOrAdmin } from 'components/services/brickService';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
@@ -13,9 +16,8 @@ import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
 import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
-
-import { checkTeacherOrAdmin } from 'components/services/brickService';
 import ShareDialogs from '../finalStep/dialogs/ShareDialogs';
+import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
 
 interface FooterProps {
   brick: Brick;
@@ -41,6 +43,7 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
 
   const [share, setShare] = React.useState(false);
 
+  const [menuOpen, setMenu] = React.useState(false);
   const [assign, setAssign] = React.useState(false);
   const [assignItems, setAssignItems] = React.useState([] as any[]);
   const [assignFailedItems, setAssignFailedItems] = React.useState([] as any[]);
@@ -109,10 +112,12 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
         <SpriteIcon name="feather-share" className="gt-smaller" onClick={() => setShare(true)} />
         {canSee
-          ? <SpriteIcon name="file-plus" className="gt-smaller" onClick={() => setAssign(true)} />
+          ? props.isCover
+            ? <SpriteIcon name="file-plus" className="gt-smaller" onClick={() => setAssign(true)} />
+            : <SpriteIcon name="f-more-vertical" className="gt-smaller" onClick={() => setMenu(true)} />
           : <SpriteIcon name="" />
         }
-        {props.isCover ? <svg /> : <SpriteIcon name="arrow-right" onClick={props.next} />}
+        {props.isCover ? canSee ? <GenerateCoverButton brick={brick} isSvg={true} /> : <svg /> : <SpriteIcon name="arrow-right" onClick={props.next} />}
       </div>
     );
   }
@@ -124,6 +129,20 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
       setCookiePopup(false);
     }} />
     {renderPopups()}
+    <Menu
+      className="phone-down-play-menu menu-dropdown"
+      keepMounted
+      open={menuOpen}
+      onClose={() => setMenu(false)}
+    >
+      <MenuItem onClick={() => {
+        setAssign(true);
+        setMenu(false);
+      }}>
+        Assign Brick <SpriteIcon name="file-plus" />
+      </MenuItem>
+      <GenerateCoverButton brick={brick} isMenuItem={true} />
+    </Menu>
     <ExitPlayDialog isOpen={exitPlay} history={history} subjectId={brick.subject?.id || brick.subjectId} close={() => setExit(false)} />
   </div>;
 }

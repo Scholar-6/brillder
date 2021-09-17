@@ -7,7 +7,6 @@ import { ReduxCombinedState } from 'redux/reducers';
 import userActions from 'redux/actions/user';
 import map from 'components/map';
 import { RolePreference, User, UserType } from 'model/user';
-import { checkAdmin } from 'components/services/brickService';
 import { setUserPreference } from 'services/axios/user';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
@@ -29,8 +28,7 @@ const TabletTheme = React.lazy(() => import('./themes/PreferenceTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/PreferenceDesktopTheme'));
 
 const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
-  const isAdmin = checkAdmin(props.user.roles);
-  const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId ?? props.defaultPreference ?? UserType.Student);
+  const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId ?? props.defaultPreference ?? RolePreference.Student);
 
   const handleChange = async (roleId: RolePreference, disabled: boolean) => {
     if (disabled || !roleId) {
@@ -70,9 +68,6 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
 
   const RadioContainer: React.FC<{ roleId: RolePreference | UserType, name: string }> = ({ roleId, name, children }) => {
     let disabled = false;
-    if (!isAdmin && roleId === UserType.Institution) {
-      disabled = true;
-    }
 
     let className = 'radio-container';
     if (disabled) {
@@ -119,7 +114,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
                 <RadioContainer roleId={RolePreference.Teacher} name="Teacher / Tutor">
                   I want to assign Brillder content and provide feedback to my students.<br />
                 </RadioContainer>
-                <RadioContainer roleId={UserType.Institution} name="Institution">
+                <RadioContainer roleId={RolePreference.Institution} name="Institution">
                   I want to manage classes, students, and teachers.<br />
                 </RadioContainer>
               </div>
@@ -178,7 +173,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <p>content and provide</p>
               <p>feedback to my students.</p>
             </RoleBox>
-            <RoleBox roleId={RolePreference.Builder} className="box3">
+            <RoleBox roleId={RolePreference.Institution} className="box3">
               <div className="flex-center">
                 <TeachButton history={historyMock} />
               </div>

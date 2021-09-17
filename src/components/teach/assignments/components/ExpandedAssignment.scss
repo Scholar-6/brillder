@@ -133,6 +133,7 @@
       }
 
       .comment-icon {
+        position: relative;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -149,6 +150,24 @@
           $size: 70%;
           width: $size;
           height: $size;
+        }
+
+        &.yellow {
+          background-color: var(--theme-yellow);
+          color: white;
+        }
+
+        &.red {
+          background-color: var(--theme-orange);
+          color: white;
+        }
+
+        .annotation-count {
+          position: absolute;
+          font-size: 1.25rem;
+          left: 50%;
+          top: 44%;
+          transform: translate(-50%, -50%);
         }
       }
 

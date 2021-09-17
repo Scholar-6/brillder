@@ -11,6 +11,11 @@
   border-radius: 0 0 $editor-radius $editor-radius;
   margin-top: -2px;
 
+  .build-status-circles {
+    position: absolute;
+    bottom: 10.1vh;
+  }
+
   .invalid {
     background: var(--theme-orange) !important;
   }

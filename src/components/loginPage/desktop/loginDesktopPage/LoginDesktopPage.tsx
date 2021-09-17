@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { History } from "history";
 import { Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
+import { isMobile } from "react-device-detect";
 
 import './LoginDesktopPage.scss';
 import actions from "redux/actions/auth";
@@ -19,7 +20,6 @@ import EmailRegisterDesktopPage from "../EmailRegisterDesktopPage";
 import Delayed from "components/services/Delayed";
 import { FirstPage, EmailSignPage, JoinPage, RegisterPage } from "../routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
-import { isMobile } from "react-device-detect";
 
 
 const DesktopTheme = React.lazy(() => import('./themes/LoginDesktopTheme'));

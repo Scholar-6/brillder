@@ -21,6 +21,7 @@ interface ImageProps {
 
 const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   const [isOpen, setOpen] = React.useState(false);
+  const [hoverTimeout, setHoverTimeout] = React.useState(-1);
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.value);
   const [isCloseOpen, setCloseDialog] = React.useState(false);
@@ -39,6 +40,15 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
       // fail
     }
   }
+
+  useEffect(() => {
+    return function cleanup() {
+      props.hover('', '');
+      props.blur();
+      clearTimeout(hoverTimeout);
+    }
+  /*eslint-disable-next-line*/
+  }, [hoverTimeout])
 
   useEffect(() => {
     if (!fileName) {
@@ -104,7 +114,15 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
         {
           fileName
             ? <img alt="" style={{ width: '100%' }}
-              onMouseEnter={() => props.hover(fileName, props.data.imageSource)}
+              onMouseEnter={() => {
+                if (hoverTimeout >= 0) {
+                  clearTimeout(hoverTimeout);
+                }
+                const timeout = setTimeout(() => {
+                  props.hover(fileName, props.data.imageSource);
+                }, 5000);
+                setHoverTimeout(timeout);
+              }}
               onMouseLeave={() => props.blur()}
               src={fileUrl(fileName)}
             />
