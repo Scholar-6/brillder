@@ -118,6 +118,7 @@ const LivePage: React.FC<LivePageProps> = ({
     } else if (props.liveStep >= 0 && props.liveBrickId === brick.id) {
       setActiveStep(props.liveStep);
     }
+  /*eslint-disable-next-line*/
   }, [location.search]);
 
   const moveToProvisional = () => {

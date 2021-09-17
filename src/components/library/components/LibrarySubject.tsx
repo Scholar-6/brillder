@@ -2,10 +2,9 @@ import React, { Component } from "react";
 
 import { SubjectAssignments } from "../service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
-import { SubjectAssignment } from "./SubjectAssignment";
+import SubjectAssignment from "./SubjectAssignment";
 
 interface LibrarySubjectsProps {
-  userId: number;
   history: any;
   subjectAssignment: SubjectAssignments;
 }
@@ -20,7 +19,6 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
   renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
     return <div key={key}>
       <SubjectAssignment
-        userId={this.props.userId}
         subject={this.props.subjectAssignment.subject}
         history={this.props.history} assignment={assignment}
       />

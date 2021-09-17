@@ -47,6 +47,7 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
       props.blur();
       clearTimeout(hoverTimeout);
     }
+  /*eslint-disable-next-line*/
   }, [hoverTimeout])
 
   useEffect(() => {

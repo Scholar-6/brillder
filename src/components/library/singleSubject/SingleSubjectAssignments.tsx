@@ -5,7 +5,7 @@ import { SubjectAssignments } from "../service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 import { BrickLengthEnum } from "model/brick";
 import SingleSubjectPagination from "./SingleSubjectPagination";
-import { SingleSubjectAssignment } from "./SingleSubjectAssignment";
+import SingleSubjectAssignment from "./SingleSubjectAssignment";
 
 interface SingleSubjectProps {
   userId: number;
@@ -102,7 +102,6 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
   renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
     return <div key={key}>
       <SingleSubjectAssignment
-        userId={this.props.userId}
         subject={this.props.subjectAssignment.subject}
         history={this.props.history} assignment={assignment}
       />
