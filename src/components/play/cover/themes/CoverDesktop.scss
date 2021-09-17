@@ -41,6 +41,11 @@
         font-size: 2.7vw;
         @extend %ellipsis;
         font-family: $font-family-black;
+        &.dynamic-title {
+          span {
+            display: inline !important;
+          }
+        }
         .adapted-text {
           font-size: .9vw;
           font-family: $font-family-bold;

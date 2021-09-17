@@ -294,9 +294,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <Grid item sm={8} xs={12}>
               <div className="introduction-page">
                 {renderFirstRow()}
-                <div className="brick-title q-brick-title">
-                  {brick.adaptedFrom && <div className="adapted-text">ADAPTED</div>}
-                  {brick.adaptedFrom && <SpriteIcon name="copy"/>}<DynamicFont content={stripHtml(brick.title)} />
+                <div className="brick-title q-brick-title dynamic-title">
+                  {brick.adaptedFrom && !brick.isCore && <div className="adapted-text">ADAPTED</div>}
+                  {brick.adaptedFrom && !brick.isCore && <SpriteIcon name="copy"/>}<DynamicFont content={stripHtml(brick.title)} />
                 </div>
                 <CoverAuthorRow brick={brick} setBio={setBio} />
                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
