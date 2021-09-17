@@ -11,6 +11,7 @@ interface UnauthorizedProps {
   emailInvalid: boolean | null; // null - before submit
   isOpen: boolean;
   history: any;
+  moveToLogin(): void;
   login(email: string): void;
   again(): void;
   close(): void;
@@ -38,7 +39,8 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
           onChange={evt => setEmail(evt.target.value)}
         />
         <div className="small-text-link" onClick={() => {
-          SetLoginRedirectUrl(playRoutes.playTimeReview(props.brickId));
+          props.moveToLogin();
+          SetLoginRedirectUrl(playRoutes.playReview(props.brickId));
           props.history.push(map.Login);
         }}>Already a member? Sign in here<SpriteIcon name="arrow-right" /></div>
         <div className="dialog-footer big-footer">
