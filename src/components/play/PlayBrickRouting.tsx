@@ -715,6 +715,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           history={history}
           isOpen={unauthorizedOpen}
           emailInvalid={emailInvalid}
+          moveToLogin={() => cashAttempt(routes.playReview(brick.id), PlayStatus.Review)}
           login={(email) => createInactiveAccount(email)}
           again={again}
           close={() => setUnauthorized(false)}
