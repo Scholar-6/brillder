@@ -179,7 +179,7 @@ class ExpandedAssignment extends Component<
 
     return <div className={"comment-icon" + className} onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}>
       <SpriteIcon name="message-square" className="active" />
-      <span className="annotation-count">{this.state.students.find(s => s.id === studentId)?.studentResult?.attempts.slice(-1)[0].annotations.length}</span>
+      <span className="annotation-count">{this.state.students.find(s => s.id === studentId)?.studentResult?.attempts.slice(-1)[0].annotations?.length}</span>
     </div>;
   }
 
