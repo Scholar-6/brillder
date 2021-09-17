@@ -99,6 +99,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const { history } = props;
 
   let parsedBrick = null;
+  let initBrickAttempt: any = {};
   let initAttempts: any = [];
   let initReviewAttempts: any = [];
   let initMode = PlayMode.Normal;
@@ -132,6 +133,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       initAttemptId = cashAttempt.attemptId;
       initStatus = parseInt(cashAttempt.status);
       initLiveDuration = cashAttempt.liveDuration;
+      initBrickAttempt = cashAttempt.brickAttempt;
       initReviewDuration = cashAttempt.reviewDuration;
       if (cashAttempt.prepEndTime) {
         initPrepEndTime = moment(cashAttempt.prepEndTime);
@@ -161,7 +163,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [brick, setBrick] = useState(parsedBrick);
   const [status, setStatus] = useState(initStatus);
-  const [brickAttempt, setBrickAttempt] = useState({} as BrickAttempt);
+  const [brickAttempt, setBrickAttempt] = useState(initBrickAttempt as BrickAttempt);
+  
   const [attempts, setAttempts] = useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = useState(initReviewAttempts);
   const [prepEndTime, setPrepEndTime] = useState(initPrepEndTime);
@@ -258,7 +261,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishLive = () => {
-    var ba = calcBrickLiveAttempt(brick, attempts);
+    const ba = calcBrickLiveAttempt(brick, attempts);
     setStatus(PlayStatus.Review);
     setBrickAttempt(ba);
     setReviewAttempts(Object.assign([], attempts));
@@ -268,7 +271,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const finishReview = () => {
-    var ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
+    const ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
     saveBrickAttempt(ba);
