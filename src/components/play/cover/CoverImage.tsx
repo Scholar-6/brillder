@@ -42,6 +42,14 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   }
 
   useEffect(() => {
+    return function cleanup() {
+      props.hover('', '');
+      props.blur();
+      clearTimeout(hoverTimeout);
+    }
+  }, [hoverTimeout])
+
+  useEffect(() => {
     if (!fileName) {
       setFileName(props.data.value);
     }
@@ -109,8 +117,9 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
                 if (hoverTimeout >= 0) {
                   clearTimeout(hoverTimeout);
                 }
-                console.log('hover');
-                const timeout = setTimeout(() => props.hover(fileName, props.data.imageSource), 5000);
+                const timeout = setTimeout(() => {
+                  props.hover(fileName, props.data.imageSource);
+                }, 5000);
                 setHoverTimeout(timeout);
               }}
               onMouseLeave={() => props.blur()}
