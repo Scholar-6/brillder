@@ -157,7 +157,7 @@ class ExpandedStudentAssignment extends Component<
     const { history, assignment } = this.props;
     const moveToPostPlay = () => {
       if (studentStatus.bestScore !== undefined) {
-        history.push(map.postPlay(assignment.brick.id, studentId) + '?fromTeach=true');
+        history.push(map.postAssignment(assignment.brick.id, studentId) + '?fromTeach=true');
       }
     }
     return (
