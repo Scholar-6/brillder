@@ -2159,3 +2159,13 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   position: absolute;
   left: 42.3vw;
 }
+
+.fixed-alert-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: red;
+  z-index: 1000000;
+  width: 100%;
+  height: 100%;
+}
