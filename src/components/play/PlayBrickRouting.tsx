@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
-import queryString from 'query-string';
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import moment from 'moment';
 

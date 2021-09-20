@@ -12,7 +12,8 @@ import { NotificationType } from 'model/notifications';
 import types from 'redux/types';
 import notifications from 'redux/actions/notifications';
 
-const middlewares = [ thunkMiddleware ];
+
+const middlewares = [thunkMiddleware];
 const mockStore = configureMockStore(middlewares);
 
 const mockNotification = {
@@ -32,9 +33,9 @@ const mockNotification = {
 describe("notification panel", () => {
     it("should display a list of notifications", () => {
         const store = mockStore({
-            user: { user: {roles: []} },
+            user: { user: { roles: [] } },
             notifications: {
-                notifications: [ mockNotification ]
+                notifications: [mockNotification]
             }
         });
 
@@ -42,7 +43,7 @@ describe("notification panel", () => {
             <Provider store={store}>
                 <NotificationPanel
                     shown={true}
-                    handleClose={() => {}}/>
+                    handleClose={() => { }} />
             </Provider>
         );
 
@@ -54,16 +55,16 @@ describe("notification panel", () => {
     });
 
     it("should display placeholder text if there are no notifications", () => {
-        const store = mockStore({ 
-            user: { user: {roles: []} },
+        const store = mockStore({
+            user: { user: { roles: [] } },
             notifications: []
         });
 
         render(
             <Provider store={store}>
-                <NotificationPanel 
+                <NotificationPanel
                     shown={true}
-                    handleClose={() => {}}/>
+                    handleClose={() => { }} />
             </Provider>
         );
 
@@ -73,7 +74,7 @@ describe("notification panel", () => {
 
     it("should not display 'clear all' when there are no notifications", () => {
         const store = mockStore({
-            user: { user: {roles: []} },
+            user: { user: { roles: [] } },
             notifications: {
                 notifications: []
             }
@@ -81,21 +82,21 @@ describe("notification panel", () => {
 
         render(
             <Provider store={store}>
-                <NotificationPanel 
+                <NotificationPanel
                     shown={true}
-                    handleClose={() => {}}/>
+                    handleClose={() => { }} />
             </Provider>
         );
-        
+
         const clearAll = screen.queryByText("Clear All");
         expect(clearAll).toBeFalsy();
     });
 
     it("should display 'clear all' when there are notifications to clear", () => {
         const store = mockStore({
-            user: { user: {roles: []} },
+            user: { user: { roles: [] } },
             notifications: {
-                notifications: [ mockNotification ]
+                notifications: [mockNotification]
             }
         });
 
@@ -103,7 +104,7 @@ describe("notification panel", () => {
             <Provider store={store}>
                 <NotificationPanel
                     shown={true}
-                    handleClose={() => {}}/>
+                    handleClose={() => { }} />
             </Provider>
         );
 
@@ -113,9 +114,9 @@ describe("notification panel", () => {
 
     it("should clear all notifications when 'clear all' is pressed", async () => {
         const store = mockStore({
-            user: { user: {roles: []} },
+            user: { user: { roles: [] } },
             notifications: {
-                notifications: [ mockNotification ]
+                notifications: [mockNotification]
             }
         });
 
@@ -130,20 +131,20 @@ describe("notification panel", () => {
             <Provider store={store}>
                 <NotificationPanel
                     shown={true}
-                    handleClose={() => {}}/>
+                    handleClose={() => { }} />
             </Provider>
         );
 
         screen.queryByLabelText("clear-all").click();
 
-        expect(store.getActions()).toStrictEqual([ expectedAction ]);
+        expect(store.getActions()).toStrictEqual([expectedAction]);
     });
 
     it("should clear a single notification when a clear button is pressed", () => {
         const store = mockStore({
-            user: { user: {roles: []} },
+            user: { user: { roles: [] } },
             notifications: {
-                notifications: [ mockNotification ]
+                notifications: [mockNotification]
             }
         });
 
@@ -158,12 +159,12 @@ describe("notification panel", () => {
             <Provider store={store}>
                 <NotificationPanel
                     shown={true}
-                    handleClose={() => {}}/>
+                    handleClose={() => { }} />
             </Provider>
         );
 
         fireEvent.click(screen.queryByLabelText("clear"));
 
-        expect(store.getActions()).toStrictEqual([ expectedAction ]);
+        expect(store.getActions()).toStrictEqual([expectedAction]);
     })
 })

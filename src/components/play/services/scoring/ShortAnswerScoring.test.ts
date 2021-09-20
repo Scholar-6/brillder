@@ -11,7 +11,6 @@ const mockComponent: ShortAnswerData = {
 };
 
 describe("short answer scoring", () => {
-
     it("should mark a correct answer with 4 marks", () => {
         //11/4/2020
         // arrange
@@ -28,7 +27,6 @@ describe("short answer scoring", () => {
         expect(result.correct).toStrictEqual(true);
         
     });
-
     it("should mark an almost correct (one wrong character) answer with 3 marks", () => {
         //11/4/2020
         // arrange
@@ -114,5 +112,4 @@ describe("short answer scoring", () => {
         expect(result.maxMarks).toStrictEqual(4);
         expect(result.correct).toStrictEqual(false);
     });
-    
 });
