@@ -434,6 +434,7 @@ const LivePage: React.FC<LivePageProps> = ({
           Prep tasks
         </div>
         <div className="prep-button" onClick={() => history.push(playNewPrep(brick.id) + '?resume=true')}>
+          <img alt="circle-border" className="highlight-circle dashed-circle" src="/images/borders/small-dash-circle.svg" />
           <SpriteIcon name="file-text" />
         </div>
       </div>
