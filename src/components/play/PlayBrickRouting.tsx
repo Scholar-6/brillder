@@ -46,7 +46,7 @@ import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
 import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
-import routes, { playBrief, playCountInvesigation, PlayCoverLastPrefix, playNewPrep, playPreInvesigation, playPrePrep, playSections } from "./routes";
+import routes, { playBrief, playCountInvesigation, PlayCoverLastPrefix, playInvestigation, playNewPrep, playPreInvesigation, playPrePrep, playSections } from "./routes";
 import { isPhone } from "services/phone";
 import Brief from "./brief/Brief";
 import PrePrep from "./prePrep/PrePrep";
@@ -358,18 +358,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToLive = () => {
-    let liveLink = `/play/brick/${brick.id}/live`;
-    const values = queryString.parse(props.location.search);
-    const query = {} as any;
-    if (values.resume === 'true') {
-      if (values.activeStep) {
-        query.activeStep = values.activeStep;
-      }
-    }
     if (isPhone()) {
       setHeader(true);
     }
-    history.push(liveLink);
+    moveToInvestigation();
     setSidebar(true);
   }
 
@@ -391,7 +383,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const moveToPrePrep = () => history.push(playPrePrep(brick.id));
   const moveToNewPrep = () => history.push(playNewPrep(brick.id));
   const moveToIntro = () => history.push(playBrief(brick.id));
-  const moveToPreInvestigation = () => history.push(playPreInvesigation(brick.id));
+  const moveToPreInvestigation = (isResume: boolean) => {
+    if (isResume) {
+      moveToInvestigation();
+    } else {
+      history.push(playPreInvesigation(brick.id));
+    }
+  }
+  const moveToInvestigation = () => history.push(playInvestigation(brick.id));
   const moveToTimeInvestigation = () => history.push(playCountInvesigation(brick.id));
   const moveToTimeSynthesis = () => history.push(routes.playTimeSynthesis(brick.id));
   const moveToSynthesis = () => history.push(routes.playSynthesis(brick.id));
@@ -560,6 +559,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               onHighlight={onHighlight}
             />
             : <NewPrep
+              history={history}
               brick={brick} mode={mode} moveNext={moveToPreInvestigation} endTime={prepEndTime}
               setEndTime={setPrepEndTime} onHighlight={onHighlight}
             />

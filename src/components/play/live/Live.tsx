@@ -433,7 +433,7 @@ const LivePage: React.FC<LivePageProps> = ({
           go back to
           Prep tasks
         </div>
-        <div className="prep-button" onClick={() => history.push(playNewPrep(brick.id))}>
+        <div className="prep-button" onClick={() => history.push(playNewPrep(brick.id) + '?resume=true')}>
           <SpriteIcon name="file-text" />
         </div>
       </div>
