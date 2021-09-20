@@ -1,20 +1,20 @@
 import React from "react";
+import { useEffect } from "react";
+import queryString from 'query-string';
+import { isMobile } from "react-device-detect";
 
 import { Brick } from "model/brick";
-
-import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import { BrickFieldNames } from 'components/build/proposal/model';
+import { PlayMode } from "../model";
+import { getPrepareTime } from "../services/playTimes";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
-import { PlayMode } from "../model";
 import HighlightHtml from "../baseComponents/HighlightHtml";
-import { getPrepareTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
-import { isMobile } from "react-device-detect";
 
 export interface IntroductionState {
   isStopped: boolean;
@@ -26,16 +26,24 @@ export interface IntroductionState {
 interface Props {
   brick: Brick;
   briefExpanded?: boolean;
+  history: any;
 
   endTime: any;
   setEndTime(t: any): void;
 
-  moveNext(): void;
+  moveNext(isResume: boolean): void;
   mode?: PlayMode;
   onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
 const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
+  let initResume = false;
+  const values = queryString.parse(props.history.location.search)
+  if (values.resume) {
+    initResume = true;
+  }
+
+  const [isResume] = React.useState(initResume);
   const [timerHidden, hideTimer] = React.useState(false);
 
   const [state, setState] = React.useState({
@@ -48,7 +56,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
-        props.moveNext();
+        props.moveNext(isResume);
       }
     }
 
@@ -189,8 +197,8 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
                 </div>}
               </div>
               <div className="new-navigation-buttons">
-                <div className="n-btn next" onClick={props.moveNext}>
-                  Investigation
+                <div className="n-btn next" onClick={() => props.moveNext(isResume)}>
+                  {isResume ? 'Resume' : 'Investigation'}
                   <SpriteIcon name="arrow-right" />
                 </div>
               </div>
