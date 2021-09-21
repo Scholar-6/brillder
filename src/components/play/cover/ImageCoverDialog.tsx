@@ -72,16 +72,21 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
     <BaseDialogWrapper open={open} className="image-dialog-container" close={() => setDialog(false)} submit={() => { }}>
       <div className="dialog-header image-dialog">
         <div className={`cropping ${removed ? 'empty' : ''}`}>
-          <div className="switch-image">
-            <div className={"svgOnHover " + className} onClick={handleClick}>
-              <SpriteIcon name="plus" className="svg-plus active text-white" />
-            </div>
-          </div>
           <div className="centered">
             {removed
               ? <SpriteIcon name="image" className="icon-image" />
-              : <DropCoverImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
+              : <div className="image-desktop-preview cover-color">
+                <DropCoverImage initFileName={initData.value} locked={false} file={file} setFile={setCroped} />
+              </div>
             }
+          </div>
+          <div className="i-image-footer">
+            <div className="file-name">
+              {file ? file.name : initData.value}
+            </div>
+            <div className={"svgOnHover " + className} onClick={handleClick}>
+              <SpriteIcon name="plus" className="svg-plus active text-white" />
+            </div>
           </div>
         </div>
         <div className="bold">
