@@ -251,3 +251,14 @@
   font-size: 2.25rem;
   transform: translateY(-2rem);
 }
+
+// cover image style
+.image-dialog-container .image-dialog .cropping  .image-desktop-preview  {
+  &.cover-color {
+    background: var(--off-white);
+  }
+  > img {
+    max-height: 100% !important;
+    max-width: 100% !important;
+  }
+}
