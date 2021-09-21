@@ -107,7 +107,8 @@
     padding: 0.2vh 1vw;
     width: calc(100% - 2vw);
     &::placeholder {
-      color: var(--dark-gray);
+      color: var(--theme-dark-blue);
+      opacity: 0.5;
       font-family: $font-family-bold;
     }
   }
