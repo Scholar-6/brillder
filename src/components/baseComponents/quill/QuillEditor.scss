@@ -143,6 +143,10 @@ s {
   }
   .embed-description {
     padding: 0 1rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
   }
   .embed-url {
     text-decoration: underline;
