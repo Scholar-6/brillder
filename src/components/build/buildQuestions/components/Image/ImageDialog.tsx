@@ -139,7 +139,7 @@ const ImageDialog: React.FC<DialogProps> = ({
       submit={() => {}}
     >
       <div className="close-button svgOnHover" onClick={() => setDialog(false)}>
-        <SpriteIcon name="cancel" className="w100 h100 active" />
+        <SpriteIcon name="cancel-thick" className="w100 h100 active" />
       </div>
       <div className="dialog-header image-dialog">
         <div className={`cropping ${removed ? "empty" : ""}`}>
@@ -196,7 +196,7 @@ const ImageDialog: React.FC<DialogProps> = ({
           value={source}
           className={validationRequired && !source ? "invalid" : ""}
           onChange={(e) => setSource(e.target.value)}
-          placeholder="Add link to source or name of owner..."
+          placeholder="Add link to source or name of owner"
         />
          <CopyrightCheckboxes
           validationRequired={validationRequired}
@@ -206,7 +206,7 @@ const ImageDialog: React.FC<DialogProps> = ({
         <input
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
-          placeholder="Add caption..."
+          placeholder="Add caption"
         />
       </div>
       <div className="centered last-button">
@@ -232,7 +232,7 @@ const ImageDialog: React.FC<DialogProps> = ({
         >
           <div className="background" />
           <SpriteIcon name="upload" />
-          <div className="css-custom-tooltip">Upload</div>
+          <div className="css-custom-tooltip bold">Upload</div>
         </div>
       </div>
     </BaseDialogWrapper>

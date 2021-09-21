@@ -12,6 +12,23 @@ import { NotificationType } from 'model/notifications';
 import types from 'redux/types';
 import notifications from 'redux/actions/notifications';
 
+var window = {
+    AudioContext: class AudioContextMock {
+
+    }
+}
+
+var _rangy = {
+  default: {
+    createClassApplier: () => {
+
+    }
+  }
+}
+
+var rangy = {
+    createClassApplier: () => { }
+}
 
 const middlewares = [thunkMiddleware];
 const mockStore = configureMockStore(middlewares);

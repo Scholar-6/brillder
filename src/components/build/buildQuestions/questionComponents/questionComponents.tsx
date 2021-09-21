@@ -84,6 +84,7 @@ const QuestionComponents = ({
       id: (comp.id && comp.id > 5) ? comp.id : generateId(),
     }));
     setComponents(newComponents);
+    console.log('new question components: ' + JSON.parse(JSON.stringify(newComponents)));
     const newQuestion = updateComponents(newComponents);
     if(!newQuestion) return;
     saveQuestion(newQuestion);

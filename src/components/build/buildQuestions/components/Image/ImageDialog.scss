@@ -106,14 +106,12 @@
 .image-dialog {
   margin-bottom: 0 !important;
   min-height: 66vh;
-  padding-left: 1vw;
-  padding-right: 1vw;
   $font-size: 1.3vw;
   max-width: 35vw;
   font-size: $font-size !important;
 
   > div {
-    padding-top: 2vh;
+    padding-top: 1vh;
   }
 
   .image-preview-label {
@@ -157,7 +155,7 @@
 
   input {
     font-size: $font-size;
-    margin-top: 2vh;
+    margin-top: 1vh;
     color: var(--theme-dark-blue);
     background: var(--tab-gray);
     border-radius: $editor-radius;
