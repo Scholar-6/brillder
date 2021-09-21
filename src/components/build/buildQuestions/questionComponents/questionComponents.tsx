@@ -118,7 +118,8 @@ const QuestionComponents = ({
   let canRemove = (components.length > 3) ? true : false;
 
   const updatingComponent = (compData: any, index: number) => {
-    let copyComponents = Object.assign([], question.components) as any[];
+    console.log('update component', JSON.parse(JSON.stringify(question.components)));
+    let copyComponents = Object.assign([], components) as any[];
     copyComponents[index] = compData;
     setComponents(copyComponents);
     updateComponentsAndSave(copyComponents);
