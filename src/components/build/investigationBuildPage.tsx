@@ -628,8 +628,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const updateComponents = (components: any[]): Question | undefined => {
     if(currentQuestionIndex < 0) return;
     if (locked) { return activeQuestion!; }
+    console.log('before updated components', JSON.parse(JSON.stringify(questions)));
     const updatedQuestions = questions.slice();
+    console.log('before updated components 4', JSON.parse(JSON.stringify(updatedQuestions)));
     updatedQuestions[currentQuestionIndex].components = components;
+    console.log('updated components', JSON.parse(JSON.stringify(updatedQuestions)));
     setQuestions(update(questions, { $set: updatedQuestions }));
     return updatedQuestions[currentQuestionIndex];
   }

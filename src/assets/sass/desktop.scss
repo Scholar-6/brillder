@@ -459,6 +459,7 @@
 }
 
 .permision-buttons {
+  display: flex;
   font-size: 1vw;
 }
 
@@ -888,4 +889,8 @@
       padding: 4px 8px !important;
     }
   }
+}
+
+.MuiSlider-marked {
+  margin-bottom: 1vh;
 }

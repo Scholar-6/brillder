@@ -92,7 +92,7 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
           value={source}
           className={validationRequired && !source ? 'invalid' : ''}
           onChange={(e) => setSource(e.target.value)}
-          placeholder="Add link to source or name of owner..."
+          placeholder="Add link to source or name of owner"
         />
         <CopyrightCheckboxes
           validationRequired={validationRequired}
@@ -102,7 +102,7 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
         <input
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
-          placeholder="Add caption..."
+          placeholder="Add caption"
         />
       </div>
       <div className="centered last-button">
