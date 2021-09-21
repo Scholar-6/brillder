@@ -461,6 +461,24 @@
 .permision-buttons {
   display: flex;
   font-size: 1vw;
+
+  > div {
+    display: flex;
+    align-items: flex-start;
+
+    svg {
+      margin: 0 !important;
+      width: 1.5vw !important;
+      height: 1.5vw !important;
+      margin-right: 0.5vw !important;
+    }
+  }
+
+  > div:nth-child(2) {
+    svg {
+      margin-left: 0.5vw !important;
+    }
+  }
 }
 
 .introduction-page,
