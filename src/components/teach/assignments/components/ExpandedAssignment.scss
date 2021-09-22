@@ -58,10 +58,6 @@
       $size: 1.5vw;
       width: $size;
       height: $size;
-
-      &.grey {
-        color: var(--off-white);
-      }
     }
 
     .assigned-student-name {
@@ -278,6 +274,15 @@
       .css-custom-tooltip {
         height: auto;
         opacity: 1;
+      }
+    }
+  }
+  .smaller-remind-button {
+    .reminder-button-container {
+      .svg {
+        padding: 0.29vw !important;
+        width: 1.6vw;
+        height: 1.6vw;
       }
     }
   }
