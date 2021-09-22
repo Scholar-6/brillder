@@ -46,6 +46,18 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
     onAnnotationChangeRef.current = _.throttle(onAnnotationChange, 500, { leading: true, trailing: true });
   }, [onAnnotationChange]);
 
+  const validateReply = () => {
+    if (props.addAnnotationReply && annotation) {
+      console.log(annotation);
+      if (annotation.children && annotation.children.length !== 0 && annotation.children[annotation.children.length - 1].text) {
+        props.addAnnotationReply();
+      }
+      if (annotation.children?.length === 0 && annotation.text) {
+        props.addAnnotationReply();
+      }
+    }
+  }
+
   return (
     <Grid
       className={`annotation-container comment-${annotation.id} ${focused ? "focused" : ""}`}
@@ -99,7 +111,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
                 />
               ))}
             </div>
-            {props.addAnnotationReply && <div className="add-reply" onClick={props.addAnnotationReply}>
+            {props.addAnnotationReply && <div className="add-reply" onClick={validateReply}>
               <div className="grey-circle">
                 <div className="grey-background"/>
                 <SpriteIcon name="corner-up-left" className="reply-icon" />
