@@ -614,7 +614,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             white-space: nowrap;
           }
           .question-live-play {
-            overflow-y: auto;
+            overflow-y: hidden;
             padding-bottom: 2vw;
             position: absolute;
             top: 0;
