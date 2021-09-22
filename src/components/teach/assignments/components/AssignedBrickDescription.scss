@@ -390,6 +390,15 @@
       }
     }
   }
+
+  .smaller-remind-button {
+    .reminder-button-container {
+      .svg {
+       width: 1vw;
+       height: 1vw; 
+      }
+    }
+  }
 }
 
 .teach-circles-container {

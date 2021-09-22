@@ -157,7 +157,7 @@ class ExpandedAssignment extends Component<
     const completedCount = statuses.filter(({ status }) => status === 2).length;
 
     return (
-      <div className="reminder-brick-actions-container">
+      <div className="reminder-brick-actions-container smaller-remind-button">
         <ReminderButton className="" studentCount={statuses.length - completedCount} sendNotifications={this.sendNotifications.bind(this)} />
       </div>
     );
