@@ -236,6 +236,11 @@ class ExpandedAssignment extends Component<
 
   renderStudent(student: TeachStudent, i: number) {
     const { studentResult } = student;
+    const {bookData} = this.state;
+    
+    const disabled = bookData.student && bookData.student?.id !== student.id ? true : false;
+    const active = bookData.student?.id === student.id ? true : false;
+    
     return (
       <Grow
         in={true}
@@ -251,11 +256,13 @@ class ExpandedAssignment extends Component<
           <td className="student-book">
             {studentResult && studentResult.numberOfAttempts > 0 && <div className="centered">{this.renderBookIcon(studentResult, student.id)}</div>}
           </td>
-          <td className={`assigned-student-name`}>
+          <td className={`assigned-student-name ${active ? 'bold' : 'regular'}`}>
             {student.firstName} {student.lastName}
           </td>
           <td>
-            {studentResult && studentResult.numberOfAttempts > 0 && <SpriteIcon name="eye-on" className="eye-icon" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})} />}
+            {studentResult && studentResult.numberOfAttempts > 0 && <SpriteIcon
+              name="eye-on" className={`eye-icon ${disabled ? 'grey' : 'blue'}`} onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})}
+            />}
           </td>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map((a, i) =>
             <td key={i} className="icon-container">
