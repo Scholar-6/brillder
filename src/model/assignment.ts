@@ -30,4 +30,5 @@ export interface LibraryAssignmentBrick extends AssignmentBrick {
   maxScore?: number;
   lastAttemptScore?: number;
   bestAttemptScore?: number;
+  bestAttemptPercentScore?: number;
 }

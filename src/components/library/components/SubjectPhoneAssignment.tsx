@@ -33,18 +33,7 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     className += " length-" + BrickLengthEnum.S40min;
   }
   const minHeight = 5;
-  let height = 0;
-  if (assignment.bestAttemptScore && assignment.maxScore) {
-    const heightInt = (assignment.bestAttemptScore / assignment.maxScore) * 100;
-    if (heightInt < minHeight) {
-      height = minHeight;
-    } else {
-      height = heightInt;
-    }
-  }
-  if (assignment.bestAttemptScore === 0) {
-    height = minHeight;
-  }
+  const height = assignment.bestAttemptPercentScore ? assignment.bestAttemptPercentScore : minHeight;
 
   let { color } = subject;
   if (subject.name === GENERAL_SUBJECT) {
