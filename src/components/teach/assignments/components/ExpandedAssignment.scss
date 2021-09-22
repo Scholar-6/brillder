@@ -58,6 +58,10 @@
       $size: 1.5vw;
       width: $size;
       height: $size;
+
+      &.grey {
+        color: var(--off-white);
+      }
     }
 
     .assigned-student-name {
