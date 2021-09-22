@@ -19,6 +19,7 @@ import { Annotation } from "model/attempt";
 import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
 import { User } from "model/user";
+import BookButton from "./BookButton";
 
 enum SortBy {
   None,
@@ -190,11 +191,7 @@ class ExpandedAssignment extends Component<
         history.push(map.postAssignment(assignment.brick.id, studentId) + '?fromTeach=true');
       }
     }
-    return (
-      <div className="round b-green centered">
-        <SpriteIcon name="book-open" className="active book-open-icon" onClick={moveToPostPlay} />
-      </div>
-    );
+    return <BookButton onClick={moveToPostPlay} />;
   }
 
   renderQuestionAttemptIcon(
