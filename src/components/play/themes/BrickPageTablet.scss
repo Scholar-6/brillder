@@ -2304,10 +2304,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     }
 
     &:hover {
-      color: var(--white);
-      svg {
-        color: var(--white);
-      }
+      opacity: 0.5;
     }
   }
 }
