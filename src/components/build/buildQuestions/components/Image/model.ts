@@ -11,6 +11,7 @@ export interface MainImageProps {
 
 export interface ImageComponentData extends MainImageProps {
   value: string;
+  url: string;
   imageAlign: ImageAlign;
   imageHeight: number;
 }
