@@ -165,10 +165,12 @@ class ExpandedAssignment extends Component<
   }
 
   renderCommentIcon(studentId: number) {
+    const { history, assignment } = this.props;
     return <CommentButton
       studentId={studentId} students={this.state.students}
       currentUser={this.props.currentUser}
       onClick={(evt: any) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}
+      onMove={() =>  history.push(map.postAssignment(assignment.brick.id, studentId) + '?fromTeach=true')}
     />;
   }
 
