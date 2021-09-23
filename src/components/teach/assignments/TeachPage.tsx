@@ -131,9 +131,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       steps: [{
         element: '.archive-toggle-button',
         intro: `<p>Find your archived assignments here</p>`,
-      }, {
-        element: '.archive-toggle-button',
-        intro: `<p>Find your archived assignments here</p>`,
       }],
 
       pageSize: 6,
@@ -581,6 +578,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
           initialStep={0}
           onChange={this.onIntroChanged.bind(this)}
           onExit={this.onIntroExit.bind(this)}
+          options={{
+            hidePrev: true,
+            doneLabel: 'View'
+          }}
         />
       </div>
     );
