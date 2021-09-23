@@ -72,9 +72,15 @@ export const getUserByUserName = async (userName: string) => {
   }
 }
 
-export const setUserPreference = async (roleId: RolePreference) => {
+export const setUserPreference = async (roleId: RolePreference, initial?: boolean) => {
   try {
-    const data = await put<any>(`/user/rolePreference/${roleId}`, {});
+
+    var url = initial
+      ? `/user/rolePreference/${roleId}/true`
+      :`/user/rolePreference/${roleId}`
+
+    const data = await put<any>(url, {});
+
     return data === "OK" ? true : false;
   } catch (e) {
     return false;
