@@ -36,7 +36,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
     }
     setPreference(roleId);
     try {
-      await setUserPreference(roleId);
+      await setUserPreference(roleId, true);
       props.getUser();
     } catch (e) {
       console.log(e);
