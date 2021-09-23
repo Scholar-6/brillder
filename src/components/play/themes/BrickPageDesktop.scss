@@ -25,6 +25,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   min-height: 100%;
 
   .prep-button {
+    animation: fadein 400ms ease-out forwards;
+
     z-index:99999;
     cursor: pointer;
     left: 1.6vw;
@@ -34,11 +36,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     color: var(--tab-gray);
     .highlight-circle {
       position: absolute;
+      padding: 0 !important;
+      margin-top: 0 !important;
       top: 0.25vw;
       left: 0.1vw;
       $border-size: 3.5vw;
-      width: $border-size;
-      height: $border-size;
+      width: $border-size !important;
+      height: $border-size !important;
+      stroke: var(--theme-dark-blue) !important;
+      color: var(--theme-dark-blue) !important;
     }
     svg {
       $icons-size: 2vw;
@@ -81,10 +87,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
 
     &:hover {
-      color: var(--white);
-      svg {
-        color: var(--white);
-      }
+      opacity: 0.5;
     }
   }
 
@@ -2444,6 +2447,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   background: none !important;
   overflow: visible !important;
   .absolute-prep-text {
+    opacity: 0;
+    animation: fadein 400ms 400ms ease-out forwards;
     position: absolute;
     color: var(--white);
     z-index: 100;
