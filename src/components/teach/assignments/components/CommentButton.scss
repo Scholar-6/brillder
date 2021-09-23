@@ -1,0 +1,17 @@
+.teach-comment-button {
+  position: relative !important;
+  .css-custom-tooltip {
+    top: 3vw !important;
+    height: 0;
+    overflow: hidden;
+    width: 8vw;
+    transition: all 300ms ease-out;
+  }
+  &:hover {
+    .css-custom-tooltip {
+      z-index: 1000;
+      opacity: 1;
+      height: auto;
+    }
+  }
+}
