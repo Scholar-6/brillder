@@ -12,14 +12,13 @@ interface DialogProps {
   open: boolean;
   initFile: File | null;
   initData: ImageCoverData;
-  upload(file: File, source: string, caption: string): void;
-  updateData(source: string, caption: string): void;
+  upload(file: File, source: string): void;
+  updateData(source: string): void;
   setDialog(open: boolean): void;
 }
 
 const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upload, updateData, setDialog }) => {
   const [source, setSource] = React.useState(initData.imageSource || '');
-  const [caption, setCaption] = React.useState(initData.imageCaption || '');
   const [permision, setPermision] = React.useState(initData.imagePermision ? true : false as boolean | 1);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
@@ -89,7 +88,7 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
             </div>
           </div>
         </div>
-        <div className="bold">
+        <div className="bold margin-top-x2">
           Where did you get this image?
           <span className="text-theme-orange">*</span>
         </div>
@@ -104,18 +103,13 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
           permision={permision}
           setPermision={setPermision}
         />
-        <input
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-          placeholder="Add caption"
-        />
       </div>
       <div className="centered last-button">
         <div className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
           if (cropedFile && canUpload) {
-            upload(cropedFile, source, caption);
+            upload(cropedFile, source);
           } else if (canUpload) {
-            updateData(source, caption);
+            updateData(source);
           } else {
             setValidation(true);
           }

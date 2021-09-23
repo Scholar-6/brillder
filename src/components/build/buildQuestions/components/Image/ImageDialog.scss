@@ -3,6 +3,9 @@
 @import "src/assets/sass/partials/extensions";
 
 .image-dialog-container {
+  .margin-top-x2 {
+    margin-top: 1vh;
+  }
   .MuiSlider-mark {
     display: none;
   }

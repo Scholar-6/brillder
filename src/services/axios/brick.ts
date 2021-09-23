@@ -244,7 +244,6 @@ export interface CoverImageData {
   brickId: number;
   coverImage: string;
   coverImageSource: string;
-  coverImageCaption: string;
 }
 
 export const setBrickCover = async (data: CoverImageData) => {
