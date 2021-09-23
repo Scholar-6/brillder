@@ -118,7 +118,7 @@ const LivePage: React.FC<LivePageProps> = ({
     } else if (props.liveStep >= 0 && props.liveBrickId === brick.id) {
       setActiveStep(props.liveStep);
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [location.search]);
 
   const moveToProvisional = () => {
@@ -434,7 +434,12 @@ const LivePage: React.FC<LivePageProps> = ({
           Prep tasks
         </div>
         <div className="prep-button" onClick={() => history.push(playNewPrep(brick.id) + '?resume=true')}>
-          <img alt="circle-border" className="highlight-circle dashed-circle" src="/images/borders/small-dash-circle.svg" />
+          <svg className="highlight-circle dashed-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+            <g id="Ellipse_72" data-name="Ellipse 72" fill="none" stroke="inherit" stroke-linecap="round" stroke-width="3" stroke-dasharray="8 8">
+              <circle cx="36" cy="36" r="36" stroke="none" />
+              <circle cx="36" cy="36" r="34.5" fill="none" />
+            </g>
+          </svg>
           <SpriteIcon name="file-text" />
         </div>
       </div>
@@ -460,20 +465,20 @@ const LivePage: React.FC<LivePageProps> = ({
             <div className="new-layout-footer" style={{ display: "none" }}>
               <div className="time-container">
                 {!timerHidden &&
-                <TimeProgressbar
-                  isLive={true}
-                  onEnd={onEnd}
-                  minutes={minutes}
-                  endTime={props.endTime}
-                  brickLength={brick.brickLength}
-                  setEndTime={props.setEndTime}
-                />}
+                  <TimeProgressbar
+                    isLive={true}
+                    onEnd={onEnd}
+                    minutes={minutes}
+                    endTime={props.endTime}
+                    brickLength={brick.brickLength}
+                    setEndTime={props.setEndTime}
+                  />}
               </div>
               <div className="footer-space">
                 {!isMobile &&
-                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
-                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
-                </div>}
+                  <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                    {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                  </div>}
               </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn back" onClick={prev}>

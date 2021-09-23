@@ -34,11 +34,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     color: var(--tab-gray);
     .highlight-circle {
       position: absolute;
+      padding: 0 !important;
+      margin-top: 0 !important;
       top: 0.25vw;
       left: 0.1vw;
       $border-size: 3.5vw;
-      width: $border-size;
-      height: $border-size;
+      width: $border-size !important;
+      height: $border-size !important;
+      stroke: var(--theme-dark-blue) !important;
+      color: var(--theme-dark-blue) !important;
     }
     svg {
       $icons-size: 2vw;
@@ -81,9 +85,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
 
     &:hover {
-      color: var(--white);
       svg {
-        color: var(--white);
       }
     }
   }
