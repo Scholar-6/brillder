@@ -24,13 +24,13 @@ const CommentButton: React.FC<Props> = (props) => {
   const latestAnnotation = flattenedAnnotations.sort((a: any, b: any) => new Date(b.timestamp) > new Date(a.timestamp) ? 1 : -1)[0];
   const className = latestAnnotation ?
     (latestAnnotation.user.id === props.currentUser.id ? " yellow" : " red")
-    : "";
+    : "grey-x2";
 
   console.log(annotations);
 
-  return <div className={"teach-comment-button comment-icon" + className} onClick={props.onClick}>
+  return <div className={"teach-comment-button comment-icon " + className} onClick={props.onClick}>
     <SpriteIcon name="message-square" className="active" />
-    <div className={"hover-background" + className} />
+    <div className={"hover-background " + className} />
     <div className={"background " + className} />
     <span className="annotation-count">{students.find(s => s.id === studentId)?.studentResult?.attempts.slice(-1)[0].annotations?.length}</span>
     <div className="css-custom-tooltip bold">
