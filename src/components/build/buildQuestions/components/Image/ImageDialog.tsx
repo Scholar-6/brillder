@@ -148,7 +148,7 @@ const ImageDialog: React.FC<DialogProps> = ({
               <SpriteIcon name="image" className="icon-image" />
             ) : (
               <ImageDesktopPreview
-                src={fileUrl(initData.value)}
+                src={fileUrl(initData.value) || initData.url}
                 height={height}
                 align={align}
                 file={cropedFile}
