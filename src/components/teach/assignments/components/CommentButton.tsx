@@ -8,6 +8,7 @@ interface Props {
   currentUser: any;
   students: any[];
   onClick(e: any): void;
+  onMove(): void;
 }
 
 const CommentButton: React.FC<Props> = (props) => {
@@ -26,9 +27,13 @@ const CommentButton: React.FC<Props> = (props) => {
     (latestAnnotation.user.id === props.currentUser.id ? " yellow" : " red")
     : "grey-x2";
 
-  console.log(annotations);
-
-  return <div className={"teach-comment-button comment-icon " + className} onClick={props.onClick}>
+  return <div className={"teach-comment-button comment-icon " + className} onClick={(e) => {
+    if (annotations && annotations.length > 0) {
+      props.onMove();
+    } else {
+      props.onClick(e);
+    }
+  }}>
     <SpriteIcon name="message-square" className="active" />
     <div className={"hover-background " + className} />
     <div className={"background " + className} />
