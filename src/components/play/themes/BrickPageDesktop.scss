@@ -25,6 +25,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   min-height: 100%;
 
   .prep-button {
+    animation: fadein 400ms ease-out forwards;
+
     z-index:99999;
     cursor: pointer;
     left: 1.6vw;
@@ -85,8 +87,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
 
     &:hover {
-      svg {
-      }
+      opacity: 0.5;
     }
   }
 
@@ -2446,6 +2447,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   background: none !important;
   overflow: visible !important;
   .absolute-prep-text {
+    opacity: 0;
+    animation: fadein 400ms 400ms ease-out forwards;
     position: absolute;
     color: var(--white);
     z-index: 100;
