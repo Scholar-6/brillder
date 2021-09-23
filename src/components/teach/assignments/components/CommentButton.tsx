@@ -30,9 +30,11 @@ const CommentButton: React.FC<Props> = (props) => {
 
   return <div className={"teach-comment-button comment-icon" + className} onClick={props.onClick}>
     <SpriteIcon name="message-square" className="active" />
+    <div className={"hover-background" + className} />
+    <div className={"background " + className} />
     <span className="annotation-count">{students.find(s => s.id === studentId)?.studentResult?.attempts.slice(-1)[0].annotations?.length}</span>
     <div className="css-custom-tooltip bold">
-      {annotations.length > 0 ? 'View Comments' : 'Add Comment'}
+      {annotations && annotations.length > 0 ? 'View Comments' : 'Add Comment'}
     </div>
   </div>;
 }
