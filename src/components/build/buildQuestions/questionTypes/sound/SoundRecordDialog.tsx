@@ -43,7 +43,7 @@ const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
       />
       {value && 
         <div>
-          <input value={caption} onChange={e => setCaption(e.target.value)} placeholder="Enter caption here" />
+          <input className="caption-input" value={caption} onChange={e => setCaption(e.target.value)} placeholder="Add a caption" />
           <div className="bold">
             Where did you get this sound?
             <span className="text-theme-orange">*</span>
