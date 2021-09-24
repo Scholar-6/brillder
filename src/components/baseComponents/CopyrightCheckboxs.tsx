@@ -16,7 +16,7 @@ const CopyrightCheckboxes: React.FC<Props> = (props) => {
     <div className="light-font permision-buttons">
       <div onClick={() => props.setPermision(permision ? permision === true ? 1 : true : true)}>
         <div>
-          <SpriteIcon name="globe" />
+          <SpriteIcon name="globe" className="fgr-icon" />
           <Checkbox
             checked={permision === true}
             className={validationRequired ? "required" : ""}
@@ -26,7 +26,7 @@ const CopyrightCheckboxes: React.FC<Props> = (props) => {
       </div>
       <div onClick={() => props.setPermision(permision ? permision === true ? 1 : true : 1)}>
         <div>
-        <SpriteIcon name="key" />
+        <SpriteIcon name="key" className="fgr-icon" />
           <Checkbox
             checked={permision === 1}
             className={validationRequired ? "required" : ""}

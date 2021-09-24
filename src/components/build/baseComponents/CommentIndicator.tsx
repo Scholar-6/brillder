@@ -11,7 +11,6 @@ const CommentIndicator: React.FC<IndicatorProps> = ({replyType}) => {
   }
   return (
     <div className={"unread-indicator" + (replyType > 0 ? " has-replied" : "")}>
-      <div className="outer-circle"></div>
       <div className="inner-circle"></div>
     </div>
   );
