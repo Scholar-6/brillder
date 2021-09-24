@@ -9,7 +9,6 @@
   background: var(--tab-gray);
   min-height: 20vh;
   max-height: 30vh;
-  width: 34vw;
   div {
     padding-top: 0 !important;
 
@@ -17,7 +16,7 @@
       margin: auto;
     }
     img {
-      max-height: calc(30vh - 0.8vw) !important;
+      max-height: 25vh !important;
     }
   }
 }

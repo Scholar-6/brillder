@@ -1048,7 +1048,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
               font-size: 2.5vw;
               font-family: $font-family-bold;
               margin-left: 1vw;
-              margin-right: 3vw;
+              margin-right: 1.5vw;
 
               svg {
                 transition: all 300ms ease-out;
@@ -2304,10 +2304,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     }
 
     &:hover {
-      color: var(--white);
-      svg {
-        color: var(--white);
-      }
+      opacity: 0.5;
     }
   }
 }

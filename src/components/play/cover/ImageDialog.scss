@@ -41,18 +41,21 @@
       }
     }
   }
+  .close-button {
+    top: 0.2vw !important;
+    right: 0.2vw !important;
+    stroke-width: 4 !important;
+  }
 }
 
 .image-dialog {
   margin-bottom: 0 !important;
   min-height: 66vh;
-  padding-left: 1vw;
-  padding-right: 1vw;
   $font-size: 1.3vw;
   font-size: $font-size !important;
 
   > div {
-    padding-top: 2vh;
+    padding-top: 0vh;
   }
 
   .image-preview-label {
@@ -96,15 +99,17 @@
 
   input {
     font-size: $font-size;
-    margin-top: 2vh;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
     color: var(--theme-dark-blue);
     background: var(--tab-gray);
     border-radius: $editor-radius;
     padding: 0.2vh 1vw;
     width: calc(100% - 2vw);
     &::placeholder {
-      color: var(--dark-gray);
-      font-family: $font-family-regular;
+      color: var(--theme-dark-blue);
+      opacity: 0.5;
+      font-family: $font-family-bold;
     }
   }
   .MuiFormControlLabel-root {
@@ -246,4 +251,15 @@
   color: var(--theme-dark-blue);
   font-size: 2.25rem;
   transform: translateY(-2rem);
+}
+
+// cover image style
+.image-dialog-container .image-dialog .cropping  .image-desktop-preview  {
+  &.cover-color {
+    background: var(--off-white);
+  }
+  > img {
+    max-height: 100% !important;
+    max-width: 100% !important;
+  }
 }

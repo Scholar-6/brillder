@@ -58,6 +58,10 @@
       $size: 1.5vw;
       width: $size;
       height: $size;
+
+      &.grey {
+        color: var(--off-white) !important;
+      }
     }
 
     .assigned-student-name {
@@ -65,6 +69,9 @@
       padding-left: 0.85vw !important;
       font-size: 1.2vw !important;
       width: 18vw;
+      &.grey {
+        color: var(--off-white) !important;
+      }
     }
     .circle-td {
       width: 5vw;
@@ -277,12 +284,26 @@
       }
     }
   }
+  .smaller-remind-button {
+    .reminder-button-container {
+      .svg {
+        padding: 0.29vw !important;
+        width: 1.6vw;
+        height: 1.6vw;
+      }
+    }
+  }
 }
-
+.holistic-comment-popup .MuiPaper-root {
+  border-radius: 14px !important;
+}
 .holistic-comment-panel {
   width: 25vw;
   overflow: hidden;
   position: relative;
+  .comment-item-container {
+    margin-bottom: 0 !important;
+  }
   .save-button {
     position: absolute;
     top: 0;

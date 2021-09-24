@@ -117,14 +117,15 @@ const QuestionComponents = ({
 
   let canRemove = (components.length > 3) ? true : false;
 
-  const renderDropBox = (component: any, index: number) => {
-    const updatingComponent = (compData: any) => {
-      let copyComponents = Object.assign([], components) as any[];
-      copyComponents[index] = compData;
-      setComponents(copyComponents);
-      updateComponentsAndSave(copyComponents);
-    }
+  const updatingComponent = (compData: any, index: number) => {
+    console.log('update component', JSON.parse(JSON.stringify(question.components)));
+    let copyComponents = Object.assign([], components) as any[];
+    copyComponents[index] = compData;
+    setComponents(copyComponents);
+    updateComponentsAndSave(copyComponents);
+  }
 
+  const renderDropBox = (component: any, index: number) => {
     const setEmptyType = () => {
       if (component.value) {
         setDialog(true);
@@ -179,7 +180,7 @@ const QuestionComponents = ({
         setEmptyType={setEmptyType}
         removeComponent={removeInnerComponent}
         setQuestionHint={updateHintAndSave}
-        updateComponent={updatingComponent}
+        updateComponent={(compData: any) => updatingComponent(compData, index)}
         saveBrick={() => {}}
         openSameAnswerDialog={openSameAnswerDialog}
       />

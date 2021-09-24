@@ -34,19 +34,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
   // animate height
   setTimeout(() => {
     const minHeight = 5;
-    let height = 0;
-    if (assignment.bestAttemptScore && assignment.maxScore) {
-      const heightInt =
-        (assignment.bestAttemptScore / assignment.maxScore) * 100;
-      if (heightInt < minHeight) {
-        height = minHeight;
-      } else {
-        height = heightInt;
-      }
-    }
-    if (assignment.bestAttemptScore === 0) {
-      height = minHeight;
-    }
+    const height = assignment.bestAttemptPercentScore ? assignment.bestAttemptPercentScore : minHeight;
     setHeight(height);
   }, 200);
 
