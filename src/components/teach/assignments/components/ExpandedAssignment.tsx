@@ -15,10 +15,11 @@ import { sendAssignmentReminder } from "services/axios/brick";
 import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
 import BookDialog from "./BookDialog";
 import HolisticCommentPanel from "./HolisticCommentPanel";
-import { Annotation } from "model/attempt";
 import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
 import { User } from "model/user";
+import BookButton from "./BookButton";
+import CommentButton from "./CommentButton";
 
 enum SortBy {
   None,
@@ -156,31 +157,20 @@ class ExpandedAssignment extends Component<
     const completedCount = statuses.filter(({ status }) => status === 2).length;
 
     return (
-      <div className="reminder-brick-actions-container">
+      <div className="reminder-brick-actions-container smaller-remind-button">
         <ReminderButton className="" studentCount={statuses.length - completedCount} sendNotifications={this.sendNotifications.bind(this)} />
       </div>
     );
   }
 
   renderCommentIcon(studentId: number) {
-    const annotations = this.state.students.find(s => s.id === studentId)?.studentResult?.attempts.slice(-1)[0].annotations;
-    const flattenAnnotation = (annotation: Annotation): Annotation[] => {
-      const arr = [annotation];
-      annotation.children?.forEach((a) => arr.push(...flattenAnnotation(a)))
-      return arr;
-    }
-    const flattenedAnnotations: Annotation[] = [];
-    annotations?.forEach(a => flattenedAnnotations.push(...flattenAnnotation(a)));
-
-    const latestAnnotation = flattenedAnnotations.sort((a: any, b: any) => new Date(b.timestamp) > new Date(a.timestamp) ? 1 : -1)[0];
-    const className = latestAnnotation ? 
-      (latestAnnotation.user.id === this.props.currentUser.id ? " yellow" : " red")
-      : "";
-
-    return <div className={"comment-icon" + className} onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}>
-      <SpriteIcon name="message-square" className="active" />
-      <span className="annotation-count">{this.state.students.find(s => s.id === studentId)?.studentResult?.attempts.slice(-1)[0].annotations?.length}</span>
-    </div>;
+    const { history, assignment } = this.props;
+    return <CommentButton
+      studentId={studentId} students={this.state.students}
+      currentUser={this.props.currentUser}
+      onClick={(evt: any) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}
+      onMove={() =>  history.push(map.postAssignment(assignment.brick.id, studentId) + '?fromTeach=true')}
+    />;
   }
 
   renderBookIcon(studentResult: StudentStatus, studentId: number) {
@@ -190,11 +180,7 @@ class ExpandedAssignment extends Component<
         history.push(map.postAssignment(assignment.brick.id, studentId) + '?fromTeach=true');
       }
     }
-    return (
-      <div className="round b-green centered">
-        <SpriteIcon name="book-open" className="active book-open-icon" onClick={moveToPostPlay} />
-      </div>
-    );
+    return <BookButton onClick={moveToPostPlay} />;
   }
 
   renderQuestionAttemptIcon(
@@ -236,6 +222,11 @@ class ExpandedAssignment extends Component<
 
   renderStudent(student: TeachStudent, i: number) {
     const { studentResult } = student;
+    const {bookData} = this.state;
+    
+    const disabled = bookData.student && bookData.student?.id !== student.id ? true : false;
+    const active = bookData.student?.id === student.id ? true : false;
+    
     return (
       <Grow
         in={true}
@@ -251,11 +242,13 @@ class ExpandedAssignment extends Component<
           <td className="student-book">
             {studentResult && studentResult.numberOfAttempts > 0 && <div className="centered">{this.renderBookIcon(studentResult, student.id)}</div>}
           </td>
-          <td className={`assigned-student-name`}>
+          <td className={`assigned-student-name ${active ? 'bold' : disabled ? 'grey' : 'regular'}`}>
             {student.firstName} {student.lastName}
           </td>
           <td>
-            {studentResult && studentResult.numberOfAttempts > 0 && <SpriteIcon name="eye-on" className="eye-icon" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})} />}
+            {studentResult && studentResult.numberOfAttempts > 0 && <SpriteIcon
+              name="eye-on" className={`eye-icon ${disabled ? 'grey' : 'blue'}`} onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})}
+            />}
           </td>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map((a, i) =>
             <td key={i} className="icon-container">

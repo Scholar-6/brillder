@@ -253,7 +253,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
           <Switch>
             <Route exact path={routes.newPrepRoute}>
-              <NewPrep brick={brick} moveNext={moveToLive} briefExpanded={true} endTime={prepEndTime} setEndTime={setPrepEndTime} />
+              <NewPrep history={history} brick={brick} moveNext={moveToLive} briefExpanded={true} endTime={prepEndTime} setEndTime={setPrepEndTime} />
             </Route>
             <Route exac path={routes.preLiveRoute}>
               <Live

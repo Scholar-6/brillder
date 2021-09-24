@@ -14,6 +14,7 @@ import MathInHtml from "components/play/baseComponents/MathInHtml";
 import { getValidationClassName } from "../service";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import { HintStatus } from "model/question";
+import QuillShortAnswerPreview from "components/baseComponents/quill/QuillShortAnswerPreview";
 
 export type ShortAnswerAnswer = string[];
 
@@ -47,7 +48,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   componentDidUpdate(prevProps: ShortAnswerProps) {
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProps.answers) {
-        this.setState({userAnswers: this.props.answers});
+        this.setState({ userAnswers: this.props.answers });
       }
     }
   }
@@ -103,6 +104,13 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     let placeholder = 'Type your answer here';
     if (this.state.userAnswers.length > 1) {
       placeholder = 'Type Answer ' + (index + 1);
+    }
+
+    if (this.props.isPreview) {
+      return <QuillShortAnswerPreview
+        disabled={true}
+        data={value}
+      />
     }
 
     return <QuillEditor

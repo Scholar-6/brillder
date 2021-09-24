@@ -131,7 +131,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
           value={source}
           className={validationRequired && !source ? "invalid" : ""}
           onChange={(e) => setSource(e.target.value)}
-          placeholder="Add link to source or name of owner..."
+          placeholder="Add link to source or name of owner"
         />
         <CopyrightCheckboxes
           validationRequired={validationRequired}
@@ -141,7 +141,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
         <input
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
-          placeholder="Add caption..."
+          placeholder="Add caption"
         />
       </div>
       <div className="centered last-button">
@@ -159,7 +159,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
         >
           <div className="background" />
           <SpriteIcon name="upload" />
-          <div className="css-custom-tooltip">Upload</div>
+          <div className="css-custom-tooltip bold">Upload</div>
         </div>
       </div>
     </BaseDialogWrapper>

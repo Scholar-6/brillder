@@ -69,9 +69,13 @@
 
 .name-subject-display {
   .subject-icon {
-    width: 3vw;
+    width: calc(calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35/1.4);
     height: 3vw;
     margin-right: 1vw;
+    svg {
+      width: 3vw;
+      height: 3vw;
+    }
   }
 
   .name-display {

@@ -103,7 +103,7 @@ describe("Roles Box", () => {
     expect(component.props().children[0].props.children.props.checked).toBe(false);
     expect(component.props().children[1].props.children.props.checked).toBe(false);
     expect(component.props().children[2].props.children.props.checked).toBe(true);
-    expect(component.props().children[3].props.children.props.checked).toBe(true);
+    expect(component.props().children[3].props.children.props.checked).toBe(false);
     expect(component.props().children[4].props.children.props.checked).toBe(true);
     expect(component.props().children[5].props.children.props.checked).toBe(true);
   });

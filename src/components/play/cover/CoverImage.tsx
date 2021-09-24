@@ -31,8 +31,7 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
     const res = await setBrickCover({
       brickId: props.brickId,
       coverImage: coverData.value,
-      coverImageSource: coverData.imageSource,
-      coverImageCaption: coverData.imageCaption
+      coverImageSource: coverData.imageSource
     });
     if (res) {
       // success
@@ -60,12 +59,11 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   /*eslint-disable-next-line*/
   }, [props]);
 
-  const upload = (file: File, source: string, caption: string) => {
+  const upload = (file: File, source: string) => {
     uploadFile(file, (res: any) => {
       let comp = Object.assign({}, props.data);
       comp.value = res.data.fileName;
       comp.imageSource = source;
-      comp.imageCaption = caption;
       comp.imagePermision = true;
       updateCover(comp);
       setOpen(false);
@@ -73,10 +71,9 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
     }, () => { });
   }
 
-  const updateData = (source: string, caption: string) => {
+  const updateData = (source: string) => {
     let comp = Object.assign({}, props.data);
     comp.imageSource = source;
-    comp.imageCaption = caption;
     comp.imagePermision = true;
     updateCover(comp);
     setOpen(false);
