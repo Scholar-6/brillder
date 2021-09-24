@@ -2,7 +2,6 @@ import { Popover } from '@material-ui/core';
 import axios from 'axios';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
-import BookAnnotation from 'components/postPlay/desktop/BookAnnotation';
 import BookAnnotationV2 from 'components/postPlay/desktop/BookAnnotationV2';
 import { Annotation, AnnotationLocation } from 'model/attempt';
 import { AttemptStats } from 'model/stats';
@@ -78,6 +77,7 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
         vertical: 'top',
         horizontal: 'right',
       }}
+      className="holistic-comment-popup"
     >
       <div className="holistic-comment-panel">
         <BookAnnotationV2 textRef={textRef} />

@@ -294,11 +294,16 @@
     }
   }
 }
-
+.holistic-comment-popup .MuiPaper-root {
+  border-radius: 14px !important;
+}
 .holistic-comment-panel {
   width: 25vw;
   overflow: hidden;
   position: relative;
+  .comment-item-container {
+    margin-bottom: 0 !important;
+  }
   .save-button {
     position: absolute;
     top: 0;
