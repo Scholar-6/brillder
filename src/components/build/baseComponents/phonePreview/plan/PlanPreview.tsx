@@ -7,6 +7,7 @@ import { User } from "model/user";
 import BrickCircle from "components/baseComponents/BrickCircle";
 import { AcademicLevelLabels, Brick } from "model/brick";
 import YoutubeAndMathQuote from "components/play/baseComponents/YoutubeAndMathQuote";
+import YoutubeMathDesmos from "components/play/baseComponents/YoutubeMathDesmos";
 
 interface PlanPreviewProps {
   data: {
@@ -50,7 +51,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
         </div>
       </div>
       <div className="base-font">
-        <YoutubeAndMathQuote value={currentBrick.prep} />
+        <YoutubeMathDesmos value={currentBrick.prep} />
       </div>
     </div>
   );
