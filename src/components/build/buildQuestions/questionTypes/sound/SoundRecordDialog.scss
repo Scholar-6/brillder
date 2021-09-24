@@ -33,6 +33,20 @@
       letter-spacing: 0;
     }
 
+    input::placeholder {
+      opacity: 0.5 !important;
+      color: var(--theme-dark-blue) !important;
+    }
+
+    .permision-buttons {
+      .MuiButtonBase-root {
+        padding: 0 !important;
+      }
+      svg.fgr-icon {
+        margin-top: 0.5vh !important;
+      }
+    }
+
     .upload-button {
       position: relative;
       background: var(--white);
