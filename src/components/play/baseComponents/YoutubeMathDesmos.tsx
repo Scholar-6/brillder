@@ -8,6 +8,7 @@ import { isMathJax, isLatex, parseDataToArray } from 'components/services/mathJa
 import YoutubeLink from './YoutubeLink';
 import './YoutubeAndMath.scss'
 import Katex from 'components/baseComponents/katex/Katex';
+import { renderGraph } from 'services/graph';
 
 interface MathHtmlProps {
   innerRef?: any;
@@ -23,22 +24,6 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
 
   const renderMath = (data: string, i: number) => {
     return <MathJax math={data} key={i} />;
-  }
-
-  const renderGraph = (el: Element) => {
-    const value = JSON.parse(el.getAttribute("data-value") as string);
-
-    const desmos = Desmos.GraphingCalculator(el, {
-      fontSize: Desmos.FontSizes.VERY_SMALL,
-      expressions: false,
-      settingsMenu: false,
-      lockViewport: true,
-      pointsOfInterest: true,
-      trace: true,
-    });
-    desmos.setState(value.graphState);
-
-    return desmos;
   }
 
   React.useEffect(() => {

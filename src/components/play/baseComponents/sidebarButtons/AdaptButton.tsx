@@ -1,5 +1,6 @@
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { checkTeacherOrAdmin } from 'components/services/brickService';
+import { isBuilderPreference } from 'components/services/preferenceService';
 import { User } from 'model/user';
 import React from 'react';
 
@@ -14,7 +15,7 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
   const [hovered, setHover] = React.useState(false);
 
   if (!props.user) { return <span />; }
-  let canSee = checkTeacherOrAdmin(props.user);
+  const canSee = checkTeacherOrAdmin(props.user) || isBuilderPreference(props.user);
   if (!canSee) { return <span />; }
 
   if (!props.sidebarRolledUp) {

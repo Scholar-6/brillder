@@ -177,9 +177,11 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
 
   return (
     <div className="annotations-no-scroll-panel">
+      <div className="annotation-title bold">Notes and Comments</div>
       <NewCommentPanel
         currentBrick={{ id: -1 } as any}
         currentLocation={-1}
+        placeholder="Start typing"
         createComment={comment => createNewAnnotation(comment.text)}
       />
       <div className="right-part annotations-panel">

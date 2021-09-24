@@ -11,6 +11,8 @@
 
     .react-recording {
       padding: 0 0.5vw;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
 
     .dropzone {
@@ -22,6 +24,12 @@
       margin-top: 0.5vw;
     }
 
+    .caption-input {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      margin-top: 0;
+    }
+
     .upload-button-container {
       margin-top: 3vw;
       height: 3vw;
@@ -31,6 +39,20 @@
     .record-button-row button span {
       font-size: 1.3vw;
       letter-spacing: 0;
+    }
+
+    input::placeholder {
+      opacity: 0.5 !important;
+      color: var(--theme-dark-blue) !important;
+    }
+
+    .permision-buttons {
+      .MuiButtonBase-root {
+        padding: 0 !important;
+      }
+      svg.fgr-icon {
+        margin-top: 0.5vh !important;
+      }
     }
 
     .upload-button {

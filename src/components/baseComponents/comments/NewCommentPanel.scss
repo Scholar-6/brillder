@@ -81,6 +81,10 @@
   padding: 10px;
   margin: 5px;
   border-radius: 10px;
+  textarea {
+    font-size: 1vw;
+    color: var(--theme-dark-blue);
+  }
 }
 
 button.comment-action-button {

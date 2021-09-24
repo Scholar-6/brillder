@@ -6,12 +6,18 @@ $margin-left: 21%;
 
 .annotations-no-scroll-panel {
   background: var(--off-white);
-  $top-space: 7vh;
+  $top-space: 15vh;
   width: calc(100% - 65%);
+  .annotation-title {
+    position: absolute;
+    top: 2vh;
+    margin-left: 1rem !important;
+    font-size: 1.5vw;
+  }
   .comment-text-container {
     margin-left: 1rem !important;
     margin-right: 1rem !important;
-    top: 1vh;
+    top: 7vh;
     width: calc(100% - 65% - 2rem) !important;
   }
   .annotations-panel {

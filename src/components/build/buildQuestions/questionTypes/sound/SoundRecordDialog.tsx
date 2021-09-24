@@ -43,7 +43,7 @@ const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
       />
       {value && 
         <div>
-          <input value={caption} onChange={e => setCaption(e.target.value)} placeholder="Enter caption here" />
+          <input className="caption-input" value={caption} onChange={e => setCaption(e.target.value)} placeholder="Add a caption" />
           <div className="bold">
             Where did you get this sound?
             <span className="text-theme-orange">*</span>
@@ -52,7 +52,7 @@ const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
             value={source}
             className={validationRequired && !source ? "invalid" : ""}
             onChange={(e) => setSource(e.target.value)}
-            placeholder="Add link to source or name of owner..."
+            placeholder="Add link to source or name of owner"
           />
           <CopyrightCheckboxes
             isSound={true}
@@ -63,7 +63,7 @@ const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
         </div>
       }
       <div className="upload-button-container">
-        <div className={`upload-button ${value ? 'active' : 'disabled'}`} onClick={() => {
+        <div className={`upload-button ${(canUpload) ? 'active' : 'disabled'}`} onClick={() => {
           if (canUpload) {
             props.save(value, caption, permision, source);
             setValue('');
@@ -73,7 +73,7 @@ const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
         }}>
           <div className="background" />
           <SpriteIcon name="upload" />
-          <div className="css-custom-tooltip">Upload</div>
+          <div className="css-custom-tooltip bold">Upload</div>
         </div>
       </div>
     </Dialog>

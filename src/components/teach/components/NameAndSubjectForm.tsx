@@ -146,7 +146,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
             name="edit-outline"
             className="w100 h100 active"
           />
-          <div className="css-custom-tooltip">Edit Class Name or Subject</div>
+          <div className="css-custom-tooltip bold">Edit Class Name or Subject</div>
         </span>
         <div className="classroom-btns-container">
           {!props.inviteHidden &&
