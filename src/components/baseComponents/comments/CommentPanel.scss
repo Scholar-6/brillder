@@ -4,6 +4,23 @@
 
 $margin-left: 21%;
 
+.annotations-no-scroll-panel {
+  background: var(--off-white);
+  $top-space: 7vh;
+  width: calc(100% - 65%);
+  .comment-text-container {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+    top: 1vh;
+    width: calc(100% - 65% - 2rem) !important;
+  }
+  .annotations-panel {
+    width: 100% !important;
+    height: calc(100% - #{$top-space}) !important;
+    margin-top: $top-space;
+  }
+}
+
 .comments-panel,
 .annotations-panel {
   &.comments-panel {
