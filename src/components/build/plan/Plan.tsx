@@ -262,6 +262,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                         "sound", "desmos", "caps"
                       ]}
                       imageDialog={true}
+                      soundDialog={true}
                       allowMediaEmbed={true}
                       allowLinks={true}
                       allowTables={true}
