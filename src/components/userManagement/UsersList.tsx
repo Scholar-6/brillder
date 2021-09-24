@@ -77,9 +77,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       filterExpanded: true,
 
       roles: [
-        { name: "Student", type: RolePreference.Student, checked: false },
-        { name: "Teacher", type: RolePreference.Teacher, checked: false },
-        { name: "Builder", type: RolePreference.Builder, checked: false },
+        { name: "Student", type: RolePreference.Student, checked: false, isPreference: true },
+        { name: "Teacher", type: RolePreference.Teacher, checked: false, isPreference: true },
+        { name: "Builder", type: RolePreference.Builder, checked: false, isPreference: true },
         { name: "Publisher", type: UserType.Publisher, checked: false },
         { name: "Admin", type: UserType.Admin, checked: false },
       ],
@@ -393,6 +393,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       type += "S";
     } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
       type += "T";
+    } else if (user.rolePreference?.roleId === RolePreference.Institution) {
+      type += "I";
     }
     return type;
   }

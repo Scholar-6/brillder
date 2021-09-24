@@ -256,11 +256,6 @@ $tile-height: 100%;
     .inner-circle {
       background: var(--white) !important;
     }
-
-    .outer-circle {
-      opacity: 0.5;
-      background: var(--white) !important;
-    }
   }
 
   .editor-border {
@@ -292,23 +287,13 @@ $tile-height: 100%;
       @extend %radCircle;
       position: absolute;
 
-      &.outer-circle {
-        background-color: var(--theme-orange-alpha5);
-        width: 100%;
-        height: 100%;
-      }
-
       &.inner-circle {
         background-color: var(--theme-orange);
-        width: 50%;
-        height: 50%;
+        width: 60%;
+        height: 60%;
       }
 
       @media (prefers-color-scheme: dark) {
-        &.outer-circle {
-          background-color: var(--theme-orange-alpha5);
-        }
-
         &.inner-circle {
           background-color: var(--theme-orange);
         }
@@ -317,19 +302,11 @@ $tile-height: 100%;
 
     &.has-replied {
       >div {
-        &.outer-circle {
-          background-color: var(--theme-yellow-alpha5) !important;
-        }
-
         &.inner-circle {
           background-color: var(--theme-yellow) !important;
         }
 
         @media (prefers-color-scheme: dark) {
-          &.outer-circle {
-            background-color: var(--theme-yellow-alpha5) !important;
-          }
-
           &.inner-circle {
             background-color: var(--theme-yellow) !important;
           }
@@ -359,20 +336,12 @@ $tile-height: 100%;
 .drag-tabs {
   .drag-tile-container.active .drag-tile.invalid {
     .unread-indicator {
-      .outer-circle {
-        background-color: var(--theme-orange-alpha5) !important;
-      }
-
       .inner-circle {
         background-color: var(--theme-orange) !important;
       }
     }
 
     .unread-indicator.has-replied {
-      .outer-circle {
-        background-color: var(--theme-yellow-alpha5) !important;
-      }
-
       .inner-circle {
         background-color: var(--theme-yellow) !important;
       }
