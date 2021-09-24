@@ -3,6 +3,7 @@ import axios from 'axios';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
 import BookAnnotation from 'components/postPlay/desktop/BookAnnotation';
+import BookAnnotationV2 from 'components/postPlay/desktop/BookAnnotationV2';
 import { Annotation, AnnotationLocation } from 'model/attempt';
 import { AttemptStats } from 'model/stats';
 import { User } from 'model/user';
@@ -19,15 +20,21 @@ interface HolisticCommentPanelProps {
 }
 
 const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
+  const textRef = React.useRef<HTMLElement>();
+
   const createHolisticComment = React.useCallback(() => {
     if (!props.currentAttempt) return;
+    if (!textRef.current) return;
+
+    const text = textRef.current.innerText;
+    if (!text || text.length < 0) return;
 
     const newAttempt = props.currentAttempt;
     const newAnnotation: Annotation = {
       id: generateId(),
       location: AnnotationLocation.Brief,
       priority: 1,
-      text: "",
+      text,
       timestamp: new Date(),
       user: props.currentUser,
       children: [],
@@ -36,21 +43,15 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
 
     props.setCurrentAttempt(newAttempt);
     saveAttempt(newAttempt);
+    props.onClose();
     /*eslint-disable-next-line*/
   }, [props.currentAttempt]);
-
-  /*eslint-disable-next-line*/
-  const annotation = React.useMemo(() => props.currentAttempt?.annotations?.find(a => a.priority === 1), [props.currentAttempt?.annotations]);
-
-  const [currentAnnotation, setCurrentAnnotation] = React.useState<Annotation>();
 
   const saveAttempt = React.useCallback(async (attempt: AttemptStats) => {
     const newAttempt = Object.assign({}, attempt);
 
     newAttempt.answers = attempt.answers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
     newAttempt.liveAnswers = attempt.liveAnswers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
-
-    console.log(newAttempt);
 
     return await axios.put(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
@@ -63,32 +64,6 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
     });
     /*eslint-disable-next-line*/
   }, []);
-
-  const updateAnnotation = React.useCallback(async () => {
-    await (async () => {
-      const newAttempt = props.currentAttempt;
-      if (!newAttempt || !newAttempt.annotations || !currentAnnotation) return;
-
-      const annotationIndex = newAttempt.annotations.findIndex(a => a.id === currentAnnotation.id);
-      if (annotationIndex < 0) return;
-
-      newAttempt.annotations[annotationIndex] = currentAnnotation;
-      await saveAttempt(newAttempt);
-    })();
-    props.onClose();
-    /*eslint-disable-next-line*/
-  }, [currentAnnotation, props.currentAttempt, saveAttempt]);
-
-  React.useEffect(() => {
-    if (props.currentAttempt && !annotation) {
-      createHolisticComment();
-    }
-    /*eslint-disable-next-line*/
-  }, [props.currentAttempt, annotation])
-
-  if (!annotation) {
-    return <></>;
-  }
 
   return (
     <Popover
@@ -105,12 +80,8 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
       }}
     >
       <div className="holistic-comment-panel">
-        <BookAnnotation
-          annotation={annotation}
-          updateAnnotation={(a: Annotation) => setCurrentAnnotation(a)}
-          disableFocus
-        />
-        <div className="centered" onClick={() => updateAnnotation()}>
+        <BookAnnotationV2 textRef={textRef} />
+        <div className="centered" onClick={createHolisticComment}>
           <div className="save-button b-green">
             <SpriteIcon name="send" className="active" />
           </div>
