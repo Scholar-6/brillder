@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import ReactQuill from "react-quill";
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
-import _ from "lodash";
 
 import "./QuillKeyboard";
 import QuillBetterTable from "./QuillBetterTable";

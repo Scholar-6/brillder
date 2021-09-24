@@ -15,7 +15,6 @@ import { sendAssignmentReminder } from "services/axios/brick";
 import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
 import BookDialog from "./BookDialog";
 import HolisticCommentPanel from "./HolisticCommentPanel";
-import { Annotation } from "model/attempt";
 import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
 import { User } from "model/user";
