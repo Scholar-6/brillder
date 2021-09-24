@@ -10,11 +10,12 @@ import { User } from 'model/user';
 import BookAnnotation from './BookAnnotation';
 import { HighlightRef } from 'components/play/baseComponents/HighlightHtml';
 import { useHistory } from 'react-router-dom';
+import NewCommentPanel from 'components/baseComponents/comments/NewCommentPanel';
 
 interface BookAnnotationsPanelProps {
   currentUser: User;
 
-  state: BookState; 
+  state: BookState;
   questionIndex?: number;
 
   attempt?: PlayAttempt;
@@ -27,7 +28,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
   const history = useHistory();
 
   const location = React.useMemo(() => {
-    switch(props.state) {
+    switch (props.state) {
       case BookState.Brief: return AnnotationLocation.Brief;
       case BookState.Prep: return AnnotationLocation.Prep;
       case BookState.QuestionPage: return AnnotationLocation.Question;
@@ -39,8 +40,8 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
   const addAnnotation = React.useCallback(() => {
     let newAttempt = props.attempt;
 
-    if(!newAttempt) return;
-    if(!newAttempt.annotations) newAttempt.annotations = [];
+    if (!newAttempt) return;
+    if (!newAttempt.annotations) newAttempt.annotations = [];
     const newAnnotation: Annotation = {
       id: generateId(),
       location,
@@ -53,46 +54,71 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     };
     newAttempt.annotations.push(newAnnotation);
 
-    if(props.highlightRef.current) {
+    if (props.highlightRef.current) {
       props.highlightRef.current.createAnnotation(newAnnotation);
     }
 
     props.setAttempt(newAttempt);
     history.push("#" + newAnnotation.id);
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [props.attempt, props.setAttempt, location, props.questionIndex]);
+
+  const createNewAnnotation = (text: string) => {
+    let newAttempt = props.attempt;
+
+    if (!newAttempt) return;
+    if (!newAttempt.annotations) newAttempt.annotations = [];
+    const newAnnotation: Annotation = {
+      id: generateId(),
+      location,
+      priority: 0,
+      questionIndex: props.questionIndex,
+      text,
+      timestamp: new Date(),
+      user: props.currentUser,
+      children: [],
+    };
+    newAttempt.annotations.push(newAnnotation);
+
+    if (props.highlightRef.current) {
+      props.highlightRef.current.createAnnotation(newAnnotation);
+    }
+
+    props.setAttempt(newAttempt);
+    history.push("#" + newAnnotation.id);
+  }
 
   const updateAnnotation = React.useCallback((annotation: Annotation) => {
     let newAttempt = props.attempt;
 
-    if(!newAttempt) return;
-    if(!newAttempt.annotations) return;
+    if (!newAttempt) return;
+    if (!newAttempt.annotations) return;
 
     const annotationIndex = newAttempt.annotations.findIndex(a => a.id === annotation.id);
-    if(annotationIndex < 0) return;
+    if (annotationIndex < 0) return;
 
     newAttempt.annotations[annotationIndex] = annotation;
     props.setAttempt(newAttempt);
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [props.attempt, props.setAttempt]);
 
   const deleteAnnotation = React.useCallback((annotation: Annotation) => {
     let newAttempt = props.attempt;
 
-    if(!newAttempt) return;
-    if(!newAttempt.annotations) return;
+    if (!newAttempt) return;
+    if (!newAttempt.annotations) return;
 
     const annotationIndex = newAttempt.annotations.findIndex(a => a.id === annotation.id);
-    if(annotationIndex < 0) return;
+    if (annotationIndex < 0) return;
 
     newAttempt.annotations.splice(annotationIndex, 1);
 
-    if(props.highlightRef.current) {
+    if (props.highlightRef.current) {
       props.highlightRef.current.deleteAnnotation(annotation);
     }
 
     props.setAttempt(newAttempt);
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [props.attempt, props.setAttempt]);
 
   const addAnnotationReply = React.useCallback((annotation: Annotation) => {
@@ -110,25 +136,25 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
       ...annotation,
       children: [...annotation.children ?? [], newAnnotation],
     });
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [updateAnnotation]);
 
   const updateAnnotationReply = React.useCallback((annotation: Annotation, reply: Annotation) => {
     const updatedAnnotation = annotation;
-    if(!updatedAnnotation.children) return;
+    if (!updatedAnnotation.children) return;
 
     const idx = updatedAnnotation.children.findIndex(child => child.id === reply.id);
-    if(idx <= -1) return;
+    if (idx <= -1) return;
     updatedAnnotation.children[idx] = reply;
     updateAnnotation(updatedAnnotation);
   }, [updateAnnotation]);
 
   const deleteAnnotationReply = React.useCallback((annotation: Annotation, replyId: number) => {
     const updatedAnnotation = annotation;
-    if(!updatedAnnotation.children) return;
+    if (!updatedAnnotation.children) return;
 
     const idx = updatedAnnotation.children.findIndex(child => child.id === replyId);
-    if(idx <= -1) return;
+    if (idx <= -1) return;
     updatedAnnotation.children.splice(idx, 1);
     updateAnnotation(updatedAnnotation);
   }, [updateAnnotation]);
@@ -137,7 +163,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     annotation => annotation.location === location && (annotation.location !== AnnotationLocation.Question || annotation.questionIndex === props.questionIndex)
   );
 
-  if(!props.attempt || !filteredAnnotations?.length) {
+  if (!props.attempt || !filteredAnnotations?.length) {
     return <div className="right-part empty" onClick={addAnnotation}>
       <div className="gg-background" />
       <div className="grey-circle" onMouseDown={e => e.preventDefault()} >
@@ -149,9 +175,16 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     </div>
   }
 
-	return (
-		<div className="right-part annotations-panel">
-			{filteredAnnotations?.map(annotation => (
+  return (
+    <div className="annotations-no-scroll-panel">
+      <NewCommentPanel
+        currentBrick={{ id: -1 } as any}
+        currentLocation={-1}
+        createComment={comment => createNewAnnotation(comment.text)}
+      />
+      <div className="right-part annotations-panel">
+
+        {filteredAnnotations?.map(annotation => (
           <BookAnnotation
             key={annotation.id}
             annotation={annotation}
@@ -162,16 +195,10 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
             deleteAnnotationReply={(replyId) => deleteAnnotationReply(annotation, replyId)}
           />
         ))
-      }
-      <div className="add-annotation-text" onMouseDown={e => e.preventDefault()} onClick={addAnnotation}>
-        <div className="grey-circle">
-          <div className="grey-background"/>
-          <SpriteIcon name="pen-tool" className="pen-icon" />
-        </div>
-        <span>Add Annotation</span>
+        }
       </div>
-		</div>
-	);
+    </div>
+  );
 };
 
 const mapState = (state: ReduxCombinedState) => ({
