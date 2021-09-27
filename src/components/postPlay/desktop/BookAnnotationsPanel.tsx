@@ -121,13 +121,13 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     /*eslint-disable-next-line*/
   }, [props.attempt, props.setAttempt]);
 
-  const addAnnotationReply = React.useCallback((annotation: Annotation) => {
+  const addAnnotationReply = React.useCallback((annotation: Annotation, text: string) => {
     const newAnnotation: Annotation = {
       id: generateId(),
       location: annotation.location,
       priority: 0,
       questionIndex: annotation.questionIndex,
-      text: "",
+      text: text,
       timestamp: new Date(),
       user: props.currentUser,
     };
@@ -192,7 +192,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
             annotation={annotation}
             updateAnnotation={updateAnnotation}
             deleteAnnotation={() => deleteAnnotation(annotation)}
-            addAnnotationReply={() => addAnnotationReply(annotation)}
+            addAnnotationReply={text => addAnnotationReply(annotation, text)}
             updateAnnotationReply={(reply) => updateAnnotationReply(annotation, reply)}
             deleteAnnotationReply={(replyId) => deleteAnnotationReply(annotation, replyId)}
           />

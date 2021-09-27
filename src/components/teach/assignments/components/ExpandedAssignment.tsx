@@ -202,7 +202,7 @@ class ExpandedAssignment extends Component<
       studentId={studentId} students={this.state.students}
       currentUser={this.props.currentUser}
       onClick={(evt: any) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}
-      onMove={() =>  history.push(map.postAssignment(assignment.brick.id, studentId) + '?fromTeach=true')}
+      onMove={() =>  history.push(map.postAssignmentBrief(assignment.brick.id, studentId) + '?fromTeach=true')}
     />;
   }
 
@@ -279,9 +279,14 @@ class ExpandedAssignment extends Component<
             {student.firstName} {student.lastName}
           </td>
           <td>
-            {studentResult && studentResult.numberOfAttempts > 0 && <SpriteIcon
-              name="eye-on" className={`eye-icon ${disabled ? 'grey' : 'blue'}`} onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})}
-            />}
+            {studentResult && studentResult.numberOfAttempts > 0 && <div className="tooltip-container">
+                <SpriteIcon
+                  name="eye-on" className={`eye-icon ${disabled ? 'grey' : 'blue'}`}
+                  onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})}
+                />
+                <div className="css-custom-tooltip">View Answers</div>
+              </div>
+            }
           </td>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map((a, i) =>
             <td key={i} className="icon-container">

@@ -584,3 +584,13 @@
     }
   }
 }
+
+.back-to-work-teach {
+  .custom-tooltip, .css-custom-tooltip {
+    font-family: $font-family-bold;
+  }
+  .css-custom-tooltip {
+    color: var(--tab-gray);
+    background: var(--theme-light-blue);
+  }
+}
