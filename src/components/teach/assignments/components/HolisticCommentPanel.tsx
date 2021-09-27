@@ -82,7 +82,7 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
       <div className="holistic-comment-panel">
         <BookAnnotationV2 textRef={textRef} />
         <div className="centered" onClick={createHolisticComment}>
-          <div className="save-button b-green">
+          <div className={`save-button b-green`}>
             <SpriteIcon name="send" className="active" />
           </div>
         </div>

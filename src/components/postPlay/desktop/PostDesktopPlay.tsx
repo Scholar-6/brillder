@@ -80,6 +80,8 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     const values = queryString.parse(props.history.location.search);
     if (values.contentsAttempts) {
       bookState = BookState.Attempts;
+    } else if (values.brief) {
+      bookState = BookState.Brief;
     }
 
     this.state = {

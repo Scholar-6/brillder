@@ -123,6 +123,10 @@ export const postAssignment = (brickId: number, userId: number) => {
   return postPlay(brickId, userId) + '?contentsAttempts=true';
 }
 
+export const postAssignmentBrief = (brickId: number, userId: number) => {
+  return postPlay(brickId, userId) + '?brief=true';
+}
+
 export default {
   Build,
   ActivateAccount,
@@ -176,6 +180,7 @@ export default {
 
   postPlay,
   postAssignment,
+  postAssignmentBrief,
 
   Proposal,
   InvestigationBuild,
