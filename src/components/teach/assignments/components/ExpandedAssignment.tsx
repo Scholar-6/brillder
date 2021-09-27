@@ -97,6 +97,39 @@ class ExpandedAssignment extends Component<
     return students;
   }
 
+  nextStudent() {
+    try {
+      const {students} = this.state;
+      const studentIndex = this.state.students.findIndex(s => s.id === this.state.bookData.student.id);
+      for (let i = studentIndex + 1; i < students.length; i++) {
+        const student = students[i];
+        if (student.studentResult) {
+          this.setState({bookData: {open: true, student, assignment: this.props.assignment }});
+          break;
+        }
+      }
+    } catch {
+      console.log('can`t find next student');
+    }
+  }
+
+  prevStudent() {
+    try {
+      const {students} = this.state;
+      const studentIndex = this.state.students.findIndex(s => s.id === this.state.bookData.student.id);
+      for (let i = studentIndex - 1; i >= 0; i--) {
+        const student = students[i];
+        if (student.studentResult) {
+          this.setState({bookData: {open: true, student, assignment: this.props.assignment }});
+          break;
+        }
+      }
+    } catch {
+      console.log('can`t find next student');
+    }
+  }
+
+
   toggleSort() {
     if (this.state.sortBy === SortBy.None) {
       this.sort(SortBy.AvgDecreasing);
@@ -337,7 +370,12 @@ class ExpandedAssignment extends Component<
             </div>
           )}
         </div>
-        {this.state.bookData.open && <BookDialog bookData={this.state.bookData} onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />}
+        {this.state.bookData.open && <BookDialog
+          bookData={this.state.bookData}
+          nextStudent={this.nextStudent.bind(this)}
+          prevStudent={this.prevStudent.bind(this)}
+          onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />
+        }
         <HolisticCommentPanel
           currentAttempt={students.find(s => s.id === this.state.currentCommentStudentId)?.studentResult?.attempts.slice(-1)[0]}
           setCurrentAttempt={(attempt: AttemptStats) => {
