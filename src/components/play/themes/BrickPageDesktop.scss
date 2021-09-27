@@ -2485,3 +2485,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     width: calc(100vw - 5.834vw - 8vw - 7vw - 2.1vw) !important;
   }
 }
+
+.play-preview-pages .review-page .question-live-play {
+  overflow-y: auto !important;
+}
