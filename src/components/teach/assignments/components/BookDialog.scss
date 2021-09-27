@@ -25,18 +25,55 @@
     z-index: 100001;
     overflow: hidden;
     .header {
+      position: relative;
       width: 100%;
-      padding-left: 1vw;
+      padding-left: 3vw;
       $color: var(--white);
       background: var(--theme-light-blue);
       color: $color;
       height: 8vh;
 
+      .absolute-user-stepper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3vw;
+        svg {
+          height: 4vh;
+          width: 4vh;
+          max-width: 3vw;
+        }
+        .user-icon-box {
+          display: flex;
+          justify-content: center;
+          height: 4vh;
+        }
+        .arrow-box {
+          display: flex;
+          justify-content: center;
+          svg {
+            cursor: pointer;
+            width: 2vh;
+            height: 2vh;
+            transition: all 300ms ease-out;
+
+            &:hover {
+              color: var(--theme-orange);
+            }
+          }
+        }
+      }
+
       .title {
         height: 3.5vh;
-        display: flex;
         align-items: flex-end;
+        @extend %ellipsis;
         font-size: 1vw;
+        width: calc(100% - 2vw) !important;
+
+        p {
+          display: inline;
+        }
 
         span {
           margin-left: 0.2vw;
