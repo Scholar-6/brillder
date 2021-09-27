@@ -53,6 +53,24 @@
       }
     }
 
+    .tooltip-container {
+      position: relative;
+      .css-custom-tooltip {
+        left: -2.7vw;
+        width: 7vw;
+        padding-left: 0;
+        text-align: center;
+        height: 0;
+        overflow: hidden;
+      }
+      &:hover {
+        .css-custom-tooltip {
+          opacity: 1;
+          height: auto;
+        }
+      }
+    }
+
     .eye-icon {
       cursor: pointer;
       $size: 1.5vw;
