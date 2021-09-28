@@ -9,6 +9,7 @@ import YoutubeLink from './YoutubeLink';
 import './YoutubeAndMath.scss'
 import Katex from 'components/baseComponents/katex/Katex';
 import { renderGraph } from 'services/graph';
+import HtmlWithSpaces from './HtmlWithSpaces';
 
 interface MathHtmlProps {
   innerRef?: any;
@@ -79,7 +80,7 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
             if (res) {
               return <YoutubeLink key={i} value={el} />;
             }
-            return <div key={i} dangerouslySetInnerHTML={{ __html: el }} />
+            return <HtmlWithSpaces index={i} value={el} />;
           })
         }
       </div>
