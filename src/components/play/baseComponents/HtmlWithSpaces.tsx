@@ -20,13 +20,12 @@ const HtmlWithSpaces:React.FC<SpacesProps> = ({ index, className, value }) => {
       isTag = false;
     }
 
-    if (!isTag) {
-      output += s.replace(/ /g, '&nbsp;');
+    if (!isTag && s === ' ') {
+      output += '<span class="custom-space-character"></span>'
     } else {
       output += s;
     }
   }
-
   return <div key={index} className={className} dangerouslySetInnerHTML={{ __html: output }} />
 }
 
