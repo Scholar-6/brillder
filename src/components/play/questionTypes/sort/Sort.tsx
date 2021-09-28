@@ -19,6 +19,8 @@ import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
 import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
 import SortImage from './SortImage';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { isMobile } from 'react-device-detect';
 
 interface UserCategory {
   name: string;
@@ -88,7 +90,7 @@ class Sort extends CompComponent<SortProps, SortState> {
   }
 
   getPhonePreviewCats(props: SortProps) {
-    let userCats:UserCategory[] = [];
+    let userCats: UserCategory[] = [];
     let choices: SortAnswer[] = [];
 
     for (let [catIndex, category] of (props.component.categories as any).entries()) {
@@ -103,7 +105,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       userCats.push({ choices: [], name: cat.name });
       catIndex++;
     }
-    
+
     userCats.push({ choices, name: Sort.unsortedTitle });
 
     return userCats;
@@ -316,6 +318,16 @@ class Sort extends CompComponent<SortProps, SortState> {
     )
   }
 
+  checkImages() {
+    for (let category of this.props.component.categories) {
+      let foundImage = category.answers.find((a: any) => a.valueFile);
+      if (foundImage) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   render() {
     let count = -1;
     const incrementCount = () => count++;
@@ -323,9 +335,17 @@ class Sort extends CompComponent<SortProps, SortState> {
     const unsorted = this.state.userCats[this.state.userCats.length - 1];
     const correct = !!this.props.attempt?.correct;
 
+    const haveImage = this.checkImages();
+
     return (
       <div className="question-unique-play sort-play">
-        <p><span className="help-text"><DragIcon />Drag to rearrange.</span></p>
+        <p>
+          <span className="help-text"><DragIcon />Drag to rearrange. {
+            haveImage && (isMobile
+              ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
+              : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
+          }</span>
+        </p>
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>
