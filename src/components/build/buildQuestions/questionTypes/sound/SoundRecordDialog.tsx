@@ -50,7 +50,7 @@ const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
           </div>
           <input
             value={source}
-            className={validationRequired && !source ? "invalid" : ""}
+            className={`source-g2 ${validationRequired && !source ? "invalid" : ""}`}
             onChange={(e) => setSource(e.target.value)}
             placeholder="Add link to source or name of owner"
           />
