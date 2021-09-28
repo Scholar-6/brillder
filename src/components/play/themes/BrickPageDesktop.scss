@@ -1624,6 +1624,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
     .round-icon {
+      cursor: pointer;
       width: 2vw;
       border-radius: 50%;
       height: 2vw;
