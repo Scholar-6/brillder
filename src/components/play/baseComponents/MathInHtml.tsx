@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // @ts-ignore
-import MathJax from 'react-mathjax-preview'
+import MathJax from 'react-mathjax-preview';
 
 import { parseDataToArray, isMathJax, isLatex } from 'components/services/mathJaxService';
 import Katex from 'components/baseComponents/katex/Katex';
@@ -13,7 +13,7 @@ interface MathHtmlProps {
 
 class MathInHtml extends Component<MathHtmlProps> {
   render() {
-    var arr = parseDataToArray(this.props.value);
+    const arr = parseDataToArray(this.props.value);
 
     const renderMath = (data: string, i: number) => {
       return <MathJax math={data} key={i} />;
@@ -36,7 +36,8 @@ class MathInHtml extends Component<MathHtmlProps> {
         } else if (latex) {
           return renderLatex(el, i);
         } else {
-          return <div className={this.props.className} key={i} dangerouslySetInnerHTML={{ __html: el }} />
+          const elWithSpaces = el.replace(/ /g, '&nbsp;');
+          return <div className={this.props.className} key={i} dangerouslySetInnerHTML={{ __html: elWithSpaces }} />
         }
       })
     );
