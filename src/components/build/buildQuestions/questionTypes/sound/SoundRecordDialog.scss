@@ -22,6 +22,12 @@
     input {
       width: calc(100% - 0.9vw);
       margin-top: 0.5vw;
+      &.source-g2 {
+        margin-top: 0 !important;
+      }
+      &.invalid {
+        background: var(--theme-orange);
+      }
     }
 
     .caption-input {
@@ -43,15 +49,20 @@
 
     input::placeholder {
       opacity: 0.5 !important;
+      font-family: $font-family-bold;
       color: var(--theme-dark-blue) !important;
     }
 
     .permision-buttons {
+      margin-top: 0.8vh;
       .MuiButtonBase-root {
         padding: 0 !important;
       }
       svg.fgr-icon {
         margin-top: 0.5vh !important;
+      }
+      .required {
+        color: var(--theme-orange);
       }
     }
 
