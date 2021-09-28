@@ -36,8 +36,7 @@ class MathInHtml extends Component<MathHtmlProps> {
         } else if (latex) {
           return renderLatex(el, i);
         } else {
-          const elWithSpaces = el.replace(/ /g, '&nbsp;');
-          return <div className={this.props.className} key={i} dangerouslySetInnerHTML={{ __html: elWithSpaces }} />
+          return <div className={this.props.className} key={i} dangerouslySetInnerHTML={{ __html: el }} />
         }
       })
     );
