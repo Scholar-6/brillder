@@ -4,6 +4,7 @@ import MathJax from 'react-mathjax-preview';
 
 import { parseDataToArray, isMathJax, isLatex } from 'components/services/mathJaxService';
 import Katex from 'components/baseComponents/katex/Katex';
+import HtmlWithSpaces from './HtmlWithSpaces';
 
 
 interface MathHtmlProps {
@@ -36,7 +37,7 @@ class MathInHtml extends Component<MathHtmlProps> {
         } else if (latex) {
           return renderLatex(el, i);
         } else {
-          return <div className={this.props.className} key={i} dangerouslySetInnerHTML={{ __html: el }} />
+          return <HtmlWithSpaces index={i} value={el} className={this.props.className} />;
         }
       })
     );
