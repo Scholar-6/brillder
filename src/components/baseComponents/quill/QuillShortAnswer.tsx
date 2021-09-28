@@ -121,9 +121,7 @@ const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
           <React.Fragment>
             <div>
               <span className="exclamation-mark">!</span>
-              Great minds don’t think exactly alike: the learner may know the
-              right answer but use slightly different language, so there is a
-              limit of three words for short answers.
+              There is a limit of two spaces or three words for short answers
             </div>
           </React.Fragment>
         }
