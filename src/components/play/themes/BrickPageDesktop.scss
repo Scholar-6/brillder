@@ -2489,3 +2489,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .play-preview-pages .review-page .question-live-play {
   overflow-y: auto !important;
 }
+
+.play-preview-pages .new-prep-page .introduction-page .scrollable .introduction-content {
+  padding-bottom: 2vw;
+}
