@@ -53,7 +53,8 @@ class YoutubeAndMathInHtml extends Component<MathHtmlProps> {
             if (res) {
               return <YoutubeLink key={i} value={el} />;
             }
-            return <div key={i} dangerouslySetInnerHTML={{ __html: el}} />
+            const elWithSpaces = el.replace(/ /g, '&nbsp;');
+            return <div key={i} dangerouslySetInnerHTML={{ __html: elWithSpaces}} />
           })
         }
       </div>

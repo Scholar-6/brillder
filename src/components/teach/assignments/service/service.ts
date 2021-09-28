@@ -3,19 +3,21 @@ import { TeachListItem } from "../components/ClassroomsList";
 
 
 export const convertClassAssignments = (items: any[], classroom: TeachClassroom, isArchive: boolean) => {
-  for (let assignment of classroom.assignments) {
-    let item: TeachListItem = {
-      classroom,
-      assignment
-    };
+  if (classroom.assignments) {
+    for (let assignment of classroom.assignments) {
+      let item: TeachListItem = {
+        classroom,
+        assignment
+      };
 
-    if (assignment.isArchived === true) {
-      if (isArchive) {
-        items.push(item);
-      }
-    } else {
-      if (!isArchive) {
-        items.push(item);
+      if (assignment.isArchived === true) {
+        if (isArchive) {
+          items.push(item);
+        }
+      } else {
+        if (!isArchive) {
+          items.push(item);
+        }
       }
     }
   }
