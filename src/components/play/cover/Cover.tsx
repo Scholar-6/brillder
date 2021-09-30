@@ -268,7 +268,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   </div>
                 </div>}
             </div>
-            <CoverTimer onFinish={() => {}} />
           </div>
           <div className="introduction-info">
             <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
