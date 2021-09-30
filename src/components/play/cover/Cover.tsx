@@ -24,6 +24,7 @@ import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
 import HoveredImage from "../baseComponents/HoveredImage";
+import CoverTimer from "./CoverTimer";
 
 
 interface Props {
@@ -267,6 +268,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   </div>
                 </div>}
             </div>
+            <CoverTimer onFinish={() => {}} />
           </div>
           <div className="introduction-info">
             <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
@@ -348,6 +350,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                         </div>
                       </div>
                     </div>
+                    <CoverTimer onFinish={() => {}} />
                   </div>
                 </div>
                 <div className="keywords-row">

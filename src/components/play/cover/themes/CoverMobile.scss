@@ -243,3 +243,22 @@
   }
 }
 
+.cover-timer {
+  top: calc(1vh + 1.4vw);
+  right: 1vw;
+  width: 12vw;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 4.5vw !important;
+
+  svg {
+    display: none;
+    $size: 4.5vw;
+    width: $size !important;
+    height: $size !important;
+    stroke-width: 2;
+    margin-right: 0.5vw;
+  }
+}

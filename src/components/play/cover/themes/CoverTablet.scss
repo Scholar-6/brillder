@@ -247,3 +247,18 @@
     height: 1.5vw;
   }
 }
+
+.cover-timer {
+  display: flex;
+  align-items: center;
+  font-size: 1.5vw !important;
+
+  svg {
+    $size: 1.5vw;
+    width: $size !important;
+    height: $size !important;
+    stroke-width: 2;
+    margin-left: 1.5vw !important;
+    margin-right: 0.5vw;
+  }
+}

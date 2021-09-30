@@ -110,6 +110,7 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
       <div>
         <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
         <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
+        {props.isCover && <SpriteIcon name="" />}
         <SpriteIcon name="feather-share" className="gt-smaller" onClick={() => setShare(true)} />
         {canSee
           ? props.isCover

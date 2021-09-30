@@ -6,7 +6,6 @@ import { isMathJax, isLatex, parseDataToArray } from 'components/services/mathJa
 import YoutubeLink from './YoutubeLink';
 import './YoutubeAndMath.scss'
 import Katex from 'components/baseComponents/katex/Katex';
-import { stripHtml } from 'components/build/questionService/ConvertService';
 import HtmlWithSpaces from './HtmlWithSpaces';
 
 interface MathHtmlProps {
