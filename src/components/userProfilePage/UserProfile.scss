@@ -112,7 +112,7 @@
       .profile-image-container {
         position: relative;
         padding-top: 5vh;
-        width: 13.5vw;
+        width: 11vw;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -215,8 +215,8 @@
 
       .profile-inputs-container {
         padding-top: 5.1vh;
-        width: 32.4vw;
-        margin: 0 3vw;
+        width: 25vw;
+        margin: 0 0.5vw 0 1vw;
 
         @include phone_and_tabletP {
           width: 100%;
@@ -280,13 +280,22 @@
       }
 
       .profile-roles-container {
-        width: 13.5vw;
+        width: 22vw;
 
         @include phone_and_tabletP {
           width: 100%;
         }
 
+        &.preference-container {
+          margin-right: 0.5vw;
+        }
+
+        &.roles-container {
+          margin-left: 0.5vw;
+        }
+
         .roles-title {
+          height: 5.1vh;
           width: 100%;
           @extend %textCenter;
           font-size: 1.82vw;
@@ -301,8 +310,9 @@
         }
 
         .roles-box {
+          min-height: calc(6.8vw + 13.2vh);
           width: 100%;
-          border-radius: 0.3vw;
+          border-radius: 1.7vh;
           box-shadow: $base-shadow;
           padding: 1.15vw;
 
@@ -312,6 +322,10 @@
           }
 
           @extend %radioBlue;
+
+          .first-column {
+            margin-right: 2vw;
+          }
 
           .MuiGrid-item {
             width: 100%;
@@ -330,7 +344,7 @@
             }
 
             .MuiFormControlLabel-label {
-              margin-left: 1.15vw;
+              margin-left: 0.1vw;
               font-size: 1.45vw;
               color: var(--theme-dark-blue);
               font-family: $font-family-regular;
@@ -414,13 +428,10 @@
         padding-top: 0;
         padding-left: 0.65vw;
         max-height: 18vh;
+        font-size: 1.45vw;
 
         @include phone_and_tabletL {
           font-size: 4vw;
-        }
-
-        @include tabletL {
-          font-size: 1.8vw;
         }
       }
 
