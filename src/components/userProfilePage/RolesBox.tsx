@@ -54,48 +54,52 @@ class RolesBox extends Component<BoxProps, BoxState> {
   render() {
     const { rolePreference } = this.state;
     return (
-      <Grid container className="roles-box">
-        <Grid item>
-          <FormControlLabel
-            className="filter-container"
-            checked={rolePreference === RolePreference.Student}
-            onClick={() => this.onPreferenceChange(RolePreference.Student)}
-            control={<Radio className="filter-radio" />}
-            label="Student"
-          />
-        </Grid>
-        <Grid item>
-          <FormControlLabel
-            className="filter-container"
-            checked={rolePreference === RolePreference.Teacher}
-            onClick={() => this.onPreferenceChange(RolePreference.Teacher)}
-            control={<Radio className="filter-radio" />}
-            label="Teacher"
-          />
-        </Grid>
-        <Grid item>
-          <FormControlLabel
-            className="filter-container"
-            checked={rolePreference === RolePreference.Builder}
-            onClick={() => this.onPreferenceChange(RolePreference.Builder)}
-            control={<Radio className="filter-radio" />}
-            label="Builder"
-          />
-        </Grid>
-        <Grid item>
-          <FormControlLabel
-            className="filter-container"
-            checked={rolePreference === RolePreference.Institution}
-            onClick={() => this.onPreferenceChange(RolePreference.Institution)}
-            control={<Radio className="filter-radio" />}
-            label="Institution"
-          />
-        </Grid>
+      <div className="flex-center roles-box">
+        <div className="first-column">
+          <Grid item>
+            <FormControlLabel
+              className="filter-container"
+              checked={rolePreference === RolePreference.Student}
+              onClick={() => this.onPreferenceChange(RolePreference.Student)}
+              control={<Radio className="filter-radio" />}
+              label="Student"
+            />
+          </Grid>
+          <Grid item>
+            <FormControlLabel
+              className="filter-container"
+              checked={rolePreference === RolePreference.Teacher}
+              onClick={() => this.onPreferenceChange(RolePreference.Teacher)}
+              control={<Radio className="filter-radio" />}
+              label="Teacher"
+            />
+          </Grid>
+          <Grid item>
+            <FormControlLabel
+              className="filter-container"
+              checked={rolePreference === RolePreference.Builder}
+              onClick={() => this.onPreferenceChange(RolePreference.Builder)}
+              control={<Radio className="filter-radio" />}
+              label="Builder"
+            />
+          </Grid>
+        </div>
+        <div>
+          <Grid item>
+            <FormControlLabel
+              className="filter-container"
+              checked={rolePreference === RolePreference.Institution}
+              onClick={() => this.onPreferenceChange(RolePreference.Institution)}
+              control={<Radio className="filter-radio" />}
+              label="Institution"
+            />
+          </Grid>
 
-        {/* Publisher and Admin roles */}
-        <Grid item>{this.renderRole(this.props.roles[0])}</Grid>
-        <Grid item>{this.renderRole(this.props.roles[1])}</Grid>
-      </Grid>
+          {/* Publisher and Admin roles */}
+          <Grid item>{this.renderRole(this.props.roles[0])}</Grid>
+          <Grid item>{this.renderRole(this.props.roles[1])}</Grid>
+        </div>
+      </div>
     );
   }
 }
