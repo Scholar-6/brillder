@@ -52,7 +52,7 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
     rest.isAuthorized()
     return <PageLoader content="...Checking rights..." />;
   } else {
-    let isCover = location.pathname.search('/play/brick/') !== -1 && location.pathname.slice(-6) === '/cover';
+    const isCover = location.pathname.search('/play/brick/') !== -1 && location.pathname.slice(-6) === '/cover';
     if (isCover) {
       return <Redirect to={map.Login} />
     }
