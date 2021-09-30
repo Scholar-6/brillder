@@ -29,6 +29,9 @@ $base-build-border: $editor-radius;
   }
 
   .phone-question-preview {
+    .phone {
+      max-width: 21vw;
+    }
     .custom-component {
       background: white;
 
@@ -1034,5 +1037,27 @@ $base-build-border: $editor-radius;
     right: 7vw;
     width: 25vw;
     z-index: 1001;
+  }
+}
+
+// aspect ratio is too high hide phone and make build bigger
+@media (max-aspect-ratio: 16/12) {
+  .investigation-build-page .fixed-build-phone {
+    display: none;
+  }
+  .investigation-build-page .question-container {
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+  }
+  .investigation-build-page {
+    .build-brick-title {
+      justify-content: flex-start;
+    }
+  }
+  .investigation-build-page .saved-info {
+    top: 1%;
+    width: 40vw;
+    .saved-info-row .text-container {
+    }
   }
 }
