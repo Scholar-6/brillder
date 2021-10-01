@@ -33,6 +33,7 @@ import ProfilePhonePreview from "./components/ProfilePhonePreview";
 import { getExistedUserState, getNewUserState } from "./stateService";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
+import UserTypeLozenge from "./UsertypeLozenge";
 
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
 
@@ -336,9 +337,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           />
           <Grid container direction="row" className="user-profile-content">
             <div className="profile-block">
+              <UserTypeLozenge roles={user.roles} rolePreference={this.props.user.rolePreference} />
               <div className="profile-header">
-                {user.firstName ? user.firstName : "NAME"}
-                <span className="profile-username">{user.username ? user.username : "USERNAME"}</span>
+                {user.username ? user.username : "USERNAME"}
               </div>
               <div className="save-button-container">
                 <SaveProfileButton
@@ -393,10 +394,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   </div>
                 </div>
                 <div className="profile-roles-container">
-                  <div className="roles-title">ROLES</div>
+                  <div className="roles-title">User Types</div>
                   <RolesBox
                     roles={this.state.roles}
-                    userRoles={[this.state.user.roles]}
+                    userRoles={this.state.user.roles}
                     rolePreference={this.props.user.rolePreference?.roleId}
                     toggleRole={this.toggleRole.bind(this)}
                   />
