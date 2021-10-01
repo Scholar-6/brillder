@@ -1055,9 +1055,6 @@ $base-build-border: $editor-radius;
     }
   }
   .investigation-build-page .saved-info {
-    top: 1%;
-    width: 40vw;
-    .saved-info-row .text-container {
-    }
+    display: none;
   }
 }
