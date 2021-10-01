@@ -56,12 +56,11 @@
       padding-top: 3.1vh;
       margin-left: 1.08vw;
       font-size: 5.4vw;
-      letter-spacing: 1.05vw;
       @extend %textCenter;
-      font-family: $font-family-black;
+      font-family: $font-family-bold;
       color: var(--theme-dark-blue);
       line-height: 1;
-      text-transform: uppercase;
+      text-transform: capitalize;
 
       @include phone_and_tabletP {
         font-size: 13.4vw;
@@ -299,9 +298,8 @@
           width: 100%;
           @extend %textCenter;
           font-size: 1.82vw;
-          letter-spacing: 0.36vw;
           color: var(--theme-dark-blue);
-          font-family: $font-family-black;
+          font-family: $font-family-bold;
           line-height: 1.41;
 
           @include phone_and_tabletP {
