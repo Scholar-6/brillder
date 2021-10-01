@@ -38,7 +38,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
   }
 
   renderRole(role: UserRoleItem) {
-    let checked = this.checkUserRole(role.roleId);
+    const checked = this.checkUserRole(role.roleId);
 
     return (
       <FormControlLabel

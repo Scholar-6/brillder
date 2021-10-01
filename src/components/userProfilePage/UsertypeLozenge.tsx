@@ -28,9 +28,9 @@ const UserTypeLozenge: React.FC<any> = (props) => {
     name = "Publisher";
   }
 
-  return <div className="user-type-lozenge">
+  return <span className="user-type-lozenge">
    {name}
-  </div>;
+  </span>;
 }
 
 export default UserTypeLozenge;
