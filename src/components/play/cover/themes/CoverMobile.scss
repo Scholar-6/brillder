@@ -105,6 +105,7 @@
     position: relative;
 
     .cover-info-row {
+      max-width: 85%;
       position: absolute;
       top: 2.5vw;
       left: 2vw;
@@ -259,6 +260,25 @@
     width: $size !important;
     height: $size !important;
     stroke-width: 2;
+    margin-right: 0.5vw;
+  }
+}
+
+.cover-timer {
+  position: absolute;
+  right: 0.5vw;
+  top: calc(1vh + 1.2vw);
+  display: flex;
+  align-items: center;
+  font-size: 4.5vw !important;
+
+  svg {
+    display: block !important;
+    $size: 4.5vw;
+    width: $size !important;
+    height: $size !important;
+    stroke-width: 2;
+    margin-left: 1.5vw !important;
     margin-right: 0.5vw;
   }
 }
