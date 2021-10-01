@@ -337,9 +337,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           />
           <Grid container direction="row" className="user-profile-content">
             <div className="profile-block">
-              <UserTypeLozenge roles={user.roles} rolePreference={this.props.user.rolePreference} />
               <div className="profile-header">
-                {user.username ? user.username : "USERNAME"}
+                <UserTypeLozenge roles={user.roles} rolePreference={this.props.user.rolePreference} />
+                <div>{user.username ? user.username : "USERNAME"}</div>
               </div>
               <div className="save-button-container">
                 <SaveProfileButton
