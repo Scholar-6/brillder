@@ -51,7 +51,7 @@
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.6",
-    "quill": "https://github.com/Scholar-6/quill/tarball/master",
+    "quill": "github:Scholar-6/quill#master",
     "quill-better-table": "https://github.com/Scholar-6/quill-better-table/tarball/master",
     "quill-delta": "^4.2.2",
     "quill-delta-to-html": "^0.12.0",
