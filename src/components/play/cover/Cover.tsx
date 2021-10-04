@@ -350,8 +350,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                         </div>
                       </div>
                     </div>
-                    <CoverTimer brickLength={brick.brickLength} />
                   </div>
+                  <CoverTimer brickLength={brick.brickLength} />
                 </div>
                 <div className="keywords-row">
                   <KeyWordsPreview keywords={brick.keywords} />
