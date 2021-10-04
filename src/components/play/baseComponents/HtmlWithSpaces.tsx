@@ -21,7 +21,7 @@ const HtmlWithSpaces:React.FC<SpacesProps> = ({ index, className, value }) => {
     }
 
     if (!isTag && s === ' ') {
-      output += '<span class="custom-space-character"></span>'
+      output += '<span class="custom-space-character"> </span>'
     } else {
       output += s;
     }
