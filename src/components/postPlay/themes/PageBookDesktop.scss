@@ -143,14 +143,6 @@
     top: 0;
     transition: all 0.8s ease-in-out;
   }
-  
-  .reply-icon-g2 {
-    cursor: pointer;
-    $size: 1.3vw;
-    stroke-width: 2;
-    width: $size;
-    height: $size;
-  }
 
   .comment-reply-container .comment-text {
     margin-left: 0 !important;
