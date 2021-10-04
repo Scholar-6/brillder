@@ -29,9 +29,6 @@ $base-build-border: $editor-radius;
   }
 
   .phone-question-preview {
-    .phone {
-      max-width: 21vw;
-    }
     .custom-component {
       background: white;
 
@@ -1041,7 +1038,7 @@ $base-build-border: $editor-radius;
 }
 
 // aspect ratio is too high hide phone and make build bigger
-@media (max-aspect-ratio: 16/12) {
+@media (max-aspect-ratio: 160/98) {
   .investigation-build-page .fixed-build-phone {
     display: none;
   }

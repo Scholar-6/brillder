@@ -93,7 +93,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     initSuggestionExpanded = true;
   }
 
-  const isCurrentEditor = (props.brick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
+  const isCurrentEditor = (props.brick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
   if (isCurrentEditor) {
     initSuggestionExpanded = true;
   }
@@ -167,7 +167,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   // when no questions create one and make active.
   useEffect(() => {
     if (brick && (!brick.questions || brick.questions.length === 0)) {
-      createNewQuestionV2(getNewFirstQuestion(QuestionTypeEnum.None, true), (questionV2:any) => {
+      createNewQuestionV2(getNewFirstQuestion(QuestionTypeEnum.None, true), (questionV2: any) => {
         questionV2.active = true;
         setQuestions(update(questions, { $set: [questionV2] }));
         cashBuildQuestion(brickId, 0);
@@ -190,7 +190,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }, [questions, params]);
   const setCurrentQuestionIndex = React.useCallback((index: number) => {
     history.push(map.investigationBuildQuestion(props.brick.id, questions[index].id));
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [questions, history]);
   let activeQuestion = React.useMemo(() => (currentQuestionIndex >= 0) ? questions[currentQuestionIndex] : undefined, [currentQuestionIndex, questions]);
 
@@ -247,9 +247,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const pushDiff = (brick: any) => {
     const diff = getBrickDiff(currentBrick, brick);
-    if(diff) {
+    if (diff) {
       const backwardDiff = getBrickDiff(brick, currentBrick);
-      if(Object.keys(diff).filter((k: any) => k !== "updated" && k !== "type").length === 0) {
+      if (Object.keys(diff).filter((k: any) => k !== "updated" && k !== "type").length === 0) {
         return;
       }
       undoRedoService.push({
@@ -262,7 +262,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const undo = () => {
     const diff = undoRedoService.undo();
-    if(diff) {
+    if (diff) {
       console.log(diff);
       applyDiff(diff);
       updateBrick(diff);
@@ -273,7 +273,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const redo = () => {
     const diff = undoRedoService.redo();
-    if(diff) {
+    if (diff) {
       console.log(diff);
       applyDiff(diff);
       updateBrick(diff);
@@ -295,7 +295,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else {
       history.push(map.ProposalReview(brickId));
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [history]);
 
   const setPrevFromPhone = React.useCallback(() => {
@@ -304,7 +304,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else {
       moveToPlan(history, brickId);
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [questions, currentQuestionIndex]);
 
   const setNextQuestion = React.useCallback(() => {
@@ -313,7 +313,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else {
       history.push(map.ProposalReview(brickId));
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [questions, history]);
   //#endregion
 
@@ -357,7 +357,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const questionToSave = updatedQuestions[currentQuestionIndex];
 
     saveQuestion(questionToSave, (savedQuestion: any) => {
-      if(!questionToSave.id) {
+      if (!questionToSave.id) {
         const postUpdatedQuestions = updatedQuestions;
         postUpdatedQuestions[currentQuestionIndex].id = savedQuestion.id;
         setQuestions(update(questions, { $set: postUpdatedQuestions }));
@@ -504,7 +504,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         let isHintInvalid = validateHint(invalidQuestion.hint, answersCount);
         if (isHintInvalid) {
           let index = getQuestionIndex(invalidQuestion);
-          setInvalidHint({ isOpen: true, questionNumber: index + 1});
+          setInvalidHint({ isOpen: true, questionNumber: index + 1 });
         } else {
           setSubmitDialog(true);
         }
@@ -549,7 +549,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const moveToRedTab = () => {
     const invalidQuestionIndex = getFirstInvalidQuestionIndex(questions);
-    if(invalidQuestionIndex) {
+    if (invalidQuestionIndex) {
       setCurrentQuestionIndex(invalidQuestionIndex);
     }
   }
@@ -564,7 +564,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const createNewQuestionV2 = async (initQuestion: Question, callback?: Function) => {
     const resQuestion = await createQuestion(brickId, getApiQuestion(initQuestion));
     if (resQuestion) {
-      if(callback) { callback(resQuestion); }
+      if (callback) { callback(resQuestion); }
     } else {
       console.log("Error creation question.");
       setSaveError(true);
@@ -581,7 +581,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         setSavingStatus(false);
       } else {
         props.saveQuestion(getApiQuestion(updatedQuestion)).then((res: Question) => {
-          if(callback) { callback(res); }
+          if (callback) { callback(res); }
           setSavingStatus(false);
         }).catch((err: any) => {
           console.log(err);
@@ -611,7 +611,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         const time = Date.now();
         console.log(`${new Date(time)} -> ${res.updated}`);
         const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
-        if(timeDifference > 10000) {
+        if (timeDifference > 10000) {
           console.log("Not updated properly!!");
           setSaveError(true);
         } else {
@@ -626,7 +626,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const updateComponents = (components: any[]): Question | undefined => {
-    if(currentQuestionIndex < 0) return;
+    if (currentQuestionIndex < 0) return;
     if (locked) { return activeQuestion!; }
     console.log('before updated components', JSON.parse(JSON.stringify(questions)));
     const updatedQuestions = questions.slice();
@@ -638,7 +638,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const updateFirstComponent = (component: TextComponentObj): Question | undefined => {
-    if(currentQuestionIndex < 0) return;
+    if (currentQuestionIndex < 0) return;
     if (locked) { return activeQuestion!; }
     const updatedQuestions = questions.slice();
     updatedQuestions[currentQuestionIndex].firstComponent = component;
@@ -710,7 +710,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const isTutorialPassed = () => {
-    const isCurrentEditor = (props.brick.editors?.findIndex((e:any) => e.id === props.user.id) ?? -1) >= 0;
+    const isCurrentEditor = (props.brick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
     if (isCurrentEditor) {
       return true;
     }
@@ -761,7 +761,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             undoRedoService={undoRedoService}
             undo={undo}
             redo={redo}
-           />
+          />
         </Route>
       </Switch>
     );
@@ -796,9 +796,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       props.saveBrickQuestions(questions).then(() => {
         setSavingStatus(false);
       }).catch((err: any) => {
-          console.log(err);
-          console.log("Error saving brick.");
-          setSaveError(true);
+        console.log(err);
+        console.log("Error saving brick.");
+        setSaveError(true);
       });
     }
   }
@@ -817,166 +817,172 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const renderBuildPage = () => {
     return (
       <div className="investigation-build-page">
-      <Helmet>
-        <title>{getBrillderTitle(props.brick.title)}</title>
-      </Helmet>
-      <BuildNavigation
-        tutorialStep={step}
-        user={props.user}
-        isTutorialSkipped={isTutorialPassed()}
-        isValid={isValid}
-        questions={questions}
-        moveToPreview={moveToPreview}
-        isEditor={isCurrentEditor}
-        isPublisher={isPublisher}
-        isAdmin={isAdmin}
-        isAuthor={isAuthor}
-        history={history}
-        brick={props.brick}
-        exitAndSave={exitAndSave}
-      />
-      <Hidden only={['xs', 'sm']}>
-        <TutorialLabels isTutorialPassed={isTutorialPassed()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} />
-        <Grid
-          container direction="row"
-          className="investigation-build-background"
-          alignItems="center"
-        >
+        <Helmet>
+          <title>{getBrillderTitle(props.brick.title)}</title>
+        </Helmet>
+        <BuildNavigation
+          tutorialStep={step}
+          user={props.user}
+          isTutorialSkipped={isTutorialPassed()}
+          isValid={isValid}
+          questions={questions}
+          moveToPreview={moveToPreview}
+          isEditor={isCurrentEditor}
+          isPublisher={isPublisher}
+          isAdmin={isAdmin}
+          isAuthor={isAuthor}
+          history={history}
+          brick={props.brick}
+          exitAndSave={exitAndSave}
+        />
+        <Hidden only={['xs', 'sm']}>
+          <TutorialLabels isTutorialPassed={isTutorialPassed()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} />
           <Grid
-            container
-            item xs={12} sm={12} md={9}
+            container direction="row"
+            className="investigation-build-background"
             alignItems="center"
-            style={{ height: "100%" }}
-            className="question-container"
           >
             <Grid
-              container direction="row"
-              justify="center" alignItems="center"
+              container
+              item xs={12} sm={12} md={9}
+              alignItems="center"
               style={{ height: "100%" }}
+              className="question-container"
             >
-              <div className="build-brick-title">
-                {props.brick.adaptedFrom && <SpriteIcon name="copy" />}
-                <div dangerouslySetInnerHTML={{ __html: brick.title }}></div>
-              </div>
               <Grid
-                container
-                item xs={12} sm={12} md={9}
-                style={{ height: "90%", width: "75vw", minWidth: 'none' }}
+                container direction="row"
+                justify="center" alignItems="center"
+                style={{ height: "100%" }}
               >
-                <DragableTabs
-                  history={history}
-                  setQuestions={switchQuestions}
-                  questions={questions}
-                  brickId={brickId}
-                  questionId={parseInt(params.questionId)}
-                  synthesis={synthesis}
-                  isPlanValid={proposalRes.isValid}
-                  validationRequired={validationRequired}
-                  tutorialSkipped={isTutorialPassed()}
-                  openSkipTutorial={openSkipTutorial}
-                  tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
-                  isSynthesisPage={isSynthesisPage}
-                  currentQuestionIndex={currentQuestionIndex}
-                  createNewQuestion={createNewQuestion}
-                  selectQuestion={selectQuestion}
-                  removeQuestion={removeQuestion}
-                  moveToLastQuestion={moveToLastQuestion}
-                />
-                {renderPanel()}
+                <div className="build-brick-title">
+                  {props.brick.adaptedFrom && <SpriteIcon name="copy" />}
+                  <div dangerouslySetInnerHTML={{ __html: brick.title }}></div>
+                </div>
+                <Grid
+                  container
+                  item xs={12} sm={12} md={9}
+                  style={{ height: "90%", width: "75vw", minWidth: 'none' }}
+                >
+                  <DragableTabs
+                    history={history}
+                    setQuestions={switchQuestions}
+                    questions={questions}
+                    brickId={brickId}
+                    questionId={parseInt(params.questionId)}
+                    synthesis={synthesis}
+                    isPlanValid={proposalRes.isValid}
+                    validationRequired={validationRequired}
+                    tutorialSkipped={isTutorialPassed()}
+                    openSkipTutorial={openSkipTutorial}
+                    tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
+                    isSynthesisPage={isSynthesisPage}
+                    currentQuestionIndex={currentQuestionIndex}
+                    createNewQuestion={createNewQuestion}
+                    selectQuestion={selectQuestion}
+                    removeQuestion={removeQuestion}
+                    moveToLastQuestion={moveToLastQuestion}
+                  />
+                  {renderPanel()}
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <LastSave isEditor={isCurrentEditor} updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={hasSaveError} />
-          {/* <Route path="/build/brick/:brickId/investigation/" exact>
+            <LastSave isEditor={isCurrentEditor} updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={hasSaveError} />
+            {/* <Route path="/build/brick/:brickId/investigation/" exact>
             <Redirect to={`/build/brick/${brick.id}/investigation/question-component/${questions[0].id}`} />
           </Route> */}
-          <Route path="/build/brick/:brickId/investigation/question-component/:questionId">
-            <PhoneQuestionPreview
-              question={activeQuestion!}
-              focusIndex={focusIndex}
-              nextQuestion={setNextQuestion}
-              prevQuestion={setPrevFromPhone}
-            />
-          </Route>
-          <Route path="/build/brick/:brickId/investigation/question/:questionId">
-            {renderQuestionTypePreview()}
-          </Route>
-          <Route path="/build/brick/:brickId/synthesis">
-            <PhonePreview
-              Component={SynthesisPreviewComponent}
-              prev={() => selectQuestion(questions.length - 1)}
-              next={()=>{}}
-              nextDisabled={true}
-              data={{synthesis: synthesis, brickLength: brick.brickLength}}
-            />
-          </Route>
-          <Route path={[
-            "/build/brick/:brickId/investigation/",
-            "/build/brick/:brickId/investigation/question-component",
-            "/build/brick/:brickId/investigation/question",
-          ]} exact>
-            <Redirect to={`/build/brick/${brick.id}/investigation/question-component/${questions[0]?.id ?? ""}`} />
-          </Route>
-        </Grid>
-        <HighlightInvalidDialog
-          isOpen={highlightInvalid.isOpen}
-          isLines={highlightInvalid.isLine}
-          close={() => {
-            setValidation(true);
-            setInvalidHighlight({ isOpen: false, isLine: false})
-          }}
-        />
-        <HintInvalidDialog
-          isOpen={invalidHint.isOpen}
-          invalidQuestionNumber={invalidHint.questionNumber}
-          close={() => {
-            setValidation(true);
-            setInvalidHint({isOpen: false, questionNumber: -1})
-          }}
-        />
-        <QuestionInvalidDialog
-          isOpen={submitDialogOpen}
-          close={() => setSubmitDialog(false)}
-          submit={() => submitInvalidBrick()}
-          hide={() => hideInvalidBrick()}
-        />
-        <ProposalInvalidDialog
-          isOpen={proposalResult.isOpen}
-          close={() => {
-            setProposalResult({ ...proposalResult, isOpen: false })
-            setValidation(true);
-          }}
-          submit={() => {
-            submitInvalidBrick();
-          }}
-          hide={() => {
-            moveToInvalidProposal();
-            setValidation(true);
-          }}
-        />
-        <DeleteDialog
-          isOpen={deleteDialogOpen}
-          index={deleteQuestionIndex}
-          title="Permanently delete<br />this question?"
-          close={setDeleteDialog}
-          submit={deleteQuestionByIndex}
-        />
-        <SkipTutorialDialog
-          open={skipTutorialOpen}
-          close={() => setSkipDialog(false)}
-          skip={() => {
-            skipTutorial(true);
-            setSkipDialog(false);
-          }}
-        />
-      </Hidden>
-      <Hidden only={['md', 'lg', 'xl']}>
-        <div className="blue-page">
-          <DesktopVersionDialog history={history} />
-        </div>
-      </Hidden>
-    </div>
-  );
+            <Route path="/build/brick/:brickId/investigation/question-component/:questionId">
+              <div className="fixed-build-phone">
+                <PhoneQuestionPreview
+                  question={activeQuestion!}
+                  focusIndex={focusIndex}
+                  nextQuestion={setNextQuestion}
+                  prevQuestion={setPrevFromPhone}
+                />
+              </div>
+            </Route>
+            <Route path="/build/brick/:brickId/investigation/question/:questionId">
+              <div className="fixed-build-phone">
+                {renderQuestionTypePreview()}
+              </div>
+            </Route>
+            <Route path="/build/brick/:brickId/synthesis">
+              <div className="fixed-build-phone">
+                <PhonePreview
+                  Component={SynthesisPreviewComponent}
+                  prev={() => selectQuestion(questions.length - 1)}
+                  next={() => { }}
+                  nextDisabled={true}
+                  data={{ synthesis: synthesis, brickLength: brick.brickLength }}
+                />
+              </div>
+            </Route>
+            <Route path={[
+              "/build/brick/:brickId/investigation/",
+              "/build/brick/:brickId/investigation/question-component",
+              "/build/brick/:brickId/investigation/question",
+            ]} exact>
+              <Redirect to={`/build/brick/${brick.id}/investigation/question-component/${questions[0]?.id ?? ""}`} />
+            </Route>
+          </Grid>
+          <HighlightInvalidDialog
+            isOpen={highlightInvalid.isOpen}
+            isLines={highlightInvalid.isLine}
+            close={() => {
+              setValidation(true);
+              setInvalidHighlight({ isOpen: false, isLine: false })
+            }}
+          />
+          <HintInvalidDialog
+            isOpen={invalidHint.isOpen}
+            invalidQuestionNumber={invalidHint.questionNumber}
+            close={() => {
+              setValidation(true);
+              setInvalidHint({ isOpen: false, questionNumber: -1 })
+            }}
+          />
+          <QuestionInvalidDialog
+            isOpen={submitDialogOpen}
+            close={() => setSubmitDialog(false)}
+            submit={() => submitInvalidBrick()}
+            hide={() => hideInvalidBrick()}
+          />
+          <ProposalInvalidDialog
+            isOpen={proposalResult.isOpen}
+            close={() => {
+              setProposalResult({ ...proposalResult, isOpen: false })
+              setValidation(true);
+            }}
+            submit={() => {
+              submitInvalidBrick();
+            }}
+            hide={() => {
+              moveToInvalidProposal();
+              setValidation(true);
+            }}
+          />
+          <DeleteDialog
+            isOpen={deleteDialogOpen}
+            index={deleteQuestionIndex}
+            title="Permanently delete<br />this question?"
+            close={setDeleteDialog}
+            submit={deleteQuestionByIndex}
+          />
+          <SkipTutorialDialog
+            open={skipTutorialOpen}
+            close={() => setSkipDialog(false)}
+            skip={() => {
+              skipTutorial(true);
+              setSkipDialog(false);
+            }}
+          />
+        </Hidden>
+        <Hidden only={['md', 'lg', 'xl']}>
+          <div className="blue-page">
+            <DesktopVersionDialog history={history} />
+          </div>
+        </Hidden>
+      </div>
+    );
   }
 
   return renderBuildPage();
