@@ -13,6 +13,16 @@
     }
   }
 
+  .page-loader-container {
+    .page-loader {
+      height: 30vh;
+      background: var(--white) !important;
+      svg {
+        color: var(--theme-dark-blue) !important;
+      }
+    }
+  }
+
   .tab-container {
     display: flex;
     flex-wrap: nowrap;
