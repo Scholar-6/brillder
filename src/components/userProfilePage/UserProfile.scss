@@ -312,26 +312,26 @@
           margin-left: 0.5vw;
         }
 
-        .roles-title {
-          height: 5.1vh;
-          width: 100%;
-          @extend %textCenter;
-          font-size: 1.82vw;
-          color: var(--theme-dark-blue);
-          font-family: $font-family-bold;
-          line-height: 1.41;
-
-          @include phone_and_tabletP {
-            font-size: 6vw;
-          }
-        }
-
         .roles-box {
+          margin-top: 5.1vh;
           min-height: calc(6.8vw + 13.2vh);
           width: 100%;
           border-radius: 1.7vh;
           box-shadow: $base-shadow;
           padding: 1.15vw;
+          padding-top: 2vw;
+
+          position: relative;
+
+          .fixed-label {
+            position: absolute;
+            top: 0.5vw;
+            font-size: 1.5vw;
+            color: var(--theme-dark-blue);
+            font-family: $font-family-bold;
+            width: 100%;
+            text-align: center;
+          }
 
           @include phone_and_tabletP {
             display: grid;

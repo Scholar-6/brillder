@@ -394,7 +394,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   </div>
                 </div>
                 <div className="profile-roles-container">
-                  <div className="roles-title">User Types</div>
                   <RolesBox
                     roles={this.state.roles}
                     userRoles={this.state.user.roles}
