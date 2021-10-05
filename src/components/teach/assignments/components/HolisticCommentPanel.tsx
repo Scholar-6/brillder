@@ -6,7 +6,7 @@ import BookAnnotationV2 from 'components/postPlay/desktop/BookAnnotationV2';
 import { Annotation, AnnotationLocation } from 'model/attempt';
 import { AttemptStats } from 'model/stats';
 import { User } from 'model/user';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
 
@@ -20,6 +20,8 @@ interface HolisticCommentPanelProps {
 
 const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
   const textRef = React.useRef<HTMLElement>();
+
+  const [filled, setFilled] = React.useState(false);
 
   const createHolisticComment = React.useCallback(() => {
     if (!props.currentAttempt) return;
@@ -80,9 +82,15 @@ const HolisticCommentPanel: React.FC<HolisticCommentPanelProps> = props => {
       className="holistic-comment-popup"
     >
       <div className="holistic-comment-panel">
-        <BookAnnotationV2 textRef={textRef} />
+        <BookAnnotationV2 textRef={textRef} onInput={v => {
+          if (v.length > 0) {
+            setFilled(true);
+          } else {
+            setFilled(false);
+          }
+        }} />
         <div className="centered" onClick={createHolisticComment}>
-          <div className={`save-button b-green`}>
+          <div className={`save-button ${filled ? 'b-green' : 'b-tab-gray'}`}>
             <SpriteIcon name="send" className="active" />
           </div>
         </div>
