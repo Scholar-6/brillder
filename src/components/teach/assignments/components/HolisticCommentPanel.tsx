@@ -1,13 +1,14 @@
+import React from 'react';
 import { Popover } from '@material-ui/core';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
 import BookAnnotationV2 from 'components/postPlay/desktop/BookAnnotationV2';
 import { Annotation, AnnotationLocation } from 'model/attempt';
 import { AttemptStats } from 'model/stats';
 import { User } from 'model/user';
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
 
 interface HolisticCommentPanelProps {

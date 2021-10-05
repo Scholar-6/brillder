@@ -8,13 +8,26 @@ interface Props {
 
 const UserTypeLozenge: React.FC<any> = (props) => {
   let bestType = props.rolePreference.roleId;
+  let bestRole = null;
 
   if (props.roles) {
-    bestType = props.roles[0].roleId;
+    const isAdmin = props.roles.find((roleId:number) => roleId === UserType.Admin);
+    if (isAdmin) {
+      bestRole = UserType.Admin;
+    } else {
+      const isPublisher = props.roles.find((roleId:number) => roleId === UserType.Publisher);
+      if (isPublisher) {
+        bestRole = UserType.Publisher;
+      }
+    }
   }
 
   let name = '';
-  if (bestType === RolePreference.Student) {
+  if (bestRole === UserType.Admin) {
+    name = "Admin";
+  } else if (bestRole === UserType.Publisher) {
+    name = "Publisher";
+  } else if (bestType === RolePreference.Student) {
     name = 'Student'
   } else if (bestType === RolePreference.Builder) {
     name = 'Builder';
@@ -22,14 +35,10 @@ const UserTypeLozenge: React.FC<any> = (props) => {
     name = "Teacher";
   } else if (bestType === RolePreference.Institution) {
     name = "Institution";
-  } else if (bestType = UserType.Admin) {
-    name = "Admin";
-  } else if (bestType = UserType.Publisher) {
-    name = "Publisher";
   }
 
   return <span className="user-type-lozenge">
-   {name}
+    {name}
   </span>;
 }
 
