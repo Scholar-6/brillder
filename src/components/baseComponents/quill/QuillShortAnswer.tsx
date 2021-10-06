@@ -95,13 +95,21 @@ const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
 
   return (
     <div
-      className={`quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId}`}
+      className={`quill-document-editor ${valid ? "" : "content-invalid"} quill-id-${uniqueId}`}
       data-toolbar={[]}
       ref={forwardRef}
     >
       <ReactQuill
         theme="snow"
         value={data || ""}
+        onKeyUp={() => {
+          // overflow replace text to show that data isn`t changing
+          if (limitOverflow) {
+            if (quill && data) {
+              quill.setText(stripHtml(data));
+            }
+          }
+        }}
         onChange={onChange}
         onFocus={onFocus}
         readOnly={props.disabled}
