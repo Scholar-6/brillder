@@ -1037,6 +1037,18 @@ $base-build-border: $editor-radius;
   }
 }
 
+//quill tables
+.investigation-build-page .quill-better-table {
+  background: var(--off-white);
+  border: none !important;
+  table {
+    border: none !important;
+  }
+  tr, td {
+    border: 3px solid var(--white) !important;
+  }
+}
+
 @media only screen and (max-width: 960px) {
   .investigation-build-page {
     .play-preview {
