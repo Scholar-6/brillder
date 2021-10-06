@@ -104,8 +104,8 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
           setPermision={setPermision}
         />
       </div>
-      <div className="centered last-button">
-        <div className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
+      <div className="upload-button-container">
+        <div className={`upload-button ${(canUpload) ? 'active' : 'disabled'}`} onClick={() => {
           if (cropedFile && canUpload) {
             upload(cropedFile, source);
           } else if (canUpload) {
@@ -114,7 +114,9 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
             setValidation(true);
           }
         }}>
+          <div className="background" />
           <SpriteIcon name="upload" />
+          <div className="css-custom-tooltip bold">Upload</div>
         </div>
       </div>
     </BaseDialogWrapper>

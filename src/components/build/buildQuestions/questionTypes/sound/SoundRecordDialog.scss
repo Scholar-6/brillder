@@ -67,6 +67,9 @@
       }
       .required {
         color: var(--theme-orange);
+        &.Mui-checked {
+          color: var(--theme-green);
+        }
       }
     }
 
