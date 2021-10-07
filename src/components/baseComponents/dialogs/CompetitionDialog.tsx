@@ -5,13 +5,17 @@ import './CompetitionDialog.scss';
 
 interface DialogProps {
   isOpen: boolean;
-  submit(): void;
+  submit(start: any, end: any): void;
   close(): void;
 }
 
 const CompetitionDialog: React.FC<DialogProps> = ({ isOpen, submit, close }) => {
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
+
+  const getStringDate = (date: Date) => {
+    return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+  }
 
   return (
     <Dialog open={isOpen} onClose={close} className="dialog-box competition-dialog">
@@ -25,7 +29,7 @@ const CompetitionDialog: React.FC<DialogProps> = ({ isOpen, submit, close }) => 
         </div>
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button" onClick={submit}>
+        <button className="btn btn-md bg-theme-orange yes-button" onClick={() => submit(startDate, endDate)}>
           <span>Yes</span>
         </button>
         <button className="btn btn-md bg-gray no-button" onClick={close}>
