@@ -24,6 +24,8 @@ import routes, { PlayPreInvestigationLastPrefix } from "./routes";
 import ShareDialogs from "./finalStep/dialogs/ShareDialogs";
 import GenerateCoverButton from "./baseComponents/sidebarButtons/GenerateCoverButton";
 import { isInstitutionPreference } from "components/services/preferenceService";
+import CompetitionButton from "./baseComponents/sidebarButtons/CompetitionButton";
+import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDialog";
 
 interface SidebarProps {
   history: any;
@@ -47,6 +49,7 @@ interface SidebarProps {
 
 interface SidebarState {
   isAdaptBrickOpen: boolean;
+  isCompetitionOpen: boolean;
   isCoomingSoonOpen: boolean;
   isAssigningOpen: boolean;
   isAssignedSuccessOpen: boolean;
@@ -62,6 +65,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     super(props);
     this.state = {
       isAdapting: false,
+      isCompetitionOpen: false,
       isAdaptBrickOpen: false,
       isCoomingSoonOpen: false,
       isAssigningOpen: false,
@@ -148,8 +152,16 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     this.setState({ isAdapting: false })
   }
 
+  async createCompetition() {
+    // creation competition
+  }
+
   onAdaptDialog() {
     this.setState({ isAdaptBrickOpen: true });
+  }
+
+  onCompetition() {
+    this.setState({ isCompetitionOpen: true });
   }
 
   isLive() {
@@ -212,7 +224,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       }
     }
 
-    const {sidebarRolledUp} = this.props;
+    const { sidebarRolledUp } = this.props;
     const haveBriefCircles = this.props.history.location.pathname.slice(-routes.PlayBriefLastPrefix.length) === routes.PlayBriefLastPrefix;
 
     return (
@@ -243,6 +255,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
             brick={this.props.brick}
           />
         }
+        {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) && <CompetitionButton sidebarRolledUp={sidebarRolledUp} onClick={this.onCompetition.bind(this)} />}
       </div>
     );
   }
@@ -265,6 +278,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           isOpen={this.state.isAdaptBrickOpen}
           close={() => this.setState({ isAdaptBrickOpen: false })}
           submit={this.createBrickCopy.bind(this)}
+        />
+        <CompetitionDialog
+          isOpen={this.state.isCompetitionOpen}
+          close={() => this.setState({ isCompetitionOpen: false })}
+          submit={() => {
+            this.setState({ isCompetitionOpen: false });
+            this.createCompetition();
+          }}
         />
         {canSee &&
           <AssignPersonOrClassDialog
