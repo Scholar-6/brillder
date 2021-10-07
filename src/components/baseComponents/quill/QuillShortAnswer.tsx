@@ -106,7 +106,11 @@ const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
           // overflow replace text to show that data isn`t changing
           if (limitOverflow) {
             if (quill && data) {
+              const selection = quill.getSelection();
               quill.setText(stripHtml(data));
+              if (selection) {
+                quill.setSelection(selection);
+              }
             }
           }
         }}
