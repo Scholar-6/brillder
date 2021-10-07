@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
-import { connect } from 'react-redux';
+import { AnyIfEmpty, connect } from 'react-redux';
 
 import actions from "redux/actions/brickActions";
 import { ReduxCombinedState } from 'redux/reducers';
@@ -49,6 +49,7 @@ interface SidebarProps {
 
 interface SidebarState {
   isAdaptBrickOpen: boolean;
+  competitionPresent: boolean | null;
   isCompetitionOpen: boolean;
   isCoomingSoonOpen: boolean;
   isAssigningOpen: boolean;
@@ -65,6 +66,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     super(props);
     this.state = {
       isAdapting: false,
+      competitionPresent: null,
       isCompetitionOpen: false,
       isAdaptBrickOpen: false,
       isCoomingSoonOpen: false,
@@ -74,6 +76,22 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isSharingOpen: false,
       selectedItems: [],
       failedItems: []
+    }
+
+    this.getCompetition();
+  }
+
+  async getCompetition() {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/competition/${this.props.user.id}/${this.props.brick.id}`, { withCredentials: true });
+      if (res.status === 200 && res.data) {
+        console.log(res.data);
+        this.setState({competitionPresent: true});
+      } else {
+        this.setState({competitionPresent: false});
+      }
+    } catch {
+      this.setState({competitionPresent: false});
     }
   }
 
@@ -152,8 +170,17 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     this.setState({ isAdapting: false })
   }
 
-  async createCompetition() {
+  async createCompetition(startDate: any, endDate: any) {
     // creation competition
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/competition`,
+      { startDate: "2021-10-07", endDate: "2021-10-08  ", brickId: this.props.brick.id },
+      { withCredentials: true }
+    );
+    if (response.status === 200) {
+      console.log('created')
+    }
+    return;
   }
 
   onAdaptDialog() {
@@ -162,6 +189,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   onCompetition() {
     this.setState({ isCompetitionOpen: true });
+  }
+
+  onDownload() {
+    // download pdf
   }
 
   isLive() {
@@ -201,7 +232,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
               <SpriteIcon name="trowel" className="w100 h100 active" />
             </div>
             <div className="create-icon-label">
-              B<br/>A<br/>C<br/>K<br/><br/>T<br/>O<br/><br/>B<br/>U<br/>I<br/>L<br/>D
+              B<br />A<br />C<br />K<br /><br />T<br />O<br /><br />B<br />U<br />I<br />L<br />D
             </div>
           </div>
         );
@@ -255,7 +286,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
             brick={this.props.brick}
           />
         }
-        {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) && <CompetitionButton sidebarRolledUp={sidebarRolledUp} onClick={this.onCompetition.bind(this)} />}
+        {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) &&
+          <CompetitionButton competitionPresent={this.state.competitionPresent} sidebarRolledUp={sidebarRolledUp} onDownload={this.onDownload.bind(this)} onClick={this.onCompetition.bind(this)} />}
       </div>
     );
   }
@@ -282,9 +314,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         <CompetitionDialog
           isOpen={this.state.isCompetitionOpen}
           close={() => this.setState({ isCompetitionOpen: false })}
-          submit={() => {
+          submit={(start: any, end: any) => {
             this.setState({ isCompetitionOpen: false });
-            this.createCompetition();
+            this.createCompetition(start, end);
           }}
         />
         {canSee &&
