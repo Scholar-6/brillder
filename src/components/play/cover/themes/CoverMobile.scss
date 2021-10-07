@@ -266,18 +266,19 @@
 
 .cover-timer {
   position: absolute;
-  right: 0.5vw;
+  right: 2vw;
   top: calc(1vh + 1.2vw);
   display: flex;
   align-items: center;
   font-size: 4.5vw !important;
+  font-family: $font-family-bold;
 
   svg {
     display: block !important;
     $size: 4.5vw;
     width: $size !important;
     height: $size !important;
-    stroke-width: 2;
+    stroke-width: 2.5;
     margin-left: 1.5vw !important;
     margin-right: 0.5vw;
   }
