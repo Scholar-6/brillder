@@ -1,4 +1,6 @@
 import React from "react";
+import ReactWaves from "@dschoon/react-waves";
+
 import "./Sound.scss";
 import Dropzone from "./Dropzone";
 import PauseButton from "./components/buttons/PauseButton";
@@ -97,7 +99,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
   }
 
   playRecord() {
-    const {audio} = this.state;
+    const { audio } = this.state;
     audio.play();
     this.setState({ status: AudioStatus.Play });
     audio.onended = this.setRecorded.bind(this);
@@ -128,7 +130,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
           this.props.save();
         },
         () => {
-          this.setState({cantSave: true});
+          this.setState({ cantSave: true });
         }
       );
     }
@@ -137,7 +139,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
   render() {
     const { locked } = this.props;
     const { status } = this.state;
-    let canDelete =
+    const canDelete =
       status === AudioStatus.Start || status === AudioStatus.Recording;
 
     return (
@@ -151,6 +153,24 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
           saveAudio={this.saveAudio.bind(this)}
         />
         <div className="record-button-row">
+          {(status === AudioStatus.Recorded || status === AudioStatus.Play || status === AudioStatus.Stop) && <div>
+            <ReactWaves
+              audioFile={this.state.blobUrl}
+              className={"react-waves"}
+              options={{
+                barHeight: 2,
+                cursorWidth: 0,
+                height: 200,
+                hideScrollbar: true,
+                progressColor: "#EC407A",
+                responsive: true,
+                waveColor: "#D1D6DA",
+              }}
+              volume={1}
+              zoom={1}
+              playing={true}
+            />
+          </div>}
           <Recording
             status={status}
             isShown={true}
@@ -179,7 +199,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
         <ValidationFailedDialog
           isOpen={this.state.cantSave}
           header="Can`t save audio file"
-          close={() => this.setState({cantSave: false})}
+          close={() => this.setState({ cantSave: false })}
         />
       </div>
     );
