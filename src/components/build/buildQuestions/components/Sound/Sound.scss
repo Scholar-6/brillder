@@ -13,6 +13,21 @@
     align-items: center;
     justify-content: center;
   }
+  
+  .top-wave {
+    margin-top: 5vw;
+  }
+
+  .wave {
+    position: absolute;
+    width: calc(100% - 1vw);
+    top: 1vw;
+    left: 0.5vw;
+
+    > wave {
+      height: 4vw !important;
+    }
+  }
 
   .btn {
     width: 7.5vw;
