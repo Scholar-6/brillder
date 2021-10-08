@@ -41,7 +41,7 @@ export class AudioBlot extends Embed {
 }
 AudioBlot.blotName = 'audio';
 AudioBlot.tagName = 'div';
-Quill.register(AudioBlot);
+GlobalQuill.register(AudioBlot);
 
 export default class SoundUpload {
   quill: Quill;
