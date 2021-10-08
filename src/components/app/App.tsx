@@ -64,6 +64,7 @@ import BuildRouter from 'components/build/BuildRouter';
 import ProposalBrickRoute from './ProposalBrickRoute';
 import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';
 import { GetYoutubeClick } from 'localStorage/play';
+import StripePage from 'components/stripePage/StripePage';
 
 interface AppProps {
   user: User;
@@ -241,6 +242,8 @@ const App: React.FC<AppProps> = props => {
       <Profiler id="app-tsx" onRender={onRenderCallback} >
       {/* all page routes are here order of routes is important */}
       <Switch>
+        <AllUsersRoute path="/stripe-subscription" component={StripePage} />
+
         <UnauthorizedRoute path={map.SubjectCategories} component={ViewAll} />
         <UnauthorizedRoute path={map.SearchPublishBrickPage} component={ViewAll} />
         <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
@@ -286,6 +289,7 @@ const App: React.FC<AppProps> = props => {
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path={map.ResetPassword} component={ResetPasswordPage} />
         <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
+
         <Route path={map.TermsSignUp} component={Terms} />
         <Route path={map.TermsPage} component={PublicTerms} />
 
