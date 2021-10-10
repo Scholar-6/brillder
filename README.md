@@ -22,13 +22,15 @@ Run the project locally (Windows and Linux) and connect to the dev-api:
         # $npm_package_version points to the package.json 
         REACT_APP_BUILD_AUTO_SAVE_DELAY=500  
         REACT_APP_DESMOS_API_KEY=dcb31709b452b1cf9dc26972add0fda6  
-        HOST=local-brillder.brillder.com  
+        HOST=localbrillder.com  
         PORT=3000  
+        # comment the following out if running the backend locally
         HTTPS=true  
+        REACT_APP_MATOMO_URL=https://matomo.brillder.com/js/container_UkdV64XH.js  
 * `npm install`  
 * `npm start`  
-* Go to http://local-brillder.scholar6.org:3000  
-* If you do not have an account registered on https://dev-brillder.scholar6.org then click signup option  
+* Go to http://localbrillder.com:3000  
+* If you do not have an account registered on https://app.brillder.com then click signup option  
 
 ## Available Scripts
 
