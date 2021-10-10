@@ -22,6 +22,7 @@ Run the project locally (Windows and Linux) and connect to the dev-api:
         # $npm_package_version points to the package.json 
         REACT_APP_BUILD_AUTO_SAVE_DELAY=500  
         REACT_APP_DESMOS_API_KEY=dcb31709b452b1cf9dc26972add0fda6  
+        REACT_APP_WEBSOCKET_HOST=wss://dev-api.brillder.com
         HOST=localbrillder.com  
         PORT=3000  
         # comment the following out if running the backend locally
