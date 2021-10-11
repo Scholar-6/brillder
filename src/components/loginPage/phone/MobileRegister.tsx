@@ -126,7 +126,7 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
       }
     }).catch((e) => {
       toggleAlertMessage(true);
-      setAlertMessage("Connection problem");
+      setAlertMessage("Something maybe wrong with the connection.");
     });
   };
 
