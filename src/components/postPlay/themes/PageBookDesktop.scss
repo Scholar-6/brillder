@@ -144,6 +144,10 @@
     transition: all 0.8s ease-in-out;
   }
 
+  .comment-reply-container .comment-text {
+    margin-left: 0 !important;
+  }
+
   .book-container {
     display: flex;
     perspective: 100vw;

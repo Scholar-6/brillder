@@ -44,13 +44,13 @@ const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
       {value && 
         <div>
           <input className="caption-input" value={caption} onChange={e => setCaption(e.target.value)} placeholder="Add a caption" />
-          <div className="bold">
+          <div className="bold margin-top-x3">
             Where did you get this sound?
             <span className="text-theme-orange">*</span>
           </div>
           <input
             value={source}
-            className={validationRequired && !source ? "invalid" : ""}
+            className={`source-g2 ${validationRequired && !source ? "invalid" : ""}`}
             onChange={(e) => setSource(e.target.value)}
             placeholder="Add link to source or name of owner"
           />

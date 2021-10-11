@@ -1,8 +1,10 @@
+import { generateId } from "components/build/buildQuestions/questionTypes/service/questionBuild";
 import Quill from "quill";
 import { Quill as GlobalQuill } from "react-quill";
 
 const Embed = GlobalQuill.import('blots/block/embed');
 
+declare const WaveSurfer: any;
 export interface AudioData {
   url: string; // full url
   caption: string;
@@ -17,6 +19,43 @@ export class AudioBlot extends Embed {
     node.setAttribute('data-value', data.url);
     node.setAttribute('data-caption', data.caption);
     node.setAttribute('data-source', data.source);
+
+    const wave = document.createElement("div");
+
+    const id = generateId().toString();
+    wave.classList.add('quill-wave');
+    wave.setAttribute('id', 'wave-' + id);
+    node.appendChild(wave);
+
+    setTimeout(() => {
+      const addWave = (id: string) => {
+        const wavesurfer = WaveSurfer.create({
+          container: '#wave-' + id,
+          barGap: 4,
+          barWidth: 4,
+          barHeight: 4,
+          barRadius: 4,
+          cursorWidth: 0,
+          height: 100,
+          hideScrollbar: true,
+          progressColor: '#c43c30',
+          cursorColor: 'red',
+          normalize: true,
+          responsive: true,
+          waveColor: '#001c58',
+        });
+
+        wavesurfer.load(data.url);
+      }
+      try {
+        addWave(id);
+      } catch {
+        setTimeout(() => {
+          addWave(id);
+        },1500);
+      }
+
+    }, 500);
 
     const audioElement = document.createElement("audio");
     audioElement.setAttribute('src', data.url);
@@ -41,7 +80,7 @@ export class AudioBlot extends Embed {
 }
 AudioBlot.blotName = 'audio';
 AudioBlot.tagName = 'div';
-Quill.register(AudioBlot);
+GlobalQuill.register(AudioBlot);
 
 export default class SoundUpload {
   quill: Quill;

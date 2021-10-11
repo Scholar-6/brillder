@@ -15,6 +15,14 @@
     margin-bottom: 2.5vh;
   }
 
+  .reply-icon-g2 {
+    cursor: pointer;
+    $size: 1.3vw;
+    stroke-width: 2;
+    width: $size;
+    height: $size;
+  }
+
   .book-navigator {
     position: absolute;
     top: 0;

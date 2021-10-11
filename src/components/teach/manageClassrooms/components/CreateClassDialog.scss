@@ -5,7 +5,16 @@
 .create-classroom-dialog,
 .dialog-box {
   .dialog-select-container {
+    position: relative;
     margin-bottom: 2vh !important;
+    .absolute-placeholder {
+      pointer-events: none;
+      position: absolute;
+      color:#777;
+      z-index: 40;
+      top: 1vw;
+      font-family: $font-family-regular;
+    }
 
     .MuiInputBase-root {
       margin-bottom: 0 !important;

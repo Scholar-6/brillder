@@ -90,7 +90,7 @@ class ExpandedStudentAssignment extends Component<
 
     return <div className={"comment-icon" + className} onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget })}>
       <SpriteIcon name="message-square" className="active" />
-      <span className="annotation-count">{this.state.student.studentResult?.attempts.slice(-1)[0].annotations.length}</span>
+      <span className="annotation-count">{this.state.student.studentResult?.attempts.slice(-1)[0].annotations && this.state.student.studentResult?.attempts.slice(-1)[0].annotations.length}</span>
     </div>;
   }
 
@@ -263,7 +263,7 @@ class ExpandedStudentAssignment extends Component<
             <tbody>{this.renderStudent(this.props.student)}</tbody>
           </table>
         </div>
-        {this.state.bookData.open && <BookDialog bookData={this.state.bookData} onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />}
+        {this.state.bookData.open && <BookDialog nextStudent={() => {}} prevStudent={() => {}} bookData={this.state.bookData} onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />}
         <HolisticCommentPanel
           currentAttempt={this.state.student.studentResult?.attempts.slice(-1)[0]}
           setCurrentAttempt={(attempt: AttemptStats) => {

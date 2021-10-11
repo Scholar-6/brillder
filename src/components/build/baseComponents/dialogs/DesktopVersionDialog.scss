@@ -1,12 +1,12 @@
 .dialog-box.desktop-version-dialog {
   z-index: 11000 !important;
-  .MuiTypography-root.MuiListItemText-primary {
-    font-size: 7.3vw;
+  .MuiPaper-root {
+    width: 90vw;
   }
   li .MuiListItemText-root .MuiTypography-root.MuiListItemText-primary{
-    text-align: center;
+    text-align: left;
     width: 100%;
-    font-size: 5.8vw !important;
+    font-size: 4.6vw !important;
   }
   .MuiAvatar-root.MuiAvatar-circle.circle-orange.MuiAvatar-colorDefault {
     height: 13vw;
@@ -18,9 +18,8 @@
   }
   .MuiListItemText-root.italic {
     .MuiTypography-root.MuiListItemText-primary {
-      text-align: center;
-      font-size: 5vw !important;
-      padding-left: 2vw;
+      text-align: left;
+      font-size: 3.8vw !important;
     }
   }
   .MuiListItem-root.MuiListItem-gutters {

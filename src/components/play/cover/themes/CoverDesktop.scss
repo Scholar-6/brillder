@@ -289,3 +289,21 @@
     }
   }
 }
+
+.cover-timer {
+  position: absolute;
+  top: calc(1vh + 0.4vw);
+  right: 1.2vw;
+  display: flex;
+  align-items: center;
+  font-size: 1.5vw !important;
+  font-family: $font-family-bold !important;
+
+  svg {
+    $size: 1.5vw;
+    width: $size !important;
+    height: $size !important;
+    stroke-width: 2.5;
+    margin-right: 0.5vw;
+  }
+}

@@ -280,8 +280,8 @@ $base-build-border: $editor-radius;
     position: fixed;
     font-family: $font-family-regular;
     top: 6%;
-    right: 0;
-    width: 34.3vw;
+    right: 7vw;
+    width: 25vw;
     color: white;
     @extend %textCenter;
 
@@ -1034,5 +1034,47 @@ $base-build-border: $editor-radius;
     right: 7vw;
     width: 25vw;
     z-index: 1001;
+  }
+}
+
+//quill tables
+.investigation-build-page .quill-better-table {
+  background: var(--off-white);
+  border: none !important;
+  table {
+    border: none !important;
+  }
+  tr, td {
+    border: 3px solid var(--white) !important;
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .investigation-build-page {
+    .play-preview {
+      display: none !important;
+    }
+    .build-navigation-buttons {
+      display: none !important;
+    }
+  }
+}
+
+// aspect ratio is too high hide phone and make build bigger
+@media (max-aspect-ratio: 160/98) {
+  .investigation-build-page .fixed-build-phone {
+    display: none;
+  }
+  .investigation-build-page .question-container {
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+  }
+  .investigation-build-page {
+    .build-brick-title {
+      justify-content: flex-start;
+    }
+  }
+  .investigation-build-page .saved-info {
+    display: none;
   }
 }

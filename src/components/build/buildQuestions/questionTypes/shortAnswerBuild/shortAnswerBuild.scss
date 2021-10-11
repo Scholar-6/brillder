@@ -30,6 +30,10 @@
     }
   }
 
+  .MuiSnackbarContent-root {
+    min-width: 20vw !important;
+  }
+
   .MuiSnackbar-root {
     position: fixed !important;
     z-index: 999999;
@@ -37,7 +41,8 @@
 
     top: 30% !important;
     height: 30vh;
-    left: 50.8% !important;
+    left: unset !important;
+    right: -6vw !important;
     width: 20vw;
 
     .MuiSnackbarContent-root {

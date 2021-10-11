@@ -105,6 +105,7 @@
     position: relative;
 
     .cover-info-row {
+      max-width: 85%;
       position: absolute;
       top: 2.5vw;
       left: 2vw;
@@ -243,3 +244,42 @@
   }
 }
 
+.cover-timer {
+  top: calc(1vh + 1.4vw);
+  right: 1vw;
+  width: 12vw;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 4.5vw !important;
+
+  svg {
+    display: none;
+    $size: 4.5vw;
+    width: $size !important;
+    height: $size !important;
+    stroke-width: 2;
+    margin-right: 0.5vw;
+  }
+}
+
+.cover-timer {
+  position: absolute;
+  right: 2vw;
+  top: calc(1vh + 1.2vw);
+  display: flex;
+  align-items: center;
+  font-size: 4.5vw !important;
+  font-family: $font-family-bold;
+
+  svg {
+    display: block !important;
+    $size: 4.5vw;
+    width: $size !important;
+    height: $size !important;
+    stroke-width: 2.5;
+    margin-left: 1.5vw !important;
+    margin-right: 0.5vw;
+  }
+}
