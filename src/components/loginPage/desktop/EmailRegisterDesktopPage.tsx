@@ -96,6 +96,10 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         return;
       }
 
+      if (data.msg === "INVALID_EMAIL_OR_PASSWORD") {
+        setLoginWrong(true);
+      }
+
       if (data.msg) {
         toggleAlertMessage(true);
         setAlertMessage(data.msg);
@@ -106,7 +110,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       }
     }).catch((e) => {
       toggleAlertMessage(true);
-      setAlertMessage("Something maybe wrong with the connection.");
+      setAlertMessage("Something may be wrong with the connection.");
     });
   };
 
