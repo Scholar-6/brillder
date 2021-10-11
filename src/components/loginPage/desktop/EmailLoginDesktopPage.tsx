@@ -89,12 +89,15 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         } else if (response.status === 401) {
           const { msg } = response.data;
           if (msg === "INVALID_EMAIL_OR_PASSWORD") {
-            setLoginWrong(true);
+            toggleAlertMessage(true);
+            // This opens up a side channel, because hackers can intuit that this means the email exists in the system
+            setAlertMessage("The email or password may be wrong.");
+            //setLoginWrong(true);
           }
         }
       } else {
         toggleAlertMessage(true);
-        setAlertMessage("Something maybe wrong with the connection.");
+        setAlertMessage("Something may be wrong with the connection.");
       }
     }
   };
@@ -124,7 +127,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
       }
     }).catch((e) => {
       toggleAlertMessage(true);
-      setAlertMessage("Something maybe wrong with the connection.");
+      setAlertMessage("Something may be wrong with the connection.");
     });
   };
 
