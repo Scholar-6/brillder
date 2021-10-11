@@ -9,9 +9,10 @@ import { User } from 'model/user';
 interface BookAnnotationProps {
   user: User;
   textRef: React.MutableRefObject<HTMLElement | undefined>;
+  onInput?(value:string): void;
 }
 
-const BookAnnotationV2: React.FC<BookAnnotationProps> = ({ user, textRef }) => {
+const BookAnnotationV2: React.FC<BookAnnotationProps> = ({ user, textRef, onInput }) => {
   return (
     <Grid className="annotation-container comment-1 focused">
       <div className="comment-item-container">
@@ -34,6 +35,12 @@ const BookAnnotationV2: React.FC<BookAnnotationProps> = ({ user, textRef }) => {
               className="comment-text-editable"
               placeholder="Type your comment"
               ref={textRef as any}
+              onInput={(e => {
+                try {
+                  const el = (e.target as any);
+                  onInput?.(el.innerText);
+                } catch {}
+              })}
               contentEditable={true}
               suppressContentEditableWarning={true} // prevent warning for having contenteditable with children
             />

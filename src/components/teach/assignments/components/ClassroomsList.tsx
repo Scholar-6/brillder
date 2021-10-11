@@ -12,6 +12,7 @@ import { updateClassroom } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
 import { getAssignmentsClassrooms } from "components/teach/service";
 import MainAssignmentPagination from "./MainAssignmentPagination";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -34,6 +35,7 @@ interface ClassroomListProps {
 interface State {
   page: number;
   pageSize: number;
+  loaded: boolean;
   toggleState: boolean;
   classrooms: any[];
 }
@@ -46,6 +48,7 @@ class ClassroomList extends Component<ClassroomListProps, State> {
       page: 0,
       pageSize: 6,
       toggleState: false,
+      loaded:false,
       classrooms: props.classrooms
     }
 
@@ -77,7 +80,7 @@ class ClassroomList extends Component<ClassroomListProps, State> {
         index += classroom.assignments.length;
       }
     }
-    this.setState({ toggleState: !this.state.toggleState, classrooms });
+    this.setState({ toggleState: !this.state.toggleState, loaded: true, classrooms });
   }
 
   async updateClassroom(classroom: TeachClassroom, name: string, subject: Subject) {
@@ -125,6 +128,15 @@ class ClassroomList extends Component<ClassroomListProps, State> {
 
   renderTeachList(items: TeachListItem[]) {
     let index = 1;
+
+    if (!this.state.loaded) {
+      return (
+        <div className="page-loader-container">
+          <PageLoader content="...Loading classroms..." />
+        </div>
+      );
+    }
+
     return (
       <div>
         {items.map((c, i) => {

@@ -9,7 +9,7 @@
 }
 
 .introjs-tooltip {
-  max-width: 30vw !important;
+  max-width: 40vw !important;
   border-radius: 0.4vw;
   .introjs-skipbutton {
     line-height: 1;
@@ -63,14 +63,6 @@
 
 .introjs-helperLayer {
   box-shadow: rgba(33, 33, 33, .5) 0px 0px 0px 5000px !important;
-}
-
-.center-box {
-  position: fixed;
-  width: 0;
-  height: 0;
-  left: 50%;
-  top: 50%;
 }
 
 .dark-shadow {

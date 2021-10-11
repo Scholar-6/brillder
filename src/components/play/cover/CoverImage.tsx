@@ -120,7 +120,11 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
                 }, 5000);
                 setHoverTimeout(timeout);
               }}
-              onMouseLeave={() => props.blur()}
+              onMouseLeave={() => {
+                clearTimeout(hoverTimeout);
+                setHoverTimeout(-1);
+                props.blur();
+              }}
               src={fileUrl(fileName)}
             />
             : (

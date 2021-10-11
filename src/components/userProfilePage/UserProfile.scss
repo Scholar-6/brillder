@@ -54,14 +54,32 @@
 
     .profile-header {
       padding-top: 3.1vh;
-      margin-left: 1.08vw;
+      margin-right: 7vw;
       font-size: 5.4vw;
-      letter-spacing: 1.05vw;
       @extend %textCenter;
-      font-family: $font-family-black;
+      font-family: $font-family-bold;
       color: var(--theme-dark-blue);
       line-height: 1;
-      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      > div {
+        text-transform: capitalize;
+      }
+
+      .user-type-lozenge {
+        border-radius: 2vw;
+        padding-left: 2vw;
+        padding-right: 2vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 5vw;
+        margin-left: 1vw;
+        font-size: 3vw !important;
+        background: var(--tab-gray);
+      }
 
       @include phone_and_tabletP {
         font-size: 13.4vw;
@@ -112,7 +130,7 @@
       .profile-image-container {
         position: relative;
         padding-top: 5vh;
-        width: 13.5vw;
+        width: 11vw;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -215,8 +233,8 @@
 
       .profile-inputs-container {
         padding-top: 5.1vh;
-        width: 32.4vw;
-        margin: 0 3vw;
+        width: 25vw;
+        margin: 0 0.5vw 0 1vw;
 
         @include phone_and_tabletP {
           width: 100%;
@@ -280,31 +298,40 @@
       }
 
       .profile-roles-container {
-        width: 13.5vw;
+        width: 22vw;
 
         @include phone_and_tabletP {
           width: 100%;
         }
 
-        .roles-title {
-          width: 100%;
-          @extend %textCenter;
-          font-size: 1.82vw;
-          letter-spacing: 0.36vw;
-          color: var(--theme-dark-blue);
-          font-family: $font-family-black;
-          line-height: 1.41;
+        &.preference-container {
+          margin-right: 0.5vw;
+        }
 
-          @include phone_and_tabletP {
-            font-size: 6vw;
-          }
+        &.roles-container {
+          margin-left: 0.5vw;
         }
 
         .roles-box {
+          margin-top: 5.1vh;
+          min-height: calc(6.8vw + 13.2vh);
           width: 100%;
-          border-radius: 0.3vw;
+          border-radius: 1.7vh;
           box-shadow: $base-shadow;
           padding: 1.15vw;
+          padding-top: 2vw;
+
+          position: relative;
+
+          .fixed-label {
+            position: absolute;
+            top: 0.5vw;
+            font-size: 1.5vw;
+            color: var(--theme-dark-blue);
+            font-family: $font-family-bold;
+            width: 100%;
+            text-align: center;
+          }
 
           @include phone_and_tabletP {
             display: grid;
@@ -312,6 +339,10 @@
           }
 
           @extend %radioBlue;
+
+          .first-column {
+            margin-right: 2vw;
+          }
 
           .MuiGrid-item {
             width: 100%;
@@ -330,7 +361,7 @@
             }
 
             .MuiFormControlLabel-label {
-              margin-left: 1.15vw;
+              margin-left: 0.1vw;
               font-size: 1.45vw;
               color: var(--theme-dark-blue);
               font-family: $font-family-regular;
@@ -414,13 +445,10 @@
         padding-top: 0;
         padding-left: 0.65vw;
         max-height: 18vh;
+        font-size: 1.45vw;
 
         @include phone_and_tabletL {
           font-size: 4vw;
-        }
-
-        @include tabletL {
-          font-size: 1.8vw;
         }
       }
 

@@ -95,13 +95,25 @@ const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
 
   return (
     <div
-      className={`quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId}`}
+      className={`quill-document-editor ${valid ? "" : "content-invalid"} quill-id-${uniqueId}`}
       data-toolbar={[]}
       ref={forwardRef}
     >
       <ReactQuill
         theme="snow"
         value={data || ""}
+        onKeyUp={() => {
+          // overflow replace text to show that data isn`t changing
+          if (limitOverflow) {
+            if (quill && data) {
+              const selection = quill.getSelection();
+              quill.setText(stripHtml(data));
+              if (selection) {
+                quill.setSelection(selection);
+              }
+            }
+          }
+        }}
         onChange={onChange}
         onFocus={onFocus}
         readOnly={props.disabled}
@@ -121,9 +133,7 @@ const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
           <React.Fragment>
             <div>
               <span className="exclamation-mark">!</span>
-              Great minds don’t think exactly alike: the learner may know the
-              right answer but use slightly different language, so there is a
-              limit of three words for short answers.
+              There is a limit of two spaces or three words for short answers
             </div>
           </React.Fragment>
         }

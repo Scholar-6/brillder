@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, useLocation } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import actions from 'redux/actions/auth';
@@ -26,6 +26,7 @@ interface StudentRouteProps {
 }
 
 const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, innerComponent, user, ...rest }) => {
+  const location = useLocation();
   const cookiesAccepted = getCookies();
   const [cookieOpen, setCookiePopup] = React.useState(!cookiesAccepted);
   const [cookieReOpen, setCookieReOpen] = React.useState(false);
@@ -51,6 +52,11 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
     rest.isAuthorized()
     return <PageLoader content="...Checking rights..." />;
   } else {
+    const isCover = location.pathname.search('/play/brick/') !== -1 && location.pathname.slice(-6) === '/cover';
+    if (isCover) {
+      return <Redirect to={map.Login} />
+    }
+
     return (
       <div className="unauthrozied-container">
         <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />

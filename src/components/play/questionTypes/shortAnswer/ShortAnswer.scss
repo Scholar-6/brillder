@@ -7,6 +7,7 @@
   width: 100%;
   flex-direction: column;
   .short-answer-input {
+    position: relative;
     display: inline-block;
     margin-bottom: 0.5vh;
     background-color: var(--tab-gray);
@@ -35,5 +36,41 @@
 
   .document-editor {
     width: 100%;
+  }
+  .MuiSnackbar-root {
+    position: absolute !important;
+    z-index: 999999;
+    font-size: 2vw;
+
+    bottom: 30% !important;
+    height: 30vh;
+    left: calc(50% - 10vw) !important;
+    width: 20vw;
+
+    .MuiSnackbarContent-root {
+      text-align: justify;
+      padding: 0 1.7vw 0.8vw 1vw;
+      border-radius: 0.7vw;
+      background: var(--theme-light-blue);
+      font-size: 1.4vw;
+      font-family: $font-family-regular;
+
+      .MuiSnackbarContent-action {
+        padding: 0;
+      }
+
+      .exclamation-mark {
+        border-radius: 100vw;
+        padding-left: 0.7vw;
+        padding-right: 0.7vw;
+        margin-right: 1vw;
+        font-size: 1.2vw;
+        @extend %textCenter;
+        font-weight: bold;
+        font-family: $font-family-black;
+        color: white;
+        background-color: var(--theme-orange);
+      }
+    }
   }
 }

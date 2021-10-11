@@ -7,6 +7,7 @@ import './TextLive.scss';
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import Katex from 'components/baseComponents/katex/Katex';
+import HtmlWithSpaces from '../baseComponents/HtmlWithSpaces';
 
 
 interface TextProps {
@@ -53,7 +54,7 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component, refs }) => 
           } else if (latex) {
             return renderLatex(el, i);
           } else {
-            return <div key={i} dangerouslySetInnerHTML={{ __html: el}} />
+            return <HtmlWithSpaces index={i} value={el} />;
           }
         })
       }

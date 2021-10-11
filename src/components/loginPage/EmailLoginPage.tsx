@@ -91,7 +91,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         }
       } else {
         toggleAlertMessage(true);
-        setAlertMessage("Connection problem");
+        setAlertMessage("Your email or password may be wrong?");
       }
     }
   };
@@ -121,7 +121,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       }
     }).catch((e) => {
       toggleAlertMessage(true);
-      setAlertMessage("Connection problem");
+      setAlertMessage("Something maybe wrong with the connection.");
     });
   };
 

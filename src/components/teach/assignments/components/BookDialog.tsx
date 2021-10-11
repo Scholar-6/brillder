@@ -1,9 +1,10 @@
+import React, { useEffect } from 'react';
 import { FormControlLabel, Radio } from '@material-ui/core';
+
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { justParseQuestion } from 'components/build/questionService/QuestionService';
 import QuestionPlay from 'components/play/questionPlay/QuestionPlay';
 import { AttemptStats } from 'model/stats';
-import React, { useEffect } from 'react';
 import { getAttempts } from 'services/axios/attempt';
 
 import './BookDialog.scss';
@@ -11,10 +12,12 @@ import { BookData } from './ExpandedAssignment';
 
 interface Props {
   bookData: BookData;
+  nextStudent(): void;
+  prevStudent(): void;
   onClose(): void;
 }
 
-const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
+const BookDialog: React.FC<Props> = ({ bookData, onClose, ...props }) => {
   const [activeStep, setStep] = React.useState(0);
   const [isReview, setReview] = React.useState(true);
 
@@ -47,7 +50,7 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
   }
 
   /*eslint-disable-next-line*/
-  useEffect(() => { getAttempt() }, []);
+  useEffect(() => { getAttempt() }, [bookData]);
 
   const { student, assignment } = bookData;
 
@@ -63,6 +66,17 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
 
     return (
       <div className="header">
+        <div className="absolute-user-stepper">
+          <div className="arrow-box">
+            <SpriteIcon name="arrow-up" onClick={props.prevStudent} />
+          </div>
+          <div className="user-icon-box">
+            <SpriteIcon name="user" />
+          </div>
+          <div className="arrow-box">
+            <SpriteIcon name="arrow-down" onClick={props.nextStudent} />
+          </div>
+        </div>
         <div className="title"><span className="bold">{student.firstName} {student.lastName} | {assignment?.classroom?.subject?.name},</span> {' '} <span dangerouslySetInnerHTML={{ __html: assignment?.brick.title || '' }} /></div>
         <div className="stepper">
           {getBestStudentAttempt().answers.map(renderStep)}
@@ -133,9 +147,8 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose }) => {
     return (
       <div className="ge-phone-title">
         <div
-          className={`ge-phone-circle ${
-            attempt.marks > 0 ? "b-yellow" : "b-red"
-          }`}
+          className={`ge-phone-circle ${attempt.marks > 0 ? "b-yellow" : "b-red"
+            }`}
         >
           <SpriteIcon name="cancel-custom" />
         </div>

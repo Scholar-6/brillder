@@ -6,6 +6,9 @@
   .invalid {
     background: var(--theme-orange);
   }
+  .permision-buttons {
+    margin-top: 1vh !important;
+  }
   .MuiPaper-root.MuiDialog-paper {
     padding-bottom: 7.4vw;
     overflow-y: hidden;
