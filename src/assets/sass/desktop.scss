@@ -887,9 +887,18 @@
 
 .ql-sound-custom {
   position: relative;
+  
+  .quill-wave {
+    position: absolute;
+    top: 0;
+    width: 300px;
+  }
+  audio {
+    margin-top: 90px;
+  }
   .sound-caption {
     position: absolute;
-    top: 55px;
+    top: 145px;
     width: 300px;
     text-align: center;
     font-size: 1vw;

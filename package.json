@@ -4,6 +4,7 @@
   "private": false,
   "dependencies": {
     "@datadog/datadog-ci": "^0.11.11",
+    "@dschoon/react-waves": "^4.0.3",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.56",

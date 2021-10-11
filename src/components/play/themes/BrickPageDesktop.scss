@@ -2494,3 +2494,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .play-preview-pages .new-prep-page .introduction-page .scrollable .introduction-content {
   padding-bottom: 2vw;
 }
+
+
+// competition button
+.play-preview-pages .collapsable-sidebar .sidebar-button .two-line-button {
+  height: 5vw !important;
+  span {
+    white-space: unset !important;
+  }
+}
