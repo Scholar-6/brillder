@@ -233,6 +233,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   renderThirdButton() {
     if (this.state.isTeacher) {
       return this.renderTryBuildButton(true && !this.state.isNewTeacher);
+    } else if (this.state.isBuilder) {
+      return this.renderLibraryButton();
     } else if (this.state.isStudent) {
       return this.renderLibraryButton();
     } else if (this.state.isAdmin) {
@@ -323,15 +325,17 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   renderRightButton() {
     if (this.state.isBuilder) {
-      let isActive = false;
-      return (
-        <div className="create-item-container stats">
-          <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
-            <SpriteIcon name="f-trending-up" />
-            <span className={`item-description ${isActive ? '' : 'disabled'}`}>Brick Stats</span>
-          </button>
-        </div>
-      );
+      // Removed brick stats because it doesnt exist yet 11/10/21
+      // let isActive = false;
+      // return (
+      //   <div className="create-item-container stats">
+      //     <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
+      //       <SpriteIcon name="f-trending-up" />
+      //       <span className={`item-description ${isActive ? '' : 'disabled'}`}>Brick Stats</span>
+      //     </button>
+      //   </div>
+      // );
+      return ""
     }
     let isActive = this.props.user.hasPlayedBrick;
     if (this.state.isTeacher) {

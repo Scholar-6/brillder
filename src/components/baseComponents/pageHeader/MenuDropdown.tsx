@@ -19,7 +19,7 @@ import PlaySkipDialog from "../dialogs/PlaySkipDialog";
 import { isPhone } from "services/phone";
 import { getAssignedBricks, getLibraryBricks } from "services/axios/brick";
 import LockedDialog from "../dialogs/LockedDialog";
-import { isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
+import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick())
@@ -149,12 +149,13 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const renderManageClassesItem = () => {
     if (isIPad13 || isTablet) { return <div/>; }
     const {user} = props;
-    if (page !== PageEnum.ManageClasses && page !== PageEnum.MainPage && user) {
+    // I think we should be able to see this from the main page
+    if (page !== PageEnum.ManageClasses && user) {
       let canSee = checkTeacherOrAdmin(user);
-      if (!canSee) {
-        if (isTeacherPreference(user) || isInstitutionPreference(user)) {
-          canSee = true
-        }
+      // There is no need to check for teacher, institution, admin twice it already does so in previous line
+      // I added the manage classrooms just in the menu for the builder preference
+      if (isBuilderPreference(user)) {
+        canSee = true;
       }
       if (canSee) {
         return (
