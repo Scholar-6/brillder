@@ -26,15 +26,18 @@ const mark = (component: ChooseSeveralComponent, attempt: ComponentAttempt<Choos
     // If there are more possible correct answers then correct user answers then the attempt is incorrect
     attempt.correct = JSON.stringify(whatTheAnswersShouldBe.sort((a,b) => a-b)) === JSON.stringify(correctUserAnswers.sort((a,b) => a-b));
 
-    //#3889
-    for (let [i, choice] of (component.list as any).entries()) {
-        if (choice.checked === false) {
-            for (let answer of attempt.answer) {
-                if (i === answer.realIndex) {
-                    attempt.correct = false;
-                }
-            }
-        }
+    //#3960
+    if (attempt.correct === false) {
+      //#3889
+      for (let [i, choice] of (component.list as any).entries()) {
+          if (choice.checked === false) {
+              for (let answer of attempt.answer) {
+                  if (i === answer.realIndex) {
+                      attempt.correct = false;
+                  }
+              }
+          }
+      }
     }
 
     return attempt;
