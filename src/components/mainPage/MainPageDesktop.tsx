@@ -233,7 +233,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   renderThirdButton() {
     if (this.state.isTeacher) {
       return this.renderTryBuildButton(true && !this.state.isNewTeacher);
-    } else if (this.state.isBuilder) {
+    } else if (this.state.isBuilder && !this.state.isAdmin) {
       return this.renderLibraryButton();
     } else if (this.state.isStudent) {
       return this.renderLibraryButton();
