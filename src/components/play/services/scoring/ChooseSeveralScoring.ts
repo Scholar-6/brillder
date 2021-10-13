@@ -32,7 +32,7 @@ const mark = (component: ChooseSeveralComponent, attempt: ComponentAttempt<Choos
             for (let answer of attempt.answer) {
                 if (i === answer.realIndex) {
                     // check if user selected this answer
-                    const answerSelected = whatTheUserSelected.find(selected => selected === answer.realIndex);
+                    const answerSelected = whatTheUserSelected.find(selected => selected === choice.index);
                     if (answerSelected && answerSelected >= 0) {
                         attempt.correct = false;
                     }
