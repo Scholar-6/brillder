@@ -433,7 +433,13 @@ const LivePage: React.FC<LivePageProps> = ({
           go back to
           Prep tasks
         </div>
-        <div className="prep-button" onClick={() => history.push(playNewPrep(brick.id) + '?resume=true')}>
+        <div className="prep-button" onClick={() => {
+          if (props.isPlayPreview) {
+            history.push(previewRoutes.previewNewPrep(brick.id) + '?resume=true');
+          } else {
+            history.push(routes.playNewPrep(brick.id) + '?resume=true');
+          }
+        }}>
           <svg className="highlight-circle dashed-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
             <g id="Ellipse_72" data-name="Ellipse 72" fill="none" stroke="inherit" stroke-linecap="round" stroke-width="3" stroke-dasharray="8 8">
               <circle cx="36" cy="36" r="36" stroke="none" />
