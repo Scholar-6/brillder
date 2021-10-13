@@ -1,5 +1,7 @@
 import React from 'react';
 
+declare var Brillder: any;
+
 interface ButtonProps {
   competitionPresent: boolean | null;
   sidebarRolledUp: boolean;
@@ -8,7 +10,7 @@ interface ButtonProps {
 }
 
 const CompetitionButton: React.FC<ButtonProps> = (props) => {
-  if (props.sidebarRolledUp || props.competitionPresent === null) {
+  if (props.sidebarRolledUp || props.competitionPresent === null || Brillder.testing.competition === false) {
     return <span />
   }
 
