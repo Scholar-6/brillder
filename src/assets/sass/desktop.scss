@@ -933,3 +933,15 @@
   font-size: 0.01vw;
   margin-left: 0.35vw;
 }
+
+.select-classes-list {
+  .MuiSvgIcon-root {
+    width: 1vw;
+    height: 1vw;
+    margin-left: 0.3vw;
+    margin-right: 0.4vw;
+  }
+  .MuiTypography-body1 {
+    font-size: 1.4vw !important;
+  }
+}
