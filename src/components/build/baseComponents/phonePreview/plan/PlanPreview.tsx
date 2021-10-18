@@ -24,7 +24,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
       <BrickCircle color={currentBrick.subject ? currentBrick.subject.color : ''} label={AcademicLevelLabels[currentBrick.academicLevel]} onClick={() => {}} />
       <div className="title" style={{ textAlign: "center" }}>
         <div className='q-brick-title'>
-          <YoutubeAndMathQuote value={currentBrick.title} />
+          <div dangerouslySetInnerHTML={{__html: currentBrick.title}} />
         </div>
       </div>
       <KeyWordsPlay keywords={currentBrick.keywords} />
