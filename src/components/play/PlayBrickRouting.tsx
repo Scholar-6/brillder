@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import moment from 'moment';
+import queryString from 'query-string';
 
 import Cover from "./cover/Cover";
 import Sections from "./sections/Sections";
@@ -162,6 +163,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [brick, setBrick] = useState(parsedBrick);
   const [status, setStatus] = useState(initStatus);
+  const [competitionId, setCompetitionId] = useState(-1);
   const [brickAttempt, setBrickAttempt] = useState(initBrickAttempt as BrickAttempt);
   
   const [attempts, setAttempts] = useState(initAttempts);
@@ -228,6 +230,18 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     } else {
       showZendesk();
     }
+
+
+    // competition
+    const values = queryString.parse(props.location.search);
+    if (values.competitionId) {
+      try {
+        var compId = values.competitionId as string;
+        setCompetitionId(parseInt(compId));
+      } catch {
+        console.log('can`t convert competition id');
+      }
+    }
     /*eslint-disable-next-line*/
   }, [])
 
@@ -265,6 +279,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setBrickAttempt(ba);
     setReviewAttempts(Object.assign([], attempts));
     setStatus(PlayStatus.Review);
+    if (competitionId > -1) {
+      ba.competitionId = competitionId;
+    }
     saveBrickAttempt(ba);
     settingLiveDuration();
   };

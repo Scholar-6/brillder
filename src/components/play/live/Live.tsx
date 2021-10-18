@@ -27,7 +27,7 @@ import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
 import { getLiveTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
-import routes, { playNewPrep } from "../routes";
+import routes from "../routes";
 import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
 import { getUniqueComponent } from "components/build/questionService/QuestionService";

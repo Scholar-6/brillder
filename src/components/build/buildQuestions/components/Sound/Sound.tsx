@@ -7,7 +7,7 @@ import PauseButton from "./components/buttons/PauseButton";
 import PlayButton from "./components/buttons/PlayButton";
 import RecordingButton from "./components/buttons/RecordingButton";
 import RecordButton from "./components/buttons/RecordButton";
-import { fileUrl, getFile, uploadFile } from "components/services/uploadFile";
+import { getFile, uploadFile } from "components/services/uploadFile";
 import Recording from "./components/Recording";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
