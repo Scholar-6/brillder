@@ -19,7 +19,7 @@ import PlaySkipDialog from "../dialogs/PlaySkipDialog";
 import { isPhone } from "services/phone";
 import { getAssignedBricks, getLibraryBricks } from "services/axios/brick";
 import LockedDialog from "../dialogs/LockedDialog";
-import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
+import { isBuilderPreference, isStudentPreference } from "components/services/preferenceService";
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick())
