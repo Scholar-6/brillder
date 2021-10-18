@@ -52,13 +52,11 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [emailInvalidPopup, setInvalidEmailPopup] = React.useState(false); // null - before submit button clicked, true - invalid
   const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
-  useEffect(() => {
-    const userTimeout = setTimeout(() => {
-      if (!props.user) {
-        setUnauthorizedV2(true);
-      }
-    }, 10000);
-  }, [])
+  const userTimeout = setTimeout(() => {
+    if (!props.user) {
+      setUnauthorizedV2(true);
+    }
+  }, 10000);
 
   const validate = (data: any) => {
     if (data === 400) {
