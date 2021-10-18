@@ -57,7 +57,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       if (!props.user) {
         setUnauthorizedV2(true);
       }
-    }, 1000);
+    }, 10000);
   }, [])
 
   const validate = (data: any) => {
