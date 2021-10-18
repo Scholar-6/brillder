@@ -19,7 +19,7 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import SponsorImageComponent from "./SponsorImage";
 import CoverAuthorRow from "./components/coverAuthorRow/CoverAuthorRow";
 import CoverPlay from "./components/coverAuthorRow/CoverPlay";
-import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/UnauthorizedUserDialogV2";
+import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
@@ -43,6 +43,8 @@ const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [bioOpen, setBio] = React.useState(false);
 
+  const [playClicked, setClickPlay] = React.useState(false);
+  const [unauthPopupShown, setUnauthPopupShown] = React.useState(false)
   const [unauthorizedOpenV2, setUnauthorizedV2] = React.useState(false);
 
   const [firstPhonePopup, setFirstPhonePopup] = React.useState(false);
@@ -50,11 +52,13 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [emailInvalidPopup, setInvalidEmailPopup] = React.useState(false); // null - before submit button clicked, true - invalid
   const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
-  const userTimeout = setTimeout(() => {
-    if (!props.user) {
-      setUnauthorizedV2(true);
-    }
-  }, 10000);
+  useEffect(() => {
+    const userTimeout = setTimeout(() => {
+      if (!props.user) {
+        setUnauthorizedV2(true);
+      }
+    }, 1000);
+  }, [])
 
   const validate = (data: any) => {
     if (data === 400) {
@@ -172,7 +176,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         <div className="cover-page">
           {renderFirstRow()}
           <div className="brick-title q-brick-title">
-          {brick.adaptedFrom &&<div className="adapted-text">ADAPTED</div>}
+            {brick.adaptedFrom && <div className="adapted-text">ADAPTED</div>}
             <div>
               {brick.adaptedFrom && <SpriteIcon name="copy" />}
               <div dangerouslySetInnerHTML={{ __html: brick.title }} />
@@ -271,7 +275,15 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <CoverTimer brickLength={brick.brickLength} />
           </div>
           <div className="introduction-info">
-            <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
+            <CoverPlay onClick={() => {
+              if (props.user) {
+                startBrick();
+              } else {
+                setUnauthorizedV2(true);
+                setClickPlay(true);
+              }
+            }}
+            />
           </div>
         </div>
         <UnauthorizedUserDialogV2
@@ -279,8 +291,14 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           brickId={brick.id}
           isOpen={unauthorizedOpenV2}
           emailInvalid={emailInvalid}
-          login={(email) => createInactiveAccountV2(email)}
-          notyet={() => startBrick()}
+          notyet={() => {
+            if (playClicked) {
+              startBrick()
+            } else {
+              setUnauthorizedV2(false);
+            }
+            setUnauthPopupShown(true);
+          }}
         />
       </React.Suspense>
     );
@@ -298,7 +316,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 {renderFirstRow()}
                 <div className="brick-title q-brick-title dynamic-title">
                   {brick.adaptedFrom && !brick.isCore && <div className="adapted-text">ADAPTED</div>}
-                  {brick.adaptedFrom && !brick.isCore && <SpriteIcon name="copy"/>}<DynamicFont content={stripHtml(brick.title)} />
+                  {brick.adaptedFrom && !brick.isCore && <SpriteIcon name="copy" />}<DynamicFont content={stripHtml(brick.title)} />
                 </div>
                 <CoverAuthorRow brick={brick} setBio={setBio} />
                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
@@ -360,7 +378,14 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             </Grid>
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
-                <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
+                <CoverPlay onClick={() => {
+                  if (props.user) {
+                    startBrick();
+                  } else {
+                    setUnauthorizedV2(true);
+                    setClickPlay(true);
+                  }
+                }} />
               </div>
             </Grid>
           </Grid>
@@ -372,8 +397,14 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         brickId={brick.id}
         isOpen={unauthorizedOpenV2}
         emailInvalid={emailInvalid}
-        login={(email) => createInactiveAccountV2(email)}
-        notyet={() => startBrick()}
+        notyet={() => {
+          if (playClicked) {
+            startBrick();
+          } else {
+            setUnauthorizedV2(false);
+          }
+          setUnauthPopupShown(true);
+        }}
       />
       <TextDialog
         isOpen={emailInvalidPopup} close={() => setInvalidEmailPopup(false)}
