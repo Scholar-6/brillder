@@ -277,7 +277,11 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
               if (props.user) {
                 startBrick();
               } else {
-                setUnauthorizedV2(true);
+                if (!unauthPopupShown) {
+                  setUnauthorizedV2(true);
+                } else {
+                  startBrick();
+                }
                 setClickPlay(true);
               }
             }}
@@ -380,7 +384,11 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   if (props.user) {
                     startBrick();
                   } else {
-                    setUnauthorizedV2(true);
+                    if (!unauthPopupShown) {
+                      setUnauthorizedV2(true);
+                    } else {
+                      startBrick();
+                    }
                     setClickPlay(true);
                   }
                 }} />
