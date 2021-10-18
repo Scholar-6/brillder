@@ -14,6 +14,15 @@ $base-build-border: $editor-radius;
   height: 100vh;
   overflow: hidden;
 
+  .q-brick-title {
+    br {
+      display: none;
+    }
+    p {
+      display: inline;
+    }
+  }
+
   .exit-arrow {
     position: fixed;
     top: 2.6vh;
@@ -423,6 +432,10 @@ $base-build-border: $editor-radius;
   @extend %flexCenter;
   justify-content: center;
 
+  br {
+    display: none;
+  }
+
   svg {
     margin-left: 2vw;
     margin-right: 0.3vw;
@@ -448,6 +461,7 @@ $base-build-border: $editor-radius;
   p {
     color: var(--theme-light-blue) !important;
     background: inherit !important;
+    display: inline;
   }
 }
 
