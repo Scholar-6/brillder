@@ -11,6 +11,7 @@ interface Props {
 interface State {
   playing: boolean;
   volume: number;
+  fileСaption: string | null;
   fileUrl: string | null;
 }
 
@@ -21,11 +22,13 @@ class SoundPlay extends React.Component<Props, State> {
     const div = document.createElement('div');
     div.innerHTML = props.element;
     const fileUrl = div.children[0].getAttribute('data-value');
+    const fileСaption = div.children[0].getAttribute('data-caption');
     console.log(props.element, fileUrl);
 
     this.state = {
       playing: false,
       volume: 1,
+      fileСaption,
       fileUrl
     }
   }
@@ -98,6 +101,7 @@ class SoundPlay extends React.Component<Props, State> {
             />
           </div>
         </div>
+        <div className="sound-caption">{this.state.fileСaption}</div>
       </div>
     }
     return (<div />);
