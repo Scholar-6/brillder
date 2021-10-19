@@ -423,18 +423,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
-  moveToPlay(brickId: number) {
-    this.props.history.push(playCover(brickId));
-  }
-
-  move(brickId: number) {
-    if (document.body.requestFullscreen) {
-      document.body.requestFullscreen().then(() => {
-        this.moveToPlay(brickId);
-      });
-    } else {
-      this.moveToPlay(brickId);
-    }
+  moveToPlay(brick: Brick) {
+    this.props.history.push(playCover(brick));
   }
 
   handleSortChange = (e: any) => {

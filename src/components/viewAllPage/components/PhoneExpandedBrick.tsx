@@ -44,7 +44,7 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user, h
           if (user && checkAssignment(brick)) {
             history.push(map.postAssignment(brick.id, user.id));
           } else {
-            history.push(routes.playBrief(brick.id));
+            history.push(routes.playBrief(brick));
           }
         }}>Play Now</button>
       </div>

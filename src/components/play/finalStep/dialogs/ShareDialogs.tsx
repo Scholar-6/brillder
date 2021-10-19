@@ -34,7 +34,7 @@ const ShareDialogs: React.FC<ShareProps> = props => {
     name: ''
   } as InviteResult);
 
-  const link = routes.playCover(props.brick.id);
+  const link = routes.playCover(props.brick);
 
   let isAuthor = false;
   try {

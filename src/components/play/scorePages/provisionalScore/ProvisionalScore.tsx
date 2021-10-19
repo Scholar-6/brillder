@@ -105,7 +105,7 @@ class ProvisionalScore extends React.Component<
     if (this.props.isPlayPreview) {
       link = previewRoutes.previewNewPrep(brickId);
     } else {
-      link = routes.playNewPrep(brickId);
+      link = routes.playNewPrep(this.props.brick);
     }
     this.props.history.push(link);
     this.props.moveToPrep?.();
@@ -116,7 +116,7 @@ class ProvisionalScore extends React.Component<
     if (this.props.isPlayPreview) {
       link = previewRoutes.previewSynthesis(this.props.brick.id);
     } else {
-      link = routes.playPreSynthesis(this.props.brick.id);
+      link = routes.playPreSynthesis(this.props.brick);
     }
     this.props.history.push(link);
     this.props.moveNext?.();

@@ -1,5 +1,7 @@
+import { stripHtml } from "components/build/questionService/ConvertService";
 import { PlayBase, realPlay } from "components/map";
 import { setAssignmentId } from "localStorage/playAssignmentId";
+import { Brick } from "model/brick";
 import { isPhone } from "services/phone";
 
 const basePlayRoute = PlayBase + '/:brickId';
@@ -19,6 +21,7 @@ export const PlaySynthesisLastPrefix = '/synthesis';
 export const PlayPreReviewLastPrefix = '/pre-review';
 export const PlayTimeReviewLastPrefix = '/review-countdown';
 export const PlayReviewLastPrefix = '/review';
+export const PlayEndingLastPrefix = '/ending';
 export const PlayFinalStepLastPrefix = '/finalStep';
 
 export const coverRoute = basePlayRoute + PlayCoverLastPrefix;
@@ -35,26 +38,38 @@ export const preReviewRoute = basePlayRoute + PlayPreReviewLastPrefix;
 export const timeReviewRoute = basePlayRoute + PlayTimeReviewLastPrefix;
 export const reviewRoute = basePlayRoute + PlayReviewLastPrefix;
 
-export const playCover = (brickId: number) => realPlay(brickId) + PlayCoverLastPrefix;
-export const playSections = (brickId: number) => realPlay(brickId) + PlaySectionsLastPrefix;
-export const playBrief = (brickId: number) => realPlay(brickId) + PlayBriefLastPrefix;
-export const playPrePrep = (brickId: number) => realPlay(brickId) + PlayPrePrepLastPrefix;
-export const playNewPrep = (brickId: number) => realPlay(brickId) + PlayNewPrepLastPrefix;
-export const playPreInvesigation = (brickId: number) => realPlay(brickId) + PlayPreInvestigationLastPrefix;
-export const playCountInvesigation = (brickId: number) => realPlay(brickId) + PlayCountInvestigationLastPrefix;
-export const playInvestigation = (brickId: number) => realPlay(brickId) + PlayLiveLastPrefix;
-export const playProvisionalScore = (brickId: number) => realPlay(brickId) + PlayProvisionalScoreLastPrefix;
-export const playPreSynthesis = (brickId: number) => realPlay(brickId) + PlayPreSynthesisLastPrefix;
-export const playTimeSynthesis = (brickId: number) => realPlay(brickId) + PlayTimeSynthesisLastPrefix;
-export const playSynthesis = (brickId: number) => realPlay(brickId) + PlaySynthesisLastPrefix;
-export const playPreReview = (brickId: number) => realPlay(brickId) + PlayPreReviewLastPrefix;
-export const playTimeReview = (brickId: number) => realPlay(brickId) + PlayTimeReviewLastPrefix;
-export const playReview = (brickId: number) => realPlay(brickId) + PlayReviewLastPrefix;
-export const playFinalStep = (brickId: number) => realPlay(brickId) + PlayFinalStepLastPrefix;
+const prepareURLString = (str?: string) => {
+  if (str) {
+    return '/' + encodeURI(str.replace(/\s+/g, '-').toLowerCase());
+  }
+  return '';
+}
+
+const preparePlayUrl = (brick: Brick, prefix: string) => {
+  return realPlay(brick.id) + prefix + prepareURLString(brick.subject?.name) + prepareURLString(stripHtml(brick.title));
+}
+
+export const playCover = (brick: Brick) => preparePlayUrl(brick, PlayCoverLastPrefix);
+export const playSections = (brick: Brick) => preparePlayUrl(brick, PlaySectionsLastPrefix);
+export const playBrief = (brick: Brick) => preparePlayUrl(brick, PlayBriefLastPrefix);
+export const playPrePrep = (brick: Brick) => preparePlayUrl(brick, PlayPrePrepLastPrefix);
+export const playNewPrep = (brick: Brick) => preparePlayUrl(brick, PlayNewPrepLastPrefix);
+export const playPreInvesigation = (brick: Brick) => preparePlayUrl(brick, PlayPreInvestigationLastPrefix);
+export const playCountInvesigation = (brick: Brick) => preparePlayUrl(brick, PlayCountInvestigationLastPrefix);
+export const playInvestigation = (brick: Brick) => preparePlayUrl(brick, PlayLiveLastPrefix);
+export const playProvisionalScore = (brick: Brick) => preparePlayUrl(brick, PlayProvisionalScoreLastPrefix);
+export const playPreSynthesis = (brick: Brick) => preparePlayUrl(brick, PlayPreSynthesisLastPrefix);
+export const playTimeSynthesis = (brick: Brick) => preparePlayUrl(brick, PlayTimeSynthesisLastPrefix);
+export const playSynthesis = (brick: Brick) => preparePlayUrl(brick, PlaySynthesisLastPrefix);
+export const playPreReview = (brick: Brick) => preparePlayUrl(brick, PlayPreReviewLastPrefix);
+export const playTimeReview = (brick: Brick) => preparePlayUrl(brick, PlayTimeReviewLastPrefix);
+export const playReview = (brick: Brick) => preparePlayUrl(brick, PlayReviewLastPrefix);
+export const playEnding = (brick: Brick) => preparePlayUrl(brick, PlayEndingLastPrefix);
+export const playFinalStep = (brick: Brick) => preparePlayUrl(brick, PlayFinalStepLastPrefix);
 
 // phone pages
 export const PlayPhonePrepLastPrefix = '/intro';
-export const phonePrep = (brickId: number) => realPlay(brickId) + PlayPhonePrepLastPrefix;
+export const phonePrep = (brick: Brick) => preparePlayUrl(brick, PlayPhonePrepLastPrefix);
 
 /**
  * Set assignment and return link to play
@@ -62,12 +77,12 @@ export const phonePrep = (brickId: number) => realPlay(brickId) + PlayPhonePrepL
  * @param assignmentId AssignmentId
  * @returns link to play
  */
-export const playAssignment = (brickId: number, assignmentId: number) => {
+export const playAssignment = (brick: Brick, assignmentId: number) => {
   setAssignmentId(assignmentId);
   if (isPhone()) {
-    return phonePrep(brickId);
+    return phonePrep(brick);
   } else {
-    return playCover(brickId);
+    return playCover(brick);
   }
 }
 
@@ -114,6 +129,7 @@ export default {
   playPreReview,
   playTimeReview,
   playReview,
+  playEnding,
   playFinalStep,
 
   playAssignment,

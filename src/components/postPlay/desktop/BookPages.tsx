@@ -92,7 +92,7 @@ class BookPages extends React.Component<BookProps, BookState> {
     }
     return (
       <div className="green-button-container1" onClick={() => {
-        this.props.history.push(routes.playAssignment(brick.id, this.props.attempt.assignmentId));
+        this.props.history.push(routes.playAssignment(brick, this.props.attempt.assignmentId));
       }}>
         <div className="green-button-container2">
           <div className="play-text">Play Again</div>

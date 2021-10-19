@@ -188,7 +188,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
         <div className="green-button-container3"
           onClick={() =>
             this.props.history.push(
-              routes.playAssignment(brick.id, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
+              routes.playAssignment(brick, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
             )
           }
         >
