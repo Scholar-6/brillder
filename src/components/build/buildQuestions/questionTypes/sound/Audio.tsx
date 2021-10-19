@@ -6,6 +6,7 @@ import { fileUrl } from "components/services/uploadFile";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
+import ReactWaves from "@dschoon/react-waves";
 
 interface SoundProps {
   src?: string;
@@ -117,6 +118,31 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
   render() {
     return (
       <div>
+        <div className="play-wave-container">
+          {this.props.src &&
+            <ReactWaves
+              audioFile={fileUrl(this.props.src)}
+              className={"react-waves"}
+              options={{
+                barGap: 4,
+                barWidth: 4,
+                barHeight: 4,
+                barRadius: 4,
+                cursorWidth: 0,
+                height: 150,
+                hideScrollbar: true,
+                progressColor: '#c43c30',
+                cursorColor: 'red',
+                normalize: true,
+                responsive: true,
+                waveColor: '#001c58',
+              }}
+              volume={1}
+              zoom={1}
+              playing={false}
+            />
+          }
+        </div>
         <div className="custom-audio-controls">
           <div className="button-container">
             {this.state.audioState === AudioState.Init ||
