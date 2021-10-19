@@ -123,7 +123,11 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const moveToProvisional = () => {
     let playPath = getPlayPath(props.isPlayPreview, brick.id);
-    history.push(`${playPath}/provisionalScore`);
+    if (props.isPlayPreview) {
+      history.push(`${playPath}/provisionalScore`);
+    } else {
+      history.push(routes.playProvisionalScore(brick));
+    }
     props.moveNext && props.moveNext();
   };
 
