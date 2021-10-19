@@ -141,11 +141,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
       const isProvisional = history.location.pathname.slice(-routes.PlayProvisionalScoreLastPrefix.length) === routes.PlayProvisionalScoreLastPrefix;
       if (!isProvisional && cashAttempt.lastPageUrl === routes.PlayProvisionalScoreLastPrefix && initStatus === PlayStatus.Review) {
-        history.push(routes.playProvisionalScore(props.brick.id))
+        history.push(routes.playProvisionalScore(props.brick))
       }
       const isSynthesis = history.location.pathname.slice(-routes.PlaySynthesisLastPrefix.length) === routes.PlaySynthesisLastPrefix;
       if (!isSynthesis && cashAttempt.lastPageUrl === routes.PlaySynthesisLastPrefix && initStatus === PlayStatus.Review) {
-        history.push(routes.playProvisionalScore(props.brick.id))
+        history.push(routes.playProvisionalScore(props.brick))
       }
       setRestored(true);
     } else {
@@ -383,7 +383,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const coverMoveNext = () => {
     if (isPhone()) {
-      moveToIntro();
+      moveToBrief();
     } else {
       if (props.user) {
         moveToBrief();
@@ -394,30 +394,29 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
-  const moveToSections = () => history.push(playSections(brick.id));
-  const moveToBrief = () => history.push(playBrief(brick.id));
-  const moveToPrePrep = () => history.push(playPrePrep(brick.id));
-  const moveToNewPrep = () => history.push(playNewPrep(brick.id));
-  const moveToIntro = () => history.push(playBrief(brick.id));
+  const moveToSections = () => history.push(playSections(brick));
+  const moveToBrief = () => history.push(playBrief(brick));
+  const moveToPrePrep = () => history.push(playPrePrep(brick));
+  const moveToNewPrep = () => history.push(playNewPrep(brick));
   const moveToPreInvestigation = (isResume: boolean) => {
     if (isResume) {
       moveToInvestigation();
     } else {
-      history.push(playPreInvesigation(brick.id));
+      history.push(playPreInvesigation(brick));
     }
   }
-  const moveToInvestigation = () => history.push(playInvestigation(brick.id));
-  const moveToTimeInvestigation = () => history.push(playCountInvesigation(brick.id));
-  const moveToTimeSynthesis = () => history.push(routes.playTimeSynthesis(brick.id));
-  const moveToSynthesis = () => history.push(routes.playSynthesis(brick.id));
-  const moveToPreReview = () => history.push(routes.playPreReview(brick.id));
-  const moveToTimeReview = () => history.push(routes.playTimeReview(brick.id));
-  const finishBrick = () => history.push(routes.playFinalStep(brick.id));
+  const moveToInvestigation = () => history.push(playInvestigation(brick));
+  const moveToTimeInvestigation = () => history.push(playCountInvesigation(brick));
+  const moveToTimeSynthesis = () => history.push(routes.playTimeSynthesis(brick));
+  const moveToSynthesis = () => history.push(routes.playSynthesis(brick));
+  const moveToPreReview = () => history.push(routes.playPreReview(brick));
+  const moveToTimeReview = () => history.push(routes.playTimeReview(brick));
+  const finishBrick = () => history.push(routes.playFinalStep(brick));
 
 
   const moveToReview = () => {
     if (props.user) {
-      history.push(routes.playReview(brick.id));
+      history.push(routes.playReview(brick));
     } else {
       // unauthorized users finish it here. show popup
       setUnauthorized(true);
@@ -455,7 +454,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       } else {
         setUser(data);
         setUnauthorized(false);
-        history.push(routes.playReview(brick.id));
+        history.push(routes.playReview(brick));
       }
     }
   }
@@ -522,7 +521,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <meta property="og:image" content={brick.coverImage} />
       </Helmet>
       <Switch>
-        <Route exac path={routes.coverRoute}>
+        <Route path={routes.coverRoute}>
           <Cover
             user={props.user}
             location={props.location}
@@ -533,19 +532,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
           {isPhone() && <PhonePlayShareFooter isCover={true} brick={brick} history={history} next={coverMoveNext} />}
         </Route>
-        <Route exact path={routes.briefRoute}>
+        <Route path={routes.briefRoute}>
           <Brief brick={brick} mode={mode} user={props.user} moveNext={moveToPrePrep} onHighlight={onHighlight} />
-          {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={() => history.push(routes.playPrePrep(brick.id))} />}
+          {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={() => history.push(routes.playPrePrep(brick))} />}
         </Route>
-        <Route exact path={routes.sectionsRoute}>
+        <Route path={routes.sectionsRoute}>
           <Sections brick={brick} moveNext={moveToBrief} />
           {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={() => { }} />}
         </Route>
-        <Route exact path={routes.prePrepRoute}>
+        <Route path={routes.prePrepRoute}>
           <PrePrep brick={brick} mode={mode} moveNext={moveToNewPrep} onHighlight={onHighlight} />
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Start Prep" next={() => history.push(routes.playNewPrep(brick.id))} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Start Prep" next={() => history.push(routes.playNewPrep(brick))} />}
         </Route>
-        <Route exact path={routes.preInvestigationRoute}>
+        <Route path={routes.preInvestigationRoute}>
           {isPhone()
             ? <PhonePreInvestigationPage brick={brick} moveNext={moveToTimeInvestigation} />
             : <PreInvestigationPage brick={brick} moveNext={moveToTimeInvestigation} />
@@ -553,15 +552,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={moveToTimeInvestigation} />}
         </Route>
 
-        <Route exact path={routes.countInvestigationRoute}>
+        <Route path={routes.countInvestigationRoute}>
           {isPhone()
-            ? <PhoneCountInvestigationPage brick={brick} moveNext={() => history.push(routes.playInvestigation(brick.id))} />
+            ? <PhoneCountInvestigationPage brick={brick} moveNext={moveToInvestigation} />
             : <CountdownInvestigationPage brick={brick} moveNext={moveToLive} />
           }
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Start Timer" next={() => history.push(routes.playInvestigation(brick.id))} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Start Timer" next={moveToInvestigation} />}
         </Route>
 
-        <Route exac path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
+        <Route path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
           {isPhone() ?
             <Introduction
               location={props.location}
@@ -580,9 +579,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               setEndTime={setPrepEndTime} onHighlight={onHighlight}
             />
           }
-          {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={() => history.push(routes.playPreInvesigation(brick.id))} />}
+          {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={() => history.push(routes.playPreInvesigation(brick))} />}
         </Route>
-        <Route exac path="/play/brick/:brickId/live">
+        <Route path="/play/brick/:brickId/live">
           <Live
             history={history}
             mode={mode}
@@ -602,7 +601,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
           {isPhone() && renderPhoneFooter()}
         </Route>
-        <Route exac path="/play/brick/:brickId/provisionalScore">
+        <Route path="/play/brick/:brickId/provisionalScore">
           <ProvisionalScore
             user={props.user}
             history={history}
@@ -613,10 +612,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             liveDuration={liveDuration}
             moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}
           />
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} showQRCode={true} btnText="Next" next={() => history.push(routes.playPreSynthesis(brick.id))} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} showQRCode={true} btnText="Next" next={() => history.push(routes.playPreSynthesis(brick))} />}
         </Route>
 
-        <Route exact path={routes.preSynthesisRoute}>
+        <Route path={routes.preSynthesisRoute}>
           {isPhone()
             ? <PhonePreSynthesisPage brick={brick} moveNext={moveToTimeSynthesis} />
             : <PreSynthesis brick={brick} history={history} />
@@ -624,7 +623,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} showQRCode={true} btnText="Next" next={moveToTimeSynthesis} />}
         </Route>
 
-        <Route exact path={routes.timeSynthesisRoute}>
+        <Route path={routes.timeSynthesisRoute}>
           {isPhone()
             ? <PhoneTimeSynthesisPage brick={brick} />
             : <PreSynthesis brick={brick} history={history} />
@@ -632,7 +631,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Synthesis" next={moveToSynthesis} />}
         </Route>
 
-        <Route exac path={routes.synthesisRoute}>
+        <Route path={routes.synthesisRoute}>
           <Synthesis
             mode={mode} status={status} brick={brick}
             moveNext={moveToPreReview} onHighlight={onHighlight}
@@ -642,12 +641,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={moveToPreReview} />}
         </Route>
 
-        <Route exact path={routes.preReviewRoute}>
+        <Route path={routes.preReviewRoute}>
           <PreReview brick={brick} moveNext={moveToTimeReview} />
           {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Start Review" next={moveToTimeReview} />}
         </Route>
 
-        <Route exact path={routes.timeReviewRoute}>
+        <Route path={routes.timeReviewRoute}>
           {isPhone()
             ? <PhoneCountdownReview brick={brick} moveNext={moveToReview} />
             : <CountdownReview brick={brick} moveNext={moveToReview} />
@@ -730,11 +729,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {renderRouter()}
         </div>
         <UnauthorizedUserDialog
-          brickId={brick.id}
+          brick={brick}
           history={history}
           isOpen={unauthorizedOpen}
           emailInvalid={emailInvalid}
-          moveToLogin={() => cashAttempt(routes.playReview(brick.id), PlayStatus.Review)}
+          moveToLogin={() => cashAttempt(routes.playReview(brick), PlayStatus.Review)}
           login={(email) => createInactiveAccount(email)}
           again={again}
           close={() => setUnauthorized(false)}

@@ -124,7 +124,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           history={this.props.history}
           onFinish={() => {
             this.setState({ brickStatus: BrickStatus.Publish });
-            this.props.history.push(routes.playCover(this.props.brick.id));
+            this.props.history.push(routes.playCover(this.props.brick));
           }}
         />
       );
@@ -140,7 +140,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         history={this.props.history}
         onFinish={() => {
           this.setState({ brickStatus: BrickStatus.Publish });
-          this.props.history.push(routes.playCover(this.props.brick.id));
+          this.props.history.push(routes.playCover(this.props.brick));
         }}
       />
     );
@@ -154,7 +154,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         history={this.props.history}
         onFinish={() => {
           this.setState({ brickStatus: BrickStatus.Publish });
-          this.props.history.push(routes.playCover(this.props.brick.id));
+          this.props.history.push(routes.playCover(this.props.brick));
         }}
       />
     );

@@ -239,7 +239,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
     return (
       <div className="green-button-container1" onClick={() => {
-        this.props.history.push(routes.playAssignment(brick.id, this.state.attempts[0].assignmentId));
+        this.props.history.push(routes.playAssignment(brick, this.state.attempts[0].assignmentId));
       }}>
         <div className="green-button-container2">
           <div className="play-text">Play Again</div>

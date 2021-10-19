@@ -75,7 +75,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
               props.history.push(map.postPlay(brick.id, props.user.id));
             }
           } else {
-            props.history.push(routes.playNewPrep(brick.id));
+            props.history.push(routes.playNewPrep(brick));
           }
         }}
         style={{ background: color }}

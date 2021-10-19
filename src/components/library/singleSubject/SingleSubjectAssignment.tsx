@@ -125,7 +125,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
               props.history.push(map.postAssignment(brick.id, props.user.id));
             }
           } else {
-            props.history.push(routes.playNewPrep(brick.id));
+            props.history.push(routes.playNewPrep(brick));
           }
         }}
         style={{ background: color }}

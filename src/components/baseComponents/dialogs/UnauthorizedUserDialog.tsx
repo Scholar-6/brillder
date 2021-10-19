@@ -5,9 +5,10 @@ import map from "components/map";
 import SpriteIcon from "../SpriteIcon";
 import playRoutes from 'components/play/routes';
 import { SetLoginRedirectUrl } from "localStorage/login";
+import { Brick } from "model/brick";
 
 interface UnauthorizedProps {
-  brickId: number;
+  brick: Brick;
   emailInvalid: boolean | null; // null - before submit
   isOpen: boolean;
   history: any;
@@ -40,7 +41,7 @@ const UnauthorizedUserDialog: React.FC<UnauthorizedProps> = (props) => {
         />
         <div className="small-text-link" onClick={() => {
           props.moveToLogin();
-          SetLoginRedirectUrl(playRoutes.playReview(props.brickId));
+          SetLoginRedirectUrl(playRoutes.playReview(props.brick));
           props.history.push(map.Login);
         }}>Already a member? Sign in here<SpriteIcon name="arrow-right" /></div>
         <div className="dialog-footer big-footer">

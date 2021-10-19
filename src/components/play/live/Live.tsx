@@ -144,7 +144,7 @@ const LivePage: React.FC<LivePageProps> = ({
         CashQuestionFromPlay(brick.id, step);
       } else {
         history.push(
-          routes.playInvestigation(brick.id) + "?activeStep=" + step
+          routes.playInvestigation(brick) + "?activeStep=" + step
         );
       }
     }, 100);
@@ -320,12 +320,12 @@ const LivePage: React.FC<LivePageProps> = ({
     props.updateAttempts(attempt, activeStep);
     let link = "";
     if (isPhone()) {
-      link = routes.phonePrep(brick.id);
+      link = routes.phonePrep(brick);
     } else {
       if (props.isPlayPreview) {
         link = previewRoutes.previewNewPrep(brick.id);
       } else {
-        link = routes.playNewPrep(brick.id);
+        link = routes.playNewPrep(brick);
       }
     }
     history.push(
@@ -437,7 +437,7 @@ const LivePage: React.FC<LivePageProps> = ({
           if (props.isPlayPreview) {
             history.push(previewRoutes.previewNewPrep(brick.id) + '?resume=true');
           } else {
-            history.push(routes.playNewPrep(brick.id) + '?resume=true');
+            history.push(routes.playNewPrep(brick) + '?resume=true');
           }
         }}>
           <svg className="highlight-circle dashed-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">

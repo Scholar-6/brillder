@@ -94,14 +94,14 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
 
     if (props.isPlay) {
       const values = queryString.parse(props.history.location.search);
-      let link = playCover(brick.id);
+      let link = playCover(brick);
       if (values.newTeacher) {
         link += '?' + map.NewTeachQuery;
       }
       props.history.push(link);
     } else if (props.isAssignment && props.assignmentId) {
       setAssignmentId(props.assignmentId);
-      props.history.push(playCover(brick.id));
+      props.history.push(playCover(brick));
     } else {
       moveToBuild();
     }
@@ -144,7 +144,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
         style={{ transformOrigin: "0 0 0" }}
         timeout={index * 150}
       >
-        <a href={window.location.origin + routes.playCover(brick.id)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
+        <a href={window.location.origin + routes.playCover(brick)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
           {props.isAssignment && props.teacher && <div className="absolute-assignment-title">Created By {props.teacher.firstName} {props.teacher.lastName}</div>}
           <div className="publish-brick-container">
             {renderDeadline()}

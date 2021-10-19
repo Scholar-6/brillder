@@ -2147,6 +2147,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   position: fixed;
   top: 0.3vw;
   left: 14.2vw;
+  display: inline !important;
   font-size: 1.5vw;
   line-height: 1;
   color: var(--theme-light-blue);
@@ -2155,7 +2156,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   width: 75.5vw;
   @extend %ellipsis;
 
+  br {
+    display: none;
+  }
+
   span, p {
+    display: inline !important;
     color: var(--theme-light-blue) !important;
     background: inherit !important;
   }
