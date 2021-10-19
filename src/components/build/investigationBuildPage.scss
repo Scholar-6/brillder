@@ -1092,3 +1092,20 @@ $base-build-border: $editor-radius;
     display: none;
   }
 }
+
+//audio preview
+.fixed-build-phone {
+  .play-wave-container {
+    height: 5vw;
+    .react-waves {
+      height: 5vw;
+      width: 90%;
+      padding: 0 !important;
+      margin-left: 5%;
+
+      wave {
+        height: 4vw !important;
+      }
+    }
+  }
+}
