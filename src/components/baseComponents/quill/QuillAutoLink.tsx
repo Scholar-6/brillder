@@ -76,7 +76,7 @@ export class InlineLinkBlot extends Embed {
 
     if(value.image && value.image !== "undefined") {
       const image = document.createElement("img");
-      image.src = value.image;
+      image.src = 'https://brillder.com/asserts/img/logo/Brillder B.svg';
       image.alt = value.title;
       node.appendChild(image);
     }
