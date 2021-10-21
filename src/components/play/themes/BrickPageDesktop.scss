@@ -2450,7 +2450,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 }
 
 .play-preview-pages .sorted-row.sorted-row-expanded .real-live-container {
-  background: none !important;
   overflow: visible !important;
   .absolute-prep-text {
     opacity: 0;
