@@ -5,6 +5,7 @@ import Dialog from "@material-ui/core/Dialog";
 import './UnauthorizedUserDialog.scss';
 import SpriteIcon from "../../SpriteIcon";
 import { isPhone } from "services/phone";
+import { SetAuthBrickCoverId } from "localStorage/play";
 
 interface UnauthorizedProps {
   emailInvalid: boolean | null; // null - before submit
@@ -23,7 +24,10 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => (
     {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
     <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
       <div className="title bold">Great that you've clicked a brick!<br /> A new word of learning starts here:</div>
-      <button className="btn btn-md bg-white" onClick={() => props.history.push('/login')}>
+      <button className="btn btn-md bg-white" onClick={() => {
+        SetAuthBrickCoverId(props.brickId);
+        props.history.push('/login')
+      }}>
         <SpriteIcon name="f-user-check" />
         <span>I’m a member, sign in</span>
       </button>
