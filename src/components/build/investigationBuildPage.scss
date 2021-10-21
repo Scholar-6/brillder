@@ -1109,3 +1109,11 @@ $base-build-border: $editor-radius;
     }
   }
 }
+
+
+// blockqoutes
+.fixed-build-phone {
+  blockquote {
+    overflow-x: auto;
+  }
+}

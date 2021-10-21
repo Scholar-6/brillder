@@ -123,7 +123,7 @@ const HintComponent: React.FC<HintProps> = ({
             placeholder="Global Hint"
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'insertTable', 'uploadImageCustom', 'image'
+              'latex', 'insertTable', 'uploadImageCustom', 'image', 'blockQuote'
             ]}
             imageDialog={true}
             validate={validationRequired}
@@ -167,7 +167,7 @@ const HintComponent: React.FC<HintProps> = ({
             placeholder={`${prefixWord} ${i + 1} Hint`}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'imageUploadCustom', 'image'
+              'latex', 'imageUploadCustom', 'image', 'blockQuote'
             ]}
             imageDialog={true}
             validate={validationRequired}
