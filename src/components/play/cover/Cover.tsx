@@ -65,19 +65,20 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     setInvalidEmail(true);
   }
 
-  const createInactiveAccountV2 = async (email: string) => {
-    if (!props.user) {
-      // create a new account for an unauthorized user.
-      const data = await createUserByEmail(email);
-      if (data === 400 || !data) {
-        validate(data);
-      } else {
-        props.setUser(data);
-        setUnauthorizedV2(false);
-        startBrick();
-      }
-    }
-  }
+  // Commented because unused 21/10/21
+  // const createInactiveAccountV2 = async (email: string) => {
+  //   if (!props.user) {
+  //     // create a new account for an unauthorized user.
+  //     const data = await createUserByEmail(email);
+  //     if (data === 400 || !data) {
+  //       validate(data);
+  //     } else {
+  //       props.setUser(data);
+  //       setUnauthorizedV2(false);
+  //       startBrick();
+  //     }
+  //   }
+  // }
 
   useEffect(() => {
     function handleMove(e: any) {
