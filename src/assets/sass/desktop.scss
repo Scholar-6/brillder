@@ -777,8 +777,7 @@
       display: block !important;
     }
     .scrollable,
-    .synthesis-content,
-    .question-live-play {
+    .synthesis-content {
       overflow-x:hidden;
       ::-webkit-scrollbar,
       ::-webkit-scrollbar-track,
@@ -944,5 +943,13 @@
   }
   .MuiTypography-body1 {
     font-size: 1.4vw !important;
+  }
+}
+
+// live
+.play-preview-pages .sorted-row .brick-row-container .real-live-page .introduction-page .question-live-play.review-content {
+  overflow-y: auto !important;
+  > div {
+    overflow: visible !important;
   }
 }
