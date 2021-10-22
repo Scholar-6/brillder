@@ -40,7 +40,8 @@ export const reviewRoute = basePlayRoute + PlayReviewLastPrefix;
 
 const prepareURLString = (str?: string) => {
   if (str) {
-    return '/' + encodeURI(str.replace(/\s+/g, '-').toLowerCase());
+    const justLetters = str.replace(/[^a-zA-Z ]/g, "")
+    return '/' + encodeURI(justLetters.replace(/\s+/g, '-').toLowerCase());
   }
   return '';
 }
