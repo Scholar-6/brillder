@@ -8,7 +8,6 @@ import { isPhone } from "services/phone";
 import { SetAuthBrickCoverId } from "localStorage/play";
 
 interface UnauthorizedProps {
-  emailInvalid: boolean | null; // null - before submit
   isOpen: boolean;
   brickId: number;
   history: any;
