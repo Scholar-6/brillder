@@ -178,9 +178,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         ...this.state,
         bricks,
         finalBricks: bricks,
-        subjects,
-        mySubjects,
-        categorySubjects,
+        subjects: subjects.sort((a, b) => b.bricks.length - a.bricks.length),
+        mySubjects: mySubjects.sort((a, b) => b.bricks.length - a.bricks.length),
+        categorySubjects: categorySubjects.sort((a, b) => b.bricks.length - a.bricks.length),
         shown: true,
         isLoading: false,
       });
