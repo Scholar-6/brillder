@@ -176,6 +176,12 @@ s {
   }
 }
 
+.fixed-build-phone {
+  .inline-link {
+    display: flex;
+  }
+}
+
 .quill-document-editor {
   border-radius: $editor-radius;
   background-color: var(--tab-gray);
