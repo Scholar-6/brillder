@@ -20,9 +20,8 @@ import SponsorImageComponent from "./SponsorImage";
 import CoverAuthorRow from "./components/coverAuthorRow/CoverAuthorRow";
 import CoverPlay from "./components/coverAuthorRow/CoverPlay";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
-import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
-import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
+import { CreateByEmailRes } from "services/axios/user";
 import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
 
@@ -49,36 +48,12 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
 
   const [firstPhonePopup, setFirstPhonePopup] = React.useState(false);
   const [secondPhonePopup, setSecondPhonePopup] = React.useState(false);
-  const [emailInvalidPopup, setInvalidEmailPopup] = React.useState(false); // null - before submit button clicked, true - invalid
-  const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
   const userTimeout = setTimeout(() => {
     if (!props.user) {
       setUnauthorizedV2(true);
     }
   }, 10000);
-
-  const validate = (data: any) => {
-    if (data === 400) {
-      setInvalidEmailPopup(true);
-    }
-    setInvalidEmail(true);
-  }
-
-  // Commented because unused 21/10/21
-  // const createInactiveAccountV2 = async (email: string) => {
-  //   if (!props.user) {
-  //     // create a new account for an unauthorized user.
-  //     const data = await createUserByEmail(email);
-  //     if (data === 400 || !data) {
-  //       validate(data);
-  //     } else {
-  //       props.setUser(data);
-  //       setUnauthorizedV2(false);
-  //       startBrick();
-  //     }
-  //   }
-  // }
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -293,7 +268,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           history={props.history}
           brickId={brick.id}
           isOpen={unauthorizedOpenV2}
-          emailInvalid={emailInvalid}
           notyet={() => {
             if (playClicked) {
               startBrick()
@@ -328,7 +302,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 />}
                 <div className="image-container centered">
                   <CoverImage
-                    locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user.id)}
+                    locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user?.id)}
                     brickId={brick.id}
                     data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
                   />
@@ -403,7 +377,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         history={props.history}
         brickId={brick.id}
         isOpen={unauthorizedOpenV2}
-        emailInvalid={emailInvalid}
         notyet={() => {
           if (playClicked) {
             startBrick();
@@ -412,10 +385,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           }
           setUnauthPopupShown(true);
         }}
-      />
-      <TextDialog
-        isOpen={emailInvalidPopup} close={() => setInvalidEmailPopup(false)}
-        label="You might already have an account, try signing in."
       />
     </React.Suspense>
   );
