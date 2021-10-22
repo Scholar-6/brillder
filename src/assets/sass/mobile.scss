@@ -1000,3 +1000,25 @@
   font-size: 0.01vw;
   margin-left: 1vw;
 }
+
+// brick link
+.inline-link {
+  position: relative;
+  background-color: var(--tab-gray);
+  // font-size: 1.35vw;
+  border-radius: 3vw;
+  margin: 0 0.5rem;
+  padding-left: 9vw;
+  padding-right: 1.5vw;
+  text-decoration: none !important;
+  color: var(--text-blue) !important;
+  img {
+    position: absolute;
+    top: 50%;
+    left: 5vw;
+    transform: translate(-50%, -50%);
+    width: 5vw !important;
+    height: 5vw !important;
+    object-fit: cover;
+  }
+}
