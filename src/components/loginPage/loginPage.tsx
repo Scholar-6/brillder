@@ -42,6 +42,10 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     props.history.push(map.Login + '/email');
   }
 
+  return (
+    <iframe src="https://brillder.com/bricksIframe/index.html" width="1000" height="320"></iframe>
+  )
+
   if (!isPhone()) {
     return <LoginDesktopPage history={props.history} match={props.match} />
   }
