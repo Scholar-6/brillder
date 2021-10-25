@@ -2169,3 +2169,32 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   width: 100%;
   height: 100%;
 }
+
+.play-preview-pages {
+  .scroll-sideways-hint {
+    display: flex;
+    align-items: center;
+    font-family: $font-family-regular-italic;
+    font-size: 4vw !important;
+
+    svg {
+      $size: 4vw;
+      width: $size;
+      height: $size;
+      margin-right: 1vw;
+    }
+  }
+  blockquote {
+    padding-left: 1.8vw;
+    border-left: 3px solid var(--tab-gray) !important;
+  }
+  blockquote.no-break {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .question-hint, .question-hint-global {
+    blockquote {
+      border-left: 3px solid var(--theme-dark-blue);
+    }
+  }
+}

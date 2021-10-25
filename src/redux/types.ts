@@ -60,6 +60,8 @@ const PLAY_ON_BLUR = 'PLAY_BLUR';
 
 const LIVE_STEP = 'LIVE_STEP';
 
+const UNAUTH_BRICK = 'UNAUTH_BRICK';
+
 export default {
   REQUEST_FAILED,
   REQUEST_FAILTURE_FORGOTTEN,
@@ -148,4 +150,6 @@ export default {
   PLAY_ON_BLUR,
 
   LIVE_STEP,
+
+  UNAUTH_BRICK,
 }

@@ -15,7 +15,7 @@ interface Props {
 }
 
 const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
-  const moveNext = () => props.history.push(routes.playSynthesis(brick.id));
+  const moveNext = () => props.history.push(routes.playSynthesis(brick));
 
   useEffect(() => {
     function handleMove(e: any) {

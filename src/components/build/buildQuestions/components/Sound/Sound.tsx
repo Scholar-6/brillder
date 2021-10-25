@@ -145,6 +145,7 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
   render() {
     const { locked } = this.props;
     const { status } = this.state;
+
     const canDelete =
       status === AudioStatus.Start || status === AudioStatus.Recording;
 
@@ -158,11 +159,10 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
           status={status}
           saveAudio={this.saveAudio.bind(this)}
         />
-
         <div className={`record-button-row ${(status === AudioStatus.Recorded || status === AudioStatus.Play || status === AudioStatus.Stop) && 'top-wave'}`}>
-          {(status === AudioStatus.Recorded || status === AudioStatus.Play || status === AudioStatus.Stop) && this.state.file && <div className="wave">
+          {(status === AudioStatus.Recorded || status === AudioStatus.Play || status === AudioStatus.Stop) && (this.state.file || this.props.data.value) && <div className="wave">
             <ReactWaves
-              audioFile={this.state.file}
+              audioFile={this.state.file || fileUrl(this.props.data.value)}
               className={"react-waves"}
               options={{
                 barGap: 4,

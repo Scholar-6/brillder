@@ -178,9 +178,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         ...this.state,
         bricks,
         finalBricks: bricks,
-        subjects,
-        mySubjects,
-        categorySubjects,
+        subjects: subjects.sort((a, b) => b.bricks.length - a.bricks.length),
+        mySubjects: mySubjects.sort((a, b) => b.bricks.length - a.bricks.length),
+        categorySubjects: categorySubjects.sort((a, b) => b.bricks.length - a.bricks.length),
         shown: true,
         isLoading: false,
       });
@@ -195,11 +195,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  handleClick(brickId: number, isAssignment: boolean) {
+  handleClick(brick: Brick, isAssignment: boolean) {
     if (isAssignment) {
-      this.props.history.push(map.postAssignment(brickId, this.props.user.id));
+      this.props.history.push(map.postAssignment(brick.id, this.props.user.id));
     } else {
-      this.props.history.push(routes.playCover(brickId));
+      this.props.history.push(routes.playCover(brick));
     }
   }
 
@@ -284,7 +284,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           const isAssignment = this.checkAssignment(brick);
 
           return (
-            <SwiperSlide key={i} onClick={() => this.handleClick(brick.id, isAssignment)}>
+            <SwiperSlide key={i} onClick={() => this.handleClick(brick, isAssignment)}>
               {i === 0 && <div className="week-brick">Brick of the week</div>}
               <PhoneTopBrick16x9
                 circleIcon={circleIcon}

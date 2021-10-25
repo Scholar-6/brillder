@@ -147,6 +147,7 @@
     <path d="M20,21v-2c0-2.2-1.8-4-4-4H8c-2.2,0-4,1.8-4,4v2" />
     <circle cx="12" cy="7" r="4" />
   </svg>
+  <svg id="f-user-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-check"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
   <svg id="users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M16.5,20.2v-1.8c0-2-1.6-3.6-3.6-3.6H5.6c-2,0-3.6,1.6-3.6,3.6v1.8" />
     <circle cx="9.3" cy="7.5" r="3.6" />
@@ -564,6 +565,10 @@
     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>
   </svg>
   <svg id="feather-search" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+  <svg id="feather-search-custom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="11" cy="11" r="8"></circle>
     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
   </svg>

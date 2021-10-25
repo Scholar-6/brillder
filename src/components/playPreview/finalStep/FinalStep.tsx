@@ -347,7 +347,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         isOpen={publishSuccess === PublishStatus.Popup}
         close={() => {
           setPublishSuccess(PublishStatus.Published);
-          history.push(playRoutes.playCover(brick.id));
+          history.push(playRoutes.playCover(brick));
         }}
       />
       <SendPublisherSuccessDialog isOpen={sendedToPublisher && publisherConfirmed === false} close={() => props.sendToPublisherConfirmed()} />

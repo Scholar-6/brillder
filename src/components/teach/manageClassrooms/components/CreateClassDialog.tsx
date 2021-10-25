@@ -44,8 +44,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     }
   }, [subjects])
 
-  console.log(subjectIndex);
-
   return (
     <Dialog
       open={props.isOpen}
@@ -60,9 +58,9 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         <input placeholder="Class Name" value={value} onChange={e => setValue(e.target.value)} />
       </div>
       <div className="dialog-header dialog-select-container">
-        {subjectIndex === -1 && <div className="absolute-placeholder unselectable" onClick={e => e.preventDefault()}>Choose a Subject</div>}
+        {(subjectIndex === -1 || subjectIndex === undefined) && <div className="absolute-placeholder unselectable" onClick={e => e.preventDefault()}>Choose a Subject</div>}
         <Select
-          MenuProps={{ style: { zIndex: 1000000 } } /* Dialog box is always z-index 999999 */}
+          MenuProps={{ style: { zIndex: 1000000 }, classes: { paper: 'select-classes-list' } } /* Dialog box is always z-index 999999 */}
           value={subjectIndex}
           onChange={(evt) => setSubjectIndex(evt.target.value as number)}
           input={<InputBase />}

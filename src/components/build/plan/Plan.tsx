@@ -29,6 +29,7 @@ import StatusCircle from "../baseComponents/statusCircle/StatusCircle";
 import QuillSimpleEditor from "components/baseComponents/quill/QuillSimpleEditor";
 import LockComponent from "../buildQuestions/lock/Lock";
 import { isAorPorE } from "components/services/brickService";
+import QuillTitleEditor from "components/baseComponents/quill/QuillTitleEditor";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -165,7 +166,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                 <Grid container direction="row" className="inner-quills" ref={scrollArea}>
                   <div className="title-quill-container">
                     <div className="header">Title</div>
-                    <QuillSimpleEditor
+                    <QuillTitleEditor
                       data={currentBrick.title}
                       onChange={title => changeBrick((brick) => ({ ...brick, title }))}
                       placeholder="What is your brick about?"

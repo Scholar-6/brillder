@@ -27,7 +27,7 @@ import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import { isPhone } from "services/phone";
 import { getLiveTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
-import routes, { playNewPrep } from "../routes";
+import routes from "../routes";
 import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
 import { getUniqueComponent } from "components/build/questionService/QuestionService";
@@ -123,7 +123,11 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const moveToProvisional = () => {
     let playPath = getPlayPath(props.isPlayPreview, brick.id);
-    history.push(`${playPath}/provisionalScore`);
+    if (props.isPlayPreview) {
+      history.push(`${playPath}/provisionalScore`);
+    } else {
+      history.push(routes.playProvisionalScore(brick));
+    }
     props.moveNext && props.moveNext();
   };
 
@@ -144,7 +148,7 @@ const LivePage: React.FC<LivePageProps> = ({
         CashQuestionFromPlay(brick.id, step);
       } else {
         history.push(
-          routes.playInvestigation(brick.id) + "?activeStep=" + step
+          routes.playInvestigation(brick) + "?activeStep=" + step
         );
       }
     }, 100);
@@ -320,12 +324,12 @@ const LivePage: React.FC<LivePageProps> = ({
     props.updateAttempts(attempt, activeStep);
     let link = "";
     if (isPhone()) {
-      link = routes.phonePrep(brick.id);
+      link = routes.phonePrep(brick);
     } else {
       if (props.isPlayPreview) {
         link = previewRoutes.previewNewPrep(brick.id);
       } else {
-        link = routes.playNewPrep(brick.id);
+        link = routes.playNewPrep(brick);
       }
     }
     history.push(
@@ -437,7 +441,7 @@ const LivePage: React.FC<LivePageProps> = ({
           if (props.isPlayPreview) {
             history.push(previewRoutes.previewNewPrep(brick.id) + '?resume=true');
           } else {
-            history.push(routes.playNewPrep(brick.id) + '?resume=true');
+            history.push(routes.playNewPrep(brick) + '?resume=true');
           }
         }}>
           <svg className="highlight-circle dashed-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">

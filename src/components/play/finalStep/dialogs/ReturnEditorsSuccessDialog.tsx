@@ -36,13 +36,17 @@ const ReturnEditorsSuccessDialog: React.FC<InvitationProps> = props => {
     let text = '';
     const {editors} = props;
     if (editors) {
-      editors.forEach((e, i) => {
-        if (i > 0 && editors.length - 1 === i) {
-          text += ' & ' + e.firstName;
-        } else {
-          text += ', ' + e.firstName;
-        }
-      });
+      if (editors.length === 1) {
+        text+= ' ' + editors[0].firstName;
+      } else {
+        editors.forEach((e, i) => {
+          if (i > 0 && editors.length - 1 === i) {
+            text += ' & ' + e.firstName;
+          } else {
+            text += ', ' + e.firstName;
+          }
+        });
+      }
     }
     return text;
   }

@@ -1,0 +1,79 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.auth-confirm-dialog {
+  .MuiPaper-root {
+    padding-left: 1.2vw !important;
+    padding-right: 1.2vw !important;
+    padding-top: 1.2vw !important;
+    padding-bottom: 0.7vw !important;
+    width: 23vw !important;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 1.4vw !important;
+    margin-bottom: 0.4vw;
+  }
+
+  .btn {
+    margin-top: 0.26vw;
+    margin-bottom: 0.26vw;
+    width: 100%;
+    height: 3.5vw !important;
+    display: flex;
+    font-size: 1.3vw !important;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0;
+
+    font-family: $font-family-regular;
+
+    svg {
+      stroke-width: 1.8 !important;
+      $size: 1.8vw;
+      width: $size;
+      height: $size;
+    }
+
+    &.bg-orange {
+      background: var(--theme-orange);
+
+      svg {
+        margin-right: 0.8vw;
+      }
+    }
+
+    &.bg-white {
+      color: var(--theme-dark-blue);
+      padding-right: 4vw;
+
+      svg {
+        $size: 2vw;
+        width: $size;
+        height: $size;
+        margin-right: 1.7vw;
+      }
+    }
+
+    &.bg-blue {
+      background: var(--theme-dark-blue);
+      padding-right: 5.8vw;
+
+      svg {
+        $size: 2vw;
+        width: $size;
+        height: $size;
+        margin-right: 3.5vw;
+      }
+    }
+  }
+
+  .small-text {
+    margin-top: 0.3vw;
+    text-align: center;
+    font-size: 0.95vw;
+    font-family: $font-family-light-italic;
+  }
+}

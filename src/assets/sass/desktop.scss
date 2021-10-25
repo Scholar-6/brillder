@@ -539,6 +539,7 @@
         white-space: nowrap;
         display: inline-block;
         font-size: 0.6vw;
+        color: var(--tab-gray) !important;
       }
     }
   }
@@ -775,9 +776,10 @@
       background: var(--off-white);
       display: block !important;
     }
+    
     .scrollable,
-    .synthesis-content,
-    .question-live-play {
+    .question-live-play,
+    .synthesis-content {
       overflow-x:hidden;
       ::-webkit-scrollbar,
       ::-webkit-scrollbar-track,
@@ -932,4 +934,24 @@
 .custom-space-character {
   font-size: 0.01vw;
   margin-left: 0.35vw;
+}
+
+.select-classes-list {
+  .MuiSvgIcon-root {
+    width: 1vw;
+    height: 1vw;
+    margin-left: 0.3vw;
+    margin-right: 0.4vw;
+  }
+  .MuiTypography-body1 {
+    font-size: 1.4vw !important;
+  }
+}
+
+// live
+.play-preview-pages .sorted-row .brick-row-container .real-live-page .introduction-page .question-live-play.review-content {
+  overflow-y: auto !important;
+  > div {
+    overflow: visible !important;
+  }
 }
