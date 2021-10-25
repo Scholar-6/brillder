@@ -68,7 +68,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
       if (notification.brick && notification.brick.id) {
         const {type, brick} = notification;
         if (notification.type === NotificationType.BrickPublished) {
-          history.push(routes.playCover(brick.id));
+          history.push(routes.playCover(brick));
         } else if (type === NotificationType.NewCommentOnBrick) {
           if (notification.question && notification.question.id >= 1) {
             history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
@@ -77,9 +77,9 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           }
         } else if (type === NotificationType.InvitedToPlayBrick) {
           if (isPhone()) {
-            history.push(routes.playNewPrep(brick.id));
+            history.push(routes.playNewPrep(brick));
           } else {
-            history.push(routes.playCover(brick.id));
+            history.push(routes.playCover(brick));
           }
         } else if (type === NotificationType.BrickAttemptSaved) {
           if (isMobile) {
@@ -102,9 +102,9 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           type === NotificationType.StudentAssignedBrick
         ) {
           if (isPhone()) {
-            history.push(routes.playNewPrep(brick.id));
+            history.push(routes.playNewPrep(brick));
           } else {
-            history.push(routes.playCover(brick.id));
+            history.push(routes.playCover(brick));
           }
         }
       }

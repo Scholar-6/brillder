@@ -88,7 +88,7 @@ class MainNotificationPanel extends Component<
       if (notification.brick && notification.brick.id) {
         const { type, brick } = notification;
         if (notification.type === NotificationType.BrickPublished) {
-          history.push(routes.playCover(brick.id));
+          history.push(routes.playCover(brick));
         } else if (type === NotificationType.NewCommentOnBrick) {
           if (isPhone()) {
             this.setState({ needDesktopOpen: true });
@@ -106,9 +106,9 @@ class MainNotificationPanel extends Component<
           }
         } else if (type === NotificationType.InvitedToPlayBrick) {
           if (isPhone()) {
-            history.push(routes.playNewPrep(brick.id));
+            history.push(routes.playNewPrep(brick));
           } else {
-            history.push(routes.playCover(brick.id));
+            history.push(routes.playCover(brick));
           }
         } else if (type === NotificationType.BrickAttemptSaved) {
           if (isMobile) {
@@ -130,7 +130,7 @@ class MainNotificationPanel extends Component<
           type === NotificationType.RemindedToPlayBrick ||
           type === NotificationType.StudentAssignedBrick
         ) {
-          history.push(routes.playCover(brick.id));
+          history.push(routes.playCover(brick));
         }
       }
     }

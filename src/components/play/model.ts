@@ -24,6 +24,7 @@ export interface BrickAttempt {
   id?: string;
   brickId?: number;
   studentId?: number;
+  competitionId?: number;
   brick?: Brick;
   score: number;
   oldScore?: number;

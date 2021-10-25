@@ -13,9 +13,10 @@ const CompetitionDialog: React.FC<DialogProps> = ({ isOpen, submit, close }) => 
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
 
+  /*
   const getStringDate = (date: Date) => {
     return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
-  }
+  }*/
 
   return (
     <Dialog open={isOpen} onClose={close} className="dialog-box competition-dialog">

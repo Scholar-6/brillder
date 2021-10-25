@@ -73,14 +73,14 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, circleIcon, ind
   const move = () => {
     if (props.isPlay) {
       const values = queryString.parse(props.history.location.search);
-      let link = playCover(brick.id);
+      let link = playCover(brick);
       if (values.newTeacher) {
         link += '?' + map.NewTeachQuery;
       }
       props.history.push(link);
     } else if (props.isAssignment && props.assignmentId) {
       setAssignmentId(props.assignmentId);
-      props.history.push(playCover(brick.id));
+      props.history.push(playCover(brick));
     } else {
       moveToBuild();
     }

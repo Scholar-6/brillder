@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, useLocation } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import actions from 'redux/actions/auth';
@@ -26,7 +26,6 @@ interface StudentRouteProps {
 }
 
 const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, innerComponent, user, ...rest }) => {
-  const location = useLocation();
   const cookiesAccepted = getCookies();
   const [cookieOpen, setCookiePopup] = React.useState(!cookiesAccepted);
   const [cookieReOpen, setCookieReOpen] = React.useState(false);
@@ -53,7 +52,7 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
     return <PageLoader content="...Checking rights..." />;
   } else {
     // If the url has /play/brick/ and the last 6 characters are /coer
-    const isCover = location.pathname.search('/play/brick/') !== -1 && location.pathname.slice(-6) === '/cover';
+    //const isCover = location.pathname.search('/play/brick/') !== -1 && location.pathname.slice(-6) === '/cover';
     // This actually needs to just redirect unauthenticated people trying to access personal Bricks but allow public bricks
     // if (isCover) {
     //   return <Redirect to={map.Login} />

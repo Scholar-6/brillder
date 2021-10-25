@@ -19,10 +19,9 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import SponsorImageComponent from "./SponsorImage";
 import CoverAuthorRow from "./components/coverAuthorRow/CoverAuthorRow";
 import CoverPlay from "./components/coverAuthorRow/CoverPlay";
-import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/UnauthorizedUserDialogV2";
-import TextDialog from "components/baseComponents/dialogs/TextDialog";
+import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 
-import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
+import { CreateByEmailRes } from "services/axios/user";
 import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
 
@@ -43,39 +42,18 @@ const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [bioOpen, setBio] = React.useState(false);
 
+  const [playClicked, setClickPlay] = React.useState(false);
+  const [unauthPopupShown, setUnauthPopupShown] = React.useState(false)
   const [unauthorizedOpenV2, setUnauthorizedV2] = React.useState(false);
 
   const [firstPhonePopup, setFirstPhonePopup] = React.useState(false);
   const [secondPhonePopup, setSecondPhonePopup] = React.useState(false);
-  const [emailInvalidPopup, setInvalidEmailPopup] = React.useState(false); // null - before submit button clicked, true - invalid
-  const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
   const userTimeout = setTimeout(() => {
     if (!props.user) {
       setUnauthorizedV2(true);
     }
   }, 10000);
-
-  const validate = (data: any) => {
-    if (data === 400) {
-      setInvalidEmailPopup(true);
-    }
-    setInvalidEmail(true);
-  }
-
-  const createInactiveAccountV2 = async (email: string) => {
-    if (!props.user) {
-      // create a new account for an unauthorized user.
-      const data = await createUserByEmail(email);
-      if (data === 400 || !data) {
-        validate(data);
-      } else {
-        props.setUser(data);
-        setUnauthorizedV2(false);
-        startBrick();
-      }
-    }
-  }
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -172,7 +150,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         <div className="cover-page">
           {renderFirstRow()}
           <div className="brick-title q-brick-title">
-          {brick.adaptedFrom &&<div className="adapted-text">ADAPTED</div>}
+            {brick.adaptedFrom && <div className="adapted-text">ADAPTED</div>}
             <div>
               {brick.adaptedFrom && <SpriteIcon name="copy" />}
               <div dangerouslySetInnerHTML={{ __html: brick.title }} />
@@ -271,16 +249,33 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <CoverTimer brickLength={brick.brickLength} />
           </div>
           <div className="introduction-info">
-            <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
+            <CoverPlay onClick={() => {
+              if (props.user) {
+                startBrick();
+              } else {
+                if (!unauthPopupShown) {
+                  setUnauthorizedV2(true);
+                } else {
+                  startBrick();
+                }
+                setClickPlay(true);
+              }
+            }}
+            />
           </div>
         </div>
         <UnauthorizedUserDialogV2
           history={props.history}
           brickId={brick.id}
           isOpen={unauthorizedOpenV2}
-          emailInvalid={emailInvalid}
-          login={(email) => createInactiveAccountV2(email)}
-          notyet={() => startBrick()}
+          notyet={() => {
+            if (playClicked) {
+              startBrick()
+            } else {
+              setUnauthorizedV2(false);
+            }
+            setUnauthPopupShown(true);
+          }}
         />
       </React.Suspense>
     );
@@ -298,7 +293,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 {renderFirstRow()}
                 <div className="brick-title q-brick-title dynamic-title">
                   {brick.adaptedFrom && !brick.isCore && <div className="adapted-text">ADAPTED</div>}
-                  {brick.adaptedFrom && !brick.isCore && <SpriteIcon name="copy"/>}<DynamicFont content={stripHtml(brick.title)} />
+                  {brick.adaptedFrom && !brick.isCore && <SpriteIcon name="copy" />}<DynamicFont content={stripHtml(brick.title)} />
                 </div>
                 <CoverAuthorRow brick={brick} setBio={setBio} />
                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
@@ -307,7 +302,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 />}
                 <div className="image-container centered">
                   <CoverImage
-                    locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user.id)}
+                    locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user?.id)}
                     brickId={brick.id}
                     data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
                   />
@@ -360,7 +355,18 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             </Grid>
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
-                <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
+                <CoverPlay onClick={() => {
+                  if (props.user) {
+                    startBrick();
+                  } else {
+                    if (!unauthPopupShown) {
+                      setUnauthorizedV2(true);
+                    } else {
+                      startBrick();
+                    }
+                    setClickPlay(true);
+                  }
+                }} />
               </div>
             </Grid>
           </Grid>
@@ -371,13 +377,14 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         history={props.history}
         brickId={brick.id}
         isOpen={unauthorizedOpenV2}
-        emailInvalid={emailInvalid}
-        login={(email) => createInactiveAccountV2(email)}
-        notyet={() => startBrick()}
-      />
-      <TextDialog
-        isOpen={emailInvalidPopup} close={() => setInvalidEmailPopup(false)}
-        label="You might already have an account, try signing in."
+        notyet={() => {
+          if (playClicked) {
+            startBrick();
+          } else {
+            setUnauthorizedV2(false);
+          }
+          setUnauthPopupShown(true);
+        }}
       />
     </React.Suspense>
   );

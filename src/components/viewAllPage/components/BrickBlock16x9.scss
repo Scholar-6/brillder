@@ -83,6 +83,16 @@
         width: 100%;
         border-bottom-left-radius: 0.9vw;
         border-bottom-right-radius: 0.9vw;
+
+        .brick-title {
+          display: inline;
+          br {
+            display: none;
+          }
+          p {
+            display: inline;
+          }
+        }
       }
 
       .scroll-block {

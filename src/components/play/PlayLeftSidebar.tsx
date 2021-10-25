@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
-import { AnyIfEmpty, connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 import actions from "redux/actions/brickActions";
 import { ReduxCombinedState } from 'redux/reducers';

@@ -10,6 +10,7 @@ import './YoutubeAndMath.scss'
 import Katex from 'components/baseComponents/katex/Katex';
 import { renderGraph } from 'services/graph';
 import HtmlWithSpaces from './HtmlWithSpaces';
+import SoundPlay from 'components/baseComponents/SoundPlay';
 
 interface MathHtmlProps {
   innerRef?: any;
@@ -64,6 +65,10 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
     return /<iframe.*src=\"https:\/\/www.youtube\.com\/embed/.test(el);
   }
 
+  const isSound = (el: string) => {
+    return /<div (.*)class="ql-sound-custom"(.*)>/.test(el);
+  }
+
   return (
     <div className="youtube-video-session" ref={props.innerRef}>
       <div ref={renderedRef}>
@@ -71,10 +76,13 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
           arr.map((el: any, i: number) => {
             let res = isMathJax(el);
             const latex = isLatex(el);
+            const sound = isSound(el);
             if (res) {
               return renderMath(el, i);
             } else if (latex) {
               return renderLatex(el, i);
+            } else if (sound) {
+              return <SoundPlay element={el} key={i} />
             }
             res = isYoutube(el);
             if (res) {

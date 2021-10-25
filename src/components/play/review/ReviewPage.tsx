@@ -62,7 +62,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const [timerHidden, hideTimer] = React.useState(false);
 
   const theme = useTheme();
-  const playPath = getPlayPath(props.isPlayPreview, brick.id);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -85,17 +84,22 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   });
 
   const moveToEnding = () => {
-    history.push(`${playPath}/ending`);
+    if (props.isPlayPreview) {
+      const playPath = getPlayPath(props.isPlayPreview, brick.id);
+      history.push(`${playPath}/ending`);
+    } else {
+      history.push(routes.playEnding(brick));
+    }
   };
 
   if (status === PlayStatus.Live) {
     if (isPhone()) {
-      history.push(routes.phonePrep(brick.id));
+      history.push(routes.phonePrep(brick));
     } else {
       if (props.isPlayPreview) {
         history.push(previewRoutes.previewNewPrep(brick.id));
       } else {
-        history.push(routes.playNewPrep(brick.id));
+        history.push(routes.playNewPrep(brick));
       }
     }
     return <PageLoader content="...Loading..." />;

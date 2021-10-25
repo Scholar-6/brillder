@@ -130,13 +130,13 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 
   render() {
-    const brickId = this.props.brick.id;
+    const {brick} = this.props;
 
     if (this.props.status === PlayStatus.Live) {
       if (isPhone()) {
-        this.props.history.push(routes.phonePrep(brickId));
+        this.props.history.push(routes.phonePrep(brick));
       } else {
-        this.props.history.push(routes.playNewPrep(brickId));
+        this.props.history.push(routes.playNewPrep(brick));
       }
     }
 

@@ -1,0 +1,76 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.auth-confirm-dialog {
+  .MuiPaper-root {
+    padding-left: 4vw !important;
+    padding-right: 4vw !important;
+    padding-top: 4vw !important;
+    padding-bottom: 2vw !important;
+    width: 80vw !important;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 5vw !important;
+    margin-bottom: 0.4vw;
+  }
+
+  .btn {
+    margin-top: 1.2vw;
+    margin-bottom: 1.2vw;
+    width: 100%;
+    height: 13vw !important;
+    display: flex;
+    font-size: 5vw !important;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0;
+
+    font-family: $font-family-regular;
+
+    svg {
+      stroke-width: 1.8 !important;
+      $size: 6vw;
+      width: $size !important;
+      height: $size !important;
+    }
+
+    &.bg-orange {
+      background: var(--theme-orange);
+
+      svg {
+        margin-right: 1.6vw;
+      }
+    }
+
+    &.bg-white {
+      color: var(--theme-dark-blue);
+      padding-right: 13vw;
+
+      svg {
+        margin-right: 6.1vw;
+        $size: 7vw;
+        width: $size !important;
+        height: $size !important;
+      }
+    }
+
+    &.bg-blue {
+      background: var(--theme-dark-blue);
+      padding-right: 19vw;
+
+      svg {
+        margin-right: 13vw;
+      }
+    }
+  }
+
+  .small-text {
+    margin-top: 0.3vw;
+    text-align: center;
+    font-size: 3.3vw;
+    font-family: $font-family-light-italic;
+  }
+}

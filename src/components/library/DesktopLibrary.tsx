@@ -23,7 +23,6 @@ import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
 import LibrarySubjects from "./components/LibrarySubjects";
 import SingleSubjectAssignments from "./singleSubject/SingleSubjectAssignments";
-import routes from "components/play/routes";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 
 
@@ -218,10 +217,6 @@ class Library extends Component<BricksListProps, BricksListState> {
     } else {
       this.setState({ failedRequest: true });
     }
-  }
-
-  move(brickId: number) {
-    this.props.history.push(routes.playNewPrep(brickId));
   }
 
   handleSortChange = (e: any) => {};
