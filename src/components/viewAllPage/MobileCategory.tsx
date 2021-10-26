@@ -33,6 +33,7 @@ import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
 import { isLevelVisible, toggleElement } from "./service/viewAll";
 import routes from "components/play/routes";
 import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
+import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -68,6 +69,7 @@ interface BricksListProps {
 interface BricksListState {
   expandedBrick: Brick | null;
   bricks: Array<Brick>;
+  isCore: boolean;
   finalBricks: Brick[];
   isViewAll: boolean;
   mySubjects: SubjectWithBricks[];
@@ -115,6 +117,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       finalBricks: [],
       expandedSubject: null,
       isViewAll,
+      isCore: true,
       mySubjects: [],
       subjects: [],
       categorySubjects: [],
@@ -127,7 +130,10 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.loadData(subjectGroup);
   }
 
-  addBrickBySubject(subjects: SubjectWithBricks[], brick: Brick) {
+  addBrickBySubject(subjects: SubjectWithBricks[], brick: Brick, isCore: boolean) {
+    if (brick.isCore != isCore) {
+      return;
+    }
     const subject = subjects.find((s) => s.id === brick.subjectId);
     if (subject) {
       subject.bricks.push(brick);
@@ -138,9 +144,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     let bricks = null;
     if (this.props.user) {
       bricks = await getPublishedBricks();
-      if (bricks) {
-        bricks = bricks.filter(b => b.isCore = true);
-      }
     } else {
       bricks = await getPublicBricks();
     }
@@ -165,12 +168,12 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
       if (this.props.user) {
         for (let brick of bricks) {
-          this.addBrickBySubject(subjects, brick);
-          this.addBrickBySubject(mySubjects, brick);
+          this.addBrickBySubject(subjects, brick, this.state.isCore);
+          this.addBrickBySubject(mySubjects, brick, this.state.isCore);
         }
       } else {
         for (let brick of bricks) {
-          this.addBrickBySubject(categorySubjects, brick);
+          this.addBrickBySubject(categorySubjects, brick, true);
         }
       }
 
@@ -238,8 +241,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       this.clearBricks(mySubjects);
       for (let brick of this.state.bricks) {
         if (isLevelVisible(brick, levels)) {
-          this.addBrickBySubject(subjects, brick);
-          this.addBrickBySubject(mySubjects, brick);
+          this.addBrickBySubject(subjects, brick, this.state.isCore);
+          this.addBrickBySubject(mySubjects, brick, this.state.isCore);
         }
       }
     } else {
@@ -247,7 +250,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       this.clearBricks(categorySubjects);
       for (let brick of this.state.bricks) {
         if (isLevelVisible(brick, levels)) {
-          this.addBrickBySubject(categorySubjects, brick);
+          this.addBrickBySubject(categorySubjects, brick, true);
         }
       }
     }
@@ -260,6 +263,20 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   hideSubject() {
     this.setState({ expandedSubject: null });
+  }
+  
+  toggleCore() {
+    const {mySubjects, subjects } = this.state;
+    const newCore = !this.state.isCore;
+    this.clearBricks(mySubjects);
+    this.clearBricks(subjects);
+
+    for (let brick of this.state.bricks) {
+      this.addBrickBySubject(subjects, brick, newCore);
+      this.addBrickBySubject(mySubjects, brick, newCore);
+    }
+
+    this.setState({isCore: newCore});
   }
 
   renderMobileBricks() {
@@ -322,7 +339,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           {bricks.map((b: any, i: number) => {
             const color = getBrickColor(b as Brick);
             const isAssignment = this.checkAssignment(b);
-            
+
             return (
               <PhoneTopBrick16x9
                 key={i}
@@ -389,16 +406,16 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       const { bricks } = expandedSubject;
       var brickGroups = [];
       brickGroups.push(
-        bricks.filter((b) => b.academicLevel === AcademicLevel.First)
+        bricks.filter((b) => b.academicLevel === AcademicLevel.First && b.isCore == this.state.isCore)
       );
       brickGroups.push(
-        bricks.filter((b) => b.academicLevel === AcademicLevel.Second)
+        bricks.filter((b) => b.academicLevel === AcademicLevel.Second && b.isCore == this.state.isCore)
       );
       brickGroups.push(
-        bricks.filter((b) => b.academicLevel === AcademicLevel.Third)
+        bricks.filter((b) => b.academicLevel === AcademicLevel.Third && b.isCore == this.state.isCore)
       );
       brickGroups.push(
-        bricks.filter((b) => b.academicLevel === AcademicLevel.Fourth)
+        bricks.filter((b) => b.academicLevel === AcademicLevel.Fourth && b.isCore == this.state.isCore)
       );
 
       brickGroups = brickGroups.filter((b) => b.length > 0);
@@ -517,6 +534,12 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 <LevelHelpContent />
               </MobileHelp>
             </div>
+            {this.props.user &&
+              <PrivateCoreToggle
+                isViewAll={true}
+                isCore={this.state.isCore}
+                onSwitch={this.toggleCore.bind(this)}
+              />}
           </div>
           <div className="va-bricks-container">
             {this.state.expandedSubject
