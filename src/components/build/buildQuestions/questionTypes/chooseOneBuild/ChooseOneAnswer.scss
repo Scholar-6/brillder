@@ -11,6 +11,20 @@
     height: calc(100% - 0.4vh);
   }
 
+  .play-wave-container {
+    margin-left: 2.2vw;
+    width: calc(100% - 6.5vw);
+
+    .play-icon-d1 {
+      width: 3vw !important;
+      height: 3vw !important;
+    }
+  }
+
+  .play-wave-container .react-waves .wave wave {
+    height: 2.3vw !important;
+  }
+
   .checkbox-container {
     @extend %flexCenter;
     @extend %floatToYCenter;

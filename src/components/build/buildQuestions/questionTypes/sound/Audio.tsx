@@ -1,11 +1,9 @@
 import React from "react";
-import Slider from '@material-ui/core/Slider';
 
 import './Audio.scss';
 import { fileUrl } from "components/services/uploadFile";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { isPhone } from "services/phone";
 import ReactWaves from "@dschoon/react-waves";
 
 interface SoundProps {
@@ -26,6 +24,7 @@ interface SoundState {
   duration: string;
   audioState: AudioState;
   audio: any;
+  playing: boolean;
 }
 
 class AudioComponent extends React.Component<SoundProps, SoundState> {
@@ -43,6 +42,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
       currentTime: "00:00",
       duration: "00:00",
       audio,
+      playing: false,
       volume: 0,
       volumeHovered: false,
       rangeValue: 0,
@@ -96,109 +96,70 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
     e.preventDefault();
   }
 
-  play() {
-    const { audio } = this.state;
-    if (audio) {
-      audio.play();
-      this.setState({ audioState: AudioState.Play });
-      audio.onended = () => {
-        this.setState({ audioState: AudioState.Init });
-      };
-    }
-  }
-
-  pause() {
-    const { audio } = this.state;
-    if (audio) {
-      audio.pause();
-      this.setState({ audioState: AudioState.Paused });
-    }
-  }
-
   render() {
     return (
       <div>
         <div className="play-wave-container">
+          <div className="play-icon-container-d1">
+            <SpriteIcon className="play-icon-d1" name={this.state.playing ? 'feather-pause-circle' : "feather-play-circle"} onClick={() => this.setState({ playing: !this.state.playing })} />
+          </div>
           {this.props.src &&
-            <ReactWaves
-              audioFile={fileUrl(this.props.src)}
-              className={"react-waves"}
-              options={{
-                barGap: 4,
-                barWidth: 4,
-                barHeight: 4,
-                barRadius: 4,
-                cursorWidth: 0,
-                height: 150,
-                hideScrollbar: true,
-                progressColor: '#c43c30',
-                cursorColor: 'red',
-                normalize: true,
-                responsive: true,
-                waveColor: '#001c58',
-              }}
-              volume={1}
-              zoom={1}
-              playing={false}
-            />
-          }
-        </div>
-        <div className="custom-audio-controls">
-          <div className="button-container">
-            {this.state.audioState === AudioState.Init ||
-              this.state.audioState === AudioState.Paused ? (
-              <SpriteIcon name="play-thick" onClick={this.play.bind(this)} />
-            ) : (
-              <SpriteIcon name="pause-filled" onClick={this.pause.bind(this)} />
-            )}
-          </div>
-          <div className="time-text">
-            {this.state.currentTime} / {this.state.duration}
-          </div>
-          <div className="input-container">
-            {isPhone() ?
-              <Slider
-                value={this.state.rangeValue}
-                max={100}
-                onChange={(e, value) => {
-                  const v = value as number;
-                  const { audio } = this.state;
-                  audio.currentTime = (v * audio.duration) / 100;
-                  this.setState({ rangeValue: v });
-                  e.stopPropagation();
-                  e.preventDefault();
+            <div className="relative-waves-container">
+              <ReactWaves
+                audioFile={fileUrl(this.props.src)}
+                className={"react-waves"}
+                pos={10}
+                options={{
+                  barGap: 4,
+                  barWidth: 4,
+                  barHeight: 4,
+                  barRadius: 4,
+                  cursorWidth: 0,
+                  height: 150,
+                  hideScrollbar: true,
+                  progressColor: '#c43c30',
+                  cursorColor: 'red',
+                  normalize: true,
+                  responsive: true,
+                  waveColor: '#001c58',
                 }}
-                valueLabelDisplay="auto"
-                aria-labelledby="non-linear-slider"
-              /> : <input
-                type="range"
+                onPosChange={() => {
+                  console.log(44, this);
+                }}
+                volume={this.state.volume}
+                zoom={1}
+                playing={this.state.playing}
+              />
+              <div className="absolute-start-time">
+                {this.state.currentTime}
+              </div>
+              <div className="absolute-end-time">
+                {this.state.duration}
+              </div>
+            </div>
+          }
+          <div className="custom-audio-controls">
+            <div className="volume-container-main">
+              <div
+                className={`volume-container ${this.state.volumeHovered ? 'hovered' : ''}`}
+                onMouseEnter={() => this.setState({ volumeHovered: true })}
+                onMouseLeave={() => this.setState({ volumeHovered: false })}
+              >
+                <SpriteIcon
+                  name={this.state.volume > 0.5 ? "volume-2" : this.state.volume > 0 ? "volume-1" : "volume-x"}
+                  onClick={this.toggleVolume.bind(this)}
+                />
+              </div>
+              <input
+                type="range" min={0} max={100}
+                value={this.state.volume * 100}
                 draggable="true"
                 onDragStart={e => e.preventDefault()}
-                value={this.state.rangeValue}
-                onChange={this.setRange.bind(this)}
-                max={100}
-              />}
-          </div>
-          <div className="volume-container-main">
-            <div
-              className={`volume-container ${this.state.volumeHovered ? 'hovered' : ''}`}
-              onMouseEnter={() => this.setState({ volumeHovered: true })}
-              onMouseLeave={() => this.setState({ volumeHovered: false })}
-            >
-              <SpriteIcon
-                name={this.state.volume > 0.5 ? "volume-2" : this.state.volume > 0 ? "volume-1" : "volume-x"}
-                onClick={this.toggleVolume.bind(this)}
+                onChange={e => {
+                  this.setVolume(Number(e.target.value) / 100);
+                }}
               />
             </div>
-            <input
-              type="range" min={0} max={100}
-              value={this.state.volume * 100}
-              draggable="true"
-              onDragStart={e => e.preventDefault()}
-              onChange={e => {
-                this.setVolume(Number(e.target.value) / 100);
-              }}
-            />
           </div>
         </div>
       </div>

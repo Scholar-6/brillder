@@ -571,6 +571,24 @@
     padding-left: 4vw;
     display: flex;
 
+    .private-core-toggle {
+      margin-left: 12vw;
+      position: relative;
+      top: unset !important;
+      right: unset !important;
+
+      svg {
+        $size: 7vw;
+        width: $size !important;
+        height: $size !important;
+        padding: 1.4vw !important;
+      }
+
+      .btn .svgOnHover {
+        height: 10vw !important;
+      }
+    }
+
     .va-round-level,
     .va-level-count {
       border-radius: 50%;
