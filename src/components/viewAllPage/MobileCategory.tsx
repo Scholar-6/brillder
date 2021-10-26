@@ -131,7 +131,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   addBrickBySubject(subjects: SubjectWithBricks[], brick: Brick, isCore: boolean) {
-    if (brick.isCore != isCore) {
+    if (brick.isCore !== isCore) {
       return;
     }
     const subject = subjects.find((s) => s.id === brick.subjectId);
@@ -406,16 +406,16 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       const { bricks } = expandedSubject;
       var brickGroups = [];
       brickGroups.push(
-        bricks.filter((b) => b.academicLevel === AcademicLevel.First && b.isCore == this.state.isCore)
+        bricks.filter((b) => b.academicLevel === AcademicLevel.First && b.isCore === this.state.isCore)
       );
       brickGroups.push(
-        bricks.filter((b) => b.academicLevel === AcademicLevel.Second && b.isCore == this.state.isCore)
+        bricks.filter((b) => b.academicLevel === AcademicLevel.Second && b.isCore === this.state.isCore)
       );
       brickGroups.push(
-        bricks.filter((b) => b.academicLevel === AcademicLevel.Third && b.isCore == this.state.isCore)
+        bricks.filter((b) => b.academicLevel === AcademicLevel.Third && b.isCore === this.state.isCore)
       );
       brickGroups.push(
-        bricks.filter((b) => b.academicLevel === AcademicLevel.Fourth && b.isCore == this.state.isCore)
+        bricks.filter((b) => b.academicLevel === AcademicLevel.Fourth && b.isCore === this.state.isCore)
       );
 
       brickGroups = brickGroups.filter((b) => b.length > 0);
