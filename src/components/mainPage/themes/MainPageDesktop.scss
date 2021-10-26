@@ -196,6 +196,7 @@
         align-items: center;
 
         .m-red-circle {
+          margin-left: 0.3vw;
           background: var(--theme-orange);
           width: 1.6vw;
           height: 1.6vw;
@@ -206,10 +207,6 @@
           justify-content: center;
           text-align: center;
           overflow: hidden;
-
-          span {
-            margin-left: 0.3vw;
-          }
         }
       }
     }
