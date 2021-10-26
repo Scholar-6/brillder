@@ -33,8 +33,10 @@
 }
 
 .custom-audio-controls {
-  margin-top: 4vw;
-  margin-bottom: 8vw !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10vw !important;
   position: relative;
   margin-bottom: 5vw;
   .input-container {
@@ -48,7 +50,13 @@
     width: 23vw !important;
   }
   .volume-container-main {
-    display: none !important;
+    svg {
+      height: 6vw !important;
+      width: 6vw !important;
+    }
+    input {
+      display: none !important;
+    }
   }
   .button-container {
     margin-top: 3vw;
@@ -1020,5 +1028,29 @@
     width: 5vw !important;
     height: 5vw !important;
     object-fit: cover;
+  }
+}
+
+
+// audio
+.play-wave-container {
+  height: 15vw;
+  .play-icon-container-d1 {
+    height: 10vw !important;
+  }
+  .play-icon-d1 {
+    stroke-width: 2;
+    width: 7vw !important;
+    height: 7vw !important;
+  }
+  .react-waves .wave wave {
+    height: 10vw !important;
+  }
+  .custom-audio-controls {
+    margin: 0 !important;
+  }
+  .absolute-start-time,
+  .absolute-end-time {
+    top: 10vw;
   }
 }

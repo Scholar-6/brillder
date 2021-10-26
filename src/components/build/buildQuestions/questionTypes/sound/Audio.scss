@@ -2,6 +2,64 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
+.play-wave-container {
+  display: flex;
+
+  .custom-audio-controls {
+    width: 18% !important;
+  }
+
+  .relative-waves-container {
+    position: relative;
+    width: 85%;
+    .react-waves {
+      width: 100% !important;
+    }
+  }
+
+  .absolute-end-time,
+  .absolute-start-time {
+    color: var(--theme-dark-blue);
+    position: absolute;
+    top: 2.7vw;
+  }
+
+  .absolute-start-time {
+    left: 1%;
+  }
+
+  .absolute-end-time {
+    right: 0; 
+  }
+
+  .play-icon-container-d1 {
+    display: flex;
+    align-items: center;
+    .play-icon-d1 {
+      color: var(--theme-dark-blue);
+      cursor: pointer;
+      width: 3vw;
+      height: 3vw;
+    }
+  }
+
+  .volume-container {
+    svg {
+      color: var(--theme-dark-blue);
+    }
+  }
+
+  .react-waves {
+    padding: 0 !important;
+    margin: 0 !important;
+    .wave {
+      wave {
+        height: 3vw !important;
+      }
+    }
+  }
+}
+
 .custom-audio-controls {
   display: flex;
   margin: auto;
@@ -144,4 +202,19 @@
     @extend %flexCenter;
   }
   font-size: 0.8vw;
+}
+
+.fixed-build-phone .audio-play-component .play-wave-container {
+  .play-icon-d1 {
+    width: 1.5vw;
+    height: 1.5vw;
+    stroke-width: 2;
+  }
+
+  .custom-audio-controls {
+    height: 2vw !important;
+    input {
+      display: none;
+    }
+  }
 }
