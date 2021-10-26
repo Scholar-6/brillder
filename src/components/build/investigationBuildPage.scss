@@ -1096,15 +1096,16 @@ $base-build-border: $editor-radius;
 //audio preview
 .fixed-build-phone {
   .play-wave-container {
-    height: 5vw;
+    display: flex;
+    height: 3vw;
     .react-waves {
-      height: 5vw;
+      height: 3vw;
       width: 90%;
       padding: 0 !important;
       margin-left: 5%;
 
       wave {
-        height: 4vw !important;
+        height: 3vw !important;
       }
     }
   }

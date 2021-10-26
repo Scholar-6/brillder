@@ -161,17 +161,15 @@ s {
   // font-size: 1.35vw;
   border-radius: 1.35vw;
   margin: 0 0.5rem;
-  padding-left: 2.1vw;
+  padding-left: 0.7vw;
   padding-right: 0.85vw;
   text-decoration: none !important;
   color: var(--text-blue) !important;
+  font-family: $font-family-bold;
   img {
-    position: absolute;
-    top: 50%;
-    left: 1.15vw;
-    transform: translate(-50%, -50%);
-    width: 1.2vw !important;
-    height: 1.2vw !important;
+    margin-right: 0.5vw;
+    width: 1vw !important;
+    height: 1vw !important;
     object-fit: cover;
   }
 }
@@ -179,6 +177,17 @@ s {
 .fixed-build-phone {
   .inline-link {
     display: flex;
+    padding-left: 1.8vw;
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 1vw;
+      transform: translate(-50%, -50%);
+      width: 1vw !important;
+      height: 1vw !important;
+      object-fit: cover;
+    }
   }
 }
 
@@ -188,6 +197,13 @@ s {
   height: calc(100% - 0.2vh);
   position: relative;
   overflow: visible;
+
+  .inline-link {
+    img {
+      width: 0.78vw !important;
+      height: 0.78vw !important;
+    }
+  }
 
   .ql-toolbar {
     @extend .ql-custom-toolbar;

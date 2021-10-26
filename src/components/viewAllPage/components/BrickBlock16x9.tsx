@@ -145,7 +145,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
         timeout={index * 150}
       >
         <a href={window.location.origin + routes.playCover(brick)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
-          {props.isAssignment && props.teacher && <div className="absolute-assignment-title">Created By {props.teacher.firstName} {props.teacher.lastName}</div>}
+          {props.isAssignment && props.teacher && <div className="absolute-assignment-title">Assigned by {props.teacher.firstName} {props.teacher.lastName}</div>}
           <div className="publish-brick-container">
             {renderDeadline()}
             <div className="level">
