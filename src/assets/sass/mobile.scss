@@ -1011,19 +1011,23 @@
 
 // brick link
 .inline-link {
+  display: block;
   position: relative;
   background-color: var(--tab-gray);
   // font-size: 1.35vw;
   border-radius: 3vw;
   margin: 0 0.5rem;
-  padding-left: 9vw;
+  padding-top: 1vw;
+  padding-bottom: 1vw;
+  padding-left: 11vw;
   padding-right: 1.5vw;
+  line-height: 1.2;
   text-decoration: none !important;
   color: var(--text-blue) !important;
   img {
     position: absolute;
     top: 50%;
-    left: 5vw;
+    left: 5.7vw;
     transform: translate(-50%, -50%);
     width: 5vw !important;
     height: 5vw !important;
