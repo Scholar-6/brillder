@@ -1095,8 +1095,15 @@ $base-build-border: $editor-radius;
   // font sizes bigger
   .investigation-build-page {
     $font-size-custom: 1.8vw;
+    .question-type .inner-question-type .label-question-type {
+      font-size: 2vw;
+    }
     .build-question-page .help-arrow-text {
       left: 13.8vw;
+    }
+    .question-type .inner-question-type .label-question-type svg {
+      width: 2vw;
+      height: 2vw;
     }
     .build-question-page .help-arrow {
       left: 14vw;
