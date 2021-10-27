@@ -8,6 +8,27 @@
     margin-bottom: 0.4vh;
     border-radius: 0.8vw;
     background: var(--solitude-light);
+
+    .play-wave-container {
+      margin-left: 2.2vw;
+      width: calc(100% - 5.5vw);
+  
+      .play-icon-d1 {
+        width: 3vw !important;
+        height: 3vw !important;
+      }
+    }
+
+    .play-wave-container {
+      height: 4vw;
+      .play-icon-d1 {
+        width: 2vw !important;
+        height: 2vw !important;
+      }
+      .react-waves .wave wave {
+        height: 2.3vw !important;
+      }
+    }
   }
   .index-circle-container {
     top: 0;
