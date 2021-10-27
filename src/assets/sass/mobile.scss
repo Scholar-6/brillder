@@ -1058,3 +1058,11 @@
     top: 10vw;
   }
 }
+
+
+.private-core-toggle .btn {
+  cursor: none !important;
+  .svgOnHover {
+    border-radius: 4.2vw;
+  }
+}
