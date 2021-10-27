@@ -74,12 +74,10 @@ export class InlineLinkBlot extends Embed {
     node.setAttribute("href", value.url);
     node.setAttribute("target", "_blank")
 
-    if(value.image && value.image !== "undefined") {
-      const image = document.createElement("img");
-      image.src = 'https://brillder.com/asserts/img/logo/Brillder B.svg';
-      image.alt = value.title;
-      node.appendChild(image);
-    }
+    const image = document.createElement("img");
+    image.src = 'https://brillder.com/asserts/img/logo/Brillder B.svg';
+    image.alt = value.title;
+    node.appendChild(image);
 
     const title = document.createElement("span");
     title.classList.add("inline-title");
