@@ -1200,6 +1200,25 @@ $base-build-border: $editor-radius;
       }
     }
   }
+
+  .absolute-start-time,
+  .absolute-end-time {
+    font-size: 0.9vw;
+  }
+
+  .choose-choice .play-wave-container {
+    height: 3.5vw;
+    .relative-waves-container {
+      width: calc(100% - 4.5vw);
+    }
+    .play-icon-container-d1 .play-icon-d1 {
+      width: 2vw;
+      height: 2vw;
+    }
+  }
+  .custom-audio-controls input {
+    display: none;
+  }
 }
 
 
