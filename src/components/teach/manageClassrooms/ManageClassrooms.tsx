@@ -32,6 +32,7 @@ import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import { Subject } from "model/brick";
 import ClassroomFilterItem from "./components/ClassroomFilterItem";
 import { socket } from "socket/socket";
+import map from "components/map";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -334,6 +335,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   setActiveClassroom(activeClassroom: ClassroomApi) {
     this.unselectAllStudents();
     activeClassroom.isActive = true;
+    this.props.history.push(map.ManageClassroomsTab + '?classroomId=' + activeClassroom.id);
     this.setState({ activeClassroom, page: 0, isPending: false, pageStudentsSelected: false, pageSize: this.state.classPageSize, selectedUsers: [], isSearching: false });
   }
 
