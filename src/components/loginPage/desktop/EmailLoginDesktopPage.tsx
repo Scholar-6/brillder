@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Snackbar } from "@material-ui/core";
+import { Avatar, Dialog, ListItem, ListItemAvatar, ListItemText, Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
@@ -74,9 +74,9 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
       if (data === "OK") {
         axios.get(
           `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
-          {withCredentials: true}
+          { withCredentials: true }
         ).then(response => {
-          const {data} = response;
+          const { data } = response;
           getTerms().then(r => {
             if (r && r.lastModifiedDate != data.termsAndConditionsAcceptedVersion) {
               props.history.push(map.TermsSignUp + '?onlyAcceptTerms=true');
@@ -152,7 +152,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
 
   const renderPrivacyPolicy = () => {
     return (
-      <TermsLink history={props.history}/>
+      <TermsLink history={props.history} />
     );
   }
 
@@ -178,7 +178,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
                 if (email) {
                   try {
                     await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true });
-                  } catch {}
+                  } catch { }
                   setEmailSended(true);
                 } else {
                   setEmptyEmail(true);
@@ -244,10 +244,23 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         isOpen={emailSended} close={() => setEmailSended(false)}
         label="Now check your email for a password reset link."
       />
-      <TextDialog
-        isOpen={emptyEmail} close={() => setEmptyEmail(false)}
-        label="You need to enter an email before clicking this."
-      />
+      <Dialog open={emptyEmail} onClose={() => setEmptyEmail(false)} className="dialog-box">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <ListItem>
+            <ListItemText
+              primary="You need to enter an email before clicking this"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+            <ListItemAvatar style={{ padding: 0 }}>
+              <Avatar className="circle-orange">
+                <SpriteIcon name="alert-triangle" className="active text-white stroke-2 w-3 m-b-02" />
+              </Avatar>
+            </ListItemAvatar>
+          </ListItem>
+          <div></div>
+        </div>
+      </Dialog>
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </div>
   );
