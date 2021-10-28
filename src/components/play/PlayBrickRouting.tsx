@@ -68,6 +68,7 @@ import PhoneTimeSynthesisPage from "./preSynthesis/PhoneTimeSynthesis";
 import PhoneCountdownReview from "./preReview/PhoneCountdownReview";
 import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigation";
 import CountdownReview from "./preReview/CountdownReview";
+import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 
 export enum PlayPage {
   Cover,
@@ -737,15 +738,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             />}
           {renderRouter()}
         </div>
-        <UnauthorizedUserDialog
-          brick={brick}
+        <UnauthorizedUserDialogV2
           history={history}
+          brickId={brick.id}
           isOpen={unauthorizedOpen}
-          emailInvalid={emailInvalid}
-          moveToLogin={() => cashAttempt(routes.playReview(brick), PlayStatus.Review)}
-          login={(email) => createInactiveAccount(email)}
-          again={again}
-          close={() => setUnauthorized(false)}
+          notyet={() => {
+            history.push(map.ViewAllPage);
+          }}
         />
         <TextDialog
           isOpen={emailInvalidPopup} close={() => setInvalidEmailPopup(false)}
