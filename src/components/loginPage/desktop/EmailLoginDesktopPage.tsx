@@ -17,6 +17,7 @@ import TermsLink from "components/baseComponents/TermsLink";
 import { trackSignUp } from "services/matomo";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import map from "components/map";
+import { getTerms } from "services/axios/terms";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -76,12 +77,14 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
           {withCredentials: true}
         ).then(response => {
           const {data} = response;
-          if (data.termsAndConditionsAcceptedVersion === null) {
-            props.history.push(map.TermsSignUp);
-            props.loginSuccess();
-          } else {
-            props.loginSuccess();
-          }
+          getTerms().then(r => {
+            if (r && r.lastModifiedDate != data.termsAndConditionsAcceptedVersion) {
+              props.history.push(map.TermsSignUp + '?onlyAcceptTerms=true');
+              props.loginSuccess();
+            } else {
+              props.loginSuccess();
+            }
+          });
         }).catch(error => {
           // error
           toggleAlertMessage(true);
