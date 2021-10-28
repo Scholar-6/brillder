@@ -1069,10 +1069,18 @@
 
 .forgot-password-alert {
   svg {
-    padding: 5vw;
-    width: 14vw !important;
-    height: 14vw !important;
+    padding: 3vw;
+    width: 10vw !important;
+    height: 10vw !important;
     background: var(--theme-orange);
     border-radius: 50%;
+
+    &.green {
+      background: var(--theme-green);
+    }
+  }
+  .MuiListItemText-primary {
+    text-align: center;
+    font-size: 6vw !important;
   }
 }
