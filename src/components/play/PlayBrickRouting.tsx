@@ -740,6 +740,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </div>
         <UnauthorizedUserDialogV2
           history={history}
+          isBeforeReview={true}
           brickId={brick.id}
           isOpen={unauthorizedOpen}
           notyet={() => {
