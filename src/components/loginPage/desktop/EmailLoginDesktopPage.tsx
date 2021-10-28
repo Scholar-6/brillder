@@ -240,10 +240,23 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
-      <TextDialog
-        isOpen={emailSended} close={() => setEmailSended(false)}
-        label="Now check your email for a password reset link."
-      />
+      <Dialog open={emailSended} onClose={() => setEmailSended(false)} className="dialog-box">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <ListItem>
+            <ListItemText
+              primary="Now check your email for a password reset link"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+            <ListItemAvatar style={{ padding: 0 }}>
+              <Avatar className="circle-green">
+                <SpriteIcon name="link" className="active text-white stroke-2 w-3 m-b-02" />
+              </Avatar>
+            </ListItemAvatar>
+          </ListItem>
+          <div></div>
+        </div>
+      </Dialog>
       <Dialog open={emptyEmail} onClose={() => setEmptyEmail(false)} className="dialog-box">
         <div className="dialog-header" style={{ marginBottom: 0 }}>
           <ListItem>

@@ -167,8 +167,23 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
       <TextDialog
         isOpen={emailSended} close={() => setEmailSended(false)}
-        label="Now check your email for a password reset link."
+        label="."
       />
+      <Dialog open={emailSended} onClose={() => setEmailSended(false)} className="dialog-box forgot-password-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <div className="flex-center">
+            <SpriteIcon name="link" className="active green text-white stroke-2 m-b-02" />
+          </div>
+          <ListItem>
+            <ListItemText
+              primary="Now check your email for a password reset link"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+          <div></div>
+        </div>
+      </Dialog>
       <Dialog open={emptyEmail} onClose={() => setEmptyEmail(false)} className="dialog-box forgot-password-alert">
         <div className="dialog-header" style={{ marginBottom: 0 }}>
           <div className="flex-center">
