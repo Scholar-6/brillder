@@ -1234,3 +1234,26 @@ $base-build-border: $editor-radius;
     }
   }
 }
+.desktop-version-dialog {
+  display: none;
+}
+.build-hide-popup {
+  display: none;
+}
+
+.build-show-container {
+  height: 100%;
+}
+
+
+@media only screen and (max-width: 960px) {
+  .build-show-container {
+    display: none;
+  }
+  .build-hide-popup {
+    display: block;
+  }  
+  .desktop-version-dialog {
+    display: block;
+  }
+}

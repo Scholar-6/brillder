@@ -835,7 +835,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           brick={props.brick}
           exitAndSave={exitAndSave}
         />
-        <Hidden only={['xs', 'sm']}>
+        <div className="build-show-container">
           <TutorialLabels isTutorialPassed={isTutorialPassed()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} />
           <Grid
             container direction="row"
@@ -975,12 +975,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               setSkipDialog(false);
             }}
           />
-        </Hidden>
-        <Hidden only={['md', 'lg', 'xl']}>
+        </div>
+        <div className="build-hide-popup">
           <div className="blue-page">
             <DesktopVersionDialog history={history} />
           </div>
-        </Hidden>
+        </div>
       </div>
     );
   }
