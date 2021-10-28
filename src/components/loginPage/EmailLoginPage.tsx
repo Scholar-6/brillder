@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Snackbar } from "@material-ui/core";
+import { Avatar, Dialog, Grid, ListItem, ListItemAvatar, ListItemText, Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
@@ -14,6 +14,7 @@ import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 import { trackSignUp } from "services/matomo";
 import { isPhone } from "services/phone";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -168,10 +169,21 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         isOpen={emailSended} close={() => setEmailSended(false)}
         label="Now check your email for a password reset link."
       />
-      <TextDialog
-        isOpen={emptyEmail} close={() => setEmptyEmail(false)}
-        label="You need to enter an email before clicking this."
-      />
+      <Dialog open={emptyEmail} onClose={() => setEmptyEmail(false)} className="dialog-box forgot-password-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <div className="flex-center">
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 m-b-02" />
+          </div>
+          <ListItem>
+            <ListItemText
+              primary="You need to enter an email before clicking this"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+          <div></div>
+        </div>
+      </Dialog>
     </Grid>
   );
 };
