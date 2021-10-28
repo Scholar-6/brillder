@@ -162,13 +162,14 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="button-box">
           <DesktopLoginForm
             email={email}
+            isLogin={true}
+            history={props.history}
             setEmail={setEmail}
             password={password}
             setPassword={setPassword}
             passwordHidden={passwordHidden}
             setHidden={setHidden}
             handleSubmit={handleLoginSubmit}
-            register={() => register(email, password)}
             resetPassword={async () => {
               try {
                 if (email) {

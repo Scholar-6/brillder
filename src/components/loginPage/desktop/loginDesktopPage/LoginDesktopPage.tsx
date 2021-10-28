@@ -20,6 +20,8 @@ import EmailRegisterDesktopPage from "../EmailRegisterDesktopPage";
 import Delayed from "components/services/Delayed";
 import { FirstPage, EmailSignPage, JoinPage, RegisterPage } from "../routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
+import DesktopLoginForm from "../DesktopLoginForm";
+import EmailLoginDesktopPage from "../EmailLoginDesktopPage";
 
 
 const DesktopTheme = React.lazy(() => import('./themes/LoginDesktopTheme'));
