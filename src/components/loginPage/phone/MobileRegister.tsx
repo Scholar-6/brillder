@@ -155,7 +155,6 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
             passwordHidden={passwordHidden}
             setHidden={setHidden}
             handleSubmit={handleLoginSubmit}
-            register={() => register(email, password)}
           />
           {!keyboardShown &&
           <div className="mobile-policy-text">

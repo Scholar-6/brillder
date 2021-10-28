@@ -145,7 +145,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
           passwordHidden={passwordHidden}
           setHidden={setHidden}
           handleSubmit={handleLoginSubmit}
-          register={() => register(email, password)}
         />
       </div>
       <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
