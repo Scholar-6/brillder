@@ -9,6 +9,7 @@ import { login } from "services/axios/auth";
 import LoginLogo from '../components/LoginLogo';
 import WrongLoginDialog from "../components/WrongLoginDialog";
 import DesktopLoginForm from "./DesktopLoginForm";
+import map from "components/map";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -54,7 +55,22 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
     let data = await login(email, password);
     if (!data.isError) {
       if (data === "OK") {
-        props.loginSuccess();
+        axios.get(
+          `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
+          {withCredentials: true}
+        ).then(response => {
+          const {data} = response;
+          if (data.termsAndConditionsAcceptedVersion === null) {
+            props.history.push(map.TermsSignUp);
+            props.loginSuccess();
+          } else {
+            props.loginSuccess();
+          }
+        }).catch(error => {
+          // error
+          toggleAlertMessage(true);
+          setAlertMessage("Server error");
+        });
         return;
       }
       let { msg } = data;

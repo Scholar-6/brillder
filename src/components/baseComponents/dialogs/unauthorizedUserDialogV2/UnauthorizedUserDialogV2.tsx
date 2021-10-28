@@ -30,7 +30,10 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => (
         <SpriteIcon name="f-user-check" />
         <span>I’m a member, sign in</span>
       </button>
-      <button className="btn btn-md bg-orange" onClick={() => props.history.push('/login/join')}>
+      <button className="btn btn-md bg-orange" onClick={() => {
+        SetAuthBrickCoverId(props.brickId);
+        props.history.push('/login/join');
+      }}>
         <SpriteIcon name="f-check-clircle" />
         <span>I’d like to register in two clicks</span>
       </button>
