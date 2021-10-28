@@ -69,6 +69,14 @@ import PhoneCountdownReview from "./preReview/PhoneCountdownReview";
 import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigation";
 import CountdownReview from "./preReview/CountdownReview";
 
+export enum PlayPage {
+  Cover,
+  Live,
+  Synthesis,
+  Review,
+  Ending,
+  FinalStep
+}
 
 function shuffle(a: any[]) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -476,9 +484,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setSearchString(v);
   }
 
-  const renderPhoneFooter = () => {
+  const renderPhoneFooter = (page: PlayPage) => {
     return <PhonePlayFooter
       brick={brick}
+      page={page}
       user={props.user}
       history={history}
       menuOpen={false}
@@ -599,7 +608,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             }}
             moveNext={() => cashAttempt(routes.PlayProvisionalScoreLastPrefix, PlayStatus.Review)}
           />
-          {isPhone() && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter(PlayPage.Live)}
         </Route>
         <Route path="/play/brick/:brickId/provisionalScore">
           <ProvisionalScore
@@ -670,7 +679,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               }
             }}
           />
-          {isPhone() && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter(PlayPage.Review)}
         </Route>
         <Route exac path="/play/brick/:brickId/ending">
           <Ending
@@ -694,7 +703,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={history}
             moveNext={moveToPostPlay}
           />
-          {isPhone() && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter(PlayPage.FinalStep)}
         </Route>
         <ValidationFailedDialog
           isOpen={saveFailed}

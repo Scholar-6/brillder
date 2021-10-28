@@ -21,12 +21,14 @@ import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePol
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
 import ShareDialogs from '../finalStep/dialogs/ShareDialogs';
 import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
+import { PlayPage } from '../PlayBrickRouting';
 
 interface FooterProps {
   brick: Brick;
   isAuthenticated: isAuthenticated;
   history: any;
   user: User;
+  page: PlayPage;
   menuOpen?: boolean;
   moveToPostPlay(): void;
   mode: PlayMode;
@@ -41,7 +43,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     isInitCookieOpen = true;
   }
 
-  const { brick, user, history } = props;
+  const { brick, page, user, history } = props;
   const [exitPlay, setExit] = React.useState(false);
   const [cookieOpen, setCookiePopup] = React.useState(isInitCookieOpen);
   const [cookieReOpen, setCookieReOpen] = React.useState(false);
@@ -55,26 +57,6 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
 
   let initMenuOpen = props.menuOpen ? true : false;
   const [menuOpen, setMenu] = React.useState(initMenuOpen);
-
-  const isIntro = () => {
-    return history.location.pathname.slice(-6) === routes.PlayPhonePrepLastPrefix;
-  }
-
-  const isPrep = () => {
-    return history.location.pathname.slice(-5) === '/prep';
-  }
-
-  const isSynthesis = () => {
-    return history.location.pathname.slice(-10) === routes.PlaySynthesisLastPrefix;
-  }
-
-  const isFinalScore = () => {
-    return history.location.pathname.slice(-7) === '/ending';
-  }
-
-  const isFinalStep = () => {
-    return history.location.pathname.slice(-10) === '/finalStep';
-  }
 
   let canSee = false;
   try {
@@ -148,7 +130,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     return (
       <div>
         <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
-        {(isIntro() || isPrep() || isFinalScore() || isSynthesis())
+        {(page === PlayPage.Ending)
           ? <SpriteIcon name="" />
           : <SpriteIcon name="file-text" className="ff-prep-icon" onClick={() => history.push(routes.playNewPrep(brick) + '?prepExtanded=true&resume=true')} />}
         <SpriteIcon name="" className="ff-smaller" />
@@ -176,7 +158,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   }
 
   return <div className="phone-play-footer q-phone-play-footer">
-    {(isFinalStep()) ? renderFinalStep() : renderEveryOtherStep()}
+    {page === PlayPage.FinalStep ? renderFinalStep() : renderEveryOtherStep()}
     <Menu
       className="phone-down-play-menu menu-dropdown"
       keepMounted
