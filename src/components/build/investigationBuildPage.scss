@@ -1063,17 +1063,6 @@ $base-build-border: $editor-radius;
   }
 }
 
-@media only screen and (max-width: 960px) {
-  .investigation-build-page {
-    .play-preview {
-      display: none !important;
-    }
-    .build-navigation-buttons {
-      display: none !important;
-    }
-  }
-}
-
 // aspect ratio is too high hide phone and make build bigger
 @media (max-aspect-ratio: 160/98) {
   .investigation-build-page .fixed-build-phone {
@@ -1246,14 +1235,23 @@ $base-build-border: $editor-radius;
 }
 
 
-@media only screen and (max-width: 960px) {
-  .build-show-container {
-    display: none;
-  }
-  .build-hide-popup {
-    display: block;
-  }  
+@media only screen and (max-width: 760px) {
   .desktop-version-dialog {
     display: block;
+  }
+  
+  .investigation-build-page {
+    .build-show-container {
+      display: none;
+    }
+    .build-hide-popup {
+      display: block;
+    }  
+    .build-navigation-buttons {
+      display: none !important;
+    }
+    .play-preview {
+      display: none !important;
+    }
   }
 }
