@@ -15,7 +15,6 @@ import PhoneIcon from "./PhoneIcon";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import TermsLink from "components/baseComponents/TermsLink";
 import { trackSignUp } from "services/matomo";
-import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import map from "components/map";
 import { getTerms } from "services/axios/terms";
 

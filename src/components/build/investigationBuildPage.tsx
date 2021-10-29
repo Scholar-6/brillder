@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import update from "immutability-helper";
 import { connect } from "react-redux";
 import queryString from 'query-string';
