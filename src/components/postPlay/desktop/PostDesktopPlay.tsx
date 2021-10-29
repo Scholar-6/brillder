@@ -35,6 +35,7 @@ import BookAnnotationsPanel from "./BookAnnotationsPanel";
 import { PlayMode } from "components/play/model";
 import HighlightHtml, { HighlightRef } from "components/play/baseComponents/HighlightHtml";
 import axios from "axios";
+import { CashAttempt } from "localStorage/play";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -239,6 +240,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
     return (
       <div className="green-button-container1" onClick={() => {
+        CashAttempt('');
         this.props.history.push(routes.playAssignment(brick, this.state.attempts[0].assignmentId));
       }}>
         <div className="green-button-container2">
