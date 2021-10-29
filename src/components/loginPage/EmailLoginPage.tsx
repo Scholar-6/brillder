@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Dialog, Grid, ListItem, ListItemAvatar, ListItemText, Snackbar } from "@material-ui/core";
+import { Dialog, Grid, ListItem, ListItemText, Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";

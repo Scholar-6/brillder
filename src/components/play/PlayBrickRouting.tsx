@@ -38,14 +38,13 @@ import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames } from "components/build/proposal/model";
 import { maximizeZendeskButton, minimizeZendeskButton, showZendesk } from 'services/zendesk';
-import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
 import map from "components/map";
 import userActions from 'redux/actions/user';
 import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
-import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
+import { CreateByEmailRes } from "services/axios/user";
 import routes, { playBrief, playCountInvesigation, PlayCoverLastPrefix, playInvestigation, playNewPrep, playPreInvesigation, playPrePrep, playSections } from "./routes";
 import { isPhone } from "services/phone";
 import Brief from "./brief/Brief";
@@ -199,7 +198,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   // used for unauthenticated user.
   const [userToken, setUserToken] = useState<string>();
   const [emailInvalidPopup, setInvalidEmailPopup] = useState(false); // null - before submit button clicked, true - invalid
-  const [emailInvalid, setInvalidEmail] = useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
   const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
     let lastPageUrl = lastUrl;
@@ -440,36 +438,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
-  const validate = (data: any) => {
-    if (data === 400) {
-      setInvalidEmailPopup(true);
-    }
-    setInvalidEmail(true);
-  }
-
   const setUser = (data: CreateByEmailRes) => {
     const { user, token } = data;
     props.setUser(user);
     setUserToken(token);
     trackSignUp();
-  }
-
-  const createInactiveAccount = async (email: string) => {
-    if (!props.user) {
-      // create a new account for an unauthorized user.
-      const data = await createUserByEmail(email);
-      if (data === 400 || !data) {
-        validate(data);
-      } else {
-        setUser(data);
-        setUnauthorized(false);
-        history.push(routes.playReview(brick));
-      }
-    }
-  }
-
-  const again = () => {
-    history.push(`/play/dashboard`);
   }
 
   const onHighlight = (name: BrickFieldNames, value: string) => {
