@@ -1,6 +1,7 @@
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import map from "components/map";
 import React from "react";
+import queryString from 'query-string';
 
 import { TeachActiveTab } from "./model";
 
@@ -12,12 +13,16 @@ interface TabProps {
 
 const TeachTab: React.FC<TabProps> = ({ history, activeTab, assignmentsEnabled }) => {
   const isActive = (t1: TeachActiveTab, t2: TeachActiveTab) => t1 === t2 ? 'active' : 'no-active';
+  const values = queryString.parse(history.location.search);
+  const classroomId = values.classroomId || '';
   
   const [errorOpen, setErrorOpen] = React.useState(false);
 
+  const prepareLink = (link: string) => classroomId ? (link + '?classroomId=' + classroomId) : link;
+
   const goToAssignments = React.useCallback(() => {
     if (assignmentsEnabled) {
-      history.push(map.TeachAssignedTab);
+      history.push(prepareLink(map.TeachAssignedTab));
     } else {
       setErrorOpen(true);
     }
@@ -37,7 +42,7 @@ const TeachTab: React.FC<TabProps> = ({ history, activeTab, assignmentsEnabled }
   const manageClassesTab = () => {
     const className = isActive(activeTab, TeachActiveTab.Students);
     return (
-      <div className={className} onClick={() => history.push(map.ManageClassroomsTab)}>
+      <div className={className} onClick={() => history.push(prepareLink(map.ManageClassroomsTab))}>
         <div style={{display: 'flex'}}>
           <span>Students</span>
         </div>

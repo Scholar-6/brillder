@@ -77,6 +77,15 @@
         width: 4vw;
       }
     }
+    .circle-green {
+      background: var(--theme-green);
+      width: 5vw;
+      height: 5vw;
+      svg {
+        width: 4vw;
+        height: 4vw;
+      }
+    }
     .circle-orange {
       background: var(--theme-orange);
     }

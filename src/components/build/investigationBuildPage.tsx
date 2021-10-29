@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import update from "immutability-helper";
 import { connect } from "react-redux";
 import queryString from 'query-string';
@@ -835,7 +835,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           brick={props.brick}
           exitAndSave={exitAndSave}
         />
-        <Hidden only={['xs', 'sm']}>
+        <div className="build-show-container">
           <TutorialLabels isTutorialPassed={isTutorialPassed()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} />
           <Grid
             container direction="row"
@@ -844,7 +844,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           >
             <Grid
               container
-              item xs={12} sm={12} md={9}
+              item xs={9}
               alignItems="center"
               style={{ height: "100%" }}
               className="question-container"
@@ -860,7 +860,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                 </div>
                 <Grid
                   container
-                  item xs={12} sm={12} md={9}
+                  item xs={9}
                   style={{ height: "90%", width: "75vw", minWidth: 'none' }}
                 >
                   <DragableTabs
@@ -975,12 +975,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               setSkipDialog(false);
             }}
           />
-        </Hidden>
-        <Hidden only={['md', 'lg', 'xl']}>
+        </div>
+        <div className="build-hide-popup">
           <div className="blue-page">
             <DesktopVersionDialog history={history} />
           </div>
-        </Hidden>
+        </div>
       </div>
     );
   }

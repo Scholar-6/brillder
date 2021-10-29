@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Snackbar } from "@material-ui/core";
+import { Dialog, Grid, ListItem, ListItemText, Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
@@ -14,6 +14,9 @@ import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 import { trackSignUp } from "services/matomo";
 import { isPhone } from "services/phone";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { getTerms } from "services/axios/terms";
+import map from "components/map";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -67,7 +70,24 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
     let data = await login(email, password);
     if (!data.isError) {
       if (data === "OK") {
-        props.loginSuccess();
+        axios.get(
+          `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
+          { withCredentials: true }
+        ).then(response => {
+          const { data } = response;
+          getTerms().then(r => {
+            if (r && r.lastModifiedDate != data.termsAndConditionsAcceptedVersion) {
+              props.history.push(map.TermsSignUp + '?onlyAcceptTerms=true');
+              props.loginSuccess();
+            } else {
+              props.loginSuccess();
+            }
+          });
+        }).catch(error => {
+          // error
+          toggleAlertMessage(true);
+          setAlertMessage("Server error");
+        });
         return;
       }
       let { msg } = data;
@@ -166,12 +186,38 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
       <TextDialog
         isOpen={emailSended} close={() => setEmailSended(false)}
-        label="Now check your email for a password reset link."
+        label="."
       />
-      <TextDialog
-        isOpen={emptyEmail} close={() => setEmptyEmail(false)}
-        label="You need to enter an email before clicking this."
-      />
+      <Dialog open={emailSended} onClose={() => setEmailSended(false)} className="dialog-box forgot-password-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <div className="flex-center">
+            <SpriteIcon name="link" className="active green text-white stroke-2 m-b-02" />
+          </div>
+          <ListItem>
+            <ListItemText
+              primary="Now check your email for a password reset link"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+          <div></div>
+        </div>
+      </Dialog>
+      <Dialog open={emptyEmail} onClose={() => setEmptyEmail(false)} className="dialog-box forgot-password-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <div className="flex-center">
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 m-b-02" />
+          </div>
+          <ListItem>
+            <ListItemText
+              primary="You need to enter an email before clicking this"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+          <div></div>
+        </div>
+      </Dialog>
     </Grid>
   );
 };

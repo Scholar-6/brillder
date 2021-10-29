@@ -9,6 +9,7 @@ import map from "components/map";
 import axios from "axios";
 import { hideZendesk, showZendesk } from "services/zendesk";
 import { isPhone } from "services/phone";
+import { JoinPage } from "../desktop/routes";
 
 interface MobileLoginProps {
   email: string;
@@ -136,6 +137,15 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps, State> {
               >
                 Sign in
               </Button>
+            </div>
+            <div className="button-box" style={{marginTop: '3.4vh'}}>
+              <div className="text-box gg-text-box">
+                <span>New to Brillder?</span>
+                <div className="join-button" onClick={() => this.props.history.push(JoinPage)}>
+                  Join Now
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </div>
             </div>
             {!this.state.keyboardShown &&
             <div className="mobile-policy-text">
