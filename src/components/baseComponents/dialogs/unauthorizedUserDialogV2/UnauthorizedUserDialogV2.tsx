@@ -29,7 +29,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
         <div className="title bold">
           {props.isBeforeReview
             ? <span>To save and improve your score, and start building your personal library, create an account.</span>
-            : <span>Great that you've clicked a brick!<br /> A new word of learning starts here.</span>}
+            : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
         </div>
         <button className="btn btn-md bg-white" onClick={() => {
           SetAuthBrickCoverId(props.brickId);
