@@ -15,6 +15,8 @@ import { trackSignUp } from "services/matomo";
 import { isPhone } from "services/phone";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { getTerms } from "services/axios/terms";
+import map from "components/map";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -68,7 +70,24 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
     let data = await login(email, password);
     if (!data.isError) {
       if (data === "OK") {
-        props.loginSuccess();
+        axios.get(
+          `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
+          { withCredentials: true }
+        ).then(response => {
+          const { data } = response;
+          getTerms().then(r => {
+            if (r && r.lastModifiedDate != data.termsAndConditionsAcceptedVersion) {
+              props.history.push(map.TermsSignUp + '?onlyAcceptTerms=true');
+              props.loginSuccess();
+            } else {
+              props.loginSuccess();
+            }
+          });
+        }).catch(error => {
+          // error
+          toggleAlertMessage(true);
+          setAlertMessage("Server error");
+        });
         return;
       }
       let { msg } = data;
