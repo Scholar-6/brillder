@@ -1063,17 +1063,6 @@ $base-build-border: $editor-radius;
   }
 }
 
-@media only screen and (max-width: 960px) {
-  .investigation-build-page {
-    .play-preview {
-      display: none !important;
-    }
-    .build-navigation-buttons {
-      display: none !important;
-    }
-  }
-}
-
 // aspect ratio is too high hide phone and make build bigger
 @media (max-aspect-ratio: 160/98) {
   .investigation-build-page .fixed-build-phone {
@@ -1090,6 +1079,97 @@ $base-build-border: $editor-radius;
   }
   .investigation-build-page .saved-info {
     display: none;
+  }
+
+  // font sizes bigger
+  .investigation-build-page {
+    $font-size-custom: 1.8vw;
+    .question-type .inner-question-type .label-question-type {
+      font-size: 2vw;
+    }
+    .build-question-page .help-arrow-text {
+      left: 13.8vw;
+    }
+    .question-type .inner-question-type .label-question-type svg {
+      width: 2vw;
+      height: 2vw;
+    }
+    .build-question-page .help-arrow {
+      left: 14vw;
+    }
+    .tutorial-panel.tutorial-proposal-panel .button-row {
+      font-size: 2vw;
+    }
+    .question-type .question-container .link-description {
+      font-size: 2vw !important;
+      line-height: 2.7vw !important;
+    }
+    .ql-global-toolbar button, .ql-global-toolbar .picker.q-color, .ql-custom-toolbar button, .ql-custom-toolbar .picker.q-color {
+      width: 2.2vw !important;
+      height: 2.2vw !important;
+    }
+    .quill-document-editor .ql-container .ql-editor {
+      font-size: $font-size-custom;
+    }
+    .component-title {
+      font-size: 1.2vw;
+      svg {
+        width: 1.3vw;
+        height: 1.3vw;
+      }
+    }
+    .question-comments-panel.hidden {
+      right: -19vw;
+    }
+    .plan-page .inner-question-type .inner-quills .key-words {
+      input {
+        font-size: $font-size-custom !important;
+      }
+      .key-word {
+        font-size: $font-size-custom !important;
+      }
+    }
+    .comment-button .custom-tooltip {
+      font-size: 1.2vw;
+      width: 8vw;
+    }
+    .comment-item-container {
+      font-size: 1.3vw !important;
+    }
+    .synthesis-words-count {
+      font-size: $font-size-custom !important;
+    }
+    .synthesis-page .inner-question-type .synthesis-input-container .ql-container .ql-editor p {
+      font-size: $font-size-custom !important;
+    }
+    .comment-reply-text-form textarea {
+      font-size: 1.3vw;
+    }
+    .build-question-page .select-question-type  {
+      font-size: 1.3vw !important;
+    }
+
+    .build-question-page .select-type-container {
+      font-size: 1.3vw;
+    }
+
+    button.comment-action-button.in-child {
+      font-size: 1.2vw;
+    }
+
+    .plan-page .inner-question-type .inner-quills .level-and-length-container .difficulty-select .MuiInputBase-root .MuiSelect-root {
+      font-size: $font-size-custom !important;
+    }
+    .plan-page .inner-question-type .inner-quills .subject-select-container .MuiInputBase-root .MuiSelect-root .MuiTypography-root {
+      font-size: $font-size-custom !important;
+    }
+    .plan-page .inner-question-type .inner-quills .level-and-length-container .brick-length .MuiSelect-root  {
+      padding-left: 3.8vw;
+      font-size: $font-size-custom !important;
+    }
+    .core-select .MuiSelect-root.MuiSelect-select.MuiSelect-selectMenu.MuiInputBase-input.MuiInput-input {
+      font-size: 0.97vw !important;
+    }
   }
 }
 
@@ -1109,6 +1189,25 @@ $base-build-border: $editor-radius;
       }
     }
   }
+
+  .absolute-start-time,
+  .absolute-end-time {
+    font-size: 0.9vw;
+  }
+
+  .choose-choice .play-wave-container {
+    height: 3.5vw;
+    .relative-waves-container {
+      width: calc(100% - 4.5vw);
+    }
+    .play-icon-container-d1 .play-icon-d1 {
+      width: 2vw;
+      height: 2vw;
+    }
+  }
+  .custom-audio-controls input {
+    display: none;
+  }
 }
 
 
@@ -1121,6 +1220,38 @@ $base-build-border: $editor-radius;
   .question-hint, .question-hint-global {
     blockquote {
       border-left: 3px solid var(--theme-dark-blue) !important;
+    }
+  }
+}
+.desktop-version-dialog {
+  display: none;
+}
+.build-hide-popup {
+  display: none;
+}
+
+.build-show-container {
+  height: 100%;
+}
+
+
+@media only screen and (max-width: 760px) {
+  .desktop-version-dialog {
+    display: block;
+  }
+  
+  .investigation-build-page {
+    .build-show-container {
+      display: none;
+    }
+    .build-hide-popup {
+      display: block;
+    }  
+    .build-navigation-buttons {
+      display: none !important;
+    }
+    .play-preview {
+      display: none !important;
     }
   }
 }

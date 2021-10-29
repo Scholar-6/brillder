@@ -335,6 +335,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
           />
           <div className="page-content">
             <BookSidebar
+              user={this.props.user}
               brick={brick} questions={questions}
               activeQuestionIndex={this.state.questionIndex}
               attempt={this.state.attempt}

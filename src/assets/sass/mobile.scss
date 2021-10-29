@@ -1058,3 +1058,29 @@
     top: 10vw;
   }
 }
+
+
+.private-core-toggle .btn {
+  cursor: none !important;
+  .svgOnHover {
+    border-radius: 4.9vw;
+  }
+}
+
+.forgot-password-alert {
+  svg {
+    padding: 3vw;
+    width: 10vw !important;
+    height: 10vw !important;
+    background: var(--theme-orange);
+    border-radius: 50%;
+
+    &.green {
+      background: var(--theme-green);
+    }
+  }
+  .MuiListItemText-primary {
+    text-align: center;
+    font-size: 6vw !important;
+  }
+}

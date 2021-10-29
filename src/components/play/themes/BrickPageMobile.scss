@@ -999,7 +999,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               display: flex;
               justify-content: center;
               margin-top: 2vh;
-              margin-bottom: 5vh;
+              margin-bottom: 2vh;
               .icon-background {
                 display: flex;
                 justify-content: center;
@@ -1074,8 +1074,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             font-family: $font-family-bold;
           }
           .share-row {
-            margin-top: 0vh;
-            height: 55vh;
+            margin-top: 7vh;
+            height: 45vh;
             display: flex;
             align-items: center;
             .button-container {
@@ -1093,7 +1093,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             }
             .link-text {
               cursor: pointer;
-              margin-top: 2vh;
+              margin-top: 0vh;
               font-family: $font-family-bold;
               @extend %textCenter;
               font-size: 2vw;
@@ -1620,7 +1620,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 }
 
 .final-assign-brick-column {
-  margin-top: 30%;
+  margin-top: 25%;
 }
 
 // fix for cutoff

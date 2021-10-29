@@ -21,8 +21,15 @@
     }
   }
 
-  .play-wave-container .react-waves .wave wave {
-    height: 2.3vw !important;
+  .play-wave-container {
+    height: 4vw;
+    .play-icon-d1 {
+      width: 2vw !important;
+      height: 2vw !important;
+    }
+    .react-waves .wave wave {
+      height: 2.3vw !important;
+    }
   }
 
   .checkbox-container {

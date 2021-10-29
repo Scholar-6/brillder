@@ -38,14 +38,13 @@ import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames } from "components/build/proposal/model";
 import { maximizeZendeskButton, minimizeZendeskButton, showZendesk } from 'services/zendesk';
-import UnauthorizedUserDialog from "components/baseComponents/dialogs/UnauthorizedUserDialog";
 import map from "components/map";
 import userActions from 'redux/actions/user';
 import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
-import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
+import { CreateByEmailRes } from "services/axios/user";
 import routes, { playBrief, playCountInvesigation, PlayCoverLastPrefix, playInvestigation, playNewPrep, playPreInvesigation, playPrePrep, playSections } from "./routes";
 import { isPhone } from "services/phone";
 import Brief from "./brief/Brief";
@@ -68,7 +67,16 @@ import PhoneTimeSynthesisPage from "./preSynthesis/PhoneTimeSynthesis";
 import PhoneCountdownReview from "./preReview/PhoneCountdownReview";
 import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigation";
 import CountdownReview from "./preReview/CountdownReview";
+import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 
+export enum PlayPage {
+  Cover,
+  Live,
+  Synthesis,
+  Review,
+  Ending,
+  FinalStep
+}
 
 function shuffle(a: any[]) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -190,7 +198,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   // used for unauthenticated user.
   const [userToken, setUserToken] = useState<string>();
   const [emailInvalidPopup, setInvalidEmailPopup] = useState(false); // null - before submit button clicked, true - invalid
-  const [emailInvalid, setInvalidEmail] = useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
   const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
     let lastPageUrl = lastUrl;
@@ -431,36 +438,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
-  const validate = (data: any) => {
-    if (data === 400) {
-      setInvalidEmailPopup(true);
-    }
-    setInvalidEmail(true);
-  }
-
   const setUser = (data: CreateByEmailRes) => {
     const { user, token } = data;
     props.setUser(user);
     setUserToken(token);
     trackSignUp();
-  }
-
-  const createInactiveAccount = async (email: string) => {
-    if (!props.user) {
-      // create a new account for an unauthorized user.
-      const data = await createUserByEmail(email);
-      if (data === 400 || !data) {
-        validate(data);
-      } else {
-        setUser(data);
-        setUnauthorized(false);
-        history.push(routes.playReview(brick));
-      }
-    }
-  }
-
-  const again = () => {
-    history.push(`/play/dashboard`);
   }
 
   const onHighlight = (name: BrickFieldNames, value: string) => {
@@ -476,9 +458,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setSearchString(v);
   }
 
-  const renderPhoneFooter = () => {
+  const renderPhoneFooter = (page: PlayPage) => {
     return <PhonePlayFooter
       brick={brick}
+      page={page}
       user={props.user}
       history={history}
       menuOpen={false}
@@ -599,7 +582,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             }}
             moveNext={() => cashAttempt(routes.PlayProvisionalScoreLastPrefix, PlayStatus.Review)}
           />
-          {isPhone() && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter(PlayPage.Live)}
         </Route>
         <Route path="/play/brick/:brickId/provisionalScore">
           <ProvisionalScore
@@ -670,7 +653,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               }
             }}
           />
-          {isPhone() && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter(PlayPage.Review)}
         </Route>
         <Route exac path="/play/brick/:brickId/ending">
           <Ending
@@ -694,7 +677,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={history}
             moveNext={moveToPostPlay}
           />
-          {isPhone() && renderPhoneFooter()}
+          {isPhone() && renderPhoneFooter(PlayPage.FinalStep)}
         </Route>
         <ValidationFailedDialog
           isOpen={saveFailed}
@@ -728,15 +711,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             />}
           {renderRouter()}
         </div>
-        <UnauthorizedUserDialog
-          brick={brick}
+        <UnauthorizedUserDialogV2
           history={history}
+          isBeforeReview={true}
+          brickId={brick.id}
           isOpen={unauthorizedOpen}
-          emailInvalid={emailInvalid}
-          moveToLogin={() => cashAttempt(routes.playReview(brick), PlayStatus.Review)}
-          login={(email) => createInactiveAccount(email)}
-          again={again}
-          close={() => setUnauthorized(false)}
+          notyet={() => {
+            history.push(map.ViewAllPage);
+          }}
         />
         <TextDialog
           isOpen={emailInvalidPopup} close={() => setInvalidEmailPopup(false)}
