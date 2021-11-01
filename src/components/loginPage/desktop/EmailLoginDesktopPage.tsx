@@ -38,6 +38,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
   const [isPolicyOpen, setPolicyDialog] = useState(initPolicyOpen);
 
   const [emptyEmail, setEmptyEmail] = useState(false);
+  const [invalidEmail, setInvalidEmail] = useState(false);
   const [emailSended, setEmailSended] = useState(false);
 
   const [alertMessage, setAlertMessage] = useState("");
@@ -175,10 +176,14 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             resetPassword={async () => {
               try {
                 if (email) {
-                  try {
-                    await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true });
-                  } catch { }
-                  setEmailSended(true);
+                  if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
+                    try {
+                      await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true });
+                    } catch { }
+                    setEmailSended(true);
+                  } else {
+                    setInvalidEmail(true);
+                  }
                 } else {
                   setEmptyEmail(true);
                 }
@@ -261,6 +266,23 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
           <ListItem>
             <ListItemText
               primary="You need to enter an email before clicking this"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+            <ListItemAvatar style={{ padding: 0 }}>
+              <Avatar className="circle-orange">
+                <SpriteIcon name="alert-triangle" className="active text-white stroke-2 w-3 m-b-02" />
+              </Avatar>
+            </ListItemAvatar>
+          </ListItem>
+          <div></div>
+        </div>
+      </Dialog>
+      <Dialog open={invalidEmail} onClose={() => setInvalidEmail(false)} className="dialog-box">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <ListItem>
+            <ListItemText
+              primary="This email appears to be invalid"
               className="bold"
               style={{ minWidth: '30vw' }}
             />
