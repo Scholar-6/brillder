@@ -18,6 +18,7 @@ interface MobileLoginProps {
   history: History;
   setEmailSended(v: boolean): void;
   setEmptyEmail(v: boolean): void;
+  setInvalidEmail(v: boolean): void;
   setEmail(email: string): void;
   setPassword(password: string): void;
   setHidden(hidden: boolean): void;
@@ -98,10 +99,14 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps, State> {
               <div className="reset-password-link" onClick={async () => {
                 try {
                   if (this.props.email) {
-                    try {
-                      await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${this.props.email}`, {}, { withCredentials: true });
-                    } catch { }
-                    this.props.setEmailSended(true);
+                    if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.props.email)) {
+                      try {
+                        await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${this.props.email}`, {}, { withCredentials: true });
+                      } catch { }
+                      this.props.setEmailSended(true);
+                    } else {
+                      this.props.setInvalidEmail(true);
+                    }
                   } else {
                     this.props.setEmptyEmail(true);
                   }
