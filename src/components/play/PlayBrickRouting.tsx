@@ -149,11 +149,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
       const isProvisional = history.location.pathname.slice(-routes.PlayProvisionalScoreLastPrefix.length) === routes.PlayProvisionalScoreLastPrefix;
       if (!isProvisional && cashAttempt.lastPageUrl === routes.PlayProvisionalScoreLastPrefix && initStatus === PlayStatus.Review) {
-        history.push(routes.playProvisionalScore(props.brick))
+        history.push(routes.playTimeReview(props.brick))
       }
       const isSynthesis = history.location.pathname.slice(-routes.PlaySynthesisLastPrefix.length) === routes.PlaySynthesisLastPrefix;
       if (!isSynthesis && cashAttempt.lastPageUrl === routes.PlaySynthesisLastPrefix && initStatus === PlayStatus.Review) {
-        history.push(routes.playProvisionalScore(props.brick))
+        history.push(routes.playTimeReview(props.brick))
       }
       setRestored(true);
     } else {

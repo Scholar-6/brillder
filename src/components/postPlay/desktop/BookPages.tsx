@@ -13,6 +13,7 @@ import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
 import FrontPage from '../FrontPage';
 import routes from 'components/play/routes';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { CashAttempt } from 'localStorage/play';
 
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
 const DesktopBookTheme = React.lazy(() => import('../themes/PageBookDesktopTheme'));
@@ -92,6 +93,7 @@ class BookPages extends React.Component<BookProps, BookState> {
     }
     return (
       <div className="green-button-container1" onClick={() => {
+        CashAttempt('');
         this.props.history.push(routes.playAssignment(brick, this.props.attempt.assignmentId));
       }}>
         <div className="green-button-container2">
