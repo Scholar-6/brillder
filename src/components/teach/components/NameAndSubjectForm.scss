@@ -89,6 +89,13 @@
     color: var(--theme-dark-blue);
   }
 
+  .class-creator {
+    margin-left: 1vw;
+    font-size: 1vw;
+    color: var(--theme-dark-blue);
+    font-family: $font-family-light-italic;
+  }
+
   .edit-icon {
     transition: all 300ms ease-out;
     position: relative;

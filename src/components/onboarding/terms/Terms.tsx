@@ -8,7 +8,7 @@ import marked from "marked";
 
 import map from "components/map";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
-import { acceptTerms, getUserById } from "services/axios/user";
+import { acceptTerms } from "services/axios/user";
 import userActions from 'redux/actions/user';
 import { getTerms } from "services/axios/terms";
 import { isPhone } from "services/phone";
