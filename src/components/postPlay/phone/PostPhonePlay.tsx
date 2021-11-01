@@ -38,6 +38,7 @@ import PhoneQuestionPage from "./PhoneQuestionPage";
 import map from "components/map";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { checkTeacher } from "components/services/brickService";
+import { CashAttempt } from "localStorage/play";
 
 const MobileTheme = React.lazy(() => import('../themes/PageMobileTheme'));
 
@@ -186,11 +187,12 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       <div className="green-button-container2">
         <div className="play-text">Play Again</div>
         <div className="green-button-container3"
-          onClick={() =>
+          onClick={() => {
+            CashAttempt('');
             this.props.history.push(
               routes.playAssignment(brick, this.state.attempts[this.state.activeAttemptIndex].assignmentId)
             )
-          }
+          }}
         >
           <PlayGreenButton onClick={() => { }} />
         </div>
