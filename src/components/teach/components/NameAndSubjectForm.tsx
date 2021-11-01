@@ -167,7 +167,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
               </div>
             </div>}
         </div>
-        {checkAdmin(props.user.roles) ? <span className="class-creator">Created by {props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span> : ''}
+        {checkAdmin(props.user.roles) ? <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span> : ''}
         {isOpen &&
           <AssignBrickClass
             isOpen={isOpen}
