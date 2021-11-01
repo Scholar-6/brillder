@@ -37,6 +37,7 @@ interface BrickBlockProps {
 
   // student assignments page
   isAssignment?: boolean;
+  isCompleted?: boolean;
   assignmentStatus?: AssignmentBrickStatus;
   assignmentId?: number;
 
@@ -127,6 +128,10 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
       res = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
     } else {
       className = "smaller-blue";
+    }
+
+    if (props.isCompleted) {
+      className = 'green';
     }
 
     return (<div className="fwe1-16x9-deadline">

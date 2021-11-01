@@ -11,9 +11,11 @@ import map from "components/map";
 
 import "./AssignedBricks.scss";
 import { Subject } from "model/brick";
+import { Tab } from "./service";
 
 interface AssignedBricksProps {
   user: User;
+  tab: Tab;
   shown: boolean;
   subjects: Subject[];
   pageSize: number;
@@ -41,6 +43,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       assignmentId={item.assignmentId}
       history={this.props.history}
       color={color}
+      isCompleted={this.props.tab === Tab.Completed}
       teacher={item.teacher}
       circleIcon={circleIcon}
       deadline={item.deadline}

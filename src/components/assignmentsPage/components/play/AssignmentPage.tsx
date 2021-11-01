@@ -215,6 +215,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
             <div className="tab-content learn-tab-desktop">
               <AssignedBricks
                 user={this.props.user}
+                tab={this.state.activeTab}
                 shown={true}
                 subjects={this.state.subjects}
                 pageSize={this.state.pageSize}
