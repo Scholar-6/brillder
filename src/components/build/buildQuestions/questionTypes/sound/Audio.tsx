@@ -33,8 +33,6 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
 
     const { src } = this.props;
     const audio = new Audio(fileUrl(src ? src : ""));
-
-    audio.addEventListener("timeupdate", this.progress.bind(this), false);
     audio.addEventListener("canplaythrough", this.onLoad.bind(this), false);
 
     this.state = {
@@ -58,9 +56,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
   }
 
   setVolume(volume: number) {
-    const { audio } = this.state;
-    audio.volume = volume;
-    this.setState({ audio, volume });
+    this.setState({ volume });
   }
 
   toggleVolume() {
@@ -79,24 +75,14 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
     return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
   }
 
-  progress() {
-    const { audio } = this.state;
-    const { currentTime } = audio;
-    const rangeValue = ~~((100 / audio.duration) * currentTime);
-    this.setState({ currentTime: this.getTime(currentTime), rangeValue });
-  }
-
-  setRange(e: any) {
-    const { value } = e.target;
-    const { audio } = this.state;
-    const audioValue = (value * audio.duration) / 100;
-    audio.currentTime = audioValue;
-    this.setState({ rangeValue: value });
-    e.stopPropagation();
-    e.preventDefault();
+  /*eslint-disable-next-line*/
+  onChange(a: any, b: any) {
+    var time = this.getTime(a);
+    this.setState({currentTime: time});
   }
 
   render() {
+    var Waves = ReactWaves as any;
     return (
       <div>
         <div className="play-wave-container">
@@ -105,10 +91,10 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
           </div>
           {this.props.src &&
             <div className="relative-waves-container">
-              <ReactWaves
+              <Waves
                 audioFile={fileUrl(this.props.src)}
                 className={"react-waves"}
-                pos={10}
+                pos={0}
                 options={{
                   barGap: 4,
                   barWidth: 4,
@@ -123,9 +109,8 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
                   responsive: true,
                   waveColor: '#001c58',
                 }}
-                onPosChange={() => {
-                  console.log(44, this);
-                }}
+                /*eslint-disable-next-line*/
+                onPosChange={this.onChange.bind(this)}
                 volume={this.state.volume}
                 zoom={1}
                 playing={this.state.playing}
