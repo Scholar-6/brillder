@@ -4,6 +4,7 @@ import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDi
 import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import StudentInviteSuccessDialog from 'components/play/finalStep/dialogs/StudentInviteSuccessDialog';
+import { checkAdmin } from 'components/services/brickService';
 import { Subject } from 'model/brick';
 import { User } from 'model/user';
 import React from 'react';
@@ -166,6 +167,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
               </div>
             </div>}
         </div>
+        {checkAdmin(props.user.roles) ? <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span> : ''}
         {isOpen &&
           <AssignBrickClass
             isOpen={isOpen}

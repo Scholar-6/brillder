@@ -101,6 +101,11 @@
         color: var(--theme-dark-blue);
         background: var(--theme-yellow);
       }
+      > div.green {
+        font-size: 0.5vw;
+        color: var(--white);
+        background: var(--theme-green);
+      }
       > div.orange {
         color: var(--white);
         background: var(--theme-orange);

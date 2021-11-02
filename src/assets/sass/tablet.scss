@@ -768,3 +768,28 @@ html {
   font-size: 0.01vw;
   margin-left: 0.3vw;
 }
+
+// play
+.play-preview-panel blockquote {
+  font-size: 1.6vw !important;
+}
+
+.play-preview-pages .prep-button {
+  left: 0.9vw !important;
+
+  .highlight-circle {
+    position: absolute;
+    padding: 0 !important;
+    margin-top: 0 !important;
+    top: 0.25vw;
+    left: 0.1vw;
+    width: 3.5vw !important;
+    height: 3.5vw !important;
+    stroke: var(--theme-dark-blue) !important;
+    color: var(--theme-dark-blue) !important;
+  }
+}
+
+.play-preview-pages .sorted-row .real-live-page .introduction-page .introduction-info .intro-text-row {
+  padding-left: 4.5vw !important;
+}
