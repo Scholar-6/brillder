@@ -44,6 +44,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   const [isLoginWrong, setLoginWrong] = React.useState(false);
 
   const [emptyEmail, setEmptyEmail] = useState(false);
+  const [invalidEmail, setInvalidEmail] = useState(false);
   const [emailSended, setEmailSended] = useState(false);
   
   const validateForm = () => {
@@ -165,6 +166,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         setEmail={setEmail}
         setEmailSended={setEmailSended}
         setEmptyEmail={setEmptyEmail}
+        setInvalidEmail={setInvalidEmail}
         password={password}
         setPassword={setPassword}
         passwordHidden={passwordHidden}
@@ -215,7 +217,20 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
               style={{ minWidth: '30vw' }}
             />
           </ListItem>
-          <div></div>
+        </div>
+      </Dialog>
+      <Dialog open={invalidEmail} onClose={() => setInvalidEmail(false)} className="dialog-box forgot-password-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <div className="flex-center">
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 m-b-02" />
+          </div>
+          <ListItem>
+            <ListItemText
+              primary="This email appears to be invalid"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
         </div>
       </Dialog>
     </Grid>
