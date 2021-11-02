@@ -45,7 +45,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
     padding-left: 2vw;
     padding-right: 2vw;
     padding-bottom: 12vh;
-    height: 70vh;
+    height: calc(100vh - #{$home-button-size} - 2vw - 2vh - 5vw);
     .libary-container {
       background: var(--white);
       border-radius: 0.7vw;
@@ -66,7 +66,8 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
           .progress-value {
             border-radius: $base-radius;
             .rotated-text {
-              font-size: 1.2vw;
+              font-size: 1.5vw;
+              line-height: 0;
               color: var(--white);
             }
             .text-dark-gray {
@@ -83,7 +84,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
           width: $base-width;
           .rotated .rotated-text {
             height: $base-width;
-            line-height: 1.7;
+            line-height: 1.35;
           }
           .progress-value {
             width: $base-width;
@@ -94,7 +95,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
           width: $width;
           .rotated .rotated-text {
             height: $width;
-            line-height: 3.4;
+            line-height: 2.7;
           }
           .progress-value {
             width: $width
@@ -105,7 +106,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
           width: $width;
           .rotated .rotated-text {
             height: $width;
-            line-height: 6.4;
+            line-height: 5.5;
           }
           .progress-value {
             width: $width;
@@ -223,12 +224,12 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
   }
   
   .my-library-list {
-    height: 70vh;
+    height: calc(100vh - #{$home-button-size} - 2vw - 2vh - 5vw);
     padding-top: 2vh;
     padding-left: 1.5vw;
     margin-right: 2vw;
     .libary-container-1 {
-      height: calc(100% / 3);
+      height: calc((100%) / 3);
       margin-left: 0.5vw;
       margin-right: 0.5vw;
       .libary-container {
@@ -238,8 +239,8 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
         border-radius: 0.7vw;
         padding-left: 0.4vw;
         padding-right: 0.4vw;
-        margin-top: 1vh;
-        margin-bottom: 1vh;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
         padding-top: 1vh;
         padding-bottom: 1vh;
       }
