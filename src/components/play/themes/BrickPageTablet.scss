@@ -1151,6 +1151,15 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
                 background: var(--theme-orange);
               }
             }
+            &.almost-failed {
+              span {
+                color: var(--tab-gray);
+                background: var(--theme-yellow);
+              }
+              &:hover {
+                opacity: 0.5;
+              }
+            }
             &.current {
               span {
                 color: var(--white);
