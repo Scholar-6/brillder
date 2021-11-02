@@ -1,22 +1,12 @@
-import React, { Fragment } from 'react'
-import MediaQuery from 'react-responsive';
+import React from 'react'
 
 import './dragBox.scss';
 import { QuestionComponentTypeEnum } from 'model/question';
 
 
-const HoverBox = ({ marginTop, label }: any) => {
-  return (
-    <Fragment>
-      <MediaQuery minDeviceWidth={1280}>
-        <div className="drag-box-hover" style={{ marginTop }}>{label}</div>
-      </MediaQuery>
-      <MediaQuery maxDeviceWidth={1280}>
-        <div className="drag-box-hover" style={{ marginTop }}>{label}</div>
-      </MediaQuery>
-    </Fragment>
-  );
-}
+const HoverBox = ({ marginTop, label }: any) => (
+  <div className="drag-box-hover" style={{ marginTop }}>{label}</div>
+);
 
 export interface BoxProps {
   locked: boolean;
