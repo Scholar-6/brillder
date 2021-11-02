@@ -805,7 +805,9 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             valueFile: a.valueFile,
             answerType: a.answerType,
             imageSource: a.imageSource,
-            imageCaption: a.imageCaption
+            imageCaption: a.imageCaption,
+            valueSoundFile: a.valueSoundFile,
+            valueSoundCaption: a.valueSoundCaption
           }));
           c.choices = shuffle(choices);
         }
