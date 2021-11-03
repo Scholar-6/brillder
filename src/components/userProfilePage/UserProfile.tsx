@@ -394,12 +394,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   </div>
                 </div>
                 <div className="profile-roles-container">
+                  {this.state.user.rolePreference &&
                   <RolesBox
                     roles={this.state.roles}
                     userRoles={this.state.user.roles}
-                    rolePreference={this.props.user.rolePreference?.roleId}
+                    rolePreference={this.state.user.rolePreference?.roleId}
                     toggleRole={this.toggleRole.bind(this)}
-                  />
+                  />}
                 </div>
               </div>
               <div style={{ display: 'flex' }}>
