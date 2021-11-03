@@ -19,6 +19,7 @@ export const getUserProfile = (user: User): UserProfile => {
     lastName: user.lastName ? user.lastName : "",
     subjects: user.subjects ? user.subjects : [],
     profileImage: user.profileImage ? user.profileImage : "",
+    rolePreference: user.rolePreference,
     status: user.status,
     tutorialPassed: false,
     bio: user.bio ? user.bio : '',

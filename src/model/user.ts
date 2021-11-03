@@ -46,6 +46,7 @@ export interface User extends UserBase {
 
 export interface UserProfile extends UserBase {
   password: string;
+  rolePreference?: UserRole;
   roles: number[];
 }
 
