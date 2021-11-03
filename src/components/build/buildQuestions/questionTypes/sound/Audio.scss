@@ -4,6 +4,7 @@
 
 .play-wave-container {
   display: flex;
+  padding-top: 0.4vw;
 
   .custom-audio-controls {
     width: 18% !important;
@@ -20,6 +21,7 @@
 
   .absolute-end-time,
   .absolute-start-time {
+    font-size: 1vw;
     color: var(--theme-dark-blue);
     position: absolute;
     top: 2.7vw;
@@ -36,6 +38,7 @@
   .play-icon-container-d1 {
     display: flex;
     align-items: center;
+    padding-left: 0.8vw;
 
     .play-icon-d1 {
       color: var(--theme-dark-blue);
@@ -93,6 +96,7 @@
 
   input[type='range'] {
     overflow: hidden;
+    border-radius: 0.25vw;
     margin-bottom: 0;
     -webkit-appearance: none;
     background-color: #9a905d;
