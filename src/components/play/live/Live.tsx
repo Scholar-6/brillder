@@ -445,7 +445,7 @@ const LivePage: React.FC<LivePageProps> = ({
           }
         }}>
           <svg className="highlight-circle dashed-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
-            <g id="Ellipse_72" data-name="Ellipse 72" fill="none" stroke="inherit" stroke-linecap="round" stroke-width="3" stroke-dasharray="8 8">
+            <g id="Ellipse_72" data-name="Ellipse 72" fill="none" stroke="inherit" strokeLinecap="round" strokeWidth="3" strokeDasharray="8 8">
               <circle cx="36" cy="36" r="36" stroke="none" />
               <circle cx="36" cy="36" r="34.5" fill="none" />
             </g>
