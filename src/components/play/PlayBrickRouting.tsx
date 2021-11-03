@@ -644,7 +644,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={history}
             brick={brick}
             updateAttempts={updateReviewAttempts}
-            attempts={attempts}
+            attempts={reviewAttempts}
             finishBrick={finishReview}
             endTime={reviewEndTime}
             setEndTime={time => {
