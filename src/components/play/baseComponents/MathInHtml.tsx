@@ -52,13 +52,13 @@ class MathInHtml extends Component<MathHtmlProps> {
         if (isPhone() && isBlockqouteNoBreaks(el)) {
           if (prev && isBlockqouteNoBreaks(prev)) {
             prev = el;
-            return <div dangerouslySetInnerHTML={{__html: el }} />
+            return <div key={i} dangerouslySetInnerHTML={{__html: el }} />
           }
 
           prev = el;
 
           return (
-            <div>
+            <div key={i}>
               <div className="scroll-sideways-hint">
                 <SpriteIcon name="flaticon-swipe" />
                 <div>Scroll sideways on each line that overflows</div>
@@ -70,7 +70,7 @@ class MathInHtml extends Component<MathHtmlProps> {
 
         prev = el;
 
-        return <HtmlWithSpaces index={i} value={el} className={this.props.className} />;
+        return <HtmlWithSpaces key={i} index={i} value={el} className={this.props.className} />;
       })
     );
   }

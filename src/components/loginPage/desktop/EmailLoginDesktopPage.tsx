@@ -176,7 +176,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             resetPassword={async () => {
               try {
                 if (email) {
-                  if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
+                  if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/.test(email)) {
                     try {
                       await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true });
                     } catch { }

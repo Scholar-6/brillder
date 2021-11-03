@@ -74,7 +74,7 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component, refs }) => 
             prev = el;
   
             return (
-              <div>
+              <div key={i}>
                 <div className="scroll-sideways-hint">
                   <SpriteIcon name="flaticon-swipe" />
                   <div>Scroll sideways on each line that overflows</div>
@@ -85,7 +85,7 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component, refs }) => 
           }
 
           prev = el;
-          return <HtmlWithSpaces index={i} value={el} />;
+          return <HtmlWithSpaces key={i} index={i} value={el} />;
         })
       }
     </div>

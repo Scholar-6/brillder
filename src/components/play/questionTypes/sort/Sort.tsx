@@ -337,6 +337,8 @@ class Sort extends CompComponent<SortProps, SortState> {
 
     const haveImage = this.checkImages();
 
+    const ReactSortableV1 = ReactSortable as any;
+
     return (
       <div className="question-unique-play sort-play">
         <p>
@@ -369,18 +371,20 @@ class Sort extends CompComponent<SortProps, SortState> {
                       })}
                     </div>
                     :
-                    <ReactSortable
+                    <ReactSortableV1
                       list={cat.choices as any[]}
                       animation={150}
+                      delayOnTouchStart={true}
+                      delay={50}
                       className={`${i === this.state.userCats.length - 1 ? 'unsorted' : unsorted.choices.length === 0 ? '' : 'category'} sortable-list`}
                       group={{ name: "cloning-group-name" }}
-                      setList={(list) => this.updateCategory(list, i)}
+                      setList={(list: any[]) => this.updateCategory(list, i)}
                     >
                       {cat.choices.map((choice, i) => {
                         incrementCount();
                         return this.renderChoice(choice, i, count);
                       })}
-                    </ReactSortable>
+                    </ReactSortableV1>
                 )}
               </div>
             </div>

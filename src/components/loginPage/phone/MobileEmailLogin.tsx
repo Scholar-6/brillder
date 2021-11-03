@@ -99,7 +99,7 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps, State> {
               <div className="reset-password-link" onClick={async () => {
                 try {
                   if (this.props.email) {
-                    if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.props.email)) {
+                    if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/.test(this.props.email)) {
                       try {
                         await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${this.props.email}`, {}, { withCredentials: true });
                       } catch { }

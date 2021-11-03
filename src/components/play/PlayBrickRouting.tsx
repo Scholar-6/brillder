@@ -644,7 +644,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={history}
             brick={brick}
             updateAttempts={updateReviewAttempts}
-            attempts={attempts}
+            attempts={reviewAttempts}
             finishBrick={finishReview}
             endTime={reviewEndTime}
             setEndTime={time => {
@@ -805,7 +805,9 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             valueFile: a.valueFile,
             answerType: a.answerType,
             imageSource: a.imageSource,
-            imageCaption: a.imageCaption
+            imageCaption: a.imageCaption,
+            valueSoundFile: a.valueSoundFile,
+            valueSoundCaption: a.valueSoundCaption
           }));
           c.choices = shuffle(choices);
         }
