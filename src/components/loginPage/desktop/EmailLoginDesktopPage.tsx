@@ -3,6 +3,8 @@ import { Avatar, Dialog, ListItem, ListItemAvatar, ListItemText, Snackbar } from
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
+//@ts-ignore
+import isEmail from 'validator/lib/isEmail';
 
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
@@ -176,7 +178,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             resetPassword={async () => {
               try {
                 if (email) {
-                  if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/.test(email)) {
+                  if (isEmail(email)) {
                     try {
                       await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true });
                     } catch { }
