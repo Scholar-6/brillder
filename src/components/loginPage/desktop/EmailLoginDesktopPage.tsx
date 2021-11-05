@@ -17,6 +17,7 @@ import TermsLink from "components/baseComponents/TermsLink";
 import { trackSignUp } from "services/matomo";
 import map from "components/map";
 import { getTerms } from "services/axios/terms";
+import validator from 'validator';
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -176,7 +177,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             resetPassword={async () => {
               try {
                 if (email) {
-                  if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/.test(email)) {
+                  if (validator.isEmail(email)) {
                     try {
                       await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${email}`, {}, { withCredentials: true });
                     } catch { }
