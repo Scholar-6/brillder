@@ -294,7 +294,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
           history={this.props.history}
           selfPublish={selfPublish}
           bricks={bricks}
-          isEmpty={this.props.isFilterEmpty}
+          isEmpty={isEmpty || this.props.isFilterEmpty}
           filters={this.state.filters}
           setFilters={this.setFilters.bind(this)}
           filterBySubject={this.filterBySubject.bind(this)}
