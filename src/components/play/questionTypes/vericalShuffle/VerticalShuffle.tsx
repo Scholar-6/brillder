@@ -117,7 +117,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   checkAttemptAnswer(index: number) {
-    if (this.props.attempt && this.props.attempt.answer) {
+    if (this.props.isReview && this.props.attempt && this.props.attempt === this.props.liveAttempt) {
       let answer = this.props.attempt.answer[index];
       if (answer.index - index === 0) {
         return true;
