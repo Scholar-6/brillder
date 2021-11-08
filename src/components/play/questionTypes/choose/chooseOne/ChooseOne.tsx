@@ -44,7 +44,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   }
 
   getActiveItem(props: ChooseOneProps) {
-    let activeItem = { shuffleIndex: -1, realIndex: -1};
+    let activeItem = { shuffleIndex: -1, realIndex: -1 };
     if (props.answers?.shuffleIndex >= 0) {
       activeItem = props.answers;
     } else if (props.attempt?.answer?.shuffleIndex >= 0) {
@@ -54,7 +54,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   }
 
   getBookActiveItem(props: ChooseOneProps) {
-    let activeItem = { shuffleIndex: -1, realIndex: -1};
+    let activeItem = { shuffleIndex: -1, realIndex: -1 };
     if (props.attempt?.answer?.shuffleIndex >= 0) {
       activeItem = props.attempt.answer;
     }
@@ -65,13 +65,13 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProp.answers) {
         const activeItem = this.getBookActiveItem(this.props);
-        this.setState({activeItem});
+        this.setState({ activeItem });
       }
     }
   }
 
   setActiveItem(realIndex: number, activeItem: number) {
-    this.setState({ activeItem: { realIndex, shuffleIndex: activeItem} });
+    this.setState({ activeItem: { realIndex, shuffleIndex: activeItem } });
     if (this.props.onAttempted) {
       this.props.onAttempted();
     }
@@ -90,7 +90,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       />;
     } else if (answer.answerType === QuestionValueType.Sound) {
       return (
-        <div style={{width: '100%'}}>
+        <div style={{ width: '100%' }}>
           <Audio src={answer.soundFile} />
           <div>{answer.soundCaption ? answer.soundCaption : 'Click to select'}</div>
         </div>
@@ -110,9 +110,19 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   }
 
   isResultCorrect(index: number, choice: ChooseOneChoice) {
-    if (this.props.attempt?.answer) {
-      if (choice.checked && index === this.props.attempt?.answer.shuffleIndex) {
-        return true;
+    if (this.props.isBookPreview) {
+      if (this.props.attempt?.answer) {
+        if (choice.checked && index === this.props.attempt?.answer.shuffleIndex) {
+          return true;
+        }
+      }
+    }
+
+    if (this.props.isReview && this.props.attempt === this.props.liveAttempt) {
+      if (this.props.attempt?.answer) {
+        if (choice.checked && index === this.props.attempt?.answer.shuffleIndex) {
+          return true;
+        }
       }
     }
     return false;
@@ -172,16 +182,18 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     // if review show correct or wrong else just make answers active
     else if (attempt && index === activeItem.shuffleIndex) {
       let { answer } = attempt;
-      if (answer.shuffleIndex >= 0 && answer.shuffleIndex === index) {
-        if (this.props.isReview) {
-          if (isCorrect) {
-            className += " correct";
-          } else if (isCorrect === false) {
-            className += " wrong";
+      if (this.props.isReview && this.props.attempt === this.props.liveAttempt) {
+        if (answer.shuffleIndex >= 0 && answer.shuffleIndex === index) {
+          if (this.props.isReview) {
+            if (isCorrect) {
+              className += " correct";
+            } else if (isCorrect === false) {
+              className += " wrong";
+            }
           }
+        } else {
+          className += " active";
         }
-      } else {
-        className += " active";
       }
     }
 
