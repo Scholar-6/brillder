@@ -92,7 +92,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   }
 
   checkChoice(choice: ChooseOneAnswer, index: number) {
-    if (this.props.attempt && this.props.isReview) {
+    if (this.props.attempt && this.props.isReview && this.props.attempt === this.props.liveAttempt) {
       const { answer } = this.props.attempt;
       const found = answer.find(a => a.shuffleIndex === index);
       if (found !== undefined && found) {
