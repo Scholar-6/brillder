@@ -1,7 +1,9 @@
-export const getValidationClassName = (isCorrect: boolean) => {
+export const getValidationClassName = (isCorrect: boolean | null) => {
   if (isCorrect) {
     return " correct";
-  } else {
+  } else if (isCorrect === false) {
     return " wrong";
+  } else {
+    return '';
   }
 }
