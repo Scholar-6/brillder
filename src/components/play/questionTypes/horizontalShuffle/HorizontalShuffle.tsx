@@ -146,14 +146,14 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
               isPhonePreview={this.props.isPreview}
               isReview={this.props.isReview}
               index={i}
-              isCorrect={isCorrect}
+              isCorrect={isCorrect || false}
               hint={this.props.question.hint}
             /> : this.props.isReview &&
             <ReviewEachHint
               isPhonePreview={this.props.isPreview}
               isReview={this.props.isReview}
               index={answer.index}
-              isCorrect={isCorrect}
+              isCorrect={isCorrect || false}
               hint={this.props.question.hint}
             />
           }
