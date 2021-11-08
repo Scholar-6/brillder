@@ -114,10 +114,11 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
           </Collapse>}
           {props.addAnnotationReply && <Collapse in={!focused}>
             <div className="add-reply inactive">
+            {annotation.children && annotation.children.length > 0 &&
               <div className="grey-circle">
                 <div className="grey-background"/>
-                <SpriteIcon name="plus" className="reply-icon" />
-              </div>
+                 <SpriteIcon name="plus" className="reply-icon" />
+              </div>}
               <span>{annotation.children?.length ?? 0} {annotation.children?.length === 1 ? "Reply" : "Replies"}</span>
             </div>
           </Collapse>}
