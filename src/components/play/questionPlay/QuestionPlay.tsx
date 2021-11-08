@@ -26,6 +26,7 @@ import { PlayMode } from '../model';
 
 interface QuestionProps {
   isTimeover?: boolean;
+  liveAttempt?: any;
   attempt?: ComponentAttempt<any>;
   question: Question;
   answers: any;
@@ -136,6 +137,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
           ref={this.state.answerRef as React.RefObject<any>}
           key={index}
           isTimeover={this.props.isTimeover}
+          liveAttempt={this.props.liveAttempt}
           attempt={this.props.attempt}
           answers={this.props.answers}
           isPreview={this.props.isPreview}
