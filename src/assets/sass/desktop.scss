@@ -955,3 +955,7 @@
     overflow: visible !important;
   }
 }
+
+.bold-on-hover:hover {
+  font-family: $font-family-bold;
+}

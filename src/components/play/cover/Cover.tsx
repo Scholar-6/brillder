@@ -41,6 +41,7 @@ const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 
 const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [bioOpen, setBio] = React.useState(false);
+  const [editorBioOpen, setEditorBio] = React.useState(false);
 
   const [playClicked, setClickPlay] = React.useState(false);
   const [unauthPopupShown, setUnauthPopupShown] = React.useState(false)
@@ -156,7 +157,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
               <div dangerouslySetInnerHTML={{ __html: brick.title }} />
             </div>
           </div>
-          <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
+          <div className="author-row">{brick.author.firstName} {brick.author.lastName} {brick.editors && brick.editors.length > 0 && `, ${brick.editors[0].firstName} ${brick.editors[0].lastName} (Editor)`}</div>
           <div className="keywords-row">
             <KeyWordsPreview keywords={brick.keywords} />
           </div>
@@ -295,7 +296,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   {brick.adaptedFrom && !brick.isCore && <div className="adapted-text">ADAPTED</div>}
                   {brick.adaptedFrom && !brick.isCore && <SpriteIcon name="copy" />}<DynamicFont content={stripHtml(brick.title)} />
                 </div>
-                <CoverAuthorRow brick={brick} setBio={setBio} />
+                <CoverAuthorRow brick={brick} setBio={setBio} setEditorBio={setEditorBio} />
                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
                   user={props.user}
                   brick={brick}
@@ -372,6 +373,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           </Grid>
         </div>
         <CoverBioDialog isOpen={bioOpen} user={brick.author} close={() => setBio(false)} />
+        {brick.editors && brick.editors.length > 0 && 
+          <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
+        }
       </div>
       <UnauthorizedUserDialogV2
         history={props.history}
