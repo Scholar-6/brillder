@@ -56,6 +56,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
             <CoverAuthorRow
               brick={brick}
               setBio={() => { }}
+              setEditorBio={()=>{}}
             />
             <HoverHelp>
               This is taken from the information you provide in your profile
