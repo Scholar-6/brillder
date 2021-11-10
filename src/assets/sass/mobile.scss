@@ -1126,9 +1126,17 @@
     }
   }
   .i-image-footer {
-    height: 5vw !important;
+    height: 9vw !important;
     .file-name {
       font-size: 3.8vw !important;
+    }
+  }
+  .add-image-button {
+    width: 4.5vw !important;
+    height: 4.5vw !important;
+    svg {
+      width: 4vw !important;
+      height: 4vw !important;
     }
   }
   .MuiPaper-root.MuiDialog-paper .upload-button-container .upload-button {
