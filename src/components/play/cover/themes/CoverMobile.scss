@@ -71,11 +71,25 @@
   }
 
   .author-row {
+    display: inline-flex;
+    align-items: center;
     margin-bottom: 1vh;
     padding-right: 2vw;
-    font-size: 6vw;
+    font-size: 5vw;
     @extend %ellipsis;
     text-transform: capitalize;
+    svg {
+      width: 4vw;
+      height: 4vw;
+      margin-right: 1vw;
+    }
+    div {
+      display: inline-flex;
+      align-items: center;
+      svg {
+        margin-left: 1vw;
+      }
+    }
   }
 
   .keywords-row {
