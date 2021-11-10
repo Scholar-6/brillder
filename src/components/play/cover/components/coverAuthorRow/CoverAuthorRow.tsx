@@ -1,3 +1,4 @@
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Brick } from "model/brick";
 import React from "react";
 import { isMobile } from "react-device-detect";
@@ -30,12 +31,14 @@ const CoverAuthorRow: React.FC<Props> = ({ brick, setBio, setEditorBio }) => {
         <DesktopTheme />
       )}
       <div className="author-row cover-author-row">
-        <span>
-          <span onClick={() => setBio(true)} className="pointer bold-on-hover">{brick.author.firstName} {brick.author.lastName}</span>{renderEditor()}
-        </span>
-        <div className="cover-bio" onClick={() => setBio(true)}>
-          <div className="cover-bio-content">Author Profile</div>
-          <div className="cover-bio-background" />
+        <div className="relative">
+          <span>
+            <div className="background" />
+            <SpriteIcon name="feather-feather" />
+            <span className="absolute-text">
+              <span onClick={() => setBio(true)} className="pointer bold-on-hover">{brick.author.firstName} {brick.author.lastName}</span>{renderEditor()}
+            </span>
+          </span>
         </div>
       </div>
     </React.Suspense>
