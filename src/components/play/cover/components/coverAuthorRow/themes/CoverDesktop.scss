@@ -31,19 +31,32 @@
   }
 
   svg {
-    z-index: 2;
-    position: absolute;
-    margin-top: 0.4vw;
-    left: 0vw;
+    padding-left: 0.5vw;
     width: 1.3vw;
     height: 1.3vw;
+    padding-right: 0.5vw;
   }
 
   .absolute-text {
     position: absolute;
-    left: 2vw;
-    width: 13vw;
+    left: 0;
+    width: 30vw;
     z-index: 2;
+    display: inline-flex;
+    div {
+      display: flex;
+    }
+    .bold-on-hover {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      padding-right: 0.3vw;
+      border-radius: 3vw;
+      &:hover {
+        background: var(--tab-gray);
+      }
+    }
   }
 
   .cover-bio {

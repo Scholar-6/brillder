@@ -1092,3 +1092,53 @@
 .header-btn {
   cursor: initial !important;
 }
+
+
+// popup cover
+.image-dialog-container {
+  .dialog-header.image-dialog {
+    max-width: 100% !important;
+    font-size: 4vw !important;
+    input {
+      font-size: 4vw !important;
+    }
+
+    svg {
+      width: 6vw;
+      height: 6vw;
+    }
+    .MuiButtonBase-root {
+      display: block;
+    }
+    .permision-buttons {
+      > div {
+        display: flex;
+        align-items: flex-start;
+        div {
+        width: 7vw;
+        }
+      }
+    }
+    .MuiButtonBase-root.MuiIconButton-root.MuiCheckbox-root .MuiSvgIcon-root,
+    .MuiButtonBase-root.MuiIconButton-root.MuiCheckbox-root input {
+      width: 5vw;
+      height: 5vw;
+    }
+  }
+  .i-image-footer {
+    height: 5vw !important;
+    .file-name {
+      font-size: 3.8vw !important;
+    }
+  }
+  .MuiPaper-root.MuiDialog-paper .upload-button-container .upload-button {
+    width: 7vw !important;
+    height: 7vw !important;
+    .background {
+      display: none !important;
+    }
+    .css-custom-tooltip {
+      display: none !important;
+    }
+  }
+}
