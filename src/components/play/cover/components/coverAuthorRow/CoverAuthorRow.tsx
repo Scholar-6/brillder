@@ -17,7 +17,10 @@ const DesktopTheme = React.lazy(() => import("./themes/CoverDesktopTheme"));
 const CoverAuthorRow: React.FC<Props> = ({ brick, setBio, setEditorBio }) => {
   const renderEditor = () => {
     if (brick.editors && brick.editors.length > 0) {
-      return <span><span>, </span><span className="pointer bold-on-hover" onClick={() => setEditorBio(true)}>{brick.editors[0].firstName} {brick.editors[0].lastName} (Editor)</span></span>
+      return <div><div>, </div><div className="pointer bold-on-hover" onClick={() => setEditorBio(true)}>
+        <SpriteIcon name="feather-edit-3" />
+        {brick.editors[0].firstName} {brick.editors[0].lastName} (Editor)</div>
+      </div>
     }
     return '';
   }
@@ -33,11 +36,15 @@ const CoverAuthorRow: React.FC<Props> = ({ brick, setBio, setEditorBio }) => {
       <div className="author-row cover-author-row">
         <div className="relative">
           <span>
-            <div className="background" />
-            <SpriteIcon name="feather-feather" />
-            <span className="absolute-text">
-              <span onClick={() => setBio(true)} className="pointer bold-on-hover">{brick.author.firstName} {brick.author.lastName}</span>{renderEditor()}
-            </span>
+            <div className="absolute-text">
+              <div onClick={() => setBio(true)} className="pointer bold-on-hover">
+                <SpriteIcon name="feather-feather" />
+                <div>
+                  {brick.author.firstName} {brick.author.lastName}
+                </div>
+              </div>
+                {renderEditor()}
+            </div>
           </span>
         </div>
       </div>
