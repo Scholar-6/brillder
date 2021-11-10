@@ -11,6 +11,9 @@ $base-build-border: $editor-radius;
 }
 
 .investigation-build-page {
+  .key-word {
+    text-transform: capitalize !important;
+  }
   height: 100vh;
   overflow: hidden;
 
