@@ -157,7 +157,11 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
               <div dangerouslySetInnerHTML={{ __html: brick.title }} />
             </div>
           </div>
-          <div className="author-row">{brick.author.firstName} {brick.author.lastName} {brick.editors && brick.editors.length > 0 && `, ${brick.editors[0].firstName} ${brick.editors[0].lastName} (Editor)`}</div>
+          <div className="author-row">
+            <SpriteIcon name="feather-feather"/>
+            {brick.author.firstName} {brick.author.lastName}
+            {brick.editors && brick.editors.length > 0 && <div>, <SpriteIcon name="feather-edit-3" />{brick.editors[0].firstName} {brick.editors[0].lastName} (Editor)</div>}
+          </div>
           <div className="keywords-row">
             <KeyWordsPreview keywords={brick.keywords} />
           </div>
