@@ -130,6 +130,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       stepsEnabled: false,
       steps: [{
         element: '.archive-toggle-button',
+        position: 'left',
         intro: `<p>Find your archived assignments here</p>`,
       }],
 
