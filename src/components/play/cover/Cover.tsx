@@ -154,7 +154,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             {brick.adaptedFrom && <div className="adapted-text">ADAPTED</div>}
             <div>
               {brick.adaptedFrom && <SpriteIcon name="copy" />}
-              <div dangerouslySetInnerHTML={{ __html: brick.title }} />
+              <h1 dangerouslySetInnerHTML={{ __html: brick.title }} />
             </div>
           </div>
           <div className="author-row">
@@ -296,10 +296,10 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <Grid item sm={8} xs={12}>
               <div className="introduction-page">
                 {renderFirstRow()}
-                <div className="brick-title q-brick-title dynamic-title">
+                <h1 className="brick-title q-brick-title dynamic-title">
                   {brick.adaptedFrom && !brick.isCore && <div className="adapted-text">ADAPTED</div>}
                   {brick.adaptedFrom && !brick.isCore && <SpriteIcon name="copy" />}<DynamicFont content={stripHtml(brick.title)} />
-                </div>
+                </h1>
                 <CoverAuthorRow brick={brick} setBio={setBio} setEditorBio={setEditorBio} />
                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
                   user={props.user}
