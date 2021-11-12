@@ -22,7 +22,7 @@ const CoverBioDialog: React.FC<SubjectDialogProps> = ({ isOpen, user, close }) =
           <div className="b-name">
             {user.firstName} {user.lastName}
           </div>
-          {/*<div className="btn btn-md b-green text-white pointer">See all of {user.firstName}'s bricks</div>*/}
+          <div className="btn btn-md b-green text-white pointer">See all of {user.firstName}'s bricks</div>
         </div>
         {user.bio && <div className="b-bio">{user.bio}</div>}
       </div>
