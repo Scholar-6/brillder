@@ -8,17 +8,26 @@ $margin-left: 21%;
   background: var(--off-white);
   $top-space: 15vh;
   width: calc(100% - 65%);
+  position: relative;
   .annotation-title {
     position: absolute;
+    width: 100%;
     top: 2vh;
-    margin-left: 1rem !important;
+    text-align: center;
     font-size: 1.5vw;
+  }
+  .toggle-container {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: calc(2vh + 2vw + 1vh);
   }
   .comment-text-container {
     margin-left: 1rem !important;
     margin-right: 1rem !important;
-    top: 7vh;
-    width: calc(100% - 65% - 2rem) !important;
+    top: calc(2vh + 2vw + 1vh + 2.5vw + 1.5vh);
+    width: calc(100% - 2rem) !important;
   }
   .annotations-panel {
     width: 100% !important;

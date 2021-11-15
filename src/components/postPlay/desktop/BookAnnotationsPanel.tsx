@@ -11,6 +11,7 @@ import BookAnnotation from './BookAnnotation';
 import { HighlightRef } from 'components/play/baseComponents/HighlightHtml';
 import { useHistory } from 'react-router-dom';
 import NewCommentPanel from 'components/baseComponents/comments/NewCommentPanel';
+import CommentTypeToggle from 'components/baseComponents/CommentTypeToggle';
 
 interface BookAnnotationsPanelProps {
   currentUser: User;
@@ -26,6 +27,8 @@ interface BookAnnotationsPanelProps {
 
 const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
   const history = useHistory();
+
+  const [mode, setMode] = React.useState(null as any);
 
   const location = React.useMemo(() => {
     switch (props.state) {
@@ -163,14 +166,26 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     annotation => annotation.location === location && (annotation.location !== AnnotationLocation.Question || annotation.questionIndex === props.questionIndex)
   );
 
-  if (!props.attempt || !filteredAnnotations?.length) {
-    return <div className="right-part empty" onClick={addAnnotation}>
-      <div className="gg-background" />
-      <div className="grey-circle" onMouseDown={e => e.preventDefault()} >
-        <SpriteIcon name="pen-tool" className="pen-icon" />
+  if (!props.attempt || mode === null) {
+    return <div className="right-part empty">
+      <div className="first-button" onClick={() => setMode(1)}>
+        <div className="gg-background" />
+        <div className="grey-circle" onMouseDown={e => e.preventDefault()} >
+          <SpriteIcon name="pen-tool" className="pen-icon" />
+        </div>
+        <div className="add-annotation-text">
+          <span>Select text on the left and click<br /> here to add an annotation</span>
+        </div>
       </div>
-      <div className="add-annotation-text">
-        <span>+ Add Annotation</span>
+      <div className="second-button" onClick={() => setMode(2)}>
+        <div className="gg-background" />
+        <div className="grey-circle" onMouseDown={e => e.preventDefault()} >
+          <SpriteIcon name="message-square" className="pen-icon" />
+          <SpriteIcon name="plus-line-custom" className="pen-icon plus" />
+        </div>
+        <div className="add-annotation-text">
+          <span>Add Annotation</span>
+        </div>
       </div>
     </div>
   }
@@ -178,6 +193,9 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
   return (
     <div className="annotations-no-scroll-panel">
       <div className="annotation-title bold">Notes and Comments</div>
+      <div className="toggle-container">
+        <CommentTypeToggle mode={mode} onSwitch={() => setMode(!mode)} />
+      </div>
       <NewCommentPanel
         currentBrick={{ id: -1 } as any}
         currentLocation={-1}
