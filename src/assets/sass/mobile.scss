@@ -21,6 +21,13 @@
   height: 12.5vw !important;
 }
 
+@media (orientation: landscape) {
+  #launcher {
+    width: 5vw !important;
+    height: 5vw !important;
+  }
+}
+
 // #2870 unauthorized dashbaord scrolling fix
 .unauthrozied-container {
   height: 100%;
@@ -1148,5 +1155,47 @@
     .css-custom-tooltip {
       display: none !important;
     }
+  }
+}
+
+
+.dialog-box .dialog-header.bio-popup {
+  display: block;
+  .b-image-container {
+    min-width: 9vw;
+    display: block;
+    .b-image {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0.4vw;
+      svg {
+        height: 3vw;
+        width: 3vw;
+        background: var(--tab-gray);
+        padding: 1vw;
+        border-radius: 50%;
+      }
+      img, svg {
+        height: 15vw;
+        width: 15vw;
+        border-radius: 50%;
+      }
+    }
+    .b-name {
+      text-align: center;
+    }
+    .btn {
+      margin-left: 20%;
+      width: 60% !important;
+      text-align: center;
+      letter-spacing: 0;
+    }
+  }
+  .b-bio {
+    margin-top: 1vh;
+    max-width: 100%;
+    font-size: 3.6vw !important;
+    font-family: $font-family-regular !important;
+    margin-left: 1.5vw;
   }
 }
