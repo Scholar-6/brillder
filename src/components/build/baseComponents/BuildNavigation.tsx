@@ -15,6 +15,7 @@ import { User } from "model/user";
 import routes from "components/play/routes";
 import CopyBrickButton from "./CopyBrickButton";
 import { Question } from "model/question";
+import InviteEditorButton from "./InviteEditorButton";
 
 
 interface NavigationProps {
@@ -59,6 +60,15 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
       disabled={disabled} history={this.props.history} brick={brick}
       user={this.props.user}
     />;
+  }
+
+  renderInviteEditorButton() {
+    let disabled = false;
+    if (!this.props.isValid) {
+      disabled = true;
+    }
+
+    return <InviteEditorButton disabled={disabled} isAuthor={this.props.isAuthor} history={this.props.history} brick={this.props.brick} />
   }
 
   renderReturnToEditorButton() {
@@ -177,6 +187,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         />
         {this.props.brick.isCore ?
           <div className="build-navigation-buttons">
+            {(this.props.isAuthor || this.props.isAdmin) && this.renderInviteEditorButton()}
             {(this.props.isEditor || this.props.isAdmin) && this.renderReturnToAuthorButton()}
             {(this.props.isPublisher || this.props.isAuthor) && this.renderReturnToEditorButton()}
             {(this.props.isEditor || this.props.isAdmin || this.props.isPublisher) && this.renderSendToPublisherButton()}
