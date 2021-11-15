@@ -353,6 +353,12 @@ $base-build-border: $editor-radius;
       width: 100%;
     }
 
+    &.invite-editor-button svg {
+      margin-left: 8%;
+      width: 90%;
+      height: 90%;
+    }
+
     &.disabled {
       cursor: inherit;
       background: var(--theme-light-blue) !important;

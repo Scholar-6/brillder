@@ -34,7 +34,7 @@ const InviteEditorButton: React.FC<ButtonProps> = props => {
     name: ''
   } as InviteResult);
 
-  let className = 'return-to-editor-button';
+  let className = 'return-to-editor-button invite-editor-button';
   if (props.disabled) {
     className += ' disabled';
   } else {
@@ -50,7 +50,7 @@ const InviteEditorButton: React.FC<ButtonProps> = props => {
         onClick={() => setOpen(true)}
       >
         <SpriteIcon name="user-plus" />
-        {hovered && <div className="custom-tooltip">Invite Editor</div>}
+        {hovered && <div className="custom-tooltip">Invite an Editor</div>}
       </div>
       <InviteEditorDialog
         canEdit={true} brick={props.brick} isOpen={inviteOpen} hideAccess={true}
