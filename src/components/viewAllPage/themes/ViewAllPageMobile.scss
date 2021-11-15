@@ -823,6 +823,9 @@
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+        br {
+          display: none;
+        }
       }
     }
 
