@@ -28,7 +28,12 @@
       text-align: center;
     }
     .btn {
+      background: var(--theme-dark-blue);
+      margin-top: 1vw;
       letter-spacing: 0;
+      &:hover {
+        background: var(--theme-green);
+      }
     }
   }
   .b-bio {
