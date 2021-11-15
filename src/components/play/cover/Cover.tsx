@@ -158,10 +158,14 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
           </div>
           <div className="author-row">
-            <SpriteIcon name="feather-feather"/>
+            <SpriteIcon name="feather-feather" />
             {brick.author.firstName} {brick.author.lastName}
             {brick.editors && brick.editors.length > 0 && <div>, <SpriteIcon name="feather-edit-3" />{brick.editors[0].firstName} {brick.editors[0].lastName} (Editor)</div>}
           </div>
+          {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
+            user={props.user}
+            brick={brick}
+          />}
           <div className="keywords-row">
             <KeyWordsPreview keywords={brick.keywords} />
           </div>
@@ -377,7 +381,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           </Grid>
         </div>
         <CoverBioDialog isOpen={bioOpen} user={brick.author} close={() => setBio(false)} />
-        {brick.editors && brick.editors.length > 0 && 
+        {brick.editors && brick.editors.length > 0 &&
           <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
         }
       </div>
