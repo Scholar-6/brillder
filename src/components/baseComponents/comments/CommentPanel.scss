@@ -32,7 +32,7 @@ $margin-left: 21%;
   .annotations-panel {
     width: 100% !important;
     height: calc(100% - #{$top-space}) !important;
-    margin-top: $top-space;
+    margin-top: calc(2vh + 2vw + 1vh + 2.5vw + 4vh + 1.6vh + 1vh);
   }
 }
 
