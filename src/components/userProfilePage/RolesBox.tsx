@@ -55,7 +55,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
     const { rolePreference } = this.state;
     return (
       <div className="flex-center roles-box">
-        <p className="fixed-label">User Types</p>
+        <p className="fixed-label">User Type</p>
         <div className="first-column">
           <Grid item>
             <FormControlLabel

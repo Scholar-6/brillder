@@ -12,6 +12,33 @@
   border: 0.25vw solid var(--solitude-light);
   box-shadow: $base-shadow;
 
+  .css-custom-tooltip {
+    display: none;
+    left: -9vw !important;
+    top: calc(50% - 0.5vw);
+    width: 9vw;
+    height: 0vw;
+    overflow: hidden;
+    padding: 0.1vw 0;
+    &:hover {
+      display: none;
+    }
+  }
+
+  &:hover {
+    .css-custom-tooltip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      left: -9vw !important;
+      top: calc(50% - 0.5vw);
+      height: 1.5vw;
+      padding: 0.1vw 0;
+      opacity: 1;
+      animation: fadein 300ms ease-in-out;
+    }
+  }
+
   outline: 0 !important;
   @extend %radCircle;
   @extend %b0;

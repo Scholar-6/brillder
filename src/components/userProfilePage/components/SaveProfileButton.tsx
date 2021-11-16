@@ -4,6 +4,7 @@ import './SaveProfileButton.scss';
 import {isValid} from '../service';
 import { UserProfile } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isMobile } from "react-device-detect";
 
 interface SaveProfileProps {
   user: UserProfile;
@@ -66,6 +67,7 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
     return (
       <button type="button" className={className} onClick={this.props.onClick}>
         <SpriteIcon name="feather-cloud-upload" className="active" />
+        {!isMobile && <span className="css-custom-tooltip">Save Changes</span>}
       </button>
     );
   }
