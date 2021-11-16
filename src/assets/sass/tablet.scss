@@ -864,3 +864,27 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     display: initial !important;
 }
+
+
+::-webkit-scrollbar-track {
+  border-radius: 0.125rem;
+  background-color: red !important
+}
+::-webkit-scrollbar {
+  width: 0.25rem;
+  border-radius: 0.125rem;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 0.125rem;
+  background-color: red !important;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: red !important;
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
