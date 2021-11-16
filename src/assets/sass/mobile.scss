@@ -799,7 +799,9 @@
     font-size: $mbase-font-size;
   }
 }
-
+.user-profile-page .fixed-label {
+  font-size: 5vw !important;
+}
 .MuiAutocomplete-option {
   font-size: $mbase-font-size;
 }
