@@ -22,8 +22,8 @@
 
     .grey-circle {
       background-color: #e4e8ee;
-      width: 12rem;
-      height: 12rem;
+      width: 19vh;
+      height: 19vh;
       border-radius: 10rem;
       position: absolute;
       top: 50%;
@@ -49,8 +49,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      height: 10rem;
-      width: 10rem;
+      height: 19vh;
+      width: 19vh;
       border-radius: 50%;
       background: rgba(228, 232, 238, .5) !important;
       transition: 300ms all ease-out;
@@ -70,8 +70,8 @@
         background: var(--theme-light-blue-alpha3) !important;
         top: calc(50%);
         left: calc(50%);
-        height: 15rem;
-        width: 15rem;
+        height: 23vh;
+        width: 23vh;
         transition: 300ms all ease-out;
       }
     }
@@ -80,12 +80,12 @@
     .add-annotation-text {
       position: absolute;
       text-align: center;
-      top: calc(50% + 5.5rem);
+      top: calc(50% + 8vh);
       left: 0%;
       width: 100%;
     }
     .first-button .add-annotation-text{
-      top: calc(50% + 7rem);
+      top: calc(50% + 10vh);
     }
   }
 
@@ -118,8 +118,8 @@
     position: relative;
     display: inline-block;
     position: relative;
-    width: 4rem;
-    height: 4rem;
+    width: 4vh;
+    height: 4vh;
     background-color: #e4e8ee;
     border-radius: 2rem;
     margin-right: 1rem;
@@ -130,15 +130,15 @@
       border-radius: 50%;
       top: 0;
       left: 0;
-      width: 4rem;
-      height: 4rem;
+      width: 4vh;
+      height: 4vh;
       background-color: var(--tab-gray);
     }
 
     .pen-icon {
       position: absolute;
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 2.5vh;
+      height: 2.5vh;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);

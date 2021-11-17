@@ -16,7 +16,9 @@ const CommentTypeToggle: React.FC<ToggleProps> = props => {
     if (mode) {
       className += " selected";
     }
-    return <SpriteIcon name="pen-tool" className={className} />;
+    return <div className={className}>
+      <SpriteIcon name="pen-tool" />
+    </div>
   }
 
   const renderPrivateIcon = () => {
@@ -24,7 +26,9 @@ const CommentTypeToggle: React.FC<ToggleProps> = props => {
     if (!mode) {
       className += " selected";
     }
-    return <SpriteIcon name="message-square" className={className} />;
+    return <div className={className}>
+      <SpriteIcon name="message-square" />
+    </div>;
   }
 
   return (

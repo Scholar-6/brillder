@@ -119,7 +119,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
                 <div className="grey-background"/>
                  <SpriteIcon name="plus" className="reply-icon" />
               </div>}
-              {!annotation.children?.length ??
+              {annotation.children?.length ??
                 <span>{annotation.children?.length ?? 0} {annotation.children?.length === 1 ? "Reply" : "Replies"}</span>
               }
             </div>
