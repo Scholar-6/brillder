@@ -105,6 +105,10 @@
         font-size: 0.5vw;
         color: var(--white);
         background: var(--theme-green);
+
+        &.bigger {
+          font-size: 1vw;
+        }
       }
       > div.orange {
         color: var(--white);

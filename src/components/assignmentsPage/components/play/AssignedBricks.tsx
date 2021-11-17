@@ -39,6 +39,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       key={item.index}
       shown={this.props.shown}
       isAssignment={true}
+      completedDate={item.completedDate}
       assignmentStatus={item.status}
       assignmentId={item.assignmentId}
       history={this.props.history}

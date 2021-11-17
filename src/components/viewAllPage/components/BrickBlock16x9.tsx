@@ -38,6 +38,7 @@ interface BrickBlockProps {
   // student assignments page
   isAssignment?: boolean;
   isCompleted?: boolean;
+  completedDate?: string;
   assignmentStatus?: AssignmentBrickStatus;
   assignmentId?: number;
 
@@ -116,6 +117,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     if (!props.isAssignment) { return '' }
     let className = '';
     let res = 'NO DEADLINE';
+
     const { deadline } = props;
     if (deadline) {
       const date = new Date(deadline);
@@ -134,11 +136,18 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
       className = 'green';
     }
 
-    return (<div className="fwe1-16x9-deadline">
-      <div>
-        <div className={className}>{res}</div>
+    if (props.completedDate) {
+      const date = new Date(props.completedDate);
+      className += ' bigger';
+      res = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
+    }
+
+    return (
+      <div className="fwe1-16x9-deadline">
+        <div>
+          <div className={className}>{res}</div>
+        </div>
       </div>
-    </div>
     );
   }
 
