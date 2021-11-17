@@ -2490,3 +2490,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     white-space: unset !important;
   }
 }
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page h1 {
+  font-family: $font-family-bold !important;
+  text-align: center;
+}
