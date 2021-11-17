@@ -90,7 +90,7 @@ export const setUserPreference = async (roleId: RolePreference, initial?: boolea
 export const setUserPreferenceById = async (roleId: RolePreference, userId: number) => {
   try {
 
-    var url = `/user/rolePreferenceById/${roleId}`;
+    var url = `/user/rolePreferenceById/${roleId}/${userId}`;
 
     const data = await put<any>(url, {userId});
 
