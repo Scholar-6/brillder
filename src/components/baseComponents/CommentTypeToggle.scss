@@ -27,11 +27,10 @@
     }
     .svgOnHover {
       $icon-padding: 0.3vw;
-      $icon-size: 1.9vw;
+      $icon-size: 2vw;
       border-radius: 40%;
-      height: calc(#{$icon-padding * 2} + #{$icon-size});
       background-color: var(--tab-gray);
-      .svg {
+      > .svg {
         @extend %removePosition;
         padding: $icon-padding;
         height: $icon-size;
@@ -39,9 +38,18 @@
         background-color: var(--tab-gray);
         color: var(--theme-light-blue);
         border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &.selected {
           color: var(--theme-dark-blue);
           background-color: var(--theme-green);
+        }
+
+        svg {
+          stroke-width: 2;
+          width: 91%;
+          height: 91%;
         }
       }
     }

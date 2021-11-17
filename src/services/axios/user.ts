@@ -87,6 +87,19 @@ export const setUserPreference = async (roleId: RolePreference, initial?: boolea
   }
 }
 
+export const setUserPreferenceById = async (roleId: RolePreference, userId: number) => {
+  try {
+
+    var url = `/user/rolePreferenceById/${roleId}`;
+
+    const data = await put<any>(url, {userId});
+
+    return data === "OK" ? true : false;
+  } catch (e) {
+    return false;
+  }
+}
+
 export interface CreateByEmailRes {
   user: User;
   token: string;
