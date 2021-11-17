@@ -1020,8 +1020,8 @@
   </svg>
   <svg id="expample-arrow-1" viewBox="0 0 41.766 116.678">
     <g id="Group_466" data-name="Group 466" transform="matrix(0.087, -0.996, 0.996, 0.087, -1085.342, 1377.391)">
-      <path id="Path_5183" data-name="Path 5183" d="M.084,14.838S10.059.06,31.244.186s29.591,8.083,46.4,8.183S111.119,1.2,111.119,1.2" transform="translate(1356.11 972.552) rotate(7)" fill="none" stroke="#c43c30" stroke-linecap="round" stroke-width="3" stroke-dasharray="8 8"/>
-      <path id="Icon_feather-chevron-right" data-name="Icon feather-chevron-right" d="M0,18,9,9,0,0" transform="translate(1456.773 979.595) rotate(-8)" fill="none" stroke="#c43c30" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path id="Path_5183" data-name="Path 5183" d="M.084,14.838S10.059.06,31.244.186s29.591,8.083,46.4,8.183S111.119,1.2,111.119,1.2" transform="translate(1356.11 972.552) rotate(7)" fill="none" stroke="#001c58" stroke-linecap="round" stroke-width="3" stroke-dasharray="8 8"/>
+      <path id="Icon_feather-chevron-right" data-name="Icon feather-chevron-right" d="M0,18,9,9,0,0" transform="translate(1456.773 979.595) rotate(-8)" fill="none" stroke="#001c58" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
     </g>
   </svg>
   <svg id="play-red-arrow" viewBox="0 0 41.766 116.678">
