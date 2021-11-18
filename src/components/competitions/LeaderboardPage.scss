@@ -1,0 +1,103 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+
+.LeaderboardPage {
+  height: 100vh;
+  overflow: hidden;
+  background: var(--theme-dark-blue);
+
+  .page-header {
+    width: 100vw;
+    display: flex;
+
+    .logout-container {
+      height: 5.834vw;
+      display: flex;
+      align-items: center;
+      width: calc(92.2vw) !important;
+      padding-left: 1vw;
+      margin-left: 7.8vw;
+      border-bottom-left-radius: 2vw;
+      background: var(--theme-light-blue);
+
+      .search-container {
+        width: 80vw;
+        display: flex;
+        font-size: 1.7vw;
+
+        input {
+          color: white;
+        }
+      }
+
+      .action-container {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .leaderboard-container {
+    background: white;
+    height: calc(90vh - 5.8vw);
+    border-radius: 1vw;
+    margin-top: 5vh;
+    margin-left: 25vw;
+    margin-right: 25vw;
+    overflow: hidden;
+    color: var(--theme-dark-blue);
+    position: relative;
+    .leaderboard-head {
+      background: var(--tab-gray);
+      width: 100%;
+      height: 3vw;
+      font-size: 1.6vw;
+      font-family: $font-family-bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .leaderboard-filter {
+      font-family: $font-family-bold;
+      font-size: 1.3vw;
+      display: flex;
+      div:first-child {
+        margin-left: 5vw;
+        width: 10vw;
+      }
+    }
+    .competitors-result {
+      .title {
+        font-family: $font-family-bold;
+      }
+      .title,
+      .list > div {
+        display: flex;
+        align-items: center;
+        height: 4vh;
+        > div:first-child {
+          margin-left: 5vw;
+          width: 10vw;
+        }
+      }
+      .list > div:nth-child(odd) {
+        background: var(--tab-gray);
+      }
+      .list {
+        height: calc(90vh - 5.8vw - 5vw - 1.7vw);
+        overflow-y: scroll;
+      }
+    }
+    .line {
+      position: absolute;
+      height: calc(90vh - 5.8vw - 5vw - 2vw);
+      width: 0.2vw;
+      border-radius: 0.2vw;
+      top: 5vw;
+      left: 13vw;
+      background: var(--theme-dark-blue);
+    }
+  }
+}
