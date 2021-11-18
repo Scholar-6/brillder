@@ -15,61 +15,27 @@ interface LeaderboardProps {
 
 const LeaderboardPage: React.FC<any> = (props: LeaderboardProps) => {
   const history = useHistory();
+  const [searchString, setSearchString] = React.useState('');
+  const [rawCompetitors, setRawCompetiors] = React.useState([] as any);
   const [competitors, setCompetitors] = React.useState([] as any);
 
   const getCompetitors = async (competitionId: number) => {
-    const res = [
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-      {username: 1, score: 2},
-    ] // await getCompetitionLeaderboard(competitionId);
+    const res = await getCompetitionLeaderboard(competitionId);
+    setCompetitors(res);
+    setRawCompetiors(res);
+  }
+
+  const search = () => {
+    let res:any[] = [];
+    for (let comp of rawCompetitors) {
+      if (comp.username) {
+        var index = comp.username.indexOf(searchString);
+        if (index >= 0) {
+          res.push(comp);
+        }
+      }
+    }
+
     setCompetitors(res);
   }
 
@@ -83,10 +49,10 @@ const LeaderboardPage: React.FC<any> = (props: LeaderboardProps) => {
       <PageHeadWithMenu
         page={PageEnum.MyLibrary}
         user={props.user}
-        placeholder="  "
+        placeholder="Search Competitors"
         history={history}
-        search={() => { }}
-        searching={() => { }}
+        search={() => search()}
+        searching={setSearchString}
       />
       <div className="leaderboard-container">
         <div className="leaderboard-head">
