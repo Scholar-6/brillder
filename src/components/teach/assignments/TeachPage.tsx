@@ -37,6 +37,7 @@ import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog"
 import EmptyTabContent from "./components/EmptyTabContent";
 import ArchiveToggle from "./components/ArchiveToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ClassroomsListV2 from "./components/ClassroomsListV2";
 
 
 interface RemindersData {
@@ -378,7 +379,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async search() {
     const classrooms = await searchClassrooms(this.state.searchString) as TeachClassroom[] | null;
     if (classrooms) {
-      this.setState({ ...this.state, classrooms });
+      this.setState({ ...this.state, activeClassroom: null, activeAssignment: null, activeStudent: null, classrooms, sortedIndex: 0 });
     } else {
       // failed
     }
@@ -450,6 +451,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     const { activeClassroom } = this.state;
 
+    console.log(this.state.classrooms);
+
     if (this.state.isLoaded && (this.state.classrooms?.length === 0 || (activeClassroom && activeClassroom?.assignments?.length === 0))) {
       return (
         <EmptyTabContent
@@ -460,6 +463,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
         />
       );
     }
+
+    console.log('good');
 
     return (
       <div className="tab-content">
@@ -504,7 +509,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 onRemind={this.setReminderNotification.bind(this)}
               />
               :
-              <ClassroomsList
+              <ClassroomsListV2
                 subjects={this.state.subjects}
                 isArchive={isArchive}
                 expand={this.moveToAssignment.bind(this)}
