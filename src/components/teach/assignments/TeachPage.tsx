@@ -377,8 +377,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async search() {
-    const classrooms = await searchClassrooms(this.state.searchString) as TeachClassroom[] | null;
+    let classrooms = await searchClassrooms(this.state.searchString) as TeachClassroom[] | null;
     if (classrooms) {
+      classrooms = classrooms.filter(c => c.subjectId);
       this.setState({ ...this.state, activeClassroom: null, activeAssignment: null, activeStudent: null, classrooms, sortedIndex: 0 });
     } else {
       // failed
@@ -451,8 +452,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     const { activeClassroom } = this.state;
 
-    console.log(this.state.classrooms);
-
     if (this.state.isLoaded && (this.state.classrooms?.length === 0 || (activeClassroom && activeClassroom?.assignments?.length === 0))) {
       return (
         <EmptyTabContent
@@ -463,8 +462,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
         />
       );
     }
-
-    console.log('good');
 
     return (
       <div className="tab-content">
