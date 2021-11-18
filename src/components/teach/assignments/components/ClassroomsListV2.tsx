@@ -131,8 +131,6 @@ class ClassroomListV2 extends Component<ClassroomListProps, State> {
   renderTeachList(items: TeachListItem[]) {
     let index = 1;
 
-    console.log('dd', this.state.loaded);
-
     if (!this.state.loaded) {
       return (
         <div className="page-loader-container">
@@ -236,8 +234,9 @@ class ClassroomListV2 extends Component<ClassroomListProps, State> {
     />
   }
 
-  render() {
+  prepareItems() {
     const { page, pageSize, classrooms } = this.state;
+    console.log(classrooms);
     let items = [] as TeachListItem[];
     let notFirst = false;
 
@@ -274,8 +273,11 @@ class ClassroomListV2 extends Component<ClassroomListProps, State> {
       }
       notFirst = true;
     }
+    return items;
+  }
 
-    console.log('items', items);
+  render() {
+    const items = this.prepareItems();
 
     return (
       <div className="classroom-list many-classes">
