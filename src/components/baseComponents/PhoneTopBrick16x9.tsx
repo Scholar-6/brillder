@@ -9,6 +9,7 @@ import BrickCircle from "./BrickCircle";
 import BrickTitle from "./BrickTitle";
 import { fileUrl } from "components/services/uploadFile";
 import { getDate, getMonth, getYear } from "components/services/brickService";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 interface Props {
   brick: Brick;
@@ -78,6 +79,12 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
           <div className="round-button" style={{ background: color }}>
             <div className="label-circle-text">{props.bestScore}</div>
           </div>
+          <CircularProgressbar
+            className="circle-progress-first"
+            strokeWidth={8}
+            counterClockwise={false}
+            value={props.bestScore}
+          />
         </div>
       );
     }
