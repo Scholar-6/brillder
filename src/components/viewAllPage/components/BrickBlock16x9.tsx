@@ -16,6 +16,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getDate, getMonth, getYear } from "components/services/brickService";
 import { AssignmentBrickStatus } from "model/assignment";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -159,6 +160,12 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
           <div style={{ background: color }}>
             {Math.round(props.bestScore)}
           </div>
+          <CircularProgressbar
+            className="circle-progress-first"
+            strokeWidth={8}
+            counterClockwise={false}
+            value={props.bestScore}
+          />
         </div>
       );
     }
