@@ -12,5 +12,11 @@
   }
   .left-brick-circle {
     z-index: 10;
+    &.score-circle {
+      right: 11.5vw !important;
+      .label-circle-text {
+        font-size: 4.3vw !important;
+      }
+    }
   }
 }

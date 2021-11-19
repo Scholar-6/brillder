@@ -297,6 +297,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             color={color}
             isAssignment={true}
             deadline={a.deadline}
+            bestScore={a.bestScore}
             onIconClick={e => this.onIconClick(e, a)}
             onClick={() => {
               if (this.state.expandedAssignment === a) {
