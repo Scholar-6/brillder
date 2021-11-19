@@ -40,7 +40,8 @@
   .absolute-text {
     position: absolute;
     left: 0;
-    width: 30vw;
+    width: 49vw;
+    justify-content: center;
     z-index: 2;
     display: inline-flex;
     div {
@@ -103,5 +104,12 @@
         background: rgba(0, 28, 88, 0.5);
       }
     }
+  }
+}
+
+
+.sorted-row-expanded .author-row.cover-author-row {
+  .absolute-text {
+    width: 56vw;
   }
 }
