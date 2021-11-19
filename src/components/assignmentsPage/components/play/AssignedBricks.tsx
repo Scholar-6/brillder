@@ -45,6 +45,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       history={this.props.history}
       color={color}
       isCompleted={this.props.tab === Tab.Completed}
+      bestScore={item.bestScore}
       teacher={item.teacher}
       circleIcon={circleIcon}
       deadline={item.deadline}

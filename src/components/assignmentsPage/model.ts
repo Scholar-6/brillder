@@ -34,4 +34,5 @@ export interface AssignmentBrickData {
   isInvitation: boolean;
   completedDate: string;
   teacher?: any;
+  bestScore: number;
 }

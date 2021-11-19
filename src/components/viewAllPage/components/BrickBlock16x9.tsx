@@ -41,6 +41,7 @@ interface BrickBlockProps {
   completedDate?: string;
   assignmentStatus?: AssignmentBrickStatus;
   assignmentId?: number;
+  bestScore?: number;
 
   teacher?: User;
 
@@ -167,6 +168,13 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
                 {isAssignment ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
               </div>
             </div>
+            {
+              props.isCompleted && props.bestScore && <div className="level score">
+                <div style={{ background: color }}>
+                  {Math.round(props.bestScore)}
+                </div>
+              </div>
+            }
             {brick.coverImage ?
               <div className="p-cover-image">
                 <div className="scroll-block">
