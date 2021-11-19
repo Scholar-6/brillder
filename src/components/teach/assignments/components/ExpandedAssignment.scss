@@ -41,6 +41,10 @@
       }
     }
 
+    .student-book {
+      text-transform: initial !important;
+    }
+
     .student-book .round {
       $size: 2.18vw;
       width: $size !important;

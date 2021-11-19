@@ -221,7 +221,7 @@ class ProvisionalScore extends React.Component<
           <Grid container direction="row">
             <Grid item xs={8}>
               <div className="introduction-page">
-                <h1 className="title">Provisional Score</h1>
+                <h1 style={{marginTop: '1vw'}} className="title">Provisional Score</h1>
                 {this.state.score < this.state.maxScore &&
                   <div className="hr-sub-title">
                     <div>To improve your score, now read the author's <span className="bold">Synthesis</span></div>
