@@ -76,7 +76,7 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
     if (props.bestScore) {
       return (
         <div className="left-brick-circle brick-status-circle score-circle">
-          <div className="round-button" style={{ background: color }}>
+          <div className="round-button" style={{ background: "white" }}>
             <div className="label-circle-text">{props.bestScore}</div>
           </div>
           <CircularProgressbar

@@ -157,12 +157,12 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     if (props.isCompleted && props.bestScore && props.bestScore > 0) {
       return (
         <div className="level score">
-          <div style={{ background: color }}>
+          <div style={{ background: 'white' }}>
             {Math.round(props.bestScore)}
           </div>
           <CircularProgressbar
             className="circle-progress-first"
-            strokeWidth={8}
+            strokeWidth={10}
             counterClockwise={false}
             value={props.bestScore}
           />
