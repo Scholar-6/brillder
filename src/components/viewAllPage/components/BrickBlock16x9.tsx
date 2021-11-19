@@ -152,6 +152,19 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     );
   }
 
+  const renderScore = () => {
+    if (props.isCompleted && props.bestScore && props.bestScore > 0) {
+      return (
+        <div className="level score">
+          <div style={{ background: color }}>
+            {Math.round(props.bestScore)}
+          </div>
+        </div>
+      );
+    }
+    return '';
+  }
+
   return (
     <div className="animated-brick-container">
       <Grow
@@ -168,13 +181,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
                 {isAssignment ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
               </div>
             </div>
-            {
-              props.isCompleted && props.bestScore && <div className="level score">
-                <div style={{ background: color }}>
-                  {Math.round(props.bestScore)}
-                </div>
-              </div>
-            }
+            {renderScore()}
             {brick.coverImage ?
               <div className="p-cover-image">
                 <div className="scroll-block">
