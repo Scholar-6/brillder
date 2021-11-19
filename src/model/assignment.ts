@@ -19,6 +19,7 @@ export interface AssignmentBrick {
   status: AssignmentBrickStatus;
   brick: Brick;
   deadline: string;
+  bestScore?: number;
   completedDate?: string;
   expanded?: boolean;
   expandFinished?: boolean;
