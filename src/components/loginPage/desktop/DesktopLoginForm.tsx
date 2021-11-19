@@ -66,7 +66,7 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
         <div className="input-block">
           <TypingInput
             required
-            type="email"
+            type="email" name="email"
             className="login-field"
             placeholder="Email"
             value={this.props.email}

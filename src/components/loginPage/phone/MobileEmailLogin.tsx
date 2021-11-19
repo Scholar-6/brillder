@@ -88,7 +88,7 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps, State> {
           >
             <div className="input-block">
               <input
-                type="email"
+                type="email" name="email"
                 value={this.props.email}
                 onChange={(e) => this.props.setEmail(e.target.value)}
                 className="login-field"
