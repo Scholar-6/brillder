@@ -37,7 +37,7 @@
         position: relative;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
-        margin-top: 1vh;
+        margin-top: 1.5vw;
         font-size: 2.7vw;
         @extend %ellipsis;
         font-family: $font-family-black;
@@ -127,7 +127,7 @@
         @extend %ellipsis;
       }
       .image-container {
-        margin-top: 2vw;
+        margin-top: 4.5vw;
         position: relative;
         .image-drag-n-drop {
           border-radius: 0.5vw;
