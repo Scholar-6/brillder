@@ -37,11 +37,10 @@
         position: relative;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
-        margin-top: 3.6vh;
+        margin-top: 1vh;
         font-size: 2.7vw;
         @extend %ellipsis;
         font-family: $font-family-black;
-        text-align: left !important;
         &.dynamic-title {
           span {
             display: inline !important;
@@ -66,6 +65,13 @@
         font-size: 1.5vw;
         overflow-y: visible;
         text-transform: capitalize;
+
+        > div {
+          width: 100%;
+          > span {
+            width: 100%;
+          }
+        }
 
         .cover-bio {
           position: relative;
@@ -121,6 +127,7 @@
         @extend %ellipsis;
       }
       .image-container {
+        margin-top: 2vw;
         position: relative;
         .image-drag-n-drop {
           border-radius: 0.5vw;
@@ -266,10 +273,13 @@
 
 // sponsor
 .cover-page .cover-sponsors {
+  position: absolute;
+  top: -0.3vw;
+  right: 1vw;
   margin-top: 2vw;
   display: flex;
   align-items: flex-end;
-  justify-content: flex-end;
+  justify-content: center;
   font-family: $font-family-regular-italic;
   
 
