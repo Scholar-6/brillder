@@ -283,7 +283,7 @@ const App: React.FC<AppProps> = props => {
         <AllUsersRoute path={map.UserPreference} component={UserPreferencePage} isPreferencePage={true} />
         <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
         <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
-        <AllUsersRoute path={map.LeaderboardPage + '/:competitionId'} component={LeaderboardPage} />
+        <UnauthorizedRoute path={map.LeaderboardPage + '/:competitionId'} component={LeaderboardPage} />
 
         <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
