@@ -34,6 +34,7 @@ import { getExistedUserState, getNewUserState } from "./stateService";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import UserTypeLozenge from "./UsertypeLozenge";
+import { maximizeZendeskButton, minimizeZendeskButton } from "services/zendesk";
 
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
 
@@ -66,6 +67,7 @@ interface UserProfileState {
   emailInvalid: boolean;
   editPassword: boolean;
   saveDisabled: boolean;
+  minimizeTimeout?: number;
 
   introJsSuspended?: boolean;
 }
@@ -117,6 +119,21 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.props.requestFailed("Can`t get subjects");
       }
     });
+  }
+
+  componentDidMount() {
+    minimizeZendeskButton();
+    const minimizeTimeout = setTimeout(() => {
+      minimizeZendeskButton();
+    }, 1400);
+    this.setState({minimizeTimeout });
+  }
+  
+  componentWillUnmount() {
+    if (this.state.minimizeTimeout) {
+      clearTimeout(this.state.minimizeTimeout);
+    }
+    maximizeZendeskButton();
   }
 
   saveStudentProfile(user: UserProfile) {
