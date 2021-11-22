@@ -18,6 +18,7 @@ export const getNewUserState = (isAdmin: boolean) => {
     emailInvalidOpen: false,
     passwordChangedDialog: false,
 
+    saveDisabled: true,
     validationRequired: false,
     emailInvalid: false,
     previewAnimationFinished: false,
@@ -65,6 +66,7 @@ export const getExistedUserState = (user: User) => {
     savedDialogOpen: false,
     emailInvalidOpen: false,
     passwordChangedDialog: false,
+    saveDisabled: true,
 
     validationRequired: false,
     emailInvalid: false,

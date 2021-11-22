@@ -65,6 +65,7 @@ interface UserProfileState {
   validationRequired: boolean;
   emailInvalid: boolean;
   editPassword: boolean;
+  saveDisabled: boolean;
 
   introJsSuspended?: boolean;
 }
@@ -218,7 +219,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   onFieldChanged(e: React.ChangeEvent<HTMLInputElement>, name: UserProfileField) {
     const { user } = this.state;
     user[name] = e.target.value;
-    this.setState({ user });
+    this.setState({ user, saveDisabled: false });
   }
 
   onEmailChanged(e: React.ChangeEvent<HTMLInputElement>) {
@@ -229,7 +230,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
       emailInvalid = true;
     }
-    this.setState({ user, emailInvalid });
+    this.setState({ user, emailInvalid, saveDisabled: false });
   }
 
   onProfileImageChanged(name: string) {
@@ -264,13 +265,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     } else {
       this.state.user.roles.push(roleId);
     }
-    this.setState({ ...this.state });
+    this.setState({ ...this.state, saveDisabled: false });
   }
 
   onSubjectChange(newValue: any[]) {
     const { user } = this.state;
     user.subjects = newValue;
-    this.setState({ user });
+    this.setState({ user, saveDisabled: false });
   }
 
   async changePassword() {
@@ -344,6 +345,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               <div className="save-button-container">
                 <SaveProfileButton
                   user={user}
+                  disabled={this.state.saveDisabled}
                   onClick={() => this.saveUserProfile()}
                 />
               </div>

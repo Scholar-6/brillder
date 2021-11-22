@@ -8,6 +8,7 @@ import { isMobile } from "react-device-detect";
 
 interface SaveProfileProps {
   user: UserProfile;
+  disabled: boolean;
   onClick(): void;
 }
 
@@ -28,6 +29,10 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
 
   shouldComponentUpdate(props: SaveProfileProps) {
     const { user } = props;
+
+    if (this.props.disabled !== props.disabled) {
+      return true;
+    }
 
     // check pulsing
     if (isValid(user)) {
@@ -57,17 +62,22 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
   }
 
   render() {
+    console.log(this.props.disabled, this.state.isValid);
     let className = "save-image";
-    if (this.state.isValid) {
+    if (this.state.isValid && !this.props.disabled) {
       className += " valid";
     }
+    console.log(this.props.disabled);
     if (this.state.shouldPulse) {
       className += " save-pulse";
     }
     return (
-      <button type="button" className={className} onClick={this.props.onClick}>
+      <button type="button" className={className} onClick={() => {
+        if (!this.props.disabled) {
+          this.props.onClick();
+        }}}>
         <SpriteIcon name="feather-cloud-upload" className="active" />
-        {!isMobile && <span className="css-custom-tooltip">Save Changes</span>}
+        {!isMobile && <span className="css-custom-tooltip bold">Save Changes</span>}
       </button>
     );
   }
