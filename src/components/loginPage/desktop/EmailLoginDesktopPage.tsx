@@ -19,6 +19,7 @@ import TermsLink from "components/baseComponents/TermsLink";
 import { trackSignUp } from "services/matomo";
 import map from "components/map";
 import { getTerms } from "services/axios/terms";
+import validator from 'validator';
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
