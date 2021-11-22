@@ -960,3 +960,11 @@
 .bold-on-hover:hover {
   font-family: $font-family-bold;
 }
+
+#bell-container {
+  .bell-circle {
+    span {
+      font-family: $font-family-bold !important;
+    }
+  }
+}
