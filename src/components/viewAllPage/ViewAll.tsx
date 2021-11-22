@@ -913,6 +913,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       return SubjectGroupNames[this.state.subjectGroup];
     }
 
+    const renderName = (name: string) => {
+      if (name[name.length-1] === 's') {
+        return `${name}'`;
+      }
+      return `${name}'s`;
+    }
+
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0];
       const subject = this.state.subjects.find((s) => s.id === subjectId);
@@ -923,7 +930,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       return "Filtered";
     } else if (this.state.isSearching) {
       if (this.state.userIdSearch) {
-        return this.state.searchString + "'s bricks";
+        return renderName(this.state.searchString) + ' bricks';
       }
       return this.state.searchString;
     }
