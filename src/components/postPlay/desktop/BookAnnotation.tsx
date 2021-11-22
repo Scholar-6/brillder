@@ -33,17 +33,17 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
   const canEdit = React.useMemo(() => props.currentUser.id === annotation.user.id, [props.currentUser, annotation.user]);
 
   const onAnnotationChange = React.useCallback(() => {
-    if(!textRef.current) return;
+    if (!textRef.current) return;
     props.updateAnnotation({
       ...annotation,
       text: textRef.current!.innerText ?? "",
     });
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [annotation, props.updateAnnotation]);
 
   const onAnnotationChangeRef = React.useRef<(() => void) & _.Cancelable>();
   React.useEffect(() => {
-    if(onAnnotationChangeRef.current) {
+    if (onAnnotationChangeRef.current) {
       onAnnotationChangeRef.current.cancel();
     }
     onAnnotationChangeRef.current = _.throttle(onAnnotationChange, 500, { leading: true, trailing: true });
@@ -52,7 +52,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
   return (
     <Grid
       className={`annotation-container comment-${annotation.id} ${focused ? "focused" : ""}`}
-      onMouseDown={props.disableFocus ? (() => {}) : (() => history.push("#" + annotation.id))}
+      onMouseDown={props.disableFocus ? (() => { }) : (() => history.push("#" + annotation.id))}
     >
       <div className="comment-item-container">
         <Grid container direction="column">
@@ -106,16 +106,16 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
               ))}
             </div>
             {addingReply && <ReplyCommentPanel
-              parentComment={{id: -1, location: ''} as any}
-              currentBrick={{id: -1} as Brick}
+              parentComment={{ id: -1, location: '' } as any}
+              currentBrick={{ id: -1 } as Brick}
               collapsePanel={() => setAddingReply(false)}
               createComment={comment => props.addAnnotationReply?.(comment.text)}
             />}
           </Collapse>}
-          {props.addAnnotationReply && <Collapse in={!focused}>
+          {props.addAnnotationReply && annotation.children && annotation.children.length > 0 && <Collapse in={!focused}>
             <div className="add-reply inactive">
               <div className="grey-circle">
-                <div className="grey-background"/>
+                <div className="grey-background" />
                 <SpriteIcon name="plus" className="reply-icon" />
               </div>
               <span>{annotation.children?.length ?? 0} {annotation.children?.length === 1 ? "Reply" : "Replies"}</span>

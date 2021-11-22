@@ -37,7 +37,7 @@
         position: relative;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
-        margin-top: 3.6vh;
+        margin-top: 1.5vw;
         font-size: 2.7vw;
         @extend %ellipsis;
         font-family: $font-family-black;
@@ -65,6 +65,13 @@
         font-size: 1.5vw;
         overflow-y: visible;
         text-transform: capitalize;
+
+        > div {
+          width: 100%;
+          > span {
+            width: 100%;
+          }
+        }
 
         .cover-bio {
           position: relative;
@@ -120,6 +127,7 @@
         @extend %ellipsis;
       }
       .image-container {
+        margin-top: 4.5vw;
         position: relative;
         .image-drag-n-drop {
           border-radius: 0.5vw;
@@ -207,9 +215,9 @@
           border-radius: 0.7vw;
           padding: 1.4vh 1.9vw;
           color: var(--white);
-          background: var(--theme-orange);
+          background: var(--theme-green);
           &:hover {
-            background: var(--theme-green);
+            background: var(--theme-dark-blue);
           }
         }
       }
@@ -265,17 +273,20 @@
 
 // sponsor
 .cover-page .cover-sponsors {
+  position: absolute;
+  top: -0.3vw;
+  right: 1vw;
+  margin-top: 2vw;
   display: flex;
   align-items: flex-end;
-  justify-content: flex-end;
+  justify-content: center;
   font-family: $font-family-regular-italic;
   
 
   img {
     margin-left: 0.3vw;
-    margin-top: 0.2vw;
     margin-right: 0.5vw;
-    height: 1.5vw;
+    height: 1.8vw !important;
   }
   .dropzone {
     margin-left: 0.2vw;

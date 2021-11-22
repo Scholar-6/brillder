@@ -6,6 +6,12 @@ export const ActivateAccount = '/activateAccount';
 export const ResetPassword = '/resetPassword';
 export const Build = '/build';
 export const MainPage = '/home';
+export const LeaderboardPage = '/leaderboard';
+export const MyLibrary = '/my-library';
+export const TermsPage = '/terms';
+
+export const AssignmentsPage = '/assignments';
+export const AssignmentsClassPage = AssignmentsPage + '/:classId';
 
 export const buildBase = (brickId: number) => `${Build}/brick/` + brickId;
 
@@ -18,13 +24,7 @@ export const BackToWorkPublic = BackToWorkPage + '?isCore=true';
 export const backToWorkUserBased = (user: User) => 
   `${BackToWorkPage}?isCore=${user.rolePreference?.roleId === RolePreference.Builder || isAorP(user.roles) ? 'true' : 'false'}`
 
-export const AssignmentsPage = '/assignments';
-export const AssignmentsClassPage = AssignmentsPage + '/:classId';
-export const MyLibrary = '/my-library';
 export const Onboarding = '/onboarding';
-export const TermsPage = '/terms';
-
-
 export const TermsSignUp = Onboarding + '/terms';
 export const ThankYouPage = Onboarding + '/thank-you';
 export const SetUsername = Onboarding + '/set-username';
@@ -135,6 +135,7 @@ export default {
   Login,
   MainPage,
   MyLibrary,
+  LeaderboardPage,
 
   TermsPage,
   TermsSignUp,

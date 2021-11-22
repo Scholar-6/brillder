@@ -9,6 +9,9 @@
 }
 
 .brick-title-page {
+  .key-word {
+    text-transform: capitalize !important;
+  }
   .tooltip-container {
     position: relative;
     .css-custom-tooltip {

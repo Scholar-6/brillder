@@ -23,7 +23,11 @@ interface InviteProps {
 
 const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [isValid, setValid] = React.useState(false);
-  const [editors, setEditors] = React.useState<Editor[]>([]);
+  let initEditors:any[] = [];
+  if (brick.editors) {
+    initEditors = brick.editors;
+  }
+  const [editors, setEditors] = React.useState<Editor[]>(initEditors);
   const [editorError, setEditorError] = React.useState("");
 
   const saveEditors = async (editorIds: number[]) => {
@@ -57,7 +61,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
       setEditorError("");
     } else {
       setValid(false);
-      setEditorError("No editors assigned.");
+      setEditorError("No editors have been assigned to this brick yet.");
     }
   }, [editors]);
 
@@ -110,7 +114,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
               canEdit={props.canEdit}
               brick={brick}
               editorError={editorError}
-              placeholder="Enter editor's username here..."
+              placeholder="Editor's username (first 3 characters)"
               onBlur={onBlur}
               users={editors}
               setUsers={setEditors}

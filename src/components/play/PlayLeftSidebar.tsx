@@ -200,7 +200,16 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   isCover() {
-    return this.props.history.location.pathname.slice(-6) === '/cover';
+    try {
+      const coverPart = this.props.history.location.pathname.split('/')[4];
+      if (coverPart === 'cover') {
+        return true;
+      }
+    } catch {
+      console.log('something wrong with path');
+      return false;
+    }
+    return false;
   }
 
   isPreInvesigation() {
@@ -224,6 +233,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   renderButtons() {
+    this.isCover();
     if (this.props.isPreview) {
       if (this.props.sidebarRolledUp) {
         return (

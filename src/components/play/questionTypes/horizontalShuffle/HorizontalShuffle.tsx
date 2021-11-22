@@ -93,13 +93,14 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   checkAttemptAnswer(index: number) {
-    if (this.props.attempt && this.props.attempt.answer) {
+    if (this.props.isReview && this.props.attempt && this.props.attempt.answer && this.props.attempt === this.props.liveAttempt) {
       let answer = this.props.attempt.answer[index];
       if (answer.index - index === 0) {
         return true;
       }
+      return false;
     }
-    return false;
+    return null;
   }
 
   prepareAttempt(component: HorizontalShuffleComponent, attempt: ComponentAttempt<any>) {
@@ -145,14 +146,14 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
               isPhonePreview={this.props.isPreview}
               isReview={this.props.isReview}
               index={i}
-              isCorrect={isCorrect}
+              isCorrect={isCorrect || false}
               hint={this.props.question.hint}
             /> : this.props.isReview &&
             <ReviewEachHint
               isPhonePreview={this.props.isPreview}
               isReview={this.props.isReview}
               index={answer.index}
-              isCorrect={isCorrect}
+              isCorrect={isCorrect || false}
               hint={this.props.question.hint}
             />
           }

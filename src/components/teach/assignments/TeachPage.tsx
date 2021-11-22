@@ -37,6 +37,7 @@ import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog"
 import EmptyTabContent from "./components/EmptyTabContent";
 import ArchiveToggle from "./components/ArchiveToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ClassroomsListV2 from "./components/ClassroomsListV2";
 
 
 interface RemindersData {
@@ -130,6 +131,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       stepsEnabled: false,
       steps: [{
         element: '.archive-toggle-button',
+        position: 'left',
         intro: `<p>Find your archived assignments here</p>`,
       }],
 
@@ -375,9 +377,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async search() {
-    const classrooms = await searchClassrooms(this.state.searchString) as TeachClassroom[] | null;
+    let classrooms = await searchClassrooms(this.state.searchString) as TeachClassroom[] | null;
     if (classrooms) {
-      this.setState({ ...this.state, classrooms });
+      classrooms = classrooms.filter(c => c.subjectId);
+      this.setState({ ...this.state, activeClassroom: null, activeAssignment: null, activeStudent: null, classrooms, sortedIndex: 0 });
     } else {
       // failed
     }
@@ -503,7 +506,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 onRemind={this.setReminderNotification.bind(this)}
               />
               :
-              <ClassroomsList
+              <ClassroomsListV2
                 subjects={this.state.subjects}
                 isArchive={isArchive}
                 expand={this.moveToAssignment.bind(this)}

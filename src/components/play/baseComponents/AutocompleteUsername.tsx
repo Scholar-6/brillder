@@ -24,6 +24,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
   brick, users, setUsers,
   ...props
 }) => {
+  const [searchString, setSearchString] = React.useState('');
   const [suggestions, setSuggestions] = React.useState([] as UserBase[]);
 
   return (
@@ -38,6 +39,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
           setUsers(value);
         }
       }}
+      noOptionsText={searchString.length >= 3 ? 'Sorry, no potential editors found with that username' : "Options will start appearing after you type three characters"}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -47,6 +49,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
           onBlur={() => props.onBlur()}
           onChange={(evt) => {
             const { value } = evt.target;
+            setSearchString(value);
             if (value.length >= 3) {
               suggestUsername(value).then((res) => {
                 if (res && res.length > 0) {

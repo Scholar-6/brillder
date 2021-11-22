@@ -42,6 +42,7 @@ export interface Assignment {
 export interface TeachStudent extends UserBase {
   studentResult: AssignmentStudent | undefined;
   studentStatus: StudentStatus | undefined;
+  remindersCounter?: number;
 }
 
 export interface Classroom {
@@ -65,6 +66,7 @@ export interface StudentStatus {
   studentId: number;
   status: StudentAssignmentStatus;
   bestScore: number;
+  remindersCounter?: number;
 }
 
 export interface TeachClassroom extends Classroom {

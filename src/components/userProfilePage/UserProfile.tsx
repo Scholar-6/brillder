@@ -34,6 +34,7 @@ import { getExistedUserState, getNewUserState } from "./stateService";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import UserTypeLozenge from "./UsertypeLozenge";
+import { maximizeZendeskButton, minimizeZendeskButton } from "services/zendesk";
 
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
 
@@ -65,6 +66,8 @@ interface UserProfileState {
   validationRequired: boolean;
   emailInvalid: boolean;
   editPassword: boolean;
+  saveDisabled: boolean;
+  minimizeTimeout?: number;
 
   introJsSuspended?: boolean;
 }
@@ -116,6 +119,21 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.props.requestFailed("Can`t get subjects");
       }
     });
+  }
+
+  componentDidMount() {
+    minimizeZendeskButton();
+    const minimizeTimeout = setTimeout(() => {
+      minimizeZendeskButton();
+    }, 1400);
+    this.setState({minimizeTimeout });
+  }
+  
+  componentWillUnmount() {
+    if (this.state.minimizeTimeout) {
+      clearTimeout(this.state.minimizeTimeout);
+    }
+    maximizeZendeskButton();
   }
 
   saveStudentProfile(user: UserProfile) {
@@ -218,7 +236,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   onFieldChanged(e: React.ChangeEvent<HTMLInputElement>, name: UserProfileField) {
     const { user } = this.state;
     user[name] = e.target.value;
-    this.setState({ user });
+    this.setState({ user, saveDisabled: false });
   }
 
   onEmailChanged(e: React.ChangeEvent<HTMLInputElement>) {
@@ -229,7 +247,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
       emailInvalid = true;
     }
-    this.setState({ user, emailInvalid });
+    this.setState({ user, emailInvalid, saveDisabled: false });
   }
 
   onProfileImageChanged(name: string) {
@@ -264,13 +282,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     } else {
       this.state.user.roles.push(roleId);
     }
-    this.setState({ ...this.state });
+    this.setState({ ...this.state, saveDisabled: false });
   }
 
   onSubjectChange(newValue: any[]) {
     const { user } = this.state;
     user.subjects = newValue;
-    this.setState({ user });
+    this.setState({ user, saveDisabled: false });
   }
 
   async changePassword() {
@@ -344,6 +362,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               <div className="save-button-container">
                 <SaveProfileButton
                   user={user}
+                  disabled={this.state.saveDisabled}
                   onClick={() => this.saveUserProfile()}
                 />
               </div>
@@ -397,7 +416,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   {this.state.user.rolePreference &&
                   <RolesBox
                     roles={this.state.roles}
+                    userId={this.state.user.id}
                     userRoles={this.state.user.roles}
+                    isAdmin={this.state.isAdmin}
                     rolePreference={this.state.user.rolePreference?.roleId}
                     toggleRole={this.toggleRole.bind(this)}
                   />}

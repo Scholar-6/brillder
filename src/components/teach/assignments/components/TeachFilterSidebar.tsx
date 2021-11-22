@@ -149,11 +149,12 @@ class TeachFilterSidebar extends Component<
           title={c.name}
         >
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
+            {c.subject.color && 
             <RadioButton
               checked={c.active}
               color={c.subject.color}
               name={c.subject.name}
-            />
+            />}
             <span className="filter-class-name">{c.name}</span>
             {c.active && (c.students.length > 0 || c.studentsInvitations.length > 0) && (
               <div className="classroom-icon svgOnHover">

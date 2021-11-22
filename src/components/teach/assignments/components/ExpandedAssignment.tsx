@@ -94,6 +94,14 @@ class ExpandedAssignment extends Component<
         .find(s => s.studentId === student.id);
     });
 
+    students.forEach(student => {
+      this.props.assignment.studentStatus.forEach(s => {
+        if (student.id === s.studentId) {
+          student.remindersCounter = s.remindersCounter;
+        }
+      })
+    })
+
     return students;
   }
 
@@ -259,7 +267,7 @@ class ExpandedAssignment extends Component<
     
     const disabled = bookData.student && bookData.student?.id !== student.id ? true : false;
     const active = bookData.student?.id === student.id ? true : false;
-    
+
     return (
       <Grow
         in={true}
@@ -273,7 +281,10 @@ class ExpandedAssignment extends Component<
             <div>{this.renderStatus(studentResult)}</div>
           </td>
           <td className="student-book">
-            {studentResult && studentResult.numberOfAttempts > 0 && <div className="centered">{this.renderBookIcon(studentResult, student.id)}</div>}
+            {(studentResult && studentResult.numberOfAttempts > 0) 
+              ? <div className="centered">{this.renderBookIcon(studentResult, student.id)}</div>
+              : <div className="centered">{student.remindersCounter} sent</div>
+            }
           </td>
           <td className={`assigned-student-name ${active ? 'bold' : disabled ? 'grey' : 'regular'}`}>
             {student.firstName} {student.lastName}

@@ -90,7 +90,7 @@ class LineHighlighting extends CompComponent<
     }
 
     if (line.selected) {
-      if (this.props.attempt && this.props.isReview) {
+      if (this.props.attempt && this.props.isReview && this.props.attempt === this.props.liveAttempt) {
         let status = this.props.attempt.answer.indexOf(index);
         if (status !== -1) {
           if (line.checked === true) {

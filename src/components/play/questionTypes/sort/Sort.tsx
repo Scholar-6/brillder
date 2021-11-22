@@ -188,13 +188,17 @@ class Sort extends CompComponent<SortProps, SortState> {
   }
 
   getState(choice: string) {
-    if (this.props.attempt) {
+    if (this.props.isReview && this.props.attempt && this.props.attempt === this.props.liveAttempt) {
       if (this.props.attempt.answer[choice] === this.state.choices[choice]) {
         return 1;
       } else {
         return -1;
       }
     }
+    if (this.state.status !== DragAndDropStatus.Changed) {
+      this.setState({status: DragAndDropStatus.Changed});
+    }
+    return 0;
   }
 
   shuffle(a: any[]) {
@@ -374,8 +378,6 @@ class Sort extends CompComponent<SortProps, SortState> {
                     <ReactSortableV1
                       list={cat.choices as any[]}
                       animation={150}
-                      delayOnTouchStart={true}
-                      delay={50}
                       className={`${i === this.state.userCats.length - 1 ? 'unsorted' : unsorted.choices.length === 0 ? '' : 'category'} sortable-list`}
                       group={{ name: "cloning-group-name" }}
                       setList={(list: any[]) => this.updateCategory(list, i)}

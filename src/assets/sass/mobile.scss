@@ -21,6 +21,13 @@
   height: 12.5vw !important;
 }
 
+@media (orientation: landscape) {
+  #launcher {
+    width: 5vw !important;
+    height: 5vw !important;
+  }
+}
+
 // #2870 unauthorized dashbaord scrolling fix
 .unauthrozied-container {
   height: 100%;
@@ -291,6 +298,9 @@
 .brick-inline {
   p {
     display: inline;
+  }
+  br {
+    display: none;
   }
 }
 
@@ -789,7 +799,9 @@
     font-size: $mbase-font-size;
   }
 }
-
+.user-profile-page .fixed-label {
+  font-size: 5vw !important;
+}
 .MuiAutocomplete-option {
   font-size: $mbase-font-size;
 }
@@ -1091,4 +1103,104 @@
 .step,
 .header-btn {
   cursor: initial !important;
+}
+
+
+// popup cover
+.image-dialog-container {
+  .dialog-header.image-dialog {
+    max-width: 100% !important;
+    font-size: 4vw !important;
+    input {
+      font-size: 4vw !important;
+    }
+
+    svg {
+      width: 6vw;
+      height: 6vw;
+    }
+    .MuiButtonBase-root {
+      display: block;
+    }
+    .permision-buttons {
+      > div {
+        display: flex;
+        align-items: flex-start;
+        div {
+        width: 7vw;
+        }
+      }
+    }
+    .MuiButtonBase-root.MuiIconButton-root.MuiCheckbox-root .MuiSvgIcon-root,
+    .MuiButtonBase-root.MuiIconButton-root.MuiCheckbox-root input {
+      width: 5vw;
+      height: 5vw;
+    }
+  }
+  .i-image-footer {
+    height: 9vw !important;
+    .file-name {
+      font-size: 3.8vw !important;
+    }
+  }
+  .add-image-button {
+    width: 4.5vw !important;
+    height: 4.5vw !important;
+    svg {
+      width: 4vw !important;
+      height: 4vw !important;
+    }
+  }
+  .MuiPaper-root.MuiDialog-paper .upload-button-container .upload-button {
+    width: 7vw !important;
+    height: 7vw !important;
+    .background {
+      display: none !important;
+    }
+    .css-custom-tooltip {
+      display: none !important;
+    }
+  }
+}
+
+
+.dialog-box .dialog-header.bio-popup {
+  display: block;
+  .b-image-container {
+    min-width: 9vw;
+    display: block;
+    .b-image {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0.4vw;
+      svg {
+        height: 3vw;
+        width: 3vw;
+        background: var(--tab-gray);
+        padding: 1vw;
+        border-radius: 50%;
+      }
+      img, svg {
+        height: 15vw;
+        width: 15vw;
+        border-radius: 50%;
+      }
+    }
+    .b-name {
+      text-align: center;
+    }
+    .btn {
+      margin-left: 20%;
+      width: 60% !important;
+      text-align: center;
+      letter-spacing: 0;
+    }
+  }
+  .b-bio {
+    margin-top: 1vh;
+    max-width: 100%;
+    font-size: 3.6vw !important;
+    font-family: $font-family-regular !important;
+    margin-left: 1.5vw;
+  }
 }

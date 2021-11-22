@@ -56,6 +56,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
             <CoverAuthorRow
               brick={brick}
               setBio={() => { }}
+              setEditorBio={()=>{}}
             />
             <HoverHelp>
               This is taken from the information you provide in your profile
@@ -122,9 +123,6 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
         <div className="left-sidebar">
           <div>
             <CoverPlay onClick={() => setStatus(PlayStatus.Prep)} />
-            <div className="efw-arrow-container">
-              <SpriteIcon name="expample-arrow-1" />
-            </div>
             <div className="efw-help-text">Click here to see next page</div>
           </div>
         </div>

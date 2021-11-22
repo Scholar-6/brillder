@@ -132,6 +132,7 @@ interface ViewAllState {
   isSearchBLoading: boolean;
   isAllSubjects: boolean;
   isViewAll: boolean;
+  userIdSearch: number;
 
   bricksRef: React.RefObject<any>;
   onBricksWheel(e: any): void;
@@ -157,6 +158,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const isSubjectCategory =
       props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) ===
       map.SubjectCategoriesPrefix;
+
+    let userIdSearch = -1;
+    if (values.searchUserId) {
+      userIdSearch = parseInt(values.searchUserId as string);
+    }
+
 
     if (
       !isSubjectCategory &&
@@ -218,7 +225,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       teachSteps: [{
         element: '.bricks-list',
         intro: `<p>Click a brick you would like to assign</p>`,
-      },{
+      }, {
         element: '.bricks-list',
         intro: `<p>Click a brick you would like to assign</p>`,
       }],
@@ -233,6 +240,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isSearchBLoading: false,
       isAllSubjects,
       isViewAll,
+      userIdSearch,
       handleKey: this.handleKey.bind(this),
 
       bricksRef: React.createRef<any>(),
@@ -398,7 +406,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       setTimeout(() => {
         if (values) {
           let newTeacher = values.newTeacher as any;
-          this.setState({stepsEnabled: !!newTeacher});
+          this.setState({ stepsEnabled: !!newTeacher });
         }
       }, 300);
     } else {
@@ -407,12 +415,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   onIntroExit() {
-    this.setState({stepsEnabled: false});
+    this.setState({ stepsEnabled: false });
   }
 
   onIntroChanged(e: any) {
     if (e !== 0) {
-      this.setState({stepsEnabled: false});
+      this.setState({ stepsEnabled: false });
     }
   }
 
@@ -562,7 +570,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           finalBricks,
           shown: true,
         });
-      } catch {}
+      } catch { }
     }, 1400);
   }
 
@@ -592,7 +600,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           finalBricks,
           shown: true,
         });
-      } catch {}
+      } catch { }
     }, 1400);
   }
 
@@ -896,7 +904,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           isCore
         );
         this.setState({ shown: true, finalBricks, sortedIndex: 0 });
-      } catch {}
+      } catch { }
     }, 1400);
   }
 
@@ -914,6 +922,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     } else if (filterSubjects.length > 1) {
       return "Filtered";
     } else if (this.state.isSearching) {
+      if (this.state.userIdSearch) {
+        return this.state.searchString + "'s bricks";
+      }
       return this.state.searchString;
     }
 
@@ -1070,9 +1081,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return (
       <div>
         <div
-          className={`brick-row-title main-title ${
-            filterSubjects.length === 1 && "subject-title"
-          }`}
+          className={`brick-row-title main-title ${filterSubjects.length === 1 && "subject-title"
+            }`}
         >
           {this.renderMainTitle(filterSubjects)}
         </div>
@@ -1140,7 +1150,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       return <PageLoader content="...Getting Bricks..." />;
     }
 
-    const {user, history} = this.props;
+    const { user, history } = this.props;
 
     let bricks = this.state.finalBricks;
 
@@ -1166,11 +1176,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               </Route>
               <Route exec path={map.SearchPublishBrickPage}>
                 <React.Suspense fallback={<></>}>
-                  {isPhone() &&  <MobileTheme />}
+                  {isPhone() && <MobileTheme />}
                   <PhoneSearchPage
                     user={user} subjects={this.state.subjects}
                     history={history}
-                    requestFailed={() => this.setState({failedRequest: true})}
+                    requestFailed={() => this.setState({ failedRequest: true })}
                   />
                 </React.Suspense>
               </Route>
@@ -1276,14 +1286,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         </div>
         <ClassInvitationDialog />
         {this.state.isNewTeacher &&
-        <Steps
-          enabled={this.state.stepsEnabled}
-          steps={this.state.teachSteps}
-          initialStep={0}
-          onChange={this.onIntroChanged.bind(this)}
-          onExit={this.onIntroExit.bind(this)}
-          onComplete={() => {}}
-        />}
+          <Steps
+            enabled={this.state.stepsEnabled}
+            steps={this.state.teachSteps}
+            initialStep={0}
+            onChange={this.onIntroChanged.bind(this)}
+            onExit={this.onIntroExit.bind(this)}
+            onComplete={() => { }}
+          />}
       </React.Suspense>
     );
   }

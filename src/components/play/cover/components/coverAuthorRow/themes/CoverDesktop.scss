@@ -9,6 +9,56 @@
   font-size: 1.5vw;
   overflow-y: visible;
   text-transform: capitalize;
+  margin-left: 0.3vw;
+
+  .relative {
+    position: relative;
+  }
+
+  .background {
+    position: absolute;
+    top: -0.25vw;
+    left: -0.8vw;
+    height: 2.5vw;
+    width: 14.2vw;
+    border-radius: 1.25vw;
+    transition: all 300ms ease-in-out;
+  }
+
+  &:hover .background {
+    z-index: 1;
+    background: var(--tab-gray);
+  }
+
+  svg {
+    padding-left: 0.5vw;
+    width: 1.3vw;
+    height: 1.3vw;
+    padding-right: 0.5vw;
+  }
+
+  .absolute-text {
+    position: absolute;
+    left: 0;
+    width: 49vw;
+    justify-content: center;
+    z-index: 2;
+    display: inline-flex;
+    div {
+      display: flex;
+    }
+    .bold-on-hover {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      padding-right: 0.3vw;
+      border-radius: 3vw;
+      &:hover {
+        background: var(--tab-gray);
+      }
+    }
+  }
 
   .cover-bio {
     position: relative;
@@ -54,5 +104,12 @@
         background: rgba(0, 28, 88, 0.5);
       }
     }
+  }
+}
+
+
+.sorted-row-expanded .author-row.cover-author-row {
+  .absolute-text {
+    width: 56vw;
   }
 }

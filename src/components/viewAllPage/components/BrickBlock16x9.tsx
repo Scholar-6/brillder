@@ -16,6 +16,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getDate, getMonth, getYear } from "components/services/brickService";
 import { AssignmentBrickStatus } from "model/assignment";
 import BrickTitle from "components/baseComponents/BrickTitle";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -38,8 +39,10 @@ interface BrickBlockProps {
   // student assignments page
   isAssignment?: boolean;
   isCompleted?: boolean;
+  completedDate?: string;
   assignmentStatus?: AssignmentBrickStatus;
   assignmentId?: number;
+  bestScore?: number;
 
   teacher?: User;
 
@@ -116,6 +119,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     if (!props.isAssignment) { return '' }
     let className = '';
     let res = 'NO DEADLINE';
+
     const { deadline } = props;
     if (deadline) {
       const date = new Date(deadline);
@@ -134,12 +138,38 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
       className = 'green';
     }
 
-    return (<div className="fwe1-16x9-deadline">
-      <div>
-        <div className={className}>{res}</div>
+    if (props.completedDate) {
+      const date = new Date(props.completedDate);
+      className += ' bigger';
+      res = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
+    }
+
+    return (
+      <div className="fwe1-16x9-deadline">
+        <div>
+          <div className={className}>{res}</div>
+        </div>
       </div>
-    </div>
     );
+  }
+
+  const renderScore = () => {
+    if (props.isCompleted && props.bestScore && props.bestScore > 0) {
+      return (
+        <div className="level score">
+          <div style={{ background: 'white' }}>
+            {Math.round(props.bestScore)}
+          </div>
+          <CircularProgressbar
+            className="circle-progress-first"
+            strokeWidth={10}
+            counterClockwise={false}
+            value={props.bestScore}
+          />
+        </div>
+      );
+    }
+    return '';
   }
 
   return (
@@ -158,6 +188,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
                 {isAssignment ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
               </div>
             </div>
+            {renderScore()}
             {brick.coverImage ?
               <div className="p-cover-image">
                 <div className="scroll-block">
