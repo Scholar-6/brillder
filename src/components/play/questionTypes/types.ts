@@ -4,6 +4,7 @@ import {ComponentAttempt} from '../model';
 export interface CompQuestionProps {
   question: Question;
   component: any;
+  liveAttempt?: ComponentAttempt<any>;
   attempt?: ComponentAttempt<any>;
   answers: any;
   isReview?: boolean;

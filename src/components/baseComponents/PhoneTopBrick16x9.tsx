@@ -9,6 +9,7 @@ import BrickCircle from "./BrickCircle";
 import BrickTitle from "./BrickTitle";
 import { fileUrl } from "components/services/uploadFile";
 import { getDate, getMonth, getYear } from "components/services/brickService";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 interface Props {
   brick: Brick;
@@ -27,6 +28,7 @@ interface Props {
 
   deadline?: string;
   isAssignment?: boolean;
+  bestScore?: number;
   isViewAllAssignment?: boolean;
 
   onClick?(): void;
@@ -70,6 +72,24 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
     );
   }
 
+  const renderBestScore = () => {
+    if (props.bestScore) {
+      return (
+        <div className="left-brick-circle brick-status-circle score-circle">
+          <div className="round-button" style={{ background: "white" }}>
+            <div className="label-circle-text">{Math.round(props.bestScore)}</div>
+          </div>
+          <CircularProgressbar
+            className="circle-progress-first"
+            strokeWidth={8}
+            counterClockwise={false}
+            value={props.bestScore}
+          />
+        </div>
+      );
+    }
+    return '';
+  }
 
   return (
     <div className="phone-top-brick-16x9" onClick={() => props.onClick ? props.onClick() : {}}>
@@ -88,13 +108,14 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
           />
         )
       }
+      {renderBestScore()}
       <div className="p-blue-background" />
       <img alt="" className={`p-cover-image ${imgLoaded ? 'visible' : 'hidden'}`} onLoad={() => setLoaded(true)} src={fileUrl(brick.coverImage)} />
       <div className="bottom-description-color" />
       <div className="bottom-description">
         <BrickTitle title={brick.title} />
       </div>
-    </div>
+    </div >
   );
 }
 

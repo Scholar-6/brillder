@@ -2,11 +2,13 @@ import React from "react";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
 import { History } from "history";
-import TermsLink from "components/baseComponents/TermsLink";
+import axios from "axios";
+//@ts-ignore
+import isEmail from 'validator/lib/isEmail';
 
+import TermsLink from "components/baseComponents/TermsLink";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
-import axios from "axios";
 import { hideZendesk, showZendesk } from "services/zendesk";
 import { isPhone } from "services/phone";
 import { JoinPage } from "../desktop/routes";
@@ -88,7 +90,7 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps, State> {
           >
             <div className="input-block">
               <input
-                type="email"
+                type="email" name="email"
                 value={this.props.email}
                 onChange={(e) => this.props.setEmail(e.target.value)}
                 className="login-field"
@@ -101,7 +103,7 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps, State> {
               <div className="reset-password-link" onClick={async () => {
                 try {
                   if (this.props.email) {
-                    if (validator.isEmail(this.props.email)) {
+                    if (isEmail(this.props.email)) {
                       try {
                         await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/resetPassword/${this.props.email}`, {}, { withCredentials: true });
                       } catch { }

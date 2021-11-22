@@ -31,6 +31,7 @@ interface ReviewPageProps {
   status: PlayStatus;
   brick: Brick;
   history: any;
+  liveAttempts: any[];
   attempts: any[];
   isPlayPreview?: boolean;
   updateAttempts(attempt: any, index: number): any;
@@ -191,6 +192,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     return (
       <QuestionLive
         mode={props.mode}
+        liveAttempt={props.liveAttempts[index]}
         attempt={attempts[index]}
         question={question}
         answers={answers[index]}
@@ -228,7 +230,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   };
 
   const renderQuestionContainer = (question: Question, index: number) => {
-    const attempt = attempts[index];
+    const attempt = props.liveAttempts[index];
     return (
       <TabPanel
         key={index}
@@ -288,7 +290,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 </span>
                 <ReviewStepper
                   questions={questions}
-                  attempts={attempts}
+                  attempts={props.liveAttempts}
                   activeStep={activeStep}
                   handleStep={handleStep}
                 />
@@ -334,7 +336,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
               <div className="intro-text-row">
                 <ReviewStepper
                   questions={questions}
-                  attempts={attempts}
+                  attempts={props.liveAttempts}
                   activeStep={activeStep}
                   handleStep={handleStep}
                 />

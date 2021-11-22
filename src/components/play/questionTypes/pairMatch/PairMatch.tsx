@@ -13,7 +13,7 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import PairMatchOption from './PairMatchOption';
 import PairMatchImageContent from './PairMatchImageContent';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
-import {ReactComponent as DragIcon} from'assets/img/drag.svg';
+import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isMobile } from 'react-device-detect';
 
@@ -78,10 +78,12 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
 
   getState(entry: number): number {
     try {
-      if (this.props.attempt?.answer[entry]) {
-        if (this.props.attempt.answer[entry].index === this.props.component.list[entry].index) {
-          return 1;
-        } else { return -1; }
+      if (this.props.isReview && this.props.attempt === this.props.liveAttempt) {
+        if (this.props.attempt?.answer[entry]) {
+          if (this.props.attempt.answer[entry].index === this.props.component.list[entry].index) {
+            return 1;
+          } else { return -1; }
+        } else { return 0; }
       } else { return 0; }
     } catch {
       return 0;
@@ -138,7 +140,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (answer.answerType === QuestionValueType.Image) {
       className += " image-choice";
     }
-    if (this.props.attempt && this.props.isReview) {
+    if (this.props.attempt && this.props.isReview && this.props.attempt === this.props.liveAttempt) {
       if (this.state.status !== DragAndDropStatus.Changed) {
         let state = this.getState(answer.index);
         if (state === 1) {

@@ -156,7 +156,9 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const setCurrentAnswerAttempt = () => {
     let attempt = questionRefs[activeStep].current?.getAttempt(false);
-    props.updateAttempts(attempt, activeStep);
+    if (attempt) {
+      props.updateAttempts(attempt, activeStep);
+    }
   };
 
   const setActiveAnswer = () => {

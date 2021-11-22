@@ -14,6 +14,7 @@
 @import './utils/desktop/buttons-desktop';
 @import './utils/desktop/form-elements-desktop';
 @import './utils/desktop/dropdowns-desktop';
+@import './utils/webkit-ui';
 
 #launcher {
   left: 0 !important;
@@ -953,5 +954,17 @@
   overflow-y: auto !important;
   > div {
     overflow: visible !important;
+  }
+}
+
+.bold-on-hover:hover {
+  font-family: $font-family-bold;
+}
+
+#bell-container {
+  .bell-circle {
+    span {
+      font-family: $font-family-bold !important;
+    }
   }
 }

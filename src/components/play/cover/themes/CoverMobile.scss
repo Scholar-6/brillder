@@ -10,6 +10,24 @@
   padding-left: 4vw;
   padding-right: 4vw;
 
+  h1 {
+    font-size: 7vw;
+  }
+  
+  .cover-sponsors {
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+    .dropzone {
+      padding: 1.5vw !important;
+      min-height: 5vw !important;
+      width: 30vw !important;
+      img {
+        width: 100% !important;
+      }
+    }
+  }
+
   .q-brick-title {
     overflow: auto !important;
     font-size: 7vw !important;
@@ -33,6 +51,9 @@
       font-size: 3.7vw;
       line-height: 1;
       font-family: $font-family-bold;
+    }
+    br {
+      display: none;
     }
   }
 
@@ -71,11 +92,25 @@
   }
 
   .author-row {
+    display: inline-flex;
+    align-items: center;
     margin-bottom: 1vh;
     padding-right: 2vw;
-    font-size: 6vw;
+    font-size: 5vw;
     @extend %ellipsis;
     text-transform: capitalize;
+    svg {
+      width: 4vw;
+      height: 4vw;
+      margin-right: 1vw;
+    }
+    div {
+      display: inline-flex;
+      align-items: center;
+      svg {
+        margin-left: 1vw;
+      }
+    }
   }
 
   .keywords-row {
@@ -154,7 +189,7 @@
         border-radius: 3vw;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
-        min-height: 52vw;
+        min-height: 42vw;
         overflow-y: scroll;
         max-height: 30vh;
 
@@ -188,7 +223,7 @@
         border-radius: 3vw;
         padding: 1.1vh 7vw;
         color: var(--white);
-        background: var(--theme-orange);
+        background: var(--theme-green);
       }
     }
   }

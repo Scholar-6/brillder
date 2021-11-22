@@ -11,7 +11,6 @@ interface KeyWordsProps {
 
 const KeyWordsSearchPlay: React.FC<KeyWordsProps> = ({ searchString, keywords }) => {
   const renderKeyWord = (k: KeyWord, i: number) => {
-
     return (
       <div key={i} className='key-word-play'>
         {i > 0 ? ' • ' : ''} <SearchText key={0} searchString={searchString} text={k.name.trim()} /> {' '}

@@ -2,7 +2,7 @@ import { RolePreference } from "model/user";
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 
-import { setUserPreference } from 'services/axios/user';
+import { setUserPreference, setUserPreferenceById } from 'services/axios/user';
 
 import { UserRoleItem } from "./model";
 
@@ -13,6 +13,8 @@ interface BoxState {
 interface BoxProps {
   roles: any[];
   userRoles: any[];
+  userId: number;
+  isAdmin: boolean;
   rolePreference?: any;
   toggleRole(roleId: number, disabled: boolean): void;
 }
@@ -27,9 +29,16 @@ class RolesBox extends Component<BoxProps, BoxState> {
   }
 
   async onPreferenceChange(rolePreference: RolePreference) {
-    const success = await setUserPreference(rolePreference);
-    if (success) {
-      this.setState({ rolePreference });
+    if (this.props.isAdmin && this.props.userId) {
+      const success = await setUserPreferenceById(rolePreference, this.props.userId);
+      if (success) {
+        this.setState({ rolePreference });
+      }
+    } else {
+      const success = await setUserPreference(rolePreference);
+      if (success) {
+        this.setState({ rolePreference });
+      }
     }
   }
 
@@ -55,7 +64,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
     const { rolePreference } = this.state;
     return (
       <div className="flex-center roles-box">
-        <p className="fixed-label">User Types</p>
+        <p className="fixed-label">User Type</p>
         <div className="first-column">
           <Grid item>
             <FormControlLabel

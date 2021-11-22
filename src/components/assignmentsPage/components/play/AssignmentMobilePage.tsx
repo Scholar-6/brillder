@@ -273,6 +273,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
                 circleIcon='file-plus'
                 brick={a.brick}
                 deadline={a.deadline}
+                bestScore={a.bestScore}
                 isAssignment={true}
                 color={color}
               />
@@ -297,6 +298,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             color={color}
             isAssignment={true}
             deadline={a.deadline}
+            bestScore={a.bestScore}
             onIconClick={e => this.onIconClick(e, a)}
             onClick={() => {
               if (this.state.expandedAssignment === a) {
@@ -347,6 +349,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
               color={color}
               deadline={a.deadline}
               isAssignment={true}
+              bestScore={a.bestScore}
               onIconClick={e => this.onIconClick(e, a)}
               onClick={() => {
                 if (this.state.expandedAssignment === a) {

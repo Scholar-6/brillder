@@ -793,3 +793,98 @@ html {
 .play-preview-pages .sorted-row .real-live-page .introduction-page .introduction-info .intro-text-row {
   padding-left: 4.5vw !important;
 }
+
+.play-preview-pages .sorted-row.sorted-row-expanded .brick-row-container .brick-container .introduction-page .dd-live-container.question-live-play {
+  z-index: 10;
+  top: 0;
+  margin-left: 0 !important;
+  margin-top: calc(2vw + 4vw) !important;
+  position: fixed !important;
+  width: 79vw !important;
+  height: calc(100% - 12vw) !important;
+  padding-right: 2.3vw !important;
+  padding-left: 0 !important;
+  > div {
+    padding-left: 7vw !important;
+    padding-right: 7vw !important;
+  }
+}
+
+
+.play-preview-pages {
+  .play-brief-page,
+  .synthesis-page .introduction-page,
+  .real-live-page .play-question-container,
+  .review-page .play-question-container {
+    $size: 0.3vw;
+    ::-webkit-scrollbar {
+      width: $size * 2;
+      display: block !important;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      border-radius: $size;
+      background: var(--theme-light-blue);
+      display: block !important;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      border-radius: $size;
+      background: var(--tab-gray);
+      display: block !important;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--off-white);
+      display: block !important;
+    }
+    
+    .scrollable,
+    .question-live-play,
+    .synthesis-content {
+      overflow-x:hidden;
+    }
+    .question-live-play {
+      > div {
+        padding-left: 7vw;
+        padding-right: 7vw;
+        width: 100%;
+        overflow-x: auto;
+      }
+    }
+  }
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:hover {
+    display: initial !important;
+}
+
+
+::-webkit-scrollbar-track {
+  border-radius: 0.125rem;
+  background-color: red !important
+}
+::-webkit-scrollbar {
+  width: 0.25rem;
+  border-radius: 0.125rem;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 0.125rem;
+  background-color: red !important;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: red !important;
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}

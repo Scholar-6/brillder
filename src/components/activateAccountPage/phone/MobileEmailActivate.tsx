@@ -91,7 +91,7 @@ const MobileEmailActivatePage: React.FC<MobileLoginProps> = (props) => {
         >
           <div className="input-block">
             <input
-              type="email"
+              type="email" name="email"
               value={email}
               disabled={true}
               className="login-field"

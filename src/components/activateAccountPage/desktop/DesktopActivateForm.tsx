@@ -48,7 +48,7 @@ class DesktopActivateForm extends React.Component<ActivateFormProps, LoginsState
         <div className="input-block">
           <TypingInput
             required
-            type="email"
+            type="email" name="email"
             disabled={true}
             className="login-field blue-disable"
             placeholder="Email"

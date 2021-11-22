@@ -12,5 +12,39 @@
   }
   .left-brick-circle {
     z-index: 10;
+    &.score-circle {
+      right: 11.5vw !important;
+      .label-circle-text {
+        color: var(--theme-dark-blue);
+        font-family: $font-family-bold;
+        font-size: 4vw !important;
+      }
+      .CircularProgressbar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10;
+        width: 8vw;
+        height: 8vw;
+        .CircularProgressbar-trail {
+          display: none;
+        }
+        .CircularProgressbar-path {
+          stroke: var(--theme-green) !important;
+        }
+      }
+    }
+  }
+}
+
+.phone-top-bricks16x9 .phone-top-brick-16x9 .left-brick-circle.score-circle {
+  right: 20vw !important;
+  .CircularProgressbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    width: 14vw;
+    height: 14vw;
   }
 }

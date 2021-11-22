@@ -1,0 +1,57 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.comment-type-toggle {
+  right: 3vw;
+  font-size: 1.2vw;
+  top: calc(2.1vh + 1.35vw);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-family: $font-family-bold;
+
+  .btn {
+    cursor: pointer;
+    display: flex;
+    letter-spacing: 0.05vw;
+    align-items: center;
+    span {
+      color: var(--theme-light-blue) !important;
+      &:first-child {
+        margin-right: 1vw;
+      }
+      &:last-child {
+        margin-left: 1vw;
+      }
+    }
+    .svgOnHover {
+      $icon-padding: 0.3vw;
+      $icon-size: 2vw;
+      border-radius: 40%;
+      background-color: var(--tab-gray);
+      > .svg {
+        @extend %removePosition;
+        padding: $icon-padding;
+        height: $icon-size;
+        width: $icon-size;
+        background-color: var(--tab-gray);
+        color: var(--theme-light-blue);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &.selected {
+          color: var(--theme-dark-blue);
+          background-color: var(--theme-green);
+        }
+
+        svg {
+          stroke-width: 2;
+          width: 91%;
+          height: 91%;
+        }
+      }
+    }
+  }
+}

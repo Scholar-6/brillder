@@ -21,7 +21,9 @@ export type ShortAnswerAnswer = string[];
 interface ShortAnswerProps extends CompQuestionProps {
   component: ShortAnswerData;
   isTimeover: boolean;
+  liveAttempt?: any;
   attempt: ComponentAttempt<ShortAnswerAnswer>;
+  liveAnswers: string[];
   answers: string[];
 }
 
@@ -123,7 +125,11 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
 
   renderAnswer(answer: ShortAnswerItem, index: number) {
     let isCorrect = false;
-    if (this.props.isReview || this.props.isBookPreview) {
+    if (this.props.isBookPreview) {
+      isCorrect = this.checkAttemptAnswer(answer, index);
+    }
+
+    if (this.props.isReview && this.props.liveAttempt === this.props.attempt) {
       isCorrect = this.checkAttemptAnswer(answer, index);
     }
 
@@ -132,7 +138,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     if (this.props.isBookPreview) {
       className += getValidationClassName(isCorrect);
     } else {
-      if (this.props.isReview) {
+      if (this.props.isReview && this.props.liveAttempt === this.props.attempt) {
         if (isCorrect) {
           className += ' correct';
         } else {

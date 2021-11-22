@@ -1416,7 +1416,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   .phone-share-footer {
     > div {
       svg {
-        width: calc(100% / 4.9);
+        width: calc(100% / 6);
       }
       .gt-smaller {
         height: 11vw;

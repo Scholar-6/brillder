@@ -87,3 +87,9 @@
 iframe {
   max-width: 100vw;
 }
+
+.MuiFormHelperText-root.Mui-error {
+  font-family: $font-family-bold;
+  color: white !important;
+  font-size: 1vw;
+}

@@ -13,6 +13,7 @@
     font-family: $font-family-light-italic;
     color: var(--theme-dark-blue);
   }
+
   .flex-brick-container {
     position: relative;
     height: calc(#{$bricks-height / 2.5});
@@ -35,6 +36,29 @@
         z-index: 3;
         right: 1vh;
         top: 1vh;
+
+        &.score {
+          right: calc(1vh + 3.5vh + 2vh);
+          > div {
+            color: var(--theme-dark-blue);
+            font-family: $font-family-bold;
+            font-size:2.5vh;
+          }
+          .CircularProgressbar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 10;
+            width: 4.5vh;
+            height: 4.5vh;
+            .CircularProgressbar-trail {
+              display: none;
+            }
+            .CircularProgressbar-path {
+              stroke: var(--theme-green) !important;
+            }
+          }
+        }
 
         svg {
           $size: 3.5vh;
