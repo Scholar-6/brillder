@@ -4,6 +4,7 @@ import ReactQuill from "react-quill";
 import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
 import "quill-table-ui/dist/index.css";
+import Snackbar from "@material-ui/core/Snackbar";
 
 import "./QuillLatex";
 import "./QuillAutoLink";
@@ -11,6 +12,7 @@ import "./QuillMediaEmbed";
 import "./QuillKeyboard";
 import "./QuillCapitalization";
 import "./QuillBlockQuote";
+import "./QuillTitleEditor.scss";
 import QuillBetterTable from "./QuillBetterTable";
 import { QuillEditorContext } from "./QuillEditorContext";
 import { stripHtml } from "components/build/questionService/ConvertService";
@@ -92,7 +94,7 @@ const QuillSimpleEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((pr
 
   return (
     <div
-      className={`simple quill-document-editor${valid ? "" : " content-invalid"} quill-id-${uniqueId}`}
+      className={`simple plan-brick-title quill-document-editor ${valid ? "" : " content-invalid"} quill-id-${uniqueId}`}
       data-toolbar={props.toolbar}
       ref={forwardRef}
     >
@@ -118,6 +120,22 @@ const QuillSimpleEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((pr
         placeholder={props.placeholder}
         modules={modules}
         ref={ref}
+      />
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={limitOverflow}
+        onClose={() => setLimitOverflow(false)}
+        action={
+          <React.Fragment>
+            <div>
+              <span className="exclamation-mark">!</span>
+              Titles can be a maximum of 50 characters long
+            </div>
+          </React.Fragment>
+        }
       />
     </div>
   );
