@@ -929,7 +929,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     } else if (filterSubjects.length > 1) {
       return "Filtered";
     } else if (this.state.isSearching) {
-      if (this.state.userIdSearch) {
+      if (this.state.userIdSearch >= 1) {
         return renderName(this.state.searchString) + ' bricks';
       }
       return this.state.searchString;
