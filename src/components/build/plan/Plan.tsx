@@ -21,7 +21,6 @@ import BrickLength from "./BrickLength";
 import Subjects from "./Subjects";
 import brickActions from "redux/actions/brickActions";
 import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPreview";
-import DifficultySelect from "../proposal/questionnaire/brickTitle/components/DifficultySelect";
 import { getSubjects } from "services/axios/subject";
 import CoreSelect from "../proposal/questionnaire/brickTitle/components/CoreSelect";
 import { stripHtml } from "../questionService/ConvertService";
@@ -30,6 +29,7 @@ import QuillSimpleEditor from "components/baseComponents/quill/QuillSimpleEditor
 import LockComponent from "../buildQuestions/lock/Lock";
 import { isAorPorE } from "components/services/brickService";
 import QuillTitleEditor from "components/baseComponents/quill/QuillTitleEditor";
+import DifficultySelectV2 from "../proposal/questionnaire/brickTitle/components/DifficultySelectV2";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -192,7 +192,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <CoreSelect disabled={locked} brickStatus={currentBrick.status} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({...brick, isCore}))} />
                   </div>
                   <div className="level-and-length-container">
-                    <DifficultySelect
+                    <DifficultySelectV2
                       disabled={locked}
                       level={currentBrick.academicLevel}
                       onChange={academicLevel => changeBrick((brick) => ({ ...brick, academicLevel }))}
