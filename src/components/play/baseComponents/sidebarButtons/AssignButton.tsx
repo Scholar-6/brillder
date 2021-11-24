@@ -70,7 +70,7 @@ const AssignButton: React.FC<ButtonProps> = (props) => {
   }
 
   const renderTooltip = () => (
-    <div className="custom-tooltip">
+    <div className="custom-tooltip bold">
       <div>Assign Brick</div>
     </div>
   );

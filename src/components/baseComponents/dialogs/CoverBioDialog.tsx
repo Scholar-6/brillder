@@ -39,7 +39,7 @@ const CoverBioDialog: React.FC<SubjectDialogProps> = ({ isOpen, user, close }) =
             if (isPhone()) {
               history.push(map.SearchPublishBrickPage + '?searchString=' + user.firstName + '&searchUserId=' + user.id);
             } else {
-              history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true&searchString=' + user.firstName + '&searchUserId=' + user.id);
+              history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true&searchString=' + user.firstName + ' ' + user.lastName + '&searchUserId=' + user.id);
             }
           }}>See all of {renderName()} bricks</div>
         </div>

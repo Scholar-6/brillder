@@ -39,6 +39,7 @@ const ReturnToAuthorButton: React.FC<ButtonProps> = props => {
           }
         }}
       >
+        <div className="center-absolute">A</div>
         <SpriteIcon name="repeat" />
         {hovered && <div className="custom-tooltip">Return to Author</div>}
       </div>

@@ -27,7 +27,7 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
   }
 
   const renderTooltip = () => (
-    <div className="custom-tooltip">
+    <div className="custom-tooltip bold">
       <div>Adapt Brick</div>
     </div>
   );

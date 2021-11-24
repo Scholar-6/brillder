@@ -18,8 +18,16 @@
       font-family: $font-family-bold;
     }
   }
-  svg {
+  &.custom-arrow .MuiInputBase-root svg {
     display: none;
+    right: 0;
+    position: absolute;
+    $size: 1vw;
+    width: $size;
+    height: 100% !important;
+    color: var(--theme-dark-blue);
+  }
+  svg.arrow {
     right: 0;
     position: absolute;
     $size: 1vw;

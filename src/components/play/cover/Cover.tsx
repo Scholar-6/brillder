@@ -345,7 +345,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                           <div className="white-circle">II</div>
                           <div className="flex-center and-sign">&</div>
                           <div className="white-circle">III</div>
-                          <div className="l-text">
+                          <div className="l-text smaller">
                             <div>Core</div>
                             <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
                           </div>

@@ -1,0 +1,54 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.simple.plan-brick-title.quill-document-editor {
+  .MuiSnackbarContent-root {
+    min-width: 20vw !important;
+  }
+
+  .MuiSnackbar-root {
+    position: fixed !important;
+    z-index: 999999;
+    font-size: 2vw;
+
+    top: 30% !important;
+    height: 10vw;
+    left: 19vw !important;
+    width: 40vw;
+
+    .MuiSnackbarContent-root {
+      text-align: justify;
+      padding: 0.8vw 1.7vw 0.8vw 1vw;
+      border-radius: 0.7vw;
+      background: var(--theme-light-blue);
+      font-size: 1.4vw;
+      font-family: $font-family-regular;
+
+      .MuiSnackbarContent-action {
+        padding: 0;
+      }
+
+      .exclamation-mark {
+        border-radius: 100vw;
+        padding-left: 0.7vw;
+        padding-right: 0.7vw;
+        margin-right: 1vw;
+        font-size: 1.2vw;
+        @extend %textCenter;
+        font-weight: bold;
+        font-family: $font-family-black;
+        color: white;
+        background-color: var(--theme-orange);
+      }
+    }
+  }
+  .exclamation-mark {
+    width: 2vw;
+    @extend %textCenter;
+    font-weight: bold;
+    font-family: $font-family-black;
+    color: white;
+    font-size: 1.2vw;
+  }
+}

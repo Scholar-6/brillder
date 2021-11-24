@@ -14,6 +14,7 @@ interface AutocompleteProps {
   canEdit: boolean;
   editorError: string;
   placeholder: string;
+  removeDisabled?: boolean;
   onBlur(): void;
 
   users: UserBase[];
@@ -30,6 +31,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
   return (
     <Autocomplete
       multiple
+      className="autocomplete-username no-removal"
       disabled={!props.canEdit}
       value={users}
       options={suggestions}
@@ -67,14 +69,24 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
         />
       )}
       renderTags={(value: UserBase[], getTagProps) => {
+        if (props.removeDisabled) {
+          return <>
+            {value.map((user, idx) => (
+              <Chip
+                label={`${user.username}`}
+                avatar={<Avatar src={fileUrl(user.profileImage)} />}
+              />
+            ))}
+          </>;
+        }
         return <>
-        {value.map((user, idx) => (
-          <Chip
-            label={`${user.username}`}
-            avatar={<Avatar src={fileUrl(user.profileImage)} />}
-            {...getTagProps({ index: idx })}
-          />
-        ))}
+          {value.map((user, idx) => (
+            <Chip
+              label={`${user.username}`}
+              avatar={<Avatar src={fileUrl(user.profileImage)} />}
+              {...getTagProps({ index: idx })}
+            />
+          ))}
         </>;
       }}
       filterOptions={(options) => options}
