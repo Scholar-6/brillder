@@ -44,6 +44,7 @@ const ReturnToEditorButton: React.FC<ButtonProps> = props => {
           }
         }}
       >
+        <div className="center-absolute">E</div>
         <SpriteIcon name="repeat" />
         {hovered && <div className="custom-tooltip">Return to Editor</div>}
       </div>

@@ -17,7 +17,7 @@ const DifficultySelect: React.FC<DifficultySelectProps> = (props) => {
     level = 0;
   }
 
-  let className = 'difficulty-select';
+  let className = 'difficulty-select custom-arrow';
   if (level === 0) {
     className += ' current-placeholder';
   }

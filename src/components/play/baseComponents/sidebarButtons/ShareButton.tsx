@@ -19,7 +19,7 @@ const ShareButton: React.FC<ButtonProps> = (props) => {
   }
 
   const renderTooltip = () => (
-    <div className="custom-tooltip">
+    <div className="custom-tooltip bold">
       <div>Share Brick</div>
     </div>
   );

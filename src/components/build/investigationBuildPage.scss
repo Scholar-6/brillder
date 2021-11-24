@@ -405,6 +405,14 @@ $base-build-border: $editor-radius;
   .build-publish-button-container {
     position: relative;
 
+    .center-absolute {
+      position: absolute;
+      top: 1.3vw;
+      left: 1.85vw;
+      font-size: 1.3vw;
+      font-family: $font-family-bold;
+    }
+
     .custom-hover-container {
       top: 0;
       left: 0;

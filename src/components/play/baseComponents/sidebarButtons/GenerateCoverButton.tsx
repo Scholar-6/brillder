@@ -71,7 +71,7 @@ const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
                     <button onClick={generateCover} className="assign-class-button svgOnHover blue" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                         <SpriteIcon name="heroicons-qrcode" className="active" />
                     </button>
-                    {hovered && <div className="custom-tooltip">
+                    {hovered && <div className="custom-tooltip bold">
                         <div>Create QR Cover</div>
                     </div>}
                 </div>
