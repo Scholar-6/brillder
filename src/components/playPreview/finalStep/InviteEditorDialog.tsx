@@ -88,7 +88,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         className={`btn bold btn-md yes-button bg-theme-orange`}
         onClick={onNext}
       >
-        Send Invite
+        Invite new editor{editors.length > 1 ? 's' : ''}
         <SpriteIcon name="send" className="active send-icon" onClick={props.close} />
       </button>
     );
@@ -113,6 +113,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
             <AutocompleteUsername
               canEdit={props.canEdit}
               brick={brick}
+              removeDisabled={true}
               editorError={editorError}
               placeholder="Editor's username (first 3 characters)"
               onBlur={onBlur}
