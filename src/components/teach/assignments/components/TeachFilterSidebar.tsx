@@ -175,14 +175,19 @@ class TeachFilterSidebar extends Component<
   }
 
   getClassAssignedCount(classroom: any) {
-    return parseInt(classroom.assignmentsCount);
+    if (classroom.assignmentsCount) {
+      return parseInt(classroom.assignmentsCount);
+    } else if (classroom.assignments) {
+      return classroom.assignments.length;
+    }
+    return 0;
   }
 
   renderClassesBox() {
     let finalClasses = [];
     for (const cls of this.props.classrooms) {
       let finalClass = Object.assign({}, cls) as any;
-      finalClass.assigned = parseInt(cls.assignmentsCount);
+      finalClass.assigned = this.getClassAssignedCount(cls);
       finalClasses.push(finalClass);
     }
     if (this.state.ascending) {
@@ -194,7 +199,7 @@ class TeachFilterSidebar extends Component<
     let totalCount = 0;
     for (let classroom of this.props.classrooms) {
       totalCount += classroom.students.length;
-      totalBricks += 1;// this.getClassAssignedCount(classroom);
+      totalBricks += 1;
     }
     let label = '1 ASSIGNMENT';
     if (totalBricks > 1) {
