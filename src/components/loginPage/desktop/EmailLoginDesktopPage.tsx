@@ -116,7 +116,6 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             // This opens up a side channel, because hackers can intuit that this means the email exists in the system
             //setAlertMessage("The email or password may be wrong.");
             //setLoginWrong(true);
-            console.log('555');
             setInvalidLogin(true);
           }
         }
