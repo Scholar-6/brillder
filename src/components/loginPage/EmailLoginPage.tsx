@@ -42,6 +42,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [isLoginWrong, setLoginWrong] = React.useState(false);
+  const [invalidLogin, setInvalidLogin] = React.useState(false);
 
   const [emptyEmail, setEmptyEmail] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);
@@ -110,6 +111,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
             toggleAlertMessage(true);
             setAlertMessage("Your email or password may be wrong?");
             setLoginWrong(true);
+            setInvalidLogin(true);
           }
         }
       } else {
@@ -227,6 +229,20 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
           <ListItem>
             <ListItemText
               primary="This email appears to be invalid"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+        </div>
+      </Dialog>
+      <Dialog open={false} onClose={() => setInvalidLogin(false)} className="dialog-box forgot-password-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <div className="flex-center">
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 m-b-02" />
+          </div>
+          <ListItem>
+            <ListItemText
+              primary="This email appears to be invali 435435d"
               className="bold"
               style={{ minWidth: '30vw' }}
             />
