@@ -71,7 +71,6 @@ interface TeachState {
   totalCount: number;
   subjects: Subject[];
   searchString: string;
-  isSearching: boolean;
   isLoaded: boolean;
   remindersData: RemindersData;
   createClassOpen: boolean;
@@ -124,7 +123,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       totalCount: 0,
       searchString: '',
-      isSearching: false,
       subjects: [],
 
       haveArchivedBrick: false,
@@ -365,12 +363,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (searchString.length === 0) {
       this.setState({
         ...this.state, searchString,
-        isSearching: true,
         activeClassroom: null,
         activeAssignment: null,
         assignmentStats: null,
         activeStudent: null
       });
+      this.loadInitData();
     } else {
       this.setState({ ...this.state, searchString });
     }
