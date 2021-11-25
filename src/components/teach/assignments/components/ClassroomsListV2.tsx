@@ -9,7 +9,7 @@ import { TeachClassroom, Assignment } from "model/classroom";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import NameAndSubjectForm from "components/teach/components/NameAndSubjectForm";
 import { updateClassroom } from "services/axios/classroom";
-import { convertClassAssignments } from "../service/service";
+import { convertClassAssignments, getArchivedAssignedCount, getClassAssignedCount } from "../service/service";
 import { getAssignmentsClassrooms } from "components/teach/service";
 import MainAssignmentPagination from "./MainAssignmentPagination";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
@@ -216,11 +216,11 @@ class ClassroomListV2 extends Component<ClassroomListProps, State> {
     for (let cls of this.state.classrooms) {
       totalCount += 1;
       if (this.props.isArchive) {
-        itemsCount += parseInt(cls.archivedAssignmentsCount);
-        totalCount += parseInt(cls.archivedAssignmentsCount);
+        itemsCount += getArchivedAssignedCount(cls);
+        totalCount += getArchivedAssignedCount(cls);
       } else {
-        itemsCount += parseInt(cls.assignmentsCount) - parseInt(cls.archivedAssignmentsCount);
-        totalCount += parseInt(cls.assignmentsCount) - parseInt(cls.archivedAssignmentsCount);
+        itemsCount += getClassAssignedCount(cls) - getArchivedAssignedCount(cls);
+        totalCount += getClassAssignedCount(cls) - getArchivedAssignedCount(cls);
       }
     }
     let endIndex = this.getClassIndex(items, start + pageSize);
@@ -239,7 +239,6 @@ class ClassroomListV2 extends Component<ClassroomListProps, State> {
 
   prepareItems() {
     const { page, pageSize, classrooms } = this.state;
-    console.log(classrooms);
     let items = [] as TeachListItem[];
     let notFirst = false;
 

@@ -40,3 +40,27 @@ export const isDeadlinePassed = (assignment: Assignment) => {
   }
   return false;
 }
+
+export const getClassAssignedCount = (classroom: any) => {
+  if (classroom.assignmentsCount) {
+    return parseInt(classroom.assignmentsCount);
+  } else if (classroom.assignments) {
+    return classroom.assignments.length;
+  }
+  return 0;
+}
+
+export const getArchivedAssignedCount = (classroom: any) => {
+  if (classroom.archivedAssignmentsCount) {
+    return parseInt(classroom.archivedAssignmentsCount);
+  } else if (classroom.assignments) {
+    let archivedCount = 0;
+    for (let assignment of classroom.assignments) {
+      if (assignment.isArchived) {
+        archivedCount += 1;
+      }
+    }
+    return archivedCount;
+  }
+  return 0;
+}
