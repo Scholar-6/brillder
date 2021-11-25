@@ -38,6 +38,7 @@ import EmptyTabContent from "./components/EmptyTabContent";
 import ArchiveToggle from "./components/ArchiveToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ClassroomsListV2 from "./components/ClassroomsListV2";
+import { getArchivedAssignedCount } from "./service/service";
 
 
 interface RemindersData {
@@ -182,7 +183,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   findClassArchive(c: TeachClassroom) {
-    return parseInt(c.archivedAssignmentsCount) > 0;
+    return getArchivedAssignedCount(c) > 0;
   }
 
   async loadClasses(activeClassId?: number) {
