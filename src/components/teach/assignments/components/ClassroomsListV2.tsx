@@ -56,6 +56,9 @@ class ClassroomListV2 extends Component<ClassroomListProps, State> {
   }
 
   componentDidUpdate(prevProps: ClassroomListProps, prevState: State) {
+    if (this.props.classrooms != prevProps.classrooms) {
+      this.loadPageData(0, this.state.pageSize, this.props.classrooms);
+    }
     if (prevProps.isArchive !== this.props.isArchive) {
       this.loadPageData(0, this.state.pageSize, this.props.classrooms);
     }
