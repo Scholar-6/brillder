@@ -87,14 +87,14 @@ class ExpandedAssignment extends Component<
   }
 
   prepareStudents() {
-    const { students } = this.props.classroom;
+    const { students } = this.props.assignment.classroom;
 
-    students.forEach(student => {
+    students.forEach((student: any) => {
       student.studentResult = this.props.stats.byStudent
         .find(s => s.studentId === student.id);
     });
 
-    students.forEach(student => {
+    students.forEach((student: any) => {
       this.props.assignment.studentStatus.forEach(s => {
         if (student.id === s.studentId) {
           student.remindersCounter = s.remindersCounter;
