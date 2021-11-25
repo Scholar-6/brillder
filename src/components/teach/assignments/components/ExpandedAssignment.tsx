@@ -20,6 +20,7 @@ import { connect } from "react-redux";
 import { User } from "model/user";
 import BookButton from "./BookButton";
 import CommentButton from "./CommentButton";
+import { getClassroomStudents } from "services/axios/classroom";
 
 enum SortBy {
   None,
@@ -77,18 +78,27 @@ class ExpandedAssignment extends Component<
       questionCount: questionCount,
       studentsPrepared: false,
       bookData: { open: false, student: null, assignment: null},
-      students: this.prepareStudents(),
+      students: this.props.assignment.classroom ? this.prepareStudents(this.props.assignment.classroom.students) : [],
       shown: false
     };
+
+    if (!this.props.assignment.classroom) {
+      this.loadStudents();
+    }
+  }
+
+  async loadStudents() {
+    var res = await getClassroomStudents(this.props.classroom.id);
+    if (res) {
+      this.setState({students: this.prepareStudents(res)});
+    }
   }
 
   componentDidMount() {
     this.setState({ shown: true });
   }
 
-  prepareStudents() {
-    const { students } = this.props.assignment.classroom;
-
+  prepareStudents(students: any[]) {
     students.forEach((student: any) => {
       student.studentResult = this.props.stats.byStudent
         .find(s => s.studentId === student.id);
