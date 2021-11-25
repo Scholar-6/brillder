@@ -19,7 +19,7 @@ import TermsLink from "components/baseComponents/TermsLink";
 import { trackSignUp } from "services/matomo";
 import map from "components/map";
 import { getTerms } from "services/axios/terms";
-import validator from 'validator';
+import LoginBricks from "../components/LoginBricks";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -43,6 +43,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
   const [emptyEmail, setEmptyEmail] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [emailSended, setEmailSended] = useState(false);
+  const [invalidLogin, setInvalidLogin] = React.useState(false);
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
@@ -113,8 +114,10 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
           if (msg === "INVALID_EMAIL_OR_PASSWORD") {
             toggleAlertMessage(true);
             // This opens up a side channel, because hackers can intuit that this means the email exists in the system
-            setAlertMessage("The email or password may be wrong.");
+            //setAlertMessage("The email or password may be wrong.");
             //setLoginWrong(true);
+            console.log('555');
+            setInvalidLogin(true);
           }
         }
       } else {
@@ -201,36 +204,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="container">
           <PhoneIcon />
         </div>
-        <div className="bricks-container">
-          <div className="inner">
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
-            </div>
-            <div className="row">
-              <div className="block" />
-              <div className="block" />
-            </div>
-          </div>
-        </div>
+        <LoginBricks />
         <div className="icons-container">
           <img alt="" className="glasses floating1" src="/images/login/rotatedGlasses.svg" />
           <TeachIcon className="floating3" />
@@ -286,6 +260,23 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
           <ListItem>
             <ListItemText
               primary="This email appears to be invalid"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+            <ListItemAvatar style={{ padding: 0 }}>
+              <Avatar className="circle-orange">
+                <SpriteIcon name="alert-triangle" className="active text-white stroke-2 w-3 m-b-02" />
+              </Avatar>
+            </ListItemAvatar>
+          </ListItem>
+          <div></div>
+        </div>
+      </Dialog>
+      <Dialog open={invalidLogin} onClose={() => setInvalidLogin(false)} className="dialog-box width-50">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <ListItem>
+            <ListItemText
+              primary="If you think you have already signed up, but are unable to access your account, please tell us by clicking the help button in the bottom left of this screen"
               className="bold"
               style={{ minWidth: '30vw' }}
             />
