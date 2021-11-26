@@ -22,6 +22,7 @@ import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
 import ShareDialogs from '../finalStep/dialogs/ShareDialogs';
 import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
 import { PlayPage } from '../PlayBrickRouting';
+import FullScreenButton from 'components/baseComponents/pageHeader/fullScreenButton/FullScreen';
 
 interface FooterProps {
   brick: Brick;
@@ -187,6 +188,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         }}>
           Stop Tracking <SpriteIcon name="feather-x-octagon" />
         </MenuItem>}
+      <FullScreenButton />
       {canSee && <GenerateCoverButton brick={brick} isMenuItem={true} />}
     </Menu>
     {renderPopups()}

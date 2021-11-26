@@ -13,6 +13,7 @@ import CreateClassDialog from "components/teach/manageClassrooms/components/Crea
 import { Subject } from "model/brick";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import { resendInvitation } from "services/axios/classroom";
+import { getClassAssignedCount } from "../service/service";
 
 enum TeachFilterFields {
   Assigned = "assigned",
@@ -128,7 +129,7 @@ class TeachFilterSidebar extends Component<
   }
 
   renderAssignedCount(c: TeachClassroom) {
-    const count = this.getClassAssignedCount(c);
+    const count = getClassAssignedCount(c);
     if (count <= 0) {
       return <div />;
     }
@@ -174,15 +175,11 @@ class TeachFilterSidebar extends Component<
     );
   }
 
-  getClassAssignedCount(classroom: any) {
-    return parseInt(classroom.assignmentsCount);
-  }
-
   renderClassesBox() {
     let finalClasses = [];
     for (const cls of this.props.classrooms) {
       let finalClass = Object.assign({}, cls) as any;
-      finalClass.assigned = parseInt(cls.assignmentsCount);
+      finalClass.assigned = getClassAssignedCount(cls);
       finalClasses.push(finalClass);
     }
     if (this.state.ascending) {
@@ -194,7 +191,7 @@ class TeachFilterSidebar extends Component<
     let totalCount = 0;
     for (let classroom of this.props.classrooms) {
       totalCount += classroom.students.length;
-      totalBricks += 1;// this.getClassAssignedCount(classroom);
+      totalBricks += 1;
     }
     let label = '1 ASSIGNMENT';
     if (totalBricks > 1) {

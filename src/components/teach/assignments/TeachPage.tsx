@@ -38,6 +38,7 @@ import EmptyTabContent from "./components/EmptyTabContent";
 import ArchiveToggle from "./components/ArchiveToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ClassroomsListV2 from "./components/ClassroomsListV2";
+import { getArchivedAssignedCount } from "./service/service";
 
 
 interface RemindersData {
@@ -71,7 +72,6 @@ interface TeachState {
   totalCount: number;
   subjects: Subject[];
   searchString: string;
-  isSearching: boolean;
   isLoaded: boolean;
   remindersData: RemindersData;
   createClassOpen: boolean;
@@ -124,7 +124,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       totalCount: 0,
       searchString: '',
-      isSearching: false,
       subjects: [],
 
       haveArchivedBrick: false,
@@ -184,7 +183,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   findClassArchive(c: TeachClassroom) {
-    return parseInt(c.archivedAssignmentsCount) > 0;
+    return getArchivedAssignedCount(c) > 0;
   }
 
   async loadClasses(activeClassId?: number) {
@@ -365,12 +364,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (searchString.length === 0) {
       this.setState({
         ...this.state, searchString,
-        isSearching: true,
         activeClassroom: null,
         activeAssignment: null,
         assignmentStats: null,
         activeStudent: null
       });
+      this.loadInitData();
     } else {
       this.setState({ ...this.state, searchString });
     }

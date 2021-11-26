@@ -42,6 +42,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [isLoginWrong, setLoginWrong] = React.useState(false);
+  const [invalidLogin, setInvalidLogin] = React.useState(false);
 
   const [emptyEmail, setEmptyEmail] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);
@@ -107,9 +108,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         } else if (response.status === 401) {
           const { msg } = response.data;
           if (msg === "INVALID_EMAIL_OR_PASSWORD") {
-            toggleAlertMessage(true);
-            setAlertMessage("Your email or password may be wrong?");
-            setLoginWrong(true);
+            setInvalidLogin(true);
           }
         }
       } else {
@@ -176,7 +175,6 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         handleLoginSubmit={handleLoginSubmit}
         setPolicyDialog={setPolicyDialog}
       />
-      <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={alertShown}
@@ -227,6 +225,20 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
           <ListItem>
             <ListItemText
               primary="This email appears to be invalid"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+        </div>
+      </Dialog>
+      <Dialog open={invalidLogin} onClose={() => setInvalidLogin(false)} className="dialog-box forgot-password-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <div className="flex-center">
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 m-b-02" />
+          </div>
+          <ListItem>
+            <ListItemText
+              primary="If you think you have already signed up, but are unable to access your account, please tell us by clicking the help button in the bottom left of this screen"
               className="bold"
               style={{ minWidth: '30vw' }}
             />

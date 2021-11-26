@@ -48,6 +48,14 @@ export const getStudents = async () => {
   }
 }
 
+export const getClassroomStudents = async (id: number) => {
+  try {
+    return await get<Student[]>("/classrooms/students/" + id);
+  } catch {
+    return null;
+  }
+}
+
 export const getClassInvitations = async (searchString?: string) => {
   try {
     return await post<MUser[]>("/classrooms/studentsInvitations", {});

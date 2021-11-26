@@ -18,6 +18,7 @@ import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccess
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
 import ShareDialogs from '../finalStep/dialogs/ShareDialogs';
 import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
+import FullScreenButton from 'components/baseComponents/pageHeader/fullScreenButton/FullScreen';
 
 interface FooterProps {
   brick: Brick;
@@ -143,6 +144,7 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
       }}>
         Assign Brick <SpriteIcon name="file-plus" />
       </MenuItem>
+      <FullScreenButton />
       <GenerateCoverButton brick={brick} isMenuItem={true} />
     </Menu>
     <ExitPlayDialog isOpen={exitPlay} history={history} subjectId={brick.subject?.id || brick.subjectId} close={() => setExit(false)} />

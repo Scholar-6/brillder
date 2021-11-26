@@ -2198,3 +2198,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
   }
 }
+
+.sort-play > div {
+  margin-left: 6vw !important;
+  margin-right: 6vw !important;
+}

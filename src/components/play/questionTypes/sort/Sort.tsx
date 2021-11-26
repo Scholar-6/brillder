@@ -352,6 +352,7 @@ class Sort extends CompComponent<SortProps, SortState> {
               : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
           }</span>
         </p>
+        {isMobile ?  <p className="flex-center"><span className="help-text"><SpriteIcon name="flaticon-swipe" style={{paddingBottom: '2vw'}} className="rotate-90"/> Scroll on the right-hand side.</span></p> : ''}
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>

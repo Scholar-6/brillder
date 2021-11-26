@@ -18,6 +18,9 @@
     align-items: center;
     justify-content: flex-end;
     display: flex;
+    > img {
+      width: 30vw;
+    }
     .dropzone {
       padding: 1.5vw !important;
       min-height: 5vw !important;
