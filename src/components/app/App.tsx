@@ -121,6 +121,7 @@ const App: React.FC<AppProps> = props => {
   // lock screen for phone
   if (isPhone()) {
     document.onclick = function (e) {
+      /*
       if (document.body.requestFullscreen && !document.fullscreenElement) {
         let res = document.body.requestFullscreen();
         res.then(() => {
@@ -129,7 +130,7 @@ const App: React.FC<AppProps> = props => {
             console.log('lock screen');
           }
         });
-      }
+      }*/
     }
   }
 
