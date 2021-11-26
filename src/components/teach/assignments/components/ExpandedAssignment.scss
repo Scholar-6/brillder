@@ -39,6 +39,11 @@
       > div {
         @extend %flexCenter;
       }
+      .centered {
+        line-height: 0.7;
+        text-align: center;
+        font-size: 1.1vw;
+      }
     }
 
     .student-book {
