@@ -28,6 +28,10 @@
   }
 }
 
+.rotate-90 {
+  transform: rotate(-90deg);
+}
+
 // #2870 unauthorized dashbaord scrolling fix
 .unauthrozied-container {
   height: 100%;
