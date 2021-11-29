@@ -9,13 +9,20 @@ import { HighlightMode } from '../model';
 import HighlightButton from '../components/HighlightButton';
 import LineStyleDialog from './LineStyleDialog';
 import PoemToggle from './PoemToggle';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
+enum SubMode {
+  Edit,
+  Bold,
+  Italic
+}
 export interface WordHighlightingData {
   text: string;
   isPoem: boolean;
   words: BuildWord[];
   mode: HighlightMode;
+  subMode: SubMode;
 }
 
 export interface WordHighlightingProps extends UniqueComponentProps {
@@ -35,6 +42,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   useEffect(() => {
     if (!data.text) { data.text = ''; }
     if (!data.words) { data.words = []; }
+    data.subMode = state.subMode;
     setState(data);
   }, [data]);
 
@@ -115,17 +123,49 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     save();
   }
 
+  const toggleBold = (index: number) => {
+    if (locked) { return; }
+    const word = state.words[index];
+    if (word.notSelectable) { return; }
+    state.words[index].bold = !word.bold;
+    update();
+    save();
+  }
+
+  const toggleItalic = (index: number) => {
+    if (locked) { return; }
+    const word = state.words[index];
+    if (word.notSelectable) { return; }
+    state.words[index].italic = !word.italic;
+    update();
+    save();
+  }
+
   const renderEditWord = (word: BuildWord, index: number) => {
     let className = "word";
     if (word.checked) {
       className += " active";
+    }
+    if (word.italic) {
+      className += ' italic'
+    }
+    if (word.bold) {
+      className += ' bold';
     }
     if (word.notSelectable) {
       className += " disabled";
     }
 
     return (
-      <span key={index} className={className} onClick={() => { toggleLight(index) }}>
+      <span key={index} className={className} onClick={() => {
+        if (state.subMode === SubMode.Bold) {
+          toggleBold(index);
+        } else if (state.subMode === SubMode.Italic) {
+          toggleItalic(index);
+        } else {
+          toggleLight(index)
+        }
+      }}>
         {word.text}
       </span>
     );
@@ -184,6 +224,24 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         switchMode={switchMode}
       />
       <PoemToggle state={state} update={update} />
+      {state.mode === HighlightMode.Edit && <div className="editor-icons">
+        <SpriteIcon name="ql-bold" className={state.subMode === SubMode.Bold ? 'active' : ''} onClick={() => {
+          if (state.subMode === SubMode.Bold) {
+            setState({...state, subMode: SubMode.Edit});
+          } else {
+            setState({...state, subMode: SubMode.Bold});
+          }}} />
+        <SpriteIcon
+          name="ql-italic" className={state.subMode === SubMode.Italic ? 'active' : ''}
+          onClick={() => {
+            if (state.subMode === SubMode.Italic) {
+              setState({...state, subMode: SubMode.Edit});
+            } else {
+              setState({...state, subMode: SubMode.Italic});
+            }
+          }}
+        />
+      </div>}
       <div className="input-container">
         {state.mode === HighlightMode.Edit
           ? renderEditBox()
