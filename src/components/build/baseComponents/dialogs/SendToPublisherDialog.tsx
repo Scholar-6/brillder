@@ -8,6 +8,7 @@ import SendToPublisherDialog2 from "./SendToPublisher2Dialog";
 
 interface DialogProps {
   isOpen: boolean;
+  isCore?: boolean;
   isPublishing?: boolean; // true if user click to publish
   close(): void;
   submit(): void;
@@ -24,7 +25,11 @@ const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
   const [submiting, setSubmiting] = React.useState(false);
 
   const isValid = () => {
-    if (checked1 && checked2 && checked3 && checked4) {
+    if (props.isCore) {
+      if (checked1 && checked2 && checked3 && checked4) {
+        return true;
+      }
+    } else if (checked2 && checked3 && checked4) {
       return true;
     }
     return false;
@@ -42,11 +47,12 @@ const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
     <BaseDialogWrapper open={props.isOpen} className="send-publish-dialog" close={props.close} submit={() => { }}>
       <div className="dialog-header">
         <div className="title">Before submitting this brick for publication, please confirm the following:</div>
-        <FormControlLabel
-          checked={checked1}
-          control={<Checkbox onClick={() => setChecked1(!checked1)} />}
-          label="The images used are of a reasonable quality and have neither stretched nor pixelated. They are available for use without commercial restrictions."
-        />
+        {props.isCore &&
+          <FormControlLabel
+            checked={checked1}
+            control={<Checkbox onClick={() => setChecked1(!checked1)} />}
+            label="The images used are of a reasonable quality and have neither stretched nor pixelated. They are available for use without commercial restrictions."
+          />}
         <FormControlLabel
           checked={checked2}
           control={<Checkbox onClick={() => setChecked2(!checked2)} />}
