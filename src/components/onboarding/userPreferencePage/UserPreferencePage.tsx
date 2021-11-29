@@ -103,7 +103,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
             <div className="ef-space-after-title" />
             <div className="ef-main-radio-context">
               <div className="ef-flex">
-                <RadioContainer roleId={RolePreference.Student} name="Student">
+                <RadioContainer roleId={RolePreference.Student} name="Learner">
                   I want to learn, receive assignments and feedback, or join a course.
                 </RadioContainer>
                 <RadioContainer roleId={RolePreference.Builder} name="Builder">
@@ -111,7 +111,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
                 </RadioContainer>
               </div>
               <div className="ef-flex">
-                <RadioContainer roleId={RolePreference.Teacher} name="Teacher / Tutor">
+                <RadioContainer roleId={RolePreference.Teacher} name="Educator / Tutor">
                   I want to assign Brillder content and provide feedback to my students.<br />
                 </RadioContainer>
                 <RadioContainer roleId={RolePreference.Institution} name="Institution">
@@ -158,7 +158,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <div className="flex-center">
                 <SpriteIcon name="glasses" className="glasses" />
               </div>
-              <h2>Student</h2>
+              <h2>Learner</h2>
               <p>I want to learn,</p>
               <p>receive assignments</p>
               <p>and feedback, or join</p>
@@ -168,7 +168,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <div className="flex-center file-container">
                 <SpriteIcon name="file-plus" />
               </div>
-              <h2>Teacher | Tutor</h2>
+              <h2>Educator | Tutor</h2>
               <p>I want to assign Brillder</p>
               <p>content and provide</p>
               <p>feedback to my students.</p>
