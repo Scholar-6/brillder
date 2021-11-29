@@ -52,6 +52,7 @@ const SendToPublisherButton: React.FC<ButtonProps> = props => {
       <SendToPublisherDialog
         isOpen={isOpen}
         close={() => setState(false)}
+        isCore={props.brick.isCore}
         submit={async () => {
           const res = await props.sendToPublisher(props.brick.id);
           if (res === true) {
