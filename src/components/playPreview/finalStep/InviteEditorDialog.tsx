@@ -84,7 +84,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const renderSendButton = () => {
     return (
       <button
-        disabled={editors.length > 0 ? true : false}
+        disabled={editors.length > 0 ? false : true}
         className={`btn bold btn-md yes-button ${editors.length > 0 ? 'bg-theme-orange' : 'disabled'}`}
         onClick={onNext}
       >

@@ -72,7 +72,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
               checked={rolePreference === RolePreference.Student}
               onClick={() => this.onPreferenceChange(RolePreference.Student)}
               control={<Radio className="filter-radio" />}
-              label="Student"
+              label="Learner"
             />
           </Grid>
           <Grid item>
@@ -81,7 +81,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
               checked={rolePreference === RolePreference.Teacher}
               onClick={() => this.onPreferenceChange(RolePreference.Teacher)}
               control={<Radio className="filter-radio" />}
-              label="Teacher"
+              label="Educator"
             />
           </Grid>
           <Grid item>
