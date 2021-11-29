@@ -67,9 +67,23 @@ class WordHighlighting extends CompComponent<
     if (word.notSelectable && !word.isBreakLine) {
       return <span key={index} />;
     }
+
+    let className = 'word';
+
+    if (word.bold) {
+      className += ' bold';
+    }
+
+    if (word.italic) {
+      className += ' italic';
+    }
+
+    if (word.checked) {
+      className += ' correct';
+    }
   
     return (
-      <span key={index} className={word.checked ? "correct word" : "word"}>
+      <span key={index} className={className}>
         {word.text}
       </span>
     );
@@ -88,6 +102,14 @@ class WordHighlighting extends CompComponent<
     
     if (word.selected) {
       className += " active";
+    }
+
+    if (word.bold) {
+      className += ' bold';
+    }
+
+    if (word.italic) {
+      className += ' italic';
     }
 
     if (this.props.attempt && this.props.attempt === this.props.liveAttempt && word.selected && this.props.isReview) {
