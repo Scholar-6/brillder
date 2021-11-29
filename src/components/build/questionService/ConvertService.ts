@@ -13,6 +13,18 @@ export function stripHtml(html: string) {
   return div.textContent || div.innerText || "";
 }
 
+export function htmlChildren(html: string) {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+
+  let arr = []
+  for (let i = 0; i < div.children.length; i++) {
+    arr.push(div.children[i].innerHTML);
+  }
+
+  return arr;
+}
+
 function stripHtmlList(list: any[]) {
   if (list && list.length > 0) {
     for (let item of list) {
