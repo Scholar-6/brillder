@@ -420,6 +420,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                     userRoles={this.state.user.roles}
                     isAdmin={this.state.isAdmin}
                     rolePreference={this.state.user.rolePreference?.roleId}
+                    togglePreference={() => this.setState({saveDisabled: false})}
                     toggleRole={this.toggleRole.bind(this)}
                   />}
                 </div>
