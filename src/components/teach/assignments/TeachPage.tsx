@@ -24,7 +24,6 @@ import { downKeyPressed, upKeyPressed } from "components/services/key";
 import BackPagePagination from 'components/backToWorkPage/components/BackPagePagination';
 import TeachFilterSidebar from './components/TeachFilterSidebar';
 import ClassroomList from './components/ClassroomList';
-import ClassroomsList from './components/ClassroomsList';
 import ActiveStudentBricks from "./components/ActiveStudentBricks";
 import ExpandedAssignment from './components/ExpandedAssignment';
 import TeachTab from "components/teach/TeachTab";
