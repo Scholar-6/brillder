@@ -26,6 +26,7 @@ import routes from "../routes";
 import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
 import { isMobile } from "react-device-detect";
+import { CashQuestionFromPlay } from "localStorage/buildLocalStorage";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -118,6 +119,9 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     let attempt = questionRefs[activeStep].current?.getAttempt(true);
     if (attempts[activeStep] && attempts[activeStep].liveCorrect) {
       attempt.liveCorrect = true;
+    }
+    if (props.isPlayPreview) {
+      CashQuestionFromPlay(brick.id, step);
     }
     updateAttempts(attempt, activeStep);
     setAnswers(copyAnswers);
