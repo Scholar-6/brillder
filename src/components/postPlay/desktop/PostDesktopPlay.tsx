@@ -372,6 +372,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                     <HighlightHtml
                       ref={this.highlightRef}
                       value={brick.brief}
+                      user={this.props.user}
                       mode={PlayMode.UnHighlighting}
                       onHighlight={this.setAttemptBrickProperty.bind(this, "brief")}
                     />
