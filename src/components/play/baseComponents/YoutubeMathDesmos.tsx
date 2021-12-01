@@ -84,6 +84,7 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
             } else if (sound) {
               return <SoundPlay element={el} key={i} />
             }
+
             res = isYoutube(el);
             if (res) {
               return <YoutubeLink key={i} value={el} />;
