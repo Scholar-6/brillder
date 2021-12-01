@@ -113,7 +113,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         toolbar={[
           'bold', 'italic', 'fontColor'
         ]}
-        placeholder="Introduce your question"
+        placeholder="Enter or Paste Text"
         imageDialog={true}
         onChange={updateText}
       />/*
