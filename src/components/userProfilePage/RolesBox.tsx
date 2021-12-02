@@ -16,6 +16,7 @@ interface BoxProps {
   userId: number;
   isAdmin: boolean;
   rolePreference?: any;
+  togglePreference(): void;
   toggleRole(roleId: number, disabled: boolean): void;
 }
 
@@ -29,6 +30,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
   }
 
   async onPreferenceChange(rolePreference: RolePreference) {
+    this.props.togglePreference();
     if (this.props.isAdmin && this.props.userId) {
       const success = await setUserPreferenceById(rolePreference, this.props.userId);
       if (success) {

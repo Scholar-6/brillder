@@ -483,9 +483,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     isAllSubjects: boolean,
     isCore: boolean,
     showAll?: boolean,
-    levels?: AcademicLevel[]
+    levels?: AcademicLevel[],
+    noSearching?: boolean
   ) {
-    if (this.state.isSearching) {
+    if (!noSearching && this.state.isSearching) {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
@@ -785,17 +786,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   searching(searchString: string) {
     if (searchString.length === 0) {
-      let finalBricks = this.filterByCore(this.state.bricks, this.state.isCore);
-      let filterSubjects = [];
-      if (this.state.isAllSubjects) {
-        filterSubjects = getCheckedSubjectIds(this.state.subjects);
-      } else {
-        filterSubjects = prepareUserSubjects(
-          this.state.subjects,
-          this.state.userSubjects
-        );
-      }
-      finalBricks = sortAndFilterBySubject(finalBricks, filterSubjects);
+      const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, false, this.state.filterLevels, true);
 
       this.setState({
         ...this.state,

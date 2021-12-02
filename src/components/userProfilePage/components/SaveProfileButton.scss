@@ -11,6 +11,9 @@
   background: var(--tab-gray) 0% 0% no-repeat padding-box;
   border: 0.25vw solid var(--solitude-light);
   box-shadow: $base-shadow;
+  svg {
+    color: var(--dark-gray) !important;
+  }
 
   .css-custom-tooltip {
     display: none;
@@ -76,7 +79,7 @@
   background: var(--theme-green);
 
   svg {
-    color: var(--white);
+    color: var(--white) !important;
   }
 }
 

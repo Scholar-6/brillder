@@ -33,5 +33,17 @@
   .word {
     max-width: 100%;
   }
+  .editor-icons {
+    svg {
+      cursor: pointer;
+      width: 1.3vw;
+      height: 1.3vw;
+      opacity: 0.6;
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
 }
 
