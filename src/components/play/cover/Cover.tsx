@@ -443,7 +443,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       {competitionData &&
       <Dialog open={competitionData.isOpen} onClose={() => setCompetitionData({...competitionData, isOpen: false})} className="dialog-box">
         <div className="dialog-header">
-          <div className="bold" style={{ textAlign: 'center' }}>This Brick has a competition running, would you like to take part? (We will email you further details)</div>
+          <div className="bold" style={{ textAlign: 'center' }}>This Brick has a competition running, would you like to take part? <a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Click for more information</a></div>
         </div>
         <div className="dialog-footer">
           <button className="btn btn-md bg-theme-orange yes-button" onClick={() => {
