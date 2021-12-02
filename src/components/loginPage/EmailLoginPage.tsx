@@ -8,7 +8,6 @@ import "./loginPage.scss";
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
-import WrongLoginDialog from "./components/WrongLoginDialog";
 import MobileEmailLogin from './phone/MobileEmailLogin';
 import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 import { trackSignUp } from "services/matomo";
@@ -41,7 +40,6 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
-  const [isLoginWrong, setLoginWrong] = React.useState(false);
   const [invalidLogin, setInvalidLogin] = React.useState(false);
 
   const [emptyEmail, setEmptyEmail] = useState(false);

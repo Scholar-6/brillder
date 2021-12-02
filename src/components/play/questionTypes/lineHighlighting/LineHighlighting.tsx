@@ -64,9 +64,7 @@ class LineHighlighting extends CompComponent<
   renderLinePreview(line: any, index: number) {
     return (
       <div key={index}>
-        <span className={line.checked ? "correct line" : "line"}>
-          {line.text}
-        </span>
+        <span className={line.checked ? "correct line" : "line"} dangerouslySetInnerHTML={{__html: line.text}} />
       </div>
     );
   }
@@ -112,9 +110,7 @@ class LineHighlighting extends CompComponent<
 
     return (
       <div key={index} className="line-container">
-        <span className={className} onClick={() => this.highlighting(index)}>
-          {line.text}
-        </span>
+        <span className={className} onClick={() => this.highlighting(index)} dangerouslySetInnerHTML={{__html: line.text}} />
       </div>
     );
   }

@@ -8,11 +8,13 @@ export enum SpecialSymbols {
 }
 
 export interface Word {
-  text: string,
+  text: string;
   isPunctuation?: boolean;
-  isBreakLine?: boolean,
-  notSelectable?: boolean,
-  checked: boolean
+  isBreakLine?: boolean;
+  notSelectable?: boolean;
+  checked: boolean;
+  italic: boolean;
+  bold: boolean;
 }
 
 export interface BuildWord extends Word {

@@ -35,6 +35,7 @@ import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import UserTypeLozenge from "./UsertypeLozenge";
 import { maximizeZendeskButton, minimizeZendeskButton } from "services/zendesk";
+import SaveIntroJs from "./components/SaveIntroJs";
 
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
 
@@ -420,6 +421,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                     userRoles={this.state.user.roles}
                     isAdmin={this.state.isAdmin}
                     rolePreference={this.state.user.rolePreference?.roleId}
+                    togglePreference={() => this.setState({saveDisabled: false})}
                     toggleRole={this.toggleRole.bind(this)}
                   />}
                 </div>
@@ -468,6 +470,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             isOpen={this.state.passwordChangedDialog}
             close={() => this.setState({ passwordChangedDialog: false })} />
           <ProfileIntroJs user={this.props.user} suspended={this.state.introJsSuspended} history={this.props.history} location={this.props.location} />
+          {!this.state.saveDisabled &&  <SaveIntroJs  />}
         </div>
       </React.Suspense>
     );

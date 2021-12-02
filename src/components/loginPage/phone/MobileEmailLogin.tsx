@@ -13,8 +13,6 @@ import { hideZendesk, showZendesk } from "services/zendesk";
 import { isPhone } from "services/phone";
 import { JoinPage } from "../desktop/routes";
 
-import validator from 'validator';
-
 interface MobileLoginProps {
   email: string;
   password: string;
