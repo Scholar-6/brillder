@@ -13,6 +13,7 @@ import MathInHtml from "components/play/baseComponents/MathInHtml";
 
 interface MissingComponent {
   choices: any[];
+  isPoem?: boolean;
 }
 
 interface MissingAttemptAnswer {
@@ -176,7 +177,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     return (
       <div className="question-unique-play missing-word-live">
         {component.choices.map((choice: any, index: number) => (
-          <div key={index} className="missing-word-choice">
+          <div key={index} className={"missing-word-choice " + (component.isPoem ? 'poem' : '')}>
             <span>
               <MathInHtml value={choice.before} />
               {this.renderSelect(choice, index)}
