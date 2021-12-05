@@ -886,6 +886,10 @@
       padding-right: 18px;
     }
   }
+  &.poem {
+    white-space: nowrap;
+    overflow: scroll;
+  }
 }
 
 .ql-sound-custom {
