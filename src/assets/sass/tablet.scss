@@ -535,6 +535,10 @@ html {
       padding-right: 18px;
     }
   }
+  &.poem {
+    white-space: nowrap;
+    overflow: scroll;
+  }
 }
 
 .dialog-header {
