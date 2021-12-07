@@ -78,7 +78,7 @@ export class CustomImageBlot extends Embed {
 
         const captionNode = document.createElement("figcaption");
         captionNode.className = "image-caption";
-        captionNode.textContent = value.imageCaption;
+        captionNode.innerHTML = value.imageCaption;
         captionNode.contentEditable = "false";
         containerNode.appendChild(captionNode);
 

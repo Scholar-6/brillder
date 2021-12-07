@@ -116,16 +116,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         placeholder="Enter or Paste Text"
         imageDialog={true}
         onChange={updateText}
-      />/*
-      <TextareaAutosize
-        disabled={locked}
-        className={className}
-        onBlur={() => save()}
-        
-        value={state.text}
-        onChange={updateText}
-        placeholder="Enter or Paste Text"
-      />*/
+      />
     );
   }
 
