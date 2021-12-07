@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { PlayMode } from "../model";
 
@@ -11,7 +11,6 @@ import { Annotation } from "model/attempt";
 import { useLocation } from "react-router-dom";
 import YoutubeMathDesmos from "./YoutubeMathDesmos";
 import { User } from "model/user";
-import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
 
 let annotateCreateEvent: (el: HTMLElement) => void = () => {
   console.log('asdfasdf');
@@ -41,17 +40,13 @@ interface SelectableProps {
 }
 
 export interface HighlightRef {
-  createAnnotation(annotation: Annotation): void;
+  createAnnotation(annotation: Annotation): string;
   deleteAnnotation(annotation: Annotation): void;
 }
 
 const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, ref) => {
   const [textBox, setTextBox] = React.useState<HTMLDivElement>();
   const shouldHighlight = props.mode === PlayMode.Highlighting && props.onHighlight;
-
-  useEffect(() => {
-    console.log('dd', textRef);
-  }, []);
 
   const onMouseUp = React.useCallback(() => {
     if (!textBox) return;
@@ -80,7 +75,7 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
 
   const createAnnotation = (annotation: Annotation) => {
     console.log(888, annotation)
-    if (!textBox) return;
+    if (!textBox) return '';
     annotateCreateEvent = (el: HTMLElement) => {
       el.dataset.id = annotation.id.toString();
       (el as HTMLAnchorElement).href = "#" + annotation.id.toString();
@@ -92,9 +87,11 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
       selection.focusNode && textBox.contains(selection.focusNode)
     ) {
       annotator.applyToSelection();
-      props.onHighlight(textBox?.innerHTML);
+      var text = textBox?.innerHTML;
       selection.removeAllRanges();
+      return text;
     }
+    return '';
   }
 
   const deleteAnnotation = (annotation: Annotation) => {
@@ -140,20 +137,15 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
   }, [location.hash]);
 
   React.useImperativeHandle(ref, () => ({
-    createAnnotation(annotation: Annotation) { createAnnotation(annotation) },
+    createAnnotation(annotation: Annotation) { return createAnnotation(annotation) },
     deleteAnnotation(annotation: Annotation) { deleteAnnotation(annotation) },
   }));
 
   return (
     <div className={`highlight-html${shouldHighlight ? " highlight-on" : ""}`} onClick={() => {
-      if (props.user) {
-      createAnnotation({
-        id: generateId(), location: 0, priority: 0, questionIndex: 0,
-        children: [],
-        text: "wefwef",
-        user: props.user,
-        timestamp: new Date(),
-      })}}}>
+      if (textBox)
+        props.onHighlight(textBox.innerHTML)
+    }}>
       <YoutubeMathDesmos ref={textRef} isSynthesisParser={props.isSynthesis} value={props.value} />
     </div>
   );
