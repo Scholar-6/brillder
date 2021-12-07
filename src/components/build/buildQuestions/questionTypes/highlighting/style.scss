@@ -54,3 +54,37 @@
     }
   }
 }
+
+.missing-word-build {
+  .component-title {
+    position: relative;
+  }
+  .poem-toggle {
+    border-radius: 50%;
+    position: absolute;
+    width: 1.6vw;
+    height: 1.6vw;
+    font-size: 0.9vw;
+    top: -0.1vw;
+    right: 0vw;
+    background: #f5f6f7;
+    color: #acacac;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    
+    &.active {
+      color: var(--white);
+      background: var(--theme-green);
+    }
+
+    &:hover {
+      background: var(--white);
+
+      &.active {
+        color: #acacac;
+      }
+    }
+  }
+}

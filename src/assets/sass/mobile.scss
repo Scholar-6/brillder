@@ -1208,3 +1208,10 @@
     margin-left: 1.5vw;
   }
 }
+
+.missing-word-choice {
+  &.poem {
+    white-space: nowrap;
+    overflow: scroll;
+  }
+}

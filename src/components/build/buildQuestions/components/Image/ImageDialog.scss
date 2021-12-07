@@ -3,6 +3,28 @@
 @import "src/assets/sass/partials/extensions";
 
 .image-dialog-container {
+  .quill-caption {
+    .ql-custom-toolbar {
+      svg {
+        width: 1.3vw !important;
+        height: 1.3vw !important;
+      }
+    }
+    .ql-editor {
+      border-radius: 0.6vw;
+      padding: 0 !important;
+      font-family: $font-family-regular;
+      padding-left: 1vw !important;
+      font-size: 1.3vw !important;
+      line-height: 1.87 !important;
+    }
+    p {
+      display: inline;
+    }
+    br {
+      display: none;
+    }
+  }
   .margin-top-x2 {
     margin-top: 1vh;
   }
