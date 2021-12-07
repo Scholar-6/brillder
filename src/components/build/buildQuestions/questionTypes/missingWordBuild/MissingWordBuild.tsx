@@ -9,6 +9,7 @@ import { showSameAnswerPopup } from '../service/questionBuild';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import MissingWordQuill from 'components/baseComponents/quill/MissingWordQuill';
+import PoemToggle from '../highlighting/wordHighlighting/PoemToggle';
 
 
 interface Answer {
@@ -26,6 +27,7 @@ export interface MissingChoice {
 export interface MissingWordComponentProps extends UniqueComponentProps {
   data: {
     choices: MissingChoice[];
+    isPoem?: boolean;
   };
 }
 
@@ -205,12 +207,29 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
     );
   }
 
+  const renderPoemToggle = () => {
+    let className = 'poem-toggle';
+    if (data.isPoem) {
+      className += ' active';
+    }
+    return (
+      <div className={className} onClick={() => {
+        data.isPoem = !data.isPoem;
+        update();
+        save();
+      }}>
+        br
+      </div>
+    );
+  }
+
   return (
     <div className="missing-word-build">
       <div className="component-title">
-      <div className="flex-center">
-          <SpriteIcon name="feacher-check-square"/>
+        <div className="flex-center">
+          <SpriteIcon name="feacher-check-square" />
           <div>Tick Correct Answer</div>
+          {renderPoemToggle()}
         </div>
       </div>
       {

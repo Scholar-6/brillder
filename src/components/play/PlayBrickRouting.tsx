@@ -510,6 +510,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
+            setCompetitionId={setCompetitionId}
             setUser={setUser}
             moveNext={coverMoveNext}
           />

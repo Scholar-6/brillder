@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Dialog, Grid } from "@material-ui/core";
 import DynamicFont from 'react-dynamic-font';
 
 import { AcademicLevelLabels, Brick } from "model/brick";
@@ -24,6 +24,7 @@ import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthor
 import { CreateByEmailRes } from "services/axios/user";
 import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
+import { getCompetitionsByBrickId } from "services/axios/competitions";
 
 
 interface Props {
@@ -31,6 +32,7 @@ interface Props {
   brick: Brick;
   location: any;
   history: any;
+  setCompetitionId(id: number): void;
   setUser(data: CreateByEmailRes): void;
   moveNext(): void;
 }
@@ -40,6 +42,7 @@ const TabletTheme = React.lazy(() => import('./themes/CoverTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 
 const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
+  const [competitionData, setCompetitionData] = React.useState(null as any);
   const [bioOpen, setBio] = React.useState(false);
   const [editorBioOpen, setEditorBio] = React.useState(false);
 
@@ -55,6 +58,39 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       setUnauthorizedV2(true);
     }
   }, 10000);
+
+  const getNewestCompetition = (competitions: any[]) => {
+    let competition = null;
+    const timeNow = new Date().getTime();
+    for (const comp of competitions) {
+      try {
+        var start = new Date(comp.startDate).getTime();
+        if (timeNow > start) {
+          var end = new Date(comp.endDate).getTime();
+          if (timeNow < end) {
+            competition = comp;
+          }
+        }
+      } catch {
+        console.log('competition time can`t be parsed');
+      }
+    }
+    return competition;
+  }
+
+  const getCompetitions = async () => {
+    const res = await getCompetitionsByBrickId(brick.id);
+    if (res && res.length > 0) {
+      const competition = getNewestCompetition(res);
+      if (competition) {
+        setCompetitionData({ isOpen: true, competition });
+      }
+    }
+  }
+
+  useEffect(() => {
+    getCompetitions();
+  }, []);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -404,6 +440,23 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           setUnauthPopupShown(true);
         }}
       />
+      {competitionData &&
+      <Dialog open={competitionData.isOpen} onClose={() => setCompetitionData({...competitionData, isOpen: false})} className="dialog-box">
+        <div className="dialog-header">
+          <div className="bold" style={{ textAlign: 'center' }}>This Brick has a competition running, would you like to take part? <br/><a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Click for more information</a></div>
+        </div>
+        <div className="dialog-footer">
+          <button className="btn btn-md bg-theme-orange yes-button" onClick={() => {
+            props.setCompetitionId(competitionData.competition.id);
+            setCompetitionData({...competitionData, isOpen: false});
+          }}>
+            <span>Yes</span>
+          </button>
+          <button className="btn btn-md bg-gray no-button" onClick={() => setCompetitionData({...competitionData, isOpen: false})}>
+            <span>No</span>
+          </button>
+        </div>
+      </Dialog>}
     </React.Suspense>
   );
 };

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Dialog, Grid, ListItem, ListItemText, Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
-import { History } from "history";
 import axios from "axios";
 
 import "./loginPage.scss";
@@ -16,6 +15,7 @@ import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getTerms } from "services/axios/terms";
 import map from "components/map";
+import { useHistory, useRouteMatch } from "react-router";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -25,13 +25,13 @@ const connector = connect(null, mapDispatch);
 
 interface LoginProps {
   loginSuccess(): void;
-  history: History;
-  match: any;
 }
 
 const EmailLoginPage: React.FC<LoginProps> = (props) => {
+  const history = useHistory();
+  const match = useRouteMatch() as any;
   let initPolicyOpen = false;
-  if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
+  if (match.params.privacy && match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
   }
   const [alertMessage, setAlertMessage] = useState("");
@@ -77,7 +77,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
           const { data } = response;
           getTerms().then(r => {
             if (r && r.lastModifiedDate != data.termsAndConditionsAcceptedVersion) {
-              props.history.push(map.TermsSignUp + '?onlyAcceptTerms=true');
+              history.push(map.TermsSignUp + '?onlyAcceptTerms=true');
               props.loginSuccess();
             } else {
               props.loginSuccess();
@@ -146,7 +146,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   };
 
   if (!isPhone()) {
-    return <EmailLoginDesktopPage history={props.history} match={props.match} />;
+    return <EmailLoginDesktopPage history={history} match={match} />;
   }
 
   return (
@@ -158,7 +158,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       alignItems="center"
     >
       <MobileEmailLogin
-        history={props.history}
+        history={history}
         email={email}
         setEmail={setEmail}
         setEmailSended={setEmailSended}

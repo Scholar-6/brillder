@@ -174,7 +174,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     // creation competition
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/competition`,
-      { startDate: "2021-10-07", endDate: "2021-10-08  ", brickId: this.props.brick.id },
+      { startDate, endDate, brickId: this.props.brick.id },
       { withCredentials: true }
     );
     if (response.status === 200) {
