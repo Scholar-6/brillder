@@ -9,6 +9,7 @@ import Slider from "@material-ui/core/Slider";
 import ImageDesktopPreview from "./ImageDesktopPreview";
 import { fileUrl } from "components/services/uploadFile";
 import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 interface DialogProps {
   open: boolean;
@@ -136,7 +137,7 @@ const ImageDialog: React.FC<DialogProps> = ({
       open={open}
       className="image-dialog-container"
       close={() => setDialog(false)}
-      submit={() => {}}
+      submit={() => { }}
     >
       <div className="close-button svgOnHover" onClick={() => setDialog(false)}>
         <SpriteIcon name="cancel-thick" className="w100 h100 active" />
@@ -198,21 +199,26 @@ const ImageDialog: React.FC<DialogProps> = ({
           onChange={(e) => setSource(e.target.value)}
           placeholder="Add link to source or name of owner"
         />
-         <CopyrightCheckboxes
+        <CopyrightCheckboxes
           validationRequired={validationRequired}
           permision={permision}
           setPermision={setPermision}
         />
-        <input
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
+        <QuillEditor
+          disabled={false}
+          className="quill-caption"
+          data={caption}
+          showToolbar={true}
+          toolbar={['latex']}
           placeholder="Add caption"
+          imageDialog={true}
+          onChange={v => setCaption(v)}
         />
       </div>
       <div className="centered last-button">
         <div
           className={`upload-button ${canUpload ? "active" : "disabled"}`}
-          onClick={async() => {
+          onClick={async () => {
             if (!isSaving) {
               setSaving(true);
               if (cropedFile && canUpload && !alwaysUpdate) {
