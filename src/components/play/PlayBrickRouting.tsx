@@ -243,8 +243,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const values = queryString.parse(props.location.search);
     if (values.competitionId) {
       try {
-        var compId = values.competitionId as string;
-        setCompetitionId(parseInt(compId));
+        var compId = parseInt(values.competitionId as string);
+        setCompetitionId(compId);
+        brick.competitionId = compId;
       } catch {
         console.log('can`t convert competition id');
       }
@@ -510,7 +511,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
-            setCompetitionId={setCompetitionId}
+            setCompetitionId={id => {
+              setCompetitionId(id);
+              brick.competitionId = id;
+              history.push(routes.playCover(brick));
+            }}
             setUser={setUser}
             moveNext={coverMoveNext}
           />
