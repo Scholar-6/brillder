@@ -12,7 +12,7 @@ import { getCompetitionsByBrickId } from "services/axios/competitions";
 interface Props {
   brick: Brick;
 
-  competitionId?: number;
+  competitionId: number;
   setCompetitionId(id: number): void;
   moveNext(): void;
 
@@ -58,7 +58,7 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
   }
 
   React.useEffect(() => {
-    if (!props.competitionId) {
+    if (props.competitionId <= 0) {
       getCompetitions();
     }
   }, []);
