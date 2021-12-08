@@ -16,6 +16,7 @@ interface Props {
 
   moveNext(): void;
   mode?: PlayMode;
+  setCompetitionId(id: number): void;
   onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
