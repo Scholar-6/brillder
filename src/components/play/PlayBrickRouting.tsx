@@ -522,7 +522,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {isPhone() && <PhonePlayShareFooter isCover={true} brick={brick} history={history} next={coverMoveNext} />}
         </Route>
         <Route path={routes.briefRoute}>
-          <Brief brick={brick} mode={mode} user={props.user} setCompetitionId={id => {
+          <Brief brick={brick} mode={mode} user={props.user} competitionId={competitionId} setCompetitionId={id => {
             setCompetitionId(id);
             brick.competitionId = id;
             history.push(routes.playBrief(brick));
