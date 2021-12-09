@@ -25,6 +25,7 @@ import { CreateByEmailRes } from "services/axios/user";
 import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
+import routes from "../routes";
 
 
 interface Props {
@@ -417,7 +418,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   <CoverTimer brickLength={brick.brickLength} />
                 </div>
                 <div className="keywords-row">
-                  <KeyWordsPreview keywords={brick.keywords} />
+                  <KeyWordsPreview keywords={brick.keywords} onClick={keyword => props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)} />
                 </div>
               </div>
             </Grid>
