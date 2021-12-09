@@ -125,6 +125,12 @@
         padding-right: 0.5vw;
         font-size: 1.1vw;
         @extend %ellipsis;
+        .key-word-play {
+          cursor: pointer;
+        }
+        .key-word-play:hover {
+          font-family: $font-family-bold;
+        }
       }
       .image-container {
         margin-top: 4.5vw;
