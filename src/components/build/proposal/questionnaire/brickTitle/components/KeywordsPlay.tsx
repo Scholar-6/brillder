@@ -5,12 +5,13 @@ import { KeyWord } from "model/brick";
 
 interface KeyWordsProps {
   keywords?: KeyWord[];
+  onClick?(keyword: KeyWord): void;
 }
 
-const KeyWordsPlay: React.FC<KeyWordsProps> = ({ keywords }) => {
+const KeyWordsPlay: React.FC<KeyWordsProps> = ({ keywords, onClick }) => {
   const renderKeyWord = (k: KeyWord, i: number) => {
     return (
-      <div key={i} className='key-word-play'>
+      <div key={i} className='key-word-play' onClick={() => onClick?.(k)}>
         {i > 0 ? ' • ' : ''} {k.name.trim()} {' '}
       </div>
     );
