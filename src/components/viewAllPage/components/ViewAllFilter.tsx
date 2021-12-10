@@ -213,7 +213,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     return (
       <FormControlLabel
         value={SortBy.Popularity}
-        style={{ marginRight: 0, width: "50%" }}
+        style={{ marginRight: 0, width: "28%" }}
         control={
           <Radio
             className="sortBy"
@@ -280,7 +280,6 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               {this.renderAcademicLevel(AcademicLevel.First)}
               {this.renderAcademicLevel(AcademicLevel.Second)}
               {this.renderAcademicLevel(AcademicLevel.Third)}
-              {this.renderAcademicLevel(AcademicLevel.Fourth)}
               <div className="absolute-difficult-help">
                 <HoverHelp>
                   <LevelHelpContent />

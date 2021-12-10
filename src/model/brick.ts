@@ -83,8 +83,7 @@ export enum AcademicLevel {
   Default = 0,
   First = 1,
   Second,
-  Third,
-  Fourth
+  Third
 }
 
 export const AcademicLevelLabels = [
