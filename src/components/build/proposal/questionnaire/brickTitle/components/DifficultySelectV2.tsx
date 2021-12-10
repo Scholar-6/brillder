@@ -28,7 +28,6 @@ const DifficultySelect: React.FC<DifficultySelectProps> = (props) => {
         <MenuItem value={AcademicLevel.First}>I: Foundation (GCSE equiv.)</MenuItem>
         <MenuItem value={AcademicLevel.Second}>II: Core 1 (AS equiv.)</MenuItem>
         <MenuItem value={AcademicLevel.Third}>III: Core 2 (A-Level / IB equiv.)</MenuItem>
-        <MenuItem value={AcademicLevel.Fourth}>IV: Extension (Oxbridge equiv.)</MenuItem>
       </Select>
     </div>
   );

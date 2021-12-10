@@ -414,9 +414,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       brickGroups.push(
         bricks.filter((b) => b.academicLevel === AcademicLevel.Third && b.isCore === this.state.isCore)
       );
-      brickGroups.push(
-        bricks.filter((b) => b.academicLevel === AcademicLevel.Fourth && b.isCore === this.state.isCore)
-      );
 
       brickGroups = brickGroups.filter((b) => b.length > 0);
 
@@ -528,7 +525,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             {this.renderAcademicLevel(AcademicLevel.First)}
             {this.renderAcademicLevel(AcademicLevel.Second)}
             {this.renderAcademicLevel(AcademicLevel.Third)}
-            {this.renderAcademicLevel(AcademicLevel.Fourth)}
             <div className="va-difficult-help">
               <MobileHelp>
                 <LevelHelpContent />
