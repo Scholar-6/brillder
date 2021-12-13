@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 
 import './SingleSubjectAssignments.scss';
-import { SubjectAssignments } from "../service/model";
+import { SortBy, SubjectAssignments } from "../service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 import { BrickLengthEnum } from "model/brick";
 import SingleSubjectPagination from "./SingleSubjectPagination";
 import SingleSubjectAssignment from "./SingleSubjectAssignment";
 
 interface SingleSubjectProps {
+  sortBy: SortBy;
   userId: number;
   history: any;
   subjectAssignment: SubjectAssignments;
@@ -109,7 +110,31 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
   }
 
   render() {
-    const { assignments } = this.props.subjectAssignment;
+    const {sortBy} = this.props;
+    let { assignments } = this.props.subjectAssignment;
+
+    if (sortBy == SortBy.Score) {
+      assignments = assignments.sort((a, b) => {
+        if (a.bestAttemptPercentScore && b.bestAttemptPercentScore && a.bestAttemptPercentScore > b.bestAttemptPercentScore) {
+          return -1;
+        }
+        return 1;
+      });
+    } else if (sortBy === SortBy.Date) {
+      assignments = assignments.sort((a: any, b: any) => {
+        if (new Date(a.lastAttemptDate).getTime() > new Date(b.lastAttemptDate).getTime()) {
+          return -1;
+        }
+        return 1;
+      });
+    } else if (sortBy === SortBy.Level) {
+      assignments = assignments.sort((a: any, b: any) => {
+        if (a.brick.academicLevel > b.brick.academicLevel) {
+          return -1;
+        }
+        return 1;
+      });
+    }
 
     const pages = this.getPages(assignments);
 
