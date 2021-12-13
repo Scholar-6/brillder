@@ -219,7 +219,9 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  handleSortChange = (e: any) => {};
+  handleSortChange = (e: any) => {
+    this.setState({sortBy: parseInt(e.target.value)});
+  };
 
   getCheckedSubjectIds(subjects: SubjectAItem[]) {
     const filterSubjects = [];
@@ -353,6 +355,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       <div className="bricks-list-container bricks-container-mobile all-subject-assignments">
         <LibrarySubjects
           subjects={this.state.subjects}
+          sortBy={this.state.sortBy}
           pageSize={this.state.pageSize}
           sortedIndex={this.state.sortedIndex}
           subjectAssignments={this.state.subjectAssignments}

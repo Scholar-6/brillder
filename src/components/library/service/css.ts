@@ -5,7 +5,7 @@ export const getSubjectWidth = (subjectAssignment: SubjectAssignments) => {
   const paddingWidth = 0.4 * 2;
   const marginWidth = 0.2 * 2;
   const baseWidth = 0.8;
-  let width = paddingWidth;
+  let width = paddingWidth + 2;
   for (let a of subjectAssignment.assignments) {
     width += marginWidth;
     if (a.brick.brickLength === BrickLengthEnum.S20min) {
