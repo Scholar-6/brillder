@@ -32,6 +32,14 @@ const LibrarySubjects: React.FC<LibrarySubjectsProps> = (props) => {
         }
         return 1;
       });
+    } else if (props.sortBy === SortBy.Level) {
+      console.log(item.assignments);
+      item.assignments = item.assignments.sort((a: any, b: any) => {
+        if (a.brick.academicLevel > b.brick.academicLevel) {
+          return -1;
+        }
+        return 1;
+      });
     }
 
     return <div key={key} className="libary-container-1" style={{ width: width + 'vw', display: 'inline-flex' }}>
