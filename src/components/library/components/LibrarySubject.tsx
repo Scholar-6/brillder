@@ -25,7 +25,7 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
   }
 
   render() {
-    const { assignments } = this.props.subjectAssignment;
+    let { assignments } = this.props.subjectAssignment;
 
     return (
       <div className="libary-container">

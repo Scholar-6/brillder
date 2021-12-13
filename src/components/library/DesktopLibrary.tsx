@@ -220,7 +220,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   handleSortChange = (e: any) => {
-    this.setState({sortBy: parseInt(e.target.value)});
+    this.setState({ sortBy: parseInt(e.target.value) });
   };
 
   getCheckedSubjectIds(subjects: SubjectAItem[]) {
@@ -347,7 +347,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       if (subject) {
         const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
         if (subjectAssignment) {
-          return <SingleSubjectAssignments userId={this.props.user.id} subjectAssignment={subjectAssignment} history={this.props.history} />
+          return <SingleSubjectAssignments userId={this.props.user.id} sortBy={this.state.sortBy} subjectAssignment={subjectAssignment} history={this.props.history} />
         }
       }
     }
@@ -379,8 +379,8 @@ class Library extends Component<BricksListProps, BricksListState> {
             user={this.props.user}
             placeholder="  "
             history={this.props.history}
-            search={() => {}}
-            searching={() => {}}
+            search={() => { }}
+            searching={() => { }}
           />
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
@@ -397,12 +397,8 @@ class Library extends Component<BricksListProps, BricksListState> {
             </Grid>
             <Grid item xs={9} className="brick-row-container">
               <div className={
-                `
-                  library-title
-                    ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}
-                  `
-              }
-              >
+                `library-title ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}`
+              }>
                 {this.renderMainTitle(filterSubjects)}
               </div>
               {this.renderContent()}
