@@ -51,6 +51,7 @@
       $base-side-margin: 0.32vw;
       padding-left: $base-side-margin;
       padding-right: $base-side-margin;
+
       > div {
         height: 100%;
         $base-width: 2vw;
@@ -227,17 +228,46 @@
       height: calc(100% / 3);
       margin-left: 0.5vw;
       margin-right: 0.5vw;
+      .subject-name-v3 {
+        padding: 0 !important;
+        position: relative;
+        color: white;
+        background: var(--theme-light-blue);
+        width: 2vw;
+        border-top-left-radius: 0.8vw;
+        border-bottom-left-radius: 0.8vw;
+        > div {
+          width: 0;
+          height: 0;
+          transform: rotate(-90deg);
+          > div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-left: 0.1vw;
+            right: 0;
+            position: absolute;
+            width: 10vw;
+            height: 2vw;
+          }
+        }
+      }
+
       .libary-container {
         height: 100%;
         display: flex;
         background: var(--white);
         border-radius: 0.7vw;
-        padding-left: 0.4vw;
         padding-right: 0.4vw;
         margin-top: 1vh;
         margin-bottom: 1vh;
-        padding-top: 1vh;
-        padding-bottom: 1vh;
+        padding-top: 0;
+        padding-bottom: 0;
+        > div {
+          padding-left: 0.3vw;
+          padding-top: 1vh;
+          padding-bottom: 1vh;
+        }
       }
     }
   }
