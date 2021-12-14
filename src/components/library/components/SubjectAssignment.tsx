@@ -46,7 +46,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     let className = "rotated-container " + name;
     let width = "calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh)";
     if (height !== 100) {
-      width = `calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh * ${height})`;
+      width = `calc((((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh) / 100 * ${height})`;
     }
     return (
       <div className={className}>
@@ -58,6 +58,9 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
       </div>
     );
   };
+
+
+
 
   return (
     <div
@@ -111,6 +114,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
               maxHeight: "100%",
             }}
           >
+            {height >= 50 && renderRotatedTitle("white", height)}
             {assignment.brick.academicLevel >= AcademicLevel.First && (
               <AcademyDifficulty
                 a={assignment.brick.academicLevel}

@@ -279,6 +279,7 @@
     display: inline-block;
   
     .rotated-container {
+      z-index: 1000;
       position: absolute;
       bottom: 0;
       .rotated {
@@ -366,7 +367,7 @@
       margin-top: calc((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 2.5vh) / 4);
       text-align: center;
       transform: translate(-25%, 0); 
-      width: 16vw;
+      width: 13vw;
       z-index: 1000;
     }
   }
