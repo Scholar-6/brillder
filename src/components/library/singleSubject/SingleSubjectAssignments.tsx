@@ -129,7 +129,7 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
       });
     } else if (sortBy === SortBy.Level) {
       assignments = assignments.sort((a: any, b: any) => {
-        if (a.brick.academicLevel > b.brick.academicLevel) {
+        if (a.brick.academicLevel < b.brick.academicLevel) {
           return -1;
         }
         return 1;

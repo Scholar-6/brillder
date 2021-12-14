@@ -59,9 +59,6 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     );
   };
 
-
-
-
   return (
     <div
       className="assignment-progressbar"
