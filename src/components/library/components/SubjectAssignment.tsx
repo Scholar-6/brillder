@@ -12,6 +12,7 @@ import routes from "components/play/routes";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { isTeacherPreference } from "components/services/preferenceService";
 import { User } from "model/user";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 interface LibrarySubjectsProps {
   subject: Subject;
@@ -46,7 +47,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     let className = "rotated-container " + name;
     let width = "calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh)";
     if (height !== 100) {
-      width = `calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh * ${height})`;
+      width = `calc((((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh) / 100 * ${height})`;
     }
     return (
       <div className={className}>
@@ -59,9 +60,28 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     );
   };
 
+  const renderRotatedPercentage = (name: string, value: number, height: number) => {
+    let className = "rotated-container " + name;
+    let width = "calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh)";
+    if (height !== 100) {
+      width = `calc((((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh) / 100 * ${height})`;
+    }
+    return (
+      <div className={className}>
+        <div className="rotated">
+          <div className="rotated-text no-padding" style={{ width }}>
+            {value}%
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  console.log(subject.name);
+
   return (
     <div
-      className="assignment-progressbar"
+      className={`assignment-progressbar ${subject.name == GENERAL_SUBJECT ? 'general' : ''}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -78,43 +98,44 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
             props.history.push(routes.playNewPrep(brick));
           }
         }}
-        style={{ background: color }}
+        style={{ background: ((subject.name == GENERAL_SUBJECT) ? 'white' : color) }}
       >
         {hovered && (
-          <div className="custom-tooltip subject-tooltip">
-            <div className="bold">{subject.name}</div>
+          <div className={`custom-tooltip subject-tooltip ${height < 50 ? 'yellow-background' : ''}`}>
             <div>
               <BrickTitle title={brick.title} />
+            </div>
+            <div className="relative">
+              <div className="circle-score bold">{Math.round(height)}</div>
+              <CircularProgressbar
+                className="circle-progress-second"
+                counterClockwise={true}
+                strokeWidth={8}
+                value={height}
+              />
             </div>
           </div>
         )}
         <div
           className="progress-value default-value"
           onMouseEnter={() => setHover(true)}
-        >
-          {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
-          {height < 50 && height > 0 && renderRotatedTitle("white", 100)}
-          {height < 50 && (
-            <AcademyDifficulty
-              a={assignment.brick.academicLevel}
-              className="smaller"
-            />
-          )}
-        </div>
-        {height >= 50 &&
+        />
+        {height > 0 &&
           <div
             className="progress-value"
             onMouseEnter={() => setHover(true)}
             style={{
-              background: color,
-              height: height + "%",
+              background: ((subject.name == GENERAL_SUBJECT) ? 'white' : color),
+              height: ((height > 30) ? height : 30) + "%",
               maxHeight: "100%",
             }}
           >
-            {assignment.brick.academicLevel >= AcademicLevel.First && (
+            {height < 50 && renderRotatedPercentage("white", Math.round(height), ((height > 30) ? height : 30))}
+            {height > 0 && assignment.brick.academicLevel >= AcademicLevel.First && (
               <AcademyDifficulty
                 a={assignment.brick.academicLevel}
                 className="smaller"
+                noTopLines={height < 50}
               />
             )}
           </div>
