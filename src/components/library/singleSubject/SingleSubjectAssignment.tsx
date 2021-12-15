@@ -13,6 +13,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import routes from "components/play/routes";
 import { User } from "model/user";
 import { isTeacherPreference } from "components/services/preferenceService";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 interface LibrarySubjectsProps {
   subject: Subject;
@@ -85,7 +86,18 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
       if (height >= 50) {
         return (
           <div className="custom-tooltip subject-tooltip">
-            <BrickTitle title={brick.title} />
+            <div>
+              <BrickTitle title={brick.title} />
+            </div>
+            <div className="relative">
+              <div className="circle-score bold">{Math.round(height)}</div>
+              <CircularProgressbar
+                className="circle-progress-second"
+                counterClockwise={true}
+                strokeWidth={8}
+                value={height}
+              />
+            </div>
           </div>
         );
       }
@@ -150,6 +162,11 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
                 <SpriteIcon name="lock" />
               </div>
               <div>{Math.round(height)}%</div>
+              <AcademyDifficulty
+                a={assignment.brick.academicLevel}
+                brick={brick}
+                noTopLines={height < 50}
+              />
             </div>}
         </div>
         {height >= 50 &&

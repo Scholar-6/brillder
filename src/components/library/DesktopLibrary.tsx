@@ -524,7 +524,7 @@ class Library extends Component<BricksListProps, BricksListState> {
               }>
                 {this.renderMainTitle(filterSubjects)}
                 {this.renderBook()}
-                {this.renderBox()}
+                { !this.state.subjectChecked && this.renderBox()}
                 {this.renderLastBox()}
                 {this.highestScore()}
                 {this.averageScore()}

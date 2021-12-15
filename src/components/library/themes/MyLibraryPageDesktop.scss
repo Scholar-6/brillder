@@ -212,7 +212,7 @@
           }
 
           .default-value.progress-value .rotated-text {
-            padding-left: 5.5vw;
+            padding-left: calc(5.5vw + 2.8vh);
           }
         }
 
@@ -346,7 +346,7 @@
       border-top-right-radius: 1.5vw;
       border-bottom-left-radius: 0.35vw;
       border-bottom-right-radius: 0.35vw;
-      height: 5vw;
+      height: calc(5vw + 2.8vh);
       bottom: 0;
       font-family: $font-family-bold;
       color: var(--white);
