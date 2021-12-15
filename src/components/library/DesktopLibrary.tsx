@@ -24,6 +24,8 @@ import { TeachClassroom } from "model/classroom";
 import LibrarySubjects from "./components/LibrarySubjects";
 import SingleSubjectAssignments from "./singleSubject/SingleSubjectAssignments";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 
 interface BricksListProps {
@@ -365,6 +367,127 @@ class Library extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  renderBook() {
+    let number = 0;
+    for (let aa of this.state.finalAssignments) {
+      if (aa.bestAttemptPercentScore && aa.bestAttemptPercentScore >= 50) {
+        number += 1;
+      }
+    }
+
+    return (
+      <div className="flex-center">
+        <div className="book-green">
+          <SpriteIcon name="book-open" />
+        </div>
+        <div className="static-numbers">
+          <div>{number}</div>
+          <div className="smaller-number">/ {this.state.finalAssignments.length}</div>
+        </div>
+      </div>
+    );
+  }
+
+  renderBox() {
+    return (
+      <div className="flex-center">
+        <div className="box-blue circle-container">
+          <SpriteIcon name="box" />
+        </div>
+        <div className="static-numbers">
+          <div>{this.state.subjects.length}</div>
+        </div>
+      </div>
+    );
+  }
+
+  renderLastBox() {
+    let number = 0;
+    for (let assign of this.state.finalAssignments) {
+      number += assign.numberOfAttempts;
+    }
+    return (
+      <div className="flex-center">
+        <div className="box-yellow circle-container">
+          <SpriteIcon name="play-thick" />
+        </div>
+        <div className="static-numbers">
+          <div>{number}</div>
+        </div>
+      </div>
+    );
+  }
+
+  highestScore() {
+    let number = 0;
+    for (let assign of this.state.finalAssignments) {
+      if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore > number) {
+        number = assign.bestAttemptPercentScore;
+      }
+    }
+    return (
+      <div className="flex-center hs-score">
+        HS
+        <div className="score-container-v5">
+          <CircularProgressbar
+            strokeWidth={12}
+            counterClockwise={true}
+            value={number}
+          />
+          <div className="score-absolute">{number}</div>
+        </div>
+      </div>
+    );
+  }
+
+  averageScore() {
+    let count = 0;
+    let number = 0;
+    for (let assign of this.state.finalAssignments) {
+      if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 50) {
+        number += assign.bestAttemptPercentScore;
+        count += 1;
+      }
+    }
+    number = Math.round(number / count);
+    return (
+      <div className="flex-center hs-score avg-score">
+        AVG.
+        <div className="score-container-v5">
+          <CircularProgressbar
+            strokeWidth={12}
+            counterClockwise={true}
+            value={number}
+          />
+          <div className="score-absolute">{number}</div>
+        </div>
+      </div>
+    );
+  }
+
+  lowestScore() {
+    let number = 100;
+    for (let assign of this.state.finalAssignments) {
+      if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 0 && assign.bestAttemptPercentScore < number) {
+        number = assign.bestAttemptPercentScore;
+      }
+    }
+    return (
+      <div className="flex-center hs-score ls-score">
+        LS
+        <div className="score-container-v5">
+          <CircularProgressbar
+            strokeWidth={12}
+            counterClockwise={true}
+            value={number}
+          />
+          <div className="score-absolute">{Math.round(number)}</div>
+        </div>
+      </div>
+    );
+  }
+
+
   render() {
     if (this.state.isLoading) {
       return <PageLoader content="...Getting Bricks..." />;
@@ -400,6 +523,12 @@ class Library extends Component<BricksListProps, BricksListState> {
                 `library-title ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}`
               }>
                 {this.renderMainTitle(filterSubjects)}
+                {this.renderBook()}
+                {this.renderBox()}
+                {this.renderLastBox()}
+                {this.highestScore()}
+                {this.averageScore()}
+                {this.lowestScore()}
               </div>
               {this.renderContent()}
             </Grid>

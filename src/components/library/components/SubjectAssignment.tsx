@@ -81,7 +81,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
 
   return (
     <div
-      className="assignment-progressbar"
+      className={`assignment-progressbar ${subject.name == GENERAL_SUBJECT ? 'general' : ''}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -101,12 +101,12 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         style={{ background: ((subject.name == GENERAL_SUBJECT) ? 'white' : color) }}
       >
         {hovered && (
-          <div className="custom-tooltip subject-tooltip">
+          <div className={`custom-tooltip subject-tooltip ${height < 50 ? 'yellow-background' : ''}`}>
             <div>
               <BrickTitle title={brick.title} />
             </div>
             <div className="relative">
-              <div className="circle-score">{Math.round(height)}</div>
+              <div className="circle-score bold">{Math.round(height)}</div>
               <CircularProgressbar
                 className="circle-progress-second"
                 counterClockwise={true}
