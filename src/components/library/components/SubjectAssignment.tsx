@@ -59,6 +59,23 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     );
   };
 
+  const renderRotatedPercentage = (name: string, value: number, height: number) => {
+    let className = "rotated-container " + name;
+    let width = "calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh)";
+    if (height !== 100) {
+      width = `calc((((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh) / 100 * ${height})`;
+    }
+    return (
+      <div className={className}>
+        <div className="rotated">
+          <div className="rotated-text no-padding" style={{ width }}>
+            {value}%
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div
       className="assignment-progressbar"
@@ -93,7 +110,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           onMouseEnter={() => setHover(true)}
         >
           {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
-          {height < 50 && height > 0 && renderRotatedTitle("white", 100)}
+          {height == 0 && renderRotatedTitle("white", 100)}
           {height < 50 && (
             <AcademyDifficulty
               a={assignment.brick.academicLevel}
@@ -101,18 +118,19 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
             />
           )}
         </div>
-        {height >= 50 &&
+        {height > 0 &&
           <div
             className="progress-value"
             onMouseEnter={() => setHover(true)}
             style={{
               background: color,
-              height: height + "%",
+              height: ((height > 20) ? height : 20) + "%",
               maxHeight: "100%",
             }}
           >
             {height >= 50 && renderRotatedTitle("white", height)}
-            {assignment.brick.academicLevel >= AcademicLevel.First && (
+            {height < 50 && renderRotatedPercentage("white", Math.round(height), ((height > 20) ? height : 20))}
+            {height >= 50 && assignment.brick.academicLevel >= AcademicLevel.First && (
               <AcademyDifficulty
                 a={assignment.brick.academicLevel}
                 className="smaller"
