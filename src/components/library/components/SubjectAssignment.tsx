@@ -12,6 +12,7 @@ import routes from "components/play/routes";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { isTeacherPreference } from "components/services/preferenceService";
 import { User } from "model/user";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 interface LibrarySubjectsProps {
   subject: Subject;
@@ -99,9 +100,17 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
       >
         {hovered && (
           <div className="custom-tooltip subject-tooltip">
-            <div className="bold">{subject.name}</div>
             <div>
               <BrickTitle title={brick.title} />
+            </div>
+            <div className="relative">
+              <div className="circle-score">{Math.round(height)}</div>
+              <CircularProgressbar
+                className="circle-progress-second"
+                counterClockwise={true}
+                strokeWidth={8}
+                value={height}
+              />
             </div>
           </div>
         )}
