@@ -6,10 +6,11 @@ import { User } from "model/user";
 interface Props {
   a: AcademicLevel;
   brick?: Brick;
+  noTopLines?: boolean;
   className?: string;
 }
 
-export const AcademyDifficulty: React.FC<Props> = ({ a, brick, className }) => {
+export const AcademyDifficulty: React.FC<Props> = ({ a, brick, className, noTopLines }) => {
   let resClassName = "academic-lines ";
   if (className) {
     resClassName += className;
@@ -28,9 +29,10 @@ export const AcademyDifficulty: React.FC<Props> = ({ a, brick, className }) => {
 
   return (
     <div className={resClassName}>
+      {!noTopLines &&
       <div className="start-lines">
         <div>{renderLines()}</div>
-      </div>
+      </div>}
       <div className="end-lines">
         {brick && brick.author && (
           <div className="lib-author">

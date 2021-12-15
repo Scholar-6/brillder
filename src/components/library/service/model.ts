@@ -5,6 +5,7 @@ export enum SortBy {
   None,
   Date,
   Score,
+  Level,
 }
 
 export interface SubjectAssignments {

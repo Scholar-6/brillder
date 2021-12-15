@@ -263,7 +263,6 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
               {this.renderAcademicLevel(AcademicLevel.First)}
               {this.renderAcademicLevel(AcademicLevel.Second)}
               {this.renderAcademicLevel(AcademicLevel.Third)}
-              {this.renderAcademicLevel(AcademicLevel.Fourth)}
             </div>
             <div className="ba-label">Level</div>
           </div>

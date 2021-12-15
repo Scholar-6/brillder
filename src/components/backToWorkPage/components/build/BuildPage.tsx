@@ -377,9 +377,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
       if (!filters.level3) {
         finalBricks = finalBricks.filter(b => b.academicLevel !== AcademicLevel.Third);
       }
-      if (!filters.level4) {
-        finalBricks = finalBricks.filter(b => b.academicLevel !== AcademicLevel.Fourth);
-      }
     }
     this.setState({ ...this.state, filters, subjects, finalBricks, sortedIndex: 0 });
   }

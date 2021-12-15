@@ -14,7 +14,6 @@ interface LibrarySubjectState {
   hovered: boolean;
 }
 
-
 class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectState> {
   renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
     return <div key={key}>
@@ -26,10 +25,17 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
   }
 
   render() {
-    const { assignments } = this.props.subjectAssignment;
+    let { assignments } = this.props.subjectAssignment;
 
     return (
       <div className="libary-container">
+        <div className="subject-name-v3 bold">
+          <div>
+            <div>
+              {this.props.subjectAssignment.subject.name}
+            </div>
+          </div>
+        </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           {assignments.map(this.renderAssignment.bind(this))}
         </div>

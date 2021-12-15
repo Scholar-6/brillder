@@ -26,9 +26,8 @@ const DifficultySelect: React.FC<DifficultySelectProps> = (props) => {
       <Select value={level} disabled={props.disabled} onChange={e => props.onChange(e.target.value as AcademicLevel)} MenuProps={{className: 'difficult-popper'}}>
         <MenuItem disabled style={{display: 'none'}} value={AcademicLevel.Default}>Select level</MenuItem>
         <MenuItem value={AcademicLevel.First}>I: Foundation (GCSE equiv.)</MenuItem>
-        <MenuItem value={AcademicLevel.Second}>II: Core 1 (AS equiv.)</MenuItem>
-        <MenuItem value={AcademicLevel.Third}>III: Core 2 (A-Level / IB equiv.)</MenuItem>
-        <MenuItem value={AcademicLevel.Fourth}>IV: Extension (Oxbridge equiv.)</MenuItem>
+        <MenuItem value={AcademicLevel.Second}>II: Core (A Level / IB equiv.)</MenuItem>
+        <MenuItem value={AcademicLevel.Third}>III: Extension (Oxbridge equiv.)</MenuItem>
       </Select>
     </div>
   );
