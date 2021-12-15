@@ -6,42 +6,176 @@
 .my-library {
   $small-level-size: 3vh;
   $level-size: 6vh;
+
   .custom-tooltip.subject-tooltip .brick-inline {
-    p, span {
+
+    p,
+    span {
       color: var(--white) !important;
     }
   }
 
   .library-title {
+    display: flex;
+    align-items: center;
     margin-top: 2vh;
     padding-left: 3vw;
     font-family: $font-family-bold;
     color: var(--theme-dark-blue);
     font-size: 3vw;
+
+    .circle-container {
+      border-radius: 50%;
+      margin-left: 1.5vw;
+      width: 2.5vw;
+      height: 2.5vw;
+      color: var(--white);
+      position: relative;
+
+      svg {
+        position: absolute;
+        stroke-width: 2;
+        top: 20%;
+        left: 20%;
+        width: 60%;
+        height: 60%;
+      }
+    }
+
+    .book-green {
+      border-radius: 50%;
+      margin-left: 1.5vw;
+      width: 2.5vw;
+      height: 2.5vw;
+      color: var(--white);
+      background: var(--theme-green);
+      position: relative;
+
+      svg {
+        position: absolute;
+        stroke-width: 2;
+        top: 20%;
+        left: 20%;
+        width: 60%;
+        height: 60%;
+      }
+    }
+
+    .static-numbers {
+      margin-left: 0.5vw;
+      font-size: 2vw;
+      display: flex;
+      align-items: center;
+    }
+
+    .smaller-number {
+      margin-left: 0.3vw;
+      margin-bottom: 1.2vw;
+      font-size: 1.2vw;
+    }
+
+    .box-blue {
+      background: var(--theme-dark-blue);
+    }
+
+    .box-yellow {
+      background: var(--theme-yellow);
+      svg {
+        padding-left: 0.2vw;
+      }
+    }
+
+
+    .hs-score {
+      $size: 2.5vw;
+      margin-left: 10vw;
+      font-size: 1.2vw;
+
+      .score-container-v5 {
+        margin-left: 0.3vw;
+        height: $size;
+        width: $size;
+        position: relative;
+      }
+
+      .CircularProgressbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: $size;
+        height: $size;
+
+        .CircularProgressbar-trail {
+          display: none;
+        }
+
+        .CircularProgressbar-path {
+          stroke: var(--theme-green);
+        }
+      }
+
+      .score-absolute {
+        top: 0;
+        left: 0;
+        width: $size;
+        height: $size;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        font-size: 1vw;
+      }
+    }
+
+    .avg-score {
+      margin-left: 1vw;
+
+      .CircularProgressbar {
+        .CircularProgressbar-path {
+          stroke: var(--theme-light-blue);
+        }
+      }
+    }
+
+    .ls-score {
+      margin-left: 1vw;
+
+      .CircularProgressbar {
+        .CircularProgressbar-path {
+          stroke: var(--theme-orange);
+        }
+      }
+    }
   }
 
   .all-subject-assignments {
     height: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh) !important;
+
     .my-library-list {
       padding-bottom: 9vh;
     }
   }
+
   .subjects-filter {
     height: 25vh !important;
   }
+
   .classroom-filter-custom {
     height: 25vh;
     overflow-y: scroll;
   }
+
   .index-box.hover-light:hover {
     background: var(--light-blue-alpha3);
   }
+
   .one-subject {
     padding-top: 3vh;
     padding-left: 2vw;
     padding-right: 2vw;
     padding-bottom: 12vh;
     height: 100%;
+
     .libary-container {
       background: var(--theme-dark-blue);
       border-radius: 0.7vw;
@@ -52,58 +186,72 @@
       padding-left: $base-side-margin;
       padding-right: $base-side-margin;
 
-      > div {
+      >div {
         height: 100%;
         $base-width: 2vw;
+
         .assignment {
           margin-left: $base-side-margin;
           margin-right: $base-side-margin;
           $base-radius: 0.35vw;
           border-radius: $base-radius;
+
           .progress-value {
             border-radius: $base-radius;
+
             .rotated-text {
               font-size: 1.2vw;
               color: var(--white);
             }
+
             .text-dark-gray {
               .rotated-text {
                 color: var(--dark-gray);
               }
             }
           }
+
           .default-value.progress-value .rotated-text {
             padding-left: 5.5vw;
           }
         }
+
         .length-20 {
           width: $base-width;
+
           .rotated .rotated-text {
             height: $base-width;
             line-height: 1.7;
           }
+
           .progress-value {
             width: $base-width;
           }
         }
+
         .length-40 {
           $width: calc(#{$base-width} * 2);
           width: $width;
+
           .rotated .rotated-text {
             height: $width;
             line-height: 3.4;
           }
+
           .progress-value {
             width: $width
           }
         }
+
         .length-60 {
           $width: calc(#{$base-width} * 4);
           width: $width;
+
           .rotated .rotated-text {
             height: $width;
             line-height: 6.4;
           }
+
           .progress-value {
             width: $width;
           }
@@ -111,13 +259,15 @@
       }
     }
   }
+
   .single-assignment-progressbar {
     .rotated-container {
       position: absolute;
       bottom: 0;
+
       .rotated {
         transform: rotate(270deg);
-  
+
         .rotated-text {
           padding-left: $level-size;
           padding-right: $level-size;
@@ -128,35 +278,41 @@
           font-family: $font-family-bold;
           color: #C8CACC;
           width: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh - 8vh - 3vh);
+
           p {
             color: #C8CACC;
             font-size: 1vw;
             font-family: $font-family-bold;
             white-space: nowrap;
-            overflow: hidden; 
+            overflow: hidden;
             text-overflow: ellipsis;
           }
         }
       }
+
       &.white .rotated .rotated-text p {
         color: var(--white);
       }
-  
+
       &.left-align {
         .rotated .rotated-text {
           justify-content: flex-start;
         }
       }
     }
+
     .custom-tooltip.subject-tooltip {
       margin-top: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh - 8vh - 2vh);
     }
+
     .length-40 .custom-tooltip.subject-tooltip {
       margin-left: 0.5vw;
     }
+
     .length-60 .custom-tooltip.subject-tooltip {
       margin-left: 2vw;
     }
+
     .teacher-initials {
       width: 100%;
       position: absolute;
@@ -165,7 +321,8 @@
       justify-content: center;
       bottom: 1vh;
       z-index: 200;
-      > div {
+
+      >div {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -181,6 +338,7 @@
         color: var(--theme-dark-blue);
       }
     }
+
     .pr-lock-container {
       position: absolute;
       width: 100%;
@@ -192,11 +350,13 @@
       bottom: 0;
       font-family: $font-family-bold;
       color: var(--white);
-      > div {
+
+      >div {
         display: flex;
         justify-content: center;
         line-height: 2 !important;
       }
+
       svg {
         margin-top: 0.8vw;
         margin-bottom: 0.4vw;
@@ -206,29 +366,33 @@
       }
     }
   }
-  
+
   .progress-value {
     transition: all 300ms ease-out !important;
   }
+
   .one-subject-pagination {
     position: absolute;
     bottom: 1vh;
     width: calc(100% - 4vw) !important;
     right: 2vw;
   }
+
   .single-subject-assignments {
     height: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh) !important;
   }
-  
+
   .my-library-list {
     height: 100%;
     padding-top: 2vh;
     padding-left: 1.5vw;
     margin-right: 2vw;
+
     .libary-container-1 {
       height: calc(100% / 3);
       margin-left: 0.5vw;
       margin-right: 0.5vw;
+
       .subject-name-v3 {
         padding: 0 !important;
         position: relative;
@@ -237,11 +401,13 @@
         width: 2vw;
         border-top-left-radius: 0.8vw;
         border-bottom-left-radius: 0.8vw;
-        > div {
+
+        >div {
           width: 0;
           height: 0;
           transform: rotate(-90deg);
-          > div {
+
+          >div {
             font-family: $font-family-bold;
             display: flex;
             justify-content: center;
@@ -265,7 +431,8 @@
         margin-bottom: 1vh;
         padding-top: 0;
         padding-bottom: 0;
-        > div {
+
+        >div {
           padding-left: 0.3vw;
           padding-top: 1vh;
           padding-bottom: 1vh;
@@ -273,19 +440,20 @@
       }
     }
   }
-  
+
   .assignment-progressbar {
     position: relative;
     height: 100%;
     display: inline-block;
-  
+
     .rotated-container {
       z-index: 1000;
       position: absolute;
       bottom: 0;
+
       .rotated {
         transform: rotate(270deg);
-  
+
         .rotated-text {
           padding-left: $small-level-size;
           padding-right: $small-level-size;
@@ -304,87 +472,111 @@
           }
         }
       }
+
       &.white .rotated .rotated-text p {
         color: var(--white);
       }
-  
+
       &.left-align {
         .rotated .rotated-text {
           justify-content: flex-start;
         }
       }
     }
-  
+
     .assignment {
       $small-book-radius: 0.2vw;
-  
+
       cursor: pointer;
       height: 100%;
       width: 1vw;
       margin-left: 0.2vw;
       margin-right: 0.2vw;
       border-radius: $small-book-radius;
-  
+
       &.default {
         background: var(--theme-light-blue) !important;
       }
-  
+
       &.assigned {
         opacity: 0.2;
       }
-  
+
       .default-value {
         height: 100%;
+
         &:hover {
           opacity: 0.5;
           background: var(--theme-light-blue) !important;
         }
       }
-  
+
       &.length-20 {
         width: 0.8vw;
+
         .progress-value {
           width: 0.8vw;
           line-height: 1;
         }
       }
+
       &.length-40 {
         width: 1.6vw;
+
         .progress-value {
           line-height: 1.9;
           width: 1.6vw;
         }
       }
+
       &.length-60 {
         width: 3.2vw;
+
         .progress-value {
           line-height: 3.9;
           width: 3.2vw;
         }
       }
     }
+
     .progress-value {
       position: absolute;
       bottom: 0;
       border-radius: 0.25vw;
     }
+
     .subject-tooltip {
       background: var(--white);
       margin-top: calc((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 12vh) / 4);
       text-align: center;
-      transform: translate(-25%, 0); 
+      transform: translate(-25%, 0);
       width: 13vw;
       z-index: 1200;
+
+      &.yellow-background {
+        background: var(--theme-yellow);
+
+        .CircularProgressbar .CircularProgressbar-path {
+          stroke: var(--theme-dark-blue) !important;
+        }
+      }
+
       .relative {
+        margin-top: 1vh;
+        margin-bottom: 1vh;
         position: relative;
       }
-      .brick-inline p {
+
+      .brick-inline {
         font-family: $font-family-bold;
-        color: var(--theme-dark-blue) !important;
+
+        p {
+          font-family: $font-family-bold;
+          color: var(--theme-dark-blue) !important;
+        }
       }
+
       .circle-score {
-        padding-top: 1vh;
-        padding-bottom: 1vh;
         position: absolute;
         top: 0;
         height: 3vw;
@@ -393,13 +585,15 @@
         align-items: center;
         justify-content: center;
       }
-      .CircularProgressbar  {
+
+      .CircularProgressbar {
         width: 3vw;
         height: 3vw;
 
         .CircularProgressbar-trail {
           display: none;
         }
+
         .CircularProgressbar-path {
           stroke: var(--theme-green);
         }
@@ -408,27 +602,31 @@
   }
 
   .one-subject {
-  .assignment-progressbar {
-    .rotated-container {
-      .rotated {
-        .rotated-text {
-          padding-left: $level-size;
-          padding-right: $level-size;
+    .assignment-progressbar {
+      .rotated-container {
+        .rotated {
+          .rotated-text {
+            padding-left: $level-size;
+            padding-right: $level-size;
+          }
         }
       }
     }
   }
-}
-  
+
   .progress-value {
     .academic-lines {
-      .start-lines, .end-lines {
+
+      .start-lines,
+      .end-lines {
         display: flex;
         align-items: center;
         height: $level-size;
-        > div {
+
+        >div {
           width: 100%;
         }
+
         .level {
           background: var(--white);
           width: 100%;
@@ -437,16 +635,20 @@
           height: 0.7vh;
         }
       }
+
       .end-lines {
         width: 100%;
         position: absolute;
         bottom: 0;
       }
-  
+
       &.smaller {
-        .start-lines, .end-lines {
+
+        .start-lines,
+        .end-lines {
           height: $small-level-size;
         }
+
         .level {
           background: var(--white);
           width: 100%;
@@ -456,5 +658,10 @@
         }
       }
     }
+  }
+  .assignment-progressbar.general .academic-lines {
+      &.smaller .level {
+        background: var(--theme-dark-blue) !important;
+      }
   }
 }
