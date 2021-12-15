@@ -77,6 +77,8 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     );
   };
 
+  console.log(subject.name);
+
   return (
     <div
       className="assignment-progressbar"
@@ -96,7 +98,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
             props.history.push(routes.playNewPrep(brick));
           }
         }}
-        style={{ background: color }}
+        style={{ background: ((subject.name == GENERAL_SUBJECT) ? 'white' : color) }}
       >
         {hovered && (
           <div className="custom-tooltip subject-tooltip">
@@ -117,32 +119,23 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         <div
           className="progress-value default-value"
           onMouseEnter={() => setHover(true)}
-        >
-          {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
-          {height == 0 && renderRotatedTitle("white", 100)}
-          {height < 50 && (
-            <AcademyDifficulty
-              a={assignment.brick.academicLevel}
-              className="smaller"
-            />
-          )}
-        </div>
+        />
         {height > 0 &&
           <div
             className="progress-value"
             onMouseEnter={() => setHover(true)}
             style={{
-              background: color,
-              height: ((height > 20) ? height : 20) + "%",
+              background: ((subject.name == GENERAL_SUBJECT) ? 'white' : color),
+              height: ((height > 30) ? height : 30) + "%",
               maxHeight: "100%",
             }}
           >
-            {height >= 50 && renderRotatedTitle("white", height)}
-            {height < 50 && renderRotatedPercentage("white", Math.round(height), ((height > 20) ? height : 20))}
-            {height >= 50 && assignment.brick.academicLevel >= AcademicLevel.First && (
+            {height < 50 && renderRotatedPercentage("white", Math.round(height), ((height > 30) ? height : 30))}
+            {height > 0 && assignment.brick.academicLevel >= AcademicLevel.First && (
               <AcademyDifficulty
                 a={assignment.brick.academicLevel}
                 className="smaller"
+                noTopLines={height < 50}
               />
             )}
           </div>
