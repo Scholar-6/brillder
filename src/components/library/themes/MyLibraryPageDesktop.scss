@@ -242,6 +242,7 @@
           height: 0;
           transform: rotate(-90deg);
           > div {
+            font-family: $font-family-bold;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -298,7 +299,8 @@
 
           &.no-padding {
             text-align: center;
-            padding: 0 !important;
+            padding-left: 2.2vh;
+            padding-right: 0 !important;
           }
         }
       }
@@ -368,18 +370,21 @@
     }
     .subject-tooltip {
       background: var(--white);
-      margin-top: calc((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 2.5vh) / 4);
+      margin-top: calc((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 12vh) / 4);
       text-align: center;
       transform: translate(-25%, 0); 
       width: 13vw;
-      z-index: 1000;
+      z-index: 1200;
       .relative {
         position: relative;
       }
       .brick-inline p {
+        font-family: $font-family-bold;
         color: var(--theme-dark-blue) !important;
       }
       .circle-score {
+        padding-top: 1vh;
+        padding-bottom: 1vh;
         position: absolute;
         top: 0;
         height: 3vw;

@@ -29,7 +29,7 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
 
     return (
       <div className="libary-container">
-        <div className="subject-name-v3">
+        <div className="subject-name-v3 bold">
           <div>
             <div>
               {this.props.subjectAssignment.subject.name}
