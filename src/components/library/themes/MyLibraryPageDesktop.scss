@@ -43,7 +43,7 @@
     padding-bottom: 12vh;
     height: 100%;
     .libary-container {
-      background: var(--white);
+      background: var(--theme-dark-blue);
       border-radius: 0.7vw;
       height: 100%;
       padding-top: 1.5vh;
@@ -257,7 +257,7 @@
       .libary-container {
         height: 100%;
         display: flex;
-        background: var(--white);
+        background: var(--theme-dark-blue);
         border-radius: 0.7vw;
         padding-right: 0.4vw;
         margin-top: 1vh;
@@ -295,6 +295,11 @@
           font-family: $font-family-bold;
           color: #C8CACC;
           font-size: 0.8vw;
+
+          &.no-padding {
+            text-align: center;
+            padding: 0 !important;
+          }
         }
       }
       &.white .rotated .rotated-text p {
@@ -319,7 +324,7 @@
       border-radius: $small-book-radius;
   
       &.default {
-        background: var(--tab-gray) !important;
+        background: var(--theme-light-blue) !important;
       }
   
       &.assigned {
