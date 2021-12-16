@@ -59,6 +59,19 @@
         width: 60%;
         height: 60%;
       }
+
+      .custom-tooltip {
+        display: none;
+      }
+
+      &:hover .custom-tooltip {
+        display: block;
+        z-index: 100;
+        top: 3vw;
+        left: -5vw;
+        background: var(--tab-gray);
+        width: 13vw;
+      }
     }
 
     .static-numbers {
@@ -76,12 +89,37 @@
 
     .box-blue {
       background: var(--theme-dark-blue);
+      .custom-tooltip {
+        display: none;
+      }
+
+      &:hover .custom-tooltip {
+        display: block;
+        z-index: 100;
+        top: 3vw;
+        left: -1.8vw;
+        background: var(--tab-gray);
+        width: 7vw;
+      }
     }
 
     .box-yellow {
       background: var(--theme-yellow);
       svg {
         padding-left: 0.2vw;
+      }
+
+      .custom-tooltip {
+        display: none;
+      }
+
+      &:hover .custom-tooltip {
+        display: block;
+        z-index: 100;
+        top: 3vw;
+        left: -1.8vw;
+        background: var(--tab-gray);
+        width: 7vw;
       }
     }
 
@@ -90,6 +128,20 @@
       $size: 2.5vw;
       margin-left: 10vw;
       font-size: 1.2vw;
+      position: relative;
+
+      .custom-tooltip {
+        display: none;
+      }
+
+      &:hover .custom-tooltip {
+        display: block;
+        z-index: 100;
+        top: 3vw;
+        left: -1.8vw;
+        background: var(--tab-gray);
+        width: 7vw;
+      }
 
       .score-container-v5 {
         margin-left: 0.3vw;
