@@ -79,7 +79,7 @@ export class AudioBlot extends Embed {
   }
 }
 AudioBlot.blotName = 'audio';
-AudioBlot.tagName = 'div';
+AudioBlot.tagName = 'section';
 GlobalQuill.register(AudioBlot);
 
 export default class SoundUpload {
