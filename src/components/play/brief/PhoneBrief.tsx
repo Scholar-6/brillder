@@ -107,19 +107,16 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
         </div>
       </div>
       {competitionData &&
-        <Dialog open={competitionData.isOpen} onClose={() => setCompetitionData({ ...competitionData, isOpen: false })} className="dialog-box phone-competition-dialog">
+        <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog">
           <div className="dialog-header">
-            <div className="bold" style={{ textAlign: 'center' }}>This Brick has a competition running, would you like to take part? <br /><a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Click for more information</a></div>
+            <div className="bold" style={{ textAlign: 'center' }}>This Brick is part of a competition, you may win a prize. <br /><a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">More Information</a></div>
           </div>
           <div className="dialog-footer">
             <button className="btn btn-md bg-theme-orange yes-button" onClick={() => {
               props.setCompetitionId(competitionData.competition.id);
               setCompetitionData({ ...competitionData, isOpen: false });
             }}>
-              <span>Yes</span>
-            </button>
-            <button className="btn btn-md bg-gray no-button" onClick={() => setCompetitionData({ ...competitionData, isOpen: false })}>
-              <span>No</span>
+              <span>Accept</span>
             </button>
           </div>
         </Dialog>}

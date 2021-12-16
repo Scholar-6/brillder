@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import Dialog from '@material-ui/core/Dialog';
 import { connect } from 'react-redux';
 import Radio from '@material-ui/core/Radio';
@@ -15,11 +16,12 @@ import SpriteIcon from '../SpriteIcon';
 import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
 import { getPublishedBricks } from 'services/axios/brick';
 import map from 'components/map';
-import { useHistory } from 'react-router';
 import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
 import BrickTitle from '../BrickTitle';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import ValidationFailedDialog from './ValidationFailedDialog';
+import { User } from 'model/user';
+import { ReduxCombinedState } from 'redux/reducers';
 
 interface AssignPersonOrClassProps {
   classroomId: number;
@@ -29,6 +31,7 @@ interface AssignPersonOrClassProps {
   failed(brick: Brick): void;
   close(): void;
 
+  user: User;
   requestFailed(e: string): void;
 }
 
@@ -49,7 +52,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const loadBricks = async () => {
     const bricks = await getPublishedBricks();
     if (bricks) {
-      setBricks(bricks.filter(b => b.isCore === true));
+      setBricks(bricks.filter(b => b.isCore === true || b.author.id == props.user.id));
     }
   }
 
@@ -197,10 +200,12 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   );
 }
 
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+
 const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
 });
 
-const connector = connect(null, mapDispatch);
+const connector = connect(mapState, mapDispatch);
 
 export default connector(AssignBrickClassDialog);

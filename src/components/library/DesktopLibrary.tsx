@@ -379,6 +379,9 @@ class Library extends Component<BricksListProps, BricksListState> {
       <div className="flex-center">
         <div className="book-green">
           <SpriteIcon name="book-open" />
+          <div className="custom-tooltip bold">
+            <div>Books Earned / Bricks Attempted</div>
+          </div>
         </div>
         <div className="static-numbers">
           <div>{number}</div>
@@ -393,6 +396,9 @@ class Library extends Component<BricksListProps, BricksListState> {
       <div className="flex-center">
         <div className="box-blue circle-container">
           <SpriteIcon name="box" />
+          <div className="custom-tooltip bold">
+            <div>Subjects Played</div>
+          </div>
         </div>
         <div className="static-numbers">
           <div>{this.state.subjects.length}</div>
@@ -410,6 +416,9 @@ class Library extends Component<BricksListProps, BricksListState> {
       <div className="flex-center">
         <div className="box-yellow circle-container">
           <SpriteIcon name="play-thick" />
+          <div className="custom-tooltip bold">
+            <div>Total Plays</div>
+          </div>
         </div>
         <div className="static-numbers">
           <div>{number}</div>
@@ -427,6 +436,9 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
     return (
       <div className="flex-center hs-score">
+        <div className="custom-tooltip bold">
+          <div>Highest Score</div>
+        </div>
         HS
         <div className="score-container-v5">
           <CircularProgressbar
@@ -434,7 +446,7 @@ class Library extends Component<BricksListProps, BricksListState> {
             counterClockwise={true}
             value={number}
           />
-          <div className="score-absolute">{number}</div>
+          <div className="score-absolute">{Math.round(number)}</div>
         </div>
       </div>
     );
@@ -452,6 +464,9 @@ class Library extends Component<BricksListProps, BricksListState> {
     number = Math.round(number / count);
     return (
       <div className="flex-center hs-score avg-score">
+        <div className="custom-tooltip bold">
+          <div>Average Score</div>
+        </div>
         AVG.
         <div className="score-container-v5">
           <CircularProgressbar
@@ -459,7 +474,7 @@ class Library extends Component<BricksListProps, BricksListState> {
             counterClockwise={true}
             value={number}
           />
-          <div className="score-absolute">{number}</div>
+          <div className="score-absolute">{Math.round(number)}</div>
         </div>
       </div>
     );
@@ -474,6 +489,9 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
     return (
       <div className="flex-center hs-score ls-score">
+        <div className="custom-tooltip bold">
+          <div>Lowest Score</div>
+        </div>
         LS
         <div className="score-container-v5">
           <CircularProgressbar
@@ -524,7 +542,7 @@ class Library extends Component<BricksListProps, BricksListState> {
               }>
                 {this.renderMainTitle(filterSubjects)}
                 {this.renderBook()}
-                { !this.state.subjectChecked && this.renderBox()}
+                {!this.state.subjectChecked && this.renderBox()}
                 {this.renderLastBox()}
                 {this.highestScore()}
                 {this.averageScore()}
