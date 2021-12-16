@@ -434,7 +434,7 @@ class Library extends Component<BricksListProps, BricksListState> {
             counterClockwise={true}
             value={number}
           />
-          <div className="score-absolute">{number}</div>
+          <div className="score-absolute">{Math.round(number)}</div>
         </div>
       </div>
     );
@@ -459,7 +459,7 @@ class Library extends Component<BricksListProps, BricksListState> {
             counterClockwise={true}
             value={number}
           />
-          <div className="score-absolute">{number}</div>
+          <div className="score-absolute">{Math.round(number)}</div>
         </div>
       </div>
     );
