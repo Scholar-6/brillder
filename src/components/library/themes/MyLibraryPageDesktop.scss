@@ -446,6 +446,10 @@
     height: 100%;
     display: inline-block;
 
+    .assignment:hover .progress-value {
+      opacity: 0.5 !important;
+    }
+
     .rotated-container {
       z-index: 1000;
       position: absolute;
