@@ -35,7 +35,7 @@ const ImageLive: React.FC<ImageProps> = ({ component, refs }) => {
               </div>}
             </div>
           </div>
-          {component.imageCaption && <figcaption className="image-caption">{component.imageCaption}</figcaption>}
+          {component.imageCaption && <figcaption className="image-caption" dangerouslySetInnerHTML={{__html: component.imageCaption}} />}
         </div>
       </div>
     );
