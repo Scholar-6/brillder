@@ -209,7 +209,7 @@ const ImageDialog: React.FC<DialogProps> = ({
           className="quill-caption"
           data={caption}
           showToolbar={true}
-          toolbar={['latex']}
+          toolbar={['bold', 'italic', 'latex']}
           placeholder="Add caption"
           imageDialog={true}
           onChange={v => setCaption(v)}
