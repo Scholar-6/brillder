@@ -369,9 +369,27 @@ class Library extends Component<BricksListProps, BricksListState> {
 
   renderBook() {
     let number = 0;
-    for (let aa of this.state.finalAssignments) {
-      if (aa.bestAttemptPercentScore && aa.bestAttemptPercentScore >= 50) {
-        number += 1;
+    let count = 0;
+   
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          count = subjectAssignment.assignments.length;
+          for (let aa of subjectAssignment.assignments) {
+            if (aa.bestAttemptPercentScore && aa.bestAttemptPercentScore >= 50) {
+              number += 1;
+            }
+          }
+        }
+      }
+    } else {
+      count = this.state.finalAssignments.length;
+      for (let aa of this.state.finalAssignments) {
+        if (aa.bestAttemptPercentScore && aa.bestAttemptPercentScore >= 50) {
+          number += 1;
+        }
       }
     }
 
@@ -385,7 +403,7 @@ class Library extends Component<BricksListProps, BricksListState> {
         </div>
         <div className="static-numbers">
           <div>{number}</div>
-          <div className="smaller-number">/ {this.state.finalAssignments.length}</div>
+          <div className="smaller-number">/ {count}</div>
         </div>
       </div>
     );
@@ -409,9 +427,23 @@ class Library extends Component<BricksListProps, BricksListState> {
 
   renderLastBox() {
     let number = 0;
-    for (let assign of this.state.finalAssignments) {
-      number += assign.numberOfAttempts;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let assignment of subjectAssignment.assignments) {
+            number += assignment.numberOfAttempts;
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        number += assign.numberOfAttempts;
+      }
     }
+
     return (
       <div className="flex-center">
         <div className="box-yellow circle-container">
