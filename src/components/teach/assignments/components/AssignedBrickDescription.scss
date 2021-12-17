@@ -64,6 +64,17 @@
       font-size: 0.9vw;
       text-align: justify;
       color: var(--theme-dark-blue);
+      
+      &.deadline-editor {
+        display: flex;
+        align-items: center;
+
+        svg {
+          width: 1.2vw;
+          height: 1.2vw;
+          stroke-width: 2;
+        }
+      }
     }
   }
   .vertical-brick {
