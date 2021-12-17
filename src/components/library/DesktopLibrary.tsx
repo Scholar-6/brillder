@@ -370,7 +370,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   renderBook() {
     let number = 0;
     let count = 0;
-   
+
     if (this.state.subjectChecked) {
       const subject = this.state.subjects.find(s => s.checked === true);
       if (subject) {
@@ -461,11 +461,27 @@ class Library extends Component<BricksListProps, BricksListState> {
 
   highestScore() {
     let number = 0;
-    for (let assign of this.state.finalAssignments) {
-      if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore > number) {
-        number = assign.bestAttemptPercentScore;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let aa3 of subjectAssignment.assignments) {
+            if (aa3.bestAttemptPercentScore && aa3.bestAttemptPercentScore > number) {
+              number = aa3.bestAttemptPercentScore;
+            }
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore > number) {
+          number = assign.bestAttemptPercentScore;
+        }
       }
     }
+
     return (
       <div className="flex-center hs-score">
         <div className="custom-tooltip bold">
@@ -487,13 +503,31 @@ class Library extends Component<BricksListProps, BricksListState> {
   averageScore() {
     let count = 0;
     let number = 0;
-    for (let assign of this.state.finalAssignments) {
-      if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 50) {
-        number += assign.bestAttemptPercentScore;
-        count += 1;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let assign of subjectAssignment.assignments) {
+            if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 50) {
+              number += assign.bestAttemptPercentScore;
+              count += 1;
+            }
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 50) {
+          number += assign.bestAttemptPercentScore;
+          count += 1;
+        }
       }
     }
-    number = Math.round(number / count);
+    if (count != 0) {
+      number = Math.round(number / count);
+    }
     return (
       <div className="flex-center hs-score avg-score">
         <div className="custom-tooltip bold">
@@ -514,11 +548,27 @@ class Library extends Component<BricksListProps, BricksListState> {
 
   lowestScore() {
     let number = 100;
-    for (let assign of this.state.finalAssignments) {
-      if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 0 && assign.bestAttemptPercentScore < number) {
-        number = assign.bestAttemptPercentScore;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let assign of subjectAssignment.assignments) {
+            if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 0 && assign.bestAttemptPercentScore < number) {
+              number = assign.bestAttemptPercentScore;
+            }
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 0 && assign.bestAttemptPercentScore < number) {
+          number = assign.bestAttemptPercentScore;
+        }
       }
     }
+    
     return (
       <div className="flex-center hs-score ls-score">
         <div className="custom-tooltip bold">
