@@ -375,7 +375,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     const {page} = this.state;
     this.setState({ ...this.state, page: page - 1 });
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(page - 1, this.state.sortBy, filterSubjects);
+    const filterRoles = this.getCheckedRoles();
+    this.getUsers(page - 1, this.state.sortBy, filterSubjects, filterRoles);
   }
 
   renderUserType(user: User) {
