@@ -467,8 +467,9 @@
 }
 
 .permision-buttons {
+  margin-top: 0 !important;
   display: flex;
-  font-size: 1vw;
+  font-size: 0.85vw;
 
   > div {
     display: flex;
