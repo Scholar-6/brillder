@@ -74,7 +74,7 @@ export const getAllClassrooms = async () => {
  */
  export const getAssignmentsClassrooms = async (classId: number) => {
   try {
-    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/classroom/assignments/0/25/" + classId, {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/classroom/assignments/0/9000/" + classId, {
       withCredentials: true,
     });
     if (res.data) {

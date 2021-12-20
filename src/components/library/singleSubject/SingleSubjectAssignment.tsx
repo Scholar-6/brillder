@@ -48,7 +48,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
 
   let { color } = subject;
   if (subject.name === GENERAL_SUBJECT) {
-    color = "#001c58";
+    color = "white";
   }
 
   className += " default";
@@ -123,7 +123,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
 
   return (
     <div
-      className="assignment-progressbar single-assignment-progressbar"
+      className={`assignment-progressbar single-assignment-progressbar ${subject.name == GENERAL_SUBJECT ? 'general' : ''}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -147,13 +147,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
           className="progress-value default-value"
           onMouseEnter={() => setHover(true)}
         >
-          {height < 50 && height > 0 &&
-            assignment.brick.academicLevel >= AcademicLevel.First && (
-              <AcademyDifficulty
-                a={assignment.brick.academicLevel}
-                brick={brick}
-              />
-            )}
+          
           {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
           {height < 50 && height > 0 && renderRotatedTitle("white", 100)}
           {height < 50 && height > 0 &&

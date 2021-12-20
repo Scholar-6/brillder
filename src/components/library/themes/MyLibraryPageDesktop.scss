@@ -313,6 +313,27 @@
   }
 
   .single-assignment-progressbar {
+    &.general {
+      .progress-value .rotated-container .rotated .rotated-text {
+        color: var(--theme-dark-blue);
+      }
+      .progress-value.default-value .rotated-container .rotated .rotated-text {
+        color: white;
+      }
+      .pr-lock-container {
+        color: var(--theme-dark-blue) !important;
+      }
+      .academic-lines {
+        .lib-circle {
+          color: white !important;
+          background: var(--theme-dark-blue) !important;
+        }
+        .level {
+          background: var(--theme-dark-blue) !important;
+        }
+      }
+    }
+
     .rotated-container {
       position: absolute;
       bottom: 0;
@@ -406,7 +427,7 @@
       >div {
         display: flex;
         justify-content: center;
-        line-height: 2 !important;
+        line-height: 1 !important;
       }
 
       svg {
@@ -453,6 +474,7 @@
         width: 2vw;
         border-top-left-radius: 0.8vw;
         border-bottom-left-radius: 0.8vw;
+        font-size: 1vw;
 
         >div {
           width: 0;

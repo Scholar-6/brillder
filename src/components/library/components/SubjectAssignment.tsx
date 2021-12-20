@@ -38,7 +38,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
 
   let { color } = subject;
   if (subject.name === GENERAL_SUBJECT) {
-    color = "#001c58";
+    color = "white";
   }
 
   className += " default";
@@ -98,7 +98,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
             props.history.push(routes.playNewPrep(brick));
           }
         }}
-        style={{ background: ((subject.name == GENERAL_SUBJECT) ? 'white' : color) }}
+        style={{ background: color }}
       >
         {hovered && (
           <div className={`custom-tooltip subject-tooltip ${height < 50 ? 'yellow-background' : ''}`}>
@@ -125,7 +125,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
             className="progress-value"
             onMouseEnter={() => setHover(true)}
             style={{
-              background: ((subject.name == GENERAL_SUBJECT) ? 'white' : color),
+              background: color,
               height: ((height > 30) ? height : 30) + "%",
               maxHeight: "100%",
             }}
