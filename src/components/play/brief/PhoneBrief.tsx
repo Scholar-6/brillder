@@ -109,10 +109,10 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
       {competitionData &&
         <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog">
           <div className="dialog-header">
-            <div className="bold" style={{ textAlign: 'center' }}>This Brick is part of a competition, you may win a prize. <br /><a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">More Information</a></div>
+            <div className="bold" style={{ textAlign: 'center' }}>This brick is part of a competition, you may win a prize! <br /><a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">More Information</a></div>
           </div>
           <div className="dialog-footer">
-            <button className="btn btn-md bg-theme-orange yes-button" onClick={() => {
+            <button className="btn btn-md bg-green text-white yes-button" onClick={() => {
               props.setCompetitionId(competitionData.competition.id);
               setCompetitionData({ ...competitionData, isOpen: false });
             }}>

@@ -34,6 +34,7 @@ interface AssignedDescriptionProps {
 interface State {
   warningOpen: boolean;
   archiveHovered: boolean;
+  deadlineEditable: boolean;
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps, State> {
@@ -43,6 +44,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     this.state = {
       warningOpen: false,
       archiveHovered: false,
+      deadlineEditable: false,
     }
   }
 
@@ -264,9 +266,12 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           <div className="link-info">
             {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)}
           </div>
-          <div className="link-info">
-            {assignment.deadline ? <span> Deadline: {getFormattedDate(assignment.deadline)}</span> : ""}
-          </div>
+          {assignment.deadline ?
+          <div className="link-info deadline-editor">
+            <span> Deadline: {getFormattedDate(assignment.deadline)}</span>
+            <SpriteIcon name="edit-outline-custom" onClick={() => this.setState({deadlineEditable: true})}/>
+          </div> : ""
+          }
         </div>
         <div className="reminder-container">
           {!this.props.isArchive && this.renderStatus(assignment)}
