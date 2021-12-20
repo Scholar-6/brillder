@@ -314,6 +314,15 @@
 
   .single-assignment-progressbar {
     &.general {
+      .progress-value .rotated-container .rotated .rotated-text {
+        color: var(--theme-dark-blue);
+      }
+      .progress-value.default-value .rotated-container .rotated .rotated-text {
+        color: white;
+      }
+      .pr-lock-container {
+        color: var(--theme-dark-blue) !important;
+      }
       .academic-lines {
         .lib-circle {
           color: white !important;
