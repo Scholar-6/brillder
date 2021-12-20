@@ -313,6 +313,18 @@
   }
 
   .single-assignment-progressbar {
+    &.general {
+      .academic-lines {
+        .lib-circle {
+          color: white !important;
+          background: var(--theme-dark-blue) !important;
+        }
+        .level {
+          background: var(--theme-dark-blue) !important;
+        }
+      }
+    }
+
     .rotated-container {
       position: absolute;
       bottom: 0;
