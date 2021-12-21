@@ -6,7 +6,7 @@ import './UserPreferencePage.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import userActions from 'redux/actions/user';
 import map from 'components/map';
-import { RolePreference, User, UserType } from 'model/user';
+import { UserPreferenceType, User, UserType } from 'model/user';
 import { setUserPreference } from 'services/axios/user';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
@@ -28,15 +28,15 @@ const TabletTheme = React.lazy(() => import('./themes/PreferenceTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/PreferenceDesktopTheme'));
 
 const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
-  const [preference, setPreference] = React.useState(props.user.rolePreference?.roleId ?? props.defaultPreference ?? RolePreference.Student);
+  const [preference, setPreference] = React.useState(props.user.userPreference?.preferenceId ?? props.defaultPreference ?? UserPreferenceType.Student);
 
-  const handleChange = async (roleId: RolePreference, disabled: boolean) => {
-    if (disabled || !roleId) {
+  const handleChange = async (preferenceId: UserPreferenceType, disabled: boolean) => {
+    if (disabled || !preferenceId) {
       return;
     }
-    setPreference(roleId);
+    setPreference(preferenceId);
     try {
-      await setUserPreference(roleId, true);
+      await setUserPreference(preferenceId, true);
       props.getUser();
     } catch (e) {
       console.log(e);
@@ -56,17 +56,17 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
     /* eslint-disable-next-line */
   }, [props.defaultPreference]);
 
-  const renderRadioButton = (roleId: RolePreference) => {
-    return <Radio checked={preference === roleId} value={roleId} />;
+  const renderRadioButton = (preferenceId: UserPreferenceType) => {
+    return <Radio checked={preference === preferenceId} value={preferenceId} />;
   }
 
   const moveNext = () => {
-    if (preference && props.user.rolePreference) {
+    if (preference && props.user.userPreference) {
       props.history.push(map.SetUsername);
     }
   }
 
-  const RadioContainer: React.FC<{ roleId: RolePreference | UserType, name: string }> = ({ roleId, name, children }) => {
+  const RadioContainer: React.FC<{ preferenceId: UserPreferenceType | UserType, name: string }> = ({ preferenceId, name, children }) => {
     let disabled = false;
 
     let className = 'radio-container';
@@ -74,14 +74,14 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
       className += ' disabled';
     }
 
-    if (preference === roleId) {
+    if (preference === preferenceId) {
       className += ' active';
     }
 
     return (
       <div className="ef-radio-box">
-        <div className={className} onClick={() => handleChange(roleId as RolePreference, disabled)}>
-          {renderRadioButton(roleId as RolePreference)}
+        <div className={className} onClick={() => handleChange(preferenceId as UserPreferenceType, disabled)}>
+          {renderRadioButton(preferenceId as UserPreferenceType)}
           <span className="radio-text pointer">{name}</span>
           <div className="ef-label">{children}</div>
         </div>
@@ -103,18 +103,18 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
             <div className="ef-space-after-title" />
             <div className="ef-main-radio-context">
               <div className="ef-flex">
-                <RadioContainer roleId={RolePreference.Student} name="Learner">
+                <RadioContainer preferenceId={UserPreferenceType.Student} name="Learner">
                   I want to learn, receive assignments and feedback, or join a course.
                 </RadioContainer>
-                <RadioContainer roleId={RolePreference.Builder} name="Builder">
+                <RadioContainer preferenceId={UserPreferenceType.Builder} name="Builder">
                   I want to build and submit content for paid publication.
                 </RadioContainer>
               </div>
               <div className="ef-flex">
-                <RadioContainer roleId={RolePreference.Teacher} name="Educator / Tutor">
+                <RadioContainer preferenceId={UserPreferenceType.Teacher} name="Educator / Tutor">
                   I want to assign Brillder content and provide feedback to my students.<br />
                 </RadioContainer>
-                <RadioContainer roleId={RolePreference.Institution} name="Institution">
+                <RadioContainer preferenceId={UserPreferenceType.Institution} name="Institution">
                   I want to manage classes, students, and teachers.<br />
                 </RadioContainer>
               </div>
@@ -133,9 +133,9 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
     );
   }
 
-  const RoleBox: React.FC<{ roleId: RolePreference | UserType, className: string }> = ({ roleId, className, children }) => {
+  const RoleBox: React.FC<{ preferenceId: UserPreferenceType | UserType, className: string }> = ({ preferenceId, className, children }) => {
     return <div className={"role-box " + className} onClick={async () => {
-      await handleChange(roleId as RolePreference, false);
+      await handleChange(preferenceId as UserPreferenceType, false);
       moveNext();
     }}>
       {children}
@@ -154,7 +154,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
             <TypingLabel minTime={20} maxTime={30} onEnd={() => { }} label="Which of the following best describes you?" />
           </h1>
           <div className="ef-flex">
-            <RoleBox roleId={RolePreference.Student} className="box1">
+            <RoleBox preferenceId={UserPreferenceType.Student} className="box1">
               <div className="flex-center">
                 <SpriteIcon name="glasses" className="glasses" />
               </div>
@@ -164,7 +164,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <p>and feedback, or join</p>
               <p>a course.</p>
             </RoleBox>
-            <RoleBox roleId={RolePreference.Teacher} className="box2">
+            <RoleBox preferenceId={UserPreferenceType.Teacher} className="box2">
               <div className="flex-center file-container">
                 <SpriteIcon name="file-plus" />
               </div>
@@ -173,7 +173,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <p>content and provide</p>
               <p>feedback to my students.</p>
             </RoleBox>
-            <RoleBox roleId={RolePreference.Institution} className="box3">
+            <RoleBox preferenceId={UserPreferenceType.Institution} className="box3">
               <div className="flex-center">
                 <TeachButton history={historyMock} />
               </div>
@@ -182,7 +182,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <p>classes, students,</p>
               <p>and teachers.</p>
             </RoleBox>
-            <RoleBox roleId={RolePreference.Builder} className="box4">
+            <RoleBox preferenceId={UserPreferenceType.Builder} className="box4">
               <div className="flex-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="dd-trowel" viewBox="0 0 570.728 450.691">
                   <path id="Path_140" data-name="Path 140" d="M1186.909,726.115l3.436-10.847L1371.8,492.923l12.378-7.847,10.862-1.178,8.811,1.178,7.179,3.586,8.133,4.261,40.921,41.658,33.37-20.381a17.992,17.992,0,0,0,3.742-4.186,12.5,12.5,0,0,0,1.492-4.791v-12.3l1.252-49.893,2.666-7.273,9.87-11.555,33.362-24.667-1.045-6.87v-9.082l4.609-6.262,7.665-4.425,149.052-80.213,8.425-3.922,7.345-1.288,9.4,1.288,6.973,3.922,3.974,4.286,4.834,5.272,5.449,5.769,4.054,6.93,1.058,7v7.515l-2.177,5.934-2.935,5.041-5.449,6.128L1599.96,428.781l-9.55,5.12-9.706,1.856-8.857-.951-8.045-3.871-6.733-6.733-26.284,18.828-4.193,5.461v73.462h0a25.189,25.189,0,0,1-.979,4.314,7.623,7.623,0,0,1-1.562,2.651l-7.35,5.665-8.115,4.681-113.544,65.971,3.884,5.2,5.861,2.975h7.679l6.7-1.331,79.524-37.7,58.38,53.3,4.563,7.862,1.135,8.009-1.135,6.248-4.563,5.4-7.464,4.959-345.336,78.013h-6.742l-5.486-1.63-3.5-4.191-1.635-6.227" transform="translate(-1186.909 -287.472)" fill="#c43c30"/>

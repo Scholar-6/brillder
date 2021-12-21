@@ -41,8 +41,8 @@ const PlayPreviewRoute: React.FC<PreviewRouteProps> = ({
 
     let { user } = rest;
 
-    if (!user.rolePreference) {
-      return <Redirect to={map.UserPreference} />;
+    if (!user.userPreference) {
+      return <Redirect to={map.UserPreferencePage} />;
     }
 
     if (!rest.isRedirectedToProfile) {

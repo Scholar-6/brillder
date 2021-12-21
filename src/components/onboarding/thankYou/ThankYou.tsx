@@ -27,7 +27,7 @@ const ThankYou: React.FC<Props> = (props) => {
   }, []);
 
   const moveNext = () => {
-    props.history.push(map.UserPreference);
+    props.history.push(map.UserPreferencePage);
   }
 
   if (isPhone()) {
