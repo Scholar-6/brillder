@@ -6,6 +6,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 import DropCoverImage from "./DropCoverImage";
 import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
+import SourceInput from "components/baseComponents/SourceInput";
 
 
 interface DialogProps {
@@ -92,12 +93,7 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
           Where did you get this image?
           <span className="text-theme-orange">*</span>
         </div>
-        <input
-          value={source}
-          className={validationRequired && !source ? 'invalid' : ''}
-          onChange={(e) => setSource(e.target.value)}
-          placeholder="Add link to source or name of owner"
-        />
+        <SourceInput source={source} validationRequired={validationRequired} setSource={setSource} />
         <CopyrightCheckboxes
           validationRequired={validationRequired}
           permision={permision}
