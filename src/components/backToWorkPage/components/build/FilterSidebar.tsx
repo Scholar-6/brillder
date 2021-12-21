@@ -126,7 +126,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     return (
       <div>
         <div className="filter-container sort-by-box">
-          <div className="sort-header">INBOX</div>
+          <div className="sort-header">Inbox</div>
         </div>
         <div className="filter-container subject-indexes-box first">
           <div className="index-box color1">
