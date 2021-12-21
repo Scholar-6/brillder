@@ -15,7 +15,7 @@ import {
 } from "components/build/questionService/QuestionService";
 import { Question } from "model/question";
 import { getAttempts } from "services/axios/attempt";
-import { PlayAttempt } from "model/attempt";
+import { Annotation, AnnotationLocation, PlayAttempt } from "model/attempt";
 import { Redirect } from "react-router-dom";
 import { loadSubjects } from "components/services/subject";
 
@@ -36,6 +36,7 @@ import { PlayMode } from "components/play/model";
 import HighlightHtml, { HighlightRef } from "components/play/baseComponents/HighlightHtml";
 import axios from "axios";
 import { CashAttempt } from "localStorage/play";
+import { generateId } from "components/build/buildQuestions/questionTypes/service/questionBuild";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -134,16 +135,20 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   }
 
   async saveAttempt(attempt: PlayAttempt) {
+    console.log(attempt);
     const newAttempt = Object.assign({ }, attempt) as any;
 
     newAttempt.answers = attempt.answers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
     newAttempt.liveAnswers = attempt.liveAnswers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
 
-    newAttempt.brick = undefined;
+    newAttempt.id = attempt.id;
+    newAttempt.brick = attempt.brick;
     newAttempt.student = undefined;
     newAttempt.timestamp = undefined;
     newAttempt.studentId = undefined;
-    newAttempt.brickId = undefined;
+    newAttempt.brickId = attempt.brick.id;
+
+    console.log(newAttempt);
 
     return await axios.put(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
@@ -165,6 +170,8 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       if(attemptIdx > -1) {
         newAttempts[attemptIdx] = attempt;
       }
+
+      console.log('save attempt', attempt);
 
       this.setState({ attempt, attempts: newAttempts });
       this.saveAttempt(attempt);
@@ -201,11 +208,38 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     } catch { }
   }
 
-  setAttemptBrickProperty(property: "brief" | "prep" | "synthesis", value: string) {
+  createNewAnnotation(property: "brief" | "prep" | "synthesis", text: string) {
+    let newAttempt = this.state.attempt;
+
+    if (!newAttempt) return;
+    if (!newAttempt.annotations) newAttempt.annotations = [];
+    const newAnnotation: Annotation = {
+      id: generateId(),
+      location: AnnotationLocation.Brief,
+      priority: 0,
+      questionIndex: this.state.questionIndex,
+      text,
+      timestamp: new Date(),
+      user: this.props.user,
+      children: [],
+    };
+    newAttempt.annotations.push(newAnnotation);
+
+    if (this.highlightRef.current) {
+      var text = this.highlightRef.current.createAnnotation(newAnnotation);
+      if (text != '') {
+        newAttempt.brick[property] = text;
+      }
+    }
+
+    this.setActiveAttempt(newAttempt);
+    this.props.history.push("#" + newAnnotation.id);
+  }
+
+  setAttemptBrickProperty(property: "brief" | "prep" | "synthesis") {
     const newAttempt = this.state.attempt;
     if(!newAttempt) return;
-    newAttempt.brick[property] = value;
-    this.setActiveAttempt(newAttempt);
+    this.createNewAnnotation(property, '');
   }
 
   renderAnnotationsPanel() {
@@ -368,10 +402,10 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                         </div>
                       </div>
                     </div>
-                    {/* <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.brief }} /> */}
                     <HighlightHtml
                       ref={this.highlightRef}
                       value={brick.brief}
+                      user={this.props.user}
                       mode={PlayMode.UnHighlighting}
                       onHighlight={this.setAttemptBrickProperty.bind(this, "brief")}
                     />
