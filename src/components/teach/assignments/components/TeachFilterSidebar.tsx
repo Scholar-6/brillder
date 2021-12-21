@@ -122,7 +122,7 @@ class TeachFilterSidebar extends Component<
           <span>{s.email}</span>
           <button className="btn resend-label" onClick={
             () => this.resendInvitation(s)
-          }>Resend<SpriteIcon name="send-custom"/></button>
+          }>Resend<SpriteIcon name="send-custom" /></button>
         </span>
       </div>
     );
@@ -141,6 +141,16 @@ class TeachFilterSidebar extends Component<
     );
   }
 
+  renderStudents(c: TeachClassroom) {
+    return (
+      <div className="right-index">
+        {(c.students ? c.students.length : 0) + (c.studentsInvitations ? c.studentsInvitations.length : 0)}
+        <SpriteIcon name="users-custom" className="active" />
+        {this.renderAssignedCount(c)}
+      </div>
+    )
+  }
+
   renderClassroom(c: TeachClassroom, i: number) {
     return (
       <div key={i} className="classes-box">
@@ -150,12 +160,12 @@ class TeachFilterSidebar extends Component<
           title={c.name}
         >
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
-            {c.subject.color && 
-            <RadioButton
-              checked={c.active}
-              color={c.subject.color}
-              name={c.subject.name}
-            />}
+            {c.subject.color &&
+              <RadioButton
+                checked={c.active}
+                color={c.subject.color}
+                name={c.subject.name}
+              />}
             <span className="filter-class-name">{c.name}</span>
             {c.active && (c.students.length > 0 || c.studentsInvitations.length > 0) && (
               <div className="classroom-icon svgOnHover">
@@ -163,11 +173,7 @@ class TeachFilterSidebar extends Component<
               </div>
             )}
           </div>
-          <div className="right-index">
-            {c.students.length + c.studentsInvitations.length}
-            <SpriteIcon name="users-custom" className="active" />
-            {this.renderAssignedCount(c)}
-          </div>
+          {this.renderStudents(c)}
         </div>
         {c.active && c.students.map(this.renderStudent.bind(this))}
         {c.active && c.studentsInvitations.map(this.renderInvitation.bind(this))}
