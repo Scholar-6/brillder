@@ -281,7 +281,7 @@ const App: React.FC<AppProps> = props => {
 
         <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
         <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
-        <AllUsersRoute path={map.UserPreference} component={UserPreferencePage} isPreferencePage={true} />
+        <AllUsersRoute path={map.UserPreferencePage} component={UserPreferencePage} isPreferencePage={true} />
         <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
         <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
         <UnauthorizedRoute path={map.LeaderboardPage + '/:competitionId'} component={LeaderboardPage} />

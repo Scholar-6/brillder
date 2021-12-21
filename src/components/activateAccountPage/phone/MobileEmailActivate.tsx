@@ -11,7 +11,7 @@ import TermsLink from "components/baseComponents/TermsLink";
 import actions from "redux/actions/auth";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { setUserPreference } from "services/axios/user";
-import { RolePreference } from "model/user";
+import { UserPreferenceType } from "model/user";
 import WrongLoginDialog from "components/loginPage/components/WrongLoginDialog";
 
 interface MobileLoginProps {
@@ -47,7 +47,7 @@ const MobileEmailActivatePage: React.FC<MobileLoginProps> = (props) => {
           { password: password },
           { withCredentials: true }
         );
-        await setUserPreference(RolePreference.Student);
+        await setUserPreference(UserPreferenceType.Student);
         props.history.push(map.TermsSignUp);
         props.loginSuccess();
       }

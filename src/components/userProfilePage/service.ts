@@ -1,4 +1,4 @@
-import { User, UserProfile, UserStatus, RolePreference } from 'model/user';
+import { User, UserProfile, UserStatus, UserPreferenceType } from 'model/user';
 
 export const isValid = (user: UserProfile) => {
   if (user.firstName && user.lastName && user.email) {
@@ -19,7 +19,7 @@ export const getUserProfile = (user: User): UserProfile => {
     lastName: user.lastName ? user.lastName : "",
     subjects: user.subjects ? user.subjects : [],
     profileImage: user.profileImage ? user.profileImage : "",
-    rolePreference: user.rolePreference,
+    userPreference: user.userPreference,
     status: user.status,
     tutorialPassed: false,
     bio: user.bio ? user.bio : '',
@@ -36,7 +36,7 @@ export const newStudentProfile = (): UserProfile => {
     tutorialPassed: false,
     email: "",
     password: "",
-    roles: [RolePreference.Student, RolePreference.Builder],
+    roles: [UserPreferenceType.Student, UserPreferenceType.Builder],
     subjects: [],
     status: UserStatus.Pending,
     bio: '',

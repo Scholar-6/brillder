@@ -1,13 +1,13 @@
-import { RolePreference, UserRole, UserType } from 'model/user';
+import { UserPreferenceType, UserRole, UserType } from 'model/user';
 import React from 'react';
 
 interface Props {
   roles: any[];
-  rolePreference?: UserRole;
+  userPreference?: UserRole;
 }
 
 const UserTypeLozenge: React.FC<any> = (props) => {
-  let bestType = props.rolePreference.roleId;
+  let bestType = props.userPreference.preferenceId;
   let bestRole = null;
 
   if (props.roles) {
@@ -27,13 +27,13 @@ const UserTypeLozenge: React.FC<any> = (props) => {
     name = "Admin";
   } else if (bestRole === UserType.Publisher) {
     name = "Publisher";
-  } else if (bestType === RolePreference.Student) {
+  } else if (bestType === UserPreferenceType.Student) {
     name = 'Student'
-  } else if (bestType === RolePreference.Builder) {
+  } else if (bestType === UserPreferenceType.Builder) {
     name = 'Builder';
-  } else if (bestType === RolePreference.Teacher) {
+  } else if (bestType === UserPreferenceType.Teacher) {
     name = "Teacher";
-  } else if (bestType === RolePreference.Institution) {
+  } else if (bestType === UserPreferenceType.Institution) {
     name = "Institution";
   }
 
