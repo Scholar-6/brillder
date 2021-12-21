@@ -6,6 +6,7 @@ import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapp
 import DropImage from "../../buildQuestions/components/Image/DropImage";
 import { fileUrl } from "components/services/uploadFile";
 import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
+import SourceInput from "components/baseComponents/SourceInput";
 
 interface DialogProps {
   isOption?: boolean; // only pair match
@@ -127,12 +128,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
           Where did you get this image?
           <span className="text-theme-orange">*</span>
         </div>
-        <input
-          value={source}
-          className={validationRequired && !source ? "invalid" : ""}
-          onChange={(e) => setSource(e.target.value)}
-          placeholder="Add link to source or name of owner"
-        />
+        <SourceInput source={source} validationRequired={validationRequired} setSource={setSource} />
         <CopyrightCheckboxes
           validationRequired={validationRequired}
           permision={permision}

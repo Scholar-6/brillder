@@ -1,4 +1,4 @@
-import {AttemptCash, YoutubeClicked, AuthBrickCoverId} from './types';
+import {AttemptCash, YoutubeClicked, AuthBrickCoverId, PreviewAttemptCash} from './types';
 
 export function SetYoutubeClick() {
   localStorage.setItem(YoutubeClicked, "true");
@@ -21,6 +21,13 @@ export function GetCashedPlayAttempt() {
   return localStorage.getItem(AttemptCash);
 }
 
+export function PreviewCashAttempt(attemptCash: any) {
+  localStorage.setItem(PreviewAttemptCash, attemptCash);
+}
+
+export function GetPreviewCashedPlayAttempt() {
+  return localStorage.getItem(PreviewAttemptCash);
+}
 
 export function SetAuthBrickCoverId(brickId: number) {
   localStorage.setItem(AuthBrickCoverId, brickId.toString());

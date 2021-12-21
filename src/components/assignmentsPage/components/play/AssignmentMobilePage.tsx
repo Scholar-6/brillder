@@ -440,7 +440,6 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
           {this.renderAcademicLevel(AcademicLevel.First)}
           {this.renderAcademicLevel(AcademicLevel.Second)}
           {this.renderAcademicLevel(AcademicLevel.Third)}
-          {this.renderAcademicLevel(AcademicLevel.Fourth)}
           <div className="va-difficult-help">
             <MobileHelp>
               <LevelHelpContent />

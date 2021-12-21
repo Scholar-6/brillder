@@ -205,11 +205,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       // if reloading
       let stepsEnabled = false;
-      if (this.state.isLoaded === true) {
-        if (haveArchivedBrick === true && haveArchivedBrick !== this.state.haveArchivedBrick) {
-          stepsEnabled = true;
-        }
-      }
 
       classrooms.sort((c1, c2) => parseInt(c2.assignmentsCount) - parseInt(c1.assignmentsCount));
 

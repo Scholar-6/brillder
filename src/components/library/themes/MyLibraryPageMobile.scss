@@ -99,6 +99,7 @@
           height: calc(30vh);
           display: flex;
           background: var(--white);
+          background: var(--theme-dark-blue);
           border-radius: 1vw;
           padding: 1.5vw;
 
@@ -125,7 +126,7 @@
             border-radius: 1vw;
 
             &.default {
-              background: var(--tab-gray) !important;
+              background: var(--theme-light-blue) !important;
             }
 
             &.assigned {
@@ -213,6 +214,10 @@
             text-align: center;
             transform: translate(-25%, 0);
             z-index: 1000;
+          }
+
+          &.general {
+
           }
         }
       }

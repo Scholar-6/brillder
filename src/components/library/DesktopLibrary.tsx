@@ -24,6 +24,8 @@ import { TeachClassroom } from "model/classroom";
 import LibrarySubjects from "./components/LibrarySubjects";
 import SingleSubjectAssignments from "./singleSubject/SingleSubjectAssignments";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 
 interface BricksListProps {
@@ -219,7 +221,9 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  handleSortChange = (e: any) => {};
+  handleSortChange = (e: any) => {
+    this.setState({ sortBy: parseInt(e.target.value) });
+  };
 
   getCheckedSubjectIds(subjects: SubjectAItem[]) {
     const filterSubjects = [];
@@ -345,7 +349,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       if (subject) {
         const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
         if (subjectAssignment) {
-          return <SingleSubjectAssignments userId={this.props.user.id} subjectAssignment={subjectAssignment} history={this.props.history} />
+          return <SingleSubjectAssignments userId={this.props.user.id} sortBy={this.state.sortBy} subjectAssignment={subjectAssignment} history={this.props.history} />
         }
       }
     }
@@ -353,14 +357,237 @@ class Library extends Component<BricksListProps, BricksListState> {
       <div className="bricks-list-container bricks-container-mobile all-subject-assignments">
         <LibrarySubjects
           subjects={this.state.subjects}
+          sortBy={this.state.sortBy}
           pageSize={this.state.pageSize}
           sortedIndex={this.state.sortedIndex}
           subjectAssignments={this.state.subjectAssignments}
           history={this.props.history}
+          subjectTitleClick={s => this.filterBySubject(s.id)}
         />
       </div>
     );
   }
+
+  renderBook() {
+    let number = 0;
+    let count = 0;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          count = subjectAssignment.assignments.length;
+          for (let aa of subjectAssignment.assignments) {
+            if (aa.bestAttemptPercentScore && aa.bestAttemptPercentScore >= 50) {
+              number += 1;
+            }
+          }
+        }
+      }
+    } else {
+      count = this.state.finalAssignments.length;
+      for (let aa of this.state.finalAssignments) {
+        if (aa.bestAttemptPercentScore && aa.bestAttemptPercentScore >= 50) {
+          number += 1;
+        }
+      }
+    }
+
+    return (
+      <div className="flex-center">
+        <div className="book-green">
+          <SpriteIcon name="book-open" />
+          <div className="custom-tooltip bold">
+            <div>Books Earned / Bricks Attempted</div>
+          </div>
+        </div>
+        <div className="static-numbers">
+          <div>{number}</div>
+          <div className="smaller-number">/ {count}</div>
+        </div>
+      </div>
+    );
+  }
+
+  renderBox() {
+    return (
+      <div className="flex-center">
+        <div className="box-blue circle-container">
+          <SpriteIcon name="box" />
+          <div className="custom-tooltip bold">
+            <div>Subjects Played</div>
+          </div>
+        </div>
+        <div className="static-numbers">
+          <div>{this.state.subjects.length}</div>
+        </div>
+      </div>
+    );
+  }
+
+  renderLastBox() {
+    let number = 0;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let assignment of subjectAssignment.assignments) {
+            number += assignment.numberOfAttempts;
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        number += assign.numberOfAttempts;
+      }
+    }
+
+    return (
+      <div className="flex-center">
+        <div className="box-yellow circle-container">
+          <SpriteIcon name="play-thick" />
+          <div className="custom-tooltip bold">
+            <div>Total Plays</div>
+          </div>
+        </div>
+        <div className="static-numbers">
+          <div>{number}</div>
+        </div>
+      </div>
+    );
+  }
+
+  highestScore() {
+    let number = 0;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let aa3 of subjectAssignment.assignments) {
+            if (aa3.bestAttemptPercentScore && aa3.bestAttemptPercentScore > number) {
+              number = aa3.bestAttemptPercentScore;
+            }
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore > number) {
+          number = assign.bestAttemptPercentScore;
+        }
+      }
+    }
+
+    return (
+      <div className="flex-center hs-score">
+        <div className="custom-tooltip bold">
+          <div>Highest Score</div>
+        </div>
+        HS
+        <div className="score-container-v5">
+          <CircularProgressbar
+            strokeWidth={12}
+            counterClockwise={true}
+            value={number}
+          />
+          <div className="score-absolute">{Math.round(number)}</div>
+        </div>
+      </div>
+    );
+  }
+
+  averageScore() {
+    let count = 0;
+    let number = 0;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let assign of subjectAssignment.assignments) {
+            if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 50) {
+              number += assign.bestAttemptPercentScore;
+              count += 1;
+            }
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 50) {
+          number += assign.bestAttemptPercentScore;
+          count += 1;
+        }
+      }
+    }
+    if (count != 0) {
+      number = Math.round(number / count);
+    }
+    return (
+      <div className="flex-center hs-score avg-score">
+        <div className="custom-tooltip bold">
+          <div>Average Score</div>
+        </div>
+        AVG.
+        <div className="score-container-v5">
+          <CircularProgressbar
+            strokeWidth={12}
+            counterClockwise={true}
+            value={number}
+          />
+          <div className="score-absolute">{Math.round(number)}</div>
+        </div>
+      </div>
+    );
+  }
+
+  lowestScore() {
+    let number = 100;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let assign of subjectAssignment.assignments) {
+            if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 0 && assign.bestAttemptPercentScore < number) {
+              number = assign.bestAttemptPercentScore;
+            }
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 0 && assign.bestAttemptPercentScore < number) {
+          number = assign.bestAttemptPercentScore;
+        }
+      }
+    }
+    
+    return (
+      <div className="flex-center hs-score ls-score">
+        <div className="custom-tooltip bold">
+          <div>Lowest Score</div>
+        </div>
+        LS
+        <div className="score-container-v5">
+          <CircularProgressbar
+            strokeWidth={12}
+            counterClockwise={true}
+            value={number}
+          />
+          <div className="score-absolute">{Math.round(number)}</div>
+        </div>
+      </div>
+    );
+  }
+
 
   render() {
     if (this.state.isLoading) {
@@ -376,8 +603,8 @@ class Library extends Component<BricksListProps, BricksListState> {
             user={this.props.user}
             placeholder="  "
             history={this.props.history}
-            search={() => {}}
-            searching={() => {}}
+            search={() => { }}
+            searching={() => { }}
           />
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
@@ -394,13 +621,15 @@ class Library extends Component<BricksListProps, BricksListState> {
             </Grid>
             <Grid item xs={9} className="brick-row-container">
               <div className={
-                `
-                  library-title
-                    ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}
-                  `
-              }
-              >
+                `library-title ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}`
+              }>
                 {this.renderMainTitle(filterSubjects)}
+                {this.renderBook()}
+                {!this.state.subjectChecked && this.renderBox()}
+                {this.renderLastBox()}
+                {this.highestScore()}
+                {this.averageScore()}
+                {this.lowestScore()}
               </div>
               {this.renderContent()}
             </Grid>

@@ -13,6 +13,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import routes from "components/play/routes";
 import { User } from "model/user";
 import { isTeacherPreference } from "components/services/preferenceService";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 interface LibrarySubjectsProps {
   subject: Subject;
@@ -47,7 +48,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
 
   let { color } = subject;
   if (subject.name === GENERAL_SUBJECT) {
-    color = "#001c58";
+    color = "white";
   }
 
   className += " default";
@@ -85,7 +86,18 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
       if (height >= 50) {
         return (
           <div className="custom-tooltip subject-tooltip">
-            <BrickTitle title={brick.title} />
+            <div>
+              <BrickTitle title={brick.title} />
+            </div>
+            <div className="relative">
+              <div className="circle-score bold">{Math.round(height)}</div>
+              <CircularProgressbar
+                className="circle-progress-second"
+                counterClockwise={true}
+                strokeWidth={8}
+                value={height}
+              />
+            </div>
           </div>
         );
       }
@@ -111,7 +123,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
 
   return (
     <div
-      className="assignment-progressbar single-assignment-progressbar"
+      className={`assignment-progressbar single-assignment-progressbar ${subject.name == GENERAL_SUBJECT ? 'general' : ''}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -135,13 +147,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
           className="progress-value default-value"
           onMouseEnter={() => setHover(true)}
         >
-          {height < 50 && height > 0 &&
-            assignment.brick.academicLevel >= AcademicLevel.First && (
-              <AcademyDifficulty
-                a={assignment.brick.academicLevel}
-                brick={brick}
-              />
-            )}
+          
           {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
           {height < 50 && height > 0 && renderRotatedTitle("white", 100)}
           {height < 50 && height > 0 &&
@@ -150,6 +156,11 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
                 <SpriteIcon name="lock" />
               </div>
               <div>{Math.round(height)}%</div>
+              <AcademyDifficulty
+                a={assignment.brick.academicLevel}
+                brick={brick}
+                noTopLines={height < 50}
+              />
             </div>}
         </div>
         {height >= 50 &&

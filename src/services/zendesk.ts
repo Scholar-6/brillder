@@ -64,9 +64,9 @@ const initZendeskPopupStyling = () => {
     `;
     const head = innerWidgetDoc.head || innerWidgetDoc.getElementsByTagName('head')[0];
     const style = document.createElement('style');
-  
+
     head.appendChild(style);
-  
+
     style.type = 'text/css';
     style.appendChild(document.createTextNode(css));
     success = true;
@@ -158,6 +158,57 @@ function addZendesk() {
   }
 }
 
+// if form submitted click to "Go Back" button to move back
+function messageSent() {
+  var interval2 = setInterval(() => {
+    try {
+      const iframe = getWidgetIframe();
+      if (iframe) {
+        var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+        var footer = innerDoc.getElementsByTagName('footer')[0];
+        console.log(footer);
+        if (footer && footer.children[0]) {
+          var button = footer.children[0].children[1];
+          button.onclick = function () {
+            var waitTimes = 0;
+            // wait untill popup open wait only 3 times
+            var interval3 = setInterval(() => {
+              waitTimes+= 1;
+              if (waitTimes > 9) {
+                clearInterval(interval3);
+              }
+              const iframe = getWidgetIframe();
+              if (iframe) {
+                var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+                // looking for button
+                try {
+                var tagv3 = innerDoc.getElementById("Embed").children[3].children[0].children[0];
+                if (tagv3.children[1]) {
+                  var container = tagv3.children[1].children[0];
+                  console.log(container.children[2].children[0]);
+                  var backButtonV5 = container.children[2].children[0];
+                  console.log(backButtonV5.innerHTML);
+                  if (backButtonV5.ineerHTML != 'Send') {
+                    console.log('click')
+                    backButtonV5.click();
+                  }
+                  //clearInterval(interval3);
+                }
+              } catch { }
+              }
+            }, 250);
+          }
+          console.log(button);
+          clearInterval(interval2);
+        }
+      }
+    } catch (e) {
+      console.log('can`t find zendesk button inside form', e);
+      clearInterval(interval2);
+    }
+  }, 300);
+}
+
 /**
  * Mount Zendesk. if mounted then just switch mode from small to big
  * @param location Location
@@ -184,6 +235,8 @@ export function setupZendesk(zendeskCreated: boolean, setZendesk: Function) {
               const widgetInterval = setInterval(() => {
                 const success = initZendeskPopupStyling();
                 if (success) {
+                  messageSent();
+                  console.log('success');
                   clearInterval(widgetInterval);
                 }
               }, 100);

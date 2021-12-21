@@ -47,7 +47,8 @@ const prepareURLString = (str?: string) => {
 }
 
 const preparePlayUrl = (brick: Brick, prefix: string) => {
-  return realPlay(brick.id) + prefix + prepareURLString(brick.subject?.name) + prepareURLString(stripHtml(brick.title));
+  const {competitionId} = brick;
+  return realPlay(brick.id) + prefix + prepareURLString(brick.subject?.name) + prepareURLString(stripHtml(brick.title)) + (competitionId ? `/competition/${competitionId}` : '');
 }
 
 export const playCover = (brick: Brick) => preparePlayUrl(brick, PlayCoverLastPrefix);

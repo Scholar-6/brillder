@@ -74,6 +74,8 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
             </div>
           </div>
           <div className="mobile-button-box button-box">
+            <GoogleButton />
+            <RegisterButton onClick={this.props.moveToLogin} />
             <div className="button-box">
               <div className="text-box gg-text-box">
                 <span>New to Brillder?</span>
@@ -83,8 +85,6 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
                 </div>
               </div>
             </div>
-            <GoogleButton />
-            <RegisterButton onClick={this.props.moveToLogin} />
             {this.state.animationFinished && this.renderPrivacyPolicy()}
           </div>
         </div>

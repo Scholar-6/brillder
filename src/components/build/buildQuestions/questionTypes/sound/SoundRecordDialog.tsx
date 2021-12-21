@@ -5,6 +5,7 @@ import './SoundRecordDialog.scss';
 import SoundComponent from './Sound';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import CopyrightCheckboxes from 'components/baseComponents/CopyrightCheckboxs';
+import SourceInput from 'components/baseComponents/SourceInput';
 
 
 interface SoundRecordDialog {
@@ -48,12 +49,7 @@ const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
             Where did you get this sound?
             <span className="text-theme-orange">*</span>
           </div>
-          <input
-            value={source}
-            className={`source-g2 ${validationRequired && !source ? "invalid" : ""}`}
-            onChange={(e) => setSource(e.target.value)}
-            placeholder="Add link to source or name of owner"
-          />
+          <SourceInput source={source} validationRequired={validationRequired} setSource={setSource} />
           <CopyrightCheckboxes
             isSound={true}
             validationRequired={validationRequired}

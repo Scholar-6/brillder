@@ -6,7 +6,7 @@
   .level-filter-box {
     position: relative;
     .MuiFormControlLabel-root {
-      width: 50% !important;
+      width: 29% !important;
     }
     .MuiTypography-root {
       font-family: $font-family-light !important;
@@ -16,8 +16,8 @@
       width: 4vw !important;
       position: absolute;
       z-index: 1200;
-      right: 0;
-      top: calc(1.3vh + 0.7vw);
+      right: -0.5vw;
+      top: calc(1.3vh - 0.2vw);
       .white-circle {
         color: var(--theme-dark-blue);
         background: var(--white);
