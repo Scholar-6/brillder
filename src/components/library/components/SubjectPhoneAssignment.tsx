@@ -77,7 +77,7 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   };
 
   return (
-    <div className="assignment-progressbar">
+    <div className={`assignment-progressbar ${subject.name == GENERAL_SUBJECT ? 'general' : ''}`}>
       <div
         className={className}
         onClick={() => {

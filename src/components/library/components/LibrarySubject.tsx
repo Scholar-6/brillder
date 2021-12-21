@@ -3,10 +3,13 @@ import React, { Component } from "react";
 import { SubjectAssignments } from "../service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 import SubjectAssignment from "./SubjectAssignment";
+import subject from "redux/actions/subject";
 
 interface LibrarySubjectsProps {
   history: any;
   subjectAssignment: SubjectAssignments;
+
+  subjectTitleClick(): void;
 }
 
 interface LibrarySubjectState {
@@ -29,10 +32,11 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
 
     return (
       <div className="libary-container">
-        <div className="subject-name-v3 bold">
+        <div className="subject-name-v3 bold" onClick={this.props.subjectTitleClick}>
           <div>
             <div>
-              {this.props.subjectAssignment.subject.name}
+              <div className="round-circle" style={{background: this.props.subjectAssignment.subject.color}} />
+              <div>{this.props.subjectAssignment.subject.name}</div>
             </div>
           </div>
         </div>
