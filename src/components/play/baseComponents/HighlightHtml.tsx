@@ -99,6 +99,8 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
 
     const els = textBox.querySelectorAll(`.annotation[data-id="${annotation.id}"]`);
 
+    console.log('delete');
+
     els.forEach(el => {
       const range = rangy.createRange();
       range.selectNodeContents(el);
@@ -107,7 +109,7 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
       el.remove();
     });
 
-    props.onHighlight(textBox?.innerHTML);
+    //props.onHighlight(textBox?.innerHTML);
   }
 
   const textRef = React.useCallback((div: HTMLDivElement) => {

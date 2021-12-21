@@ -135,16 +135,20 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   }
 
   async saveAttempt(attempt: PlayAttempt) {
+    console.log(attempt);
     const newAttempt = Object.assign({ }, attempt) as any;
 
     newAttempt.answers = attempt.answers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
     newAttempt.liveAnswers = attempt.liveAnswers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
 
-    newAttempt.brick = undefined;
+    newAttempt.id = attempt.id;
+    newAttempt.brick = attempt.brick;
     newAttempt.student = undefined;
     newAttempt.timestamp = undefined;
     newAttempt.studentId = undefined;
-    newAttempt.brickId = undefined;
+    newAttempt.brickId = attempt.brick.id;
+
+    console.log(newAttempt);
 
     return await axios.put(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
@@ -166,6 +170,8 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       if(attemptIdx > -1) {
         newAttempts[attemptIdx] = attempt;
       }
+
+      console.log('save attempt', attempt);
 
       this.setState({ attempt, attempts: newAttempts });
       this.saveAttempt(attempt);
