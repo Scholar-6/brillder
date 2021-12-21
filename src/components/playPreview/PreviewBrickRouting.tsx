@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Route, Switch } from 'react-router-dom';
 import { connect } from "react-redux";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
+import moment from 'moment';
 
 import actions from 'redux/actions/brickActions';
 import { CashQuestionFromPlay, GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
@@ -28,6 +29,7 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
 import BuildCompletePage from './buildComplete/BuildCompletePage';
 import FinalStep from './finalStep/FinalStep';
+import { PreviewCashAttempt, GetPreviewCashedPlayAttempt } from "localStorage/play";
 import { calcBrickLiveAttempt, calcBrickReviewAttempt } from 'components/play/services/scoring';
 import playRoutes from "components/play/routes";
 import buildRoutes from 'components/build/routes';
@@ -70,16 +72,14 @@ const DesktopTheme = React.lazy(() => import('../play/themes/BrickPageDesktopThe
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const { history, location, match } = props;
-  const parsedBrick = parseAndShuffleQuestions(props.brick);
-
+  let parsedBrick = parseAndShuffleQuestions(props.brick);
+  let initBrickAttempt: any = {};
   let cashedBuildQuestion = GetCashedBuildQuestion();
 
-  const [brick] = React.useState(parsedBrick);
   const [status, setStatus] = React.useState(PlayStatus.Live);
-  const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
-  const initAttempts = prefillAttempts(brick.questions);
-  const [attempts, setAttempts] = React.useState(initAttempts);
-  const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
+  let initAttempts:any[] = [];
+  let initReviewAttempts: any = [];
+
   const [prepEndTime, setPrepEndTime] = React.useState(undefined);
   const [synthesisEndTime, setSynthesisEndTime] = React.useState(null);
   
@@ -87,6 +87,34 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [headerHidden, hideMobileHeader] = React.useState(false);
   const [liveEndTime, setLiveEndTime] = React.useState(null as any);
   const [reviewEndTime, setReviewEndTime] = React.useState(null as any);
+
+
+  const [restoredFromCash, setRestored] = React.useState(false);
+
+  const cashAttemptString = GetPreviewCashedPlayAttempt();
+
+  console.log(cashAttemptString);
+
+  if (cashAttemptString && !restoredFromCash) {
+    const cashAttempt = JSON.parse(cashAttemptString);
+
+    if (cashAttempt.brick.id === props.brick.id) {
+      parsedBrick = cashAttempt.brick;
+      initAttempts = cashAttempt.attempts;
+      initReviewAttempts = cashAttempt.reviewAttempts;
+      initBrickAttempt = cashAttempt.brickAttempt;
+
+      setRestored(true);
+    }
+  } else {
+    initAttempts = prefillAttempts(parsedBrick.questions);
+    initReviewAttempts = initAttempts;
+  }
+
+  const [brick] = React.useState(parsedBrick);
+  const [attempts, setAttempts] = React.useState(initAttempts);
+  const [brickAttempt, setBrickAttempt] = React.useState(initBrickAttempt);
+  const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
 
   useEffect(() => {
     if (props.brick) {
@@ -152,6 +180,30 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     history.push(routes.previewReview(brick.id));
   }
 
+  const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
+    let lastPageUrl = lastUrl;
+    if (!lastUrl) {
+      const found = location.pathname.match(`[^/]+(?=/$|$)`);
+      if (found) {
+        lastPageUrl = '/' + found[0];
+      }
+    }
+    if (!tempStatus) {
+      tempStatus = status;
+    }
+    PreviewCashAttempt(JSON.stringify({
+      brick,
+      lastPageUrl,
+      status: tempStatus,
+      attempts,
+      reviewAttempts,
+      prepEndTime,
+      reviewEndTime,
+      liveEndTime,
+      brickAttempt,
+    }));
+  }
+
   const moveToBuild = () => {
     const {pathname} = history.location;
     const isSynthesis = pathname.slice(-playRoutes.PlaySynthesisLastPrefix.length) === playRoutes.PlaySynthesisLastPrefix;
@@ -174,6 +226,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         }
       }
     }
+    cashAttempt();
     history.push(link);
   }
 
