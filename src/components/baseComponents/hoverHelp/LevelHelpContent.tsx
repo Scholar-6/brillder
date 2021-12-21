@@ -22,9 +22,7 @@ const LevelHelpContent: React.FC<any> = () => {
       <br />
       <div className="container">
         <div className="white-circle">II</div>
-        <div className="and-sign">&</div>
-        <div className="white-circle">III</div>
-        <div className="l-text smaller">
+        <div className="l-text">
           <div>Core</div>
           <div className="regular">
             For 17-18 yr-olds, equivalent to A-level / IB / High
@@ -34,7 +32,7 @@ const LevelHelpContent: React.FC<any> = () => {
       </div>
       <br />
       <div className="container">
-        <div className="white-circle">IV</div>
+        <div className="white-circle">III</div>
         <div className="l-text">
           <div>Extension</div>
           <div className="regular">

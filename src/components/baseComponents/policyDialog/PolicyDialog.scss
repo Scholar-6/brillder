@@ -2,9 +2,10 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-.privacy-policy-dialog {
+.privacy-policy-dialog.dialog-box {
   height: 100vh !important;
   padding: 6vh 5vw;
+  z-index: 1000000 !important;
   width: 100vw;
   overflow: hidden;
 

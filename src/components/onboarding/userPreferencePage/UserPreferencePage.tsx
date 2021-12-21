@@ -168,7 +168,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <div className="flex-center file-container">
                 <SpriteIcon name="file-plus" />
               </div>
-              <h2>Educator | Tutor</h2>
+              <h2>Educator</h2>
               <p>I want to assign Brillder</p>
               <p>content and provide</p>
               <p>feedback to my students.</p>

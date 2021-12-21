@@ -25,6 +25,7 @@ import { CreateByEmailRes } from "services/axios/user";
 import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
+import routes from "../routes";
 
 
 interface Props {
@@ -275,16 +276,14 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                     <br />
                     <div className="container">
                       <div className="white-circle">II</div>
-                      <div className="and-sign">&</div>
-                      <div className="white-circle">III</div>
-                      <div className="l-text smaller">
+                      <div className="l-text">
                         <div>Core</div>
                         <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
                       </div>
                     </div>
                     <br />
                     <div className="container">
-                      <div className="white-circle">IV</div>
+                      <div className="white-circle">III</div>
                       <div className="l-text">
                         <div>Extension</div>
                         <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
@@ -328,6 +327,20 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         {brick.editors && brick.editors.length > 0 &&
           <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
         }
+        {competitionData &&
+          <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog">
+            <div className="dialog-header phone-competition">
+              <div className="bold" style={{ textAlign: 'center' }}>This brick is part of a competition, you may win a prize! <br /><a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">More Information</a></div>
+            </div>
+            <div className="dialog-footer">
+              <button className="btn btn-md  bg-green text-white yes-button" onClick={() => {
+                props.setCompetitionId(competitionData.competition.id);
+                setCompetitionData({ ...competitionData, isOpen: false });
+              }}>
+                <span>Accept</span>
+              </button>
+            </div>
+          </Dialog>}
       </React.Suspense>
     );
   }
@@ -379,16 +392,14 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                         <br />
                         <div className="container">
                           <div className="white-circle">II</div>
-                          <div className="flex-center and-sign">&</div>
-                          <div className="white-circle">III</div>
-                          <div className="l-text smaller">
+                          <div className="l-text">
                             <div>Core</div>
                             <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
                           </div>
                         </div>
                         <br />
                         <div className="container">
-                          <div className="white-circle">IV</div>
+                          <div className="white-circle">III</div>
                           <div className="l-text">
                             <div>Extension</div>
                             <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
@@ -400,7 +411,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   <CoverTimer brickLength={brick.brickLength} />
                 </div>
                 <div className="keywords-row">
-                  <KeyWordsPreview keywords={brick.keywords} />
+                  <KeyWordsPreview keywords={brick.keywords} onClick={keyword => props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)} />
                 </div>
               </div>
             </Grid>
@@ -441,22 +452,19 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         }}
       />
       {competitionData &&
-      <Dialog open={competitionData.isOpen} onClose={() => setCompetitionData({...competitionData, isOpen: false})} className="dialog-box">
-        <div className="dialog-header">
-          <div className="bold" style={{ textAlign: 'center' }}>This Brick has a competition running, would you like to take part? <br/><a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Click for more information</a></div>
-        </div>
-        <div className="dialog-footer">
-          <button className="btn btn-md bg-theme-orange yes-button" onClick={() => {
-            props.setCompetitionId(competitionData.competition.id);
-            setCompetitionData({...competitionData, isOpen: false});
-          }}>
-            <span>Yes</span>
-          </button>
-          <button className="btn btn-md bg-gray no-button" onClick={() => setCompetitionData({...competitionData, isOpen: false})}>
-            <span>No</span>
-          </button>
-        </div>
-      </Dialog>}
+        <Dialog open={competitionData.isOpen} className="dialog-box">
+          <div className="dialog-header">
+            <div className="bold" style={{ textAlign: 'center' }}>This brick is part of a competition, you may win a prize! <br /><a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a></div>
+          </div>
+          <div className="dialog-footer">
+            <button className="btn btn-md bg-green text-white yes-button" onClick={() => {
+              props.setCompetitionId(competitionData.competition.id);
+              setCompetitionData({ ...competitionData, isOpen: false });
+            }}>
+              <span>Accept</span>
+            </button>
+          </div>
+        </Dialog>}
     </React.Suspense>
   );
 };

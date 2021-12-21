@@ -538,6 +538,7 @@
   }
 
   .mobile-button-box {
+    display: block !important;
     padding-top: 9% !important;
     margin-top: 8% !important;
 
@@ -1214,4 +1215,8 @@
     white-space: nowrap;
     overflow: scroll;
   }
+}
+
+.phone-competition-dialog .dialog-header {
+  font-size: 5.6vw !important;
 }

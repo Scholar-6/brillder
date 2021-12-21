@@ -4,6 +4,10 @@
 
 .image-dialog-container {
   .quill-caption {
+    margin-top: 1vh;
+    .q-tooltip-hover:hover {
+      opacity: 0.5;
+    }
     .ql-custom-toolbar {
       svg {
         width: 1.3vw !important;
@@ -12,6 +16,8 @@
     }
     .ql-editor {
       border-radius: 0.6vw;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
       padding: 0 !important;
       font-family: $font-family-regular;
       padding-left: 1vw !important;

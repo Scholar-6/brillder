@@ -47,7 +47,7 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
             onChange={this.props.handleSortChange}
           >
             <Grid container direction="row">
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <FormControlLabel
                   value={SortBy.Score}
                   style={{ marginRight: 0, width: "50%" }}
@@ -55,12 +55,20 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
                   label="My Score"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
                 <FormControlLabel
                   value={SortBy.Date}
                   style={{ marginRight: 0 }}
                   control={<Radio className="sortBy" />}
                   label="Date Added"
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <FormControlLabel
+                  value={SortBy.Level}
+                  style={{ marginRight: 0 }}
+                  control={<Radio className="sortBy" />}
+                  label="Level"
                 />
               </Grid>
             </Grid>

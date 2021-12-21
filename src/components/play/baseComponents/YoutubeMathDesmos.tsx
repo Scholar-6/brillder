@@ -66,7 +66,7 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
   }
 
   const isSound = (el: string) => {
-    return /<div (.*)class="ql-sound-custom"(.*)>/.test(el);
+    return /<section (.*)class="ql-sound-custom"(.*)>/.test(el);
   }
 
   return (

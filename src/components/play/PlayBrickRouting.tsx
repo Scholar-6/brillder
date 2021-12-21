@@ -243,8 +243,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const values = queryString.parse(props.location.search);
     if (values.competitionId) {
       try {
-        var compId = values.competitionId as string;
-        setCompetitionId(parseInt(compId));
+        var compId = parseInt(values.competitionId as string);
+        setCompetitionId(compId);
+        brick.competitionId = compId;
       } catch {
         console.log('can`t convert competition id');
       }
@@ -510,14 +511,22 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
-            setCompetitionId={setCompetitionId}
+            setCompetitionId={id => {
+              setCompetitionId(id);
+              brick.competitionId = id;
+              history.push(routes.playCover(brick));
+            }}
             setUser={setUser}
             moveNext={coverMoveNext}
           />
           {isPhone() && <PhonePlayShareFooter isCover={true} brick={brick} history={history} next={coverMoveNext} />}
         </Route>
         <Route path={routes.briefRoute}>
-          <Brief brick={brick} mode={mode} user={props.user} moveNext={moveToPrePrep} onHighlight={onHighlight} />
+          <Brief brick={brick} mode={mode} user={props.user} competitionId={competitionId} setCompetitionId={id => {
+            setCompetitionId(id);
+            brick.competitionId = id;
+            history.push(routes.playBrief(brick));
+          }} moveNext={moveToPrePrep} onHighlight={onHighlight} />
           {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={() => history.push(routes.playPrePrep(brick))} />}
         </Route>
         <Route path={routes.sectionsRoute}>

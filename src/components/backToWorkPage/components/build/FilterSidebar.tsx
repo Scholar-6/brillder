@@ -195,7 +195,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     return (
       <FormControlLabel
         value={SortBy.Popularity}
-        style={{ marginRight: 0, width: "50%" }}
+        style={{ marginRight: 0 }}
         control={
           <Radio
             className="sortBy"
@@ -220,7 +220,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             {this.renderAcademicLevel(this.props.filters.level1, AcademicLevel.First, FilterFields.Level1)}
             {this.renderAcademicLevel(this.props.filters.level2, AcademicLevel.Second, FilterFields.Level2)}
             {this.renderAcademicLevel(this.props.filters.level3, AcademicLevel.Third, FilterFields.Level3)}
-            {this.renderAcademicLevel(this.props.filters.level4, AcademicLevel.Fourth, FilterFields.Level4)}
             <div className="absolute-difficult-help">
               <HoverHelp>
                 <LevelHelpContent />

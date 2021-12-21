@@ -10,6 +10,7 @@ import ImageDesktopPreview from "./ImageDesktopPreview";
 import { fileUrl } from "components/services/uploadFile";
 import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import SourceInput from "components/baseComponents/SourceInput";
 
 interface DialogProps {
   open: boolean;
@@ -193,12 +194,7 @@ const ImageDialog: React.FC<DialogProps> = ({
           Where did you get this image?
           <span className="text-theme-orange">*</span>
         </div>
-        <input
-          value={source}
-          className={validationRequired && !source ? "invalid" : ""}
-          onChange={(e) => setSource(e.target.value)}
-          placeholder="Add link to source or name of owner"
-        />
+        <SourceInput source={source} validationRequired={validationRequired} setSource={setSource} />
         <CopyrightCheckboxes
           validationRequired={validationRequired}
           permision={permision}
@@ -209,7 +205,7 @@ const ImageDialog: React.FC<DialogProps> = ({
           className="quill-caption"
           data={caption}
           showToolbar={true}
-          toolbar={['latex']}
+          toolbar={['bold', 'italic', 'superscript', 'subscript', 'latex']}
           placeholder="Add caption"
           imageDialog={true}
           onChange={v => setCaption(v)}
