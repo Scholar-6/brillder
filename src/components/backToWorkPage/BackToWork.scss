@@ -81,12 +81,11 @@
         min-height: $backwork-tab-height;
         font-size: 4.5vh;
         border-top-left-radius: 0.5vw;
-        font-family: $font-family-black;
-        text-transform: uppercase;
-        letter-spacing: 0.5vw;
+        font-family: $font-family-bold;
+        text-transform: capitalize;
         color: var(--theme-dark-blue);
         background: var(--tab-gray);
-        padding-left: 1.5vw;
+        padding-left: 2vw;
         border-top-right-radius: 0.5vw;
         margin-right: $tabs-margin-between;
         > div {
@@ -104,7 +103,7 @@
           width: 3.8vh;
           height: 3.8vh;
           margin-top: 1.2vh;
-          margin-left: 2.4vw;
+          margin-left: 1.6vw;
           .svg {
             height: 100%;
             width: 100%;

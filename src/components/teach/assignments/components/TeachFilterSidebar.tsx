@@ -152,6 +152,7 @@ class TeachFilterSidebar extends Component<
   }
 
   renderClassroom(c: TeachClassroom, i: number) {
+    console.log(c, c.students);
     return (
       <div key={i} className="classes-box">
         <div
@@ -175,8 +176,8 @@ class TeachFilterSidebar extends Component<
           </div>
           {this.renderStudents(c)}
         </div>
-        {c.active && c.students.map(this.renderStudent.bind(this))}
-        {c.active && c.studentsInvitations.map(this.renderInvitation.bind(this))}
+        {c.active && c.students && c.students.map(this.renderStudent.bind(this))}
+        {c.active && c.studentsInvitations && c.studentsInvitations.map(this.renderInvitation.bind(this))}
       </div>
     );
   }
