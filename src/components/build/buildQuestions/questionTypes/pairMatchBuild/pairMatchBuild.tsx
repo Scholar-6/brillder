@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core';
 
 import './pairMatchBuild.scss'
-import {Answer} from './types';
+import { Answer } from './types';
 import { UniqueComponentProps } from '../types';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
@@ -10,6 +10,7 @@ import PairAnswerComponent from './answer/pairAnswer';
 import PairOptionComponent from './option/pairOption';
 import { showSameAnswerPopup } from '../service/questionBuild';
 import ShuffleText from '../shuffle/components/ShuffleText';
+import { ReactSortable } from 'react-sortablejs';
 
 
 export interface PairMatchBuildProps extends UniqueComponentProps { }
@@ -79,9 +80,14 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         <div>Enter Pairs below so that Option 1 matches Answer 1 and so on.</div>
         <ShuffleText />
       </div>
-      {
-        state.list.map((answer: Answer, i: number) => renderAnswer(answer, i))
-      }
+      <ReactSortable
+        list={state.list}
+        animation={150}
+        group={{ name: "cloning-group-name", pull: "clone" }}
+        setList={newList => setState({...state, list: newList })}
+      >
+        {state.list.map((answer: Answer, i: number) => renderAnswer(answer, i))}
+      </ReactSortable>
       <AddAnswerButton
         locked={locked}
         addAnswer={addAnswer}
