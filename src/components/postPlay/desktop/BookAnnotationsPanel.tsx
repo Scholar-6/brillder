@@ -114,11 +114,17 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     const annotationIndex = newAttempt.annotations.findIndex(a => a.id === annotation.id);
     if (annotationIndex < 0) return;
 
+    console.log('remove', newAttempt.annotations.length, annotationIndex);
+
     newAttempt.annotations.splice(annotationIndex, 1);
+
+    console.log('removed', newAttempt.annotations.length, annotationIndex);
 
     if (props.highlightRef.current) {
       props.highlightRef.current.deleteAnnotation(annotation);
     }
+
+    console.log()
 
     props.setAttempt(newAttempt);
     /*eslint-disable-next-line*/

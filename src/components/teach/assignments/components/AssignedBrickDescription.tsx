@@ -82,6 +82,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           </div>
           <div className="hover-area" style={{ background: color }} />
         </div>
+        <div className="css-custom-tooltip">
+          {this.props.minimize ? 'Minimize' : 'Expand'}
+        </div>
       </div>
     );
   }

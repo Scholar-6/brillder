@@ -78,6 +78,17 @@
     }
   }
   .vertical-brick {
+    .css-custom-tooltip {
+      z-index: 1000;
+      padding-right: 0.5vw;
+      top: 4vw;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+        display: block;
+      }
+    }
     cursor: pointer;
     width: calc(#{$bricks-height / 6.35 / 1.4});
     @extend %flexCenter;

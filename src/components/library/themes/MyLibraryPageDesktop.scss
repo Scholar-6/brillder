@@ -467,6 +467,7 @@
       margin-right: 0.5vw;
 
       .subject-name-v3 {
+        cursor: pointer;
         padding: 0 !important;
         position: relative;
         color: white;
@@ -482,6 +483,12 @@
           transform: rotate(-90deg);
 
           >div {
+            .round-circle {
+              width: 0.8vw;
+              height: 0.8vw;
+              border-radius: 50%;
+              margin-right: 0.4vw;
+            }
             font-family: $font-family-bold;
             display: flex;
             justify-content: center;
