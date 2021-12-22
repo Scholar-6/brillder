@@ -5,13 +5,33 @@
 .image-dialog-container {
   .quill-caption {
     margin-top: 1vh;
+    .ql-custom-toolbar {
+      height: 2.3vw !important;
+    }
+    .q-tooltip-hover {
+      width: 1.6vw !important;
+    }
+    .formats {
+      display: flex;
+      button {
+        display: block;
+      }
+    }
+    .css-custom-tooltip {
+      display: none;
+    }
+    .ql-editor.ql-blank::before {
+      font-family: $font-family-bold;
+      color: var(--theme-dark-blue);
+      opacity: 0.45;
+    }
     .q-tooltip-hover:hover {
       opacity: 0.5;
     }
     .ql-custom-toolbar {
       svg {
-        width: 1.3vw !important;
-        height: 1.3vw !important;
+        width: 1.6vw !important;
+        height: 1.6vw !important;
       }
     }
     .ql-editor {
@@ -269,6 +289,7 @@
     margin-left: 3vw;
     width: 19vw;
     height: 0.3vw;
+    padding: 0.6vw !important;
     .MuiSlider-track,
     .MuiSlider-rail {
       height: inherit !important;
