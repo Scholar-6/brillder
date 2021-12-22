@@ -35,7 +35,6 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
         <div className="subject-name-v3 bold" onClick={this.props.subjectTitleClick}>
           <div>
             <div>
-              <div className="round-circle" style={{background: this.props.subjectAssignment.subject.color}} />
               <div>{this.props.subjectAssignment.subject.name}</div>
             </div>
           </div>
