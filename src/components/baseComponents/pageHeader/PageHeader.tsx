@@ -49,6 +49,7 @@ interface Props {
 }
 
 interface State {
+  value: string;
   searchVisible: boolean;
   searchAnimation: string;
   // mobile
@@ -62,6 +63,7 @@ class PageHeader extends Component<Props, State> {
     this.state = {
       searchVisible: false,
       dropdownShown: false,
+      value: '',
       searchAnimation: 'slideInLeft'
     };
   }
@@ -131,6 +133,15 @@ class PageHeader extends Component<Props, State> {
 
     let link = this.props.link ? this.props.link : map.MainPage;
 
+    let className = 'search-container 44';
+    if (searchVisible) {
+      className += 'active animated slideInRight '
+    }
+
+    if (this.state.value.length > 1) {
+      className += ' no-bottom-border';
+    }
+
     return (
       <div className="upper-part">
         <div className={!searchVisible ? "page-header" : "page-header active"}>
@@ -142,13 +153,16 @@ class PageHeader extends Component<Props, State> {
                 </div>
               }
               {!searchVisible && <HomeButton history={this.props.history} link={link} />}
-              <div className={searchVisible ? "search-container active animated slideInRight" : "search-container"}>
+              <div className={className}>
                 {this.props.page !== PageEnum.Book &&
                   <div className={searchVisible ? 'search-area active' : 'search-area'}>
                     <input
                       className="search-input"
                       onKeyUp={(e) => this.keySearch(e)}
-                      onChange={(e) => this.props.searching(e.target.value)}
+                      onChange={(e) => {
+                        this.setState({...this.state, value: e.target.value});
+                        this.props.searching(e.target.value);
+                      }}
                       placeholder={this.props.searchPlaceholder}
                     />
                   </div>
@@ -179,15 +193,19 @@ class PageHeader extends Component<Props, State> {
           <Hidden only={['xs']} >
             <HomeButton link={link} history={this.props.history} />
             <div className="logout-container">
-              <div className="search-container">
+              <div className={`search-container ${this.state.value.length > 1 ? 'no-bottom-border' : ''}`}>
                 <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>
                   <SpriteIcon name="search" className="active" />
                 </div>
                 <div className="search-area">
                   <input
                     className="search-input"
+                    value={this.state.value}
                     onKeyUp={(e) => this.keySearch(e)}
-                    onChange={(e) => this.props.searching(e.target.value)}
+                    onChange={(e) => {
+                      this.setState({...this.state, value: e.target.value});
+                      this.props.searching(e.target.value);
+                    }}
                     placeholder={this.props.searchPlaceholder}
                   />
                 </div>

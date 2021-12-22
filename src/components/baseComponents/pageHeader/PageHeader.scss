@@ -92,6 +92,13 @@
         .search-container {
           display: flex;
           align-items: center;
+          background: #243D6E;
+          margin-left: 0.8vw;
+          border-radius: 1vw;
+          &.no-bottom-border {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+          }
           @include phone_and_tabletP {
             display: flex;
             &.active {
@@ -102,7 +109,8 @@
             }
           }
           @include tabletP {
-            width: 70%;
+            width: 60vw;
+            margin-right: 3vw;
             height: 3.698vw;
           }
 
@@ -366,8 +374,8 @@
   }
   @include tabletP {
     margin: 0 2vw 0 0;
-    width: 3.698vw;
-    height: 3.698vw;
+    width: 2vw;
+    height: 2vw;
   }
   .svg {
     width: 100% !important;
