@@ -96,12 +96,6 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         <div className="progress-value default-value">
           {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
           {height < 50 && height > 0 && renderRotatedTitle("white", 100)}
-          {height < 50 && (
-            <AcademyDifficulty
-              a={assignment.brick.academicLevel}
-              className="smaller"
-            />
-          )}
           {height < 50 && height > 0 && (
             <div className="pr-lock-container" style={{ background: color }}>
               <div>
