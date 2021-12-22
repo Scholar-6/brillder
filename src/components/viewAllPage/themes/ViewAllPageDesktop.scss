@@ -398,3 +398,46 @@
 .dashboard-page .sorted-row .brick-row-container {
   padding-top: 0 !important;
 }
+
+.dashboard-page {
+  .search-suggestions {
+    position: fixed;
+    z-index: 100000;
+    width: 60vw;
+    top: 4.8vw;
+    padding-left: 0.3vw;
+    padding-right: 0.3vw;
+    color: white;
+    left: 8.65vw;
+    padding-left: 1vw;
+    background: #243D6E;
+    border-bottom-left-radius: 1vw;
+    border-bottom-right-radius: 1vw;
+
+    > div {
+      padding-top: 0.2vw;
+      padding-bottom: 0.2vw;
+      display: flex;
+      font-size: 1.4vw;
+      align-items: center;
+      svg {
+        width: 2vw;
+        height: 2vw;
+        color: var(--theme-orange);
+        margin-right: 0.3vw;
+      }
+      .author-image {
+        width: 2vw;
+        height: 2vw;
+        border-radius: 50%;
+        margin-right: 0.3vw;
+      }
+      .circle {
+        width: 2vw;
+        height: 2vw;
+        border-radius: 50%;
+        margin-right: 0.3vw;
+      }
+    }
+  }
+}

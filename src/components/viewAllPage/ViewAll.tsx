@@ -53,7 +53,6 @@ import SubjectCategoriesComponent from "./subjectCategories/SubjectCategories";
 import {
   removeByIndex,
   sortByPopularity,
-  prepareUserSubjects,
   sortByDate,
   sortAndFilterBySubject,
   getCheckedSubjects,
@@ -81,6 +80,7 @@ import { addSubject } from "services/axios/user";
 import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 import PhoneSearchPage from "./PhoneSearchPage";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
+import SearchSuggestions from "./components/SearchSuggestions";
 
 interface ViewAllProps {
   user: User;
@@ -95,6 +95,7 @@ interface ViewAllState {
   bricks: Array<Brick>;
   searchBricks: Array<Brick>;
   searchString: string;
+  searchTyping: boolean;
   isSearching: boolean;
   sortBy: SortBy;
 
@@ -214,6 +215,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       dropdownShown: false,
       searchBricks: [],
       searchString,
+      searchTyping: false,
       activeSubject: {} as SubjectItem,
       isSearching: false,
       pageSize: 6,
@@ -792,10 +794,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         ...this.state,
         searchString,
         finalBricks,
+        searchTyping: false,
         isSearching: false,
       });
     } else {
-      this.setState({ ...this.state, searchString });
+      this.setState({ ...this.state, searchTyping: true, searchString });
     }
   }
 
@@ -808,7 +811,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async search() {
     const { searchString } = this.state;
-    this.setState({ shown: false, isSearchBLoading: true });
+    this.setState({ shown: false, searchTyping: false, isSearchBLoading: true });
     const bricks = await searchPublicBricks(searchString);
 
     setTimeout(() => {
@@ -1228,6 +1231,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
         <div className="main-listing dashboard-page">
+          {this.state.searchTyping === true && <SearchSuggestions history={this.props.history} searchString={this.state.searchString} bricks={this.state.bricks} />}
           <div>
             <PageHeadWithMenu
               page={PageEnum.ViewAll}
