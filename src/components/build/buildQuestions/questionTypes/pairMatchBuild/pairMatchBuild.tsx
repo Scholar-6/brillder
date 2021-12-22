@@ -11,6 +11,7 @@ import PairOptionComponent from './option/pairOption';
 import { showSameAnswerPopup } from '../service/questionBuild';
 import ShuffleText from '../shuffle/components/ShuffleText';
 import { ReactSortable } from 'react-sortablejs';
+import DeleteDialog from 'components/build/baseComponents/dialogs/DeleteDialog';
 
 
 export interface PairMatchBuildProps extends UniqueComponentProps { }
@@ -34,6 +35,8 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   }
 
   const [state, setState] = React.useState(data);
+  const [removingIndex, setRemovingIndex] = React.useState(-1);
+
   useEffect(() => { setState(data) }, [data]);
 
   const update = () => {
@@ -48,12 +51,17 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
     save();
   }
 
-  const removeFromList = (index: number) => {
-    if (locked) { return; }
-    state.list.splice(index, 1);
-    removeHintAt(index);
+  const realRemoving = () => {
+    state.list.splice(removingIndex, 1);
+    removeHintAt(removingIndex);
     update();
     save();
+    setRemovingIndex(-1);
+  }
+
+  const removeFromList = (index: number) => {
+    if (locked) { return; }
+    setRemovingIndex(index);
   }
 
   const renderAnswer = (answer: Answer, i: number) => {
@@ -84,7 +92,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         list={state.list}
         animation={150}
         group={{ name: "cloning-group-name", pull: "clone" }}
-        setList={newList => setState({...state, list: newList })}
+        setList={newList => setState({ ...state, list: newList })}
       >
         {state.list.map((answer: Answer, i: number) => renderAnswer(answer, i))}
       </ReactSortable>
@@ -93,6 +101,13 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         addAnswer={addAnswer}
         height="auto"
         label="Add a pair"
+      />
+      <DeleteDialog
+        isOpen={removingIndex >= 0}
+        title="Permanently delete<br />this answer?"
+        index={removingIndex}
+        submit={realRemoving}
+        close={() => setRemovingIndex(-1)}
       />
     </div>
   )
