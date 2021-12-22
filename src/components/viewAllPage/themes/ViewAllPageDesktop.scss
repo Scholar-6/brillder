@@ -414,6 +414,16 @@
     border-bottom-left-radius: 1vw;
     border-bottom-right-radius: 1vw;
 
+    .upper-line {
+      margin-left: 0vw;
+      width: 58vw;
+      margin-bottom: 0.3vw;
+      padding: 0;
+      height: 0.1vw;
+      border-radius: 0.05vw;
+      background: var(--theme-dark-blue);
+    }
+
     > div {
       padding-top: 0.2vw;
       padding-bottom: 0.2vw;

@@ -116,6 +116,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
   if (suggestions.length === 0) {
     return (
     <div className="search-suggestions">
+      <div className="upper-line" />
       <div>no options</div>
     </div>
     );
@@ -123,6 +124,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
 
   return (
     <div className="search-suggestions">
+      <div className="upper-line" />
       {suggestions.map(suggestion => <div onClick={() => props.history.push(routes.playCover(suggestion.brick))}>
         {suggestion.isTitleRes ? <SpriteIcon name="logo" /> : suggestion.isAuthorRes ? renderAutorAvatar(suggestion.brick) : suggestion.isKeyRes ? <SpriteIcon name='hash' /> : suggestion.isSubjectRes ? renderSubjectCircle(suggestion.brick) : ''}
           {stripHtml(suggestion.brick.title)}
