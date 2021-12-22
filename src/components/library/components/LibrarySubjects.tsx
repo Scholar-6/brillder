@@ -12,6 +12,8 @@ interface LibrarySubjectsProps {
   subjects: Subject[];
   subjectAssignments: SubjectAssignments[];
   history: any;
+
+  subjectTitleClick(s: Subject): void;
 }
 
 const LibrarySubjects: React.FC<LibrarySubjectsProps> = (props) => {
@@ -42,7 +44,7 @@ const LibrarySubjects: React.FC<LibrarySubjectsProps> = (props) => {
     }
 
     return <div key={key} className="libary-container-1" style={{ width: width + 'vw', display: 'inline-flex' }}>
-      <LibrarySubject subjectAssignment={item} history={props.history} />
+      <LibrarySubject subjectAssignment={item} history={props.history} subjectTitleClick={() => props.subjectTitleClick(item.subject)} />
     </div>
   }
 

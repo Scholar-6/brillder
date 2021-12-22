@@ -10,6 +10,7 @@ import "./HighlightHtml.scss";
 import { Annotation } from "model/attempt";
 import { useLocation } from "react-router-dom";
 import YoutubeMathDesmos from "./YoutubeMathDesmos";
+import { User } from "model/user";
 
 let annotateCreateEvent: (el: HTMLElement) => void = () => {
   console.log('asdfasdf');
@@ -21,17 +22,25 @@ const classApplier = rangy.createClassApplier("hi");
 const annotator = rangy.createClassApplier("annotation", {
   elementTagName: "a",
   onElementCreate: onAnnotateCreate,
+  elementProperties: {
+    onclick: function() {
+        var highlight = annotator.getHighlightForElement(this);
+        console.log(highlight);
+        return false;
+    }
+  }
 })
 
 interface SelectableProps {
   value: string;
+  user?: User;
   mode?: PlayMode;
   isSynthesis?: boolean;
   onHighlight(value: string): void;
 }
 
 export interface HighlightRef {
-  createAnnotation(annotation: Annotation): void;
+  createAnnotation(annotation: Annotation): string;
   deleteAnnotation(annotation: Annotation): void;
 }
 
@@ -40,18 +49,18 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
   const shouldHighlight = props.mode === PlayMode.Highlighting && props.onHighlight;
 
   const onMouseUp = React.useCallback(() => {
-    if(!textBox) return;
+    if (!textBox) return;
     const selection = window.getSelection();
-    if(selection && !selection.isCollapsed && selection.anchorNode && selection.focusNode) {
+    if (selection && !selection.isCollapsed && selection.anchorNode && selection.focusNode) {
       textBox.contentEditable = "true";
-      if(shouldHighlight) {
+      if (shouldHighlight) {
         const position = selection.anchorNode.compareDocumentPosition(selection.focusNode);
         let backwards = false;
         if ((!position && selection.anchorOffset > selection.focusOffset) || position === Node.DOCUMENT_POSITION_PRECEDING) {
           backwards = true;
         }
         console.log(selection.anchorOffset, selection.focusOffset);
-        if(!backwards) {
+        if (!backwards) {
           classApplier.applyToSelection();
         } else {
           classApplier.undoToSelection();
@@ -61,31 +70,36 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
       props.onHighlight(textBox?.innerHTML);
       selection.removeAllRanges();
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [shouldHighlight]);
 
   const createAnnotation = (annotation: Annotation) => {
-    if(!textBox) return;
+    console.log(888, annotation)
+    if (!textBox) return '';
     annotateCreateEvent = (el: HTMLElement) => {
       el.dataset.id = annotation.id.toString();
       (el as HTMLAnchorElement).href = "#" + annotation.id.toString();
     };
 
     const selection = window.getSelection();
-    if(selection && !selection.isCollapsed &&
+    if (selection && !selection.isCollapsed &&
       selection.anchorNode && textBox.contains(selection.anchorNode) &&
       selection.focusNode && textBox.contains(selection.focusNode)
     ) {
       annotator.applyToSelection();
-      props.onHighlight(textBox?.innerHTML);
+      var text = textBox?.innerHTML;
       selection.removeAllRanges();
+      return text;
     }
+    return '';
   }
 
   const deleteAnnotation = (annotation: Annotation) => {
-    if(!textBox) return;
-    
+    if (!textBox) return;
+
     const els = textBox.querySelectorAll(`.annotation[data-id="${annotation.id}"]`);
+
+    console.log('delete');
 
     els.forEach(el => {
       const range = rangy.createRange();
@@ -95,42 +109,45 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
       el.remove();
     });
 
-    props.onHighlight(textBox?.innerHTML);
+    //props.onHighlight(textBox?.innerHTML);
   }
 
   const textRef = React.useCallback((div: HTMLDivElement) => {
-    if(textBox) {
+    if (textBox) {
       textBox.removeEventListener("mouseup", onMouseUp);
     }
-    if(div) {
+    if (div) {
       div.addEventListener("mouseup", onMouseUp);
       setTextBox(div);
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [setTextBox, onMouseUp]);
 
   const location = useLocation();
   React.useEffect(() => {
     const id = location.hash.substr(1);
-    if(!id) return;
+    if (!id) return;
     const links = textBox?.querySelectorAll(`.annotation`) as NodeListOf<HTMLAnchorElement>;
     links?.forEach(link => {
-      if(link.dataset.id === id) {
+      if (link.dataset.id === id) {
         link.classList.add("focused");
       } else {
         link.classList.remove("focused");
       }
     });
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [location.hash]);
 
   React.useImperativeHandle(ref, () => ({
-    createAnnotation(annotation: Annotation) { createAnnotation(annotation) },
+    createAnnotation(annotation: Annotation) { return createAnnotation(annotation) },
     deleteAnnotation(annotation: Annotation) { deleteAnnotation(annotation) },
   }));
 
   return (
-    <div className={`highlight-html${shouldHighlight ? " highlight-on" : ""}`}>
+    <div className={`highlight-html${shouldHighlight ? " highlight-on" : ""}`} onClick={() => {
+      if (textBox)
+        props.onHighlight(textBox.innerHTML)
+    }}>
       <YoutubeMathDesmos ref={textRef} isSynthesisParser={props.isSynthesis} value={props.value} />
     </div>
   );

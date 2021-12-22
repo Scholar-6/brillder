@@ -362,6 +362,7 @@ class Library extends Component<BricksListProps, BricksListState> {
           sortedIndex={this.state.sortedIndex}
           subjectAssignments={this.state.subjectAssignments}
           history={this.props.history}
+          subjectTitleClick={s => this.filterBySubject(s.id)}
         />
       </div>
     );

@@ -328,7 +328,7 @@ class ExpandedAssignment extends Component<
     const { sortBy } = this.state;
     const name = sortBy === SortBy.AvgIncreasing ? "arrow-up" : "arrow-down";
 
-    let className = "btn btn-transparent svgOnHover btn-grey-circle";
+    let className = "btn btn-transparent svgOnHover btn-grey-circle sort-tooltip-container";
     if (sortBy === SortBy.AvgIncreasing || sortBy === SortBy.AvgDecreasing) {
       className += " active";
     }
@@ -340,6 +340,7 @@ class ExpandedAssignment extends Component<
             <div className="center">
               <button className={className} onClick={() => this.toggleSort()}>
                 <SpriteIcon name={name} className="active text-theme-dark-blue" />
+                <div className="css-custom-tooltip">{sortBy === SortBy.AvgDecreasing ? 'Sort by lowest score' : 'Sort by highest score'}</div>
               </button>
             </div>
           </th>

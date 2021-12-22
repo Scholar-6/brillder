@@ -977,3 +977,28 @@
 .dialog-box.width-50 .MuiDialog-paperWidthSm {
   max-width: 50vw !important;
 }
+
+.source-input {
+  position: relative;
+  .fixed-icon {
+    border-top-left-radius: 0.6vw;
+    border-bottom-left-radius: 0.6vw;
+    background: var(--tab-gray);
+    position: absolute;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    height: calc(100% - 2vh);
+    top: 0;
+    left: 0;
+    width: 2.8vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  input {
+    background: var(--off-white);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: 2.8vw;
+  }
+}
