@@ -138,7 +138,7 @@ class PageHeader extends Component<Props, State> {
       className += 'active animated slideInRight '
     }
 
-    if (this.state.value.length > 1) {
+    if (this.state.value.length >= 1) {
       className += ' no-bottom-border';
     }
 
@@ -193,7 +193,7 @@ class PageHeader extends Component<Props, State> {
           <Hidden only={['xs']} >
             <HomeButton link={link} history={this.props.history} />
             <div className="logout-container">
-              <div className={`search-container ${this.state.value.length > 1 ? 'no-bottom-border' : ''}`}>
+              <div className={`search-container ${this.state.value.length >= 1 ? 'no-bottom-border' : ''}`}>
                 <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>
                   <SpriteIcon name="search" className="active" />
                 </div>
