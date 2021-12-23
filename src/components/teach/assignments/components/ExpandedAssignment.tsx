@@ -21,6 +21,7 @@ import { User } from "model/user";
 import BookButton from "./BookButton";
 import CommentButton from "./CommentButton";
 import { getClassroomStudents } from "services/axios/classroom";
+import LibraryButton from "./LibraryButton";
 
 enum SortBy {
   None,
@@ -295,6 +296,9 @@ class ExpandedAssignment extends Component<
               ? <div className="centered">{this.renderBookIcon(studentResult, student.id)}</div>
               : <div className="centered">{student.remindersCounter} sent</div>
             }
+          </td>
+          <td>
+            {studentResult && <LibraryButton onClick={() => this.props.history.push(map.MyLibrary + '/' + studentResult.studentId)} />}
           </td>
           <td className={`assigned-student-name ${active ? 'bold' : disabled ? 'grey' : 'regular'}`}>
             {student.firstName} {student.lastName}

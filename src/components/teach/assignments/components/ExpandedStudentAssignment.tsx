@@ -218,7 +218,7 @@ class ExpandedStudentAssignment extends Component<
         <td className="student-book">
           {studentResult && studentResult.numberOfAttempts > 0 && <div className="centered">{this.renderBookIcon(studentResult, student.id)}</div>}
         </td>
-        <td className={`assigned-student-name`}>
+        <td className="assigned-student-name">
           {student.firstName} {student.lastName}
         </td>
         <td>

@@ -59,7 +59,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     if (bricks && bricks.length > 0) {
       setAssignedCount(bricks.length);
     }
-    const lbricks = await getLibraryBricks();
+    const lbricks = await getLibraryBricks(props.user.id);
     if (lbricks && lbricks.length > 0) {
       setLibraryCount(lbricks.length);
     }

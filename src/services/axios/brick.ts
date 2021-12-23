@@ -75,12 +75,13 @@ export const getAssignedBricks = async () => {
   }
 }
 
-export const getLibraryBricks = async <T>(classroomId?: number) => {
+export const getLibraryBricks = async <T>(userId: number, classroomId?: number) => {
   try {
-    let obj = {};
+    let obj:any = {userId};
     if (classroomId) {
-      obj = { classroomId };
+      obj = { userId, classroomId };
     }
+    console.log(obj)
     return await post<T[]>("/play/library", obj);
   } catch (e) {
     return null;
