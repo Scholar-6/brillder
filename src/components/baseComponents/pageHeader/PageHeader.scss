@@ -13,6 +13,10 @@
   }
   .search-input {
     width: 100%;
+    @include placeholder {
+      opacity: 0.8;
+      color: var(--tab-gray);
+    }
   }
   .page-navigation {
     position: relative;
@@ -92,6 +96,11 @@
         .search-container {
           display: flex;
           align-items: center;
+          margin-left: 0.8vw;
+          border-radius: 1vw;
+          &.no-bottom-border {
+            background: #2B4779;
+          }
           @include phone_and_tabletP {
             display: flex;
             &.active {
@@ -102,7 +111,8 @@
             }
           }
           @include tabletP {
-            width: 70%;
+            width: 60vw;
+            margin-right: 3vw;
             height: 3.698vw;
           }
 
@@ -130,12 +140,12 @@
             .search-input {
               display: block;
               background-color: transparent;
-              font-family: $font-family-regular;
+              font-family: $font-family-bold !important;
               border: none;
               border-radius: 12px;
               letter-spacing: 0.045vw;
               width: 100%;
-              color: var(--dark-gray);
+              color: var(--tab-gray);
               padding: 0.7vh 0.6vw;
               @include phone_and_tabletP {
                 font-size: 3.7vw;
@@ -366,6 +376,10 @@
   }
   @include tabletP {
     margin: 0 2vw 0 0;
+    width: 2.8vw;
+    height: 2.8vw;
+  }
+  &#bell-container, &.more-button {
     width: 3.698vw;
     height: 3.698vw;
   }

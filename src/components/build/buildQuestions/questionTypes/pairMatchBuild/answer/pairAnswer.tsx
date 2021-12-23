@@ -7,6 +7,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditorContainer from "components/baseComponents/quill/QuillEditorContainer";
 import SoundRecord from "../../sound/SoundRecord";
 import { ChooseOneAnswer } from "../../chooseOneBuild/types";
+import DeleteDialog from "components/build/baseComponents/dialogs/DeleteDialog";
 
 
 export interface PairAnswerProps {
@@ -26,6 +27,8 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
   locked, index, length, answer, validationRequired,
   removeFromList, update, save, onBlur
 }) => {
+  const [removingImgOpen, setRemoveImage] = React.useState(false);
+
   const onTextChanged = (answer: Answer, value: string) => {
     if (locked) { return; }
     answer.value = value;
@@ -36,13 +39,18 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     save();
   }
 
-  const removeImage = () => {
-    if (locked) { return; }
+  const reallyRemoveImage = () => {
     answer.valueFile = "";
     answer.valueSoundFile = "";
     answer.answerType = QuestionValueType.None;
     update();
     save();
+    setRemoveImage(false);
+  }
+
+  const removeImage = () => {
+    if (locked) { return; }
+    setRemoveImage(true);
   }
 
   const renderDeleteButton = () => {
@@ -138,6 +146,13 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
             update={setImage}
           />
         </div>
+        <DeleteDialog
+          isOpen={removingImgOpen}
+          title="Remove image?"
+          index={0}
+          submit={reallyRemoveImage}
+          close={() => setRemoveImage(false)}
+        />
       </Grid>
     );
   }
