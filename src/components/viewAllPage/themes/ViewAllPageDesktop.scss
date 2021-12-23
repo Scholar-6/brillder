@@ -422,12 +422,17 @@
       padding: 0;
       height: 0.1vw;
       border-radius: 0.05vw;
-      background: var(--theme-dark-blue);
+      background: var(--theme-dark-blue) !important;
     }
 
     > div {
+      font-family: $font-family-bold;
+      color: var(--tab-gray);
       &:hover {
-        background: var(--theme-light-blue) !important;
+        background: #2b4e99 !important;
+        &.upper-line {
+          background: var(--theme-dark-blue) !important;
+        }
       }
       cursor: pointer;
       padding-left: 1vw;

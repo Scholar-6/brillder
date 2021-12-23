@@ -136,12 +136,12 @@
             .search-input {
               display: block;
               background-color: transparent;
-              font-family: $font-family-regular;
+              font-family: $font-family-bold !important;
               border: none;
               border-radius: 12px;
               letter-spacing: 0.045vw;
               width: 100%;
-              color: var(--dark-gray);
+              color: var(--tab-gray);
               padding: 0.7vh 0.6vw;
               @include phone_and_tabletP {
                 font-size: 3.7vw;
@@ -374,6 +374,10 @@
     margin: 0 2vw 0 0;
     width: 2vw;
     height: 2vw;
+  }
+  &#bell-container, &.more-button {
+    width: 3.698vw;
+    height: 3.698vw;
   }
   .svg {
     width: 100% !important;
