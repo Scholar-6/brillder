@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, RadioGroup, FormControlLabel, Radio, Hidden } from "@material-ui/core";
 import queryString from 'query-string';
 
@@ -9,6 +9,7 @@ import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
 import map from 'components/map';
 import { GENERAL_SUBJECT } from "components/services/subject";
+import TypingLabel from "components/baseComponents/TypingLabel";
 
 
 interface SubjectProps {
@@ -21,14 +22,23 @@ interface SubjectProps {
 }
 
 const FrenchComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+
   return (
-    <div className="french-preview">
+    <div className="french-preview subject-preview">
       <div>
-        <div>“Revenons</div>
-        <div>à nos</div>
-        <div>moutons”</div>
+        <div>
+          <TypingLabel label="“Revenons" onEnd={() => setFirstEnd(true)} />
+        </div>
+        <div>
+          {firstFinished &&  <TypingLabel label="à nos" onEnd={() => setSecondEnd(true)} />}
+        </div>
+        <div>
+          {secondFinished &&  <TypingLabel label="moutons”" />}
+        </div>
       </div>
-      <div>Anon.</div>
+      <div className="absolute-bottom">Anon.</div>
     </div>
   );
 }

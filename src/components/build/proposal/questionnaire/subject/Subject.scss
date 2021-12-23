@@ -89,6 +89,15 @@ $box-radius: 0.4vw;
     }
   }
 
+  .subject-preview {
+    .absolute-bottom {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      bottom: 2vw;
+    }
+  }
+
   .subject-name {
     position: fixed;
     top: 8.2%;
