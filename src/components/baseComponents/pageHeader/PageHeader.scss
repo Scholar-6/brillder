@@ -13,6 +13,10 @@
   }
   .search-input {
     width: 100%;
+    @include placeholder {
+      opacity: 0.8;
+      color: var(--tab-gray);
+    }
   }
   .page-navigation {
     position: relative;
@@ -95,7 +99,7 @@
           margin-left: 0.8vw;
           border-radius: 1vw;
           &.no-bottom-border {
-            background: #243D6E;
+            background: #2B4779;
           }
           @include phone_and_tabletP {
             display: flex;
@@ -372,8 +376,8 @@
   }
   @include tabletP {
     margin: 0 2vw 0 0;
-    width: 2vw;
-    height: 2vw;
+    width: 2.8vw;
+    height: 2.8vw;
   }
   &#bell-container, &.more-button {
     width: 3.698vw;

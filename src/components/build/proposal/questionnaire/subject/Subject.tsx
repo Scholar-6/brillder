@@ -8,6 +8,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
 import map from 'components/map';
+import { GENERAL_SUBJECT } from "components/services/subject";
 
 
 interface SubjectProps {
@@ -39,6 +40,24 @@ const ArtComponent: React.FC = () => {
       <div>Albert Camus</div>
     </div>
   );
+}
+
+const GeneralComponent: React.FC = () => {
+  return (
+    <div className="art-preview general-preview">
+      <div>“You cannot shake hands with a clenched fist”</div>
+      <div>Indira Gandhi</div>
+    </div>
+  )
+}
+
+const ReligionComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“Everything has been figured out, except how to live”</div>
+      <div>Jean-Paul Sartre</div>
+    </div>
+  )
 }
 
 const BiologyComponent: React.FC = () => {
@@ -256,6 +275,10 @@ const SubjectPage: React.FC<SubjectProps> = ({
       return FrenchComponent;
     } else if (subjectName === 'Art & Design') {
       return ArtComponent;
+    } else if (subjectName === GENERAL_SUBJECT) {
+      return GeneralComponent;
+    } else if (subjectName === 'Religion & Philosophy') {
+      return ReligionComponent;
     } else if (subjectName === 'Biology') {
       return BiologyComponent;
     } else if (subjectName === 'Chinese') {
