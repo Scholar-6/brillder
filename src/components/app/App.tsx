@@ -251,6 +251,7 @@ const App: React.FC<AppProps> = props => {
         <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />
 
+        <StudentRoute path="/my-library/:userId" component={Library} />
         <StudentRoute path="/my-library" component={Library} />
         <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 

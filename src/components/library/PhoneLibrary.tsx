@@ -131,7 +131,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async getAssignments(subjects: SubjectAItem[]) {
-    const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
+    const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>(this.props.user.id);
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const subjectAssignments = this.getAssignmentSubjects(rawAssignments, subjects);
