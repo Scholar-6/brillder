@@ -37,6 +37,7 @@ import HighlightHtml, { HighlightRef } from "components/play/baseComponents/High
 import axios from "axios";
 import { CashAttempt } from "localStorage/play";
 import { generateId } from "components/build/buildQuestions/questionTypes/service/questionBuild";
+import map from "components/map";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -254,6 +255,14 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     )
   }
 
+  renderLibraryLink() {
+    return (
+      <div className="absolute-library-link" onClick={() => this.props.history.push(map.MyLibrary + '/' + this.props.match.params.userId)}>
+        <SpriteIcon name="bar-chart-2"/>
+      </div>
+    );
+  }
+
   renderPlayButton(brick: Brick) {
     const isTeacher = checkTeacher(this.props.user);
 
@@ -386,6 +395,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                   {renderAttempts()}
                 </div>
                 <div className="right-part flex-center">
+                  {this.renderLibraryLink()}
                   {this.renderPlayButton(brick)}
                 </div>
               </div>
