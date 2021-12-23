@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { stripHtml } from 'components/build/questionService/ConvertService';
-import { Brick } from 'model/brick';
+import { Author, Brick, Subject } from 'model/brick';
 import { fileUrl } from 'components/services/uploadFile';
 import routes from 'components/play/routes';
 
@@ -13,17 +13,23 @@ interface ResultObj {
   isAuthorRes?: boolean;
   isSubjectRes?: boolean;
   isKeyRes?: boolean;
-  brick: Brick;
+  brick?: Brick;
+  subject?: Subject;
+  author?: Author;
 }
 
 interface SearchSuggestionsProps {
   history: any;
   searchString: string;
   bricks: Brick[];
+  subjects: Subject[];
+
+  filterByAuthor(a: Author): void;
+  filterBySubject(s: Subject): void;
 }
 
 const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
-  const res:ResultObj[] = [];
+  let res:ResultObj[] = [];
   var searchString = props.searchString.toLocaleLowerCase();
 
   const getTitlesResult = () => {
@@ -41,21 +47,20 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
     const authorFirstNameRes = props.bricks.filter(b => stripHtml(b.author.firstName).toLowerCase().indexOf(searchString) >= 0);
     const authorLastNameRes = props.bricks.filter(b => stripHtml(b.author.lastName).toLowerCase().indexOf(searchString) >= 0);
 
-    for (let brick of authorFirstNameRes) {
-      res.push({
-        isAuthorRes: true,
-        brick: brick
-      });
+    var resR:ResultObj[] = [];
+    var united = [...authorFirstNameRes, ...authorLastNameRes];
+
+    for (let el of united) {
+      let found = resR.find(a => a.author && a.author.id == el.author.id);
+      if (!found) {
+        resR.push({isAuthorRes: true, author: el.author});
+      }
     }
 
-    for (let brick of authorLastNameRes) {
-      res.push({
-        isAuthorRes: true,
-        brick: brick
-      });
-    }
+    res = [...res, ...resR];
   }
 
+  /*
   const getKeyResult = () => {
     const keysRes = props.bricks.filter(b => {
       if (b.keywords) {
@@ -70,20 +75,16 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
         brick: brick
       });
     }
-  }
+  }*/
 
   const getSubjectResult = () => {
-    const subjectsRes = props.bricks.filter(b => {
-      if (b.subject) {
-        return b.subject.name.toLocaleLowerCase().indexOf(searchString) >= 0;
-      }
-      return false;
-    });
+    const subjectsRes = props.subjects.filter(s => s.name.toLocaleLowerCase().indexOf(searchString) >= 0);
 
-    for (let brick of subjectsRes) {
+
+    for (let subject of subjectsRes) {
       res.push({
         isSubjectRes: true,
-        brick: brick
+        subject
       });
     }
   }
@@ -99,16 +100,16 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
 
   const suggestions = res.splice(0, 10);
 
-  const renderAutorAvatar = (loopBrick: Brick) => {
-    if (loopBrick.author.profileImage) {
-      return <img className="author-image" alt="b-imge" src={fileUrl(loopBrick.author.profileImage)} />
+  const renderAutorAvatar = (authorR: Author) => {
+    if (authorR.profileImage) {
+      return <img className="author-image" alt="b-imge" src={fileUrl(authorR.profileImage)} />
     }
     return <SpriteIcon name="user" />
   }
 
-  const renderSubjectCircle = (loopBrick: Brick) => {
-    if (loopBrick.subject) {
-      return <div className="circle" style={{background: loopBrick.subject.color}} />
+  const renderSubjectCircle = (subjectR: Subject) => {
+    if (subjectR) {
+      return <div className="circle" style={{background: subjectR.color}} />
     }
     return '';
   }
@@ -121,15 +122,37 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
     </div>
     );
   }
+  
+  const renderItem = (suggestion: ResultObj) => {
+    const {brick, subject, author} = suggestion;
+    if (suggestion.isTitleRes && brick) {
+      return (
+        <div onClick={() => props.history.push(routes.playCover(brick))}>
+          <SpriteIcon name="logo" />
+          {stripHtml(brick.title)}
+        </div>
+      );
+    } else if (suggestion.isSubjectRes && subject) {
+      return (
+        <div onClick={() => props.filterBySubject(subject)}>
+          {renderSubjectCircle(subject)}
+          {subject.name}
+          </div>
+      );
+    } else if (suggestion.isAuthorRes && author) {
+      return (
+        <div onClick={() => props.filterByAuthor(author)}>
+          {renderAutorAvatar(author)}
+          {author.firstName} {author.lastName}
+          </div>
+      );
+    }
+  }
 
   return (
     <div className="search-suggestions">
       <div className="upper-line" />
-      {suggestions.map(suggestion => <div onClick={() => props.history.push(routes.playCover(suggestion.brick))}>
-        {suggestion.isTitleRes ? <SpriteIcon name="logo" /> : suggestion.isAuthorRes ? renderAutorAvatar(suggestion.brick) : suggestion.isKeyRes ? <SpriteIcon name='hash' /> : suggestion.isSubjectRes ? renderSubjectCircle(suggestion.brick) : ''}
-          {stripHtml(suggestion.brick.title)}
-        </div>
-      )}
+      {suggestions.map(renderItem)}
     </div>
   );
 }

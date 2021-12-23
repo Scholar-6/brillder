@@ -14,6 +14,7 @@ import { User } from "model/user";
 import { Notification } from "model/notifications";
 import {
   AcademicLevel,
+  Author,
   Brick,
   Subject,
   SubjectGroup,
@@ -708,6 +709,40 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
+  filterByAuthor(author: Author) {
+    const searchBricks = this.state.bricks.filter(b => b.author.id == author.id);
+
+    this.setState({
+      ...this.state,
+      isClearFilter: this.isFilterClear(),
+      searchString: author.firstName,
+      searchBricks,
+      finalBricks: searchBricks,
+      shown: true,
+      isLoading: false,
+      searchTyping: false,
+      isSearchBLoading: false,
+      isSearching: true,
+    });
+  }
+
+  filterSuggestionSubject(subject: Subject) {
+    const searchBricks = this.state.bricks.filter(b => b.subject && b.subject.id == subject.id);
+
+    this.setState({
+      ...this.state,
+      isClearFilter: this.isFilterClear(),
+      searchString: subject.name,
+      searchBricks,
+      finalBricks: searchBricks,
+      shown: true,
+      isLoading: false,
+      searchTyping: false,
+      isSearchBLoading: false,
+      isSearching: true,
+    });
+  }
+
   filterByOneSubject(id: number) {
     this.state.subjects.forEach((s) => (s.checked = false));
     toggleSubject(this.state.subjects, id);
@@ -1231,7 +1266,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
         <div className="main-listing dashboard-page">
-          {this.state.searchTyping === true && <SearchSuggestions history={this.props.history} searchString={this.state.searchString} bricks={this.state.bricks} />}
+          {this.state.searchTyping === true && <SearchSuggestions
+            history={this.props.history} subjects={this.state.subjects} searchString={this.state.searchString} bricks={this.state.bricks}
+            filterByAuthor={this.filterByAuthor.bind(this)}
+            filterBySubject={this.filterSuggestionSubject.bind(this)}
+          />}
           <div>
             <PageHeadWithMenu
               page={PageEnum.ViewAll}
