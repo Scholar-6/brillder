@@ -91,7 +91,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [restoredFromCash, setRestored] = React.useState(false);
 
-  const cashAttemptString = GetPreviewCashedPlayAttempt();
+  const cashAttemptString = '';// GetPreviewCashedPlayAttempt();
 
   if (cashAttemptString && !restoredFromCash) {
     const cashAttempt = JSON.parse(cashAttemptString);

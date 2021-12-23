@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, RadioGroup, FormControlLabel, Radio, Hidden } from "@material-ui/core";
 import queryString from 'query-string';
 
@@ -8,6 +8,8 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
 import map from 'components/map';
+import { GENERAL_SUBJECT } from "components/services/subject";
+import TypingLabel from "components/baseComponents/TypingLabel";
 
 
 interface SubjectProps {
@@ -20,14 +22,23 @@ interface SubjectProps {
 }
 
 const FrenchComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+
   return (
-    <div className="french-preview">
+    <div className="french-preview subject-preview">
       <div>
-        <div>“Revenons</div>
-        <div>à nos</div>
-        <div>moutons”</div>
+        <div>
+          <TypingLabel label="“Revenons" onEnd={() => setFirstEnd(true)} />
+        </div>
+        <div>
+          {firstFinished &&  <TypingLabel label="à nos" onEnd={() => setSecondEnd(true)} />}
+        </div>
+        <div>
+          {secondFinished &&  <TypingLabel label="moutons”" />}
+        </div>
       </div>
-      <div>Anon.</div>
+      <div className="absolute-bottom">Anon.</div>
     </div>
   );
 }
@@ -37,6 +48,78 @@ const ArtComponent: React.FC = () => {
     <div className="art-preview">
       <div>“A work of art is a confession”</div>
       <div>Albert Camus</div>
+    </div>
+  );
+}
+
+const GeneralComponent: React.FC = () => {
+  return (
+    <div className="art-preview general-preview">
+      <div>“You cannot shake hands with a clenched fist”</div>
+      <div>Indira Gandhi</div>
+    </div>
+  );
+}
+
+const ReligionComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“Everything has been figured out, except how to live”</div>
+      <div>Jean-Paul Sartre</div>
+    </div>
+  );
+}
+
+const SpanishComponent: React.FC = () => {
+  return (
+    <div className="art-preview spanish-preview">
+      <div>“Haciendo y deshaciendo se va aprendiendo”</div>
+      <div>Anon</div>
+    </div>
+  );
+}
+
+const EnglishLComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“The limits of my language mean the limits of my world”</div>
+      <div>Wittgenstein</div>
+    </div>
+  );
+}
+
+const HistoryPComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“Time the destroyer is time the preserver”</div>
+      <div>T. S. Eliot</div>
+    </div>
+  );
+}
+
+const HistoryAComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“I paint flowers so they will not die”</div>
+      <div>Frida Kahlo</div>
+    </div>
+  );
+}
+
+const SociologyComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“The eyes of others our prisons; their thoughts our cages”</div>
+      <div>Virginia Woolf</div>
+    </div>
+  );
+}
+
+const MusicComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“Where words fail, music speaks”</div>
+      <div>H. C. Andersen</div>
     </div>
   );
 }
@@ -256,6 +339,22 @@ const SubjectPage: React.FC<SubjectProps> = ({
       return FrenchComponent;
     } else if (subjectName === 'Art & Design') {
       return ArtComponent;
+    } else if (subjectName === GENERAL_SUBJECT) {
+      return GeneralComponent;
+    } else if (subjectName === 'Religion & Philosophy') {
+      return ReligionComponent;
+    } else if (subjectName === 'Spanish') {
+      return SpanishComponent;
+    } else if (subjectName === 'English Language') {
+      return EnglishLComponent;
+    } else if (subjectName === 'History & Politics') {
+      return HistoryPComponent;
+    } else if (subjectName === 'History of Art') {
+      return HistoryAComponent;
+    } else if (subjectName === 'Sociology') {
+      return SociologyComponent;
+    } else if (subjectName === 'Music') {
+      return MusicComponent;
     } else if (subjectName === 'Biology') {
       return BiologyComponent;
     } else if (subjectName === 'Chinese') {
@@ -266,8 +365,6 @@ const SubjectPage: React.FC<SubjectProps> = ({
       return EconomicsComponent;
     } else if (subjectName === 'English Literature') {
       return EnglishComponent;
-    } else if (subjectName === 'Drama & Theatre') {
-      return DramaComponent;
     } else if (subjectName === 'Geography') {
       return GeographyComponent;
     } else if (subjectName === 'German') {

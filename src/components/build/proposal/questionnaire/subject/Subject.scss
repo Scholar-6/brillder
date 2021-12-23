@@ -89,6 +89,15 @@ $box-radius: 0.4vw;
     }
   }
 
+  .subject-preview {
+    .absolute-bottom {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      bottom: 2vw;
+    }
+  }
+
   .subject-name {
     position: fixed;
     top: 8.2%;
@@ -134,6 +143,36 @@ $box-radius: 0.4vw;
       margin-top: 10vw;
       font-size: 2vw;
       font-family: $font-family-bold;
+    }
+  }
+
+  .general-preview {
+    > div:nth-child(1) {
+      margin-top: 9vw;
+      font-size: 2.4vw;
+    }
+    > div:nth-child(2) {
+      margin-top: 9vw;
+    }
+  }
+
+  .religion-preview {
+    > div:nth-child(1) {
+      margin-top: 7.3vw;
+      font-size: 2.4vw;
+    }
+    > div:nth-child(2) {
+      margin-top: 7.3vw;
+    }
+  }
+
+  .spanish-preview {
+    > div:nth-child(1) {
+      margin-top: 9vw;
+      font-size: 2.4vw;
+    }
+    > div:nth-child(2) {
+      margin-top: 9vw;
     }
   }
 
