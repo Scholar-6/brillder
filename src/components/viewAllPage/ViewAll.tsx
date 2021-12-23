@@ -1266,7 +1266,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
         <div className="main-listing dashboard-page">
-          {this.state.searchTyping === true && <SearchSuggestions
+          {this.state.searchTyping === true && this.state.searchString.length >= 1 && <SearchSuggestions
             history={this.props.history} subjects={this.state.subjects} searchString={this.state.searchString} bricks={this.state.bricks}
             filterByAuthor={this.filterByAuthor.bind(this)}
             filterBySubject={this.filterSuggestionSubject.bind(this)}

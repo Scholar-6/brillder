@@ -92,12 +92,10 @@
         .search-container {
           display: flex;
           align-items: center;
-          background: #243D6E;
           margin-left: 0.8vw;
           border-radius: 1vw;
           &.no-bottom-border {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
+            background: #243D6E;
           }
           @include phone_and_tabletP {
             display: flex;
