@@ -405,17 +405,17 @@
     z-index: 100000;
     width: 60vw;
     top: 4.8vw;
-    padding-left: 0.3vw;
-    padding-right: 0.3vw;
+    padding-left: 0;
+    padding-right: 0;
     color: white;
     left: 8.65vw;
-    padding-left: 1vw;
     background: #243D6E;
     border-bottom-left-radius: 1vw;
     border-bottom-right-radius: 1vw;
+    overflow: hidden;
 
     .upper-line {
-      margin-left: 0vw;
+      margin-left: 1vw;
       width: 58vw;
       margin-bottom: 0.3vw;
       padding: 0;
@@ -425,6 +425,11 @@
     }
 
     > div {
+      &:hover {
+        background: var(--theme-light-blue) !important;
+      }
+      cursor: pointer;
+      padding-left: 1vw;
       padding-top: 0.2vw;
       padding-bottom: 0.2vw;
       display: flex;
