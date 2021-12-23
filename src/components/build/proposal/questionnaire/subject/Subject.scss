@@ -137,6 +137,16 @@ $box-radius: 0.4vw;
     }
   }
 
+  .general-preview {
+    > div:nth-child(1) {
+      margin-top: 9vw;
+      font-size: 2.4vw;
+    }
+    > div:nth-child(2) {
+      margin-top: 9vw;
+    }
+  }
+
   .biology-preview {
     margin-left: 1.5vw;
     margin-right: 1.5vw;

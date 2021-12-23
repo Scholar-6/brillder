@@ -715,7 +715,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({
       ...this.state,
       isClearFilter: this.isFilterClear(),
-      searchString: author.firstName,
+      searchString: author.firstName + ' ' + author.lastName,
       searchBricks,
       finalBricks: searchBricks,
       shown: true,

@@ -410,10 +410,11 @@
     padding-right: 0;
     color: white;
     left: 8.65vw;
-    background: #243D6E;
+    background: #2B4779;
     border-bottom-left-radius: 1vw;
     border-bottom-right-radius: 1vw;
     overflow: hidden;
+    padding-bottom: 0.6vw;
 
     .upper-line {
       margin-left: 1vw;
@@ -429,7 +430,7 @@
       font-family: $font-family-bold;
       color: var(--tab-gray);
       &:hover {
-        background: #2b4e99 !important;
+        background: #405683 !important;
         &.upper-line {
           background: var(--theme-dark-blue) !important;
         }
@@ -446,6 +447,12 @@
         height: 2vw;
         color: var(--theme-orange);
         margin-right: 0.3vw;
+      }
+      .icon-status {
+        margin-left: 0.6vw;
+        width: 1.4vw;
+        height: 1.4vw;
+        color: var(--tab-gray);
       }
       .author-image {
         width: 2vw;

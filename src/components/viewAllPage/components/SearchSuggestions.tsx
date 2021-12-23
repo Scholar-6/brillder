@@ -130,6 +130,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
         <div onClick={() => props.history.push(routes.playCover(brick))}>
           <SpriteIcon name="logo" />
           {stripHtml(brick.title)}
+          <SpriteIcon className="icon-status" name={brick.isCore ? "globe" : "key"} />
         </div>
       );
     } else if (suggestion.isSubjectRes && subject) {
