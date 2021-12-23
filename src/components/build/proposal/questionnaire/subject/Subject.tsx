@@ -48,7 +48,7 @@ const GeneralComponent: React.FC = () => {
       <div>“You cannot shake hands with a clenched fist”</div>
       <div>Indira Gandhi</div>
     </div>
-  )
+  );
 }
 
 const ReligionComponent: React.FC = () => {
@@ -57,7 +57,61 @@ const ReligionComponent: React.FC = () => {
       <div>“Everything has been figured out, except how to live”</div>
       <div>Jean-Paul Sartre</div>
     </div>
-  )
+  );
+}
+
+const SpanishComponent: React.FC = () => {
+  return (
+    <div className="art-preview spanish-preview">
+      <div>“Haciendo y deshaciendo se va aprendiendo”</div>
+      <div>Anon</div>
+    </div>
+  );
+}
+
+const EnglishLComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“The limits of my language mean the limits of my world”</div>
+      <div>Wittgenstein</div>
+    </div>
+  );
+}
+
+const HistoryPComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“Time the destroyer is time the preserver”</div>
+      <div>T. S. Eliot</div>
+    </div>
+  );
+}
+
+const HistoryAComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“I paint flowers so they will not die”</div>
+      <div>Frida Kahlo</div>
+    </div>
+  );
+}
+
+const SociologyComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“The eyes of others our prisons; their thoughts our cages”</div>
+      <div>Virginia Woolf</div>
+    </div>
+  );
+}
+
+const MusicComponent: React.FC = () => {
+  return (
+    <div className="art-preview religion-preview">
+      <div>“Where words fail, music speaks”</div>
+      <div>H. C. Andersen</div>
+    </div>
+  );
 }
 
 const BiologyComponent: React.FC = () => {
@@ -279,6 +333,18 @@ const SubjectPage: React.FC<SubjectProps> = ({
       return GeneralComponent;
     } else if (subjectName === 'Religion & Philosophy') {
       return ReligionComponent;
+    } else if (subjectName === 'Spanish') {
+      return SpanishComponent;
+    } else if (subjectName === 'English Language') {
+      return EnglishLComponent;
+    } else if (subjectName === 'History & Politics') {
+      return HistoryPComponent;
+    } else if (subjectName === 'History of Art') {
+      return HistoryAComponent;
+    } else if (subjectName === 'Sociology') {
+      return SociologyComponent;
+    } else if (subjectName === 'Music') {
+      return MusicComponent;
     } else if (subjectName === 'Biology') {
       return BiologyComponent;
     } else if (subjectName === 'Chinese') {
@@ -289,8 +355,6 @@ const SubjectPage: React.FC<SubjectProps> = ({
       return EconomicsComponent;
     } else if (subjectName === 'English Literature') {
       return EnglishComponent;
-    } else if (subjectName === 'Drama & Theatre') {
-      return DramaComponent;
     } else if (subjectName === 'Geography') {
       return GeographyComponent;
     } else if (subjectName === 'German') {
