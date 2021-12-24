@@ -257,7 +257,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
   renderLibraryLink() {
     let name = '';
-    const {firstName} = this.props.user;
+    const { firstName } = this.props.user;
     let lastLetter = firstName[firstName.length - 1];
     if (lastLetter == 's') {
       name = firstName + "'";
@@ -372,6 +372,26 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       );
     }
 
+    const renderAbsolutePercentage = () => {
+      const a = this.state.attempt;
+      let percentages = 0;
+      if (a) {
+        if (typeof a.oldScore === 'undefined') {
+          percentages = Math.round(a.score * 100 / a.maxScore);
+        } else {
+          const middleScore = (a.score + a.oldScore) / 2;
+          percentages = Math.round(middleScore * 100 / a.maxScore);
+        }
+
+        return (
+          <div className="attempt-score">
+            {percentages}%
+          </div>
+        );
+      }
+      return '';
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
@@ -389,6 +409,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
           />
           <div className="absolute-top-part">
             {this.props.user.firstName} {this.props.user.lastName}
+            {renderAbsolutePercentage()}
           </div>
           {this.renderLibraryLink()}
           <div className="page-content">

@@ -18,6 +18,20 @@
     top: 1.3vw;
     left: 11vw;
     font-size: 2vw;
+    display: flex;
+    align-items: center;
+
+    .attempt-score {
+      margin-left: 0.5vw;
+      width: 2.7vw;
+      height: 2.7vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--theme-green);
+      font-size: 1.2vw;
+      border-radius: 50%;
+    }
   }
 
   .absolute-library-link {
