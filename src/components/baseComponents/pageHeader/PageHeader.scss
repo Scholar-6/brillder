@@ -370,7 +370,7 @@
 .header-btn {
   cursor: pointer;
   display: inline-block;
-  &#bell-container, &.more-button {
+  &.search-button, &#bell-container, &.more-button {
     width: 3.698vw;
     height: 3.698vw;
     @include phone_and_tabletP {
