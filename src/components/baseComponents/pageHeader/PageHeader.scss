@@ -370,18 +370,20 @@
 .header-btn {
   cursor: pointer;
   display: inline-block;
+  &#bell-container, &.more-button {
+    width: 3.698vw;
+    height: 3.698vw;
+    @include phone_and_tabletP {
+      width: 45px;
+      height: 45px;
+    }
+  }
   @include phone_and_tabletP {
     width: 45px;
     height: 45px;
   }
   @include tabletP {
     margin: 0 2vw 0 0;
-    width: 2.8vw;
-    height: 2.8vw;
-  }
-  &#bell-container, &.more-button {
-    width: 3.698vw;
-    height: 3.698vw;
   }
   .svg {
     width: 100% !important;
