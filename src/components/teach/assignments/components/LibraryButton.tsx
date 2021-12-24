@@ -16,7 +16,7 @@ const LibraryButton: React.FC<Props> = ({firstName, onClick}) => {
     name = firstName + "'s";
   }
   return (
-    <div className="teach-book-button">
+    <div className="teach-book-button library-button-v5">
       <div className="book-container" onClick={onClick} >
         <div className="green-hover">
           <div />

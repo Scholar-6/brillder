@@ -79,4 +79,15 @@
 
     
   }
+
+  &.library-button-v5 {
+    .book-container {
+      background: var(--theme-dark-blue);
+    }
+    .green-hover {
+      > div {
+        background: var(--theme-dark-blue-alpha3);
+      }
+    }
+  }
 }
