@@ -96,7 +96,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       subjects: [],
       handleKey: this.handleKey.bind(this)
     };
-    
+
     this.highlightRef = React.createRef();
 
     this.loadData();
@@ -137,7 +137,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
   async saveAttempt(attempt: PlayAttempt) {
     console.log(attempt);
-    const newAttempt = Object.assign({ }, attempt) as any;
+    const newAttempt = Object.assign({}, attempt) as any;
 
     newAttempt.answers = attempt.answers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
     newAttempt.liveAnswers = attempt.liveAnswers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
@@ -156,7 +156,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       { id: attempt.id, userId: this.props.user.id, body: newAttempt },
       { withCredentials: true }
     ).catch(e => {
-      if(e.response.status !== 409) {
+      if (e.response.status !== 409) {
         throw e;
       }
     });
@@ -168,7 +168,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
       const newAttempts = this.state.attempts;
       const attemptIdx = newAttempts.findIndex(a => a.timestamp === attempt.timestamp);
-      if(attemptIdx > -1) {
+      if (attemptIdx > -1) {
         newAttempts[attemptIdx] = attempt;
       }
 
@@ -239,7 +239,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
   setAttemptBrickProperty(property: "brief" | "prep" | "synthesis") {
     const newAttempt = this.state.attempt;
-    if(!newAttempt) return;
+    if (!newAttempt) return;
     this.createNewAnnotation(property, '');
   }
 
@@ -256,9 +256,18 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   }
 
   renderLibraryLink() {
+    let name = '';
+    const {firstName} = this.props.user;
+    let lastLetter = firstName[firstName.length - 1];
+    if (lastLetter == 's') {
+      name = firstName + "'";
+    } else {
+      name = firstName + "'s";
+    }
     return (
       <div className="absolute-library-link" onClick={() => this.props.history.push(map.MyLibrary + '/' + this.props.match.params.userId)}>
-        <SpriteIcon name="bar-chart-2"/>
+        <SpriteIcon name="bar-chart-2" />
+        <div className="css-custom-tooltip">View {name} library</div>
       </div>
     );
   }
@@ -378,6 +387,10 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
             search={() => { }}
             searching={(v: string) => { }}
           />
+          <div className="absolute-top-part">
+            {this.props.user.firstName} {this.props.user.lastName}
+          </div>
+          {this.renderLibraryLink()}
           <div className="page-content">
             <BookSidebar
               user={this.props.user}
@@ -395,7 +408,6 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                   {renderAttempts()}
                 </div>
                 <div className="right-part flex-center">
-                  {this.renderLibraryLink()}
                   {this.renderPlayButton(brick)}
                 </div>
               </div>

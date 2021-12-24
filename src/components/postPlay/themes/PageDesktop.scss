@@ -13,10 +13,18 @@
   background: var(--theme-dark-blue);
   color: var(--white);
 
+  .absolute-top-part {
+    position: absolute;
+    top: 1.3vw;
+    left: 11vw;
+    font-size: 2vw;
+  }
+
   .absolute-library-link {
     cursor: pointer;
     position: absolute;
-    top: 1vw;
+    top: 1.5vw;
+    right: 14vw;
     border-radius: 50%;
     width: 3vw;
     height: 3vw;
@@ -27,6 +35,22 @@
       width: 70%;
       height: 70%;
       color: white;
+    }
+    .css-custom-tooltip {
+      display: none;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        display: block;
+        opacity: 1;
+        top: 3.5vw;
+        left: -1.7vw;
+        padding-left: 0.3vw;
+        padding-right: 0.3vw;
+        white-space: nowrap;
+        width: auto;
+        text-align: center;
+      }
     }
   }
   

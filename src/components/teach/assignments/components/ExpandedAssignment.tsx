@@ -298,7 +298,7 @@ class ExpandedAssignment extends Component<
             }
           </td>
           <td>
-            {studentResult && <LibraryButton onClick={() => this.props.history.push(map.MyLibrary + '/' + studentResult.studentId)} />}
+            {studentResult && <LibraryButton firstName={student.firstName} onClick={() => this.props.history.push(map.MyLibrary + '/' + studentResult.studentId)} />}
           </td>
           <td className={`assigned-student-name ${active ? 'bold' : disabled ? 'grey' : 'regular'}`}>
             {student.firstName} {student.lastName}
