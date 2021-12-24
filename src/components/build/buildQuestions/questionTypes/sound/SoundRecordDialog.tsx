@@ -23,8 +23,15 @@ const SoundRecordDialog: React.FC<SoundRecordDialog> = props => {
   const [permision, setPermision] = React.useState(props.data.imagePermision ? true : false as boolean | 1);
   const [validationRequired, setValidation] = React.useState(false);
 
+  const validateSource = () => {
+    if (source && source.trim().length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   let canUpload = false;
-  if ((permision) && source) {
+  if ((permision) && validateSource()) {
     canUpload = true;
   }
 

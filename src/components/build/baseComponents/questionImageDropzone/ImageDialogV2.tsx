@@ -7,6 +7,7 @@ import DropImage from "../../buildQuestions/components/Image/DropImage";
 import { fileUrl } from "components/services/uploadFile";
 import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
 import SourceInput from "components/baseComponents/SourceInput";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 interface DialogProps {
   isOption?: boolean; // only pair match
@@ -57,8 +58,16 @@ const ImageDialogV2: React.FC<DialogProps> = ({
     }
   }, [initFile, initData.value, file]);
 
+
+  const validateSource = () => {
+    if (source && source.trim().length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   let canUpload = false;
-  if ((permision) && source && !removed) {
+  if ((permision) && validateSource() && !removed) {
     canUpload = true;
   }
 
@@ -93,8 +102,8 @@ const ImageDialogV2: React.FC<DialogProps> = ({
     <BaseDialogWrapper
       open={open}
       className="image-dialog-container image-dialog-v2"
-      close={() => {}}
-      submit={() => {}}
+      close={() => { }}
+      submit={() => { }}
     >
       <div className="close-button svgOnHover" onClick={close}>
         <SpriteIcon name="cancel" className="w100 h100 active" />
@@ -134,10 +143,15 @@ const ImageDialogV2: React.FC<DialogProps> = ({
           permision={permision}
           setPermision={setPermision}
         />
-        <input
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
+        <QuillEditor
+          disabled={false}
+          className="quill-caption"
+          data={caption}
+          showToolbar={true}
+          toolbar={['bold', 'italic', 'superscript', 'subscript', 'latex']}
           placeholder="Add caption"
+          imageDialog={true}
+          onChange={v => setCaption(v)}
         />
       </div>
       <div className="centered last-button">
