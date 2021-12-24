@@ -69,12 +69,12 @@
         flex-direction: column;
 
         .sort-header {
-          font-size: 1.8vw;
+          font-size: 1.5vw;
           font-family: $font-family-bold;
         }
 
         .sort-group {
-          padding: $sidebar-gutter 0 0 0;
+          padding-top: 1.3vh;
           display: flex;
           flex-wrap: wrap;
           flex-direction: row;
@@ -243,7 +243,7 @@
         position: relative;
         background: var(--light-blue-alpha5);
         padding: 0.3vw 1.4vw;
-        font-size: 1.8vw;
+        font-size: 1.5vw;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -284,10 +284,6 @@
             }
           }
         }
-
-        // .MuiTypography-root {
-        //   color: var(--white) !important;
-        // }
       }
     }
 
@@ -448,7 +444,6 @@
         @include tabletP {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
-          // grid-template-columns: repeat(auto-fit, 33.33%);
         }
       }
 
