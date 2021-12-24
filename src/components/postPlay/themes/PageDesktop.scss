@@ -16,32 +16,57 @@
   .absolute-top-part {
     position: absolute;
     top: 1.3vw;
-    left: 11vw;
+    left: 10vw;
     font-size: 2vw;
     display: flex;
     align-items: center;
 
+    .profile-image-v5 {
+      width: 3vw;
+      height: 3vw;
+      margin-right: 0.8vw;
+      img {
+        width: 3vw;
+        height: 3vw;
+        border-radius: 50%;
+      }
+      svg {
+        width: 3vw;
+        height: 3vw;
+      }
+    }
+
     .attempt-score {
+      position: relative;
       margin-left: 0.5vw;
-      width: 2.7vw;
-      height: 2.7vw;
+      width: 3.3vw;
+      height: 3.3vw;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--theme-green);
       font-size: 1.2vw;
       border-radius: 50%;
+      .CircularProgressbar  {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        .CircularProgressbar-trail {
+          display: none;
+        }
+        .CircularProgressbar-path {
+          stroke: var(--theme-green);
+        }
+      }
     }
   }
 
   .absolute-library-link {
     cursor: pointer;
-    position: absolute;
-    top: 1.5vw;
-    right: 14vw;
+    position: relative;
+    margin-left: 0.8vw;
     border-radius: 50%;
-    width: 3vw;
-    height: 3vw;
+    width: 2.7vw;
+    height: 2.7vw;
     background: var(--theme-green);
     svg {
       margin-top: 15%;
@@ -58,7 +83,7 @@
         display: block;
         opacity: 1;
         top: 3.5vw;
-        left: -1.7vw;
+        left: -2.3vw;
         padding-left: 0.3vw;
         padding-right: 0.3vw;
         white-space: nowrap;

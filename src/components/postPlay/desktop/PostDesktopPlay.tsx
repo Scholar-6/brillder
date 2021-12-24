@@ -38,6 +38,8 @@ import axios from "axios";
 import { CashAttempt } from "localStorage/play";
 import { generateId } from "components/build/buildQuestions/questionTypes/service/questionBuild";
 import map from "components/map";
+import { fileUrl } from "components/services/uploadFile";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -385,6 +387,11 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
         return (
           <div className="attempt-score">
+            <CircularProgressbar
+              strokeWidth={12}
+              counterClockwise={true}
+              value={percentages}
+            />
             {percentages}%
           </div>
         );
@@ -408,10 +415,13 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
             searching={(v: string) => { }}
           />
           <div className="absolute-top-part">
+            <div className='profile-image-v5'>
+              {this.props.user.profileImage ? <img src={fileUrl(this.props.user.profileImage)} /> : <SpriteIcon name="user" />}
+            </div>
             {this.props.user.firstName} {this.props.user.lastName}
             {renderAbsolutePercentage()}
+            {this.renderLibraryLink()}
           </div>
-          {this.renderLibraryLink()}
           <div className="page-content">
             <BookSidebar
               user={this.props.user}
