@@ -229,7 +229,9 @@ $base-build-font-size: 1.25vw;
   }
   .user-radio-column {
     padding-left: 1.2vw !important;
-    width: 4vw;
+    width: 6vw;
+    display: flex;
+    align-items: center;
     @extend %radioBlue;
   }
 
