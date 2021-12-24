@@ -87,8 +87,15 @@ const ImageDialog: React.FC<DialogProps> = ({
     /*eslint-disable-next-line*/
   }, [open]);
 
+  const validateSource = () => {
+    if (source && source.trim().length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   let canUpload = false;
-  if (permision && source && !removed) {
+  if (permision && validateSource() && !removed) {
     canUpload = true;
   }
 

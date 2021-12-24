@@ -42,7 +42,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             }
           }}
         />
-        {imageCaption && <div>{imageCaption}</div>}
+        {imageCaption && <div dangerouslySetInnerHTML={{__html: imageCaption}} />}
       </div>
     );
   }
@@ -63,7 +63,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
               }}
             />
           </div>
-          {imageCaption && <div>{imageCaption}</div>}
+          {imageCaption && <div dangerouslySetInnerHTML={{__html: imageCaption}}/>}
         </div>
       </div>
     );
@@ -78,7 +78,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             onMouseLeave={props.blur}
           />
         </div>
-        {imageCaption && <div>{imageCaption}</div>}
+        {imageCaption && <div dangerouslySetInnerHTML={{__html: imageCaption}} />}
       </div>
     </div>
   );

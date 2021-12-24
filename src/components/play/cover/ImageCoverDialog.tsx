@@ -37,8 +37,15 @@ const ImageCoverDialog: React.FC<DialogProps> = ({ open, initFile, initData, upl
     }
   }, [initFile, file, initData.value]);
 
+  const validateSource = () => {
+    if (source && source.trim().length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   let canUpload = false;
-  if (permision && source && !removed) {
+  if (permision && validateSource() && !removed) {
     canUpload = true;
   }
 
