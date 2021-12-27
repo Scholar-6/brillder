@@ -248,9 +248,12 @@ class TeachFilterSidebar extends Component<
                     : "hero-sort-descending"
                 }
                 onClick={() =>
-                  this.setState({ ascending: !this.state.ascending })
+                  this.setState({ ascending: !this.state.ascending }) 
                 }
               />
+              <div className="css-custom-tooltip">
+                {this.state.ascending ? 'Sort by most assignments' : 'Sort by fewest assignments'}
+              </div>
             </div>
           </div>
         </div>

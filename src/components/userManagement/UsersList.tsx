@@ -267,14 +267,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     let filterSubjects = this.getCheckedSubjectIds();
     let roles = this.getCheckedRoles();
     this.getUsers(0, this.state.sortBy, filterSubjects, roles);
-    this.setState({...this.state});
+    this.setState({...this.state, page: 0});
   }
 
   filterBySubject = (i: number) => {
     const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked;
     this.filter();
-    this.setState({ ...this.state });
+    this.setState({ ...this.state, page: 0 });
     this.filterClear();
   };
 
