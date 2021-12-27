@@ -82,6 +82,9 @@ const StudentTable: React.FC<StudentTableProps> = props => {
   const renderLibraryLink = (user: MUser) => {
     let name = '';
     const { firstName } = user;
+    if (!firstName) {
+      return '';
+    }
     let lastLetter = firstName[firstName.length - 1];
     if (lastLetter == 's') {
       name = firstName + "'";

@@ -119,6 +119,9 @@ $base-build-font-size: 1.25vw;
       margin-right: 0.4vw;
       transition: all 300ms ease-out;
     }
+    .custom-tooltip {
+      letter-spacing: 0;
+    }
     &:hover {
       svg {
         color: var(--theme-orange);

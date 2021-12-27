@@ -89,5 +89,8 @@
         background: var(--theme-dark-blue-alpha3);
       }
     }
+    svg {
+      margin-top: 0 !important;
+    }
   }
 }

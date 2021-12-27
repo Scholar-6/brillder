@@ -99,7 +99,7 @@ const BookSidebar: React.FC<Props> = ({ bookState, user, brick, questions, attem
           <CommentIndicator replyType={getHasReplied(AnnotationLocation.Prep)} />
         </div>
         {questions.map((q, i) => <div key={i} className={`question-link relative ${bookState === BookState.QuestionPage && i === activeQuestionIndex ? 'active' : ''}`} onClick={() => moveToQuestion(i)}>
-          <span className="bold">{i + 1}</span><span className="ellipsis">{stripHtml(q.firstComponent.value)}</span>
+          <span className="bold">{i + 1}</span><span className="ellipsis italic">{stripHtml(q.firstComponent.value)}</span>
           {renderIcon(i)}
           <CommentIndicator replyType={getHasReplied(AnnotationLocation.Question, i)} />
         </div>)}

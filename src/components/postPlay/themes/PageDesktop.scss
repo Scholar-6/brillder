@@ -20,6 +20,7 @@
     font-size: 2vw;
     display: flex;
     align-items: center;
+    font-family: $font-family-bold;
 
     .profile-image-v5 {
       width: 3vw;
@@ -45,6 +46,7 @@
       align-items: center;
       justify-content: center;
       font-size: 1.2vw;
+      font-family: $font-family-bold;
       border-radius: 50%;
       .CircularProgressbar  {
         position: absolute;
@@ -77,6 +79,7 @@
     }
     .css-custom-tooltip {
       display: none;
+      font-family: $font-family-bold;
     }
     &:hover {
       .css-custom-tooltip {
@@ -145,8 +148,10 @@
         }
 
         .title {
-          font-size: 3vh;
+          font-size: 2vh;
+          font-family: $font-family-bold-italic;
           p {
+            font-family: $font-family-bold-italic;
             max-width: 18vw;
             overflow-x: hidden;
             white-space:nowrap;
@@ -192,6 +197,9 @@
               margin: 0;
               text-align: center;
               width: 9.3vh;
+            }
+            .ellipsis.italic {
+              font-family: $font-family-regular-italic;
             }
             .circle {
               display: flex;
