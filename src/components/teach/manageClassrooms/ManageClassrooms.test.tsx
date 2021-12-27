@@ -20,7 +20,7 @@ const mockUser = {
   id: 313,
   lastName: "Teach",
   profileImage: null,
-  rolePreference: {roleId: 2},
+  userPreference: {roleId: 2},
   roles: [{roleId: 1}, {roleId: 2}, {roleId: 3}],
   status: 1,
   subjects: [],
