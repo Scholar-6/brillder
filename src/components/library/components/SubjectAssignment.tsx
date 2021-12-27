@@ -13,6 +13,7 @@ import { stripHtml } from "components/build/questionService/ConvertService";
 import { isTeacherPreference } from "components/services/preferenceService";
 import { User } from "model/user";
 import { CircularProgressbar } from "react-circular-progressbar";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface LibrarySubjectsProps {
   subject: Subject;
@@ -77,7 +78,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     );
   };
 
-  console.log(subject.name);
+  console.log(assignment.brick.competitions);
 
   return (
     <div
@@ -130,6 +131,12 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
               maxHeight: "100%",
             }}
           >
+            {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
+              <div className="competition-star">
+                <div>
+                  <SpriteIcon name="star" />
+                </div>
+              </div>}
             {height < 50 && renderRotatedPercentage("white", Math.round(height), ((height > 30) ? height : 30))}
             {height > 0 && assignment.brick.academicLevel >= AcademicLevel.First && (
               <AcademyDifficulty
