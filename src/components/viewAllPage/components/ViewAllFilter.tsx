@@ -8,6 +8,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import {
   AcademicLevel,
   AcademicLevelLabels,
+  BrickLengthEnum,
   SubjectGroup,
   SubjectGroupNames,
 } from "model/brick";
@@ -101,7 +102,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
 
   filterByLevel(level: AcademicLevel) {
     const { levels } = this.props;
-    
+
     const found = levels.find((l) => l === level);
     if (found) {
       const newLevels = levels.filter((l) => l !== level);
@@ -177,8 +178,8 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       <div className="subjects-toggle">
         <div
           className={`${!isAllSubjects
-              ? "toggle-button my-subjects active"
-              : "toggle-button my-subjects not-active"
+            ? "toggle-button my-subjects active"
+            : "toggle-button my-subjects not-active"
             }`}
           onClick={() => {
             if (isAllSubjects) {
@@ -193,8 +194,8 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
         </div>
         <div
           className={`${this.props.isAllSubjects
-              ? "toggle-button all-subjects active"
-              : "toggle-button all-subjects not-active"
+            ? "toggle-button all-subjects active"
+            : "toggle-button all-subjects not-active"
             }`}
           onClick={() => {
             if (!isAllSubjects) {
@@ -208,21 +209,24 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     );
   }
 
-  renderAcademicLevel(loopLevel: AcademicLevel) {
+  renderAcademicLevel(loopLevel: AcademicLevel, length: BrickLengthEnum) {
     const found = this.props.levels.find((l) => l === loopLevel);
     return (
-      <FormControlLabel
-        value={SortBy.Popularity}
-        style={{ marginRight: 0, width: "28%" }}
-        control={
-          <Radio
-            className="sortBy"
-            checked={!!found}
-            onClick={() => this.filterByLevel(loopLevel)}
-          />
-        }
-        label={`Level ${AcademicLevelLabels[loopLevel]}`}
-      />
+      <div className="">
+        <FormControlLabel
+          value={SortBy.Popularity}
+          style={{ marginRight: 0, width: "28%" }}
+          control={
+            <Radio
+              className="sortBy"
+              checked={!!found}
+              onClick={() => this.filterByLevel(loopLevel)}
+            />
+          }
+          label={`Level ${AcademicLevelLabels[loopLevel]}`}
+        />
+        <div>{length} mins</div>
+      </div>
     );
   }
 
@@ -277,9 +281,9 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
             </div>
             {this.renderFilterLabelBox()}
             <div className="sort-box level-filter-box">
-              {this.renderAcademicLevel(AcademicLevel.First)}
-              {this.renderAcademicLevel(AcademicLevel.Second)}
-              {this.renderAcademicLevel(AcademicLevel.Third)}
+              {this.renderAcademicLevel(AcademicLevel.First, BrickLengthEnum.S20min)}
+              {this.renderAcademicLevel(AcademicLevel.Second, BrickLengthEnum.S40min)}
+              {this.renderAcademicLevel(AcademicLevel.Third, BrickLengthEnum.S60min)}
               <div className="absolute-difficult-help">
                 <HoverHelp>
                   <LevelHelpContent />

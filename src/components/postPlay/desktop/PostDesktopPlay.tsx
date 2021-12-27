@@ -392,7 +392,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
               counterClockwise={true}
               value={percentages}
             />
-            {percentages}%
+            {percentages}
           </div>
         );
       }

@@ -11,8 +11,8 @@
     cursor: pointer !important;
 
     svg {
-      width: 6rem;
-      height: 6rem;
+      width: 10vh;
+      height: 10vh;
     }
 
     .first-button, .second-button {
@@ -37,10 +37,10 @@
         stroke-width: 2;
         transform: translate(-50%, -50%);
         &.plus {
-          width: 3.7rem;
-          height: 3.7rem;
+          width: 5vh;
+          height: 5vh;
           stroke-width: 2.7;
-          margin-top: -0.5rem;
+          margin-top: -0.8vh;
         }
       }
     }

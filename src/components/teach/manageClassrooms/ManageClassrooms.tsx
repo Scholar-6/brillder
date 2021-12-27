@@ -91,7 +91,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   constructor(props: UsersListProps) {
     super(props);
 
-    const pageSize = 14;
+    const pageSize = 12;
 
     this.state = {
       isLoaded: false,
