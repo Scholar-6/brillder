@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
 
 import actions from 'redux/actions/requestFailed';
-import { User, UserType, UserStatus, RolePreference } from "model/user";
+import { User, UserType, UserStatus, UserPreferenceType } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
@@ -77,9 +77,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       filterExpanded: true,
 
       roles: [
-        { name: "Learner", type: RolePreference.Student, checked: false, isPreference: true },
-        { name: "Educator", type: RolePreference.Teacher, checked: false, isPreference: true },
-        { name: "Builder", type: RolePreference.Builder, checked: false, isPreference: true },
+        { name: "Learner", type: UserPreferenceType.Student, checked: false, isPreference: true },
+        { name: "Educator", type: UserPreferenceType.Teacher, checked: false, isPreference: true },
+        { name: "Builder", type: UserPreferenceType.Builder, checked: false, isPreference: true },
         { name: "Publisher", type: UserType.Publisher, checked: false },
         { name: "Admin", type: UserType.Admin, checked: false },
       ],
@@ -267,14 +267,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     let filterSubjects = this.getCheckedSubjectIds();
     let roles = this.getCheckedRoles();
     this.getUsers(0, this.state.sortBy, filterSubjects, roles);
-    this.setState({...this.state});
+    this.setState({...this.state, page: 0});
   }
 
   filterBySubject = (i: number) => {
     const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked;
     this.filter();
-    this.setState({ ...this.state });
+    this.setState({ ...this.state, page: 0 });
     this.filterClear();
   };
 
@@ -389,13 +389,13 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         type += "P";
       }
     }
-    if (user.rolePreference?.roleId === RolePreference.Builder) {
+    if (user.userPreference?.preferenceId === UserPreferenceType.Builder) {
       type += "B";
-    } else if (user.rolePreference?.roleId === RolePreference.Student) {
+    } else if (user.userPreference?.preferenceId === UserPreferenceType.Student) {
       type += "L";
-    } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
+    } else if (user.userPreference?.preferenceId === UserPreferenceType.Teacher) {
       type += "E";
-    } else if (user.rolePreference?.roleId === RolePreference.Institution) {
+    } else if (user.userPreference?.preferenceId === UserPreferenceType.Institution) {
       type += "I";
     }
     return type;

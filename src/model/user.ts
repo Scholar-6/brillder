@@ -6,7 +6,7 @@ export enum UserType {
   Publisher,
 }
 
-export enum RolePreference {
+export enum UserPreferenceType {
   Student = 1,
   Teacher,
   Builder,
@@ -21,6 +21,10 @@ export enum UserStatus {
 
 export interface UserRole {
   roleId: number;
+  name?: string;
+}
+export interface UserPreference {
+  preferenceId: number;
   name?: string;
 }
 
@@ -39,14 +43,14 @@ export interface UserBase {
 
 export interface User extends UserBase {
   roles: UserRole[];
-  rolePreference?: UserRole;
+  userPreference?: UserPreference;
   hasPlayedBrick: boolean;
   termsAndConditionsAcceptedVersion: string;
 }
 
 export interface UserProfile extends UserBase {
   password: string;
-  rolePreference?: UserRole;
+  userPreference?: UserPreference;
   roles: number[];
 }
 

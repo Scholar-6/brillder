@@ -33,7 +33,7 @@ import DifficultySelectV2 from "../proposal/questionnaire/brickTitle/components/
 
 export interface PlanProps {
   currentBrick: Brick;
-  saveBrick(brick: Brick): void;
+  saveBrick(brick: Brick): Promise<Brick | null>;
   user: User;
   locked: boolean;
   editOnly: boolean;
@@ -41,11 +41,11 @@ export interface PlanProps {
   toggleLock(): void;
   initSuggestionExpanded?: boolean;
   selectFirstQuestion(): void;
+  setSaveFailed(): void;
 }
 
 const PlanPage: React.FC<PlanProps> = (props) => {
   const { currentBrick, validationRequired, locked } = props;
-
   const [apiSubjects, setApiSubjects] = React.useState([] as Subject[]);
 
   const [scrollArea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
@@ -96,7 +96,11 @@ const PlanPage: React.FC<PlanProps> = (props) => {
   const changeBrick = React.useMemo(() => {
     return (changeFn: (brick: Brick) => Brick) => {
       const newBrick = changeFn(currentBrick);
-      props.saveBrick(newBrick);
+      props.saveBrick(newBrick).then(res => {
+        if (res === null) {
+          props.setSaveFailed();
+        }
+      });
     };
   /*eslint-disable-next-line*/
   }, [currentBrick, props.saveBrick]);

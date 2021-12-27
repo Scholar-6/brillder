@@ -9,6 +9,7 @@ import PhoneLibrary from "./PhoneLibrary";
 interface BricksListProps {
   user: User;
   notifications: Notification[] | null;
+  match: any;
   history: any;
   location: any;
 }

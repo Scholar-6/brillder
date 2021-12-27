@@ -251,6 +251,7 @@ const App: React.FC<AppProps> = props => {
         <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />
 
+        <StudentRoute path="/my-library/:userId" component={Library} />
         <StudentRoute path="/my-library" component={Library} />
         <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 
@@ -281,7 +282,7 @@ const App: React.FC<AppProps> = props => {
 
         <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
         <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
-        <AllUsersRoute path={map.UserPreference} component={UserPreferencePage} isPreferencePage={true} />
+        <AllUsersRoute path={map.UserPreferencePage} component={UserPreferencePage} isPreferencePage={true} />
         <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
         <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
         <UnauthorizedRoute path={map.LeaderboardPage + '/:competitionId'} component={LeaderboardPage} />

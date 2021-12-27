@@ -13,6 +13,88 @@
   background: var(--theme-dark-blue);
   color: var(--white);
 
+  .absolute-top-part {
+    position: absolute;
+    top: 1.3vw;
+    left: 10vw;
+    font-size: 2vw;
+    display: flex;
+    align-items: center;
+    font-family: $font-family-bold;
+
+    .profile-image-v5 {
+      width: 3vw;
+      height: 3vw;
+      margin-right: 0.8vw;
+      img {
+        width: 3vw;
+        height: 3vw;
+        border-radius: 50%;
+      }
+      svg {
+        width: 3vw;
+        height: 3vw;
+      }
+    }
+
+    .attempt-score {
+      position: relative;
+      margin-left: 0.5vw;
+      width: 3.3vw;
+      height: 3.3vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2vw;
+      font-family: $font-family-bold;
+      border-radius: 50%;
+      .CircularProgressbar  {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        .CircularProgressbar-trail {
+          display: none;
+        }
+        .CircularProgressbar-path {
+          stroke: var(--theme-green);
+        }
+      }
+    }
+  }
+
+  .absolute-library-link {
+    cursor: pointer;
+    position: relative;
+    margin-left: 0.8vw;
+    border-radius: 50%;
+    width: 3vw;
+    height: 3vw;
+    background: var(--theme-dark-blue);
+    svg {
+      margin-top: 15%;
+      margin-left: 15%;
+      width: 70%;
+      height: 70%;
+      color: white;
+    }
+    .css-custom-tooltip {
+      display: none;
+      font-family: $font-family-bold;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        display: block;
+        opacity: 1;
+        top: 3.5vw;
+        left: -2.3vw;
+        padding-left: 0.3vw;
+        padding-right: 0.3vw;
+        white-space: nowrap;
+        width: auto;
+        text-align: center;
+      }
+    }
+  }
   
   .reply-icon-g2 {
     cursor: pointer;
@@ -66,8 +148,10 @@
         }
 
         .title {
-          font-size: 3vh;
+          font-size: 2vh;
+          font-family: $font-family-bold-italic;
           p {
+            font-family: $font-family-bold-italic;
             max-width: 18vw;
             overflow-x: hidden;
             white-space:nowrap;
@@ -113,6 +197,9 @@
               margin: 0;
               text-align: center;
               width: 9.3vh;
+            }
+            .ellipsis.italic {
+              font-family: $font-family-regular-italic;
             }
             .circle {
               display: flex;

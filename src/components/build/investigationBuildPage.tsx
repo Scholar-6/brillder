@@ -69,6 +69,7 @@ import { deleteQuestion } from "services/axios/brick";
 import { createQuestion } from "services/axios/question";
 import { Helmet } from "react-helmet";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import SaveFailedDialog from "./baseComponents/dialogs/SaveFailedDialog";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -76,9 +77,9 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
   user: User;
   startEditing(brickId: number): void;
   changeQuestion(questionId?: number): void;
-  saveBrick(brick: any): any;
-  saveQuestion(question: any): any;
-  saveBrickQuestions(questions: any): any;
+  saveBrick(brick: any): Promise<Brick | null>;
+  saveQuestion(question: any): Promise<Question | null>;
+  saveBrickQuestions(questions: any): Promise<any | null>;
   createQuestion(brickId: number, question: any): any;
   updateBrick(brick: any): any;
 }
@@ -115,6 +116,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let proposalRes = React.useMemo(() => validateProposal(props.brick), [props.brick]);
 
   const [questions, setQuestions] = React.useState([] as Question[]);
+
+  const [saveFailed, setSaveFailed] = React.useState(false);
 
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
@@ -263,11 +266,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const undo = () => {
     const diff = undoRedoService.undo();
     if (diff) {
-      console.log(diff);
       applyDiff(diff);
       updateBrick(diff);
       prepareBrickToSave(brick, questions, synthesis);
-      props.saveBrick(brick);
+      props.saveBrick(brick).then(resV3 => {
+        if (resV3 === null) {
+          setSaveFailed(true);
+        }
+      });
     }
   }
 
@@ -278,7 +284,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       applyDiff(diff);
       updateBrick(diff);
       prepareBrickToSave(brick, questions, synthesis);
-      props.saveBrick(brick);
+      props.saveBrick(brick).then(resV3 => {
+        if (resV3 === null) {
+          setSaveFailed(true);
+        }
+      });
     }
   }
 
@@ -580,7 +590,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         await createNewQuestionV2(updatedQuestion, callback);
         setSavingStatus(false);
       } else {
-        props.saveQuestion(getApiQuestion(updatedQuestion)).then((res: Question) => {
+        props.saveQuestion(getApiQuestion(updatedQuestion)).then(res => {
+          if (res === null) {
+            setSavingStatus(false);
+            setSaveFailed(true);
+            return;
+          }
           if (callback) { callback(res); }
           setSavingStatus(false);
         }).catch((err: any) => {
@@ -607,7 +622,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           ...question, contentBlocks: undefined, type: undefined, order: idx
         })),
       };
-      props.saveBrick(brickToSave).then((res: Brick) => {
+      console.log('save brick');
+      props.saveBrick(brickToSave).then(res => {
+        if (res === null) {
+          setSaveFailed(true);
+          return;
+        }
         const time = Date.now();
         console.log(`${new Date(time)} -> ${res.updated}`);
         const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
@@ -739,6 +759,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             editOnly={!canEdit}
             user={props.user}
             toggleLock={toggleLock}
+            setSaveFailed={() => setSaveFailed(true)}
             validationRequired={validationRequired}
             initSuggestionExpanded={initSuggestionExpanded}
             selectFirstQuestion={() => selectQuestion(0)}
@@ -793,7 +814,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSavingStatus(true);
       questions.map((question, index) => question.order = index);
 
-      props.saveBrickQuestions(questions).then(() => {
+      props.saveBrickQuestions(questions).then(res => {
+        if (res === null) {
+          setSaveFailed(true);
+        }
         setSavingStatus(false);
       }).catch((err: any) => {
         console.log(err);
@@ -814,178 +838,175 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const isPublisher = checkPublisher(props.user, props.brick);
   const isAdmin = checkAdmin(props.user.roles);
 
-  const renderBuildPage = () => {
-    return (
-      <div className="investigation-build-page">
-        <Helmet>
-          <title>{getBrillderTitle(props.brick.title)}</title>
-        </Helmet>
-        <BuildNavigation
-          tutorialStep={step}
-          user={props.user}
-          isTutorialSkipped={isTutorialPassed()}
-          isValid={isValid}
-          questions={questions}
-          moveToPreview={moveToPreview}
-          isEditor={isCurrentEditor}
-          isPublisher={isPublisher}
-          isAdmin={isAdmin}
-          isAuthor={isAuthor}
-          history={history}
-          brick={props.brick}
-          exitAndSave={exitAndSave}
-        />
-        <div className="build-show-container">
-          <TutorialLabels isTutorialPassed={isTutorialPassed()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} />
+  return (
+    <div className="investigation-build-page">
+      <Helmet>
+        <title>{getBrillderTitle(props.brick.title)}</title>
+      </Helmet>
+      <BuildNavigation
+        tutorialStep={step}
+        user={props.user}
+        isTutorialSkipped={isTutorialPassed()}
+        isValid={isValid}
+        questions={questions}
+        moveToPreview={moveToPreview}
+        isEditor={isCurrentEditor}
+        isPublisher={isPublisher}
+        isAdmin={isAdmin}
+        isAuthor={isAuthor}
+        history={history}
+        brick={props.brick}
+        exitAndSave={exitAndSave}
+      />
+      <div className="build-show-container">
+        <TutorialLabels isTutorialPassed={isTutorialPassed()} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} />
+        <Grid
+          container direction="row"
+          className="investigation-build-background"
+          alignItems="center"
+        >
           <Grid
-            container direction="row"
-            className="investigation-build-background"
+            container
+            item xs={9}
             alignItems="center"
+            style={{ height: "100%" }}
+            className="question-container"
           >
             <Grid
-              container
-              item xs={9}
-              alignItems="center"
+              container direction="row"
+              justify="center" alignItems="center"
               style={{ height: "100%" }}
-              className="question-container"
             >
+              <div className="build-brick-title">
+                {props.brick.adaptedFrom && <SpriteIcon name="copy" />}
+                <div dangerouslySetInnerHTML={{ __html: brick.title }}></div>
+              </div>
               <Grid
-                container direction="row"
-                justify="center" alignItems="center"
-                style={{ height: "100%" }}
+                container
+                item xs={9}
+                style={{ height: "90%", width: "75vw", minWidth: 'none' }}
               >
-                <div className="build-brick-title">
-                  {props.brick.adaptedFrom && <SpriteIcon name="copy" />}
-                  <div dangerouslySetInnerHTML={{ __html: brick.title }}></div>
-                </div>
-                <Grid
-                  container
-                  item xs={9}
-                  style={{ height: "90%", width: "75vw", minWidth: 'none' }}
-                >
-                  <DragableTabs
-                    history={history}
-                    setQuestions={switchQuestions}
-                    questions={questions}
-                    brickId={brickId}
-                    questionId={parseInt(params.questionId)}
-                    synthesis={synthesis}
-                    isPlanValid={proposalRes.isValid}
-                    validationRequired={validationRequired}
-                    tutorialSkipped={isTutorialPassed()}
-                    openSkipTutorial={openSkipTutorial}
-                    tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
-                    isSynthesisPage={isSynthesisPage}
-                    currentQuestionIndex={currentQuestionIndex}
-                    createNewQuestion={createNewQuestion}
-                    selectQuestion={selectQuestion}
-                    removeQuestion={removeQuestion}
-                    moveToLastQuestion={moveToLastQuestion}
-                  />
-                  {renderPanel()}
-                </Grid>
+                <DragableTabs
+                  history={history}
+                  setQuestions={switchQuestions}
+                  questions={questions}
+                  brickId={brickId}
+                  questionId={parseInt(params.questionId)}
+                  synthesis={synthesis}
+                  isPlanValid={proposalRes.isValid}
+                  validationRequired={validationRequired}
+                  tutorialSkipped={isTutorialPassed()}
+                  openSkipTutorial={openSkipTutorial}
+                  tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
+                  isSynthesisPage={isSynthesisPage}
+                  currentQuestionIndex={currentQuestionIndex}
+                  createNewQuestion={createNewQuestion}
+                  selectQuestion={selectQuestion}
+                  removeQuestion={removeQuestion}
+                  moveToLastQuestion={moveToLastQuestion}
+                />
+                {renderPanel()}
               </Grid>
             </Grid>
-            <LastSave isEditor={isCurrentEditor} updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={hasSaveError} />
-            {/* <Route path="/build/brick/:brickId/investigation/" exact>
+          </Grid>
+          <LastSave isEditor={isCurrentEditor} updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={hasSaveError} />
+          {/* <Route path="/build/brick/:brickId/investigation/" exact>
             <Redirect to={`/build/brick/${brick.id}/investigation/question-component/${questions[0].id}`} />
           </Route> */}
-            <Route path="/build/brick/:brickId/investigation/question-component/:questionId">
-              <div className="fixed-build-phone">
-                <PhoneQuestionPreview
-                  question={activeQuestion!}
-                  focusIndex={focusIndex}
-                  nextQuestion={setNextQuestion}
-                  prevQuestion={setPrevFromPhone}
-                />
-              </div>
-            </Route>
-            <Route path="/build/brick/:brickId/investigation/question/:questionId">
-              <div className="fixed-build-phone">
-                {renderQuestionTypePreview()}
-              </div>
-            </Route>
-            <Route path="/build/brick/:brickId/synthesis">
-              <div className="fixed-build-phone">
-                <PhonePreview
-                  Component={SynthesisPreviewComponent}
-                  prev={() => selectQuestion(questions.length - 1)}
-                  next={() => { }}
-                  nextDisabled={true}
-                  data={{ synthesis: synthesis, brickLength: brick.brickLength }}
-                />
-              </div>
-            </Route>
-            <Route path={[
-              "/build/brick/:brickId/investigation/",
-              "/build/brick/:brickId/investigation/question-component",
-              "/build/brick/:brickId/investigation/question",
-            ]} exact>
-              <Redirect to={`/build/brick/${brick.id}/investigation/question-component/${questions[0]?.id ?? ""}`} />
-            </Route>
-          </Grid>
-          <HighlightInvalidDialog
-            isOpen={highlightInvalid.isOpen}
-            isLines={highlightInvalid.isLine}
-            close={() => {
-              setValidation(true);
-              setInvalidHighlight({ isOpen: false, isLine: false })
-            }}
-          />
-          <HintInvalidDialog
-            isOpen={invalidHint.isOpen}
-            invalidQuestionNumber={invalidHint.questionNumber}
-            close={() => {
-              setValidation(true);
-              setInvalidHint({ isOpen: false, questionNumber: -1 })
-            }}
-          />
-          <QuestionInvalidDialog
-            isOpen={submitDialogOpen}
-            close={() => setSubmitDialog(false)}
-            submit={() => submitInvalidBrick()}
-            hide={() => hideInvalidBrick()}
-          />
-          <ProposalInvalidDialog
-            isOpen={proposalResult.isOpen}
-            close={() => {
-              setProposalResult({ ...proposalResult, isOpen: false })
-              setValidation(true);
-            }}
-            submit={() => {
-              submitInvalidBrick();
-            }}
-            hide={() => {
-              moveToInvalidProposal();
-              setValidation(true);
-            }}
-          />
-          <DeleteDialog
-            isOpen={deleteDialogOpen}
-            index={deleteQuestionIndex}
-            title="Permanently delete<br />this question?"
-            close={setDeleteDialog}
-            submit={deleteQuestionByIndex}
-          />
-          <SkipTutorialDialog
-            open={skipTutorialOpen}
-            close={() => setSkipDialog(false)}
-            skip={() => {
-              skipTutorial(true);
-              setSkipDialog(false);
-            }}
-          />
-        </div>
-        <div className="build-hide-popup">
-          <div className="blue-page">
-            <DesktopVersionDialog history={history} />
-          </div>
+          <Route path="/build/brick/:brickId/investigation/question-component/:questionId">
+            <div className="fixed-build-phone">
+              <PhoneQuestionPreview
+                question={activeQuestion!}
+                focusIndex={focusIndex}
+                nextQuestion={setNextQuestion}
+                prevQuestion={setPrevFromPhone}
+              />
+            </div>
+          </Route>
+          <Route path="/build/brick/:brickId/investigation/question/:questionId">
+            <div className="fixed-build-phone">
+              {renderQuestionTypePreview()}
+            </div>
+          </Route>
+          <Route path="/build/brick/:brickId/synthesis">
+            <div className="fixed-build-phone">
+              <PhonePreview
+                Component={SynthesisPreviewComponent}
+                prev={() => selectQuestion(questions.length - 1)}
+                next={() => { }}
+                nextDisabled={true}
+                data={{ synthesis: synthesis, brickLength: brick.brickLength }}
+              />
+            </div>
+          </Route>
+          <Route path={[
+            "/build/brick/:brickId/investigation/",
+            "/build/brick/:brickId/investigation/question-component",
+            "/build/brick/:brickId/investigation/question",
+          ]} exact>
+            <Redirect to={`/build/brick/${brick.id}/investigation/question-component/${questions[0]?.id ?? ""}`} />
+          </Route>
+        </Grid>
+        <HighlightInvalidDialog
+          isOpen={highlightInvalid.isOpen}
+          isLines={highlightInvalid.isLine}
+          close={() => {
+            setValidation(true);
+            setInvalidHighlight({ isOpen: false, isLine: false })
+          }}
+        />
+        <HintInvalidDialog
+          isOpen={invalidHint.isOpen}
+          invalidQuestionNumber={invalidHint.questionNumber}
+          close={() => {
+            setValidation(true);
+            setInvalidHint({ isOpen: false, questionNumber: -1 })
+          }}
+        />
+        <QuestionInvalidDialog
+          isOpen={submitDialogOpen}
+          close={() => setSubmitDialog(false)}
+          submit={() => submitInvalidBrick()}
+          hide={() => hideInvalidBrick()}
+        />
+        <ProposalInvalidDialog
+          isOpen={proposalResult.isOpen}
+          close={() => {
+            setProposalResult({ ...proposalResult, isOpen: false })
+            setValidation(true);
+          }}
+          submit={() => {
+            submitInvalidBrick();
+          }}
+          hide={() => {
+            moveToInvalidProposal();
+            setValidation(true);
+          }}
+        />
+        <DeleteDialog
+          isOpen={deleteDialogOpen}
+          index={deleteQuestionIndex}
+          title="Permanently delete<br />this question?"
+          close={setDeleteDialog}
+          submit={deleteQuestionByIndex}
+        />
+        <SkipTutorialDialog
+          open={skipTutorialOpen}
+          close={() => setSkipDialog(false)}
+          skip={() => {
+            skipTutorial(true);
+            setSkipDialog(false);
+          }}
+        />
+      </div>
+      <div className="build-hide-popup">
+        <div className="blue-page">
+          <DesktopVersionDialog history={history} />
         </div>
       </div>
-    );
-  }
-
-  return renderBuildPage();
+      <SaveFailedDialog open={saveFailed} close={() => setSaveFailed(false)} />
+    </div>
+  );
 };
 
 const mapState = (state: ReduxCombinedState) => ({

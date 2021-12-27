@@ -6,7 +6,7 @@ import axios from "axios";
 
 import actions from "redux/actions/auth";
 import { setUserPreference } from "services/axios/user";
-import { RolePreference } from "model/user";
+import { UserPreferenceType } from "model/user";
 
 import LoginLogo from 'components/loginPage/components/LoginLogo';
 import WrongLoginDialog from "components/loginPage/components/WrongLoginDialog";
@@ -62,7 +62,7 @@ const EmailActivateDesktopPage: React.FC<LoginProps> = (props) => {
     try {
       if (password.length > 0) {
         await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/changePassword/${props.token}`, { password: password }, { withCredentials: true });
-        await setUserPreference(RolePreference.Student);
+        await setUserPreference(UserPreferenceType.Student);
         props.history.push(map.TermsSignUp);
         props.loginSuccess();
       }
