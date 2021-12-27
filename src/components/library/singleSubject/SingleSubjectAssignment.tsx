@@ -171,7 +171,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
             {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
             <div className="competition-star bigger">
               <div>
-                <SpriteIcon name="star" />
+                <SpriteIcon name="star" style={{color: color, fill: color}} />
               </div>
             </div>}
             {renderRotatedTitle("white", height)}
