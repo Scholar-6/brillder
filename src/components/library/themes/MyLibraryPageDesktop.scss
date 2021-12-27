@@ -21,12 +21,12 @@
       padding-top: 0.15vw;
       display: flex;
       justify-content: center;
+      border-top-left-radius: 0.25vw;
+      border-top-right-radius: 0.25vw;
 
       svg {
         width: 0.7vw;
         height: 0.7vw;
-        color: blue;
-        fill: blue;
       }
     }
 
@@ -776,9 +776,9 @@
         .level {
           background: var(--white);
           width: 100%;
-          margin-top: 0.3vh;
-          margin-bottom: 0.3vh;
-          height: 0.4vh;
+          margin-top: 3px;
+          margin-bottom: 3px;
+          height: 3px;
         }
       }
     }
