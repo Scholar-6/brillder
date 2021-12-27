@@ -199,6 +199,11 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         />
         <div className="notifications-text-2" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText2 }} />
         <div className="notifications-text-3" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText3 }} />
+
+        <div className="link-to-landing" onClick={() => window.location.href = 'https://brillder.com'}>
+          <SpriteIcon name="star" />
+          Play the 12 bricks of Christmas
+        </div>
       </div>
     );
   }
