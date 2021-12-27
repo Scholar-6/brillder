@@ -8,6 +8,15 @@ interface SourceInputProps {
 }
 
 const SourceInput: React.FC<SourceInputProps> = ({ source, validationRequired, setSource }) => {
+  const validate = () => {
+    if (validationRequired) {
+      if (source && source.trim().length > 0) {
+        return '';
+      }
+      return 'invalid';
+    }
+    return '';
+  }
   return (
     <div className="source-input">
       <div className="fixed-icon">
@@ -15,7 +24,7 @@ const SourceInput: React.FC<SourceInputProps> = ({ source, validationRequired, s
       </div>
       <input
         value={source}
-        className={validationRequired && !source ? "invalid" : ""}
+        className={validate()}
         onChange={(e) => setSource(e.target.value)}
         placeholder="Add link to source or name of owner"
       />

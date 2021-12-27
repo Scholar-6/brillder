@@ -95,9 +95,16 @@
 
         .search-container {
           display: flex;
+          position: absolute;
+          top: 1vw;
           align-items: center;
           margin-left: 0.8vw;
-          border-radius: 1vw;
+          border-radius: 0.8vw;
+
+          svg {
+            width: 80% !important;
+            height: 80% !important;
+          }
           &.no-bottom-border {
             background: #2B4779;
           }
@@ -157,6 +164,7 @@
           }
         }
         .action-container {
+          margin-left: 65vw;
           justify-content: flex-end;
           @include phone_and_tabletP {
             width: 100%;
@@ -370,18 +378,20 @@
 .header-btn {
   cursor: pointer;
   display: inline-block;
+  &.search-button, &#bell-container, &.more-button {
+    width: 3.698vw;
+    height: 3.698vw;
+    @include phone_and_tabletP {
+      width: 45px;
+      height: 45px;
+    }
+  }
   @include phone_and_tabletP {
     width: 45px;
     height: 45px;
   }
   @include tabletP {
     margin: 0 2vw 0 0;
-    width: 2.8vw;
-    height: 2.8vw;
-  }
-  &#bell-container, &.more-button {
-    width: 3.698vw;
-    height: 3.698vw;
   }
   .svg {
     width: 100% !important;

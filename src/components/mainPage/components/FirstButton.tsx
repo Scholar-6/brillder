@@ -16,8 +16,8 @@ interface FirstButtonProps {
 
 const FirstButton: React.FC<FirstButtonProps> = props => {
   const renderViewAllLabel = () => {
-    const { rolePreference } = props.user;
-    if (rolePreference) {
+    const { userPreference } = props.user;
+    if (userPreference) {
       if (isTeacherPreference(props.user)) {
         return "Assign Bricks";
       } else if (isStudentPreference(props.user)) {

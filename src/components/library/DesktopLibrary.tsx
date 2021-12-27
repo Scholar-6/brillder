@@ -31,6 +31,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 interface BricksListProps {
   user: User;
   notifications: Notification[] | null;
+  match: any;
   history: any;
   location: any;
 }
@@ -200,7 +201,13 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async getAssignments(subjects: SubjectAItem[]) {
-    const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
+    let userId = this.props.user.id;
+    console.log(this.props.match.params.userId)
+    if (this.props.match.params.userId) {
+      userId = this.props.match.params.userId;
+    }
+    console.log(userId);
+    const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>(userId);
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects);

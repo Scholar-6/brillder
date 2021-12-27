@@ -6,6 +6,7 @@ import { fileUrl } from 'components/services/uploadFile';
 import { isPhone } from 'services/phone';
 import actions from 'redux/actions/play';
 import { ReduxCombinedState } from 'redux/reducers';
+import MathInHtml from 'components/play/baseComponents/MathInHtml';
 
 interface AnswerProps {
   fileName: string;
@@ -42,7 +43,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             }
           }}
         />
-        {imageCaption && <div>{imageCaption}</div>}
+        {imageCaption && <div dangerouslySetInnerHTML={{__html: imageCaption}} />}
       </div>
     );
   }
@@ -63,7 +64,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
               }}
             />
           </div>
-          {imageCaption && <div>{imageCaption}</div>}
+          {imageCaption && <div dangerouslySetInnerHTML={{__html: imageCaption}}/>}
         </div>
       </div>
     );
@@ -78,7 +79,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             onMouseLeave={props.blur}
           />
         </div>
-        {imageCaption && <div>{imageCaption}</div>}
+        {imageCaption && <MathInHtml value={imageCaption} /> }
       </div>
     </div>
   );

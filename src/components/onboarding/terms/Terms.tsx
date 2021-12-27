@@ -138,10 +138,10 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
                   if (values.onlyAcceptTerms) {
                     this.props.history.push(map.MainPage);
                   } else {
-                    if (user.rolePreference?.roleId) {
+                    if (user.userPreference?.preferenceId) {
                       this.props.history.push(map.MainPage);
                     } else {
-                      this.props.history.push(map.UserPreference);
+                      this.props.history.push(map.UserPreferencePage);
                     }
                   }
                 }

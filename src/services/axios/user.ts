@@ -1,6 +1,6 @@
 import {get, put, post, postRes} from './index';
 
-import { RolePreference, User } from 'model/user';
+import { UserPreferenceType, User } from 'model/user';
 import { UpdateUserStatus } from 'components/userProfilePage/model';
 import { Editor } from 'model/brick';
 
@@ -72,12 +72,12 @@ export const getUserByUserName = async (userName: string) => {
   }
 }
 
-export const setUserPreference = async (roleId: RolePreference, initial?: boolean) => {
+export const setUserPreference = async (preferenceId: UserPreferenceType, initial?: boolean) => {
   try {
 
     var url = initial
-      ? `/user/rolePreference/${roleId}/true`
-      :`/user/rolePreference/${roleId}`
+      ? `/user/rolePreference/${preferenceId}/true`
+      :`/user/rolePreference/${preferenceId}`
 
     const data = await put<any>(url, {});
 
@@ -87,10 +87,10 @@ export const setUserPreference = async (roleId: RolePreference, initial?: boolea
   }
 }
 
-export const setUserPreferenceById = async (roleId: RolePreference, userId: number) => {
+export const setUserPreferenceTypeById = async (preferenceId: UserPreferenceType, userId: number) => {
   try {
 
-    var url = `/user/rolePreferenceById/${roleId}/${userId}`;
+    var url = `/user/rolePreferenceById/${preferenceId}/${userId}`;
 
     const data = await put<any>(url, {userId});
 

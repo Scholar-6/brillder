@@ -37,6 +37,9 @@ import HighlightHtml, { HighlightRef } from "components/play/baseComponents/High
 import axios from "axios";
 import { CashAttempt } from "localStorage/play";
 import { generateId } from "components/build/buildQuestions/questionTypes/service/questionBuild";
+import map from "components/map";
+import { fileUrl } from "components/services/uploadFile";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -95,7 +98,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       subjects: [],
       handleKey: this.handleKey.bind(this)
     };
-    
+
     this.highlightRef = React.createRef();
 
     this.loadData();
@@ -136,7 +139,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
   async saveAttempt(attempt: PlayAttempt) {
     console.log(attempt);
-    const newAttempt = Object.assign({ }, attempt) as any;
+    const newAttempt = Object.assign({}, attempt) as any;
 
     newAttempt.answers = attempt.answers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
     newAttempt.liveAnswers = attempt.liveAnswers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
@@ -155,7 +158,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       { id: attempt.id, userId: this.props.user.id, body: newAttempt },
       { withCredentials: true }
     ).catch(e => {
-      if(e.response.status !== 409) {
+      if (e.response.status !== 409) {
         throw e;
       }
     });
@@ -167,7 +170,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
       const newAttempts = this.state.attempts;
       const attemptIdx = newAttempts.findIndex(a => a.timestamp === attempt.timestamp);
-      if(attemptIdx > -1) {
+      if (attemptIdx > -1) {
         newAttempts[attemptIdx] = attempt;
       }
 
@@ -238,7 +241,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
   setAttemptBrickProperty(property: "brief" | "prep" | "synthesis") {
     const newAttempt = this.state.attempt;
-    if(!newAttempt) return;
+    if (!newAttempt) return;
     this.createNewAnnotation(property, '');
   }
 
@@ -252,6 +255,23 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
         questionIndex={this.state.questionIndex}
       />
     )
+  }
+
+  renderLibraryLink() {
+    let name = '';
+    const { firstName } = this.props.user;
+    let lastLetter = firstName[firstName.length - 1];
+    if (lastLetter == 's') {
+      name = firstName + "'";
+    } else {
+      name = firstName + "'s";
+    }
+    return (
+      <div className="absolute-library-link" onClick={() => this.props.history.push(map.MyLibrary + '/' + this.props.match.params.userId)}>
+        <SpriteIcon name="bar-chart-2" />
+        <div className="css-custom-tooltip">View {name} library</div>
+      </div>
+    );
   }
 
   renderPlayButton(brick: Brick) {
@@ -354,6 +374,31 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       );
     }
 
+    const renderAbsolutePercentage = () => {
+      const a = this.state.attempt;
+      let percentages = 0;
+      if (a) {
+        if (typeof a.oldScore === 'undefined') {
+          percentages = Math.round(a.score * 100 / a.maxScore);
+        } else {
+          const middleScore = (a.score + a.oldScore) / 2;
+          percentages = Math.round(middleScore * 100 / a.maxScore);
+        }
+
+        return (
+          <div className="attempt-score">
+            <CircularProgressbar
+              strokeWidth={12}
+              counterClockwise={true}
+              value={percentages}
+            />
+            {percentages}
+          </div>
+        );
+      }
+      return '';
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
@@ -369,6 +414,14 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
             search={() => { }}
             searching={(v: string) => { }}
           />
+          <div className="absolute-top-part">
+            <div className='profile-image-v5'>
+              {this.props.user.profileImage ? <img src={fileUrl(this.props.user.profileImage)} /> : <SpriteIcon name="user" />}
+            </div>
+            {this.props.user.firstName} {this.props.user.lastName}
+            {renderAbsolutePercentage()}
+            {this.renderLibraryLink()}
+          </div>
           <div className="page-content">
             <BookSidebar
               user={this.props.user}

@@ -358,7 +358,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <div className="profile-block">
               <div className="profile-header">
                 <div>{user.username ? user.username : "USERNAME"}</div>
-                <UserTypeLozenge roles={user.roles} rolePreference={this.props.user.rolePreference} />
+                <UserTypeLozenge roles={user.roles} userPreference={this.props.user.userPreference} />
               </div>
               <div className="save-button-container">
                 <SaveProfileButton
@@ -414,13 +414,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   </div>
                 </div>
                 <div className="profile-roles-container">
-                  {this.state.user.rolePreference &&
+                  {this.state.user.userPreference &&
                   <RolesBox
                     roles={this.state.roles}
                     userId={this.state.user.id}
                     userRoles={this.state.user.roles}
                     isAdmin={this.state.isAdmin}
-                    rolePreference={this.state.user.rolePreference?.roleId}
+                    userPreference={this.state.user.userPreference?.preferenceId}
                     togglePreference={() => this.setState({saveDisabled: false})}
                     toggleRole={this.toggleRole.bind(this)}
                   />}

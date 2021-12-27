@@ -1,4 +1,4 @@
-import { RolePreference, User } from "model/user";
+import { UserPreference, UserPreferenceType, User } from "model/user";
 import { isAorP } from "./services/brickService";
 
 export const Login = '/login';
@@ -22,14 +22,14 @@ export const BackToWorkPage = '/back-to-work';
 export const BackToWorkPersonal = BackToWorkPage + '?isCore=false';
 export const BackToWorkPublic = BackToWorkPage + '?isCore=true';
 export const backToWorkUserBased = (user: User) => 
-  `${BackToWorkPage}?isCore=${user.rolePreference?.roleId === RolePreference.Builder || isAorP(user.roles) ? 'true' : 'false'}`
+  `${BackToWorkPage}?isCore=${user.userPreference?.preferenceId === UserPreferenceType.Builder || isAorP(user.roles) ? 'true' : 'false'}`
 
 export const Onboarding = '/onboarding';
 export const TermsSignUp = Onboarding + '/terms';
 export const ThankYouPage = Onboarding + '/thank-you';
 export const SetUsername = Onboarding + '/set-username';
 export const SelectSubjectPage = Onboarding + '/select-subjects';
-export const UserPreference = Onboarding + '/user-preference';
+export const UserPreferencePage = Onboarding + '/user-preference';
 export const UserProfile = Onboarding + '/profile-page';
 
 export const TeachAssignedTab = '/teach/assigned';
@@ -142,7 +142,7 @@ export default {
   ThankYouPage,
   SetUsername,
   SelectSubjectPage,
-  UserPreference,
+  UserPreferencePage,
 
   NewBrick,
   ProposalStart,
