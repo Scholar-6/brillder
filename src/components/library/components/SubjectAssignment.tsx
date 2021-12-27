@@ -134,7 +134,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
             {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
               <div className="competition-star">
                 <div>
-                  <SpriteIcon name="star" />
+                  <SpriteIcon name="star" style={{color: color, fill: color}} />
                 </div>
               </div>}
             {height < 50 && renderRotatedPercentage("white", Math.round(height), ((height > 30) ? height : 30))}
