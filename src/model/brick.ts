@@ -121,6 +121,7 @@ export interface Brick {
   academicLevel: AcademicLevel;
 
   // cover page
+  competitions?: any[];
   competitionId?: number;
   coverImage: string;
   coverImageCaption: string;
