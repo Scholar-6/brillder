@@ -1,13 +1,13 @@
-import { RolePreference } from "model/user";
+import { UserPreferenceType } from "model/user";
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 
-import { setUserPreference, setUserPreferenceById } from 'services/axios/user';
+import { setUserPreference, setUserPreferenceTypeById } from 'services/axios/user';
 
 import { UserRoleItem } from "./model";
 
 interface BoxState {
-  rolePreference?: RolePreference;
+  userPreference?: UserPreferenceType;
 }
 
 interface BoxProps {
@@ -15,7 +15,7 @@ interface BoxProps {
   userRoles: any[];
   userId: number;
   isAdmin: boolean;
-  rolePreference?: any;
+  userPreference?: any;
   togglePreference(): void;
   toggleRole(roleId: number, disabled: boolean): void;
 }
@@ -25,21 +25,21 @@ class RolesBox extends Component<BoxProps, BoxState> {
     super(props);
 
     this.state = {
-      rolePreference: props.rolePreference,
+      userPreference: props.userPreference,
     };
   }
 
-  async onPreferenceChange(rolePreference: RolePreference) {
+  async onPreferenceChange(userPreference: UserPreferenceType) {
     this.props.togglePreference();
     if (this.props.isAdmin && this.props.userId) {
-      const success = await setUserPreferenceById(rolePreference, this.props.userId);
+      const success = await setUserPreferenceTypeById(userPreference, this.props.userId);
       if (success) {
-        this.setState({ rolePreference });
+        this.setState({ userPreference });
       }
     } else {
-      const success = await setUserPreference(rolePreference);
+      const success = await setUserPreference(userPreference);
       if (success) {
-        this.setState({ rolePreference });
+        this.setState({ userPreference });
       }
     }
   }
@@ -63,7 +63,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
   }
 
   render() {
-    const { rolePreference } = this.state;
+    const { userPreference } = this.state;
     return (
       <div className="flex-center roles-box">
         <p className="fixed-label">User Type</p>
@@ -71,8 +71,8 @@ class RolesBox extends Component<BoxProps, BoxState> {
           <Grid item>
             <FormControlLabel
               className="filter-container"
-              checked={rolePreference === RolePreference.Student}
-              onClick={() => this.onPreferenceChange(RolePreference.Student)}
+              checked={userPreference === UserPreferenceType.Student}
+              onClick={() => this.onPreferenceChange(UserPreferenceType.Student)}
               control={<Radio className="filter-radio" />}
               label="Learner"
             />
@@ -80,8 +80,8 @@ class RolesBox extends Component<BoxProps, BoxState> {
           <Grid item>
             <FormControlLabel
               className="filter-container"
-              checked={rolePreference === RolePreference.Teacher}
-              onClick={() => this.onPreferenceChange(RolePreference.Teacher)}
+              checked={userPreference === UserPreferenceType.Teacher}
+              onClick={() => this.onPreferenceChange(UserPreferenceType.Teacher)}
               control={<Radio className="filter-radio" />}
               label="Educator"
             />
@@ -89,8 +89,8 @@ class RolesBox extends Component<BoxProps, BoxState> {
           <Grid item>
             <FormControlLabel
               className="filter-container"
-              checked={rolePreference === RolePreference.Builder}
-              onClick={() => this.onPreferenceChange(RolePreference.Builder)}
+              checked={userPreference === UserPreferenceType.Builder}
+              onClick={() => this.onPreferenceChange(UserPreferenceType.Builder)}
               control={<Radio className="filter-radio" />}
               label="Builder"
             />
@@ -100,8 +100,8 @@ class RolesBox extends Component<BoxProps, BoxState> {
           <Grid item>
             <FormControlLabel
               className="filter-container"
-              checked={rolePreference === RolePreference.Institution}
-              onClick={() => this.onPreferenceChange(RolePreference.Institution)}
+              checked={userPreference === UserPreferenceType.Institution}
+              onClick={() => this.onPreferenceChange(UserPreferenceType.Institution)}
               control={<Radio className="filter-radio" />}
               label="Institution"
             />

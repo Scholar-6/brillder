@@ -6,7 +6,7 @@ import map from 'components/map';
 import { checkTeacher, getDateString, getTime } from "components/services/brickService";
 import { getBrillderTitle } from 'components/services/titleService';
 import { PlayAttempt } from 'model/attempt';
-import { RolePreference, User } from 'model/user';
+import { UserPreferenceType, User } from 'model/user';
 
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import PlayGreenButton from "components/build/baseComponents/PlayGreenButton";
@@ -153,7 +153,7 @@ class BookPages extends React.Component<BookProps, BookState> {
                   <div className="page1">
                     <div className="flipped-page">
                       <div className="flex-center" style={{ height: '100%' }}>
-                        {this.props.user.rolePreference?.roleId !== RolePreference.Teacher  && this.renderPlayButton()}
+                        {this.props.user.userPreference?.preferenceId !== UserPreferenceType.Teacher  && this.renderPlayButton()}
                       </div>
                     </div>
                   </div>

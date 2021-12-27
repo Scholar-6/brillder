@@ -1,5 +1,5 @@
 import { Brick, BrickStatus } from 'model/brick';
-import { User, UserType, UserRole, RolePreference } from 'model/user';
+import { User, UserType, UserRole, UserPreferenceType } from 'model/user';
 import { isInstitutionPreference, isTeacherPreference } from './preferenceService';
 
 export function formatTwoLastDigits(twoLastDigits: number) {
@@ -125,11 +125,11 @@ export function checkPublisher(user: User, brick: Brick) {
 }
 
 export function checkTeacher(user: User) {
-  return user.rolePreference?.roleId === RolePreference.Teacher;
+  return user.userPreference?.preferenceId === UserPreferenceType.Teacher;
 }
 
 export function checkBuilder(user: User) {
-  return user.rolePreference?.roleId === RolePreference.Builder;
+  return user.userPreference?.preferenceId === UserPreferenceType.Builder;
 }
 
 export function checkAdmin(roles: UserRole[]) {
@@ -183,7 +183,7 @@ export function canDelete(userId: number, isAdmin: boolean, brick: Brick) {
 }
 
 export function checkTeacherEditorOrAdmin(user: User) {
-  if (user.rolePreference?.roleId === RolePreference.Teacher) {
+  if (user.userPreference?.preferenceId === UserPreferenceType.Teacher) {
     return true;
   }
   return user.roles.some(role => {
@@ -202,8 +202,8 @@ export function getAssignmentIcon(brick: Brick) {
 
 export function canTeach(user: User) {
   let canTeach = checkTeacherOrAdmin(user);  
-  if (!canTeach && user.rolePreference) {
-    if (user.rolePreference.roleId === RolePreference.Teacher) {
+  if (!canTeach && user.userPreference) {
+    if (user.userPreference.preferenceId === UserPreferenceType.Teacher) {
       canTeach = true;
     }
   }
