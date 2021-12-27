@@ -225,7 +225,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
           }
           label={`Level ${AcademicLevelLabels[loopLevel]}`}
         />
-        <div>{length} mins</div>
+        {/*<div>{length} mins</div>*/}
       </div>
     );
   }
