@@ -76,7 +76,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       rawAssignments: [],
       subjectAssignments: [],
       classrooms: [],
-      sortBy: SortBy.Date,
+      sortBy: SortBy.Score,
       subjects: [],
       sortedIndex: 0,
       dropdownShown: false,
