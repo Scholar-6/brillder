@@ -110,11 +110,11 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
         <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog">
           <div className="dialog-header">
             <div className="flex-center">
-              <SpriteIcon name="star" className="big-star" />
-             </div>
+              <SpriteIcon name="star-empty" className="big-star" />
+            </div>
             <div className="bold" style={{ textAlign: 'center' }}>
-            This brick is part of a competition. <br/>
-             If you do well, you could win a prize!
+              This brick is part of a competition. <br />
+              If you do well, you could win a prize!
             </div>
           </div>
           <div className="dialog-footer">
@@ -122,10 +122,13 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
               props.setCompetitionId(competitionData.competition.id);
               setCompetitionData({ ...competitionData, isOpen: false });
             }}>
-              <span>Accept</span>
+              <span>Start Playing</span>
             </button>
           </div>
-          <div className="italic" style={{ textAlign: 'center' }}><a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a></div>
+          <div className="italic bottom-link flex-center" style={{ textAlign: 'center' }}>
+            <SpriteIcon name="eye-on" />
+            <a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
+          </div>
         </Dialog>}
     </div>
   );
