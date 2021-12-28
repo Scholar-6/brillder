@@ -9,7 +9,6 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademyDifficulty } from "../base/AcademyDifficulty";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import routes from "components/play/routes";
-import { stripHtml } from "components/build/questionService/ConvertService";
 import { isTeacherPreference } from "components/services/preferenceService";
 import { User } from "model/user";
 import { CircularProgressbar } from "react-circular-progressbar";
@@ -44,39 +43,62 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
 
   className += " default";
 
-  const renderRotatedTitle = (name: string, height: number) => {
-    let className = "rotated-container " + name;
-    let width = "calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh)";
-    if (height !== 100) {
-      width = `calc((((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh) / 100 * ${height})`;
-    }
+  const renderValueBar = () => {
     return (
-      <div className={className}>
-        <div className="rotated">
-          <div className="rotated-text" style={{ width }}>
-            {stripHtml(brick.title)}
-          </div>
-        </div>
+      <div
+        className="progress-value"
+        onMouseEnter={() => setHover(true)}
+        style={{
+          background: color,
+          height: ((height > 30) ? height : 30) + "%",
+          maxHeight: "100%",
+        }}
+      >
+        {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
+          <div className="competition-star">
+            <div>
+              <SpriteIcon name="star" style={{ color: color, fill: color }} />
+            </div>
+          </div>}
+        {height > 0 && assignment.brick.academicLevel >= AcademicLevel.First && (
+          <AcademyDifficulty
+            a={assignment.brick.academicLevel}
+            className="smaller"
+            noTopLines={height < 50}
+          />
+        )}
       </div>
-    );
-  };
+    )
+  }
 
-  const renderRotatedPercentage = (name: string, value: number, height: number) => {
-    let className = "rotated-container " + name;
-    let width = "calc(((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh)";
-    if (height !== 100) {
-      width = `calc((((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 9vh - 2vh) / 3) - 2vh) / 100 * ${height})`;
-    }
+  const renderFullBar = () => {
     return (
-      <div className={className}>
-        <div className="rotated">
-          <div className="rotated-text no-padding" style={{ width }}>
-            {value}%
-          </div>
-        </div>
+      <div
+        className="progress-value small-value"
+        onMouseEnter={() => setHover(true)}
+        style={{
+          background: color,
+          height: 100 + "%",
+          opacity: 0.5,
+          maxHeight: "100%",
+        }}
+      >
+        {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
+          <div className="competition-star">
+            <div>
+              <SpriteIcon name="star" style={{ color: color, fill: color }} />
+            </div>
+          </div>}
+        {height > 0 && assignment.brick.academicLevel >= AcademicLevel.First && (
+          <AcademyDifficulty
+            a={assignment.brick.academicLevel}
+            className="smaller"
+            noTopLines={false}
+          />
+        )}
       </div>
     );
-  };
+  }
 
   return (
     <div
@@ -119,32 +141,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           className="progress-value default-value"
           onMouseEnter={() => setHover(true)}
         />
-        {height > 0 &&
-          <div
-            className="progress-value"
-            onMouseEnter={() => setHover(true)}
-            style={{
-              background: color,
-              height: ((height > 30) ? height : 30) + "%",
-              maxHeight: "100%",
-            }}
-          >
-            {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
-              <div className="competition-star">
-                <div>
-                  <SpriteIcon name="star" style={{color: color, fill: color}} />
-                </div>
-              </div>}
-            {height < 50 && renderRotatedPercentage("white", Math.round(height), ((height > 30) ? height : 30))}
-            {height > 0 && assignment.brick.academicLevel >= AcademicLevel.First && (
-              <AcademyDifficulty
-                a={assignment.brick.academicLevel}
-                className="smaller"
-                noTopLines={height < 50}
-              />
-            )}
-          </div>
-        }
+        {height >= 50 ? renderValueBar() : renderFullBar()}
       </div>
     </div>
   );

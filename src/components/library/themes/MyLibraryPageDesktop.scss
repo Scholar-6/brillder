@@ -582,6 +582,11 @@
 
     .assignment:hover .progress-value {
       opacity: 0.5 !important;
+
+      &.small-value:hover {
+        opacity: 0.9 !important;
+      }
+  
     }
 
     .rotated-container {
