@@ -1015,11 +1015,31 @@
 }
 
 .big-star {
-  width: 3vw !important;
-  height: 3vw !important;
+  margin-top: -0.8vw;
+  margin-bottom: 0.3vw;
+  width: 5vw !important;
+  height: 5vw !important;
+  stroke-width: 1;
 }
 
 .wifi-off-big {
   width: 5vw !important;
   height: 5vw !important;
+  fill: unset !important;
+}
+
+.bottom-link {
+  margin-top: 0.4vw;
+  font-size: 1.1vw;
+  color: blue;
+  
+  a {
+    color: blue;
+  }
+
+  svg {
+    width: 1.4vw;
+    height: 1.4vw;
+    margin-right: 0.2vw;
+  }
 }

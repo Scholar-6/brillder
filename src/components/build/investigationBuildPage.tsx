@@ -1004,7 +1004,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <DesktopVersionDialog history={history} />
         </div>
       </div>
-      <SaveFailedDialog open={true} close={() => setSaveFailed(false)} />
+      <SaveFailedDialog open={saveFailed} close={() => setSaveFailed(false)} />
     </div>
   );
 };

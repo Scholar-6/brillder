@@ -1220,3 +1220,28 @@
 .phone-competition-dialog .dialog-header {
   font-size: 5.6vw !important;
 }
+
+
+.big-star {
+  margin-top: -0.8vw;
+  margin-bottom: 0.3vw;
+  width: 8vh !important;
+  height: 8vh !important;
+  stroke-width: 1;
+}
+
+.bottom-link {
+  margin-top: 1.5vw;
+  font-size: 4vw;
+  color: blue;
+  
+  a {
+    color: blue;
+  }
+
+  svg {
+    width: 7vw;
+    height: 7vw;
+    margin-right: 0.8vw;
+  }
+}
