@@ -1,8 +1,11 @@
+import React, { useEffect } from 'react';
+
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { checkTeacherOrAdmin } from 'components/services/brickService';
 import { isBuilderPreference } from 'components/services/preferenceService';
 import { User } from 'model/user';
-import React from 'react';
+import { getAllClassrooms } from 'components/teach/service';
+
 
 interface ButtonProps {
   user: User;
@@ -13,8 +16,25 @@ interface ButtonProps {
 
 const AdaptButton: React.FC<ButtonProps> = (props) => {
   const [hovered, setHover] = React.useState(false);
+  const [hassigned, setAssigned] = React.useState(false);
+
+  const getAssigned = async () => {
+    const classes = await getAllClassrooms();
+    if (classes && classes.length > 0) {
+      var classWithAssignments = classes.find(c => c.assignmentsCount && c.assignmentsCount > 0);
+      if (classWithAssignments) {
+        setAssigned(true);
+      }
+    }
+  }
+
+  useEffect(() => {
+    getAssigned();
+  }, []);
 
   if (!props.user) { return <span />; }
+  if (!hassigned) { return <span />; }
+
   const canSee = checkTeacherOrAdmin(props.user) || isBuilderPreference(props.user);
   if (!canSee) { return <span />; }
 
@@ -53,3 +73,4 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
 }
 
 export default AdaptButton;
+
