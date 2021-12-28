@@ -352,6 +352,14 @@
   }
 
   .single-assignment-progressbar {
+    .background {
+      height: 100%;
+      width: 100%;
+      border-radius: 0.35vw;
+    }
+    .default-value .rotated-container .rotated .rotated-text {
+      opacity: 0.5;
+    }
     &.general {
       .progress-value .rotated-container .rotated .rotated-text {
         color: var(--theme-dark-blue);
@@ -566,6 +574,12 @@
     height: 100%;
     display: inline-block;
 
+    &.all-subjects:hover {
+        .default {
+          background: rgba(25, 50, 102, 0.9) !important;
+        }
+    }
+
     .assignment:hover .progress-value {
       opacity: 0.5 !important;
     }
@@ -628,11 +642,6 @@
 
       .default-value {
         height: 100%;
-
-        &:hover {
-          opacity: 0.5;
-          background: var(--theme-light-blue) !important;
-        }
       }
 
       &.length-20 {

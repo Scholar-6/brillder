@@ -78,11 +78,9 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     );
   };
 
-  console.log(assignment.brick.competitions);
-
   return (
     <div
-      className={`assignment-progressbar ${subject.name == GENERAL_SUBJECT ? 'general' : ''}`}
+      className={`assignment-progressbar all-subjects ${subject.name == GENERAL_SUBJECT ? 'general' : ''}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >

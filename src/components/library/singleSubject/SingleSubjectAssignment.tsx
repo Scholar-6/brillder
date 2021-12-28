@@ -147,6 +147,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
           className="progress-value default-value"
           onMouseEnter={() => setHover(true)}
         >
+          <div className="background" style={{background: color, opacity: 0.5}} />
           {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
           {height < 50 && height > 0 && renderRotatedTitle("white", 100)}
           {height < 50 && height > 0 &&
