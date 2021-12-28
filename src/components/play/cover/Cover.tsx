@@ -342,6 +342,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
               <button className="btn btn-md  bg-green text-white yes-button" onClick={() => {
                 props.setCompetitionId(competitionData.competition.id);
                 setCompetitionData({ ...competitionData, isOpen: false });
+                startBrick();
               }}>
                 <span>Start Playing</span>
               </button>
@@ -462,7 +463,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         }}
       />
       {competitionData &&
-        <Dialog open={competitionData.isOpen} className="dialog-box">
+        <Dialog open={competitionData.isOpen} className="dialog-box competition-dialog">
           <div className="dialog-header">
             <div className="flex-center">
               <SpriteIcon name="star-empty" className="big-star" />
@@ -473,9 +474,10 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
           </div>
           <div className="dialog-footer">
-            <button className="btn btn-md bg-green text-white yes-button" onClick={() => {
+            <button className="btn btn-md bg-green text-white yes-button blue-on-hover" onClick={() => {
               props.setCompetitionId(competitionData.competition.id);
               setCompetitionData({ ...competitionData, isOpen: false });
+              startBrick();
             }}>
               <span>Start Playing</span>
             </button>

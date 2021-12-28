@@ -1217,8 +1217,19 @@
   }
 }
 
-.phone-competition-dialog .dialog-header {
-  font-size: 5.6vw !important;
+.phone-competition-dialog {
+  .dialog-header {
+    font-size: 5.3vw !important;
+  }
+  .dialog-footer {
+    display: flex;
+    justify-content: center;
+    button {
+      padding-top: 0.8vh !important;
+      padding-bottom: 0.8vh !important;
+      max-width: 76vw;
+    }
+  }
 }
 
 
@@ -1231,7 +1242,7 @@
 }
 
 .bottom-link {
-  margin-top: 1.5vw;
+  margin-top: 2.5vw;
   font-size: 4vw;
   color: blue;
   
