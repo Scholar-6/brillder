@@ -17,6 +17,7 @@ import {
   Author,
   Brick,
   BrickLengthEnum,
+  KeyWord,
   Subject,
   SubjectGroup,
   SubjectGroupNames,
@@ -101,6 +102,7 @@ interface ViewAllState {
   searchTyping: boolean;
   isSearching: boolean;
   sortBy: SortBy;
+  keywords: KeyWord[];
 
   filterLevels: AcademicLevel[];
   filterLength: BrickLengthEnum[];
@@ -239,6 +241,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       filterLevels: [],
       filterLength: [],
+      keywords: [],
       isClearFilter: false,
       failedRequest: false,
       isAdmin,
@@ -378,10 +381,28 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
+  collectKeywords(bricks: Brick[]) {
+    let keywords:KeyWord[] = [];
+    for(let brick of bricks) {
+      if (brick.keywords && brick.keywords.length > 0) {
+        for (let keyword of brick.keywords) {
+          var found = keywords.find(k => k.id == keyword.id);
+          if (!found) {
+            keywords.push(keyword);
+          }
+        }
+      }
+    }
+
+    console.log(keywords);
+    return keywords;
+  }
+
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
       const bricks = await getPublishedBricks();
       if (bricks) {
+        var keywords = this.collectKeywords(bricks);
         let bs = sortAllBricks(bricks);
         let finalBricks = this.filter(
           bs,
@@ -403,6 +424,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           ...this.state,
           subjects,
           bricks,
+          keywords,
           isLoading: false,
           finalBricks,
           shown: true,
@@ -775,6 +797,31 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       ...this.state,
       isClearFilter: this.isFilterClear(),
       searchString: subject.name,
+      searchBricks,
+      finalBricks: searchBricks,
+      shown: true,
+      isLoading: false,
+      searchTyping: false,
+      isSearchBLoading: false,
+      isSearching: true,
+    });
+  }
+
+  filterSuggestionKeyword(keyword: KeyWord) {
+    const searchBricks = this.state.bricks.filter(b => {
+      if (b.keywords && b.keywords.length > 0) {
+        let found = b.keywords.find(k => k.id == keyword.id);
+        if (found) {
+          return true;
+        }
+      }
+      return false;
+    });
+
+    this.setState({
+      ...this.state,
+      isClearFilter: this.isFilterClear(),
+      searchString: keyword.name,
       searchBricks,
       finalBricks: searchBricks,
       shown: true,
@@ -1313,8 +1360,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         <div className="main-listing dashboard-page">
           {this.state.searchTyping === true && this.state.searchString.length >= 1 && <SearchSuggestions
             history={this.props.history} subjects={this.state.subjects} searchString={this.state.searchString} bricks={this.state.bricks}
+            keywords={this.state.keywords}
             filterByAuthor={this.filterByAuthor.bind(this)}
             filterBySubject={this.filterSuggestionSubject.bind(this)}
+            filterByKeyword={this.filterSuggestionKeyword.bind(this)}
           />}
           <div>
             <PageHeadWithMenu
