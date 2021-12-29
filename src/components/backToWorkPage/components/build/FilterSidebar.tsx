@@ -3,7 +3,7 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
 import './FilterSidebar.scss';
-import { AcademicLevel, AcademicLevelLabels, Brick, BrickStatus } from "model/brick";
+import { AcademicLevel, AcademicLevelLabels, Brick, BrickLengthEnum, BrickStatus } from "model/brick";
 import { SortBy, Filters, ThreeColumns } from '../../model';
 import { clearStatusFilters } from '../../service';
 import EmptyFilterSidebar from "../EmptyFilter";
@@ -22,7 +22,9 @@ enum FilterFields {
   Level1 = 'level1',
   Level2 = 'level2',
   Level3 = 'level3',
-  Level4 = 'level4'
+  s20 = 's20',
+  s40 = 's40',
+  s60 = 's60',
 }
 
 interface FilterSidebarProps {
@@ -191,8 +193,9 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     );
   };
 
-  renderAcademicLevel(checked: boolean, loopLevel: AcademicLevel, level: FilterFields) {
+  renderAcademicLevel(checked: boolean, loopLevel: AcademicLevel, level: FilterFields, checked2: boolean, length: FilterFields) {
     return (
+      <div>
       <FormControlLabel
         value={SortBy.Popularity}
         style={{ marginRight: 0 }}
@@ -205,10 +208,26 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
         }
         label={`Level ${AcademicLevelLabels[loopLevel]}`}
       />
+      <div>
+      <FormControlLabel
+        value={SortBy.Popularity}
+        style={{ marginRight: 0 }}
+        control={
+          <Radio
+            className="sortBy"
+            checked={checked2}
+            onClick={() => this.toggleFilter(length)}
+          />
+        }
+        label={`${length.substring(1)} mins`}
+      />
+      </div>
+      </div>
     );
   }
 
   renderPublishFilter() {
+    const {filters} = this.props;
     const canSee = isAorP(this.props.user.roles) || checkBuilder(this.props.user);
     if (canSee) {
       return (
@@ -217,9 +236,9 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             Levels
           </div>
           <div className="level-filter-box">
-            {this.renderAcademicLevel(this.props.filters.level1, AcademicLevel.First, FilterFields.Level1)}
-            {this.renderAcademicLevel(this.props.filters.level2, AcademicLevel.Second, FilterFields.Level2)}
-            {this.renderAcademicLevel(this.props.filters.level3, AcademicLevel.Third, FilterFields.Level3)}
+            {this.renderAcademicLevel(filters.level1, AcademicLevel.First, FilterFields.Level1, filters.s20, FilterFields.s20)}
+            {this.renderAcademicLevel(filters.level2, AcademicLevel.Second, FilterFields.Level2, filters.s40, FilterFields.s40)}
+            {this.renderAcademicLevel(filters.level3, AcademicLevel.Third, FilterFields.Level3, filters.s60, FilterFields.s60)}
             <div className="absolute-difficult-help">
               <HoverHelp>
                 <LevelHelpContent />

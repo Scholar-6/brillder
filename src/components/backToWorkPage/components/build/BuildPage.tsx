@@ -137,7 +137,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
         level1: true,
         level2: true,
         level3: true,
-        level4: true
+
+        s20: true,
+        s40: true,
+        s60: true
       },
       handleKey: this.handleKey.bind(this)
     }
@@ -328,7 +331,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     filters.level1 = true;
     filters.level2 = true;
     filters.level3 = true;
-    filters.level4 = true;
 
     if (!filters.publish) {
       removeAllFilters(filters);
