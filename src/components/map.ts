@@ -115,16 +115,16 @@ export const realPlay = (brickId: number) => {
 
 export const PostPlay = '/post-play/brick';
 
-export const postPlay = (brickId: number, userId: number) => {
-  return PostPlay + '/' + brickId + '/' + userId;
+export const postPlay = (brickId: number, userId: number, classId?: number) => {
+  return PostPlay + '/' + brickId + '/' + userId + (classId ? '/' + classId : '');
 }
 
-export const postAssignment = (brickId: number, userId: number) => {
-  return postPlay(brickId, userId) + '?contentsAttempts=true';
+export const postAssignment = (brickId: number, userId: number, classId?: number) => {
+  return postPlay(brickId, userId, classId) + '?contentsAttempts=true';
 }
 
-export const postAssignmentBrief = (brickId: number, userId: number) => {
-  return postPlay(brickId, userId) + '?brief=true';
+export const postAssignmentBrief = (brickId: number, userId: number, classId?: number) => {
+  return postPlay(brickId, userId, classId) + '?brief=true';
 }
 
 export default {

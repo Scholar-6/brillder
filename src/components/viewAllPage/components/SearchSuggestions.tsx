@@ -154,7 +154,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
     } else if (suggestion.isKeyRes && keyword) {
       return (
         <div onClick={() => props.filterByKeyword(keyword)}>
-          <SpriteIcon name="hash" />
+          <SpriteIcon name="hash" className="keyword-icon" />
           {stripHtml(keyword.name)}
         </div>
       );
