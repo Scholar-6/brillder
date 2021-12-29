@@ -419,10 +419,11 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                       </div>
                     </div>
                   </div>
+                  <div className="keywords-row">
+                    <SpriteIcon name="hash" />
+                    <KeyWordsPreview keywords={brick.keywords} onClick={keyword => props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)} />
+                  </div>
                   <CoverTimer brickLength={brick.brickLength} />
-                </div>
-                <div className="keywords-row">
-                  <KeyWordsPreview keywords={brick.keywords} onClick={keyword => props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)} />
                 </div>
               </div>
             </Grid>
