@@ -260,9 +260,9 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     return '';
   }
 
-  renderLibraryLink() {
+  renderLibraryLink(student: User) {
     let name = '';
-    const { firstName } = this.props.user;
+    const { firstName } = student;
     let lastLetter = firstName[firstName.length - 1];
     if (lastLetter == 's') {
       name = firstName + "'";
@@ -401,6 +401,23 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       return '';
     }
 
+    const renderTopUserData = () => {
+      if (this.state.attempt) {
+        const {student} = this.state.attempt;
+        return (
+          <div className="absolute-top-part">
+            {this.renderClassroom()}
+            <div className='profile-image-v5'>
+              {student.profileImage ? <img src={fileUrl(student.profileImage)} /> : <SpriteIcon name="user" />}
+            </div>
+            {student.firstName} {student.lastName}
+            {renderAbsolutePercentage()}
+            {this.renderLibraryLink(student)}
+          </div>
+        );
+      }
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
@@ -416,15 +433,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
             search={() => { }}
             searching={(v: string) => { }}
           />
-          <div className="absolute-top-part">
-            {this.renderClassroom()}
-            <div className='profile-image-v5'>
-              {this.props.user.profileImage ? <img src={fileUrl(this.props.user.profileImage)} /> : <SpriteIcon name="user" />}
-            </div>
-            {this.props.user.firstName} {this.props.user.lastName}
-            {renderAbsolutePercentage()}
-            {this.renderLibraryLink()}
-          </div>
+          {renderTopUserData()}
           <div className="page-content">
             <BookSidebar
               user={this.props.user}
