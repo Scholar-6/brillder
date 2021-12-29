@@ -7,7 +7,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
 import './BuildPage.scss';
-import { AcademicLevel, Brick, BrickStatus } from "model/brick";
+import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters, SortBy } from '../../model';
@@ -378,6 +378,15 @@ class BuildPage extends Component<BuildProps, BuildState> {
       }
       if (!filters.level3) {
         finalBricks = finalBricks.filter(b => b.academicLevel !== AcademicLevel.Third);
+      }
+      if (!filters.s20) {
+        finalBricks = finalBricks.filter(b => b.brickLength !== BrickLengthEnum.S20min);
+      }
+      if (!filters.s40) {
+        finalBricks = finalBricks.filter(b => b.brickLength !== BrickLengthEnum.S40min);
+      }
+      if (!filters.s60) {
+        finalBricks = finalBricks.filter(b => b.brickLength !== BrickLengthEnum.S60min);
       }
     }
     this.setState({ ...this.state, filters, subjects, finalBricks, sortedIndex: 0 });
