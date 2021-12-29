@@ -229,7 +229,7 @@ class ExpandedAssignment extends Component<
     const { history, assignment } = this.props;
     const moveToPostPlay = () => {
       if (studentResult.bestScore !== undefined) {
-        history.push(map.postAssignment(assignment.brick.id, studentId) + '?fromTeach=true');
+        history.push(map.postAssignment(assignment.brick.id, studentId, this.props.classroom.id) + '?fromTeach=true');
       }
     }
     return <BookButton onClick={moveToPostPlay} />;

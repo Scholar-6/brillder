@@ -62,6 +62,12 @@
     }
   }
 
+  .classroom-top {
+    padding-right: 0.5vw;
+    border-right: 0.2vw solid var(--tab-gray);
+    margin-right: 0.5vw;
+  }
+
   .absolute-library-link {
     cursor: pointer;
     position: relative;

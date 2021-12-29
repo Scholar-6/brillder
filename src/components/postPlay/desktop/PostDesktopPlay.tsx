@@ -40,6 +40,7 @@ import { generateId } from "components/build/buildQuestions/questionTypes/servic
 import map from "components/map";
 import { fileUrl } from "components/services/uploadFile";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { ClassroomApi, getAllClassrooms } from "components/teach/service";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -70,8 +71,8 @@ interface ProposalState {
   subjects: Subject[];
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
+  classroom: ClassroomApi | null;
   mode?: boolean; // live - false, review - true, undefined - default
-  handleKey(e: any): void;
 }
 
 class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
@@ -95,27 +96,13 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       attempt: null,
       attempts: [],
       mode: true,
+      classroom: null,
       subjects: [],
-      handleKey: this.handleKey.bind(this)
     };
 
     this.highlightRef = React.createRef();
 
     this.loadData();
-  }
-
-  componentDidMount() {
-    document.addEventListener("keydown", this.state.handleKey, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.state.handleKey, false);
-  }
-
-  handleKey(e: any) {
-    if (rightKeyPressed(e)) {
-    } else if (leftKeyPressed(e)) {
-    }
   }
 
   moveToPage(bookState: BookState) {
@@ -127,18 +114,28 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   }
 
   async loadData() {
-    const { userId, brickId } = this.props.match.params;
+    const { userId, brickId, classId } = this.props.match.params;
     const subjects = await loadSubjects();
+    let classroom = null;
+    if (classId) {
+      const classrooms = await getAllClassrooms();
+      if (classrooms) {
+        var found = classrooms.find(c => c.id == classId);
+        if (found) {
+          classroom = found;
+        }
+      }
+    }
+
     let attempts = await getAttempts(brickId, userId);
     if (subjects && attempts && attempts.length > 0) {
       const attempt = attempts[0];
       this.prepareAttempt(attempt);
-      this.setState({ attempt: attempt, attempts, subjects });
+      this.setState({ attempt: attempt, attempts, classroom, subjects });
     }
   }
 
   async saveAttempt(attempt: PlayAttempt) {
-    console.log(attempt);
     const newAttempt = Object.assign({}, attempt) as any;
 
     newAttempt.answers = attempt.answers.map(answer => ({ ...answer, answer: JSON.parse(JSON.parse(answer.answer)) }));
@@ -150,8 +147,6 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     newAttempt.timestamp = undefined;
     newAttempt.studentId = undefined;
     newAttempt.brickId = attempt.brick.id;
-
-    console.log(newAttempt);
 
     return await axios.put(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
@@ -174,15 +169,12 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
         newAttempts[attemptIdx] = attempt;
       }
 
-      console.log('save attempt', attempt);
-
       this.setState({ attempt, attempts: newAttempts });
       this.saveAttempt(attempt);
     } catch { }
   }
 
   componentDidCatch(error: any, info: any) {
-    console.log(error, 'post-book', info);
     this.props.history.push('/home');
   }
 
@@ -257,6 +249,17 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     )
   }
 
+  renderClassroom() {
+    if (this.state.classroom) {
+      return (
+        <div className="classroom-top">
+          {this.state.classroom.name}
+        </div>
+      );
+    }
+    return '';
+  }
+
   renderLibraryLink() {
     let name = '';
     const { firstName } = this.props.user;
@@ -313,7 +316,6 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     }
 
     if (!this.state.attempt.liveAnswers) {
-      console.log('redirect has no live answers');
       return <Redirect to="/home" />;
     }
 
@@ -415,6 +417,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
             searching={(v: string) => { }}
           />
           <div className="absolute-top-part">
+            {this.renderClassroom()}
             <div className='profile-image-v5'>
               {this.props.user.profileImage ? <img src={fileUrl(this.props.user.profileImage)} /> : <SpriteIcon name="user" />}
             </div>
@@ -478,7 +481,6 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                         </div>
                       </div>
                     </div>
-                    {/* <div className="expanded-text" dangerouslySetInnerHTML={{ __html: brick.prep }} /> */}
                     <HighlightHtml
                       ref={this.highlightRef}
                       value={brick.prep}
