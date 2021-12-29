@@ -56,9 +56,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
       >
         {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
           <div className="competition-star">
-            <div>
-              <SpriteIcon name="star" style={{ color: color, fill: color }} />
-            </div>
+            <SpriteIcon name="book-star" style={{ color: color, stroke: color, fill: color }} />
           </div>}
         {height > 0 && assignment.brick.academicLevel >= AcademicLevel.First && (
           <AcademyDifficulty
@@ -85,9 +83,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
       >
         {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
           <div className="competition-star">
-            <div>
-              <SpriteIcon name="star" style={{ color: color, fill: color }} />
-            </div>
+            <SpriteIcon name="book-star" style={{ color: color, stroke: color, fill: color }} />
           </div>}
         {height > 0 && assignment.brick.academicLevel >= AcademicLevel.First && (
           <AcademyDifficulty

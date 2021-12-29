@@ -147,7 +147,14 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
           className="progress-value default-value"
           onMouseEnter={() => setHover(true)}
         >
-          <div className="background" style={{background: color, opacity: 0.5}} />
+          <div className="background" style={{ background: color, opacity: 0.5 }}>
+          {height < 50 && (
+            <AcademyDifficulty
+              a={assignment.brick.academicLevel}
+              brick={brick}
+            />
+          )}
+          </div>
           {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
           {height < 50 && height > 0 && renderRotatedTitle("white", 100)}
           {height < 50 && height > 0 &&
@@ -170,11 +177,9 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
             style={{ background: color, height: height + "%" }}
           >
             {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
-            <div className="competition-star bigger">
-              <div>
-                <SpriteIcon name="star" style={{color: color, fill: color}} />
-              </div>
-            </div>}
+              <div className="competition-star bigger">
+                <SpriteIcon name="book-star" style={{ color: color, stroke: color, fill: color }} />
+              </div>}
             {renderRotatedTitle("white", height)}
             {assignment.brick.academicLevel >= AcademicLevel.First && (
               <AcademyDifficulty

@@ -12,36 +12,25 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    > div {
+    > svg {
       background: white;
       border-bottom-left-radius: 0.4vw;
       border-bottom-right-radius: 0.4vw;
       width: 0.8vw;
       height: 1.1vw;
-      padding-top: 0.15vw;
+      padding-top: 0;
       display: flex;
       justify-content: center;
       border-top-left-radius: 0.25vw;
       border-top-right-radius: 0.25vw;
-
-      svg {
-        width: 0.7vw;
-        height: 0.7vw;
-      }
     }
 
     &.bigger {
-      > div {
+      > svg {
         width: 2vw;
         height: 2.8vw;
-        padding-top: 0.4vw;
         border-bottom-left-radius: 1vw;
         border-bottom-right-radius: 1vw;
-  
-        svg {
-          width: 1.5vw;
-          height: 1.5vw;
-        }
       }
     }
   }
