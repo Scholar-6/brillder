@@ -147,7 +147,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
           className="progress-value default-value"
           onMouseEnter={() => setHover(true)}
         >
-          <div className="background" style={{ opacity: height < 50 ? 0.3 : 0.5 }}>
+          <div className="background" style={{background: height < 50 ? color : '', opacity: height < 50 ? 0.3 : 0.5 }}>
           {height < 50 && (
             <AcademyDifficulty
               a={assignment.brick.academicLevel}
