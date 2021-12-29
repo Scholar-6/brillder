@@ -50,6 +50,9 @@ interface FilterProps {
 
   levels: AcademicLevel[];
   filterByLevel(level: AcademicLevel[]): void;
+
+  lengths: BrickLengthEnum[];
+  filterByLength(length: BrickLengthEnum[]): void;
 }
 
 interface FilterState {
@@ -110,6 +113,19 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     } else {
       levels.push(level);
       this.props.filterByLevel(levels);
+    }
+  }
+
+  filterByLength(length: BrickLengthEnum) {
+    const { lengths } = this.props;
+
+    const found = lengths.find((l) => l === length);
+    if (found) {
+      const newLengths = lengths.filter((l) => l !== length);
+      this.props.filterByLength(newLengths);
+    } else {
+      lengths.push(length);
+      this.props.filterByLength(lengths);
     }
   }
 
@@ -210,7 +226,9 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   }
 
   renderAcademicLevel(loopLevel: AcademicLevel, length: BrickLengthEnum) {
-    const found = this.props.levels.find((l) => l === loopLevel);
+    const found = this.props.levels.find(l => l === loopLevel);
+    const found2 = this.props.lengths.find(l => l === length);
+
     return (
       <div className="">
         <FormControlLabel
@@ -225,7 +243,20 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
           }
           label={`Level ${AcademicLevelLabels[loopLevel]}`}
         />
-        {/*<div>{length} mins</div>*/}
+        <div>
+        <FormControlLabel
+          value={SortBy.Popularity}
+          style={{ marginRight: 0, width: "28%" }}
+          control={
+            <Radio
+              className="sortBy"
+              checked={!!found2}
+              onClick={() => this.filterByLength(length)}
+            />
+          }
+          label={`${length} mins`}
+        />
+        </div>
       </div>
     );
   }

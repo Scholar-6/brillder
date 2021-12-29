@@ -16,6 +16,7 @@ import {
   AcademicLevel,
   Author,
   Brick,
+  BrickLengthEnum,
   Subject,
   SubjectGroup,
   SubjectGroupNames,
@@ -71,6 +72,7 @@ import {
 import {
   filterByCurretUser,
   filterByLevels,
+  filterByLength
 } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import MobileCategory from "./MobileCategory";
@@ -101,6 +103,7 @@ interface ViewAllState {
   sortBy: SortBy;
 
   filterLevels: AcademicLevel[];
+  filterLength: BrickLengthEnum[];
   subjects: SubjectItem[];
   userSubjects: Subject[];
 
@@ -235,6 +238,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAllCategory,
 
       filterLevels: [],
+      filterLength: [],
       isClearFilter: false,
       failedRequest: false,
       isAdmin,
@@ -487,6 +491,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     isCore: boolean,
     showAll?: boolean,
     levels?: AcademicLevel[],
+    filterLength?: BrickLengthEnum[],
     noSearching?: boolean
   ) {
     if (!noSearching && this.state.isSearching) {
@@ -530,6 +535,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks = filterByLevels(bricks, levels);
     }
 
+    if (filterLength && filterLength.length > 0) {
+      bricks = filterByLength(bricks, filterLength)
+    }
+
     if (filterSubjects.length > 0) {
       return sortAndFilterBySubject(bricks, filterSubjects);
     }
@@ -559,7 +568,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             this.state.isAllSubjects,
             this.state.isCore,
             false,
-            this.state.filterLevels
+            this.state.filterLevels,
+            this.state.filterLength
           );
         } else {
           finalBricks = this.filterUnauthorized(
@@ -589,13 +599,45 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             this.state.isAllSubjects,
             this.state.isCore,
             false,
-            filterLevels
+            filterLevels,
+            this.state.filterLength
           );
         } else {
           finalBricks = this.filterUnauthorized(
             this.state.bricks,
             this.state.isViewAll,
             filterLevels
+          );
+        }
+        this.setState({
+          ...this.state,
+          isClearFilter: this.isFilterClear(),
+          finalBricks,
+          shown: true,
+        });
+      } catch { }
+    }, 1400);
+  }
+
+  filterByLength(filterLength: BrickLengthEnum[]) {
+    this.setState({ filterLength, shown: false });
+    setTimeout(() => {
+      try {
+        let finalBricks: Brick[] = [];
+        if (this.props.user) {
+          finalBricks = this.filter(
+            this.state.bricks,
+            this.state.isAllSubjects,
+            this.state.isCore,
+            false,
+            this.state.filterLevels,
+            filterLength
+          );
+        } else {
+          finalBricks = this.filterUnauthorized(
+            this.state.bricks,
+            this.state.isViewAll,
+            this.state.filterLevels
           );
         }
         this.setState({
@@ -823,7 +865,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   searching(searchString: string) {
     if (searchString.length === 0) {
-      const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, false, this.state.filterLevels, true);
+      const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, false, this.state.filterLevels, this.state.filterLength, true);
 
       this.setState({
         ...this.state,
@@ -1141,6 +1183,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
+
   renderDesktopViewAllPage(bricks: Brick[]) {
     return (
       <Grid container direction="row" className="sorted-row">
@@ -1172,6 +1215,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           clearSubjects={() => this.clearSubjects()}
           levels={this.state.filterLevels}
           filterByLevel={(lvs) => this.filterByLevel(lvs)}
+          lengths={this.state.filterLength}
+          filterByLength={lens => this.filterByLength(lens)}
           filterBySubject={(id) => this.filterBySubject(id)}
         />
         <Grid item xs={9} className="brick-row-container">
