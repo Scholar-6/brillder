@@ -77,7 +77,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         style={{
           background: color,
           height: 100 + "%",
-          opacity: 0.5,
+          opacity: 0.3,
           maxHeight: "100%",
         }}
       >
