@@ -125,11 +125,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   if (cashAttemptString && !restoredFromCash) {
     // parsing cashed play
-    const isCover = history.location.pathname.slice(-PlayCoverLastPrefix.length) === PlayCoverLastPrefix;
-    const cashAttempt = JSON.parse(cashAttemptString);
-    if (isCover) {
+
+    // check if is Cover page
+    let isCover = false;
+    const coverPart = history.location.pathname.split('/')[4];
+    if (coverPart === 'cover') {
+      isCover = true;
       CashAttempt('');
     }
+    const cashAttempt = JSON.parse(cashAttemptString);
 
     if (cashAttempt.brick.id === props.brick.id && !isCover) {
       parsedBrick = cashAttempt.brick;
