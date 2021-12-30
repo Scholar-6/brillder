@@ -51,6 +51,7 @@
     font-family: $font-family-bold;
     color: var(--theme-dark-blue);
     font-size: 3vw;
+    text-transform: capitalize;
 
     .circle-container {
       border-radius: 50%;
@@ -151,10 +152,24 @@
       }
     }
 
+    .absolute-scores {
+      position: absolute;
+      right: 1vw;
+      width: 17.3vw;
+      display: flex;
+    }
+
+    .ellipsis-title {
+      width: 30vw;
+      font-size: 2.4vw;
+      max-width: 30vw;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+      white-space: nowrap;
+    }
 
     .hs-score {
       $size: 2.5vw;
-      margin-left: 10vw;
       font-size: 1.2vw;
       position: relative;
 

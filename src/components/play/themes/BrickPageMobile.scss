@@ -2018,6 +2018,11 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     padding-top: 2vh;
     padding-bottom: 2vh;
   }
+
+  .introduction-content {
+    padding-top: 2vh !important;
+    padding-bottom: 1vh !important;
+  }
 }
 
 .play-preview-pages .sorted-row .brick-row-container.real-introduction-page {
@@ -2202,4 +2207,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 .sort-play > div {
   margin-left: 6vw !important;
   margin-right: 6vw !important;
+}
+
+.sort-play > p.flex-center {
+  justify-content: flex-start;
 }
