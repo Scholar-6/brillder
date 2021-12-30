@@ -14,6 +14,7 @@ import { getLibraryBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 import { SortBy, SubjectAssignments } from "./service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
+import { getUserById } from 'services/axios/user';
 
 import LibraryFilter from "./components/LibraryFilter";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
@@ -46,6 +47,7 @@ interface BricksListState {
   sortedIndex: number;
   isLoading: boolean;
   classrooms: TeachClassroom[];
+  student: User | null;
 
   dropdownShown: boolean;
 
@@ -82,6 +84,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       dropdownShown: false,
       pageSize: 15,
       isLoading: true,
+      student: null,
 
       activeClassroomId: -1,
       isClearFilter: false,
@@ -202,11 +205,11 @@ class Library extends Component<BricksListProps, BricksListState> {
 
   async getAssignments(subjects: SubjectAItem[]) {
     let userId = this.props.user.id;
-    console.log(this.props.match.params.userId)
+    var student:User | null = null;
     if (this.props.match.params.userId) {
       userId = this.props.match.params.userId;
+      student = await getUserById(userId);
     }
-    console.log(userId);
     const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>(userId);
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
@@ -220,7 +223,7 @@ class Library extends Component<BricksListProps, BricksListState> {
         });
       } else {
         this.setState({
-          ...this.state, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments
+          ...this.state, student, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments
         });
       }
     } else {
@@ -346,6 +349,9 @@ class Library extends Component<BricksListProps, BricksListState> {
       if (classroom) {
         return classroom.name;
       }
+    }
+    if (this.props.user.id != this.props.match.params.userId && this.state.student) {
+      return this.state.student.firstName + " " + this.state.student.lastName + "'s library";
     }
     return "My Library";
   }
