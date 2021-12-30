@@ -350,8 +350,9 @@ class Library extends Component<BricksListProps, BricksListState> {
         return classroom.name;
       }
     }
-    if (this.props.user.id != this.props.match.params.userId && this.state.student) {
-      return this.state.student.firstName + " " + this.state.student.lastName + "'s library";
+    const {student} = this.state;
+    if (this.props.user.id != this.props.match.params.userId && student) {
+      return student.firstName + " " + student.lastName + "'s library";
     }
     return "My Library";
   }
@@ -636,13 +637,17 @@ class Library extends Component<BricksListProps, BricksListState> {
               <div className={
                 `library-title ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}`
               }>
-                {this.renderMainTitle(filterSubjects)}
+                <div className="ellipsis-title">
+                  {this.renderMainTitle(filterSubjects)}
+                </div>
                 {this.renderBook()}
                 {!this.state.subjectChecked && this.renderBox()}
                 {this.renderLastBox()}
-                {this.highestScore()}
-                {this.averageScore()}
-                {this.lowestScore()}
+                <div className="absolute-scores">
+                  {this.highestScore()}
+                  {this.averageScore()}
+                  {this.lowestScore()}
+                </div>
               </div>
               {this.renderContent()}
             </Grid>

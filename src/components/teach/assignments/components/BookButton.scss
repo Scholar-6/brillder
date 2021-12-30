@@ -84,6 +84,9 @@
     .book-container {
       background: var(--theme-dark-blue);
     }
+    .css-custom-tooltip {
+      text-transform: capitalize;
+    }
     .green-hover {
       > div {
         background: var(--theme-dark-blue-alpha3);
