@@ -356,6 +356,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     );
   }
 
+  const briefText = stripHtml(brick.brief);
+
   return (
     <React.Suspense fallback={<></>}>
       <HoveredImage />
@@ -365,16 +367,11 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           <Grid container direction="row">
             <Grid item sm={8} xs={12}>
               <div className="introduction-page">
-                {renderFirstRow()}
                 <h1 className="brick-title q-brick-title dynamic-title">
                   {brick.adaptedFrom && !brick.isCore && <div className="adapted-text">ADAPTED</div>}
                   {brick.adaptedFrom && !brick.isCore && <SpriteIcon name="copy" />}<DynamicFont content={stripHtml(brick.title)} />
                 </h1>
                 <CoverAuthorRow brick={brick} setBio={setBio} setEditorBio={setEditorBio} />
-                {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
-                  user={props.user}
-                  brick={brick}
-                />}
                 <div className="image-container centered">
                   <CoverImage
                     locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user?.id)}
@@ -429,6 +426,13 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             </Grid>
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
+                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
+                  user={props.user}
+                  brick={brick}
+                />}
+                <div className="brief-ellipsis">
+                  {briefText}
+                </div>
                 <CoverPlay onClick={() => {
                   if (props.user) {
                     startBrick();
