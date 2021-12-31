@@ -1028,8 +1028,12 @@
   fill: unset !important;
 }
 
+.competition-dialog .MuiDialog-container .MuiDialog-paperScrollPaper {
+  padding-bottom: 0.9vw;
+}
+
 .bottom-link {
-  margin-top: 0.4vw;
+  margin-top: 0.9vw;
   font-size: 1.1vw;
   color: blue;
   

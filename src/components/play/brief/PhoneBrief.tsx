@@ -107,7 +107,7 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
         </div>
       </div>
       {competitionData &&
-        <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog">
+        <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog" onClick={() => setCompetitionData({ ...competitionData, isOpen: false })}>
           <div className="dialog-header">
             <div className="flex-center">
               <SpriteIcon name="star-empty" className="big-star" />
