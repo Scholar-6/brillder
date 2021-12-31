@@ -6,7 +6,7 @@
 
   .brief-ellipsis {
     position: absolute;
-    top: 6vw;
+    top: 9vw;
     font-family: $font-family-regular-italic;
     padding-left: 2.2vw;
     padding-right: 2.2vw;
@@ -14,7 +14,7 @@
     font-size: 2.4vh;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 13;
+    -webkit-line-clamp: 10;
     overflow: hidden;
   }
 

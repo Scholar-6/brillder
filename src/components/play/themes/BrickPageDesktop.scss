@@ -354,6 +354,21 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             @extend %transitionAll300;
             overflow: hidden;
 
+            &.bigger-button-v3 {
+              > div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+              svg {
+                margin-right: 0.8vw;
+              }
+            }
+
+            &.assign-intro-button {
+              margin-top: 6vh;
+            }
+
             span {
               @extend %transitionAll300;
             }
@@ -364,22 +379,18 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
             &:hover {
               background: var(--white);
-              span {
-                color: var(--theme-orange) !important;
-              }
+              color: var(--theme-orange) !important;
               svg {
                 color: var(--theme-orange) !important;
               }
             }
 
-            &.blue {
+            &.blue-v3 {
               background: var(--theme-dark-blue);
               stroke-width: 2;
               &:hover {
                 background: var(--tab-gray);
-                span {
-                  color: var(--theme-dark-blue) !important;
-                }
+                color: var(--theme-dark-blue) !important;
                 svg {
                   color: var(--theme-dark-blue) !important;
                 }

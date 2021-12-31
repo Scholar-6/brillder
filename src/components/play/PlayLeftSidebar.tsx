@@ -276,7 +276,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           haveCircle={haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />}
-        <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
         <AssignButton
           sidebarRolledUp={sidebarRolledUp}
           user={this.props.user}
@@ -290,6 +289,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           sidebarRolledUp={sidebarRolledUp}
           onClick={this.onAdaptDialog.bind(this)}
         />
+        <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
         {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) &&
           <GenerateCoverButton
             sidebarRolledUp={sidebarRolledUp}
