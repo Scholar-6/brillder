@@ -12,6 +12,17 @@
     }
   }
 
+  //#4190
+  .main-listing.mobile-category.phone-view-all .upper-part .page-header .logout-container {
+    .home-button-container {
+      margin-right: 24vw;
+    }
+    .search-container {
+      top: 2.6vw;
+      left: 44vw;
+    }
+  }
+
   .sorted-row {
     border-top-left-radius: 12vw;
 
