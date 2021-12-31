@@ -40,9 +40,10 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
 
   if (!props.sidebarRolledUp) {
     return (
-      <button onClick={props.onClick} className="assign-class-button svgOnHover blue">
-        <span>Adapt Brick</span>
-      </button>
+      <div onClick={props.onClick} className="assign-class-button bigger-button-v3 blue-v3">
+        <SpriteIcon name="copy" />
+        <div>Adapt</div>
+      </div>
     );
   }
 
