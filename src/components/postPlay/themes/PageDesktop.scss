@@ -21,6 +21,7 @@
     display: flex;
     align-items: center;
     font-family: $font-family-bold;
+    text-transform: capitalize;
 
     .profile-image-v5 {
       width: 3vw;
