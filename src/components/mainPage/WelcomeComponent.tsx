@@ -172,8 +172,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
     }
     return (
       <div className="welcome-box">
-        <div>Welcome to</div>
-        <div className="smaller">Brillder,</div>
+        <div>Welcome to Brillder,</div>
         <div
           className="welcome-name"
           onMouseEnter={() => this.setState({nameHovered: true})}
