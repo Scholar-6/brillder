@@ -24,6 +24,21 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   background: var(--theme-dark-blue);
   min-height: 100%;
 
+  .brick-info {
+    font-family: $font-family-bold;
+    top: calc(1vw + 0.2vw);
+    position: absolute;
+    width: 100%;
+    font-size: 1.2vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    sub {
+      margin-bottom: 0.6vw;
+      margin-right: 0.3vw;
+    }
+  }
+
   .prep-button {
     animation: fadein 400ms ease-out forwards;
 
