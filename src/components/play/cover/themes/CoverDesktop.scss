@@ -3,6 +3,26 @@
 @import 'src/assets/sass/partials/extensions';
 
 .cover-page {
+
+  .brief-ellipsis {
+    position: absolute;
+    top: 4vw;
+    font-family: $font-family-regular-italic;
+    padding-left: 2.2vw;
+    padding-right: 2.2vw;
+    margin-top: 2vw;
+    font-size: 2.4vh;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 13;
+    overflow: hidden;
+  }
+
+  .cover-play-button {
+    position: absolute;
+    top: calc(74vh - 5.8vw);
+  }
+
   .brick-container {
     color: var(--theme-dark-blue);
     .introduction-page {
@@ -303,8 +323,9 @@
 // sponsor
 .cover-page .cover-sponsors {
   position: absolute;
-  top: -0.3vw;
-  right: 1vw;
+  top: 1vh;
+  right: 0vw;
+  width: 100%;
   margin-top: 2vw;
   display: flex;
   align-items: flex-end;
