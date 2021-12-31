@@ -363,7 +363,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       if (subject) {
         const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
         if (subjectAssignment) {
-          return <SingleSubjectAssignments userId={this.props.user.id} sortBy={this.state.sortBy} subjectAssignment={subjectAssignment} history={this.props.history} />
+          return <SingleSubjectAssignments userId={this.props.user.id} sortBy={this.state.sortBy} student={this.state.student} subjectAssignment={subjectAssignment} history={this.props.history} />
         }
       }
     }
@@ -376,6 +376,7 @@ class Library extends Component<BricksListProps, BricksListState> {
           sortedIndex={this.state.sortedIndex}
           subjectAssignments={this.state.subjectAssignments}
           history={this.props.history}
+          student={this.state.student}
           subjectTitleClick={s => this.filterBySubject(s.id)}
         />
       </div>

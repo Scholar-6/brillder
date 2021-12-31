@@ -6,12 +6,14 @@ import { LibraryAssignmentBrick } from "model/assignment";
 import { BrickLengthEnum } from "model/brick";
 import SingleSubjectPagination from "./SingleSubjectPagination";
 import SingleSubjectAssignment from "./SingleSubjectAssignment";
+import { User } from "model/user";
 
 interface SingleSubjectProps {
   sortBy: SortBy;
   userId: number;
   history: any;
   subjectAssignment: SubjectAssignments;
+  student: User | null;
 }
 
 interface SingleSubjectState {
@@ -104,6 +106,7 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
     return <div key={key}>
       <SingleSubjectAssignment
         subject={this.props.subjectAssignment.subject}
+        student={this.props.student}
         history={this.props.history} assignment={assignment}
       />
     </div>
