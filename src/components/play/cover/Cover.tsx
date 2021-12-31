@@ -328,7 +328,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
         }
         {competitionData &&
-          <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog">
+          <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog" onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}>
             <div className="dialog-header phone-competition">
               <div className="flex-center">
                 <SpriteIcon name="star-empty" className="big-star" />
@@ -464,7 +464,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         }}
       />
       {competitionData &&
-        <Dialog open={competitionData.isOpen} className="dialog-box competition-dialog">
+        <Dialog open={competitionData.isOpen} className="dialog-box competition-dialog" onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}>
           <div className="dialog-header">
             <div className="flex-center">
               <SpriteIcon name="star-empty" className="big-star" />
