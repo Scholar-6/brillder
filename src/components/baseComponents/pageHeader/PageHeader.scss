@@ -16,6 +16,7 @@
     @include placeholder {
       opacity: 0.8;
       color: var(--tab-gray);
+      font-family: $font-family-regular !important;
     }
   }
   .page-navigation {
@@ -67,7 +68,7 @@
         position: relative;
         align-items: center;
         justify-content: center;
-        height: 74px;
+        height: 17.5vw;
         &.active {
           z-index: 999999;
         }

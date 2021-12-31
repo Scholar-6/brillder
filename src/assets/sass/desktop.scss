@@ -852,8 +852,8 @@
 .level-filter-box {
   padding-top: 1.3vh;
   padding-bottom: 1.8vh;
-  padding-left: 1.2vw;
-  padding-right: 4.5vw;
+  padding-left: 1vw;
+  padding-right: 3.7vw;
   font-size: 1.05vw;
   display: flex;
   .MuiButtonBase-root {
@@ -865,7 +865,7 @@
     margin: 0;
   }
   .MuiFormControlLabel-label {
-    min-width: 3.4vw;
+    min-width: 3.8vw;
   }
   .MuiButtonBase-root {
     margin-right: 0.5vw;
@@ -1028,8 +1028,12 @@
   fill: unset !important;
 }
 
+.competition-dialog .MuiDialog-container .MuiDialog-paperScrollPaper {
+  padding-bottom: 0.9vw;
+}
+
 .bottom-link {
-  margin-top: 0.4vw;
+  margin-top: 0.9vw;
   font-size: 1.1vw;
   color: blue;
   

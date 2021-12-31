@@ -86,12 +86,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/competition/${this.props.user.id}/${this.props.brick.id}`, { withCredentials: true });
       if (res.status === 200 && res.data) {
         console.log(res.data);
-        this.setState({competitionPresent: true});
+        this.setState({ competitionPresent: true });
       } else {
-        this.setState({competitionPresent: false});
+        this.setState({ competitionPresent: false });
       }
     } catch {
-      this.setState({competitionPresent: false});
+      this.setState({ competitionPresent: false });
     }
   }
 
@@ -383,13 +383,60 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return (
       <Grid container item className={className}>
         <div className="collapsable-sidebar">
-          <div className="sidebar-button f-align-end">
-            {this.renderToggleButton()}
-          </div>
-          {this.renderButtons()}
-          {this.renderDialogs()}
+          {!this.props.sidebarRolledUp &&
+            <div className="brick-info">
+              <div className="hover-area">
+                Brick N<sub className="smaller">o.</sub> {this.props.brick.id}
+                <div className="hover-content">
+                  <div>A brick is a learning unit that should take either 20, 40, or 60 minutes to complete.</div>
+                  <br />
+                  <div>Bricks follow a cognitively optimised sequence:</div>
+                  <div className="container">
+                    <div className="white-circle">1</div>
+                    <div className="l-text">
+                      Preparation: <span className="regular">stimulus content gets you in the zone.</span>
+                    </div>
+                  </div>
+                  <div className="container">
+                    <div className="white-circle">2</div>
+                    <div className="l-text">
+                      Investigation: <span className="regular">challenging interactive questions make you think.</span>
+                    </div>
+                  </div>
+                  <div className="container">
+                    <div className="white-circle">3</div>
+                    <div className="l-text">
+                      <span className="regular">A preliminary score</span>
+                    </div>
+                  </div>
+                  <div className="container">
+                    <div className="white-circle">4</div>
+                    <div className="l-text">
+                      Synthesis: <span className="regular">explanation.</span>
+                    </div>
+                  </div>
+                  <div className="container">
+                    <div className="white-circle">5</div>
+                    <div className="l-text">
+                      Review: <span className="regular">hints help you correct your answers.</span>
+                    </div>
+                  </div>
+                  <div className="container">
+                    <div className="white-circle">6</div>
+                    <div className="l-text">
+                      <span className="regular">A final score</span>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>}
+        <div className="sidebar-button f-align-end">
+          {this.renderToggleButton()}
         </div>
-      </Grid>
+        {this.renderButtons()}
+        {this.renderDialogs()}
+      </div>
+      </Grid >
     );
   }
 };

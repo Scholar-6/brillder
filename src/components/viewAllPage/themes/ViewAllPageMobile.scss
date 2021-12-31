@@ -12,6 +12,17 @@
     }
   }
 
+  //#4190
+  .main-listing.mobile-category.phone-view-all .upper-part .page-header .logout-container {
+    .home-button-container {
+      margin-right: 24vw;
+    }
+    .search-container {
+      top: 2.6vw;
+      left: 44vw;
+    }
+  }
+
   .sorted-row {
     border-top-left-radius: 12vw;
 
@@ -793,7 +804,7 @@
   .va-phone-expanded-brick {
     animation: gew-grow 0.4s forwards;
     position: fixed;
-    bottom: 74px;
+    bottom: 17.5vw;
     z-index: 23;
     left: 4vw;
     min-width: 92%;

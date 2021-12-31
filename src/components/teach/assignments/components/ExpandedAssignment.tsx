@@ -221,7 +221,7 @@ class ExpandedAssignment extends Component<
       studentId={studentId} students={this.state.students}
       currentUser={this.props.currentUser}
       onClick={(evt: any) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}
-      onMove={() =>  history.push(map.postAssignmentBrief(assignment.brick.id, studentId) + '?fromTeach=true')}
+      onMove={() =>  history.push(map.postAssignmentBrief(assignment.brick.id, studentId, this.props.classroom.id) + '?fromTeach=true')}
     />;
   }
 
@@ -229,7 +229,7 @@ class ExpandedAssignment extends Component<
     const { history, assignment } = this.props;
     const moveToPostPlay = () => {
       if (studentResult.bestScore !== undefined) {
-        history.push(map.postAssignment(assignment.brick.id, studentId) + '?fromTeach=true');
+        history.push(map.postAssignment(assignment.brick.id, studentId, this.props.classroom.id) + '?fromTeach=true');
       }
     }
     return <BookButton onClick={moveToPostPlay} />;
