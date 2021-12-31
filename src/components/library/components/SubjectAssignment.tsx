@@ -19,6 +19,7 @@ interface LibrarySubjectsProps {
   assignment: LibraryAssignmentBrick;
   history: any;
   user: User;
+  student: User | null;
 }
 
 const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
@@ -106,10 +107,14 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         className={className}
         onClick={() => {
           if (assignment.maxScore) {
+            let userId = props.user.id;
+            if (props.student) {
+              userId = props.student.id;
+            }
             if (isTeacherPreference(props.user)) {
-              props.history.push(map.postAssignment(brick.id, props.user.id));
+              props.history.push(map.postAssignment(brick.id, userId));
             } else {
-              props.history.push(map.postPlay(brick.id, props.user.id));
+              props.history.push(map.postPlay(brick.id, userId));
             }
           } else {
             props.history.push(routes.playNewPrep(brick));

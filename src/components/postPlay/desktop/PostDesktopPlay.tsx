@@ -311,6 +311,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   }
 
   render() {
+    console.log(this.state.attempt);
     if (!this.state.attempt) {
       return <PageLoader content="...Getting Attempt..." />;
     }

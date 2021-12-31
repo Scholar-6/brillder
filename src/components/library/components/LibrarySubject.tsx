@@ -3,10 +3,11 @@ import React, { Component } from "react";
 import { SubjectAssignments } from "../service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 import SubjectAssignment from "./SubjectAssignment";
-import subject from "redux/actions/subject";
+import { User } from "model/user";
 
 interface LibrarySubjectsProps {
   history: any;
+  student: User | null;
   subjectAssignment: SubjectAssignments;
 
   subjectTitleClick(): void;
@@ -23,6 +24,7 @@ class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectStat
       <SubjectAssignment
         subject={this.props.subjectAssignment.subject}
         history={this.props.history} assignment={assignment}
+        student={this.props.student}
       />
     </div>
   }
