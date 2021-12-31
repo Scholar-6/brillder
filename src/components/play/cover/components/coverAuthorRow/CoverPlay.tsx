@@ -11,6 +11,7 @@ const CoverPlay: React.FC<Props> = ({ onClick }) => {
     <div className="cover-play-button">
       <div className="c-next-btn-container">
         <button type="button" onClick={onClick}>
+          <SpriteIcon name="feather-play-circle" />
           Play Now
         </button>
       </div>
