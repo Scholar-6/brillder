@@ -6,7 +6,7 @@
 
   .brief-ellipsis {
     position: absolute;
-    top: 4vw;
+    top: 6vw;
     font-family: $font-family-regular-italic;
     padding-left: 2.2vw;
     padding-right: 2.2vw;
@@ -230,6 +230,7 @@
           .subject-and-name {
             margin-top: 0.2vw;
             display: flex;
+            font-family: $font-family-bold;
             align-items: center;
           }
           .flex-center {
@@ -252,11 +253,19 @@
         display: flex;
         justify-content: center;
         button {
+          svg {
+            width: 2.7vw;
+            height: 2.7vw;
+            stroke-width: 2;
+            margin-right: 0.5vw;
+          }
+          display: flex;
+          align-items: center;
           font-family: $font-family-bold;
           transition: all 300ms ease-out;
           border: none;
           outline: none;
-          font-size: 1.7vw;
+          font-size: 2vw;
           border-radius: 0.7vw;
           padding: 1.4vh 1.9vw;
           color: var(--white);
@@ -323,11 +332,12 @@
 // sponsor
 .cover-page .cover-sponsors {
   position: absolute;
-  top: 1vh;
+  top: 2vw;
   right: 0vw;
   width: 100%;
   margin-top: 2vw;
   display: flex;
+  font-size: 1.4vw;
   align-items: flex-end;
   justify-content: center;
   font-family: $font-family-regular-italic;
