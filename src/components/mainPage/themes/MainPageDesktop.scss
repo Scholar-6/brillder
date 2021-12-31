@@ -49,11 +49,11 @@
   .welcome-col {
     width: $welcome-col-width;
     @extend %textCenter;
-    padding-top: 10vh;
+    padding-top: 20vh;
 
     .welcome-box {
       color: white;
-      letter-spacing: 0.66vw;
+      letter-spacing: 0vw;
       font-size: 3vw;
       font-family: $font-family-bold;
       padding-right: 2.9vw;
@@ -65,7 +65,7 @@
         justify-content: center;
         font-size: 2.5vw;
         letter-spacing: 0.73vw;
-        margin-top: 3.2vh;
+        margin-top: 5vh;
         font-weight: 600;
         text-transform: uppercase;
         font-family: $font-family-light;
@@ -73,7 +73,7 @@
         color: var(--theme-orange);
         .custom-tooltip {
           margin-left: -1.4vw;
-          letter-spacing: 0.05vw;
+          letter-spacing: 0vw;
           text-transform: none;
           margin-top: 4.9vw;
           font-family: $font-family-regular;
@@ -106,8 +106,8 @@
         }
       }
       .notifications-text {
-        margin-top: 4.3vw; //10vh;
-        letter-spacing: 0.1vw;
+        margin-top: 5vh; //10vh;
+        letter-spacing: 0;
         font-family: $font-family-light;
         font-size: 2vw;
 
@@ -252,11 +252,11 @@
       color: var(--tab-gray);
       @include phone_and_tabletP {
         font-size: 25px;
-        letter-spacing: 5px;
+        letter-spacing: 0;
       }
       @include tabletP {
         font-size: 1.5vw;
-        letter-spacing: 0.1vw;
+        letter-spacing: 0;
       }
     }
     &:hover {
@@ -353,7 +353,7 @@
       transform: translate(139px, $smileY) !important;
     }
     .item-description {
-      letter-spacing: 0.3vw !important;
+      letter-spacing: 0 !important;
       font-family: $font-family-light !important;
     }
     .left-smile, .right-smile {
