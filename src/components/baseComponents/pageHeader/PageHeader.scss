@@ -16,6 +16,7 @@
     @include placeholder {
       opacity: 0.8;
       color: var(--tab-gray);
+      font-family: $font-family-regular !important;
     }
   }
   .page-navigation {

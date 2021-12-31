@@ -383,6 +383,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return (
       <Grid container item className={className}>
         <div className="collapsable-sidebar">
+        <div className="brick-info">
+          Brick N<sub className="smaller">o.</sub> {this.props.brick.id}
+        </div>
           <div className="sidebar-button f-align-end">
             {this.renderToggleButton()}
           </div>
