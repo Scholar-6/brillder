@@ -14,6 +14,7 @@ import { getLibraryBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 import { SortBy, SubjectAssignments } from "./service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
+import { getUserById } from 'services/axios/user';
 
 import LibraryFilter from "./components/LibraryFilter";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
@@ -46,6 +47,7 @@ interface BricksListState {
   sortedIndex: number;
   isLoading: boolean;
   classrooms: TeachClassroom[];
+  student: User | null;
 
   dropdownShown: boolean;
 
@@ -82,6 +84,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       dropdownShown: false,
       pageSize: 15,
       isLoading: true,
+      student: null,
 
       activeClassroomId: -1,
       isClearFilter: false,
@@ -202,11 +205,11 @@ class Library extends Component<BricksListProps, BricksListState> {
 
   async getAssignments(subjects: SubjectAItem[]) {
     let userId = this.props.user.id;
-    console.log(this.props.match.params.userId)
+    var student:User | null = null;
     if (this.props.match.params.userId) {
       userId = this.props.match.params.userId;
+      student = await getUserById(userId);
     }
-    console.log(userId);
     const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>(userId);
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
@@ -220,7 +223,7 @@ class Library extends Component<BricksListProps, BricksListState> {
         });
       } else {
         this.setState({
-          ...this.state, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments
+          ...this.state, student, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments
         });
       }
     } else {
@@ -347,6 +350,10 @@ class Library extends Component<BricksListProps, BricksListState> {
         return classroom.name;
       }
     }
+    const {student} = this.state;
+    if (this.props.user.id != this.props.match.params.userId && student) {
+      return student.firstName + " " + student.lastName + "'s library";
+    }
     return "My Library";
   }
 
@@ -356,7 +363,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       if (subject) {
         const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
         if (subjectAssignment) {
-          return <SingleSubjectAssignments userId={this.props.user.id} sortBy={this.state.sortBy} subjectAssignment={subjectAssignment} history={this.props.history} />
+          return <SingleSubjectAssignments userId={this.props.user.id} sortBy={this.state.sortBy} student={this.state.student} subjectAssignment={subjectAssignment} history={this.props.history} />
         }
       }
     }
@@ -369,6 +376,7 @@ class Library extends Component<BricksListProps, BricksListState> {
           sortedIndex={this.state.sortedIndex}
           subjectAssignments={this.state.subjectAssignments}
           history={this.props.history}
+          student={this.state.student}
           subjectTitleClick={s => this.filterBySubject(s.id)}
         />
       </div>
@@ -630,13 +638,17 @@ class Library extends Component<BricksListProps, BricksListState> {
               <div className={
                 `library-title ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}`
               }>
-                {this.renderMainTitle(filterSubjects)}
+                <div className="ellipsis-title">
+                  {this.renderMainTitle(filterSubjects)}
+                </div>
                 {this.renderBook()}
                 {!this.state.subjectChecked && this.renderBox()}
                 {this.renderLastBox()}
-                {this.highestScore()}
-                {this.averageScore()}
-                {this.lowestScore()}
+                <div className="absolute-scores">
+                  {this.highestScore()}
+                  {this.averageScore()}
+                  {this.lowestScore()}
+                </div>
               </div>
               {this.renderContent()}
             </Grid>

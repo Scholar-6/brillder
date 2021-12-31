@@ -7,13 +7,15 @@ interface Props {
   onClick(): void;
 }
 
-const LibraryButton: React.FC<Props> = ({firstName, onClick}) => {
+const LibraryButton: React.FC<Props> = ({ firstName, onClick }) => {
   let name = '';
-  let lastLetter = firstName[firstName.length - 1];
-  if (lastLetter == 's') {
-    name = firstName + "'";
-  } else {
-    name = firstName + "'s";
+  if (firstName) {
+    let lastLetter = firstName[firstName.length - 1];
+    if (lastLetter == 's') {
+      name = firstName + "'";
+    } else {
+      name = firstName + "'s";
+    }
   }
   return (
     <div className="teach-book-button library-button-v5">

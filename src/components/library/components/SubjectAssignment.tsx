@@ -19,6 +19,7 @@ interface LibrarySubjectsProps {
   assignment: LibraryAssignmentBrick;
   history: any;
   user: User;
+  student: User | null;
 }
 
 const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
@@ -56,9 +57,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
       >
         {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
           <div className="competition-star">
-            <div>
-              <SpriteIcon name="star" style={{ color: color, fill: color }} />
-            </div>
+            <SpriteIcon name="book-star" style={{ color: color, stroke: color, fill: color }} />
           </div>}
         {height > 0 && assignment.brick.academicLevel >= AcademicLevel.First && (
           <AcademyDifficulty
@@ -79,15 +78,13 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         style={{
           background: color,
           height: 100 + "%",
-          opacity: 0.5,
+          opacity: 0.3,
           maxHeight: "100%",
         }}
       >
         {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
           <div className="competition-star">
-            <div>
-              <SpriteIcon name="star" style={{ color: color, fill: color }} />
-            </div>
+            <SpriteIcon name="book-star" style={{ color: color, stroke: color, fill: color }} />
           </div>}
         {height > 0 && assignment.brick.academicLevel >= AcademicLevel.First && (
           <AcademyDifficulty
@@ -110,10 +107,14 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         className={className}
         onClick={() => {
           if (assignment.maxScore) {
+            let userId = props.user.id;
+            if (props.student) {
+              userId = props.student.id;
+            }
             if (isTeacherPreference(props.user)) {
-              props.history.push(map.postAssignment(brick.id, props.user.id));
+              props.history.push(map.postAssignment(brick.id, userId));
             } else {
-              props.history.push(map.postPlay(brick.id, props.user.id));
+              props.history.push(map.postPlay(brick.id, userId));
             }
           } else {
             props.history.push(routes.playNewPrep(brick));

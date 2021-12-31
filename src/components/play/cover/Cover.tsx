@@ -328,7 +328,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
         }
         {competitionData &&
-          <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog">
+          <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog" onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}>
             <div className="dialog-header phone-competition">
               <div className="flex-center">
                 <SpriteIcon name="star-empty" className="big-star" />
@@ -356,6 +356,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     );
   }
 
+  const briefText = stripHtml(brick.brief);
+
   return (
     <React.Suspense fallback={<></>}>
       <HoveredImage />
@@ -365,16 +367,11 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           <Grid container direction="row">
             <Grid item sm={8} xs={12}>
               <div className="introduction-page">
-                {renderFirstRow()}
                 <h1 className="brick-title q-brick-title dynamic-title">
                   {brick.adaptedFrom && !brick.isCore && <div className="adapted-text">ADAPTED</div>}
                   {brick.adaptedFrom && !brick.isCore && <SpriteIcon name="copy" />}<DynamicFont content={stripHtml(brick.title)} />
                 </h1>
                 <CoverAuthorRow brick={brick} setBio={setBio} setEditorBio={setEditorBio} />
-                {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
-                  user={props.user}
-                  brick={brick}
-                />}
                 <div className="image-container centered">
                   <CoverImage
                     locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user?.id)}
@@ -419,15 +416,23 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                       </div>
                     </div>
                   </div>
+                  <div className="keywords-row">
+                    <SpriteIcon name="hash" />
+                    <KeyWordsPreview keywords={brick.keywords} onClick={keyword => props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)} />
+                  </div>
                   <CoverTimer brickLength={brick.brickLength} />
-                </div>
-                <div className="keywords-row">
-                  <KeyWordsPreview keywords={brick.keywords} onClick={keyword => props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)} />
                 </div>
               </div>
             </Grid>
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
+                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
+                  user={props.user}
+                  brick={brick}
+                />}
+                <div className="brief-ellipsis">
+                  {briefText}
+                </div>
                 <CoverPlay onClick={() => {
                   if (props.user) {
                     startBrick();
@@ -463,7 +468,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         }}
       />
       {competitionData &&
-        <Dialog open={competitionData.isOpen} className="dialog-box competition-dialog">
+        <Dialog open={competitionData.isOpen} className="dialog-box competition-dialog" onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}>
           <div className="dialog-header">
             <div className="flex-center">
               <SpriteIcon name="star-empty" className="big-star" />

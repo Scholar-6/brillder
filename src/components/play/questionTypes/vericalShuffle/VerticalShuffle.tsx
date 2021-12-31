@@ -235,7 +235,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return (
       <div className="question-unique-play vertical-shuffle-play">
         <span className="help-text">
-          <TapIcon />Click on two answers to reorder them.   {haveImage && <span>Double tap images to zoom.</span>}
+          <TapIcon />Click on two answers to reorder them.   {haveImage && <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>}
         </span>
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>

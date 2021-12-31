@@ -253,6 +253,7 @@ const App: React.FC<AppProps> = props => {
 
         <StudentRoute path="/my-library/:userId" component={Library} />
         <StudentRoute path="/my-library" component={Library} />
+        <StudentRoute path="/post-play/brick/:brickId/:userId/:classId" component={PostPlay} />
         <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 
         <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />

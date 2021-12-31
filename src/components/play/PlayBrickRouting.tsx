@@ -68,6 +68,7 @@ import PhoneCountdownReview from "./preReview/PhoneCountdownReview";
 import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigation";
 import CountdownReview from "./preReview/CountdownReview";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
+import SearchSuggestions from "components/viewAllPage/components/SearchSuggestions";
 
 export enum PlayPage {
   Cover,
@@ -125,11 +126,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   if (cashAttemptString && !restoredFromCash) {
     // parsing cashed play
-    const isCover = history.location.pathname.slice(-PlayCoverLastPrefix.length) === PlayCoverLastPrefix;
-    const cashAttempt = JSON.parse(cashAttemptString);
-    if (isCover) {
+
+    // check if is Cover page
+    let isCover = false;
+    const coverPart = history.location.pathname.split('/')[4];
+    if (coverPart === 'cover') {
+      isCover = true;
       CashAttempt('');
     }
+    const cashAttempt = JSON.parse(cashAttemptString);
 
     if (cashAttempt.brick.id === props.brick.id && !isCover) {
       parsedBrick = cashAttempt.brick;
@@ -173,6 +178,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [status, setStatus] = useState(initStatus);
   const [competitionId, setCompetitionId] = useState(-1);
   const [brickAttempt, setBrickAttempt] = useState(initBrickAttempt as BrickAttempt);
+
+  const [bricks, setBricks] = useState([]);
   
   const [attempts, setAttempts] = useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = useState(initReviewAttempts);
@@ -251,6 +258,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       }
     }
     /*eslint-disable-next-line*/
+
   }, [])
 
   const updateAttempts = (attempt: any, index: number) => {
@@ -709,6 +717,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
       <div className="play-preview-pages">
         {isPhone() ? <div /> : renderHead()}
+        {/*!isPhone() && <SearchSuggestions />*/}
         <div className={className}>
           {!isPhone() &&
             <PlayLeftSidebar

@@ -4,6 +4,7 @@ import { Subject } from "model/brick";
 import { SortBy, SubjectAssignments } from "../service/model";
 import LibrarySubject from "./LibrarySubject";
 import { getSubjectWidth } from "../service/css";
+import { User } from "model/user";
 
 interface LibrarySubjectsProps {
   sortBy: SortBy;
@@ -12,6 +13,7 @@ interface LibrarySubjectsProps {
   subjects: Subject[];
   subjectAssignments: SubjectAssignments[];
   history: any;
+  student: User | null;
 
   subjectTitleClick(s: Subject): void;
 }
@@ -44,7 +46,7 @@ const LibrarySubjects: React.FC<LibrarySubjectsProps> = (props) => {
     }
 
     return <div key={key} className="libary-container-1" style={{ width: width + 'vw', display: 'inline-flex' }}>
-      <LibrarySubject subjectAssignment={item} history={props.history} subjectTitleClick={() => props.subjectTitleClick(item.subject)} />
+      <LibrarySubject subjectAssignment={item} history={props.history} student={props.student} subjectTitleClick={() => props.subjectTitleClick(item.subject)} />
     </div>
   }
 
