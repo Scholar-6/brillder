@@ -24,6 +24,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   background: var(--theme-dark-blue);
   min-height: 100%;
 
+  .MuiLinearProgress-colorPrimary  {
+    background: var(--theme-dark-blue) !important;
+  }
+
   .brick-info {
     font-family: $font-family-bold;
     top: calc(1vw + 0.2vw);
@@ -109,12 +113,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       $border-size: 3.5vw;
       width: $border-size !important;
       height: $border-size !important;
-      stroke: var(--theme-dark-blue) !important;
-      color: var(--theme-dark-blue) !important;
+      stroke: var(--tab-gray) !important;
+      color: var(--tab-gray) !important;
     }
     svg {
       $icons-size: 2vw;
-      color: var(--theme-dark-blue);
+      color: var(--tab-gray);
       padding: 0 0.5vw;
       stroke-width: 1.6;
       margin-top: 0.6vw;
@@ -812,14 +816,13 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 color: var(--dark-gray);
                 &:hover {
                   opacity: 0.5;
-                  color: var(--theme-light-blue) !important;
                 }
                 &.current {
                   opacity: 1;
                 }
                 &.completed,
                 &.current {
-                  color: var(--theme-dark-blue);
+                  color: var(--white);
                 }
                 > span {
                   width: 3vw;
@@ -1341,15 +1344,14 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           flex-direction: row;
           height: $foter-height;
           width: $width;
+          background: var(--theme-light-blue);
           overflow: visible !important;
           z-index: 10 !important;
           &::before {
             position: absolute;
             width: 100%;
             content: '' !important;
-            box-shadow: 0px 0px 15px 2px #aaa;
           }
-          background: var(--tab-gray);
           .time-container {
             display: flex;
             align-items: center;
@@ -1373,6 +1375,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             display: flex;
             align-items: center;
             font-size: 1vw;
+            color: white;
             .subject {
               font-size: 1.2vw;
               font-family: $font-family-bold;
@@ -1401,6 +1404,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 height: 3vw;
               }
               &.next {
+                color: var(--white);
                 &:hover {
                   margin-right: 0.5vw;
                   svg {
@@ -1461,11 +1465,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           height: $stepper-height;
           display: flex !important;
           align-items: center;
-          background: var(--tab-gray);
+          background: var(--theme-light-blue);
           padding-left: 2.2vw !important;
           padding-right: 2.2vw !important;
           z-index: 30 !important;
-          box-shadow: 0px 0px 15px 2px #aaa;
         }
         .introduction-info .stepper {
           width: 100%;
@@ -1495,8 +1498,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
             &.completed {
               span {
-                color: var(--white);
-                background: var(--blue);
+                color: var(--theme-dark-blue);
+                background: var(--white);
               }
               &:hover {
                 opacity: 0.5;
@@ -1531,8 +1534,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
             &.current {
               span {
-                color: var(--theme-dark-blue);
-                border: 0.25vw solid var(--theme-dark-blue);
+                color: var(--white);
+                border: 0.25vw solid var(--white);
               }
               .underline {
                 position: absolute;
@@ -1555,6 +1558,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               }
               &:hover {
                 opacity: 0.5;
+              }
+              &.completed {
+                span {
+                  color: var(--theme-dark-blue) !important;
+                }
               }
             }
           }
@@ -1873,7 +1881,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
   .step:hover {
     opacity: 0.5;
-    color: var(--theme-light-blue) !important;
   }
   .step.current {
     opacity: 1;
@@ -1950,7 +1957,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
   }
-  .new-layout-footer .title-column {
+  .new-layout-footer {
+    .title-column {
     width: 55vw !important;
     .round-button-container {
       margin-left: 1vw;
@@ -1975,6 +1983,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       @extend %ellipsis;
     }
   }
+}
 }
 
 // brief and new-prep pages
@@ -2134,6 +2143,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     display: flex;
     align-items: center;
     font-size: 1vw;
+    color: white;
   }
   .footer-space {
     padding-left: 6vw;
@@ -2174,6 +2184,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   align-items: center;
   font-size: 1vw;
+  color: white;
 }
 
 .pre-investigation {
@@ -2540,7 +2551,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       width:100%;
       bottom:1px;
       z-index:20 !important;
-      box-shadow: 0px 0px 15px 2px #333;
     }
   }
   .introduction-page .question-live-play > div {
