@@ -1473,7 +1473,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         .introduction-info .stepper {
           width: 100%;
           margin-top: 0.3vw;
-          height: calc(#{$step-height} + 0.7vw) !important;
+          height: calc(#{$step-height} + 1.5vw) !important;
           padding: 0 !important;
           overflow-x: auto;
           overflow-y: hidden;
@@ -2581,4 +2581,27 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page h1 {
   font-family: $font-family-bold !important;
   text-align: center;
+}
+
+.play-preview-pages .sorted-row .live-page .stepper,
+.play-preview-pages .sorted-row .review-page .stepper {
+  position: absolute;
+  padding-left: 1.5vw !important;
+  padding-right: 1.5vw !important;
+  top: 0.4vw;
+  left: 5vw;
+  background: transparent !important;
+  overflow-y: visible !important;
+  .fixed-stepper-triangle {
+    position: absolute;
+    z-index: 100;
+    top: 3vw !important;
+    margin-left: 0.6vw;
+    width: 0;
+    height: 0;
+    $size: 0.6vw;
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-top: $size solid var(--theme-light-blue);
+  }
 }
