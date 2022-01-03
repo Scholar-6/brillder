@@ -299,6 +299,7 @@ class ProvisionalScore extends React.Component<
                   <ReviewStepper
                     questions={brick.questions}
                     attempts={attempts}
+                    isProvisional={true}
                     handleStep={() => { }}
                   />
                 </div>
