@@ -852,9 +852,13 @@
 
 .image-play-container {
   width: 100%;
+  max-width: 86vw;
 
   .image-play {
     width: auto !important;
+  }
+  .image-source {
+    color: var(--tab-gray);
   }
 }
 

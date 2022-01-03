@@ -1720,10 +1720,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     position: relative;
   }
   img {
-    background: var(--white);
-    padding-right: 4vw;
+    background: var(--theme-light-blue);
     max-width: 80vw;
     max-height: 80vh;
+    padding-right: 4vw;
     border: 2vw solid var(--theme-light-blue);
     border-radius: 0.8vw;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -1741,6 +1741,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       position: absolute;
       bottom: 0.7vw;
       font-size: 3vw;
+      color: var(--tab-gray);
       transform: rotate(-90deg);
       text-overflow: ellipsis;
     }
