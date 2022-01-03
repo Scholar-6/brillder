@@ -10,6 +10,7 @@ interface ReviewStepperProps {
   attempts: ComponentAttempt<any>[];
   questions: Question[];
   noScrolling?: boolean;
+  isProvisional?: boolean;
   isEnd?: boolean;
   activeStep?: number;
   handleStep(questionIndex: number): any;
@@ -20,6 +21,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   noScrolling,
   questions,
   activeStep,
+  isProvisional,
   handleStep,
   attempts,
 }) => {
@@ -120,14 +122,19 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   }
 
   return (
-    <div className={className} ref={stepperRef}>
-      {questions.length > 19 && (
+    <div className={className}>
+      {questions.length > 18 && (
         <div className="scroll-back-button" style={{ display: "none" }}>
           <SpriteIcon onClick={scrollBack} name="arrow-left" />
         </div>
       )}
-      {questions.map((q, index) => renderQuestionStep(index))}
-      {questions.length > 19 && (
+      {isProvisional
+      ?  questions.map((q, index) => renderQuestionStep(index))
+      :
+      <div className="scrollable-steps" ref={stepperRef}>
+        {questions.map((q, index) => renderQuestionStep(index))}
+      </div>}
+      {questions.length > 18 && (
         <div className="scroll-next-button" style={{ display: "none" }}>
           <SpriteIcon name="arrow-right" onClick={scrollNext} />
         </div>

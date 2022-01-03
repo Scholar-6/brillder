@@ -84,11 +84,13 @@ const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
   }
 
   return (
-    <div className="stepper" ref={stepperRef}>
-      {questions.length > 19 && <div className="scroll-back-button" style={{display: 'none'}}><SpriteIcon onClick={scrollBack} name="arrow-left" /></div>}
+    <div className="stepper">
+      {questions.length > 18 && <div className="scroll-back-button" style={{display: 'none'}}><SpriteIcon onClick={scrollBack} name="arrow-left" /></div>}
       <div className="step current prep-step" onClick={props.moveToPrep}>Prep</div>
-      {questions.map(renderQuestionStep)}
-      {questions.length > 19 && <div className="scroll-next-button" style={{display: 'none'}}><SpriteIcon name="arrow-right" onClick={scrollNext} /></div>}
+      <div className="scrollable-steps" ref={stepperRef}>
+        {questions.map(renderQuestionStep)}
+      </div>
+      {questions.length > 18 && <div className="scroll-next-button" style={{display: 'none'}}><SpriteIcon name="arrow-right" onClick={scrollNext} /></div>}
     </div>
   );
 };

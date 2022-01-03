@@ -175,7 +175,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     cursor: pointer;
     color: var(--white);
     border-radius: 0.6vw;
-    background: var(--dark-gray);
+    background: var(--theme-dark-blue);
     padding: 0.2vw 1vw;
     font-size: 1.4vw;
     letter-spacing: 0;
@@ -806,6 +806,17 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               margin-top: 0.5vw;
             }
             .stepper {
+              width: 71vw;
+              max-width: 71vw;
+              overflow: hidden;
+              .scrollable-steps {
+                margin-left: 4vw;
+                width: 76vw;
+                max-width: 64vw;
+                overflow-x: scroll;
+                overflow-y: visible;
+                height: 4vw;
+              }
               .step {
                 @extend %posRelative;
                 @extend %flexCenter;
@@ -848,6 +859,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                     background: var(--blue);
                   }
                 }
+              }
+            }
+            &.f-align-self-start {
+              .stepper {
+                width: 100% !important;
               }
             }
           }
@@ -1224,7 +1240,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             align-items: center;
             justify-content: center;
             font-family: $font-family-bold;
-            background: var(--tab-gray);
+            background: var(--theme-light-blue);
           }
           .introduction-page {
             height: calc(100vh - 4vw - 4vw) !important;
@@ -1324,7 +1340,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         height: calc(100vh - #{$header-height}) !important;
         margin-right: 8vw;
         margin-left: 7vw;
-        border-radius: 2vw !important;
+        border-radius: 2.2vw !important;
 
         .swipe-view {
           width: $width !important;
@@ -1589,9 +1605,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
           }
           .scroll-back-button {
-            left: 0;
+            top: -0.5vw;
+            left: 2vw;
           }
           .scroll-next-button {
+            top: -0.5vw;
             right: 0;
           }
         }
@@ -2603,5 +2621,16 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     border-left: $size solid transparent;
     border-right: $size solid transparent;
     border-top: $size solid var(--theme-light-blue);
+  }
+}
+
+.play-preview-pages .sorted-row .review-page .stepper {
+  left: 1vw;
+}
+
+.play-preview-pages .sorted-row .live-page,
+.play-preview-pages .sorted-row .review-page {
+  .introduction-info {
+    background: var(--theme-light-blue) !important;
   }
 }
