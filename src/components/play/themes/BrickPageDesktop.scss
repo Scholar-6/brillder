@@ -157,7 +157,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
 
     &:hover {
-      opacity: 0.5;
+      opacity: 0.5 !important;
     }
   }
 
@@ -822,7 +822,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 @extend %flexCenter;
                 justify-content: flex-start;
                 cursor: pointer;
-                font-size: 2vw;
+                font-size: 1.8vw;
                 font-family: $font-family-black;
                 color: var(--dark-gray);
                 &:hover {
@@ -1240,6 +1240,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             align-items: center;
             justify-content: center;
             font-family: $font-family-bold;
+            color: var(--white);
             background: var(--theme-light-blue);
           }
           .introduction-page {
@@ -1431,8 +1432,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               &.back {
                 color: var(--dark-gray);
                 &:hover {
-                  color: var(--theme-dark-blue);
-                  //margin-right: 2vw;
+                  color: var(--white);
                   svg {
                     margin-right: 1vw;
                   }
@@ -1597,11 +1597,16 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             height: $stepper-height;
             display: flex !important;
             align-items: center;
+            color: var(--dark-gray);
             justify-content: center;
             svg {
               cursor: pointer;
+              stroke-width: 3;
               width: $scroll-button-size;
               height: $scroll-button-size;
+            }
+            &:hover {
+              color: var(--white);
             }
           }
           .scroll-back-button {
@@ -2202,6 +2207,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   align-items: center;
   font-size: 1vw;
+  font-family: $font-family-bold;
   color: white;
 }
 
@@ -2541,6 +2547,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   overflow: visible !important;
   .absolute-prep-text {
     opacity: 0;
+    font-family: $font-family-regular-italic;
     animation: fadein 400ms 400ms ease-out forwards;
     position: absolute;
     color: var(--white);
