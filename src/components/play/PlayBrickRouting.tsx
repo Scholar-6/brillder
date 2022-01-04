@@ -68,7 +68,6 @@ import PhoneCountdownReview from "./preReview/PhoneCountdownReview";
 import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigation";
 import CountdownReview from "./preReview/CountdownReview";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
-import SearchSuggestions from "components/viewAllPage/components/SearchSuggestions";
 
 export enum PlayPage {
   Cover,
@@ -496,6 +495,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         page={PageEnum.Play}
         user={props.user}
         link={link}
+        suggestions={true}
         history={history}
         search={search}
         searching={searching}
@@ -717,7 +717,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
       <div className="play-preview-pages">
         {isPhone() ? <div /> : renderHead()}
-        {/*!isPhone() && <SearchSuggestions />*/}
         <div className={className}>
           {!isPhone() &&
             <PlayLeftSidebar

@@ -15,6 +15,9 @@ import map from 'components/map';
 import UnauthorizedMenu from 'components/app/unauthorized/UnauthorizedMenu';
 import { PageEnum } from './PageHeadWithMenu';
 import { isPhone } from 'services/phone';
+import { getPublishedBricks } from 'services/axios/brick';
+import { Brick } from 'model/brick';
+import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestions';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -33,6 +36,7 @@ interface Props {
   searchPlaceholder: string;
   link?: string;
   page: PageEnum;
+  suggestions?: boolean;
 
   history: any;
   search(): void;
@@ -52,6 +56,7 @@ interface State {
   value: string;
   searchVisible: boolean;
   searchAnimation: string;
+  bricks: Brick[];
   // mobile
   dropdownShown: boolean;
 }
@@ -64,8 +69,20 @@ class PageHeader extends Component<Props, State> {
       searchVisible: false,
       dropdownShown: false,
       value: '',
+      bricks: [],
       searchAnimation: 'slideInLeft'
     };
+
+    if (props.suggestions) {
+      this.prepareSuggestions();
+    }
+  }
+
+  async prepareSuggestions() {
+    var bricks = await getPublishedBricks();
+    if (bricks) {
+      this.setState({bricks});
+    }
   }
 
   keySearch(e: any) {
@@ -224,9 +241,17 @@ class PageHeader extends Component<Props, State> {
                   <div className="login-button" onClick={() => this.props.history.push(map.Login)}>Login | Register</div>
                 </Grid>
               }
-            </div >
+            </div>
           </Hidden>
         </div>
+        {this.state.value.length >= 1 && <SearchSuggestions
+          history={this.props.history} subjects={[]}
+          searchString={this.state.value} bricks={this.state.bricks}
+          keywords={[]}
+          filterByAuthor={() => {}}
+          filterBySubject={() => {}}
+          filterByKeyword={() => {}}
+        />}
       </div>
     );
   }
