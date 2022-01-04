@@ -192,6 +192,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
             {brick.coverImage ?
               <div className="p-cover-image">
                 <div className="scroll-block">
+                  {brick.competitions && brick.competitions.length > 0 && <div className="competition-baner"><SpriteIcon name="star" /> competition</div>}
                   <img alt="" className={imgLoaded ? 'visible' : 'hidden'} onLoad={() => setImgLoaded(true)} src={fileUrl(brick.coverImage)} />
                 </div>
               </div>

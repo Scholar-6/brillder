@@ -852,9 +852,13 @@
 
 .image-play-container {
   width: 100%;
+  max-width: 86vw;
 
   .image-play {
     width: auto !important;
+  }
+  .image-source {
+    color: var(--tab-gray);
   }
 }
 
@@ -1214,6 +1218,24 @@
   &.poem {
     white-space: nowrap;
     overflow: scroll;
+  }
+  .MuiInputBase-root {
+    min-width: 20vw;
+    display: inline-block !important; 
+    position: relative;
+    &::before, &::after {
+      bottom: 0vw !important;
+    }
+    .MuiSelect-root {
+      padding-left: 4vw !important;
+      padding-right: 25px !important;
+      min-width: 18vw !important;
+    }
+    p {
+    }
+    input {
+      position: absolute;
+    }
   }
 }
 

@@ -24,6 +24,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   background: var(--theme-dark-blue);
   min-height: 100%;
 
+  .MuiLinearProgress-colorPrimary  {
+    background: var(--theme-dark-blue) !important;
+  }
+
   .brick-info {
     font-family: $font-family-bold;
     top: calc(1vw + 0.2vw);
@@ -109,12 +113,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       $border-size: 3.5vw;
       width: $border-size !important;
       height: $border-size !important;
-      stroke: var(--theme-dark-blue) !important;
-      color: var(--theme-dark-blue) !important;
+      stroke: var(--tab-gray) !important;
+      color: var(--tab-gray) !important;
     }
     svg {
       $icons-size: 2vw;
-      color: var(--theme-dark-blue);
+      color: var(--tab-gray);
       padding: 0 0.5vw;
       stroke-width: 1.6;
       margin-top: 0.6vw;
@@ -153,7 +157,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
 
     &:hover {
-      opacity: 0.5;
+      opacity: 0.5 !important;
     }
   }
 
@@ -171,7 +175,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     cursor: pointer;
     color: var(--white);
     border-radius: 0.6vw;
-    background: var(--dark-gray);
+    background: var(--theme-dark-blue);
     padding: 0.2vw 1vw;
     font-size: 1.4vw;
     letter-spacing: 0;
@@ -802,24 +806,34 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               margin-top: 0.5vw;
             }
             .stepper {
+              width: 71vw;
+              max-width: 71vw;
+              overflow: hidden;
+              .scrollable-steps {
+                margin-left: 4vw;
+                width: 76vw;
+                max-width: 64vw;
+                overflow-x: scroll;
+                overflow-y: visible;
+                height: 4vw;
+              }
               .step {
                 @extend %posRelative;
                 @extend %flexCenter;
                 justify-content: flex-start;
                 cursor: pointer;
-                font-size: 2vw;
+                font-size: 1.8vw;
                 font-family: $font-family-black;
                 color: var(--dark-gray);
                 &:hover {
                   opacity: 0.5;
-                  color: var(--theme-light-blue) !important;
                 }
                 &.current {
                   opacity: 1;
                 }
                 &.completed,
                 &.current {
-                  color: var(--theme-dark-blue);
+                  color: var(--white);
                 }
                 > span {
                   width: 3vw;
@@ -845,6 +859,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                     background: var(--blue);
                   }
                 }
+              }
+            }
+            &.f-align-self-start {
+              .stepper {
+                width: 100% !important;
               }
             }
           }
@@ -1221,7 +1240,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             align-items: center;
             justify-content: center;
             font-family: $font-family-bold;
-            background: var(--tab-gray);
+            color: var(--white);
+            background: var(--theme-light-blue);
           }
           .introduction-page {
             height: calc(100vh - 4vw - 4vw) !important;
@@ -1321,7 +1341,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         height: calc(100vh - #{$header-height}) !important;
         margin-right: 8vw;
         margin-left: 7vw;
-        border-radius: 2vw !important;
+        border-radius: 2.2vw !important;
 
         .swipe-view {
           width: $width !important;
@@ -1341,15 +1361,14 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           flex-direction: row;
           height: $foter-height;
           width: $width;
+          background: var(--theme-light-blue);
           overflow: visible !important;
           z-index: 10 !important;
           &::before {
             position: absolute;
             width: 100%;
             content: '' !important;
-            box-shadow: 0px 0px 15px 2px #aaa;
           }
-          background: var(--tab-gray);
           .time-container {
             display: flex;
             align-items: center;
@@ -1373,6 +1392,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             display: flex;
             align-items: center;
             font-size: 1vw;
+            color: white;
             .subject {
               font-size: 1.2vw;
               font-family: $font-family-bold;
@@ -1401,6 +1421,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 height: 3vw;
               }
               &.next {
+                color: var(--white);
                 &:hover {
                   margin-right: 0.5vw;
                   svg {
@@ -1411,8 +1432,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               &.back {
                 color: var(--dark-gray);
                 &:hover {
-                  color: var(--theme-dark-blue);
-                  //margin-right: 2vw;
+                  color: var(--white);
                   svg {
                     margin-right: 1vw;
                   }
@@ -1461,16 +1481,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           height: $stepper-height;
           display: flex !important;
           align-items: center;
-          background: var(--tab-gray);
+          background: var(--theme-light-blue);
           padding-left: 2.2vw !important;
           padding-right: 2.2vw !important;
           z-index: 30 !important;
-          box-shadow: 0px 0px 15px 2px #aaa;
         }
         .introduction-info .stepper {
           width: 100%;
           margin-top: 0.3vw;
-          height: calc(#{$step-height} + 0.7vw) !important;
+          height: calc(#{$step-height} + 1.5vw) !important;
           padding: 0 !important;
           overflow-x: auto;
           overflow-y: hidden;
@@ -1495,8 +1514,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
             &.completed {
               span {
-                color: var(--white);
-                background: var(--blue);
+                color: var(--theme-dark-blue);
+                background: var(--white);
               }
               &:hover {
                 opacity: 0.5;
@@ -1531,8 +1550,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
             &.current {
               span {
-                color: var(--theme-dark-blue);
-                border: 0.25vw solid var(--theme-dark-blue);
+                color: var(--white);
+                border: 0.25vw solid var(--white);
               }
               .underline {
                 position: absolute;
@@ -1556,6 +1575,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               &:hover {
                 opacity: 0.5;
               }
+              &.completed {
+                span {
+                  color: var(--theme-dark-blue) !important;
+                }
+              }
             }
           }
           .prep-step {
@@ -1573,17 +1597,24 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             height: $stepper-height;
             display: flex !important;
             align-items: center;
+            color: var(--dark-gray);
             justify-content: center;
             svg {
               cursor: pointer;
+              stroke-width: 3;
               width: $scroll-button-size;
               height: $scroll-button-size;
             }
+            &:hover {
+              color: var(--white);
+            }
           }
           .scroll-back-button {
-            left: 0;
+            top: -0.5vw;
+            left: 2vw;
           }
           .scroll-next-button {
+            top: -0.5vw;
             right: 0;
           }
         }
@@ -1873,7 +1904,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
   .step:hover {
     opacity: 0.5;
-    color: var(--theme-light-blue) !important;
   }
   .step.current {
     opacity: 1;
@@ -1950,7 +1980,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
   }
-  .new-layout-footer .title-column {
+  .new-layout-footer {
+    .title-column {
     width: 55vw !important;
     .round-button-container {
       margin-left: 1vw;
@@ -1975,6 +2006,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       @extend %ellipsis;
     }
   }
+}
 }
 
 // brief and new-prep pages
@@ -2134,6 +2166,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     display: flex;
     align-items: center;
     font-size: 1vw;
+    color: white;
   }
   .footer-space {
     padding-left: 6vw;
@@ -2174,6 +2207,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   display: flex;
   align-items: center;
   font-size: 1vw;
+  font-family: $font-family-bold;
+  color: white;
 }
 
 .pre-investigation {
@@ -2512,6 +2547,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   overflow: visible !important;
   .absolute-prep-text {
     opacity: 0;
+    font-family: $font-family-regular-italic;
     animation: fadein 400ms 400ms ease-out forwards;
     position: absolute;
     color: var(--white);
@@ -2540,7 +2576,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       width:100%;
       bottom:1px;
       z-index:20 !important;
-      box-shadow: 0px 0px 15px 2px #333;
     }
   }
   .introduction-page .question-live-play > div {
@@ -2571,4 +2606,38 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page h1 {
   font-family: $font-family-bold !important;
   text-align: center;
+}
+
+.play-preview-pages .sorted-row .live-page .stepper,
+.play-preview-pages .sorted-row .review-page .stepper {
+  position: absolute;
+  padding-left: 1.5vw !important;
+  padding-right: 1.5vw !important;
+  top: 0.4vw;
+  left: 5vw;
+  background: transparent !important;
+  overflow-y: visible !important;
+  .fixed-stepper-triangle {
+    position: absolute;
+    z-index: 100;
+    top: 3vw !important;
+    margin-left: 0.6vw;
+    width: 0;
+    height: 0;
+    $size: 0.6vw;
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-top: $size solid var(--theme-light-blue);
+  }
+}
+
+.play-preview-pages .sorted-row .review-page .stepper {
+  left: 1vw;
+}
+
+.play-preview-pages .sorted-row .live-page,
+.play-preview-pages .sorted-row .review-page {
+  .introduction-info {
+    background: var(--theme-light-blue) !important;
+  }
 }
