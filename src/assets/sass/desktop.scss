@@ -1051,3 +1051,75 @@
 .blue-on-hover:hover {
   background: var(--theme-dark-blue) !important;
 }
+
+.search-suggestions {
+  position: fixed;
+  z-index: 100000;
+  width: 60vw;
+  top: 4vw;
+  padding-top: 0.8vw;
+  padding-left: 0;
+  padding-right: 0;
+  color: white;
+  left: 8.65vw;
+  background: #2B4779;
+  border-bottom-left-radius: 1vw;
+  border-bottom-right-radius: 1vw;
+  overflow: hidden;
+  padding-bottom: 0.6vw;
+
+  .upper-line {
+    margin-left: 1vw;
+    width: 58vw;
+    margin-bottom: 0.3vw;
+    padding: 0;
+    height: 0.1vw;
+    border-radius: 0.05vw;
+    background: var(--theme-dark-blue) !important;
+  }
+
+  > div {
+    font-family: $font-family-bold;
+    color: var(--tab-gray);
+    &:hover {
+      background: #405683 !important;
+      &.upper-line {
+        background: var(--theme-dark-blue) !important;
+      }
+    }
+    cursor: pointer;
+    padding-left: 1vw;
+    padding-top: 0.2vw;
+    padding-bottom: 0.2vw;
+    display: flex;
+    font-size: 1.4vw;
+    align-items: center;
+    svg {
+      width: 2vw;
+      height: 2vw;
+      color: var(--theme-orange);
+      margin-right: 0.3vw;
+    }
+    .keyword-icon {
+      color: var(--tab-gray);
+    }
+    .icon-status {
+      margin-left: 0.6vw;
+      width: 1.4vw;
+      height: 1.4vw;
+      color: var(--tab-gray);
+    }
+    .author-image {
+      width: 2vw;
+      height: 2vw;
+      border-radius: 50%;
+      margin-right: 0.3vw;
+    }
+    .circle {
+      width: 2vw;
+      height: 2vw;
+      border-radius: 50%;
+      margin-right: 0.3vw;
+    }
+  }
+}
