@@ -136,6 +136,33 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     setAnswers(copyAnswers);
   };
 
+  const renderPrepButton = () => {
+    return (
+      <div>
+        <div className="absolute-prep-text">
+          Click here to
+          go back to
+          Prep tasks
+        </div>
+        <div className="prep-button" onClick={() => {
+          if (props.isPlayPreview) {
+            history.push(previewRoutes.previewNewPrep(brick.id) + '?resume=true');
+          } else {
+            history.push(routes.playNewPrep(brick) + '?resume=true');
+          }
+        }}>
+          <svg className="highlight-circle dashed-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+            <g id="Ellipse_72" data-name="Ellipse 72" fill="none" stroke="inherit" strokeLinecap="round" strokeWidth="3" strokeDasharray="8 8">
+              <circle cx="36" cy="36" r="36" stroke="none" />
+              <circle cx="36" cy="36" r="34.5" fill="none" />
+            </g>
+          </svg>
+          <SpriteIcon name="file-text" />
+        </div>
+      </div>
+    );
+  }
+
   const prev = () => {
     if (activeStep === 0) {
       return;
@@ -334,6 +361,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       </div>
       <HoveredImage />
       <div className="brick-container play-preview-panel review-page">
+        {renderPrepButton()}
         <div className="introduction-page">
           <Grid container direction="row">
             <div className="introduction-info">
