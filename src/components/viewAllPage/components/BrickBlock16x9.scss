@@ -18,6 +18,7 @@
     background: var(--theme-orange);
     z-index: 1000;
     top: 1.5vw;
+    font-family: $font-family-bold;
     margin-right: 0.5vw;
     width: 8vw;
     left: -1.7vw;
@@ -120,7 +121,7 @@
       .bottom-description {
         color: var(--theme-dark-blue);
         height: 3vw;
-        font-size: 1vw;
+        font-size: 0.93vw;
         letter-spacing: 1;
         position: absolute;
         bottom: 0;
@@ -132,7 +133,12 @@
         border-bottom-right-radius: 0.9vw;
 
         .brick-title {
-          display: inline;
+          width: 100%;
+          white-space: nowrap;
+          overflow-x: hidden;
+          text-align: center;
+          text-overflow: ellipsis;
+            display: inline;
           br {
             display: none;
           }
