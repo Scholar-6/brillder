@@ -134,13 +134,13 @@ class BuildPage extends Component<BuildProps, BuildState> {
         publish: false,
         isCore,
 
-        level1: true,
-        level2: true,
-        level3: true,
+        level1: false,
+        level2: false,
+        level3: false,
 
-        s20: true,
-        s40: true,
-        s60: true
+        s20: false,
+        s40: false,
+        s60: false
       },
       handleKey: this.handleKey.bind(this)
     }
@@ -328,9 +328,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
   switchPublish() {
     const { filters, buildCheckedSubjectId } = this.state;
 
-    filters.level1 = true;
-    filters.level2 = true;
-    filters.level3 = true;
+    filters.level1 = false;
+    filters.level2 = false;
+    filters.level3 = false;
 
     if (!filters.publish) {
       removeAllFilters(filters);
@@ -367,29 +367,50 @@ class BuildPage extends Component<BuildProps, BuildState> {
     filters.draft = newFilters.draft;
     let finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
     const subjects = this.getBrickSubjects(finalBricks);
+
+    let totalBricks = finalBricks;
     
     // published. filter by levels
     if (filters.publish) {
-      if (!filters.level1) {
-        finalBricks = finalBricks.filter(b => b.academicLevel !== AcademicLevel.First);
+      let levelBricks:Brick[] = [];
+
+      if (filters.level1) {
+        levelBricks.push(...finalBricks.filter(b => b.academicLevel == AcademicLevel.First));
       }
-      if (!filters.level2) {
-        finalBricks = finalBricks.filter(b => b.academicLevel !== AcademicLevel.Second);
+      if (filters.level2) {
+        levelBricks.push(...finalBricks.filter(b => b.academicLevel === AcademicLevel.Second));
       }
-      if (!filters.level3) {
-        finalBricks = finalBricks.filter(b => b.academicLevel !== AcademicLevel.Third);
+      if (filters.level3) {
+        levelBricks.push(...finalBricks.filter(b => b.academicLevel === AcademicLevel.Third));
       }
-      if (!filters.s20) {
-        finalBricks = finalBricks.filter(b => b.brickLength !== BrickLengthEnum.S20min);
+      
+      totalBricks = [];
+
+      if (!filters.level1 && !filters.level2 && !filters.level3) {
+        levelBricks = finalBricks;
       }
-      if (!filters.s40) {
-        finalBricks = finalBricks.filter(b => b.brickLength !== BrickLengthEnum.S40min);
+
+      if (filters.s20) {
+        totalBricks.push(...levelBricks.filter(b => b.brickLength === BrickLengthEnum.S20min));
       }
-      if (!filters.s60) {
-        finalBricks = finalBricks.filter(b => b.brickLength !== BrickLengthEnum.S60min);
+      if (filters.s40) {
+        totalBricks.push(...levelBricks.filter(b => b.brickLength === BrickLengthEnum.S40min));
+      }
+      if (filters.s60) {
+        totalBricks.push(...levelBricks.filter(b => b.brickLength === BrickLengthEnum.S60min));
+      }
+
+      if (!filters.s20 && !filters.s40 && !filters.s60) {
+        totalBricks = levelBricks;
+      }
+
+      if (!filters.level1 && !filters.level2 && !filters.level3 && !filters.s20 && !filters.s40 && !filters.s60) {
+        console.log(444, filters);
+        totalBricks = finalBricks;
       }
     }
-    this.setState({ ...this.state, filters, subjects, finalBricks, sortedIndex: 0 });
+    console.log(totalBricks);
+    this.setState({ ...this.state, filters, subjects, finalBricks: totalBricks, sortedIndex: 0 });
   }
 
   handleDeleteOpen(deleteBrickId: number) {
