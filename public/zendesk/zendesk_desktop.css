@@ -69,7 +69,7 @@ div {
 }
 
 #Embed button>span>svg {
-  margin-left: 10% !important;
+  margin-left: 11% !important;
   margin-right: 7vw !important;
   width: 80%;
   height: 80%;
@@ -93,6 +93,14 @@ div {
 
 #Embed.minimized>div>div>.wrapper-AtBcr>.Icon {
   margin: 0 !important;
+}
+
+#Embed.minimized {
+  width: 44vw !important;
+}
+
+#Embed.minimized button span[data-testid='launcher-label'] {
+  display: none !important;
 }
 
 /*=====  End of ZENDESK MINIMIZED  ======*/
