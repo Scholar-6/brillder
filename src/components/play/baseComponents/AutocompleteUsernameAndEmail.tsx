@@ -9,9 +9,14 @@ import { UserBase } from "model/user";
 import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { enterPressed, spaceKeyPressed } from "components/services/key";
+import { Popper } from '@material-ui/core';
 
 //eslint-disable-next-line
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const UsersPopper = function (props: any) {
+  return <Popper {...props} className="users-popper" placement="bottom-start" />;
+};
 
 export interface ShareUser extends UserBase {
   isJustEmail?: boolean;
@@ -54,6 +59,8 @@ const AutocompleteUsernameAndEmail: React.FC<AutocompleteProps> = ({
           setUsers(value);
         }
       }}
+      PopperComponent={UsersPopper}
+      noOptionsText="Sorry, we couldn't find anyone this time"
       renderInput={(params) => (
         <TextField
           {...params}

@@ -18,6 +18,7 @@ interface ShareProps {
 const ShareDialog: React.FC<ShareProps> = props => {
   const [linkHovered, setLinkHover] = React.useState(false);
   const [inviteHovered, setInviteHover] = React.useState(false);
+  const [whatsappHovered, setWhatsappHover] = React.useState(false);
 
   return (
     <Dialog
@@ -34,22 +35,23 @@ const ShareDialog: React.FC<ShareProps> = props => {
       <div className="social-share-row">
         <div>
           <SpriteHoverIcon name="link" onClick={props.link} onHover={() => setLinkHover(true)} onBlur={() => setLinkHover(false)} />
-          {linkHovered && <div className="custom-tooltip copy-tooltip">Copy Link</div>}
+          {linkHovered && <div className="custom-tooltip copy-tooltip bold">Copy Link</div>}
         </div>
         {!props.isPrivatePreview &&
           <div>
-            <WhatsappIcon onClick={() => {
+            <WhatsappIcon onMouseLeave={() => setWhatsappHover(false)} onMouseEnter={() => setWhatsappHover(true)} onClick={() => {
               const a = document.createElement('a');
               a.target = "_blank";
               a.href = "whatsapp://send?text=https://app.brillder.com" + props.realLink;
               console.log(props.realLink);
               a.click();
             }} />
+            {whatsappHovered && <div className="custom-tooltip whatsapp-tooltip bold">WhatsApp</div>}
           </div>}
         {!props.isPrivatePreview &&
           <div>
             <SpriteHoverIcon name="user-plus" onClick={props.invite} onBlur={() => setInviteHover(false)} onHover={() => setInviteHover(true)} />
-            {inviteHovered && <div className="custom-tooltip invite-tooltip">Invite an existing user</div>}
+            {inviteHovered && <div className="custom-tooltip invite-tooltip bold">Invite an existing user</div>}
           </div>}
       </div>
     </Dialog>

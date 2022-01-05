@@ -70,9 +70,16 @@
         align-items: center;
 
         svg {
-          width: 1.2vw;
-          height: 1.2vw;
+          cursor: pointer;
+          margin-left: 0.2vw;
+          width: 1vw;
+          height: 1vw;
           stroke-width: 2;
+          transition: all 300ms ease-in-out;
+
+          &:hover {
+            color: var(--theme-orange);
+          }
         }
       }
     }

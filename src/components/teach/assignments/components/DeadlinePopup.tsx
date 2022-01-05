@@ -3,6 +3,8 @@ import Dialog from '@material-ui/core/Dialog';
 import TimeDropdowns from 'components/baseComponents/timeDropdowns/TimeDropdowns';
 import { Assignment } from 'model/classroom';
 import { changeDeadline } from 'services/axios/assignBrick';
+import BaseDialogWrapper from 'components/baseComponents/dialogs/BaseDialogWrapper';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 interface Props {
@@ -25,7 +27,7 @@ const DeadlinePopup:React.FC<Props> = (props) => {
 
   const renderDeadline = () => (
     <div>
-      <div className="r-popup-title bold">When is it due?</div>
+      <div className="r-popup-title bold">When is this assignment due?</div>
       <div className="r-radio-buttons">
         <TimeDropdowns date={deadlineDate} onChange={setDeadline} />
       </div>
@@ -46,12 +48,15 @@ const DeadlinePopup:React.FC<Props> = (props) => {
   );
 
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
+    <BaseDialogWrapper open={props.isOpen} close={props.close} className="dialog-box light-blue assign-dialog change-deadline-dialog" submit={() => {}}>
+      <div className="close-button svgOnHover" onClick={props.close}>
+        <SpriteIcon name="cancel-thick" className="active" />
+      </div>
       <div className="dialog-header">
         {renderDeadline()}
         {renderFooter()}
       </div>
-    </Dialog>
+    </BaseDialogWrapper>
   );
 }
 
