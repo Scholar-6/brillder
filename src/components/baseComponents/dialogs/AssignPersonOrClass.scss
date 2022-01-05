@@ -27,6 +27,20 @@
   }
 }
 
+
+.change-deadline-dialog .r-radio-buttons {
+  padding-right: 0 !important;
+}
+
+.change-deadline-dialog .dialog-header > div {
+  width: auto !important;
+}
+
+.change-deadline-dialog .MuiPaper-root {
+  padding-left: 4vw !important;
+  padding-right: 4vw !important;
+}
+
 span.bold {
   font-family: $font-family-bold !important;
 }
