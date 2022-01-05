@@ -18,7 +18,7 @@ const DeadlinePopup:React.FC<Props> = (props) => {
   const [deadlineDate, setDeadline] = React.useState(new Date(props.assignment.deadline) || new Date());
 
   const update = async () => {
-    var dateString = deadlineDate.getFullYear() + '-' + deadlineDate.getMonth() + '-' + deadlineDate.getDate() + '';
+    var dateString = deadlineDate.getFullYear() + '-' + (deadlineDate.getMonth() + 1) + '-' + deadlineDate.getDate() + '';
     const res = await changeDeadline(props.assignment.id, dateString);
     if (res) {
       props.update(dateString);
