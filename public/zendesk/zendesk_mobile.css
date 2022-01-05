@@ -60,3 +60,19 @@ div {
   width: 17vw !important;
   opacity: 0 !important;
 }
+
+#Embed button {
+  height: 100%;
+}
+
+#Embed button>span {
+  width: 100%;
+  height: 100%;
+}
+
+#Embed button>span>svg {
+  margin-top: 10% !important;
+  margin-left: 10% !important;
+  width: 80%;
+  height: 80%;
+}
