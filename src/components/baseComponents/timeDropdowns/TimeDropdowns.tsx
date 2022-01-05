@@ -87,7 +87,6 @@ class TimeDropdowns extends React.Component<Props, State> {
   }
 
   render() {
-    console.log("rendering,", this.props);
     return (
       <div className="inline">
         {this.renderSelect(this.props.date.getDate(), this.state.days, (newDay: number) => this.setDay(newDay), 'first')}
