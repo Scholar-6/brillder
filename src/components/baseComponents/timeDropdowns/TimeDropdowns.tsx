@@ -57,8 +57,9 @@ class TimeDropdowns extends React.Component<Props, State> {
     if(year) newDate.setFullYear(year);
     if(month || month === 0) newDate.setMonth(month);
     if(day) newDate.setDate(day);
-    console.log('update', newDate);
-    this.props.onChange(newDate);
+    if (newDate.getTime() > new Date().getTime()) {
+      this.props.onChange(newDate);
+    }
   }
 
   setDay(newDay: number) {
@@ -66,7 +67,6 @@ class TimeDropdowns extends React.Component<Props, State> {
   }
 
   setMonth(newMonth: number) {
-    console.log('month', newMonth)
     const days = this.getDays(newMonth, this.props.date.getFullYear());
     this.setState({ days });
     this.onChange({ month: newMonth });
@@ -93,7 +93,6 @@ class TimeDropdowns extends React.Component<Props, State> {
 
 
   render() {
-    console.log(this.props.date);
     return (
       <div className="inline">
         {this.renderSelect(this.props.date.getDate(), this.state.days, (newDay: number) => this.setDay(newDay), 'first')}
