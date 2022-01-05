@@ -5,15 +5,20 @@
 .image-dialog-container {
   .quill-caption {
     margin-top: 1vh;
-    .ql-custom-toolbar {
+    .ql-custom-toolbar.ql-toolbar {
+      padding: 0 !important;
       height: 2.3vw !important;
     }
     .q-tooltip-hover {
       width: 1.6vw !important;
     }
     .formats {
+      border-top-left-radius: 0.6vw;
+      border-top-right-radius: 0.6vw;
       display: flex;
+      height: 100%;
       button {
+        height: 100%;
         display: block;
       }
     }

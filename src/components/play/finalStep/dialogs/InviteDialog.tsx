@@ -87,7 +87,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
       setEditorError("");
     } else {
       setValid(false);
-      setEditorError("No-one assigned.");
+      setEditorError("Nobody invited yet.");
     }
   }, [editors]);
 
@@ -135,7 +135,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
               canEdit={props.canEdit}
               brick={brick}
               editorError={editorError}
-              placeholder={`Enter email or ${accessGranted ? "editor" : "user"}'s username here...`}
+              placeholder={`Email or ${accessGranted ? "editor's " : ""}username`}
               onBlur={onBlur}
               users={editors}
               setUsers={setEditors}
@@ -153,7 +153,6 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
             </div>
           </div> : ""}
       </div>
-      <div style={{ marginTop: '1.8vh' }}></div>
       <div className="dialog-footer" style={{ justifyContent: 'center' }}>
         <button
           className="btn bold btn-md bg-theme-orange yes-button"
