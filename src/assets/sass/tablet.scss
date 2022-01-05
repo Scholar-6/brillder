@@ -923,3 +923,36 @@ html {
     margin-right: 0.2vw;
   }
 }
+
+.level-filter-box {
+  padding-top: 1.3vh;
+  padding-bottom: 1.8vh;
+  padding-left: 1vw;
+  padding-right: 3.7vw;
+  display: flex;
+  .MuiTypography-root {
+    font-size: 1.1vw !important;
+  }
+  .MuiButtonBase-root {
+    padding: 0;
+    padding-top: 0.81vh;
+    padding-bottom: 0.8vh;
+  }
+  .MuiFormControlLabel-root {
+    margin: 0;
+  }
+  .MuiFormControlLabel-label {
+    min-width: 3.8vw;
+  }
+  .MuiButtonBase-root {
+    margin-right: 0.5vw;
+  }
+  svg {
+    height: 1.25vw;
+    width: 1.25vw;
+    color: var(--white) !important;
+  }
+  .absolute-difficult-help {
+    top: calc(-2.6vw) !important;
+  }
+}
