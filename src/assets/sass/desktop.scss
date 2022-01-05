@@ -985,6 +985,7 @@
 
 .source-input {
   position: relative;
+  max-width: 100%;
   .fixed-icon {
     border-top-left-radius: 0.6vw;
     border-bottom-left-radius: 0.6vw;
@@ -1005,6 +1006,8 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     margin-left: 2.8vw;
+    width: calc(100% - 4.7vw) !important;
+    overflow: hidden;
   }
 }
 
