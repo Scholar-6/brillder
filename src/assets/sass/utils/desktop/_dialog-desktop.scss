@@ -269,7 +269,7 @@
     }
 
     svg:hover {
-      color: var(--theme-orange);
+      color: var(--theme-orange) !important;
     }
   }
   &.light-blue {
