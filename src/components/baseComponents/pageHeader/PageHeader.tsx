@@ -244,7 +244,7 @@ class PageHeader extends Component<Props, State> {
             </div>
           </Hidden>
         </div>
-        {this.state.value.length >= 1 && <SearchSuggestions
+        {this.props.suggestions && this.state.value.length >= 1 && <SearchSuggestions
           history={this.props.history} subjects={[]}
           searchString={this.state.value} bricks={this.state.bricks}
           keywords={[]}

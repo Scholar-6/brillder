@@ -1359,7 +1359,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
         <div className="main-listing dashboard-page">
           {this.state.searchTyping === true && this.state.searchString.length >= 1 && <SearchSuggestions
-            history={this.props.history} subjects={this.state.subjects} searchString={this.state.searchString} bricks={this.state.bricks}
+            history={this.props.history} subjects={this.state.subjects}
+            searchString={this.state.searchString} bricks={this.state.bricks}
             keywords={this.state.keywords}
             filterByAuthor={this.filterByAuthor.bind(this)}
             filterBySubject={this.filterSuggestionSubject.bind(this)}
