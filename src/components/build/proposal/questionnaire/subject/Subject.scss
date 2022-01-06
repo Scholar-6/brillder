@@ -97,6 +97,8 @@ $box-radius: 0.4vw;
       bottom: 2vw;
       left: 0;
       font-size: 2vw;
+      opacity: 0;
+      animation: fadein 300ms forwards;
     }
   }
 
