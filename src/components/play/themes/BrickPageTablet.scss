@@ -1054,9 +1054,14 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
           flex-direction: row;
           height: $foter-height;
           width: $width;
-          background: var(--tab-gray);
+          background: var(--theme-light-blue);
+          color: var(--white);
           border-bottom-left-radius: $play-border-radius !important;
           border-bottom-right-radius: $play-border-radius !important;
+
+          .MuiLinearProgress-colorPrimary {
+            background: var(--theme-dark-blue);
+          }
 
           .time-container {
             display: flex;
@@ -1145,7 +1150,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
           height: $stepper-height;
           display: flex !important;
           align-items: center;
-          background: var(--tab-gray) !important;
+          background: var(--theme-light-blue) !important;
           padding-left: 2.2vw !important;
           padding-right: 2.2vw !important;
         }
@@ -2315,20 +2320,24 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     top: 0;
     position: absolute;
     justify-content: center;
-    color: var(--tab-gray);
+    color: var(--white);
     svg {
       $icons-size: 2vw;
-      color: var(--theme-dark-blue);
       padding: 0 0.5vw;
       stroke-width: 1.6;
       margin-top: 0.6vw;
       padding-bottom: 0.2vw;
+      color: var(--white);
       width: calc(#{$icons-size} * 1.4) !important;
       height: calc(#{$icons-size} * 1.4) !important;
+    }
+    .highlight-circle {
+      stroke: var(--white) !important;
     }
     .absolute-circle {
       top: 0.3vw;
       left: 0vw;
+      color: var(--white);
       position: absolute;
       img {
         width: 3.4vw;
@@ -2338,6 +2347,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
         position: absolute;
         top: 0;
         height: 5vw;
+        color: var(--white);
         left: -5.7vw;
         width: 7.4vw;
         line-height: 1.3;
@@ -2360,4 +2370,8 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
       opacity: 0.5;
     }
   }
+}
+
+.play-preview-pages .sorted-row.sorted-row-expanded .brick-row-container.review-container .stepper {
+  margin-left: 2vw;
 }
