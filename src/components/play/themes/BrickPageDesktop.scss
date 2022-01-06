@@ -345,6 +345,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
           }
           .assign-class-button {
+            cursor: pointer;
             background: var(--theme-orange);
             outline: none;
             border: none;
