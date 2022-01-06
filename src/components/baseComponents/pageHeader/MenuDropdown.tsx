@@ -77,9 +77,22 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     return false;
   }
 
+   const isCover = () => {
+    try {
+      const coverPart = props.history.location.pathname.split('/')[4];
+      if (coverPart === 'cover') {
+        return true;
+      }
+    } catch {
+      console.log('something wrong with path');
+      return false;
+    }
+    return false;
+  }
+
   const move = (link: string, label: string) => {
     let isPlay = checkPlay();
-    if (isPlay) {
+    if (isPlay && !isCover()) {
       setPlaySkip({ isOpen: true, link, label });
     } else {
       props.history.push(link);
