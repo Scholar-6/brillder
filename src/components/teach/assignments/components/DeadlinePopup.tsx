@@ -15,7 +15,15 @@ interface Props {
 }
 
 const DeadlinePopup:React.FC<Props> = (props) => {
-  const [deadlineDate, setDeadline] = React.useState(new Date(props.assignment.deadline) || new Date());
+  let initDate = new Date();
+
+  if (props.assignment.deadline) {
+    let tempDate = new Date(props.assignment.deadline);
+    if (tempDate.getTime() > initDate.getTime()) {
+      initDate = tempDate;
+    }
+  }
+  const [deadlineDate, setDeadline] = React.useState(initDate);
 
   const update = async () => {
     var dateString = deadlineDate.getFullYear() + '-' + (deadlineDate.getMonth() + 1) + '-' + deadlineDate.getDate() + '';

@@ -68,6 +68,7 @@ import PhoneCountdownReview from "./preReview/PhoneCountdownReview";
 import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigation";
 import CountdownReview from "./preReview/CountdownReview";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
+import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
 
 export enum PlayPage {
   Cover,
@@ -122,6 +123,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const cashAttemptString = GetCashedPlayAttempt();
 
   const [restoredFromCash, setRestored] = useState(false);
+  const [isSkipOpen, setPlaySkip] = useState(false);
 
   if (cashAttemptString && !restoredFromCash) {
     // parsing cashed play
@@ -179,7 +181,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [brickAttempt, setBrickAttempt] = useState(initBrickAttempt as BrickAttempt);
 
   const [bricks, setBricks] = useState([]);
-  
+
   const [attempts, setAttempts] = useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = useState(initReviewAttempts);
   const [prepEndTime, setPrepEndTime] = useState(initPrepEndTime);
@@ -485,11 +487,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       link = map.ViewAllPage;
     }
     if (!isPhone() && sidebarRolledUp) {
-      return <HomeButton history={history} link={link} />;
+      return <HomeButton history={history} onClick={() => {
+        setPlaySkip(true);
+      }} />;
     }
     if (headerHidden) {
       return <div></div>;
     }
+
     return (
       <PageHeadWithMenu
         page={PageEnum.Play}
@@ -730,6 +735,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             />}
           {renderRouter()}
         </div>
+        <PlaySkipDialog
+          isOpen={isSkipOpen}
+          label="Exit"
+          submit={() => {
+            let link = map.MainPage;
+            if (!props.user) {
+              link = map.ViewAllPage;
+            }
+        
+            props.history.push(link)
+          }}
+          close={() => setPlaySkip(false)}
+        />
         <UnauthorizedUserDialogV2
           history={history}
           isBeforeReview={true}
