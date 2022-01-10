@@ -363,7 +363,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       <div className="brick-container play-preview-panel review-page">
         {renderPrepButton()}
         <div className="introduction-page">
-          <Grid container direction="row">
             <div className="introduction-info">
               <div className="intro-text-row">
                 <ReviewStepper
@@ -415,7 +414,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 </div>
               </div>
             </div>
-          </Grid>
           <SubmitAnswersDialog
             isOpen={isSubmitOpen}
             submit={submitAndMove}

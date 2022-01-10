@@ -1573,6 +1573,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
 // brief and new-prep pages
 .play-preview-pages .sorted-row .brick-row-container .brick-container.play-brief-page {
   .introduction-page {
+    background: var(--white);
     padding-top: 0 !important;
     .open-question {
       padding: 0 4vw !important;
@@ -2371,5 +2372,89 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
 .play-preview-pages .stepper .scrollable-steps {
   .step {
     font-size: 1.6vw !important;
+  }
+}
+ 
+.play-preview-pages .sorted-row.sorted-row-expanded {
+  .live-container, .review-container  {
+  background: var(--theme-dark-blue) !important;
+  .brick-container.play-preview-panel.live-page .introduction-info {
+    padding: 0 !important;
+    height: 4vw !important;
+  }
+  }
+}
+
+html body #root .browser-type-container .sorted-row-expanded .brick-row-container.live-container > div {
+  height: 0 !important;
+}
+
+html body #root .browser-type-container .sorted-row-expanded .brick-container.review-page > div {
+  height: 0 !important;
+}
+
+html body #root .browser-type-container .sorted-row-expanded {
+  .brick-row-container.review-container,
+  .brick-row-container.live-container {
+    > div.brick-container {
+      height: 100% !important;
+    }
+  }
+}
+
+html body #root .browser-type-container .sorted-row-expanded {
+  .brick-row-container.review-container,
+  .brick-row-container.live-container {
+    > div.brick-container .introduction-page {
+      height: 100% !important;
+
+      .introduction-info {
+        background: none !important;
+      }
+    
+      .play-question-container {
+        background: var(--white);
+        margin-top: 4vw;
+        height: calc(100% - 8vw) !important;
+      }
+    }
+  }
+}
+
+html body #root .browser-type-container .sorted-row-expanded .brick-row-container.review-contrainer {
+  background: inherit !important;
+}
+
+html body #root .browser-type-container .sorted-row-expanded .brick-row-container.synthesis-container {
+  background: inherit !important;
+  .synthesis-content {
+    background: var(--white);
+  }
+}
+
+html body #root .browser-type-container .sorted-row-expanded .brick-row-container.provisional-container {
+  background: inherit !important;
+
+  .provisional-score-page > .MuiGrid-root {
+    background: var(--white);
+  }
+
+  .introduction-page {
+    background: var(--white);
+  }
+  .introduction-info {
+    height: calc(100%) !important;
+  }
+}
+
+// brief page
+html body #root .browser-type-container .sorted-row-expanded .brick-row-container.live-container {
+  > div.after-cover-page,
+  > div.brick-container.play-pre-prep-page,
+  > div.brick-container.play-brief-page {
+    .introduction-page {
+      background: var(--white);
+      height: calc(100% - 4vw) !important;
+    }
   }
 }
