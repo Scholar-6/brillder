@@ -130,3 +130,18 @@ html body #root .browser-type-container .sorted-row .brick-row-container .er-tab
 html body #root .browser-type-container .sorted-row .brick-row-container .tab-content {
   height: 100% !important;
 }
+
+.animated-brick-container {
+  > a {
+    .absolute-assignment-title {
+      font-size: 1.4vw;
+    }
+    max-height: 17vw;
+    .publish-brick-container {
+      height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/3);
+      max-height: 13vw;
+    }
+  }
+}
+
+
