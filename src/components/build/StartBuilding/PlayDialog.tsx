@@ -52,7 +52,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
       <div>
         <div className="dialog-header cover-content">
           <h1><BrickTitle title={brick.title} /></h1>
-          <div className="flex">
+          <div className="flex author-play-content">
             <CoverAuthorRow
               brick={brick}
               setBio={() => { }}
