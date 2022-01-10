@@ -47,8 +47,6 @@ const QuillOpenQuestionEditor = React.forwardRef<HTMLDivElement, QuillEditorProp
   const callOnChange = React.useCallback((content: string) => props.onChange?.(content), [props.onChange]);
 
   const onChange = (content: string) => {
-    const valueString = stripHtml(content);
-
     if (content.length >= 250) {
       setLimitOverflow(true);
     } else {
