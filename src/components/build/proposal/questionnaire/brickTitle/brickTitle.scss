@@ -91,6 +91,10 @@
           stroke-width: 2.7 !important;
           width: 2vw;
           height: 2vw;
+          transition: all 300ms ease-in-out;
+          &:hover {
+            color: var(--theme-dark-blue);
+          }
         }
       }
     }
