@@ -600,9 +600,18 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
                 &.current {
                   opacity: 1;
                 }
-                &.completed,
                 &.current {
-                  color: var(--theme-dark-blue);
+                  span {
+                    color: white;
+                    border: 0.25vw solid white;
+                  }
+                }
+                &.completed {
+                  span {
+                    color: var(--theme-dark-blue);
+                    background: white;
+                    border: 0.25vw solid white;
+                  }
                 }
                 > span {
                   width: 3vw;
@@ -1205,31 +1214,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
               }
               &:hover {
                 opacity: 0.5;
-              }
-            }
-            &.current {
-              span {
-                color: var(--white);
-                background: var(--theme-dark-blue);
-              }
-              .underline {
-                position: absolute;
-                bottom: -0.5vw;
-                width: $step-height;
-                display: flex;
-                justify-content: center;
-                > div {
-                  border-radius: 0.4vw;
-                  width: 1.3vw;
-                  height: 0.2vw;
-                  background: var(--theme-dark-blue);
-                }
-              }
-              &.success .underline > div {
-                background: var(--theme-green);
-              }
-              &.failed .underline > div {
-                background: var(--theme-orange);
               }
             }
           }
@@ -2372,6 +2356,20 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   }
 }
 
+.play-preview-pages .youtube-video-session .youtube-video {
+  width: 100%;
+  > div {
+    display: flex;
+    justify-content: center;
+  }
+}
+
 .play-preview-pages .sorted-row.sorted-row-expanded .brick-row-container.review-container .stepper {
-  margin-left: 2vw;
+  margin-left: 5vw;
+}
+
+.play-preview-pages .stepper .scrollable-steps {
+  .step {
+    font-size: 1.6vw !important;
+  }
 }
