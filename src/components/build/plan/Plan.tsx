@@ -30,6 +30,7 @@ import LockComponent from "../buildQuestions/lock/Lock";
 import { isAorPorE } from "components/services/brickService";
 import QuillTitleEditor from "components/baseComponents/quill/QuillTitleEditor";
 import DifficultySelectV2 from "../proposal/questionnaire/brickTitle/components/DifficultySelectV2";
+import QuillOpenQuestionEditor from "components/baseComponents/quill/QuillOpenQuestionEditor";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -209,7 +210,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   </div>
                   <div className="open-question-container">
                     <div className="header">Open Question</div>
-                    <QuillSimpleEditor
+                    <QuillOpenQuestionEditor
                       disabled={locked}
                       placeholder="Ideally, every brick should point to a bigger question."
                       data={currentBrick.openQuestion}

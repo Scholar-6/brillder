@@ -2,6 +2,7 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
+.simple.open-question-plan-quill.simple.quill-document-editor,
 .simple.plan-brick-title.quill-document-editor {
   .MuiSnackbarContent-root {
     min-width: 20vw !important;
@@ -51,4 +52,8 @@
     color: white;
     font-size: 1.2vw;
   }
+}
+
+.simple.open-question-plan-quill.simple.quill-document-editor .MuiSnackbar-root {
+  top: 64vh !important;
 }
