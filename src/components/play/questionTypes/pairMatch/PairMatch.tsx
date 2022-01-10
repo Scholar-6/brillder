@@ -16,6 +16,7 @@ import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isMobile } from 'react-device-detect';
+import { isPhone } from 'services/phone';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
@@ -187,6 +188,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
                 : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
             }
           </span>
+          {!isPhone() && isMobile &&
+          <span className="help-text">
+            <SpriteIcon name="hero-cursor-click" />
+            Click and hold to move if using an Apple Pencil
+          </span>}
         </p>
         <Grid container justify="center">
           <List style={{ padding: 0 }} className="answers-list">

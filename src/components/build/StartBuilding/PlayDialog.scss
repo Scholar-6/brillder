@@ -39,6 +39,10 @@
     padding-left: 2vw;
     width: 61.2vw;
 
+    h1 {
+      text-align: center;
+    }
+
     .hover-area {
       left: 13vw;
 
@@ -46,6 +50,11 @@
         height: 2.3vw;
         width: 2.3vw;
       }
+    }
+
+    .author-play-content .hover-area {
+      z-index: 1000;
+      left: 40vw;
     }
 
     .author-row.cover-author-row {
@@ -211,11 +220,20 @@
           outline: none;
           font-size: 1.7vw;
           border-radius: 0.7vw;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           padding: 1.4vh 1.9vw;
           color: var(--white);
-          background: var(--theme-orange);
+          svg {
+            margin-right: 0.3vw;
+            stroke-width: 2;
+            width: 2vw;
+            height: 2vw;
+          }
+          background: var(--theme-green);
           &:hover {
-            background: var(--theme-green);
+            background: var(--theme-dark-blue);
           }
         }
       }

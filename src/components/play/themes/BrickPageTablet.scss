@@ -600,9 +600,18 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
                 &.current {
                   opacity: 1;
                 }
-                &.completed,
                 &.current {
-                  color: var(--theme-dark-blue);
+                  span {
+                    color: white;
+                    border: 0.25vw solid white;
+                  }
+                }
+                &.completed {
+                  span {
+                    color: var(--theme-dark-blue);
+                    background: white;
+                    border: 0.25vw solid white;
+                  }
                 }
                 > span {
                   width: 3vw;
@@ -1157,7 +1166,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
         .introduction-info .stepper {
           width: 100%;
           margin-top: 0.7vw;
-          height: calc(#{$step-height} + 0.7vw) !important;
+          height: calc(#{$step-height} + 0.7vw);
           padding: 0 !important;
           overflow-x: auto;
           overflow-y: hidden;
@@ -1205,31 +1214,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
               }
               &:hover {
                 opacity: 0.5;
-              }
-            }
-            &.current {
-              span {
-                color: var(--white);
-                background: var(--theme-dark-blue);
-              }
-              .underline {
-                position: absolute;
-                bottom: -0.5vw;
-                width: $step-height;
-                display: flex;
-                justify-content: center;
-                > div {
-                  border-radius: 0.4vw;
-                  width: 1.3vw;
-                  height: 0.2vw;
-                  background: var(--theme-dark-blue);
-                }
-              }
-              &.success .underline > div {
-                background: var(--theme-green);
-              }
-              &.failed .underline > div {
-                background: var(--theme-orange);
               }
             }
           }
@@ -1589,6 +1573,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
 // brief and new-prep pages
 .play-preview-pages .sorted-row .brick-row-container .brick-container.play-brief-page {
   .introduction-page {
+    background: var(--white);
     padding-top: 0 !important;
     .open-question {
       padding: 0 4vw !important;
@@ -2372,6 +2357,133 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   }
 }
 
+.play-preview-pages .youtube-video-session .youtube-video {
+  width: 100%;
+  > div {
+    display: flex;
+    justify-content: center;
+  }
+}
+
 .play-preview-pages .sorted-row.sorted-row-expanded .brick-row-container.review-container .stepper {
-  margin-left: 2vw;
+  margin-left: 5vw;
+}
+
+.play-preview-pages .stepper .scrollable-steps {
+  .step {
+    font-size: 1.6vw !important;
+  }
+}
+ 
+.play-preview-pages .sorted-row.sorted-row-expanded {
+  .live-container, .review-container  {
+  background: var(--theme-dark-blue) !important;
+  .brick-container.play-preview-panel.live-page .introduction-info {
+    padding: 0 !important;
+    height: 4vw !important;
+  }
+  }
+}
+
+html body #root .browser-type-container .sorted-row-expanded .brick-row-container.live-container > div {
+  height: 0 !important;
+}
+
+html body #root .browser-type-container .sorted-row-expanded .brick-container.review-page > div {
+  height: 0 !important;
+}
+
+html body #root .browser-type-container .sorted-row-expanded {
+  .brick-row-container.review-container,
+  .brick-row-container.live-container {
+    > div.brick-container {
+      height: 100% !important;
+    }
+  }
+}
+
+html body #root .browser-type-container .sorted-row-expanded {
+  .brick-row-container.review-container,
+  .brick-row-container.live-container {
+    > div.brick-container .introduction-page {
+      height: 100% !important;
+
+      .introduction-info {
+        background: none !important;
+      }
+    
+      .play-question-container {
+        background: var(--white);
+        margin-top: 4vw;
+        height: calc(100% - 8vw) !important;
+      }
+    }
+  }
+}
+
+html body #root .browser-type-container .sorted-row-expanded .brick-row-container.review-contrainer {
+  background: inherit !important;
+}
+
+html body #root .browser-type-container .sorted-row-expanded .brick-row-container.synthesis-container {
+  background: inherit !important;
+  .header {
+    color: var(--white);
+    background: var(--theme-light-blue);
+  }
+  .synthesis-content {
+    background: var(--white);
+  }
+}
+
+html body #root .browser-type-container .sorted-row-expanded .brick-row-container.provisional-container {
+  background: inherit !important;
+
+  .provisional-score-page > .MuiGrid-root {
+    background: var(--white);
+  }
+
+  .introduction-page {
+    background: var(--white);
+  }
+  .introduction-info {
+    height: calc(100%) !important;
+  }
+}
+
+// brief page
+html body #root .browser-type-container .sorted-row-expanded .brick-row-container.live-container {
+  > div.after-cover-page,
+  > div.brick-container.play-pre-prep-page,
+  > div.brick-container.play-brief-page {
+    .introduction-page {
+      background: var(--white);
+      height: calc(100% - 4vw) !important;
+    }
+  }
+}
+
+.play-preview-pages .sorted-row .live-page .stepper,
+.play-preview-pages .sorted-row .review-page .stepper {
+  position: absolute;
+  padding-left: 1.5vw !important;
+  padding-right: 1.5vw !important;
+  top: 0vw;
+  left: 0vw;
+  margin-left: 5vw;
+  height: 4.3vw !important;
+  background: transparent !important;
+  overflow-y: visible !important;
+  .fixed-stepper-triangle {
+    position: absolute;
+    z-index: 100;
+    top: 3.2vw !important;
+    margin-left: 0.6vw;
+    width: 0;
+    height: 0;
+    $size: 0.6vw;
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-top: $size solid var(--theme-light-blue);
+  }
 }

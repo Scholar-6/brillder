@@ -12,6 +12,9 @@ import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import {ReactComponent as DragIcon} from'assets/img/drag.svg';
+import { isPhone } from 'services/phone';
+import { isMobile } from 'react-device-detect';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 enum DragAndDropStatus {
@@ -170,7 +173,15 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     const correct = this.props.attempt?.correct;
     return (
       <div className="question-unique-play horizontal-shuffle-play">
-        <p><span className="help-text"><DragIcon />Drag to rearrange.</span></p>
+        <p><span className="help-text">
+          <DragIcon />Drag to rearrange.
+          {!isPhone() && isMobile &&
+          <span>
+            <SpriteIcon name="hero-cursor-click" />
+            Click and hold to move if using an Apple Pencil
+          </span>}
+          </span>
+        </p>
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>
         ) : (
