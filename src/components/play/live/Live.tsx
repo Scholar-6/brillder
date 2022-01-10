@@ -467,52 +467,50 @@ const LivePage: React.FC<LivePageProps> = ({
       <HoveredImage />
       <div className="brick-container play-preview-panel live-page real-live-page">
         <div className="introduction-page">
-          <Grid container direction="row">
-            <div className="introduction-info">
-              <div className="intro-text-row">
-                {renderStepper()}
+          <div className="introduction-info">
+            <div className="intro-text-row">
+              {renderStepper()}
+            </div>
+          </div>
+          {renderQuestionContainer(questions[activeStep], activeStep)}
+          <div className="new-layout-footer" style={{ display: "none" }}>
+            <div className="time-container">
+              {!timerHidden &&
+                <TimeProgressbar
+                  isLive={true}
+                  onEnd={onEnd}
+                  minutes={minutes}
+                  endTime={props.endTime}
+                  brickLength={brick.brickLength}
+                  setEndTime={props.setEndTime}
+                />}
+            </div>
+            <div className="footer-space">
+              {!isMobile &&
+                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                </div>}
+            </div>
+            <div className="new-navigation-buttons">
+              <div className="n-btn back" onClick={prev}>
+                <SpriteIcon name="arrow-left" />
+                Back
+              </div>
+              <div
+                className="n-btn next"
+                onClick={() => {
+                  if (questions.length - 1 > activeStep) {
+                    next();
+                  } else {
+                    setSubmitAnswers(true);
+                  }
+                }}
+              >
+                Next
+                <SpriteIcon name="arrow-right" />
               </div>
             </div>
-            {renderQuestionContainer(questions[activeStep], activeStep)}
-            <div className="new-layout-footer" style={{ display: "none" }}>
-              <div className="time-container">
-                {!timerHidden &&
-                  <TimeProgressbar
-                    isLive={true}
-                    onEnd={onEnd}
-                    minutes={minutes}
-                    endTime={props.endTime}
-                    brickLength={brick.brickLength}
-                    setEndTime={props.setEndTime}
-                  />}
-              </div>
-              <div className="footer-space">
-                {!isMobile &&
-                  <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
-                    {timerHidden ? 'Show Timer' : 'Hide Timer'}
-                  </div>}
-              </div>
-              <div className="new-navigation-buttons">
-                <div className="n-btn back" onClick={prev}>
-                  <SpriteIcon name="arrow-left" />
-                  Back
-                </div>
-                <div
-                  className="n-btn next"
-                  onClick={() => {
-                    if (questions.length - 1 > activeStep) {
-                      next();
-                    } else {
-                      setSubmitAnswers(true);
-                    }
-                  }}
-                >
-                  Next
-                  <SpriteIcon name="arrow-right" />
-                </div>
-              </div>
-            </div>
-          </Grid>
+          </div>
         </div>
       </div>
       {renderDialogs()}
