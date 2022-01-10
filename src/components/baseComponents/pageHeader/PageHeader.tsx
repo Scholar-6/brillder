@@ -16,8 +16,9 @@ import UnauthorizedMenu from 'components/app/unauthorized/UnauthorizedMenu';
 import { PageEnum } from './PageHeadWithMenu';
 import { isPhone } from 'services/phone';
 import { getPublishedBricks } from 'services/axios/brick';
-import { Brick } from 'model/brick';
+import { Brick, KeyWord, Subject } from 'model/brick';
 import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestions';
+import { getSubjects } from 'services/axios/subject';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -57,6 +58,8 @@ interface State {
   searchVisible: boolean;
   searchAnimation: string;
   bricks: Brick[];
+  keywords: KeyWord[];
+  subjects: Subject[];
   // mobile
   dropdownShown: boolean;
 }
@@ -70,6 +73,8 @@ class PageHeader extends Component<Props, State> {
       dropdownShown: false,
       value: '',
       bricks: [],
+      keywords: [],
+      subjects: [],
       searchAnimation: 'slideInLeft'
     };
 
@@ -78,10 +83,31 @@ class PageHeader extends Component<Props, State> {
     }
   }
 
+  collectKeywords(bricks: Brick[]) {
+    let keywords:KeyWord[] = [];
+    for(let brick of bricks) {
+      if (brick.keywords && brick.keywords.length > 0) {
+        for (let keyword of brick.keywords) {
+          var found = keywords.find(k => k.id == keyword.id);
+          if (!found) {
+            keywords.push(keyword);
+          }
+        }
+      }
+    }
+    return keywords;
+  }
+
   async prepareSuggestions() {
-    var bricks = await getPublishedBricks();
+    let subjects:Subject[] = [];
+    const bricks = await getPublishedBricks();
     if (bricks) {
-      this.setState({bricks});
+      let keywords = this.collectKeywords(bricks);
+      const subjects2 = await getSubjects();
+      if (subjects2) {
+        subjects = subjects2;
+      }
+      this.setState({bricks, subjects, keywords});
     }
   }
 
@@ -245,12 +271,12 @@ class PageHeader extends Component<Props, State> {
           </Hidden>
         </div>
         {this.props.suggestions && this.state.value.length >= 1 && <SearchSuggestions
-          history={this.props.history} subjects={[]}
+          history={this.props.history} subjects={this.state.subjects}
           searchString={this.state.value} bricks={this.state.bricks}
-          keywords={[]}
-          filterByAuthor={() => {}}
-          filterBySubject={() => {}}
-          filterByKeyword={() => {}}
+          keywords={this.state.keywords}
+          filterByAuthor={a => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + a.firstName)}
+          filterBySubject={s => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + s.name)}
+          filterByKeyword={k => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + k.name)}
         />}
       </div>
     );

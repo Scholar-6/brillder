@@ -17,10 +17,10 @@ const PlaySkipDialog: React.FC<DialogProps> = ({ isOpen, label, submit, close })
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button" onClick={submit}>
-          <span>Ok</span>
+          <span>Yes</span>
         </button>
         <button className="btn btn-md bg-gray no-button" onClick={close}>
-          <span>Close</span>
+          <span>No, keep playing</span>
         </button>
       </div>
     </Dialog>

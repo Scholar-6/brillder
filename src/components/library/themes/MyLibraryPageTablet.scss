@@ -275,7 +275,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
     padding-bottom: 12vh;
     height: calc(100vh - #{$home-button-size} - 2vw - 2vh - 5vw);
     .libary-container {
-      background: var(--white);
+      background: var(--theme-dark-blue);
       border-radius: 0.7vw;
       height: 100%;
       padding-top: 1.5vh;
@@ -344,6 +344,17 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
     }
   }
   .single-assignment-progressbar {
+    &.general {
+      .pr-lock-container {
+        background: var(--theme-dark-blue) !important;
+      }
+      .progress-value {
+        background: var(--theme-dark-blue) !important;
+        &.default-value {
+          background: inherit !important;
+        }
+      }
+    }
     .rotated-container {
       position: absolute;
       bottom: 0;
@@ -420,7 +431,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
       border-top-right-radius: 1.5vw;
       border-bottom-left-radius: 0.35vw;
       border-bottom-right-radius: 0.35vw;
-      height: 5vw;
+      height: calc(4vw + 6vh);
       bottom: 0;
       font-family: $font-family-bold;
       color: var(--white);
@@ -498,14 +509,16 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
       .libary-container {
         height: 100%;
         display: flex;
-        background: var(--white);
+        background: var(--theme-dark-blue);
         border-radius: 0.7vw;
         padding-left: 0.4vw;
         padding-right: 0.4vw;
         margin-top: 2vh;
         margin-bottom: 2vh;
-        padding-top: 1vh;
-        padding-bottom: 1vh;
+        > div {
+          padding-top: 1vh;
+          padding-bottom: 1vh;
+        }
       }
     }
   }
