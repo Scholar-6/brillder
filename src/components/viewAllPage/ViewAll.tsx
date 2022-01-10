@@ -393,8 +393,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         }
       }
     }
-
-    console.log(keywords);
     return keywords;
   }
 
