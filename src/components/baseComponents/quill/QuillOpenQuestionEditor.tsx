@@ -49,7 +49,7 @@ const QuillOpenQuestionEditor = React.forwardRef<HTMLDivElement, QuillEditorProp
   const onChange = (content: string) => {
     const valueString = stripHtml(content);
 
-    if (valueString.length > 257) {
+    if (content.length >= 250) {
       setLimitOverflow(true);
     } else {
       setLimitOverflow(false);

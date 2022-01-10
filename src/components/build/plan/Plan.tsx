@@ -216,7 +216,12 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       data={currentBrick.openQuestion}
                       validate={validationRequired}
                       isValid={!!stripHtml(currentBrick.openQuestion)}
-                      onChange={data => changeBrick((brick) => ({ ...brick, openQuestion: data }))}
+                      onChange={data => {
+                        if (data.length < 250) {
+                          console.log(data.length);
+                          changeBrick((brick) => ({ ...brick, openQuestion: data }))
+                        }
+                      }}
                       toolbar={["bold", "italic", "latex"]}
                     />
                   </div>
