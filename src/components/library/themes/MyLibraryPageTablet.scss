@@ -275,7 +275,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
     padding-bottom: 12vh;
     height: calc(100vh - #{$home-button-size} - 2vw - 2vh - 5vw);
     .libary-container {
-      background: var(--white);
+      background: var(--theme-dark-blue);
       border-radius: 0.7vw;
       height: 100%;
       padding-top: 1.5vh;
@@ -498,14 +498,16 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
       .libary-container {
         height: 100%;
         display: flex;
-        background: var(--white);
+        background: var(--theme-dark-blue);
         border-radius: 0.7vw;
         padding-left: 0.4vw;
         padding-right: 0.4vw;
         margin-top: 2vh;
         margin-bottom: 2vh;
-        padding-top: 1vh;
-        padding-bottom: 1vh;
+        > div {
+          padding-top: 1vh;
+          padding-bottom: 1vh;
+        }
       }
     }
   }
