@@ -61,11 +61,11 @@ const PreReview: React.FC<Props> = ({ brick, moveNext }) => {
   const minutes = getReviewTime(brick.brickLength);
 
   return (
-    <div className="brick-row-container live-container">
+    <div className="brick-row-container live-container static-top-part">
       <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page after-cover-page pre-synthesis animate-fade">
         <div className="introduction-page">
-          <div className="after-cover-main-content">
+          <div className="after-cover-main-content static-top-part-inner">
             <div className="title s-fade1">
               Improve your score.
             </div>

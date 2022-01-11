@@ -1030,3 +1030,15 @@ html {
     }
   }
 }
+
+.notification-box {
+  .MuiPaper-root {
+    background: inherit !important;
+  }
+}
+
+.animated-brick-container .flex-brick-container .publish-brick-container .bottom-description {
+  padding-left: 1vw;
+  padding-right: 1vw;
+  font-size: 1.2vw;
+}
