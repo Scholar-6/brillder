@@ -238,6 +238,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
 
             svg {
               @extend %transitionAll300;
+              margin-right: 0.5vw;
             }
 
             &.blue {
@@ -403,6 +404,10 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
           }
           .assign-class-button {
             width: 3.5vw;
+
+            .svg {
+              margin-right: 0;
+            }
           }
         }
       }
@@ -998,7 +1003,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
           .score-data {
             position: absolute;
             height: $introduction-desktop-height;
-            width: 50vh;
+            width: 40vh;
             top: 0;
             color: var(--theme-dark-blue);
             @extend %textCenter;
@@ -1250,7 +1255,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
       .provisional-container,
       .ending-container {
         .circle-progress-container {
-          $height: calc(50vh);
+          $height: calc(40vh);
           height: $height !important;
           .circle-progress {
             height: $height !important;
@@ -2494,7 +2499,12 @@ html body #root .browser-type-container .sorted-row-expanded .brick-row-containe
   }
 }
 
+.play-preview-pages .provisional-score-page .question-live-play .circle-progress-container {
+  margin-top: 5vh !important;
+}
+
+.play-preview-pages .provisional-score-page .score-precentage,
 .play-preview-pages .ending-page .score-precentage {
-  margin-top: 2vh;
+    margin-top: 2vh;
   font-size: 10vh;
 }
