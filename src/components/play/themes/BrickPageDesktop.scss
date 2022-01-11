@@ -829,10 +829,16 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 font-family: $font-family-black;
                 color: var(--dark-gray);
                 &:hover {
-                  opacity: 0.5;
+                  opacity: 1 !important;
+                  span {
+                    opacity: 0.5;
+                  }
                 }
                 &.current {
-                  opacity: 1;
+                  opacity: 1 !important;
+                  span {
+                    opacity: 1 !important;
+                  }
                 }
                 &.completed,
                 &.current {
@@ -1201,7 +1207,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           p {
             @extend %textCenter;
             font-size: 2.1vw;
-            margin-top: 4.2vh;
+            margin-top: 0vh;
             font-family: $font-family-bold;
           }
 
@@ -1344,7 +1350,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         height: calc(100vh - #{$header-height}) !important;
         margin-right: 8vw;
         margin-left: 7vw;
-        border-radius: 2.2vw !important;
+        border-radius: 1.9vw !important;
 
         .swipe-view {
           width: $width !important;
@@ -1931,7 +1937,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .after-cover-page {
   .after-cover-main-content {
     .title {
-      margin-top: 7.5vh;
+      padding-top: 7.5vh;
       margin-bottom: 10vh;
       text-align: center;
       font-size: 6vh !important;
@@ -2129,7 +2135,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     height: calc(#{$height-1} - #{$height-2});
   }
   .icon-container {
-    margin-top: 12.5vh;
+    padding-top: 12.5vh;
     display: flex;
     justify-content: center;
     svg {
@@ -2643,4 +2649,47 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   .introduction-info {
     background: var(--theme-light-blue) !important;
   }
+}
+
+// static pages
+.static-top-part {
+  background: inherit !important;
+
+  .static-top-part-inner {
+    height: calc(100% - 4vw + 1px);
+    background: var(--white);
+  }
+}
+
+// score pages
+.play-preview-pages .sorted-row .brick-row-container.ending-container,
+.play-preview-pages .sorted-row .brick-row-container.provisional-container {
+  background: inherit !important;
+  .play-preview-panel {
+    height: 100%;
+    .MuiGrid-root {
+      height: 100%;
+      .introduction-info {
+        height: calc(100% - 4vw + 1px) !important;
+      }
+    }
+  }
+  .introduction-page {
+    height: calc(100% - 4vw + 1px) !important;
+    background: var(--white);
+  }
+}
+
+// radius fix
+.play-preview-pages .sorted-row.sorted-row-expanded .synthesis-container {
+  overflow: visible !important;
+}
+.play-preview-pages .sorted-row.sorted-row-expanded .synthesis-container,
+.play-preview-pages .sorted-row.sorted-row-expanded .review-container,
+.play-preview-pages .sorted-row.sorted-row-expanded .live-container {
+  border-radius: 2.2vw !important;
+}
+
+.play-preview-pages .sorted-row.sorted-row-expanded .live-container.static-top-part {
+  border-radius: 1.9vw !important;
 }

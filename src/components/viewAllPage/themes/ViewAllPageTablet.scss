@@ -2,17 +2,39 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-$sidebar-font-size: 1.4vw;
+$sidebar-font-size: 1.3vw;
 
 .dashboard-page {
   overflow: hidden;
   background: var(--theme-dark-blue);
   height: 100%;
   width: 100%;
+  .radio-container {
+    font-size: $sidebar-font-size;
+  }
+  .level-filter-box {
+    padding-right: 1vw !important;
+    .MuiTypography-root {
+      font-size: 1.3vw !important;
+    }
+    .MuiFormControlLabel-root {
+      width: 100% !important;
+    }
+  }
   .sorted-row .sort-and-filter-container .sort-box .sort-by-box .sort-header,
   .sorted-row .sort-and-filter-container .subjects-toggle .toggle-button,
   .sorted-row .sort-and-filter-container .sort-box .filter-container .MuiFormControlLabel-label {
     font-size: $sidebar-font-size !important;
+  }
+  .sorted-row .sort-and-filter-container .sort-box .sort-by-box {
+    .sort-header {
+      font-size: 1.8vw !important;
+    }
+  }
+  .sorted-row .sort-and-filter-container .sort-box .filter-header {
+    text-transform: capitalize;
+    letter-spacing: 0 !important;
+    font-size: 1.8vw !important;
   }
   .published-count div {
     font-size: $sidebar-font-size !important;

@@ -104,10 +104,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
     }
     return (
       <Grid className="share-row" container direction="row" justify="center">
-        <ShareColumn onClick={() => setShare(true)} />
-        {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
-        {canSee && <AdaptBrickColumn onClick={() => setIsAdaptBrickOpen(true)} />}
-        {canSee && <GenerateCoverButton brick={brick} isFinal={true} />}
+        <ShareColumn size={3} onClick={() => setShare(true)} />
+        {canSee && <AssignBrickColumn size={3} onClick={() => setAssign(true)} />}
+        {canSee && <AdaptBrickColumn size={3} onClick={() => setIsAdaptBrickOpen(true)} />}
+        {canSee && <GenerateCoverButton size={3} brick={brick} isFinal={true} />}
       </Grid>
     );
   }
@@ -117,7 +117,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <Hidden only={['xs']}>
         <div className="brick-container final-step-page">
           <Grid container direction="row">
-            <Grid item xs={8}>
+            <Grid item xs={12}>
               <div className="introduction-page">
                 <div className="intro-header">
                   <div className="left-brick-circle">
@@ -131,27 +131,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 </div>
               </div>
             </Grid>
-            <Grid item xs={4}>
-              <div className="introduction-info">
-                <div className="intro-text-row">
-                </div>
-                <div className="action-footer">
-                  <div></div>
-                  <div className="direction-info text-center">
-                    <h2>Results</h2>
-                  </div>
-                  <div>
-                    <button
-                      type="button"
-                      className="play-preview svgOnHover roller-red"
-                      onClick={moveNext}
-                    >
-                      <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
-                    </button>
-                  </div>
-                </div>
+            <div className="new-navigation-buttons">
+              <div className="n-btn next" onClick={moveNext}>
+                Results
+                <SpriteIcon name="arrow-right" />
               </div>
-            </Grid>
+            </div>
           </Grid>
         </div>
       </Hidden>
