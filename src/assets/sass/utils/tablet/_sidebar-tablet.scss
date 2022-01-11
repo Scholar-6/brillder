@@ -70,9 +70,8 @@
         flex-direction: column;
 
         .sort-header {
-          text-transform: uppercase;
+          text-transform: capitalize;
           font-size: 2.3vh;
-          letter-spacing: 0.45vh;
           font-family: $font-family-bold;
         }
 
@@ -384,7 +383,7 @@
       }
 
       @include tabletP {
-        font-family: $font-family-black;
+        font-family: $font-family-bold;
         padding-bottom: 0;
         font-size: $bricks-title-font-size;
         line-height: 1;

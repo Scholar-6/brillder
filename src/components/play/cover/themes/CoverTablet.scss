@@ -3,6 +3,9 @@
 @import 'src/assets/sass/partials/extensions';
 
 .cover-page {
+  .cover-info-row .hover-area {
+    margin-top: 0.3vw !important;
+  }
 
   .brief-ellipsis {
     position: absolute;
@@ -149,7 +152,7 @@
         margin-top: 2vh;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
-        font-size: 1.1vw;
+        font-size: 1.3vw;
         @extend %ellipsis;
         .key-word-play {
           cursor: pointer;
@@ -192,7 +195,7 @@
             border-top-left-radius: 0 !important;
             border-top-right-radius: 0 !important;
             border: none !important;
-            height: calc(100vh - 18vh - 28vw);
+            height: calc(96vh - 18vh - 28vw);
             overflow-y: auto;
 
             svg {
