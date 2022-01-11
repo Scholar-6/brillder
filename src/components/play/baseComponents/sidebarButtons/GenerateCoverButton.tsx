@@ -11,7 +11,9 @@ import { Grid } from '@material-ui/core';
 interface GenerateCoverButtonProps {
     brick: Brick;
 
+    
     // ways to display
+    size?: 3 | 4 | 5 | 6 | 7 | 8;
     sidebarRolledUp?: boolean;
     isSvg?: boolean;
     isMenuItem?: boolean;
@@ -53,14 +55,14 @@ const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
 
     if (props.isFinal) {
         return (
-            <Grid className="share-column final-assign-brick-column" onClick={generateCover} container item xs={6} justify="center">
-            <div>
-              <div className="button-container">
-                <SpriteIcon name="heroicons-qrcode" className="active" />
-              </div>
-              <div className="link-text">Create QR Cover</div>
-            </div>
-          </Grid>
+            <Grid className="share-column final-assign-brick-column" onClick={generateCover} container item xs={props.size ? props.size : 6} justify="center">
+                <div>
+                    <div className="button-container">
+                        <SpriteIcon name="heroicons-qrcode" className="active" />
+                    </div>
+                    <div className="link-text">Create QR Cover</div>
+                </div>
+            </Grid>
         )
     }
 

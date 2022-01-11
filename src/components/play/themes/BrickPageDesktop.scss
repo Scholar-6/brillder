@@ -829,10 +829,16 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 font-family: $font-family-black;
                 color: var(--dark-gray);
                 &:hover {
-                  opacity: 0.5;
+                  opacity: 1 !important;
+                  span {
+                    opacity: 0.5;
+                  }
                 }
                 &.current {
-                  opacity: 1;
+                  opacity: 1 !important;
+                  span {
+                    opacity: 1 !important;
+                  }
                 }
                 &.completed,
                 &.current {
@@ -1201,7 +1207,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           p {
             @extend %textCenter;
             font-size: 2.1vw;
-            margin-top: 4.2vh;
+            margin-top: 0vh;
             font-family: $font-family-bold;
           }
 
@@ -1344,7 +1350,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         height: calc(100vh - #{$header-height}) !important;
         margin-right: 8vw;
         margin-left: 7vw;
-        border-radius: 2.2vw !important;
+        border-radius: 1.9vw !important;
 
         .swipe-view {
           width: $width !important;
@@ -2672,4 +2678,18 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     height: calc(100% - 4vw + 1px) !important;
     background: var(--white);
   }
+}
+
+// radius fix
+.play-preview-pages .sorted-row.sorted-row-expanded .synthesis-container {
+  overflow: visible !important;
+}
+.play-preview-pages .sorted-row.sorted-row-expanded .synthesis-container,
+.play-preview-pages .sorted-row.sorted-row-expanded .review-container,
+.play-preview-pages .sorted-row.sorted-row-expanded .live-container {
+  border-radius: 2.2vw !important;
+}
+
+.play-preview-pages .sorted-row.sorted-row-expanded .live-container.static-top-part {
+  border-radius: 1.9vw !important;
 }
