@@ -1499,7 +1499,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   }
   .after-cover-main-content {
     .title {
-      margin-top: 7.5vh;
+      padding-top: 7.5vh;
       margin-bottom: 10vh;
       text-align: center;
       font-size: 2.5vw !important;
