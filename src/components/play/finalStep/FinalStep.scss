@@ -31,13 +31,10 @@
   p {
     @extend %textCenter;
     font-size: 2.1vw;
-    margin-top: 4.2vh;
     font-family: $font-family-bold;
   }
 
   .share-row {
-    margin-top: 12.5vh;
-
     .button-container {
       @extend %flexToXCenter;
 
@@ -59,5 +56,61 @@
       font-size: 2vw;
     }
     @extend %questionLinkDescription;
+  }
+}
+
+.play-preview-pages .sorted-row .brick-row-container.complete-container {
+  background: inherit !important;
+}
+
+html body #root .play-preview-pages .sorted-row.sorted-row-expanded .complete-container .brick-container.final-step-page {
+  height: 100% !important;
+  > .MuiGrid-root {
+    height: inherit;
+    > .MuiGrid-root:first-child {
+      height: calc(100% - 4vw);
+      .introduction-page {
+        height: 100% !important;
+        background: var(--white);
+      }
+    }
+    .new-navigation-buttons {
+      position: absolute;
+      background: var(--theme-light-blue) !important;
+      bottom: 0;
+      padding: 0 !important;
+      height: 4vw !important;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .n-btn {
+        cursor: pointer;
+        transition: all 300ms ease-out;
+        display: flex;
+        align-items: center;
+        font-size: 2.2vw;
+        font-family: $font-family-bold;
+        margin-left: 1vw;
+        margin-right: 1.5vw;
+
+        svg {
+          transition: all 300ms ease-out;
+          stroke-width: 3;
+          width: 3vw;
+          height: 3vw;
+        }
+        &.next {
+          color: var(--white);
+          &:hover {
+            margin-right: 0.5vw;
+            svg {
+              margin-left: 1vw;
+            }
+          }
+        }
+      }
+    }
   }
 }
