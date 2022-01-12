@@ -59,7 +59,7 @@
       }
     }
   }
-  $space: 1.5vw;
+  $space: 1.2vw;
   .brick-length-image-container1 {
     margin-right: calc(#{$space * 2}) !important;
     .brick-length-image {
@@ -109,8 +109,8 @@
     }
 
     .brick-length-image {
-      width: 8vw;
-      height: 6vw;
+      width: 10vw;
+      height: 8vw;
       background-repeat: no-repeat;
     }
     &.active,
