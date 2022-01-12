@@ -8,7 +8,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
 
 
 .my-library {
-  $small-level-size: 3vh;
+  $small-level-size: 6vh;
   $level-size: 6vh;
   .custom-tooltip.subject-tooltip .brick-inline {
     p, span {
@@ -305,7 +305,8 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
             }
           }
           .default-value.progress-value .rotated-text {
-            padding-left: 5.5vw;
+            padding-right: 6vh;
+            padding-left: calc(6vh + 4.5vw);
           }
         }
         .length-20 {
@@ -344,14 +345,31 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
     }
   }
   .single-assignment-progressbar {
+    .background {
+      height: 100%;
+      width: 100%;
+      border-radius: 0.35vw;
+    }
     &.general {
+      .academic-lines {
+        .end-lines,
+        .start-lines {
+          .level {
+            background: var(--theme-dark-blue) !important;
+          }
+        }
+      }
       .pr-lock-container {
-        background: var(--theme-dark-blue) !important;
+        color: var(--theme-dark-blue) !important;
+        background: var(--white) !important;
       }
       .progress-value {
-        background: var(--theme-dark-blue) !important;
+        background: var(--white) !important;
         &.default-value {
           background: inherit !important;
+        }
+        .rotated-container .rotated .rotated-text {
+          color: var(--theme-dark-blue);
         }
       }
     }
@@ -511,7 +529,6 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
         display: flex;
         background: var(--theme-dark-blue);
         border-radius: 0.7vw;
-        padding-left: 0.4vw;
         padding-right: 0.4vw;
         margin-top: 2vh;
         margin-bottom: 2vh;
