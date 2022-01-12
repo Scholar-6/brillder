@@ -217,7 +217,27 @@
           }
 
           &.general {
-
+            .academic-lines {
+              .end-lines,
+              .start-lines {
+                .level {
+                  background: var(--theme-dark-blue) !important;
+                }
+              }
+            }
+            .pr-lock-container {
+              color: var(--theme-dark-blue) !important;
+              background: var(--white) !important;
+            }
+            .progress-value {
+              background: var(--white) !important;
+              &.default-value {
+                background: inherit !important;
+              }
+              .rotated-container .rotated .rotated-text {
+                color: var(--theme-dark-blue);
+              }
+            }
           }
         }
       }
