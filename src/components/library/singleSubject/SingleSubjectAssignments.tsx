@@ -7,6 +7,7 @@ import { BrickLengthEnum } from "model/brick";
 import SingleSubjectPagination from "./SingleSubjectPagination";
 import SingleSubjectAssignment from "./SingleSubjectAssignment";
 import { User } from "model/user";
+import { isITablet } from "services/phone";
 
 interface SingleSubjectProps {
   sortBy: SortBy;
@@ -78,7 +79,11 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
   getPages(assignments: LibraryAssignmentBrick[]) {
     const totalWidth = 68.6;
     const baseMargin = 0.32;
-    const baseAssignmentWidth = 2;
+    let baseAssignmentWidth = 2;
+
+    if (isITablet()) {
+      baseAssignmentWidth = 3;
+    }
 
     let pages = [];
 

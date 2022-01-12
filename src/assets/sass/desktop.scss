@@ -1132,3 +1132,22 @@
   font-size: 1.3vw;
   }
 }
+
+// caption
+.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .image-caption {
+  padding-left: 5vw;
+  padding-right: 5vw;
+  font-size: 1vw !important;
+  text-align: left;
+  p {
+    font-size: 1vw !important;
+  }
+}
+
+// preview caption
+.phone-question-preview .image-caption {
+  font-size: 0.8vw !important;
+  p {
+    font-size: 0.8vw !important;
+  }
+}
