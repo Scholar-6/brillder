@@ -1251,6 +1251,14 @@ $base-build-border: $editor-radius;
   height: 100%;
 }
 
+// caption font size
+.investigation-build-page .image-caption {
+  font-size: 0.9vw !important;
+  p {
+    font-size: 0.9vw !important;
+  }
+}
+
 
 @media only screen and (max-width: 760px) {
   .desktop-version-dialog {
