@@ -43,9 +43,9 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   className += " default";
 
   const renderRotatedTitle = (name: string, height: number) => {
-    let width = "calc(30vh - 3vw)";
+    let width = "calc(45vh - 3vw)";
     if (height !== 100) {
-      width = `calc((30vh - 3vw) / 100 * ${height})`;
+      width = `calc((45vh - 3vw) / 100 * ${height})`;
     }
     return (
       <div className={"rotated-container " + name}>
@@ -94,6 +94,14 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         style={{ background: color }}
       >
         <div className="progress-value default-value">
+          <div className="background" style={{ background: height < 50 ? color : '', opacity: height < 50 ? 0.3 : 0.5 }}>
+            {height < 50 && (
+              <AcademyDifficulty
+                a={assignment.brick.academicLevel}
+                brick={brick}
+              />
+            )}
+          </div>
           {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
           {height < 50 && height > 0 && renderRotatedTitle("white", 100)}
           {height < 50 && height > 0 && (
@@ -102,6 +110,11 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
                 <SpriteIcon name="lock" />
               </div>
               <div>{Math.round(height)}%</div>
+              <AcademyDifficulty
+                a={assignment.brick.academicLevel}
+                brick={brick}
+                noTopLines={height < 50}
+              />
             </div>
           )}
         </div>

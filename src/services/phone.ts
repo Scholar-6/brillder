@@ -6,3 +6,10 @@ export const isPhone = () => {
   }
   return false;
 }
+
+export const isITablet = () => {
+  if (isMobile && (isTablet || isIPad13)) {
+    return true;
+  }
+  return false;
+}
