@@ -49,7 +49,11 @@ export const getLatestBrick = async () => {
  */
 export const getPublishedBricks = async () => {
   try {
-    return await get<Brick[]>(`/bricks/byStatus/${BrickStatus.Publish}`);
+    let bricks = await get<Brick[]>(`/bricks/byStatus/${BrickStatus.Publish}`);
+    if (bricks) {
+      bricks = bricks.filter(b => b.status == 4);
+    }
+    return bricks;
   } catch {
     return null;
   }
