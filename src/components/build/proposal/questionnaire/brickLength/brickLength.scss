@@ -92,24 +92,25 @@
   }
 
   .brick-length-image-container {
+    position: relative;
     padding-top: 1vw;
+    padding-bottom: 1vw;
     padding-left: 0;
     padding-right: 0;
     border-radius: 0.8vw;
 
     .length-num {
-      margin-top: -0.3vw;
-      margin-right: 0.4vw;
-      line-height: 1.2;
+      position: absolute;
+      top: -1.5vw;
+      left: calc(50% - 0.5vw);
       font-size: 1vw;
       font-family: $font-family-bold;
-      text-align: right;
       color: var(--tab-gray);
     }
 
     .brick-length-image {
       width: 8vw;
-      height: auto;
+      height: 6vw;
       background-repeat: no-repeat;
     }
     &.active,
