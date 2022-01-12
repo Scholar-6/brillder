@@ -3,7 +3,13 @@
 @import 'src/assets/sass/partials/extensions';
 
 .phone-my-library {
-  $base-brick-width: 8vw;
+  $base-brick-width: 10vw;
+
+  .background {
+    height: 100%;
+    width: 100%;
+    border-radius: 1vw;
+  }
 
   .ml-content {
     height: calc(100% - 64px);
@@ -56,10 +62,6 @@
     .length-60 .rotated-container .rotated {
       margin-bottom: 13vw;
     }
-  }
-
-  .page-header {
-    height: 74px !important;
   }
 
   .page-navigation {
@@ -148,7 +150,7 @@
               height: 100%;
 
               .white .rotated-text {
-                padding-left: calc(12vw + 5vh);
+                padding-left: calc(15vw + 5vh);
               }
 
               .text-dark-gray .rotated-text {
@@ -230,6 +232,9 @@
           }
 
           &.general {
+            .background {
+              background: var(--white) !important;
+            }
             .academic-lines {
               .end-lines,
               .start-lines {
@@ -248,7 +253,7 @@
                 background: inherit !important;
               }
               .rotated-container .rotated .rotated-text {
-                color: var(--theme-dark-blue);
+                color: var(--white);
               }
             }
           }
@@ -271,4 +276,15 @@
 .my-library .all-subject-assignments .my-library-list .libary-container-1 .assignment-progressbar .assignment {
   margin-left: 0.5vw;
   margin-right: 0.5vw;
+}
+
+// bottom
+.phone-my-library .upper-part {
+  .search-container {
+    top: 2.6vw !important;
+    left: 44vw;
+  }
+  .home-button-container {
+    margin-right: 24vw;
+  }
 }
