@@ -39,8 +39,8 @@
       .rotated {
         transform: rotate(270deg);
         .rotated-text {
-          padding-left: 3vh;
-          padding-right: 3vh;
+          padding-left: 5vh;
+          padding-right: 5vh;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -66,6 +66,17 @@
     display: none;
   }
 
+  .academic-lines {
+    .end-lines,
+    .start-lines {
+      height: 5vh !important;
+
+      .level {
+        height: 0.6vh;
+      }
+    }
+  }
+
   .all-subject-assignments {
     height: calc(100% - 8%) !important;
     padding: 0 !important;
@@ -79,7 +90,7 @@
       overflow-y: scroll;
 
       .libary-container-1 {
-        height: calc(34vh + 8vw);
+        height: calc(49vh + 8vw);
         margin-left: 0.5vw;
         margin-right: 0.5vw;
         max-width: 100%;
@@ -96,7 +107,7 @@
         .libary-container {
           width: max-content;
           max-width: 100%;
-          height: calc(30vh);
+          height: calc(45vh);
           display: flex;
           background: var(--white);
           background: var(--theme-dark-blue);
@@ -137,7 +148,7 @@
               height: 100%;
 
               .white .rotated-text {
-                padding-left: 14.5vw;
+                padding-left: calc(12vw + 5vh);
               }
 
               .text-dark-gray .rotated-text {
@@ -149,9 +160,11 @@
                 border-radius: 1vw;
                 border-top-right-radius: 4vw;
                 border-top-left-radius: 4vw;
-                height: 13vw;
+                height: calc(11vw + 5vh);
+                padding-bottom: 6vh;
                 width: 100%;
                 bottom: 0;
+                line-height: 1.1;
                 font-family: $font-family-bold;
                 color: var(--white);
                 > div {
