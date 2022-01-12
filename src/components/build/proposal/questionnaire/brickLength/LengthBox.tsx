@@ -38,10 +38,12 @@ const LengthBox: React.FC<LengthBoxProps> = ({ activeLength, boxLength, setBrick
   }
 
   return (
-    <div className={className} onClick={() => setBrickLength(boxLength)} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} >
-      <SpriteIcon name={icon} className="brick-length-image" />
-      <div className="length-num">
-        {label}
+    <div>
+      <div className={className} onClick={() => setBrickLength(boxLength)} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} >
+        <div className="length-num">
+          {label}
+        </div>
+        <SpriteIcon name={icon} className="brick-length-image" />
       </div>
     </div>
   )
