@@ -285,7 +285,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
       padding-right: $base-side-margin;
       > div {
         height: 100%;
-        $base-width: 2vw;
+        $base-width: 3vw;
         .assignment {
           margin-left: $base-side-margin;
           margin-right: $base-side-margin;
@@ -313,7 +313,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
           width: $base-width;
           .rotated .rotated-text {
             height: $base-width;
-            line-height: 1.35;
+            line-height: 2;
           }
           .progress-value {
             width: $base-width;
@@ -324,7 +324,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
           width: $width;
           .rotated .rotated-text {
             height: $width;
-            line-height: 2.7;
+            line-height: 4;
           }
           .progress-value {
             width: $width
@@ -599,26 +599,27 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
           background: var(--theme-light-blue) !important;
         }
       }
-  
+ 
+      $base-width: 1.4vw; 
       &.length-20 {
-        width: 0.8vw;
+        width: $base-width;
         .progress-value {
-          width: 0.8vw;
+          width: $base-width;
           line-height: 1;
         }
       }
       &.length-40 {
-        width: 1.6vw;
+        width: calc(#{$base-width} * 2);
         .progress-value {
+          width: calc(#{$base-width} * 2);
           line-height: 1.9;
-          width: 1.6vw;
         }
       }
       &.length-60 {
-        width: 3.2vw;
+        width: calc(#{$base-width} * 4);
         .progress-value {
+          width: calc(#{$base-width} * 4);
           line-height: 3.9;
-          width: 3.2vw;
         }
       }
     }
