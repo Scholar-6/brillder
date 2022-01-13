@@ -111,7 +111,7 @@ class MainNotificationPanel extends Component<
             history.push(routes.playCover(brick));
           }
         } else if (type === NotificationType.BrickAttemptSaved) {
-          if (isMobile) {
+          if (isPhone()) {
             this.setState({ needDesktopOpen: true });
           } else {
             history.push(map.postPlay(brick.id, notification.sender.id));
