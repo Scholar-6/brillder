@@ -17,6 +17,8 @@ import map from "components/map";
 import PrepHoverHelp from "../baseComponents/PrepHoverHelp";
 import BriefHoverHelp from "../baseComponents/BriefHoverHelp";
 import OpenQHoverHelp from "../baseComponents/OpenQHoverHelp";
+import { stripHtml } from "../questionService/ConvertService";
+import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
 
 interface DialogProps {
   isOpen: boolean;
@@ -32,6 +34,8 @@ enum PlayStatus {
 
 const PlayDialog: React.FC<DialogProps> = (props) => {
   const { brick } = props;
+  const [bioOpen, setBio] = React.useState(false);
+  const [editorBioOpen, setEditorBio] = React.useState(false);
   const [status, setStatus] = React.useState(PlayStatus.Cover);
 
   const close = () => {
@@ -48,20 +52,21 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
   }
 
   const renderCoverContent = () => {
+    const briefText = stripHtml(brick.brief);
+
     return (
       <div>
         <div className="dialog-header cover-content">
           <h1><BrickTitle title={brick.title} /></h1>
           <div className="flex author-play-content">
-            <CoverAuthorRow
-              brick={brick}
-              setBio={() => { }}
-              setEditorBio={()=>{}}
-            />
             <HoverHelp>
+              Click on the author or editor's name to read an example bio.
               This is taken from the information you provide in your profile
               page, and should reflect your academic interests and credentials.
             </HoverHelp>
+            <CoverAuthorRow
+              brick={brick} setBio={setBio} setEditorBio={setEditorBio}
+            />
           </div>
           <div className="flex-center">
             <div className="hover-orange-text">
@@ -74,6 +79,15 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
               {renderBrickCircle()}
               <div className="subject-and-name">
                 {brick.subject?.name}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
+              </div>
+              <div className="keywords-row">
+                <HoverHelp>
+                  Keywords are best thought of as likely search terms, and are
+                  ultimately curated by Publishers for each subject. For multi-word
+                  keywords, separate words with a hyphen, eg. ‘19th-Century’
+                </HoverHelp>
+                <SpriteIcon name="hash" className="hash-icon" />
+                <KeyWordsPreview keywords={brick.keywords} />
               </div>
               <div className="hover-area flex-center">
                 <SpriteIcon name="help-circle-custom" />
@@ -107,22 +121,17 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
                 </div>
               </div>
             </div>
-
-          </div>
-          <div className="keywords-row">
-            <KeyWordsPreview keywords={brick.keywords} />
-            <HoverHelp>
-              Keywords are best thought of as likely search terms, and are
-              ultimately curated by Publishers for each subject. For multi-word
-              keywords, separate words with a hyphen, eg. ‘19th-Century’
-            </HoverHelp>
           </div>
         </div>
         <div className="left-sidebar">
-          <div>
-            <CoverPlay onClick={() => setStatus(PlayStatus.Prep)} />
-            <div className="efw-help-text">Click here to see next page</div>
+          <HoverHelp>
+            We display the first few sentences of the brief here. <br/>
+            Aim to catch the educator or learner's eye.
+          </HoverHelp>
+          <div className="brief-ellipsis">
+            {briefText}
           </div>
+          <CoverPlay onClick={() => setStatus(PlayStatus.Prep)} />
         </div>
       </div>
     );
@@ -133,7 +142,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
       <div className="dialog-header dialog-prep-content">
         <div className="flex">
           <OpenQHoverHelp />
-          <div className="open-question" dangerouslySetInnerHTML={{__html: brick.openQuestion}} />
+          <div className="open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }} />
         </div>
         <div className="space" />
         <div className="flex">
@@ -148,7 +157,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
           </div>
         </div>
         <div className="flex text-container">
-          <div dangerouslySetInnerHTML={{__html: brick.brief}} />
+          <div dangerouslySetInnerHTML={{ __html: brick.brief }} />
         </div>
         <div className="flex">
           <PrepHoverHelp />
@@ -162,11 +171,21 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
           </div>
         </div>
         <div className="flex text-container">
-          <div dangerouslySetInnerHTML={{__html: brick.prep}} />
+          <div dangerouslySetInnerHTML={{ __html: brick.prep }} />
         </div>
       </div>
     );
   };
+
+  const renderCoverFooter = () => {
+    return (
+      <div className="prep-footer">
+        <div className="button-container" onClick={() => setStatus(PlayStatus.Prep)}>
+          Next <SpriteIcon name="arrow-right" />
+        </div>
+      </div>
+    );
+  }
 
   const renderPrepFooter = () => {
     return (
@@ -178,6 +197,9 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
           <div className="time-string">
             {formatTwoLastDigits(getPrepareTime(brick.brickLength))}:00
           </div>
+        </div>
+        <div className="back-container" onClick={() => setStatus(PlayStatus.Cover)}>
+          <SpriteIcon name="arrow-left" /> Back 
         </div>
         <div className="button-container" onClick={() => props.history.push(map.ProposalSubjectLink)}>
           Exit & Start Building <SpriteIcon name="arrow-right" />
@@ -199,8 +221,12 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
         onClick={close}
       />
       <div className="footer">
-        {status === PlayStatus.Prep && renderPrepFooter()}
+        {status === PlayStatus.Prep ? renderPrepFooter() : renderCoverFooter()}
       </div>
+      <CoverBioDialog isOpen={bioOpen} user={brick.author} close={() => setBio(false)} />
+      {brick.editors && brick.editors.length > 0 &&
+        <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
+      }
     </Dialog>
   );
 };

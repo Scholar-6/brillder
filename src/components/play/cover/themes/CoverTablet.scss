@@ -321,6 +321,25 @@
     position: relative;
     .hover-content {
       display: none;
+      color: var(--theme-dark-blue);
+      background: var(--white) !important;
+      > div {
+        font-family: $font-family-bold;
+        color: var(--theme-dark-blue);
+
+        .white-circle {
+          display: inline;
+          background: var(--theme-dark-blue);
+          width: 1.6vw;
+          height: 1.6vw;
+          border-radius: 50%;
+          color: var(--white);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
     &:hover .hover-content {
       width: 30vw;

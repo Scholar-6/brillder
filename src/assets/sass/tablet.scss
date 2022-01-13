@@ -1031,12 +1031,6 @@ html {
   }
 }
 
-.notification-box {
-  .MuiPaper-root {
-    background: inherit !important;
-  }
-}
-
 .animated-brick-container .flex-brick-container .publish-brick-container .bottom-description {
   padding-left: 1vw;
   padding-right: 1vw;
@@ -1049,5 +1043,45 @@ html {
   font-size: 1.3vw !important;
   p {
     font-size: 1.3vw !important;
+  }
+}
+
+// ipad notification box
+.main-page-menu.notification-expanded {
+  background: var(--white);
+  width: 35vw;
+  border-radius: 0 !important;
+  .menu-buttons #bell-container svg {
+    stroke: var(--theme-orange) !important;
+  }
+}
+.notification-box {
+  .MuiPaper-root {
+    background: inherit !important;
+
+    .notification-content {
+      background: var(--white);
+      width: 35vw;
+
+      .notification-list li .content-box {
+        .notification-detail {
+          .notif-title,
+          .notif-desc {
+            color: var(--theme-dark-blue);
+            line-height: 1.2;
+            font-size: 1.4vw;
+          }
+        }
+        .actions {
+          color: var(--theme-dark-blue);
+          .notification-time {
+            font-size: 1.2vw;
+          }
+        }
+      }
+      .clear-notification {
+        font-size: 1.4vw;
+      }
+    }
   }
 }
