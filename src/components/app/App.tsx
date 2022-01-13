@@ -66,6 +66,7 @@ import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';
 import { GetYoutubeClick } from 'localStorage/play';
 import StripePage from 'components/stripePage/StripePage';
 import LeaderboardPage from 'components/competitions/LeaderboardPage';
+import ChoosePlan from 'components/choosePlan/ChoosePlan';
 
 interface AppProps {
   user: User;
@@ -255,6 +256,8 @@ const App: React.FC<AppProps> = props => {
         <StudentRoute path="/my-library" component={Library} />
         <StudentRoute path="/post-play/brick/:brickId/:userId/:classId" component={PostPlay} />
         <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
+
+        <StudentRoute path="/choose-plan" component={ChoosePlan} />
 
         <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
         <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
