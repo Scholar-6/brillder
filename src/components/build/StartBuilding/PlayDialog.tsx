@@ -17,6 +17,7 @@ import map from "components/map";
 import PrepHoverHelp from "../baseComponents/PrepHoverHelp";
 import BriefHoverHelp from "../baseComponents/BriefHoverHelp";
 import OpenQHoverHelp from "../baseComponents/OpenQHoverHelp";
+import { stripHtml } from "../questionService/ConvertService";
 
 interface DialogProps {
   isOpen: boolean;
@@ -48,6 +49,8 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
   }
 
   const renderCoverContent = () => {
+    const briefText = stripHtml(brick.brief);
+
     return (
       <div>
         <div className="dialog-header cover-content">
@@ -56,7 +59,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
             <CoverAuthorRow
               brick={brick}
               setBio={() => { }}
-              setEditorBio={()=>{}}
+              setEditorBio={() => { }}
             />
             <HoverHelp>
               This is taken from the information you provide in your profile
@@ -74,6 +77,14 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
               {renderBrickCircle()}
               <div className="subject-and-name">
                 {brick.subject?.name}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
+              </div>
+              <div className="keywords-row">
+                <KeyWordsPreview keywords={brick.keywords} />
+                <HoverHelp>
+                  Keywords are best thought of as likely search terms, and are
+                  ultimately curated by Publishers for each subject. For multi-word
+                  keywords, separate words with a hyphen, eg. ‘19th-Century’
+                </HoverHelp>
               </div>
               <div className="hover-area flex-center">
                 <SpriteIcon name="help-circle-custom" />
@@ -107,22 +118,13 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
                 </div>
               </div>
             </div>
-
-          </div>
-          <div className="keywords-row">
-            <KeyWordsPreview keywords={brick.keywords} />
-            <HoverHelp>
-              Keywords are best thought of as likely search terms, and are
-              ultimately curated by Publishers for each subject. For multi-word
-              keywords, separate words with a hyphen, eg. ‘19th-Century’
-            </HoverHelp>
           </div>
         </div>
         <div className="left-sidebar">
-          <div>
-            <CoverPlay onClick={() => setStatus(PlayStatus.Prep)} />
-            <div className="efw-help-text">Click here to see next page</div>
+          <div className="brief-ellipsis">
+            {briefText}
           </div>
+          <CoverPlay onClick={() => setStatus(PlayStatus.Prep)} />
         </div>
       </div>
     );
@@ -133,7 +135,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
       <div className="dialog-header dialog-prep-content">
         <div className="flex">
           <OpenQHoverHelp />
-          <div className="open-question" dangerouslySetInnerHTML={{__html: brick.openQuestion}} />
+          <div className="open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }} />
         </div>
         <div className="space" />
         <div className="flex">
@@ -148,7 +150,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
           </div>
         </div>
         <div className="flex text-container">
-          <div dangerouslySetInnerHTML={{__html: brick.brief}} />
+          <div dangerouslySetInnerHTML={{ __html: brick.brief }} />
         </div>
         <div className="flex">
           <PrepHoverHelp />
@@ -162,7 +164,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
           </div>
         </div>
         <div className="flex text-container">
-          <div dangerouslySetInnerHTML={{__html: brick.prep}} />
+          <div dangerouslySetInnerHTML={{ __html: brick.prep }} />
         </div>
       </div>
     );
