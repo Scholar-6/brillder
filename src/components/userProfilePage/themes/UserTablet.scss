@@ -24,5 +24,21 @@
     .phone-question-preview-box {
       width: calc(100vw - #{$width});
     }
+    .input-block {
+      box-shadow: $base-shadow !important;
+      border-radius: 1.7vh;
+      input {
+        box-shadow: unset !important;
+      }
+    }
   }
+
+  .save-image svg {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.user-profile-page .phone-question-preview-box .phone-question-preview .phone {
+  height: 63vh !important;
 }
