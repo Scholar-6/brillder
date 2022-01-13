@@ -69,15 +69,18 @@ $sidebar-font-size: 1.3vw;
       position: absolute;
       right: 0;
       top: calc(1.3vh + 0.7vw);
+      > div {
+        font-family: $font-family-bold;
+      }
       .white-circle {
-        color: var(--theme-dark-blue);
-        background: var(--white);
+        color: var(--white);
+        background: var(--theme-dark-blue);
       }
       .hover-content {
-        background: var(--theme-dark-blue);
-        color: var(--white);
+        background: var(--white);
+        color: var(--theme-dark-blue);
         right: 0;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
       }
       .l-text.smaller {
         width: calc(100% - 4vw);

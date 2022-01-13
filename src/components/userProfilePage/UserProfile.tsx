@@ -435,7 +435,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   />
                 </div>
               </div>
-              <Grid container direction="row" className="big-input-container">
+              <Grid container direction="row" className="big-input-container bio-container-2">
                 <textarea
                   className="style2 bio-container"
                   value={user.bio}

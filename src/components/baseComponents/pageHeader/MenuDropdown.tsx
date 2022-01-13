@@ -116,10 +116,10 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         <MenuItem
           className="first-item menu-item"
           onClick={() => {
-            if (isMobile) {
+            if (isPhone()) {
               move("/play/dashboard/1", 'View All Bricks');
             } else {
-              move("/play/dashboard", 'View All Bricks');
+              move(map.ViewAllPage + '?mySubject=true', 'View All Bricks');
             }
           }}
         >
