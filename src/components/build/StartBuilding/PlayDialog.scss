@@ -16,11 +16,29 @@
   width: 80vw;
   position: relative;
 
+  .hover-area .hover-content {
+    background: var(--white);
+    color: var(--theme-dark-blue);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+
+  .left-sidebar .hover-area {
+    position: absolute;
+    top: 6vw;
+
+    .hover-content {
+      width: 26vw;
+      left: unset;
+      right: -5vw !important;
+    }
+  }
+
   .brief-ellipsis {
     position: absolute;
     top: 9vw;
     width: 100%;
     font-family: $font-family-regular-italic;
+    color: var(--theme-dark-blue);
     padding-left: 1.8vw;
     padding-right: 1.8vw;
     margin-top: 0;
@@ -69,7 +87,7 @@
 
     .author-play-content .hover-area {
       z-index: 1000;
-      left: 40vw;
+      left: 12vw;
     }
 
     .author-row.cover-author-row {
@@ -96,7 +114,7 @@
         padding-left: 0.4vw;
         padding-right: 0.4vw;
         padding-bottom: 0.4vw;
-        background: var(--theme-dark-blue) !important;
+        background: var(--theme-light-blue) !important;
       }
 
       .dropzone {
@@ -114,7 +132,13 @@
         font-size: 1.3vw;
         color: var(--white);
         display: flex;
-        left: 2.5vw;
+        left: -0.4vw;
+
+        svg.hash-icon {
+          height: 2vw;
+        }
+
+        font-family: $font-family-regular;
 
         .key-words-play {
           margin-top: 0.5vw;
@@ -130,6 +154,20 @@
             bottom: 3vw;
             left: -3vw;
           }
+
+
+          &:hover .hover-content {
+            width: 30vw;
+            height: 8vw;
+            font-size: 1.1vw;
+            z-index: 100000;
+            display: block;
+            position: absolute;
+            top: 3vw;
+            left: -1vw;
+            border-radius: 1vw;
+            padding: 1.4vw 2vw;
+          }
         }
       }
 
@@ -139,7 +177,7 @@
         left: 0.6vw;
         display: flex;
         font-size: 2vw;
-        font-family: "Brandon Grotesque Black";
+        font-family: $font-family-bold;
         line-height: 1;
 
         .round-button-container {
@@ -174,11 +212,11 @@
 
           .white-circle {
             display: inline;
-            background: var(--white);
+            background: var(--theme-dark-blue);
             width: 1.6vw;
             height: 1.6vw;
             border-radius: 50%;
-            color: var(--theme-dark-blue);
+            color: var(--white);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -210,10 +248,8 @@
           position: absolute;
           top: 3vw;
           left: -10vw;
-          color: var(--white);
           border-radius: 1vw;
           padding: 1.4vw 2vw;
-          background: var(--theme-light-blue);
         }
       }
     }
@@ -282,7 +318,56 @@
   .footer {
     height: $footer-height;
     width: 80vw;
-    background: var(--tab-gray);
+    background: var(--theme-light-blue);
+    .time-string {
+      font-family: $font-family-bold;
+      color: var(--white);
+    }
+    .button-container {
+      color: var(--white) !important;
+      margin-right: 4.5vw;
+
+      svg {
+        width: 3vw !important;
+        height: 3vw !important;
+        right: -3.3vw;
+        position: absolute;
+        transition: all 300ms ease-in-out;
+      }
+
+      &:hover {
+        svg {
+          right: -4.1vw !important;
+        }
+      }
+    }
+    .back-container {
+      cursor: pointer;
+      color: var(--dark-gray);
+      position: absolute;
+      top: 0;
+      height: 7vh;
+      font-size: 4vh;
+      font-family: $font-family-bold;
+      display: flex;
+      align-items: center;
+      right: 23vw;
+
+      svg {
+        width: 3vw !important;
+        height: 3vw !important;
+        left: -2.8vw;
+        position: absolute;
+        transition: all 300ms ease-in-out;
+      }
+
+      &:hover {
+        color: var(--white);
+        svg {
+          left: -3.5vw !important;
+        }
+      }
+    }
   }
 }
 
