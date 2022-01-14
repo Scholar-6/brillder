@@ -8,6 +8,7 @@ import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import BuildPage from './components/build/BuildPage';
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
 interface BackToWorkState {
   searchString: string;
@@ -69,6 +70,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           history={this.props.history}
         />
         <ClassInvitationDialog />
+        <ClassTInvitationDialog />
       </div>
     );
   }

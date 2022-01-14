@@ -17,6 +17,7 @@ import FailedRequestDialog from "components/baseComponents/failedRequestDialog/F
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import LibraryPhoneSubjects from "./components/LibraryPhoneSubjects";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
 interface BricksListProps {
   user: User;
@@ -183,6 +184,7 @@ class Library extends Component<BricksListProps, BricksListState> {
           />
         </div>
         <ClassInvitationDialog />
+        <ClassTInvitationDialog />
       </React.Suspense>
     );
   }

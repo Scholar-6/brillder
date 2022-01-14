@@ -6,6 +6,7 @@ import { TeachClassroomInvitation } from 'model/classroom';
 import './ClassInvitationDialog.scss';
 import map from 'components/map';
 import { getTeachClassInvitations, teachAcceptClass, teachRejectClass } from 'services/axios/classroom';
+import SpriteIcon from '../SpriteIcon';
 
 interface Props {
   onFinish?(): void;
@@ -25,25 +26,25 @@ const ClassTInvitationDialog: React.FC<Props> = props => {
       setActiveStep(0);
 
       return invitations as TeachClassroomInvitation[];
-    } catch(e) { }
+    } catch (e) { }
   }
 
   useEffect(() => {
-    if(invitations === undefined) {
+    if (invitations === undefined) {
       getInvitations();
     }
   }, [invitations, setInvitations, setActiveStep]);
 
   const handleAccept = async () => {
     try {
-      if(invitations && invitations[activeStep]) {
+      if (invitations && invitations[activeStep]) {
         const classId = invitations[activeStep].id;
         const res = await teachAcceptClass(classId);
         if (res) {
           setActiveStep(activeStep => activeStep + 1);
-          if(activeStep + 1 >= invitations.length) {
+          if (activeStep + 1 >= invitations.length) {
             const newInvitations = await getInvitations();
-            if(newInvitations && newInvitations.length <= 0) {
+            if (newInvitations && newInvitations.length <= 0) {
               history.push(map.ManageClassroomsTab + '?classroomId=' + classId);
               props.onFinish?.();
             }
@@ -56,14 +57,14 @@ const ClassTInvitationDialog: React.FC<Props> = props => {
   }
 
   const handleReject = async () => {
-    if(invitations && invitations[activeStep]) {
+    if (invitations && invitations[activeStep]) {
       const classId = invitations[activeStep].id;
       const res = await teachRejectClass(classId);
       if (res) {
         setActiveStep(activeStep => activeStep + 1);
-        if(activeStep + 1 >= invitations.length) {
+        if (activeStep + 1 >= invitations.length) {
           getInvitations();
-        }   
+        }
       }
     }
   }
@@ -75,13 +76,19 @@ const ClassTInvitationDialog: React.FC<Props> = props => {
       className="dialog-box link-copied-dialog"
     >
       {currentInvitation && <Grid className="classroom-invitation" container direction="column" alignItems="center">
-        <h1><strong>You have been invited to a class.</strong></h1>
+        <h1 className="bold">A class has been shared with you.</h1>
         <div className="classroom-name">
           <h2>{currentInvitation.name}</h2>
         </div>
         <Grid item container direction="row" justify="center">
-          <button className="btn btn-md b-green text-white" onClick={handleAccept}>Accept</button>
-          <button className="btn btn-md b-red text-white" onClick={handleReject}>Reject</button>
+          <button className="btn btn-md b-green text-white" onClick={handleAccept}>
+            <SpriteIcon name="check-custom" />
+            Accept
+          </button>
+          <button className="btn btn-md b-red text-white" onClick={handleReject}>
+            <SpriteIcon name="cancel-custom" />
+            Reject
+          </button>
         </Grid>
         <MobileStepper
           variant="dots"
