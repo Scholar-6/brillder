@@ -9,6 +9,7 @@ export const MainPage = '/home';
 export const LeaderboardPage = '/leaderboard';
 export const MyLibrary = '/my-library';
 export const TermsPage = '/terms';
+export const ChoosePlan = '/choose-plan';
 
 export const AssignmentsPage = '/assignments';
 export const AssignmentsClassPage = AssignmentsPage + '/:classId';
@@ -136,7 +137,8 @@ export default {
   MainPage,
   MyLibrary,
   LeaderboardPage,
-
+  ChoosePlan,
+  
   TermsPage,
   TermsSignUp,
   ThankYouPage,

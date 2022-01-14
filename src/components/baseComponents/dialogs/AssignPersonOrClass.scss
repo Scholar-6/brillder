@@ -136,11 +136,18 @@ span.bold {
         }
 
         .premium-btn {
+          cursor: pointer;
           font-family: $font-family-bold;
           font-size: 1.6vw;
           stroke-width: 1.5;
           svg {
             margin-left: 0.4vw;
+          }
+
+          transition: all 150ms ease-in-out;
+
+          &:hover {
+            color: var(--theme-green);
           }
         }
 

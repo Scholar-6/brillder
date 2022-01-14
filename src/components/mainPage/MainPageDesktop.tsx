@@ -390,7 +390,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
             {this.renderSecondButton()}
             {this.renderThirdButton()}
           </div>
-          <div className="second-item"></div>
+          <div className="second-item" onClick={() => this.props.history.push(map.ChoosePlan)}>
+            Go Premium <SpriteIcon name="hero-sparkle" />
+          </div>
         </div>
         {(this.state.isTeacher || this.state.isAdmin) ?
           <div className="second-col">

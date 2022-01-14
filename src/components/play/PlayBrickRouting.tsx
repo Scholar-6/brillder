@@ -69,6 +69,9 @@ import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigatio
 import CountdownReview from "./preReview/CountdownReview";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
+import LastAttemptDialog from "./baseComponents/dialogs/LastAttemptDialog";
+import PremiumEducatorDialog from "./baseComponents/dialogs/PremiumEducatorDialog";
+import PremiumLearnerDialog from "./baseComponents/dialogs/PremiumLearnerDialog";
 
 export enum PlayPage {
   Cover,
@@ -762,6 +765,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           label="You might already have an account, try signing in."
         />
       </div>
+      <LastAttemptDialog isOpen={false} history={history} close={() => {}} submit={() => {}} />
+      <PremiumEducatorDialog isOpen={false} close={() => {}} submit={() => {}} />
+      <PremiumLearnerDialog isOpen={true} close={() => {}} submit={() => {}} />
     </React.Suspense>
   );
 };
