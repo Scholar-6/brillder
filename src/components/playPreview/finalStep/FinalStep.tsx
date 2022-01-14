@@ -315,7 +315,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         close={() => setShare(false)}
       />
       <InviteEditorDialog
-        canEdit={true} brick={brick} isOpen={inviteOpen} hideAccess={true}
+        canEdit={true} brick={brick} isOpen={inviteOpen}
         submit={name => {
           setInviteResult({ isOpen: true, name, accessGranted: true } as InviteResult);
           props.fetchBrick(brick.id);

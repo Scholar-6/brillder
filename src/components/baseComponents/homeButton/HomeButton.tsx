@@ -32,7 +32,7 @@ const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
               <SpriteIcon name="roof" className="w100 h100 active text-theme-orange" />
             </div>
             <div className="smoke-container">
-              <svg className="svg w100 h100">
+              <svg className="svg w100 h100" viewBox="0 0 24 24">
                 <g className="smokes" fill="#BEBEBE" stroke="none">
                   <g className="smoke-1">
                     <path id="Shape1" d="M13.247,2.505c-2.09-1.363-3.281-2.4-6.472-2.043C3.583,0.818,4.833,5.601,3.438,5.601
