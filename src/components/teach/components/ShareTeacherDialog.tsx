@@ -5,71 +5,58 @@ import { connect } from "react-redux";
 
 import actions from 'redux/actions/requestFailed';
 import brickActions from 'redux/actions/brickActions';
-import { Brick, Editor } from 'model/brick';
-import './InviteEditorDialog.scss';
+import { Editor } from 'model/brick';
 import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { inviteTeacher } from 'services/axios/classroom';
 
 interface InviteProps {
-  canEdit: boolean;
   isOpen: boolean;
-  brick: Brick;
-  submit(name: string): void;
+  classId: number;
   close(): void;
   requestFailed(e: string): void;
-  assignEditor(brick: Brick, editorIds: number[]): Promise<boolean>;
 }
 
-const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
-  const [isValid, setValid] = React.useState(false);
-  let initEditors:any[] = [];
-  if (brick.editors) {
-    initEditors = brick.editors;
-  }
-  const [editors, setEditors] = React.useState<Editor[]>(initEditors);
-  const [editorError, setEditorError] = React.useState("");
+const ShareTeacherDialog: React.FC<InviteProps> = ({ classId, ...props }) => {
+  const [teachers, setTeachers] = React.useState<Editor[]>([]);
 
   const saveEditors = async (editorIds: number[]) => {
-    let res = await props.assignEditor(brick, editorIds);
+    /*
+    let res = await props.shareTeachers(brick, editorIds);
     if (res) {
       props.submit(getNameText());
       setEditors([]);
     }
     return res;
+    */
   }
 
   const onNext = async () => {
-    if (isValid && editors) {
-      let editorsIds = [];
-      editorsIds.push(...editors.map(editor => editor.id));
-      if (brick.editors) {
-        editorsIds.push(...brick.editors.map(editor => editor.id));
+    if (teachers && teachers.length > 0) {
+      let teachersIds = [];
+      teachersIds.push(...teachers.map(t => t.id));
+      const res = await inviteTeacher(classId, teachersIds);
+      console.log(res);
+      if (res) {
+        setTeachers([]);
+        props.close();
+      } else {
+        props.requestFailed("can`t save editors");
       }
+    }
+    /*
+    if (isValid && editors) {
       const res = await saveEditors(editorsIds);
       if (res) {
         props.close();
       } else {
         props.requestFailed("can`t save editors");
       }
-    }
+    }*/
   };
 
-  const onBlur = React.useCallback(async () => {
-    if (editors.length > 0) {
-      setValid(true);
-      setEditorError("");
-    } else {
-      setValid(false);
-      setEditorError("No editors have been assigned to this brick yet.");
-    }
-  }, [editors]);
-
-  useEffect(() => {
-    onBlur();
-  }, [brick, onBlur]);
-
   const getNameText = () => {
-    return editors.reduce((prev, current, idx, array) => {
+    return teachers.reduce((prev, current, idx, array) => {
       if (idx === 0) {
         return `${prev}${current.username}`;
       } else if(idx === array.length - 1) {
@@ -83,11 +70,11 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const renderSendButton = () => {
     return (
       <button
-        disabled={editors.length > 0 ? false : true}
-        className={`btn bold btn-md yes-button ${editors.length > 0 ? 'bg-theme-orange' : 'disabled'}`}
+        disabled={teachers.length > 0 ? false : true}
+        className={`btn bold btn-md yes-button ${teachers.length > 0 ? 'bg-theme-orange' : 'disabled'}`}
         onClick={onNext}
       >
-        Invite new editor{editors.length > 1 ? 's' : ''}
+        Share
         <SpriteIcon name="send" className="active send-icon" onClick={props.close} />
       </button>
     );
@@ -104,19 +91,19 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
       </div>
       <div className="dialog-header" style={{ minWidth: '30vw' }}>
         <div className="title">
-          Who would you like to edit this brick?
+          Who would you like to share this brick with?
         </div>
         <div style={{ marginTop: '1.8vh' }}></div>
         <Grid item className="input-container">
           <div className="audience-inputs border-rounded">
             <AutocompleteUsername
-              canEdit={props.canEdit}
+              canEdit={true}
               removeDisabled={true}
-              editorError=""
-              placeholder="Editor's username (first 3 characters)"
-              onBlur={onBlur}
-              users={editors}
-              setUsers={setEditors}
+              editorError={''}
+              placeholder="Teacher's username (first 3 characters)"
+              onBlur={() => {}}
+              users={teachers}
+              setUsers={setTeachers}
             />
           </div>
         </Grid>
@@ -135,4 +122,4 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(null, mapDispatch);
 
-export default connector(InviteEditorDialog);
+export default connector(ShareTeacherDialog);

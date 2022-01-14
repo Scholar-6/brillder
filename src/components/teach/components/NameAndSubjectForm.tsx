@@ -1,4 +1,6 @@
+import React, { useState } from 'react';
 import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
+
 import AssignBrickClass from 'components/baseComponents/dialogs/AssignBrickClass';
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
 import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
@@ -7,12 +9,12 @@ import StudentInviteSuccessDialog from 'components/play/finalStep/dialogs/Studen
 import { checkAdmin } from 'components/services/brickService';
 import { Subject } from 'model/brick';
 import { User } from 'model/user';
-import React from 'react';
 import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
 import InviteStudentEmailDialog from '../manageClassrooms/components/InviteStudentEmailDialog';
 
 import "./NameAndSubjectForm.scss";
+import ShareTeacherDialog from './ShareTeacherDialog';
 
 interface NameAndSubjectFormProps {
   classroom: any;
@@ -28,12 +30,13 @@ interface NameAndSubjectFormProps {
 }
 
 const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
-  const [edit, setEdit] = React.useState(false);
-  const [isOpen, togglePopup] = React.useState(false);
-  const [successResult, setSuccess] = React.useState({ isOpen: false, brick: null } as any);
-  const [failResult, setFailed] = React.useState({ isOpen: false, brick: null } as any);
-  const [inviteOpen, setInvite] = React.useState(false);
-  const [numStudentsInvited, setInvitedCount] = React.useState(0);
+  const [edit, setEdit] = useState(false);
+  const [isOpen, togglePopup] = useState(false);
+  const [successResult, setSuccess] = useState({ isOpen: false, brick: null } as any);
+  const [failResult, setFailed] = useState({ isOpen: false, brick: null } as any);
+  const [inviteOpen, setInvite] = useState(false);
+  const [numStudentsInvited, setInvitedCount] = useState(0);
+  const [isShareTeachOpen, setShareTeach] = useState(false);
 
   const [name, setName] = React.useState<string>();
   const [subjectIndex, setSubjectIndex] = React.useState<number>();
@@ -130,6 +133,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
       </div>
     ) : (
       <div className="name-subject-display">
+
         <div className="subject-icon">
           <SpriteIcon
             name={(props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ? "circle-empty" : "circle-filled"}
@@ -140,7 +144,15 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
                 props.classroom.subject.color
             }}
           />
-          <SpriteIcon name="share" className="share-icon" />
+          <div className="subject-icon-hover"
+            style={{
+              background: (props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ?
+                "var(--theme-dark-blue)" :
+                props.classroom.subject.color
+            }}
+          />
+          <SpriteIcon name="share" className="share-icon" onClick={() => setShareTeach(true)} />
+          <div className="css-custom-tooltip bold">Share Class</div>
         </div>
         <h1 className="name-display">{props.classroom!.name}</h1>
         <span className="edit-icon" onClick={startEditing}>
@@ -213,6 +225,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           numStudentsInvited={numStudentsInvited}
           close={() => setInvitedCount(0)}
         />
+        <ShareTeacherDialog isOpen={isShareTeachOpen} classId={props.classroom.id} close={() => setShareTeach(false)} />
       </div>
     );
 }

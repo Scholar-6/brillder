@@ -79,3 +79,12 @@ export const resendInvitation = async (classroom: ClassroomApi, email: string) =
     return null;
   }
 }
+
+export const inviteTeacher = async (classroomId: number, userIds: number[]) => {
+  try {
+    await post<any>('/classroom/inviteTeacher/' + classroomId, { userIds });
+    return true;
+  } catch{
+    return null;
+  }
+}

@@ -71,20 +71,49 @@
 .name-subject-display {
   .subject-icon {
     position: relative;
-    width: calc(calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35/1.4);
+    width: 3vw;
     height: 3vw;
     margin-right: 1vw;
     svg {
       width: 3vw;
       height: 3vw;
     }
+
+    .css-custom-tooltip {
+      left: -1vw;
+      width: 5.8vw;
+    }
+    .subject-icon-hover {
+      position: absolute;
+      border-radius: 50%;
+      top: 0;
+      left: 0vw;
+      opacity: 0.5;
+      height: 3vw;
+      width: 3vw;
+      transition: all 300ms ease-in-out;
+    }
+
+    &:hover {
+      .subject-icon-hover {
+        top: -0.3vw;
+        left: -0.3vw;
+        height: 3.6vw;
+        width: 3.6vw;
+      }
+        
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
   }
 
   .share-icon {
+    cursor: pointer;
     position: absolute;
     color: var(--white);
     top: 0.5vw;
-    left: 0.7vw;
+    left: 0.4vw;
     width: 2vw !important;
     height: 2vw !important;
   }
