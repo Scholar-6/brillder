@@ -153,7 +153,7 @@ class TeachFilterSidebar extends Component<
 
   renderClassroom(c: TeachClassroom, i: number) {
     console.log(c, c.students);
-    return (
+    return ( 
       <div key={i} className="classes-box">
         <div
           className={"index-box " + (c.active ? "active" : "")}
@@ -168,7 +168,7 @@ class TeachFilterSidebar extends Component<
                 name={c.subject.name}
               />}
             <span className="filter-class-name">{c.name}</span>
-            {c.active && (c.students.length > 0 || c.studentsInvitations.length > 0) && (
+            {c.active && (c.students.length > 0 || (c.studentsInvitations && c.studentsInvitations.length > 0)) && (
               <div className="classroom-icon svgOnHover">
                 <SpriteIcon name="arrow-right" className="active" />
               </div>
