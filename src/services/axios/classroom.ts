@@ -88,3 +88,29 @@ export const inviteTeacher = async (classroomId: number, userIds: number[]) => {
     return null;
   }
 }
+
+export const getTeachClassInvitations = async () => {
+  try {
+    return await get<any>('/classrooms/teachInvitations');
+  } catch {
+    return null;
+  }
+}
+
+export const teachAcceptClass = async (classroomId: number) => {
+  try {
+    await post<any>('/classroom/acceptTeacherInvite/' + classroomId, {});
+    return true;
+  } catch {
+    return null;
+  }
+}
+
+export const teachRejectClass = async (classroomId: number) => {
+  try {
+    await post<any>('/classroom/rejectTeacherInvite/' + classroomId, {});
+    return true;
+  } catch {
+    return null;
+  }
+}

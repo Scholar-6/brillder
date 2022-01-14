@@ -10,6 +10,7 @@ import {
   notificationTypeColors,
 } from "model/notifications";
 import { isPhone } from "services/phone";
+import TeachIcon from "components/mainPage/components/TeachIcon";
 
 interface Props {
   notification: Notification;
@@ -109,6 +110,7 @@ const NotificationItem: React.FC<Props> = ({
               className="w60 h60 active text-theme-dark-blue stroke-2"
             />
           )}
+          {notification.type === NotificationType.TeacherInvitation && <TeachIcon className="teach-icon-notif" />}
         </div>
         <div className="content-box">
           <div className="notification-detail">

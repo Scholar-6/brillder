@@ -20,6 +20,8 @@ export enum NotificationType {
   ReturnedToEditor,
   StudentAssignedBrick,
   RemindedToPlayBrick,
+  DontKnow,
+  TeacherInvitation,
 }
 
 export interface Notification {
@@ -48,4 +50,6 @@ export const notificationTypeColors = {
   [NotificationType.ReturnedToAuthor]: "red",
   [NotificationType.StudentAssignedBrick]: "red",
   [NotificationType.RemindedToPlayBrick]: "red",
+  [NotificationType.DontKnow]: "red",
+  [NotificationType.TeacherInvitation]: "white",
 };
