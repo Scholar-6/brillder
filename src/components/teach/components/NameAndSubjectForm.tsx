@@ -140,6 +140,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
                 props.classroom.subject.color
             }}
           />
+          <SpriteIcon name="share" className="share-icon" />
         </div>
         <h1 className="name-display">{props.classroom!.name}</h1>
         <span className="edit-icon" onClick={startEditing}>
