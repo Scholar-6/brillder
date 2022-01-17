@@ -110,6 +110,35 @@
           &.invited-to-play {
             background-color: var(--white);
           }
+          &.white {
+            background-color: var(--white);
+          }
+          .teach-icon-notif {
+            opacity: 1 !important;
+            visibility: visible !important;
+            width: 83% !important;
+            height: 83% !important;
+
+            #Ellipse_12-2,
+            #Path_8-4,
+            #Ellipse_12,
+            #Path_8 {
+              fill: var(--theme-dark-blue) !important;
+            }
+
+            #Path_8-2,
+            #Path_8-3 {
+              fill: var(--white) !important;
+            }
+            .blue {
+              fill: var(--white) !important;
+            }
+
+            &:hover {
+              width: 92% !important;
+              height: 92% !important;
+            }
+          }
         }
         .content-box {
           display: flex;

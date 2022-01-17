@@ -19,6 +19,7 @@ import { isLevelVisible, toggleElement } from "components/viewAllPage/service/vi
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
 enum Tab {
   Assignemnts,
@@ -460,6 +461,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
           />
         )}
         <ClassInvitationDialog onFinish={() => this.getAssignments()} />
+        <ClassTInvitationDialog />
       </div>
     );
   }

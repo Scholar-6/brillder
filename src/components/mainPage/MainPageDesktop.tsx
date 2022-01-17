@@ -32,6 +32,8 @@ import ReportsAlertDialog from "components/baseComponents/dialogs/ReportsAlertDi
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import InvalidDialog from "components/build/baseComponents/dialogs/InvalidDialog";
 import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
+
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -441,6 +443,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           label="This feature is not available on this device, try a desktop browser."
           close={() => this.setState({isDesktopOpen: false})} />
         <ClassInvitationDialog />
+        <ClassTInvitationDialog />
       </Grid>
       </React.Suspense>
     );

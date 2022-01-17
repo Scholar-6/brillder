@@ -78,3 +78,13 @@ export interface TeachClassroom extends Classroom {
   archivedAssignmentsCount: string;
   studentsInvitations: any[];
 }
+
+export interface TeachClassroomInvitation {
+  name: string;
+  created: string;
+  id: number;
+  status: number;
+  subject: Subject;
+  subjectId: number;
+  updated: string;
+}

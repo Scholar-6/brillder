@@ -10,7 +10,6 @@ import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface AutocompleteProps {
-  brick: Brick;
   canEdit: boolean;
   editorError: string;
   placeholder: string;
@@ -22,7 +21,7 @@ interface AutocompleteProps {
 }
 
 const AutocompleteUsername: React.FC<AutocompleteProps> = ({
-  brick, users, setUsers,
+  users, setUsers,
   ...props
 }) => {
   const [searchString, setSearchString] = React.useState('');
