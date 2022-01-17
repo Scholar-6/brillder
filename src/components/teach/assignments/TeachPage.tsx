@@ -38,6 +38,7 @@ import ArchiveToggle from "./components/ArchiveToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ClassroomsListV2 from "./components/ClassroomsListV2";
 import { getArchivedAssignedCount } from "./service/service";
+import PremiumEducatorDialog from "components/play/baseComponents/dialogs/PremiumEducatorDialog";
 
 
 interface RemindersData {
@@ -74,6 +75,8 @@ interface TeachState {
   isLoaded: boolean;
   remindersData: RemindersData;
   createClassOpen: boolean;
+
+  isPremiumDialogOpen: boolean;
 
   isNewTeacher: boolean;
 
@@ -120,6 +123,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         isDeadlinePassed: false
       },
       createClassOpen: false,
+      isPremiumDialogOpen: false,
 
       totalCount: 0,
       searchString: '',
@@ -537,6 +541,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <TeachFilterSidebar
+            user={this.props.user}
             isNewTeacher={this.state.isNewTeacher}
             classrooms={showedClasses}
             isLoaded={this.state.isLoaded}
@@ -548,6 +553,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             setActiveStudent={this.setActiveStudent.bind(this)}
             filterChanged={this.teachFilterUpdated.bind(this)}
             createClass={this.createClass.bind(this)}
+            moveToPremium={() => this.setState({isPremiumDialogOpen: true})}
           />
           <Grid item xs={9} className="brick-row-container">
             <TeachTab activeTab={TeachActiveTab.Assignments} history={history} assignmentsEnabled={true} />
@@ -579,6 +585,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             doneLabel: 'View'
           }}
         />
+        <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => {}} submit={() => {}} />
       </div>
     );
   }
