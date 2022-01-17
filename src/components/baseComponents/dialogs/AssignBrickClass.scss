@@ -35,6 +35,16 @@ span.bold {
 }
 
 .assign-dialog-new {
+  .MuiDialog-paper .dialog-header > div {
+    width: auto !important;
+  }
+  .MuiDialog-paper .dialog-header .subject-autocomplete {
+    width: 33vw !important;
+  }
+  .subject-autocomplete .MuiInputBase-root.MuiInput-root.MuiAutocomplete-inputRoot {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
   .text-with-glasses {
     display: flex;
     align-items: center;
@@ -42,11 +52,12 @@ span.bold {
 
     .glasses {
       .eye-glass-icon {
-        width: 3.1vw;
+        width: 9vw;
 
         svg {
           margin: 0 !important;
-          width: 2.7vw;
+          width: 9vw;
+          height: 3.5vw;
         }
 
         .glass-eyes-left,
@@ -55,6 +66,10 @@ span.bold {
         }
       }
     }
+  }
+  .assignments-count {
+    font-family: $font-family-regular-italic;
+    margin-bottom: 0.5vw !important;
   }
 }
 
