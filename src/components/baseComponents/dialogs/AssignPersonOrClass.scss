@@ -28,6 +28,14 @@
       font-family: $font-family-bold;
     }
   }
+  .custom-action-row {
+    display: flex;
+    align-items: center;
+    .btn {
+      margin-left: 3vw;
+      margin-right: 3vw;
+    }
+  }
 }
 
 

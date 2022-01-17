@@ -69,6 +69,10 @@ const ClassTInvitationDialog: React.FC<Props> = props => {
     }
   }
 
+  if (!invitations) {
+    return <div />
+  }
+
   const currentInvitation = invitations?.[activeStep];
   return (
     <Dialog
