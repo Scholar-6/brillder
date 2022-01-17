@@ -27,6 +27,7 @@ import SingleSubjectAssignments from "./singleSubject/SingleSubjectAssignments";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { CircularProgressbar } from "react-circular-progressbar";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
 
 interface BricksListProps {
@@ -659,6 +660,7 @@ class Library extends Component<BricksListProps, BricksListState> {
           />
         </div>
         <ClassInvitationDialog />
+        <ClassTInvitationDialog />
       </React.Suspense>
     );
   }

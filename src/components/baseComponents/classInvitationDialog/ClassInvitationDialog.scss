@@ -1,3 +1,7 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
 .classroom-invitation {
     color: var(--theme-dark-blue);
 
@@ -8,6 +12,21 @@
     .btn {
         margin-left: 0.2em;
         margin-right: 0.2em;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 1.5vw;
+            height: 1.5vw;
+            stroke-width: 3;
+            margin-right: 0.5vw;
+        }
+
+        &:hover {
+            background: var(--theme-dark-blue) !important;
+        }
     }
 
     .sent-by {

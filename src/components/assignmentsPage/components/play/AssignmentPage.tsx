@@ -19,6 +19,7 @@ import { getSubjects } from "services/axios/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { countClassAssignments, countClassroomAssignments, filter, getAssignmentsTabCount, getCompletedTabCount, isVisibled, sortAssignments, Tab } from "./service";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
 
 interface PlayProps {
@@ -235,6 +236,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
           }
         </Grid>
         <ClassInvitationDialog onFinish={() => this.getAssignments(-1)} />
+        <ClassTInvitationDialog />
       </Grid>
     );
   }

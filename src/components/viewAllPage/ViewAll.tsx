@@ -85,6 +85,7 @@ import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 import PhoneSearchPage from "./PhoneSearchPage";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import SearchSuggestions from "./components/SearchSuggestions";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
 interface ViewAllProps {
   user: User;
@@ -1419,6 +1420,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           )}
         </div>
         <ClassInvitationDialog />
+        <ClassTInvitationDialog />
         {this.state.isNewTeacher &&
           <Steps
             enabled={this.state.stepsEnabled}
