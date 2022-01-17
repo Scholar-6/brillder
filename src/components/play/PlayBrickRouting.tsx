@@ -203,6 +203,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [searchString, setSearchString] = useState("");
   const [saveFailed, setFailed] = useState(false);
 
+  const [isLastAttemptOpen, setLastAttemptDialog] = useState(false);
+  const [isPremiumLOpen, setPremiumLOpen] = useState(false);
+  const [isPremiumEOpen, setPremiumEOpen] = useState(false);
+
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
 
@@ -238,8 +242,24 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }));
   }
 
+  const showInitDialogs = async () => {
+    var user = await props.getUser();
+    if (user) {
+      if (user.freeAttemptsLeft == 1) {
+        setLastAttemptDialog(true);
+      } else if (user.freeAttemptsLeft <= 0) {
+        setPremiumLOpen(true);
+      } else if (user.freeAssignmentsLeft <= 0) {
+        setPremiumEOpen(true);
+      }
+    }
+    console.log(user);
+  }
+
   // only cover page should have big sidebar
   useEffect(() => {
+    showInitDialogs();
+
     if (!isPhone()) {
       let { pathname } = history.location;
       if (pathname.search(PlayCoverLastPrefix) === -1) {
@@ -262,7 +282,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       }
     }
     /*eslint-disable-next-line*/
-
   }, [])
 
   const updateAttempts = (attempt: any, index: number) => {
@@ -765,9 +784,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           label="You might already have an account, try signing in."
         />
       </div>
-      <LastAttemptDialog isOpen={false} history={history} close={() => {}} submit={() => {}} />
-      <PremiumEducatorDialog isOpen={false} close={() => {}} submit={() => {}} />
-      <PremiumLearnerDialog isOpen={true} close={() => {}} submit={() => {}} />
+      <LastAttemptDialog isOpen={isLastAttemptOpen} history={history} close={() => {}} submit={() => {
+        toggleSideBar(true);
+        setLastAttemptDialog(false);
+        moveToBrief();
+      }} />
+      <PremiumEducatorDialog isOpen={isPremiumEOpen} close={() => {}} submit={() => {}} />
+      <PremiumLearnerDialog isOpen={isPremiumLOpen} close={() => {}} submit={() => {}} />
     </React.Suspense>
   );
 };

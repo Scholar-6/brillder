@@ -23,6 +23,7 @@ import ValidationFailedDialog from './ValidationFailedDialog';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
+  user?: User;
   history: any;
   isOpen: boolean;
   success(items: any[], failed: any[]): void;
@@ -106,6 +107,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res && res.length > 0) {
             await assignToExistingBrick(newClassroom);
+            if (props.user) {
+              props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
+            }
             props.success([newClassroom], []);
 
             // only for new classes
@@ -256,9 +260,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   const renderFooter = () => (
-    <div className="action-row" style={{ justifyContent: 'center' }}>
+    <div className="action-row custom-action-row" style={{ justifyContent: 'center' }}>
       <div className="left-label">
-        1 free Assignment Left
+
+        {props.user?.freeAssignmentsLeft || 0} free Assignment Left
       </div>
       <button
         className="btn btn-md bg-theme-orange yes-button icon-button r-long"
