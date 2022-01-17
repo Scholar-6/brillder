@@ -107,7 +107,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res && res.length > 0) {
             await assignToExistingBrick(newClassroom);
-            if (props.user) {
+
+            if (props.user && props.user.freeAssignmentsLeft) {
               props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
             }
             props.success([newClassroom], []);
@@ -184,11 +185,19 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           }
         }
         if (allArchived) {
+          if (props.user && props.user.freeAssignmentsLeft) {
+            props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
+          }
+
           props.success([existingClass], []);
         } else {
           setAssigned(true);
         }
       } else if (res !== false) {
+        if (props.user && props.user.freeAssignmentsLeft) {
+          props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
+        }
+
         props.success([existingClass], []);
       }
     } else {
