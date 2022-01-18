@@ -272,7 +272,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     <div className="action-row custom-action-row" style={{ justifyContent: 'center' }}>
       <div className="left-label">
 
-        {props.user?.freeAssignmentsLeft || 0} free Assignment Left
+        {props.user?.freeAssignmentsLeft || 0} free Assignments Left
       </div>
       <button
         className="btn btn-md bg-theme-orange yes-button icon-button r-long"
