@@ -7,6 +7,14 @@
 }
 
 .assign-dialog {
+  .psevdo-radio-class {
+    display: flex;
+    margin-bottom: 1vh !important;
+
+    svg {
+      color: var(--white) !important;
+    }
+  }
   .dialog-header>div {
     width: 50vw !important;
 
@@ -86,6 +94,13 @@ span.bold {
           height: 1.5vw;
           margin-left: 1vw;
           margin-right: 0.4vw;
+          stroke-width: 2;
+        }
+        &:hover {
+          font-family: $font-family-bold;
+          svg {
+            stroke-width: 3;
+          }
         }
       }
     }

@@ -148,6 +148,11 @@
     <line x1="12" y1="8" x2="12" y2="16"></line>
     <line x1="8" y1="12" x2="16" y2="12"></line>
   </svg>
+    <svg id="plus-circle-custom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"></circle>
+    <line x1="12" y1="8" x2="12" y2="16"></line>
+    <line x1="8" y1="12" x2="16" y2="12"></line>
+  </svg>
   <svg id="user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M20,21v-2c0-2.2-1.8-4-4-4H8c-2.2,0-4,1.8-4,4v2" />
     <circle cx="12" cy="7" r="4" />

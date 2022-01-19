@@ -28,6 +28,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     annualPrice = 64.99;
   }
 
+  const [valid, setValid] = useState(false);
   const [isMonthly, setMonthly] = useState(true);
   const [card, setCard] = useState(null as null | StripeCardElement);
 
@@ -98,14 +99,16 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       <div className="voucher-box">
         <SpriteIcon name="brain-storm" />
         <div className="absolute-voucher">
-          <div className="light label">Have a discoupt code? Add it here</div>
+          <div className="light label">Have a discount code? Add it here</div>
           <input />
         </div>
       </div>
       <div className="pay-box">
         <form className="CheckOut" onSubmit={handlePayment}>
           <div className="logo bold">Go Premium today</div>
-          <div className="bigger">Join an incredible platform and build a brilliant mind.</div>
+          <div className="bigger">
+            Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'}
+          </div>
           <div className="normal">From just £{price}/month. Cancel anytime.</div>
           <div className="radio-row">
             <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
@@ -131,7 +134,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
             </div>
           </div>
           <div className="small light">By clicking “Agree & Subscribe”, you are agreeing to start your subscription immediately, and you can withdraw from the contract and receive a refund within the first 14 days unless you have accessed Brillder content in that time. We will charge the monthly or annual fee to your stored payment method on a recurring basis. You can cancel at any time, effective at the end of the payment period.</div>
-          <button type="submit" disabled={!stripe}>
+          <button type="submit" disabled={!valid || !stripe}>
             Agree & Subscribe
           </button>
         </form>
