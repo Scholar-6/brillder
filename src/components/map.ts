@@ -33,6 +33,10 @@ export const SelectSubjectPage = Onboarding + '/select-subjects';
 export const UserPreferencePage = Onboarding + '/user-preference';
 export const UserProfile = Onboarding + '/profile-page';
 
+export const StripePage = '/stripe-subscription';
+export const StripeLearner = StripePage + '/learner';
+export const StripeEducator = StripePage + '/educator';
+
 export const TeachAssignedTab = '/teach/assigned';
 export const TeachAssignedArchiveTab = TeachAssignedTab + '/archive';
 export const ManageClassroomsTab = '/teach/manage-classrooms';
@@ -138,6 +142,8 @@ export default {
   MyLibrary,
   LeaderboardPage,
   ChoosePlan,
+  StripeLearner,
+  StripeEducator,
   
   TermsPage,
   TermsSignUp,

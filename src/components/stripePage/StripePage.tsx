@@ -12,6 +12,7 @@ import map from 'components/map';
 
 interface StripePageProps {
   history: any;
+  match: any;
   user: User;
   getUser(): void;
 }
@@ -19,11 +20,10 @@ interface StripePageProps {
 const StripePage: React.FC<any> = (props: StripePageProps) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK as string);
 
-  var { user } = props;
   return (<div className="StripePayPage">
     <HomeButton link={map.MainPage} history={props.history} />
     <Elements stripe={stripePromise}>
-      <StripePageCreditCard user={user}></StripePageCreditCard>
+      <StripePageCreditCard user={props.user} match={props.match}></StripePageCreditCard>
     </Elements>
   </div>)
 }

@@ -1,16 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { StripeCardElement } from "@stripe/stripe-js"
 import axios from "axios";
 import './StripePageCreditCard.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Radio } from '@material-ui/core';
+import { User } from 'model/user';
 
+interface Props {
+  user: User;
+  match: any;
+}
 
-const StripePageCreditCard: React.FC<any> = (props) => {
+const StripePageCreditCard: React.FC<Props> = (props) => {
   const stripe = useStripe();
   const elements = useElements() as any;
   const user = props.user;
+
+  console.log(props.match)
+  const isLearner = props.match.params.type === 'learner';
+
+  let price = 4.99;
+  let annualPrice = 49;
+
+  if (!isLearner) {
+    price = 6.49;
+    annualPrice = 64.99;
+  }
 
   const [isMonthly, setMonthly] = useState(true);
   const [card, setCard] = useState(null as null | StripeCardElement);
@@ -90,15 +106,15 @@ const StripePageCreditCard: React.FC<any> = (props) => {
         <form className="CheckOut" onSubmit={handlePayment}>
           <div className="logo bold">Go Premium today</div>
           <div className="bigger">Join an incredible platform and build a brilliant mind.</div>
-          <div className="normal">From just £4.99/month. Cancel anytime.</div>
+          <div className="normal">From just £{price}/month. Cancel anytime.</div>
           <div className="radio-row">
             <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
               <Radio checked={isMonthly} />
-              £4.99 <span className="label">Monthly</span>
+              £{price} <span className="label">Monthly</span>
             </div>
             <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
               <Radio checked={!isMonthly} />
-              <span>£49</span> <span className="label">Annually</span>
+              <span>£{annualPrice}</span> <span className="label">Annually</span>
               <div className="absolute-label" >Save 18%</div>
             </div>
           </div>
