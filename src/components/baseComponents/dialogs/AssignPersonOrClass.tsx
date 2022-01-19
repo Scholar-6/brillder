@@ -326,11 +326,23 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box assign-student-popup light-blue assign-dialog">
         <div className="dialog-header">
           <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
+          {isCreating &&
+            <div className="psevdo-radio-class">
+              <div className="switch-mode">
+                <Radio checked={false} onClick={() => setCreating(false)} />
+                An existing class
+              </div>
+              <div className="switch-mode">
+                <Radio checked={true} />
+                Create a new class
+              </div>
+            </div>
+          }
           {isCreating ? renderNew() : renderExisting()}
           {!isCreating &&
             <div className="switch-mode" onClick={() => setCreating(true)}>
-              <SpriteIcon name="plus-circle" />
-              Create a new Class
+              <SpriteIcon name="plus-circle-custom" />
+              Create a new class
             </div>
           }
         </div>

@@ -117,6 +117,10 @@
           width: 3vw;
           height: 3vw;
         }
+        transition: all 300ms ease-in-out;
+        &:hover {
+          background: var(--theme-dark-blue);
+        }
       }
 
       &.second {
