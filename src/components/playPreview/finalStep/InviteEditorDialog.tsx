@@ -14,7 +14,6 @@ interface InviteProps {
   canEdit: boolean;
   isOpen: boolean;
   brick: Brick;
-  hideAccess?: boolean;
   submit(name: string): void;
   close(): void;
   requestFailed(e: string): void;
@@ -112,9 +111,8 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
           <div className="audience-inputs border-rounded">
             <AutocompleteUsername
               canEdit={props.canEdit}
-              brick={brick}
               removeDisabled={true}
-              editorError={editorError}
+              editorError=""
               placeholder="Editor's username (first 3 characters)"
               onBlur={onBlur}
               users={editors}

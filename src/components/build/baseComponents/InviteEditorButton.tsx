@@ -53,7 +53,7 @@ const InviteEditorButton: React.FC<ButtonProps> = props => {
         {hovered && <div className="custom-tooltip">Invite an Editor</div>}
       </div>
       <InviteEditorDialog
-        canEdit={true} brick={props.brick} isOpen={inviteOpen} hideAccess={true}
+        canEdit={true} brick={props.brick} isOpen={inviteOpen}
         submit={name => {
           setInviteResult({ isOpen: true, name, accessGranted: true } as InviteResult);
           props.fetchBrick(props.brick.id);

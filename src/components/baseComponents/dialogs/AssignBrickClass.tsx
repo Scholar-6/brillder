@@ -81,20 +81,8 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
     if (res === false) {
       props.failed(brick);
     } else {
-      if (res && res.length > 0) {
-        let allArchived = true;
-        for (let a of res) {
-          if (a.isArchived !== true) {
-            allArchived = false;
-          }
-        }
-        if (allArchived) {
-          props.success(brick);
-        } else {
-          setAssigned(true);
-          return;
-        }
-      }
+      props.success(brick);
+      setAssigned(true);
     }
     props.close();
   }

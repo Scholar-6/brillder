@@ -27,6 +27,7 @@ import LibraryButton from "./components/LibraryButton";
 import BlocksIcon from "./components/BlocksIcon";
 import { getAssignedBricks } from "services/axios/brick";
 import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -390,6 +391,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           onClick={() => this.setState({ isDesktopOpen: false })}
         />
         <ClassInvitationDialog />
+        <ClassTInvitationDialog />
       </Grid>
     );
   }
