@@ -7,17 +7,21 @@ import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import userActions from "../../redux/actions/user";
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import map from 'components/map';
 
 interface StripePageProps {
+  history: any;
   user: User;
+  getUser(): void;
 }
 
-const StripePage: React.FC<any> = (props: any) => {
+const StripePage: React.FC<any> = (props: StripePageProps) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK as string);
-  debugger
 
-  var user = props.user;
+  var { user } = props;
   return (<div className="StripePayPage">
+    <HomeButton link={map.MainPage} history={props.history} />
     <Elements stripe={stripePromise}>
       <StripePageCreditCard user={user}></StripePageCreditCard>
     </Elements>
