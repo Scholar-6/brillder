@@ -7,6 +7,7 @@ import { ReduxCombinedState } from "redux/reducers";
 
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import map from "components/map";
 
 interface ChoosePlanProps {
   user: User;
@@ -64,7 +65,7 @@ class ChoosePlanPage extends Component<ChoosePlanProps, ChoosePlanState> {
               </div>
             </div>
             <div className="flex-center">
-              <div className="continue-btn flex-center">
+              <div className="continue-btn flex-center" onClick={() => this.props.history.push(map.StripeLearner)}>
                 Continue <SpriteIcon name="hero-sparkle"/>
               </div>
             </div>
@@ -103,7 +104,7 @@ class ChoosePlanPage extends Component<ChoosePlanProps, ChoosePlanState> {
               </div>
             </div>
             <div className="flex-center">
-              <div className="continue-btn flex-center">
+              <div className="continue-btn flex-center" onClick={() => this.props.history.push(map.StripeEducator)}>
                 Continue <SpriteIcon name="hero-sparkle"/>
               </div>
             </div>

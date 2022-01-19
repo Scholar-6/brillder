@@ -246,7 +246,7 @@ const App: React.FC<AppProps> = props => {
       <Profiler id="app-tsx" onRender={onRenderCallback} >
       {/* all page routes are here order of routes is important */}
       <Switch>
-        <AllUsersRoute path="/stripe-subscription" component={StripePage} />
+        <AllUsersRoute path="/stripe-subscription/:type" component={StripePage} />
         <UnauthorizedRoute path={map.SubjectCategories} component={ViewAll} />
         <UnauthorizedRoute path={map.SearchPublishBrickPage} component={ViewAll} />
         <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
