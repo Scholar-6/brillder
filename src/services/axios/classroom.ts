@@ -79,3 +79,38 @@ export const resendInvitation = async (classroom: ClassroomApi, email: string) =
     return null;
   }
 }
+
+export const inviteTeacher = async (classroomId: number, userIds: number[]) => {
+  try {
+    await post<any>('/classroom/inviteTeacher/' + classroomId, { userIds });
+    return true;
+  } catch{
+    return null;
+  }
+}
+
+export const getTeachClassInvitations = async () => {
+  try {
+    return await get<any>('/classrooms/teachInvitations');
+  } catch {
+    return null;
+  }
+}
+
+export const teachAcceptClass = async (classroomId: number) => {
+  try {
+    await post<any>('/classroom/acceptTeacherInvite/' + classroomId, {});
+    return true;
+  } catch {
+    return null;
+  }
+}
+
+export const teachRejectClass = async (classroomId: number) => {
+  try {
+    await post<any>('/classroom/rejectTeacherInvite/' + classroomId, {});
+    return true;
+  } catch {
+    return null;
+  }
+}

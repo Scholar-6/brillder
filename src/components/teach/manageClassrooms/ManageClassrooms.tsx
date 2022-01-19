@@ -33,6 +33,7 @@ import { Subject } from "model/brick";
 import ClassroomFilterItem from "./components/ClassroomFilterItem";
 import { socket } from "socket/socket";
 import map from "components/map";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
