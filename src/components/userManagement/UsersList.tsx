@@ -20,6 +20,7 @@ import UserActionsCell from "./components/UserActionsCell";
 import RoleDescription from "components/baseComponents/RoleDescription";
 import CustomToggle from './components/CustomToggle';
 import UsersListPagination from "./components/Pagination";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -419,15 +420,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     const { sortBy, isAscending } = this.state;
 
     return (
-      <img
+      <SpriteIcon
         className="sort-button"
-        alt=""
-        src={
+        name={
           sortBy === currentSortBy
             ? !isAscending
-              ? "/feathericons/chevron-down.svg"
-              : "/feathericons/chevron-up.svg"
-            : "/feathericons/chevron-right.svg"
+                ? "arrow-down"
+                : "arrow-up"
+              : "arrow-right"
         }
         onClick={() => this.sortBy(currentSortBy)}
       />
@@ -498,7 +498,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   <td>{user.email}</td>
                   <td>{this.renderUserType(user)}</td>
                   <td className="activate-button-container">
-                    <CustomToggle checked={user.status === UserStatus.Active} onClick={() => this.toggleUser(user)} />
+                    <CustomToggle checked={user.status === UserStatus.Active} name={user.firstName} onClick={() => this.toggleUser(user)} />
                   </td>
                   <UserActionsCell
                     userId={user.id}
