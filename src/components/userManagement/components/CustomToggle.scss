@@ -42,6 +42,9 @@
             @extend %transitionAll300;
           }
         }
+        &:hover svg .box {
+          stroke: var(--theme-yellow);
+        }
       }
       &.no-reverse {
         svg {
