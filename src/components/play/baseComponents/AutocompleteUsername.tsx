@@ -3,7 +3,6 @@ import { Avatar, Chip, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import './AutocompleteUsername.scss';
-import { Brick } from "model/brick";
 import { suggestUsername } from "services/axios/user";
 import { UserBase } from "model/user";
 import { fileUrl } from "components/services/uploadFile";
@@ -13,7 +12,9 @@ interface AutocompleteProps {
   canEdit: boolean;
   editorError: string;
   placeholder: string;
+  onlyTeachers?: boolean;
   removeDisabled?: boolean;
+  hideLastName?: boolean;
   onBlur(): void;
 
   users: UserBase[];
@@ -89,11 +90,11 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
         </>;
       }}
       filterOptions={(options) => options}
-      getOptionLabel={(option) => `${option.firstName} ${option.lastName} (${option.username})`}
+      getOptionLabel={(option) => `${option.firstName} ${!props.hideLastName && option.lastName} (${option.username})`}
       renderOption={option => (
         <React.Fragment>
           {option.profileImage ? <img alt="" className="autocomplete-profile-image" src={fileUrl(option.profileImage)} /> : <SpriteIcon className="autocomplete-profile-icon" name="user" />}
-          {option.firstName} {option.lastName} ({option.username})
+          {option.firstName} {!props.hideLastName && option.lastName} ({option.username})
         </React.Fragment>
       )}
     />
