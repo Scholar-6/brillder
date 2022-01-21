@@ -17,7 +17,6 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   const elements = useElements() as any;
   const user = props.user;
 
-  console.log(props.match)
   const isLearner = props.match.params.type === 'learner';
 
   let price = 4.99;
@@ -28,7 +27,10 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     annualPrice = 64.99;
   }
 
-  const [valid, setValid] = useState(false);
+  const [cardValid, setCardValid] = useState(false);
+  const [expireValid, setExpireValid] = useState(false);
+  const [cvcValid, setCvcValid] = useState(false);
+  
   const [isMonthly, setMonthly] = useState(true);
   const [card, setCard] = useState(null as null | StripeCardElement);
 
@@ -46,15 +48,40 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       cardNumberElement.mount('#card-number-element');
       setCard(cardNumberElement);
 
+      cardNumberElement.on('change', function(event: any) {
+        if (event.error) {
+          setCardValid(false);
+        } else {
+          setCardValid(true)
+        }
+      });
+      
+
       const cardExpiryElement = elements.create('cardExpiry', {
         style,
       });
       cardExpiryElement.mount('#card-expiry-element');
 
+      cardExpiryElement.on('change', function(event: any) {
+        if (event.error) {
+          setExpireValid(false);
+        } else {
+          setExpireValid(true)
+        }
+      });
+
       const cardCvcElement = elements.create('cardCvc', {
         style,
       });
       cardCvcElement.mount('#card-cvc-element');
+
+      cardCvcElement.on('change', function(event: any) {
+        if (event.error) {
+          setCvcValid(false);
+        } else {
+          setCvcValid(true)
+        }
+      });
     }
   }, [elements]);
 
@@ -134,7 +161,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
             </div>
           </div>
           <div className="small light">By clicking “Agree & Subscribe”, you are agreeing to start your subscription immediately, and you can withdraw from the contract and receive a refund within the first 14 days unless you have accessed Brillder content in that time. We will charge the monthly or annual fee to your stored payment method on a recurring basis. You can cancel at any time, effective at the end of the payment period.</div>
-          <button type="submit" disabled={!valid || !stripe}>
+          <button type="submit" disabled={!cardValid|| !expireValid || !cvcValid || !stripe}>
             Agree & Subscribe
           </button>
         </form>
