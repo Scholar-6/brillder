@@ -27,6 +27,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     annualPrice = 64.99;
   }
 
+  const [discount, setDiscount] = useState('WELCOME50');
+
   const [cardValid, setCardValid] = useState(false);
   const [expireValid, setExpireValid] = useState(false);
   const [cvcValid, setCvcValid] = useState(false);
@@ -126,8 +128,13 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       <div className="voucher-box">
         <SpriteIcon name="brain-storm" />
         <div className="absolute-voucher">
-          <div className="light label">Have a discount code? Add it here</div>
-          <input />
+          <div className="light label">Your discount code has been added!{/*Have a discount code? Add it here*/}</div>
+          <input value={discount} disabled onChange={e => {
+            const {value} = e.target;
+            if (value.length < 20) {
+              setDiscount(e.target.value)
+            }
+          }} />
         </div>
       </div>
       <div className="pay-box">
@@ -140,12 +147,14 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
           <div className="radio-row">
             <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
               <Radio checked={isMonthly} />
+              <div className="absoulte-price">£9.99</div>
               £{price} <span className="label">Monthly</span>
+              <div className="absolute-label" >Save 50%</div>
             </div>
             <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
               <Radio checked={!isMonthly} />
               <span>£{annualPrice}</span> <span className="label">Annually</span>
-              <div className="absolute-label" >Save 18%</div>
+              <div className="absolute-label" >Save 59%</div>
             </div>
           </div>
           <div className="label light">Card Number</div>

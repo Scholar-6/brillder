@@ -283,7 +283,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           <SpriteIcon name="file-plus" />
         </div>
       </button>
-      <div className="premium-btn flex-center" onClick={() => props.history.push(map.ChoosePlan)}>
+      <div className="premium-btn flex-center" onClick={() => props.history.push(map.StripeEducator)}>
         Go Premium <SpriteIcon name="hero-sparkle" />
       </div>
     </div>
