@@ -42,6 +42,7 @@
         border-radius: 0.4vw;
         height: $block-height;
         color: var(--white);
+        background: var(--theme-light-blue);
         border: 1px solid var(--white);
       }
     }
@@ -88,6 +89,7 @@
       width: 50%;
       background: var(--tab-gray);
       margin-left: 0.9vw;
+      font-size: 1.1vw;
       display: flex;
       align-items: center;
       height: $block-height;
@@ -103,7 +105,15 @@
       > span.label {
         margin-left: 1vw;
         font-size: 1.3vw;
-        margin-bottom: 0.3vw;
+        margin-bottom: 0.1vw;
+      }
+      .absoulte-price {
+        position: absolute;
+        color: var(--theme-dark-blue);
+        font-size: 0.75vw;
+        top: 0.16vw;
+        left: 3vw;
+        text-decoration: line-through;
       }
       .absolute-label {
         position: absolute;
@@ -139,7 +149,7 @@
     padding: 3vh 2vw 4.5vh 2vw;
     background: var(--white);
     color: var(--theme-dark-blue);
-    font-size: 0.9vw;
+    font-size: 1vw;
 
     .field {
       display: flex;
@@ -169,6 +179,7 @@
       font-family: $font-family-bold !important;
       background: var(--theme-green);
       &:disabled {
+        color: var(--dark-gray);
         background: var(--tab-gray);
       }
     }
