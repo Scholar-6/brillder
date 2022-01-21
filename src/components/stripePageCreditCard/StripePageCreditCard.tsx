@@ -95,9 +95,11 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       return;
     }
 
-    var intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/subscription`, { state: isLearner ? 2 : 3, interval: isMonthly ? 0 : 1 }, { withCredentials: true });
+    var intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/subscription`, 
+      { state: isLearner ? 2 : 3, interval: isMonthly ? 0 : 1, coupon: discount }, 
+      { withCredentials: true });
 
-    const clientSecret = intent.data;
+    const clientSecret = intent.data.clientSecret;
 
     if (card) {
       const result = await stripe.confirmCardPayment(clientSecret, {
