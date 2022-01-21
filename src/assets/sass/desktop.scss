@@ -178,8 +178,8 @@
     border-top-right-radius: 1vw;
     border-bottom-right-radius: 1vw;
     margin-left: 0.2vw;
-    background: var(--white);
-    color: var(--theme-dark-blue);
+    background: var(--theme-dark-blue);
+    color: var(--white);
   }
 
   .r-class-inputs {
@@ -343,6 +343,8 @@
   .r-radio-buttons {
     padding-right: 2vw;
     margin-top: 0.5vw;
+    display: flex;
+    align-items: center;
     margin-bottom: 1.2vw !important;
 
     .MuiFormControlLabel-root {

@@ -155,7 +155,7 @@ $base-build-font-size: 1.25vw;
 
   .m-absolute-sort {
     position: absolute;
-    top: -2vw;
+    top: calc(-2vw - 4.7vh);
     right: 2vw;
 
     .svg {

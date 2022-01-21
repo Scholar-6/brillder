@@ -66,6 +66,7 @@ import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';
 import { GetYoutubeClick } from 'localStorage/play';
 import StripePage from 'components/stripePage/StripePage';
 import LeaderboardPage from 'components/competitions/LeaderboardPage';
+import ChoosePlan from 'components/choosePlan/ChoosePlan';
 
 interface AppProps {
   user: User;
@@ -199,6 +200,7 @@ const App: React.FC<AppProps> = props => {
   }
 
   // get terms version
+  /* temporally fix for mobile branch
   if (props.user && props.user.termsAndConditionsAcceptedVersion && !termsData.termsVersion && !termsData.isLoading) {
     setTermsData({isLoading: true, termsVersion: ''});
     getTerms().then(r => {
@@ -216,7 +218,7 @@ const App: React.FC<AppProps> = props => {
     if (termsData.termsVersion !== props.user.termsAndConditionsAcceptedVersion) {
       window.location.href= map.TermsSignUp + '?onlyAcceptTerms=true';
     }
-  }
+  }*/
 
   const onRenderCallback = (
     id: any, // the "id" prop of the Profiler tree that has just committed
@@ -244,7 +246,7 @@ const App: React.FC<AppProps> = props => {
       <Profiler id="app-tsx" onRender={onRenderCallback} >
       {/* all page routes are here order of routes is important */}
       <Switch>
-        <AllUsersRoute path="/stripe-subscription" component={StripePage} />
+        <AllUsersRoute path="/stripe-subscription/:type" component={StripePage} />
         <UnauthorizedRoute path={map.SubjectCategories} component={ViewAll} />
         <UnauthorizedRoute path={map.SearchPublishBrickPage} component={ViewAll} />
         <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
@@ -255,6 +257,8 @@ const App: React.FC<AppProps> = props => {
         <StudentRoute path="/my-library" component={Library} />
         <StudentRoute path="/post-play/brick/:brickId/:userId/:classId" component={PostPlay} />
         <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
+
+        <StudentRoute path={map.ChoosePlan} component={ChoosePlan} />
 
         <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
         <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />

@@ -23,6 +23,7 @@ import ValidationFailedDialog from './ValidationFailedDialog';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
+  user?: User;
   history: any;
   isOpen: boolean;
   success(items: any[], failed: any[]): void;
@@ -106,6 +107,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res && res.length > 0) {
             await assignToExistingBrick(newClassroom);
+
+            if (props.user && props.user.freeAssignmentsLeft) {
+              props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
+            }
             props.success([newClassroom], []);
 
             // only for new classes
@@ -180,11 +185,19 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           }
         }
         if (allArchived) {
+          if (props.user && props.user.freeAssignmentsLeft) {
+            props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
+          }
+
           props.success([existingClass], []);
         } else {
           setAssigned(true);
         }
       } else if (res !== false) {
+        if (props.user && props.user.freeAssignmentsLeft) {
+          props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
+        }
+
         props.success([existingClass], []);
       }
     } else {
@@ -256,34 +269,42 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   const renderFooter = () => (
-    <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
+    <div className="action-row custom-action-row" style={{ justifyContent: 'center' }}>
+      <div className="left-label">
+
+        {props.user?.freeAssignmentsLeft || 0} free Assignments Left
+      </div>
       <button
         className="btn btn-md bg-theme-orange yes-button icon-button r-long"
         onClick={assign} style={{ width: 'auto' }}
       >
         <div className="centered">
           <span className="label">Assign</span>
+          <SpriteIcon name="file-plus" />
         </div>
       </button>
+      <div className="premium-btn flex-center" onClick={() => props.history.push(map.StripeEducator)}>
+        Go Premium <SpriteIcon name="hero-sparkle" />
+      </div>
     </div>
   );
 
   const renderDeadline = () => (
-    <div>
-      <div className="r-popup-title bold">When is it due?</div>
-      <div className="r-radio-buttons">
-        <FormControlLabel
-          checked={haveDeadline === false}
-          control={<Radio onClick={() => toggleDeadline(false)} />}
-          label="No deadline"
-        />
-        <FormControlLabel
-          checked={haveDeadline === true}
-          control={<Radio onClick={() => toggleDeadline(true)} />}
-          label="Set date"
-        />
-        {haveDeadline && <TimeDropdowns date={deadlineDate} onChange={setDeadline} />}
+    <div className="r-radio-buttons">
+      <div className="label">
+        When is it due?
       </div>
+      <FormControlLabel
+        checked={haveDeadline === false}
+        control={<Radio onClick={() => toggleDeadline(false)} />}
+        label="No deadline"
+      />
+      <FormControlLabel
+        checked={haveDeadline === true}
+        control={<Radio onClick={() => toggleDeadline(true)} />}
+        label="Set date"
+      />
+      {haveDeadline && <TimeDropdowns date={deadlineDate} onChange={setDeadline} />}
     </div>
   );
 
@@ -302,20 +323,30 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
   return (
     <div>
-      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
+      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box assign-student-popup light-blue assign-dialog">
         <div className="dialog-header">
           <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
-          <div className="r-radio-row">
-            <FormControlLabel
-              checked={!isCreating}
-              control={<Radio onClick={() => setCreating(false)} className={"filter-radio custom-color"} />}
-              label="An Existing Class" />
-            <FormControlLabel
-              checked={isCreating}
-              control={<Radio onClick={() => setCreating(true)} className={"filter-radio custom-color"} />}
-              label="Create A New Class" />
-          </div>
+          {isCreating &&
+            <div className="psevdo-radio-class">
+              <div className="switch-mode">
+                <Radio checked={false} onClick={() => setCreating(false)} />
+                An existing class
+              </div>
+              <div className="switch-mode">
+                <Radio checked={true} />
+                Create a new class
+              </div>
+            </div>
+          }
           {isCreating ? renderNew() : renderExisting()}
+          {!isCreating &&
+            <div className="switch-mode" onClick={() => setCreating(true)}>
+              <SpriteIcon name="plus-circle-custom" />
+              Create a new class
+            </div>
+          }
+        </div>
+        <div className="dialog-footer-white">
           {renderDeadline()}
           {renderFooter()}
         </div>
