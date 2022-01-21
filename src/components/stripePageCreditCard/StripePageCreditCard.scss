@@ -178,9 +178,13 @@
       width: 100%;
       font-family: $font-family-bold !important;
       background: var(--theme-green);
+      transition: all 300ms ease-in-out;
+      &:hover {
+        background: var(--theme-dark-blue);
+      }
       &:disabled {
-        color: var(--dark-gray);
-        background: var(--tab-gray);
+        color: var(--dark-gray) !important;
+        background: var(--tab-gray) !important;
       }
     }
   }
