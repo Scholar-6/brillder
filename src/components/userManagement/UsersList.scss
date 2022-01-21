@@ -3,6 +3,16 @@
 @import 'src/assets/sass/partials/extensions';
 
 .user-list-page {
+  .role-description {
+    font-size: 1.2vw;
+    font-family: $font-family-regular;
+    .bold.m-1 {
+      margin-left: 1.5vw;
+    }
+    .bold.m-2 {
+      margin-left: 2.4vw;
+    }
+  }
   .sorted-row {
     .sort-box {
       .subjects-filter {
@@ -47,6 +57,7 @@
         .brick-row-title {
           font-size: 3.8vw !important;
           letter-spacing: 0 !important;
+          font-family: $font-family-bold;
 
           @include tabletP {
             padding-left: 1.18vw;
@@ -59,7 +70,7 @@
           cursor: pointer;
           margin: 0 1.3vw;
           margin-top: 3vh;
-          font-family: $font-family-black;
+          font-family: $font-family-bold;
           color: var(--theme-dark-blue);
           font-size: 1vw;
           width: 6vw;
@@ -67,9 +78,13 @@
           @extend %flexCenter;
           flex-direction: column;
 
-          >img {
+          >svg {
+            stroke-width: 1.5;
             width: 60%;
-            height: 60%;
+            height: 3.4vw;
+          }
+          &:hover svg {
+            color: var(--theme-orange);
           }
         }
       }
@@ -85,7 +100,7 @@
 
           thead {
             color: var(--theme-dark-blue);
-            font-family: $font-family-black;
+            font-family: $font-family-bold;
             font-size: 1.3vw;
 
             tr {
@@ -101,6 +116,10 @@
                   margin-left: 0.4vw;
                   height: 1.5vw;
                   width: 1.5vw;
+                  color: var(--theme-dark-blue);
+                  &:hover {
+                    color: var(--theme-orange) !important;
+                  }
                 }
               }
 
@@ -152,6 +171,12 @@
                   cursor: pointer;
                   height: 1.85vw;
                   width: 1.85vw;
+
+                  &:hover {
+                    svg {
+                      color: var(--theme-orange) !important;
+                    }
+                  }
                 }
 
                 .edit-button {
