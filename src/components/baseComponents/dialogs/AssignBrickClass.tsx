@@ -73,6 +73,9 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
     if (res === false) {
       props.requestFailed('Can`t assign class to brick');
     }
+    if (props.user && props.user.freeAssignmentsLeft) {
+      props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
+    }
     return res;
   }
 
@@ -91,6 +94,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
     <div>
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog assign-dialog-new">
         <div className="dialog-header">
+          {props.user.freeAssignmentsLeft && <div className="assignments-count">{props.user.freeAssignmentsLeft} free Assignments left</div>}
           <div className="r-popup-title bold">Already know what you're looking for?</div>
           <Autocomplete
             freeSolo
@@ -146,9 +150,8 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
               </div>
             </div> :
             <div>
-              <p>Prefer to browse our public catalogue?</p>
               <div className="text-with-glasses">
-                Click the
+                Or click the
                 <div className="glasses pointer">
                   <div className="eye-glass-icon" onClick={() => history.push(map.ViewAllPage + '?subjectId=' + props.subjectId)} >
                     <div className="eye-glass-frame svgOnHover">
@@ -176,7 +179,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
           <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
             <button className={brick ? "btn btn-md bg-theme-orange yes-button icon-button" : "btn btn-md b-dark-blue text-theme-light-blue yes-button icon-button"} onClick={assign} style={{ width: 'auto' }}>
               <div className="centered">
-                <span className="label">Assign Brick</span>
+                <span className="label">Assign</span>
                 <SpriteIcon name="file-plus" />
               </div>
             </button>

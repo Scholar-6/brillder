@@ -142,20 +142,41 @@
     .first-item {
       padding-top: 4vh;
       background: var(--theme-light-blue);
-      height: 89.2vh;
+      height: 85vh;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
       @extend %flexCenter;
       flex-direction: column;
     }
     .second-item {
+      cursor: pointer;
       position: relative;
-      background: var(--theme-light-blue);
+      background: var(--white);
       margin-top: 4.6vh;
-      height: 6.2vh;
-      @extend %textCenter;
+      height: 10.4vh;
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--theme-dark-blue);
+      font-family: $font-family-bold;
+
+      font-size: 1.8vw;
+
+      svg {
+        margin-left: 0.5vw;
+        stroke-width: 1.3;
+        width: 2.7vw;
+        height: 2.7vw;
+      }
+
+      transition: all 150ms ease-in-out;
+
+      &:hover {
+        color: var(--theme-green);
+      }
     }
   }
 

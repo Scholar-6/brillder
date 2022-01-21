@@ -9,6 +9,7 @@ export const MainPage = '/home';
 export const LeaderboardPage = '/leaderboard';
 export const MyLibrary = '/my-library';
 export const TermsPage = '/terms';
+export const ChoosePlan = '/choose-plan';
 
 export const AssignmentsPage = '/assignments';
 export const AssignmentsClassPage = AssignmentsPage + '/:classId';
@@ -31,6 +32,10 @@ export const SetUsername = Onboarding + '/set-username';
 export const SelectSubjectPage = Onboarding + '/select-subjects';
 export const UserPreferencePage = Onboarding + '/user-preference';
 export const UserProfile = Onboarding + '/profile-page';
+
+export const StripePage = '/stripe-subscription';
+export const StripeLearner = StripePage + '/learner';
+export const StripeEducator = StripePage + '/educator';
 
 export const TeachAssignedTab = '/teach/assigned';
 export const TeachAssignedArchiveTab = TeachAssignedTab + '/archive';
@@ -136,7 +141,10 @@ export default {
   MainPage,
   MyLibrary,
   LeaderboardPage,
-
+  ChoosePlan,
+  StripeLearner,
+  StripeEducator,
+  
   TermsPage,
   TermsSignUp,
   ThankYouPage,

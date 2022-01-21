@@ -14,6 +14,7 @@ import { Subject } from "model/brick";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import { resendInvitation } from "services/axios/classroom";
 import { getClassAssignedCount } from "../service/service";
+import { User } from "model/user";
 
 enum TeachFilterFields {
   Assigned = "assigned",
@@ -23,6 +24,7 @@ enum TeachFilterFields {
 interface FilterSidebarProps {
   isLoaded: boolean;
   isNewTeacher: boolean;
+  user: User;
   classrooms: TeachClassroom[];
   activeStudent: TeachStudent | null;
   activeClassroom: TeachClassroom | null;
@@ -30,6 +32,7 @@ interface FilterSidebarProps {
   setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
   hideIntro(): void;
+  moveToPremium(): void;
   createClass(name: string, subject: Subject): void;
   isArchive: boolean;
 }
@@ -152,8 +155,7 @@ class TeachFilterSidebar extends Component<
   }
 
   renderClassroom(c: TeachClassroom, i: number) {
-    console.log(c, c.students);
-    return ( 
+    return (
       <div key={i} className="classes-box">
         <div
           className={"index-box " + (c.active ? "active" : "")}
@@ -178,6 +180,25 @@ class TeachFilterSidebar extends Component<
         </div>
         {c.active && c.students && c.students.map(this.renderStudent.bind(this))}
         {c.active && c.studentsInvitations && c.studentsInvitations.map(this.renderInvitation.bind(this))}
+      </div>
+    );
+  }
+
+  renderPremiumBox() {
+    let className = 'index-box pay-info ';
+    let noFreeTries = false;
+    if (this.props.user && this.props.user.freeAssignmentsLeft <= 0) {
+      className += " no-free-tries";
+      noFreeTries = true;
+    }
+    return (
+      <div className={className}>
+        <div className="premium-label">
+          {noFreeTries ? 'No Free Assignments Left!' : <span>{this.props.user && this.props.user.freeAssignmentsLeft} free Assignments Left</span>}
+        </div>
+        <div className="premium-btn" onClick={this.props.moveToPremium}>
+          Go Premium <SpriteIcon name="hero-sparkle" />
+        </div>
       </div>
     );
   }
@@ -224,6 +245,7 @@ class TeachFilterSidebar extends Component<
               <div className="custom-tooltip">Create Class</div>
             </div>
           </div>
+          {this.renderPremiumBox()}
           <div
             className={
               "index-box m-view-all " +
@@ -248,7 +270,7 @@ class TeachFilterSidebar extends Component<
                     : "hero-sort-descending"
                 }
                 onClick={() =>
-                  this.setState({ ascending: !this.state.ascending }) 
+                  this.setState({ ascending: !this.state.ascending })
                 }
               />
               <div className="css-custom-tooltip">
