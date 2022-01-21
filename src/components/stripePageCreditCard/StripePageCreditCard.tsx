@@ -6,16 +6,19 @@ import './StripePageCreditCard.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Radio } from '@material-ui/core';
 import { User } from 'model/user';
+import map from 'components/map';
 
 interface Props {
   user: User;
   match: any;
+  history: any;
 }
 
 const StripePageCreditCard: React.FC<Props> = (props) => {
   const stripe = useStripe();
   const elements = useElements() as any;
   const user = props.user;
+  console.log(props)
 
   const isLearner = props.match.params.type === 'learner';
 
@@ -118,6 +121,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       }
 
       if (result.paymentIntent?.status === 'succeeded') {
+        props.history.push(map.MainPage);
         return true
       }
     }

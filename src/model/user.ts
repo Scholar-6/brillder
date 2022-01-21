@@ -50,6 +50,7 @@ export interface User extends UserBase {
   freeAssignmentsLeft: number;
   freeAttemptsLeft: number;
   freeCompetitionLeft: number;
+  subscriptionState?: number;
 }
 
 export interface UserProfile extends UserBase {

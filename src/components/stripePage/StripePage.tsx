@@ -23,7 +23,7 @@ const StripePage: React.FC<any> = (props: StripePageProps) => {
   return (<div className="StripePayPage">
     <HomeButton link={map.MainPage} history={props.history} />
     <Elements stripe={stripePromise}>
-      <StripePageCreditCard user={props.user} match={props.match}></StripePageCreditCard>
+      <StripePageCreditCard user={props.user} history={props.history} match={props.match}></StripePageCreditCard>
     </Elements>
   </div>)
 }
