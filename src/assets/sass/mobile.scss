@@ -1474,3 +1474,34 @@
     }
   }
 }
+
+.premium-educator-dialog {
+  .premium-label {
+    font-size: 11vw;
+
+    svg {
+      width: 16vw;
+      height: 16vw;
+    }
+
+    .absolute-label {
+      top: 11.7vw;
+      left: 6vw;
+      font-size: 5vw;
+    }
+  }
+  .list {
+    font-size: 4.5vw;
+    svg {
+      margin-right: 1vw;
+      width: 4.5vw;
+      height: 4.5vw;
+    }
+  }
+  .green-btn {
+    font-size: 6vw;
+    background: var(--theme-green) !important;
+    border-radius: 2vw;
+    padding: 2vw 4vw;
+  }
+}
