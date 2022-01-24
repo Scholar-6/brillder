@@ -1290,3 +1290,102 @@
     font-size: 4vw !important;
   }
 }
+
+.last-attempt-dialog {
+  .dialog-header {
+    font-family: $font-family-bold !important;
+    font-size: 5vw !important;
+  }
+  .green-btn {
+    padding: 2vw 4vw;
+    font-size: 7vw;
+    border-radius: 2vw;
+    background: var(--theme-green) !important;
+
+    svg {
+      margin-right: 2vw;
+      width: 7vw;
+      height: 7vw;
+    }
+  }
+  .premium-btn {
+    font-size: 6vw;
+    color: var(--theme-dark-blue) !important;
+
+    svg {
+      width: 8vw;
+      height: 8vw;
+    }
+  }
+}
+
+.choose-plan-page {
+  overflow-y: scroll;
+  .title {
+    height: auto;
+    font-size: 5.4vw;
+    .text-green {
+      margin-left: 1vw;
+    }
+  }
+  .plans-container {
+    display: block;
+    height: auto;
+    .plan-container {
+      border-radius: 2vw;
+      margin-top: 2vh;
+      margin-bottom: 2vh;
+      width: 80vw;
+      margin-left: 10vw;
+      .green-icon.glasses {
+        width: 36vw;
+        height: 18vw;
+      }
+      
+      .green-icon.cap {
+        width: 27vw;
+        height: 27vw;
+      }
+
+      .big-label {
+        font-size: 8vw;
+      }
+      .price-row {
+        margin-top: 1vw;
+        font-size: 5vw;
+        .upper-text {
+          right: 1.2vw;
+          top: -3vw;
+          font-size: 3.5vw;
+          position: absolute;
+          text-decoration: line-through;
+        }
+      }
+      .list {
+        margin-top: 2vh;
+        margin-left: 3.3vw;
+        font-size: 4vw;
+
+        svg {
+          width: 4vw;
+          height: 4vw;
+          margin-right: 1vw;
+        }
+      }
+      .continue-btn {
+        cursor: pointer;
+        background: var(--theme-green) !important;
+        font-size: 5vw;
+        color: var(--white);
+        padding: 1vw 4vw;
+        border-radius: 1vw;
+        margin-top: 3vh;
+
+        svg {
+          width: 6vw;
+          height: 6vw;
+        }
+      }
+    }
+  }
+}
