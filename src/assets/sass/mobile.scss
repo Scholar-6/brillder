@@ -1319,6 +1319,7 @@
   }
 }
 
+// choose plan page mobile
 .choose-plan-page {
   overflow-y: scroll;
   .title {
@@ -1385,6 +1386,90 @@
           width: 6vw;
           height: 6vw;
         }
+      }
+    }
+  }
+}
+
+// Stripe page mobile
+.StripePayPage {
+  display: block;
+
+  .voucher-box {
+    display: none;
+    position: absolute;
+    svg {
+      display: none;
+    }
+  }
+  > .flex-center {
+    min-height: 80vh;
+    align-items: center;
+  }
+  .pay-box {
+    border-radius: 2vw;
+    max-width: 80vw;
+    .CheckOut {
+      .logo {
+        font-size: 7vw;
+      }
+      .bigger {
+        font-size: 3.7vw;
+      }
+      .normal {
+        font-size: 3.5vw;
+      }
+
+      $box-height: 6vh;
+
+      .radio-row > div {
+        height: $box-height;
+        border-radius: 2vw;
+        font-size: 4.5vw;
+        .absoulte-price {
+          font-size: 3vw;
+          left: 7.2vw;
+          top: calc(50% - 5.4vw);
+        }
+        .absolute-label {
+          font-size: 3vw;
+          top: -2vw;
+          border-radius: 1vw;
+        }
+        > span.label {
+          margin-left: 1vw;
+          font-size: 5vw;
+          margin-bottom: 0.1vw;
+        }
+        .MuiButtonBase-root {
+          width: 7vw;
+          height: 5vw;
+
+          svg {
+            width: 5vw;
+            height: 5vw;
+          }
+        }
+      }
+
+      .field {
+        border-radius: 2vw;
+        height: $box-height;
+        padding-left: 1.5vw;
+        padding-right: 1.5vw;
+      }
+
+      .label {
+        font-size: 4.5vw;
+      }
+
+      .small {
+        font-size: 2.42vw;
+      }
+
+      button {
+        border-radius: 2vw;
+        font-size: 5vw !important;
       }
     }
   }
