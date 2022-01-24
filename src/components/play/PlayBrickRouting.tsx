@@ -753,6 +753,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               sidebarRolledUp={sidebarRolledUp}
               empty={finalStep}
               setMode={setMode}
+              showPremium={() => setPremiumEOpen(true)}
               toggleSidebar={setSidebar}
             />}
           {renderRouter()}

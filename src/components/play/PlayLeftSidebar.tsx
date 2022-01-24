@@ -40,6 +40,7 @@ interface SidebarProps {
 
   //play-preview
   isPreview?: boolean;
+  showPremium?(): void;
   moveToBuild?(): void;
 
   //redux
@@ -341,6 +342,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                 this.setState({ failedItems, isAssignedFailedOpen: true });
               }
             }}
+            showPremium={() => this.props.showPremium && this.props.showPremium()}
             close={() => this.setState({ isAssigningOpen: false })}
           />}
         <AssignSuccessDialog
