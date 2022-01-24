@@ -70,7 +70,7 @@ const ChangeClassDeadlineDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
 
     const res = await assignClasses(brick.id, data);
-    if (res === false) {
+    if (res.success === false) {
       props.requestFailed('Can`t assign class to brick');
     }
     return res;
@@ -78,12 +78,12 @@ const ChangeClassDeadlineDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
   const assign = async () => {
     const res = await assignToClasses([props.classroomId]); // empty array if succss
-    if (res === false) {
+    if (!res || res.success === false) {
       props.failed(brick);
     } else {
-      if (res && res.length > 0) {
+      if (res.success && res.result.length > 0) {
         let allArchived = true;
-        for (let a of res) {
+        for (let a of res.result) {
           if (a.isArchived !== true) {
             allArchived = false;
           }

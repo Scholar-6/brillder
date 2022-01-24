@@ -501,6 +501,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 pageSize={this.state.classPageSize}
                 reloadClass={this.loadClass.bind(this)}
                 onRemind={this.setReminderNotification.bind(this)}
+                showPremium={() => this.setState({isPremiumDialogOpen: true})}
               />
               :
               <ClassroomsListV2
@@ -512,6 +513,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 pageSize={this.state.pageSize}
                 reloadClasses={this.loadClasses.bind(this)}
                 onRemind={this.setReminderNotification.bind(this)}
+                showPremium={() => this.setState({isPremiumDialogOpen: true})}
               />
         }
         {this.renderTeachPagination()}
@@ -585,7 +587,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             doneLabel: 'View'
           }}
         />
-        <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen || (this.props.user.freeAssignmentsLeft == 0)} close={() => {}} submit={() => this.props.history.push(map.StripeEducator)} />
+        <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => {}} submit={() => this.props.history.push(map.StripeEducator)} />
       </div>
     );
   }

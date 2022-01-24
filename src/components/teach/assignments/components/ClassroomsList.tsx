@@ -119,6 +119,7 @@ class ClassroomList extends Component<ClassroomListProps, State> {
               isArchive={this.props.isArchive}
               onAssigned={() => this.props.reloadClasses()}
               onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
+              showPremium={() => console.log('premium 4')}
             />
           </div>
         </div>

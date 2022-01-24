@@ -24,6 +24,7 @@ interface ClassroomListProps {
   pageSize: number;
   activeClassroom: TeachClassroom;
   isArchive: boolean;
+  showPremium(): void;
   expand(classroomId: number, assignmentId: number): void;
   reloadClass(id: number): void;
   onRemind?(count: number, isDeadlinePassed: boolean): void;
@@ -83,6 +84,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
           isArchive={this.props.isArchive}
           onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
           onAssigned={() => this.props.reloadClass(classroom.id)}
+          showPremium={this.props.showPremium}
         />
       </div>
     );

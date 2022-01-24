@@ -28,6 +28,7 @@ interface AssignPersonOrClassProps {
   subjectId: number;
   isOpen: boolean;
   success(brick: Brick): void;
+  showPremium(): void;
   failed(brick: Brick): void;
   close(): void;
 
@@ -70,8 +71,12 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
     }
 
     const res = await assignClasses(brick.id, data);
-    if (res === false) {
-      props.requestFailed('Can`t assign class to brick');
+    if (res.success === false) {
+      if (res.error == 'Subscription is not valid.') {
+        return res;
+      } else {
+        props.requestFailed('Can`t assign class to brick');
+      }
     }
     if (props.user && props.user.freeAssignmentsLeft) {
       props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
@@ -81,8 +86,13 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
 
   const assign = async () => {
     const res = await assignToClasses([props.classroomId]); // empty array if succss
-    if (res === false) {
-      props.failed(brick);
+    
+    if (!res || res.success === false) {
+      if (res && res.error == 'Subscription is not valid.') {
+        props.showPremium();
+      } else {
+        props.failed(brick);
+      }
     } else {
       props.success(brick);
       setAssigned(true);
@@ -90,11 +100,18 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
     props.close();
   }
 
+  const renderTopLabel = () => {
+    if (props.user.freeAssignmentsLeft && props.user.freeAssignmentsLeft > 1) {
+      return <div className="assignments-count">{props.user.freeAssignmentsLeft - 1} free Assignments left</div>;
+    }
+    return '';
+  }
+
   return (
     <div>
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog assign-dialog-new">
         <div className="dialog-header">
-          {props.user.freeAssignmentsLeft && <div className="assignments-count">{props.user.freeAssignmentsLeft} free Assignments left</div>}
+          {renderTopLabel()}
           <div className="r-popup-title bold">Already know what you're looking for?</div>
           <Autocomplete
             freeSolo
