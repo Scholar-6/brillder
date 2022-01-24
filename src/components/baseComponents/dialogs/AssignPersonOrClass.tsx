@@ -27,6 +27,7 @@ interface AssignPersonOrClassProps {
   history: any;
   isOpen: boolean;
   success(items: any[], failed: any[]): void;
+  showPremium?(): void;
   close(): void;
   requestFailed(e: string): void;
 }
@@ -162,6 +163,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (haveDeadline && deadlineDate) {
       data.deadline = deadlineDate;
     }
+    console.log('fff')
     return await assignClasses(props.brick.id, data);
   }
 
@@ -173,9 +175,12 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     // prevent from double click
     if (isSaving) { return; }
     setSaving(true);
+    console.log('eee');
 
     if (isCreating === false) {
       const res = await assignToExistingBrick(existingClass);
+
+      console.log(res);
 
       if (res.success && res.result.length > 0) {
         let allArchived = true;
@@ -188,7 +193,6 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           if (props.user && props.user.freeAssignmentsLeft) {
             props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
           }
-
           props.success([existingClass], []);
         } else {
           setAssigned(true);
@@ -199,6 +203,11 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         }
 
         props.success([existingClass], []);
+      } else {
+        if (res.error == 'Subscription is not valid.' && props.showPremium) {
+          props.close();
+          props.showPremium();
+        }
       }
     } else {
       await createClassAndAssign();
@@ -268,11 +277,24 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     );
   }
 
+  const renderAssignLeftLabel = () => {
+    if (props.user?.freeAssignmentsLeft && props.user?.freeAssignmentsLeft > 1) {
+      return (
+        <div className="left-label">
+          {props.user.freeAssignmentsLeft - 1} free Assignments Left
+        </div>
+      )
+    }
+    return (
+      <div className="left-label">
+        No Free Assignments Left
+      </div>
+    )
+  }
+
   const renderFooter = () => (
     <div className="action-row custom-action-row" style={{ justifyContent: 'center' }}>
-      <div className="left-label">
-        {(props.user?.freeAssignmentsLeft && props.user?.freeAssignmentsLeft > 0) || 0} free Assignments Left
-      </div>
+      {renderAssignLeftLabel()}
       <button
         className="btn btn-md bg-theme-orange yes-button icon-button r-long"
         onClick={assign} style={{ width: 'auto' }}
