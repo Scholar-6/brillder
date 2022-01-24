@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import userActions from "../../redux/actions/user";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import map from 'components/map';
+import { isPhone } from 'services/phone';
 
 interface StripePageProps {
   history: any;
@@ -21,7 +22,7 @@ const StripePage: React.FC<any> = (props: StripePageProps) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK as string);
 
   return (<div className="StripePayPage">
-    <HomeButton link={map.MainPage} history={props.history} />
+    {!isPhone() && <HomeButton link={map.MainPage} history={props.history} />}
     <Elements stripe={stripePromise}>
       <StripePageCreditCard user={props.user} history={props.history} match={props.match}></StripePageCreditCard>
     </Elements>

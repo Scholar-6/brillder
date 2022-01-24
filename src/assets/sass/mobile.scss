@@ -1396,20 +1396,49 @@
   display: block;
 
   .voucher-box {
-    display: none;
-    position: absolute;
+    padding-top: 2vh;
+    height: auto;
+    width: 100vw;
+    padding-bottom: 2vh;
     svg {
       display: none;
     }
+
+    .absolute-voucher {
+      position: initial;
+      .label {
+        font-size: 4vw;
+      }
+      input {
+        text-align: center;
+        border-radius: 2vw;
+        font-size: 4vw;
+        margin-left: 30vw;
+        width: 40vw;
+        height: calc(6vh - 2px);
+      }
+    }
   }
   > .flex-center {
+    display: block !important;
     min-height: 80vh;
     align-items: center;
   }
   .pay-box {
     border-radius: 2vw;
-    max-width: 80vw;
+    margin-left: 5vw;
+    width: 90vw;
+    max-width: 90vw;
+    padding-left: 5vw;
+    padding-right:5vw;
+    padding-bottom: 2vh;
     .CheckOut {
+      .two-columns {
+        > div:first-child {
+          margin-right: 5vw;
+        }
+      }
+    
       .logo {
         font-size: 7vw;
       }
@@ -1426,6 +1455,13 @@
         height: $box-height;
         border-radius: 2vw;
         font-size: 4.5vw;
+        margin-left: 2.5vw;
+        
+        &:first-child {
+          margin-left: 0;
+          margin-right: 2.5vw;
+        }
+
         .absoulte-price {
           font-size: 3vw;
           left: 7.2vw;
@@ -1464,7 +1500,7 @@
       }
 
       .small {
-        font-size: 2.42vw;
+        font-size: 3.5vw;
       }
 
       button {
