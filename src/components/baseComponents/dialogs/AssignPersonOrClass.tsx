@@ -177,9 +177,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (isCreating === false) {
       const res = await assignToExistingBrick(existingClass);
 
-      if (res && res.length > 0) {
+      if (res.success && res.result.length > 0) {
         let allArchived = true;
-        for (let a of res) {
+        for (let a of res.result) {
           if (a.isArchived !== true) {
             allArchived = false;
           }
@@ -193,7 +193,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         } else {
           setAssigned(true);
         }
-      } else if (res !== false) {
+      } else if (res.success !== false) {
         if (props.user && props.user.freeAssignmentsLeft) {
           props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
         }
@@ -271,8 +271,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const renderFooter = () => (
     <div className="action-row custom-action-row" style={{ justifyContent: 'center' }}>
       <div className="left-label">
-
-        {props.user?.freeAssignmentsLeft || 0} free Assignments Left
+        {(props.user?.freeAssignmentsLeft && props.user?.freeAssignmentsLeft > 0) || 0} free Assignments Left
       </div>
       <button
         className="btn btn-md bg-theme-orange yes-button icon-button r-long"

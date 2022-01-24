@@ -187,7 +187,7 @@ class TeachFilterSidebar extends Component<
   renderPremiumBox() {
     let className = 'index-box pay-info ';
     let noFreeTries = false;
-    if (this.props.user && this.props.user.freeAssignmentsLeft <= 0) {
+    if (this.props.user && this.props.user.freeAssignmentsLeft <= 1) {
       className += " no-free-tries";
       noFreeTries = true;
     }
