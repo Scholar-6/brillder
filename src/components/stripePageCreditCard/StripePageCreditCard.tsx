@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
+import { Radio } from '@material-ui/core';
 import { StripeCardElement } from "@stripe/stripe-js"
 import axios from "axios";
+import { connect } from 'react-redux';
+
+import userActions from 'redux/actions/user';
 import './StripePageCreditCard.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { Radio } from '@material-ui/core';
 import { User } from 'model/user';
 import map from 'components/map';
 
@@ -12,6 +15,7 @@ interface Props {
   user: User;
   match: any;
   history: any;
+  getUser(): void;
 }
 
 const StripePageCreditCard: React.FC<Props> = (props) => {
@@ -121,6 +125,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       }
 
       if (result.paymentIntent?.status === 'succeeded') {
+        await props.getUser();
         props.history.push(map.MainPage + '?subscribedPopup=true');
         return true
       }
@@ -185,4 +190,9 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   );
 }
 
-export default StripePageCreditCard;
+const mapDispatch = (dispatch: any) => ({
+  getUser: () => dispatch(userActions.getUser()),
+});
+
+
+export default connect(null, mapDispatch)(StripePageCreditCard);
