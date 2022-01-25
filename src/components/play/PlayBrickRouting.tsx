@@ -790,7 +790,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         setLastAttemptDialog(false);
         moveToBrief();
       }} />
-      <PremiumEducatorDialog isOpen={isPremiumEOpen} close={() => {}} submit={() => props.history.push(map.StripeEducator)} />
+      <PremiumEducatorDialog isOpen={isPremiumEOpen} close={() => setPremiumEOpen(false)} submit={() => props.history.push(map.StripeEducator)} />
       <PremiumLearnerDialog isOpen={isPremiumLOpen} close={() => {}} submit={() => props.history.push(map.StripeLearner)} />
     </React.Suspense>
   );
