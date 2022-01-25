@@ -119,7 +119,7 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
                 {this.state.parts.map((p, i) => {
                   try {
                     console.log(i, p, p.content);
-                    return <div key={i} ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
+                    return <div key={i} ref={p.el} dangerouslySetInnerHTML={{ __html: marked.parse(p.content) }} />
                   } catch (e) {
                     console.log('error', e);
                     return <div />;
