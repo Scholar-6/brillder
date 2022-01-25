@@ -587,7 +587,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             doneLabel: 'View'
           }}
         />
-        <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => {}} submit={() => this.props.history.push(map.StripeEducator)} />
+        <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => this.setState({isPremiumDialogOpen: false})} submit={() => this.props.history.push(map.StripeEducator)} />
       </div>
     );
   }
