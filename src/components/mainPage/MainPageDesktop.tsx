@@ -33,6 +33,7 @@ import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import InvalidDialog from "components/build/baseComponents/dialogs/InvalidDialog";
 import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
+import SubscribedDialog from "./components/SubscibedDialog";
 
 
 
@@ -88,6 +89,8 @@ interface MainPageState {
   // intro
   stepsEnabled: boolean;
   steps: any[];
+
+  subscribedPopup: boolean;
 }
 
 class MainPageDesktop extends Component<MainPageProps, MainPageState> {
@@ -99,6 +102,11 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     const values = queryString.parse(this.props.history.location.search);
     if (values.newTeacher) {
       isNewTeacher = true;
+    }
+
+    let subscribedPopup = false;
+    if (values.subscribedPopup) {
+      subscribedPopup = true;
     }
 
     const isStudent = isStudentPreference(props.user);
@@ -115,6 +123,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isTryBuildOpen: false,
       isReportLocked: false,
       isNewTeacher,
+
+      subscribedPopup,
 
       isTeacher: isTeacherPreference(props.user) || isInstitutionPreference(props.user),
       isAdmin: checkAdmin(props.user.roles),
@@ -446,6 +456,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           close={() => this.setState({isDesktopOpen: false})} />
         <ClassInvitationDialog />
         <ClassTInvitationDialog />
+        <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({subscribedPopup: false})} />
       </Grid>
       </React.Suspense>
     );

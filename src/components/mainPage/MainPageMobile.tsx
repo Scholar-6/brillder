@@ -28,6 +28,7 @@ import BlocksIcon from "./components/BlocksIcon";
 import { getAssignedBricks } from "services/axios/brick";
 import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
+import SubscribedDialog from "./components/SubscibedDialog";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -69,6 +70,7 @@ interface MainPageState {
   secondaryLabel: string;
   secondPart: string;
 
+  subscribedPopup: boolean;
   steps: any[];
 }
 
@@ -86,6 +88,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isNewStudent = true;
     }
 
+    let subscribedPopup = false;
+    if (values.subscribedPopup) {
+      subscribedPopup = true;
+    }
+
     this.state = {
       swiper: null,
       notificationExpanded: false,
@@ -94,6 +101,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isTryBuildOpen: false,
       isSwiping: false,
       isNewStudent,
+
+      subscribedPopup,
 
       isStudent,
       isBuilder,
@@ -392,6 +401,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         />
         <ClassInvitationDialog />
         <ClassTInvitationDialog />
+        <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({subscribedPopup: false})} />
       </Grid>
     );
   }

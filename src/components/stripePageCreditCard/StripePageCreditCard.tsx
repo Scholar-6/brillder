@@ -121,7 +121,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       }
 
       if (result.paymentIntent?.status === 'succeeded') {
-        props.history.push(map.MainPage);
+        props.history.push(map.MainPage + '?subscribedPopup=true');
         return true
       }
     }
