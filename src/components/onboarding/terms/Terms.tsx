@@ -43,6 +43,7 @@ const DesktopTheme = React.lazy(() => import('./themes/TermsDesktopTheme'));
 class TermsSignUp extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
+    console.log('init');
 
     this.state = {
       parts: [],
@@ -115,9 +116,15 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
           <Grid className="user-preference-container terms-page-container onboarding-terms" item>
             <div className="terms-page">
               <div>
-                {this.state.parts.map((p, i) => (
-                  <div key={i} ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
-                ))}
+                {this.state.parts.map((p, i) => {
+                  try {
+                    console.log(i, p, p.content);
+                    return <div key={i} ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
+                  } catch {
+                    console.log('error');
+                    return <div />;
+                  }
+                })}
               </div>
             </div>
             <div className="bottom-button" onClick={async () => {
