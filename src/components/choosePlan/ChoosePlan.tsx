@@ -53,11 +53,11 @@ class ChoosePlanPage extends Component<ChoosePlanProps, ChoosePlanState> {
             <div className="list">
               <div>
                 <SpriteIcon name="check-icon" className="text-green" />
-                Collect unlimited books in your library
+                Earn prize money if you win a challenge
               </div>
               <div>
                 <SpriteIcon name="check-icon" className="text-green" />
-                Double prize money if you win a challenge
+                Collect unlimited books in your library
               </div>
               <div>
                 <SpriteIcon name="check-icon" className="text-green" />
