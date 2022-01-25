@@ -18,7 +18,6 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   const stripe = useStripe();
   const elements = useElements() as any;
   const user = props.user;
-  console.log(props)
 
   const isLearner = props.match.params.type === 'learner';
 
@@ -42,13 +41,14 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   useEffect(() => {
     var style = {
       base: {
+        fontFamily: 'Brandon Grotesque Regular',
         fontSize: '18px',
       },
     };
 
     if (elements) {
       const cardNumberElement = elements.create('cardNumber', {
-        style
+        style,
       });
       cardNumberElement.mount('#card-number-element');
       setCard(cardNumberElement);
@@ -163,7 +163,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
               <div className="absolute-label" >Save 59%</div>
             </div>
           </div>
-          <div className="label light">Card Number</div>
+          <div className="label light">12 Card Number</div>
           <div id="card-number-element" className="field"></div>
           <div className="two-columns">
             <div>
