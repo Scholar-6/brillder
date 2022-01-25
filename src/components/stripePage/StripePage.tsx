@@ -21,9 +21,18 @@ interface StripePageProps {
 const StripePage: React.FC<any> = (props: StripePageProps) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK as string);
 
+  const options = {
+    fonts: [
+      {
+        family: 'Brandon Grotesque Regular',
+        src: 'url(https://brillder.com/asserts/fonts/BrandonGrotesque/Brandon_bld.woff) format(woff)'
+      },
+    ],
+  }
+
   return (<div className="StripePayPage">
     {!isPhone() && <HomeButton link={map.MainPage} history={props.history} />}
-    <Elements stripe={stripePromise}>
+    <Elements stripe={stripePromise} options={options}>
       <StripePageCreditCard user={props.user} history={props.history} match={props.match}></StripePageCreditCard>
     </Elements>
   </div>)
