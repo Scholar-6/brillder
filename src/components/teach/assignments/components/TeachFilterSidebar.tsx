@@ -245,7 +245,7 @@ class TeachFilterSidebar extends Component<
               <div className="custom-tooltip">Create Class</div>
             </div>
           </div>
-          {this.renderPremiumBox()}
+          {this.props.user.subscriptionState == 0 && this.renderPremiumBox()}
           <div
             className={
               "index-box m-view-all " +
