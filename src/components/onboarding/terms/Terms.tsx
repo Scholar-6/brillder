@@ -120,8 +120,8 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
                   try {
                     console.log(i, p, p.content);
                     return <div key={i} ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
-                  } catch {
-                    console.log('error');
+                  } catch (e) {
+                    console.log('error', e);
                     return <div />;
                   }
                 })}
