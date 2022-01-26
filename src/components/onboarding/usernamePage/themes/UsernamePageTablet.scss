@@ -163,6 +163,8 @@
         outline: none;
         border-radius: 1.5vw;
         padding: 1.1vh 2.5vw;
+        display: flex;
+        align-items: center;
         background: var(--theme-orange);
         font-family: $font-family-bold;
         transition: all 300ms ease-out !important;
@@ -173,9 +175,10 @@
       }
 
       svg {
-        height: 5vw;
-        width: 5vw;
-        color: var(--theme-orange);
+        margin-left: 1vw;
+        height: 2.5vw;
+        width: 2.5vw;
+        color: var(--white);
 
         &.invalid {
           color: var(--theme-light-blue);

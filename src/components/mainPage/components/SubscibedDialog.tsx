@@ -1,11 +1,8 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import Avatar from "@material-ui/core/Avatar";
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
+import './SubscibedDialog.scss';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface AddSubjectProps {
   isOpen: boolean;
@@ -16,20 +13,21 @@ const SubscribedDialog: React.FC<AddSubjectProps> = (props) => {
   return (
     <Dialog
       open={props.isOpen} onClick={props.close} onClose={props.close}
-      className="dialog-box link-copied-dialog"
+      className="dialog-box link-copied-dialog welcome-premium"
     >
+      <div className="container flex-center">
+        <div className="circle-check flex-center">
+          <SpriteIcon name="hero-sparkle" />
+        </div>
+      </div>
       <div className="dialog-header">
-        <ListItem>
-          <ListItemText
-            primary="Welcome to Brillder Premium!"
-            className="bold" style={{ minWidth: '30vw' }}
-          />
-          <ListItemAvatar>
-            <Avatar className="circle-check">
-              <SpriteIcon name="hero-sparkle" />
-            </Avatar>
-          </ListItemAvatar>
-        </ListItem>
+        Welcome to Brillder Premium!
+      </div>
+      <div className="message">
+        Thank you for supporting Brillder.
+      </div>
+      <div className="message">
+      Your contribution is a big deal to our small company.
       </div>
     </Dialog>
   );
