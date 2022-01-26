@@ -200,7 +200,6 @@ const App: React.FC<AppProps> = props => {
   }
 
   // get terms version
-  /* temporally fix for mobile branch
   if (props.user && props.user.termsAndConditionsAcceptedVersion && !termsData.termsVersion && !termsData.isLoading) {
     setTermsData({isLoading: true, termsVersion: ''});
     getTerms().then(r => {
@@ -218,7 +217,7 @@ const App: React.FC<AppProps> = props => {
     if (termsData.termsVersion !== props.user.termsAndConditionsAcceptedVersion) {
       window.location.href= map.TermsSignUp + '?onlyAcceptTerms=true';
     }
-  }*/
+  }
 
   const onRenderCallback = (
     id: any, // the "id" prop of the Profiler tree that has just committed

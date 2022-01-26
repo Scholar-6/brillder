@@ -205,8 +205,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
         }
       }
 
-      const haveArchivedBrick = !!classrooms.find(this.findClassArchive);
-
       // if reloading
       let stepsEnabled = false;
 

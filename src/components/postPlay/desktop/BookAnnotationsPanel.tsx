@@ -40,32 +40,6 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     }
   }, [props.state])
 
-  const addAnnotation = React.useCallback(() => {
-    let newAttempt = props.attempt;
-
-    if (!newAttempt) return;
-    if (!newAttempt.annotations) newAttempt.annotations = [];
-    const newAnnotation: Annotation = {
-      id: generateId(),
-      location,
-      priority: 0,
-      questionIndex: props.questionIndex,
-      text: "",
-      timestamp: new Date(),
-      user: props.currentUser,
-      children: [],
-    };
-    newAttempt.annotations.push(newAnnotation);
-
-    if (props.highlightRef.current) {
-      props.highlightRef.current.createAnnotation(newAnnotation);
-    }
-
-    props.setAttempt(newAttempt);
-    history.push("#" + newAnnotation.id);
-    /*eslint-disable-next-line*/
-  }, [props.attempt, props.setAttempt, location, props.questionIndex]);
-
   const createNewAnnotation = (text: string) => {
     let newAttempt = props.attempt;
 

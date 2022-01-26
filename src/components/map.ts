@@ -1,4 +1,4 @@
-import { UserPreference, UserPreferenceType, User } from "model/user";
+import { UserPreferenceType, User } from "model/user";
 import { isAorP } from "./services/brickService";
 
 export const Login = '/login';
