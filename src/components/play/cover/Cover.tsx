@@ -25,7 +25,6 @@ import { CreateByEmailRes } from "services/axios/user";
 import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
-import routes from "../routes";
 
 
 interface Props {
@@ -349,7 +348,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="italic bottom-link flex-center" style={{ textAlign: 'center' }}>
               <SpriteIcon name="eye-on" />
-              <a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
+              <a rel="noopener noreferrer" href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
             </div>
           </Dialog>}
       </React.Suspense>
@@ -489,7 +488,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           </div>
           <div className="italic bottom-link flex-center" style={{ textAlign: 'center' }}>
             <SpriteIcon name="eye-on" />
-            <a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
+            <a rel="noopener noreferrer" href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
           </div>
         </Dialog>}
     </React.Suspense>

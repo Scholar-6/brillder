@@ -183,8 +183,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [competitionId, setCompetitionId] = useState(-1);
   const [brickAttempt, setBrickAttempt] = useState(initBrickAttempt as BrickAttempt);
 
-  const [bricks, setBricks] = useState([]);
-
   const [attempts, setAttempts] = useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = useState(initReviewAttempts);
   const [prepEndTime, setPrepEndTime] = useState(initPrepEndTime);

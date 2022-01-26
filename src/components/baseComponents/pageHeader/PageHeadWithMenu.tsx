@@ -9,7 +9,6 @@ import NotificationPopup from "components/baseComponents/notificationPopup/Notif
 
 import MenuDropdown from './MenuDropdown';
 import { isPhone } from "services/phone";
-import { getPublishedBricks } from "services/axios/brick";
 
 export enum PageEnum {
   None,

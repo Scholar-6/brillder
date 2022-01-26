@@ -9,7 +9,6 @@ import { showSameAnswerPopup } from '../service/questionBuild';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import MissingWordQuill from 'components/baseComponents/quill/MissingWordQuill';
-import PoemToggle from '../highlighting/wordHighlighting/PoemToggle';
 
 
 interface Answer {

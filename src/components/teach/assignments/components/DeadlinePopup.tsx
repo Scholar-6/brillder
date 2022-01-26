@@ -1,5 +1,4 @@
 import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
 import TimeDropdowns from 'components/baseComponents/timeDropdowns/TimeDropdowns';
 import { Assignment } from 'model/classroom';
 import { changeDeadline } from 'services/axios/assignBrick';
