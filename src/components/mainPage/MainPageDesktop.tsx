@@ -405,7 +405,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           {this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState ?
           <div className="second-item" onClick={() => this.props.history.push(map.ChoosePlan)}>
             Go Premium <SpriteIcon name="hero-sparkle" />
-          </div> : <div className="second-item" />
+          </div> : <div className="second-item not-active light-blue" />
           }
         </div>
         {(this.state.isTeacher || this.state.isAdmin) ?

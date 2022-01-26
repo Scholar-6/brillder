@@ -177,6 +177,11 @@
       &:hover {
         color: var(--theme-green);
       }
+
+      &.not-active {
+        cursor: initial;
+        background: var(--theme-light-blue);
+      }
     }
   }
 
