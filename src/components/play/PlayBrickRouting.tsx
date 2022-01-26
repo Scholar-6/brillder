@@ -788,8 +788,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         setLastAttemptDialog(false);
         moveToBrief();
       }} />
-      {props.user.subscriptionState == 0 && <PremiumEducatorDialog isOpen={isPremiumEOpen} close={() => setPremiumEOpen(false)} submit={() => props.history.push(map.StripeEducator)} />}
-      {props.user.subscriptionState == 0 && <PremiumLearnerDialog isOpen={isPremiumLOpen} close={() => {}} submit={() => props.history.push(map.StripeLearner)} />}
+      {(props.user.subscriptionState === 0 || !props.user.subscriptionState) && <PremiumEducatorDialog isOpen={isPremiumEOpen} close={() => setPremiumEOpen(false)} submit={() => props.history.push(map.StripeEducator)} />}
+      {(props.user.subscriptionState === 0 || !props.user.subscriptionState) && <PremiumLearnerDialog isOpen={isPremiumLOpen} close={() => {}} submit={() => props.history.push(map.StripeLearner)} />}
     </React.Suspense>
   );
 };
