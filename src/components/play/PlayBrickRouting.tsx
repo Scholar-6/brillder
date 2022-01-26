@@ -783,11 +783,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           label="You might already have an account, try signing in."
         />
       </div>
+      {(props.user.subscriptionState === 0 || !props.user.subscriptionState) &&
       <LastAttemptDialog isOpen={isLastAttemptOpen} history={history} close={() => {}} submit={() => {
         toggleSideBar(true);
         setLastAttemptDialog(false);
         moveToBrief();
-      }} />
+      }} />}
       {(props.user.subscriptionState === 0 || !props.user.subscriptionState) && <PremiumEducatorDialog isOpen={isPremiumEOpen} close={() => setPremiumEOpen(false)} submit={() => props.history.push(map.StripeEducator)} />}
       {(props.user.subscriptionState === 0 || !props.user.subscriptionState) && <PremiumLearnerDialog isOpen={isPremiumLOpen} close={() => {}} submit={() => props.history.push(map.StripeLearner)} />}
     </React.Suspense>
