@@ -331,10 +331,12 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
   if (classes.length === 0) {
     return (
-      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
+      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-student-popup assign-dialog create-first-class">
         <div className="dialog-header">
           <div className="r-popup-title bold r-first-class">Create Your First Class</div>
           {renderNew()}
+        </div>
+        <div className="dialog-footer-white">
           {renderDeadline()}
           {renderFooter()}
         </div>

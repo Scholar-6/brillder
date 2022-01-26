@@ -71,10 +71,6 @@ span.bold {
     .dialog-header {
       padding: 2vw 3vw 1.4vw 3vw;
 
-      .r-popup-title {
-        width: 40vw !important;
-      }
-
       .r-class-selection {
         margin-bottom: 0.9vw !important;
         width: 40vw !important;
@@ -191,6 +187,17 @@ span.bold {
           }
         }
       }
+    }
+  }
+}
+
+.create-first-class {
+  .MuiPaper-root {
+    .dialog-footer-white .r-radio-buttons {
+      padding-left: 7vw;
+    }
+    .inline {
+      margin-left: 1vw;
     }
   }
 }
