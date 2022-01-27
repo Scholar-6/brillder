@@ -1122,6 +1122,10 @@ html body #root .browser-type-container .manage-classrooms-page .sorted-row {
       width: 3vw;
       height: 3vw;
     }
+    .student-status .reminder-button-container .svg {
+      width: 2.1vw;
+      height: 2.1vw;
+    }
   }
   .index-box {
     font-size: 1.4vw !important;
@@ -1135,6 +1139,9 @@ html body #root .browser-type-container .manage-classrooms-page .sorted-row {
     .classrooms-box {
       font-size: 1.4vw !important;
     }
+  }
+  .expanded-assignment .assignments-table .assigned-student-name {
+    font-size: 1.4vw !important;
   }
 }
 
@@ -1152,5 +1159,13 @@ html body #root .browser-type-container .manage-classrooms-page .sorted-row {
   .right-index2 svg {
     width: 1.5vw;
     height: 1.5vw;
+  }
+
+  .student-row .student-name {
+    font-size: 1.3vw;
+
+    > span {
+      width: 15vw;
+    }
   }
 }
