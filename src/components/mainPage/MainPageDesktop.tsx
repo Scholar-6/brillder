@@ -235,7 +235,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   renderSecondButton() {
     if (this.state.isTeacher || this.state.isAdmin) {
       const isIpad = isIPad13 || isTablet;
-      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher || isIpad} onMobileClick={() => this.setState({isDesktopOpen: true})} />
+      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher} onMobileClick={() => this.setState({isDesktopOpen: true})} />
     } else if (this.state.isStudent) {
       return this.renderStudentWorkButton();
     }
