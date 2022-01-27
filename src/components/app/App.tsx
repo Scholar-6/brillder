@@ -76,7 +76,6 @@ interface AppProps {
 const App: React.FC<AppProps> = props => {
   const location = useLocation();
   const [iframeFullScreen, setIframe] = React.useState(false);
-  const [showWarning, setWarning] = React.useState(isTablet ? true: false)
   const [termsData, setTermsData] = React.useState({
     isLoading: false,
     termsVersion: ''
@@ -186,10 +185,6 @@ const App: React.FC<AppProps> = props => {
     return <RotateIPadInstruction />;
   }
 
-  if (isTablet && showWarning) {
-    return <IPadWarning hideWarning={() => setWarning(false)} />
-  }
-  
   // If is mobile and landscape tell them to go to portrait
   else if (isMobileOnly && horizontal && !iframeFullScreen) {
     if (location.pathname.search('/prep') !== -1 && location.pathname.search('/play/brick') !== -1) {
