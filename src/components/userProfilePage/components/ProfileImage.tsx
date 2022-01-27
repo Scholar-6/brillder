@@ -7,6 +7,8 @@ import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 import { uploadFile } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { UserProfile, UserStatus } from "model/user";
+import { useHistory } from "react-router-dom";
+import map from "components/map";
 
 interface ProfileImageProps {
   user: UserProfile;
@@ -17,6 +19,7 @@ interface ProfileImageProps {
 }
 
 const ProfileImage: React.FC<ProfileImageProps> = (props) => {
+  const history = useHistory();
   const [state, setState] = React.useState({
     result: null,
     filename: null,
@@ -114,10 +117,16 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
           <SpriteIcon name="plus" className="svg-plus active text-white" />
         </div>
       </div>
-      <div className="status-container svgOnHover">
-        <SpriteIcon name="circle-filled" className={`active ${status === UserStatus.Active ? 'text-theme-green' : 'text-theme-orange'}`} />
-        <span>{status === UserStatus.Active ? 'Active' : 'Inactive'}</span>
+      {status === UserStatus.Active ? <div className="status-container active-status-container svgOnHover">
+        <SpriteIcon name="circle-filled" className="active text-theme-green" />
+        <span><div className="flex-center premium-container">Free Trial <div className="btn-premium" onClick={() => history.push(map.ChoosePlan)}>Go Premium <SpriteIcon name="hero-sparkle" /></div></div></span>
       </div>
+      :
+      <div className="status-container svgOnHover">
+        <SpriteIcon name="circle-filled" className="active text-theme-orange" />
+        <span>Inactive</span>
+      </div>
+      }
       <Dialog
         open={isUploadOpen}
         onClose={() => {

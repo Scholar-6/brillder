@@ -228,6 +228,40 @@
             }
           }
         }
+
+        .active-status-container {
+          margin-left: -2vw;
+          width: calc(100% + 4vw);
+
+          .premium-container {
+            .btn-premium {
+              cursor: pointer;
+              transition: all 300ms ease-in-out;
+              font-family: $font-family-bold;
+              margin-left: 0.5vw;
+              border-radius: 3vw;
+              padding-left: 0.3vw;
+              padding-right: 0.3vw;
+              color: var(--white);
+              background: var(--theme-green);
+              font-size: 1vw;
+
+              &:hover {
+                background: var(--theme-dark-blue);
+              }
+
+              display: flex;
+              align-items: center;
+
+              svg {
+                color: var(--white);
+                stroke-width: 2;
+                width: 1.1vw;
+                height: 1.1vw;
+              }
+            }
+          }
+        }
       }
 
       .profile-inputs-container {
