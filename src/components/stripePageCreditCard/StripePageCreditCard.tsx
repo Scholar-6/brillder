@@ -35,6 +35,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   const [discount, setDiscount] = useState('WELCOME50');
 
+  const [clicked, setClicked] = useState(false);
+
   const [cardValid, setCardValid] = useState(false);
   const [expireValid, setExpireValid] = useState(false);
   const [cvcValid, setCvcValid] = useState(false);
@@ -102,6 +104,12 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       return;
     }
 
+    if (clicked) {
+      return;
+    }
+
+    setClicked(true);
+
     var intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/subscription`, 
       { state: isLearner ? 2 : 3, interval: isMonthly ? 0 : 1, coupon: discount }, 
       { withCredentials: true });
@@ -127,10 +135,12 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       if (result.paymentIntent?.status === 'succeeded') {
         await props.getUser();
         props.history.push(map.MainPage + '?subscribedPopup=true');
+        setClicked(false);
         return true
       }
     }
 
+    setClicked(false);
     return false;
   };
 
@@ -168,7 +178,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
               <div className="absolute-label" >Save 59%</div>
             </div>
           </div>
-          <div className="label light">12 Card Number</div>
+          <div className="label light">Card Number</div>
           <div id="card-number-element" className="field"></div>
           <div className="two-columns">
             <div>
@@ -181,7 +191,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
             </div>
           </div>
           <div className="small light">By clicking “Agree & Subscribe”, you are agreeing to start your subscription immediately, and you can withdraw from the contract and receive a refund within the first 14 days unless you have accessed Brillder content in that time. We will charge the monthly or annual fee to your stored payment method on a recurring basis. You can cancel at any time, effective at the end of the payment period.</div>
-          <button type="submit" disabled={!cardValid|| !expireValid || !cvcValid || !stripe}>
+          <button type="submit" disabled={!cardValid|| !expireValid || !cvcValid || !stripe || clicked}>
             Agree & Subscribe
           </button>
         </form>

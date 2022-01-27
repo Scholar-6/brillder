@@ -217,13 +217,17 @@ class TeachFilterSidebar extends Component<
     }
     let totalBricks = 0;
     let totalCount = 0;
+    let assignmentsCount = 0;
     for (let classroom of this.props.classrooms) {
       totalCount += classroom.students.length;
       totalBricks += 1;
+      if (classroom.assignments && classroom.assignments.length > 0) {
+        assignmentsCount += classroom.assignments.length;
+      }
     }
     let label = '1 ASSIGNMENT';
-    if (totalBricks > 1) {
-      label = `${totalBricks} ASSIGNMENTS`;
+    if (assignmentsCount > 1) {
+      label = `${assignmentsCount} ASSIGNMENTS`;
     }
     return (
       <div className="sort-box teach-sort-box flex-height-box">
