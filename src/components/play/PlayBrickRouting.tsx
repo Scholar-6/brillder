@@ -72,6 +72,7 @@ import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
 import LastAttemptDialog from "./baseComponents/dialogs/LastAttemptDialog";
 import PremiumEducatorDialog from "./baseComponents/dialogs/PremiumEducatorDialog";
 import PremiumLearnerDialog from "./baseComponents/dialogs/PremiumLearnerDialog";
+import user from "redux/reducers/user";
 
 export enum PlayPage {
   Cover,
@@ -419,6 +420,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const coverMoveNext = () => {
+    const {user} = props;
+    if (user.freeAttemptsLeft <= 0) {
+      if (!user.subscriptionState || user.subscriptionState === 0) {
+        setPremiumLOpen(true);
+        return;
+      }
+    }
     if (isPhone()) {
       moveToBrief();
     } else {
@@ -784,13 +792,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         />
       </div>
       {(props.user.subscriptionState === 0 || !props.user.subscriptionState) &&
-      <LastAttemptDialog isOpen={isLastAttemptOpen} history={history} close={() => {}} submit={() => {
+      <LastAttemptDialog isOpen={isLastAttemptOpen} history={history} close={() => setLastAttemptDialog(false)} submit={() => {
         toggleSideBar(true);
         setLastAttemptDialog(false);
         moveToBrief();
       }} />}
       {(props.user.subscriptionState === 0 || !props.user.subscriptionState) && <PremiumEducatorDialog isOpen={isPremiumEOpen} close={() => setPremiumEOpen(false)} submit={() => props.history.push(map.StripeEducator)} />}
-      {(props.user.subscriptionState === 0 || !props.user.subscriptionState) && <PremiumLearnerDialog isOpen={isPremiumLOpen} close={() => {}} submit={() => props.history.push(map.StripeLearner)} />}
+      {(props.user.subscriptionState === 0 || !props.user.subscriptionState) && <PremiumLearnerDialog isOpen={isPremiumLOpen} close={() => setPremiumLOpen(false)} submit={() => props.history.push(map.StripeLearner)} />}
     </React.Suspense>
   );
 };
