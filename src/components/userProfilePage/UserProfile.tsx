@@ -370,6 +370,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               <div className="profile-fields">
                 <ProfileImage
                   user={user}
+                  currentUser={this.props.user}
                   setImage={(v) => this.onProfileImageChanged(v)}
                   deleteImage={() => this.onProfileImageChanged('')}
                   suspendIntroJs={this.suspendIntroJs.bind(this)}

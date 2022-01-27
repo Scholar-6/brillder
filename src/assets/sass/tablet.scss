@@ -1088,6 +1088,69 @@ html {
 
 
 // manage classes page
-html body #root .browser-type-container .manage-classrooms-page .sorted-row .brick-row-container .tab-container {
-  height: 6.6vh !important;
+html body #root .browser-type-container .manage-classrooms-page .sorted-row {
+  .brick-row-container {
+    .tab-container {
+      height: 6.6vh !important;
+    }
+  
+    .classroom-title.one-of-many {
+      height: calc(calc(90vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh) / 6.35 - 2vh);
+    }
+  
+    .assigned-brick-description {
+      height: calc(calc( 90vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35);
+
+      .vertical-brick .brick-relative .brick-middle {
+        width: 80%;
+        height: calc(calc( 90vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35/2.4);
+      }
+
+      .hover-area {
+        display: none;
+      }
+  
+      .short-brick-info .link-description {
+        font-size: 1.4vw;
+      }
+      .link-info {
+        font-size: 1.2vw;
+      }
+    }
+
+    .reminder-button-container .svg {
+      width: 3vw;
+      height: 3vw;
+    }
+  }
+  .index-box {
+    font-size: 1.4vw !important;
+    .premium-label {
+      font-size: 1.1vw !important;
+    }
+    .right-index {
+      right: 0vw !important;
+      font-size: 1.4vw !important;
+    }
+    .classrooms-box {
+      font-size: 1.4vw !important;
+    }
+  }
+}
+
+.manage-classrooms-page {
+  .user-row {
+    font-size: 1.4vw !important;
+  }
+  .sorted-row .sort-and-filter-container .sort-box .filter-container .MuiFormControlLabel-label {
+    font-size: 1.4vw !important;
+    text-overflow: ellipsis;
+    overflow-x:hidden;
+    white-space: nowrap;
+    width: 14.5vw;
+  }
+  .right-index2 svg {
+    width: 1.5vw;
+    height: 1.5vw;
+  }
 }

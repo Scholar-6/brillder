@@ -6,12 +6,13 @@ import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 
 import { uploadFile } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { UserProfile, UserStatus } from "model/user";
+import { User, UserProfile, UserStatus } from "model/user";
 import { useHistory } from "react-router-dom";
 import map from "components/map";
 
 interface ProfileImageProps {
   user: UserProfile;
+  currentUser: User;
   setImage(profileImage: string): void;
   deleteImage(): void;
   suspendIntroJs(): void;
@@ -48,7 +49,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
 
   const openAnotherUploadDialog = () => {
     props.deleteImage();
-    setState({ ...state, src: null, result: null});
+    setState({ ...state, src: null, result: null });
     openUploadDialog();
   }
 
@@ -79,7 +80,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
 
   const uploadCropedFile = () => {
     let file = dataURLtoFile(state.result as any, state.filename as any);
-    if (!file) { return; } 
+    if (!file) { return; }
     uploadFile(
       file as File,
       (res: any) => {
@@ -109,6 +110,32 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     className += " remove-image"
   }
 
+  const renderStatus = () => {
+    if (status === UserStatus.Active) {
+      console.log(props.currentUser)
+      if (props.currentUser.subscriptionState && props.currentUser.subscriptionState > 0) {
+        return (
+          <div className="status-container active-status-container svgOnHover">
+            <SpriteIcon name="circle-filled" className="active text-theme-green" />
+            <span><div className="flex-center premium-container">{props.currentUser.subscriptionState === 1 ? 'Premium User' : 'Premium User'}</div></span>
+          </div>
+        );
+      }
+      return (
+        <div className="status-container active-status-container svgOnHover">
+          <SpriteIcon name="circle-filled" className="active text-theme-green" />
+          <span><div className="flex-center premium-container">Free Trial <div className="btn-premium" onClick={() => history.push(map.ChoosePlan)}>Go Premium <SpriteIcon name="hero-sparkle" /></div></div></span>
+        </div>
+      );
+    }
+    return (
+      <div className="status-container svgOnHover">
+        <SpriteIcon name="circle-filled" className="active text-theme-orange" />
+        <span>Inactive</span>
+      </div>
+    );
+  }
+
   return (
     <div className="profile-image-container">
       <div className="profile-image svgOnHover">
@@ -117,16 +144,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
           <SpriteIcon name="plus" className="svg-plus active text-white" />
         </div>
       </div>
-      {status === UserStatus.Active ? <div className="status-container active-status-container svgOnHover">
-        <SpriteIcon name="circle-filled" className="active text-theme-green" />
-        <span><div className="flex-center premium-container">Free Trial <div className="btn-premium" onClick={() => history.push(map.ChoosePlan)}>Go Premium <SpriteIcon name="hero-sparkle" /></div></div></span>
-      </div>
-      :
-      <div className="status-container svgOnHover">
-        <SpriteIcon name="circle-filled" className="active text-theme-orange" />
-        <span>Inactive</span>
-      </div>
-      }
+      {renderStatus()}
       <Dialog
         open={isUploadOpen}
         onClose={() => {
