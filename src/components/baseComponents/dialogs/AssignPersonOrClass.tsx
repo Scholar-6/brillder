@@ -294,7 +294,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
   const renderFooter = () => (
     <div className="action-row custom-action-row" style={{ justifyContent: 'center' }}>
-      {renderAssignLeftLabel()}
+      {props.user?.subscriptionState === 0 && renderAssignLeftLabel()}
       <button
         className="btn btn-md bg-theme-orange yes-button icon-button r-long"
         onClick={assign} style={{ width: 'auto' }}
@@ -304,9 +304,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           <SpriteIcon name="file-plus" />
         </div>
       </button>
+      {props.user?.subscriptionState === 0 &&
       <div className="premium-btn flex-center" onClick={() => props.history.push(map.StripeEducator)}>
         Go Premium <SpriteIcon name="hero-sparkle" />
-      </div>
+      </div>}
     </div>
   );
 
