@@ -221,8 +221,9 @@ class TeachFilterSidebar extends Component<
     for (let classroom of this.props.classrooms) {
       totalCount += classroom.students.length;
       totalBricks += 1;
-      if (classroom.assignments && classroom.assignments.length > 0) {
-        assignmentsCount += classroom.assignments.length;
+      console.log(classroom, classroom.assignmentsCount)
+      if (classroom.assignmentsCount && parseInt(classroom.assignmentsCount) > 0) {
+        assignmentsCount += parseInt(classroom.assignmentsCount);
       }
     }
     let label = '1 ASSIGNMENT';
