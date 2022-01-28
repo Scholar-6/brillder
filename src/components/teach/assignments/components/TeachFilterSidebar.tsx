@@ -154,6 +154,22 @@ class TeachFilterSidebar extends Component<
     )
   }
 
+  renderStudentList(c: TeachClassroom) {
+    if (c.active) {
+      const sts = c.students.sort((a, b) => {
+        if (a.lastName < b.lastName) { return -1; }
+        if (a.lastName > b.lastName) { return 1; }
+        return 0;
+      });
+
+
+      return <div>
+        {sts.map(this.renderStudent.bind(this))}
+      </div>
+    }
+    return <div />
+  }
+
   renderClassroom(c: TeachClassroom, i: number) {
     return (
       <div key={i} className="classes-box">
@@ -178,7 +194,7 @@ class TeachFilterSidebar extends Component<
           </div>
           {this.renderStudents(c)}
         </div>
-        {c.active && c.students && c.students.map(this.renderStudent.bind(this))}
+        {this.renderStudentList(c)}
         {c.active && c.studentsInvitations && c.studentsInvitations.map(this.renderInvitation.bind(this))}
       </div>
     );
