@@ -127,9 +127,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const minimizeTimeout = setTimeout(() => {
       minimizeZendeskButton();
     }, 1400);
-    this.setState({minimizeTimeout });
+    this.setState({ minimizeTimeout });
   }
-  
+
   componentWillUnmount() {
     if (this.state.minimizeTimeout) {
       clearTimeout(this.state.minimizeTimeout);
@@ -357,8 +357,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <Grid container direction="row" className="user-profile-content">
             <div className="profile-block">
               <div className="profile-header">
-              <UserTypeLozenge roles={user.roles} userPreference={this.props.user.userPreference} />
+                <UserTypeLozenge roles={user.roles} userPreference={this.props.user.userPreference} />
                 <div>{user.username ? user.username : "USERNAME"}</div>
+                <SpriteIcon name="hero-sparkle" />
               </div>
               <div className="save-button-container">
                 <SaveProfileButton
@@ -416,15 +417,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 </div>
                 <div className="profile-roles-container">
                   {this.state.user.userPreference &&
-                  <RolesBox
-                    roles={this.state.roles}
-                    userId={this.state.user.id}
-                    userRoles={this.state.user.roles}
-                    isAdmin={this.state.isAdmin}
-                    userPreference={this.state.user.userPreference?.preferenceId}
-                    togglePreference={() => this.setState({saveDisabled: false})}
-                    toggleRole={this.toggleRole.bind(this)}
-                  />}
+                    <RolesBox
+                      roles={this.state.roles}
+                      userId={this.state.user.id}
+                      userRoles={this.state.user.roles}
+                      isAdmin={this.state.isAdmin}
+                      userPreference={this.state.user.userPreference?.preferenceId}
+                      togglePreference={() => this.setState({ saveDisabled: false })}
+                      toggleRole={this.toggleRole.bind(this)}
+                    />}
                 </div>
               </div>
               <div style={{ display: 'flex' }}>
@@ -471,7 +472,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             isOpen={this.state.passwordChangedDialog}
             close={() => this.setState({ passwordChangedDialog: false })} />
           <ProfileIntroJs user={this.props.user} suspended={this.state.introJsSuspended} history={this.props.history} location={this.props.location} />
-          {!this.state.saveDisabled &&  <SaveIntroJs  />}
+          {!this.state.saveDisabled && <SaveIntroJs />}
         </div>
       </React.Suspense>
     );

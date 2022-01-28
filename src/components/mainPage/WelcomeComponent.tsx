@@ -190,6 +190,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
             {this.state.nameHovered && <div className="custom-tooltip bold">View Profile</div>}
           </div>
           <span style={this.getStyle()}>{this.state.animatedName}</span>
+          <SpriteIcon className="sparkle-s6" name="hero-sparkle" />
         </div>
         <div
           className={className}
