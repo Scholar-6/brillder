@@ -256,11 +256,10 @@
 
     .filter-header {
       position: relative;
-      text-transform: uppercase;
+      text-transform: capitalize;
       background: var(--light-blue-alpha5);
       padding: 0.3vw 1.4vw;
       font-size: 1.2vw;
-      letter-spacing: 0.22vw;
       display: flex;
       align-items: center;
       justify-content: space-between;
