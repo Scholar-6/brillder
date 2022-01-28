@@ -157,8 +157,10 @@ class TeachFilterSidebar extends Component<
   renderStudentList(c: TeachClassroom) {
     if (c.active) {
       const sts = c.students.sort((a, b) => {
-        if (a.lastName < b.lastName) { return -1; }
-        if (a.lastName > b.lastName) { return 1; }
+        const al = a.lastName.toUpperCase();
+        const bl = b.lastName.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
         return 0;
       });
 
@@ -237,7 +239,6 @@ class TeachFilterSidebar extends Component<
     for (let classroom of this.props.classrooms) {
       totalCount += classroom.students.length;
       totalBricks += 1;
-      console.log(classroom, classroom.assignmentsCount)
       if (classroom.assignmentsCount && parseInt(classroom.assignmentsCount) > 0) {
         assignmentsCount += parseInt(classroom.assignmentsCount);
       }

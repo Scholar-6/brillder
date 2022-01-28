@@ -74,12 +74,22 @@ class ExpandedAssignment extends Component<
       }
     }
 
+    const prepared = this.prepareStudents(this.props.assignment.classroom.students);
+
+    const students = prepared.sort((a, b) => {
+      const al = a.lastName.toUpperCase();
+      const bl = b.lastName.toUpperCase();
+      if (al < bl) { return -1; }
+      if (al > bl) { return 1; }
+      return 0;
+    });
+
     this.state = {
       sortBy: SortBy.None,
       questionCount: questionCount,
       studentsPrepared: false,
       bookData: { open: false, student: null, assignment: null},
-      students: this.props.assignment.classroom ? this.prepareStudents(this.props.assignment.classroom.students) : [],
+      students: students || [],
       shown: false
     };
 
@@ -91,7 +101,17 @@ class ExpandedAssignment extends Component<
   async loadStudents() {
     var res = await getClassroomStudents(this.props.classroom.id);
     if (res) {
-      this.setState({students: this.prepareStudents(res)});
+      const prepared = this.prepareStudents(res);
+
+      const students = prepared.sort((a, b) => {
+        const al = a.lastName.toUpperCase();
+        const bl = b.lastName.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
+        return 0;
+      });
+
+      this.setState({students});
     }
   }
 
@@ -174,7 +194,7 @@ class ExpandedAssignment extends Component<
         if (!b.studentResult) { return -1; }
         return b.studentResult?.bestScore - a.studentResult?.bestScore;
       });
-    } else {
+    } else if (sortBy === SortBy.AvgIncreasing) {
       students = this.state.students.sort((a, b) => {
         if (!a.studentResult) { return -1; }
         if (!b.studentResult) { return 1; }
