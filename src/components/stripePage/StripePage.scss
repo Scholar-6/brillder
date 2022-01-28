@@ -1,5 +1,11 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .StripePayPage {
   background: var(--theme-dark-blue);
   min-height: 100%;
-  color: var(--white);
+
+  display: flex;
+  align-items: center;
 }

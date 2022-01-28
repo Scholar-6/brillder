@@ -3,7 +3,7 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
 import './FilterSidebar.scss';
-import { AcademicLevel, AcademicLevelLabels, Brick, BrickLengthEnum, BrickStatus } from "model/brick";
+import { AcademicLevel, AcademicLevelLabels, Brick, BrickStatus } from "model/brick";
 import { SortBy, Filters, ThreeColumns } from '../../model';
 import { clearStatusFilters } from '../../service';
 import EmptyFilterSidebar from "../EmptyFilter";
@@ -12,7 +12,6 @@ import { User } from "model/user";
 import { checkBuilder, isAorP } from "components/services/brickService";
 import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
 import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpContent";
-import { filter } from "components/assignmentsPage/components/play/service";
 
 
 enum FilterFields {

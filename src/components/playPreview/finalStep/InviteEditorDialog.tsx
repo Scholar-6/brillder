@@ -27,7 +27,6 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     initEditors = brick.editors;
   }
   const [editors, setEditors] = React.useState<Editor[]>(initEditors);
-  const [editorError, setEditorError] = React.useState("");
 
   const saveEditors = async (editorIds: number[]) => {
     let res = await props.assignEditor(brick, editorIds);
@@ -57,10 +56,8 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const onBlur = React.useCallback(async () => {
     if (editors.length > 0) {
       setValid(true);
-      setEditorError("");
     } else {
       setValid(false);
-      setEditorError("No editors have been assigned to this brick yet.");
     }
   }, [editors]);
 

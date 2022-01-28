@@ -1290,3 +1290,254 @@
     font-size: 4vw !important;
   }
 }
+
+.last-attempt-dialog {
+  .dialog-header {
+    font-family: $font-family-bold !important;
+    font-size: 5vw !important;
+  }
+  .green-btn {
+    padding: 2vw 4vw;
+    font-size: 7vw;
+    border-radius: 2vw;
+    background: var(--theme-green) !important;
+
+    svg {
+      margin-right: 2vw;
+      width: 7vw;
+      height: 7vw;
+    }
+  }
+  .premium-btn {
+    font-size: 6vw;
+    color: var(--theme-dark-blue) !important;
+
+    svg {
+      width: 8vw;
+      height: 8vw;
+    }
+  }
+}
+
+// choose plan page mobile
+.choose-plan-page {
+  overflow-y: scroll;
+  .title {
+    height: auto;
+    font-size: 5.4vw;
+    .text-green {
+      margin-left: 1vw;
+    }
+  }
+  .plans-container {
+    display: block;
+    height: auto;
+    .plan-container {
+      border-radius: 2vw;
+      margin-top: 2vh;
+      margin-bottom: 2vh;
+      width: 80vw;
+      margin-left: 10vw;
+      .green-icon.glasses {
+        width: 36vw;
+        height: 18vw;
+      }
+      
+      .green-icon.cap {
+        width: 27vw;
+        height: 27vw;
+      }
+
+      .big-label {
+        font-size: 8vw;
+      }
+      .price-row {
+        margin-top: 1vw;
+        font-size: 5vw;
+        .upper-text {
+          right: 1.2vw;
+          top: -3vw;
+          font-size: 3.5vw;
+          position: absolute;
+          text-decoration: line-through;
+        }
+      }
+      .list {
+        margin-top: 2vh;
+        margin-left: 3.3vw;
+        font-size: 4vw;
+
+        svg {
+          width: 4vw;
+          height: 4vw;
+          margin-right: 1vw;
+        }
+      }
+      .continue-btn {
+        cursor: pointer;
+        background: var(--theme-green) !important;
+        font-size: 5vw;
+        color: var(--white);
+        padding: 1vw 4vw;
+        border-radius: 1vw;
+        margin-top: 3vh;
+
+        svg {
+          width: 6vw;
+          height: 6vw;
+        }
+      }
+    }
+  }
+}
+
+// Stripe page mobile
+.StripePayPage {
+  display: block;
+
+  .voucher-box {
+    padding-top: 2vh;
+    height: auto;
+    width: 100vw;
+    padding-bottom: 2vh;
+    svg {
+      display: none;
+    }
+
+    .absolute-voucher {
+      position: initial;
+      .label {
+        font-size: 4vw;
+      }
+      input {
+        text-align: center;
+        border-radius: 2vw;
+        font-size: 4vw;
+        margin-left: 30vw;
+        width: 40vw;
+        height: calc(6vh - 2px);
+      }
+    }
+  }
+  > .flex-center {
+    display: block !important;
+    min-height: 80vh;
+    align-items: center;
+  }
+  .pay-box {
+    border-radius: 2vw;
+    margin-left: 5vw;
+    width: 90vw;
+    max-width: 90vw;
+    padding-left: 5vw;
+    padding-right:5vw;
+    padding-bottom: 2vh;
+    .CheckOut {
+      .two-columns {
+        > div:first-child {
+          margin-right: 5vw;
+        }
+      }
+    
+      .logo {
+        font-size: 7vw;
+      }
+      .bigger {
+        font-size: 3.7vw;
+      }
+      .normal {
+        font-size: 3.5vw;
+      }
+
+      $box-height: 6vh;
+
+      .radio-row > div {
+        height: $box-height;
+        border-radius: 2vw;
+        font-size: 4.5vw;
+        margin-left: 2.5vw;
+        
+        &:first-child {
+          margin-left: 0;
+          margin-right: 2.5vw;
+        }
+
+        .absoulte-price {
+          font-size: 3vw;
+          left: 7.2vw;
+          top: calc(50% - 5.4vw);
+        }
+        .absolute-label {
+          font-size: 3vw;
+          top: -2vw;
+          border-radius: 1vw;
+        }
+        > span.label {
+          margin-left: 1vw;
+          font-size: 5vw;
+          margin-bottom: 0.1vw;
+        }
+        .MuiButtonBase-root {
+          width: 7vw;
+          height: 5vw;
+
+          svg {
+            width: 5vw;
+            height: 5vw;
+          }
+        }
+      }
+
+      .field {
+        border-radius: 2vw;
+        height: $box-height;
+        padding-left: 3vw;
+        padding-right: 3vw;
+      }
+
+      .label {
+        font-size: 4.5vw;
+      }
+
+      .small {
+        font-size: 3.5vw;
+      }
+
+      button {
+        border-radius: 2vw;
+        font-size: 6.5vw !important;
+      }
+    }
+  }
+}
+
+.premium-educator-dialog {
+  .premium-label {
+    font-size: 11vw;
+
+    svg {
+      width: 16vw;
+      height: 16vw;
+    }
+
+    .absolute-label {
+      top: 11.7vw;
+      left: 6vw;
+      font-size: 5vw;
+    }
+  }
+  .list {
+    font-size: 4.5vw;
+    svg {
+      margin-right: 1vw;
+      width: 4.5vw;
+      height: 4.5vw;
+    }
+  }
+  .green-btn {
+    font-size: 6vw;
+    background: var(--theme-green) !important;
+    border-radius: 2vw;
+    padding: 2vw 4vw;
+  }
+}

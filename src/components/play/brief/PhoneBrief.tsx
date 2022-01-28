@@ -127,7 +127,7 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
           </div>
           <div className="italic bottom-link flex-center" style={{ textAlign: 'center' }}>
             <SpriteIcon name="eye-on" />
-            <a href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
+            <a rel="noopener noreferrer" href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
           </div>
         </Dialog>}
     </div>

@@ -66,6 +66,7 @@ import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';
 import { GetYoutubeClick } from 'localStorage/play';
 import StripePage from 'components/stripePage/StripePage';
 import LeaderboardPage from 'components/competitions/LeaderboardPage';
+import ChoosePlan from 'components/choosePlan/ChoosePlan';
 
 interface AppProps {
   user: User;
@@ -75,7 +76,6 @@ interface AppProps {
 const App: React.FC<AppProps> = props => {
   const location = useLocation();
   const [iframeFullScreen, setIframe] = React.useState(false);
-  const [showWarning, setWarning] = React.useState(isTablet ? true: false)
   const [termsData, setTermsData] = React.useState({
     isLoading: false,
     termsVersion: ''
@@ -185,10 +185,6 @@ const App: React.FC<AppProps> = props => {
     return <RotateIPadInstruction />;
   }
 
-  if (isTablet && showWarning) {
-    return <IPadWarning hideWarning={() => setWarning(false)} />
-  }
-  
   // If is mobile and landscape tell them to go to portrait
   else if (isMobileOnly && horizontal && !iframeFullScreen) {
     if (location.pathname.search('/prep') !== -1 && location.pathname.search('/play/brick') !== -1) {
@@ -244,7 +240,7 @@ const App: React.FC<AppProps> = props => {
       <Profiler id="app-tsx" onRender={onRenderCallback} >
       {/* all page routes are here order of routes is important */}
       <Switch>
-        <AllUsersRoute path="/stripe-subscription" component={StripePage} />
+        <AllUsersRoute path="/stripe-subscription/:type" component={StripePage} />
         <UnauthorizedRoute path={map.SubjectCategories} component={ViewAll} />
         <UnauthorizedRoute path={map.SearchPublishBrickPage} component={ViewAll} />
         <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
@@ -255,6 +251,8 @@ const App: React.FC<AppProps> = props => {
         <StudentRoute path="/my-library" component={Library} />
         <StudentRoute path="/post-play/brick/:brickId/:userId/:classId" component={PostPlay} />
         <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
+
+        <StudentRoute path={map.ChoosePlan} component={ChoosePlan} />
 
         <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
         <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />

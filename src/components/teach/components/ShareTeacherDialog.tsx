@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
@@ -20,23 +20,11 @@ interface InviteProps {
 const ShareTeacherDialog: React.FC<InviteProps> = ({ classId, ...props }) => {
   const [teachers, setTeachers] = React.useState<Editor[]>([]);
 
-  const saveEditors = async (editorIds: number[]) => {
-    /*
-    let res = await props.shareTeachers(brick, editorIds);
-    if (res) {
-      props.submit(getNameText());
-      setEditors([]);
-    }
-    return res;
-    */
-  }
-
   const onNext = async () => {
     if (teachers && teachers.length > 0) {
       let teachersIds = [];
       teachersIds.push(...teachers.map(t => t.id));
       const res = await inviteTeacher(classId, teachersIds);
-      console.log(res);
       if (res) {
         setTeachers([]);
         props.close();
@@ -44,28 +32,7 @@ const ShareTeacherDialog: React.FC<InviteProps> = ({ classId, ...props }) => {
         props.requestFailed("can`t save editors");
       }
     }
-    /*
-    if (isValid && editors) {
-      const res = await saveEditors(editorsIds);
-      if (res) {
-        props.close();
-      } else {
-        props.requestFailed("can`t save editors");
-      }
-    }*/
   };
-
-  const getNameText = () => {
-    return teachers.reduce((prev, current, idx, array) => {
-      if (idx === 0) {
-        return `${prev}${current.username}`;
-      } else if(idx === array.length - 1) {
-        return `${prev} and ${current.username}`;
-      } else {
-        return `${prev}, ${current.username}`;
-      }
-    }, "")
-  }
 
   const renderSendButton = () => {
     return (
@@ -99,6 +66,8 @@ const ShareTeacherDialog: React.FC<InviteProps> = ({ classId, ...props }) => {
             <AutocompleteUsername
               canEdit={true}
               removeDisabled={true}
+              onlyTeachers={true}
+              hideLastName={true}
               editorError={''}
               placeholder="Teacher's username (first 3 characters)"
               onBlur={() => {}}

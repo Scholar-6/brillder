@@ -8,7 +8,6 @@ import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
 import { getBrillderTitle } from "components/services/titleService";
 import { BrickFieldNames, PlayButtonStatus } from "../../build/proposal/model";
-import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import {
   ApiQuestion,
   parseQuestion,

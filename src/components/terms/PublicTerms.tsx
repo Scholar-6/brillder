@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import axios from "axios";
 // @ts-ignore
-import marked from "marked";
+import { marked } from "marked";
 
 import "./PublicTerms.scss";
 import { User } from "model/user";

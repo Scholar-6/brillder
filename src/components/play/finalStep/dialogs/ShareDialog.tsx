@@ -2,7 +2,6 @@ import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 
 import './ShareDialog.scss';
-import { ReactComponent as WhatsappIcon } from 'assets/img/whatsapp.svg';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import SpriteHoverIcon from 'components/baseComponents/SpriteHoverIcon';
 

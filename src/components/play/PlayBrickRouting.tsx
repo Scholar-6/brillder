@@ -69,6 +69,10 @@ import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigatio
 import CountdownReview from "./preReview/CountdownReview";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
+import LastAttemptDialog from "./baseComponents/dialogs/LastAttemptDialog";
+import PremiumEducatorDialog from "./baseComponents/dialogs/PremiumEducatorDialog";
+import PremiumLearnerDialog from "./baseComponents/dialogs/PremiumLearnerDialog";
+import user from "redux/reducers/user";
 
 export enum PlayPage {
   Cover,
@@ -180,8 +184,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [competitionId, setCompetitionId] = useState(-1);
   const [brickAttempt, setBrickAttempt] = useState(initBrickAttempt as BrickAttempt);
 
-  const [bricks, setBricks] = useState([]);
-
   const [attempts, setAttempts] = useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = useState(initReviewAttempts);
   const [prepEndTime, setPrepEndTime] = useState(initPrepEndTime);
@@ -199,6 +201,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [sidebarRolledUp, toggleSideBar] = useState(false);
   const [searchString, setSearchString] = useState("");
   const [saveFailed, setFailed] = useState(false);
+
+  const [isLastAttemptOpen, setLastAttemptDialog] = useState(false);
+  const [isPremiumLOpen, setPremiumLOpen] = useState(false);
+  const [isPremiumEOpen, setPremiumEOpen] = useState(false);
 
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
@@ -235,8 +241,24 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }));
   }
 
+  const showInitDialogs = async () => {
+    var user = await props.getUser();
+    if (user) {
+      if (user.freeAttemptsLeft == 1) {
+        setLastAttemptDialog(true);
+      } else if (user.freeAttemptsLeft <= 0) {
+        setPremiumLOpen(true);
+      } else if (user.freeAssignmentsLeft <= 0) {
+        setPremiumEOpen(true);
+      }
+    }
+    console.log(user);
+  }
+
   // only cover page should have big sidebar
   useEffect(() => {
+    showInitDialogs();
+
     if (!isPhone()) {
       let { pathname } = history.location;
       if (pathname.search(PlayCoverLastPrefix) === -1) {
@@ -259,7 +281,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       }
     }
     /*eslint-disable-next-line*/
-
   }, [])
 
   const updateAttempts = (attempt: any, index: number) => {
@@ -399,6 +420,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const coverMoveNext = () => {
+    const {user} = props;
+    if (user.freeAttemptsLeft <= 0) {
+      if (!user.subscriptionState || user.subscriptionState === 0) {
+        setPremiumLOpen(true);
+        return;
+      }
+    }
     if (isPhone()) {
       moveToBrief();
     } else {
@@ -731,6 +759,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               sidebarRolledUp={sidebarRolledUp}
               empty={finalStep}
               setMode={setMode}
+              showPremium={() => setPremiumEOpen(true)}
               toggleSidebar={setSidebar}
             />}
           {renderRouter()}
@@ -762,6 +791,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           label="You might already have an account, try signing in."
         />
       </div>
+      {(props.user.subscriptionState === 0 || !props.user.subscriptionState) &&
+      <LastAttemptDialog isOpen={isLastAttemptOpen} history={history} close={() => setLastAttemptDialog(false)} submit={() => {
+        toggleSideBar(true);
+        setLastAttemptDialog(false);
+        moveToBrief();
+      }} />}
+      {(props.user.subscriptionState === 0 || !props.user.subscriptionState) && <PremiumEducatorDialog isOpen={isPremiumEOpen} close={() => setPremiumEOpen(false)} submit={() => props.history.push(map.StripeEducator)} />}
+      {(props.user.subscriptionState === 0 || !props.user.subscriptionState) && <PremiumLearnerDialog isOpen={isPremiumLOpen} close={() => setPremiumLOpen(false)} submit={() => props.history.push(map.StripeLearner)} />}
     </React.Suspense>
   );
 };

@@ -40,6 +40,7 @@ interface SidebarProps {
 
   //play-preview
   isPreview?: boolean;
+  showPremium?(): void;
   moveToBuild?(): void;
 
   //redux
@@ -332,6 +333,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.state.isAssigningOpen}
+            user={this.props.user}
             history={this.props.history}
             success={(items: any[], failedItems: any[]) => {
               if (items.length > 0) {
@@ -340,6 +342,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                 this.setState({ failedItems, isAssignedFailedOpen: true });
               }
             }}
+            showPremium={() => this.props.showPremium && this.props.showPremium()}
             close={() => this.setState({ isAssigningOpen: false })}
           />}
         <AssignSuccessDialog

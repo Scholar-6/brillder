@@ -49,6 +49,7 @@ interface VerticalShuffleState {
   switchIndex: number;
   userAnswers: any[];
   canDrag: boolean;
+  reviewCorrectAnswers: number[];
 }
 
 class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffleState> {
@@ -70,11 +71,23 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
       canDrag = false;
     }
 
+    let reviewCorrectAnswers = [];
+
+    if (this.props.isReview) {
+      for (let i = 0; i < userAnswers.length; i++) {
+        const res = this.checkAttemptAnswer(i);
+        if (res) {
+          reviewCorrectAnswers.push(i);
+        }
+      }
+    }
+
     this.state = {
       status: DragAndDropStatus.None,
       switchIndex: -1,
       userAnswers: userAnswers,
-      canDrag
+      canDrag,
+      reviewCorrectAnswers
     };
   }
 
@@ -95,6 +108,30 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     if (this.state.status === DragAndDropStatus.Changed && this.props.onAttempted) {
       this.props.onAttempted();
     }
+   
+    // review. make correct answers static on drag and drop
+    if (this.state.reviewCorrectAnswers.length > 0) {
+      for (let index of this.state.reviewCorrectAnswers) {
+        
+        let answer = null;
+        let answerIndex = 0;
+
+        // get correct answer and index
+        for (let j = 0; j < userAnswers.length; j++) {
+          if (userAnswers[j].index == index) {
+            answerIndex = j;
+            answer = userAnswers[j];
+          }
+        }
+
+        // change answer position
+        if (answer) {
+          userAnswers.splice(answerIndex, 1);
+          userAnswers.splice(index, 0, answer);
+        }
+      }
+    }
+
     this.setState({ status, userAnswers });
   }
 
@@ -117,7 +154,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   checkAttemptAnswer(index: number) {
-    if (this.props.isReview && this.props.attempt && this.props.attempt === this.props.liveAttempt) {
+    if (this.props.isReview && this.props.attempt) {
       let answer = this.props.attempt.answer[index];
       if (answer.index - index === 0) {
         return true;

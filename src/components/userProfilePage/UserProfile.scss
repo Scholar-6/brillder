@@ -54,7 +54,7 @@
     .profile-header {
       padding-top: 3.1vh;
       margin-right: 7vw;
-      font-size: 5.4vw;
+      font-size: 4vw;
       @extend %textCenter;
       font-family: $font-family-bold;
       color: var(--theme-dark-blue);
@@ -74,9 +74,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 5vw;
+        height: 4.5vw;
         margin-left: 1vw;
-        font-size: 3vw !important;
+        font-size: 2.7vw !important;
         background: var(--tab-gray);
       }
 
@@ -225,6 +225,40 @@
 
             @include phone_and_tabletL {
               font-size: 5vw;
+            }
+          }
+        }
+
+        .active-status-container {
+          margin-left: -2vw;
+          width: calc(100% + 4vw);
+
+          .premium-container {
+            .btn-premium {
+              cursor: pointer;
+              transition: all 300ms ease-in-out;
+              font-family: $font-family-bold;
+              margin-left: 0.5vw;
+              border-radius: 3vw;
+              padding-left: 0.3vw;
+              padding-right: 0.3vw;
+              color: var(--white);
+              background: var(--theme-green);
+              font-size: 1vw;
+
+              &:hover {
+                background: var(--theme-dark-blue);
+              }
+
+              display: flex;
+              align-items: center;
+
+              svg {
+                color: var(--white);
+                stroke-width: 2;
+                width: 1.1vw;
+                height: 1.1vw;
+              }
             }
           }
         }
