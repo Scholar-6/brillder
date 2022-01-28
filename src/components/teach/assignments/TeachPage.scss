@@ -534,13 +534,21 @@
 // view all button
 .manage-classrooms-page {
   .m-view-all {
+    position: relative !important;
     cursor: pointer;
-    display: flex;
-    align-items: center;
+    padding-top: 1vh;
+    display: block;
     font-size: 1.05vw;
     font-family: $font-family-regular;
     padding-left: 1.4vw;
-    height: 4.7vh !important;
+    height: 9vh !important;
+
+    .right-index {
+      padding-top: calc(1vh + 0.5vw) !important;
+      transform: unset !important;
+      top: 0 !important;
+      height: 4vh !important;
+    }
 
     &.yellow {
       background: var(--theme-yellow);

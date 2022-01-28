@@ -139,7 +139,7 @@ class TeachFilterSidebar extends Component<
     return (
       <div className="classrooms-box">
         {count}
-        <div />
+        <SpriteIcon name="file-plus" />
       </div>
     );
   }
@@ -242,28 +242,18 @@ class TeachFilterSidebar extends Component<
         assignmentsCount += parseInt(classroom.assignmentsCount);
       }
     }
-    let label = '1 ASSIGNMENT';
+    let label = '1 Assignment';
     if (assignmentsCount > 1) {
-      label = `${assignmentsCount} ASSIGNMENTS`;
+      label = `${assignmentsCount} Assignments`;
     }
     return (
       <div className="sort-box teach-sort-box flex-height-box">
         <div className="sort-box">
           <div className="filter-container sort-by-box">
             <div style={{ display: "flex" }}>
-              <div className="class-header" style={{ width: "100%" }}>
-                {label}
+              <div className="class-header">
+                {label} in {finalClasses.length} Classes
               </div>
-            </div>
-          </div>
-          <div
-            className="create-class-button assign"
-            onClick={() => this.setState({ createClassOpen: true })}
-          >
-            In {finalClasses.length} Classes
-            <div className="flex-relative">
-              <SpriteIcon name="plus-circle" />
-              <div className="custom-tooltip">Create Class</div>
             </div>
           </div>
           {(this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState) && this.renderPremiumBox()}
@@ -274,13 +264,14 @@ class TeachFilterSidebar extends Component<
             }
             onClick={this.removeClassrooms.bind(this)}
           >
+            <div>
             View All Classes
             <div className="right-index">
               {totalCount}
               <SpriteIcon name="users-custom" className="active" />
               <div className="classrooms-box">
                 {totalBricks}
-                <div />
+                <SpriteIcon name="file-plus" />
               </div>
             </div>
             <div className="m-absolute-sort">
@@ -297,6 +288,12 @@ class TeachFilterSidebar extends Component<
               <div className="css-custom-tooltip">
                 {this.state.ascending ? 'Sort by most assignments' : 'Sort by fewest assignments'}
               </div>
+            </div>
+            </div>
+            <div>
+            <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
+              <SpriteIcon name="plus-circle" /> Create Class
+            </div>
             </div>
           </div>
         </div>
