@@ -359,7 +359,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               <div className="profile-header">
                 <UserTypeLozenge roles={user.roles} userPreference={this.props.user.userPreference} />
                 <div>{user.username ? user.username : "USERNAME"}</div>
-                <SpriteIcon name="hero-sparkle" />
+                {this.props.user && this.props.user.subscriptionState && this.props.user.subscriptionState > 1 && <SpriteIcon name="hero-sparkle" />}
               </div>
               <div className="save-button-container">
                 <SaveProfileButton
