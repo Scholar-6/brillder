@@ -111,14 +111,6 @@
       position: fixed;
       top: calc(5.834vw + 3.6vh + 1vh);
       left: 65.5vw;
-
-      @include phone_and_tabletP {
-        position: fixed;
-        bottom: 10vh;
-        right: 5vw;
-        top: inherit;
-        z-index: 999;
-      }
     }
 
     .profile-fields {
