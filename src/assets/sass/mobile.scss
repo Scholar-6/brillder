@@ -1541,3 +1541,75 @@
     padding: 2vw 4vw;
   }
 }
+
+.user-profile-page {
+  .profile-block {
+    .save-button-container {
+      position: fixed;
+      bottom: 10vh;
+      right: 6vw;
+      left: unset !important;
+      width: 15vw !important;
+      top: unset !important;
+      z-index: 999;
+
+      svg {
+        width: 80% !important;
+        height: 80% !important;
+      }
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 6vw !important;
+      flex-direction: inherit !important;
+  
+      .user-type-lozenge {
+        border-radius: 5vw;
+        padding: 0 4vw;
+        font-size: 5.5vw !important;
+        height: 6vw !important;
+      }
+  
+      svg {
+        width: 7vw;
+        height: 7vw;
+      }
+    }
+    .profile-fields {
+      .input-block input {
+        padding-left: 3vw !important;
+      }
+      .button-container {
+        top: 3.3vw !important;
+        right: 8vw !important;
+        button {
+          border-radius: 3vw !important;
+          padding: 0 2vw !important;
+          height: auto !important;
+          font-size: 4vw !important;
+        }
+      }
+      .status-container {
+        svg {
+          width: 4vw !important;
+          height: 4vw !important;
+        }
+        .premium-container .btn-premium {
+          margin-left: 2vw !important;
+          padding-left: 1vw !important;
+          font-size: 4vw !important;
+
+          svg {
+            width: 5vw !important;
+            height: 5vw !important;
+          }
+        }
+      }
+    }
+    .bio-container-2 {
+      padding-bottom: 20vw !important;
+    }
+  }
+}

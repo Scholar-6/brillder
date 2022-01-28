@@ -104,6 +104,9 @@
             stroke-width: 2.1;
           }
         }
+        .sparkle-s6 {
+          margin-left: 0.5vw;
+        }
       }
       .notifications-text {
         margin-top: 5vh; //10vh;
@@ -256,6 +259,7 @@
         align-items: center;
 
         .m-red-circle {
+          margin-top: 0.3vw;
           margin-left: 0.3vw;
           background: var(--theme-orange);
           width: 1.6vw;

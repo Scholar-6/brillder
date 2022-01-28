@@ -67,15 +67,22 @@
         text-transform: capitalize;
       }
 
+      svg {
+        margin-left: 1vw;
+        stroke-width: 1.5;
+        width: 4.6vw;
+        height: 4.6vw;
+      }
+
       .user-type-lozenge {
-        border-radius: 2vw;
+        border-radius: 3vw;
         padding-left: 2vw;
         padding-right: 2vw;
         display: flex;
         align-items: center;
         justify-content: center;
         height: 4.5vw;
-        margin-left: 1vw;
+        margin-right: 1vw;
         font-size: 2.7vw !important;
         background: var(--tab-gray);
       }
@@ -104,14 +111,6 @@
       position: fixed;
       top: calc(5.834vw + 3.6vh + 1vh);
       left: 65.5vw;
-
-      @include phone_and_tabletP {
-        position: fixed;
-        bottom: 10vh;
-        right: 5vw;
-        top: inherit;
-        z-index: 999;
-      }
     }
 
     .profile-fields {
@@ -215,6 +214,8 @@
           .svg {
             color: #30c474;
             font-size: 2.35vw;
+            width: 1vw;
+            height: 1vw;
             @extend %removePosition;
           }
 
@@ -230,7 +231,7 @@
         }
 
         .active-status-container {
-          margin-left: -2vw;
+          margin-left: 0vw;
           width: calc(100% + 4vw);
 
           .premium-container {
