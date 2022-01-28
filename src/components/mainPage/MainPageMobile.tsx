@@ -192,7 +192,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               ? "Shared with Me"
               : "My Assignments"}
             {this.state.assignedCount > 0 && (
-              <div className="m-red-circle">
+              <div className="m-red-circle bold">
                 <DynamicFont content={this.state.assignedCount.toString()} />
               </div>
             )}
