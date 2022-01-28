@@ -275,10 +275,12 @@
 
         .m-red-circle {
           background: var(--theme-orange);
-          width: 1.6vw;
-          height: 1.6vw;
+          margin-top: 0.3vw;
+          margin-left: 0.4vw;
+          width: 2.2vw;
+          height: 2.2vw;
           border-radius: 50%;
-          font-size: 1vw;
+          font-size: 1.7vw;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -286,7 +288,6 @@
           overflow: hidden;
 
           span {
-            margin-left: 0.3vw;
           }
         }
       }
