@@ -533,7 +533,7 @@
 
 // view all button
 .manage-classrooms-page {
-  .m-view-all {
+  .index-box.m-view-all {
     position: relative !important;
     cursor: pointer;
     padding-top: 1vh;
@@ -543,11 +543,23 @@
     padding-left: 1.4vw;
     height: 9vh !important;
 
+    color: var(--theme-dark-blue);
+    background: var(--tab-gray);
+
     .right-index {
+      color: var(--theme-dark-blue);
       padding-top: calc(1vh + 0.5vw) !important;
       transform: unset !important;
       top: 0 !important;
       height: 4vh !important;
+
+      .classrooms-box {
+        color: var(--theme-dark-blue) !important;
+      }
+    }
+
+    &:hover {
+      background: var(--dark-gray);
     }
 
     &.yellow {
@@ -570,7 +582,14 @@
     }
     
     &.active {
+      color: var(--white);
       background-color: var(--theme-orange);
+      .right-index {
+        color: var(--white);
+      }
+      .classrooms-box {
+        color: var(--white) !important;
+      }
       &:hover {
         background: var(--theme-orange);
       }
@@ -579,7 +598,6 @@
       display: flex;
       align-items: center;
       right: 1.2vw !important;
-      color: var(--white) !important;
       background: inherit !important;
       svg {
         margin-left: 0.2vw;
