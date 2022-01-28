@@ -22,11 +22,11 @@ const StripePage: React.FC<any> = (props: StripePageProps) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK as string);
 
   const options = {
-    fonts: [
+    fonts: [/*
       {
         family: 'Brandon Grotesque Regular',
         src: 'url(https://brillder.com/asserts/fonts/BrandonGrotesque/Brandon_bld.woff) format(woff)'
-      },
+      },*/
     ],
   }
 

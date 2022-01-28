@@ -111,7 +111,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
     <div>
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog assign-dialog-new">
         <div className="dialog-header">
-          {renderTopLabel()}
+          {props.user.subscriptionState === 0 && renderTopLabel()}
           <div className="r-popup-title bold">Already know what you're looking for?</div>
           <Autocomplete
             freeSolo
