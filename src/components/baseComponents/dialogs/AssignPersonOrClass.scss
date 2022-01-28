@@ -5,24 +5,43 @@
 .MuiAutocomplete-listbox {
   height: 30vh !important;
 }
+
 .assign-dialog {
-  .dialog-header > div {
+  .psevdo-radio-class {
+    display: flex;
+    margin-bottom: 1vh !important;
+
+    svg {
+      color: var(--white) !important;
+    }
+  }
+  .dialog-header>div {
     width: 50vw !important;
 
     .MuiInputBase-input.MuiInput-input {
       width: 14vw;
     }
   }
+
   .icon-button {
     .svg {
       $size: 2.2vw;
       height: $size;
       width: $size;
     }
+
     .label {
       font-size: 1.6vw;
       padding: 0.5vh;
       font-family: $font-family-bold;
+    }
+  }
+  .custom-action-row {
+    display: flex;
+    align-items: center;
+    .btn {
+      margin-left: 3vw;
+      margin-right: 3vw;
     }
   }
 }
@@ -32,7 +51,7 @@
   padding-right: 0 !important;
 }
 
-.change-deadline-dialog .dialog-header > div {
+.change-deadline-dialog .dialog-header>div {
   width: auto !important;
 }
 
@@ -43,4 +62,142 @@
 
 span.bold {
   font-family: $font-family-bold !important;
+}
+
+.assign-student-popup {
+  .MuiPaper-root {
+    padding: 0 !important;
+
+    .dialog-header {
+      padding: 2vw 3vw 1.4vw 3vw;
+
+      .r-class-selection {
+        margin-bottom: 0.9vw !important;
+        width: 40vw !important;
+      }
+
+      .switch-mode {
+        width: 20vw !important;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-family: $font-family-regular;
+        font-size: 1.3vw;
+        margin-bottom: 0 !important;
+        svg {
+          width: 1.5vw;
+          height: 1.5vw;
+          margin-left: 1vw;
+          margin-right: 0.4vw;
+          stroke-width: 2;
+        }
+        &:hover {
+          font-family: $font-family-bold;
+          svg {
+            stroke-width: 3;
+          }
+        }
+      }
+    }
+
+    .dialog-footer-white {
+      background: var(--white);
+
+      .r-radio-buttons {
+        color: var(--theme-dark-blue);
+        display: flex;
+        align-items: center;
+        padding-left: 3vw;
+        padding-top: 2vh;
+
+        .label {
+          padding-right: 1vw;
+          font-size: 1.6vw;
+          font-family: $font-family-bold;
+        }
+
+        .MuiSvgIcon-root {
+          fill: var(--theme-dark-blue) !important;
+          color: var(--theme-dark-blue) !important;
+        }
+
+        .MuiFormControlLabel-root {
+          padding-left: 0.5vw;
+        }
+
+        .MuiTypography-body1 {
+          font-size: 1.3vw;
+        }
+
+        .MuiInputBase-root {
+          background: var(--tab-gray) !important;
+
+          .MuiSelect-root {
+            font-size: 1.3vw !important;
+            color: var(--theme-dark-blue) !important;
+          }
+        }
+      }
+
+      .action-row {
+        padding-top: 2vh;
+        padding-bottom: 4vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--theme-dark-blue);
+        font-size: 1.3vw;
+
+        svg {
+          width: 2vw;
+          height: 2vw;
+        }
+
+        .premium-btn {
+          cursor: pointer;
+          font-family: $font-family-bold;
+          font-size: 1.6vw;
+          stroke-width: 1.5;
+          svg {
+            margin-left: 0.4vw;
+          }
+
+          transition: all 150ms ease-in-out;
+
+          &:hover {
+            color: var(--theme-green);
+          }
+        }
+
+        button {
+          font-size: 1.6vw;
+          margin-right: 4.7vw;
+          margin-left: 4.7vw;
+          padding: 0;
+          padding-left: 1vw;
+          padding-right: 1vw;
+
+          svg {
+            stroke-width: 1.5 !important;
+          }
+          &:hover {
+            color: var(--white) !important;
+            background: var(--theme-dark-blue) !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.create-first-class {
+  .MuiPaper-root {
+    .dialog-footer-white .r-radio-buttons {
+      padding-left: 7vw;
+    }
+    .inline {
+      margin-left: 1vw;
+    }
+  }
 }

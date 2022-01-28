@@ -44,7 +44,7 @@ const TeachTab: React.FC<TabProps> = ({ history, activeTab, assignmentsEnabled }
     return (
       <div className={className} onClick={() => history.push(prepareLink(map.ManageClassroomsTab))}>
         <div style={{display: 'flex'}}>
-          <span>Students</span>
+          <span>Learners</span>
         </div>
       </div>
     );

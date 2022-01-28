@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Checkbox from '@material-ui/core/Checkbox';
 import queryString from 'query-string';
 // @ts-ignore
-import marked from "marked";
+import {marked} from "marked";
 
 import map from "components/map";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
@@ -82,7 +82,6 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
         { withCredentials: true }
       ).then(response => {
         const { data } = response;
-        console.log(data, r);
         if (r && r.lastModifiedDate == data.termsAndConditionsAcceptedVersion) {
           this.props.history.push(map.MainPage);
         }
@@ -115,9 +114,14 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
           <Grid className="user-preference-container terms-page-container onboarding-terms" item>
             <div className="terms-page">
               <div>
-                {this.state.parts.map((p, i) => (
-                  <div key={i} ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
-                ))}
+                {this.state.parts.map((p, i) => {
+                  try {
+                    const parsed = marked.parse(p.content);
+                    return <div key={i} ref={p.el} dangerouslySetInnerHTML={{ __html: parsed }} />
+                  } catch (e) {
+                    return <div />;
+                  }
+                })}
               </div>
             </div>
             <div className="bottom-button" onClick={async () => {

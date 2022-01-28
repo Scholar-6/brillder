@@ -46,6 +46,11 @@ export interface User extends UserBase {
   userPreference?: UserPreference;
   hasPlayedBrick: boolean;
   termsAndConditionsAcceptedVersion: string;
+
+  freeAssignmentsLeft: number;
+  freeAttemptsLeft: number;
+  freeCompetitionLeft: number;
+  subscriptionState?: number;
 }
 
 export interface UserProfile extends UserBase {

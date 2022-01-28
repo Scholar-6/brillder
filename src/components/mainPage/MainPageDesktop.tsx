@@ -33,6 +33,7 @@ import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import InvalidDialog from "components/build/baseComponents/dialogs/InvalidDialog";
 import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
+import SubscribedDialog from "./components/SubscibedDialog";
 
 
 
@@ -88,6 +89,8 @@ interface MainPageState {
   // intro
   stepsEnabled: boolean;
   steps: any[];
+
+  subscribedPopup: boolean;
 }
 
 class MainPageDesktop extends Component<MainPageProps, MainPageState> {
@@ -99,6 +102,11 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     const values = queryString.parse(this.props.history.location.search);
     if (values.newTeacher) {
       isNewTeacher = true;
+    }
+
+    let subscribedPopup = false;
+    if (values.subscribedPopup) {
+      subscribedPopup = true;
     }
 
     const isStudent = isStudentPreference(props.user);
@@ -115,6 +123,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isTryBuildOpen: false,
       isReportLocked: false,
       isNewTeacher,
+
+      subscribedPopup,
 
       isTeacher: isTeacherPreference(props.user) || isInstitutionPreference(props.user),
       isAdmin: checkAdmin(props.user.roles),
@@ -225,7 +235,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   renderSecondButton() {
     if (this.state.isTeacher || this.state.isAdmin) {
       const isIpad = isIPad13 || isTablet;
-      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher || isIpad} onMobileClick={() => this.setState({isDesktopOpen: true})} />
+      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher} onMobileClick={() => this.setState({isDesktopOpen: true})} />
     } else if (this.state.isStudent) {
       return this.renderStudentWorkButton();
     }
@@ -392,7 +402,11 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
             {this.renderSecondButton()}
             {this.renderThirdButton()}
           </div>
-          <div className="second-item"></div>
+          {this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState ?
+          <div className="second-item" onClick={() => this.props.history.push(map.ChoosePlan)}>
+            Go Premium <SpriteIcon name="hero-sparkle" />
+          </div> : <div className="second-item not-active light-blue" />
+          }
         </div>
         {(this.state.isTeacher || this.state.isAdmin) ?
           <div className="second-col">
@@ -442,6 +456,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           close={() => this.setState({isDesktopOpen: false})} />
         <ClassInvitationDialog />
         <ClassTInvitationDialog />
+        <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({subscribedPopup: false})} />
       </Grid>
       </React.Suspense>
     );

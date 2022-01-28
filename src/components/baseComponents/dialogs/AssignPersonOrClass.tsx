@@ -23,9 +23,11 @@ import ValidationFailedDialog from './ValidationFailedDialog';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
+  user?: User;
   history: any;
   isOpen: boolean;
   success(items: any[], failed: any[]): void;
+  showPremium?(): void;
   close(): void;
   requestFailed(e: string): void;
 }
@@ -106,6 +108,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res && res.length > 0) {
             await assignToExistingBrick(newClassroom);
+
+            if (props.user && props.user.freeAssignmentsLeft) {
+              props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
+            }
             props.success([newClassroom], []);
 
             // only for new classes
@@ -157,6 +163,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (haveDeadline && deadlineDate) {
       data.deadline = deadlineDate;
     }
+    console.log('fff')
     return await assignClasses(props.brick.id, data);
   }
 
@@ -168,24 +175,39 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     // prevent from double click
     if (isSaving) { return; }
     setSaving(true);
+    console.log('eee');
 
     if (isCreating === false) {
       const res = await assignToExistingBrick(existingClass);
 
-      if (res && res.length > 0) {
+      console.log(res);
+
+      if (res.success && res.result.length > 0) {
         let allArchived = true;
-        for (let a of res) {
+        for (let a of res.result) {
           if (a.isArchived !== true) {
             allArchived = false;
           }
         }
         if (allArchived) {
+          if (props.user && props.user.freeAssignmentsLeft) {
+            props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
+          }
           props.success([existingClass], []);
         } else {
           setAssigned(true);
         }
-      } else if (res !== false) {
+      } else if (res.success !== false) {
+        if (props.user && props.user.freeAssignmentsLeft) {
+          props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
+        }
+
         props.success([existingClass], []);
+      } else {
+        if (res.error == 'Subscription is not valid.' && props.showPremium) {
+          props.close();
+          props.showPremium();
+        }
       }
     } else {
       await createClassAndAssign();
@@ -255,44 +277,67 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     );
   }
 
+  const renderAssignLeftLabel = () => {
+    if (props.user?.freeAssignmentsLeft && props.user?.freeAssignmentsLeft > 1) {
+      return (
+        <div className="left-label">
+          {props.user.freeAssignmentsLeft - 1} free Assignments Left
+        </div>
+      )
+    }
+    return (
+      <div className="left-label">
+        No Free Assignments Left
+      </div>
+    )
+  }
+
   const renderFooter = () => (
-    <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
+    <div className="action-row custom-action-row" style={{ justifyContent: 'center' }}>
+      {props.user?.subscriptionState === 0 && renderAssignLeftLabel()}
       <button
         className="btn btn-md bg-theme-orange yes-button icon-button r-long"
         onClick={assign} style={{ width: 'auto' }}
       >
         <div className="centered">
           <span className="label">Assign</span>
+          <SpriteIcon name="file-plus" />
         </div>
       </button>
+      {props.user?.subscriptionState === 0 &&
+      <div className="premium-btn flex-center" onClick={() => props.history.push(map.StripeEducator)}>
+        Go Premium <SpriteIcon name="hero-sparkle" />
+      </div>}
     </div>
   );
 
   const renderDeadline = () => (
-    <div>
-      <div className="r-popup-title bold">When is it due?</div>
-      <div className="r-radio-buttons">
-        <FormControlLabel
-          checked={haveDeadline === false}
-          control={<Radio onClick={() => toggleDeadline(false)} />}
-          label="No deadline"
-        />
-        <FormControlLabel
-          checked={haveDeadline === true}
-          control={<Radio onClick={() => toggleDeadline(true)} />}
-          label="Set date"
-        />
-        {haveDeadline && <TimeDropdowns date={deadlineDate} onChange={setDeadline} />}
+    <div className="r-radio-buttons">
+      <div className="label">
+        When is it due?
       </div>
+      <FormControlLabel
+        checked={haveDeadline === false}
+        control={<Radio onClick={() => toggleDeadline(false)} />}
+        label="No deadline"
+      />
+      <FormControlLabel
+        checked={haveDeadline === true}
+        control={<Radio onClick={() => toggleDeadline(true)} />}
+        label="Set date"
+      />
+      {haveDeadline && <TimeDropdowns date={deadlineDate} onChange={setDeadline} />}
     </div>
   );
 
   if (classes.length === 0) {
     return (
-      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
+      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-student-popup assign-dialog create-first-class">
         <div className="dialog-header">
           <div className="r-popup-title bold r-first-class">Create Your First Class</div>
           {renderNew()}
+        </div>
+        <div className="dialog-footer-white">
           {renderDeadline()}
           {renderFooter()}
         </div>
@@ -302,20 +347,30 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
   return (
     <div>
-      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog">
+      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box assign-student-popup light-blue assign-dialog">
         <div className="dialog-header">
           <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
-          <div className="r-radio-row">
-            <FormControlLabel
-              checked={!isCreating}
-              control={<Radio onClick={() => setCreating(false)} className={"filter-radio custom-color"} />}
-              label="An Existing Class" />
-            <FormControlLabel
-              checked={isCreating}
-              control={<Radio onClick={() => setCreating(true)} className={"filter-radio custom-color"} />}
-              label="Create A New Class" />
-          </div>
+          {isCreating &&
+            <div className="psevdo-radio-class">
+              <div className="switch-mode">
+                <Radio checked={false} onClick={() => setCreating(false)} />
+                An existing class
+              </div>
+              <div className="switch-mode">
+                <Radio checked={true} />
+                Create a new class
+              </div>
+            </div>
+          }
           {isCreating ? renderNew() : renderExisting()}
+          {!isCreating &&
+            <div className="switch-mode" onClick={() => setCreating(true)}>
+              <SpriteIcon name="plus-circle-custom" />
+              Create a new class
+            </div>
+          }
+        </div>
+        <div className="dialog-footer-white">
           {renderDeadline()}
           {renderFooter()}
         </div>

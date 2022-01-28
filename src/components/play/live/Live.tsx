@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Grid } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";

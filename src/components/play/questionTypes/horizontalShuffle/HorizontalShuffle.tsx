@@ -11,7 +11,7 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import { getValidationClassName } from '../service';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
-import {ReactComponent as DragIcon} from'assets/img/drag.svg';
+import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
 import { isPhone } from 'services/phone';
 import { isMobile } from 'react-device-detect';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
@@ -42,6 +42,7 @@ interface VerticalShuffleProps extends CompQuestionProps {
 interface HorizontalShuffleState {
   status: DragAndDropStatus;
   userAnswers: any[];
+  reviewCorrectAnswers: number[];
 }
 
 class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalShuffleState> {
@@ -56,7 +57,22 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
       }
     }
 
-    this.state = { status: DragAndDropStatus.None, userAnswers };
+    let reviewCorrectAnswers = [];
+
+    if (this.props.isReview) {
+      for (let i = 0; i < userAnswers.length; i++) {
+        const res = this.checkAttemptAnswer(i);
+        if (res) {
+          reviewCorrectAnswers.push(i);
+        }
+      }
+    }
+
+    this.state = {
+      status: DragAndDropStatus.None,
+      userAnswers,
+      reviewCorrectAnswers
+    };
   }
 
   componentDidUpdate(prevProp: VerticalShuffleProps) {
@@ -83,9 +99,31 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
       status = DragAndDropStatus.Init;
     }
 
-    if (this.state.status === DragAndDropStatus.Changed
-      && this.props.onAttempted) {
+    if (this.state.status === DragAndDropStatus.Changed && this.props.onAttempted) {
       this.props.onAttempted();
+    }
+
+    // review. make correct answers static on drag and drop
+    if (this.state.reviewCorrectAnswers.length > 0) {
+      for (let index of this.state.reviewCorrectAnswers) {
+
+        let answer = null;
+        let answerIndex = 0;
+
+        // get correct answer and index
+        for (let j = 0; j < userAnswers.length; j++) {
+          if (userAnswers[j].index == index) {
+            answerIndex = j;
+            answer = userAnswers[j];
+          }
+        }
+
+        // change answer position
+        if (answer) {
+          userAnswers.splice(answerIndex, 1);
+          userAnswers.splice(index, 0, answer);
+        }
+      }
     }
 
     this.setState({ status, userAnswers });
@@ -96,7 +134,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   checkAttemptAnswer(index: number) {
-    if (this.props.isReview && this.props.attempt && this.props.attempt.answer && this.props.attempt === this.props.liveAttempt) {
+    if (this.props.isReview && this.props.attempt && this.props.attempt.answer) {
       let answer = this.props.attempt.answer[index];
       if (answer.index - index === 0) {
         return true;
@@ -176,11 +214,11 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
         <p><span className="help-text">
           <DragIcon />Drag to rearrange.
           {!isPhone() && isMobile &&
-          <span>
-            <SpriteIcon name="hero-cursor-click" />
-            Click and hold to move if using an Apple Pencil
-          </span>}
-          </span>
+            <span>
+              <SpriteIcon name="hero-cursor-click" />
+              Click and hold to move if using an Apple Pencil
+            </span>}
+        </span>
         </p>
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>

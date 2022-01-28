@@ -14,6 +14,7 @@ import { Subject } from "model/brick";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import { resendInvitation } from "services/axios/classroom";
 import { getClassAssignedCount } from "../service/service";
+import { User } from "model/user";
 
 enum TeachFilterFields {
   Assigned = "assigned",
@@ -23,6 +24,7 @@ enum TeachFilterFields {
 interface FilterSidebarProps {
   isLoaded: boolean;
   isNewTeacher: boolean;
+  user: User;
   classrooms: TeachClassroom[];
   activeStudent: TeachStudent | null;
   activeClassroom: TeachClassroom | null;
@@ -30,6 +32,7 @@ interface FilterSidebarProps {
   setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
   hideIntro(): void;
+  moveToPremium(): void;
   createClass(name: string, subject: Subject): void;
   isArchive: boolean;
 }
@@ -151,9 +154,24 @@ class TeachFilterSidebar extends Component<
     )
   }
 
+  renderStudentList(c: TeachClassroom) {
+    if (c.active) {
+      const sts = c.students.sort((a, b) => {
+        if (a.lastName < b.lastName) { return -1; }
+        if (a.lastName > b.lastName) { return 1; }
+        return 0;
+      });
+
+
+      return <div>
+        {sts.map(this.renderStudent.bind(this))}
+      </div>
+    }
+    return <div />
+  }
+
   renderClassroom(c: TeachClassroom, i: number) {
-    console.log(c, c.students);
-    return ( 
+    return (
       <div key={i} className="classes-box">
         <div
           className={"index-box " + (c.active ? "active" : "")}
@@ -176,8 +194,27 @@ class TeachFilterSidebar extends Component<
           </div>
           {this.renderStudents(c)}
         </div>
-        {c.active && c.students && c.students.map(this.renderStudent.bind(this))}
+        {this.renderStudentList(c)}
         {c.active && c.studentsInvitations && c.studentsInvitations.map(this.renderInvitation.bind(this))}
+      </div>
+    );
+  }
+
+  renderPremiumBox() {
+    let className = 'index-box pay-info ';
+    let noFreeTries = false;
+    if (this.props.user && this.props.user.freeAssignmentsLeft < 1) {
+      className += " no-free-tries";
+      noFreeTries = true;
+    }
+    return (
+      <div className={className}>
+        <div className="premium-label">
+          {noFreeTries ? 'No Free Assignments Left!' : <span>{this.props.user && this.props.user.freeAssignmentsLeft} Free Assignment{this.props.user.freeAssignmentsLeft > 1 ? 's' : ''} Left</span>}
+        </div>
+        <div className="premium-btn" onClick={this.props.moveToPremium}>
+          Go Premium <SpriteIcon name="hero-sparkle" />
+        </div>
       </div>
     );
   }
@@ -196,13 +233,18 @@ class TeachFilterSidebar extends Component<
     }
     let totalBricks = 0;
     let totalCount = 0;
+    let assignmentsCount = 0;
     for (let classroom of this.props.classrooms) {
       totalCount += classroom.students.length;
       totalBricks += 1;
+      console.log(classroom, classroom.assignmentsCount)
+      if (classroom.assignmentsCount && parseInt(classroom.assignmentsCount) > 0) {
+        assignmentsCount += parseInt(classroom.assignmentsCount);
+      }
     }
     let label = '1 ASSIGNMENT';
-    if (totalBricks > 1) {
-      label = `${totalBricks} ASSIGNMENTS`;
+    if (assignmentsCount > 1) {
+      label = `${assignmentsCount} ASSIGNMENTS`;
     }
     return (
       <div className="sort-box teach-sort-box flex-height-box">
@@ -224,6 +266,7 @@ class TeachFilterSidebar extends Component<
               <div className="custom-tooltip">Create Class</div>
             </div>
           </div>
+          {(this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState) && this.renderPremiumBox()}
           <div
             className={
               "index-box m-view-all " +
@@ -248,7 +291,7 @@ class TeachFilterSidebar extends Component<
                     : "hero-sort-descending"
                 }
                 onClick={() =>
-                  this.setState({ ascending: !this.state.ascending }) 
+                  this.setState({ ascending: !this.state.ascending })
                 }
               />
               <div className="css-custom-tooltip">

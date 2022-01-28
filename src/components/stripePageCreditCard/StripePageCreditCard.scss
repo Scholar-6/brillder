@@ -1,5 +1,207 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .StripePayPage {
   background: var(--theme-dark-blue);
   min-height: 100%;
   color: var(--white);
+
+  $block-height: 7vh;
+ 
+  .light {
+    font-family: $font-family-light;
+  }
+
+  .voucher-box {
+    position: relative;
+    width: 60vw;
+    height: 80vh;
+    overflow: hidden;
+    svg {
+      width: 100%;
+      height: 100%;
+      stroke: var(--theme-light-blue);
+    }
+    .absolute-voucher {
+      position: absolute;
+      top: calc(50% - 10vw);
+      left: calc(50% - 10vw);
+      color: var(--white);
+      font-size: 1.2vw;
+
+      .label {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 2vh;
+      }
+
+      input {
+        width: 18vw;
+        padding-left: 1vw;
+        border-radius: 0.4vw;
+        height: $block-height;
+        color: var(--white);
+        background: var(--theme-light-blue);
+        border: 1px solid var(--white);
+      }
+    }
+  }
+  
+  .logo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2vw;
+    svg {
+      margin-left: 1vw;
+      width: 3vw;
+      height: 3vw;
+      stroke-width: 1.4;
+    }
+  }
+
+  .bigger, .normal {
+    width: 100%;
+    font-size: 1.1vw;
+    line-height: 1.3;
+    font-family: $font-family-light;
+  }
+
+  .bigger {
+    margin-top: 1vh;
+  }
+
+  .normal {
+    font-size: 0.9vw;
+    margin-bottom: 2vh;
+  }
+
+  .radio-row {
+    display: flex;
+    margin-bottom: 2vh;
+    > div {
+      cursor: pointer;
+      position: relative;
+      font-family: $font-family-bold;
+      border-radius: 0.4vw;
+      width: 50%;
+      background: var(--tab-gray);
+      margin-left: 0.9vw;
+      font-size: 1.1vw;
+      display: flex;
+      align-items: center;
+      height: $block-height;
+      svg {
+        width: 1.5vw;
+        height: 1.5vw;
+        color: var(--theme-dark-blue) !important;
+      }
+      .MuiButtonBase-root {
+        width: 3vw;
+        height: 1.5vw;
+      }
+      > span.label {
+        margin-left: 1vw;
+        font-size: 1.3vw;
+        margin-bottom: 0.1vw;
+      }
+      .absoulte-price {
+        position: absolute;
+        color: var(--theme-dark-blue);
+        font-size: 0.75vw;
+        top: 0.16vw;
+        left: 3vw;
+        text-decoration: line-through;
+      }
+      .absolute-label {
+        position: absolute;
+        padding: 0 0.6vw;
+        font-size: 1vw;
+        border-radius: 0.5vw;
+        top: -0.8vw;
+        right: -0.8vw;
+        color: var(--white);
+        background: var(--theme-green);
+      }
+      &:first-child {
+        margin-left: 0;
+        margin-right: 0.9vw;
+      }
+      &.active {
+        color: var(--white);
+        background: var(--theme-green);
+        svg {
+          color: var(--white) !important;
+        }
+        .absolute-label {
+          background: var(--theme-dark-blue);
+        }
+      }
+    }
+  }
+
+  .pay-box {
+    margin-left: 0vw;
+    max-width: 30vw;
+    border-radius: 0.5vw;
+    padding: 3vh 2vw 4.5vh 2vw;
+    background: var(--white);
+    color: var(--theme-dark-blue);
+    font-size: 1vw;
+
+    .field {
+      display: flex;
+      align-items: center;
+      height: $block-height;
+      padding-right: 0.4vw;
+      padding-left: 0.4vw;
+      padding-top: 0.3vw;
+      padding-bottom: 0.3vw;
+      border-radius: 0.4vw;
+      width: 100%;
+      background: var(--tab-gray);
+      > div {
+        width: 100%;
+      }
+    }
+
+    button {
+      border-radius: 0.3vw;
+      margin-top: 4vh;
+      color: var(--white);
+      outline: none;
+      border: none;
+      height: $block-height;
+      font-size: 1.4vw !important;
+      width: 100%;
+      font-family: $font-family-bold !important;
+      background: var(--theme-green);
+      transition: all 300ms ease-in-out;
+      &:hover {
+        background: var(--theme-dark-blue);
+      }
+      &:disabled {
+        color: var(--dark-gray) !important;
+        background: var(--tab-gray) !important;
+      }
+    }
+  }
+
+  .two-columns {
+    display: flex;
+    margin-top: 2vh;
+    > div {
+      width: 50%;
+    }
+    > div:first-child {
+      margin-right: 1vw;
+    }
+  }
+
+  .small {
+    margin-top: 3vh;
+    font-size: 0.8vw;
+  }
 }

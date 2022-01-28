@@ -172,13 +172,13 @@ class ExpandedAssignment extends Component<
       students = this.state.students.sort((a, b) => {
         if (!a.studentResult) { return 1; }
         if (!b.studentResult) { return -1; }
-        return b.studentResult?.avgScore - a.studentResult?.avgScore;
+        return b.studentResult?.bestScore - a.studentResult?.bestScore;
       });
     } else {
       students = this.state.students.sort((a, b) => {
         if (!a.studentResult) { return -1; }
         if (!b.studentResult) { return 1; }
-        return a.studentResult?.avgScore - b.studentResult?.avgScore;
+        return a.studentResult?.bestScore - b.studentResult?.bestScore;
       });
     }
     this.setState({ students, sortBy });

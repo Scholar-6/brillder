@@ -20,6 +20,7 @@ interface NameAndSubjectFormProps {
   classroom: any;
   onChange(name: string, subject: Subject): void;
   user: User;
+  showPremium?(): void;
   onInvited?(): void;
   onAssigned?(): void;
   moveToAssignemts?(): void;
@@ -195,6 +196,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
                 props.moveToAssignemts && props.moveToAssignemts();
               }
             }}
+            showPremium={() => props.showPremium && props.showPremium()}
             failed={brick => setFailed({ isOpen: true, brick })}
             close={() => togglePopup(false)}
           />}

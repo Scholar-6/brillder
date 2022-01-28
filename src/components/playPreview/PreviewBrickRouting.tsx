@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet";
 import { Route, Switch } from 'react-router-dom';
 import { connect } from "react-redux";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
-import moment from 'moment';
 
 import actions from 'redux/actions/brickActions';
 import { CashQuestionFromPlay, GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
@@ -29,7 +28,7 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
 import BuildCompletePage from './buildComplete/BuildCompletePage';
 import FinalStep from './finalStep/FinalStep';
-import { PreviewCashAttempt, GetPreviewCashedPlayAttempt } from "localStorage/play";
+import { PreviewCashAttempt } from "localStorage/play";
 import { calcBrickLiveAttempt, calcBrickReviewAttempt } from 'components/play/services/scoring';
 import playRoutes from "components/play/routes";
 import buildRoutes from 'components/build/routes';
@@ -78,7 +77,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [status, setStatus] = React.useState(PlayStatus.Live);
   let initAttempts:any[] = [];
-  let initReviewAttempts: any = [];
 
   const [prepEndTime, setPrepEndTime] = React.useState(undefined);
   const [synthesisEndTime, setSynthesisEndTime] = React.useState(null);
@@ -99,14 +97,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (cashAttempt.brick.id === props.brick.id) {
       parsedBrick = cashAttempt.brick;
       initAttempts = cashAttempt.attempts;
-      initReviewAttempts = cashAttempt.reviewAttempts;
       initBrickAttempt = cashAttempt.brickAttempt;
 
       setRestored(true);
     }
   } else {
     initAttempts = prefillAttempts(parsedBrick.questions);
-    initReviewAttempts = initAttempts;
   }
 
   const [brick] = React.useState(parsedBrick);

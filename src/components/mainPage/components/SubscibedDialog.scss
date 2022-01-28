@@ -1,0 +1,32 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.dialog-box.welcome-premium {
+  .container {
+    width: 100%;
+  }
+  .circle-check {
+    width: 4vw;
+    height: 4vw;
+    margin-bottom: 2vh;
+    background: var(--theme-green);
+    stroke-width: 1.5;
+    border-radius: 50%;
+
+    svg {
+      color: var(--white);
+      width: 70%;
+      height: 70%;
+    }
+  }
+  .dialog-header {
+    text-align: center;
+    font-family: $font-family-bold !important;
+  }
+  .message {
+    color: var(--theme-dark-blue);
+    font-size: 1.2vw;
+    font-family: $font-family-regular-italic;
+  }
+}

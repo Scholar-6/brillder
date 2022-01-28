@@ -1,6 +1,42 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .teach-assigned {
   .student-row:hover, .index-box:hover {
     cursor: pointer;
     background: var(--light-blue-alpha3);
+  }
+}
+
+.manage-classrooms-page .teach-sort-box .pay-info {
+  background: var(--white) !important;
+  font-family: $font-family-bold !important;
+  color: var(--theme-dark-blue) !important;
+  padding-left: 1.4vw;
+  .premium-label {
+    width: 55%;
+  }
+  .premium-btn {
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 1.4vw;
+    transition: all 150ms ease-in-out;
+    svg {
+      margin-left: 0.2vw;
+      margin-right: 0.3vw;
+      stroke-width: 1.4;
+      width: 2vw;
+      height: 2vw;
+    }
+    &:hover {
+      color: var(--theme-green);
+    }
+  }
+
+  &.no-free-tries {
+    background: var(--theme-yellow) !important;
   }
 }
