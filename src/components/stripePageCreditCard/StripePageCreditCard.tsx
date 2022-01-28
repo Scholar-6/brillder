@@ -175,7 +175,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
             <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
               <Radio checked={!isMonthly} />
               <span>£{annualPrice}</span> <span className="label">Annually</span>
-              <div className="absolute-label" >Save 59%</div>
+              <div className="absolute-label" >Save 58%</div>
             </div>
           </div>
           <div className="label light">Card Number</div>
