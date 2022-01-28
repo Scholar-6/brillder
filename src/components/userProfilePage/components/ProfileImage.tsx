@@ -117,7 +117,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
         return (
           <div className="status-container active-status-container svgOnHover">
             <SpriteIcon name="circle-filled" className="active text-theme-green" />
-            <span><div className="flex-center premium-container">{props.currentUser.subscriptionState === 1 ? 'Premium User' : 'Premium User'}</div></span>
+            <span><div className="flex-center premium-container">{props.currentUser.subscriptionState === 2 ? 'Premium Learner' : props.currentUser.subscriptionState=== 3 ? 'Premium Educator' : ''}</div></span>
           </div>
         );
       }

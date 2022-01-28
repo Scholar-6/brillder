@@ -54,7 +54,7 @@
     .profile-header {
       padding-top: 3.1vh;
       margin-right: 7vw;
-      font-size: 5.4vw;
+      font-size: 4vw;
       @extend %textCenter;
       font-family: $font-family-bold;
       color: var(--theme-dark-blue);
@@ -74,9 +74,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 5vw;
+        height: 4.5vw;
         margin-left: 1vw;
-        font-size: 3vw !important;
+        font-size: 2.7vw !important;
         background: var(--tab-gray);
       }
 
