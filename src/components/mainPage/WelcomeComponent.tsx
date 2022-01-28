@@ -165,6 +165,14 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
     return {};
   }
 
+  renderSparkle() {
+    const {user} = this.props;
+    if (user && user.subscriptionState && user.subscriptionState > 0) {
+      return <SpriteIcon className="sparkle-s6" name="hero-sparkle" />;
+    }
+    return '';
+  }
+
   render() {
     let className = "notifications-text";
     if (this.state.isTextClickable) {
@@ -190,6 +198,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
             {this.state.nameHovered && <div className="custom-tooltip bold">View Profile</div>}
           </div>
           <span style={this.getStyle()}>{this.state.animatedName}</span>
+          {this.renderSparkle()}
         </div>
         <div
           className={className}

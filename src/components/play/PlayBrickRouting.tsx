@@ -420,7 +420,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const coverMoveNext = () => {
-    const {user} = props;
+    const { user } = props;
     if (user.freeAttemptsLeft <= 0) {
       if (!user.subscriptionState || user.subscriptionState === 0) {
         setPremiumLOpen(true);
@@ -745,6 +745,23 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     className += " sorted-row-expanded";
   }
 
+  const renderPremiumPopups = () => {
+    const { user } = props;
+    if (user) {
+      return <div>
+        {(user.subscriptionState === 0 || !user.subscriptionState) &&
+          <LastAttemptDialog isOpen={isLastAttemptOpen} history={history} close={() => setLastAttemptDialog(false)} submit={() => {
+            toggleSideBar(true);
+            setLastAttemptDialog(false);
+            moveToBrief();
+          }} />}
+        {(user.subscriptionState === 0 || !user.subscriptionState) && <PremiumEducatorDialog isOpen={isPremiumEOpen} close={() => setPremiumEOpen(false)} submit={() => props.history.push(map.StripeEducator)} />}
+        {(user.subscriptionState === 0 || !user.subscriptionState) && <PremiumLearnerDialog isOpen={isPremiumLOpen} close={() => setPremiumLOpen(false)} submit={() => props.history.push(map.StripeLearner)} />}
+      </div>
+    }
+    return '';
+  }
+
   return (
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
@@ -772,7 +789,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             if (!props.user) {
               link = map.ViewAllPage;
             }
-        
+
             props.history.push(link)
           }}
           close={() => setPlaySkip(false)}
@@ -791,14 +808,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           label="You might already have an account, try signing in."
         />
       </div>
-      {(props.user.subscriptionState === 0 || !props.user.subscriptionState) &&
-      <LastAttemptDialog isOpen={isLastAttemptOpen} history={history} close={() => setLastAttemptDialog(false)} submit={() => {
-        toggleSideBar(true);
-        setLastAttemptDialog(false);
-        moveToBrief();
-      }} />}
-      {(props.user.subscriptionState === 0 || !props.user.subscriptionState) && <PremiumEducatorDialog isOpen={isPremiumEOpen} close={() => setPremiumEOpen(false)} submit={() => props.history.push(map.StripeEducator)} />}
-      {(props.user.subscriptionState === 0 || !props.user.subscriptionState) && <PremiumLearnerDialog isOpen={isPremiumLOpen} close={() => setPremiumLOpen(false)} submit={() => props.history.push(map.StripeLearner)} />}
+      {renderPremiumPopups()}
     </React.Suspense>
   );
 };
