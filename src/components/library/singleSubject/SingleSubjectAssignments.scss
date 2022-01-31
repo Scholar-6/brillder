@@ -6,4 +6,11 @@
 }
 .single-subject-assignments {
   height: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh) !important;
+
+  .background {
+    .competition-star.bigger {
+      position: absolute;
+      top: 0;
+    }
+  }
 }
