@@ -156,6 +156,14 @@ $base-build-font-size: 1.25vw;
       width: 2vw;
       height: 2vw;
     }
+
+    &.sort-v2 {
+      right: 8vw;
+
+      .svg {
+        stroke-width: 2;
+      }
+    }
   }
 
   .filter-header2 {
