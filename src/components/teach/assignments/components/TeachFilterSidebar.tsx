@@ -252,8 +252,6 @@ class TeachFilterSidebar extends Component<
       });
     }
 
-    console.log(finalClasses);
-
     let totalBricks = 0;
     let totalCount = 0;
     let assignmentsCount = 0;
@@ -292,27 +290,29 @@ class TeachFilterSidebar extends Component<
                 {totalCount}
                 <SpriteIcon name="users-custom" className="active" />
                 <div className="classrooms-box">
-                  {totalBricks}
+                  {assignmentsCount}
                   <SpriteIcon name="file-plus" />
                 </div>
               </div>
-              <div className="m-absolute-sort sort-v2">
+              <div className="m-absolute-sort sort-v2"
+                onClick={() => {
+                  let sort = false;
+                  if (this.state.sortByName) {
+                    sort = true;
+                  }
+                  this.setState({ sortByName: !this.state.sortByName, ascending: null })
+                }}
+              >
                 <SpriteIcon
                   name={
                     this.state.sortByName
-                      ? "chevrons-down"
-                      : "chevrons-up"
+                      ? "f-arrow-down"
+                      : "f-arrow-up"
                   }
-                  onClick={() => {
-                    let sort = false;
-                    if (this.state.sortByName) {
-                      sort = true;
-                    }
-                    this.setState({ sortByName: !this.state.sortByName, ascending: null })
-                  }}
                 />
+                {this.state.sortByName ? 'A-Z' : 'Z-A'}
                 <div className="css-custom-tooltip">
-                  {this.state.ascending ? 'Sort by most assignments' : 'Sort by fewest assignments'}
+                  {this.state.sortByName ? 'Sort Alphabetically: Z-A' : 'Sort Alphabetically: A-Z'}
                 </div>
               </div>
               <div className="m-absolute-sort">
@@ -327,7 +327,7 @@ class TeachFilterSidebar extends Component<
                   }
                 />
                 <div className="css-custom-tooltip">
-                  {this.state.ascending ? 'Sort by most assignments' : 'Sort by fewest assignments'}
+                  {this.state.ascending ? 'Sort by ascending number of assignments' : 'Sort by descending number of assignments'}
                 </div>
               </div>
             </div>

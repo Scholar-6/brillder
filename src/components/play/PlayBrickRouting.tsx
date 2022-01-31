@@ -421,7 +421,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const coverMoveNext = () => {
     const { user } = props;
-    if (user.freeAttemptsLeft <= 0) {
+    if (user && user.freeAttemptsLeft <= 0) { // Check if user exists (because of anonymous users)
       if (!user.subscriptionState || user.subscriptionState === 0) {
         setPremiumLOpen(true);
         return;
