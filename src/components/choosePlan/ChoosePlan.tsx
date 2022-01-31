@@ -39,7 +39,7 @@ class ChoosePlanPage extends Component<ChoosePlanProps, ChoosePlanState> {
             <div className="flex-center">
               <SpriteIcon name="glasses" className="green-icon glasses" />
             </div>
-            <div className="flex-center big-label">Learners</div>
+            <div className="flex-center big-label">Learner</div>
             <div className="price-row flex-center">
               <span className="relative">
                 <span className="upper-text first">£9.99</span>
@@ -74,7 +74,7 @@ class ChoosePlanPage extends Component<ChoosePlanProps, ChoosePlanState> {
             <div className="flex-center">
               <SpriteIcon name="academic-cap" className="green-icon cap" />
             </div>
-            <div className="flex-center big-label">Educators</div>
+            <div className="flex-center big-label">Educator</div>
             <div className="price-row flex-center">
               <span className="relative">
                 <span className="upper-text first">£12.99</span>
