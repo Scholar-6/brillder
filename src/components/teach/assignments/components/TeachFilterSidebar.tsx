@@ -39,7 +39,8 @@ interface FilterSidebarProps {
 
 interface FilterSidebarState {
   filters: TeachFilters;
-  ascending: boolean;
+  ascending: boolean | null;
+  sortByName: boolean | null;
   isInviteOpen: boolean;
   createClassOpen: boolean;
 }
@@ -51,7 +52,8 @@ class TeachFilterSidebar extends Component<
   constructor(props: FilterSidebarProps) {
     super(props);
     this.state = {
-      ascending: false,
+      ascending: true,
+      sortByName: null,
       isInviteOpen: false,
       filters: {
         assigned: false,
@@ -228,11 +230,30 @@ class TeachFilterSidebar extends Component<
       finalClass.assigned = getClassAssignedCount(cls);
       finalClasses.push(finalClass);
     }
-    if (this.state.ascending) {
+    if (this.state.ascending === false) {
       finalClasses = finalClasses.sort((a, b) => a.assigned - b.assigned);
-    } else {
+    } else if (this.state.ascending === true) {
       finalClasses = finalClasses.sort((a, b) => b.assigned - a.assigned);
+    } else if (this.state.sortByName === true) {
+      finalClasses = finalClasses.sort((a, b) => {
+        const al = a.name.toUpperCase();
+        const bl = b.name.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
+        return 0;
+      });
+    } else if (this.state.sortByName === false) {
+      finalClasses = finalClasses.sort((a, b) => {
+        const al = a.name.toUpperCase();
+        const bl = b.name.toUpperCase();
+        if (al > bl) { return -1; }
+        if (al < bl) { return 1; }
+        return 0;
+      });
     }
+
+    console.log(finalClasses);
+
     let totalBricks = 0;
     let totalCount = 0;
     let assignmentsCount = 0;
@@ -266,35 +287,54 @@ class TeachFilterSidebar extends Component<
             onClick={this.removeClassrooms.bind(this)}
           >
             <div>
-            View All Classes
-            <div className="right-index">
-              {totalCount}
-              <SpriteIcon name="users-custom" className="active" />
-              <div className="classrooms-box">
-                {totalBricks}
-                <SpriteIcon name="file-plus" />
+              View All Classes
+              <div className="right-index">
+                {totalCount}
+                <SpriteIcon name="users-custom" className="active" />
+                <div className="classrooms-box">
+                  {totalBricks}
+                  <SpriteIcon name="file-plus" />
+                </div>
               </div>
-            </div>
-            <div className="m-absolute-sort">
-              <SpriteIcon
-                name={
-                  this.state.ascending
-                    ? "hero-sort-ascending"
-                    : "hero-sort-descending"
-                }
-                onClick={() =>
-                  this.setState({ ascending: !this.state.ascending })
-                }
-              />
-              <div className="css-custom-tooltip">
-                {this.state.ascending ? 'Sort by most assignments' : 'Sort by fewest assignments'}
+              <div className="m-absolute-sort sort-v2">
+                <SpriteIcon
+                  name={
+                    this.state.sortByName
+                      ? "chevrons-down"
+                      : "chevrons-up"
+                  }
+                  onClick={() => {
+                    let sort = false;
+                    if (this.state.sortByName) {
+                      sort = true;
+                    }
+                    this.setState({ sortByName: !this.state.sortByName, ascending: null })
+                  }}
+                />
+                <div className="css-custom-tooltip">
+                  {this.state.ascending ? 'Sort by most assignments' : 'Sort by fewest assignments'}
+                </div>
               </div>
-            </div>
+              <div className="m-absolute-sort">
+                <SpriteIcon
+                  name={
+                    this.state.ascending
+                      ? "hero-sort-descending"
+                      : "hero-sort-ascending"
+                  }
+                  onClick={() =>
+                    this.setState({ ascending: !this.state.ascending, sortByName: null })
+                  }
+                />
+                <div className="css-custom-tooltip">
+                  {this.state.ascending ? 'Sort by most assignments' : 'Sort by fewest assignments'}
+                </div>
+              </div>
             </div>
             <div>
-            <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
-              <SpriteIcon name="plus-circle" /> Create Class
-            </div>
+              <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
+                <SpriteIcon name="plus-circle" /> Create Class
+              </div>
             </div>
           </div>
         </div>

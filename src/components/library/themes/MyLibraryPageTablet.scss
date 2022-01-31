@@ -335,7 +335,7 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
           width: $width;
           .rotated .rotated-text {
             height: $width;
-            line-height: 5.5;
+            line-height: 7.7;
           }
           .progress-value {
             width: $width;
@@ -349,6 +349,16 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
       height: 100%;
       width: 100%;
       border-radius: 0.35vw;
+
+      .competition-star.bigger {
+        svg {
+          width: 3vw;
+          height: 4.6vw;
+        }
+      }
+    }
+    .pr-lock-container > div{
+      line-height: 1 !important;
     }
     &.general {
       .academic-lines {
@@ -684,5 +694,12 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
     .published-count {
       font-size: 1.4vw !important;
     }
+  }
+}
+
+.my-library {
+  .filter-header,
+  .sort-header {
+  font-size: 2vw !important;
   }
 }
