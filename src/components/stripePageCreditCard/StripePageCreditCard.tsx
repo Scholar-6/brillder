@@ -10,7 +10,10 @@ import './StripePageCreditCard.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { User } from 'model/user';
 import map from 'components/map';
+import { isIPad13, isTablet } from 'react-device-detect';
 
+
+const TabletTheme = React.lazy(() => import('./themes/StripeTabletTheme'));
 interface Props {
   user: User;
   match: any;
@@ -40,7 +43,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   const [cardValid, setCardValid] = useState(false);
   const [expireValid, setExpireValid] = useState(false);
   const [cvcValid, setCvcValid] = useState(false);
-  
+
   const [isMonthly, setMonthly] = useState(true);
   const [card, setCard] = useState(null as null | StripeCardElement);
 
@@ -59,21 +62,21 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       cardNumberElement.mount('#card-number-element');
       setCard(cardNumberElement);
 
-      cardNumberElement.on('change', function(event: any) {
+      cardNumberElement.on('change', function (event: any) {
         if (event.error) {
           setCardValid(false);
         } else {
           setCardValid(true)
         }
       });
-      
+
 
       const cardExpiryElement = elements.create('cardExpiry', {
         style,
       });
       cardExpiryElement.mount('#card-expiry-element');
 
-      cardExpiryElement.on('change', function(event: any) {
+      cardExpiryElement.on('change', function (event: any) {
         if (event.error) {
           setExpireValid(false);
         } else {
@@ -86,7 +89,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       });
       cardCvcElement.mount('#card-cvc-element');
 
-      cardCvcElement.on('change', function(event: any) {
+      cardCvcElement.on('change', function (event: any) {
         if (event.error) {
           setCvcValid(false);
         } else {
@@ -110,8 +113,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
     setClicked(true);
 
-    var intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/subscription`, 
-      { state: isLearner ? 2 : 3, interval: isMonthly ? 0 : 1, coupon: discount }, 
+    var intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/subscription`,
+      { state: isLearner ? 2 : 3, interval: isMonthly ? 0 : 1, coupon: discount },
       { withCredentials: true });
 
     const clientSecret = intent.data.clientSecret;
@@ -146,56 +149,59 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   return (
     <div className="flex-center">
-      <div className="voucher-box">
-        <SpriteIcon name="brain-storm" />
-        <div className="absolute-voucher">
-          <div className="light label">Your discount code has been added!{/*Have a discount code? Add it here*/}</div>
-          <input value={discount} disabled onChange={e => {
-            const {value} = e.target;
-            if (value.length < 20) {
-              setDiscount(e.target.value)
-            }
-          }} />
+      <React.Suspense fallback={<></>}>
+        {(isIPad13 || isTablet) && <TabletTheme />}
+        <div className="voucher-box">
+          <SpriteIcon name="brain-storm" />
+          <div className="absolute-voucher">
+            <div className="light label">Your discount code has been added!{/*Have a discount code? Add it here*/}</div>
+            <input value={discount} disabled onChange={e => {
+              const { value } = e.target;
+              if (value.length < 20) {
+                setDiscount(e.target.value)
+              }
+            }} />
+          </div>
         </div>
-      </div>
-      <div className="pay-box">
-        <form className="CheckOut" onSubmit={handlePayment}>
-          <div className="logo bold">Go Premium today</div>
-          <div className="bigger">
-            Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'}
-          </div>
-          <div className="normal">From just £{price}/month. Cancel anytime.</div>
-          <div className="radio-row">
-            <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
-              <Radio checked={isMonthly} />
-              <div className="absoulte-price">£9.99</div>
-              £{price} <span className="label">Monthly</span>
-              <div className="absolute-label" >Save 50%</div>
+        <div className="pay-box">
+          <form className="CheckOut" onSubmit={handlePayment}>
+            <div className="logo bold">Go Premium today</div>
+            <div className="bigger">
+              Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'}
             </div>
-            <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
-              <Radio checked={!isMonthly} />
-              <span>£{annualPrice}</span> <span className="label">Annually</span>
-              <div className="absolute-label" >Save 58%</div>
+            <div className="normal">From just £{price}/month. Cancel anytime.</div>
+            <div className="radio-row">
+              <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
+                <Radio checked={isMonthly} />
+                <div className="absoulte-price">£9.99</div>
+                £{price} <span className="label">Monthly</span>
+                <div className="absolute-label" >Save 50%</div>
+              </div>
+              <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
+                <Radio checked={!isMonthly} />
+                <span>£{annualPrice}</span> <span className="label">Annually</span>
+                <div className="absolute-label" >Save 58%</div>
+              </div>
             </div>
-          </div>
-          <div className="label light">Card Number</div>
-          <div id="card-number-element" className="field"></div>
-          <div className="two-columns">
-            <div>
-              <div className="label light">Expiry Date</div>
-              <div id="card-expiry-element" className="field" />
+            <div className="label light">Card Number</div>
+            <div id="card-number-element" className="field"></div>
+            <div className="two-columns">
+              <div>
+                <div className="label light">Expiry Date</div>
+                <div id="card-expiry-element" className="field" />
+              </div>
+              <div>
+                <div className="label light">CVC</div>
+                <div id="card-cvc-element" className="field"></div>
+              </div>
             </div>
-            <div>
-              <div className="label light">CVC</div>
-              <div id="card-cvc-element" className="field"></div>
-            </div>
-          </div>
-          <div className="small light">By clicking “Agree & Subscribe”, you are agreeing to start your subscription immediately, and you can withdraw from the contract and receive a refund within the first 14 days unless you have accessed Brillder content in that time. We will charge the monthly or annual fee to your stored payment method on a recurring basis. You can cancel at any time, effective at the end of the payment period.</div>
-          <button type="submit" disabled={!cardValid|| !expireValid || !cvcValid || !stripe || clicked}>
-            Agree & Subscribe
-          </button>
-        </form>
-      </div>
+            <div className="small light">By clicking “Agree & Subscribe”, you are agreeing to start your subscription immediately, and you can withdraw from the contract and receive a refund within the first 14 days unless you have accessed Brillder content in that time. We will charge the monthly or annual fee to your stored payment method on a recurring basis. You can cancel at any time, effective at the end of the payment period.</div>
+            <button type="submit" disabled={!cardValid || !expireValid || !cvcValid || !stripe || clicked}>
+              Agree & Subscribe
+            </button>
+          </form>
+        </div>
+      </React.Suspense>
     </div>
   );
 }
