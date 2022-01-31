@@ -1,0 +1,26 @@
+.StripePayPage {
+  .voucher-box {
+    padding-left: 4vw;
+    padding-right: 4vw;
+    width: 53vw;
+
+    .absolute-voucher {
+      font-size: 1.5vw;
+    }
+  }
+  .pay-box {
+    max-width: 38vw;
+
+    .radio-row > div {
+      font-size: 1.4vw;
+      .absoulte-price {
+        font-size: 1vw;
+        top: calc(50% - 1.9vw);
+      }
+
+      > span.label {
+        font-size: 1.7vw;
+      }
+    }
+  }
+}
