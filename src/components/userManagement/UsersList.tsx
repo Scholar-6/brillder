@@ -124,10 +124,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
     if (sortBy === UserSortBy.Joined) {
       orderBy = "user.created";
-    }
-
-    if (sortBy === UserSortBy.Status) {
+    } else if (sortBy === UserSortBy.Status) {
       orderBy = "user.status";
+    } else if (sortBy === UserSortBy.Subscription) {
+      orderBy = "subscription.subscriptionState";
     }
 
     if (isAscending === null) {
@@ -451,7 +451,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         </th>
         <th className="email-column">Email</th>
         <th>
-          <Grid container>User Type</Grid>
+          <Grid container>User Type {this.renderSortArrow(UserSortBy.Subscription)}</Grid>
         </th>
         <th>
           <Grid container>
