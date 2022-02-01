@@ -4,7 +4,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import './AutocompleteUsername.scss';
 import { suggestUsername } from "services/axios/user";
-import { UserBase } from "model/user";
+import { UserBase, UserPreferenceType } from "model/user";
 import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
@@ -55,7 +55,12 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
             if (value.length >= 3) {
               suggestUsername(value).then((res) => {
                 if (res && res.length > 0) {
-                  setSuggestions(res);
+                  if (props.onlyTeachers) {
+                    let teachers = res.filter(r => r.userPreference && r.userPreference.preferenceId === UserPreferenceType.Teacher);
+                    setSuggestions(teachers);
+                  } else {
+                    setSuggestions(res);
+                  }
                 } else {
                   setSuggestions([]);
                 }
