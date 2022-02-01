@@ -219,6 +219,16 @@
   .joing-date {
     padding-left: 1.2vw !important;
   }
+
+  .preference-type {
+    display: flex;
+    align-items: center;
+    height: calc((100vh - 7.834vw - 5.2vw - 18vh)/13) !important;
+    svg {
+      width: 1.4vw;
+      height: 1.4vw;
+    }
+  }
 }
 
 .user-list-page~.beta-text {
