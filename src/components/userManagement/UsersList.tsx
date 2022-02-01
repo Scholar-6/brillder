@@ -40,7 +40,9 @@ interface UsersListProps {
 
 enum UserSortBy {
   Name,
-  Joined
+  Joined,
+  Subscription,
+  Status,
 }
 
 interface UsersListState {
@@ -122,6 +124,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
     if (sortBy === UserSortBy.Joined) {
       orderBy = "user.created";
+    }
+
+    if (sortBy === UserSortBy.Status) {
+      orderBy = "user.status";
     }
 
     if (isAscending === null) {
@@ -449,7 +455,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         </th>
         <th>
           <Grid container>
-            Active?
+            Active? {this.renderSortArrow(UserSortBy.Status)}
           </Grid>
         </th>
         <th className="edit-button-column"></th>
@@ -496,7 +502,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                     <span className="user-last-name">{user.lastName}</span>
                   </td>
                   <td>{user.email}</td>
-                  <td>{this.renderUserType(user)}</td>
+                  <td className="preference-type">
+                    {this.renderUserType(user)}
+                    {user.subscriptionState > 1 && <SpriteIcon name="hero-sparkle" />}
+                  </td>
                   <td className="activate-button-container">
                     <CustomToggle checked={user.status === UserStatus.Active} name={user.firstName} onClick={() => this.toggleUser(user)} />
                   </td>
