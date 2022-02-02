@@ -61,6 +61,7 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
     if (props.competitionId <= 0) {
       getCompetitions();
     }
+    /*eslint-disable-next-line*/
   }, []);
 
   const toggleBrief = () => {

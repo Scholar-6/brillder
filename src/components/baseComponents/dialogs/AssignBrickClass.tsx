@@ -53,10 +53,12 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const loadBricks = async () => {
     const bricks = await getPublishedBricks();
     if (bricks) {
+      /*eslint-disable-next-line*/
       setBricks(bricks.filter(b => b.isCore === true || b.author.id == props.user.id));
     }
   }
 
+  /*eslint-disable-next-line*/
   useEffect(() => { loadBricks() }, []);
 
   const assignToClasses = async (classesIds: Number[]) => {
@@ -72,7 +74,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
 
     const res = await assignClasses(brick.id, data);
     if (res.success === false) {
-      if (res.error == 'Subscription is not valid.') {
+      if (res.error === 'Subscription is not valid.') {
         return res;
       } else {
         props.requestFailed('Can`t assign class to brick');
@@ -86,9 +88,9 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
 
   const assign = async () => {
     const res = await assignToClasses([props.classroomId]); // empty array if succss
-    
+
     if (!res || res.success === false) {
-      if (res && res.error == 'Subscription is not valid.') {
+      if (res && res.error === 'Subscription is not valid.') {
         props.showPremium();
       } else {
         props.failed(brick);

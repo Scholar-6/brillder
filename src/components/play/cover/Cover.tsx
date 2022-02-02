@@ -90,6 +90,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
 
   useEffect(() => {
     getCompetitions();
+  /*eslint-disable-next-line*/
   }, []);
 
   useEffect(() => {

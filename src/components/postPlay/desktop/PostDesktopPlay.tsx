@@ -119,6 +119,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     if (classId) {
       const classrooms = await getAllClassrooms();
       if (classrooms) {
+        /*eslint-disable-next-line*/
         var found = classrooms.find(c => c.id == classId);
         if (found) {
           classroom = found;
@@ -220,9 +221,10 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     newAttempt.annotations.push(newAnnotation);
 
     if (this.highlightRef.current) {
-      var text = this.highlightRef.current.createAnnotation(newAnnotation);
-      if (text != '') {
-        newAttempt.brick[property] = text;
+      var text2 = this.highlightRef.current.createAnnotation(newAnnotation);
+      /*eslint-disable-next-line*/
+      if (text2 != '') {
+        newAttempt.brick[property] = text2;
       }
     }
 
@@ -263,7 +265,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     let name = '';
     const { firstName } = student;
     let lastLetter = firstName[firstName.length - 1];
-    if (lastLetter == 's') {
+    if (lastLetter === 's') {
       name = firstName + "'";
     } else {
       name = firstName + "'s";
@@ -408,7 +410,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
           <div className="absolute-top-part">
             {this.renderClassroom()}
             <div className='profile-image-v5'>
-              {student.profileImage ? <img src={fileUrl(student.profileImage)} /> : <SpriteIcon name="user" />}
+              {student.profileImage ? <img alt="profile" src={fileUrl(student.profileImage)} /> : <SpriteIcon name="user" />}
             </div>
             {student.firstName} {student.lastName}
             {renderAbsolutePercentage()}

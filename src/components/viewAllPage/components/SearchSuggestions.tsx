@@ -54,6 +54,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
     var united = [...authorFirstNameRes, ...authorLastNameRes];
 
     for (let el of united) {
+      /*eslint-disable-next-line*/
       let found = resR.find(a => a.author && a.author.id == el.author.id);
       if (!found) {
         resR.push({ isAuthorRes: true, author: el.author });

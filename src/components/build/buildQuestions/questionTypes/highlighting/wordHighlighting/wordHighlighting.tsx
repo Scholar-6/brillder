@@ -44,6 +44,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     if (!data.words) { data.words = []; }
     data.subMode = state.subMode;
     setState(data);
+    /*eslint-disable-next-line*/
   }, [data]);
 
   const update = () => {

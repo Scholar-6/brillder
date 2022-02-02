@@ -352,6 +352,7 @@ class Library extends Component<BricksListProps, BricksListState> {
       }
     }
     const {student} = this.state;
+    /*eslint-disable-next-line*/
     if (this.props.user.id != this.props.match.params.userId && student) {
       return student.firstName + " " + student.lastName + "'s library";
     }
@@ -542,7 +543,7 @@ class Library extends Component<BricksListProps, BricksListState> {
         }
       }
     }
-    if (count != 0) {
+    if (count !== 0) {
       number = Math.round(number / count);
     }
     return (
