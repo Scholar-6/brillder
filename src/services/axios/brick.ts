@@ -260,6 +260,14 @@ export const setBrickCover = async (data: CoverImageData) => {
   }
 }
 
+export const getKeywords = async () => {
+  try {
+    return await get<any>(`/bricks-keywords`);
+  } catch {
+    return false;
+  }
+}
+
 
 export const copyBrick = async (brick: Brick, questions: Question[]) => {
   try {
