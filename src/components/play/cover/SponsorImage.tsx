@@ -28,11 +28,11 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
     }
   }, [props.brick]);
 
-  const upload = (file: File) => {
+  const upload = (file: File, sponsorName: string, sponsorUrl: string) => {
     uploadFile(file, async (res: any) => {
       const {fileName} = res.data;
       setFileName(fileName);
-      await updateBrick({...props.brick, sponsorLogo: fileName});
+      await updateBrick({...props.brick, sponsorLogo: fileName, sponsorName, sponsorUrl});
       setOpen(false);
     }, () => { });
   }

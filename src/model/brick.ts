@@ -128,6 +128,7 @@ export interface Brick {
   coverImageSource: string;
   sponsorUrl: string;
   sponsorLogo: string;
+  sponsorName: string;
 
   assignments?: Assignment[];
 
