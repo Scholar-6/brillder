@@ -82,6 +82,7 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
         { withCredentials: true }
       ).then(response => {
         const { data } = response;
+        /*eslint-disable-next-line*/
         if (r && r.lastModifiedDate == data.termsAndConditionsAcceptedVersion) {
           this.props.history.push(map.MainPage);
         }

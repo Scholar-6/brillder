@@ -86,7 +86,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
       return '';
     }
     let lastLetter = firstName[firstName.length - 1];
-    if (lastLetter == 's') {
+    if (lastLetter === 's') {
       name = firstName + "'";
     } else {
       name = firstName + "'s";

@@ -78,6 +78,7 @@ const QuillSimpleEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((pr
     table: false,
     'better-table': false,
     capitalization: true,
+  /*eslint-disable-next-line*/
   }), [uniqueId]);
 
   const ref = React.useCallback((node: ReactQuill) => {

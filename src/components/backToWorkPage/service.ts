@@ -57,6 +57,7 @@ export const filterByLevels = (bricks: Brick[], levels: AcademicLevel[]) => {
 
 export const filterByLength = (bricks: Brick[], length: BrickLengthEnum[]) => {
   return bricks.filter(b => {
+    /*eslint-disable-next-line*/
     const found = length.find(l => b.brickLength == l);
     return !!found;
   });

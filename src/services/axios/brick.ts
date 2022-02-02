@@ -51,6 +51,7 @@ export const getPublishedBricks = async () => {
   try {
     let bricks = await get<Brick[]>(`/bricks/byStatus/${BrickStatus.Publish}`);
     if (bricks) {
+      /*eslint-disable-next-line*/
       bricks = bricks.filter(b => b.status == 4);
     }
     return bricks;

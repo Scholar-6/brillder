@@ -204,7 +204,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
         props.success([existingClass], []);
       } else {
-        if (res.error == 'Subscription is not valid.' && props.showPremium) {
+        if (res.error === 'Subscription is not valid.' && props.showPremium) {
           props.close();
           props.showPremium();
         }

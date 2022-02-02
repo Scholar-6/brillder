@@ -83,6 +83,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
         console.log("Saving...")
         props.updateComponent(comp, initialProps.current.index);
         props.save();
+    /*eslint-disable-next-line*/
     }, [graphState, graphSettings]);
 
     const setGraphSetting = (evt: React.MouseEvent<HTMLElement>, newSettings: string[]) => {

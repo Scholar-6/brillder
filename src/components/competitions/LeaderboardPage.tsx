@@ -42,6 +42,7 @@ const LeaderboardPage: React.FC<any> = (props: LeaderboardProps) => {
   useEffect(() => {
     const competitionId = parseInt(props.match.params.competitionId);
     getCompetitors(competitionId);
+    /*eslint-disable-next-line*/
   }, []);
 
   return (

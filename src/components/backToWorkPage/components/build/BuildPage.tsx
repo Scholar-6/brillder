@@ -375,7 +375,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       let levelBricks:Brick[] = [];
 
       if (filters.level1) {
-        levelBricks.push(...finalBricks.filter(b => b.academicLevel == AcademicLevel.First));
+        levelBricks.push(...finalBricks.filter(b => b.academicLevel === AcademicLevel.First));
       }
       if (filters.level2) {
         levelBricks.push(...finalBricks.filter(b => b.academicLevel === AcademicLevel.Second));

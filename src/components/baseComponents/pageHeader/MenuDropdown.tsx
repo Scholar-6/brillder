@@ -65,6 +65,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     }
   }
 
+  /*eslint-disable-next-line*/
   useEffect(() => { prepare() }, []);
 
   const isStudent = isStudentPreference(props.user);
