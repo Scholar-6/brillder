@@ -74,7 +74,10 @@ class ExpandedAssignment extends Component<
       }
     }
 
-    const prepared = this.prepareStudents(this.props.assignment.classroom.students);
+    let prepared = [];
+    if (this.props.assignment.classroom) {
+      prepared = this.prepareStudents(this.props.assignment.classroom.students);
+    }
 
     const students = prepared.sort((a, b) => {
       const al = a.lastName.toUpperCase();
