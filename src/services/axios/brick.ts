@@ -1,6 +1,6 @@
 import { getApiQuestion } from 'components/build/questionService/QuestionService';
 import { AssignmentBrick } from 'model/assignment';
-import { Brick, BrickStatus } from 'model/brick';
+import { Brick, BrickStatus, KeyWord } from 'model/brick';
 import { Question } from 'model/question';
 
 import { get, put, post, axiosDelete } from './index';
@@ -262,7 +262,7 @@ export const setBrickCover = async (data: CoverImageData) => {
 
 export const getKeywords = async () => {
   try {
-    return await get<any>(`/bricks-keywords`);
+    return await get<KeyWord[]>(`/bricks-keywords`);
   } catch {
     return false;
   }

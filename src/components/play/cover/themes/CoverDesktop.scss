@@ -91,6 +91,18 @@
         .key-word-play:hover {
           font-family: $font-family-bold;
         }
+
+        .btn.b-green {
+          cursor: pointer;
+          margin-left: 0.4vw;
+          padding-left: 0.4vw;
+          padding-right: 0.4vw;
+
+          &:hover {
+            color: var(--theme-green) !important;
+            background: var(--white) !important;
+          }
+        }
       }
       .image-container {
         margin-top: 4.5vw;
