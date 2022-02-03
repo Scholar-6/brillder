@@ -10,7 +10,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { User } from "model/user";
-import { checkPublisher } from "components/services/brickService";
+import { checkAdmin, checkPublisher } from "components/services/brickService";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import { stripHtml } from "components/build/questionService/ConvertService";
@@ -25,6 +25,7 @@ import { CreateByEmailRes } from "services/axios/user";
 import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
+import map from "components/map";
 
 
 interface Props {
@@ -419,6 +420,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   <div className="keywords-row">
                     <SpriteIcon name="hash" />
                     <KeyWordsPreview keywords={brick.keywords} onClick={keyword => props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)} />
+                    {!isMobile && checkAdmin(props.user.roles) && <div className="btn b-green text-white" onClick={() => props.history.push(map.Proposal(brick.id))}>Edit</div>}
                   </div>
                   <CoverTimer brickLength={brick.brickLength} />
                 </div>

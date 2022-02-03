@@ -23,11 +23,11 @@ interface KeyWordsProps {
 interface KeyWordsState {
   keyWords: KeyWord[];
   keyWord: string;
-  allKeyWords: string[];
+  allKeyWords: KeyWord[];
 }
 
 const PopperCustom = function (props: any) {
-  return (<Popper {...props} className="assign-brick-class-poopper" />)
+  return (<Popper {...props} className="keywords-poopper" />)
 }
 
 class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
@@ -50,7 +50,16 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
 
   async loadKeywords() {
     const keywords = await getKeywords();
-    this.setState({ allKeyWords: keywords });
+    if (keywords) {
+      const sorted = keywords.sort((a, b) => {
+        const al = a.name.toUpperCase();
+        const bl = b.name.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
+        return 0;
+      });
+      this.setState({ allKeyWords: sorted });
+    }
   }
 
   checkIfPresent(keyWord: string) {
