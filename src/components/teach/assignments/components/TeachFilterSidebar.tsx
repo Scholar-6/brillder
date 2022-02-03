@@ -268,7 +268,7 @@ class TeachFilterSidebar extends Component<
       <div className="sort-box teach-sort-box flex-height-box">
         <div className="sort-box">
           <div className="filter-container sort-by-box">
-            <div style={{ display: "flex" }}>
+            <div className="flex-center class-header-container">
               <div className="class-header">
                 {label} in {finalClasses.length} Classes
               </div>
