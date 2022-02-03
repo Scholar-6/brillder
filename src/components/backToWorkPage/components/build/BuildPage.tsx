@@ -297,6 +297,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     if (!this.state.filters.isCore) {
       finalBricks = rawBricks.filter(b => !b.isCore);
     }
+    finalBricks = finalBricks.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
     const subjects = this.getBrickSubjects(rawBricks);
     this.setState({ ...this.state, finalBricks, subjects, rawBricks, threeColumns, bricksLoaded: true });
   }
