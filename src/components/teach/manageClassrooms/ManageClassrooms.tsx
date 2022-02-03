@@ -492,6 +492,30 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     const { classrooms } = this.state;
 
+    let finalClasses:ClassroomApi[] = [];
+
+    if (this.state.filterSortAscending === false) {
+      finalClasses = classrooms.sort((a, b) => a.students.length - b.students.length);
+    } else if (this.state.filterSortAscending === true) {
+      finalClasses = classrooms.sort((a, b) => b.students.length - a.students.length);
+    } else if (this.state.filterSortByName === true) {
+      finalClasses = classrooms.sort((a, b) => {
+        const al = a.name.toUpperCase();
+        const bl = b.name.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
+        return 0;
+      });
+    } else if (this.state.filterSortByName === false) {
+      finalClasses = classrooms.sort((a, b) => {
+        const al = a.name.toUpperCase();
+        const bl = b.name.toUpperCase();
+        if (al > bl) { return -1; }
+        if (al < bl) { return 1; }
+        return 0;
+      });
+    }
+
     return (
       <div className="flex-height-box">
         <div className="sort-box">
@@ -505,7 +529,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         </div>
         <div className="sort-box subject-scrollable">
           <div className="subject-indexes-box filter-container manage-classrooms-filter">
-            {this.state.classrooms.map((c, i) =>
+            {finalClasses.map((c, i) =>
               <ClassroomFilterItem
                 classroom={c}
                 key={i}
