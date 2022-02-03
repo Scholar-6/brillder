@@ -48,9 +48,9 @@ export const getUserById = async (userId: number) => {
   }
 }
 
-export const saveProfileImageName = async (userId: number, name: string) => {
+export const saveProfileImageName = async (userId: number, name: string, profilePublic: boolean) => {
   try {
-    const data = await put<string>(`/user/profileImage/${userId}/${name}`, {});
+    const data = await put<string>(`/user/profileImage/${userId}/${name}/${profilePublic}`, {});
     return data === "OK" ? true : false;
   } catch {
     return false;

@@ -21,6 +21,7 @@ export const getUserProfile = (user: User): UserProfile => {
     profileImage: user.profileImage ? user.profileImage : "",
     userPreference: user.userPreference,
     status: user.status,
+    profileImagePublic: false,
     tutorialPassed: false,
     bio: user.bio ? user.bio : '',
     password: ""
@@ -39,6 +40,7 @@ export const newStudentProfile = (): UserProfile => {
     roles: [UserPreferenceType.Student, UserPreferenceType.Builder],
     subjects: [],
     status: UserStatus.Pending,
+    profileImagePublic: false,
     bio: '',
     profileImage: "",
   }
