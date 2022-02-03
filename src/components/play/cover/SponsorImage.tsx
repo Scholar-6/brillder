@@ -50,7 +50,11 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
 
   if (!isAdmin) {
     return (
-      <div className="cover-sponsors">
+      <div className="cover-sponsors" onClick={() => {
+        if (props.brick.sponsorUrl) {
+          window.location.href=props.brick.sponsorUrl;
+        }
+      }}>
         <span className="italic">Commissioned by</span>
         <img alt="scholar6" src={fileName ? fileUrl(fileName) : "/images/Scholar-6-Logo.svg"} />
       </div>
