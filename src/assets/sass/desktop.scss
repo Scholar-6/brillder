@@ -1153,3 +1153,12 @@
     font-size: 0.8vw !important;
   }
 }
+
+.keywords-poopper {
+  z-index: 2000;
+  .MuiAutocomplete-option {
+    font-size: 1.1vw;
+    color: var(--theme-dark-blue);
+    font-family: $font-family-bold;
+  }
+}

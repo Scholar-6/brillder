@@ -204,7 +204,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
         props.success([existingClass], []);
       } else {
-        if (res.error == 'Subscription is not valid.' && props.showPremium) {
+        if (res.error === 'Subscription is not valid.' && props.showPremium) {
           props.close();
           props.showPremium();
         }
@@ -281,7 +281,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (props.user?.freeAssignmentsLeft && props.user?.freeAssignmentsLeft > 1) {
       return (
         <div className="left-label">
-          {props.user.freeAssignmentsLeft - 1} free Assignments Left
+          {props.user.freeAssignmentsLeft} free Assignments Left
         </div>
       )
     }

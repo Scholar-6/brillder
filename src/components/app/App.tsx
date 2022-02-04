@@ -59,7 +59,6 @@ import { setupMatomo } from 'services/matomo';
 import { ReduxCombinedState } from 'redux/reducers';
 import { User } from 'model/user';
 import { getTerms } from 'services/axios/terms';
-import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
 import BuildRouter from 'components/build/BuildRouter';
 import ProposalBrickRoute from './ProposalBrickRoute';
 import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';

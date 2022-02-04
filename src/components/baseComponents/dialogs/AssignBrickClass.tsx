@@ -22,9 +22,10 @@ import { stripHtml } from 'components/build/questionService/ConvertService';
 import ValidationFailedDialog from './ValidationFailedDialog';
 import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
+import { Classroom } from 'model/classroom';
 
 interface AssignPersonOrClassProps {
-  classroomId: number;
+  classroom: Classroom;
   subjectId: number;
   isOpen: boolean;
   success(brick: Brick): void;
@@ -44,6 +45,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [alreadyAssigned, setAssigned] = useState(false);
   const [bricks, setBricks] = useState([] as any[]);
   const [brick, setBrick] = useState(null as any);
+
   /*eslint-disable-next-line*/
   const [deadlineDate, setDeadline] = useState(new Date());
   const [haveDeadline, toggleDeadline] = useState(false);
@@ -53,10 +55,25 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const loadBricks = async () => {
     const bricks = await getPublishedBricks();
     if (bricks) {
-      setBricks(bricks.filter(b => b.isCore === true || b.author.id == props.user.id));
+      /*eslint-disable-next-line*/
+      const filteredBricks = bricks.filter(b => b.isCore === true || b.author.id == props.user.id);
+
+      // remove assigned bricks
+      const assignments = props.classroom.assignments.filter((a: any) => a.isArchived === false);
+      const bricksWithoutAssignments = filteredBricks.filter(b => {
+        /*eslint-disable-next-line*/
+        var found = assignments.find(a => a.brick.id == b.id);
+        if (found) {
+          return false;
+        }
+        return true;
+      });
+
+      setBricks(bricksWithoutAssignments);
     }
   }
 
+  /*eslint-disable-next-line*/
   useEffect(() => { loadBricks() }, []);
 
   const assignToClasses = async (classesIds: Number[]) => {
@@ -72,7 +89,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
 
     const res = await assignClasses(brick.id, data);
     if (res.success === false) {
-      if (res.error == 'Subscription is not valid.') {
+      if (res.error === 'Subscription is not valid.') {
         return res;
       } else {
         props.requestFailed('Can`t assign class to brick');
@@ -85,10 +102,10 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   }
 
   const assign = async () => {
-    const res = await assignToClasses([props.classroomId]); // empty array if succss
-    
+    const res = await assignToClasses([props.classroom.id]); // empty array if succss
+
     if (!res || res.success === false) {
-      if (res && res.error == 'Subscription is not valid.') {
+      if (res && res.error === 'Subscription is not valid.') {
         props.showPremium();
       } else {
         props.failed(brick);
@@ -102,7 +119,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
 
   const renderTopLabel = () => {
     if (props.user.freeAssignmentsLeft && props.user.freeAssignmentsLeft > 1) {
-      return <div className="assignments-count">{props.user.freeAssignmentsLeft - 1} free Assignments left</div>;
+      return <div className="assignments-count">{props.user.freeAssignmentsLeft} free Assignments left</div>;
     }
     return '';
   }

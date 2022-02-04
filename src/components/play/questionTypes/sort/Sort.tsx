@@ -249,10 +249,12 @@ class Sort extends CompComponent<SortProps, SortState> {
 
   renderChoiceContent(choice: SortAnswer) {
     if (choice.answerType === QuestionValueType.Image) {
-      console.log(choice)
       return (
-        <div className="sort-image-container">
-          <SortImage valueFile={choice.valueFile} imageSource={choice.imageSource} />
+        <div>
+          <div className="sort-image-container">
+            <SortImage valueFile={choice.valueFile} imageSource={choice.imageSource} />
+          </div>
+          {choice.imageCaption && <div className="sort-caption" dangerouslySetInnerHTML={{__html: choice.imageCaption}} />}
         </div>
       );
     } else if (choice.answerType === QuestionValueType.Sound) {

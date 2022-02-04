@@ -11,6 +11,7 @@ export interface SortAnswer {
   value: string;
   valueFile: string;
   imageSource?: string;
+  imageCaption?: string;
   answerType: QuestionValueType;
   soundFile?: string;
   soundCaption?: string;

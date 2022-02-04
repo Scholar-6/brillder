@@ -69,14 +69,20 @@ $base-build-font-size: 1.25vw;
   }
 
   .sort-by-box {
-    padding-top: 4vh !important;
+    padding-top: 3vh !important;
     padding-left: 1.2vw !important;
-    padding-bottom: 1vw !important;
+    padding-bottom: 3vh !important;
 
     .class-header,
     .record-header,
     .individuals-header {
       font-size: 1.3vw;
+    }
+
+    .class-header-container {
+      .class-header {
+        font-size: 1.5vw;
+      }
     }
 
     .record-header,

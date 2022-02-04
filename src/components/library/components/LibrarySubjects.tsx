@@ -22,7 +22,7 @@ const LibrarySubjects: React.FC<LibrarySubjectsProps> = (props) => {
   const renderSubject = (item: SubjectAssignments, key: number) => {
     const width = getSubjectWidth(item);
 
-    if (props.sortBy == SortBy.Score) {
+    if (props.sortBy === SortBy.Score) {
       item.assignments = item.assignments.sort((a, b) => {
         if (a.bestAttemptPercentScore && b.bestAttemptPercentScore && a.bestAttemptPercentScore > b.bestAttemptPercentScore) {
           return -1;

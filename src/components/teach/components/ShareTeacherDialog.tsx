@@ -67,7 +67,7 @@ const ShareTeacherDialog: React.FC<InviteProps> = ({ classId, ...props }) => {
               canEdit={true}
               removeDisabled={true}
               onlyTeachers={true}
-              hideLastName={true}
+              onlyUsername={true}
               editorError={''}
               placeholder="Teacher's username (first 3 characters)"
               onBlur={() => {}}

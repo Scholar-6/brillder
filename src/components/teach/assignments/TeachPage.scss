@@ -533,6 +533,11 @@
 
 // view all button
 .manage-classrooms-page {
+  .sort-box > .create-class-button {
+    padding-left: 0.5vw !important;
+    padding-bottom: 1vh !important;
+  }
+
   .index-box.m-view-all {
     position: relative !important;
     cursor: pointer;
@@ -557,6 +562,16 @@
         color: var(--theme-dark-blue) !important;
       }
     }
+
+    &.item-box2 {
+      height: auto !important;
+      padding-bottom: 1vh;
+      .right-index {
+        padding-top: 0.6vw !important;
+        height: auto !important;
+      }
+    }
+
 
     &:hover {
       background: var(--dark-gray);

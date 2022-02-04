@@ -118,7 +118,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
         // get correct answer and index
         for (let j = 0; j < userAnswers.length; j++) {
-          if (userAnswers[j].index == index) {
+          if (userAnswers[j].index === index) {
             answerIndex = j;
             answer = userAnswers[j];
           }

@@ -86,7 +86,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
       return '';
     }
     let lastLetter = firstName[firstName.length - 1];
-    if (lastLetter == 's') {
+    if (lastLetter === 's') {
       name = firstName + "'";
     } else {
       name = firstName + "'s";
@@ -123,7 +123,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
               <Checkbox
                 checked={user.selected}
                 onMouseOver={() => onHover(user)} onMouseLeave={() => onBlur(user)} />
-              {renderLibraryLink(user)}
+              {!user.hasInvitation && renderLibraryLink(user)}
               {user.selectHovered && <div className="custom-tooltip">Select</div>}
             </div>
             <div className="student-name">

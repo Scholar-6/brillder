@@ -252,12 +252,10 @@ class TeachFilterSidebar extends Component<
       });
     }
 
-    let totalBricks = 0;
     let totalCount = 0;
     let assignmentsCount = 0;
     for (let classroom of this.props.classrooms) {
       totalCount += classroom.students.length;
-      totalBricks += 1;
       if (classroom.assignmentsCount && parseInt(classroom.assignmentsCount) > 0) {
         assignmentsCount += parseInt(classroom.assignmentsCount);
       }
@@ -270,7 +268,7 @@ class TeachFilterSidebar extends Component<
       <div className="sort-box teach-sort-box flex-height-box">
         <div className="sort-box">
           <div className="filter-container sort-by-box">
-            <div style={{ display: "flex" }}>
+            <div className="flex-center class-header-container">
               <div className="class-header">
                 {label} in {finalClasses.length} Classes
               </div>
@@ -296,10 +294,6 @@ class TeachFilterSidebar extends Component<
               </div>
               <div className="m-absolute-sort sort-v2"
                 onClick={() => {
-                  let sort = false;
-                  if (this.state.sortByName) {
-                    sort = true;
-                  }
                   this.setState({ sortByName: !this.state.sortByName, ascending: null })
                 }}
               >

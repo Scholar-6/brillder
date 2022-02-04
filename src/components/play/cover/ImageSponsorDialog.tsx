@@ -11,7 +11,7 @@ interface DialogProps {
   open: boolean;
   initFile: File | null;
   initValue: string;
-  upload(file: File): void;
+  upload(file: File, sponsorName: string, sponsorUrl: string): void;
   setDialog(open: boolean): void;
 }
 
@@ -21,6 +21,8 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, 
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
   const [removed, setRemoved] = React.useState(null as boolean | null);
+  const [sponsorName, setSponsorName] = React.useState('');
+  const [sponsorUrl, setSponsorUrl] = React.useState('');
 
   useEffect(() => {
     if (!file) {
@@ -80,6 +82,26 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, 
             }
           </div>
         </div>
+        <div className="source-input">
+          <div className="fixed-icon">
+            <SpriteIcon name="link" />
+          </div>
+          <input
+            value={sponsorName}
+            onChange={(e) => setSponsorName(e.target.value)}
+            placeholder="Add sponsors name"
+          />
+        </div>
+        <div className="source-input">
+          <div className="fixed-icon">
+            <SpriteIcon name="link" />
+          </div>
+          <input
+            value={sponsorUrl}
+            onChange={(e) => setSponsorUrl(e.target.value)}
+            placeholder="Add link to sponsors page"
+          />
+        </div>
         <CopyrightCheckboxes
           validationRequired={validationRequired}
           permision={permision}
@@ -89,7 +111,7 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, 
       <div className="centered last-button">
         <div className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
           if (cropedFile && canUpload) {
-            upload(cropedFile);
+            upload(cropedFile, sponsorName, sponsorUrl);
           } else {
             setValidation(true);
           }

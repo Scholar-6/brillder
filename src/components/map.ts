@@ -92,7 +92,6 @@ export const ProposalLength = (brickId: number) => `${ProposalBase(brickId)}/len
 export const ProposalReview = (brickId: number) => `${ProposalBase(brickId)}/plan`;
 
 export const Proposal = (brickId: number) => {
-  console.log(`${buildBase(brickId)}/plan`);
   return `${buildBase(brickId)}/plan`
 };
 
