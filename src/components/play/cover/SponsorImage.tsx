@@ -28,13 +28,18 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
     }
   }, [props.brick]);
 
-  const upload = (file: File, sponsorName: string, sponsorUrl: string) => {
-    uploadFile(file, async (res: any) => {
-      const {fileName} = res.data;
-      setFileName(fileName);
-      await updateBrick({...props.brick, sponsorLogo: fileName, sponsorName, sponsorUrl});
+  const upload = async (file: File | null, sponsorName: string, sponsorUrl: string) => {
+    if (file) {
+      uploadFile(file, async (res: any) => {
+        const {fileName} = res.data;
+        setFileName(fileName);
+        await updateBrick({...props.brick, sponsorLogo: fileName, sponsorName, sponsorUrl});
+        setOpen(false);
+      }, () => { });
+    } else {
+      await updateBrick({...props.brick, sponsorLogo: '', sponsorName, sponsorUrl});
       setOpen(false);
-    }, () => { });
+    }
   }
 
   let className = 'dropzone';
@@ -65,23 +70,7 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
   return (
     <div className="cover-sponsors">
       Commissioned by
-      <div className={className} onClick={() => {
-        if (fileName) {
-          setOpen(true);
-        } else {
-          let el = document.createElement("input");
-          el.setAttribute("type", "file");
-          el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
-          el.click();
-
-          el.onchange = () => {
-            if (el.files && el.files.length >= 0) {
-              setFile(el.files[0]);
-              setOpen(true);
-            }
-          };
-        }
-      }}>
+      <div className={className} onClick={() => setOpen(true)}>
         {
           fileName
             ? <img alt="" style={{ width: '100%' }} src={fileUrl(fileName)} />
