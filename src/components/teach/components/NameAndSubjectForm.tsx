@@ -31,6 +31,7 @@ interface NameAndSubjectFormProps {
 }
 
 const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
+  const {user} = props;
   const [edit, setEdit] = useState(false);
   const [isOpen, togglePopup] = useState(false);
   const [successResult, setSuccess] = useState({ isOpen: false, brick: null } as any);
@@ -47,13 +48,13 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
 
     setName(props.classroom!.name);
     if (props.classroom.subject) {
-      setSubjectIndex(props.user.subjects.findIndex(s => s.id === props.classroom.subject.id));
+      setSubjectIndex(user.subjects.findIndex(s => s.id === props.classroom.subject.id));
     }
-  }, [props.classroom, props.user.subjects]);
+  }, [props.classroom, user.subjects]);
 
   const submit = React.useCallback(() => {
-    if (name && (subjectIndex !== undefined) && props.user.subjects[subjectIndex]) {
-      props.onChange(name, props.user.subjects[subjectIndex]);
+    if (name && (subjectIndex !== undefined) && user.subjects[subjectIndex]) {
+      props.onChange(name, user.subjects[subjectIndex]);
       setEdit(false);
     }
   }, [name, subjectIndex, props]);
@@ -91,7 +92,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
                 name="arrow-down"
                 className="w100 h100 active"
                 style={{
-                  color: (props.user.subjects[subjectIndex!]?.color ?? "#FFFFFF") === "#FFFFFF" ?
+                  color: (user.subjects[subjectIndex!]?.color ?? "#FFFFFF") === "#FFFFFF" ?
                     "var(--theme-dark-blue)" :
                     "var(--white)"
                 }}
@@ -99,7 +100,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
             </SvgIcon>
           }
         >
-          {props.user.subjects.map((s, i) =>
+          {user.subjects.map((s, i) =>
             <MenuItem value={i} key={i}>
               <ListItemIcon>
                 <SvgIcon>
@@ -174,14 +175,20 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           {!props.assignHidden &&
             <div className="assign-button-container">
               <div className="btn" onClick={() => {
-                togglePopup(true);
+                if (user.subscriptionState && user.subscriptionState > 1) {
+                  togglePopup(true);
+                } else if (user.freeAssignmentsLeft > 0) {
+                  togglePopup(true);
+                } else if (props.showPremium) {
+                  props.showPremium();
+                }
               }}>
                 Assign a new brick
                 <SpriteIcon name="file-plus" />
               </div>
             </div>}
         </div>
-        {(checkAdmin(props.user.roles) && props.classroom!.teachers) && <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span>}
+        {(checkAdmin(user.roles) && props.classroom!.teachers) && <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span>}
         {isOpen &&
           <AssignBrickClass
             isOpen={isOpen}
