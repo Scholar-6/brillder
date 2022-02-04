@@ -24,7 +24,7 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, brick, initFile, init
   const [cropedFile, setCroped] = React.useState(file as File | null);
 
   let initRemoved = null;
-  if (file == null) {
+  if (file == null && !initValue) {
     initRemoved = true;
   }
 
