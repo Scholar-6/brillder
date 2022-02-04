@@ -16,6 +16,7 @@ interface ImageProps {
 
 const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
   const [isOpen, setOpen] = React.useState(false);
+  /* eslint-disable-next-line */
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.brick.sponsorLogo);
   const [isCloseOpen, setCloseDialog] = React.useState(false);
@@ -58,6 +59,8 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
       <div className="cover-sponsors" onClick={() => {
         if (props.brick.sponsorUrl) {
           window.location.href=props.brick.sponsorUrl;
+        } else {
+          window.location.href="https://scholar6.org";
         }
       }}>
         <span className="italic">Commissioned by</span>
