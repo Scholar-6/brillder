@@ -553,6 +553,9 @@ $base-build-border: $editor-radius;
     .MuiAutocomplete-root .MuiInput-formControl {
       box-shadow: none !important;
     }
+    .subject-autocomplete {
+      margin-bottom: 0.7vw !important;
+    }
   }
 
   .fixed-build-phone .phone-question-preview-box .phone-question-preview .phone .phone-border .screen .custom-component .phone-preview-component .key-words-play {
@@ -655,6 +658,13 @@ $base-build-border: $editor-radius;
           padding-top: 0.2vw;
           font-size: $baseFontSize;
           padding-bottom: 0.2vw;
+
+          svg {
+            stroke-width: 3 !important;
+            padding: 0.2vw !important;
+            width: 0.8vw !important;
+            height: 0.8vw !important;
+          }
         }
 
         input {
