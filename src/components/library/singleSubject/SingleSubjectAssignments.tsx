@@ -121,7 +121,7 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
     const {sortBy} = this.props;
     let { assignments } = this.props.subjectAssignment;
 
-    if (sortBy == SortBy.Score) {
+    if (sortBy === SortBy.Score) {
       assignments = assignments.sort((a, b) => {
         if (a.bestAttemptPercentScore && b.bestAttemptPercentScore && a.bestAttemptPercentScore > b.bestAttemptPercentScore) {
           return -1;

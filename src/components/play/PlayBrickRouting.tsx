@@ -72,7 +72,6 @@ import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
 import LastAttemptDialog from "./baseComponents/dialogs/LastAttemptDialog";
 import PremiumEducatorDialog from "./baseComponents/dialogs/PremiumEducatorDialog";
 import PremiumLearnerDialog from "./baseComponents/dialogs/PremiumLearnerDialog";
-import user from "redux/reducers/user";
 
 export enum PlayPage {
   Cover,
@@ -244,6 +243,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const showInitDialogs = async () => {
     var user = await props.getUser();
     if (user) {
+      /*eslint-disable-next-line*/
       if (user.freeAttemptsLeft == 1) {
         setLastAttemptDialog(true);
       } else if (user.freeAttemptsLeft <= 0) {

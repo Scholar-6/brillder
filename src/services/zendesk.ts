@@ -188,7 +188,7 @@ function messageSent() {
                   console.log(container.children[2].children[0]);
                   var backButtonV5 = container.children[2].children[0];
                   console.log(backButtonV5.innerHTML);
-                  if (backButtonV5.ineerHTML != 'Send') {
+                  if (backButtonV5.ineerHTML !== 'Send') {
                     console.log('click')
                     backButtonV5.click();
                   }

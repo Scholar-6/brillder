@@ -39,6 +39,7 @@ export interface UserBase {
   bio: string;
   status: UserStatus;
   profileImage: string;
+  profileImagePublic: boolean;
 }
 
 export interface User extends UserBase {

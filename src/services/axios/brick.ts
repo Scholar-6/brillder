@@ -1,6 +1,6 @@
 import { getApiQuestion } from 'components/build/questionService/QuestionService';
 import { AssignmentBrick } from 'model/assignment';
-import { Brick, BrickStatus } from 'model/brick';
+import { Brick, BrickStatus, KeyWord } from 'model/brick';
 import { Question } from 'model/question';
 
 import { get, put, post, axiosDelete } from './index';
@@ -51,6 +51,7 @@ export const getPublishedBricks = async () => {
   try {
     let bricks = await get<Brick[]>(`/bricks/byStatus/${BrickStatus.Publish}`);
     if (bricks) {
+      /*eslint-disable-next-line*/
       bricks = bricks.filter(b => b.status == 4);
     }
     return bricks;
@@ -254,6 +255,14 @@ export interface CoverImageData {
 export const setBrickCover = async (data: CoverImageData) => {
   try {
     return await post<any>(`/brick/cover`, data);
+  } catch {
+    return false;
+  }
+}
+
+export const getKeywords = async () => {
+  try {
+    return await get<KeyWord[]>(`/bricks-keywords`);
   } catch {
     return false;
   }

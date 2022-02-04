@@ -28,11 +28,11 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
     }
   }, [props.brick]);
 
-  const upload = (file: File) => {
+  const upload = (file: File, sponsorName: string, sponsorUrl: string) => {
     uploadFile(file, async (res: any) => {
       const {fileName} = res.data;
       setFileName(fileName);
-      await updateBrick({...props.brick, sponsorLogo: fileName});
+      await updateBrick({...props.brick, sponsorLogo: fileName, sponsorName, sponsorUrl});
       setOpen(false);
     }, () => { });
   }
@@ -50,7 +50,11 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
 
   if (!isAdmin) {
     return (
-      <div className="cover-sponsors">
+      <div className="cover-sponsors" onClick={() => {
+        if (props.brick.sponsorUrl) {
+          window.location.href=props.brick.sponsorUrl;
+        }
+      }}>
         <span className="italic">Commissioned by</span>
         <img alt="scholar6" src={fileName ? fileUrl(fileName) : "/images/Scholar-6-Logo.svg"} />
       </div>

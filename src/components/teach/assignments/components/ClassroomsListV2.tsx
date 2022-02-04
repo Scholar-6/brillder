@@ -56,7 +56,8 @@ class ClassroomListV2 extends Component<ClassroomListProps, State> {
     this.loadPageData(0, this.state.pageSize, props.classrooms);
   }
 
-  componentDidUpdate(prevProps: ClassroomListProps, prevState: State) {
+  componentDidUpdate(prevProps: ClassroomListProps) {
+    /*eslint-disable-next-line*/
     if (this.props.classrooms != prevProps.classrooms) {
       this.loadPageData(0, this.state.pageSize, this.props.classrooms);
     }

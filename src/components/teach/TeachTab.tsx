@@ -26,6 +26,7 @@ const TeachTab: React.FC<TabProps> = ({ history, activeTab, assignmentsEnabled }
     } else {
       setErrorOpen(true);
     }
+    /*eslint-disable-next-line*/
   }, [assignmentsEnabled, history]);
 
   const assignedTab = () => {

@@ -11,7 +11,7 @@ const LibraryButton: React.FC<Props> = ({ firstName, onClick }) => {
   let name = '';
   if (firstName) {
     let lastLetter = firstName[firstName.length - 1];
-    if (lastLetter == 's') {
+    if (lastLetter === 's') {
       name = firstName + "'";
     } else {
       name = firstName + "'s";

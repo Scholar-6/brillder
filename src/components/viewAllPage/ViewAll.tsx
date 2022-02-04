@@ -383,10 +383,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   collectKeywords(bricks: Brick[]) {
-    let keywords:KeyWord[] = [];
-    for(let brick of bricks) {
+    let keywords: KeyWord[] = [];
+    for (let brick of bricks) {
       if (brick.keywords && brick.keywords.length > 0) {
         for (let keyword of brick.keywords) {
+          /*eslint-disable-next-line*/
           var found = keywords.find(k => k.id == keyword.id);
           if (!found) {
             keywords.push(keyword);
@@ -773,6 +774,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterByAuthor(author: Author) {
+    /*eslint-disable-next-line*/
     const searchBricks = this.state.bricks.filter(b => b.author.id == author.id);
 
     this.setState({
@@ -790,6 +792,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterSuggestionSubject(subject: Subject) {
+    /*eslint-disable-next-line*/
     const searchBricks = this.state.bricks.filter(b => b.subject && b.subject.id == subject.id);
 
     this.setState({
@@ -809,6 +812,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   filterSuggestionKeyword(keyword: KeyWord) {
     const searchBricks = this.state.bricks.filter(b => {
       if (b.keywords && b.keywords.length > 0) {
+        /*eslint-disable-next-line*/
         let found = b.keywords.find(k => k.id == keyword.id);
         if (found) {
           return true;
@@ -1031,7 +1035,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     const renderName = (name: string) => {
-      if (name[name.length-1] === 's') {
+      if (name[name.length - 1] === 's') {
         return `${name}'`;
       }
       return `${name}'s`;

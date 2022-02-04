@@ -88,6 +88,7 @@ class PageHeader extends Component<Props, State> {
     for(let brick of bricks) {
       if (brick.keywords && brick.keywords.length > 0) {
         for (let keyword of brick.keywords) {
+          /*eslint-disable-next-line*/
           var found = keywords.find(k => k.id == keyword.id);
           if (!found) {
             keywords.push(keyword);

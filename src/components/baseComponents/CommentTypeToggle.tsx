@@ -33,7 +33,7 @@ const CommentTypeToggle: React.FC<ToggleProps> = props => {
 
   return (
     <div className="comment-type-toggle">
-      <button className="btn btn btn-transparent " onClick={props.onSwitch}>
+      <button className="btn btn-transparent " onClick={props.onSwitch}>
         <div className="svgOnHover">
           {renderCoreIcon()}
           {renderPrivateIcon()}

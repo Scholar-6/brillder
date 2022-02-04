@@ -82,6 +82,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         ).then(response => {
           const { data } = response;
           getTerms().then(r => {
+            /*eslint-disable-next-line*/
             if (r && r.lastModifiedDate != data.termsAndConditionsAcceptedVersion) {
               props.history.push(map.TermsSignUp + '?onlyAcceptTerms=true');
               props.loginSuccess();

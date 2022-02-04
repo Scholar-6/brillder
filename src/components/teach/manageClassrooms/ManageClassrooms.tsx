@@ -68,6 +68,9 @@ interface UsersListState {
   sortBy: UserSortBy;
   isAscending: boolean;
 
+  filterSortAscending: boolean | null;
+  filterSortByName: boolean | null;
+
   createClassOpen: boolean;
   deleteClassOpen: boolean;
 
@@ -103,6 +106,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       viewAllPageSize: pageSize,
       totalCount: 0,
       cantCreate: false,
+
+      filterSortAscending: true,
+      filterSortByName: null,
 
       searchString: "",
       isSearching: false,
@@ -168,7 +174,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       for (const u of pendingUsers) {
         u.hasInvitation = true;
       }
-      this.setState({pendingUsers});
+      this.setState({ pendingUsers });
     }
   }
 
@@ -399,7 +405,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    let className = "m-view-all index-box hover-light item-box2";
+    let className = "m-view-all index-box hover-light";
     if (!this.state.activeClassroom && !this.state.isPending) {
       className += " active";
     }
@@ -412,6 +418,43 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <SpriteIcon name="users-custom" className="active" />
           <div className="classrooms-box">
             {this.state.classrooms.length}
+          </div>
+        </div>
+        <div className="m-absolute-sort sort-v2"
+          onClick={() => {
+            this.setState({ filterSortByName: !this.state.filterSortByName, filterSortAscending: null })
+          }}
+        >
+          <SpriteIcon
+            name={
+              this.state.filterSortByName
+                ? "f-arrow-down"
+                : "f-arrow-up"
+            }
+          />
+          {this.state.filterSortByName ? 'A-Z' : 'Z-A'}
+          <div className="css-custom-tooltip">
+            {this.state.filterSortByName ? 'Sort Alphabetically: Z-A' : 'Sort Alphabetically: A-Z'}
+          </div>
+        </div>
+        <div className="m-absolute-sort">
+          <SpriteIcon
+            name={
+              this.state.filterSortAscending
+                ? "hero-sort-descending"
+                : "hero-sort-ascending"
+            }
+            onClick={() =>
+              this.setState({ filterSortAscending: !this.state.filterSortAscending, filterSortByName: null })
+            }
+          />
+          <div className="css-custom-tooltip">
+            {this.state.filterSortAscending ? 'Sort by ascending number of assignments' : 'Sort by descending number of assignments'}
+          </div>
+        </div>
+        <div>
+          <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
+            <SpriteIcon name="plus-circle" /> Create Class
           </div>
         </div>
       </div>
@@ -427,7 +470,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     return (
       <div className={className} onClick={() => {
         this.unselectClasses();
-        this.setState({isPending: true});
+        this.setState({ isPending: true });
       }}>
         Pending
         <div className="right-index right-index2">
@@ -447,28 +490,46 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       return <EmptyFilter />;
     }
 
-    const {classrooms} = this.state;
+    const { classrooms } = this.state;
+
+    let finalClasses:ClassroomApi[] = [];
+
+    if (this.state.filterSortAscending === false) {
+      finalClasses = classrooms.sort((a, b) => a.students.length - b.students.length);
+    } else if (this.state.filterSortAscending === true) {
+      finalClasses = classrooms.sort((a, b) => b.students.length - a.students.length);
+    } else if (this.state.filterSortByName === true) {
+      finalClasses = classrooms.sort((a, b) => {
+        const al = a.name.toUpperCase();
+        const bl = b.name.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
+        return 0;
+      });
+    } else if (this.state.filterSortByName === false) {
+      finalClasses = classrooms.sort((a, b) => {
+        const al = a.name.toUpperCase();
+        const bl = b.name.toUpperCase();
+        if (al > bl) { return -1; }
+        if (al < bl) { return 1; }
+        return 0;
+      });
+    }
 
     return (
       <div className="flex-height-box">
         <div className="sort-box">
-          <div className="filter-container sort-by-box">
-            <div style={{ display: 'flex' }}>
-              {classrooms.length > 1
-                ? <div className="class-header" style={{ width: '50%' }}>{classrooms.length} CLASSES</div>
-                : <div className="class-header" style={{ width: '50%' }}>{classrooms.length} CLASS</div>
-              }
+          <div className="filter-container sort-by-box flex-center">
+            <div className="class-header">
+              {this.state.users.length} Learners in {classrooms.length > 1 ? `${classrooms.length} CLASSES` : `${classrooms.length} CLASS`}
             </div>
-          </div>
-          <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
-            <SpriteIcon name="plus-circle" /> Create Class
           </div>
           {this.renderViewAllFilter()}
           {this.renderPendingFilter()}
         </div>
         <div className="sort-box subject-scrollable">
           <div className="subject-indexes-box filter-container manage-classrooms-filter">
-            {this.state.classrooms.map((c, i) =>
+            {finalClasses.map((c, i) =>
               <ClassroomFilterItem
                 classroom={c}
                 key={i}
@@ -563,7 +624,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   async resendInvitation(email: string, classroom?: ClassroomApi) {
-    if(this.state.activeClassroom || classroom) {
+    if (this.state.activeClassroom || classroom) {
       await resendInvitation((this.state.activeClassroom ?? classroom)!, email);
       this.invitationSuccess(1);
     }
@@ -685,7 +746,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
 
     const visibleUsers = this.getUsersByPage(users);
-    
+
 
     if (this.state.isPending) {
       const visibleUsers = this.getUsersByPage(this.state.pendingUsers);

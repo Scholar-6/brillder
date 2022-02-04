@@ -99,7 +99,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
 
   return (
     <div
-      className={`assignment-progressbar all-subjects ${subject.name == GENERAL_SUBJECT ? 'general' : ''}`}
+      className={`assignment-progressbar all-subjects ${subject.name === GENERAL_SUBJECT ? 'general' : ''}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >

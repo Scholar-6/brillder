@@ -22,6 +22,7 @@ export const getNewUserState = (isAdmin: boolean) => {
     validationRequired: false,
     emailInvalid: false,
     previewAnimationFinished: false,
+    profileImagePublic: false,
     editPassword: false
   };
 }
@@ -53,6 +54,7 @@ export const getExistedUserState = (user: User) => {
       status: UserStatus.Pending,
       bio: '',
       profileImage: "",
+      profileImagePublic: user.profileImagePublic || false,
     },
     subjects: [],
     isNewUser: false,

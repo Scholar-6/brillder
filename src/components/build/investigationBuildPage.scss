@@ -550,6 +550,9 @@ $base-build-border: $editor-radius;
     input::placeholder {
       font-family: $font-family-bold;
     }
+    .MuiAutocomplete-root .MuiInput-formControl {
+      box-shadow: none !important;
+    }
   }
 
   .fixed-build-phone .phone-question-preview-box .phone-question-preview .phone .phone-border .screen .custom-component .phone-preview-component .key-words-play {

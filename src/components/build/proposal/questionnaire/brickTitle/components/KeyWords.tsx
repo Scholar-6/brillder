@@ -1,10 +1,14 @@
 import React, { Component } from "react";
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+import { Popper } from '@material-ui/core';
 
 import './KeyWords.scss';
 import { enterPressed, spaceKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyWord } from "model/brick";
 import KeyWordsPlay from "./KeywordsPlay";
+import { getKeywords } from "services/axios/brick";
 
 export const MaxKeywordLength = 35;
 
@@ -19,6 +23,11 @@ interface KeyWordsProps {
 interface KeyWordsState {
   keyWords: KeyWord[];
   keyWord: string;
+  allKeyWords: KeyWord[];
+}
+
+const PopperCustom = function (props: any) {
+  return (<Popper {...props} className="keywords-poopper" />)
 }
 
 class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
@@ -32,12 +41,28 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
 
     this.state = {
       keyWords,
-      keyWord: ''
+      keyWord: '',
+      allKeyWords: []
+    }
+
+    this.loadKeywords();
+  }
+
+  async loadKeywords() {
+    const keywords = await getKeywords();
+    if (keywords) {
+      const sorted = keywords.sort((a, b) => {
+        const al = a.name.toUpperCase();
+        const bl = b.name.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
+        return 0;
+      });
+      this.setState({ allKeyWords: sorted });
     }
   }
 
-  checkIfPresent() {
-    const { keyWord } = this.state;
+  checkIfPresent(keyWord: string) {
     for (let keyword of this.state.keyWords) {
       if (keyword.name.trim() === keyWord.trim()) {
         return true;
@@ -46,25 +71,26 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
     return false;
   }
 
-  addKeyWord() {
+  addKeyWord(keyword: string) {
     if (this.props.disabled) { return; }
 
-    const present = this.checkIfPresent();
+    const present = this.checkIfPresent(keyword);
     if (present) {
-      this.setState({ keyWord: '' });
+      this.setState({keyWord: ''})
       return;
     }
 
     const { keyWords } = this.state;
-    keyWords.push({ name: this.state.keyWord });
+    keyWords.push({ name: keyword });
     this.setState({ keyWord: '', keyWords });
     this.props.onChange(keyWords);
   }
 
-  checkKeyword(e: React.KeyboardEvent<HTMLInputElement>) {
+  checkKeyword(e: any) {
     let pressed = enterPressed(e) || spaceKeyPressed(e);
     if (pressed) {
-      this.addKeyWord();
+      const value = e.target.value;
+      this.addKeyWord(value);
     }
   }
 
@@ -105,12 +131,26 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
             ? <KeyWordsPlay keywords={this.state.keyWords} />
             : this.state.keyWords.map(this.renderKeyWord.bind(this))
           }
-          <input disabled={this.props.disabled} value={this.state.keyWord} placeholder="Keyword(s)"
-            onKeyDown={this.checkKeyword.bind(this)}
-            onChange={e => {
-              if (e.target.value.length <= MaxKeywordLength) {
-                this.setState({ keyWord: e.target.value })
-              }
+          <Autocomplete
+            freeSolo
+            value={null}
+            options={this.state.allKeyWords}
+            onChange={(e: any, v: any) => this.addKeyWord(v.name)}
+            noOptionsText="Sorry, try typing something else"
+            className="subject-autocomplete"
+            PopperComponent={PopperCustom}
+            getOptionLabel={(option: any) => option.name}
+            renderInput={(params: any) => {
+              console.log(params);
+              params.inputProps.value = this.state.keyWord; 
+              return <TextField
+                {...params}
+                variant="standard"
+                onChange={(e) => this.setState({keyWord: e.target.value})}
+                onKeyDown={this.checkKeyword.bind(this)}
+                label=""
+                placeholder="Type keyword "
+              />
             }}
           />
         </div>

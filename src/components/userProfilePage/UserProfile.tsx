@@ -69,7 +69,6 @@ interface UserProfileState {
   editPassword: boolean;
   saveDisabled: boolean;
   minimizeTimeout?: number;
-
   introJsSuspended?: boolean;
 }
 
@@ -91,6 +90,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       const { user } = props;
 
       let tempState: UserProfileState = getExistedUserState(user);
+
       if (userId) {
         this.state = tempState;
         getUserById(userId).then(user => {
@@ -251,11 +251,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({ user, emailInvalid, saveDisabled: false });
   }
 
-  onProfileImageChanged(name: string) {
+  onProfileImageChanged(name: string, imagePublic: boolean) {
     const { user } = this.state;
     user.profileImage = name;
+    user.profileImagePublic = imagePublic;
 
-    saveProfileImageName(user.id, name).then((res: boolean) => {
+    saveProfileImageName(user.id, name, imagePublic).then((res: boolean) => {
       if (res) {
         // upload success
       } else {
@@ -372,8 +373,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 <ProfileImage
                   user={user}
                   currentUser={this.props.user}
-                  setImage={(v) => this.onProfileImageChanged(v)}
-                  deleteImage={() => this.onProfileImageChanged('')}
+                  setImage={this.onProfileImageChanged.bind(this)}
+                  deleteImage={() => this.onProfileImageChanged('', false)}
                   suspendIntroJs={this.suspendIntroJs.bind(this)}
                   resumeIntroJs={this.resumeIntroJs.bind(this)}
                 />
