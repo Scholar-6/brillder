@@ -5,17 +5,19 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 import DropImage from "components/build/buildQuestions/components/Image/DropImage";
 import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
+import { Brick } from "model/brick";
 
 
 interface DialogProps {
   open: boolean;
   initFile: File | null;
   initValue: string;
+  brick: Brick;
   upload(file: File | null, sponsorName: string, sponsorUrl: string): void;
   setDialog(open: boolean): void;
 }
 
-const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, upload, setDialog }) => {
+const ImageSponsorDialog: React.FC<DialogProps> = ({ open, brick, initFile, initValue, upload, setDialog }) => {
   const [permision, setPermision] = React.useState(false as boolean | 1);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
@@ -25,9 +27,13 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, 
   if (file == null) {
     initRemoved = true;
   }
+
+  let initSponsorName = brick.sponsorName || "scholar6.org";
+  let initSponsorUrl = brick.sponsorUrl || "https://scholar6.org/";
+
   const [removed, setRemoved] = React.useState(initRemoved as boolean | null);
-  const [sponsorName, setSponsorName] = React.useState('');
-  const [sponsorUrl, setSponsorUrl] = React.useState('');
+  const [sponsorName, setSponsorName] = React.useState(initSponsorName);
+  const [sponsorUrl, setSponsorUrl] = React.useState(initSponsorUrl);
 
   useEffect(() => {
     if (!file) {

@@ -80,6 +80,7 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
       <ImageSponsorDialog
         initValue={fileName}
         open={isOpen}
+        brick={props.brick}
         setDialog={() => setCloseDialog(true)}
         initFile={file}
         upload={upload}
