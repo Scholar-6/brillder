@@ -412,13 +412,14 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     return (
       <div className={className} onClick={() => this.unselectClasses()}>
-        View All
+        View All Learners
         <div className="right-index right-index2">
-          {this.state.users.length}
-          <SpriteIcon name="users-custom" className="active" />
           <div className="classrooms-box">
             {this.state.classrooms.length}
+            <SpriteIcon name="manage-class" />
           </div>
+          {this.state.users.length}
+          <SpriteIcon name="users-custom" className="active" />
         </div>
         <div className="m-absolute-sort sort-v2"
           onClick={() => {
@@ -433,7 +434,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             }
           />
           {this.state.filterSortByName ? 'A-Z' : 'Z-A'}
-          <div className="css-custom-tooltip">
+          <div className="css-custom-tooltip bold">
             {this.state.filterSortByName ? 'Sort Alphabetically: Z-A' : 'Sort Alphabetically: A-Z'}
           </div>
         </div>
@@ -448,7 +449,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
               this.setState({ filterSortAscending: !this.state.filterSortAscending, filterSortByName: null })
             }
           />
-          <div className="css-custom-tooltip">
+          <div className="css-custom-tooltip bold">
             {this.state.filterSortAscending ? 'Sort by ascending number of assignments' : 'Sort by descending number of assignments'}
           </div>
         </div>
@@ -521,7 +522,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <div className="sort-box">
           <div className="filter-container sort-by-box flex-center">
             <div className="class-header">
-              {this.state.users.length} Learners in {classrooms.length > 1 ? `${classrooms.length} CLASSES` : `${classrooms.length} CLASS`}
+              {this.state.users.length} Learners in {classrooms.length > 1 ? `${classrooms.length} Classes` : `${classrooms.length} Class`}
             </div>
           </div>
           {this.renderViewAllFilter()}
