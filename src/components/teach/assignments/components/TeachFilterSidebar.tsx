@@ -288,7 +288,7 @@ class TeachFilterSidebar extends Component<
               <div className="right-index">
                 <div className="classrooms-box">
                   {finalClasses.length}
-                  <SpriteIcon name="manage-class" />
+                  <SpriteIcon name={this.props.activeClassroom ? "manage-class-blue" : "manage-class"} />
                 </div>
                 {totalCount}
                 <SpriteIcon name="users-custom" className="active" />
