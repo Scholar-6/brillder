@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { Snackbar } from "@material-ui/core";
+import React from "react";
 import { connect } from "react-redux";
 import { History } from "history";
-import axios from "axios";
 
 import actions from "redux/actions/auth";
 
