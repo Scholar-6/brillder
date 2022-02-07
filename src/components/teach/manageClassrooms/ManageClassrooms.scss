@@ -154,6 +154,19 @@ $base-build-font-size: 1.25vw;
     }
   }
 
+  .m-view-all {
+    .right-index,
+    .classrooms-box {
+      color: var(--theme-dark-blue) !important;
+    }
+    &.active {
+      .right-index,
+      .classrooms-box {
+        color: var(--white) !important;
+      }
+    }
+  }
+
   .m-view-all.active .m-absolute-sort:hover svg,
   .m-view-all.active .create-class-button:hover svg {
     color: var(--theme-dark-blue);
