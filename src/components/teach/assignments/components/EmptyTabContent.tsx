@@ -59,7 +59,7 @@ const EmptyTabContent: React.FC<Props> = (props) => {
               </div>
             </div>
           </div>
-          <div className="bold">Click the icon above to search for brick to assign</div>
+          <div className="bold">Click on the glasses above to search for brick to assign</div>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { isAorP } from "./services/brickService";
 
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
+export const ActivateAccountEmail = ActivateAccount + '/email';
 export const ResetPassword = '/resetPassword';
 export const Build = '/build';
 export const MainPage = '/home';
@@ -134,6 +135,7 @@ export const postAssignmentBrief = (brickId: number, userId: number, classId?: n
 export default {
   Build,
   ActivateAccount,
+  ActivateAccountEmail,
   ResetPassword,
   UserProfile,
   Login,
