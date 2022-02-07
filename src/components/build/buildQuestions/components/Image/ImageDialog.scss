@@ -171,6 +171,10 @@
   max-width: 35vw;
   font-size: $font-size !important;
 
+  &.no-fixed-height {
+    min-height: unset !important;
+  }
+
   > div {
     padding-top: 1vh;
   }

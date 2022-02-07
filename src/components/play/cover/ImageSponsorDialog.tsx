@@ -79,7 +79,7 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, brick, initFile, init
 
   return (
     <BaseDialogWrapper open={open} className="image-dialog-container" close={() => setDialog(false)} submit={() => { }}>
-      <div className="dialog-header image-dialog">
+      <div className="dialog-header image-dialog no-fixed-height">
         <div className={`cropping ${removed ? 'empty' : ''}`}>
           <div className="switch-image">
             <div className={"svgOnHover " + className} onClick={handleClick}>
