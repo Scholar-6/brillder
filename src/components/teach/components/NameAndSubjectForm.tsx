@@ -57,6 +57,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
       props.onChange(name, user.subjects[subjectIndex]);
       setEdit(false);
     }
+    /* eslint-disable-next-line */
   }, [name, subjectIndex, props]);
 
   if (props.isArchive) {

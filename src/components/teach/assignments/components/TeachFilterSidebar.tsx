@@ -264,6 +264,7 @@ class TeachFilterSidebar extends Component<
     if (assignmentsCount > 1) {
       label = `${assignmentsCount} Assignments`;
     }
+
     return (
       <div className="sort-box teach-sort-box flex-height-box">
         <div className="sort-box">
@@ -285,6 +286,10 @@ class TeachFilterSidebar extends Component<
             <div>
               View All Classes
               <div className="right-index">
+                <div className="classrooms-box">
+                  {finalClasses.length}
+                  <SpriteIcon name={this.props.activeClassroom ? "manage-class-blue" : "manage-class"} />
+                </div>
                 {totalCount}
                 <SpriteIcon name="users-custom" className="active" />
                 <div className="classrooms-box">
