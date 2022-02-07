@@ -5,24 +5,35 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 import DropImage from "components/build/buildQuestions/components/Image/DropImage";
 import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
+import { Brick } from "model/brick";
 
 
 interface DialogProps {
   open: boolean;
   initFile: File | null;
   initValue: string;
-  upload(file: File, sponsorName: string, sponsorUrl: string): void;
+  brick: Brick;
+  upload(file: File | null, sponsorName: string, sponsorUrl: string): void;
   setDialog(open: boolean): void;
 }
 
-const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, upload, setDialog }) => {
+const ImageSponsorDialog: React.FC<DialogProps> = ({ open, brick, initFile, initValue, upload, setDialog }) => {
   const [permision, setPermision] = React.useState(false as boolean | 1);
   const [validationRequired, setValidation] = React.useState(false);
   const [file, setFile] = React.useState(initFile as File | null);
   const [cropedFile, setCroped] = React.useState(file as File | null);
-  const [removed, setRemoved] = React.useState(null as boolean | null);
-  const [sponsorName, setSponsorName] = React.useState('');
-  const [sponsorUrl, setSponsorUrl] = React.useState('');
+
+  let initRemoved = null;
+  if (file == null && !initValue) {
+    initRemoved = true;
+  }
+
+  let initSponsorName = brick.sponsorName || "scholar6.org";
+  let initSponsorUrl = brick.sponsorUrl || "https://scholar6.org/";
+
+  const [removed, setRemoved] = React.useState(initRemoved as boolean | null);
+  const [sponsorName, setSponsorName] = React.useState(initSponsorName);
+  const [sponsorUrl, setSponsorUrl] = React.useState(initSponsorUrl);
 
   useEffect(() => {
     if (!file) {
@@ -36,7 +47,7 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, 
   }, [initFile, file, initValue]);
 
   let canUpload = false;
-  if (permision && !removed) {
+  if (permision) {
     canUpload = true;
   }
 
@@ -77,14 +88,14 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, 
           </div>
           <div className="centered">
             {removed
-              ? <SpriteIcon name="image" className="icon-image" />
+              ? <img alt="init-file" className="scholar-6-logo" src="/images/Scholar-6-Logo.svg" />
               : <DropImage initFileName={initValue} locked={false} file={file} setFile={setCroped} />
             }
           </div>
         </div>
         <div className="source-input">
           <div className="fixed-icon">
-            <SpriteIcon name="link" />
+            <SpriteIcon name="hero-library" />
           </div>
           <input
             value={sponsorName}
@@ -110,7 +121,7 @@ const ImageSponsorDialog: React.FC<DialogProps> = ({ open, initFile, initValue, 
       </div>
       <div className="centered last-button">
         <div className={`upload-button ${canUpload ? 'active' : 'disabled'}`} onClick={() => {
-          if (cropedFile && canUpload) {
+          if (canUpload) {
             upload(cropedFile, sponsorName, sponsorUrl);
           } else {
             setValidation(true);
