@@ -1104,6 +1104,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             font-family: $font-family-bold;
             display: flex;
             justify-content: center;
+
+            .MuiChip-root {
+              border-radius: 4vw !important;
+
+              .MuiChip-deleteIcon {
+                width: 1.4vw !important;
+                height: 1.4vw !important;
+              }
+            }
           }
 
           .link-description {
