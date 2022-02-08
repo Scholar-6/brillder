@@ -45,6 +45,18 @@
         background: var(--theme-light-blue);
         border: 1px solid var(--white);
       }
+
+      .apply-btn {
+        cursor: pointer;
+        width: 6vw;
+        top: 2.7vw;
+        left: 20vw;
+        height: $block-height;
+        position: absolute;
+        border-radius: 0.4vw;
+        background: var(--theme-green);
+        animation: all 300ms ease-in-out;
+      }
     }
   }
   
