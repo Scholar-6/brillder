@@ -10,6 +10,7 @@ export interface AuthState {
   defaultPreference?: UserType;
   defaultSubject?: number;
   intendedPath: string;
+  referralId?: string;
   error: string;
 }
 
@@ -20,6 +21,7 @@ const AccountInitialState: AuthState = {
   defaultPreference: undefined,
   defaultSubject: undefined,
   intendedPath: "/home",
+  referralId: undefined,
   error: ""
 }
 
@@ -41,6 +43,8 @@ export default (state = AccountInitialState, action: any) => {
       return { ...state, isAuthenticated: isAuthenticated.False} as AuthState;
     case types.SET_INTENDED_PATH:
       return { ...state, intendedPath: action.path } as AuthState;
+    case types.SET_REFERRAL_ID:
+      return { ...state, referralId: action.referralId } as AuthState;
     default: return state;
   }
 }

@@ -12,11 +12,12 @@ import map from "components/map";
 import DesktopLoginForm from "../desktop/DesktopLoginForm";
 import { isPhone } from "services/phone";
 import { hideZendesk, showZendesk } from "services/zendesk";
-
+import { ReduxCombinedState } from "redux/reducers";
 
 interface MobileLoginProps {
   history: History;
   email?: string;
+  referralId?: string;
   loginSuccess(): void;
 }
 
@@ -105,7 +106,7 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
   const register = (email: string, password: string) => {
     axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp/3`,
-      { email, password, confirmPassword: password },
+      { email, password, confirmPassword: password, referralId: props.referralId },
       { withCredentials: true }
     ).then((resp) => {
       const { data } = resp;
@@ -174,10 +175,14 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
   );
 }
 
+const mapState = (state: ReduxCombinedState) => ({
+  referralId: state.auth.referralId,
+})
+
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
 });
 
-const connector = connect(null, mapDispatch);
+const connector = connect(mapState, mapDispatch);
 
 export default connector(MobileRegisterPage);
