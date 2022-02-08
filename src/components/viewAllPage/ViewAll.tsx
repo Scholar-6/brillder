@@ -235,8 +235,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         element: '.bricks-list',
         intro: `<p>Click a brick you would like to assign</p>`,
       }, {
-        element: '.bricks-list',
-        intro: `<p>Click a brick you would like to assign</p>`,
+        element: '.private-core-toggle',
+        intro: `<p>Click on the key icon to view your personal catalogue and assign a brick you have published yourself</p>`,
+      }, {
+        element: '.private-core-toggle',
+        intro: `<p>Click on the key icon to view your personal catalogue and assign a brick you have published yourself</p>`,
       }],
       isAllCategory,
 
@@ -448,8 +451,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   onIntroChanged(e: any) {
-    if (e !== 0) {
-      this.setState({ stepsEnabled: false });
+    if (e >= 2) {
+       this.setState({ stepsEnabled: false });
     }
   }
 
