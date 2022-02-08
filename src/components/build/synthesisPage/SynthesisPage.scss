@@ -14,6 +14,13 @@
       max-width: calc(72.5% - 2vw);
     }
   }
+  .s-loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--theme-dark-blue);
+    height: 100%;
+  }
   .inner-question-type {
     width: 100%;
     $synthesis-box-width: 72.5%;
@@ -86,6 +93,10 @@
         font-size: 1.8vw;
         margin-right: 0.5vw;
       }
+    }
+
+    .comments-panel {
+      height: calc(100% - 9vh) !important;
     }
 
     .submit-button {

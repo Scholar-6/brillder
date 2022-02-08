@@ -46,14 +46,17 @@
       width: 100%;
       height: 100%;
       background: var(--tab-gray);
-      padding-left: 1.55vw;
     }
     &.one-of-many {
       margin-top: 1vh;
       margin-bottom: 1vh;
       height: calc(calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh) / 6.35 - 2vh);
+      > div {
+        padding-left: 2vw !important;
+      }
     }
   }
+
   .sort-box {
     width: 100%;
 
@@ -253,11 +256,10 @@
 
     .filter-header {
       position: relative;
-      text-transform: uppercase;
+      text-transform: capitalize;
       background: var(--light-blue-alpha5);
       padding: 0.3vw 1.4vw;
       font-size: 1.2vw;
-      letter-spacing: 0.22vw;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -451,6 +453,11 @@
         @extend %flexCenter;
         height: 6vw;
         z-index: 1000;
+
+        .eye-pupil {
+          width: 2vw;
+          height: 2vw;
+        }
       }
       .glass-eyes-right,
       .glass-eyes-left {
@@ -519,26 +526,98 @@
       margin-bottom: 1.5vw;
     }
   }
+
+  .f-top-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--theme-dark-blue);
+    height: 100% !important;
+  }
 }
 
 // view all button
 .manage-classrooms-page {
-  .m-view-all {
-    display: flex;
-    align-items: center;
+  .sort-box > .create-class-button {
+    padding-left: 0.5vw !important;
+    padding-bottom: 1vh !important;
+  }
+
+  .index-box.m-view-all {
+    position: relative !important;
+    cursor: pointer;
+    padding-top: 1vh;
+    display: block;
     font-size: 1.05vw;
     font-family: $font-family-regular;
     padding-left: 1.4vw;
-    height: 4.7vh !important;
+    height: 9vh !important;
+
+    color: var(--theme-dark-blue);
+    background: var(--tab-gray);
+
+    .right-index {
+      color: var(--theme-dark-blue);
+      padding-top: calc(1vh + 0.5vw) !important;
+      transform: unset !important;
+      top: 0 !important;
+      height: 4vh !important;
+
+      .classrooms-box {
+        color: var(--theme-dark-blue) !important;
+      }
+    }
+
+    &.item-box2 {
+      height: auto !important;
+      padding-bottom: 1vh;
+      .right-index {
+        padding-top: 0.6vw !important;
+        height: auto !important;
+      }
+    }
+
+
+    &:hover {
+      background: var(--dark-gray);
+    }
+
+    &.yellow {
+      background: var(--theme-yellow);
+      color: var(--theme-dark-blue);
+
+      .right-index {
+        color: var(--theme-dark-blue) !important;
+      }
+
+      &:hover {
+        background: var(--theme-yellow);
+      }
+      &.active {
+        color: var(--white) !important;
+        .right-index {
+          color: var(--white) !important;
+        }
+      }
+    }
     
     &.active {
+      color: var(--white);
       background-color: var(--theme-orange);
+      .right-index {
+        color: var(--white);
+      }
+      .classrooms-box {
+        color: var(--white) !important;
+      }
+      &:hover {
+        background: var(--theme-orange);
+      }
     }
     .right-index {
       display: flex;
       align-items: center;
       right: 1.2vw !important;
-      color: var(--white) !important;
       background: inherit !important;
       svg {
         margin-left: 0.2vw;
@@ -548,5 +627,15 @@
         height: 1.3vw;
       }
     }
+  }
+}
+
+.back-to-work-teach {
+  .custom-tooltip, .css-custom-tooltip {
+    font-family: $font-family-bold;
+  }
+  .css-custom-tooltip {
+    color: var(--tab-gray);
+    background: var(--theme-light-blue);
   }
 }

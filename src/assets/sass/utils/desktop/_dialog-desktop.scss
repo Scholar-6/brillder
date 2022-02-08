@@ -8,7 +8,7 @@
     padding: 0 !important;
     .MuiDialog-paperScrollPaper {
       @extend %m0;
-      padding: 1.5vw;
+      padding: 1.8vw;
       border-radius: 0.8vw;
     }
   }
@@ -75,6 +75,15 @@
       svg {
         height: 4vw;
         width: 4vw;
+      }
+    }
+    .circle-green {
+      background: var(--theme-green);
+      width: 5vw;
+      height: 5vw;
+      svg {
+        width: 4vw;
+        height: 4vw;
       }
     }
     .circle-orange {
@@ -260,7 +269,7 @@
     }
 
     svg:hover {
-      color: var(--theme-orange);
+      color: var(--theme-orange) !important;
     }
   }
   &.light-blue {
@@ -297,11 +306,19 @@
         margin-bottom: 0.7vh !important;
       }
       .small-text-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         font-size: 1vw;
         margin-bottom: 3vh;
         cursor: pointer;
         transition: all 300ms ease-out;
+
+        svg {
+          width: 1.4vw;
+          height: 1.4vw;
+        }
 
         &:hover {
           color: var(--theme-orange);

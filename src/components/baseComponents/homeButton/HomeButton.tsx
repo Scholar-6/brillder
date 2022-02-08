@@ -3,24 +3,28 @@ import { Route } from 'react-router-dom'
 
 import './HomeButton.scss';
 import SpriteIcon from '../SpriteIcon';
+import { isMobile } from 'react-device-detect';
 
-
+const DesktopTheme = React.lazy(() => import("./themes/HomeButtonDesktopTheme"));
 export interface HomeButtonProps {
   link?: string;
+  history: any;
   onClick?(): void;
 }
 
 const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
   return (
-    <Route render={({ history }) => {
+    <Route render={() => {
       const onClick = () => {
         if (props.onClick) {
           props.onClick();
         } else if (props.link) {
-          history.push(props.link);
+          props.history.push(props.link);
         }
       }
       return (
+        <React.Suspense fallback={<></>}>
+        {!isMobile && <DesktopTheme />}
         <div className="home-button-container">
           <button type="button" className="btn btn-transparent svgOnHover home-button" onClick={() => onClick()}>
             <SpriteIcon name="logo" className="w100 h100 active text-theme-orange" />
@@ -28,7 +32,7 @@ const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
               <SpriteIcon name="roof" className="w100 h100 active text-theme-orange" />
             </div>
             <div className="smoke-container">
-              <svg className="svg w100 h100">
+              <svg className="svg w100 h100" viewBox="0 0 24 24">
                 <g className="smokes" fill="#BEBEBE" stroke="none">
                   <g className="smoke-1">
                     <path id="Shape1" d="M13.247,2.505c-2.09-1.363-3.281-2.4-6.472-2.043C3.583,0.818,4.833,5.601,3.438,5.601
@@ -50,6 +54,7 @@ const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
             </div>
           </button>
         </div>
+        </React.Suspense>
       )
     }} />
   );

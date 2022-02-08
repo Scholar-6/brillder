@@ -3,12 +3,74 @@
 @import 'src/assets/sass/partials/extensions';
 
 .sound-dialog {
+  .margin-top-x3 {
+    margin-top: 1vh;
+    margin-bottom: 0.5vh;
+  }
   .MuiPaper-root.MuiDialog-paper {
+    color: var(--theme-dark-blue);
+    max-width: 37vw !important;
     background: var(--tab-gray) !important;
+    font-size: 1.3vw;
+
+    .react-recording {
+      padding: 0 0.5vw;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .dropzone {
+      margin-top: 0.5vw;
+    }
+
+    input {
+      width: calc(100% - 0.8vw);
+      margin-top: 0.5vw;
+      &.source-g2 {
+        margin-top: 0 !important;
+      }
+      &.invalid {
+        background: var(--theme-orange);
+      }
+    }
+
+    .caption-input {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      margin-top: 0;
+    }
 
     .upload-button-container {
-      margin-top: 1vw;
+      margin-top: 3vw;
+      height: 3vw;
       @extend %flexToXCenter;
+    }
+
+    .record-button-row button span {
+      font-size: 1.3vw;
+      letter-spacing: 0;
+    }
+
+    input::placeholder {
+      opacity: 0.5 !important;
+      font-family: $font-family-bold;
+      color: var(--theme-dark-blue) !important;
+    }
+
+    .permision-buttons {
+      margin-top: 1.6vh;
+      .MuiButtonBase-root {
+        padding: 0 !important;
+      }
+      svg.fgr-icon {
+        margin-top: 0.5vh !important;
+      }
+      .required {
+        color: var(--theme-orange);
+        &.Mui-checked {
+          color: var(--theme-green);
+        }
+      }
     }
 
     .upload-button {
@@ -26,6 +88,10 @@
         position: absolute;
         width: 80%;
         height: 70%;
+      }
+
+      .css-custom-tooltip {
+        background: var(--off-white);
       }
   
       &.active {

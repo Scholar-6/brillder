@@ -32,11 +32,11 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, ...
       <QuillEditor
         disabled={locked}
         data={data.value}
-        placeholder=""
         toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
         validate={props.validationRequired}
         isValid={!!stripHtml(data.value)}
         onBlur={() => props.save()}
+        placeholder="Poem text"
         onChange={onChange}
       />
     </div>

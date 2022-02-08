@@ -7,7 +7,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { PlayMode } from './model';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
-import { checkTeacherOrAdmin } from "components/services/brickService";
+import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
@@ -15,19 +15,17 @@ import { Brick } from "model/brick";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
 import axios from "axios";
-import ShareDialog from "./finalStep/dialogs/ShareDialog";
-import LinkDialog from "./finalStep/dialogs/LinkDialog";
-import LinkCopiedDialog from "./finalStep/dialogs/LinkCopiedDialog";
-import InviteDialog from "./finalStep/dialogs/InviteDialog";
-import InvitationSuccessDialog from "./finalStep/dialogs/InvitationSuccessDialog";
 import HighlightTextButton from "./baseComponents/sidebarButtons/HighlightTextButton";
 import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
-import routes, { playNewPrep, PlayPreInvestigationLastPrefix } from "./routes";
-
-declare var Brillder: any;
+import routes, { PlayPreInvestigationLastPrefix } from "./routes";
+import ShareDialogs from "./finalStep/dialogs/ShareDialogs";
+import GenerateCoverButton from "./baseComponents/sidebarButtons/GenerateCoverButton";
+import { isInstitutionPreference } from "components/services/preferenceService";
+import CompetitionButton from "./baseComponents/sidebarButtons/CompetitionButton";
+import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDialog";
 
 interface SidebarProps {
   history: any;
@@ -42,6 +40,7 @@ interface SidebarProps {
 
   //play-preview
   isPreview?: boolean;
+  showPremium?(): void;
   moveToBuild?(): void;
 
   //redux
@@ -49,24 +48,16 @@ interface SidebarProps {
   fetchBrick(brickId: number): Promise<Brick | null>;
 }
 
-interface InviteResult {
-  isOpen: boolean;
-  accessGranted: boolean;
-  name: string;
-}
-
 interface SidebarState {
   isAdaptBrickOpen: boolean;
+  competitionPresent: boolean | null;
+  isCompetitionOpen: boolean;
   isCoomingSoonOpen: boolean;
   isAssigningOpen: boolean;
   isAssignedSuccessOpen: boolean;
   isAssignedFailedOpen: boolean;
   isSharingOpen: boolean;
-  isLinkOpen: boolean;
-  linkCopiedOpen: boolean;
-  inviteOpen: boolean;
   isAdapting: boolean;
-  inviteResult: InviteResult;
   selectedItems: any[];
   failedItems: any[];
 }
@@ -76,31 +67,41 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     super(props);
     this.state = {
       isAdapting: false,
+      competitionPresent: null,
+      isCompetitionOpen: false,
       isAdaptBrickOpen: false,
       isCoomingSoonOpen: false,
       isAssigningOpen: false,
       isAssignedSuccessOpen: false,
       isAssignedFailedOpen: false,
       isSharingOpen: false,
-      isLinkOpen: false,
-      linkCopiedOpen: false,
-      inviteOpen: false,
-      inviteResult: {
-        isOpen: false,
-        accessGranted: false,
-        name: ''
-      },
       selectedItems: [],
       failedItems: []
+    }
+
+    this.getCompetition();
+  }
+
+  async getCompetition() {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/competition/${this.props.user.id}/${this.props.brick.id}`, { withCredentials: true });
+      if (res.status === 200 && res.data) {
+        console.log(res.data);
+        this.setState({ competitionPresent: true });
+      } else {
+        this.setState({ competitionPresent: false });
+      }
+    } catch {
+      this.setState({ competitionPresent: false });
     }
   }
 
   setHighlightMode() {
     if (this.props.setMode) {
-      if (this.props.mode === PlayMode.Highlighting) {
-        this.props.setMode(PlayMode.Normal);
-      } else {
+      if (this.props.mode === PlayMode.Normal) {
         this.props.setMode(PlayMode.Highlighting);
+      } else {
+        this.props.setMode(PlayMode.Normal);
       }
     }
   }
@@ -135,7 +136,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   moveToBuild() {
-    console.log('move to build')
     if (this.props.moveToBuild) {
       this.props.moveToBuild();
     }
@@ -171,8 +171,29 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     this.setState({ isAdapting: false })
   }
 
+  async createCompetition(startDate: any, endDate: any) {
+    // creation competition
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/competition`,
+      { startDate, endDate, brickId: this.props.brick.id },
+      { withCredentials: true }
+    );
+    if (response.status === 200) {
+      console.log('created')
+    }
+    return;
+  }
+
   onAdaptDialog() {
     this.setState({ isAdaptBrickOpen: true });
+  }
+
+  onCompetition() {
+    this.setState({ isCompetitionOpen: true });
+  }
+
+  onDownload() {
+    // download pdf
   }
 
   isLive() {
@@ -180,7 +201,16 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   isCover() {
-    return this.props.history.location.pathname.slice(-6) === '/cover';
+    try {
+      const coverPart = this.props.history.location.pathname.split('/')[4];
+      if (coverPart === 'cover') {
+        return true;
+      }
+    } catch {
+      console.log('something wrong with path');
+      return false;
+    }
+    return false;
   }
 
   isPreInvesigation() {
@@ -203,27 +233,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return this.props.history.location.pathname.slice(-7) === '/ending';
   }
 
-  renderPrepButton() {
-    const isLive = this.isLive() || this.isPreInvesigation();
-    if (isLive && this.props.sidebarRolledUp) {
-      return (
-        <div>
-          <div className="prep-button" onClick={() => this.props.history.push(playNewPrep(this.props.brick.id))}>
-            <SpriteIcon name="file-text" />
-            <div>Prep</div>
-            <div className="absolute-circle">
-              <img alt="prep-border-circle" className="prep-circle dashed-circle" src="/images/borders/big-prep-dash-circle.svg" />
-              <div className="prep-help-text">Click here to go back to Prep tasks</div>
-            </div>
-          </div>
-          {<div className="grey-line"><div /></div>}
-        </div>
-      );
-    }
-    return <div />
-  }
-
   renderButtons() {
+    this.isCover();
     if (this.props.isPreview) {
       if (this.props.sidebarRolledUp) {
         return (
@@ -232,7 +243,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
               <SpriteIcon name="trowel" className="w100 h100 active" />
             </div>
             <div className="create-icon-label">
-              BACK TO BUILD
+              B<br />A<br />C<br />K<br /><br />T<br />O<br /><br />B<br />U<br />I<br />L<br />D
             </div>
           </div>
         );
@@ -255,19 +266,17 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       }
     }
 
-    const {sidebarRolledUp} = this.props;
+    const { sidebarRolledUp } = this.props;
     const haveBriefCircles = this.props.history.location.pathname.slice(-routes.PlayBriefLastPrefix.length) === routes.PlayBriefLastPrefix;
 
     return (
       <div className="sidebar-button">
-        {(Brillder.testing.highlighter && (this.isPrep() || this.isSynthesis())) && <HighlightTextButton
+        {(this.isPrep() || this.isSynthesis()) && <HighlightTextButton
           mode={this.props.mode}
           sidebarRolledUp={sidebarRolledUp}
           haveCircle={haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />}
-        {this.renderPrepButton()}
-        <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
         <AssignButton
           sidebarRolledUp={sidebarRolledUp}
           user={this.props.user}
@@ -281,6 +290,15 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           sidebarRolledUp={sidebarRolledUp}
           onClick={this.onAdaptDialog.bind(this)}
         />
+        <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
+        {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) &&
+          <GenerateCoverButton
+            sidebarRolledUp={sidebarRolledUp}
+            brick={this.props.brick}
+          />
+        }
+        {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) &&
+          <CompetitionButton competitionPresent={this.state.competitionPresent} sidebarRolledUp={sidebarRolledUp} onDownload={this.onDownload.bind(this)} onClick={this.onCompetition.bind(this)} />}
       </div>
     );
   }
@@ -288,20 +306,13 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   renderDialogs() {
     if (this.props.isPreview) { return ""; }
 
+    const { brick, user } = this.props;
+
     let canSee = false;
     try {
-      canSee = checkTeacherOrAdmin(this.props.user);
+      canSee = checkTeacherOrAdmin(user);
     } catch { }
 
-    const { brick } = this.props;
-    const { inviteResult } = this.state;
-
-    let isAuthor = false;
-    try {
-      isAuthor = brick.author.id === this.props.user.id;
-    } catch { }
-
-    const link = routes.playCover(brick.id);
 
     return (
       <div>
@@ -311,9 +322,18 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           close={() => this.setState({ isAdaptBrickOpen: false })}
           submit={this.createBrickCopy.bind(this)}
         />
+        <CompetitionDialog
+          isOpen={this.state.isCompetitionOpen}
+          close={() => this.setState({ isCompetitionOpen: false })}
+          submit={(start: any, end: any) => {
+            this.setState({ isCompetitionOpen: false });
+            this.createCompetition(start, end);
+          }}
+        />
         {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.state.isAssigningOpen}
+            user={this.props.user}
             history={this.props.history}
             success={(items: any[], failedItems: any[]) => {
               if (items.length > 0) {
@@ -322,11 +342,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                 this.setState({ failedItems, isAssignedFailedOpen: true });
               }
             }}
+            showPremium={() => this.props.showPremium && this.props.showPremium()}
             close={() => this.setState({ isAssigningOpen: false })}
           />}
         <AssignSuccessDialog
           isOpen={this.state.isAssignedSuccessOpen}
-          brickTitle={this.props.brick.title}
+          brickTitle={brick.title}
           selectedItems={this.state.selectedItems}
           close={() => {
             if (this.state.failedItems.length > 0) {
@@ -338,37 +359,15 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         />
         <AssignFailedDialog
           isOpen={this.state.isAssignedFailedOpen}
-          brickTitle={this.props.brick.title}
+          brickTitle={brick.title}
           selectedItems={this.state.failedItems}
           close={() => this.setState({ isAssignedFailedOpen: false, failedItems: [] })}
         />
-        <ShareDialog
-          isOpen={this.state.isSharingOpen}
-          link={() => { this.setState({ isSharingOpen: false, isLinkOpen: true }) }}
-          invite={() => { this.setState({ isSharingOpen: false, inviteOpen: true }) }}
+        <ShareDialogs
+          shareOpen={this.state.isSharingOpen}
+          brick={brick}
+          user={user}
           close={() => this.setState({ isSharingOpen: false })}
-        />
-        <LinkDialog
-          isOpen={this.state.isLinkOpen}
-          link={document.location.host + link}
-          submit={() => this.setState({ isLinkOpen: false, linkCopiedOpen: true })}
-          close={() => this.setState({ isLinkOpen: false })}
-        />
-        <LinkCopiedDialog
-          isOpen={this.state.linkCopiedOpen}
-          close={() => this.setState({ linkCopiedOpen: false })}
-        />
-        <InviteDialog
-          canEdit={true} brick={brick} isOpen={this.state.inviteOpen} hideAccess={true} isAuthor={isAuthor}
-          submit={name => {
-            this.setState({ inviteResult: { isOpen: true, name, accessGranted: false } })
-          }}
-          close={() => this.setState({ inviteOpen: false })}
-        />
-        <InvitationSuccessDialog
-          isAuthor={isAuthor}
-          isOpen={inviteResult.isOpen} name={inviteResult.name} accessGranted={inviteResult.accessGranted}
-          close={() => this.setState({ inviteResult: { isOpen: false, name: '', accessGranted: false } })}
         />
       </div>
     );
@@ -387,13 +386,60 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return (
       <Grid container item className={className}>
         <div className="collapsable-sidebar">
-          <div className="sidebar-button f-align-end">
-            {this.renderToggleButton()}
-          </div>
-          {this.renderButtons()}
-          {this.renderDialogs()}
+          {!this.props.sidebarRolledUp &&
+            <div className="brick-info">
+              <div className="hover-area">
+                Brick N<sub className="smaller">o.</sub> {this.props.brick.id}
+                <div className="hover-content">
+                  <div>A brick is a learning unit that should take either 20, 40, or 60 minutes to complete.</div>
+                  <br />
+                  <div>Bricks follow a cognitively optimised sequence:</div>
+                  <div className="container">
+                    <div className="white-circle">1</div>
+                    <div className="l-text">
+                      Preparation: <span className="regular">stimulus content gets you in the zone.</span>
+                    </div>
+                  </div>
+                  <div className="container">
+                    <div className="white-circle">2</div>
+                    <div className="l-text">
+                      Investigation: <span className="regular">challenging interactive questions make you think.</span>
+                    </div>
+                  </div>
+                  <div className="container">
+                    <div className="white-circle">3</div>
+                    <div className="l-text">
+                      <span className="regular">A preliminary score</span>
+                    </div>
+                  </div>
+                  <div className="container">
+                    <div className="white-circle">4</div>
+                    <div className="l-text">
+                      Synthesis: <span className="regular">explanation.</span>
+                    </div>
+                  </div>
+                  <div className="container">
+                    <div className="white-circle">5</div>
+                    <div className="l-text">
+                      Review: <span className="regular">hints help you correct your answers.</span>
+                    </div>
+                  </div>
+                  <div className="container">
+                    <div className="white-circle">6</div>
+                    <div className="l-text">
+                      <span className="regular">A final score</span>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>}
+        <div className="sidebar-button f-align-end">
+          {this.renderToggleButton()}
         </div>
-      </Grid>
+        {this.renderButtons()}
+        {this.renderDialogs()}
+      </div>
+      </Grid >
     );
   }
 };

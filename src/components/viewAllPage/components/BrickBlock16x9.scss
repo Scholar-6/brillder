@@ -4,16 +4,44 @@
 
 
 .animated-brick-container {
+  .absolute-assignment-title {
+    top: -0.25vw;
+    left: 0.1vw;
+    position: absolute;
+    margin-left: 0.9vw;
+    font-size: 0.9vw;
+    font-family: $font-family-light-italic;
+    color: var(--theme-dark-blue);
+  }
+
+  .competition-baner {
+    background: var(--theme-orange);
+    z-index: 1000;
+    top: 1.5vw;
+    font-family: $font-family-bold;
+    margin-right: 0.5vw;
+    width: 8vw;
+    left: -1.7vw;
+    transform: rotate(-40deg);
+    display: flex;
+    align-items: center;
+    font-size: 0.7vw;
+    text-transform: uppercase;
+    justify-content: center;
+    color: var(--white);
+    position: absolute;
+    svg {
+      height: 0.7vw;
+      width: 0.7vw;
+    }
+  }
 
   .flex-brick-container {
+    position: relative;
     height: calc(#{$bricks-height / 2.5});
     display: flex;
     align-items: center;
     transition: all 400ms ease-out !important;
-
-    &:hover {
-      margin-top: calc(#{$bricks-height / -34});
-    }
 
     .publish-brick-container {
       min-width: 22vw;
@@ -30,13 +58,42 @@
         z-index: 3;
         right: 1vh;
         top: 1vh;
+
+        &.score {
+          right: calc(1vh + 3.5vh + 2vh);
+          > div {
+            color: var(--theme-dark-blue);
+            font-family: $font-family-bold;
+            font-size:2.5vh;
+          }
+          .CircularProgressbar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 10;
+            width: 4.5vh;
+            height: 4.5vh;
+            .CircularProgressbar-trail {
+              display: none;
+            }
+            .CircularProgressbar-path {
+              stroke: var(--theme-green) !important;
+            }
+          }
+        }
+
+        svg {
+          $size: 3.5vh;
+          width: $size;
+          height: $size;
+        }
       }
 
       .level>div {
         height: 4.5vh;
         width: 4.5vh;
         border-radius: 50%;
-        font-size: 2.3vh;
+        font-size: 3vh;
         color: white;
         display: flex;
         align-items: center;
@@ -45,6 +102,13 @@
 
       img {
         width: 100%;
+      }
+
+      .hidden {
+        opacity: 0;
+      }
+      .visible {
+        animation: fadein 0.5s 0s forwards;
       }
 
       .bottom-description-color {
@@ -57,7 +121,7 @@
       .bottom-description {
         color: var(--theme-dark-blue);
         height: 3vw;
-        font-size: 0.95vw;
+        font-size: 0.93vw;
         letter-spacing: 1;
         position: absolute;
         bottom: 0;
@@ -65,12 +129,34 @@
         align-items: center;
         justify-content: center;
         width: 100%;
+        border-bottom-left-radius: 0.9vw;
+        border-bottom-right-radius: 0.9vw;
+
+        .brick-title {
+          width: 100%;
+          white-space: nowrap;
+          overflow-x: hidden;
+          text-align: center;
+          text-overflow: ellipsis;
+            display: inline;
+          br {
+            display: none;
+          }
+          p {
+            display: inline;
+          }
+        }
       }
 
       .scroll-block {
         height: 100%;
         width: 100%;
         overflow-y: scroll;
+      }
+      
+      .p-cover-image {
+        height: 100%;
+        background: var(--tab-gray);
       }
 
       .p-cover-icon {

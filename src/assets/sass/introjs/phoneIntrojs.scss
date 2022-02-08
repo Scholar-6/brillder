@@ -1,0 +1,70 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.introjs-tooltipReferenceLayer * {
+  font-family: $font-family-regular;
+  color: var(--theme-dark-blue);
+  font-size: 1.5vw;
+}
+
+.introjs-tooltip {
+  max-width: 40vw !important;
+  border-radius: 0.4vw;
+  .introjs-skipbutton {
+    line-height: 1;
+
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .introjs-tooltiptext {
+    font-size: 1.3vw;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 3vw;
+    padding-right: 3vw;
+  }
+  .introjs-tooltipbuttons {
+    padding: 1.6vw;
+  }
+  .introjs-prevbutton {
+    margin-right: 0.6vw;
+  }
+}
+
+.introjs-tooltipReferenceLayer {
+  p {
+    min-height: 2vw;
+  }
+  .introjs-tooltipbuttons {
+    a {
+      padding: 0.7vh 1.4vh;
+      outline: none !important;
+      font-family: $font-family-bold;
+      box-shadow: none !important;
+      border: none !important;
+      border-radius: 0.4vw;
+    }
+
+    .introjs-donebutton, .introjs-nextbutton {
+      text-shadow: none;
+      background: var(--theme-green) !important;
+      color: var(--white);
+      border: none !important;
+
+      transition: all 300ms ease-out;
+
+      &:hover {
+        background: var(--theme-dark-blue) !important;
+      }
+    }
+  }
+}
+
+.introjs-helperLayer {
+  box-shadow: rgba(33, 33, 33, .5) 0px 0px 0px 5000px !important;
+}
+
+.dark-shadow {
+  box-shadow: rgba(33, 33, 33, .5) 0px 0px 0px 5000px !important;
+}

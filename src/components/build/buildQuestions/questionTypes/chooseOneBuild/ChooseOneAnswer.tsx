@@ -38,7 +38,9 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     if (locked) { return; }
     answer.value = "";
     answer.soundFile = "";
-    answer.valueFile = fileName;
+    if (fileName) {
+      answer.valueFile = fileName;
+    }
     answer.answerType = QuestionValueType.Image;
     update();
     save();
@@ -131,10 +133,11 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
           locked={locked}
           object={answer}
           fieldName="value"
-          placeholder="Enter Answer..."
+          placeholder={"Answer " + (index + 1)}
           toolbar={['latex']}
           validationRequired={validationRequired}
           isValid={!!stripHtml(answer.value)}
+          onBlur={onBlur}
           onChange={value => onTextChanged(answer, value)}
         />
         <SoundRecord

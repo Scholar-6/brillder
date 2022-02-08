@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import './MissingWordBuild.scss'
@@ -9,6 +8,7 @@ import { showSameAnswerPopup } from '../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import MissingWordQuill from 'components/baseComponents/quill/MissingWordQuill';
 
 
 interface Answer {
@@ -26,6 +26,7 @@ export interface MissingChoice {
 export interface MissingWordComponentProps extends UniqueComponentProps {
   data: {
     choices: MissingChoice[];
+    isPoem?: boolean;
   };
 }
 
@@ -73,8 +74,8 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
     updateComponent(state);
   }
 
-  const answerChanged = (answer: any, event: any) => {
-    answer.value = event.target.value;
+  const answerChanged = (answer: any, v: string) => {
+    answer.value = v;
     update();
   }
 
@@ -103,13 +104,13 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
     save();
   }
 
-  const beforeChanged = (choice: MissingChoice, event: any) => {
-    choice.before = event.target.value;
+  const beforeChanged = (choice: MissingChoice, v: string) => {
+    choice.before = v;
     update();
   }
 
-  const afterChanged = (choice: MissingChoice, event: any) => {
-    choice.after = event.target.value;
+  const afterChanged = (choice: MissingChoice, v: string) => {
+    choice.after = v;
     update();
   }
 
@@ -145,24 +146,26 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
 
     return (
       <div className="choose-several-box" key={key}>
-        <textarea
-          value={choice.before}
-          onChange={(event) => { beforeChanged(choice, event) }}
+        <MissingWordQuill
+          data={choice.before}
+          className="missing-big-text"
+          toolbar={['bold', 'italic', 'latex']}
+          onChange={v => beforeChanged(choice, v)}
           disabled={locked}
-          rows={3}
-          placeholder="Text before missing word..."></textarea>
+          placeholder="Text before missing word"
+        />
         {
           (state.choices.length > 1)
-            && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
-              <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
-            </button>
+          && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
+            <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
+          </button>
         }
         {
           choice.answers.map((answer, i) => {
             return (
               <div style={{ position: 'relative' }} className={getAnswerClass(answer)} key={i}>
                 {
-                  (choice.answers.length > 3) && <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, i)} />
+                  (choice.answers.length > 3) && <SpriteIcon name="trash-outline" className="right-top-icon" onClick={() => removeAnswer(choice, i)} />
                 }
                 <Checkbox
                   className={`left-ckeckbox ${(validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}`}
@@ -170,13 +173,14 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
                   checked={answer.checked}
                   onChange={(e) => onChecked(choice, e)} value={i}
                 />
-                <input
-                  placeholder="Enter Answer..."
+                <MissingWordQuill
+                  placeholder="Enter Answer"
+                  toolbar={['bold', 'italic', 'latex']}
                   className={getInputClass(answer)}
                   disabled={locked}
-                  value={answer.value}
-                  onChange={(event: any) => {
-                    answerChanged(answer, event);
+                  data={answer.value}
+                  onChange={v => {
+                    answerChanged(answer, v);
                   }}
                   onBlur={() => {
                     showSameAnswerPopup(i, choice.answers, openSameAnswerDialog);
@@ -186,17 +190,34 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
             );
           })
         }
-        <textarea
-          value={choice.after}
+        <MissingWordQuill
+          data={choice.after}
+          className="missing-big-text"
+          toolbar={['bold', 'italic', 'latex']}
+          onChange={v => afterChanged(choice, v)}
           disabled={locked}
-          rows={3}
-          placeholder="Text after missing word..."
-          onChange={(event) => { afterChanged(choice, event) }}>
-        </textarea>
+          placeholder="Text after missing word"
+        />
         <AddAnswerButton
           locked={locked} addAnswer={() => { addAnswer(choice) }} height={choice.height}
-          label="+ ANSWER"
+          label="Add an answer option"
         />
+      </div>
+    );
+  }
+
+  const renderPoemToggle = () => {
+    let className = 'poem-toggle';
+    if (data.isPoem) {
+      className += ' active';
+    }
+    return (
+      <div className={className} onClick={() => {
+        data.isPoem = !data.isPoem;
+        update();
+        save();
+      }}>
+        br
       </div>
     );
   }
@@ -204,14 +225,18 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
   return (
     <div className="missing-word-build">
       <div className="component-title">
-        Tick Correct Answer
+        <div className="flex-center">
+          <SpriteIcon name="feacher-check-square" />
+          <div>Tick Correct Answer</div>
+          {renderPoemToggle()}
+        </div>
       </div>
       {
         state.choices.map((choice, i) => renderChoice(choice, i))
       }
       <AddAnswerButton
         locked={locked} addAnswer={addChoice} height={height}
-        label="+ MISSING WORD"
+        label="Add a new sentence"
       />
     </div>
   )

@@ -15,6 +15,7 @@ import BackPagePagination from "../BackPagePagination";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import { PersonalFilters, SubjectItem } from "./model";
 import CreateBrickBlock from "../CreateBrickBlock";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface PersonalBuildProps {
   user: User;
@@ -293,7 +294,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
           history={this.props.history}
           selfPublish={selfPublish}
           bricks={bricks}
-          isEmpty={this.props.isFilterEmpty}
+          isEmpty={isEmpty || this.props.isFilterEmpty}
           filters={this.state.filters}
           setFilters={this.setFilters.bind(this)}
           filterBySubject={this.filterBySubject.bind(this)}
@@ -311,6 +312,7 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
                 ? this.renderEmptyPage()
                 : <div className="bricks-list-container">
                     <div className="bricks-list" ref={this.state.bricksRef}>
+                      {!this.props.loaded && <div className="absolute-loader"><SpriteIcon name="f-loader" className="spinning" /></div>}
                       {this.renderBricks(displayBricks)}
                     </div>
                   </div>}

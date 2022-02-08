@@ -13,6 +13,11 @@
   }
   .search-input {
     width: 100%;
+    @include placeholder {
+      opacity: 0.8;
+      color: var(--tab-gray);
+      font-family: $font-family-regular !important;
+    }
   }
   .page-navigation {
     position: relative;
@@ -63,7 +68,7 @@
         position: relative;
         align-items: center;
         justify-content: center;
-        height: 74px;
+        height: 17.5vw;
         &.active {
           z-index: 999999;
         }
@@ -91,7 +96,19 @@
 
         .search-container {
           display: flex;
+          position: absolute;
+          top: 1vw;
           align-items: center;
+          margin-left: 0.8vw;
+          border-radius: 0.8vw;
+
+          svg {
+            width: 80% !important;
+            height: 80% !important;
+          }
+          &.no-bottom-border {
+            background: #2B4779;
+          }
           @include phone_and_tabletP {
             display: flex;
             &.active {
@@ -102,7 +119,8 @@
             }
           }
           @include tabletP {
-            width: 70%;
+            width: 60vw;
+            margin-right: 3vw;
             height: 3.698vw;
           }
 
@@ -130,12 +148,12 @@
             .search-input {
               display: block;
               background-color: transparent;
-              font-family: $font-family-regular;
+              font-family: $font-family-bold !important;
               border: none;
               border-radius: 12px;
               letter-spacing: 0.045vw;
               width: 100%;
-              color: var(--dark-gray);
+              color: var(--tab-gray);
               padding: 0.7vh 0.6vw;
               @include phone_and_tabletP {
                 font-size: 3.7vw;
@@ -147,6 +165,7 @@
           }
         }
         .action-container {
+          margin-left: 65vw;
           justify-content: flex-end;
           @include phone_and_tabletP {
             width: 100%;
@@ -360,14 +379,20 @@
 .header-btn {
   cursor: pointer;
   display: inline-block;
+  &.search-button, &#bell-container, &.more-button {
+    width: 3.698vw;
+    height: 3.698vw;
+    @include phone_and_tabletP {
+      width: 45px;
+      height: 45px;
+    }
+  }
   @include phone_and_tabletP {
     width: 45px;
     height: 45px;
   }
   @include tabletP {
     margin: 0 2vw 0 0;
-    width: 3.698vw;
-    height: 3.698vw;
   }
   .svg {
     width: 100% !important;

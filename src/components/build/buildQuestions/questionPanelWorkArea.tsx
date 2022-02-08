@@ -25,6 +25,7 @@ import CommentButton from '../baseComponents/commentButton/CommentButton';
 import UndoButton from '../baseComponents/UndoButton';
 import RedoButton from '../baseComponents/redoButton';
 import StatusCircle from '../baseComponents/statusCircle/StatusCircle';
+import { isAorPorE } from 'components/services/brickService';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -32,8 +33,7 @@ function SplitByCapitalLetters(element: string): string {
 }
 
 export interface QuestionProps {
-  brickId: number;
-  currentBrick: Brick;
+  brick: Brick;
   canEdit: boolean;
   question: Question;
   history: any;
@@ -63,12 +63,12 @@ export interface QuestionProps {
 }
 
 const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
-  brickId, question, history, validationRequired, locked, getQuestionIndex, ...props
+  brick, question, history, validationRequired, locked, getQuestionIndex, ...props
 }) => {
   const [componentTypes, setComponentType] = React.useState([
     { id: 1, type: QuestionComponentTypeEnum.Text },
-    { id: 2, type: QuestionComponentTypeEnum.Quote },
-    { id: 3, type: QuestionComponentTypeEnum.Image },
+    //{ id: 2, type: QuestionComponentTypeEnum.Quote },
+    //{ id: 3, type: QuestionComponentTypeEnum.Image },
     { id: 4, type: QuestionComponentTypeEnum.Sound },
     { id: 5, type: QuestionComponentTypeEnum.Graph }
   ]);
@@ -111,9 +111,32 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   }
   //#endregion
 
+  /**
+   * if Admin, Publisher or Editor than true
+   * @returns 
+   */
+  const canSeeLock = () => {
+    const {currentUser} = props;
+    const adminPublisherOrEditor = isAorPorE(brick, currentUser);
+    if (adminPublisherOrEditor) {
+      return true;
+    }
+    return false;
+  }
+
+  const renderLock = () => {
+    if (brick.isCore === true) {
+      const canSee = canSeeLock();
+      if (canSee) {
+        return <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+      }
+    }
+    return ''
+  }
+
   return (
     <MuiThemeProvider>
-      <div key={question?.id} className={showHelpArrow ? "build-question-page unselectable" : "build-question-page unselectable active"} style={{ width: '100%', height: '94%' }}>
+      <div key={question?.id} className={showHelpArrow ? "build-question-page" : "build-question-page active"} style={{ width: '100%', height: '94%' }}>
         {showHelpArrow && <div className="help-arrow-text">Drag</div>}
         {showHelpArrow && <img alt="arrow" className="help-arrow" src="/images/investigation-arrow.png" />}
         <div className="top-scroll-area">
@@ -140,19 +163,13 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   hoverMarginTop="-0.85vw"
                   value={QuestionComponentTypeEnum.Text}
                 />
+                {/* 
                 <DragBox
                   locked={locked}
                   name="“ ”"
                   label="QUOTE"
                   hoverMarginTop="-1.5vw"
                   value={QuestionComponentTypeEnum.Quote}
-                />
-                {/* 
-                <DragBox
-                  locked={locked}
-                  name="jpg"
-                  label="IMAGE"
-                  value={QuestionComponentTypeEnum.Image}
                 />*/}
                 <DragBox
                   locked={locked}
@@ -177,7 +194,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               locked={locked}
               scrollRef={workarea}
               editOnly={!props.canEdit}
-              brickId={brickId}
+              brickId={brick.id}
               history={history}
               question={question}
               validationRequired={validationRequired}
@@ -188,7 +205,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               setQuestionHint={setQuestionHint}
             />
           </Grid>
-          <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">
+          <div className="right-sidebar">
             {!commentsShown &&
               <div className="comments-sidebar-default">
                 <div className="reundo-button-container">
@@ -211,7 +228,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 <Grid container direction="row" alignItems="center">
                   <Grid container justify="center" item sm={12} className="select-type-container">
                     <FormControl variant="outlined">
-                      Change Answer type here:
+                      <div className="flex-center"><SpriteIcon name="feather-refresh" /> <div>Change Answer Type</div></div>
                       <Select
                         className="select-question-type"
                         disabled={locked}
@@ -238,20 +255,21 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     </FormControl>
                   </Grid>
                 </Grid>
-                <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
-                <StatusCircle status={props.currentBrick.status} isCore={props.currentBrick.isCore} />
+                {renderLock()}
+                <StatusCircle status={brick.status} isCore={brick.isCore} />
               </div>
             }
             <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justify="flex-start" xs>
               <CommentPanel
+                isHidden={!commentsShown}
                 currentLocation={CommentLocation.Question}
-                currentBrick={props.currentBrick}
+                currentBrick={brick}
                 setCommentsShown={setCommentsShown}
                 haveBackButton={true}
                 currentQuestionId={question.id}
               />
             </Grid>
-          </Grid>
+          </div>
         </Grid>
         <div className="bottom-scroll-area">
           <div className="bottom-button-container">
@@ -268,7 +286,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 
 const mapState = (state: ReduxCombinedState) => ({
   currentUser: state.user.user,
-  currentBrick: state.brick.brick,
   comments: state.comments.comments
 });
 

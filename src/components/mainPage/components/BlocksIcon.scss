@@ -153,4 +153,9 @@ $top: -29.5%;
       }
     }
   }
+  &.disabled {
+    .bl {
+      background: var(--theme-light-blue);
+    }
+  }
 }

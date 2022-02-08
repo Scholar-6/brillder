@@ -7,9 +7,21 @@ import { Assignment, StudentStatus, TeachClassroom, TeachStudent } from "model/c
 import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
-import { ApiAssignemntStats, AssignmentStudent } from "model/stats";
+import { ApiAssignemntStats, AssignmentStudent, AttemptStats } from "model/stats";
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ReminderButton from "./ReminderButton";
+import { sendAssignmentReminder } from "services/axios/brick";
+import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
+import BookDialog from "./BookDialog";
+import HolisticCommentPanel from "./HolisticCommentPanel";
+import { ReduxCombinedState } from "redux/reducers";
+import { connect } from "react-redux";
+import { User } from "model/user";
+import BookButton from "./BookButton";
+import CommentButton from "./CommentButton";
+import { getClassroomStudents } from "services/axios/classroom";
+import LibraryButton from "./LibraryButton";
 
 enum SortBy {
   None,
@@ -17,12 +29,20 @@ enum SortBy {
   AvgDecreasing,
 }
 
+export interface BookData {
+  open: boolean;
+  student: any;
+  assignment: Assignment | null;
+}
 interface AssignemntExpandedState {
   sortBy: SortBy;
   questionCount: number;
   studentsPrepared: boolean;
+  bookData: BookData;
   students: TeachStudent[];
   shown: boolean;
+  currentCommentButton?: Element;
+  currentCommentStudentId?: number;
 }
 
 interface AssignmentBrickProps {
@@ -33,6 +53,7 @@ interface AssignmentBrickProps {
   classroom: TeachClassroom;
   assignment: Assignment;
   history: any;
+  currentUser: User;
   minimize(): void;
   onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
@@ -40,41 +61,116 @@ interface AssignmentBrickProps {
 class ExpandedAssignment extends Component<
   AssignmentBrickProps,
   AssignemntExpandedState
-  > {
+> {
   constructor(props: AssignmentBrickProps) {
     super(props);
 
     let questionCount = 0;
     if (props.stats.byStudent[0]) {
-      questionCount = props.stats.byStudent[0].attempts[0].answers.length;
+      try {
+        questionCount = props.stats.byStudent[0].attempts[0].answers.length;
+      } catch {
+        console.log('can`t get number of questions');
+      }
     }
+
+    let prepared = [];
+    if (this.props.assignment.classroom) {
+      prepared = this.prepareStudents(this.props.assignment.classroom.students);
+    }
+
+    const students = prepared.sort((a, b) => {
+      const al = a.lastName.toUpperCase();
+      const bl = b.lastName.toUpperCase();
+      if (al < bl) { return -1; }
+      if (al > bl) { return 1; }
+      return 0;
+    });
 
     this.state = {
       sortBy: SortBy.None,
       questionCount: questionCount,
       studentsPrepared: false,
-      students: this.prepareStudents(),
+      bookData: { open: false, student: null, assignment: null},
+      students: students || [],
       shown: false
     };
+
+    if (!this.props.assignment.classroom) {
+      this.loadStudents();
+    }
+  }
+
+  async loadStudents() {
+    var res = await getClassroomStudents(this.props.classroom.id);
+    if (res) {
+      const prepared = this.prepareStudents(res);
+
+      const students = prepared.sort((a, b) => {
+        const al = a.lastName.toUpperCase();
+        const bl = b.lastName.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
+        return 0;
+      });
+
+      this.setState({students});
+    }
   }
 
   componentDidMount() {
     this.setState({ shown: true });
   }
 
-  prepareStudents() {
-    const { students } = this.props.classroom;
-
-    students.forEach(student => {
+  prepareStudents(students: any[]) {
+    students.forEach((student: any) => {
       student.studentResult = this.props.stats.byStudent
-        .find(s => s.studentId === student.id);
-
-      student.studentStatus = this.props.assignment.studentStatus
         .find(s => s.studentId === student.id);
     });
 
+    students.forEach((student: any) => {
+      this.props.assignment.studentStatus.forEach(s => {
+        if (student.id === s.studentId) {
+          student.remindersCounter = s.remindersCounter;
+        }
+      })
+    })
+
     return students;
   }
+
+  nextStudent() {
+    try {
+      const {students} = this.state;
+      const studentIndex = this.state.students.findIndex(s => s.id === this.state.bookData.student.id);
+      for (let i = studentIndex + 1; i < students.length; i++) {
+        const student = students[i];
+        if (student.studentResult) {
+          this.setState({bookData: {open: true, student, assignment: this.props.assignment }});
+          break;
+        }
+      }
+    } catch {
+      console.log('can`t find next student');
+    }
+  }
+
+  prevStudent() {
+    try {
+      const {students} = this.state;
+      const studentIndex = this.state.students.findIndex(s => s.id === this.state.bookData.student.id);
+      for (let i = studentIndex - 1; i >= 0; i--) {
+        const student = students[i];
+        if (student.studentResult) {
+          this.setState({bookData: {open: true, student, assignment: this.props.assignment }});
+          break;
+        }
+      }
+    } catch {
+      console.log('can`t find next student');
+    }
+  }
+
 
   toggleSort() {
     if (this.state.sortBy === SortBy.None) {
@@ -86,58 +182,80 @@ class ExpandedAssignment extends Component<
     }
   }
 
+  sendNotifications() {
+    sendAssignmentReminder(this.props.assignment.id);
+    const count = getTotalStudentsCount(this.props.classroom);
+    const passed = isDeadlinePassed(this.props.assignment);
+    this.props.onRemind?.(count, passed);
+  }
+
   sort(sortBy: SortBy) {
     let students = this.state.students;
     if (sortBy === SortBy.AvgDecreasing) {
       students = this.state.students.sort((a, b) => {
-        if (!a.studentStatus) { return 1; }
-        if (!b.studentStatus) { return -1; }
-        return b.studentStatus?.avgScore - a.studentStatus?.avgScore;
+        if (!a.studentResult) { return 1; }
+        if (!b.studentResult) { return -1; }
+        return b.studentResult?.bestScore - a.studentResult?.bestScore;
       });
-    } else {
+    } else if (sortBy === SortBy.AvgIncreasing) {
       students = this.state.students.sort((a, b) => {
-        if (!a.studentStatus) { return -1; }
-        if (!b.studentStatus) { return 1; }
-        return a.studentStatus?.avgScore - b.studentStatus?.avgScore;
+        if (!a.studentResult) { return -1; }
+        if (!b.studentResult) { return 1; }
+        return a.studentResult?.bestScore - b.studentResult?.bestScore;
       });
     }
     this.setState({ students, sortBy });
   }
 
-  renderAvgScore(studentStatus: StudentStatus) {
-    let subjectId = this.props.assignment.brick.subjectId;
+  renderBestScore(studentResult: StudentStatus) {
+    const subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
 
     if (!color) {
       color = "#B0B0AD";
     }
 
+    const score = studentResult.bestScore || studentResult.avgScore || 0;
+
     return (
       <div className="circle" style={{ background: color }}>
-        {Math.round(studentStatus.avgScore)}
+        {Math.round(score)}
       </div>
     );
   }
 
-  renderStatus(studentStatus: StudentStatus | undefined) {
-    if (studentStatus) {
-      return this.renderAvgScore(studentStatus);
+  renderStatus(studentResult: StudentStatus | undefined) {
+    if (studentResult && studentResult.numberOfAttempts > 0) {
+      return this.renderBestScore(studentResult);
     }
-    return <SpriteIcon name="reminder" className="active reminder-icon" />;
-  }
+    const statuses = this.props.assignment.studentStatus;
+    const completedCount = statuses.filter(({ status }) => status === 2).length;
 
-  renderCommentIcon() {
-    return <SpriteIcon name="message-square" className="active comment-icon" />;
-  }
-
-  renderBookIcon(studentId: number) {
-    const { history, assignment } = this.props;
-    const moveToPostPlay = () => history.push(map.postPlay(assignment.brick.id, studentId) + '?fromTeach=true');
     return (
-      <div className="round b-green centered">
-        <SpriteIcon name="book-open" className="active book-open-icon" onClick={moveToPostPlay} />
+      <div className="reminder-brick-actions-container smaller-remind-button">
+        <ReminderButton className="" studentCount={statuses.length - completedCount} sendNotifications={this.sendNotifications.bind(this)} />
       </div>
     );
+  }
+
+  renderCommentIcon(studentId: number) {
+    const { history, assignment } = this.props;
+    return <CommentButton
+      studentId={studentId} students={this.state.students}
+      currentUser={this.props.currentUser}
+      onClick={(evt: any) => this.setState({ currentCommentButton: evt.currentTarget, currentCommentStudentId: studentId })}
+      onMove={() =>  history.push(map.postAssignmentBrief(assignment.brick.id, studentId, this.props.classroom.id) + '?fromTeach=true')}
+    />;
+  }
+
+  renderBookIcon(studentResult: StudentStatus, studentId: number) {
+    const { history, assignment } = this.props;
+    const moveToPostPlay = () => {
+      if (studentResult.bestScore !== undefined) {
+        history.push(map.postAssignment(assignment.brick.id, studentId, this.props.classroom.id) + '?fromTeach=true');
+      }
+    }
+    return <BookButton onClick={moveToPostPlay} />;
   }
 
   renderQuestionAttemptIcon(
@@ -146,8 +264,14 @@ class ExpandedAssignment extends Component<
   ) {
     if (studentResult) {
       try {
-        const attempt = studentResult.attempts[0].answers[questionNumber];
-        const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
+        let bestAttempt = studentResult.attempts[0];
+        for (let a of studentResult.attempts) {
+          if (a.percentScore > bestAttempt.percentScore) {
+            bestAttempt = a;
+          }
+        }
+        const attempt = bestAttempt.answers[questionNumber];
+        const liveAttempt = bestAttempt.liveAnswers[questionNumber];
 
         // yellow tick
         if (attempt.correct === true && liveAttempt.correct === false) {
@@ -160,7 +284,10 @@ class ExpandedAssignment extends Component<
           return <SpriteIcon name="check-icon" className="text-theme-green" />;
         }
 
-        return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
+        if (attempt.marks > 0 && attempt.maxMarks > 0) {
+          return <span className="bold text-theme-dark-blue">{attempt.marks}/{attempt.maxMarks}</span>;
+        }
+        return <SpriteIcon name="cancel-custom" className="text-theme-orange smaller close" />;
       } catch {
         console.log('can`t parse attempt');
       }
@@ -169,7 +296,12 @@ class ExpandedAssignment extends Component<
   }
 
   renderStudent(student: TeachStudent, i: number) {
-    const { studentStatus, studentResult } = student;
+    const { studentResult } = student;
+    const {bookData} = this.state;
+    
+    const disabled = bookData.student && bookData.student?.id !== student.id ? true : false;
+    const active = bookData.student?.id === student.id ? true : false;
+
     return (
       <Grow
         in={true}
@@ -180,24 +312,39 @@ class ExpandedAssignment extends Component<
         <tr className="user-row">
           <td className="padding-left-column"></td>
           <td className="student-status">
-            <div>{this.renderStatus(studentStatus)}</div>
+            <div>{this.renderStatus(studentResult)}</div>
           </td>
           <td className="student-book">
-            {studentStatus && <div className="centered">{this.renderBookIcon(student.id)}</div>}
+            {(studentResult && studentResult.numberOfAttempts > 0) 
+              ? <div className="centered">{this.renderBookIcon(studentResult, student.id)}</div>
+              : <div className="centered">{student.remindersCounter} sent</div>
+            }
           </td>
-          <td className={`assigned-student-name`}>
+          <td className="student-book">
+            {studentResult && <LibraryButton firstName={student.firstName} onClick={() => this.props.history.push(map.MyLibrary + '/' + studentResult.studentId)} />}
+          </td>
+          <td className={`assigned-student-name ${active ? 'bold' : disabled ? 'grey' : 'regular'}`}>
             {student.firstName} {student.lastName}
           </td>
-          {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
-            (a, i) =>
-              <td key={i} className="icon-container">
-                <div className="centered">
-                  {this.renderQuestionAttemptIcon(studentResult, i)}
-                </div>
-              </td>
-          )}
           <td>
-            {studentStatus && <div className="centered">{this.renderCommentIcon()}</div>}
+            {studentResult && studentResult.numberOfAttempts > 0 && <div className="tooltip-container">
+                <SpriteIcon
+                  name="eye-on" className={`eye-icon ${disabled ? 'grey' : 'blue'}`}
+                  onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})}
+                />
+                <div className="css-custom-tooltip">View Answers</div>
+              </div>
+            }
+          </td>
+          {Array.from(new Array(this.state.questionCount), (x, i) => i).map((a, i) =>
+            <td key={i} className="icon-container">
+              <div className="centered">
+                {this.renderQuestionAttemptIcon(studentResult, i)}
+              </div>
+            </td>
+          )}
+          <td style={{ width: '9vw' }}>
+            {studentResult && <div className="centered">{this.renderCommentIcon(student.id)}</div>}
           </td>
         </tr>
       </Grow>
@@ -208,7 +355,7 @@ class ExpandedAssignment extends Component<
     const { sortBy } = this.state;
     const name = sortBy === SortBy.AvgIncreasing ? "arrow-up" : "arrow-down";
 
-    let className = "btn btn-transparent svgOnHover btn-grey-circle";
+    let className = "btn btn-transparent svgOnHover btn-grey-circle sort-tooltip-container";
     if (sortBy === SortBy.AvgIncreasing || sortBy === SortBy.AvgDecreasing) {
       className += " active";
     }
@@ -220,16 +367,19 @@ class ExpandedAssignment extends Component<
             <div className="center">
               <button className={className} onClick={() => this.toggleSort()}>
                 <SpriteIcon name={name} className="active text-theme-dark-blue" />
+                <div className="css-custom-tooltip">{sortBy === SortBy.AvgDecreasing ? 'Sort by lowest score' : 'Sort by highest score'}</div>
               </button>
             </div>
           </th>
-          <th>
+          <th>{/* 
             <div className="center">
               <button className="btn btn-transparent svgOnHover btn-grey-circle">
                 <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
               </button>
-            </div>
+            </div>*/}
           </th>
+          <th></th>
+          <th></th>
           <th></th>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
             (a, i) => <th key={i}><div className="centered">{i + 1}</div></th>
@@ -256,7 +406,8 @@ class ExpandedAssignment extends Component<
             minimize={this.props.minimize}
             classroom={classroom}
             assignment={assignment}
-            archive={() => {}}
+            archive={() => { }}
+            unarchive={() => { }}
             onRemind={this.props.onRemind}
           />
         </div>
@@ -274,9 +425,32 @@ class ExpandedAssignment extends Component<
             </div>
           )}
         </div>
+        {this.state.bookData.open && <BookDialog
+          bookData={this.state.bookData}
+          nextStudent={this.nextStudent.bind(this)}
+          prevStudent={this.prevStudent.bind(this)}
+          onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />
+        }
+        <HolisticCommentPanel
+          currentAttempt={students.find(s => s.id === this.state.currentCommentStudentId)?.studentResult?.attempts.slice(-1)[0]}
+          setCurrentAttempt={(attempt: AttemptStats) => {
+            const newState = this.state;
+            /* eslint-disable-next-line */
+            const studentIdx = newState.students.findIndex(s => s.id == newState.currentCommentStudentId);
+            const attemptIdx = newState.students[studentIdx].studentResult!.attempts.length - 1;
+            newState.students[studentIdx].studentResult!.attempts[attemptIdx] = attempt;
+            this.setState(newState);
+          }}
+          onClose={() => this.setState({ currentCommentButton: undefined, currentCommentStudentId: undefined })}
+          anchorEl={this.state.currentCommentButton}
+        />
       </div>
     );
   }
 }
 
-export default ExpandedAssignment;
+const mapState = (state: ReduxCombinedState) => ({
+    currentUser: state.user.user,
+});
+
+export default connect(mapState)(ExpandedAssignment);

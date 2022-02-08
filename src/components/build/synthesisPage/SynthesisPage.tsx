@@ -51,13 +51,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
       ref: React.createRef() as React.RefObject<HTMLDivElement>,
       commentsShown: props.initSuggestionExpanded
     }
-    this.setLoaded();
-  }
-
-  setLoaded () {
-    setTimeout(() => {
-      this.setState({isLoaded: true});
-    }, 500);
+    setTimeout(() => this.setState({isLoaded: true}), 200);
   }
 
   componentDidMount() {
@@ -119,10 +113,6 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
     const {canScroll} = this.state;
     const {currentBrick} = this.props;
 
-    if (!this.state.isLoaded) {
-      return <div />
-    }
-
     return (
       <div className="question-type synthesis-page">
         <div className="top-scroll-area">
@@ -135,6 +125,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
         <div className="inner-question-type" ref={this.state.ref}>
           <Grid container direction="row" alignItems="stretch">
             <Grid item xs className="synthesis-input-container">
+              {this.state.isLoaded ?
               <QuillEditor
                 disabled={this.props.locked}
                 data={this.state.synthesis}
@@ -147,10 +138,11 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 isValid={!!stripHtml(this.state.synthesis)}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-                  'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "table", "desmos", "caps"
+                  'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "sound", "table", "desmos", "caps"
                 ]}
                 imageDialog={true}
-              />
+                soundDialog={true}
+              /> : <div className="s-loader-container"><SpriteIcon name="f-loader" className="spinning blue" /></div>}
             </Grid>
             { !this.state.commentsShown &&
               <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="flex-end">

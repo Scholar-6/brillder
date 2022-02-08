@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { ReactSortable } from 'react-sortablejs';
 import { isMobile } from 'react-device-detect';
 
-import {CompQuestionProps} from '../types';
+import { CompQuestionProps } from '../types';
 import CompComponent from '../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
@@ -13,6 +13,8 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
 import PairMatchImageContent from '../pairMatch/PairMatchImageContent';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
+import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
+import { ReactComponent as TapIcon } from 'assets/img/tap.svg';
 
 
 const MobileTheme = React.lazy(() => import('./themes/Phone'));
@@ -46,6 +48,8 @@ interface VerticalShuffleState {
   status: DragAndDropStatus;
   switchIndex: number;
   userAnswers: any[];
+  canDrag: boolean;
+  reviewCorrectAnswers: number[];
 }
 
 class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffleState> {
@@ -54,7 +58,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
     let userAnswers = this.props.component.list;
 
-    const {attempt} = this.props;
+    const { attempt } = this.props;
 
     if (attempt) {
       if (attempt.answer) {
@@ -62,17 +66,35 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
       }
     }
 
+    let canDrag = true;
+    if (this.props.attempt?.correct) {
+      canDrag = false;
+    }
+
+    let reviewCorrectAnswers = [];
+
+    if (this.props.isReview) {
+      for (let i = 0; i < userAnswers.length; i++) {
+        const res = this.checkAttemptAnswer(i);
+        if (res) {
+          reviewCorrectAnswers.push(i);
+        }
+      }
+    }
+
     this.state = {
       status: DragAndDropStatus.None,
       switchIndex: -1,
-      userAnswers: userAnswers
+      userAnswers: userAnswers,
+      canDrag,
+      reviewCorrectAnswers
     };
   }
 
   componentDidUpdate(prevProp: VerticalShuffleProps) {
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProp.answers) {
-        this.setState({userAnswers: this.props.answers as any});
+        this.setState({ userAnswers: this.props.answers as any });
       }
     }
   }
@@ -86,6 +108,30 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     if (this.state.status === DragAndDropStatus.Changed && this.props.onAttempted) {
       this.props.onAttempted();
     }
+   
+    // review. make correct answers static on drag and drop
+    if (this.state.reviewCorrectAnswers.length > 0) {
+      for (let index of this.state.reviewCorrectAnswers) {
+        
+        let answer = null;
+        let answerIndex = 0;
+
+        // get correct answer and index
+        for (let j = 0; j < userAnswers.length; j++) {
+          if (userAnswers[j].index === index) {
+            answerIndex = j;
+            answer = userAnswers[j];
+          }
+        }
+
+        // change answer position
+        if (answer) {
+          userAnswers.splice(answerIndex, 1);
+          userAnswers.splice(index, 0, answer);
+        }
+      }
+    }
+
     this.setState({ status, userAnswers });
   }
 
@@ -99,16 +145,16 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   UNSAFE_componentWillUpdate(props: VerticalShuffleProps) {
     if (!this.props.isPreview) { return; }
-    
+
     if (props.component && props.component.list) {
       if (this.state.userAnswers !== props.component.list) {
-        this.setState({userAnswers: props.component.list});
+        this.setState({ userAnswers: props.component.list });
       }
     }
   }
 
   checkAttemptAnswer(index: number) {
-    if (this.props.attempt && this.props.attempt.answer) {
+    if (this.props.isReview && this.props.attempt) {
       let answer = this.props.attempt.answer[index];
       if (answer.index - index === 0) {
         return true;
@@ -163,9 +209,9 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     }
   }
 
-  renderAnswer(answer:any, i: number) {
+  renderAnswer(answer: any, i: number) {
     const isCorrect = this.checkAttemptAnswer(i);
-    const {switchIndex} = this.state;
+    const { switchIndex } = this.state;
     let className = "vertical-shuffle-choice";
 
     if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
@@ -183,34 +229,36 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     }
 
     const hasHint = this.props.isReview || this.props.isPreview;
-    
+
     return (
       <div key={i} className={className} onClick={() => {
-        if (switchIndex === -1) {
-          this.setState({switchIndex: i});
-        } else {
-          console.log(switchIndex);
-          try {
-            const {userAnswers} = this.state;
-            const shift1 = userAnswers[switchIndex];
-            const shift2 = userAnswers[i];
-            userAnswers[switchIndex] = shift2;
-            userAnswers[i] = shift1;
-            this.setUserAnswers(userAnswers);
-            this.setState({switchIndex: -1});
-            console.log('switch');
-          } catch {}
+        if (this.state.canDrag) {
+          if (switchIndex === -1) {
+            this.setState({ switchIndex: i });
+          } else {
+            try {
+              const { userAnswers } = this.state;
+              const shift1 = userAnswers[switchIndex];
+              const shift2 = userAnswers[i];
+              userAnswers[switchIndex] = shift2;
+              userAnswers[i] = shift1;
+              this.setUserAnswers(userAnswers);
+              this.setState({ switchIndex: -1 });
+            } catch { }
+          }
         }
       }}>
         <div className={`vertical-content ${hasHint ? '' : 'full-height'}`}>
           <Grid container direction="row" justify="center">
             <div className="circle-index">
-              {switchIndex === i ? <SpriteIcon name="feather-refresh" /> : i + 1}
+              <div>
+                {switchIndex === i ? <SpriteIcon name="feather-refresh" /> : i + 1}
+              </div>
             </div>
             {this.renderData(answer)}
           </Grid>
-          {this.renderEachHint(i, answer, isCorrect)}
         </div>
+        {this.renderEachHint(i, answer, isCorrect)}
       </div>
     );
   }
@@ -223,8 +271,9 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     const haveImage = this.checkImages();
     return (
       <div className="question-unique-play vertical-shuffle-play">
-        <p><span className="help-text">Click on two answers at a time to reorder.</span></p>
-        {haveImage && <p><span className="help-text">Double tap images to zoom.</span></p>}
+        <span className="help-text">
+          <TapIcon />Click on two answers to reorder them.   {haveImage && <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>}
+        </span>
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>
         ) : (
@@ -241,15 +290,22 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     const haveImage = this.checkImages();
     return (
       <div className="question-unique-play vertical-shuffle-play">
-        <p><span className="help-text">Drag to rearrange.   {haveImage && <span>Hover over images to zoom.</span>}</span></p>
-        {this.props.isBookPreview ? (
+        <p><span className="help-text"><DragIcon />Drag to rearrange.   {haveImage && <span>Hover over images to zoom.</span>}
+        {!isPhone() && isMobile &&
+          <span>
+            <SpriteIcon name="hero-cursor-click" />
+            Click and hold to move if using an Apple Pencil
+          </span>}
+          </span>
+        </p>
+        {this.props.isBookPreview || !this.state.canDrag ? (
           <div>{this.renderAnswers()}</div>
         ) : (
           <ReactSortable
             list={this.state.userAnswers}
             animation={150}
             className="verical-shuffle-sort-list"
-            style={{display:"inline-block"}}
+            style={{ display: "inline-block" }}
             group={{ name: "cloning-group-name" }}
             setList={(choices) => this.setUserAnswers(choices)}
           >

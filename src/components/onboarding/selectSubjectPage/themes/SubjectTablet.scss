@@ -13,7 +13,7 @@
     text-align: center;
     color: var(--white);
     font-family: $font-family-black;
-    font-size: 4.5vw;
+    font-size: $mbase-font-size;
     line-height: 1;
   }
 
@@ -37,9 +37,11 @@
 
       .subject-name {
         color: white;
-        padding-top: 2.1vh;
-        padding-bottom: 2.1vh;
-        font-size: 3.2vh;
+        height: 6.7vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.9vw;
       }
 
       &.checked {
@@ -86,6 +88,8 @@
   margin-right: 2vw;
 
   .subject-row {
+    display: flex;
+    align-items: center;
     width: 100%;
 
     .subject-item {
@@ -138,6 +142,42 @@
 
     &:nth-child(even) {
       margin-left: 12.5%;
+    }
+  }
+  .select-all {
+    > div {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    }
+    svg {
+      left: 0.8vw;
+      position: absolute;
+      stroke-width: 2;
+      stroke: var(--white) !important;
+      color: var(--white) !important;
+      $size: 1.3vw;
+      width: $size;
+      height: $size;
+    }
+    .circle {
+      position: absolute;
+      left: 1vw;
+      $size: 0.9vw;
+      background: var(--white);
+      border-radius: 50%;
+      width: $size;
+      height: $size;
+      transition: ease-out 300ms;
+    }
+    &:hover {
+      .circle {
+        background: var(--theme-dark-blue);
+      }
+      svg {
+        stroke: var(--theme-dark-blue) !important;
+        color: var(--theme-dark-blue) !important;
+      }
     }
   }
 }

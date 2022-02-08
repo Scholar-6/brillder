@@ -54,8 +54,9 @@ const AssignButton: React.FC<ButtonProps> = (props) => {
 
   if (!props.sidebarRolledUp) {
     return (
-      <button onClick={props.openAssignDialog} className={`assign-class-button assign-intro-button svgOnHover ${isNewTeacher ? 'bordered' : ''}`}>
-        <span>Assign Brick</span>
+      <div onClick={props.openAssignDialog} className={`assign-class-button bigger-button-v3 assign-intro-button ${isNewTeacher ? 'bordered' : ''}`}>
+        <SpriteIcon name="file-plus" />
+        <div>Assign</div>
         {isNewTeacher &&
         <Steps
           enabled={true}
@@ -65,12 +66,12 @@ const AssignButton: React.FC<ButtonProps> = (props) => {
           onExit={onIntroExit}
           onComplete={props.openAssignDialog}
         />}
-      </button>
+      </div>
     );
   }
 
   const renderTooltip = () => (
-    <div className="custom-tooltip">
+    <div className="custom-tooltip bold">
       <div>Assign Brick</div>
     </div>
   );

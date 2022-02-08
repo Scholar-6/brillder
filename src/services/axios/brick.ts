@@ -1,7 +1,10 @@
+import { getApiQuestion } from 'components/build/questionService/QuestionService';
 import { AssignmentBrick } from 'model/assignment';
-import { Brick, BrickStatus } from 'model/brick';
+import { Brick, BrickStatus, KeyWord } from 'model/brick';
+import { Question } from 'model/question';
 
 import { get, put, post, axiosDelete } from './index';
+import { createQuestion } from './question';
 
 export const getPublicBrickById = async (id: number) => {
   try {
@@ -46,7 +49,12 @@ export const getLatestBrick = async () => {
  */
 export const getPublishedBricks = async () => {
   try {
-    return await get<Brick[]>(`/bricks/byStatus/${BrickStatus.Publish}`);
+    let bricks = await get<Brick[]>(`/bricks/byStatus/${BrickStatus.Publish}`);
+    if (bricks) {
+      /*eslint-disable-next-line*/
+      bricks = bricks.filter(b => b.status == 4);
+    }
+    return bricks;
   } catch {
     return null;
   }
@@ -72,12 +80,13 @@ export const getAssignedBricks = async () => {
   }
 }
 
-export const getLibraryBricks = async <T>(classroomId?: number) => {
+export const getLibraryBricks = async <T>(userId: number, classroomId?: number) => {
   try {
-    let obj = {};
+    let obj:any = {userId};
     if (classroomId) {
-      obj = { classroomId };
+      obj = { userId, classroomId };
     }
+    console.log(obj)
     return await post<T[]>("/play/library", obj);
   } catch (e) {
     return null;
@@ -129,6 +138,15 @@ export const inviteUser = async (brickId: number, userId: number) => {
   }
 }
 
+export const shareByEmails = async (brickId: number, emails:  string[]) => {
+  try {
+    await post<Brick>(`/brick/share/${brickId}`, { emails });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export const setCoreLibrary = async (brickId: number, isCore?: boolean) => {
   try {
     const core = isCore ? true : false;
@@ -174,9 +192,9 @@ export const returnToAuthor = async (brickId: number) => {
   }
 }
 
-export const returnToEditor = async (brickId: number) => {
+export const returnToEditor = async (brickId: number, userId: number) => {
   try {
-    await post<any>(`/brick/returnToEditor`, { brickId });
+    await post<any>(`/brick/returnToEditor`, { brickId, userId });
     return true;
   } catch {
     return false;
@@ -212,6 +230,14 @@ export const archiveAssignment = async (assignmentId: number) => {
   }
 }
 
+export const unarchiveAssignment = async (assignmentId: number) => {
+  try {
+    return await post<AssignmentBrick>(`/brick/assignment/${assignmentId}/unarchive`, {});
+  } catch {
+    return false;
+  }
+}
+
 export const deleteQuestion = async (questionId: number) => {
   try {
     return await axiosDelete(`/question/${questionId}`);
@@ -224,12 +250,45 @@ export interface CoverImageData {
   brickId: number;
   coverImage: string;
   coverImageSource: string;
-  coverImageCaption: string;
 }
 
 export const setBrickCover = async (data: CoverImageData) => {
   try {
     return await post<any>(`/brick/cover`, data);
+  } catch {
+    return false;
+  }
+}
+
+export const getKeywords = async () => {
+  try {
+    return await get<KeyWord[]>(`/bricks-keywords`);
+  } catch {
+    return false;
+  }
+}
+
+
+export const copyBrick = async (brick: Brick, questions: Question[]) => {
+  try {
+    const copy = Object.assign({}, brick) as any;
+    copy.isCore = true;
+    copy.status = BrickStatus.Draft;
+    copy.questions = [];
+    copy.id = null;
+    console.log(copy)
+    const res = await post<Brick>('/brick', copy);
+    if (res) {
+      res.isCore = true;
+      await put<Brick>('/brick', res);
+      for (let question of questions) {
+        const q = getApiQuestion(question);
+        q.brickQuestionId = undefined;
+        q.id = undefined;
+        await createQuestion(res.id, q);
+      }
+    }
+    return true;
   } catch {
     return false;
   }

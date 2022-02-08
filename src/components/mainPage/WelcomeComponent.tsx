@@ -165,6 +165,14 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
     return {};
   }
 
+  renderSparkle() {
+    const {user} = this.props;
+    if (user && user.subscriptionState && user.subscriptionState > 0) {
+      return <SpriteIcon className="sparkle-s6" name="hero-sparkle" />;
+    }
+    return '';
+  }
+
   render() {
     let className = "notifications-text";
     if (this.state.isTextClickable) {
@@ -172,8 +180,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
     }
     return (
       <div className="welcome-box">
-        <div>WELCOME TO</div>
-        <div className="smaller">BRILLDER,</div>
+        <div>Welcome to Brillder,</div>
         <div
           className="welcome-name"
           onMouseEnter={() => this.setState({nameHovered: true})}
@@ -188,9 +195,10 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
                 </div>
               : <SpriteIcon name="user-custom" />
             }
-            {this.state.nameHovered && <div className="custom-tooltip">View Profile</div>}
+            {this.state.nameHovered && <div className="custom-tooltip bold">View Profile</div>}
           </div>
           <span style={this.getStyle()}>{this.state.animatedName}</span>
+          {this.renderSparkle()}
         </div>
         <div
           className={className}
@@ -199,6 +207,12 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         />
         <div className="notifications-text-2" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText2 }} />
         <div className="notifications-text-3" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText3 }} />
+
+        {/*(this.state.animatedNotificationText3 || (this.props.notifications && this.props.notifications.length> 1 && this.state.animatedNotificationText)) &&
+        <div className="link-to-landing" onClick={() => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=Christmas12')}>
+          <SpriteIcon name="star" />
+          Play the 12 bricks of Christmas
+        </div>*/}
       </div>
     );
   }

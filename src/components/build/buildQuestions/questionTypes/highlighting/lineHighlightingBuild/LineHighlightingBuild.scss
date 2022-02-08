@@ -15,17 +15,13 @@
     resize: none;
   }
   .hightlight-area {
-    margin-bottom: 1vh !important;
+    margin-bottom: $editor-spacing !important;
   }
   .line {
     max-width: 100%;
     overflow-wrap: break-word;
   }
-}
-
-.word-highlight-build,
-.line-highlight-build {
-  .component-title {
-    margin-top: 0.4vw;
+  .quill-document-editor .ql-editor {
+    border-radius: 0.6vw; 
   }
 }

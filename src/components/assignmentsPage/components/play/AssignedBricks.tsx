@@ -1,53 +1,37 @@
 import React, { Component } from "react";
 
 import { User } from "model/user";
-import { ThreeAssignmentColumns, AssignmentBrickData, PlayFilters } from '../../model';
+import { AssignmentBrickData } from '../../model';
 import { prepareVisibleAssignments } from '../../service';
-import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
-import { AssignmentBrickStatus, AssignmentBrick } from "model/assignment";
+import { AssignmentBrick } from "model/assignment";
 
-import BrickBlock from "components/baseComponents/BrickBlock";
+import BrickBlock16x9 from "components/viewAllPage/components/BrickBlock16x9";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 
 import "./AssignedBricks.scss";
+import { Subject } from "model/brick";
+import { Tab } from "./service";
 
 interface AssignedBricksProps {
   user: User;
+  tab: Tab;
   shown: boolean;
+  subjects: Subject[];
   pageSize: number;
   sortedIndex: number;
-  filters: PlayFilters;
   assignments: AssignmentBrick[];
-  threeColumns: ThreeAssignmentColumns;
   history: any;
-
-  handleDeleteOpen(brickId: number): void;
-  onMouseHover(key: number): void;
-  onMouseLeave(key: number): void;
-  onThreeColumnsMouseHover(brickId: number, status: AssignmentBrickStatus): void;
-  onThreeColumnsMouseLeave(brickId: number, status: AssignmentBrickStatus): void;
 }
 
 class AssignedBricks extends Component<AssignedBricksProps> {
-  getColor(item: AssignmentBrickData) {
-    if (item.status === AssignmentBrickStatus.ToBeCompleted) {
-      return 'color1';
-    } else if (item.status === AssignmentBrickStatus.SubmitedToTeacher) {
-      return 'color3';
-    } else if (item.status === AssignmentBrickStatus.CheckedByTeacher) {
-      return 'color4';
-    }
-    return '';
-  }
-
   renderBrick(item: AssignmentBrickData) {
-    const color = this.getColor(item);
     let circleIcon = '';
+    const color = this.props.subjects.find(s => s.id === item.brick.subjectId)?.color;
     if (item.isInvitation) {
       circleIcon="users";
     }
-    return <BrickBlock
+    return <BrickBlock16x9
       brick={item.brick}
       index={item.index}
       row={item.row}
@@ -55,59 +39,24 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       key={item.index}
       shown={this.props.shown}
       isAssignment={true}
+      completedDate={item.completedDate}
+      assignmentStatus={item.status}
       assignmentId={item.assignmentId}
       history={this.props.history}
       color={color}
+      isCompleted={this.props.tab === Tab.Completed}
+      bestScore={item.bestScore}
+      teacher={item.teacher}
       circleIcon={circleIcon}
+      deadline={item.deadline}
       searchString=""
-      handleDeleteOpen={this.props.handleDeleteOpen}
-      handleMouseHover={() => this.props.onMouseHover(item.key)}
-      handleMouseLeave={() => this.props.onMouseLeave(item.key)}
+      handleDeleteOpen={() => {}}
     />
-  }
-
-  renderGroupedBrick(item: AssignmentBrickData) {
-    const color = this.getColor(item);
-    let circleIcon = '';
-    if (item.isInvitation) {
-      circleIcon="users";
-    }
-
-    return <BrickBlock
-      brick={item.brick}
-      index={item.key}
-      row={item.row}
-      key={item.key}
-      user={this.props.user}
-      shown={this.props.shown}
-      color={color}
-      circleIcon={circleIcon}
-      isAssignment={true}
-      assignmentId={item.assignmentId}
-      history={this.props.history}
-      searchString=""
-      handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
-      handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, item.status)}
-      handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, item.status)}
-    />
-  }
-
-  renderGroupedBricks = (data: AssignmentBrickData[]) => {
-    return data.map(item => this.renderGroupedBrick(item));
-  }
-
-  renderAssignedGroupedBricks() {
-    const data = prepareVisibleThreeColumnAssignments(this.props.pageSize, this.props.sortedIndex, this.props.threeColumns);
-    return this.renderGroupedBricks(data);
   }
 
   renderSortedBricks() {
     const data = prepareVisibleAssignments(this.props.sortedIndex, this.props.pageSize, this.props.assignments);
     return data.map(item => this.renderBrick(item));
-  }
-
-  renderAssignedBricks() {
-    return this.renderSortedBricks();
   }
 
   renderEmptyPage() {
@@ -131,7 +80,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       <div className="bricks-list-container">
         {this.props.assignments.length > 0 ?
           <div className="bricks-list">
-            { this.renderAssignedBricks() }
+            { this.renderSortedBricks() }
           </div>
           : this.renderEmptyPage()
         }

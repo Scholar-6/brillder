@@ -1,4 +1,3 @@
-import map from "components/map";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import { isPhone } from "./phone";
 
@@ -59,12 +58,15 @@ const initZendeskPopupStyling = () => {
           -ms-user-select: none;
           user-select: none;
         }
+      button[data-garden-id="buttons.icon_button"] {
+        content: url("/zendesk/close-image.svg");
+      }
     `;
     const head = innerWidgetDoc.head || innerWidgetDoc.getElementsByTagName('head')[0];
     const style = document.createElement('style');
-  
+
     head.appendChild(style);
-  
+
     style.type = 'text/css';
     style.appendChild(document.createTextNode(css));
     success = true;
@@ -156,42 +158,55 @@ function addZendesk() {
   }
 }
 
-const isProfilePage = (pathName: string) => pathName.search(map.UserProfile) >= 0;
-const isViewAllPage = (pathName: string) => pathName === "/play/dashboard";
-const isManageUsersPage = (pathName: string) => pathName === "/users";
-const isPlayPage = (pathName: string) => {
-  return pathName.search('/play/brick') >= 0;
-}
-
-/**
- * change zendesk button size
- * @param iframe Zendesk iframe
- * @param location Location - button size changing based on route
- */
-function setZendeskMode(iframe: any, location: any) {
-  const { pathname } = location;
-  if (isMobile) {
-    //setMobilePlayButton(iframe, pathname);
-    return;
-  }
-  // #1332 small mode only in viewAll and manageUsers pages
-  let isBigMode = true;
-  let isIgnorePage = false;
-  if (isViewAllPage(pathname) || isManageUsersPage(pathname) || isProfilePage(pathname)) {
-    isBigMode = false;
-  }
-
-  if (isPlayPage(pathname)) {
-    isIgnorePage = true;
-  }
-
-  try {
-    if (isBigMode && !isIgnorePage) {
-      //maximizeZendeskButton(iframe);
-    } else if (!isIgnorePage) {
-      //minimizeZendeskButton(iframe);
+// if form submitted click to "Go Back" button to move back
+function messageSent() {
+  var interval2 = setInterval(() => {
+    try {
+      const iframe = getWidgetIframe();
+      if (iframe) {
+        var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+        var footer = innerDoc.getElementsByTagName('footer')[0];
+        console.log(footer);
+        if (footer && footer.children[0]) {
+          var button = footer.children[0].children[1];
+          button.onclick = function () {
+            var waitTimes = 0;
+            // wait untill popup open wait only 3 times
+            var interval3 = setInterval(() => {
+              waitTimes+= 1;
+              if (waitTimes > 9) {
+                clearInterval(interval3);
+              }
+              const iframe = getWidgetIframe();
+              if (iframe) {
+                var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+                // looking for button
+                try {
+                var tagv3 = innerDoc.getElementById("Embed").children[3].children[0].children[0];
+                if (tagv3.children[1]) {
+                  var container = tagv3.children[1].children[0];
+                  console.log(container.children[2].children[0]);
+                  var backButtonV5 = container.children[2].children[0];
+                  console.log(backButtonV5.innerHTML);
+                  if (backButtonV5.ineerHTML !== 'Send') {
+                    console.log('click')
+                    backButtonV5.click();
+                  }
+                  //clearInterval(interval3);
+                }
+              } catch { }
+              }
+            }, 250);
+          }
+          console.log(button);
+          clearInterval(interval2);
+        }
+      }
+    } catch (e) {
+      console.log('can`t find zendesk button inside form', e);
+      clearInterval(interval2);
     }
-  } catch { }
+  }, 300);
 }
 
 /**
@@ -200,7 +215,7 @@ function setZendeskMode(iframe: any, location: any) {
  * @param zendeskCreated boolean - zendesk mounted or not
  * @param setZendesk (zendeskCreated: boolean):void - set mounted or umounted
  */
-export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk: Function) {
+export function setupZendesk(zendeskCreated: boolean, setZendesk: Function) {
   if (!zendeskCreated) {
     console.log('create zendesk iframe. (this log can`t appear twice)');
     setZendesk(true);
@@ -212,7 +227,6 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
       if (iframe) {
         try {
           initZendeskStyling(iframe);
-          setZendeskMode(iframe, location);
           clearInterval(interval);
           var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
           var buttons = innerDoc.getElementsByTagName('button');
@@ -221,6 +235,8 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
               const widgetInterval = setInterval(() => {
                 const success = initZendeskPopupStyling();
                 if (success) {
+                  messageSent();
+                  console.log('success');
                   clearInterval(widgetInterval);
                 }
               }, 100);
@@ -233,9 +249,6 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
         }
       }
     }, 100);
-  } else {
-    const iframe = getZendeskIframe();
-    setZendeskMode(iframe, location);
   }
 }
 

@@ -113,9 +113,11 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               isViewAll={false}
               selectAllSubjects={() => {}}
               clearSubjects={() => { }}
-              levels={[]}
               filterBySubject={id => this.onSubjectSelected(id)}
+              levels={[]}
               filterByLevel={() => {}}
+              lengths={[]}
+              filterByLength={() => {}}
             />
             : this.props.user ? <AllSubjectsSidebar /> : <UnauthorizedSidebar />
           }

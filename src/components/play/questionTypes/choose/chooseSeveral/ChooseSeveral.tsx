@@ -53,7 +53,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProp.answers) {
         const activeItems = this.getActiveItems(this.props);
-        this.setState({activeItems});
+        this.setState({ activeItems });
       }
     }
   }
@@ -64,7 +64,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     if (found >= 0) {
       activeItems.splice(found, 1);
     } else {
-      activeItems.push({realIndex, shuffleIndex: index});
+      activeItems.push({ realIndex, shuffleIndex: index });
     }
     if (activeItems.length >= 2 && this.props.onAttempted) {
       this.props.onAttempted();
@@ -77,20 +77,22 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   }
 
   checkBookChoice(choice: ChooseOneAnswer, index: number) {
-    const { answer } = this.props.attempt;
-    const found = answer.find(a => a.shuffleIndex === index);
-    if (found) {
-      if (choice.checked) {
-        return true;
-      } else {
-        return false;
+    if (this.props.attempt) {
+      const { answer } = this.props.attempt;
+      const found = answer.find(a => a.shuffleIndex === index);
+      if (found) {
+        if (choice.checked) {
+          return true;
+        } else {
+          return false;
+        }
       }
     }
     return null;
   }
 
   checkChoice(choice: ChooseOneAnswer, index: number) {
-    if (this.props.attempt && this.props.isReview) {
+    if (this.props.attempt && this.props.isReview && this.props.attempt === this.props.liveAttempt) {
       const { answer } = this.props.attempt;
       const found = answer.find(a => a.shuffleIndex === index);
       if (found !== undefined && found) {
@@ -113,7 +115,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       />;
     } else if (answer.answerType === QuestionValueType.Sound && answer.soundFile) {
       return (
-        <div style={{width: '100%'}}>
+        <div style={{ width: '100%' }}>
           <Audio src={answer.soundFile} />
           <div>{answer.soundCaption ? answer.soundCaption : 'Click to select'}</div>
         </div>
@@ -210,7 +212,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   }
 
   checkImages() {
-    return !!this.props.component.list.find((a:any) => a.valueFile);
+    return !!this.props.component.list.find((a: any) => a.valueFile);
   }
 
   render() {

@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 
 import './SingleSubjectAssignments.scss';
-import { SubjectAssignments } from "../service/model";
+import { SortBy, SubjectAssignments } from "../service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 import { BrickLengthEnum } from "model/brick";
 import SingleSubjectPagination from "./SingleSubjectPagination";
-import { SingleSubjectAssignment } from "./SingleSubjectAssignment";
+import SingleSubjectAssignment from "./SingleSubjectAssignment";
+import { User } from "model/user";
+import { isITablet } from "services/phone";
 
 interface SingleSubjectProps {
+  sortBy: SortBy;
   userId: number;
   history: any;
   subjectAssignment: SubjectAssignments;
+  student: User | null;
 }
 
 interface SingleSubjectState {
@@ -75,7 +79,11 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
   getPages(assignments: LibraryAssignmentBrick[]) {
     const totalWidth = 68.6;
     const baseMargin = 0.32;
-    const baseAssignmentWidth = 1.5;
+    let baseAssignmentWidth = 2;
+
+    if (isITablet()) {
+      baseAssignmentWidth = 3;
+    }
 
     let pages = [];
 
@@ -102,31 +110,39 @@ class SingleSubjectAssignments extends Component<SingleSubjectProps, SingleSubje
   renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
     return <div key={key}>
       <SingleSubjectAssignment
-        userId={this.props.userId}
         subject={this.props.subjectAssignment.subject}
+        student={this.props.student}
         history={this.props.history} assignment={assignment}
       />
     </div>
   }
 
   render() {
+    const {sortBy} = this.props;
     let { assignments } = this.props.subjectAssignment;
 
-    assignments.sort(a => {
-      if (a.maxScore && a.maxScore >= 0) {
-        return -1;
-      }
-      return 1;
-    });
-
-    assignments.sort((a, b) => {
-      if (a.maxScore && a.maxScore >= 0) {
-        if (new Date(a.brick.updated).getTime() > new Date(b.brick.updated).getTime()) {
+    if (sortBy === SortBy.Score) {
+      assignments = assignments.sort((a, b) => {
+        if (a.bestAttemptPercentScore && b.bestAttemptPercentScore && a.bestAttemptPercentScore > b.bestAttemptPercentScore) {
           return -1;
         }
-      }
-      return 1;
-    });
+        return 1;
+      });
+    } else if (sortBy === SortBy.Date) {
+      assignments = assignments.sort((a: any, b: any) => {
+        if (new Date(a.lastAttemptDate).getTime() > new Date(b.lastAttemptDate).getTime()) {
+          return -1;
+        }
+        return 1;
+      });
+    } else if (sortBy === SortBy.Level) {
+      assignments = assignments.sort((a: any, b: any) => {
+        if (a.brick.academicLevel < b.brick.academicLevel) {
+          return -1;
+        }
+        return 1;
+      });
+    }
 
     const pages = this.getPages(assignments);
 

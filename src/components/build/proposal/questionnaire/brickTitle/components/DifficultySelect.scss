@@ -13,6 +13,31 @@
     padding-bottom: 0;
     min-height: 2vw;
   }
+  &.current-placeholder {
+    .MuiSelect-root.MuiSelect-select.MuiSelect-selectMenu.MuiInputBase-input.MuiInput-input {
+      font-family: $font-family-bold;
+    }
+  }
+  &.custom-arrow .MuiInputBase-root svg {
+    display: none;
+    right: 0;
+    position: absolute;
+    $size: 1vw;
+    width: $size;
+    height: 100% !important;
+    color: var(--theme-dark-blue);
+  }
+  svg.arrow {
+    right: 0;
+    position: absolute;
+    $size: 1vw;
+    width: $size;
+    height: 100% !important;
+    color: var(--theme-dark-blue);
+  }
+  .arrow {
+    display: block;
+  }
   .placeholder {
     display: none;
   }
@@ -21,4 +46,8 @@
       opacity: 0.42 !important;
     }
   }
+}
+
+.difficult-popper li {
+  font-size: 1.6vw !important;
 }

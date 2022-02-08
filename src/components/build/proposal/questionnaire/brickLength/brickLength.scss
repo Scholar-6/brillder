@@ -12,10 +12,8 @@
       width: 100%;
       text-align: center;
     }
-    @include tabletL {
-      margin-top: 16.7vh;
-      margin-left: 12.1vw;
-    }
+    margin-top: 16.7vh;
+    margin-left: 13.4vw;
     > h1 {
       @extend %textCenter;
       color: var(--theme-dark-blue);
@@ -61,8 +59,9 @@
       }
     }
   }
+  $space: 1.2vw;
   .brick-length-image-container1 {
-    padding-right: 3vw !important;
+    margin-right: calc(#{$space * 2}) !important;
     .brick-length-image {
       @include phone_and_tabletL {
         background-position: right;
@@ -71,8 +70,8 @@
   }
 
   .brick-length-image-container2 {
-    padding-left: 1.5vw !important;
-    padding-right: 1.5vw !important;
+    margin-left: $space !important;
+    margin-right: $space !important;
     .brick-length-image {
       @include phone_and_tabletL {
         background-position: center;
@@ -80,7 +79,7 @@
     }
   }
   .brick-length-image-container3 {
-    padding-left: 3vw !important;
+    margin-left: calc(#{$space * 2}) !important;
     .brick-length-image {
       @include phone_and_tabletL {
         background-position: left;
@@ -88,39 +87,40 @@
     }
   }
 
+  .length-description {
+    text-align: center !important;
+  }
+
   .brick-length-image-container {
-    .brick-length-60-image {
-      background-image: url('/images/60min-icon-blue.png');
-    }
-    .brick-length-60-image:hover,
-    .brick-length-60-image.active {
-      background-image: url('/images/60min-icon-red-hover.png');
-    }
-    .brick-length-40-image {
-      background-image: url('/images/40min-icon-blue.png');
-    }
-    .brick-length-40-image:hover,
-    .brick-length-40-image.active {
-      background-image: url('/images/40min-icon-red-hover.png');
-    }
-    .brick-length-20-image {
-      background-image: url('/images/20min-icon-blue.png');
-    }
-    .brick-length-20-image:hover,
-    .brick-length-20-image.active {
-      background-image: url('/images/20min-icon-red-hover.png');
+    position: relative;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 0.8vw;
+
+    .length-num {
+      position: absolute;
+      top: -1.5vw;
+      left: calc(50% - 0.5vw);
+      font-size: 1vw;
+      font-family: $font-family-bold;
+      color: var(--tab-gray);
     }
 
     .brick-length-image {
-      @extend %width100;
+      width: 10vw;
+      height: 8vw;
       background-repeat: no-repeat;
-      padding-top: 100%;
-      @include phone_and_tabletP {
-        background-size: 90% 90%;
+    }
+    &.active,
+    &:hover {
+      .length-num {
+        color: var(--theme-dark-blue);
       }
-      @include tabletP {
-        background-size: 100% 100%;
-      }
+    }
+    &.active {
+      background: var(--tab-gray);
     }
   }
 
@@ -162,5 +162,39 @@
     top: 20.4vw !important;
     color: white;
     font-size: 1vw !important;
+
+    div {
+      font-size: 1vw !important;
+      margin-top: unset !important;
+      top: unset !important;
+      position: relative;
+    }
+
+    @keyframes transform-er23fwe {
+      from {
+        transform: scale(0.2, 0.2);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1,1);
+      }
+    }
+
+    ul {
+      opacity: 0;
+      transform-origin: 0% 50%;
+      &.a-1 {
+        animation: transform-er23fwe 1s 0.25s forwards;
+      }
+      &.a-2 {
+        animation: transform-er23fwe 1s 0.5s forwards;
+      }
+      &.a-3 {
+        animation: transform-er23fwe 1s 0.75s forwards;
+      }
+      &.a-4 {
+        animation: transform-er23fwe 1s 1s forwards;
+      }
+    }
   }
 }

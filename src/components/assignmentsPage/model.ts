@@ -21,9 +21,6 @@ export interface ThreeAssignmentColumns {
 
 export interface PlayFilters {
   viewAll: boolean;
-  completed: boolean;
-  submitted: boolean;
-  checked: boolean;
 }
 
 export interface AssignmentBrickData {
@@ -31,7 +28,11 @@ export interface AssignmentBrickData {
   key: number;
   index: number;
   row: number;
+  deadline: string;
   assignmentId: number;
   status: AssignmentBrickStatus;
   isInvitation: boolean;
+  completedDate: string;
+  teacher?: any;
+  bestScore: number;
 }

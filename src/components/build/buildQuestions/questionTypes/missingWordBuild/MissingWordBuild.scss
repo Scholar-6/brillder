@@ -3,17 +3,13 @@
 @import 'src/assets/sass/partials/extensions';
 
 .missing-word-build {
-  textarea {
-    width: 88.5%;
-    padding: 0;
-    padding-left: 1%;
-    padding-right: 10%;
-    min-height: 55px;
-    font-size: 1vw;
-    border-radius: 0.4vw !important;
-    padding-top: 0.4vh;
-    border: none !important;
-    font-family: $font-family-regular;
+  $bottom-distance: 0.2vw;
+  .missing-big-text {
+    margin-bottom: $bottom-distance;
+    .ql-editor {
+      background: var(--white) !important;
+      border-radius: 0.6vw;
+    }
   }
   @extend %textCenter;
 
@@ -24,6 +20,7 @@
       position: absolute;
       padding: 0.45vw;
       left: 0.1vw;
+      z-index: 10;
       top: 1vw;
       span {
         svg {
@@ -35,6 +32,7 @@
     }
 
     .input-answer {
+      margin-bottom: $bottom-distance;
       width: 100%;
       min-height: $answer-height;
       @extend %textCenter;
@@ -42,6 +40,16 @@
       background: var(--input-gray);
       @extend %themeRadius;
       font-size: $answer-input-text-size;
+
+      .ql-editor {
+        background: transparent !important;
+        margin-left: 2.2vw;
+        padding-top: 1.2vw !important;
+        margin-right: 1vw;
+        text-align: center;
+        white-space: nowrap;
+        overflow-x: scroll;
+      }
 
       &.invalid::placeholder {
         color: var(--white);

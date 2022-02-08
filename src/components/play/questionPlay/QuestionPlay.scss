@@ -22,10 +22,6 @@
   width: 100%;
   color: var(--theme-dark-blue);
   @extend %themeRadius;
-  padding: 0.3vw;
-  @include tabletP {
-    font-size: 0.8vw;
-  }
   img {
     width: auto;
   }
@@ -80,9 +76,6 @@
   }
   p {
     line-height: initial;
-    @include tabletP {
-      font-size: 1vw;
-    }
   }
   .table {
     margin-left: 0;
@@ -113,12 +106,12 @@
 .question-unique-play {
   margin-top: 1vw !important;
   margin-bottom: 1vw !important;
-  padding-bottom: 15vw;
+  padding-bottom: 5vw;
   font-size: 1.25vw !important;
 }
 
 @include phone_and_tabletP {
   .question-unique-play {
-    font-size: 4.5vw !important;
+    font-size: $mbase-font-size !important;
   }
 }

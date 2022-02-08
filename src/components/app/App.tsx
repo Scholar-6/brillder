@@ -53,18 +53,19 @@ import PlayPreviewRoute from './PlayPreviewRoute';
 import EmailLoginPage from 'components/loginPage/EmailLoginPage';
 import SelectSubjectPage from 'components/onboarding/selectSubjectPage/SelectSubjectPage';
 import PublicTerms from 'components/terms/PublicTerms';
-import MobileUsernamePage from 'components/onboarding/mobileUsernamePage/MobileUsernamePage';
 import RotateIPadInstruction from 'components/baseComponents/rotateInstruction/RotateIPadInstruction';
 import { isPhone } from 'services/phone';
 import { setupMatomo } from 'services/matomo';
 import { ReduxCombinedState } from 'redux/reducers';
 import { User } from 'model/user';
 import { getTerms } from 'services/axios/terms';
-import IPadWarning from 'components/baseComponents/rotateInstruction/IPadWarning';
 import BuildRouter from 'components/build/BuildRouter';
 import ProposalBrickRoute from './ProposalBrickRoute';
 import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';
 import { GetYoutubeClick } from 'localStorage/play';
+import StripePage from 'components/stripePage/StripePage';
+import LeaderboardPage from 'components/competitions/LeaderboardPage';
+import ChoosePlan from 'components/choosePlan/ChoosePlan';
 
 interface AppProps {
   user: User;
@@ -74,7 +75,6 @@ interface AppProps {
 const App: React.FC<AppProps> = props => {
   const location = useLocation();
   const [iframeFullScreen, setIframe] = React.useState(false);
-  const [showWarning, setWarning] = React.useState(isTablet ? true: false)
   const [termsData, setTermsData] = React.useState({
     isLoading: false,
     termsVersion: ''
@@ -120,6 +120,7 @@ const App: React.FC<AppProps> = props => {
   // lock screen for phone
   if (isPhone()) {
     document.onclick = function (e) {
+      /*
       if (document.body.requestFullscreen && !document.fullscreenElement) {
         let res = document.body.requestFullscreen();
         res.then(() => {
@@ -128,7 +129,7 @@ const App: React.FC<AppProps> = props => {
             console.log('lock screen');
           }
         });
-      }
+      }*/
     }
   }
 
@@ -170,7 +171,7 @@ const App: React.FC<AppProps> = props => {
     [],
   );
 
-  setupZendesk(location, zendeskCreated, setZendesk);
+  setupZendesk(zendeskCreated, setZendesk);
 
   axios.interceptors.response.use(function (response) {
     return response;
@@ -183,13 +184,13 @@ const App: React.FC<AppProps> = props => {
     return <RotateIPadInstruction />;
   }
 
-  if (isTablet && showWarning) {
-    return <IPadWarning hideWarning={() => setWarning(false)} />
-  }
-  
   // If is mobile and landscape tell them to go to portrait
   else if (isMobileOnly && horizontal && !iframeFullScreen) {
-    return <RotateInstruction />;
+    if (location.pathname.search('/prep') !== -1 && location.pathname.search('/play/brick') !== -1) {
+      // allow rotation on prep
+    } else {
+      return <RotateInstruction />;
+    }
   }
 
   // get terms version
@@ -238,14 +239,19 @@ const App: React.FC<AppProps> = props => {
       <Profiler id="app-tsx" onRender={onRenderCallback} >
       {/* all page routes are here order of routes is important */}
       <Switch>
-        <UnauthorizedRoute path={map.AllSubjects} component={ViewAll} />
+        <AllUsersRoute path="/stripe-subscription/:type" component={StripePage} />
         <UnauthorizedRoute path={map.SubjectCategories} component={ViewAll} />
+        <UnauthorizedRoute path={map.SearchPublishBrickPage} component={ViewAll} />
         <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />
 
+        <StudentRoute path="/my-library/:userId" component={Library} />
         <StudentRoute path="/my-library" component={Library} />
+        <StudentRoute path="/post-play/brick/:brickId/:userId/:classId" component={PostPlay} />
         <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
+
+        <StudentRoute path={map.ChoosePlan} component={ChoosePlan} />
 
         <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
         <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
@@ -274,16 +280,17 @@ const App: React.FC<AppProps> = props => {
 
         <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
         <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
-        <AllUsersRoute path={map.UserPreference} component={UserPreferencePage} isPreferencePage={true} />
+        <AllUsersRoute path={map.UserPreferencePage} component={UserPreferencePage} isPreferencePage={true} />
         <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
-        <AllUsersRoute path={map.MobileUsername} component={MobileUsernamePage} />
         <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
+        <UnauthorizedRoute path={map.LeaderboardPage + '/:competitionId'} component={LeaderboardPage} />
 
         <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path={map.ResetPassword} component={ResetPasswordPage} />
         <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
+
         <Route path={map.TermsSignUp} component={Terms} />
         <Route path={map.TermsPage} component={PublicTerms} />
 

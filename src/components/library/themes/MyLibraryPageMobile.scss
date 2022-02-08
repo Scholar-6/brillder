@@ -3,7 +3,13 @@
 @import 'src/assets/sass/partials/extensions';
 
 .phone-my-library {
-  $base-brick-width: 5vw;
+  $base-brick-width: 10vw;
+
+  .background {
+    height: 100%;
+    width: 100%;
+    border-radius: 1vw;
+  }
 
   .ml-content {
     height: calc(100% - 64px);
@@ -19,8 +25,17 @@
       color: var(--white);
     }
 
+    .rotated-text {
+      font-size: 4.5vw;
+    }
+
     .progress-value {
       position: relative;
+      .rotated-text {
+        text-align: center;
+        color: var(--white);
+        font-family: $font-family-bold !important;
+      }
     }
     .rotated-container {
       bottom: 0;
@@ -30,25 +45,38 @@
       .rotated {
         transform: rotate(270deg);
         .rotated-text {
-          padding-bottom: 3vh;
-          padding-top: 3vh;
+          padding-left: 5vh;
+          padding-right: 5vh;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
       }
     }
-    .length-40 .rotated-container .rotated {
-      margin-bottom: 2.6vw;
+    .length-20 .rotated-container .rotated {
+      margin-bottom: 1vw;
     }
-  }
-
-  .page-header {
-    height: 64px !important;
+    .length-40 .rotated-container .rotated {
+      margin-bottom: 5vw;
+    }
+    .length-60 .rotated-container .rotated {
+      margin-bottom: 13vw;
+    }
   }
 
   .page-navigation {
     display: none;
+  }
+
+  .academic-lines {
+    .end-lines,
+    .start-lines {
+      height: 5vh !important;
+
+      .level {
+        height: 0.6vh;
+      }
+    }
   }
 
   .all-subject-assignments {
@@ -60,10 +88,11 @@
       height: 100%;
       padding: 0 2vw;
       margin: 0 2vw;
+      font-size: $mbase-font-size;
       overflow-y: scroll;
 
       .libary-container-1 {
-        height: calc(34vh + 8vw);
+        height: calc(49vh + 8vw);
         margin-left: 0.5vw;
         margin-right: 0.5vw;
         max-width: 100%;
@@ -80,9 +109,10 @@
         .libary-container {
           width: max-content;
           max-width: 100%;
-          height: calc(30vh);
+          height: calc(45vh);
           display: flex;
           background: var(--white);
+          background: var(--theme-dark-blue);
           border-radius: 1vw;
           padding: 1.5vw;
 
@@ -91,6 +121,7 @@
             display: flex;
             flex-direction: row;
             overflow: hidden;
+            overflow-x: auto !important;
           }
         }
 
@@ -108,7 +139,7 @@
             border-radius: 1vw;
 
             &.default {
-              background: var(--tab-gray) !important;
+              background: var(--theme-light-blue) !important;
             }
 
             &.assigned {
@@ -117,6 +148,39 @@
 
             .default-value {
               height: 100%;
+
+              .white .rotated-text {
+                padding-left: calc(15vw + 5vh);
+              }
+
+              .text-dark-gray .rotated-text {
+                color: var(--dark-gray);
+              }
+
+              .pr-lock-container {
+                position: absolute;
+                border-radius: 1vw;
+                border-top-right-radius: 4vw;
+                border-top-left-radius: 4vw;
+                height: calc(11vw + 5vh);
+                padding-bottom: 6vh;
+                width: 100%;
+                bottom: 0;
+                line-height: 1.1;
+                font-family: $font-family-bold;
+                color: var(--white);
+                > div {
+                  display: flex;
+                  justify-content: center;
+                }
+                svg {
+                  padding-top: 1vw;
+                  $size: 5vw;
+                  stroke-width: 1.5;
+                  width: $size;
+                  height: $size;
+                }
+              }
             }
 
             &.length-20 {
@@ -148,6 +212,14 @@
             position: absolute;
             bottom: 0;
             border-radius: 1vw;
+
+            .lib-circle {
+              width: 5.5vw;
+              height: 5.5vw;
+              font-size: 3.3vw;
+              max-height: 6vh;
+              max-width: 6vh;
+            }
           }
 
           .subject-tooltip {
@@ -157,6 +229,33 @@
             text-align: center;
             transform: translate(-25%, 0);
             z-index: 1000;
+          }
+
+          &.general {
+            .background {
+              background: var(--white) !important;
+            }
+            .academic-lines {
+              .end-lines,
+              .start-lines {
+                .level {
+                  background: var(--theme-dark-blue) !important;
+                }
+              }
+            }
+            .pr-lock-container {
+              color: var(--theme-dark-blue) !important;
+              background: var(--white) !important;
+            }
+            .progress-value {
+              background: var(--white) !important;
+              &.default-value {
+                background: inherit !important;
+              }
+              .rotated-container .rotated .rotated-text {
+                color: var(--white);
+              }
+            }
           }
         }
       }
@@ -171,79 +270,21 @@
     height: 25vh;
     overflow-y: scroll;
   }
-
-  .one-subject {
-    padding-top: 3vh;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    padding-bottom: 12vh;
-    height: 100%;
-
-    .libary-container {
-      background: var(--white);
-      border-radius: 0.7vw;
-      height: 100%;
-      $base-side-margin: 0.32vw;
-
-      >div {
-        height: 100%;
-        $base-width: 5vw;
-
-        .assignment {
-          margin-left: $base-side-margin;
-          margin-right: $base-side-margin;
-          $base-radius: 0.35vw;
-          border-radius: $base-radius;
-
-          .progress-value {
-            border-radius: $base-radius;
-          }
-        }
-
-        .length-20 {
-          width: $base-width;
-
-          .rotated .rotated-text {
-            height: $base-width;
-          }
-
-          .progress-value {
-            width: $base-width;
-          }
-        }
-
-        .length-40 {
-          $width: calc(#{$base-width} * 2);
-          width: $width;
-
-          .rotated .rotated-text {
-            height: $width;
-          }
-
-          .progress-value {
-            width: $width;
-          }
-        }
-
-        .length-60 {
-          $width: calc(#{$base-width} * 4);
-          width: $width;
-
-          .rotated .rotated-text {
-            height: $width;
-          }
-
-          .progress-value {
-            width: $width;
-          }
-        }
-      }
-    }
-  }
 }
 
 // spaces
 .my-library .all-subject-assignments .my-library-list .libary-container-1 .assignment-progressbar .assignment {
   margin-left: 0.5vw;
   margin-right: 0.5vw;
+}
+
+// bottom
+.phone-my-library .upper-part {
+  .search-container {
+    top: 2.6vw !important;
+    left: 44vw;
+  }
+  .home-button-container {
+    margin-right: 24vw;
+  }
 }

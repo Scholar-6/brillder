@@ -18,13 +18,13 @@ import SubjectsColumnV2 from "./SubjectsColumnV2";
 import { isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import { isPhone } from "services/phone";
 import { hideZendesk } from "services/zendesk";
+import LabelTyping from "components/baseComponents/LabelTyping";
 
 
 interface AllSubjectsProps {
   history: any;
 
   user: User;
-  defaultSubject?: number;
   getUser(): Promise<void>;
 }
 
@@ -61,7 +61,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     if (subjects) {
       subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
       subjects = subjects.map(s => {
-        const checked = this.props.user.subjects.findIndex(s2 => s2.id === s.id) > -1 || (this.props.user.subjects.length <= 1 && s.id === this.props.defaultSubject);
+        const checked = this.props.user.subjects.findIndex(s2 => s2.id === s.id) > -1;
         return { ...s, checked: checked };
       });
       this.setState({ ...this.state, subjects });
@@ -98,13 +98,12 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
       subjects
     } as any;
 
-
     const saved = await updateUser(userToSave);
 
     if (saved) {
       await this.props.getUser();
       if (isStudentPreference(user)) {
-        this.props.history.push(map.MainPage);
+        this.props.history.push(map.MainPage + '?newStudent=true');
       } else if (isTeacherPreference(user)) {
         this.props.history.push(map.MainPage + '?' + map.NewTeachQuery);
       } else {
@@ -120,6 +119,22 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     const subject = subjects.find(s => s.id === subjectId);
     if (subject) {
       subject.checked = !subject.checked;
+    }
+    this.setState({ subjects });
+  }
+
+  onSelectAll() {
+    const { subjects } = this.state;
+    for (let s of subjects) {
+      s.checked = true;
+    }
+    this.setState({ subjects });
+  }
+
+  onUnselectAll() {
+    const { subjects } = this.state;
+    for (let s of subjects) {
+      s.checked = false;
     }
     this.setState({ subjects });
   }
@@ -145,6 +160,8 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
               subjects={this.state.subjects}
               next={this.submit.bind(this)}
               onClick={this.onSubjectSelected.bind(this)}
+              selectAll={this.onSelectAll.bind(this)}
+              unselectAll={this.onUnselectAll.bind(this)}
             />
             <div className="df-button-box">
               <button className="btn theme-orange" onClick={this.submit.bind(this)}>Next</button>
@@ -158,11 +175,15 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <Grid container direction="row" className="select-subject-page">
-          <h1>What kind of bricks will you {titleVerb}?</h1>
+          <h1>
+            <LabelTyping start={true} value={`What kind of bricks will you ${titleVerb}?`} onFinish={() => {}} />
+          </h1>
           <SubjectsColumnV2
             subjects={this.state.subjects}
             next={this.submit.bind(this)}
             onClick={this.onSubjectSelected.bind(this)}
+            selectAll={this.onSelectAll.bind(this)}
+            unselectAll={this.onUnselectAll.bind(this)}
           />
         </Grid>
       </React.Suspense>
@@ -171,11 +192,10 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 }
 
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user, defaultSubject: state.auth.defaultSubject });
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
 });
-
 
 export default connect(mapState, mapDispatch)(SelectSubjectPage);

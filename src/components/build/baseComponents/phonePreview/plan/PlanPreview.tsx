@@ -7,6 +7,7 @@ import { User } from "model/user";
 import BrickCircle from "components/baseComponents/BrickCircle";
 import { AcademicLevelLabels, Brick } from "model/brick";
 import YoutubeAndMathQuote from "components/play/baseComponents/YoutubeAndMathQuote";
+import YoutubeMathDesmos from "components/play/baseComponents/YoutubeMathDesmos";
 
 interface PlanPreviewProps {
   data: {
@@ -23,7 +24,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
       <BrickCircle color={currentBrick.subject ? currentBrick.subject.color : ''} label={AcademicLevelLabels[currentBrick.academicLevel]} onClick={() => {}} />
       <div className="title" style={{ textAlign: "center" }}>
         <div className='q-brick-title'>
-          <YoutubeAndMathQuote value={currentBrick.title} />
+          <div dangerouslySetInnerHTML={{__html: currentBrick.title}} />
         </div>
       </div>
       <KeyWordsPlay keywords={currentBrick.keywords} />
@@ -50,7 +51,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
         </div>
       </div>
       <div className="base-font">
-        <YoutubeAndMathQuote value={currentBrick.prep} />
+        <YoutubeMathDesmos value={currentBrick.prep} />
       </div>
     </div>
   );

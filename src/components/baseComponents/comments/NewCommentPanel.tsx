@@ -6,7 +6,9 @@ import { CommentLocation } from 'model/comments';
 import SpriteIcon from '../SpriteIcon';
 
 interface NewCommentPanelProps {
+  isHidden?: boolean;
   currentBrick: Brick;
+  placeholder?: string;
   currentQuestionId?: number;
   currentLocation: CommentLocation;
   createComment(comment: any): void;
@@ -55,7 +57,8 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
       <form className="comment-text-form" onClick={e => {e.stopPropagation()}} onSubmit={e => { e.preventDefault(); }}>
         <textarea
           ref={textarea}
-          className="comment-text-entry" placeholder="Add suggestion..." value={text}
+          disabled={props.isHidden}
+          className="comment-text-entry" placeholder={props.placeholder ? props.placeholder : "Add suggestion..."} value={text}
           onClick={(e) => e.stopPropagation()}
           onChange={(evt) => setText(evt.target.value)} onInput={autoResize}
         />

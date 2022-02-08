@@ -608,7 +608,7 @@
         }
       }
       .center {
-        margin: 2.3vh 0;
+        margin-top: 2.3vh;
         padding: 0;
         font-size: 1.28vw;
         @extend %textCenter;
@@ -683,18 +683,12 @@
 
 %linkDescription {
   .link-description {
-    text-transform: uppercase;
     font-family: $font-family-bold;
     margin-bottom: 0.5vh;
     color: var(--theme-dark-blue);
     margin: 0;
     @extend %ellipsis;
-    @include phone_and_tabletP {
-      font-size: 4vw;
-    }
-    @include tabletP {
-      font-size: 0.8vw;
-    }
+    font-size: 1.1vw;
   }
 }
 

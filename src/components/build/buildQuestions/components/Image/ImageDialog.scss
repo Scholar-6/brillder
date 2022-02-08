@@ -3,6 +3,62 @@
 @import "src/assets/sass/partials/extensions";
 
 .image-dialog-container {
+  .quill-caption {
+    margin-top: 1vh;
+    .ql-custom-toolbar.ql-toolbar {
+      padding: 0 !important;
+      height: 2.3vw !important;
+    }
+    .q-tooltip-hover {
+      width: 1.6vw !important;
+    }
+    .formats {
+      border-top-left-radius: 0.6vw;
+      border-top-right-radius: 0.6vw;
+      display: flex;
+      height: 100%;
+      button {
+        height: 100%;
+        display: block;
+      }
+    }
+    .css-custom-tooltip {
+      display: none;
+    }
+    .ql-editor.ql-blank::before {
+      font-family: $font-family-bold;
+      color: var(--theme-dark-blue);
+      opacity: 0.45;
+    }
+    .q-tooltip-hover:hover {
+      opacity: 0.5;
+    }
+    .ql-custom-toolbar {
+      svg {
+        width: 1.6vw !important;
+        height: 1.6vw !important;
+      }
+    }
+    .ql-editor {
+      border-radius: 0.6vw;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      padding: 0 !important;
+      font-family: $font-family-regular;
+      padding-left: 1vw !important;
+      font-size: 1.3vw !important;
+      line-height: 1.87 !important;
+    }
+    p {
+      display: inline;
+    }
+    br {
+      display: none;
+    }
+  }
+  .margin-top-x2 {
+    margin-top: 1vh;
+  }
   .MuiSlider-mark {
     display: none;
   }
@@ -26,6 +82,11 @@
       padding-bottom: calc(4vw + 1.5vw);
     }
   }
+}
+
+.upload-button-container {
+  display: flex;
+  justify-content: center;
 }
 
 .upload-button {
@@ -106,14 +167,16 @@
 .image-dialog {
   margin-bottom: 0 !important;
   min-height: 66vh;
-  padding-left: 1vw;
-  padding-right: 1vw;
   $font-size: 1.3vw;
   max-width: 35vw;
   font-size: $font-size !important;
 
+  &.no-fixed-height {
+    min-height: unset !important;
+  }
+
   > div {
-    padding-top: 2vh;
+    padding-top: 1vh;
   }
 
   .image-preview-label {
@@ -157,7 +220,7 @@
 
   input {
     font-size: $font-size;
-    margin-top: 2vh;
+    margin-top: 1vh;
     color: var(--theme-dark-blue);
     background: var(--tab-gray);
     border-radius: $editor-radius;
@@ -235,6 +298,7 @@
     margin-left: 3vw;
     width: 19vw;
     height: 0.3vw;
+    padding: 0.6vw !important;
     .MuiSlider-track,
     .MuiSlider-rail {
       height: inherit !important;

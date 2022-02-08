@@ -4,6 +4,11 @@
   }
 }
 
+.circle-border {
+  animation: border-dance 20s linear infinite;
+}
+
+
 @include keyframes(border-dance) {
   0% {
     @include rotate(0deg);

@@ -72,7 +72,7 @@
   .hint-content {
     .hint-container {
       margin: 0;
-      margin-bottom: 0.2vw;
+      margin-bottom: $editor-spacing;
       float: left;
       width: 100%;
       &:only-child,

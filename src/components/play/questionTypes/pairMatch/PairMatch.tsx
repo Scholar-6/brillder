@@ -12,8 +12,11 @@ import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, Pai
 import MathInHtml from '../../baseComponents/MathInHtml';
 import PairMatchOption from './PairMatchOption';
 import PairMatchImageContent from './PairMatchImageContent';
-import { isPhone } from 'services/phone';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
+import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { isMobile } from 'react-device-detect';
+import { isPhone } from 'services/phone';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
@@ -38,7 +41,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         userAnswers = component.choices ? component.choices : [];
       }
     }
-    this.state = { status, userAnswers };
+
+    //#3682 fix
+    if (userAnswers.length === 0) {
+      userAnswers = component.list;
+    }
+
+    const canDrag = this.props.attempt?.correct ? false : true;
+    this.state = { status, userAnswers, canDrag };
   }
 
   UNSAFE_componentWillUpdate(props: PairMatchProps) {
@@ -68,11 +78,17 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   getAnswer(): any[] { return this.state.userAnswers; }
 
   getState(entry: number): number {
-    if (this.props.attempt?.answer[entry]) {
-      if (this.props.attempt.answer[entry].index === this.props.component.list[entry].index) {
-        return 1;
-      } else { return -1; }
-    } else { return 0; }
+    try {
+      if (this.props.isReview && this.props.attempt === this.props.liveAttempt) {
+        if (this.props.attempt?.answer[entry]) {
+          if (this.props.attempt.answer[entry].index === this.props.component.list[entry].index) {
+            return 1;
+          } else { return -1; }
+        } else { return 0; }
+      } else { return 0; }
+    } catch {
+      return 0;
+    }
   }
 
   getBookState(entry: number): number {
@@ -106,7 +122,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       return (
         <div style={{ width: '100%' }}>
           <Audio src={answer.valueSoundFile} />
-          <div>{answer.valueSoundCaption ? answer.valueSoundCaption : 'Click to select'}</div>
+          <div>{answer.valueSoundCaption ? answer.valueSoundCaption : ''}</div>
         </div>
       );
     }
@@ -125,13 +141,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (answer.answerType === QuestionValueType.Image) {
       className += " image-choice";
     }
-    if (this.props.attempt && this.props.isReview) {
+    if (this.props.attempt && this.props.isReview && this.props.attempt === this.props.liveAttempt) {
       if (this.state.status !== DragAndDropStatus.Changed) {
         let state = this.getState(answer.index);
         if (state === 1) {
           className += " correct";
-        } else {
-          className += " wrong";
         }
       }
     }
@@ -168,10 +182,17 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       <div className="question-unique-play pair-match-play">
         <p>
           <span className="help-text">
-            Drag to rearrange. {
-              haveImage && (isPhone() ? 'Double tap images to zoom.' : 'Hover over images to zoom.')
+            <DragIcon /><span>Drag to rearrange.</span> {
+              haveImage && (isMobile
+                ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
+                : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
             }
           </span>
+          {!isPhone() && isMobile &&
+          <span className="help-text">
+            <SpriteIcon name="hero-cursor-click" />
+            Click and hold to move if using an Apple Pencil
+          </span>}
         </p>
         <Grid container justify="center">
           <List style={{ padding: 0 }} className="answers-list">
@@ -190,7 +211,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             }
           </List>
           {
-            this.props.isBookPreview || this.props.isPreview ?
+            this.props.isBookPreview || this.props.isPreview || !this.state.canDrag ?
               <div className="answers-list">
                 {this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))}
               </div>

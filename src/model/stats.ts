@@ -1,3 +1,4 @@
+import { Annotation } from "./attempt";
 import { Assignment } from "./classroom";
 
 export interface AssignmentStats {
@@ -19,12 +20,14 @@ export interface AssignmentAttepmtAnswer {
 }
 
 export interface AttemptStats {
+    id: number;
     answers: AssignmentAttepmtAnswer[];
     liveAnswers: AssignmentAttepmtAnswer[];
     score: number;
     oldScore: number;
     maxScore: number;
     percentScore: number;
+    annotations: Annotation[];
 }
 
 export interface AssignmentStudent {
@@ -32,6 +35,9 @@ export interface AssignmentStudent {
     avg_score: number;
     status: number;
     studentId: number;
+    avgScore: number;
+    bestScore: number;
+    numberOfAttempts: number;
 }
 
 export interface ApiAssignemntStats {

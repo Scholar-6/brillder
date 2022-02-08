@@ -8,6 +8,8 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
 import map from 'components/map';
+import { GENERAL_SUBJECT } from "components/services/subject";
+import TypingLabel from "components/baseComponents/TypingLabel";
 
 
 interface SubjectProps {
@@ -16,157 +18,469 @@ interface SubjectProps {
   location: any;
   subjectId: any;
   subjects: any[];
-  saveCore(isCore: boolean): void;
   saveSubject(subjectId: number): void;
-  saveData(subjectId: number, isCore: boolean): void;
 }
 
 const FrenchComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+
   return (
-    <div className="french-preview">
+    <div className="french-preview subject-preview">
       <div>
-        <div>“Revenons</div>
-        <div>à nos</div>
-        <div>moutons”</div>
+        <div>
+          <TypingLabel label="“Revenons" onEnd={() => setFirstEnd(true)} />
+        </div>
+        <div>
+          {firstFinished && <TypingLabel label="à nos" onEnd={() => setSecondEnd(true)} />}
+        </div>
+        <div>
+          {secondFinished && <TypingLabel label="moutons”" onEnd={() => setThirdEnd(true)} />}
+        </div>
       </div>
-      <div>Anon.</div>
+      {thirdFinished && <div className="absolute-bottom">Anon.</div>}
     </div>
   );
 }
 
 const ArtComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+
   return (
-    <div className="art-preview">
-      <div>“A work of art is a confession”</div>
-      <div>Albert Camus</div>
+    <div className="art-preview subject-preview">
+      <div>
+        <TypingLabel label="“A work of" onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="art is a" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="confession”" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      {thirdFinished && <div className="absolute-bottom">Albert Camus</div>}
+    </div>
+  );
+}
+
+const GeneralComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourthFinished, setFourthEnd] = React.useState(false);
+
+  return (
+    <div className="art-preview spanish-preview subject-preview">
+      <div>
+        <TypingLabel label="“You cannot" onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="shake hands" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="with a" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="clenched fist”" onEnd={() => setFourthEnd(true)} />}
+      </div>
+      {fourthFinished && <div className="absolute-bottom">Indira Gandhi</div>}
+    </div>
+  );
+}
+
+const ReligionComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+  const [fifthFinished, setFifthEnd] = React.useState(false);
+
+  return (
+    <div className="art-preview religion-preview subject-preview">
+      <div>
+        <TypingLabel label="“Everything" onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="has been" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="figured out," onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="except how to" onEnd={() => setFourEnd(true)} />}
+      </div>
+      <div>
+        {fourFinished && <TypingLabel label="live”" onEnd={() => setFifthEnd(true)} />}
+      </div>
+      {fifthFinished && <div className="absolute-bottom">Jean-Paul Sartre</div>}
+    </div>
+  );
+}
+
+const SpanishComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+
+  return (
+    <div className="art-preview spanish-preview subject-preview">
+      <div>
+        <TypingLabel label="“Haciendo y" onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="deshaciendo" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="se va" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="aprendiendo”" onEnd={() => setFourEnd(true)} />}
+      </div>
+      {fourFinished && <div className="absolute-bottom">Anon</div>}
+    </div>
+  );
+}
+
+const EnglishLComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+  const [fifthFinished, setFifthEnd] = React.useState(false);
+
+  return (
+    <div className="art-preview religion-preview subject-preview">
+      <div>
+        <TypingLabel label="“The limits of" onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="my language" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="mean the" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="limits of my" onEnd={() => setFourEnd(true)} />}
+      </div>
+      <div>
+        {fourFinished && <TypingLabel label="world”" onEnd={() => setFifthEnd(true)} />}
+      </div>
+      {fifthFinished && <div className="absolute-bottom">Wittgenstein</div>}
+    </div>
+  );
+}
+
+const HistoryPComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+
+  return (
+    <div className="history-preview subject-preview">
+      <div>
+        <TypingLabel label="“Time the" onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="destroyer is" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="time the" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="preserver”" onEnd={() => setFourEnd(true)} />}
+      </div>
+      {fourFinished && <div className="absolute-bottom">T. S. Eliot</div>}
+    </div>
+  );
+}
+
+const HistoryAComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+
+  return (
+    <div className="art-preview history-art-preview subject-preview">
+      <div>
+        <TypingLabel label="“I paint" onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="flowers so" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="they will" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="not die”" onEnd={() => setFourEnd(true)} />}
+      </div>
+      {fourFinished && <div className="absolute-bottom">Frida Kahlo</div>}
+    </div>
+  );
+}
+
+const SociologyComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+  const [fifthFinished, setFifthEnd] = React.useState(false);
+
+  return (
+    <div className="art-preview religion-preview subject-preview">
+      <div>
+        <TypingLabel label="“The eyes of" onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="others our" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="prisons; their" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="thoughts our" onEnd={() => setFourEnd(true)} />}
+      </div>
+      <div>
+        {fourFinished && <TypingLabel label="cages”" onEnd={() => setFifthEnd(true)} />}
+      </div>
+      {fifthFinished && <div className="absolute-bottom">Virginia Woolf</div>}
+    </div>
+  );
+}
+
+const MusicComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+
+  return (
+    <div className="art-preview religion-preview subject-preview">
+      <div>
+        <TypingLabel label="“Where" onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="words fail," onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="music" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="speaks”" onEnd={() => setFourEnd(true)} />}
+      </div>
+      {fourFinished && <div className="absolute-bottom">H. C. Andersen</div>}
     </div>
   );
 }
 
 const BiologyComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+
   return (
-    <div className="biology-preview">
-      <div>“Life is, after all, not a product of morality.”</div>
-      <div>Nietzsche</div>
+    <div className="biology-preview subject-preview">
+      <div>
+        <TypingLabel label="“Life is," onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="after all, not" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="a product of" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="morality.”" onEnd={() => setFourEnd(true)} />}
+      </div>
+      {fourFinished && <div className="absolute-bottom">Nietzsche</div>}
     </div>
   );
 }
 
 const ChineseComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+
   return (
-    <div className="chinese-preview">
-      <div>字值千金</div>
-      <div>Proverb</div>
+    <div className="chinese-preview subject-preview">
+      <div>
+        <TypingLabel label="字值千金" onEnd={() => setFirstEnd(true)} />
+      </div>
+      {firstFinished && <div className="absolute-bottom">Proverb</div>}
     </div>
   );
 }
 
 const ClassicsComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+
   return (
-    <div className="classics-preview">
-      <div>“Dis aliter visum”</div>
-      <div>Virgil</div>
+    <div className="classics-preview subject-preview">
+      <div>
+        <TypingLabel label="“Dis aliter" onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="visum”" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      {secondFinished && <div className="absolute-bottom">Virgil</div>}
     </div>
   );
 }
 
+
 const EconomicsComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+  const [fifthFinished, setFifthEnd] = React.useState(false);
+
   return (
-    <div className="economics-preview">
+    <div className="economics-preview subject-preview">
       <div>
-        <div>“Share it</div>
-        <div>fairly but</div>
-        <div>don’t take a</div>
-        <div>slice of</div>
-        <div>my pie…”</div>
+        <TypingLabel label="“Share it" onEnd={() => setFirstEnd(true)} />
       </div>
-      <div>Pink Floyd</div>
+      <div>
+        {firstFinished && <TypingLabel label="fairly but" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="don’t take a" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="slice of" onEnd={() => setFourEnd(true)} />}
+      </div>
+      <div>
+        {fourFinished && <TypingLabel label="my pie…”" onEnd={() => setFifthEnd(true)} />}
+      </div>
+      {fifthFinished && <div className="absolute-bottom">Pink Floyd</div>}
     </div>
   );
 }
 
 const EnglishComponent: React.FC = () => {
-  return (
-    <div className="english-preview">
-      <div>“What’s in a name?”</div>
-      <div>Shakespeare</div>
-    </div>
-  );
-}
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
 
-const DramaComponent: React.FC = () => {
   return (
-    <div className="drama-preview" />
+    <div className="english-preview subject-preview">
+      <div>
+        <TypingLabel label="“What’s in a" onEnd={() => setFirstEnd(true)} />
+      </div>
+      <div>
+        {firstFinished && <TypingLabel label="name?”" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      {secondFinished && <div className="absolute-bottom">Shakespeare</div>}
+    </div>
   );
 }
 
 const GeographyComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+  const [fifthFinished, setFifthEnd] = React.useState(false);
+  const [sixFinished, setSixEnd] = React.useState(false);
+
   return (
-    <div className="geography-preview">
+    <div className="geography-preview subject-preview">
       <div>
-        <div>“Planet</div>
-        <div>Earth is</div>
-        <div>blue, and</div>
-        <div>there’s</div>
-        <div>nothing I</div>
-        <div>can do.”</div>
+        <TypingLabel label="“Planet" onEnd={() => setFirstEnd(true)} />
       </div>
-      <div>David Bowie</div>
+      <div>
+        {firstFinished && <TypingLabel label="Earth is" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="blue, and" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="there’s" onEnd={() => setFourEnd(true)} />}
+      </div>
+      <div>
+        {fourFinished && <TypingLabel label="nothing I" onEnd={() => setFifthEnd(true)} />}
+      </div>
+      <div>
+        {fifthFinished && <TypingLabel label="can do.”" onEnd={() => setSixEnd(true)} />}
+      </div>
+      {sixFinished && <div className="absolute-bottom">David Bowie</div>}
     </div>
   );
 }
 
-const HistoryComponent: React.FC = () => {
-  return (
-    <div className="history-preview">
-      <div>
-        <div>“Time the</div>
-        <div>destroyer is</div>
-        <div>time the</div>
-        <div>preserver”</div>
-      </div>
-      <div>T. S. Eliot</div>
-    </div>
-  );
-}
+
 
 const MathsComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+
   return (
-    <div className="maths-preview">
+    <div className="maths-preview subject-preview">
       <div>
-        <div>“Number is</div>
-        <div>the ruler of</div>
-        <div>forms and</div>
-        <div>ideas”</div>
+        <TypingLabel label="“Number is" onEnd={() => setFirstEnd(true)} />
       </div>
-      <div>Pythagoras</div>
+      <div>
+        {firstFinished && <TypingLabel label="the ruler of" onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="forms and" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="ideas”" onEnd={() => setFourEnd(true)} />}
+      </div>
+      {fourFinished && <div className="absolute-bottom">Pythagoras</div>}
     </div>
   );
 }
 
 const PhysicsComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+  const [fourFinished, setFourEnd] = React.useState(false);
+
   return (
-    <div className="physics-preview">
+    <div className="physics-preview subject-preview">
       <div>
-        <div>“Everything</div>
-        <div>by number, </div>
-        <div>weight, and </div>
-        <div>measure”</div>
+        <TypingLabel label="“Everything" onEnd={() => setFirstEnd(true)} />
       </div>
-      <div>Newton</div>
+      <div>
+        {firstFinished && <TypingLabel label="by number," onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="weight, and" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      <div>
+        {thirdFinished && <TypingLabel label="measure”" onEnd={() => setFourEnd(true)} />}
+      </div>
+      {fourFinished && <div className="absolute-bottom">Newton</div>}
     </div>
   );
 }
 
 const PsychologyComponent: React.FC = () => {
+  const [firstFinished, setFirstEnd] = React.useState(false);
+  const [secondFinished, setSecondEnd] = React.useState(false);
+  const [thirdFinished, setThirdEnd] = React.useState(false);
+
   return (
-    <div className="psychology-preview">
+    <div className="psychology-preview subject-preview">
       <div>
-        <div>“Who looks</div>
-        <div> inside,</div>
-        <div>awakes”</div>
+        <TypingLabel label="“Who looks" onEnd={() => setFirstEnd(true)} />
       </div>
-      <div>Carl Jung</div>
+      <div>
+        {firstFinished && <TypingLabel label="inside," onEnd={() => setSecondEnd(true)} />}
+      </div>
+      <div>
+        {secondFinished && <TypingLabel label="awakes”" onEnd={() => setThirdEnd(true)} />}
+      </div>
+      {thirdFinished &&     <div className="absolute-bottom">Carl Jung</div>}
     </div>
   );
 }
@@ -210,7 +524,7 @@ const DefaultComponent: React.FC = () => {
 }
 
 const SubjectPage: React.FC<SubjectProps> = ({
-  history, subjectId, subjects, baseUrl, location, saveData, saveCore, saveSubject
+  history, subjectId, subjects, baseUrl, location, saveSubject
 }) => {
   const getSubjectName = (subjectId: number) => {
     if (subjectId) {
@@ -226,7 +540,6 @@ const SubjectPage: React.FC<SubjectProps> = ({
 
   const [subject, setSubject] = React.useState(subjectId);
   const [subjectName, setSubjectName] = React.useState(initSubjectName);
-  const [isCoreSet, setCoreStatus] = React.useState(false);
 
   const onSubjectChange = (event: any) => {
     const subjectId = parseInt(event.target.value) as number;
@@ -238,28 +551,8 @@ const SubjectPage: React.FC<SubjectProps> = ({
 
   const values = queryString.parse(location.search);
 
-  const getCore = (values: queryString.ParsedQuery<string>) => {
-    if (values.isCore === 'false') {
-      return false;
-    } else if (values.isCore === 'true') {
-      return true;
-    }
-    return false;
-  }
-
-  if (!isCoreSet && values.isCore) {
-    let isCore = getCore(values);
-    saveCore(isCore);
-    setCoreStatus(true);
-  }
-
   if (subjects.length === 1) {
-    let subjectId = subjects[0].id;
-    if (values.isCore) {
-      saveData(subjectId, getCore(values));
-    } else {
-      saveSubject(subjectId);
-    }
+    saveSubject(subjects[0].id);
     return <Redirect to={map.ProposalTitleLink} />
   }
 
@@ -279,6 +572,22 @@ const SubjectPage: React.FC<SubjectProps> = ({
       return FrenchComponent;
     } else if (subjectName === 'Art & Design') {
       return ArtComponent;
+    } else if (subjectName === GENERAL_SUBJECT) {
+      return GeneralComponent;
+    } else if (subjectName === 'Religion & Philosophy') {
+      return ReligionComponent;
+    } else if (subjectName === 'Spanish') {
+      return SpanishComponent;
+    } else if (subjectName === 'English Language') {
+      return EnglishLComponent;
+    } else if (subjectName === 'History & Politics') {
+      return HistoryPComponent;
+    } else if (subjectName === 'History of Art') {
+      return HistoryAComponent;
+    } else if (subjectName === 'Sociology') {
+      return SociologyComponent;
+    } else if (subjectName === 'Music') {
+      return MusicComponent;
     } else if (subjectName === 'Biology') {
       return BiologyComponent;
     } else if (subjectName === 'Chinese') {
@@ -289,14 +598,10 @@ const SubjectPage: React.FC<SubjectProps> = ({
       return EconomicsComponent;
     } else if (subjectName === 'English Literature') {
       return EnglishComponent;
-    } else if (subjectName === 'Drama & Theatre') {
-      return DramaComponent;
     } else if (subjectName === 'Geography') {
       return GeographyComponent;
     } else if (subjectName === 'German') {
       return GermanComponent;
-    } else if (subjectName === 'History') {
-      return HistoryComponent;
     } else if (subjectName === 'Maths') {
       return MathsComponent;
     } else if (subjectName === 'Physics') {

@@ -22,14 +22,7 @@
   line-height: 1.5 !important;
 
   @include phone_and_tabletP {
-    font-size: 4.5vw !important;
-  }
-}
-
-.post-play-page {
-  .lines-container,
-  .words-container {
-    font-size: 0.85vw !important;
+    font-size: $mbase-font-size !important;
   }
 }
 

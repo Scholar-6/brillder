@@ -3,6 +3,10 @@
 @import 'src/assets/sass/partials/extensions';
 
 .missing-word-live {
+  p {
+    display: inline !important;
+  }
+
   line-height: 1.45;
   margin: 5px 0;
   place-content: center space-evenly;
@@ -12,6 +16,20 @@
     display: inline;
     color: var(--theme-dark-blue);
     font-size: 1.25vw;
+
+    div {
+      display: inline;
+    }
+
+    br {
+      position: relative;
+      display: inline-block;
+      font-size: 8px;
+      line-height: 8px;
+      height: 8px;
+      content: "A";
+      width: 5px;
+    }
 
     .missing-select {
       margin-left: 10px;
@@ -33,12 +51,12 @@
 
   @include phone_and_tabletP {
     .missing-word-choice {
-      font-size: 4.5vw !important;
+      font-size: $mbase-font-size !important;
     }
 
     .MuiInputBase-input {
       padding: 2vw 4vw !important;
-      font-size: 4.5vw !important;
+      font-size: $mbase-font-size !important;
     }
 
     .MuiSvgIcon-root {
@@ -51,6 +69,18 @@
 .phone-question-preview {
   .missing-word-choice {
     font-size: 1vw;
+
+    .MuiInputBase-root {
+      position: relative;
+      display: inline-block;
+      min-width: 3vw !important;
+
+      .MuiSelect-select {
+        display: inline-block;
+        padding: 0;
+        min-width: 3vw !important;
+      }
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 import {get, put, post, postRes} from './index';
 
-import { RolePreference, User } from 'model/user';
+import { UserPreferenceType, User } from 'model/user';
 import { UpdateUserStatus } from 'components/userProfilePage/model';
 import { Editor } from 'model/brick';
 
@@ -48,9 +48,9 @@ export const getUserById = async (userId: number) => {
   }
 }
 
-export const saveProfileImageName = async (userId: number, name: string) => {
+export const saveProfileImageName = async (userId: number, name: string, profilePublic: boolean) => {
   try {
-    const data = await put<string>(`/user/profileImage/${userId}/${name}`, {});
+    const data = await put<string>(`/user/profileImage/${userId}/${name}/${profilePublic}`, {});
     return data === "OK" ? true : false;
   } catch {
     return false;
@@ -72,9 +72,28 @@ export const getUserByUserName = async (userName: string) => {
   }
 }
 
-export const setUserPreference = async (roleId: RolePreference) => {
+export const setUserPreference = async (preferenceId: UserPreferenceType, initial?: boolean) => {
   try {
-    const data = await put<any>(`/user/rolePreference/${roleId}`, {});
+
+    var url = initial
+      ? `/user/rolePreference/${preferenceId}/true`
+      :`/user/rolePreference/${preferenceId}`
+
+    const data = await put<any>(url, {});
+
+    return data === "OK" ? true : false;
+  } catch (e) {
+    return false;
+  }
+}
+
+export const setUserPreferenceTypeById = async (preferenceId: UserPreferenceType, userId: number) => {
+  try {
+
+    var url = `/user/rolePreferenceById/${preferenceId}/${userId}`;
+
+    const data = await put<any>(url, {userId});
+
     return data === "OK" ? true : false;
   } catch (e) {
     return false;

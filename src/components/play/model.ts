@@ -16,13 +16,15 @@ export interface ComponentAttempt<T> {
 export enum PlayMode {
   Normal = 1,
   Highlighting,
-  UnHighlighting,
+  UnHighlighting, // deprecated, use Highlighting and move cursor backwards
   Anotating
 }
 
 export interface BrickAttempt {
+  id?: string;
   brickId?: number;
   studentId?: number;
+  competitionId?: number;
   brick?: Brick;
   score: number;
   oldScore?: number;

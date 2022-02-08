@@ -15,13 +15,13 @@ const ShuffleAnswerDialog: React.FC<ShuffleAnswerDialogProps> = (props) => {
   return (
     <BaseDialogWrapper open={props.isOpen} close={props.hide} submit={props.submit}>
       <div className="dialog-header">
-        <div>Is this your answer?</div>
+        <div className="bold">Is this your answer?</div>
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button" onClick={props.submit}>
+        <button className="btn btn-md bg-theme-orange bold yes-button" onClick={props.submit}>
           <span>Yes</span>
         </button>
-        <button className="btn btn-md bg-gray no-button" onClick={props.close}>
+        <button className="btn btn-md bg-gray bold no-button" onClick={props.close}>
           <span>No, skip</span>
         </button>
       </div>

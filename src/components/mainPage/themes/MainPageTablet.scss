@@ -4,12 +4,43 @@
 
 .mainPage {
   $welcome-col-width: 35.2vw;
-  $first-col-width: 29.6vw;
+  $first-col-width: 36vw;
   background: var(--theme-dark-blue);
   position: fixed;
   width: 100%;
   height: 100%;
   font-family: $font-family-black;
+
+  .link-to-landing {
+    border-radius: 2vw;
+    background: var(--theme-orange);
+    letter-spacing: 0;
+    cursor: pointer;
+    font-size: 1.4vw;
+    line-height: 1.7;
+    margin-top: 2vh;
+    margin-left: 6vw;
+    width: 21vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+
+    animation: fadein 500ms 360ms ease-out forwards;
+
+    svg {
+      width: 1.9vw;
+      height: 1.9vw;
+      fill: none;
+      margin-right: 0.3vw;
+    }
+
+    &:hover {
+      background: white;
+      color: var(--theme-orange);
+    }
+  }
 
   .welcome-col {
     width: $welcome-col-width;
@@ -18,13 +49,12 @@
 
     .welcome-box {
       color: white;
-      letter-spacing: 0.66vw;
-      font-size: 2.58vw;
+      letter-spacing: 0;
+      font-size: 3vw;
       font-family: $font-family-bold;
-      padding-right: 2.9vw;
 
       .smaller {
-        font-size: 2.4vw;
+        font-size: 2.88vw;
       }
 
       .welcome-name {
@@ -32,26 +62,23 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2.5vw;
-        letter-spacing: 0.73vw;
+        font-size: 2.9vw;
+        letter-spacing: 0vw;
         margin-top: 3.2vh;
         font-weight: 600;
-        text-transform: uppercase;
+        text-transform: capitalize;
         font-family: $font-family-light;
         transition: font-family 0.2s ease;
-        color: var(--theme-orange);
+        color: var(--white);
+
         .custom-tooltip {
-          margin-left: -1.4vw;
-          letter-spacing: 0.05vw;
-          text-transform: none;
-          margin-top: 4.9vw;
-          font-family: $font-family-regular;
+          display: none
         }
 
         .svg,
         .profile-image-border {
-          height: 3vw;
-          width: 3vw;
+          height: 4.5vw;
+          width: 4.5vw;
           margin-right: 1vw;
         }
         .svg {
@@ -59,7 +86,7 @@
         }
         .profile-image-border {
           @extend %flexCenter;
-          border: 0.35vw solid var(--theme-orange);
+          border: 0.25vw solid var(--white);
           border-radius: 50%;
           img {
             width: 105%;
@@ -67,12 +94,21 @@
             border-radius: 50%;
           }
         }
+
+        .svg {
+          stroke-width: 1.7;
+        }
+
+        .sparkle-s6 {
+          margin-left: 0.5vw;
+        }
       }
+
       .notifications-text {
-        margin-top: 4.3vw; //10vh;
+        margin-top: 4.3vw;
         letter-spacing: 0.1vw;
         font-family: $font-family-light;
-        font-size: 1.5vw;
+        font-size: 2vw;
       }
 
       .notifications-text-2,
@@ -81,7 +117,7 @@
         color: var(--tab-gray);
         font-family: $font-family-light-italic;
         letter-spacing: 0.05vw;
-        font-size: 1.2vw;
+        font-size: 1.6vw;
       }
 
       b {
@@ -91,33 +127,94 @@
     }
   }
 
+  $font-size: 2vw;
+
   .first-col {
     width: $first-col-width;
     height: 100%;
 
     .first-item {
       background: var(--theme-light-blue);
-      height: 89.2vh;
+      height: 85%;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
       @extend %flexCenter;
       flex-direction: column;
     }
+
     .second-item {
+      cursor: pointer;
       position: relative;
-      background: var(--theme-light-blue);
-      margin-top: 4.6vh;
-      height: 6.2vh;
-      @extend %textCenter;
+      background: var(--white);
+      margin-top: 5%;
+      height: 13.5%;
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--theme-green);
+      font-family: $font-family-bold;
+
+      font-size: 2.9vw;
+
+      svg {
+        margin-left: 0.5vw;
+        stroke-width: 1.3;
+        width: 4.5vw;
+        height: 4.5vw;
+      }
+
+      transition: all 150ms ease-in-out;
+
+
+      &.not-active {
+        cursor: initial;
+        background: var(--theme-light-blue);
+      }
+    }
+  }
+
+  .eye-glass-frame {
+    width: 18vw !important;
+    svg {
+      width: 18vw !important;
+      height: 12vw !important;
+    }
+  }
+
+  .item-description,
+  .my-library-button span {
+    font-size: $font-size !important;
+  }
+
+  .manage-classes svg {
+    width: 17.5vw !important;
+    height: 12.2vw !important;
+  }
+
+  .create-item-container .btn .svg {
+    width: 18vw !important;
+    height: 12.5vw !important;
+  }
+
+  .create-item-container.stats .btn .svg {
+    stroke-width: 2;
+    width: 15vw !important;
+    height: 13vw !important;
+  }
+
+  .my-library-button {
+    svg {
+      width: 17vw !important;
+      height: 11vw !important;
     }
   }
 
   .second-col {
     color: var(--white);
-    letter-spacing: 0.3vw;
-    font-size: 1.4vw;
+    font-size: $font-size;
     font-family: $font-family-light;
     width: calc(100vw - #{$welcome-col-width} - #{$first-col-width});
     @extend %flexCenter;
@@ -133,50 +230,57 @@
     width: auto;
     @extend %flexCenter;
     flex-direction: column;
-    @include tabletP {
-      padding: 5vh 0;
-    }
+    padding: 5vh 0;
+
     .btn {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       @extend %textCenter;
       flex-direction: column;
+
       .svg {
         @extend %transitionAll300;
         @extend %removePosition;
-        width: 13vw;
-        height: 6vw;
+        width: 16vw;
+        height: 8vw;
       }
     }
+
     &.disabled {
       div {
         cursor: initial !important;
       }
+
       svg {
         cursor: initial !important;
         color: var(--theme-dark-blue) !important;
       }
+
       .item-description {
         font-family: $font-family-light !important;
       }
     }
+
     &.student-back-work {
       &.disabled {
         .blocks-icon .bl {
           background: var(--theme-light-blue) !important;
         }
       }
+
       .flex-number {
         display: flex;
         align-items: center;
 
         .m-red-circle {
           background: var(--theme-orange);
-          width: 1.6vw;
-          height: 1.6vw;
+          margin-top: 0.3vw;
+          margin-left: 0.4vw;
+          width: 2.2vw;
+          height: 2.2vw;
           border-radius: 50%;
-          font-size: 1vw;
+          font-size: 1.7vw;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -184,30 +288,25 @@
           overflow: hidden;
 
           span {
-            margin-left: 0.3vw;
           }
         }
       }
     }
+
     .item-description {
       padding: 0;
       @extend %textCenter;
       margin: 0;
       font-family: $font-family-light;
       color: var(--tab-gray);
-      @include phone_and_tabletP {
-        font-size: 25px;
-        letter-spacing: 5px;
-      }
-      @include tabletP {
-        font-size: 1.2vw;
-        letter-spacing: 0.3vw;
-      }
+      font-size: 1.2vw;
     }
   }
+
   .view-item-container {
     &.disabled {
       .eye-glass-icon {
+
         .glass-eyes-left,
         .glass-eyes-right {
           display: none;
@@ -215,17 +314,18 @@
       }
     }
   }
+
   .create-item-container {
     .btn .svg {
-      height: 7.5vw;
+      height: 9vw;
     }
   }
+
   .create-item-container,
   .back-item-container {
-    @include tabletP {
-      .item-description {
-        margin-top: 0.5vw;
-      }
+    .item-description {
+      letter-spacing: 0 !important;
+      margin-top: 0.5vw;
     }
   }
 
@@ -242,37 +342,52 @@
     right: 10vw;
     font-size: 1.6vw;
   }
+
   // disabled
   .manage-classes.disabled {
     cursor: inherit !important;
-    #Path_8-4, #Ellipse_12-2, #Path_8, #Ellipse_12 {
+
+    #Path_8-4,
+    #Ellipse_12-2,
+    #Path_8,
+    #Ellipse_12 {
       fill: var(--theme-dark-blue) !important;
     }
-    #Path_8-3, #Path_8-2 {
+
+    #Path_8-3,
+    #Path_8-2 {
       fill: var(--theme-light-blue) !important;
     }
+
     .right-smile path {
       stroke: var(--theme-light-blue) !important;
     }
+
     .left-class-icon {
       transform: translateX(0) !important;
     }
+
     .right-class-icon {
       transform: translateX(0) !important;
     }
+
     $smileY: 53px;
+
     .left-smile {
       transform: none;
       transform: translate(12px, $smileY) !important;
     }
+
     .right-smile {
       transform: translate(139px, $smileY) !important;
     }
+
     .item-description {
-      letter-spacing: 0.3vw !important;
       font-family: $font-family-light !important;
     }
-    .left-smile, .right-smile {
+
+    .left-smile,
+    .right-smile {
       path {
         stroke-dasharray: 1000;
         stroke-dashoffset: 1000;
@@ -280,12 +395,28 @@
       }
     }
   }
+
   // disabled third button build
   .first-col .first-item .create-item-container.disabled button svg {
     color: var(--theme-dark-blue) !important;
   }
+
   // disabled button build scond column
   .second-col .create-item-container.disabled button svg {
     color: var(--theme-light-blue) !important;
+  }
+
+  .second-col .create-item-container.disabled button svg {
+    color: var(--theme-light-blue) !important;
+  }
+
+  .second-col .my-library-button.disabled button svg {
+    color: var(--theme-light-blue) !important;
+  }
+}
+
+.mainPage .first-col .student-back-work .blocks-icon.disabled {
+  .bl {
+    background: var(--theme-dark-blue) !important;
   }
 }

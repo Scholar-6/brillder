@@ -2,12 +2,15 @@ import React, { Component } from "react";
 
 import { SubjectAssignments } from "../service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
-import { SubjectAssignment } from "./SubjectAssignment";
+import SubjectAssignment from "./SubjectAssignment";
+import { User } from "model/user";
 
 interface LibrarySubjectsProps {
-  userId: number;
   history: any;
+  student: User | null;
   subjectAssignment: SubjectAssignments;
+
+  subjectTitleClick(): void;
 }
 
 interface LibrarySubjectState {
@@ -15,44 +18,29 @@ interface LibrarySubjectState {
   hovered: boolean;
 }
 
-
 class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectState> {
   renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
     return <div key={key}>
       <SubjectAssignment
-        userId={this.props.userId}
         subject={this.props.subjectAssignment.subject}
         history={this.props.history} assignment={assignment}
+        student={this.props.student}
       />
     </div>
-  }
-
-  findStudent(a: LibraryAssignmentBrick) {
-    if (a.brick.assignments && a.brick.assignments.length > 0) {
-      const { assignments } = a.brick;
-      for (let a2 of assignments) {
-        if (a2.student) {
-          if (a2.student.id === this.props.userId) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
   }
 
   render() {
     let { assignments } = this.props.subjectAssignment;
 
-    assignments.sort(a => {
-      if (a.maxScore && a.maxScore >= 0) {
-        return -1;
-      }
-      return 1;
-    });
-
     return (
       <div className="libary-container">
+        <div className="subject-name-v3 bold" onClick={this.props.subjectTitleClick}>
+          <div>
+            <div>
+              <div>{this.props.subjectAssignment.subject.name}</div>
+            </div>
+          </div>
+        </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           {assignments.map(this.renderAssignment.bind(this))}
         </div>

@@ -1,24 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
-import './Synthesis.scss';
-import { AcademicLevelLabels, Brick } from 'model/brick';
-import { useHistory } from 'react-router-dom';
-import { PlayStatus } from '../model';
-import { PlayMode } from '../model';
-import HighlightHtml from '../baseComponents/HighlightHtml';
-import { BrickFieldNames } from 'components/build/proposal/model';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { rightKeyPressed } from 'components/services/key';
-import { getSynthesisTime } from '../services/playTimes';
-import { isPhone } from 'services/phone';
-import TimeProgressbarV2 from '../baseComponents/timeProgressbar/TimeProgressbarV2';
-import BrickTitle from 'components/baseComponents/BrickTitle';
-import routes from '../routes';
+import "./Synthesis.scss";
+import { Brick } from "model/brick";
+import { PlayStatus } from "../model";
+import { PlayMode } from "../model";
+import HighlightHtml from "../baseComponents/HighlightHtml";
+import { BrickFieldNames } from "components/build/proposal/model";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { rightKeyPressed } from "components/services/key";
+import { getSynthesisTime } from "../services/playTimes";
+import { isPhone } from "services/phone";
+import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
+import BrickTitle from "components/baseComponents/BrickTitle";
+import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+
+import routes from "../routes";
+import { isMobile } from "react-device-detect";
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
+
+  endTime: any;
+  setEndTime(t: any): void;
 
   // only for real play
   mode?: PlayMode;
@@ -26,7 +32,12 @@ interface SynthesisProps {
   onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
-const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }) => {
+const PlaySynthesisPage: React.FC<SynthesisProps> = ({
+  status,
+  brick,
+  ...props
+}) => {
+  const [timerHidden, hideTimer] = React.useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -45,11 +56,11 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
 
   if (status === PlayStatus.Live) {
     if (isPhone()) {
-      history.push(routes.phonePrep(brick.id));
+      history.push(routes.phonePrep(brick));
     } else {
       // direct access only for work for play preview
       if (!props.isPlayPreview) {
-        history.push(routes.playNewPrep(brick.id));
+        history.push(routes.playNewPrep(brick));
       }
     }
   }
@@ -59,111 +70,72 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   const renderSynthesisContent = () => {
     return (
       <div className="synthesis-content">
-        <HighlightHtml mode={props.mode} value={brick.synthesis} isSynthesis={true} onHighlight={
-          value => {
+        <HighlightHtml
+          mode={props.mode}
+          value={brick.synthesis}
+          isSynthesis={true}
+          onHighlight={(value) => {
             if (props.onHighlight) {
               props.onHighlight(BrickFieldNames.synthesis, value);
             }
-          }
-        } />
+          }}
+        />
       </div>
     );
-  }
-
-  const renderFooter = () => {
-    return (
-      <div className="action-footer">
-        <div></div>
-        <div className="direction-info text-center">
-          <h2>Review</h2>
-        </div>
-        <div>
-          <button type="button" className="play-preview svgOnHover play-green" onClick={reviewBrick}>
-            <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  const renderPhoneButton = () => {
-    return (
-      <div className="action-footer mobile-footer-fixed-buttons">
-        <SpriteIcon name="arrow-right" className="mobile-next-button" onClick={reviewBrick} />
-      </div>
-    );
-  }
-
-  const renderSpendTime = () => {
-    return <div>Aim to spend {getSynthesisTime(brick.brickLength)} minutes on this section.</div>;
-  }
-
-  const renderBrickCircle = (color: string) => {
-    return (
-      <div className="left-brick-circle">
-        <div className="round-button" style={{ background: `${color}` }}>
-          {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
-        </div>
-      </div>
-    );
-  }
-
-  const renderMobileHeader = (color: string) => {
-    return (
-      <div className="intro-header expanded-intro-header synthesis-header">
-        <div className="vertical-center">
-          {renderBrickCircle(color)}
-        </div>
-        <div className="r-title-container">
-          <div className="heading synthesis-title">Synthesis</div>
-          {renderSpendTime()}
-        </div>
-      </div>
-    );
-  }
+  };
 
   const renderMobile = () => {
-    let color = "#B0B0AD";
-
-    if (brick.subject) {
-      color = brick.subject.color;
-    }
-
     return (
       <div className="brick-container synthesis-page mobile-synthesis-page">
         <div className="introduction-page">
-          {renderMobileHeader(color)}
+          <div className="fixed-upper-b-title">Synthesis</div>
           <div className="introduction-content">
             {renderSynthesisContent()}
-            {isPhone() ? renderPhoneButton() : renderFooter()}
           </div>
           <div className="time-container">
-            <TimeProgressbarV2 isSynthesis={true} setEndTime={() => {}} onEnd={() => { }} brickLength={brick.brickLength} />
+            <TimeProgressbarV2
+              isSynthesis={true}
+              setEndTime={() => { }}
+              onEnd={() => { }}
+              brickLength={brick.brickLength}
+            />
           </div>
         </div>
       </div>
     );
-  }
+  };
 
   const minutes = getSynthesisTime(brick.brickLength);
 
   return (
     <div className="brick-row-container synthesis-container">
-      {isPhone() ? renderMobile() :
+      {isPhone() ? (
+        renderMobile()
+      ) : (
         <div className="brick-container play-preview-panel synthesis-page">
           <div className="fixed-upper-b-title">
             <BrickTitle title={brick.title} />
           </div>
-          <div className="header">
-            Synthesis
-          </div>
+          <div className="header">Synthesis</div>
           <div className="introduction-page">
             {renderSynthesisContent()}
-            <div className="new-layout-footer" style={{ display: 'none' }}>
+            <div className="new-layout-footer" style={{ display: "none" }}>
               <div className="time-container">
-                <TimeProgressbarV2 isSynthesis={true} minutes={minutes} setEndTime={() => {}} onEnd={() => { }} brickLength={brick.brickLength} />
+                {!timerHidden &&
+                  <TimeProgressbar
+                    minutes={minutes}
+                    setEndTime={props.setEndTime}
+                    onEnd={() => { }}
+                    endTime={props.endTime}
+                    brickLength={brick.brickLength}
+                  />}
               </div>
-              <div className="footer-space" />
+              <div className="footer-space">
+                {!isMobile &&
+                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                </div>}
+              </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn next" onClick={props.moveNext}>
                   Review
@@ -173,9 +145,9 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
             </div>
           </div>
         </div>
-      }
+      )}
     </div>
   );
-}
+};
 
 export default PlaySynthesisPage;

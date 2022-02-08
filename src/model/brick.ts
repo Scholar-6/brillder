@@ -83,8 +83,7 @@ export enum AcademicLevel {
   Default = 0,
   First = 1,
   Second,
-  Third,
-  Fourth
+  Third
 }
 
 export const AcademicLevelLabels = [
@@ -122,11 +121,14 @@ export interface Brick {
   academicLevel: AcademicLevel;
 
   // cover page
+  competitions?: any[];
+  competitionId?: number;
   coverImage: string;
   coverImageCaption: string;
   coverImageSource: string;
   sponsorUrl: string;
   sponsorLogo: string;
+  sponsorName: string;
 
   assignments?: Assignment[];
 

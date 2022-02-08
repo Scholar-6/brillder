@@ -13,10 +13,16 @@ export function stripHtml(html: string) {
   return div.textContent || div.innerText || "";
 }
 
-const stripRegex = /<(?!\/?(?:sup|sub))[^>]*>/g
-export function stripHtmlExceptSubAndSup(html: any) {
-  const replaced = html.replaceAll(stripRegex, "");
-  return replaced;
+export function htmlChildren(html: string) {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+
+  let arr = []
+  for (let i = 0; i < div.children.length; i++) {
+    arr.push(div.children[i].innerHTML);
+  }
+
+  return arr;
 }
 
 function stripHtmlList(list: any[]) {

@@ -12,14 +12,18 @@ import {
 import { stripHtml } from "components/build/questionService/ConvertService";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import { getValidationClassName } from "../service";
-import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import { HintStatus } from "model/question";
+import QuillShortAnswerPreview from "components/baseComponents/quill/QuillShortAnswerPreview";
+import QuillShortAnswer from "components/baseComponents/quill/QuillShortAnswer";
 
 export type ShortAnswerAnswer = string[];
 
 interface ShortAnswerProps extends CompQuestionProps {
   component: ShortAnswerData;
   isTimeover: boolean;
+  liveAttempt?: any;
   attempt: ComponentAttempt<ShortAnswerAnswer>;
+  liveAnswers: string[];
   answers: string[];
 }
 
@@ -46,7 +50,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   componentDidUpdate(prevProps: ShortAnswerProps) {
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProps.answers) {
-        this.setState({userAnswers: this.props.answers});
+        this.setState({ userAnswers: this.props.answers });
       }
     }
   }
@@ -69,7 +73,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   checkAttemptAnswer(answer: ShortAnswerItem, index: number) {
     const answerValue = stripHtml(answer.value);
     if (this.props.attempt && this.props.attempt.answer) {
-      let attepmtValue = stripHtml(this.props.attempt.answer[index]);
+      const attepmtValue = stripHtml(this.props.attempt.answer[index]);
 
       if (
         this.props.attempt &&
@@ -88,26 +92,44 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   }
 
   renderQuill(index: number) {
-    let value = this.state.userAnswers[index];
+    let value = '';
+    if (this.state.userAnswers) {
+      value = this.state.userAnswers[index];
+    }
     if (this.props.isPreview) {
       value = this.props.component.list[index].value;
     }
+
+    let placeholder = 'Type your answer here';
+    if (this.state.userAnswers.length > 1) {
+      placeholder = 'Type Answer ' + (index + 1);
+    }
+
     if (this.props.isBookPreview) {
       return <MathInHtml value={value} />;
     }
-    return <QuillEditor
-      disabled={false}
-      showToolbar={true}
+
+    if (this.props.isPreview) {
+      return <QuillShortAnswerPreview
+        disabled={true}
+        data={value}
+      />
+    }
+
+    return <QuillShortAnswer disabled={false}
       data={value}
-      placeholder={`Answer ${index + 1}`}
-      toolbar={['superscript', 'subscript']}
+      placeholder={placeholder}
       onChange={v => this.setUserAnswer(v, index)}
     />
   }
 
   renderAnswer(answer: ShortAnswerItem, index: number) {
     let isCorrect = false;
-    if (this.props.isReview || this.props.isBookPreview) {
+    if (this.props.isBookPreview) {
+      isCorrect = this.checkAttemptAnswer(answer, index);
+    }
+
+    if (this.props.isReview && this.props.liveAttempt === this.props.attempt) {
       isCorrect = this.checkAttemptAnswer(answer, index);
     }
 
@@ -116,9 +138,17 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     if (this.props.isBookPreview) {
       className += getValidationClassName(isCorrect);
     } else {
-      if (isCorrect) {
-        className += ' correct';
+      if (this.props.isReview && this.props.liveAttempt === this.props.attempt) {
+        if (isCorrect) {
+          className += ' correct';
+        } else {
+          className += ' wrong';
+        }
       }
+    }
+
+    if (this.props.question.hint.status === HintStatus.Each) {
+      className += ' each';
     }
 
     return (

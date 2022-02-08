@@ -3,12 +3,13 @@ import React, { useEffect } from 'react'
 import '../style.scss';
 import './LineHighlightingBuild.scss'
 import { UniqueComponentProps } from '../../types';
-import { TextareaAutosize } from '@material-ui/core';
 
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import { HighlightMode } from '../model';
 import HighlightButton from '../components/HighlightButton';
 import LineStyleDialog from '../wordHighlighting/LineStyleDialog';
+import { htmlChildren, stripHtml } from 'components/build/questionService/ConvertService';
+import QuillEditor from 'components/baseComponents/quill/QuillEditor';
 
 
 export interface Line {
@@ -50,8 +51,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
 
   const prepareLines = (text: string):Line[] => {
     if (!text) { return []; }
-
-    let lines = text.split('\n');
+    const lines = htmlChildren(text);
     return lines.map(line => {
       return {text: line, checked: false} as Line;
     });
@@ -70,9 +70,9 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
     save();
   }
 
-  const updateText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const updateText = (text: string) => {
     if (locked) { return; }
-    state.text = e.target.value;
+    state.text = text;
     update();
   }
 
@@ -93,9 +93,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         <div className="hightlight-area">
           {
             state.lines.map((line, i) =>
-              <div key={i} className={line.checked ? "line active" : "line"} onClick={() => {toggleLight(i)}}>
-                {line.text}
-              </div>
+              <div key={i} className={line.checked ? "line active" : "line"} onClick={() => {toggleLight(i)}} dangerouslySetInnerHTML={{__html: line.text}} />
             )
           }
         </div>
@@ -106,14 +104,18 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
       className += " content-invalid"
     }
     return (
-      <TextareaAutosize
+      <QuillEditor
         disabled={locked}
+        data={state.text}
         className={className}
-        onBlur={() => save()}
-        
-        value={state.text}
+        allowTables={true}
+        isValid={!!stripHtml(data.text)}
+        toolbar={[
+          'bold', 'italic', 'fontColor'
+        ]}
+        placeholder="Enter or Paste Text"
+        imageDialog={true}
         onChange={updateText}
-        placeholder="Enter Text Here..."
       />
     );
   }

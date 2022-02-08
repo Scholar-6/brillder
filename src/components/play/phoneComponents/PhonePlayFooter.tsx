@@ -5,38 +5,31 @@ import { connect } from 'react-redux';
 
 import { isAuthenticated } from 'model/brick';
 import { PlayMode } from '../model';
-import map from 'components/map';
 import { Brick } from 'model/brick';
 import { User } from 'model/user';
 import actions from "redux/actions/brickActions";
 import { checkTeacherOrAdmin } from 'components/services/brickService';
 import { getCookies, clearCookiePolicy, acceptCookies } from 'localStorage/cookies';
+import routes from 'components/play/routes';
+import { ReduxCombinedState } from 'redux/reducers';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
 import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
-import ShareDialog from '../finalStep/dialogs/ShareDialog';
-import LinkDialog from '../finalStep/dialogs/LinkDialog';
-import LinkCopiedDialog from '../finalStep/dialogs/LinkCopiedDialog';
-import InviteDialog from '../finalStep/dialogs/InviteDialog';
-import InvitationSuccessDialog from '../finalStep/dialogs/InvitationSuccessDialog';
-import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
-import routes from 'components/play/routes';
-
-interface InviteResult {
-  isOpen: boolean;
-  accessGranted: boolean;
-  name: string;
-}
+import ShareDialogs from '../finalStep/dialogs/ShareDialogs';
+import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
+import { PlayPage } from '../PlayBrickRouting';
+import FullScreenButton from 'components/baseComponents/pageHeader/fullScreenButton/FullScreen';
 
 interface FooterProps {
   brick: Brick;
   isAuthenticated: isAuthenticated;
   history: any;
   user: User;
+  page: PlayPage;
   menuOpen?: boolean;
   moveToPostPlay(): void;
   mode: PlayMode;
@@ -51,19 +44,11 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     isInitCookieOpen = true;
   }
 
-  const { brick } = props;
+  const { brick, page, user, history } = props;
   const [exitPlay, setExit] = React.useState(false);
   const [cookieOpen, setCookiePopup] = React.useState(isInitCookieOpen);
   const [cookieReOpen, setCookieReOpen] = React.useState(false);
   const [share, setShare] = React.useState(false);
-  const [linkOpen, setLink] = React.useState(false);
-  const [linkSuccess, setLinkSuccess] = React.useState(false);
-  const [invite, setInvite] = React.useState(false);
-  const [inviteResult, setInviteResult] = React.useState({
-    isOpen: false,
-    accessGranted: false,
-    name: ''
-  } as InviteResult);
 
   const [assign, setAssign] = React.useState(false);
   const [assignItems, setAssignItems] = React.useState([] as any[]);
@@ -73,41 +58,13 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
 
   let initMenuOpen = props.menuOpen ? true : false;
   const [menuOpen, setMenu] = React.useState(initMenuOpen);
-  const { history } = props;
-
-  const isIntro = () => {
-    return history.location.pathname.slice(-6) === routes.PlayPhonePrepLastPrefix;
-  }
-
-  const isPrep = () => {
-    return history.location.pathname.slice(-5) === '/prep';
-  }
-
-  const isSynthesis = () => {
-    return history.location.pathname.slice(-10) === routes.PlaySynthesisLastPrefix;
-  }
-
-  const isFinalScore = () => {
-    return history.location.pathname.slice(-7) === '/ending';
-  }
-
-  const isFinalStep = () => {
-    return history.location.pathname.slice(-10) === '/finalStep';
-  }
 
   let canSee = false;
   try {
-    canSee = checkTeacherOrAdmin(props.user);
+    canSee = checkTeacherOrAdmin(user);
   } catch { }
 
   const renderPopups = () => {
-    let isAuthor = false;
-    try {
-      isAuthor = brick.author.id === props.user.id;
-    } catch { }
-
-    const link = routes.playCover(brick.id);
-
     return <div>
       {canSee && <div>
         <AssignPersonOrClassDialog
@@ -147,42 +104,11 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
           }}
         />
       </div>}
-      <ShareDialog
-        isOpen={share}
-        link={() => {
-          setShare(false);
-          setLink(true);
-        }}
-        invite={() => {
-          setShare(false);
-          setInvite(true);
-        }}
+      <ShareDialogs
+        shareOpen={share}
+        brick={brick}
+        user={user}
         close={() => setShare(false)}
-      />
-      <LinkDialog
-        isOpen={linkOpen}
-        link={document.location.host + link}
-        submit={() => {
-          setLink(false);
-          setLinkSuccess(true);
-        }}
-        close={() => setLink(false)}
-      />
-      <LinkCopiedDialog
-        isOpen={linkSuccess}
-        close={() => setLinkSuccess(false)}
-      />
-      <InviteDialog
-        canEdit={true} brick={brick} isOpen={invite} hideAccess={true} isAuthor={isAuthor}
-        submit={name => {
-          setInviteResult({ isOpen: true, name, accessGranted: false });
-        }}
-        close={() => setInvite(false)}
-      />
-      <InvitationSuccessDialog
-        isAuthor={isAuthor}
-        isOpen={inviteResult.isOpen} name={inviteResult.name} accessGranted={inviteResult.accessGranted}
-        close={() => setInviteResult({ isOpen: false, name: '', accessGranted: false })}
       />
     </div>
   }
@@ -195,13 +121,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         <SpriteIcon name="" />
-        <button
-          type="button"
-          className="play-preview svgOnHover roller-red m-b-10"
-          onClick={props.moveToPostPlay}
-        >
-          <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
-        </button>
+        <SpriteIcon name="arrow-right" onClick={props.moveToPostPlay} />
         <span className="exit-text">See Results</span>
       </div>
     );
@@ -210,16 +130,13 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   const renderEveryOtherStep = () => {
     return (
       <div>
-        <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
-        <SpriteIcon name="" />
-        <SpriteIcon name="corner-up-left" onClick={() => setExit(true)} />
-        {(isIntro() || isPrep() || isFinalScore() || isSynthesis())
+        <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
+        {(page === PlayPage.Ending)
           ? <SpriteIcon name="" />
-          : <SpriteIcon name="file-text" onClick={() => history.push(map.playIntro(brick.id) + '?prepExtanded=true&resume=true')} />}
-        <SpriteIcon name="" />
-        <SpriteIcon name="" />
-        <SpriteIcon name="more" className="rotate-90" onClick={() => setMenu(!menuOpen)} />
-        <SpriteIcon name="" />
+          : <SpriteIcon name="file-text" className="ff-prep-icon" onClick={() => history.push(routes.playNewPrep(brick) + '?prepExtanded=true&resume=true')} />}
+        <SpriteIcon name="" className="ff-smaller" />
+        <SpriteIcon name="f-more-vertical" onClick={() => setMenu(!menuOpen)} />
+        <SpriteIcon name="" className="ff-smaller" />
       </div>
     );
   }
@@ -241,8 +158,8 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
     canStopTrack = true;
   }
 
-  return <div className="phone-play-footer">
-    {(isFinalStep()) ? renderFinalStep() : renderEveryOtherStep()}
+  return <div className="phone-play-footer q-phone-play-footer">
+    {page === PlayPage.FinalStep ? renderFinalStep() : renderEveryOtherStep()}
     <Menu
       className="phone-down-play-menu menu-dropdown"
       keepMounted
@@ -271,6 +188,8 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         }}>
           Stop Tracking <SpriteIcon name="feather-x-octagon" />
         </MenuItem>}
+      <FullScreenButton />
+      {canSee && <GenerateCoverButton brick={brick} isMenuItem={true} />}
     </Menu>
     {renderPopups()}
     <CookiePolicyDialog isOpen={cookieOpen} isReOpened={cookieReOpen} close={() => {

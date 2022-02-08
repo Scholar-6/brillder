@@ -6,11 +6,17 @@
   font-family: $font-family-regular;
   color: var(--theme-dark-blue);
 
+  .ql-blank::before {
+    font-family: $font-family-bold;
+    color: var(--theme-dark-blue-alpha3);
+  }
+
   ::-webkit-input-placeholder,
   :-ms-input-placeholder,
   ::placeholder {
     /* Edge */
     color: #aaa;
+    font-family: $font-family-bold !important;
   }
   .tutorial-pagination {
     display: flex;
@@ -18,11 +24,13 @@
     justify-content: center;
     position: fixed;
     left: 0;
-    bottom: 10vh;
+    bottom: 8vh;
     width: 60vw;
     
     .tut-next,
     .tut-prev {
+      border-radius: 50%;
+      border: 0.3vw solid var(--tab-gray) !important;
       @include phone_and_tabletL {
         height: 8vw;
         width: 8vw;
@@ -36,6 +44,17 @@
       }
       @include tabletL {
         margin-top: 0vw;
+      }
+      svg {
+        margin-left: 0.2vw !important;
+      }
+      &:hover {
+        background: var(--tab-gray) !important;
+      }
+    }
+    .tut-prev {
+      svg {
+        margin-left: -0.2vw !important;
       }
     }
   }
@@ -221,6 +240,22 @@
 .brief-page,
 .open-question-page,
 .prep-page-questionary {
+  .difficulty-select {
+    .MuiSelect-root {
+      padding-left: 1.8vw;
+    }
+    .MuiSelect-select:focus {
+      background: transparent !important;
+    }
+    svg {
+      position: absolute;
+      left: 0 !important;
+      right: unset !important;
+      $size: 1.4vw;
+      width: $size;
+      height: $size;
+    }
+  }
   p {
     margin: 0.5vh 0;
   }
@@ -398,5 +433,27 @@
   .ql-custom-toolbar .formats .picker svg, .quill-document-editor .ql-toolbar .formats .picker svg {
     height: 3vw;
     width: 3vw;
+  }
+}
+
+// quill tooltips
+.tutorial-page .ql-custom-toolbar .formats .q-tooltip-hover {
+  .css-custom-tooltip {
+    top: -1.7vw;
+    z-index: 100;
+    margin-left: -0.4vw;
+    text-transform: capitalize;
+    font-family: $font-family-bold;
+    font-size: 1vw;
+    padding: 0.3vw 1vw;
+    width: auto;
+  }
+  .tooltip-colors {
+    margin-left: -3vw;
+  }
+  &:hover {
+    .css-custom-tooltip {
+      opacity: 1;
+    }
   }
 }

@@ -95,8 +95,21 @@
       background: var(--theme-orange) !important;
     }
 
-    .sort-image-choice {
-      width: 100%;
+    .MuiListItemText-root {
+      justify-content: center;
+    }
+    .sort-image-container {
+      display: flex;
+      justify-content: center;
+      .sort-image-choice {
+        width: auto;
+        max-height: 10vh;
+      }
+    }
+    .sort-caption {
+      br {
+        display: none;
+      }
     }
   }
 
@@ -104,6 +117,12 @@
     position: relative;
     display: flex;
     flex-direction: row;
+
+    text-align: center;
+
+    p {
+      text-align: center;
+    }
   }
 }
 

@@ -11,6 +11,7 @@ import ValidationFailedDialog from 'components/baseComponents/dialogs/Validation
 import RemoveButton from '../components/RemoveButton';
 import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
 import SoundRecord from '../sound/SoundRecord';
+import ShuffleText from '../shuffle/components/ShuffleText';
 
 
 export interface CategoriseData {
@@ -88,7 +89,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 
   const removeAnswer = (category: SortCategory, index: number) => {
     category.answers.splice(index, 1);
-    
+
     const catIndex = state.categories.indexOf(category);
     let hintIndex = state.categories.slice(0, catIndex).reduce((idx, cat) => idx + cat.answers.length, 0);
     hintIndex += index;
@@ -124,7 +125,9 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     const setImage = (fileName: string) => {
       if (locked) { return; }
       answer.value = "";
-      answer.valueFile = fileName;
+      if (fileName) {
+        answer.valueFile = fileName;
+      }
       answer.answerType = QuestionValueType.Image;
       update();
       save();
@@ -191,6 +194,27 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       );
     }
 
+    if (answer.answerType === QuestionValueType.Image) {
+      return (
+        <div key={i} className={customClass}>
+          {
+            (category.answers.length > 1)
+            && <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeAnswer(category, i)}>
+              <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
+            </button>
+          }
+          <RemoveButton onClick={() => answerChanged(answer, '')} />
+          <QuestionImageDropZone
+            answer={answer as any}
+            type={answer.answerType || QuestionValueType.None}
+            fileName={answer.valueFile}
+            locked={locked}
+            update={setImage}
+          />
+        </div>
+      );
+    }
+
     return (
       <div key={i} className={customClass}>
         {
@@ -199,13 +223,11 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
           </button>
         }
-        {answer.answerType === QuestionValueType.Image && <RemoveButton onClick={() => answerChanged(answer, '')} />}
-        {answer.answerType !== QuestionValueType.Image &&
         <QuillEditorContainer
           locked={locked}
           object={answer}
           fieldName="value"
-          placeholder="Enter Answer..."
+          placeholder={`Answer ${i + 1}`}
           toolbar={['latex']}
           validationRequired={validationRequired}
           isValid={isValid}
@@ -215,7 +237,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             save();
           }}
           onChange={value => { answerChanged(answer, value) }}
-        />}
+        />
         <QuestionImageDropZone
           answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
@@ -267,7 +289,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             locked={locked}
             object={category}
             fieldName="name"
-            placeholder="Enter Category Heading..."
+            placeholder={`Category ${key + 1} Heading`}
             toolbar={['latex']}
             validationRequired={validationRequired}
             onBlur={() => {
@@ -284,7 +306,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           locked={locked}
           addAnswer={() => addAnswer(category)}
           height={category.height}
-          label="+ ANSWER"
+          label="Add an answer"
         />
       </div>
     );
@@ -292,6 +314,10 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 
   return (
     <div className="categorise-build unique-component">
+      <div className="component-title">
+        <div>Enter relevant answers underneath each Category Heading.</div>
+        <ShuffleText />
+      </div>
       {
         state.categories.map((category, i) => renderCategory(category, i))
       }
@@ -299,7 +325,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         locked={locked}
         addAnswer={addCategory}
         height={categoryHeight}
-        label="+ CATEGORY"
+        label="Add a category"
       />
       <ValidationFailedDialog
         isOpen={sameCategoryOpen}

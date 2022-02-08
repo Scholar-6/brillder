@@ -33,13 +33,24 @@ const PublishButton: React.FC<ButtonProps> = props => {
     className += ' active';
   }
 
+  const publish = async () => {
+    const success = await publishBrick(brick.id);
+    if (success) {
+      setState(PublishStatus.Published)
+    }
+  }
+
   return (
     <div className="build-publish-button-container">
       <div className={`custom-hover-container ${(hovered && !props.disabled) ? 'hovered' : ''}`}></div>
       <div className={className} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
         onClick={() => {
           if (!props.disabled) {
-            setState(PublishStatus.Publishing);
+            if (props.brick.isCore) {
+              setState(PublishStatus.Publishing);
+            } else {
+              publish();
+            }
           }
         }}
       >
@@ -49,13 +60,9 @@ const PublishButton: React.FC<ButtonProps> = props => {
       <SendToPublisherDialog
         isOpen={state === PublishStatus.Publishing}
         isPublishing={true}
+        isCore={brick.isCore}
         close={() => setState(PublishStatus.None)}
-        submit={async () => {
-          const success = await publishBrick(brick.id);
-          if (success) {
-            setState(PublishStatus.Published)
-          }
-        }}
+        submit={publish}
       />
       <PublishSuccessDialog
         isOpen={state === PublishStatus.Published}

@@ -13,6 +13,10 @@
     align-items: center;
     flex-wrap: wrap;
     background: var(--solitude-light);
+
+    > div {
+      width: 100%;
+    }
     .time-text {
       display: none;
     }
@@ -24,6 +28,37 @@
     }
     .custom-audio-controls {
       margin: 0 !important;
+    }
+
+    .play-wave-container {
+      .play-icon-d1 {
+        width: 3vw !important;
+        height: 3vw !important;
+      }
+      .relative-waves-container {
+        width: calc(100% - 4.5vw);
+      }
+      .absolute-start-time {
+        left: -18%;
+      }
+      .absolute-end-time {
+        right: -18%;
+      }
+    }
+
+    .play-wave-container {
+      height: 4vw;
+      .play-icon-d1 {
+        width: 2vw !important;
+        height: 2vw !important;
+      }
+      .react-waves .wave wave {
+        height: 2.3vw !important;
+      }
+
+      input {
+        display: none;
+      }
     }
   }
   .horizontal-shuffle-box {
@@ -49,7 +84,7 @@
       .sound-record-button {
         position: absolute;
         cursor: pointer;
-        right: 1vw;
+        right: 0.7vw;
         top: 0;
         height: 100%;
         @extend %flexCenter;

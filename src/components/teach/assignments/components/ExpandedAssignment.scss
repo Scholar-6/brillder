@@ -3,6 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .expanded-assignment {
+  padding-top: 0 !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
   .classroom-title {
@@ -10,8 +11,33 @@
     color: var(--theme-dark-blue);
   }
   .assignments-table {
+    color: var(--theme-dark-blue);
     $table-height: calc(64vh - 6.5vw);
     height: calc(#{$table-height} + 5vh) !important;
+
+    .sort-tooltip-container {
+      .css-custom-tooltip {
+        display: none;
+        top: 2vw;
+        left: -2vw;
+        width: 9.5vw;
+        padding-right: 0.3vw;
+        z-index: 100;
+      }
+      &:hover {
+        svg {
+          top: 0.1vw;
+          left: 0.2vw;
+          position: absolute;
+          transform: rotate(180deg);
+        }
+        .css-custom-tooltip {
+          display: block;
+          opacity: 1;
+          letter-spacing: 0;
+        }
+      }
+    }
 
     table {
       width: 100%;
@@ -29,20 +55,83 @@
       height: calc(#{$table-height / 8}) !important;
     }
     .padding-left-column {
-      width: 0.7vw;
+      width: 1.7vw;
     }
+    
     .student-status,
     .student-book {
       width: 2.75vw;
       > div {
         @extend %flexCenter;
       }
+      .centered {
+        line-height: 0.7;
+        text-align: center;
+        font-size: 1.1vw;
+      }
+    }
+
+    .student-status {
+      .circle {
+        font-family: $font-family-bold;
+        font-size: 1vw;
+      }
+    }
+
+    .student-book {
+      font-family: $font-family-regular-italic;
+      text-transform: initial !important;
+    }
+
+    .student-book .round {
+      $size: 2.18vw;
+      width: $size !important;
+      height: $size !important;
+
+      svg {
+        $size: 70%;
+        width: $size !important;
+        height: $size !important;
+      }
+    }
+
+    .tooltip-container {
+      position: relative;
+      .css-custom-tooltip {
+        left: -2.7vw;
+        width: 7vw;
+        padding-left: 0;
+        text-align: center;
+        height: 0;
+        overflow: hidden;
+      }
+      &:hover {
+        .css-custom-tooltip {
+          opacity: 1;
+          height: auto;
+        }
+      }
+    }
+
+    .eye-icon {
+      cursor: pointer;
+      $size: 1.5vw;
+      width: $size;
+      height: $size;
+
+      &.grey {
+        color: #C1c2c1 !important;
+      }
     }
 
     .assigned-student-name {
       color: var(--theme-dark-blue);
       padding-left: 0.85vw !important;
+      font-size: 1.2vw !important;
       width: 18vw;
+      &.grey {
+        color: #C1c2c1 !important;
+      }
     }
     .circle-td {
       width: 5vw;
@@ -98,8 +187,11 @@
         height: 1.4vw;
       }
       .reminder-icon {
-        width: 1.35vw;
-        height: 1.35vw;
+        $padding: 0.2vw;
+        $size: 2.18vw;
+        width: calc(#{$size} - #{$padding * 2});
+        height: calc(#{$size} - #{$padding * 2});
+        padding: $padding !important;
       }
 
       .book-open-icon {
@@ -108,13 +200,42 @@
       }
 
       .comment-icon {
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: var(--theme-dark-blue);
         background: var(--off-white);
         border-radius: 50%;
-        padding: 0.3vw;
         stroke-width: 1.5;
-        width: 1.6vw;
-        height: 1.6vw;
+        $size: 2.4vw;
+        width: $size;
+        height: $size;
+
+        svg {
+          $size: 70%;
+          width: $size;
+          height: $size;
+        }
+
+        &.yellow {
+          background-color: var(--theme-yellow);
+          color: white;
+        }
+
+        &.red {
+          background-color: var(--theme-orange);
+          color: white;
+        }
+
+        .annotation-count {
+          position: absolute;
+          font-size: 1.25rem;
+          left: 50%;
+          top: 44%;
+          transform: translate(-50%, -50%);
+        }
       }
 
       .reminder-icon {
@@ -137,6 +258,7 @@
       }
 
       &.icon-container {
+        font-size: 1vw;
         svg {
           width: 2vw;
           height: 2vw;
@@ -144,8 +266,119 @@
         .smaller {
           width: 1.8vw;
           height: 1.8vw;
+          stroke-width: 3;
         }
       }
+    }
+  }
+  .reminder-brick-actions-container {
+    @extend %flexCenter;
+    width: 3vw;
+    position: relative;
+    .reminder-button-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3vw;
+      height: 3vw;
+      border-radius: 50%;
+      .svg {
+        position: absolute;
+        width: 2.1vw;
+        height: 2.1vw;
+      }
+    }
+
+    &.completed .archive-button-container {
+      cursor: pointer;
+      background: var(--theme-green);
+      .svg {
+        color: var(--white) !important;
+      }
+    }
+    &.completed {
+      .green-hover {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        > div {
+          transition: all 300ms ease-out;
+          width: 2.1vw;
+          height: 2.1vw;
+          border-radius: 50%;
+          background: var(--theme-yellow-alpha3);
+        }
+      }
+    }
+    &.deadline .reminder-icon {
+      background: var(--theme-orange);
+    }
+    &.deadline .green-hover > div {
+      background: var(--theme-orange-alpha3);
+    }
+    &.completed:hover {
+      .green-hover {
+        > div {
+          width: 3vw;
+          height: 3vw;
+        }
+      }
+    }
+    // tooltip
+    .css-custom-tooltip {
+      bottom: -1.8vw;
+      left: -1.5vw;
+      padding: 0 !important;
+      text-align: center;
+      width: 7.7vw !important;
+      z-index: 100;
+      height: 0;
+      overflow: hidden;
+    }
+    &.completed:hover {
+      .css-custom-tooltip {
+        height: auto;
+        opacity: 1;
+      }
+    }
+  }
+  .smaller-remind-button {
+    .reminder-button-container {
+      .svg {
+        padding: 0.29vw !important;
+        width: 1.6vw;
+        height: 1.6vw;
+      }
+    }
+  }
+}
+.holistic-comment-popup .MuiPaper-root {
+  border-radius: 14px !important;
+}
+.holistic-comment-panel {
+  width: 25vw;
+  overflow: hidden;
+  position: relative;
+  .comment-item-container {
+    margin-bottom: 0 !important;
+  }
+  .save-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.8vw !important;
+    height: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .svg {
+      width: 70%;
+      height: 70%;
+      color: var(--white);
     }
   }
 }

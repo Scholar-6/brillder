@@ -7,6 +7,7 @@ import { ChooseOneAnswer } from './types';
 import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
 import { generateId, showSameAnswerPopup } from '../service/questionBuild';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 export interface ChooseOneData {
   list: ChooseOneAnswer[];
@@ -75,7 +76,12 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
 
   return (
     <div className="choose-one-build unique-component">
-      <div className="component-title">Tick Correct Answer</div>
+      <div className="component-title">
+        <div className="flex-center">
+          <SpriteIcon name="feacher-check-square"/>
+          <div>Tick Correct Answer</div>
+        </div>
+      </div>
       {
         state.list.map((answer: any, i: number) => {
           return <ChooseOneAnswerComponent
@@ -99,7 +105,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
         locked={locked}
         addAnswer={addAnswer}
         height="auto"
-        label="+ ANSWER"
+        label="Add an answer"
       />
     </div>
   )

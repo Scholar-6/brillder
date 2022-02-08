@@ -32,9 +32,12 @@
     .choose-choice {
       margin-bottom: 1.2vh !important;
       p {
-        font-size: 4.5vw !important;
+        font-size: $mbase-font-size !important;
       }
     }
+  }
+  .choose-choice.correct {
+    background: var(--theme-green-alpha5) !important;
   }
 }
 

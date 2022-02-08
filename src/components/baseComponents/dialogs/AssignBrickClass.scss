@@ -7,7 +7,7 @@
 }
 
 .assign-dialog {
-  .dialog-header > div {
+  .dialog-header>div {
     width: 50vw !important;
 
     .MuiInputBase-input.MuiInput-input {
@@ -35,25 +35,61 @@ span.bold {
 }
 
 .assign-dialog-new {
+  .MuiDialog-paper .dialog-header > div {
+    width: auto !important;
+  }
+  .MuiDialog-paper .dialog-header .subject-autocomplete {
+    width: 33vw !important;
+  }
+  .subject-autocomplete .MuiInputBase-root.MuiInput-root.MuiAutocomplete-inputRoot {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
   .text-with-glasses {
     display: flex;
     align-items: center;
     justify-content: center;
+
     .glasses {
       .eye-glass-icon {
+        width: 9vw;
+
+        svg {
+          margin: 0 !important;
+          width: 9vw;
+          height: 3.5vw;
+        }
+
         .glass-eyes-left,
         .glass-eyes-right {
-          animation: none;
-          transform: scale(0.23);
-          top: -2.1vw;
-        }
-        .glass-eyes-left {
-          left: -1.61vw !important;
-        }
-        .glass-eyes-right {
-          right: -1.5vw !important;
+          display: none;
         }
       }
+    }
+  }
+  .assignments-count {
+    font-family: $font-family-regular-italic;
+    margin-bottom: 0.5vw !important;
+  }
+}
+
+.assign-brick-class-poopper {
+  z-index: 1214748;
+
+  .MuiButtonBase-root {
+    &:hover {
+      background: transparent !important;
+    }
+    p {
+      font-size: 1.6vw !important;
+    }
+    span {
+      font-size: 1.6vw !important;
+    }
+    svg {
+      $size: 2vw;
+      width: $size;
+      height: $size;
     }
   }
 }

@@ -21,26 +21,32 @@ import BrickLength from "./BrickLength";
 import Subjects from "./Subjects";
 import brickActions from "redux/actions/brickActions";
 import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPreview";
-import DifficultySelect from "../proposal/questionnaire/brickTitle/components/DifficultySelect";
 import { getSubjects } from "services/axios/subject";
 import CoreSelect from "../proposal/questionnaire/brickTitle/components/CoreSelect";
 import { stripHtml } from "../questionService/ConvertService";
 import StatusCircle from "../baseComponents/statusCircle/StatusCircle";
+import QuillSimpleEditor from "components/baseComponents/quill/QuillSimpleEditor";
+import LockComponent from "../buildQuestions/lock/Lock";
+import { isAorPorE } from "components/services/brickService";
+import QuillTitleEditor from "components/baseComponents/quill/QuillTitleEditor";
+import DifficultySelectV2 from "../proposal/questionnaire/brickTitle/components/DifficultySelectV2";
+import QuillOpenQuestionEditor from "components/baseComponents/quill/QuillOpenQuestionEditor";
 
 export interface PlanProps {
   currentBrick: Brick;
-  saveBrick(brick: Brick): void;
+  saveBrick(brick: Brick): Promise<Brick | null>;
   user: User;
   locked: boolean;
   editOnly: boolean;
   validationRequired: boolean;
+  toggleLock(): void;
   initSuggestionExpanded?: boolean;
   selectFirstQuestion(): void;
+  setSaveFailed(): void;
 }
 
 const PlanPage: React.FC<PlanProps> = (props) => {
   const { currentBrick, validationRequired, locked } = props;
-
   const [apiSubjects, setApiSubjects] = React.useState([] as Subject[]);
 
   const [scrollArea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
@@ -91,10 +97,37 @@ const PlanPage: React.FC<PlanProps> = (props) => {
   const changeBrick = React.useMemo(() => {
     return (changeFn: (brick: Brick) => Brick) => {
       const newBrick = changeFn(currentBrick);
-      props.saveBrick(newBrick);
+      props.saveBrick(newBrick).then(res => {
+        if (res === null) {
+          props.setSaveFailed();
+        }
+      });
     };
   /*eslint-disable-next-line*/
   }, [currentBrick, props.saveBrick]);
+
+   /**
+   * if Admin, Publisher or Editor than true
+   * @returns 
+   */
+    const canSeeLock = () => {
+      const {user} = props;
+      const adminPublisherOrEditor = isAorPorE(currentBrick, user);
+      if (adminPublisherOrEditor) {
+        return true;
+      }
+      return false;
+    }
+
+  const renderLock = () => {
+    if (currentBrick.isCore === true) {
+      const canSee = canSeeLock();
+      if (canSee) {
+        return <LockComponent locked={locked} disabled={props.editOnly} onChange={props.toggleLock} />
+      }
+    }
+    return ''
+  }
 
   return (
     <div className="question-type plan-page">
@@ -132,14 +165,13 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     "numberedList",
                     "blockQuote",
                     "align",
-                    "image",
-                    "table",
+                    "image", "sound", "table", "desmos", "caps"
                   ]}
                 />
                 <Grid container direction="row" className="inner-quills" ref={scrollArea}>
                   <div className="title-quill-container">
                     <div className="header">Title</div>
-                    <QuillEditor
+                    <QuillTitleEditor
                       data={currentBrick.title}
                       onChange={title => changeBrick((brick) => ({ ...brick, title }))}
                       placeholder="What is your brick about?"
@@ -162,10 +194,10 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       subjectId={currentBrick.subjectId}
                       onChange={subjectId => changeBrick((brick) => ({ ...brick, subjectId, subject: apiSubjects.find(sub => sub.id === subjectId) }))}
                     />
-                    <CoreSelect disabled={locked} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({...brick, isCore}))} />
+                    <CoreSelect disabled={locked} brickStatus={currentBrick.status} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({...brick, isCore}))} />
                   </div>
                   <div className="level-and-length-container">
-                    <DifficultySelect
+                    <DifficultySelectV2
                       disabled={locked}
                       level={currentBrick.academicLevel}
                       onChange={academicLevel => changeBrick((brick) => ({ ...brick, academicLevel }))}
@@ -178,22 +210,28 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   </div>
                   <div className="open-question-container">
                     <div className="header">Open Question</div>
-                    <QuillEditor
+                    <QuillOpenQuestionEditor
                       disabled={locked}
                       placeholder="Ideally, every brick should point to a bigger question."
                       data={currentBrick.openQuestion}
                       validate={validationRequired}
                       isValid={!!stripHtml(currentBrick.openQuestion)}
-                      onChange={data => changeBrick((brick) => ({ ...brick, openQuestion: data }))}
+                      onChange={data => {
+                        if (data.length < 250) {
+                          console.log(data.length);
+                          changeBrick((brick) => ({ ...brick, openQuestion: data }))
+                        }
+                      }}
                       toolbar={["bold", "italic", "latex"]}
                     />
                   </div>
                   <div className="brief-container">
                     <div className="header">Brief</div>
-                    <QuillEditor
+                    <QuillSimpleEditor
                       disabled={locked}
                       data={currentBrick.brief}
                       allowTables={true}
+                      allowLinks={true}
                       onChange={data => changeBrick((brick) => ({ ...brick, brief: data }))}
                       placeholder="Outline the purpose of this brick."
                       validate={validationRequired}
@@ -218,20 +256,27 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       data={currentBrick.prep}
                       onChange={data => changeBrick((brick) => ({ ...brick, prep: data }))}
                       validate={validationRequired}
+                      allowDesmos={true}
                       isValid={!!stripHtml(currentBrick.prep)}
                       toolbar={[
                         "bold",
                         "italic",
                         "fontColor",
                         "latex",
+                        "subscript",
+                        "superscript",
+                        "strikethrough",
                         "bulletedList",
                         "numberedList",
                         "blockQuote",
                         "image",
                         "video",
-                        "table"
+                        "table",  
+                        "align",
+                        "sound", "desmos", "caps"
                       ]}
                       imageDialog={true}
+                      soundDialog={true}
                       allowMediaEmbed={true}
                       allowLinks={true}
                       allowTables={true}
@@ -265,6 +310,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                 </div>
                 <div style={{ width: "100%" }}></div>
               </div>
+              {renderLock()}
               <div className="bs-circles-container">
                 <StatusCircle status={currentBrick.status} isCore={currentBrick.isCore} />
               </div>

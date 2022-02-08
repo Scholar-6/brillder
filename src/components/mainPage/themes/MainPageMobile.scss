@@ -65,6 +65,10 @@
     @include tabletP {
       padding: 5vh 0;
     }
+
+    .eye-glass-icon {
+      height: 50px;
+    }
     .btn {
       display: flex;
       align-items: center;
@@ -144,7 +148,7 @@
       display: flex;
       margin-right: 0;
       width: 42vw;
-      margin-top: 3px;
+      margin-top: 10px;
       flex-wrap: wrap;
       .bell-button {
         width: 56%;
@@ -156,13 +160,13 @@
       }
     }
     &.notification-expanded {
-      height: auto;
+      height: 74px;
     }
   }
   .main-page-menu {
     position: absolute;
     width: 42vw;
-    height: 60px;
+    height: 74px;
     bottom: 0;
     border-bottom-left-radius: 0;
     border-top-left-radius: 6vw;
@@ -235,6 +239,7 @@
         }
 
         .view-item-container {
+          padding-top: 100px;
           .svg {
             width: 230px;
             height: 100px;
@@ -266,4 +271,53 @@
 
 .mainPageMobile ~ .beta-text {
   display: none;
+}
+
+
+// only case for new students
+.mobile-main-page.new-student {
+  .view-item-container {
+    height: 33vw;
+  }
+  > div {
+    height: 37%;
+  }
+  .eye-glass-frame {
+    width: 70vw;
+    height: 33vw;
+    position: relative;
+    > svg {
+      position: absolute;
+      top: 4vw;
+      width: 50vw;
+      height: 25vw;
+    }
+  }
+  .back-item-container {
+    width: 70vw;
+  }
+  .blocks-icon {
+    width: 100% !important;
+  }
+  .zendesk-position {
+    position: fixed;
+    bottom: 2.5vw;
+    left: 2.5vw;
+    height: 12.5vw;
+    width: 12.5vw;
+  }
+}
+
+.ggf-new-student-popup {
+  p {
+    $fontss: 4.8vw;
+    font-size: $fontss !important;
+    span {
+      font-size: $fontss !important;
+    }
+    &.bold {
+      font-family: $font-family-bold;
+      font-size: 6.7vw !important;
+    }
+  }
 }

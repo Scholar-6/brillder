@@ -4,13 +4,13 @@ import { Question } from "model/question";
 import { ComponentAttempt } from "../model";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { isMobile } from "react-device-detect";
 import { isPhone } from "services/phone";
 
 interface ReviewStepperProps {
   attempts: ComponentAttempt<any>[];
   questions: Question[];
   noScrolling?: boolean;
+  isProvisional?: boolean;
   isEnd?: boolean;
   activeStep?: number;
   handleStep(questionIndex: number): any;
@@ -21,10 +21,13 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   noScrolling,
   questions,
   activeStep,
+  isProvisional,
   handleStep,
   attempts,
 }) => {
-  const [stepperRef] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+  const [stepperRef] = React.useState(
+    React.createRef() as React.RefObject<HTMLDivElement>
+  );
 
   let questionIndex = 0;
 
@@ -32,47 +35,56 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
     const attempt = attempts[questionIndex];
     questionIndex++;
     let index = questionIndex;
+    let isActive = false;
 
-    let className = 'step';
+    let className = "step";
 
-    if (activeStep !== undefined && activeStep !== null && activeStep + 1 === questionIndex) {
-      className += ' current'
+    if (
+      activeStep !== undefined &&
+      activeStep !== null &&
+      activeStep + 1 === questionIndex
+    ) {
+      className += " current";
+      isActive = true;
     }
 
     // render step for invalid question
     if (!attempt) {
-      className += ' failed';
+      className += " failed";
       return (
         <div className={className} key={key} onClick={handleStep(index - 1)}>
           <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
           <SpriteIcon name="cancel" className="active text-theme-orange" />
-          <div className="underline"><div/></div>
         </div>
       );
     }
 
     if (attempt.correct) {
-      className += ' success';
+      className += " success";
+    } else if (attempt.marks > 0) {
+      className += " almost-failed";
     } else {
-      className += ' failed';
+      className += " failed";
     }
 
     // render step normal questions
     return (
       <div className={className} key={key} onClick={handleStep(index - 1)}>
-        <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
-        <SpriteIcon
-          name={attempt.correct ? "ok" : "cancel"}
-          className={`svg active ${attempt.correct ? "text-theme-green" : "text-theme-orange"}`}
-        />
-        <div className="underline"><div/></div>
+        <div>
+          <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
+          <SpriteIcon
+            name={attempt.correct ? "ok" : "cancel-custom"}
+            className="svg active"
+          />
+          {isActive && <div className="fixed-stepper-triangle" />}
+        </div>
       </div>
     );
   };
 
-  let className = 'stepper';
-  if (isMobile && noScrolling) {
-    className += ' inline';
+  let className = "stepper";
+  if (isPhone() && noScrolling) {
+    className += " inline";
   }
 
   const getStepSize = () => {
@@ -81,7 +93,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
     } catch {
       return 50;
     }
-  }
+  };
 
   const scrollBack = () => {
     try {
@@ -90,8 +102,8 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
         el.scrollBy(-getStepSize(), 0);
       }
     } catch {}
-  }
-  
+  };
+
   const scrollNext = () => {
     try {
       if (stepperRef.current) {
@@ -99,7 +111,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
         el.scrollBy(getStepSize(), 0);
       }
     } catch {}
-  }
+  };
 
   if (isPhone()) {
     return (
@@ -110,10 +122,23 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   }
 
   return (
-    <div className={className} ref={stepperRef}>
-      {questions.length > 19 && <div className="scroll-back-button" style={{display: 'none'}}><SpriteIcon onClick={scrollBack} name="arrow-left" /></div>}
-      {questions.map((q, index) => renderQuestionStep(index))}
-      {questions.length > 19 && <div className="scroll-next-button" style={{display: 'none'}}><SpriteIcon name="arrow-right" onClick={scrollNext} /></div>}
+    <div className={className}>
+      {questions.length > 18 && (
+        <div className="scroll-back-button" style={{ display: "none" }}>
+          <SpriteIcon onClick={scrollBack} name="arrow-left" />
+        </div>
+      )}
+      {isProvisional
+      ?  questions.map((q, index) => renderQuestionStep(index))
+      :
+      <div className="scrollable-steps" ref={stepperRef}>
+        {questions.map((q, index) => renderQuestionStep(index))}
+      </div>}
+      {questions.length > 18 && (
+        <div className="scroll-next-button" style={{ display: "none" }}>
+          <SpriteIcon name="arrow-right" onClick={scrollNext} />
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Dialog, Grid } from "@material-ui/core";
 import DynamicFont from 'react-dynamic-font';
 
 import { AcademicLevelLabels, Brick } from "model/brick";
@@ -10,7 +10,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { User } from "model/user";
-import { checkPublisher } from "components/services/brickService";
+import { checkAdmin, checkPublisher } from "components/services/brickService";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import { stripHtml } from "components/build/questionService/ConvertService";
@@ -19,10 +19,13 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import SponsorImageComponent from "./SponsorImage";
 import CoverAuthorRow from "./components/coverAuthorRow/CoverAuthorRow";
 import CoverPlay from "./components/coverAuthorRow/CoverPlay";
-import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/UnauthorizedUserDialogV2";
-import TextDialog from "components/baseComponents/dialogs/TextDialog";
+import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 
-import { CreateByEmailRes, createUserByEmail } from "services/axios/user";
+import { CreateByEmailRes } from "services/axios/user";
+import HoveredImage from "../baseComponents/HoveredImage";
+import CoverTimer from "./CoverTimer";
+import { getCompetitionsByBrickId } from "services/axios/competitions";
+import map from "components/map";
 
 
 interface Props {
@@ -30,6 +33,7 @@ interface Props {
   brick: Brick;
   location: any;
   history: any;
+  setCompetitionId(id: number): void;
   setUser(data: CreateByEmailRes): void;
   moveNext(): void;
 }
@@ -39,14 +43,16 @@ const TabletTheme = React.lazy(() => import('./themes/CoverTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 
 const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
+  const [competitionData, setCompetitionData] = React.useState(null as any);
   const [bioOpen, setBio] = React.useState(false);
+  const [editorBioOpen, setEditorBio] = React.useState(false);
 
+  const [playClicked, setClickPlay] = React.useState(false);
+  const [unauthPopupShown, setUnauthPopupShown] = React.useState(false)
   const [unauthorizedOpenV2, setUnauthorizedV2] = React.useState(false);
 
   const [firstPhonePopup, setFirstPhonePopup] = React.useState(false);
   const [secondPhonePopup, setSecondPhonePopup] = React.useState(false);
-  const [emailInvalidPopup, setInvalidEmailPopup] = React.useState(false); // null - before submit button clicked, true - invalid
-  const [emailInvalid, setInvalidEmail] = React.useState<boolean | null>(null); // null - before submit button clicked, true - invalid
 
   const userTimeout = setTimeout(() => {
     if (!props.user) {
@@ -54,26 +60,39 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     }
   }, 10000);
 
-  const validate = (data: any) => {
-    if (data === 400) {
-      setInvalidEmailPopup(true);
+  const getNewestCompetition = (competitions: any[]) => {
+    let competition = null;
+    const timeNow = new Date().getTime();
+    for (const comp of competitions) {
+      try {
+        var start = new Date(comp.startDate).getTime();
+        if (timeNow > start) {
+          var end = new Date(comp.endDate).getTime();
+          if (timeNow < end) {
+            competition = comp;
+          }
+        }
+      } catch {
+        console.log('competition time can`t be parsed');
+      }
     }
-    setInvalidEmail(true);
+    return competition;
   }
 
-  const createInactiveAccountV2 = async (email: string) => {
-    if (!props.user) {
-      // create a new account for an unauthorized user.
-      const data = await createUserByEmail(email);
-      if (data === 400 || !data) {
-        validate(data);
-      } else {
-        props.setUser(data);
-        setUnauthorizedV2(false);
-        startBrick();
+  const getCompetitions = async () => {
+    const res = await getCompetitionsByBrickId(brick.id);
+    if (res && res.length > 0) {
+      const competition = getNewestCompetition(res);
+      if (competition) {
+        setCompetitionData({ isOpen: true, competition });
       }
     }
   }
+
+  useEffect(() => {
+    getCompetitions();
+  /*eslint-disable-next-line*/
+  }, []);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -165,11 +184,28 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   if (isPhone()) {
     return (
       <React.Suspense fallback={<></>}>
+        <HoveredImage />
         <MobileTheme />
         <div className="cover-page">
           {renderFirstRow()}
-          <div className="brick-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
-          <div className="author-row">{brick.author.firstName} {brick.author.lastName}</div>
+          <div className="brick-title q-brick-title">
+            {brick.adaptedFrom && <div className="adapted-text">ADAPTED</div>}
+            <div>
+              {brick.adaptedFrom && <SpriteIcon name="copy" />}
+              <h1 dangerouslySetInnerHTML={{ __html: brick.title }} />
+            </div>
+          </div>
+          <div className="author-row">
+            <span onClick={() => setBio(true)}>
+              <SpriteIcon name="feather-feather" />
+              {brick.author.firstName} {brick.author.lastName}
+            </span>
+            {brick.editors && brick.editors.length > 0 && <div onClick={() => setEditorBio(true)}>, <SpriteIcon name="feather-edit-3" />{brick.editors[0].firstName} {brick.editors[0].lastName} (Editor)</div>}
+          </div>
+          {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
+            user={props.user}
+            brick={brick}
+          />}
           <div className="keywords-row">
             <KeyWordsPreview keywords={brick.keywords} />
           </div>
@@ -181,7 +217,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             />
             <div className="cover-info-row">
               {renderBrickCircle()}
-              {brick.subject?.name}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
+              <span>{brick.subject?.name}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}</span>
               <SpriteIcon name="help-circle-custom" onClick={() => setSecondPhonePopup(true)} />
               {firstPhonePopup &&
                 <div className="mobile-help-container" onClick={() => setFirstPhonePopup(false)}>
@@ -241,16 +277,14 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                     <br />
                     <div className="container">
                       <div className="white-circle">II</div>
-                      <div className="and-sign">&</div>
-                      <div className="white-circle">III</div>
-                      <div className="l-text smaller">
+                      <div className="l-text">
                         <div>Core</div>
                         <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
                       </div>
                     </div>
                     <br />
                     <div className="container">
-                      <div className="white-circle">IV</div>
+                      <div className="white-circle">III</div>
                       <div className="l-text">
                         <div>Extension</div>
                         <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
@@ -259,42 +293,89 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   </div>
                 </div>}
             </div>
+            <CoverTimer brickLength={brick.brickLength} />
           </div>
           <div className="introduction-info">
-            <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
+            <CoverPlay onClick={() => {
+              if (props.user) {
+                startBrick();
+              } else {
+                if (!unauthPopupShown) {
+                  setUnauthorizedV2(true);
+                } else {
+                  startBrick();
+                }
+                setClickPlay(true);
+              }
+            }}
+            />
           </div>
         </div>
         <UnauthorizedUserDialogV2
           history={props.history}
+          brickId={brick.id}
           isOpen={unauthorizedOpenV2}
-          emailInvalid={emailInvalid}
-          login={(email) => createInactiveAccountV2(email)}
-          notyet={() => startBrick()}
+          notyet={() => {
+            if (playClicked) {
+              startBrick()
+            } else {
+              setUnauthorizedV2(false);
+            }
+            setUnauthPopupShown(true);
+          }}
         />
+        <CoverBioDialog isOpen={bioOpen} user={brick.author} close={() => setBio(false)} />
+        {brick.editors && brick.editors.length > 0 &&
+          <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
+        }
+        {competitionData &&
+          <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog" onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}>
+            <div className="dialog-header phone-competition">
+              <div className="flex-center">
+                <SpriteIcon name="star-empty" className="big-star" />
+              </div>
+              <div className="bold" style={{ textAlign: 'center' }}>
+                This brick is part of a competition. <br />
+                If you do well, you could win a prize!
+              </div>
+            </div>
+            <div className="dialog-footer">
+              <button className="btn btn-md  bg-green text-white yes-button" onClick={() => {
+                props.setCompetitionId(competitionData.competition.id);
+                setCompetitionData({ ...competitionData, isOpen: false });
+                startBrick();
+              }}>
+                <span>Start Playing</span>
+              </button>
+            </div>
+            <div className="italic bottom-link flex-center" style={{ textAlign: 'center' }}>
+              <SpriteIcon name="eye-on" />
+              <a rel="noopener noreferrer" href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
+            </div>
+          </Dialog>}
       </React.Suspense>
     );
   }
 
+  const briefText = stripHtml(brick.brief);
+
   return (
     <React.Suspense fallback={<></>}>
+      <HoveredImage />
       {isMobile ? <TabletTheme /> : <DesktopTheme />}
       <div className="brick-row-container cover-page">
         <div className="brick-container">
           <Grid container direction="row">
             <Grid item sm={8} xs={12}>
               <div className="introduction-page">
-                {renderFirstRow()}
-                <div className="brick-title q-brick-title">
-                  <DynamicFont content={stripHtml(brick.title)} />
-                </div>
-                <CoverAuthorRow brick={brick} setBio={setBio} />
-                {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
-                  user={props.user}
-                  brick={brick}
-                />}
+                <h1 className="brick-title q-brick-title dynamic-title">
+                  {brick.adaptedFrom && !brick.isCore && <div className="adapted-text">ADAPTED</div>}
+                  {brick.adaptedFrom && !brick.isCore && <SpriteIcon name="copy" />}<DynamicFont content={stripHtml(brick.title)} />
+                </h1>
+                <CoverAuthorRow brick={brick} setBio={setBio} setEditorBio={setEditorBio} />
                 <div className="image-container centered">
                   <CoverImage
-                    locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user.id)}
+                    locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user?.id)}
                     brickId={brick.id}
                     data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
                   />
@@ -320,8 +401,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                         <br />
                         <div className="container">
                           <div className="white-circle">II</div>
-                          <div className="flex-center and-sign">&</div>
-                          <div className="white-circle">III</div>
                           <div className="l-text">
                             <div>Core</div>
                             <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
@@ -329,7 +408,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                         </div>
                         <br />
                         <div className="container">
-                          <div className="white-circle">IV</div>
+                          <div className="white-circle">III</div>
                           <div className="l-text">
                             <div>Extension</div>
                             <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
@@ -338,32 +417,83 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="keywords-row">
-                  <KeyWordsPreview keywords={brick.keywords} />
+                  <div className="keywords-row">
+                    <SpriteIcon name="hash" />
+                    <KeyWordsPreview keywords={brick.keywords} onClick={keyword => props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)} />
+                    {!isMobile && props.user && checkAdmin(props.user.roles) && <div className="btn b-green text-white" onClick={() => props.history.push(map.Proposal(brick.id))}>Edit</div>}
+                  </div>
+                  <CoverTimer brickLength={brick.brickLength} />
                 </div>
               </div>
             </Grid>
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
-                <CoverPlay onClick={() => props.user ? startBrick() : setUnauthorizedV2(true)} />
+                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
+                  user={props.user}
+                  brick={brick}
+                />}
+                <div className="brief-ellipsis">
+                  {briefText}
+                </div>
+                <CoverPlay onClick={() => {
+                  if (props.user) {
+                    startBrick();
+                  } else {
+                    if (!unauthPopupShown) {
+                      setUnauthorizedV2(true);
+                    } else {
+                      startBrick();
+                    }
+                    setClickPlay(true);
+                  }
+                }} />
               </div>
             </Grid>
           </Grid>
         </div>
         <CoverBioDialog isOpen={bioOpen} user={brick.author} close={() => setBio(false)} />
+        {brick.editors && brick.editors.length > 0 &&
+          <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
+        }
       </div>
       <UnauthorizedUserDialogV2
         history={props.history}
+        brickId={brick.id}
         isOpen={unauthorizedOpenV2}
-        emailInvalid={emailInvalid}
-        login={(email) => createInactiveAccountV2(email)}
-        notyet={() => startBrick()}
+        notyet={() => {
+          if (playClicked) {
+            startBrick();
+          } else {
+            setUnauthorizedV2(false);
+          }
+          setUnauthPopupShown(true);
+        }}
       />
-      <TextDialog
-        isOpen={emailInvalidPopup} close={() => setInvalidEmailPopup(false)}
-        label="You might already have an account, try signing in."
-      />
+      {competitionData &&
+        <Dialog open={competitionData.isOpen} className="dialog-box competition-dialog" onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}>
+          <div className="dialog-header">
+            <div className="flex-center">
+              <SpriteIcon name="star-empty" className="big-star" />
+            </div>
+            <div className="bold" style={{ textAlign: 'center' }}>
+              This brick is part of a competition. <br />
+              If you do well, you could win a prize!
+            </div>
+          </div>
+          <div className="dialog-footer">
+            <button className="btn btn-md bg-green text-white yes-button blue-on-hover" onClick={() => {
+              props.setCompetitionId(competitionData.competition.id);
+              setCompetitionData({ ...competitionData, isOpen: false });
+              startBrick();
+            }}>
+              <span>Start Playing</span>
+            </button>
+          </div>
+          <div className="italic bottom-link flex-center" style={{ textAlign: 'center' }}>
+            <SpriteIcon name="eye-on" />
+            <a rel="noopener noreferrer" href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
+          </div>
+        </Dialog>}
     </React.Suspense>
   );
 };

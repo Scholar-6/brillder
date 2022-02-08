@@ -22,8 +22,8 @@
     display: block;
     span {
       margin-top: .7vw;
-      letter-spacing: .3vw;
-      font-size: 1.2vw;
+      letter-spacing: 0;
+      font-size: 1.5vw;
       color: var(--white);
       font-family: $font-family-light;
       @include phone_and_tabletP {

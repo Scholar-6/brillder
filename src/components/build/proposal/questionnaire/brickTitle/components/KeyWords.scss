@@ -46,6 +46,7 @@
     padding-left: 0.4vw;
     &::placeholder {
       color: var(--theme-dark-blue);
+      font-family: $font-family-bold !important;
       opacity: 0.42;
     }
   }

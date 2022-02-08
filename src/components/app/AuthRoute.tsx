@@ -17,7 +17,7 @@ const AuthRoute: React.FC<AuthRouteProps> = ({ component: Component, ...rest }) 
   if (rest.isAuthenticated === isAuthenticated.None || rest.isAuthenticated === isAuthenticated.False) {
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else {
-    return <Redirect to={{ pathname: rest.intendedPath ?? "/home" }} />
+    return <Redirect to={{ pathname: rest.intendedPath ?? "/home" }} />;
   }
 }
 

@@ -103,12 +103,12 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     return (
       <div>
         <div className="filter-container sort-by-box">
-          <div className="sort-header">INBOX</div>
+          <div className="sort-header">Inbox</div>
         </div>
         {this.renderSortAndFilterBox()}
         <div className="filter-container indexes-box">
           <div className="filter-header" style={{marginBottom: 0}}>
-            SUBJECTS
+            Subjects
           </div>
         </div>
       </div>

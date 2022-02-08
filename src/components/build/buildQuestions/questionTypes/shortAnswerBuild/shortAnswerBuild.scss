@@ -6,17 +6,32 @@
   @extend %textCenter;
   margin-top: 0 !important;
 
+  .component-title {
+    p {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
   .short-answer-box {
     position: relative;
     width: 100%;
-    margin-bottom: 0.4vw;
+    margin-bottom: $editor-spacing;
     background-color: var(--white);
     @extend %themeRadius;
     .quill-document-editor {
       .ql-editor {
         padding: 1vw;
+        &::before {
+          text-align: center;
+        }
       }
     }
+  }
+
+  .MuiSnackbarContent-root {
+    min-width: 20vw !important;
   }
 
   .MuiSnackbar-root {
@@ -26,7 +41,8 @@
 
     top: 30% !important;
     height: 30vh;
-    left: 50.8% !important;
+    left: unset !important;
+    right: -6vw !important;
     width: 20vw;
 
     .MuiSnackbarContent-root {

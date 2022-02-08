@@ -10,6 +10,7 @@ import Navigation from 'components/build/proposal/components/navigation/Navigati
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import OpenQHoverHelp from "components/build/baseComponents/OpenQHoverHelp";
 
 interface OpenQuestionProps {
   baseUrl: string;
@@ -50,6 +51,7 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           <p className="sub-header">
             Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.
           </p>
+          <OpenQHoverHelp />
           <QuillEditor
             disabled={!props.canEdit}
             data={selectedQuestion}

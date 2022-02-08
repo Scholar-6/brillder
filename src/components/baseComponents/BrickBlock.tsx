@@ -1,8 +1,10 @@
 import React from "react";
 import Grow from "@material-ui/core/Grow";
 import { Box } from "@material-ui/core";
+import { connect } from "react-redux";
 import queryString from 'query-string';
 
+import brickActions from "redux/actions/brickActions";
 import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 
@@ -31,9 +33,11 @@ interface BrickBlockProps {
   handleDeleteOpen(brickId: number): void;
   handleMouseHover(e: any): void;
   handleMouseLeave(e: any): void;
+
+  forgetBrick(): void;
 }
 
-const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
+const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, circleIcon, index, row = 0, ...props }) => {
   let color = "";
   if (brick.status === BrickStatus.Draft) {
     color = "color1";
@@ -49,6 +53,10 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     color = props.color;
   }
 
+  if (brick.adaptedFrom) {
+    circleIcon = 'copy';
+  }
+
   if (props.isPlay) {
     if (!brick.subject) {
       color = "#B0B0AD";
@@ -58,20 +66,21 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
   }
 
   const moveToBuild = () => {
-    props.history.push(buildRoutes.buildQuesitonType(brick.id));
+    props.forgetBrick();
+    props.history.push(buildRoutes.buildPlan(brick.id));
   }
 
   const move = () => {
     if (props.isPlay) {
       const values = queryString.parse(props.history.location.search);
-      let link = playCover(brick.id);
+      let link = playCover(brick);
       if (values.newTeacher) {
         link += '?' + map.NewTeachQuery;
       }
       props.history.push(link);
     } else if (props.isAssignment && props.assignmentId) {
       setAssignmentId(props.assignmentId);
-      props.history.push(playCover(brick.id));
+      props.history.push(playCover(brick));
     } else {
       moveToBuild();
     }
@@ -93,7 +102,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
             <ShortBrickDescription
               user={props.user}
               searchString={props.searchString}
-              circleIcon={props.circleIcon}
+              circleIcon={circleIcon}
               iconColor={props.iconColor}
               handleDeleteOpen={props.handleDeleteOpen}
               move={move}
@@ -107,4 +116,8 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
   );
 }
 
-export default BrickBlockComponent;
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(brickActions.forgetBrick()),
+});
+
+export default connect(null, mapDispatch)(BrickBlockComponent);

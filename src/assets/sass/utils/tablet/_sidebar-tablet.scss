@@ -70,9 +70,8 @@
         flex-direction: column;
 
         .sort-header {
-          text-transform: uppercase;
+          text-transform: capitalize;
           font-size: 2.3vh;
-          letter-spacing: 0.45vh;
           font-family: $font-family-bold;
         }
 
@@ -212,6 +211,17 @@
         }
       }
 
+      .view-all-subjects {
+        display: flex;
+        align-items: center;
+        svg {
+          margin-left: -0.2vw;
+          margin-right: 0.3vw;
+          height: 1.8vw;
+          width: 1.8vw;
+        }
+      }
+
       .indexes-box {
         .index-box {
           padding: 0.53vw 0 0.53vw 1.4vw;
@@ -233,11 +243,10 @@
 
       .filter-header {
         position: relative;
-        text-transform: uppercase;
+        text-transform: capitalize;
         background: var(--light-blue-alpha5);
         padding: 0.3vw 1.4vw;
-        font-size: 1.2vw;
-        letter-spacing: 0.22vw;
+        font-size: 2.3vh;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -373,7 +382,7 @@
       }
 
       @include tabletP {
-        font-family: $font-family-black;
+        font-family: $font-family-bold;
         padding-bottom: 0;
         font-size: $bricks-title-font-size;
         line-height: 1;

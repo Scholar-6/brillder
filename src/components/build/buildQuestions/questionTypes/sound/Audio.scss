@@ -2,45 +2,140 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
+.play-wave-container {
+  display: flex;
+  padding-top: 0.4vw;
+
+  .custom-audio-controls {
+    width: 18% !important;
+  }
+
+  .relative-waves-container {
+    position: relative;
+    width: 85%;
+
+    .react-waves {
+      width: 100% !important;
+    }
+  }
+
+  .absolute-end-time,
+  .absolute-start-time {
+    font-size: 1vw;
+    color: var(--theme-dark-blue);
+    position: absolute;
+    top: 2.7vw;
+  }
+
+  .absolute-start-time {
+    left: 1%;
+  }
+
+  .absolute-end-time {
+    right: 0;
+  }
+
+  .play-icon-container-d1 {
+    display: flex;
+    align-items: center;
+    padding-left: 0.8vw;
+
+    .play-icon-d1 {
+      color: var(--theme-dark-blue);
+      cursor: pointer;
+      width: 3vw;
+      height: 3vw;
+    }
+  }
+
+  .volume-container {
+    svg {
+      color: var(--theme-dark-blue);
+    }
+  }
+
+  .react-waves {
+    padding: 0 !important;
+    margin: 0 !important;
+
+    .wave {
+      wave {
+        height: 3vw !important;
+      }
+    }
+  }
+}
+
 .custom-audio-controls {
   display: flex;
   margin: auto;
   height: 3.5vw;
   width: 80%;
+
   .button-container {
     @extend %flexCenter;
     width: 1.5vw;
+
     .svg {
       cursor: pointer;
       height: 1.2vw;
       width: 1.2vw;
     }
   }
+
   .time-text {
     width: 6vw;
     letter-spacing: -0.05vw;
     @extend %flexCenter;
   }
+
   .input-container {
     @extend %flexCenter;
     margin: 0 !important;
   }
-  input {
-    cursor: pointer;
-    width: 7vw;
+
+  input[type='range'] {
+    overflow: hidden;
+    border-radius: 0.25vw;
+    margin-bottom: 0;
     -webkit-appearance: none;
-    background: #c1c2c3;
-    height: 0.3vw;
-    margin: 0 !important;
-    &::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 0.7vw;
-      height: 0.7vw;
-      background: url("/images/slider/slider-circle.svg");
-      cursor: pointer;
-    }
+    background-color: #9a905d;
   }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 0.5vw;
+    -webkit-appearance: none;
+    color: var(--theme-dark-blue);
+    margin-top: -1px;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    width: 1px;
+    -webkit-appearance: none;
+    height: 0.5vw;
+    cursor: pointer;
+    background: var(--theme-dark-blue);
+    box-shadow: -4vw 0 0 4vw var(--theme-dark-blue);
+  }
+
+  /** FF*/
+  input[type="range"]::-moz-range-progress {
+    background-color: var(--theme-dark-blue);
+  }
+
+  input[type="range"]::-moz-range-track {
+    background-color: var(--theme-dark-blue);
+  }
+
+  /* IE*/
+  input[type="range"]::-ms-fill-lower {
+    background-color: var(--theme-dark-blue);
+  }
+
+  input[type="range"]::-ms-fill-upper {
+    background-color: var(--theme-dark-blue);
+  }
+
   .volume-container-main {
     @extend %flexCenter;
 
@@ -49,6 +144,7 @@
       background: var(--tab-gray);
     }
   }
+
   .volume-container {
     width: 2vw;
     height: 1.8vw;
@@ -67,19 +163,23 @@
       height: 1.5vw;
     }
   }
+
   .more-container {
     @extend %flexCenter;
     width: 3vw;
+
     .svg {
       cursor: pointer;
       width: 2vw;
       height: 2vw;
       @extend %transitionAll300;
+
       &:hover {
         stroke-width: 2;
       }
     }
   }
+
   font-size: 0.8vw;
 }
 
@@ -87,40 +187,46 @@
 .phone .custom-audio-controls {
   height: 3.5vw;
   width: 90%;
+
   .button-container {
     width: 3vw;
+
     .svg {
       height: 1.2vw;
       width: 1.2vw;
     }
   }
+
   .time-text {
     display: none;
   }
+
   input {
     width: 100%;
     height: 0.3vw;
-    &::-webkit-slider-thumb {
-      width: 0.7vw;
-      height: 0.7vw;
-    }
   }
+
   .volume-container-main input {
     width: 2.5vw;
   }
+
   .volume-container {
     width: 2vw;
     height: 1.8vw;
+
     .svg {
       width: 1.5vw;
       height: 1.5vw;
     }
   }
+
   .volume-container-main input {
     background: #C1C2C3;
   }
+
   .more-container {
     width: 3vw;
+
     .svg {
       width: 2vw;
       height: 2vw;
@@ -131,17 +237,37 @@
 // live play
 .introduction-page .custom-audio-controls {
   width: 85%;
+
   .input-container input {
-      width: 20vw;
+    width: 11vw;
   }
+
   .volume-container-main input {
-    width: 10vw;
+    width: 6vw;
     background: #C1C2C3;
   }
+
   .time-text {
-    width: 9vw;
+    width: 6vw;
     letter-spacing: -0.05vw;
     @extend %flexCenter;
   }
+
   font-size: 0.8vw;
+}
+
+.fixed-build-phone .audio-play-component .play-wave-container {
+  .play-icon-d1 {
+    width: 1.5vw;
+    height: 1.5vw;
+    stroke-width: 2;
+  }
+
+  .custom-audio-controls {
+    height: 2vw !important;
+
+    input {
+      display: none;
+    }
+  }
 }

@@ -11,6 +11,7 @@ import StudentTableHead from "./StudentTableHead";
 import './StudentTable.scss';
 import map from "components/map";
 import ClassroomNames from "./ClassroomNames";
+import { ClassroomApi } from "components/teach/service";
 
 interface StudentTableProps {
   history: any;
@@ -28,7 +29,7 @@ interface StudentTableProps {
   sort(sortBy: UserSortBy): void;
   unassign(student: MUser): void;
   togglePageStudents(): void;
-  resendInvitation(email: string): void;
+  resendInvitation(email: string, classroom?: ClassroomApi): void;
 }
 
 const StudentTable: React.FC<StudentTableProps> = props => {
@@ -78,6 +79,26 @@ const StudentTable: React.FC<StudentTableProps> = props => {
     e.dataTransfer.setData("text/plain", JSON.stringify({ studentIds }));
   }
 
+  const renderLibraryLink = (user: MUser) => {
+    let name = '';
+    const { firstName } = user;
+    if (!firstName) {
+      return '';
+    }
+    let lastLetter = firstName[firstName.length - 1];
+    if (lastLetter === 's') {
+      name = firstName + "'";
+    } else {
+      name = firstName + "'s";
+    }
+    return (
+      <div className="student-library-link" onClick={() => props.history.push(map.MyLibrary + '/' + user.id)}>
+        <SpriteIcon name="bar-chart-2" />
+        <div className="css-custom-tooltip">View {name} library</div>
+      </div>
+    );
+  }
+
   const renderStudent = (user: MUser, i: number) => {
     let className = 'user-row';
     if (user.hasInvitation) {
@@ -102,6 +123,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
               <Checkbox
                 checked={user.selected}
                 onMouseOver={() => onHover(user)} onMouseLeave={() => onBlur(user)} />
+              {!user.hasInvitation && renderLibraryLink(user)}
               {user.selectHovered && <div className="custom-tooltip">Select</div>}
             </div>
             <div className="student-name">
@@ -117,7 +139,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 isPending={props.isPending}
                 studyClassrooms={user.studyClassrooms}
                 hasInvitation={user.hasInvitation}
-                resendInvitation={() => props.resendInvitation(user.email)}
+                resendInvitation={() => props.resendInvitation(user.email, user.classroom)}
               />
             </div>
             <div className="selected-column">

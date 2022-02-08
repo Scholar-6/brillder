@@ -4,6 +4,7 @@ import "./LineHighlighting.scss";
 import CompComponent from "../Comp";
 import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/model";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface LineHighlightingProps extends CompQuestionProps {
@@ -63,9 +64,7 @@ class LineHighlighting extends CompComponent<
   renderLinePreview(line: any, index: number) {
     return (
       <div key={index}>
-        <span className={line.checked ? "correct line" : "line"}>
-          {line.text}
-        </span>
+        <span className={line.checked ? "correct line" : "line"} dangerouslySetInnerHTML={{__html: line.text}} />
       </div>
     );
   }
@@ -89,7 +88,7 @@ class LineHighlighting extends CompComponent<
     }
 
     if (line.selected) {
-      if (this.props.attempt && this.props.isReview) {
+      if (this.props.attempt && this.props.isReview && this.props.attempt === this.props.liveAttempt) {
         let status = this.props.attempt.answer.indexOf(index);
         if (status !== -1) {
           if (line.checked === true) {
@@ -111,9 +110,7 @@ class LineHighlighting extends CompComponent<
 
     return (
       <div key={index} className="line-container">
-        <span className={className} onClick={() => this.highlighting(index)}>
-          {line.text}
-        </span>
+        <span className={className} onClick={() => this.highlighting(index)} dangerouslySetInnerHTML={{__html: line.text}} />
       </div>
     );
   }
@@ -137,7 +134,7 @@ class LineHighlighting extends CompComponent<
 
     return (
       <div className={className}>
-        <p><span className="help-text">Click to highlight.</span></p>
+        <p><span className="help-text"><SpriteIcon name="highlighter" /> Click to highlight.</span></p>
         <div className="lines-container">
           {component.lines.map((line: any, index: number) => (
             this.renderLine(line, index)

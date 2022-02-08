@@ -1,21 +1,20 @@
 import React from "react";
+import { useEffect } from "react";
+import queryString from 'query-string';
+import { isMobile } from "react-device-detect";
 
 import { Brick } from "model/brick";
-
-import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import { BrickFieldNames } from 'components/build/proposal/model';
+import { PlayMode } from "../model";
+import { getPrepareTime } from "../services/playTimes";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
-import { PlayMode } from "../model";
-import HighlightQuoteHtml from "../baseComponents/HighlightQuoteHtml";
-import TimeProgressbarV2 from "../baseComponents/timeProgressbar/TimeProgressbarV2";
-import { getPrepareTime } from "../services/playTimes";
 import BrickTitle from "components/baseComponents/BrickTitle";
-
+import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 
 export interface IntroductionState {
   isStopped: boolean;
@@ -27,24 +26,37 @@ export interface IntroductionState {
 interface Props {
   brick: Brick;
   briefExpanded?: boolean;
+  history: any;
 
-  moveNext(): void;
+  endTime: any;
+  setEndTime(t: any): void;
+
+  moveNext(isResume: boolean): void;
   mode?: PlayMode;
   onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
 const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
+  let initResume = false;
+  const values = queryString.parse(props.history.location.search)
+  if (values.resume) {
+    initResume = true;
+  }
+
+  const [isResume] = React.useState(initResume);
+  const [timerHidden, hideTimer] = React.useState(false);
+
   const [state, setState] = React.useState({
     prepExpanded: true,
     isStopped: false,
-    briefExpanded: true,
+    briefExpanded: false,
     duration: null,
   } as IntroductionState);
 
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
-        props.moveNext();
+        props.moveNext(isResume);
       }
     }
 
@@ -131,7 +143,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
     if (state.prepExpanded) {
       return (
         <div className="expanded-text prep-box">
-          <HighlightQuoteHtml
+          <HighlightHtml
             value={brick.prep}
             mode={props.mode}
             onHighlight={value => {
@@ -150,31 +162,45 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
-      <div className="fixed-upper-b-title">
-        <BrickTitle title={brick.title} />
-      </div>
+      <div className="fixed-upper-b-title"><BrickTitle title={brick.title} /></div>
       <div className="brick-container play-preview-panel live-page play-brief-page new-prep-page">
         <div className="introduction-page">
           <div className="scrollable">
-            <div className="open-question">
-              <MathInHtml value={brick.openQuestion} />
+            <div>
+              <div className="open-question">
+                <MathInHtml value={brick.openQuestion} />
+              </div>
+              <div className="introduction-content">
+                {renderBriefTitle()}
+                {renderBriefExpandText()}
+                {renderPrepTitle()}
+                {renderPrepExpandText()}
+              </div>
             </div>
-            <div className="introduction-content">
-              {renderBriefTitle()}
-              {renderBriefExpandText()}
-              {renderPrepTitle()}
-              {renderPrepExpandText()}
-            </div>
-          </div>
-          <div className="new-layout-footer" style={{ display: 'none' }}>
-            <div className="time-container">
-              <TimeProgressbarV2 isIntro={true} setEndTime={() => {}} minutes={minutes} onEnd={() => { }} brickLength={brick.brickLength} />
-            </div>
-            <div className="footer-space"><span className="scroll-text">Scroll down</span></div>
-            <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={props.moveNext}>
-                Investigation
-                <SpriteIcon name="arrow-right" />
+            <div className="new-layout-footer" style={{ display: 'none' }}>
+              <div className="time-container">
+                {!timerHidden &&
+                  <TimeProgressbar
+                    isIntro={true}
+                    onEnd={() => {}}
+                    minutes={minutes}
+                    endTime={props.endTime}
+                    brickLength={brick.brickLength}
+                    setEndTime={props.setEndTime}
+                  />
+                }
+              </div>
+              <div className="footer-space">
+                {!isMobile &&
+                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                </div>}
+              </div>
+              <div className="new-navigation-buttons">
+                <div className="n-btn next" onClick={() => props.moveNext(isResume)}>
+                  {isResume ? 'Resume' : 'Investigation'}
+                  <SpriteIcon name="arrow-right" />
+                </div>
               </div>
             </div>
           </div>

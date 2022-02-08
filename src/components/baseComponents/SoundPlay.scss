@@ -1,0 +1,31 @@
+
+.custom-sound-with-waves {
+  .react-waves {
+    margin: 0 !important;
+    height: 3.5vw;
+    padding: 0 !important;
+    width: 95% !important;
+  }
+  wave {
+    height: 3.5vw !important;
+  }
+  .sound-caption {
+    text-align: center;
+  }
+}
+
+
+// phone preview in build
+.fixed-build-phone {
+  .custom-sound-with-waves {
+    .react-waves {
+      margin: 0 !important;
+      height: 3.5vw;
+      padding: 0 !important;
+      width: 95% !important;
+    }
+    wave {
+      height: 3.5vw !important;
+    }
+  }
+}

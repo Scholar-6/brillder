@@ -8,6 +8,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface LastSaveProps {
   tutorialStep?: TutorialStep;
+  isEditor: boolean;
   isSaving: boolean;
   saveError: boolean;
   updated: string;
@@ -33,7 +34,7 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
   }, [props]);
 
   const renderText = () => {
-    if (isSaving) {
+    if (isSaving && !props.isEditor) {
       if(props.saveError) {
         return "Connection lost.";
       } else {

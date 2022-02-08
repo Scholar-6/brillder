@@ -33,11 +33,13 @@ enum RefName {
 
 interface BrickTitleProps {
   user: User;
+  brickId: number;
   history: any;
   baseUrl: string;
   parentState: Brick;
   canEdit: boolean;
   subjects: Subject[];
+  createBrick(): void;
   saveTitles(data: any): void;
   setKeywords(keywords: KeyWord[]): void;
   setAcademicLevel(level: AcademicLevel): void;
@@ -109,6 +111,9 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
       subTitleRef: React.createRef<HTMLDivElement>(),
       altTitleRef: React.createRef<HTMLDivElement>(),
     }
+    if (!props.brickId) {
+      props.createBrick();
+    }
   }
 
   onChange(event: React.ChangeEvent<{ value: string }>, value: string) {
@@ -137,14 +142,15 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
         <div>
           This will be {a(subjectName)} brick
         </div>
-        <div className="icon-container" onClick={() => {
+        <div className="icon-container tooltip-container" onClick={() => {
           if (this.props.user.subjects.length > 1) {
-            this.props.history.push(map.ProposalSubjectLink);
+            this.props.history.push(map.ProposalSubject(this.props.brickId));
           } else {
             this.setState({subjectSelectOpen: true});
           }
         }}>
           <SpriteIcon name="edit-outline-custom" />
+          <div className="css-custom-tooltip">Change subject</div>
         </div>
       </div>
     );
@@ -237,16 +243,14 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                     <br />
                     <div className="container">
                       <div className="white-circle">II</div>
-                      <div className="and-sign">&</div>
-                      <div className="white-circle">III</div>
-                      <div className="l-text smaller">
+                      <div className="l-text">
                         <div>Core</div>
                         <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
                       </div>
                     </div>
                     <br />
                     <div className="container">
-                      <div className="white-circle">IV</div>
+                      <div className="white-circle">III</div>
                       <div className="l-text">
                         <div>Extension</div>
                         <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>

@@ -1,6 +1,12 @@
-.desktop-version-dialog {
-  .MuiTypography-root.MuiListItemText-primary {
-    font-size: 7.3vw;
+.dialog-box.desktop-version-dialog {
+  z-index: 11000 !important;
+  .MuiPaper-root {
+    width: 90vw;
+  }
+  li .MuiListItemText-root .MuiTypography-root.MuiListItemText-primary{
+    text-align: left;
+    width: 100%;
+    font-size: 4.6vw !important;
   }
   .MuiAvatar-root.MuiAvatar-circle.circle-orange.MuiAvatar-colorDefault {
     height: 13vw;
@@ -10,15 +16,10 @@
       width: 10vw;
     }
   }
-  .MuiListItemText-root.bold {
-    .MuiTypography-root.MuiListItemText-primary.MuiTypography-displayBlock {
-      width: 60vw;
-    }
-  }
   .MuiListItemText-root.italic {
     .MuiTypography-root.MuiListItemText-primary {
+      text-align: left;
       font-size: 3.8vw !important;
-      padding-left: 2vw;
     }
   }
   .MuiListItem-root.MuiListItem-gutters {

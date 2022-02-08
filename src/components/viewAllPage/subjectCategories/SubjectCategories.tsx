@@ -9,6 +9,8 @@ import map from "components/map";
 import SubjectCategoriesSidebar from "./SubjectCategoriesSidebar";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import TextDialog from "components/baseComponents/dialogs/TextDialog";
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 interface AllSubjectsProps {
   user: User;
@@ -26,6 +28,7 @@ interface AllSubjectsState {
   searchString: string;
   isAllSubjects: boolean;
   failedRequest: boolean;
+  invalidSubject: boolean;
 }
 
 const MobileTheme = React.lazy(() => import('./themes/SCategorisMobileTheme'));
@@ -46,7 +49,8 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
       failedRequest: false,
       searchString: '',
       isAllSubjects: true,
-      showFilters
+      showFilters,
+      invalidSubject: false,
     };
   }
 
@@ -60,13 +64,24 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
       return (
         <React.Suspense fallback={<></>}>
           <MobileTheme />
+          <PageHeadWithMenu
+            page={PageEnum.ViewAll}
+            user={this.props.user}
+            placeholder=""
+            history={this.props.history}
+            search={() => {
+              console.log('moving', map.SearchPublishBrickPage)
+              this.props.history.push(map.SearchPublishBrickPage)
+            }}
+            searching={() => { }}
+          />
           <div className="phone-subject-category">
             <div className="title-lines">
               <div>Click to explore one of the</div>
               <div> following subject categories.</div>
             </div>
-            <div className="subject-category">
-              <div onClick={() => this.moveToGroup(SubjectGroup.Arts)}>
+            <div className="subject-category disabled">
+              <div onClick={() => this.setState({ invalidSubject: true })}>
                 <div className="flex-center">
                   <SpriteIcon name="category-canvas" />
                 </div>
@@ -109,21 +124,20 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               <div onClick={() => this.moveToGroup(SubjectGroup.Science)}>
                 <div className="flex-center">
                   <SpriteIcon name="category-chemistry" />
-                  <img alt="" src="/images/subject-categories/chemistry.svg" />
                 </div>
                 <div className="cat-name">Science</div>
               </div>
             </div>
-            <div className="subject-category">
-              <div onClick={() => { }}>
+            <div className="subject-category disabled">
+              <div onClick={() => this.setState({ invalidSubject: true })}>
                 <div className="flex-center">
                   <SpriteIcon name="category-education" />
                 </div>
                 <div className="cat-name">School Client</div>
               </div>
             </div>
-            <div className="subject-category">
-              <div onClick={() => { }}>
+            <div className="subject-category disabled">
+              <div onClick={() => this.setState({ invalidSubject: true })}>
                 <div className="flex-center">
                   <SpriteIcon name="category-economics" />
                 </div>
@@ -131,6 +145,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               </div>
             </div>
           </div>
+          <TextDialog className="bold-important" isOpen={this.state.invalidSubject} label="Hold tight, this subject category is coming soon." close={() => this.setState({ invalidSubject: false })} />
         </React.Suspense>
       );
     }
@@ -139,10 +154,10 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
         <Grid container direction="row" className="sorted-row dashboard-all-subjects">
           <SubjectCategoriesSidebar />
-          <Grid item xs={9} className="brick-row-container view-all-subjects subject-categories">
+          <div className="subject-categories">
             <div className="row">
-              <div>
-                <div onClick={() => this.moveToGroup(SubjectGroup.Arts)}>
+              <div className="subject-category disabled">
+                <div onClick={() => this.setState({ invalidSubject: true })}>
                   <div className="flex-center zoom-item">
                     <SpriteIcon name="category-canvas" />
                   </div>
@@ -165,8 +180,8 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                   <div className="cat-name">Humanities & Social Sciences</div>
                 </div>
               </div>
-              <div>
-                <div onClick={() => {}}>
+              <div className="subject-category disabled">
+                <div onClick={() => this.setState({ invalidSubject: true })}>
                   <div className="flex-center zoom-item">
                     <SpriteIcon name="category-education" />
                   </div>
@@ -199,8 +214,8 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                   <div className="cat-name">Science</div>
                 </div>
               </div>
-              <div>
-                <div onClick={() => {}}>
+              <div className="subject-category disabled">
+                <div onClick={() => this.setState({ invalidSubject: true })}>
                   <div className="flex-center zoom-item">
                     <SpriteIcon name="category-economics" />
                   </div>
@@ -208,8 +223,9 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
                 </div>
               </div>
             </div>
-          </Grid>
+          </div>
         </Grid>
+        <TextDialog className="bold-important" isOpen={this.state.invalidSubject} label="Hold tight, this subject category is coming soon." close={() => this.setState({ invalidSubject: false })} />
       </React.Suspense>
     );
   }
