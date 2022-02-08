@@ -21,25 +21,25 @@
     }
   }
   .base-font {
-    font-size: 1.05vw;
+    font-size: 1vw;
     img {
       width: 100%;
-      height: auto !important;
+      height: auto;
     }
   }
 
   .pl-open-question {
     margin-top: 1.4vw;
+    font-size: 1vw;
   }
 
   .title {
     margin-top: 3vh;
     font-size: 1.3vw;
-    text-transform: uppercase;
     font-family: $font-family-black;
-    p {
-      @extend %ellipsis;
-    }
+  }
+  .key-words-play {
+    text-align: center;
   }
   .expand-title {
     color: var(--theme-dark-blue);

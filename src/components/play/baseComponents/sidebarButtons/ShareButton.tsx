@@ -12,14 +12,15 @@ const ShareButton: React.FC<ButtonProps> = (props) => {
 
   if (!props.sidebarRolledUp) {
     return (
-      <button onClick={props.share} className="assign-class-button share-button svgOnHover">
-        <span>Share Brick</span>
-      </button>
+      <div onClick={props.share} className="assign-class-button bigger-button-v3 share-button">
+        <SpriteIcon name="share" />
+        <span>Share</span>
+      </div>
     );
   }
 
   const renderTooltip = () => (
-    <div className="custom-tooltip">
+    <div className="custom-tooltip bold">
       <div>Share Brick</div>
     </div>
   );

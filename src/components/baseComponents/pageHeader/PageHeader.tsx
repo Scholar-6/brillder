@@ -14,6 +14,11 @@ import { isAuthenticated } from 'model/assignment';
 import map from 'components/map';
 import UnauthorizedMenu from 'components/app/unauthorized/UnauthorizedMenu';
 import { PageEnum } from './PageHeadWithMenu';
+import { isPhone } from 'services/phone';
+import { getPublishedBricks } from 'services/axios/brick';
+import { Brick, KeyWord, Subject } from 'model/brick';
+import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestions';
+import { getSubjects } from 'services/axios/subject';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -24,7 +29,7 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   getNotifications: () => dispatch(notificationActions.getNotifications())
 });
- 
+
 const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
 
 
@@ -32,12 +37,15 @@ interface Props {
   searchPlaceholder: string;
   link?: string;
   page: PageEnum;
-  
+  suggestions?: boolean;
+
   history: any;
   search(): void;
   searching(value: string): void;
   showDropdown(): void;
   showNotifications(event: any): void;
+
+  toggleSearch?(value: boolean): void;
 
   // redux
   notifications: Notification[];
@@ -46,8 +54,12 @@ interface Props {
 }
 
 interface State {
+  value: string;
   searchVisible: boolean;
   searchAnimation: string;
+  bricks: Brick[];
+  keywords: KeyWord[];
+  subjects: Subject[];
   // mobile
   dropdownShown: boolean;
 }
@@ -59,8 +71,45 @@ class PageHeader extends Component<Props, State> {
     this.state = {
       searchVisible: false,
       dropdownShown: false,
+      value: '',
+      bricks: [],
+      keywords: [],
+      subjects: [],
       searchAnimation: 'slideInLeft'
     };
+
+    if (props.suggestions) {
+      this.prepareSuggestions();
+    }
+  }
+
+  collectKeywords(bricks: Brick[]) {
+    let keywords:KeyWord[] = [];
+    for(let brick of bricks) {
+      if (brick.keywords && brick.keywords.length > 0) {
+        for (let keyword of brick.keywords) {
+          /*eslint-disable-next-line*/
+          var found = keywords.find(k => k.id == keyword.id);
+          if (!found) {
+            keywords.push(keyword);
+          }
+        }
+      }
+    }
+    return keywords;
+  }
+
+  async prepareSuggestions() {
+    let subjects:Subject[] = [];
+    const bricks = await getPublishedBricks();
+    if (bricks) {
+      let keywords = this.collectKeywords(bricks);
+      const subjects2 = await getSubjects();
+      if (subjects2) {
+        subjects = subjects2;
+      }
+      this.setState({bricks, subjects, keywords});
+    }
   }
 
   keySearch(e: any) {
@@ -69,7 +118,11 @@ class PageHeader extends Component<Props, State> {
     }
   }
 
+
   toggleSearch() {
+    if (this.props.toggleSearch) {
+      this.props.toggleSearch(!this.state.searchVisible);
+    }
     this.setState(prevState => ({
       searchVisible: !prevState.searchVisible
     }));
@@ -81,7 +134,36 @@ class PageHeader extends Component<Props, State> {
   }
 
   hideDropdown() {
-    this.setState({dropdownShown: false});
+    this.setState({ dropdownShown: false });
+  }
+
+  renderMiddleButton() {
+    if (this.props.page === PageEnum.Book && isPhone()) {
+      return (
+        <div
+          className="btn btn-transparent m-footer-book-icon svgOnHover"
+          onClick={() => this.props.history.push(map.MyLibrary)}
+        >
+          <SpriteIcon name="book-open" className="w100 h100 active text-theme-orange" />
+          <div className="gh-phone-background" />
+        </div>
+      )
+    }
+    if (this.state.searchVisible) {
+      return (
+        <div className="btn btn-transparent close-search svgOnHover" onClick={() => this.toggleSearch()}>
+          <SpriteIcon name="arrow-right" className="w100 h100 text-tab-gray" />
+        </div>
+      );
+    }
+    return (
+      <div className="btn btn-transparent open-search svgOnHover" onClick={() => {
+        this.props.page !== PageEnum.Book && this.renderSearch()
+      }}>
+        <SpriteIcon name="search" className="w100 h100 active text-theme-orange" />
+        <div className="gh-phone-background" />
+      </div>
+    );
   }
 
   render() {
@@ -95,6 +177,15 @@ class PageHeader extends Component<Props, State> {
 
     let link = this.props.link ? this.props.link : map.MainPage;
 
+    let className = 'search-container 44';
+    if (searchVisible) {
+      className += 'active animated slideInRight '
+    }
+
+    if (this.state.value.length >= 1) {
+      className += ' no-bottom-border';
+    }
+
     return (
       <div className="upper-part">
         <div className={!searchVisible ? "page-header" : "page-header active"}>
@@ -105,31 +196,24 @@ class PageHeader extends Component<Props, State> {
                   <SpriteIcon name="help-thin" className="svg-default" />
                 </div>
               }
-              {!searchVisible && <HomeButton link={link} />}
-              <div className={searchVisible ? "search-container active animated slideInRight" : "search-container"}>
+              {!searchVisible && <HomeButton history={this.props.history} link={link} />}
+              <div className={className}>
                 {this.props.page !== PageEnum.Book &&
-                <div className={searchVisible ? 'search-area active' : 'search-area'}>
-                  <input
-                    className="search-input"
-                    onKeyUp={(e) => this.keySearch(e)}
-                    onChange={(e) => this.props.searching(e.target.value)}
-                    placeholder={this.props.searchPlaceholder}
-                  />
-                </div>
-                }
-                {searchVisible ?
-                  <div className="btn btn-transparent close-search svgOnHover" onClick={() => this.toggleSearch()}>
-                    <SpriteIcon name="arrow-right" className="w100 h100 text-tab-gray" />
-                  </div>
-                  :
-                  <div className="btn btn-transparent open-search svgOnHover" onClick={() => {
-                    this.props.page !== PageEnum.Book && this.renderSearch()
-                  }}>
-                    <SpriteIcon name="search" className="w100 h100 active text-theme-orange" />
+                  <div className={searchVisible ? 'search-area active' : 'search-area'}>
+                    <input
+                      className="search-input"
+                      onKeyUp={(e) => this.keySearch(e)}
+                      onChange={(e) => {
+                        this.setState({...this.state, value: e.target.value});
+                        this.props.searching(e.target.value);
+                      }}
+                      placeholder={this.props.searchPlaceholder}
+                    />
                   </div>
                 }
+                {this.renderMiddleButton()}
                 {!this.props.isAuthenticated &&
-                  <div className="btn btn-transparent tracking-button" onClick={() => this.setState({dropdownShown: true})}>
+                  <div className="btn btn-transparent tracking-button" onClick={() => this.setState({ dropdownShown: true })}>
                     <SpriteIcon name="settings" className="w80 h80 text-theme-orange" />
                   </div>
                 }
@@ -151,17 +235,21 @@ class PageHeader extends Component<Props, State> {
             </div>
           </Hidden>
           <Hidden only={['xs']} >
-            <HomeButton link={link} />
+            <HomeButton link={link} history={this.props.history} />
             <div className="logout-container">
-              <div className="search-container">
+              <div className={`search-container ${this.state.value.length >= 1 ? 'no-bottom-border' : ''}`}>
                 <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>
                   <SpriteIcon name="search" className="active" />
                 </div>
                 <div className="search-area">
                   <input
                     className="search-input"
+                    value={this.state.value}
                     onKeyUp={(e) => this.keySearch(e)}
-                    onChange={(e) => this.props.searching(e.target.value)}
+                    onChange={(e) => {
+                      this.setState({...this.state, value: e.target.value});
+                      this.props.searching(e.target.value);
+                    }}
                     placeholder={this.props.searchPlaceholder}
                   />
                 </div>
@@ -180,9 +268,17 @@ class PageHeader extends Component<Props, State> {
                   <div className="login-button" onClick={() => this.props.history.push(map.Login)}>Login | Register</div>
                 </Grid>
               }
-            </div >
+            </div>
           </Hidden>
         </div>
+        {this.props.suggestions && this.state.value.length >= 1 && <SearchSuggestions
+          history={this.props.history} subjects={this.state.subjects}
+          searchString={this.state.value} bricks={this.state.bricks}
+          keywords={this.state.keywords}
+          filterByAuthor={a => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + a.firstName)}
+          filterBySubject={s => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + s.name)}
+          filterByKeyword={k => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + k.name)}
+        />}
       </div>
     );
   }

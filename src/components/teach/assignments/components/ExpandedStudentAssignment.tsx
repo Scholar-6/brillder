@@ -6,8 +6,19 @@ import { Assignment, TeachStudent } from "model/classroom";
 import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
-import { ApiAssignemntStats } from "model/stats";
+import { ApiAssignemntStats, AttemptStats } from "model/stats";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import map from "components/map";
+import ReminderButton from "./ReminderButton";
+import { sendAssignmentReminder } from "services/axios/brick";
+import { isDeadlinePassed } from "../service/service";
+import { BookData } from "./ExpandedAssignment";
+import BookDialog from "./BookDialog";
+import HolisticCommentPanel from "./HolisticCommentPanel";
+import { Annotation } from "model/attempt";
+import { connect } from "react-redux";
+import { ReduxCombinedState } from "redux/reducers";
+import { User } from "model/user";
 
 enum SortBy {
   None,
@@ -17,15 +28,21 @@ enum SortBy {
 
 interface AssignemntExpandedState {
   sortBy: SortBy;
+  bookData: BookData;
   questionCount: number;
   student: TeachStudent;
+  currentCommentButton?: Element;
 }
 
 interface AssignmentBrickProps {
+  history: any;
+  isStudentAssignment: boolean;
   stats: ApiAssignemntStats;
   subjects: Subject[];
   student: TeachStudent;
   assignment: Assignment;
+  currentUser: User;
+  onRemind?(count: number, passed: boolean): void;
   minimize(): void;
 }
 
@@ -37,12 +54,14 @@ class ExpandedStudentAssignment extends Component<
     super(props);
 
     let questionCount = 0;
-    if (props.stats.byStudent[0]) {
+    const {byStudent} = props.stats;
+    if (byStudent[0] && byStudent[0].attempts && byStudent[0].attempts[0] && byStudent[0].attempts[0].answers) {
       questionCount = props.stats.byStudent[0].attempts[0].answers.length;
     }
 
     this.state = {
       sortBy: SortBy.None,
+      bookData: { open: false, student: null, assignment: null},
       questionCount: questionCount,
       student: this.prepareStudent(this.props.student)
     };
@@ -54,10 +73,38 @@ class ExpandedStudentAssignment extends Component<
     return st;
   }
 
+  renderCommentIcon() {
+    const annotations = this.state.student.studentResult?.attempts.slice(-1)[0].annotations;
+    const flattenAnnotation = (annotation: Annotation): Annotation[] => {
+      const arr = [annotation];
+      annotation.children?.forEach((a) => arr.push(...flattenAnnotation(a)))
+      return arr;
+    }
+    const flattenedAnnotations: Annotation[] = [];
+    annotations?.forEach(a => flattenedAnnotations.push(...flattenAnnotation(a)));
+
+    const latestAnnotation = flattenedAnnotations.sort((a, b) => b.timestamp.valueOf() - a.timestamp.valueOf())[0];
+    const className = latestAnnotation ? 
+      (latestAnnotation.user.id === this.props.currentUser.id ? " yellow" : " red")
+      : "";
+
+    return <div className={"comment-icon" + className} onClick={(evt) => this.setState({ currentCommentButton: evt.currentTarget })}>
+      <SpriteIcon name="message-square" className="active" />
+      <span className="annotation-count">{this.state.student.studentResult?.attempts.slice(-1)[0].annotations && this.state.student.studentResult?.attempts.slice(-1)[0].annotations.length}</span>
+    </div>;
+  }
+
+  sendNotifications() {
+    sendAssignmentReminder(this.props.assignment.id);
+    const count = this.props.assignment.studentStatus.length - this.props.assignment.studentStatus.filter(({ status }) => status === 2).length;
+    const passed = isDeadlinePassed(this.props.assignment);
+    this.props.onRemind?.(count, passed);
+  }
+
   renderTableHead() {
-    const {sortBy} = this.state;
+    const { sortBy } = this.state;
     const name = sortBy === SortBy.AvgIncreasing ? "arrow-up" : "arrow-down";
-    
+
     let className = "btn btn-transparent svgOnHover btn-grey-circle";
     if (sortBy === SortBy.AvgIncreasing || sortBy === SortBy.AvgDecreasing) {
       className += " active";
@@ -68,7 +115,7 @@ class ExpandedStudentAssignment extends Component<
           <th></th>
           <th>
             <div className="center">
-              <button className={className} onClick={() => {}}>
+              <button className={className} onClick={() => { }}>
                 <SpriteIcon name={name} className="active text-theme-dark-blue" />
               </button>
             </div>
@@ -80,6 +127,7 @@ class ExpandedStudentAssignment extends Component<
               </button>
             </div>
           </th>
+          <th></th>
           <th></th>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
             (a, i) => <th key={i}><div className="centered">{i + 1}</div></th>
@@ -100,7 +148,21 @@ class ExpandedStudentAssignment extends Component<
 
     return (
       <div className="circle" style={{ background: color }}>
-        {Math.round(studentStatus.avg_score)}
+        {studentStatus.avgScore > 0 ? Math.round(studentStatus.avgScore) : 0}
+      </div>
+    );
+  }
+
+  renderBookIcon(studentStatus: any, studentId: number) {
+    const { history, assignment } = this.props;
+    const moveToPostPlay = () => {
+      if (studentStatus.bestScore !== undefined) {
+        history.push(map.postAssignment(assignment.brick.id, studentId) + '?fromTeach=true');
+      }
+    }
+    return (
+      <div className="round b-green centered">
+        <SpriteIcon name="book-open" className="active book-open-icon" onClick={moveToPostPlay} />
       </div>
     );
   }
@@ -110,18 +172,18 @@ class ExpandedStudentAssignment extends Component<
       try {
         const attempt = studentResult.attempts[0].answers[questionNumber];
         const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
-  
+
         // yellow tick
         if (attempt.correct === true && liveAttempt.correct === false) {
           return <SpriteIcon name="check-icon" className="text-yellow" />;
         } else if (attempt.correct === false && liveAttempt.correct === true) {
           return <SpriteIcon name="check-icon" className="text-yellow" />;
         }
-  
+
         if (attempt.correct === true && liveAttempt.correct === true) {
           return <SpriteIcon name="check-icon" className="text-theme-green" />;
         }
-  
+
         return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
       } catch {
         console.log('can`t parse attempt');
@@ -134,11 +196,18 @@ class ExpandedStudentAssignment extends Component<
     if (studentStatus) {
       return this.renderAvgScore(studentStatus);
     }
-    return <SpriteIcon name="reminder" className="active reminder-icon" />;
+    const statuses = this.props.assignment.studentStatus;
+    const completedCount = statuses.filter(({ status }) => status === 2).length;
+
+    return (
+      <div className="reminder-brick-actions-container">
+        <ReminderButton className="" studentCount={statuses.length - completedCount} sendNotifications={this.sendNotifications.bind(this)} />
+      </div>
+    );
   }
 
   renderStudent(student: TeachStudent) {
-    const {studentResult} = student;
+    const { studentResult } = student;
 
     return (
       <tr className="user-row">
@@ -147,9 +216,13 @@ class ExpandedStudentAssignment extends Component<
           <div>{this.renderStatus(studentResult)}</div>
         </td>
         <td className="student-book">
+          {studentResult && studentResult.numberOfAttempts > 0 && <div className="centered">{this.renderBookIcon(studentResult, student.id)}</div>}
         </td>
-        <td className={`assigned-student-name`}>
+        <td className="assigned-student-name">
           {student.firstName} {student.lastName}
+        </td>
+        <td>
+          {studentResult && <SpriteIcon name="eye-on" className="eye-icon" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})} />}
         </td>
         {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
           (a, i) =>
@@ -159,7 +232,8 @@ class ExpandedStudentAssignment extends Component<
               </div>
             </td>
         )}
-        <td>
+        <td style={{ width: '9vw' }}>
+          <div className="centered">{this.renderCommentIcon()}</div>
         </td>
       </tr>
     );
@@ -173,10 +247,14 @@ class ExpandedStudentAssignment extends Component<
           <AssignedBrickDescription
             isStudent={true}
             isExpanded={true}
+            activeStudent={this.props.student}
+            isStudentAssignment={this.props.isStudentAssignment}
             subjects={this.props.subjects}
             minimize={this.props.minimize}
             assignment={this.props.assignment}
-            archive={() => {}}
+            archive={() => { }}
+            unarchive={() => { }}
+            onRemind={this.props.onRemind}
           />
         </div>
         <div className="assignments-table">
@@ -185,9 +263,25 @@ class ExpandedStudentAssignment extends Component<
             <tbody>{this.renderStudent(this.props.student)}</tbody>
           </table>
         </div>
+        {this.state.bookData.open && <BookDialog nextStudent={() => {}} prevStudent={() => {}} bookData={this.state.bookData} onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />}
+        <HolisticCommentPanel
+          currentAttempt={this.state.student.studentResult?.attempts.slice(-1)[0]}
+          setCurrentAttempt={(attempt: AttemptStats) => {
+            const newState = this.state;
+            const attemptIdx = newState.student.studentResult!.attempts.length - 1;
+            newState.student.studentResult!.attempts[attemptIdx] = attempt;
+            this.setState(newState);
+          }}
+          onClose={() => this.setState({ currentCommentButton: undefined })}
+          anchorEl={this.state.currentCommentButton}
+        />
       </div>
     );
   }
 }
 
-export default ExpandedStudentAssignment;
+const mapState = (state: ReduxCombinedState) => ({
+    currentUser: state.user.user,
+});
+
+export default connect(mapState)(ExpandedStudentAssignment);

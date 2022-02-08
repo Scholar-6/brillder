@@ -1,6 +1,5 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 
 
 interface TabPanelProps {
@@ -17,12 +16,13 @@ const QuestionTabPanel: React.FC<TabPanelProps> = (props) => {
     <Typography
       component="div"
       role="tabpanel"
+      className="play-question-container"
       hidden={value !== index}
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && children}
     </Typography>
   );
 }

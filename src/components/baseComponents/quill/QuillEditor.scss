@@ -2,6 +2,7 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
+
 .ql-custom-toolbar {
   border: none !important;
   border-radius: $editor-radius;
@@ -53,8 +54,8 @@
       }
       .picker-label {
         display: inline-block;
-        width: 1.8vw !important;
-        height: 1.8vw !important;
+        width: 1.7vw !important;
+        height: 1.7vw !important;
         svg {
           width: 100% !important;
           height: 100% !important;
@@ -132,14 +133,61 @@ s {
   text-decoration: none !important;
   img {
     width: 100%;
+    height: 40vh;
     object-fit: cover;
+    object-position: top;
   }
   .embed-title {
     font-family: $font-family-bold;
     padding: 0 1rem;
   }
   .embed-description {
-    padding: 0 1rem 0.5rem 1rem;
+    padding: 0 1rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }
+  .embed-url {
+    text-decoration: underline;
+    color: var(--blue);
+    padding: 0.5rem 1rem;
+  }
+}
+
+.inline-link {
+  position: relative;
+  background-color: var(--tab-gray);
+  // font-size: 1.35vw;
+  border-radius: 1.35vw;
+  margin: 0 0.5rem;
+  padding-left: 0.7vw;
+  padding-right: 0.85vw;
+  text-decoration: none !important;
+  color: var(--text-blue) !important;
+  font-family: $font-family-bold;
+  img {
+    margin-right: 0.5vw;
+    width: 1vw !important;
+    height: 1vw !important;
+    object-fit: cover;
+  }
+}
+
+.fixed-build-phone {
+  .inline-link {
+    display: flex;
+    padding-left: 1.8vw;
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 1vw;
+      transform: translate(-50%, -50%);
+      width: 1vw !important;
+      height: 1vw !important;
+      object-fit: cover;
+    }
   }
 }
 
@@ -149,6 +197,13 @@ s {
   height: calc(100% - 0.2vh);
   position: relative;
   overflow: visible;
+
+  .inline-link {
+    img {
+      width: 0.78vw !important;
+      height: 0.78vw !important;
+    }
+  }
 
   .ql-toolbar {
     @extend .ql-custom-toolbar;

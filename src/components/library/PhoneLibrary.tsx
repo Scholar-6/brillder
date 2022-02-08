@@ -16,6 +16,8 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import LibraryPhoneSubjects from "./components/LibraryPhoneSubjects";
+import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
 interface BricksListProps {
   user: User;
@@ -130,7 +132,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async getAssignments(subjects: SubjectAItem[]) {
-    const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
+    const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>(this.props.user.id);
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const subjectAssignments = this.getAssignmentSubjects(rawAssignments, subjects);
@@ -181,6 +183,8 @@ class Library extends Component<BricksListProps, BricksListState> {
             close={() => this.setState({ ...this.state, failedRequest: false })}
           />
         </div>
+        <ClassInvitationDialog />
+        <ClassTInvitationDialog />
       </React.Suspense>
     );
   }

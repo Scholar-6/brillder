@@ -2,6 +2,14 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+.user-preference-page.terms-page-container {
+  background: var(--theme-dark-blue) !important;
+
+  .terms-page-container {
+    background: var(--theme-dark-blue) !important;
+  }
+}
+
 .terms-page {
   max-width: 56vw;
   height: 70vh !important;
@@ -20,7 +28,13 @@
     overflow: auto !important;
   }
 
-  ol {
+  li {
+    p {
+      display: inline;
+    }
+  }
+
+  ol ol {
     margin-left: 1vw;
     overflow-x: hidden;
   }
@@ -50,8 +64,8 @@
   h2,
   h3 {
     letter-spacing: 0;
+    text-align:left;
     font-family: $font-family-bold;
-    color: var(--theme-orange);
   }
 }
 
@@ -63,20 +77,22 @@
   .bottom-button {
     cursor: pointer;
     transition: all 300ms ease-out;
-    background: var(--theme-green);
+    color: var(--white);
+    background: var(--theme-orange);
     height: calc(10vh);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.3vw;
+    font-size: 1.6vw;
 
     .MuiIconButton-colorSecondary {
-      color: #001c58 !important;
+      color: var(--white) !important;
     }
 
     .MuiButtonBase-root {
-      width: 2.5vw;
-      height: 2.5vw;
+      $size: 3vw;
+      width: $size;
+      height: $size;
 
       .MuiIconButton-label {
         border-radius: 50%;
@@ -86,8 +102,9 @@
     }
 
     .MuiSvgIcon-root {
-      width: 1.6vw;
-      height: 1.6vw;
+      $size: 2vw;
+      width: $size;
+      height: $size;
     }
   }
 }

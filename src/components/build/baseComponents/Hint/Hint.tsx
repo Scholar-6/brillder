@@ -123,7 +123,7 @@ const HintComponent: React.FC<HintProps> = ({
             placeholder="Global Hint"
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'insertTable', 'uploadImageCustom', 'image'
+              'latex', 'insertTable', 'uploadImageCustom', 'image', 'blockQuote'
             ]}
             imageDialog={true}
             validate={validationRequired}
@@ -150,27 +150,33 @@ const HintComponent: React.FC<HintProps> = ({
       }
     }
 
-    if(props.count !== listLength) {
+    if (props.count !== listLength) {
       setListLength(props.count);
     }
 
-    return Array.from(Array(props.count)).map((_, i) => (
-      <div className="hint-container" key={`${listLength}-${i}`}>
-        <QuillEditor
-          disabled={locked}
-          data={state.list[i]}
-          placeholder={`Answer ${i + 1} Hint`}
-          toolbar={[
-            'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-            'latex', 'imageUploadCustom', 'image'
-          ]}
-          imageDialog={true}
-          validate={validationRequired}
-          isValid={!!stripHtml(state.list[i])}
-          onChange={(v: any) => { onHintListChanged(v, i) }}
-        />
-      </div>
-    ));
+    return Array.from(Array(props.count)).map((_, i) => {
+      let prefixWord = 'Answer';
+      if (props.questionType === QuestionTypeEnum.PairMatch) {
+        prefixWord = 'Option';
+      }
+      return (
+        <div className="hint-container" key={`${listLength}-${i}`}>
+          <QuillEditor
+            disabled={locked}
+            data={state.list[i]}
+            placeholder={`${prefixWord} ${i + 1} Hint`}
+            toolbar={[
+              'bold', 'italic', 'fontColor', 'superscript', 'subscript',
+              'latex', 'imageUploadCustom', 'image', 'blockQuote'
+            ]}
+            imageDialog={true}
+            validate={validationRequired}
+            isValid={!!stripHtml(state.list[i])}
+            onChange={(v: any) => { onHintListChanged(v, i) }}
+          />
+        </div>
+      )
+    });
   }
 
   const renderNormalToggle = () => {

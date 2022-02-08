@@ -1,83 +1,103 @@
-import { AssignmentBrick, AssignmentBrickStatus } from 'model/assignment';
-import { ThreeAssignmentColumns, ThreeColumnNames } from '../../model';
-import { checkPrivateBrick, checkCoreBrick } from '../../service';
+import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 
-export const getLongestColumn = (threeColumns: ThreeAssignmentColumns) => {
-  const draftLength = threeColumns.red.finalAssignments.length;
-  const reviewLength = threeColumns.yellow.finalAssignments.length;
-  const publishLenght = threeColumns.green.finalAssignments.length;
-  return Math.max(draftLength, reviewLength, publishLenght);
+export enum Tab {
+  Assignments,
+  Completed
 }
 
-export const hideAssignments = (assignments: AssignmentBrick[]) => {
-  return assignments.forEach(a => a.brick.expanded = false);
+export const isAssignmentsTab = (a: AssignmentBrick) => {
+  return a.status === AssignmentBrickStatus.ToBeCompleted;
 }
 
-export const filterAssignmentByStatus = (bricks: AssignmentBrick[], status: AssignmentBrickStatus) => {
-  return bricks.filter(b => b.status === status);
+export const isCompletedTab = (a: AssignmentBrick) => {
+  return a.status !== AssignmentBrickStatus.ToBeCompleted;
 }
 
-const setColumnAssignmentByStatus = (
-  res: ThreeAssignmentColumns,
-  name: ThreeColumnNames,
-  bricks: AssignmentBrick[],
-  status: AssignmentBrickStatus
-) => {
-  let bs = filterAssignmentByStatus(bricks, status);
-  res[name] = { rawAssignments: bs, finalAssignments: bs };
-}
-
-export const prepareThreeAssignmentRows = (assignments: AssignmentBrick[]) => {
-  let threeColumns = {} as ThreeAssignmentColumns;
-  setColumnAssignmentByStatus(threeColumns, ThreeColumnNames.Red, assignments, AssignmentBrickStatus.ToBeCompleted);
-  setColumnAssignmentByStatus(threeColumns, ThreeColumnNames.Yellow, assignments, AssignmentBrickStatus.SubmitedToTeacher);
-  setColumnAssignmentByStatus(threeColumns, ThreeColumnNames.Green, assignments, AssignmentBrickStatus.CheckedByTeacher);
-  return threeColumns;
-}
-
-export const getPlayThreeColumnBrick = (threeColumns: ThreeAssignmentColumns, name: ThreeColumnNames, key: number) => {
-  return threeColumns[name].finalAssignments[key];
-}
-
-export const expandPlayThreeColumnBrick = (threeColumns: ThreeAssignmentColumns, name: ThreeColumnNames, key: number) => {
-  let assignment = getPlayThreeColumnBrick(threeColumns, name, key);
-  if (assignment && !assignment.expandFinished) {
-    assignment.brick.expanded = true;
+export const isVisibled = (tab: Tab, a: AssignmentBrick) => {
+  if (tab === Tab.Assignments) {
+    return isAssignmentsTab(a);
   }
+  return isCompletedTab(a);
 }
 
-export const getPlayThreeColumnName = (status: AssignmentBrickStatus) => {
-  let name = ThreeColumnNames.Red;
-  if (status === AssignmentBrickStatus.CheckedByTeacher) {
-    name = ThreeColumnNames.Green;
-  } else if (status === AssignmentBrickStatus.SubmitedToTeacher) {
-    name = ThreeColumnNames.Yellow;
+export const getAssignmentsTabCount = (assignments: AssignmentBrick[]) => {
+  let count = 0;
+  for (let a of assignments) {
+    if (isAssignmentsTab(a)) {
+      count += 1;
+    }
   }
-  return name;
+  return count;
 }
 
-const filterByPrivate = (assignments: AssignmentBrick[]) => {
-  return assignments.filter(a => checkPrivateBrick(a.brick));
-}
-
-const filterByCore = (assignments: AssignmentBrick[]) => {
-  return assignments.filter(a => checkCoreBrick(a.brick));
-}
-
-export const filterAssignments = (rawAssignments: AssignmentBrick[], isCore: boolean) => {
-  let filteredAssignemnts = Object.assign([], rawAssignments) as AssignmentBrick[];
-  if (!isCore) {
-    filteredAssignemnts = filterByPrivate(filteredAssignemnts);
-  } else {
-    filteredAssignemnts = filterByCore(filteredAssignemnts);
+export const getCompletedTabCount = (assignments: AssignmentBrick[]) => {
+  let count = 0;
+  for (let a of assignments) {
+    if (isCompletedTab(a)) {
+      count += 1;
+    }
   }
-  return filteredAssignemnts;
+  return count;
 }
 
-export default {
-  prepareThreeAssignmentRows,
-  expandPlayThreeColumnBrick,
-  getPlayThreeColumnBrick,
-  getPlayThreeColumnName,
-  filterAssignments
+export interface ClassroomCountResult {
+  assignmentsTabCount: number;
+  completedTabCount: number;
+}
+
+export const countClassAssignments = (classroomId: number, assignments: AssignmentBrick[]): ClassroomCountResult => {
+  let assignmentsTabCount = 0;
+  let completedTabCount = 0;
+  for (let a of assignments) {
+    if (a.classroom?.id === classroomId) {
+      if (isAssignmentsTab(a)) {
+        assignmentsTabCount += 1;
+      } else {
+        completedTabCount += 1;
+      }
+    }
+  }
+  return { assignmentsTabCount, completedTabCount };
+}
+
+export const filter = (assignments: AssignmentBrick[], activeTab: Tab, classroomId: number) => {
+  let asins = assignments;
+  if (classroomId > 0) {
+    asins = assignments.filter(s => s.classroom?.id === classroomId);
+  }
+
+  const res = [];
+  for (let a of asins) {
+    if (isVisibled(activeTab, a)) {
+      res.push(a);
+    }
+  }
+  return res;
+}
+
+export const sortAssignments = (a: AssignmentBrick, b: AssignmentBrick) => {
+  if (a.deadline) {
+    if (a.deadline && b.deadline) {
+      if (new Date(a.deadline).getTime() < new Date(b.deadline).getTime()) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
+    return -1;
+  }
+  return 1;
+}
+
+export const countClassroomAssignments = (tab: Tab, classrooms: any[], assignments: AssignmentBrick[]) => {
+  for (let c of classrooms) {
+    c.assignmentsCount = 0;
+    for (let a of assignments) {
+      if (a.classroom && a.classroom.id === c.id) {
+        if (isVisibled(tab, a)) {
+          c.assignmentsCount += 1;
+        }
+      }
+    }
+  }
 }

@@ -13,6 +13,8 @@ import { Radio } from "@material-ui/core";
 import { BrickLengthEnum } from "model/brick";
 import Katex from "components/baseComponents/katex/Katex";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import { renderGraph } from "services/graph";
+import SoundPlay from "components/baseComponents/SoundPlay";
 
 interface SynthesisPreviewData {
   synthesis: string;
@@ -28,22 +30,6 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
 }) => {
   const renderedRef = React.createRef<HTMLDivElement>();
   const [calcs, setCalcs] = React.useState<Desmos.GraphingCalculator[]>();
-
-  const renderGraph = (el: Element) => {
-    const value = JSON.parse(el.getAttribute("data-value") as string);
-
-    const desmos = Desmos.GraphingCalculator(el, {
-      fontSize: Desmos.FontSizes.VERY_SMALL,
-      expressions: false,
-      settingsMenu: false,
-      lockViewport: true,
-      pointsOfInterest: true,
-      trace: true,
-    });
-    desmos.setState(value.graphState);
-
-    return desmos;
-  }
 
   React.useEffect(() => {
     if(renderedRef && renderedRef.current) {
@@ -120,6 +106,10 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
     return <Katex latex={latex} key={i} />
   }
 
+  const isSound = (el: string) => {
+    return /<section (.*)class="ql-sound-custom"(.*)>/.test(el);
+  }
+
   return (
     <div className="phone-preview-component synthesis-preview">
       <div className="synthesis-title" style={{ textAlign: "center" }}>
@@ -129,10 +119,13 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
         {arr.map((el: any, i: number) => {
           const res = isMathJax(el);
           const latex = isLatex(el);
+          const sound = isSound(el);
           if (res) {
             return renderMath(el, i);
           } else if (latex) {
             return renderLatex(el, i);
+          } else if (sound) {
+            return <SoundPlay element={el} key={i} />
           } else {
             return <div key={i} dangerouslySetInnerHTML={{ __html: el }} />;
           }

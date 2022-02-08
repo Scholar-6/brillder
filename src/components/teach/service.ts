@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Subject } from "model/brick";
+import { User } from "model/user";
 
 import { MUser } from "./model";
 
@@ -15,6 +16,7 @@ export interface ClassroomApi {
   isActive: boolean;
   assignmentsCount?: number;
   studentsInvitations?: MUser[];
+  teacher?: User;
 }
 
 /**
@@ -58,6 +60,25 @@ export const getAllClassrooms = async () => {
         }
       }
       return res.data as ClassroomApi[];
+    }
+    return null;
+  }
+  catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Get classroom Assignments
+ * return list of assignments if success or null if failed
+ */
+ export const getAssignmentsClassrooms = async (classId: number) => {
+  try {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/classroom/assignments/0/9000/" + classId, {
+      withCredentials: true,
+    });
+    if (res.data) {
+      return res.data;
     }
     return null;
   }

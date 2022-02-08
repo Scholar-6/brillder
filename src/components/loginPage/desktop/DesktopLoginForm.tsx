@@ -3,6 +3,8 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 
 import TypingInput from "../components/TypingInput";
 import { enterPressed } from "components/services/key";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { JoinPage } from "./routes";
 
 interface LoginsState {
   handleSubmit(e: any): void;
@@ -10,6 +12,9 @@ interface LoginsState {
 
 interface LoginFormProps {
   buttonLabel?: string;
+
+  isLogin?: boolean;
+  history?: any;
 
   email: string;
   setEmail(email: string): void;
@@ -20,7 +25,6 @@ interface LoginFormProps {
 
   resetPassword?(): void;
   handleSubmit(e: any): void;
-  register(): void;
   setHidden(passwordHidden: boolean): void;
 }
 
@@ -46,15 +50,23 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
       this.props.handleSubmit(e);
     }
   }
-  
+
+  moveToJoin() {
+    if (this.props.history) {
+      this.props.history.push(JoinPage);
+    }
+  }
+
   render() {
-    const {resetPassword} = this.props;
+    const { resetPassword } = this.props;
+
+
     return (
       <form onSubmit={this.props.handleSubmit} className="content-box expanded">
         <div className="input-block">
           <TypingInput
             required
-            type="email"
+            type="email" name="email"
             className="login-field"
             placeholder="Email"
             value={this.props.email}
@@ -62,9 +74,9 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
           />
         </div>
         {resetPassword &&
-        <div className="reset-link-container">
-          <div className="reset-password-link" onClick={() => resetPassword()}>Forgot password?</div>
-        </div>}
+          <div className="reset-link-container">
+            <div className="reset-password-link" onClick={() => resetPassword()}>Forgot password?</div>
+          </div>}
         <div className="input-block">
           <TypingInput
             required
@@ -86,6 +98,15 @@ class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
             <button type="submit" className="sign-in-button">{this.props.buttonLabel ? this.props.buttonLabel : 'Sign in'}</button>
           </div>
         </div>
+        {this.props.isLogin && <div className="button-box">
+          <div className="text-box">
+            <span>New to Brillder?</span>
+            <div className="join-button" onClick={() => this.moveToJoin()}>
+              Join Now
+              <SpriteIcon name="arrow-right" />
+            </div>
+          </div>
+        </div>}
       </form>
     );
   }

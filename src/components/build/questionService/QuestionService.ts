@@ -73,16 +73,6 @@ export function cashBuildQuestion(brickId: number, questionNumber: number) {
   CasheBuildQuestion({ brickId, questionNumber } as BuildPlayRedirect);
 }
 
-export function activeQuestionByIndex(brickId: number, questions: Question[], questionNumber: number) {
-  let updatedQuestions = questions;
-  if (updatedQuestions[questionNumber]) {
-    updatedQuestions = deactiveQuestions(questions)
-    updatedQuestions[questionNumber].active = true;
-    cashBuildQuestion(brickId, questionNumber);
-  }
-  return updatedQuestions;
-}
-
 export function getUniqueComponent(question: Question) {
   return question.components.find(
     c => c.type === QuestionComponentTypeEnum.Component

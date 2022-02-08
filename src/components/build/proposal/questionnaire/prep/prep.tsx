@@ -11,6 +11,7 @@ import YoutubeAndMathQuote from 'components/play/baseComponents/YoutubeAndMathQu
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { BrickLengthEnum } from "model/brick";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import PrepHoverHelp from "components/build/baseComponents/PrepHoverHelp";
 
 
 interface PrepProps {
@@ -73,6 +74,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
             <img className="size2" alt="titles" src="/images/new-brick/prep.png" />
           </div>
           <h1>Add engaging and relevant <br /> preparatory material.</h1>
+          <PrepHoverHelp />
           <QuillEditor
             disabled={!props.canEdit}
             data={parentPrep}
@@ -89,6 +91,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep, ...props }) 
           />
           {isVisible() &&
             <div className="prep-bottom-help-text">
+              <SpriteIcon name="clock" />
               This should take the student no longer than {getPrepLength()} minutes in total
             </div>
           }

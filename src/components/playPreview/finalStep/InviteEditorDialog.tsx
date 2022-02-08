@@ -14,7 +14,6 @@ interface InviteProps {
   canEdit: boolean;
   isOpen: boolean;
   brick: Brick;
-  hideAccess?: boolean;
   submit(name: string): void;
   close(): void;
   requestFailed(e: string): void;
@@ -23,8 +22,11 @@ interface InviteProps {
 
 const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [isValid, setValid] = React.useState(false);
-  const [editors, setEditors] = React.useState<Editor[]>([]);
-  const [editorError, setEditorError] = React.useState("");
+  let initEditors:any[] = [];
+  if (brick.editors) {
+    initEditors = brick.editors;
+  }
+  const [editors, setEditors] = React.useState<Editor[]>(initEditors);
 
   const saveEditors = async (editorIds: number[]) => {
     let res = await props.assignEditor(brick, editorIds);
@@ -54,10 +56,8 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const onBlur = React.useCallback(async () => {
     if (editors.length > 0) {
       setValid(true);
-      setEditorError("");
     } else {
       setValid(false);
-      setEditorError("No editors assigned.");
     }
   }, [editors]);
 
@@ -80,11 +80,11 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const renderSendButton = () => {
     return (
       <button
-        disabled={false}
-        className={`btn bold btn-md yes-button bg-theme-orange`}
+        disabled={editors.length > 0 ? false : true}
+        className={`btn bold btn-md yes-button ${editors.length > 0 ? 'bg-theme-orange' : 'disabled'}`}
         onClick={onNext}
       >
-        Send Invite
+        Invite new editor{editors.length > 1 ? 's' : ''}
         <SpriteIcon name="send" className="active send-icon" onClick={props.close} />
       </button>
     );
@@ -108,9 +108,9 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
           <div className="audience-inputs border-rounded">
             <AutocompleteUsername
               canEdit={props.canEdit}
-              brick={brick}
-              editorError={editorError}
-              placeholder="Enter editor's username here..."
+              removeDisabled={true}
+              editorError=""
+              placeholder="Editor's username (first 3 characters)"
               onBlur={onBlur}
               users={editors}
               setUsers={setEditors}

@@ -9,9 +9,12 @@ import Slider from "@material-ui/core/Slider";
 import ImageDesktopPreview from "./ImageDesktopPreview";
 import { fileUrl } from "components/services/uploadFile";
 import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
+import SourceInput from "components/baseComponents/SourceInput";
 
 interface DialogProps {
   open: boolean;
+  alwaysUpdate?: boolean;
   initFile: File | null;
   initData: ImageComponentData;
   upload(
@@ -25,13 +28,15 @@ interface DialogProps {
     source: string,
     caption: string,
     align: ImageAlign,
-    height: number
+    height: number,
+    newImageFile?: File,
   ): void;
   setDialog(open: boolean): void;
 }
 
 const ImageDialog: React.FC<DialogProps> = ({
   open,
+  alwaysUpdate,
   initFile,
   initData,
   upload,
@@ -82,8 +87,15 @@ const ImageDialog: React.FC<DialogProps> = ({
     /*eslint-disable-next-line*/
   }, [open]);
 
+  const validateSource = () => {
+    if (source && source.trim().length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   let canUpload = false;
-  if (permision && source && !removed) {
+  if (permision && validateSource() && !removed) {
     canUpload = true;
   }
 
@@ -133,10 +145,10 @@ const ImageDialog: React.FC<DialogProps> = ({
       open={open}
       className="image-dialog-container"
       close={() => setDialog(false)}
-      submit={() => {}}
+      submit={() => { }}
     >
       <div className="close-button svgOnHover" onClick={() => setDialog(false)}>
-        <SpriteIcon name="cancel" className="w100 h100 active" />
+        <SpriteIcon name="cancel-thick" className="w100 h100 active" />
       </div>
       <div className="dialog-header image-dialog">
         <div className={`cropping ${removed ? "empty" : ""}`}>
@@ -145,7 +157,7 @@ const ImageDialog: React.FC<DialogProps> = ({
               <SpriteIcon name="image" className="icon-image" />
             ) : (
               <ImageDesktopPreview
-                src={fileUrl(initData.value)}
+                src={fileUrl(initData.value) || initData.url}
                 height={height}
                 align={align}
                 file={cropedFile}
@@ -189,36 +201,36 @@ const ImageDialog: React.FC<DialogProps> = ({
           Where did you get this image?
           <span className="text-theme-orange">*</span>
         </div>
-        <input
-          value={source}
-          className={validationRequired && !source ? "invalid" : ""}
-          onChange={(e) => setSource(e.target.value)}
-          placeholder="Add link to source or name of owner..."
-        />
-         <CopyrightCheckboxes
+        <SourceInput source={source} validationRequired={validationRequired} setSource={setSource} />
+        <CopyrightCheckboxes
           validationRequired={validationRequired}
           permision={permision}
           setPermision={setPermision}
         />
-        <input
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-          placeholder="Add caption..."
+        <QuillEditor
+          disabled={false}
+          className="quill-caption"
+          data={caption}
+          showToolbar={true}
+          toolbar={['bold', 'italic', 'superscript', 'subscript', 'latex']}
+          placeholder="Add caption"
+          imageDialog={true}
+          onChange={v => setCaption(v)}
         />
       </div>
       <div className="centered last-button">
         <div
           className={`upload-button ${canUpload ? "active" : "disabled"}`}
-          onClick={async() => {
+          onClick={async () => {
             if (!isSaving) {
               setSaving(true);
-              if (cropedFile && canUpload) {
+              if (cropedFile && canUpload && !alwaysUpdate) {
                 const res = await upload(cropedFile, source, caption, align, height);
                 if (res) {
                   setSaving(false);
                 }
               } else if (canUpload) {
-                updateData(source, caption, align, height);
+                updateData(source, caption, align, height, cropedFile ?? undefined);
                 setSaving(false);
               } else {
                 setValidation(true);
@@ -229,7 +241,7 @@ const ImageDialog: React.FC<DialogProps> = ({
         >
           <div className="background" />
           <SpriteIcon name="upload" />
-          <div className="css-custom-tooltip">Upload</div>
+          <div className="css-custom-tooltip bold">Upload</div>
         </div>
       </div>
     </BaseDialogWrapper>

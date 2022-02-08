@@ -1,5 +1,5 @@
-import { User, UserType, UserStatus } from 'model/user';
-import { checkAdmin, canEdit, isInstitution } from "components/services/brickService";
+import { User, UserType, UserStatus, UserPreferenceType } from 'model/user';
+import { checkAdmin, canEdit } from "components/services/brickService";
 import { newStudentProfile } from './service';
 
 export const getNewUserState = (isAdmin: boolean) => {
@@ -11,7 +11,6 @@ export const getNewUserState = (isAdmin: boolean) => {
     isAdmin,
     roles: [
       { roleId: UserType.Publisher, name: "Publisher", disabled: false },
-      { roleId: UserType.Institution, name: "Institution", disabled: false },
       { roleId: UserType.Admin, name: "Admin", disabled: false },
     ],
     noSubjectDialogOpen: false,
@@ -19,9 +18,11 @@ export const getNewUserState = (isAdmin: boolean) => {
     emailInvalidOpen: false,
     passwordChangedDialog: false,
 
+    saveDisabled: true,
     validationRequired: false,
     emailInvalid: false,
     previewAnimationFinished: false,
+    profileImagePublic: false,
     editPassword: false
   };
 }
@@ -29,16 +30,14 @@ export const getNewUserState = (isAdmin: boolean) => {
 export const getExistedUserState = (user: User) => {
   const isAdmin = checkAdmin(user.roles);
   let isEditor = canEdit(user);
-  let isInstitute = isInstitution(user);
 
-  let isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
-  if (user.rolePreference && user.rolePreference.roleId === UserType.Student) {
+  let isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserPreferenceType.Student;
+  if (user.userPreference && user.userPreference.preferenceId === UserPreferenceType.Student) {
     isEditor = false;
   }
 
   if (isAdmin) {
     isEditor = true;
-    isInstitute = true;
   }
 
   return {
@@ -55,6 +54,7 @@ export const getExistedUserState = (user: User) => {
       status: UserStatus.Pending,
       bio: '',
       profileImage: "",
+      profileImagePublic: user.profileImagePublic || false,
     },
     subjects: [],
     isNewUser: false,
@@ -62,13 +62,13 @@ export const getExistedUserState = (user: User) => {
     isAdmin,
     roles: [
       { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
-      { roleId: UserType.Institution, name: "Institution", disabled: !isInstitute },
       { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
     ],
     noSubjectDialogOpen: false,
     savedDialogOpen: false,
     emailInvalidOpen: false,
     passwordChangedDialog: false,
+    saveDisabled: true,
 
     validationRequired: false,
     emailInvalid: false,

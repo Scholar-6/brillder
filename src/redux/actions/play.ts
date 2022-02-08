@@ -21,4 +21,23 @@ const setImageBlur = () => {
   }
 }
 
-export default { setImageHover, setImageBlur }
+const setUnauthReturnBrick = (brickId: number) => {
+  return async function (dispatch: Dispatch) {
+    dispatch({
+      type: types.UNAUTH_BRICK,
+      brickId,
+    } as Action);
+  }
+}
+
+const storeLiveStep = (liveStep: number, brickId: number) => {
+  return async function (dispatch: Dispatch) {
+    dispatch({
+      type: types.LIVE_STEP,
+      brickId,
+      liveStep,
+    } as Action);
+  }
+}
+
+export default { setImageHover, setImageBlur, storeLiveStep, setUnauthReturnBrick }

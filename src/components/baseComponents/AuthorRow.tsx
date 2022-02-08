@@ -27,12 +27,12 @@ const AuthorSearchRow: React.FC<ShortDescriptionProps> = ({
         <SearchText key={1} searchString={searchString} text={author.lastName} />
       );
     }
-    res.push('|');
+    res.push('•');
   }
   if (brick.created) {
     res.push(<span key={2}>{getDateString(brick.created)}</span>);
   }
-  res.push('|');
+  res.push('•');
   res.push(<span key={3}>{brick.brickLength} mins</span>);
   return <span key={4}>{res}</span>;
 };

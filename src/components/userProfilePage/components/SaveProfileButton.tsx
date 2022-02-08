@@ -4,9 +4,11 @@ import './SaveProfileButton.scss';
 import {isValid} from '../service';
 import { UserProfile } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isMobile } from "react-device-detect";
 
 interface SaveProfileProps {
   user: UserProfile;
+  disabled: boolean;
   onClick(): void;
 }
 
@@ -27,6 +29,10 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
 
   shouldComponentUpdate(props: SaveProfileProps) {
     const { user } = props;
+
+    if (this.props.disabled !== props.disabled) {
+      return true;
+    }
 
     // check pulsing
     if (isValid(user)) {
@@ -56,16 +62,22 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
   }
 
   render() {
+    console.log(this.props.disabled, this.state.isValid);
     let className = "save-image";
-    if (this.state.isValid) {
+    if (this.state.isValid && !this.props.disabled) {
       className += " valid";
     }
+    console.log(this.props.disabled);
     if (this.state.shouldPulse) {
       className += " save-pulse";
     }
     return (
-      <button type="button" className={className} onClick={this.props.onClick}>
-        <SpriteIcon name="save-icon" className="active" />
+      <button type="button" className={className} onClick={() => {
+        if (!this.props.disabled) {
+          this.props.onClick();
+        }}}>
+        <SpriteIcon name="feather-cloud-upload" className="active" />
+        {!isMobile && <span className="css-custom-tooltip bold">Save Changes</span>}
       </button>
     );
   }

@@ -10,7 +10,7 @@ interface ShareProps {
 
 const AdaptBrickColumn: React.FC<ShareProps> = props => {
   return (
-    <Grid className="share-column final-assign-brick-column" onClick={props.onClick} container item xs={props.size ? props.size : 3} justify="center">
+    <Grid className="share-column final-assign-brick-column" onClick={props.onClick} container item xs={props.size ? props.size : 6} justify="center">
       <div>
         <div className="button-container">
           <SpriteIcon name="copy" className="active" />

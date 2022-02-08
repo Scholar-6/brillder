@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Chip, Avatar, Grid, Hidden } from "@material-ui/core";
 import { connect } from "react-redux";
 
@@ -12,15 +12,10 @@ import { PlayStatus } from "components/play/model";
 import { checkAdmin, checkPublisher } from "components/services/brickService";
 import { publishBrick, returnToAuthor, returnToEditor } from "services/axios/brick";
 
-import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
-import InviteEditorDialog from './InviteEditorDialog';
-import LinkDialog from 'components/play/finalStep/dialogs/LinkDialog';
-import LinkCopiedDialog from 'components/play/finalStep/dialogs/LinkCopiedDialog';
 import ExitButton from "components/play/finalStep/ExitButton";
 import ShareColumn from "components/play/finalStep/ShareColumn";
 import InviteColumn from "components/play/finalStep/InviteColumn";
 import PublishColumn from './PublishColumn';
-import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
 import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
 import CustomColumn from "./CustomColumn";
 import { ReduxCombinedState } from "redux/reducers";
@@ -30,12 +25,21 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ReturnEditorsSuccessDialog from "components/play/finalStep/dialogs/ReturnEditorsSuccessDialog";
 import ReturnAuthorSuccessDialog from "components/play/finalStep/dialogs/ReturnAuthorSuccessDialog";
 import SelfPublishColumn from "./SelfPublishColumn";
-import routes from "../routes";
+import playRoutes from '../../play/routes';
+import ShareDialogs from "components/play/finalStep/dialogs/ShareDialogs";
+import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
+import InviteEditorDialog from "./InviteEditorDialog";
 
 enum PublishStatus {
   None,
   Popup,
   Published,
+}
+
+interface InviteResult {
+  isOpen: boolean;
+  accessGranted: boolean;
+  name: string;
 }
 
 interface FinalStepProps {
@@ -59,17 +63,16 @@ interface FinalStepProps {
 const FinalStep: React.FC<FinalStepProps> = ({
   user, brick, history, publisherConfirmed, sendedToPublisher, requestFailed, ...props
 }) => {
-  const [returnEditorsOpen, setEditorsReturn] = React.useState(false);
-  const [returnAuthorOpen, setAuthorReturn] = React.useState(false);
-  const [shareOpen, setShare] = React.useState(false);
-  const [inviteOpen, setInvite] = React.useState(false);
-  const [linkOpen, setLink] = React.useState(false);
-  const [linkCopiedOpen, setCopiedLink] = React.useState(false);
-  const [publishSuccess, setPublishSuccess] = React.useState(PublishStatus.None);
-  const [inviteSuccess, setInviteSuccess] = React.useState({
+  const [returnEditorsOpen, setEditorsReturn] = useState(false);
+  const [returnAuthorOpen, setAuthorReturn] = useState(false);
+  const [publishSuccess, setPublishSuccess] = useState(PublishStatus.None);
+  const [shareOpen, setShare] = useState(false);
+  const [inviteOpen, setInvite] = useState(false);
+  const [inviteResult, setInviteResult] = useState({
     isOpen: false,
+    accessGranted: false,
     name: ''
-  });
+  } as InviteResult);
 
   let isAuthor = false;
   try {
@@ -79,10 +82,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const isAdmin = checkAdmin(user.roles);
   const isPublisher = checkPublisher(user, brick);
   const isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
-  const link = routes.previewNewPrep(brick.id);
 
   if (!isAuthor && !isCurrentEditor && !isPublisher && !isAdmin) {
-    return <Redirect to={map.BackToWorkBuildTab} />;
+    return <Redirect to={map.backToWorkUserBased(user)} />;
   }
 
   const publish = async (brickId: number) => {
@@ -121,7 +123,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         label="for futher changes"
         size={3}
         onClick={async () => {
-          await props.returnToEditors(brick);
+          await returnToEditor(brick.id, user.id);
           props.fetchBrick(brick.id);
           setEditorsReturn(true);
         }}
@@ -150,7 +152,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         icon="repeat" title="Return to Editor" label="for futher changes"
         size={3}
         onClick={async () => {
-          await returnToEditor(brick.id);
+          await returnToEditor(brick.id, user.id);
           await props.fetchBrick(brick.id);
           setEditorsReturn(true);
         }}
@@ -167,7 +169,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         size={3}
         onClick={async () => {
           await props.sendToPublisher(brick.id);
-          history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`);
+          history.push(`${map.BackToWorkPage}?isCore=${brick.isCore}`);
         }}
       />
     );
@@ -219,8 +221,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
     if ((isCurrentEditor || isAdmin) && brick.status === BrickStatus.Build) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          { renderReturnToAuthorColumn()}
-          { renderSendToPublisherColumn()}
+          {renderReturnToAuthorColumn()}
+          {renderSendToPublisherColumn()}
         </Grid>
       );
     }
@@ -228,7 +230,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <Grid className="share-row" container direction="row" justify="center">
         {renderInviteColumn()}
-        { canPublish && brick.status === BrickStatus.Review && renderReturnToEditorColumn()}
+        {canPublish && brick.status === BrickStatus.Review && renderReturnToEditorColumn()}
       </Grid>
     );
   }
@@ -244,7 +246,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                   key={i}
                   avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${e.profileImage}`} />}
                   label={`${e.firstName} ${e.lastName}`}
-                  onDelete={brick.editors?.length === 1 ? undefined : () => removeEditor(e)}
+                  onDelete={brick.editors?.length === 1 && brick.status !== BrickStatus.Draft ? undefined : () => removeEditor(e)}
                 />
               )}
               {brick.editors.length === 1
@@ -290,7 +292,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 <div className="intro-text-row">
                 </div>
                 <ExitButton onClick={() =>
-                  history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`)} />
+                  history.push(`${map.BackToWorkPage}?isCore=${brick.isCore}`)} />
               </div>
             </Grid>
           </Grid>
@@ -302,40 +304,35 @@ const FinalStep: React.FC<FinalStepProps> = ({
             <div className="introduction-info">
               <div className="intro-text-row"></div>
             </div>
-            <ExitButton onClick={() => history.push(map.BackToWorkPage)} />
+            <ExitButton onClick={() => history.push(map.backToWorkUserBased(user))} />
           </div>
         </div>
       </Hidden>
-      <LinkDialog
-        isOpen={linkOpen} link={document.location.host + link}
-        submit={() => setCopiedLink(true)} close={() => setLink(false)}
-      />
-      <LinkCopiedDialog isOpen={linkCopiedOpen} close={() => setCopiedLink(false)} />
-      <ShareDialog
-        isOpen={shareOpen}
-        isPrivatePreview={!brick.isCore}
-        link={() => { setShare(false); setLink(true) }}
-        invite={() => { setShare(false); setInvite(true) }}
+      <ShareDialogs
+        shareOpen={shareOpen}
+        brick={brick}
+        user={user}
         close={() => setShare(false)}
       />
       <InviteEditorDialog
         canEdit={true} brick={brick} isOpen={inviteOpen}
-        submit={name => { setInviteSuccess({ isOpen: true, name }); }}
-        close={() => setInvite(false)} />
-      <InvitationSuccessDialog
-        isAuthor={isAuthor}
-        isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={true}
-        close={() => {
-          setInviteSuccess({ isOpen: false, name: '' });
+        submit={name => {
+          setInviteResult({ isOpen: true, name, accessGranted: true } as InviteResult);
           props.fetchBrick(brick.id);
         }}
+        close={() => setInvite(false)}
+      />
+      <InvitationSuccessDialog
+        isAuthor={isAuthor}
+        isOpen={inviteResult.isOpen} name={inviteResult.name} accessGranted={inviteResult.accessGranted}
+        close={() => setInviteResult({ isOpen: false, name: '', accessGranted: false } as InviteResult)}
       />
       <ReturnAuthorSuccessDialog
         isOpen={returnAuthorOpen}
         author={brick.author}
         close={() => {
           setEditorsReturn(false)
-          history.push(map.BackToWorkBuildTab);
+          history.push(map.backToWorkUserBased(user));
         }}
       />
       <ReturnEditorsSuccessDialog
@@ -343,14 +340,14 @@ const FinalStep: React.FC<FinalStepProps> = ({
         editors={brick.editors}
         close={() => {
           setEditorsReturn(false)
-          history.push(map.BackToWorkBuildTab);
+          history.push(map.backToWorkUserBased(user));
         }}
       />
       <PublishSuccessDialog
         isOpen={publishSuccess === PublishStatus.Popup}
         close={() => {
           setPublishSuccess(PublishStatus.Published);
-          history.push(map.playCover(brick.id));
+          history.push(playRoutes.playCover(brick));
         }}
       />
       <SendPublisherSuccessDialog isOpen={sendedToPublisher && publisherConfirmed === false} close={() => props.sendToPublisherConfirmed()} />

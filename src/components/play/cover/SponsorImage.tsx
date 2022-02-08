@@ -16,6 +16,7 @@ interface ImageProps {
 
 const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
   const [isOpen, setOpen] = React.useState(false);
+  /* eslint-disable-next-line */
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.brick.sponsorLogo);
   const [isCloseOpen, setCloseDialog] = React.useState(false);
@@ -28,13 +29,18 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
     }
   }, [props.brick]);
 
-  const upload = (file: File) => {
-    uploadFile(file, async (res: any) => {
-      const {fileName} = res.data;
-      setFileName(fileName);
-      await updateBrick({...props.brick, sponsorLogo: fileName});
+  const upload = async (file: File | null, sponsorName: string, sponsorUrl: string) => {
+    if (file) {
+      uploadFile(file, async (res: any) => {
+        const {fileName} = res.data;
+        setFileName(fileName);
+        await updateBrick({...props.brick, sponsorLogo: fileName, sponsorName, sponsorUrl});
+        setOpen(false);
+      }, () => { });
+    } else {
+      await updateBrick({...props.brick, sponsorLogo: '', sponsorName, sponsorUrl});
       setOpen(false);
-    }, () => { });
+    }
   }
 
   let className = 'dropzone';
@@ -50,7 +56,13 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
 
   if (!isAdmin) {
     return (
-      <div className="cover-sponsors">
+      <div className="cover-sponsors" onClick={() => {
+        if (props.brick.sponsorUrl) {
+          window.location.href=props.brick.sponsorUrl;
+        } else {
+          window.location.href="https://scholar6.org";
+        }
+      }}>
         <span className="italic">Commissioned by</span>
         <img alt="scholar6" src={fileName ? fileUrl(fileName) : "/images/Scholar-6-Logo.svg"} />
       </div>
@@ -61,23 +73,7 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
   return (
     <div className="cover-sponsors">
       Commissioned by
-      <div className={className} onClick={() => {
-        if (fileName) {
-          setOpen(true);
-        } else {
-          let el = document.createElement("input");
-          el.setAttribute("type", "file");
-          el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
-          el.click();
-
-          el.onchange = () => {
-            if (el.files && el.files.length >= 0) {
-              setFile(el.files[0]);
-              setOpen(true);
-            }
-          };
-        }
-      }}>
+      <div className={className} onClick={() => setOpen(true)}>
         {
           fileName
             ? <img alt="" style={{ width: '100%' }} src={fileUrl(fileName)} />
@@ -87,6 +83,7 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
       <ImageSponsorDialog
         initValue={fileName}
         open={isOpen}
+        brick={props.brick}
         setDialog={() => setCloseDialog(true)}
         initFile={file}
         upload={upload}

@@ -1,5 +1,6 @@
 import { Brick, BrickStatus } from 'model/brick';
-import { User, UserType, UserRole, RolePreference } from 'model/user';
+import { User, UserType, UserRole, UserPreferenceType } from 'model/user';
+import { isInstitutionPreference, isTeacherPreference } from './preferenceService';
 
 export function formatTwoLastDigits(twoLastDigits: number) {
   var formatedTwoLastDigits = "";
@@ -82,7 +83,10 @@ export function getAttemptDateString(inputDateString: string) {
 }
 
 export function checkTeacherOrAdmin(user: User) {
-  if (user.rolePreference?.roleId === RolePreference.Teacher) {
+  if (isTeacherPreference(user)) {
+    return true;
+  }
+  if (isInstitutionPreference(user)) {
     return true;
   }
   return user.roles.some(r => r.roleId === UserType.Admin);
@@ -121,11 +125,11 @@ export function checkPublisher(user: User, brick: Brick) {
 }
 
 export function checkTeacher(user: User) {
-  return user.rolePreference?.roleId === RolePreference.Teacher;
+  return user.userPreference?.preferenceId === UserPreferenceType.Teacher;
 }
 
 export function checkBuilder(user: User) {
-  return user.rolePreference?.roleId === RolePreference.Builder;
+  return user.userPreference?.preferenceId === UserPreferenceType.Builder;
 }
 
 export function checkAdmin(roles: UserRole[]) {
@@ -134,6 +138,18 @@ export function checkAdmin(roles: UserRole[]) {
 
 export function isAorP(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Publisher || role.roleId === UserType.Admin);
+}
+
+export function isAorPorE(brick: Brick, user: User) {
+  let adminOrPublisher = user.roles.some(role => role.roleId === UserType.Publisher || role.roleId === UserType.Admin);
+  if (adminOrPublisher) {
+    return true;
+  }
+  const isEditor = brick.editors && brick.editors.findIndex(e => e.id === user.id) >= 0;
+  if (isEditor) {
+    return true;
+  }
+  return false;
 }
 
 export function canEditBrick(brick: Brick, user: User) {
@@ -167,7 +183,7 @@ export function canDelete(userId: number, isAdmin: boolean, brick: Brick) {
 }
 
 export function checkTeacherEditorOrAdmin(user: User) {
-  if (user.rolePreference?.roleId === RolePreference.Teacher) {
+  if (user.userPreference?.preferenceId === UserPreferenceType.Teacher) {
     return true;
   }
   return user.roles.some(role => {
@@ -186,14 +202,11 @@ export function getAssignmentIcon(brick: Brick) {
 
 export function canTeach(user: User) {
   let canTeach = checkTeacherOrAdmin(user);  
-  if (!canTeach && user.rolePreference) {
-    if (user.rolePreference.roleId === RolePreference.Teacher) {
+  if (!canTeach && user.userPreference) {
+    if (user.userPreference.preferenceId === UserPreferenceType.Teacher) {
       canTeach = true;
     }
   }
   return canTeach;
 }
 
-export function isInstitution(user: User) {
-  return user.roles.some(role => role.roleId === UserType.Institution);
-}

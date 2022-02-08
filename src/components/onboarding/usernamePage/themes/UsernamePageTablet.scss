@@ -30,7 +30,7 @@
   form {
     display: flex;
     height: 100%;
-    margin-left: 10vw;
+    margin-left: 4vw;
     align-items: center;
 
     > div {
@@ -133,9 +133,9 @@
 
       input {
         margin-top: 3vh;
-        margin-bottom: 3vh;
+        margin-bottom: 1vh;
         width: 100%;
-        font-size: 1.8vw;
+        font-size: 2.5vw;
         color: var(--white);
         text-transform: capitalize;
       }
@@ -152,7 +152,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 14vh;
+      margin-top: 7vh;
       letter-spacing: 0.1vw;
       font-size: 3vw;
       font-family: $font-family-bold;
@@ -163,18 +163,22 @@
         outline: none;
         border-radius: 1.5vw;
         padding: 1.1vh 2.5vw;
+        display: flex;
+        align-items: center;
         background: var(--theme-orange);
         font-family: $font-family-bold;
         transition: all 300ms ease-out !important;
         &.invalid {
-          color: var(--theme-light-blue);
+          color: var(--white);
+          background: var(--theme-light-blue);
         }
       }
 
       svg {
-        height: 5vw;
-        width: 5vw;
-        color: var(--theme-orange);
+        margin-left: 1vw;
+        height: 2.5vw;
+        width: 2.5vw;
+        color: var(--white);
 
         &.invalid {
           color: var(--theme-light-blue);

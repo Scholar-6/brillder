@@ -31,17 +31,13 @@ import ProfileIntroJs from "./components/ProfileIntroJs";
 import PasswordChangedDialog from "components/baseComponents/dialogs/PasswordChangedDialog";
 import ProfilePhonePreview from "./components/ProfilePhonePreview";
 import { getExistedUserState, getNewUserState } from "./stateService";
+import { isPhone } from "services/phone";
+import { isMobile } from "react-device-detect";
+import UserTypeLozenge from "./UsertypeLozenge";
+import { maximizeZendeskButton, minimizeZendeskButton } from "services/zendesk";
+import SaveIntroJs from "./components/SaveIntroJs";
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
-
-const mapDispatch = (dispatch: any) => ({
-  forgetBrick: () => dispatch(brickActions.forgetBrick()),
-  getUser: () => dispatch(userActions.getUser()),
-  redirectedToProfile: () => dispatch(authActions.redirectedToProfile()),
-  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
-});
-
-const connector = connect(mapState, mapDispatch);
+const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
 
 interface UserProfileProps {
   user: User;
@@ -71,7 +67,8 @@ interface UserProfileState {
   validationRequired: boolean;
   emailInvalid: boolean;
   editPassword: boolean;
-
+  saveDisabled: boolean;
+  minimizeTimeout?: number;
   introJsSuspended?: boolean;
 }
 
@@ -93,6 +90,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       const { user } = props;
 
       let tempState: UserProfileState = getExistedUserState(user);
+
       if (userId) {
         this.state = tempState;
         getUserById(userId).then(user => {
@@ -122,6 +120,21 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.props.requestFailed("Can`t get subjects");
       }
     });
+  }
+
+  componentDidMount() {
+    minimizeZendeskButton();
+    const minimizeTimeout = setTimeout(() => {
+      minimizeZendeskButton();
+    }, 1400);
+    this.setState({ minimizeTimeout });
+  }
+
+  componentWillUnmount() {
+    if (this.state.minimizeTimeout) {
+      clearTimeout(this.state.minimizeTimeout);
+    }
+    maximizeZendeskButton();
   }
 
   saveStudentProfile(user: UserProfile) {
@@ -224,7 +237,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   onFieldChanged(e: React.ChangeEvent<HTMLInputElement>, name: UserProfileField) {
     const { user } = this.state;
     user[name] = e.target.value;
-    this.setState({ user });
+    this.setState({ user, saveDisabled: false });
   }
 
   onEmailChanged(e: React.ChangeEvent<HTMLInputElement>) {
@@ -235,14 +248,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
       emailInvalid = true;
     }
-    this.setState({ user, emailInvalid });
+    this.setState({ user, emailInvalid, saveDisabled: false });
   }
 
-  onProfileImageChanged(name: string) {
+  onProfileImageChanged(name: string, imagePublic: boolean) {
     const { user } = this.state;
     user.profileImage = name;
+    user.profileImagePublic = imagePublic;
 
-    saveProfileImageName(user.id, name).then((res: boolean) => {
+    saveProfileImageName(user.id, name, imagePublic).then((res: boolean) => {
       if (res) {
         // upload success
       } else {
@@ -261,7 +275,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (index !== -1) {
       // publisher can`t remove his publisher role
       if (roleId === UserType.Publisher) {
-        const foundUpperRole = this.props.user.roles.find(r => r.roleId === UserType.Admin || r.roleId === UserType.Institution);
+        const foundUpperRole = this.props.user.roles.find(r => r.roleId === UserType.Admin);
         if (!foundUpperRole) {
           return;
         }
@@ -270,18 +284,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     } else {
       this.state.user.roles.push(roleId);
     }
-    this.setState({ ...this.state });
+    this.setState({ ...this.state, saveDisabled: false });
   }
 
   onSubjectChange(newValue: any[]) {
     const { user } = this.state;
     user.subjects = newValue;
-    this.setState({ user });
+    this.setState({ user, saveDisabled: false });
   }
 
   async changePassword() {
-    const {user} = this.state;
-    const userToSave = { password: user.password} as any;
+    const { user } = this.state;
+    const userToSave = { password: user.password } as any;
 
     // set current user roles
     userToSave.roles = this.props.user.roles.map(role => role.roleId);
@@ -292,13 +306,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   suspendIntroJs() {
     if (!this.state.introJsSuspended) {
-      this.setState({introJsSuspended: true});
+      this.setState({ introJsSuspended: true });
     }
   }
 
   resumeIntroJs() {
     if (this.state.introJsSuspended) {
-      this.setState({introJsSuspended: false});
+      this.setState({ introJsSuspended: false });
     }
   }
 
@@ -323,130 +337,156 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   render() {
     const { user } = this.state;
+    const canMove = user.username ? true : false;
+
+    const mockHistory = {
+      location: this.props.history.location,
+      push() { }
+    } as any;
+
     return (
-      <div className="main-listing user-profile-page">
-        <PageHeadWithMenu
-          page={PageEnum.Profile}
-          user={this.props.user}
-          history={this.props.history}
-          search={() => { }}
-          searching={() => { }}
-        />
-        <Grid container direction="row">
-          <div className="profile-block">
-            <div className="profile-header">
-              {user.firstName ? user.firstName : "NAME"}
-              <span className="profile-username">{user.username ? user.username : "USERNAME"}</span>
-            </div>
-            <div className="save-button-container">
-              <SaveProfileButton
-                user={user}
-                onClick={() => this.saveUserProfile()}
-              />
-            </div>
-            <div className="profile-fields">
-              <ProfileImage
-                profileImage={user.profileImage}
-                setImage={(v) => this.onProfileImageChanged(v)}
-                deleteImage={() => this.onProfileImageChanged('')}
-                suspendIntroJs={this.suspendIntroJs.bind(this)}
-                resumeIntroJs={this.resumeIntroJs.bind(this)}
-              />
-              <div className="profile-inputs-container">
-                <div className="input-group">
-                  <ProfileInput
-                    value={user.firstName} validationRequired={this.state.validationRequired}
-                    className="first-name"  placeholder="Name"
-                    onChange={e => this.onFieldChanged(e, UserProfileField.FirstName)}
-                  />
-                  <ProfileInput
-                    value={user.lastName} validationRequired={this.state.validationRequired}
-                    className="last-name"  placeholder="Surname"
-                    onChange={e => this.onFieldChanged(e, UserProfileField.LastName)}
-                  />
-                </div>
-                <ProfileInput
-                  value={user.email} validationRequired={this.state.validationRequired}
-                  className=""  placeholder="Email" type="email"
-                  onChange={e => this.onEmailChanged(e)}
+      <React.Suspense fallback={<></>}>
+        <div className="main-listing user-profile-page">
+          {!isPhone() && isMobile && <TabletTheme />}
+          <PageHeadWithMenu
+            page={PageEnum.Profile}
+            user={this.props.user}
+            history={canMove ? this.props.history : mockHistory}
+            search={() => { }}
+            searching={() => { }}
+          />
+          <Grid container direction="row" className="user-profile-content">
+            <div className="profile-block">
+              <div className="profile-header">
+                <UserTypeLozenge roles={user.roles} userPreference={this.props.user.userPreference} />
+                <div>{user.username ? user.username : "USERNAME"}</div>
+                {this.props.user && this.props.user.subscriptionState && this.props.user.subscriptionState > 1 && <SpriteIcon name="hero-sparkle" />}
+              </div>
+              <div className="save-button-container">
+                <SaveProfileButton
+                  user={user}
+                  disabled={this.state.saveDisabled}
+                  onClick={() => this.saveUserProfile()}
                 />
-                <div className="password-container">
+              </div>
+              <div className="profile-fields">
+                <ProfileImage
+                  user={user}
+                  currentUser={this.props.user}
+                  setImage={this.onProfileImageChanged.bind(this)}
+                  deleteImage={() => this.onProfileImageChanged('', false)}
+                  suspendIntroJs={this.suspendIntroJs.bind(this)}
+                  resumeIntroJs={this.resumeIntroJs.bind(this)}
+                />
+                <div className="profile-inputs-container">
+                  <div className="input-group">
+                    <ProfileInput
+                      value={user.firstName} validationRequired={this.state.validationRequired}
+                      className="first-name" placeholder="Name"
+                      onChange={e => this.onFieldChanged(e, UserProfileField.FirstName)}
+                    />
+                    <ProfileInput
+                      value={user.lastName} validationRequired={this.state.validationRequired}
+                      className="last-name" placeholder="Surname"
+                      onChange={e => this.onFieldChanged(e, UserProfileField.LastName)}
+                    />
+                  </div>
                   <ProfileInput
-                    value={user.password} validationRequired={this.state.validationRequired}
-                    className=""  placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
-                    onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
+                    value={user.email} validationRequired={this.state.validationRequired}
+                    className="" placeholder="Email" type="email"
+                    onChange={e => this.onEmailChanged(e)}
+                  />
+                  <div className="password-container">
+                    <ProfileInput
+                      value={user.password} validationRequired={this.state.validationRequired}
+                      className="" placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
+                      onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
                     /*disabled={!this.state.editPassword}*/
-                  />
-                  {!this.state.editPassword &&
-                    <div className="button-container">
-                      <button onClick={() => this.setState({editPassword: true})}>Edit</button>
-                    </div>}
-                  {this.state.editPassword &&
-                  <div className="confirm-container">
-                    <SpriteIcon name="check-icon" className="start" onClick={this.changePassword.bind(this)} />
-                    <SpriteIcon name="cancel-custom" className="end" onClick={() => {
-                      this.setState({editPassword: false})
-                    }} />
-                  </div>}
+                    />
+                    {!this.state.editPassword &&
+                      <div className="button-container">
+                        <button onClick={() => this.setState({ editPassword: true })}>Edit</button>
+                      </div>}
+                    {this.state.editPassword &&
+                      <div className="confirm-container">
+                        <SpriteIcon name="check-icon" className="start" onClick={this.changePassword.bind(this)} />
+                        <SpriteIcon name="cancel-custom" className="end" onClick={() => {
+                          this.setState({ editPassword: false })
+                        }} />
+                      </div>}
+                  </div>
+                </div>
+                <div className="profile-roles-container">
+                  {this.state.user.userPreference &&
+                    <RolesBox
+                      roles={this.state.roles}
+                      userId={this.state.user.id}
+                      userRoles={this.state.user.roles}
+                      isAdmin={this.state.isAdmin}
+                      userPreference={this.state.user.userPreference?.preferenceId}
+                      togglePreference={() => this.setState({ saveDisabled: false })}
+                      toggleRole={this.toggleRole.bind(this)}
+                    />}
                 </div>
               </div>
-              <div className="profile-roles-container">
-                <div className="roles-title">ROLES</div>
-                <RolesBox
-                  roles={this.state.roles}
-                  userRoles={this.state.user.roles}
-                  rolePreference={this.props.user.rolePreference?.roleId}
-                  toggleRole={this.toggleRole.bind(this)}
-                />
+              <div style={{ display: 'flex' }}>
+                {this.renderSubjects(user)}
+                <div className="centered">
+                  <SpriteIcon
+                    name="arrow-left-2"
+                    className={`svg red-circle ${this.state.previewAnimationFinished ? '' : 'hidden'}`}
+                  />
+                </div>
               </div>
-            </div>
-            <div style={{ display: 'flex' }}>
-              {this.renderSubjects(user)}
-              <div className="centered">
-                <SpriteIcon
-                  name="arrow-left-2"
-                  className={`svg red-circle ${this.state.previewAnimationFinished ? '' : 'hidden'}`}
+              <Grid container direction="row" className="big-input-container bio-container-2">
+                <textarea
+                  className="style2 bio-container"
+                  value={user.bio}
+                  onClick={this.suspendIntroJs.bind(this)}
+                  placeholder="Write a short bio here..."
+                  onChange={e => {
+                    this.onFieldChanged(e as any, UserProfileField.Bio)
+                  }}
+                  onBlur={this.resumeIntroJs.bind(this)}
                 />
-              </div>
+              </Grid>
             </div>
-            <Grid container direction="row" className="big-input-container">
-              <textarea
-                className="style2 bio-container"
-                value={user.bio}
-                onClick={this.suspendIntroJs.bind(this)}
-                placeholder="Write a short bio here..."
-                onChange={e => {
-                  this.onFieldChanged(e as any, UserProfileField.Bio)
-                }}
-                onBlur={this.resumeIntroJs.bind(this)}
-              />
-            </Grid>
-          </div>
-          <ProfilePhonePreview user={this.state.user} previewAnimationFinished={this.previewAnimationFinished.bind(this)} />
-        </Grid>
-        <ValidationFailedDialog
-          isOpen={this.state.emailInvalidOpen}
-          header={this.state.emailInvalid ? "That email address doesn’t look right" : "Email is already in use"}
-          label="Have you spelled it correctly?"
-          close={this.onInvalidEmailClose.bind(this)}
-        />
-        <SubjectDialog
-          isOpen={this.state.noSubjectDialogOpen}
-          close={this.onSubjectDialogClose.bind(this)}
-        />
-        <ProfileSavedDialog
-          isAdmin={this.state.isAdmin}
-          history={this.props.history}
-          isOpen={this.state.savedDialogOpen}
-          close={this.onProfileSavedDialogClose.bind(this)}
-        />
-        <PasswordChangedDialog
-          isOpen={this.state.passwordChangedDialog}
-          close={() => this.setState({passwordChangedDialog: false})} />
-        <ProfileIntroJs user={this.props.user} suspended={this.state.introJsSuspended} history={this.props.history} location={this.props.location} />
-      </div>
+            <ProfilePhonePreview user={this.state.user} previewAnimationFinished={this.previewAnimationFinished.bind(this)} />
+          </Grid>
+          <ValidationFailedDialog
+            isOpen={this.state.emailInvalidOpen}
+            header={this.state.emailInvalid ? "That email address doesn’t look right" : "Email is already in use"}
+            label="Have you spelled it correctly?"
+            close={this.onInvalidEmailClose.bind(this)}
+          />
+          <SubjectDialog
+            isOpen={this.state.noSubjectDialogOpen}
+            close={this.onSubjectDialogClose.bind(this)}
+          />
+          <ProfileSavedDialog
+            isAdmin={this.state.isAdmin}
+            history={this.props.history}
+            isOpen={this.state.savedDialogOpen}
+            close={this.onProfileSavedDialogClose.bind(this)}
+          />
+          <PasswordChangedDialog
+            isOpen={this.state.passwordChangedDialog}
+            close={() => this.setState({ passwordChangedDialog: false })} />
+          <ProfileIntroJs user={this.props.user} suspended={this.state.introJsSuspended} history={this.props.history} location={this.props.location} />
+          {!this.state.saveDisabled && <SaveIntroJs />}
+        </div>
+      </React.Suspense>
     );
   }
 }
 
-export default connector(UserProfilePage);
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(brickActions.forgetBrick()),
+  getUser: () => dispatch(userActions.getUser()),
+  redirectedToProfile: () => dispatch(authActions.redirectedToProfile()),
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+});
+
+export default connect(mapState, mapDispatch)(UserProfilePage);

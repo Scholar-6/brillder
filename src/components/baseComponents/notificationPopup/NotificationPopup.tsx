@@ -57,15 +57,19 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
   const move = async (notification: Notification) => {
     const { history } = props;
     if (history) {
-      if (notification.type === NotificationType.BrickPublished) {
-        history.push(map.ViewAllPage);
-      } else if (notification.type === NotificationType.BrickSubmittedForReview) {
-        history.push(map.BackToWorkPage);
+      if (notification.type === NotificationType.BrickSubmittedForReview) {
+        if (isPhone()) {
+          setNeedDesktopOpen(true);
+        } else {
+          history.push(map.backToWorkUserBased(props.user));
+        }
       }
 
       if (notification.brick && notification.brick.id) {
         const {type, brick} = notification;
-        if (type === NotificationType.NewCommentOnBrick) {
+        if (notification.type === NotificationType.BrickPublished) {
+          history.push(routes.playCover(brick));
+        } else if (type === NotificationType.NewCommentOnBrick) {
           if (notification.question && notification.question.id >= 1) {
             history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
           } else {
@@ -73,9 +77,9 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           }
         } else if (type === NotificationType.InvitedToPlayBrick) {
           if (isPhone()) {
-            history.push(map.playIntro(brick.id));
+            history.push(routes.playNewPrep(brick));
           } else {
-            history.push(routes.playCover(brick.id));
+            history.push(routes.playCover(brick));
           }
         } else if (type === NotificationType.BrickAttemptSaved) {
           if (isMobile) {
@@ -98,9 +102,9 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
           type === NotificationType.StudentAssignedBrick
         ) {
           if (isPhone()) {
-            history.push(map.playIntro(brick.id));
+            history.push(routes.playNewPrep(brick));
           } else {
-            history.push(routes.playCover(brick.id));
+            history.push(routes.playCover(brick));
           }
         }
       }
@@ -183,7 +187,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
       </div>
       <DesktopVersionDialogV2
         isOpen={needDesktopOpen}
-        secondaryLabel="Brick summaries have not yet been optimised for mobile devices."
+        secondaryLabel=""
         onClick={() => setNeedDesktopOpen(false)}
       />
     </Popper>

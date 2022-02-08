@@ -1,3 +1,7 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .autocomplete-profile-image {
   width: 2vw;
   height: 2vw;
@@ -10,4 +14,22 @@
   height: 2.5vw;
   margin-left: -0.25vw;
   margin-right: 1vw;
+}
+
+.users-popper {
+  z-index: 1000000;
+  color: var(--theme-dark-blue);
+  .MuiAutocomplete-listbox {
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: calc(30vh) !important;
+    font-size: 1.25vw;
+    color: var(--theme-dark-blue);
+    font-family: $font-family-regular;
+  }
+
+  .MuiAutocomplete-noOptions {
+    font-size: 1.25vw;
+    font-family: $font-family-regular;
+  }
 }

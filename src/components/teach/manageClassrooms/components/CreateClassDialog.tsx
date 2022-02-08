@@ -26,12 +26,12 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   React.useEffect(() => {
     const initAllSubjects = async () => {
       const subs = await loadSubjects();
-      if(subs) {
+      if (subs) {
         setSubjects(subs);
       }
     }
 
-    if(props.user.roles.some(role => role.roleId === UserType.Admin)) {
+    if (props.user.roles.some(role => role.roleId === UserType.Admin)) {
       initAllSubjects();
     } else {
       setSubjects(props.user.subjects);
@@ -39,7 +39,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   }, [props.user.roles, props.user.subjects]);
 
   React.useEffect(() => {
-    if(subjects && subjects.length === 1) {
+    if (subjects && subjects.length === 1) {
       setSubjectIndex(subjects.findIndex(s => s.name === "General") ?? 0);
     }
   }, [subjects])
@@ -53,13 +53,14 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       <div className="close-button svgOnHover" onClick={props.close}>
         <SpriteIcon name="cancel" className="w100 h100 active" />
       </div>
-      <div className="dialog-header" style={{marginBottom: '2vh'}}>
+      <div className="dialog-header" style={{ marginBottom: '2vh' }}>
         <div className="title">Name Your Class</div>
         <input placeholder="Class Name" value={value} onChange={e => setValue(e.target.value)} />
       </div>
       <div className="dialog-header dialog-select-container">
+        {(subjectIndex === -1 || subjectIndex === undefined) && <div className="absolute-placeholder unselectable" onClick={e => e.preventDefault()}>Choose a Subject</div>}
         <Select
-          MenuProps={{ style: { zIndex: 1000000 } } /* Dialog box is always z-index 999999 */}
+          MenuProps={{ style: { zIndex: 1000000 }, classes: { paper: 'select-classes-list' } } /* Dialog box is always z-index 999999 */}
           value={subjectIndex}
           onChange={(evt) => setSubjectIndex(evt.target.value as number)}
           input={<InputBase />}
@@ -83,7 +84,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button"
           onClick={() => {
-            if(value && subjects && subjectIndex !== undefined && subjects[subjectIndex]) {
+            if (value && subjects && subjectIndex !== undefined && subjects[subjectIndex]) {
               props.submit(value, subjects[subjectIndex]);
             }
           }}>

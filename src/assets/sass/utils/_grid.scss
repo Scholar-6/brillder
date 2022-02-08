@@ -240,3 +240,14 @@
 	height: 0;
 	overflow: hidden;
 }
+
+.base-hint-container .invinsible {
+	display: none !important;
+}
+
+.base-hint-container {
+	.customImage.image-play-container2.center {
+		display: flex;
+		width: 100%;
+	}
+}

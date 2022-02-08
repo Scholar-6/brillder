@@ -1,4 +1,5 @@
 import React from "react";
+import { isPhone } from "services/phone";
 
 import './PrivateCoreToggle.scss';
 import SpriteIcon from "./SpriteIcon";
@@ -33,15 +34,17 @@ const PrivateCoreToggle: React.FC<ToggleProps> = props => {
     return <div></div>;
   }
 
+  const phone = isPhone();
+
   return (
     <div className={`private-core-toggle ${props.isViewAll ? 'view-all-toggle' : ''}`}>
-      <button className="btn btn btn-transparent ">
-        <span className={isCore ? 'bold' : 'regular'}>Public</span>
-        <div className="svgOnHover" onClick={props.onSwitch}>
+      <button className="btn btn-transparent " onClick={props.onSwitch}>
+        <span className={isCore ? 'bold' : 'regular'}>{!phone && 'Public'}</span>
+        <div className="svgOnHover">
           {renderCoreIcon()}
           {renderPrivateIcon()}
         </div>
-        <span className={!isCore ? 'bold' : 'regular'}>Personal</span>
+        <span className={!isCore ? 'bold' : 'regular'}>{!phone && 'Personal'}</span>
       </button>
     </div>
   );

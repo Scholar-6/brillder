@@ -8,13 +8,21 @@ import { TextareaAutosize } from '@material-ui/core';
 import { HighlightMode } from '../model';
 import HighlightButton from '../components/HighlightButton';
 import LineStyleDialog from './LineStyleDialog';
+import PoemToggle from './PoemToggle';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
+enum SubMode {
+  Edit,
+  Bold,
+  Italic
+}
 export interface WordHighlightingData {
   text: string;
   isPoem: boolean;
   words: BuildWord[];
   mode: HighlightMode;
+  subMode: SubMode;
 }
 
 export interface WordHighlightingProps extends UniqueComponentProps {
@@ -34,7 +42,9 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   useEffect(() => {
     if (!data.text) { data.text = ''; }
     if (!data.words) { data.words = []; }
+    data.subMode = state.subMode;
     setState(data);
+    /*eslint-disable-next-line*/
   }, [data]);
 
   const update = () => {
@@ -49,13 +59,13 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   const splitByLines = (text: string) => {
     const splited = splitByChar(text, SpecialSymbols.LineFeed);
     return splited.map(line => {
-      return {text: line, isBreakLine: true, checked: false} as BuildWord;
+      return { text: line, isBreakLine: true, checked: false } as BuildWord;
     });
   }
 
   const addSpace = (words: BuildWord[], index: number) => {
     if (index >= 1) {
-      words.push({text: "\u00A0", notSelectable: true} as BuildWord);
+      words.push({ text: "\u00A0", notSelectable: true } as BuildWord);
     }
   }
 
@@ -72,7 +82,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
       for (const index in lineStrings) {
         let intIndex = parseInt(index);
         addSpace(words, intIndex);
-        let word = {text: lineStrings[index], checked: false} as BuildWord;
+        let word = { text: lineStrings[index], checked: false } as BuildWord;
         addBreakLine(lineStrings, word, intIndex);
         words.push(word);
       }
@@ -80,55 +90,10 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     return words;
   }
 
-  const disabledEmptyWord = (word: BuildWord) => {
-    if (!word.text) {
-      word.notSelectable = true;
-    }
-  }
-
-  const addBreakLineInTheEnd = (
-    wordParts: string[], mainWord: BuildWord, partWord: BuildWord, index: number
-  ) => {
-    if (index === wordParts.length - 1) {
-      if (mainWord.isBreakLine) {
-        partWord.isBreakLine = true;
-      }
-    }
-  }
-
-  const addSpecialSignByCode = (words: BuildWord[], signCode: SpecialSymbols, index: number) => {
-    if (index >= 1) {
-      words.push({text: String.fromCharCode(signCode), isPunctuation: true, notSelectable: true} as BuildWord);
-    }
-  }
-
-  const splitBySpecialSign = (words: BuildWord[], signCode: SpecialSymbols) => {
-    const finalWords:BuildWord[] = [];
-    words.forEach(word => {
-      const commas = splitByChar(word.text, signCode);
-      if (commas.length >= 2) {
-        for (const index in commas) {
-          const loopWord = { text: commas[index] } as BuildWord;
-          const intIndex = parseInt(index);
-          addSpecialSignByCode(finalWords, signCode, intIndex);
-          addBreakLineInTheEnd(commas, word, loopWord, intIndex);
-          disabledEmptyWord(word);
-          finalWords.push(loopWord);
-        }
-      } else {
-        finalWords.push(word);
-      }
-    });
-    return finalWords;
-  }
-
   const prepareWords = (text: string) => {
     if (!text) { return []; }
     const lines = splitByLines(text);
-    const words = splitByWords(lines);
-    const wordsByCommas = splitBySpecialSign(words, SpecialSymbols.Comma);
-    const wordsByDotsAndComas = splitBySpecialSign(wordsByCommas, SpecialSymbols.Dot);
-    return wordsByDotsAndComas;
+    return splitByWords(lines);
   }
 
   const switchMode = () => {
@@ -150,7 +115,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     update();
   }
 
-  const toggleLight = (index:number) => {
+  const toggleLight = (index: number) => {
     if (locked) { return; }
     const word = state.words[index];
     if (word.notSelectable) { return; }
@@ -159,11 +124,52 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     save();
   }
 
-  const renderBox = () => {
-    if (state.mode === HighlightMode.Edit) {
-      return renderEditBox();
+  const toggleBold = (index: number) => {
+    if (locked) { return; }
+    const word = state.words[index];
+    if (word.notSelectable) { return; }
+    state.words[index].bold = !word.bold;
+    update();
+    save();
+  }
+
+  const toggleItalic = (index: number) => {
+    if (locked) { return; }
+    const word = state.words[index];
+    if (word.notSelectable) { return; }
+    state.words[index].italic = !word.italic;
+    update();
+    save();
+  }
+
+  const renderEditWord = (word: BuildWord, index: number) => {
+    let className = "word";
+    if (word.checked) {
+      className += " active";
     }
-    return renderTextBox();
+    if (word.italic) {
+      className += ' italic'
+    }
+    if (word.bold) {
+      className += ' bold';
+    }
+    if (word.notSelectable) {
+      className += " disabled";
+    }
+
+    return (
+      <span key={index} className={className} onClick={() => {
+        if (state.subMode === SubMode.Bold) {
+          toggleBold(index);
+        } else if (state.subMode === SubMode.Italic) {
+          toggleItalic(index);
+        } else {
+          toggleLight(index)
+        }
+      }}>
+        {word.text}
+      </span>
+    );
   }
 
   const getWords = () => {
@@ -173,7 +179,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     for (let word of state.words) {
       words.push(renderEditWord(word, i));
       if (word.isBreakLine) {
-        words.push(<br key={i2} style={{width: '100%'}} />);
+        words.push(<br key={i2} style={{ width: '100%' }} />);
         i2++;
       }
       i++;
@@ -184,26 +190,8 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   const renderEditBox = () => {
     return (
       <div className="hightlight-area">
-        {
-          state.words ? getWords() : ""
-        }
+        {state.words ? getWords() : ""}
       </div>
-    );
-  }
-
-  const renderEditWord = (word: BuildWord, index: number) => {
-    let className = "word";
-    if (word.checked) {
-      className += " active";
-    }
-    if (word.notSelectable) {
-      className += " disabled";
-    }
-
-    return (
-      <span key={index} className={className} onClick={() => {toggleLight(index)}}>
-        {word.text}
-      </span>
     );
   }
 
@@ -219,23 +207,8 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         onBlur={() => save()}
         value={state.text}
         onChange={updateText}
-        placeholder="Enter Text Here..."
+        placeholder="Enter or Paste Text"
       />
-    );
-  }
-
-  const renderPoemToggle = () => {
-    let className = 'poem-toggle';
-    if (state.isPoem) {
-      className += ' active';
-    }
-    return (
-      <div className={className} onClick={() => {
-        state.isPoem = !state.isPoem;
-        update();
-      }}>
-        br
-      </div>
     );
   }
 
@@ -251,9 +224,29 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         list={state.words}
         switchMode={switchMode}
       />
-      {renderPoemToggle()}
+      <PoemToggle state={state} update={update} />
+      {state.mode === HighlightMode.Edit && <div className="editor-icons">
+        <SpriteIcon name="ql-bold" className={state.subMode === SubMode.Bold ? 'active' : ''} onClick={() => {
+          if (state.subMode === SubMode.Bold) {
+            setState({...state, subMode: SubMode.Edit});
+          } else {
+            setState({...state, subMode: SubMode.Bold});
+          }}} />
+        <SpriteIcon
+          name="ql-italic" className={state.subMode === SubMode.Italic ? 'active' : ''}
+          onClick={() => {
+            if (state.subMode === SubMode.Italic) {
+              setState({...state, subMode: SubMode.Edit});
+            } else {
+              setState({...state, subMode: SubMode.Italic});
+            }
+          }}
+        />
+      </div>}
       <div className="input-container">
-        {renderBox()}
+        {state.mode === HighlightMode.Edit
+          ? renderEditBox()
+          : renderTextBox()}
       </div>
       <LineStyleDialog isOpen={isOpen}
         submit={v => {

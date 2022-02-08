@@ -1,5 +1,6 @@
 .invite-editor-dialog {
   .MuiPaper-root.MuiDialog-paper.MuiDialog-paperScrollPaper {
+    width: 39vw !important;
     max-width: 50vw !important;
   }
   .MuiInputBase-input.MuiOutlinedInput-input.MuiAutocomplete-input.MuiAutocomplete-inputFocused.MuiInputBase-inputAdornedStart.MuiOutlinedInput-inputAdornedStart.MuiInputBase-inputAdornedEnd {
@@ -26,6 +27,10 @@
     &:hover {
       background: var(--white) !important;
       color: var(--theme-orange) !important;
+    }
+    &.disabled {
+      opacity: 0.5;
+      color: var(--theme-dark-blue) !important;
     }
   }
 }

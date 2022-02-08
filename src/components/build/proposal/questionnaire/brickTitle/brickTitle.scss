@@ -9,15 +9,30 @@
 }
 
 .brick-title-page {
+  .key-word {
+    text-transform: capitalize !important;
+  }
+  .tooltip-container {
+    position: relative;
+    .css-custom-tooltip {
+      top: 2.5vw;
+      width: 7.8vw;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
+  }
   .absolute-title-help {
     position: absolute;
     right: 0;
-    top: 1.5vw;
+    top: -0.4vw;
   }
   .absolute-keyword-help {
     position: absolute;
     right: 0;
-    top: -0.5vw;
+    top: 0vw;
   }
   .absolute-difficult-help {
     position: absolute;
@@ -76,6 +91,10 @@
           stroke-width: 2.7 !important;
           width: 2vw;
           height: 2vw;
+          transition: all 300ms ease-in-out;
+          &:hover {
+            color: var(--theme-dark-blue);
+          }
         }
       }
     }
@@ -83,6 +102,15 @@
     .MuiInputBase-input {
       font-family: $font-family-regular;
       letter-spacing: 0.05vw;
+    }
+
+    .key-words {
+      input {
+        margin: 0.5vh 0;
+      }
+    }
+    .difficulty-select .MuiInputBase-root {
+      margin: 0.5vh 0;
     }
 
     .input-container {
@@ -106,6 +134,8 @@
         }
         .quill-document-editor,
         .ql-editor {
+          padding-top: 0;
+          padding-bottom: 0;
           padding-left: 0 !important;
           font-size: 1.6vw;
           background: none !important;

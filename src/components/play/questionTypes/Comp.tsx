@@ -39,12 +39,7 @@ class CompComponent<Props extends CompQuestionProps, State> extends React.Compon
   }
 
   renderGlobalHint() {
-    let correct = false;
-    if (this.props.isBookPreview) {
-      correct = true;
-    } else {
-      correct = this.props.attempt ? this.props.attempt.correct : false;
-    }
+    const correct = this.props.liveAttempt ? this.props.liveAttempt.correct : false;
 
     return (
       <ReviewGlobalHint

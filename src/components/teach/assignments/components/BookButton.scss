@@ -1,0 +1,99 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.teach-book-button {
+  width: 3vw;
+  @extend %flexCenter;
+
+  .book-container {
+    cursor: pointer;
+    position: relative;
+    $size: 2.18vw;
+    width: $size;
+    height: $size;
+    @extend %flexCenter;
+    background: var(--theme-green);
+    border-radius: 50%;
+  }
+
+  .green-hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > div {
+      border-radius: 50%;
+      background: var(--theme-green-alpha3);
+      transition: all 300ms ease-out;
+      $size: 2.18vw;
+      width: $size;
+      height: $size;
+    }
+  }
+
+  .css-custom-tooltip {
+    margin-top: 4.3vw;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    z-index: 100;
+    padding-right: 0.4vw;
+    line-height: 1.3 !important;
+    font-family: $font-family-bold;
+  }
+
+  &:hover {
+    .green-hover > div {
+      $size: 2.8vw;
+      width: $size;
+      height: $size;
+    }
+    .css-custom-tooltip {
+      opacity: 1;
+      width: auto;
+      height: auto;
+      overflow: auto;
+    }
+  }
+
+
+  svg {
+    position: absolute;
+    margin-top: 5%;
+    $size: 70%;
+    stroke-width: 1.5;
+    color: var(--white);
+    width: $size;
+    height: $size;
+  }
+
+  .reminder-icon {
+    cursor: pointer;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0.25vw;
+    stroke-width: 1.5;
+    background: var(--theme-yellow);
+
+    
+  }
+
+  &.library-button-v5 {
+    .book-container {
+      background: var(--theme-dark-blue);
+    }
+    .css-custom-tooltip {
+      text-transform: capitalize;
+    }
+    .green-hover {
+      > div {
+        background: var(--theme-dark-blue-alpha3);
+      }
+    }
+    svg {
+      margin-top: 0 !important;
+    }
+  }
+}

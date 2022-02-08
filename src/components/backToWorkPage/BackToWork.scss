@@ -3,6 +3,59 @@
 @import "src/assets/sass/partials/extensions";
 
 .back-to-work-page {
+  .level-filter-box {
+    position: relative;
+    .MuiFormControlLabel-root {
+      width: 29% !important;
+    }
+    .MuiTypography-root {
+      font-family: $font-family-light !important;
+      font-size: 1.05vw;
+    }
+    .absolute-difficult-help {
+      width: 4vw !important;
+      position: absolute;
+      z-index: 1200;
+      right: -0.5vw;
+      top: calc(1.3vh - 0.2vw);
+      > div {
+        font-family: $font-family-bold;
+      }
+      .white-circle {
+        color: var(--white);
+        background: var(--theme-dark-blue);
+      }
+      .hover-content {
+        position: fixed;
+        background: var(--white);
+        color: var(--theme-dark-blue);
+        z-index: 100000;
+        top: 5vh;
+        left: 22vw;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+      .l-text.smaller {
+        width: calc(100% - 4vw);
+      }
+    }
+  }
+  .publish-bricks {
+    height: calc(100% - 6.6vh) !important;
+    .bricks-list-container {
+      height: 100% !important;
+    }
+  }
+  .absolute-loader {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: calc(100% - 2vw);
+    display: flex;
+    z-index: 120;
+    color: var(--theme-dark-blue);
+    align-items: center;
+    justify-content: center;
+  }
   .brick-row-container {
     overflow: hidden;
     background: inherit !important;
@@ -31,12 +84,11 @@
         min-height: $backwork-tab-height;
         font-size: 4.5vh;
         border-top-left-radius: 0.5vw;
-        font-family: $font-family-black;
-        text-transform: uppercase;
-        letter-spacing: 0.5vw;
+        font-family: $font-family-bold;
+        text-transform: capitalize;
         color: var(--theme-dark-blue);
         background: var(--tab-gray);
-        padding-left: 1.5vw;
+        padding-left: 2vw;
         border-top-right-radius: 0.5vw;
         margin-right: $tabs-margin-between;
         > div {
@@ -54,7 +106,7 @@
           width: 3.8vh;
           height: 3.8vh;
           margin-top: 1.2vh;
-          margin-left: 2.4vw;
+          margin-left: 1.6vw;
           .svg {
             height: 100%;
             width: 100%;
@@ -194,8 +246,8 @@
         cursor: pointer;
         color: var(--theme-dark-blue);
         font-family: $font-family-bold;
-        font-size: 1.1vw;
-        $size: 3vw;
+        font-size: 1.25vw;
+        $size: 4vw;
         .svg {
           color: var(--theme-orange);
           height: $size;
@@ -204,7 +256,7 @@
         }
         span {
           margin-left: 1vw;
-          height: 2.5vw;
+          height: 3.8vw;
           @extend %flexToYCenter;
         }
 
@@ -477,8 +529,19 @@
   letter-spacing: 0.1vw;
   font-family: $font-family-bold;
   font-size: 0.9vw;
+  display: flex;
+
+  svg {
+    $size: 1vw;
+    stroke-width: 2;
+    margin-right: 0.3vw;
+    width: $size;
+    height: $size;
+  }
   > span {
-    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+      cursor: pointer;
     margin-left: 1vw;
     color: var(--dark-gray);
 

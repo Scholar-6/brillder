@@ -4,6 +4,8 @@
 
 .lock-container {
   display: block !important;
+  position: absolute;
+  bottom: 28vh;
   font-size: 0.9vw;
   @extend %textCenter;
   font-family: $font-family-regular;
@@ -27,17 +29,15 @@
 
   .css-custom-tooltip {
     bottom: -1.25vw;
-    left: -1.5vw;
     width: 6.4vw !important;
+    height: 0;
+    left: -2vw;
+    overflow: hidden;
+    font-family: $font-family-bold;
   }
   .container {
     display: flex;
     justify-content: center;
-  }
-  .css-custom-tooltip {
-    height: 0;
-    left: -2vw;
-    overflow: hidden;
   }
   .lock-second-container {
     position: relative;

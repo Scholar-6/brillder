@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Checkbox from '@material-ui/core/Checkbox';
 import queryString from 'query-string';
 // @ts-ignore
-import marked from "marked";
+import {marked} from "marked";
 
 import map from "components/map";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
@@ -13,6 +13,8 @@ import userActions from 'redux/actions/user';
 import { getTerms } from "services/axios/terms";
 import { isPhone } from "services/phone";
 import { hideZendesk } from "services/zendesk";
+import axios from "axios";
+import { User } from "model/user";
 
 interface BricksListProps {
   history: any;
@@ -74,6 +76,20 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
       }
 
       this.setState({ parts, lastModifiedDate: r.lastModifiedDate });
+
+      axios.get(
+        `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
+        { withCredentials: true }
+      ).then(response => {
+        const { data } = response;
+        /*eslint-disable-next-line*/
+        if (r && r.lastModifiedDate == data.termsAndConditionsAcceptedVersion) {
+          this.props.history.push(map.MainPage);
+        }
+      }).catch(error => {
+        console.log('can`t get user for terms onboarding page')
+      });
+
     }
   }
 
@@ -99,30 +115,39 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
           <Grid className="user-preference-container terms-page-container onboarding-terms" item>
             <div className="terms-page">
               <div>
-                {this.state.parts.map((p) => (
-                  <div ref={p.el} dangerouslySetInnerHTML={{ __html: marked(p.content) }} />
-                ))}
+                {this.state.parts.map((p, i) => {
+                  try {
+                    const parsed = marked.parse(p.content);
+                    return <div key={i} ref={p.el} dangerouslySetInnerHTML={{ __html: parsed }} />
+                  } catch (e) {
+                    return <div />;
+                  }
+                })}
               </div>
             </div>
-            <div className="bottom-button" onClick={async() => {
+            <div className="bottom-button" onClick={async () => {
               const success = await acceptTerms(this.state.lastModifiedDate);
               if (success) {
-                this.setState({accepted: true});
-                await this.props.getUser();
+                this.setState({ accepted: true });
+                const user = await this.props.getUser() as User;
                 const values = queryString.parse(this.props.history.location.search);
                 if (isPhone()) {
                   setTimeout(() => {
                     if (values.onlyAcceptTerms) {
-                      this.props.history.push('/home');
+                      this.props.history.push(map.MainPage);
                     } else {
                       this.props.history.push(map.ThankYouPage);
                     }
                   }, 1000);
                 } else {
                   if (values.onlyAcceptTerms) {
-                    this.props.history.push('/home');
+                    this.props.history.push(map.MainPage);
                   } else {
-                    this.props.history.push(map.UserPreference);
+                    if (user.userPreference?.preferenceId) {
+                      this.props.history.push(map.MainPage);
+                    } else {
+                      this.props.history.push(map.UserPreferencePage);
+                    }
                   }
                 }
               }

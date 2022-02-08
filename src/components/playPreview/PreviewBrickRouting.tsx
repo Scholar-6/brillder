@@ -17,18 +17,18 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { maximizeZendeskButton, minimizeZendeskButton } from 'services/zendesk';
 import { User } from 'model/user';
 
-import Introduction from 'components/play/introduction/Introduction';
 import Live from 'components/play/live/Live';
-import ProvisionalScore from 'components/play/provisionalScore/ProvisionalScore';
+import ProvisionalScore from 'components/play/scorePages/provisionalScore/ProvisionalScore';
 import Synthesis from 'components/play/synthesis/Synthesis';
 import Review from 'components/play/review/ReviewPage';
-import Ending from 'components/play/ending/Ending'
+import Ending from 'components/play/scorePages/ending/Ending'
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
 import BuildCompletePage from './buildComplete/BuildCompletePage';
 import FinalStep from './finalStep/FinalStep';
+import { PreviewCashAttempt } from "localStorage/play";
 import { calcBrickLiveAttempt, calcBrickReviewAttempt } from 'components/play/services/scoring';
 import playRoutes from "components/play/routes";
 import buildRoutes from 'components/build/routes';
@@ -71,21 +71,44 @@ const DesktopTheme = React.lazy(() => import('../play/themes/BrickPageDesktopThe
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const { history, location, match } = props;
-  const parsedBrick = parseAndShuffleQuestions(props.brick);
-
+  let parsedBrick = parseAndShuffleQuestions(props.brick);
+  let initBrickAttempt: any = {};
   let cashedBuildQuestion = GetCashedBuildQuestion();
 
-  const [brick] = React.useState(parsedBrick);
   const [status, setStatus] = React.useState(PlayStatus.Live);
-  const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
-  const initAttempts = prefillAttempts(brick.questions);
-  const [attempts, setAttempts] = React.useState(initAttempts);
-  const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
-  const [prepEndTime, setPrepEndTime] = React.useState('');
+  let initAttempts:any[] = [];
+
+  const [prepEndTime, setPrepEndTime] = React.useState(undefined);
+  const [synthesisEndTime, setSynthesisEndTime] = React.useState(null);
+  
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [headerHidden, hideMobileHeader] = React.useState(false);
   const [liveEndTime, setLiveEndTime] = React.useState(null as any);
   const [reviewEndTime, setReviewEndTime] = React.useState(null as any);
+
+
+  const [restoredFromCash, setRestored] = React.useState(false);
+
+  const cashAttemptString = '';// GetPreviewCashedPlayAttempt();
+
+  if (cashAttemptString && !restoredFromCash) {
+    const cashAttempt = JSON.parse(cashAttemptString);
+
+    if (cashAttempt.brick.id === props.brick.id) {
+      parsedBrick = cashAttempt.brick;
+      initAttempts = cashAttempt.attempts;
+      initBrickAttempt = cashAttempt.brickAttempt;
+
+      setRestored(true);
+    }
+  } else {
+    initAttempts = prefillAttempts(parsedBrick.questions);
+  }
+
+  const [brick] = React.useState(parsedBrick);
+  const [attempts, setAttempts] = React.useState(initAttempts);
+  const [brickAttempt, setBrickAttempt] = React.useState(initBrickAttempt);
+  const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
 
   useEffect(() => {
     if (props.brick) {
@@ -151,6 +174,30 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     history.push(routes.previewReview(brick.id));
   }
 
+  const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
+    let lastPageUrl = lastUrl;
+    if (!lastUrl) {
+      const found = location.pathname.match(`[^/]+(?=/$|$)`);
+      if (found) {
+        lastPageUrl = '/' + found[0];
+      }
+    }
+    if (!tempStatus) {
+      tempStatus = status;
+    }
+    PreviewCashAttempt(JSON.stringify({
+      brick,
+      lastPageUrl,
+      status: tempStatus,
+      attempts,
+      reviewAttempts,
+      prepEndTime,
+      reviewEndTime,
+      liveEndTime,
+      brickAttempt,
+    }));
+  }
+
   const moveToBuild = () => {
     const {pathname} = history.location;
     const isSynthesis = pathname.slice(-playRoutes.PlaySynthesisLastPrefix.length) === playRoutes.PlaySynthesisLastPrefix;
@@ -173,6 +220,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         }
       }
     }
+    cashAttempt();
     history.push(link);
   }
 
@@ -206,30 +254,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const renderHead = () => {
-    let isMobileHidden = false;
     const live = location.pathname.search(playRoutes.PlayLiveLastPrefix);
-    const score = location.pathname.search("/provisionalScore");
-    const synthesis = location.pathname.search(playRoutes.PlaySynthesisLastPrefix);
-    const review = location.pathname.search(playRoutes.PlayReviewLastPrefix);
-    const ending = location.pathname.search("/ending");
-    const publish = location.pathname.search("/publish");
-    const finish = location.pathname.search("/finish");
-    if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0 || publish > 0 || finish > 0) {
-      isMobileHidden = true;
-    }
     if (live && !sidebarRolledUp) {
       toggleSideBar(true);
     }
 
     if (!isMobile && sidebarRolledUp) {
-      return <HomeButton link={map.MainPage} />;
+      return <HomeButton history={history} link={map.MainPage} />;
     }
     if (isMobile && headerHidden) {
       return <div></div>;
     }
     return (
       <PageHeadWithMenu
-        isMobileHidden={isMobileHidden}
         page={PageEnum.Play}
         user={props.user}
         history={history}
@@ -263,18 +300,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
           <Switch>
             <Route exact path={routes.newPrepRoute}>
-              <NewPrep brick={brick} moveNext={moveToLive} briefExpanded={true} />
-            </Route>
-            <Route exac path="/play-preview/brick/:brickId/intro">
-              <Introduction
-                location={location}
-                history={history}
-                brick={brick}
-                isPlayPreview={true}
-                endTime={prepEndTime}
-                setEndTime={setPrepEndTime}
-                moveNext={moveToLive}
-              />
+              <NewPrep history={history} brick={brick} moveNext={moveToLive} briefExpanded={true} endTime={prepEndTime} setEndTime={setPrepEndTime} />
             </Route>
             <Route exac path={routes.preLiveRoute}>
               <Live
@@ -306,7 +332,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/synthesis">
-              <Synthesis status={status} brick={brick} isPlayPreview={true} moveNext={moveToReview} />
+              <Synthesis status={status} brick={brick} endTime={synthesisEndTime} setEndTime={setSynthesisEndTime} isPlayPreview={true} moveNext={moveToReview} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/review">
               <Review
@@ -315,7 +341,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 status={status}
                 brick={brick}
                 updateAttempts={updateReviewAttempts}
-                attempts={attempts}
+                liveAttempts={attempts}
+                attempts={reviewAttempts}
                 finishBrick={finishReview}
                 endTime={reviewEndTime}
                 setEndTime={time => {
@@ -362,6 +389,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
               id: question.id,
               type: question.type,
               hint: parsedQuestion.hint,
+              order: question.order,
               firstComponent: parsedQuestion.firstComponent ? parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
               components: parsedQuestion.components
             } as Question;
@@ -376,7 +404,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
 
   let shuffleBrick = Object.assign({}, brick);
 
-  shuffleBrick.questions = parsedQuestions;
+  shuffleBrick.questions = parsedQuestions.sort((q1, q2) => q1.order - q2.order);
 
   shuffleBrick.questions.forEach(question => {
     if (question.type === QuestionTypeEnum.ChooseOne || question.type === QuestionTypeEnum.ChooseSeveral) {
@@ -416,6 +444,8 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             valueFile: a.valueFile,
             answerType: a.answerType,
             imageSource: a.imageSource,
+            valueSoundFile: a.valueSoundFile,
+            valueSoundCaption: a.valueSoundCaption,
             imageCaption: a.imageCaption
           }));
           c.choices = shuffle(choices);

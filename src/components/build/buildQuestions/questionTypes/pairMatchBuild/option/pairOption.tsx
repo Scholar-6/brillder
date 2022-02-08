@@ -53,7 +53,9 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   const setImage = (fileName: string) => {
     if (locked) { return; }
     answer.option = "";
-    answer.optionFile = fileName;
+    if (fileName) {
+      answer.optionFile = fileName;
+    }
     answer.optionType = QuestionValueType.Image;
     update();
     save();
@@ -63,7 +65,9 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     if (locked) { return; }
     answer.value = '';
     answer.valueFile = '';
-    answer.optionSoundFile = soundFile;
+    if (soundFile) {
+      answer.optionSoundFile = soundFile;
+    }
     answer.optionSoundCaption = caption;
     answer.optionType = QuestionValueType.Sound;
     update();
@@ -93,10 +97,15 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     soundCaption: answer.optionSoundCaption
   } as ChooseOneAnswer;
 
+  // const imageAnswer = {
+  //   answerType: answer.optionType,
+  //   imageCaption: answer.imageCaption
+  // }
+
   if (answer.optionType === QuestionValueType.Sound) {
     return (
       <Grid container item xs={6}>
-        <div className="choose-sound">
+        <div className="choose-sound bigger">
           <SoundRecord
             locked={locked}
             answer={soundAnswer}
@@ -135,7 +144,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
           validationRequired={validationRequired}
           toolbar={['latex']}
           isValid={isValid}
-          placeholder={"Enter Option " + (index + 1) + "..."}
+          placeholder={"Option " + (index + 1)}
           onChange={value => onTextChanged(answer, value)}
         />
         <QuestionImageDropZone

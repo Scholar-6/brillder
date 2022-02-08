@@ -4,13 +4,13 @@ export enum UserType {
   Builder,
   Admin,
   Publisher,
-  Institution,
 }
 
-export enum RolePreference {
+export enum UserPreferenceType {
   Student = 1,
   Teacher,
   Builder,
+  Institution
 }
 
 export enum UserStatus {
@@ -21,6 +21,10 @@ export enum UserStatus {
 
 export interface UserRole {
   roleId: number;
+  name?: string;
+}
+export interface UserPreference {
+  preferenceId: number;
   name?: string;
 }
 
@@ -35,17 +39,24 @@ export interface UserBase {
   bio: string;
   status: UserStatus;
   profileImage: string;
+  profileImagePublic: boolean;
 }
 
 export interface User extends UserBase {
   roles: UserRole[];
-  rolePreference?: UserRole;
+  userPreference?: UserPreference;
   hasPlayedBrick: boolean;
   termsAndConditionsAcceptedVersion: string;
+
+  freeAssignmentsLeft: number;
+  freeAttemptsLeft: number;
+  freeCompetitionLeft: number;
+  subscriptionState?: number;
 }
 
 export interface UserProfile extends UserBase {
   password: string;
+  userPreference?: UserPreference;
   roles: number[];
 }
 

@@ -20,6 +20,7 @@ $colors: (
   'theme-orange': #c43c30,
   'theme-dark-orange': #9e281d,
   'theme-yellow': #ff9d00,
+  "highlight-yellow": #ffbf00,
   'pelorous': #17a2b8,
   'off-white': #f5f6f7,
   'muted': #444444,
@@ -134,5 +135,9 @@ $suggestions-title-padding: 1vh;
 
 $base-popup-font-size: 1.6vw;
 
+
 $progress-bar-height: 26px;
+
+// mobile
 $mobile-menu-height: 17.5vw;
+$mbase-font-size: 5vw;

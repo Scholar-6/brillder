@@ -1,22 +1,26 @@
+import React, { useState } from 'react';
 import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
+
 import AssignBrickClass from 'components/baseComponents/dialogs/AssignBrickClass';
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
 import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import StudentInviteSuccessDialog from 'components/play/finalStep/dialogs/StudentInviteSuccessDialog';
+import { checkAdmin } from 'components/services/brickService';
 import { Subject } from 'model/brick';
 import { User } from 'model/user';
-import React from 'react';
 import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
 import InviteStudentEmailDialog from '../manageClassrooms/components/InviteStudentEmailDialog';
 
 import "./NameAndSubjectForm.scss";
+import ShareTeacherDialog from './ShareTeacherDialog';
 
 interface NameAndSubjectFormProps {
   classroom: any;
   onChange(name: string, subject: Subject): void;
   user: User;
+  showPremium?(): void;
   onInvited?(): void;
   onAssigned?(): void;
   moveToAssignemts?(): void;
@@ -27,12 +31,14 @@ interface NameAndSubjectFormProps {
 }
 
 const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
-  const [edit, setEdit] = React.useState(false);
-  const [isOpen, togglePopup] = React.useState(false);
-  const [successResult, setSuccess] = React.useState({ isOpen: false, brick: null } as any);
-  const [failResult, setFailed] = React.useState({ isOpen: false, brick: null } as any);
-  const [inviteOpen, setInvite] = React.useState(false);
-  const [numStudentsInvited, setInvitedCount] = React.useState(0);
+  const {user} = props;
+  const [edit, setEdit] = useState(false);
+  const [isOpen, togglePopup] = useState(false);
+  const [successResult, setSuccess] = useState({ isOpen: false, brick: null } as any);
+  const [failResult, setFailed] = useState({ isOpen: false, brick: null } as any);
+  const [inviteOpen, setInvite] = useState(false);
+  const [numStudentsInvited, setInvitedCount] = useState(0);
+  const [isShareTeachOpen, setShareTeach] = useState(false);
 
   const [name, setName] = React.useState<string>();
   const [subjectIndex, setSubjectIndex] = React.useState<number>();
@@ -42,15 +48,16 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
 
     setName(props.classroom!.name);
     if (props.classroom.subject) {
-      setSubjectIndex(props.user.subjects.findIndex(s => s.id === props.classroom.subject.id));
+      setSubjectIndex(user.subjects.findIndex(s => s.id === props.classroom.subject.id));
     }
-  }, [props.classroom, props.user.subjects]);
+  }, [props.classroom, user.subjects]);
 
   const submit = React.useCallback(() => {
-    if (name && (subjectIndex !== undefined) && props.user.subjects[subjectIndex]) {
-      props.onChange(name, props.user.subjects[subjectIndex]);
+    if (name && (subjectIndex !== undefined) && user.subjects[subjectIndex]) {
+      props.onChange(name, user.subjects[subjectIndex]);
       setEdit(false);
     }
+    /* eslint-disable-next-line */
   }, [name, subjectIndex, props]);
 
   if (props.isArchive) {
@@ -86,7 +93,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
                 name="arrow-down"
                 className="w100 h100 active"
                 style={{
-                  color: (props.user.subjects[subjectIndex!]?.color ?? "#FFFFFF") === "#FFFFFF" ?
+                  color: (user.subjects[subjectIndex!]?.color ?? "#FFFFFF") === "#FFFFFF" ?
                     "var(--theme-dark-blue)" :
                     "var(--white)"
                 }}
@@ -94,7 +101,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
             </SvgIcon>
           }
         >
-          {props.user.subjects.map((s, i) =>
+          {user.subjects.map((s, i) =>
             <MenuItem value={i} key={i}>
               <ListItemIcon>
                 <SvgIcon>
@@ -129,6 +136,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
       </div>
     ) : (
       <div className="name-subject-display">
+
         <div className="subject-icon">
           <SpriteIcon
             name={(props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ? "circle-empty" : "circle-filled"}
@@ -139,6 +147,15 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
                 props.classroom.subject.color
             }}
           />
+          <div className="subject-icon-hover"
+            style={{
+              background: (props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ?
+                "var(--theme-dark-blue)" :
+                props.classroom.subject.color
+            }}
+          />
+          <SpriteIcon name="share" className="share-icon" onClick={() => setShareTeach(true)} />
+          <div className="css-custom-tooltip bold">Share Class</div>
         </div>
         <h1 className="name-display">{props.classroom!.name}</h1>
         <span className="edit-icon" onClick={startEditing}>
@@ -146,43 +163,51 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
             name="edit-outline"
             className="w100 h100 active"
           />
-          <div className="css-custom-tooltip">Edit Class Name or Subject</div>
+          <div className="css-custom-tooltip bold">Edit Class Name or Subject</div>
         </span>
         <div className="classroom-btns-container">
           {!props.inviteHidden &&
-          <div className="assign-button-container">
-            <div className="btn" onClick={() => setInvite(true)}>
-              Add a new student
-              <SpriteIcon name="user-plus" />
-              <div className="css-custom-tooltip">Add New Student</div>
-            </div>
-          </div>}
-          {!props.assignHidden && 
-          <div className="assign-button-container">
-            <div className="btn" onClick={() => {
-              togglePopup(true);
-            }}>
-              Assign a new brick
-            <SpriteIcon name="file-plus" />
-            </div>
-          </div>}
+            <div className="assign-button-container">
+              <div className="btn" onClick={() => setInvite(true)}>
+                Add a new student
+                <SpriteIcon name="user-plus" />
+              </div>
+            </div>}
+          {!props.assignHidden &&
+            <div className="assign-button-container">
+              <div className="btn" onClick={() => {
+                if (user.subscriptionState && user.subscriptionState > 1) {
+                  togglePopup(true);
+                } else if (user.freeAssignmentsLeft > 0) {
+                  togglePopup(true);
+                } else if (props.showPremium) {
+                  props.showPremium();
+                }
+              }}>
+                Assign a new brick
+                <SpriteIcon name="file-plus" />
+              </div>
+            </div>}
         </div>
-        <AssignBrickClass
-          isOpen={isOpen}
-          classroomId={props.classroom.id}
-          subjectId={props.classroom.subjectId || props.classroom.subject.id}
-          success={brick => {
-            setSuccess({ isOpen: true, brick })
-            if (props.onAssigned) {
-              props.onAssigned();
-            }
-            if (props.isStudents) {
-              props.moveToAssignemts && props.moveToAssignemts();
-            }
-          }}
-          failed={brick => setFailed({ isOpen: true, brick })}
-          close={() => togglePopup(false)}
-        />
+        {(checkAdmin(user.roles) && props.classroom!.teachers) && <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span>}
+        {isOpen &&
+          <AssignBrickClass
+            isOpen={isOpen}
+            classroom={props.classroom}
+            subjectId={props.classroom.subjectId || props.classroom.subject.id}
+            success={brick => {
+              setSuccess({ isOpen: true, brick })
+              if (props.onAssigned) {
+                props.onAssigned();
+              }
+              if (props.isStudents) {
+                props.moveToAssignemts && props.moveToAssignemts();
+              }
+            }}
+            showPremium={() => props.showPremium && props.showPremium()}
+            failed={brick => setFailed({ isOpen: true, brick })}
+            close={() => togglePopup(false)}
+          />}
         <AssignSuccessDialog
           isOpen={successResult.isOpen}
           brickTitle={successResult.brick?.title}
@@ -210,6 +235,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           numStudentsInvited={numStudentsInvited}
           close={() => setInvitedCount(0)}
         />
+        <ShareTeacherDialog isOpen={isShareTeachOpen} classId={props.classroom.id} close={() => setShareTeach(false)} />
       </div>
     );
 }

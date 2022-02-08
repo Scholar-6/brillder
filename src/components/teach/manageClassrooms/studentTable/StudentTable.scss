@@ -14,7 +14,7 @@
 
 .manage-classrooms-page {
   $classroom-name-width: 44.6vw;
-  $user-name-width: 15vw;
+  $user-name-width: 13vw;
   .classes-names {
     padding-left: 2vw !important;
     width: $classroom-name-width;
@@ -23,12 +23,13 @@
     width: $user-name-width !important;
   }
   .user-radio-column {
+    display: flex;
     .MuiButtonBase-root.MuiIconButton-root {
       padding: 0.35vw !important;
 
       .MuiSvgIcon-root {
-        width: 1.3vw !important;
-        height: 1.3vw !important;
+        width: 1.5vw !important;
+        height: 1.5vw !important;
       }
     }
 
@@ -39,6 +40,38 @@
       z-index: 1000;
       background: var(--theme-dark-blue);
       color: var(--tab-gray);
+    }
+  }
+
+  .student-library-link {
+    border-radius: 50%;
+    width: 1.8vw;
+    height: 1.8vw;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--theme-dark-blue);
+    svg {
+      width: 70%;
+      height: 70%;
+    }
+    .css-custom-tooltip {
+      display: none;
+      top: 2vw;
+      color: white;
+      padding-left: 0.3vw;
+      padding-right: 0.3vw;
+      background: var(--theme-dark-blue);
+      left: 0.3vw;
+      z-index: 100;
+      white-space: nowrap;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        display: block;
+        opacity: 1;
+      }
     }
   }
 

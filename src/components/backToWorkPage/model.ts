@@ -37,7 +37,10 @@ export interface Filters {
   level1: boolean;
   level2: boolean;
   level3: boolean;
-  level4: boolean;
+
+  s20: boolean;
+  s40: boolean;
+  s60: boolean;
 }
 
 export interface PlayFilters {

@@ -9,7 +9,7 @@ import DynamicFont from 'react-dynamic-font';
 
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
-import { RolePreference, User } from "model/user";
+import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
@@ -25,13 +25,16 @@ import { getAssignedBricks } from "services/axios/brick";
 import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
 import TeachButton from "./components/TeachButton";
 import FirstButton from "./components/FirstButton";
-import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/DesktopVersionDialogV2";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import LibraryButton from "./components/LibraryButton";
 import BlocksIcon from "./components/BlocksIcon";
-import { isPhone } from "services/phone";
 import ReportsAlertDialog from "components/baseComponents/dialogs/ReportsAlertDialog";
-import { isIPad13, isTablet } from "react-device-detect";
+import { isIPad13, isMobile, isTablet } from "react-device-detect";
+import InvalidDialog from "components/build/baseComponents/dialogs/InvalidDialog";
+import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
+import SubscribedDialog from "./components/SubscibedDialog";
+
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -86,6 +89,8 @@ interface MainPageState {
   // intro
   stepsEnabled: boolean;
   steps: any[];
+
+  subscribedPopup: boolean;
 }
 
 class MainPageDesktop extends Component<MainPageProps, MainPageState> {
@@ -99,9 +104,13 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isNewTeacher = true;
     }
 
-    const { rolePreference } = props.user;
-    const isStudent = rolePreference?.roleId === RolePreference.Student;
-    const isBuilder = rolePreference?.roleId === RolePreference.Builder;
+    let subscribedPopup = false;
+    if (values.subscribedPopup) {
+      subscribedPopup = true;
+    }
+
+    const isStudent = isStudentPreference(props.user);
+    const isBuilder = isBuilderPreference(props.user);
 
     this.state = {
       createHober: false,
@@ -115,7 +124,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isReportLocked: false,
       isNewTeacher,
 
-      isTeacher: rolePreference?.roleId === RolePreference.Teacher,
+      subscribedPopup,
+
+      isTeacher: isTeacherPreference(props.user) || isInstitutionPreference(props.user),
       isAdmin: checkAdmin(props.user.roles),
       isStudent,
       isBuilder,
@@ -172,9 +183,12 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return (
       <div className={`create-item-container ${isActive ? '' : 'disabled'}`} onClick={() => {
         if (disabled) {
+          if (isMobile) {
+            this.setState({isDesktopOpen: true});
+          }
           return;
         }
-        this.props.history.push(map.BackToWorkPage);
+        this.props.history.push(map.backToWorkUserBased(this.props.user));
       }}>
         <button className="btn btn-transparent zoom-item svgOnHover">
           <SpriteIcon name="trowel-home" className={isActive ? 'active text-theme-orange' : 'text-theme-light-blue'} />
@@ -188,14 +202,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     const isActive = this.props.user.hasPlayedBrick;
     return (
       <LibraryButton
-        isActive={isActive} history={this.props.history} isSwiping={false}
+        isActive={isActive} history={this.props.history}
         onClick={() => this.setState({ isMyLibraryOpen: true })}
-        onMobileClick={() => {
-          this.setState({
-            isDesktopOpen: true,
-            secondaryLabel: 'Your Library has' + this.state.secondPart
-          });
-        }}
       />
     );
   }
@@ -204,7 +212,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     const isActive = this.state.backWorkActive;
     const disabledColor = 'text-theme-dark-blue';
     return (
-      <div className="back-item-container student-back-work" onClick={() => {
+      <div className="back-item-container second-button student-back-work" onClick={() => {
         if (isActive) {
           this.props.history.push(map.AssignmentsPage);
         } else {
@@ -212,10 +220,10 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : disabledColor}`}>
-          <BlocksIcon />
+          <BlocksIcon disabled={!isActive} />
           <span className={`item-description flex-number ${isActive ? '' : 'disabled'}`}>
             My Assignments {this.state.assignedCount > 0 &&
-            <div className="m-red-circle">
+            <div className="m-red-circle bold">
               <DynamicFont content={this.state.assignedCount.toString()} />
             </div>}
           </span>
@@ -226,8 +234,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   renderSecondButton() {
     if (this.state.isTeacher || this.state.isAdmin) {
-      const isIpad = isIPad13 || isTablet;
-      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher || isIpad} />
+      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher} onMobileClick={() => this.setState({isDesktopOpen: true})} />
     } else if (this.state.isStudent) {
       return this.renderStudentWorkButton();
     }
@@ -237,6 +244,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   renderThirdButton() {
     if (this.state.isTeacher) {
       return this.renderTryBuildButton(true && !this.state.isNewTeacher);
+    } else if (this.state.isBuilder && !this.state.isAdmin) {
+      return this.renderLibraryButton();
     } else if (this.state.isStudent) {
       return this.renderLibraryButton();
     } else if (this.state.isAdmin) {
@@ -282,14 +291,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   renderReportsButton(isActive: boolean) {
     return (
       <div className="back-item-container student-back-work" onClick={() => {
-        if (isPhone()) {
-          this.setState({
-            isDesktopOpen: true,
-            secondaryLabel: 'Reports have ' + this.state.secondPart
-          });
-        } else {
-          this.setState({ isReportLocked: true });
-        }
+        this.setState({ isReportLocked: true });
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : 'text-theme-light-blue'}`}>
           <SpriteIcon name="book-open" />
@@ -313,12 +315,15 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return (
       <div className={className} onClick={() => {
         if (disabled) {
+          if (isMobile) {
+            this.setState({isDesktopOpen: true});
+          }
           return;
         }
         if (!isActive) {
           this.setState({ isTryBuildOpen: true });
         } else {
-          this.props.history.push(map.BackToWorkPage);
+          this.props.history.push(map.backToWorkUserBased(this.props.user));
         }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
@@ -331,15 +336,17 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   renderRightButton() {
     if (this.state.isBuilder) {
-      let isActive = false;
-      return (
-        <div className="create-item-container">
-          <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
-            <SpriteIcon name="book-open" />
-            <span className={`item-description ${isActive ? '' : 'disabled'}`}>Brick Stats</span>
-          </button>
-        </div>
-      );
+      // Removed brick stats because it doesnt exist yet 11/10/21
+      // let isActive = false;
+      // return (
+      //   <div className="create-item-container stats">
+      //     <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
+      //       <SpriteIcon name="f-trending-up" />
+      //       <span className={`item-description ${isActive ? '' : 'disabled'}`}>Brick Stats</span>
+      //     </button>
+      //   </div>
+      // );
+      return ""
     }
     let isActive = this.props.user.hasPlayedBrick;
     if (this.state.isTeacher) {
@@ -370,7 +377,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   onIntroChanged(e: any) {
     if (e !== 0) {
-      this.props.history.push(map.SubjectCategories + '?' + map.NewTeachQuery);
+      this.props.history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true');
       this.setState({stepsEnabled: false});
     }
   }
@@ -394,7 +401,11 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
             {this.renderSecondButton()}
             {this.renderThirdButton()}
           </div>
-          <div className="second-item"></div>
+          {this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState ?
+          <div className="second-item" onClick={() => this.props.history.push(map.ChoosePlan)}>
+            Go Premium <SpriteIcon name="hero-sparkle" />
+          </div> : <div className="second-item not-active light-blue" />
+          }
         </div>
         {(this.state.isTeacher || this.state.isAdmin) ?
           <div className="second-col">
@@ -438,11 +449,13 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         <ReportsAlertDialog
           isOpen={this.state.isReportLocked}
           close={() => this.setState({ isReportLocked: false })} />
-        <DesktopVersionDialogV2
-          isOpen={this.state.isDesktopOpen} secondaryLabel={this.state.secondaryLabel}
-          onClick={() => this.setState({ isDesktopOpen: false })}
-        />
+        <InvalidDialog 
+          isOpen={this.state.isDesktopOpen} 
+          label="This feature is not available on this device, try a desktop browser."
+          close={() => this.setState({isDesktopOpen: false})} />
         <ClassInvitationDialog />
+        <ClassTInvitationDialog />
+        <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({subscribedPopup: false})} />
       </Grid>
       </React.Suspense>
     );

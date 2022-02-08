@@ -9,6 +9,7 @@ import { login } from "services/axios/auth";
 import LoginLogo from '../components/LoginLogo';
 import WrongLoginDialog from "../components/WrongLoginDialog";
 import DesktopLoginForm from "./DesktopLoginForm";
+import map from "components/map";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -54,7 +55,22 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
     let data = await login(email, password);
     if (!data.isError) {
       if (data === "OK") {
-        props.loginSuccess();
+        axios.get(
+          `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
+          {withCredentials: true}
+        ).then(response => {
+          const {data} = response;
+          if (data.termsAndConditionsAcceptedVersion === null) {
+            props.history.push(map.TermsSignUp);
+            props.loginSuccess();
+          } else {
+            props.loginSuccess();
+          }
+        }).catch(error => {
+          // error
+          toggleAlertMessage(true);
+          setAlertMessage("Server error");
+        });
         return;
       }
       let { msg } = data;
@@ -96,6 +112,10 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         return;
       }
 
+      if (data.msg === "INVALID_EMAIL_OR_PASSWORD") {
+        setLoginWrong(true);
+      }
+
       if (data.msg) {
         toggleAlertMessage(true);
         setAlertMessage(data.msg);
@@ -106,7 +126,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       }
     }).catch((e) => {
       toggleAlertMessage(true);
-      setAlertMessage("Connection problem");
+      setAlertMessage("Something may be wrong with the connection.");
     });
   };
 
@@ -125,7 +145,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
           passwordHidden={passwordHidden}
           setHidden={setHidden}
           handleSubmit={handleLoginSubmit}
-          register={() => register(email, password)}
         />
       </div>
       <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />

@@ -3,6 +3,17 @@
 @import "src/assets/sass/partials/extensions";
 
 .invite-email-dialog {
+  .loader-container {
+    margin-left: 0.5vw;
+    $size: 2vw;
+    width: $size !important;
+    height: $size !important;
+    svg {
+      width: $size !important;
+      height: $size !important;
+      margin: 0 !important;
+    }
+  }
   .MuiDialog-container {
     padding-left: 25vw !important;
   }

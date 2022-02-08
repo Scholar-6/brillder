@@ -4,9 +4,6 @@
 
 .categorise-build {
   @extend %textCenter;
-  > div {
-    margin-bottom: 0.4vh;
-  }
   > .quill-document-editor {
     .ql-container {
       .ql-editor {
@@ -22,6 +19,7 @@
   .categorise-box {
     position: relative;
     margin: 0;
+    margin-top: $editor-spacing;
     width: 100%;
     > div {
       margin-bottom: 0.2vw;
@@ -31,6 +29,9 @@
       .ql-container {
         .ql-editor {
           padding: 1vw !important;
+          &:before {
+            text-align: center;
+          }
         }
       }
     }
@@ -83,6 +84,10 @@
       .ql-editor {
         padding-right: 10vw;
         padding-left: 2vw;
+
+        &:before {
+          margin-left: 3.9vw;
+        }
       }
       .ql-editor.ql-blank::before {
         left: 2vw;

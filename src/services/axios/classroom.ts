@@ -48,6 +48,14 @@ export const getStudents = async () => {
   }
 }
 
+export const getClassroomStudents = async (id: number) => {
+  try {
+    return await get<Student[]>("/classrooms/students/" + id);
+  } catch {
+    return null;
+  }
+}
+
 export const getClassInvitations = async (searchString?: string) => {
   try {
     return await post<MUser[]>("/classrooms/studentsInvitations", {});
@@ -67,6 +75,41 @@ export const assignToClassByEmails = async (classroom: ClassroomApi, emails: str
 export const resendInvitation = async (classroom: ClassroomApi, email: string) => {
   try {
     return await post<any>(`/classrooms/students/${classroom.id}/resend`, { email });
+  } catch {
+    return null;
+  }
+}
+
+export const inviteTeacher = async (classroomId: number, userIds: number[]) => {
+  try {
+    await post<any>('/classroom/inviteTeacher/' + classroomId, { userIds });
+    return true;
+  } catch{
+    return null;
+  }
+}
+
+export const getTeachClassInvitations = async () => {
+  try {
+    return await get<any>('/classrooms/teachInvitations');
+  } catch {
+    return null;
+  }
+}
+
+export const teachAcceptClass = async (classroomId: number) => {
+  try {
+    await post<any>('/classroom/acceptTeacherInvite/' + classroomId, {});
+    return true;
+  } catch {
+    return null;
+  }
+}
+
+export const teachRejectClass = async (classroomId: number) => {
+  try {
+    await post<any>('/classroom/rejectTeacherInvite/' + classroomId, {});
+    return true;
   } catch {
     return null;
   }

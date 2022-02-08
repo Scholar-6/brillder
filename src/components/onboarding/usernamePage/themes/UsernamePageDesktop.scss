@@ -38,7 +38,7 @@
     }
 
     h1 {
-      font-size: 4vw;
+      font-size: 3vw;
       font-family: $font-family-black;
       letter-spacing: 0.1vw;
     }
@@ -153,6 +153,14 @@
         padding: 1.1vh 2.5vw;
         background: var(--theme-orange);
         font-family: $font-family-bold;
+        display: flex;
+        align-items: center;
+        svg {
+          $size: 2.6vw;
+          width: $size;
+          height: $size;
+          padding-left: 1vw;
+        }
         transition: all 300ms ease-out !important;
         &:hover {
           background: var(--white);

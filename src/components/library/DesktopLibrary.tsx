@@ -14,6 +14,7 @@ import { getLibraryBricks } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 import { SortBy, SubjectAssignments } from "./service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
+import { getUserById } from 'services/axios/user';
 
 import LibraryFilter from "./components/LibraryFilter";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
@@ -23,12 +24,16 @@ import { getStudentClassrooms } from "services/axios/classroom";
 import { TeachClassroom } from "model/classroom";
 import LibrarySubjects from "./components/LibrarySubjects";
 import SingleSubjectAssignments from "./singleSubject/SingleSubjectAssignments";
-import routes from "components/play/routes";
+import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { CircularProgressbar } from "react-circular-progressbar";
+import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
 
 interface BricksListProps {
   user: User;
   notifications: Notification[] | null;
+  match: any;
   history: any;
   location: any;
 }
@@ -38,14 +43,12 @@ interface BricksListState {
   rawAssignments: LibraryAssignmentBrick[];
   subjectAssignments: SubjectAssignments[];
 
-  searchString: string;
-  isSearching: boolean;
-
   sortBy: SortBy;
   subjects: any[];
   sortedIndex: number;
   isLoading: boolean;
   classrooms: TeachClassroom[];
+  student: User | null;
 
   dropdownShown: boolean;
 
@@ -76,14 +79,13 @@ class Library extends Component<BricksListProps, BricksListState> {
       rawAssignments: [],
       subjectAssignments: [],
       classrooms: [],
-      sortBy: SortBy.Date,
+      sortBy: SortBy.Score,
       subjects: [],
       sortedIndex: 0,
       dropdownShown: false,
-      searchString: '',
-      isSearching: false,
       pageSize: 15,
       isLoading: true,
+      student: null,
 
       activeClassroomId: -1,
       isClearFilter: false,
@@ -203,7 +205,13 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async getAssignments(subjects: SubjectAItem[]) {
-    const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>();
+    let userId = this.props.user.id;
+    var student:User | null = null;
+    if (this.props.match.params.userId) {
+      userId = this.props.match.params.userId;
+      student = await getUserById(userId);
+    }
+    const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>(userId);
     if (rawAssignments) {
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects);
@@ -216,7 +224,7 @@ class Library extends Component<BricksListProps, BricksListState> {
         });
       } else {
         this.setState({
-          ...this.state, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments
+          ...this.state, student, subjects, subjectAssignments, isLoading: false, rawAssignments, finalAssignments
         });
       }
     } else {
@@ -224,11 +232,9 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  move(brickId: number) {
-    this.props.history.push(routes.playNewPrep(brickId));
-  }
-
-  handleSortChange = (e: any) => { };
+  handleSortChange = (e: any) => {
+    this.setState({ sortBy: parseInt(e.target.value) });
+  };
 
   getCheckedSubjectIds(subjects: SubjectAItem[]) {
     const filterSubjects = [];
@@ -309,9 +315,6 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  searching(v: string) { }
-  async search() { }
-
   showDropdown() { this.setState({ ...this.state, dropdownShown: true }) }
   hideDropdown() { this.setState({ ...this.state, dropdownShown: false }) }
 
@@ -348,6 +351,11 @@ class Library extends Component<BricksListProps, BricksListState> {
         return classroom.name;
       }
     }
+    const {student} = this.state;
+    /*eslint-disable-next-line*/
+    if (this.props.user.id != this.props.match.params.userId && student) {
+      return student.firstName + " " + student.lastName + "'s library";
+    }
     return "My Library";
   }
 
@@ -357,23 +365,246 @@ class Library extends Component<BricksListProps, BricksListState> {
       if (subject) {
         const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
         if (subjectAssignment) {
-          return <SingleSubjectAssignments userId={this.props.user.id} subjectAssignment={subjectAssignment} history={this.props.history} />
+          return <SingleSubjectAssignments userId={this.props.user.id} sortBy={this.state.sortBy} student={this.state.student} subjectAssignment={subjectAssignment} history={this.props.history} />
         }
       }
     }
     return (
       <div className="bricks-list-container bricks-container-mobile all-subject-assignments">
         <LibrarySubjects
-          userId={this.props.user.id}
           subjects={this.state.subjects}
+          sortBy={this.state.sortBy}
           pageSize={this.state.pageSize}
           sortedIndex={this.state.sortedIndex}
           subjectAssignments={this.state.subjectAssignments}
           history={this.props.history}
+          student={this.state.student}
+          subjectTitleClick={s => this.filterBySubject(s.id)}
         />
       </div>
     );
   }
+
+  renderBook() {
+    let number = 0;
+    let count = 0;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          count = subjectAssignment.assignments.length;
+          for (let aa of subjectAssignment.assignments) {
+            if (aa.bestAttemptPercentScore && aa.bestAttemptPercentScore >= 50) {
+              number += 1;
+            }
+          }
+        }
+      }
+    } else {
+      count = this.state.finalAssignments.length;
+      for (let aa of this.state.finalAssignments) {
+        if (aa.bestAttemptPercentScore && aa.bestAttemptPercentScore >= 50) {
+          number += 1;
+        }
+      }
+    }
+
+    return (
+      <div className="flex-center">
+        <div className="book-green">
+          <SpriteIcon name="book-open" />
+          <div className="custom-tooltip bold">
+            <div>Books Earned / Bricks Attempted</div>
+          </div>
+        </div>
+        <div className="static-numbers">
+          <div>{number}</div>
+          <div className="smaller-number">/ {count}</div>
+        </div>
+      </div>
+    );
+  }
+
+  renderBox() {
+    return (
+      <div className="flex-center">
+        <div className="box-blue circle-container">
+          <SpriteIcon name="box" />
+          <div className="custom-tooltip bold">
+            <div>Subjects Played</div>
+          </div>
+        </div>
+        <div className="static-numbers">
+          <div>{this.state.subjects.length}</div>
+        </div>
+      </div>
+    );
+  }
+
+  renderLastBox() {
+    let number = 0;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let assignment of subjectAssignment.assignments) {
+            number += assignment.numberOfAttempts;
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        number += assign.numberOfAttempts;
+      }
+    }
+
+    return (
+      <div className="flex-center">
+        <div className="box-yellow circle-container">
+          <SpriteIcon name="play-thick" />
+          <div className="custom-tooltip bold">
+            <div>Total Plays</div>
+          </div>
+        </div>
+        <div className="static-numbers">
+          <div>{number}</div>
+        </div>
+      </div>
+    );
+  }
+
+  highestScore() {
+    let number = 0;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let aa3 of subjectAssignment.assignments) {
+            if (aa3.bestAttemptPercentScore && aa3.bestAttemptPercentScore > number) {
+              number = aa3.bestAttemptPercentScore;
+            }
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore > number) {
+          number = assign.bestAttemptPercentScore;
+        }
+      }
+    }
+
+    return (
+      <div className="flex-center hs-score">
+        <div className="custom-tooltip bold">
+          <div>Highest Score</div>
+        </div>
+        HS
+        <div className="score-container-v5">
+          <CircularProgressbar
+            strokeWidth={12}
+            counterClockwise={true}
+            value={number}
+          />
+          <div className="score-absolute">{Math.round(number)}</div>
+        </div>
+      </div>
+    );
+  }
+
+  averageScore() {
+    let count = 0;
+    let number = 0;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let assign of subjectAssignment.assignments) {
+            if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 50) {
+              number += assign.bestAttemptPercentScore;
+              count += 1;
+            }
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 50) {
+          number += assign.bestAttemptPercentScore;
+          count += 1;
+        }
+      }
+    }
+    if (count !== 0) {
+      number = Math.round(number / count);
+    }
+    return (
+      <div className="flex-center hs-score avg-score">
+        <div className="custom-tooltip bold">
+          <div>Average Score</div>
+        </div>
+        AVG.
+        <div className="score-container-v5">
+          <CircularProgressbar
+            strokeWidth={12}
+            counterClockwise={true}
+            value={number}
+          />
+          <div className="score-absolute">{Math.round(number)}</div>
+        </div>
+      </div>
+    );
+  }
+
+  lowestScore() {
+    let number = 100;
+
+    if (this.state.subjectChecked) {
+      const subject = this.state.subjects.find(s => s.checked === true);
+      if (subject) {
+        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
+        if (subjectAssignment) {
+          for (let assign of subjectAssignment.assignments) {
+            if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 0 && assign.bestAttemptPercentScore < number) {
+              number = assign.bestAttemptPercentScore;
+            }
+          }
+        }
+      }
+    } else {
+      for (let assign of this.state.finalAssignments) {
+        if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 0 && assign.bestAttemptPercentScore < number) {
+          number = assign.bestAttemptPercentScore;
+        }
+      }
+    }
+    
+    return (
+      <div className="flex-center hs-score ls-score">
+        <div className="custom-tooltip bold">
+          <div>Lowest Score</div>
+        </div>
+        LS
+        <div className="score-container-v5">
+          <CircularProgressbar
+            strokeWidth={12}
+            counterClockwise={true}
+            value={number}
+          />
+          <div className="score-absolute">{Math.round(number)}</div>
+        </div>
+      </div>
+    );
+  }
+
 
   render() {
     if (this.state.isLoading) {
@@ -387,10 +618,10 @@ class Library extends Component<BricksListProps, BricksListState> {
           <PageHeadWithMenu
             page={PageEnum.MyLibrary}
             user={this.props.user}
-            placeholder={"Search Ongoing Projects & Published Bricks…"}
+            placeholder="  "
             history={this.props.history}
-            search={() => this.search()}
-            searching={(v) => this.searching(v)}
+            search={() => { }}
+            searching={() => { }}
           />
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
@@ -407,13 +638,19 @@ class Library extends Component<BricksListProps, BricksListState> {
             </Grid>
             <Grid item xs={9} className="brick-row-container">
               <div className={
-                `
-                    brick-row-title main-title uppercase
-                    ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}
-                  `
-              }
-              >
-                {this.renderMainTitle(filterSubjects)}
+                `library-title ${(filterSubjects.length === 1 || this.state.activeClassroomId > 0) && 'subject-title'}`
+              }>
+                <div className="ellipsis-title">
+                  {this.renderMainTitle(filterSubjects)}
+                </div>
+                {this.renderBook()}
+                {!this.state.subjectChecked && this.renderBox()}
+                {this.renderLastBox()}
+                <div className="absolute-scores">
+                  {this.highestScore()}
+                  {this.averageScore()}
+                  {this.lowestScore()}
+                </div>
               </div>
               {this.renderContent()}
             </Grid>
@@ -423,6 +660,8 @@ class Library extends Component<BricksListProps, BricksListState> {
             close={() => this.setState({ ...this.state, failedRequest: false })}
           />
         </div>
+        <ClassInvitationDialog />
+        <ClassTInvitationDialog />
       </React.Suspense>
     );
   }

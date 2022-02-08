@@ -13,21 +13,26 @@
     font-family: $font-family-regular;
   }
 
+  @keyframes hor-shuf-button-color {
+    from { background: var(--tab-gray); }
+    to { background: var(--theme-green); }
+  }
+
   button {
     position: relative;
-    font-family: $font-family-bold;
+    font-family: $font-family-regular;
     width: 22%;
     @extend %textCenter;
     margin: 1%;
     padding: 0vw 1vw;
-    height: 5vw;
+    height: 4vw;
     font-size: 2vw;
     line-height: 1.1;
     letter-spacing: 0.01vw;
     border-radius: 1vw;
     border: none;
-    background: var(--theme-green);
-    color: white;
+    color: var(--theme-dark-blue);
+    transition: all 300ms ease-out;
   }
   button:nth-child(2) {
     padding: 0;
@@ -37,6 +42,13 @@
       height: 0.1vw !important;
       overflow-y: hidden;
       text-decoration: overline;
+    }
+  }
+  .inside-green {
+    button {
+      font-family: $font-family-bold;
+      color: var(--white);
+      animation: hor-shuf-button-color 1000ms forwards;
     }
   }
 }

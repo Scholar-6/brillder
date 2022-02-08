@@ -6,6 +6,7 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import PairMatchImageContent from './PairMatchImageContent';
 import { Hint, HintStatus } from 'model/question';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
+import HintBox from 'components/play/baseComponents/HintBox';
 
 interface OptionProps {
   index: number;
@@ -27,9 +28,13 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
   const renderEachHint = (hint: Hint, i: number) => {
     if (hint.status === HintStatus.Each) {
       let value = hint.list[i];
+      let className = "question-hint";
+      if (correct) {
+        className += ' correct';
+      }
       return (
-        <div className="question-hint">
-          <div className="bold inline"><p>Hint:</p></div> <MathInHtml className="inline" value={value} />
+        <div className={className}>
+          <HintBox correct={correct} value={value} />
         </div>
       );
     }
@@ -47,7 +52,7 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
       return (
         <div style={{ width: '100%' }}>
           <Audio src={answer.optionSoundFile} />
-          <div>{answer.optionSoundCaption ? answer.optionSoundCaption : 'Click to select'}</div>
+          <div>{answer.optionSoundCaption ? answer.optionSoundCaption : ''}</div>
         </div>
       );
     }

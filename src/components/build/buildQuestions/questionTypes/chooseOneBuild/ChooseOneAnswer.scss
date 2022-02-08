@@ -11,6 +11,27 @@
     height: calc(100% - 0.4vh);
   }
 
+  .play-wave-container {
+    margin-left: 2.2vw;
+    width: calc(100% - 6.5vw);
+
+    .play-icon-d1 {
+      width: 3vw !important;
+      height: 3vw !important;
+    }
+  }
+
+  .play-wave-container {
+    height: 4vw;
+    .play-icon-d1 {
+      width: 2vw !important;
+      height: 2vw !important;
+    }
+    .react-waves .wave wave {
+      height: 2.3vw !important;
+    }
+  }
+
   .checkbox-container {
     @extend %flexCenter;
     @extend %floatToYCenter;
@@ -75,6 +96,7 @@
       padding-left: 2vw !important;
       min-height: 7vh !important;
       &.ql-blank:before {
+        text-align: center;
         padding-right: 10.5vw !important;
         padding-left: 2vw !important;
         min-height: 7vh !important;

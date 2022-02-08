@@ -1,0 +1,71 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.premium-educator-dialog {
+  .MuiPaper-root {
+    padding: 2vh 3.5vw 4vh 4.3vw !important;
+    color: var(--theme-dark-blue);
+  }
+  .flex-center {
+    width: 100%;
+  }
+  .premium-label {
+    position: relative;
+    display: flex;
+    font-size: 3.3vw;
+    svg {
+      margin-left: 1vw;
+      width: 6.7vw;
+      height: 6.7vw;
+    }
+    .absolute-label {
+      font-size: 1.45vw;
+      position: absolute;
+      bottom: 0.2vw;
+      color: var(--theme-green);
+      left: 0.2vw;
+    }
+  }
+  .list {
+    margin-top: 4vh;
+    margin-left: -1vw;
+    font-size: 1.4vw;
+    margin-bottom: 2vh;
+
+    svg {
+      width: 1.6vw;
+      height: 1.6vw;
+      margin-right: 0.5vw;
+      color: var(--theme-green);
+    }
+
+    >div {
+      display: flex;
+      align-items: center;
+      font-family: $font-family-bold;
+      margin-bottom: 0.4vh;
+    }
+  }
+
+  .green-btn {
+    cursor: pointer;
+    margin-top: 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: var(--theme-green);
+    
+    border-radius: 0.5vw;
+    padding: 0.5vw 1.4vw;
+    font-size: 2.1vw;
+    margin-right: 0.7vw;
+
+    transition: all 300ms ease-in-out;
+
+    &:hover {
+      background: var(--theme-dark-blue);
+    }
+  }
+}

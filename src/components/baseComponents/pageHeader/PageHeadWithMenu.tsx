@@ -8,6 +8,7 @@ import NotificationPanel from "components/baseComponents/notificationPanel/Notif
 import NotificationPopup from "components/baseComponents/notificationPopup/NotificationPopup";
 
 import MenuDropdown from './MenuDropdown';
+import { isPhone } from "services/phone";
 
 export enum PageEnum {
   None,
@@ -29,9 +30,12 @@ interface HeaderMenuProps {
   user: User;
   placeholder?: string;
   page: PageEnum;
-  isMobileHidden?: boolean;
-  search(): void;
-  searching(v: string): void;
+  menuClass?: string;
+  suggestions?: boolean;
+  
+  search?(): void;
+  searching?(v: string): void;
+  toggleSearch?(v:boolean): void;
 }
 
 interface HeaderMenuState {
@@ -100,9 +104,11 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           searchPlaceholder={placeholder}
           link={this.props.link}
           page={this.props.page}
+          suggestions={this.props.suggestions}
           history={this.props.history}
-          search={() => this.props.search()}
-          searching={(v: string) => this.props.searching(v)}
+          search={() => this.props.search && this.props.search()}
+          searching={(v: string) => this.props.searching && this.props.searching(v)}
+          toggleSearch={this.props.toggleSearch?.bind(this)}
           showDropdown={() => this.showDropdown()}
           showNotifications={() => this.showNotifications()}
         />
@@ -113,6 +119,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           user={this.props.user}
           page={this.props.page}
           history={this.props.history}
+          className={this.props.menuClass}
           onLogout={() => this.handleLogoutOpen()}
         />}
         {this.props.user &&
@@ -122,7 +129,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           handleClose={() => this.hideNotifications()}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
         />}
-        {this.props.user &&
+        {this.props.user && !isPhone() &&
         <NotificationPopup
           history={this.props.history}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}

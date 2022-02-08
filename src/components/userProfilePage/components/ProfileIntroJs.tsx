@@ -4,8 +4,7 @@ import 'intro.js/introjs.css';
 // @ts-ignore
 import { Steps } from 'intro.js-react';
 
-import './IntroJs.scss';
-import { RolePreference, User } from 'model/user';
+import { UserPreferenceType, User } from 'model/user';
 
 interface Props {
   suspended: boolean | undefined;
@@ -26,14 +25,14 @@ class ProfileIntroJs extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    const getUserPreferenceName = () => {
-      if (props.user.rolePreference) {
-        const { roleId } = props.user.rolePreference;
-        if (roleId === RolePreference.Student) {
+    const getUserPreferenceTypeName = () => {
+      if (props.user.userPreference) {
+        const { preferenceId } = props.user.userPreference;
+        if (preferenceId === UserPreferenceType.Student) {
           return 'Student';
-        } else if (roleId === RolePreference.Teacher) {
+        } else if (preferenceId === UserPreferenceType.Teacher) {
           return "Teacher";
-        } else if (roleId === RolePreference.Builder) {
+        } else if (preferenceId === UserPreferenceType.Builder) {
           return 'Builder';
         }
       }
@@ -60,7 +59,7 @@ class ProfileIntroJs extends React.Component<Props, State> {
         {
           element: '.profile-roles-container',
           intro: `
-            <p>You have selected your preference to be a ${getUserPreferenceName()}.</p>
+            <p>You have selected your preference to be a ${getUserPreferenceTypeName()}.</p>
             <p></p>
             <p>You can change your preferences by clicking on the other two radio buttons.</p>
           `
@@ -72,6 +71,10 @@ class ProfileIntroJs extends React.Component<Props, State> {
         {
           element: '.bio-container',
           intro: 'Write an academic bio (in the third person) so that the Brillder community can know more about your intellectual background'
+        },
+        {
+          element: '.profile-username',
+          intro: "This is your username that others see, it's only useful if your name is very common like John, or Smith.' to the tutorial on the profile page."
         },
         {
           element: '.save-button-container',

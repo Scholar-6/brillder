@@ -13,6 +13,16 @@
     }
   }
 
+  .page-loader-container {
+    .page-loader {
+      height: 30vh;
+      background: var(--white) !important;
+      svg {
+        color: var(--theme-dark-blue) !important;
+      }
+    }
+  }
+
   .tab-container {
     display: flex;
     flex-wrap: nowrap;
@@ -45,11 +55,9 @@
       cursor: pointer;
       width: 100%;
       min-height: $backwork-tab-height;
-      font-size: 4.5vh;
+      font-size: 4.8vh;
       border-top-left-radius: 0.5vw;
-      font-family: $font-family-black;
-      text-transform: uppercase;
-      letter-spacing: 0.5vw;
+      font-family: $font-family-bold;
       color: var(--theme-dark-blue);
       background: var(--tab-gray);
       padding-left: 1.5vw;

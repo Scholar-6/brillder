@@ -1,0 +1,53 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.user-profile-page {
+  .user-profile-content {
+    $width: 68vw;
+    height: 100% !important;
+    .save-button-container {
+      left: 60.5vw !important;
+    }
+    .profile-block {
+      width: $width;
+      height: 100% !important;
+      $left: 3vw;
+      .profile-fields,
+      .big-input-container {
+        padding-left: $left !important;
+      }
+      .big-input-container {
+        max-width: 63.7vw;
+      }
+      .bio-container-2 {
+        box-shadow: $base-shadow !important;
+        padding-left: 0 !important;
+        margin-left: $left !important;
+        width: calc(60.7vw);
+        textarea {
+          box-shadow: none !important;
+        }
+      }
+    }
+    .phone-question-preview-box {
+      width: calc(100vw - #{$width});
+    }
+    .input-block {
+      box-shadow: $base-shadow !important;
+      border-radius: 1.7vh;
+      input {
+        box-shadow: unset !important;
+      }
+    }
+  }
+
+  .save-image svg {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.user-profile-page .phone-question-preview-box .phone-question-preview .phone {
+  height: 63vh !important;
+}

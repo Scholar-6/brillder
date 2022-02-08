@@ -8,9 +8,13 @@ export enum ClassroomStatus {
   Deleted
 }
 
+export enum StudentAssignmentStatus {
+  Completed = 2
+}
+
 export interface StudentStatus {
   studentId: number;
-  status: number;
+  status: StudentAssignmentStatus;
   numberOfAttempts: number;
   avgScore: number;
 }
@@ -24,6 +28,8 @@ export interface Assignment {
   student?: User;
   isArchived: boolean;
 
+  classroom?: any;
+
   studentStatus: StudentStatus[];
   byStatus: any;
   studentStatusCount: {
@@ -36,6 +42,7 @@ export interface Assignment {
 export interface TeachStudent extends UserBase {
   studentResult: AssignmentStudent | undefined;
   studentStatus: StudentStatus | undefined;
+  remindersCounter?: number;
 }
 
 export interface Classroom {
@@ -57,7 +64,9 @@ export interface ClassroomInvitation {
 
 export interface StudentStatus {
   studentId: number;
-  status: number;
+  status: StudentAssignmentStatus;
+  bestScore: number;
+  remindersCounter?: number;
 }
 
 export interface TeachClassroom extends Classroom {
@@ -65,5 +74,17 @@ export interface TeachClassroom extends Classroom {
   subjectId: number;
   subject: Subject;
   isClass?: boolean;
+  assignmentsCount: string;
+  archivedAssignmentsCount: string;
   studentsInvitations: any[];
+}
+
+export interface TeachClassroomInvitation {
+  name: string;
+  created: string;
+  id: number;
+  status: number;
+  subject: Subject;
+  subjectId: number;
+  updated: string;
 }

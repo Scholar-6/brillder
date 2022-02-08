@@ -7,8 +7,11 @@ export enum QuestionValueType {
 
 export interface SortAnswer {
   text: string;
+  id?: number;
   value: string;
   valueFile: string;
+  imageSource?: string;
+  imageCaption?: string;
   answerType: QuestionValueType;
   soundFile?: string;
   soundCaption?: string;

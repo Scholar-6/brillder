@@ -63,7 +63,7 @@ export class CustomImageBlot extends Embed {
 
         const imageNode = document.createElement("img");
         imageNode.className = "image-play";
-        imageNode.setAttribute('style', `height: ${value.imageHeight}vh`);
+        imageNode.setAttribute('style', `max-height: ${value.imageHeight}vh`);
         imageNode.setAttribute('src', value.url);
         imageContainer2.appendChild(imageNode);
 
@@ -78,7 +78,7 @@ export class CustomImageBlot extends Embed {
 
         const captionNode = document.createElement("figcaption");
         captionNode.className = "image-caption";
-        captionNode.textContent = value.imageCaption;
+        captionNode.innerHTML = value.imageCaption;
         captionNode.contentEditable = "false";
         containerNode.appendChild(captionNode);
 
@@ -107,7 +107,7 @@ const imageUrlRegex = new RegExp(`${process.env.REACT_APP_BACKEND_HOST}/files/(.
 
 export default class ImageUpload {
     quill: Quill;
-    openDialog: (file?: File, data?: any, blot?: CustomImageBlot) => void;
+    openDialog: (file?: File, data?: any, blot?: CustomImageBlot, shouldUpdate?: boolean) => void;
 
     constructor(quill: Quill, options: any) {
         this.quill = quill;
@@ -158,6 +158,8 @@ export default class ImageUpload {
 
     uploadHandler(toolbarNode: any) {
         if (!toolbarNode) return;
+        const selection = this.quill.getSelection(false);
+        if(selection && this.quill.getFormat(selection)["table-cell-line"]) return;
         let fileInput = toolbarNode.querySelector("input.ql-image[type=file]");
         if (fileInput === null) {
             fileInput = document.createElement("input");
@@ -182,38 +184,20 @@ export default class ImageUpload {
     }
 
     existingImageSelected(data: any, blot: any) {
-        this.openDialog(undefined, data, blot);
+        this.openDialog(undefined, data, blot, true);
     }
 
     /**
      * @returns true if success false if failed
      */
-    async uploadImages(file: File, source: string, caption: string, align: ImageAlign, height: number) {
-        //const length = this.quill.getLength();
-        const range = this.quill.getSelection(true);
+    async uploadImages(selection: number, file: File, source: string, caption: string, align: ImageAlign, height: number) {
         const res = await new Promise<any>((resolve, reject) => uploadFile(file, resolve, reject));
         if (!res) {
           return false;
         }
         const fileName = res.data.fileName;
 
-        /*
-        const update = new Delta()
-            .retain(range.index)
-            .delete(range.length)
-            .insert({
-                customImage: {
-                    url: fileUrl(fileName),
-                    imageSource: source,
-                    imageCaption: caption,
-                    imageAlign: align,
-                    imageHeight: height,
-                    imagePermision: true,
-                }
-            });*/
-
-        //this.quill.updateContents(update as unknown as DeltaStatic, "user");
-        this.quill.insertEmbed(range.index, 'customImage', {
+        this.quill.insertEmbed(selection, 'customImage', {
             url: fileUrl(fileName),
             imageSource: source,
             imageCaption: caption,
@@ -221,16 +205,25 @@ export default class ImageUpload {
             imageHeight: height,
             imagePermision: true,
         });
-        this.quill.insertEmbed(range.index + 1, 'devider', '');
-        //this.quill.insertEmbed(range.index + 2, 'newline', '');
+        this.quill.insertEmbed(selection + 1, 'devider', '');
         return true;
     }
 
     async updateImage(leaf: any, data: any) {
         if (leaf instanceof CustomImageBlot) {
             const leafData = CustomImageBlot.value(leaf.domNode);
+
+            let fileName = null;
+            if(data.newImageFile) {
+                const res = await new Promise<any>((resolve, reject) => uploadFile(data.newImageFile, resolve, reject));
+                if(!res) {
+                    return false;
+                }
+                fileName = res.data.fileName;
+            }
+
             const newData = {
-                url: data.value ? fileUrl(data.value) : leafData.url,
+                url: fileName ? fileUrl(fileName) : leafData.url,
                 imageSource: data.source ?? leafData.imageSource,
                 imageCaption: data.caption ?? leafData.imageCaption,
                 imageAlign: data.align ?? leafData.imageAlign,

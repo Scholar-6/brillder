@@ -13,16 +13,28 @@
     width: 100vw;
   }
 
+  @keyframes transform-we23 {
+    from {
+      transform: scale(0, 0);
+    }
+    to {
+      transform: scale(1, 1);
+    }
+  }
+
   h1 {
     text-align: center;
     font-family: $font-family-black;
     font-size: 3vw;
+    animation: transform-we23 1s forwards;
   }
   p {
+    animation: transform-we23 1s forwards;
     font-size: 1.5vw;
     text-align: center;
   }
   .icon-container {
+    animation: transform-we23 1s forwards;
     margin-top: 7vh;
     margin-bottom: 5vh;
     display: flex;

@@ -1,19 +1,21 @@
 import React, { useState } from "react";
-import { Grid, Snackbar } from "@material-ui/core";
+import { Dialog, Grid, ListItem, ListItemText, Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
-import { History } from "history";
 import axios from "axios";
 
 import "./loginPage.scss";
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
-import WrongLoginDialog from "./components/WrongLoginDialog";
 import MobileEmailLogin from './phone/MobileEmailLogin';
 import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
 import { trackSignUp } from "services/matomo";
 import { isPhone } from "services/phone";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { getTerms } from "services/axios/terms";
+import map from "components/map";
+import { useHistory, useRouteMatch } from "react-router";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -23,13 +25,13 @@ const connector = connect(null, mapDispatch);
 
 interface LoginProps {
   loginSuccess(): void;
-  history: History;
-  match: any;
 }
 
 const EmailLoginPage: React.FC<LoginProps> = (props) => {
+  const history = useHistory();
+  const match = useRouteMatch() as any;
   let initPolicyOpen = false;
-  if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
+  if (match.params.privacy && match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
   }
   const [alertMessage, setAlertMessage] = useState("");
@@ -38,9 +40,10 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
-  const [isLoginWrong, setLoginWrong] = React.useState(false);
+  const [invalidLogin, setInvalidLogin] = React.useState(false);
 
   const [emptyEmail, setEmptyEmail] = useState(false);
+  const [invalidEmail, setInvalidEmail] = useState(false);
   const [emailSended, setEmailSended] = useState(false);
   
   const validateForm = () => {
@@ -67,7 +70,25 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
     let data = await login(email, password);
     if (!data.isError) {
       if (data === "OK") {
-        props.loginSuccess();
+        axios.get(
+          `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
+          { withCredentials: true }
+        ).then(response => {
+          const { data } = response;
+          getTerms().then(r => {
+            /*eslint-disable-next-line*/
+            if (r && r.lastModifiedDate != data.termsAndConditionsAcceptedVersion) {
+              history.push(map.TermsSignUp + '?onlyAcceptTerms=true');
+              props.loginSuccess();
+            } else {
+              props.loginSuccess();
+            }
+          });
+        }).catch(error => {
+          // error
+          toggleAlertMessage(true);
+          setAlertMessage("Server error");
+        });
         return;
       }
       let { msg } = data;
@@ -86,12 +107,12 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         } else if (response.status === 401) {
           const { msg } = response.data;
           if (msg === "INVALID_EMAIL_OR_PASSWORD") {
-            setLoginWrong(true);
+            setInvalidLogin(true);
           }
         }
       } else {
         toggleAlertMessage(true);
-        setAlertMessage("Connection problem");
+        setAlertMessage("Your email or password may be wrong?");
       }
     }
   };
@@ -121,12 +142,12 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       }
     }).catch((e) => {
       toggleAlertMessage(true);
-      setAlertMessage("Connection problem");
+      setAlertMessage("Something may be wrong with the connection.");
     });
   };
 
   if (!isPhone()) {
-    return <EmailLoginDesktopPage history={props.history} match={props.match} />;
+    return <EmailLoginDesktopPage history={history} match={match} />;
   }
 
   return (
@@ -138,11 +159,12 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       alignItems="center"
     >
       <MobileEmailLogin
-        history={props.history}
+        history={history}
         email={email}
         setEmail={setEmail}
         setEmailSended={setEmailSended}
         setEmptyEmail={setEmptyEmail}
+        setInvalidEmail={setInvalidEmail}
         password={password}
         setPassword={setPassword}
         passwordHidden={passwordHidden}
@@ -152,7 +174,6 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         handleLoginSubmit={handleLoginSubmit}
         setPolicyDialog={setPolicyDialog}
       />
-      <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={alertShown}
@@ -164,12 +185,65 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
       <TextDialog
         isOpen={emailSended} close={() => setEmailSended(false)}
-        label="Now check your email for a password reset link."
+        label="."
       />
-      <TextDialog
-        isOpen={emptyEmail} close={() => setEmptyEmail(false)}
-        label="You need to enter an email before clicking this."
-      />
+      <Dialog open={emailSended} onClose={() => setEmailSended(false)} className="dialog-box forgot-password-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <div className="flex-center">
+            <SpriteIcon name="link" className="active green text-white stroke-2 m-b-02" />
+          </div>
+          <ListItem>
+            <ListItemText
+              primary="Now check your email for a password reset link"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+          <div></div>
+        </div>
+      </Dialog>
+      <Dialog open={emptyEmail} onClose={() => setEmptyEmail(false)} className="dialog-box forgot-password-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <div className="flex-center">
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 m-b-02" />
+          </div>
+          <ListItem>
+            <ListItemText
+              primary="You need to enter an email before clicking this"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+        </div>
+      </Dialog>
+      <Dialog open={invalidEmail} onClose={() => setInvalidEmail(false)} className="dialog-box forgot-password-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <div className="flex-center">
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 m-b-02" />
+          </div>
+          <ListItem>
+            <ListItemText
+              primary="This email appears to be invalid"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+        </div>
+      </Dialog>
+      <Dialog open={invalidLogin} onClose={() => setInvalidLogin(false)} className="dialog-box forgot-password-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <div className="flex-center">
+            <SpriteIcon name="alert-triangle" className="active text-white stroke-2 m-b-02" />
+          </div>
+          <ListItem>
+            <ListItemText
+              primary="If you think you have already signed up, but are unable to access your account, please tell us by clicking the help button in the bottom left of this screen"
+              className="bold"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+        </div>
+      </Dialog>
     </Grid>
   );
 };

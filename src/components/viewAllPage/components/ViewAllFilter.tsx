@@ -8,12 +8,14 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import {
   AcademicLevel,
   AcademicLevelLabels,
+  BrickLengthEnum,
   SubjectGroup,
   SubjectGroupNames,
 } from "model/brick";
 import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
 import SubjectsListV4 from "components/baseComponents/subjectsList/SubjectsListV4";
+import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpContent";
 
 export enum SortBy {
   None,
@@ -48,6 +50,9 @@ interface FilterProps {
 
   levels: AcademicLevel[];
   filterByLevel(level: AcademicLevel[]): void;
+
+  lengths: BrickLengthEnum[];
+  filterByLength(length: BrickLengthEnum[]): void;
 }
 
 interface FilterState {
@@ -100,7 +105,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
 
   filterByLevel(level: AcademicLevel) {
     const { levels } = this.props;
-    
+
     const found = levels.find((l) => l === level);
     if (found) {
       const newLevels = levels.filter((l) => l !== level);
@@ -108,6 +113,19 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     } else {
       levels.push(level);
       this.props.filterByLevel(levels);
+    }
+  }
+
+  filterByLength(length: BrickLengthEnum) {
+    const { lengths } = this.props;
+
+    const found = lengths.find((l) => l === length);
+    if (found) {
+      const newLengths = lengths.filter((l) => l !== length);
+      this.props.filterByLength(newLengths);
+    } else {
+      lengths.push(length);
+      this.props.filterByLength(lengths);
     }
   }
 
@@ -176,8 +194,8 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       <div className="subjects-toggle">
         <div
           className={`${!isAllSubjects
-              ? "toggle-button my-subjects active"
-              : "toggle-button my-subjects not-active"
+            ? "toggle-button my-subjects active"
+            : "toggle-button my-subjects not-active"
             }`}
           onClick={() => {
             if (isAllSubjects) {
@@ -192,8 +210,8 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
         </div>
         <div
           className={`${this.props.isAllSubjects
-              ? "toggle-button all-subjects active"
-              : "toggle-button all-subjects not-active"
+            ? "toggle-button all-subjects active"
+            : "toggle-button all-subjects not-active"
             }`}
           onClick={() => {
             if (!isAllSubjects) {
@@ -207,21 +225,39 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     );
   }
 
-  renderAcademicLevel(loopLevel: AcademicLevel) {
-    const found = this.props.levels.find((l) => l === loopLevel);
+  renderAcademicLevel(loopLevel: AcademicLevel, length: BrickLengthEnum) {
+    const found = this.props.levels.find(l => l === loopLevel);
+    const found2 = this.props.lengths.find(l => l === length);
+
     return (
-      <FormControlLabel
-        value={SortBy.Popularity}
-        style={{ marginRight: 0, width: "50%" }}
-        control={
-          <Radio
-            className="sortBy"
-            checked={!!found}
-            onClick={() => this.filterByLevel(loopLevel)}
-          />
-        }
-        label={`Level ${AcademicLevelLabels[loopLevel]}`}
-      />
+      <div className="">
+        <FormControlLabel
+          value={SortBy.Popularity}
+          style={{ marginRight: 0, width: "28%" }}
+          control={
+            <Radio
+              className="sortBy"
+              checked={!!found}
+              onClick={() => this.filterByLevel(loopLevel)}
+            />
+          }
+          label={`Level ${AcademicLevelLabels[loopLevel]}`}
+        />
+        <div>
+        <FormControlLabel
+          value={SortBy.Popularity}
+          style={{ marginRight: 0, width: "28%" }}
+          control={
+            <Radio
+              className="sortBy"
+              checked={!!found2}
+              onClick={() => this.filterByLength(length)}
+            />
+          }
+          label={`${length} mins`}
+        />
+        </div>
+      </div>
     );
   }
 
@@ -276,54 +312,12 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
             </div>
             {this.renderFilterLabelBox()}
             <div className="sort-box level-filter-box">
-              {this.renderAcademicLevel(AcademicLevel.First)}
-              {this.renderAcademicLevel(AcademicLevel.Second)}
-              {this.renderAcademicLevel(AcademicLevel.Third)}
-              {this.renderAcademicLevel(AcademicLevel.Fourth)}
+              {this.renderAcademicLevel(AcademicLevel.First, BrickLengthEnum.S20min)}
+              {this.renderAcademicLevel(AcademicLevel.Second, BrickLengthEnum.S40min)}
+              {this.renderAcademicLevel(AcademicLevel.Third, BrickLengthEnum.S60min)}
               <div className="absolute-difficult-help">
                 <HoverHelp>
-                  <div className="flex-content">
-                    <div>
-                      Brillder focusses on universal concepts and topics, not
-                      specific exam courses.
-                    </div>
-                    <br />
-                    <div>LEVELS:</div>
-                    <div className="container">
-                      <div className="white-circle">I</div>
-                      <div className="l-text">
-                        <div>Foundation</div>
-                        <div className="regular">
-                          For 15-16 yr-olds, equivalent to GCSE / IB Middle
-                          Years / High School Diploma
-                        </div>
-                      </div>
-                    </div>
-                    <br />
-                    <div className="container">
-                      <div className="white-circle">II</div>
-                      <div className="and-sign">&</div>
-                      <div className="white-circle">III</div>
-                      <div className="l-text smaller">
-                        <div>Core</div>
-                        <div className="regular">
-                          For 17-18 yr-olds, equivalent to A-level / IB / High
-                          School Honors
-                        </div>
-                      </div>
-                    </div>
-                    <br />
-                    <div className="container">
-                      <div className="white-circle">IV</div>
-                      <div className="l-text">
-                        <div>Extension</div>
-                        <div className="regular">
-                          College / Undergraduate level, to challenge Oxbridge
-                          (UK) or Advanced Placement (US) students
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <LevelHelpContent />
                 </HoverHelp>
               </div>
             </div>

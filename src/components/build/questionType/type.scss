@@ -11,14 +11,25 @@
   height: 94%;
 
   .inner-question-type {
-    padding: 0.7vh 4vh 2vh 4vh;
+    height: 100%;
+    padding: 2vh 4vh 2vh 4vh;
     .label-question-type {
       margin-left: 0.6vw;
       font-size: 1.4vw;
-      margin-bottom: 0vh;
-      letter-spacing: 0.01vw;
+      text-align: center;
+      margin-bottom: 1vh;
       font-family: $font-family-regular;
       color: var(--theme-dark-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        margin-left: 1vw;
+        $size: 1.4vw;
+        width: $size;
+        height: $size;
+      }
     }
   }
   .quill-document-editor {
@@ -35,18 +46,11 @@
     height: 15.35vh;
     font-size: 1.5vw;
     padding: 0;
-    font-family: $font-family-regular;
-    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     @extend %transitionAll300;
-    // @media only screen and (max-width: 959px) and (min-width: 600px) {
-    //   font-size: 2vw !important;
-    //   margin: 1.1vw 1.1vw 1.1vw 1.1vw !important;
-    //   border-radius: 2vw;
-    // }
     @include phone_and_tabletP {
       font-size: 2.3vw !important;
       margin: 7px 7px 7px 12px;

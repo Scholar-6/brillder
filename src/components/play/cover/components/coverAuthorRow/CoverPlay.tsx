@@ -1,15 +1,17 @@
 import React from 'react';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import './CoverPlay.scss';
 
 interface Props {
   onClick(): any;
 }
 
-const CoverPlay: React.FC<Props> = ({onClick}) => {
+const CoverPlay: React.FC<Props> = ({ onClick }) => {
   return (
     <div className="cover-play-button">
-      <div>Are you ready to learn?</div>
       <div className="c-next-btn-container">
         <button type="button" onClick={onClick}>
+          <SpriteIcon name="feather-play-circle" />
           Play Now
         </button>
       </div>

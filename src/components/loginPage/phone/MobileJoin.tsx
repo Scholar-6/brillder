@@ -31,6 +31,8 @@ const MobileJoinPage: React.FC<MobileLoginProps> = (props) => {
           </div>
         </div>
         <div className="mobile-button-box button-box m-register-box">
+          <GoogleButton label="Register with Google" />
+          <RegisterButton label="Register with email" onClick={() => props.history.push(RegisterPage)} />
           <div className="button-box">
             <div className="text-box gg-text-box">
               <span>Already a member?</span>
@@ -40,8 +42,6 @@ const MobileJoinPage: React.FC<MobileLoginProps> = (props) => {
               </div>
             </div>
           </div>
-          <GoogleButton label="Register with Google" />
-          <RegisterButton label="Register with email" onClick={() => props.history.push(RegisterPage)} />
           <div className="mobile-policy-text">
             <TermsLink history={props.history} />
           </div>

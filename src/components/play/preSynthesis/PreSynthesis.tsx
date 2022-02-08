@@ -4,7 +4,6 @@ import { Brick } from "model/brick";
 
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
-import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import { getSynthesisTime } from "../services/playTimes";
@@ -16,7 +15,7 @@ interface Props {
 }
 
 const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
-  const moveNext = () => props.history.push(routes.playSynthesis(brick.id));
+  const moveNext = () => props.history.push(routes.playSynthesis(brick));
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -32,18 +31,14 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
     };
   });
 
-  if (isPhone()) {
-    return <div />;
-  }
-
   const minutes = getSynthesisTime(brick.brickLength);
 
   return (
-    <div className="brick-row-container live-container">
+    <div className="brick-row-container live-container static-top-part">
       <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page after-cover-page pre-synthesis animate-fade">
         <div className="introduction-page">
-          <div className="after-cover-main-content">
+          <div className="after-cover-main-content static-top-part-inner">
             <div className="title s-fade1">
               Deepen your understanding.
             </div>

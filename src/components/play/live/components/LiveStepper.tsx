@@ -28,12 +28,14 @@ const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
 
   const renderQuestionStep = (question: Question, key: number) => {
     let edited = isAttempted(question);
+    let isActive = false;
 
     let className = "step";
     if (edited) {
       className += " completed";
     }
     if (props.activeStep === questionIndex) {
+      isActive = true;
       className += " current";
     }
     questionIndex++;
@@ -42,7 +44,7 @@ const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
       <div key={key} className={className} onClick={props.handleStep(index - 1)}>
         <span>{questionIndex}</span>
         {question.edited && <PulsingCircle isPulsing={props.previousStep === questionIndex - 1} />}
-        <div className="underline"><div/></div>
+        {isActive && <div className="fixed-stepper-triangle" />}
       </div>
     );
   };
@@ -82,11 +84,13 @@ const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
   }
 
   return (
-    <div className="stepper" ref={stepperRef}>
-      {questions.length > 19 && <div className="scroll-back-button" style={{display: 'none'}}><SpriteIcon onClick={scrollBack} name="arrow-left" /></div>}
+    <div className="stepper">
+      {questions.length > 18 && <div className="scroll-back-button" style={{display: 'none'}}><SpriteIcon onClick={scrollBack} name="arrow-left-stroke" /></div>}
       <div className="step current prep-step" onClick={props.moveToPrep}>Prep</div>
-      {questions.map(renderQuestionStep)}
-      {questions.length > 19 && <div className="scroll-next-button" style={{display: 'none'}}><SpriteIcon name="arrow-right" onClick={scrollNext} /></div>}
+      <div className="scrollable-steps" ref={stepperRef}>
+        {questions.map(renderQuestionStep)}
+      </div>
+      {questions.length > 18 && <div className="scroll-next-button" style={{display: 'none'}}><SpriteIcon name="arrow-right-stroke" onClick={scrollNext} /></div>}
     </div>
   );
 };

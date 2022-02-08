@@ -6,6 +6,8 @@ import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapp
 import DropImage from "../../buildQuestions/components/Image/DropImage";
 import { fileUrl } from "components/services/uploadFile";
 import CopyrightCheckboxes from "components/baseComponents/CopyrightCheckboxs";
+import SourceInput from "components/baseComponents/SourceInput";
+import QuillEditor from "components/baseComponents/quill/QuillEditor";
 
 interface DialogProps {
   isOption?: boolean; // only pair match
@@ -38,7 +40,6 @@ const ImageDialogV2: React.FC<DialogProps> = ({
   if (isOption) {
     initCaption = initData.imageOptionCaption;
   }
-  console.log(isOption, initData.imageOptionSource, initData.imageSource);
   const [source, setSource] = React.useState(initSource || "");
   const [caption, setCaption] = React.useState(initCaption || "");
   const [permision, setPermision] = React.useState(initData.imagePermision ? true : false as boolean | 1);
@@ -57,8 +58,16 @@ const ImageDialogV2: React.FC<DialogProps> = ({
     }
   }, [initFile, initData.value, file]);
 
+
+  const validateSource = () => {
+    if (source && source.trim().length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   let canUpload = false;
-  if ((permision) && source && !removed) {
+  if ((permision) && validateSource() && !removed) {
     canUpload = true;
   }
 
@@ -93,8 +102,8 @@ const ImageDialogV2: React.FC<DialogProps> = ({
     <BaseDialogWrapper
       open={open}
       className="image-dialog-container image-dialog-v2"
-      close={() => {}}
-      submit={() => {}}
+      close={() => { }}
+      submit={() => { }}
     >
       <div className="close-button svgOnHover" onClick={close}>
         <SpriteIcon name="cancel" className="w100 h100 active" />
@@ -128,21 +137,21 @@ const ImageDialogV2: React.FC<DialogProps> = ({
           Where did you get this image?
           <span className="text-theme-orange">*</span>
         </div>
-        <input
-          value={source}
-          className={validationRequired && !source ? "invalid" : ""}
-          onChange={(e) => setSource(e.target.value)}
-          placeholder="Add link to source or name of owner..."
-        />
+        <SourceInput source={source} validationRequired={validationRequired} setSource={setSource} />
         <CopyrightCheckboxes
           validationRequired={validationRequired}
           permision={permision}
           setPermision={setPermision}
         />
-        <input
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-          placeholder="Add caption..."
+        <QuillEditor
+          disabled={false}
+          className="quill-caption"
+          data={caption}
+          showToolbar={true}
+          toolbar={['bold', 'italic', 'superscript', 'subscript', 'latex']}
+          placeholder="Add caption"
+          imageDialog={true}
+          onChange={v => setCaption(v)}
         />
       </div>
       <div className="centered last-button">
@@ -160,7 +169,7 @@ const ImageDialogV2: React.FC<DialogProps> = ({
         >
           <div className="background" />
           <SpriteIcon name="upload" />
-          <div className="css-custom-tooltip">Upload</div>
+          <div className="css-custom-tooltip bold">Upload</div>
         </div>
       </div>
     </BaseDialogWrapper>

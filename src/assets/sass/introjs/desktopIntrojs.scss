@@ -1,0 +1,50 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.introjs-tooltipReferenceLayer * {
+  font-family: $font-family-regular;
+  color: var(--theme-dark-blue);
+  font-size: 1.5vw;
+}
+
+.introjs-tooltip {
+  max-width: 30vw !important;
+}
+
+.introjs-tooltipReferenceLayer {
+  p {
+    min-height: 2vw;
+  }
+  .introjs-tooltipbuttons {
+    a {
+      padding: 0.7vh 1.4vh;
+      outline: none !important;
+      font-family: $font-family-bold;
+      box-shadow: none !important;
+      border: none !important;
+      border-radius: 0.4vw;
+    }
+
+    .introjs-donebutton, .introjs-nextbutton {
+      text-shadow: none;
+      background: var(--theme-green) !important;
+      color: var(--white);
+      border: none !important;
+
+      transition: all 300ms ease-out;
+
+      &:hover {
+        background: var(--theme-dark-blue) !important;
+      }
+    }
+  }
+}
+
+.introjs-helperLayer {
+  box-shadow: rgba(33, 33, 33, .5) 0px 0px 0px 5000px !important;
+}
+
+.dark-shadow {
+  box-shadow: rgba(33, 33, 33, .5) 0px 0px 0px 5000px !important;
+}

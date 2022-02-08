@@ -8,6 +8,7 @@ import SendToPublisherDialog2 from "./SendToPublisher2Dialog";
 
 interface DialogProps {
   isOpen: boolean;
+  isCore?: boolean;
   isPublishing?: boolean; // true if user click to publish
   close(): void;
   submit(): void;
@@ -21,22 +22,37 @@ const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
 
   const [invalid, setInvalid] = React.useState(false);
 
+  const [submiting, setSubmiting] = React.useState(false);
+
   const isValid = () => {
-    if (checked1 && checked2 && checked3 && checked4) {
+    if (props.isCore) {
+      if (checked1 && checked2 && checked3 && checked4) {
+        return true;
+      }
+    } else if (checked2 && checked3 && checked4) {
       return true;
     }
     return false;
+  }
+
+  const submit = async () => {
+    if (!submiting) {
+      setSubmiting(true);
+      await props.submit();
+      setSubmiting(false);
+    }
   }
 
   return (
     <BaseDialogWrapper open={props.isOpen} className="send-publish-dialog" close={props.close} submit={() => { }}>
       <div className="dialog-header">
         <div className="title">Before submitting this brick for publication, please confirm the following:</div>
-        <FormControlLabel
-          checked={checked1}
-          control={<Checkbox onClick={() => setChecked1(!checked1)} />}
-          label="The images used are of a reasonable quality and have neither stretched nor pixelated. They are available for use without commercial restrictions."
-        />
+        {props.isCore &&
+          <FormControlLabel
+            checked={checked1}
+            control={<Checkbox onClick={() => setChecked1(!checked1)} />}
+            label="The images used are of a reasonable quality and have neither stretched nor pixelated. They are available for use without commercial restrictions."
+          />}
         <FormControlLabel
           checked={checked2}
           control={<Checkbox onClick={() => setChecked2(!checked2)} />}
@@ -55,19 +71,19 @@ const SendToPublisherDialog: React.FC<DialogProps> = (props) => {
       </div>
       <div className="dialog-footer">
         <div>
-        <div>
-          <button className="btn btn-md bg-theme-orange yes-button" onClick={props.close}>
-            <span>It's not ready yet!</span>
-          </button>
-          <div className={`btn flex-button btn-md no-button ${isValid() ? 'bg-green text-white' : 'bg-gray'}`} onClick={() => {
-            isValid() ? props.submit() : setInvalid(true);
-          }}>
-            <div>{props.isPublishing ? 'Publish' : 'Send to Publisher'}</div>
-            <div className="flex-center">
-              <SpriteIcon name="send" />
+          <div>
+            <button className="btn btn-md bg-theme-orange yes-button" onClick={props.close}>
+              <span>It's not ready yet!</span>
+            </button>
+            <div className={`btn flex-button btn-md no-button ${isValid() ? 'bg-green text-white' : 'bg-gray'}`} onClick={() => {
+              isValid() ? submit() : setInvalid(true);
+            }}>
+              <div>{props.isPublishing ? 'Publish' : 'Send to Publisher'}</div>
+              <div className="flex-center">
+                {submiting ? <SpriteIcon name="f-loader" className="spinning" /> : <SpriteIcon name="send" />}
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
       <SendToPublisherDialog2 isOpen={invalid} close={() => setInvalid(false)} />

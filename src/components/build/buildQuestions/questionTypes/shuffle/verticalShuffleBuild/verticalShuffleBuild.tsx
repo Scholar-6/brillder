@@ -11,6 +11,8 @@ import RemoveButton from '../../components/RemoveButton';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
 import SoundRecord from '../../sound/SoundRecord';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import ShuffleText from '../components/ShuffleText';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
@@ -69,7 +71,9 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     const setImage = (fileName: string) => {
       if (locked) { return; }
       answer.value = "";
-      answer.valueFile = fileName;
+      if (fileName) {
+        answer.valueFile = fileName;
+      }
       answer.answerType = QuestionValueType.Image;
       update();
       save();
@@ -118,6 +122,9 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     if (answer.answerType === QuestionValueType.Sound) {
       return (
         <div className="verical-sound unique-component" key={i}>
+          <div className="index-circle-container">
+            <div className="index-circle">{i + 1}</div>
+          </div>
           <RemoveButton onClick={() => changed(answer, '')} />
           <SoundRecord
             locked={locked}
@@ -131,6 +138,9 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
       return (
         <div className={className} key={i}>
           <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
+          <div className="index-circle-container">
+            <div className="index-circle">{i + 1}</div>
+          </div>
           {answer.answerType === QuestionValueType.Image && <RemoveButton onClick={() => changed(answer, '')} />}
           <QuestionImageDropzone
             answer={answer as any}
@@ -147,6 +157,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     return (
       <div className={className} key={i}>
         <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
+        {answer.value && <div className="index-circle-container"><div className="index-circle">{i + 1}</div></div>}
         <QuestionImageDropzone
           answer={answer as any}
           type={answer.answerType || QuestionValueType.None}
@@ -161,7 +172,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           validationRequired={validationRequired}
           toolbar={['latex']}
           isValid={isValid}
-          placeholder={"Enter Answer " + (i + 1) + "..."}
+          placeholder={"Answer " + (i + 1)}
           onBlur={() => {
             showSameAnswerPopup(i, state.list, openSameAnswerDialog);
           }}
@@ -180,8 +191,11 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   return (
     <div className="vertical-shuffle-build unique-component">
       <div className="component-title">
-        Enter Answers in the correct order from top to bottom.<br/>
-        These will be randomised in the Play Interface.
+        <div className="flex-center">
+          <SpriteIcon name="hero-sort-descending" />
+          <div>Enter Answers in the correct order from top to bottom.</div>
+        </div>
+        <ShuffleText />
       </div>
       {
         state.list.map((answer: any, i: number) => renderAnswer(answer, i))
@@ -190,7 +204,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         locked={locked}
         addAnswer={addAnswer}
         height="auto"
-        label="+ ANSWER" />
+        label="Add an answer" />
     </div>
   )
 }

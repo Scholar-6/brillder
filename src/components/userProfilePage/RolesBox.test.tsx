@@ -4,13 +4,12 @@ import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 import RolesBox from "./RolesBox";
-import { RolePreference, UserType } from "model/user";
+import { UserPreferenceType, UserType } from "model/user";
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const roles = [
   { roleId: UserType.Publisher, name: "Publisher", disabled: false },
-  { roleId: UserType.Institution, name: "Institution", disabled: false },
   { roleId: UserType.Admin, name: "Admin", disabled: false },
 ];
 
@@ -20,18 +19,23 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[]}
-        rolePreference={RolePreference.Student}
+        userPreference={UserPreferenceType.Student}
         toggleRole={() => {}}
       />
     );
     expect(component).toHaveLength(1);
-    expect(component.props().children).toHaveLength(6);
-    expect(component.props().children[0].props.children.props.checked).toBe(true);
-    expect(component.props().children[1].props.children.props.checked).toBe(false);
-    expect(component.props().children[2].props.children.props.checked).toBe(false);
-    expect(component.props().children[3].props.children.props.checked).toBe(false);
-    expect(component.props().children[4].props.children.props.checked).toBe(false);
-    expect(component.props().children[5].props.children.props.checked).toBe(false);
+    expect(component.props().children).toHaveLength(2);
+
+    
+    const firstChildren = component.props().children[0].props.children;
+    expect(firstChildren[0].props.children.props.checked).toBe(true);
+    expect(firstChildren[1].props.children.props.checked).toBe(false);
+    expect(firstChildren[2].props.children.props.checked).toBe(false);
+
+    const secondChildren = component.props().children[1].props.children;
+    expect(secondChildren[0].props.children.props.checked).toBe(false);
+    expect(secondChildren[1].props.children.props.checked).toBe(false);
+    expect(secondChildren[2].props.children.props.checked).toBe(false);
   });
 
   it("check teacher preference", () => {
@@ -39,18 +43,22 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[]}
-        rolePreference={RolePreference.Teacher}
+        userPreference={UserPreferenceType.Teacher}
         toggleRole={() => {}}
       />
     );
     expect(component).toHaveLength(1);
-    expect(component.props().children).toHaveLength(6);
-    expect(component.props().children[0].props.children.props.checked).toBe(false);
-    expect(component.props().children[1].props.children.props.checked).toBe(true);
-    expect(component.props().children[2].props.children.props.checked).toBe(false);
-    expect(component.props().children[3].props.children.props.checked).toBe(false);
-    expect(component.props().children[4].props.children.props.checked).toBe(false);
-    expect(component.props().children[5].props.children.props.checked).toBe(false);
+    expect(component.props().children).toHaveLength(2);
+
+    const firstChildren = component.props().children[0].props.children;
+    expect(firstChildren[0].props.children.props.checked).toBe(false);
+    expect(firstChildren[1].props.children.props.checked).toBe(true);
+    expect(firstChildren[2].props.children.props.checked).toBe(false);
+
+    const secondChildren = component.props().children[1].props.children;
+    expect(secondChildren[0].props.children.props.checked).toBe(false);
+    expect(secondChildren[1].props.children.props.checked).toBe(false);
+    expect(secondChildren[2].props.children.props.checked).toBe(false);
   });
 
   it("check builder preference", () => {
@@ -58,18 +66,45 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[]}
-        rolePreference={RolePreference.Builder}
+        userPreference={UserPreferenceType.Builder}
         toggleRole={() => {}}
       />
     );
     expect(component).toHaveLength(1);
-    expect(component.props().children).toHaveLength(6);
-    expect(component.props().children[0].props.children.props.checked).toBe(false);
-    expect(component.props().children[1].props.children.props.checked).toBe(false);
-    expect(component.props().children[2].props.children.props.checked).toBe(true);
-    expect(component.props().children[3].props.children.props.checked).toBe(false);
-    expect(component.props().children[4].props.children.props.checked).toBe(false);
-    expect(component.props().children[5].props.children.props.checked).toBe(false);
+    expect(component.props().children).toHaveLength(2);
+    const firstColumn = component.props().children[0].props;
+    expect(firstColumn.children[0].props.children.props.checked).toBe(false);
+    expect(firstColumn.children[1].props.children.props.checked).toBe(false);
+    expect(firstColumn.children[2].props.children.props.checked).toBe(true);
+
+    const secondColumn = component.props().children[1].props;
+    expect(secondColumn.children[0].props.children.props.checked).toBe(false);
+    expect(secondColumn.children[1].props.children.props.checked).toBe(false);
+    expect(secondColumn.children[2].props.children.props.checked).toBe(false);
+  });
+
+  
+  it("check institution preference", () => {
+    const component = shallow(
+      <RolesBox
+        roles={roles}
+        userRoles={[]}
+        userPreference={UserPreferenceType.Institution}
+        toggleRole={() => {}}
+      />
+    );
+    expect(component).toHaveLength(1);
+    expect(component.props().children).toHaveLength(2);
+    
+    const firstColumn = component.props().children[0].props;
+    expect(firstColumn.children[0].props.children.props.checked).toBe(false);
+    expect(firstColumn.children[1].props.children.props.checked).toBe(false);
+    expect(firstColumn.children[2].props.children.props.checked).toBe(false);
+
+    const secondColumn = component.props().children[1].props;
+    expect(secondColumn.children[0].props.children.props.checked).toBe(true);
+    expect(secondColumn.children[1].props.children.props.checked).toBe(false);
+    expect(secondColumn.children[2].props.children.props.checked).toBe(false);
   });
 
   it("check admin role", () => {
@@ -77,36 +112,43 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userRoles={[UserType.Admin]}
-        rolePreference={RolePreference.Builder}
+        userPreference={UserPreferenceType.Builder}
         toggleRole={() => {}}
       />
     );
     expect(component).toHaveLength(1);
-    expect(component.props().children).toHaveLength(6);
-    expect(component.props().children[0].props.children.props.checked).toBe(false);
-    expect(component.props().children[1].props.children.props.checked).toBe(false);
-    expect(component.props().children[2].props.children.props.checked).toBe(true);
-    expect(component.props().children[3].props.children.props.checked).toBe(false);
-    expect(component.props().children[4].props.children.props.checked).toBe(false);
-    expect(component.props().children[5].props.children.props.checked).toBe(true);
+    expect(component.props().children).toHaveLength(2);
+
+    const firstChildren = component.props().children[0].props.children;
+    expect(firstChildren[0].props.children.props.checked).toBe(false);
+    expect(firstChildren[1].props.children.props.checked).toBe(false);
+    expect(firstChildren[2].props.children.props.checked).toBe(true);
+
+    const secondChildren = component.props().children[1].props.children;
+    expect(secondChildren[0].props.children.props.checked).toBe(false);
+    expect(secondChildren[1].props.children.props.checked).toBe(false);
+    expect(secondChildren[2].props.children.props.checked).toBe(true);
   });
   it("check all roles", () => {
     const component = shallow(
       <RolesBox
         roles={roles}
-        userRoles={[UserType.Admin, UserType.Publisher, UserType.Institution]}
-        rolePreference={RolePreference.Builder}
+        userRoles={[UserType.Admin, UserType.Publisher]}
+        userPreference={UserPreferenceType.Builder}
         toggleRole={() => {}}
       />
     );
     expect(component).toHaveLength(1);
-    expect(component.props().children).toHaveLength(6);
-    expect(component.props().children[0].props.children.props.checked).toBe(false);
-    expect(component.props().children[1].props.children.props.checked).toBe(false);
-    expect(component.props().children[2].props.children.props.checked).toBe(true);
-    expect(component.props().children[3].props.children.props.checked).toBe(true);
-    expect(component.props().children[4].props.children.props.checked).toBe(true);
-    expect(component.props().children[5].props.children.props.checked).toBe(true);
-  });
+    expect(component.props().children).toHaveLength(2);
 
+    const firstChildren = component.props().children[0].props.children;
+    expect(firstChildren[0].props.children.props.checked).toBe(false);
+    expect(firstChildren[1].props.children.props.checked).toBe(false);
+    expect(firstChildren[2].props.children.props.checked).toBe(true);
+
+    const secondChildren = component.props().children[1].props.children;
+    expect(secondChildren[0].props.children.props.checked).toBe(false);
+    expect(secondChildren[1].props.children.props.checked).toBe(true);
+    expect(secondChildren[2].props.children.props.checked).toBe(true);
+  });
 });

@@ -136,8 +136,10 @@ class ClassroomNames extends React.Component<ClassroomNamesProps, State> {
               }}>{classroom.name}</div>)
             }
             {props.hasInvitation && <>
-              {!this.props.isPending && <div className="classroom-name text-theme-dark-blue pending-label">Pending</div>}
-              <div className="classroom-name resend-label" onClick={e => { e.stopPropagation(); props.resendInvitation(); }}>Resend</div>
+              {!this.props.isPending && <div className="classroom-name text-theme-dark-blue pending-label"><SpriteIcon name="feather-watch"/><span>Pending</span></div>}
+              <div className="classroom-name resend-label" onClick={e => { e.stopPropagation(); props.resendInvitation(); }}><div>
+                Resend <SpriteIcon name="send-custom" /></div>
+              </div>
             </>}
           </div>
         </div>

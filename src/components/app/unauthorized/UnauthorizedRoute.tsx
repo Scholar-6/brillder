@@ -36,7 +36,7 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
       return <PageLoader content="...Getting User..." />;
     }
     
-    if (!user.rolePreference) {
+    if (!user.userPreference) {
       return <Redirect to={map.TermsSignUp} />
     }
 
@@ -51,6 +51,13 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
     rest.isAuthorized()
     return <PageLoader content="...Checking rights..." />;
   } else {
+    // If the url has /play/brick/ and the last 6 characters are /coer
+    //const isCover = location.pathname.search('/play/brick/') !== -1 && location.pathname.slice(-6) === '/cover';
+    // This actually needs to just redirect unauthenticated people trying to access personal Bricks but allow public bricks
+    // if (isCover) {
+    //   return <Redirect to={map.Login} />
+    // }
+
     return (
       <div className="unauthrozied-container">
         <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />

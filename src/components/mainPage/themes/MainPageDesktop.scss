@@ -11,47 +11,78 @@
   height: 100%;
   font-family: $font-family-black;
 
+  .stats svg {
+    stroke-width:2.3;
+  }
+
+  .link-to-landing {
+    border-radius: 2vw;
+    background: var(--theme-orange);
+    letter-spacing: 0;
+    cursor: pointer;
+    font-size: 1.4vw;
+    line-height: 1.7;
+    margin-top: 2vh;
+    margin-left: 6vw;
+    width: 21vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+
+    animation: fadein 500ms 360ms ease-out forwards;
+
+    svg {
+      width: 1.9vw;
+      height: 1.9vw;
+      fill: none;
+      margin-right: 0.3vw;
+    }
+
+    &:hover {
+      background: white;
+      color: var(--theme-orange);
+    }
+  }
+
   .welcome-col {
     width: $welcome-col-width;
     @extend %textCenter;
-    padding-top: 15vh;
+    padding-top: 20vh;
 
     .welcome-box {
       color: white;
-      letter-spacing: 0.66vw;
-      font-size: 2.58vw;
+      letter-spacing: 0vw;
+      font-size: 3vw;
       font-family: $font-family-bold;
       padding-right: 2.9vw;
-
-      .smaller {
-        font-size: 2.4vw;
-      }
 
       .welcome-name {
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2.5vw;
-        letter-spacing: 0.73vw;
-        margin-top: 3.2vh;
-        font-weight: 600;
-        text-transform: uppercase;
-        font-family: $font-family-light;
+        font-size: 3vw;
+        letter-spacing: 0;
+        margin-top: 5vh;
+        text-transform: capitalize;
+        font-family: $font-family-regular;
         transition: font-family 0.2s ease;
-        color: var(--theme-orange);
+        color: var(--white);
+
         .custom-tooltip {
           margin-left: -1.4vw;
-          letter-spacing: 0.05vw;
+          letter-spacing: 0vw;
           text-transform: none;
-          margin-top: 4.9vw;
+          margin-top: 5.5vw;
           font-family: $font-family-regular;
         }
 
         .svg,
         .profile-image-border {
-          height: 3vw;
-          width: 3vw;
+          height: 4.5vw;
+          width: 4.5vw;
           margin-right: 1vw;
         }
         .svg {
@@ -59,7 +90,7 @@
         }
         .profile-image-border {
           @extend %flexCenter;
-          border: 0.35vw solid var(--theme-orange);
+          border: 0.25vw solid var(--white);
           border-radius: 50%;
           img {
             width: 105%;
@@ -73,15 +104,21 @@
             stroke-width: 2.1;
           }
         }
+        .sparkle-s6 {
+          margin-left: 0.5vw;
+        }
       }
       .notifications-text {
-        margin-top: 4.3vw; //10vh;
-        letter-spacing: 0.1vw;
+        margin-top: 5vh; //10vh;
+        letter-spacing: 0;
         font-family: $font-family-light;
-        font-size: 1.5vw;
+        font-size: 2vw;
 
-        &.clickable:hover {
-          font-family: $font-family-bold;
+        &.clickable {
+          cursor: pointer;
+          &:hover {
+            font-family: $font-family-bold;
+          }
         }
       }
 
@@ -106,21 +143,56 @@
     height: 100%;
 
     .first-item {
+      padding-top: 4vh;
       background: var(--theme-light-blue);
-      height: 89.2vh;
+      height: 85vh;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
       @extend %flexCenter;
       flex-direction: column;
     }
     .second-item {
+      cursor: pointer;
       position: relative;
-      background: var(--theme-light-blue);
+      background: var(--white);
       margin-top: 4.6vh;
-      height: 6.2vh;
-      @extend %textCenter;
+      height: 10.4vh;
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--theme-dark-blue);
+      font-family: $font-family-bold;
+
+      font-size: 1.8vw;
+
+      svg {
+        margin-left: 0.5vw;
+        stroke-width: 1.3;
+        width: 2.7vw;
+        height: 2.7vw;
+      }
+
+      transition: all 150ms ease-in-out;
+
+      &:hover {
+        color: var(--theme-green);
+      }
+
+      &.not-active {
+        cursor: initial;
+        background: var(--theme-light-blue);
+      }
+    }
+  }
+
+  .second-button {
+    .disabled {
+      .bl {
+        background: var(--theme-dark-blue);
+      }
     }
   }
 
@@ -187,6 +259,8 @@
         align-items: center;
 
         .m-red-circle {
+          margin-top: 0.3vw;
+          margin-left: 0.3vw;
           background: var(--theme-orange);
           width: 1.6vw;
           height: 1.6vw;
@@ -197,10 +271,6 @@
           justify-content: center;
           text-align: center;
           overflow: hidden;
-
-          span {
-            margin-left: 0.3vw;
-          }
         }
       }
     }
@@ -212,11 +282,11 @@
       color: var(--tab-gray);
       @include phone_and_tabletP {
         font-size: 25px;
-        letter-spacing: 5px;
+        letter-spacing: 0;
       }
       @include tabletP {
-        font-size: 1.2vw;
-        letter-spacing: 0.3vw;
+        font-size: 1.5vw;
+        letter-spacing: 0;
       }
     }
     &:hover {
@@ -229,6 +299,18 @@
     }
   }
   .view-item-container {
+    padding-top: 7vh;
+    padding-bottom: 0;
+    margin-bottom: 5vh;
+    width: 15vw;
+    .eye-glass-icon {
+      height: 2.7vw;
+    }
+    svg {
+      width: 13vw;
+      height: 5vw;
+    }
+
     &.disabled {
       .eye-glass-icon {
         .glass-eyes-left,
@@ -301,7 +383,7 @@
       transform: translate(139px, $smileY) !important;
     }
     .item-description {
-      letter-spacing: 0.3vw !important;
+      letter-spacing: 0 !important;
       font-family: $font-family-light !important;
     }
     .left-smile, .right-smile {
@@ -315,5 +397,11 @@
   // disabled third button build
   .first-col .first-item .create-item-container.disabled button svg {
     color: var(--theme-dark-blue) !important;
+  }
+  .second-col .create-item-container.disabled button svg {
+    color: var(--theme-light-blue) !important;
+  }
+  .second-col .my-library-button.disabled button svg {
+    color: var(--theme-light-blue) !important;
   }
 }

@@ -7,6 +7,9 @@ import './TextLive.scss';
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import Katex from 'components/baseComponents/katex/Katex';
+import HtmlWithSpaces from '../baseComponents/HtmlWithSpaces';
+import { isPhone } from 'services/phone';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 interface TextProps {
@@ -37,10 +40,16 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component, refs }) => 
     return <Katex latex={latex} key={i} />
   }
 
+  const isBlockqouteNoBreaks = (el: string) => {
+    return /<blockquote (.*)class="bq no-break"(.*)>/.test(el);
+  }
+
   let classN = 'text-play';
   if (className) {
     classN += ' ' + className;
   }
+
+  let prev:any = null;
 
   return (
     <div className={classN} ref={refs}>
@@ -49,12 +58,34 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component, refs }) => 
           const res = isMathJax(el);
           const latex = isLatex(el);
           if (res) {
+            prev = el;
             return renderMath(el, i);
           } else if (latex) {
+            prev = el;
             return renderLatex(el, i);
-          } else {
-            return <div key={i} dangerouslySetInnerHTML={{ __html: el}} />
           }
+
+          if (isPhone() && isBlockqouteNoBreaks(el)) {
+            if (prev && isBlockqouteNoBreaks(prev)) {
+              prev = el;
+              return <div dangerouslySetInnerHTML={{__html: el }} />
+            }
+  
+            prev = el;
+  
+            return (
+              <div key={i}>
+                <div className="scroll-sideways-hint">
+                  <SpriteIcon name="flaticon-swipe" />
+                  <div>Scroll sideways on each line that overflows</div>
+                </div>
+                <div dangerouslySetInnerHTML={{ __html: el }} />
+              </div>
+            );
+          }
+
+          prev = el;
+          return <HtmlWithSpaces key={i} index={i} value={el} />;
         })
       }
     </div>

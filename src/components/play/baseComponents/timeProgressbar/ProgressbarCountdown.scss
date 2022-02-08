@@ -1,21 +1,20 @@
 @import 'src/assets/sass/partials/variables';
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
-
 .timer-progressbar {
-  $height: 0.7vw;
-  width: 80%;
-  border-radius: calc(#{$height} / 2);
-  height: $height !important;
-  .MuiLinearProgress-barColorPrimary {
-    background: #FF9800;
-  }
-  .MuiLinearProgress-colorPrimary {
-    background: var(--dark-gray) !important;
-  }
-  &.deadline-soon {
+    $height: 0.7vw;
+    width: 80%;
+    border-radius: calc(#{$height} / 2);
+    height: $height !important;
     .MuiLinearProgress-barColorPrimary {
-      background: var(--theme-orange);
+        background: #FF9800;
     }
-  }
+    .MuiLinearProgress-colorPrimary {
+        background: var(--theme-dark-blue) !important;
+    }
+    &.deadline-soon {
+        .MuiLinearProgress-barColorPrimary {
+            background: var(--theme-orange);
+        }
+    }
 }

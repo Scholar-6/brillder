@@ -3,6 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 $space-between-boxes: 0.1vw;
+$base-build-border: $editor-radius;
 
 .mobile-brick-dialog {
   font-size: 5vw;
@@ -10,8 +11,20 @@ $space-between-boxes: 0.1vw;
 }
 
 .investigation-build-page {
+  .key-word {
+    text-transform: capitalize !important;
+  }
   height: 100vh;
   overflow: hidden;
+
+  .q-brick-title {
+    br {
+      display: none;
+    }
+    p {
+      display: inline;
+    }
+  }
 
   .exit-arrow {
     position: fixed;
@@ -45,18 +58,22 @@ $space-between-boxes: 0.1vw;
           font-size: 0.8vw !important;
         }
       }
+
       blockquote {
         border-left: 5px solid var(--tab-gray);
         font-size: 1vw;
         padding-left: 1.8vh;
+
         &.no-break {
           white-space: nowrap;
         }
       }
+
       table {
         table-layout: fixed;
         width: 100%;
         border-collapse: collapse;
+
         td {
           outline: none;
           border: 1px solid var(--theme-dark-blue);
@@ -97,6 +114,7 @@ $space-between-boxes: 0.1vw;
     &:hover {
       opacity: 0.5;
     }
+
     svg {
       $remove-button-size: 1vw;
       height: $remove-button-size;
@@ -123,7 +141,7 @@ $space-between-boxes: 0.1vw;
   }
 
   .button-box {
-    margin: 0.2vw 0;
+    margin: $editor-spacing 0;
   }
 
   .tutorial-top-labels {
@@ -274,8 +292,8 @@ $space-between-boxes: 0.1vw;
     position: fixed;
     font-family: $font-family-regular;
     top: 6%;
-    right: 0;
-    width: 34.3vw;
+    right: 7vw;
+    width: 25vw;
     color: white;
     @extend %textCenter;
 
@@ -310,9 +328,9 @@ $space-between-boxes: 0.1vw;
   position: absolute;
   $size: 4.5vw;
   $margin: 1.4vw;
-  z-index: 9999999;
+  z-index: 1000;
   right: $margin;
-  top: calc(#{$margin} + #{$size} + #{$margin} + 0.7vw);
+  top: calc(#{$margin} + #{$size} + #{$margin} + 0.7vw + 4vh);
 
   .send-to-publisher-button,
   .build-publish-button,
@@ -335,6 +353,12 @@ $space-between-boxes: 0.1vw;
       width: 100%;
     }
 
+    &.invite-editor-button svg {
+      margin-left: 8%;
+      width: 90%;
+      height: 90%;
+    }
+
     &.disabled {
       cursor: inherit;
       background: var(--theme-light-blue) !important;
@@ -348,28 +372,47 @@ $space-between-boxes: 0.1vw;
         width: 90%;
       }
     }
+
     .custom-tooltip {
       top: 100%;
+      font-family: $font-family-bold;
       z-index: 9999;
       margin-top: 0.6vw;
       left: -1.5vw;
       width: 7vw !important;
     }
   }
+
   .build-publish-button {
     .custom-tooltip {
       top: 100%;
       z-index: 9999;
       margin-top: 0.6vw;
+      font-family: $font-family-bold;
       left: 0.2vw;
       width: 4vw !important;
+
+      &.copy-text {
+        left: -0.8vw;
+        width: 6vw !important;
+      }
     }
   }
+
   .return-to-editor-button-container,
   .return-to-author-button-container,
   .send-to-publisher-button-container,
   .build-publish-button-container {
     position: relative;
+
+    .center-absolute {
+      position: absolute;
+      top: 1.3vw;
+      left: 1.85vw;
+      font-size: 1.3vw;
+      font-family: $font-family-bold;
+    }
+
     .custom-hover-container {
       top: 0;
       left: 0;
@@ -379,6 +422,7 @@ $space-between-boxes: 0.1vw;
       background: #fff;
       @extend %transitionAll300;
       opacity: 0.5 !important;
+
       &.hovered {
         position: absolute;
         top: -10%;
@@ -389,11 +433,13 @@ $space-between-boxes: 0.1vw;
     }
   }
 }
+
 .question-unique-play .help-text {
   @include tabletP {
     font-size: 1vw !important;
   }
 }
+
 .build-brick-title {
   position: absolute;
   width: 75%;
@@ -402,7 +448,22 @@ $space-between-boxes: 0.1vw;
   height: 5%;
   @extend %flexCenter;
   justify-content: center;
-  > div {
+
+  br {
+    display: none;
+  }
+
+  svg {
+    margin-left: 2vw;
+    margin-right: 0.3vw;
+    $size: 1.3vw;
+    stroke-width: 3;
+    width: $size;
+    height: $size;
+    color: var(--theme-light-blue);
+  }
+
+  >div {
     font-size: 2.5vh;
     width: 75%;
     color: var(--theme-light-blue);
@@ -417,6 +478,7 @@ $space-between-boxes: 0.1vw;
   p {
     color: var(--theme-light-blue) !important;
     background: inherit !important;
+    display: inline;
   }
 }
 
@@ -445,12 +507,14 @@ $space-between-boxes: 0.1vw;
 // plan page styles.
 .plan-page {
   $baseFontSize: 1.05vw;
+
   .top-scroll-area,
   .bottom-scroll-area {
     display: flex;
     width: 100%;
     height: 5vh;
     justify-content: flex-start;
+
     .bottom-button-container,
     .top-button-container {
       display: flex;
@@ -471,29 +535,37 @@ $space-between-boxes: 0.1vw;
     }
   }
 
+  .right-sidebar {
+    position: relative;
+  }
+
+  .ql-editor.ql-blank::before {
+    font-family: $font-family-bold;
+  }
+
   .key-words {
     .MuiOutlinedInput-notchedOutline {
       border: none !important;
     }
+    input::placeholder {
+      font-family: $font-family-bold;
+    }
+    .MuiAutocomplete-root .MuiInput-formControl {
+      box-shadow: none !important;
+    }
+    .subject-autocomplete {
+      margin-bottom: 0.7vw !important;
+    }
   }
 
-  .fixed-build-phone
-    .phone-question-preview-box
-    .phone-question-preview
-    .phone
-    .phone-border
-    .screen
-    .custom-component
-    .phone-preview-component
-    .key-words-play {
+  .fixed-build-phone .phone-question-preview-box .phone-question-preview .phone .phone-border .screen .custom-component .phone-preview-component .key-words-play {
     white-space: normal;
     overflow: auto;
   }
 
   .bs-circles-container {
     position: absolute;
-    bottom: 15.1vh;
-    right: 1.8vw;
+    bottom: 10.1vh;
   }
 
   .inner-question-type {
@@ -501,10 +573,10 @@ $space-between-boxes: 0.1vw;
     padding-bottom: 0 !important;
     padding-right: 0 !important;
     padding-left: 2vw;
-    height: calc(100% - 10vh);
+    height: calc(100% - 10vh) !important;
 
     .plan-quill-container {
-      max-width: 72.5%;
+      max-width: 71%;
       background: var(--tab-gray);
       border-radius: $editor-radius;
     }
@@ -535,33 +607,45 @@ $space-between-boxes: 0.1vw;
         width: 100%;
         height: auto !important;
       }
+
       .ql-editor {
-        border-radius: 0.5vw;
+        border-radius: $base-build-border;
         height: auto !important;
+
+        &::before {
+          color: var(--theme-dark-blue) !important;
+          opacity: 0.5;
+        }
       }
+
       .title-quill-container {
         width: 100%;
         margin-top: 0.5vw;
+
         input {
           color: var(--theme-dark-blue);
           background: var(--off-white);
           width: calc(100% - 1vw);
           font-size: $baseFontSize;
           padding: 0.3vw 0.5vw;
-          border-radius: 0.5vw;
+          border-radius: $base-build-border;
         }
+
         .ql-editor {
           min-height: 3.5vw;
           text-align: left;
+
           br {
             display: none;
           }
         }
       }
+
       .key-words {
         margin-top: 0.5vw;
         background: var(--off-white);
-        border-radius: 0.5vw;
+        border-radius: $base-build-border;
+
         .key-word {
           border-radius: 1vw;
           background: #e4e8ee;
@@ -574,54 +658,68 @@ $space-between-boxes: 0.1vw;
           padding-top: 0.2vw;
           font-size: $baseFontSize;
           padding-bottom: 0.2vw;
-        }
-        .MuiAutocomplete-root {
-          margin-bottom: 0 !important;
-          input {
-            font-size: $baseFontSize;
-            padding: 0;
+
+          svg {
+            stroke-width: 3 !important;
+            padding: 0.2vw !important;
+            width: 0.8vw !important;
+            height: 0.8vw !important;
           }
         }
+
+        input {
+          font-size: $baseFontSize !important;
+        }
       }
+
       .subject-select-container {
         margin-top: 0.5vw;
         width: 100%;
         display: flex;
+
         .MuiInputBase-root {
           margin-right: 0.5vw;
           width: 100%;
+
           &::before,
           &::after {
             content: none !important;
           }
+
           .MuiSelect-root {
             padding-top: 0 !important;
             padding-bottom: 0 !important;
-            border-radius: 0.5vw;
+            border-radius: $base-build-border;
             background: var(--off-white);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             color: var(--theme-dark-blue);
+
             .MuiListItemIcon-root:first-child {
               display: center;
               justify-content: center;
             }
+
             .MuiTypography-root {
               font-size: $baseFontSize;
             }
           }
         }
       }
+
       .level-and-length-container {
         display: inline-flex;
         margin-top: 0.5vw;
         width: 100%;
+
         .difficulty-select {
           padding-right: 0.5vw;
           width: 100%;
+
           .MuiInputBase-root {
             width: 100%;
+
             &::before,
             &::after {
               content: none !important;
@@ -631,10 +729,11 @@ $space-between-boxes: 0.1vw;
               font-size: $baseFontSize;
               background: var(--off-white);
               padding-left: 0.4vw;
-              border-radius: 0.5vw;
+              border-radius: $base-build-border;
             }
           }
         }
+
         .brick-length {
           width: 30%;
           position: relative;
@@ -645,14 +744,15 @@ $space-between-boxes: 0.1vw;
             z-index: 100;
             height: 2vw;
             position: absolute;
-            width: 27%;
-            border-top-left-radius: 0.5vw;
-            border-bottom-left-radius: 0.5vw;
+            width: 29%;
+            border-top-left-radius: $base-build-border;
+            border-bottom-left-radius: $base-build-border;
             pointer-events: none;
             background: #e4e8ee;
             display: flex;
             align-items: center;
             justify-content: center;
+
             svg {
               stroke-width: 2;
               width: 1.5vw;
@@ -662,6 +762,7 @@ $space-between-boxes: 0.1vw;
 
           .select {
             width: 100%;
+
             &::before,
             &::after {
               content: none !important;
@@ -681,27 +782,30 @@ $space-between-boxes: 0.1vw;
             font-size: $baseFontSize;
             font-family: $font-family-regular;
             background: var(--off-white);
-            border-radius: 0.5vw;
+            border-radius: $base-build-border;
             display: flex;
             align-items: center;
           }
         }
       }
+
       .brief-container,
       .prep-container,
       .open-question-container,
       .title-quill-container {
         margin-top: 0.5vw;
+
         .header {
           width: 100%;
           background: var(--tab-gray);
-          border-top-left-radius: 0.5vw;
-          border-top-right-radius: 0.5vw;
+          border-top-left-radius: $base-build-border;
+          border-top-right-radius: $base-build-border;
           color: var(--theme-dark-blue);
           font-size: 1.3vw;
           text-align: center;
           font-family: $font-family-bold;
         }
+
         .ql-editor {
           border-top-left-radius: 0;
           border-top-right-radius: 0;
@@ -712,22 +816,29 @@ $space-between-boxes: 0.1vw;
           }
         }
       }
+
       .prep-container {
         margin-bottom: 0.5vw;
+
         iframe {
           width: 100%;
         }
       }
     }
+
     .right-sidebar {
-      width: 27.5%;
+      max-width: 29% !important;
+      flex-basis: 29% !important;
+      width: 29%;
     }
+
     .plan-comments-panel {
       transition: all 1s ease-out;
       display: flex;
       justify-content: flex-end;
       width: 27.5%;
       height: calc(100% - 10vh);
+
       &.hidden {
         width: 0;
         overflow: hidden;
@@ -746,6 +857,7 @@ $space-between-boxes: 0.1vw;
 
 // quill top toolbar
 .investigation-build-page {
+
   .ql-global-toolbar,
   .ql-custom-toolbar {
     position: relative !important;
@@ -756,12 +868,13 @@ $space-between-boxes: 0.1vw;
 
     button,
     .picker.q-color {
-      width: 1.8vw !important;
-      height: 1.8vw !important;
+      width: 1.6vw !important;
+      height: 1.6vw !important;
 
       svg {
         height: 100% !important;
         width: 100% !important;
+
         &:hover {
           color: rgba(0, 28, 88, 0.5) !important;
         }
@@ -769,8 +882,9 @@ $space-between-boxes: 0.1vw;
     }
 
     .picker.q-align {
-      width: 1.8vw !important;
-      height: 1.8vw !important;
+      width: 1.7vw !important;
+      height: 1.7vw !important;
+
       .svg {
         height: 100%;
         width: 100%;
@@ -785,20 +899,24 @@ $space-between-boxes: 0.1vw;
       }
     }
   }
+
   // more space between buttons in bigger editors
   .synthesis-page,
   .plan-page {
     .ql-custom-toolbar .formats {
-      > button,
-      > span.picker.q-color {
+
+      >button,
+      >span.picker.q-color {
         margin-left: 0.3vw;
         margin-right: 0.3vw;
       }
     }
   }
+
   .synthesis-page {
     .bs-circles-container {
-      margin-top: 10vh;
+      position: absolute;
+      bottom: 20.1vh;
     }
   }
 }
@@ -807,36 +925,44 @@ $space-between-boxes: 0.1vw;
 .investigation-build-page {
   .hover-move-left {
     cursor: pointer;
+
     .right-arrow {
       transition: all 300ms ease-out;
     }
   }
+
   .hover-move-left:hover {
     .right-arrow {
       margin-left: 1vw !important;
       margin-right: 1vw !important;
     }
   }
+  .hover-move-right {
+    cursor: pointer;
+
+    .left-arrow {
+      transition: all 300ms ease-out;
+    }
+  }
+  .hover-move-right:hover {
+    .left-arrow {
+      margin-left: 1vw !important;
+      margin-right: 2.1vw !important;
+    }
+  }
 }
 
 // #3275 highlight question font-size
 .investigation-build-page .phone-question-preview .mobile-question-component {
+
   .lines-container .line,
   .words-container .word {
     font-size: 1vw !important;
   }
 }
 
-.build-question-page
-  .build-question-column
-  .line-highlight-build
-  .hightlight-area
-  .word.active,
-.build-question-page
-  .build-question-column
-  .word-highlight-build
-  .hightlight-area
-  .word.active {
+.build-question-page .build-question-column .line-highlight-build .hightlight-area .word.active,
+.build-question-page .build-question-column .word-highlight-build .hightlight-area .word.active {
   border-radius: 0.3vw;
 }
 
@@ -851,6 +977,7 @@ $space-between-boxes: 0.1vw;
 // background color
 .phone-preview-component,
 .phone-question-preview {
+
   span,
   p {
     background: inherit !important;
@@ -859,4 +986,310 @@ $space-between-boxes: 0.1vw;
 
 .build-image-caption {
   font-size: 1.05vw;
+}
+
+.phone-question-preview {
+  .short-answer-input {
+    .quill-document-editor {
+      $border: $base-build-border;
+      border-top-right-radius: $border;
+      border-top-left-radius: $border;
+
+      .ql-custom-toolbar {
+        display: none;
+      }
+
+      .ql-container {
+        .ql-editor {
+          border-top-right-radius: $border;
+          border-top-left-radius: $border;
+        }
+
+        .ql-editor::before {
+          font-size: 1vw !important;
+        }
+      }
+    }
+  }
+}
+
+.pair-match-play-choice {
+  width: 100% !important;
+  overflow-x: hidden;
+}
+
+
+.investigation-build-page {
+  .ql-custom-toolbar .formats .q-tooltip-hover {
+    .css-custom-tooltip {
+      top: -1.7vw;
+      z-index: 100;
+      margin-left: -1vw;
+      text-transform: capitalize;
+      font-family: $font-family-bold;
+      font-size: 1vw;
+      padding: 0.3vw 1vw;
+      width: auto;
+    }
+    .tooltip-colors {
+      margin-left: -3vw;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
+  }
+  .q-caps.q-tooltip-hover .css-custom-tooltip {
+    padding: 0.3vw 0.4vw !important;
+  }
+  .phone-toolbar {
+    position: relative;
+    .css-custom-tooltip {
+      z-index: 9999999;
+      text-transform: capitalize;
+      font-family: $font-family-bold;
+      font-size: 1vw;
+      padding: 0.3vw 1vw;
+      width: auto;
+    }
+    .right-tooltip {
+      left: 2vw;
+    }
+    .left-tooltip {
+      right: 2vw;
+    }
+    .bottom-tooltip {
+      top: 2vw;
+    }
+    .upper-tooltip {
+      bottom: 2vw;
+    }
+    &:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.investigation-build-page {
+  .phone-question-preview-box {
+    right: 7vw;
+    width: 25vw;
+    z-index: 1001;
+  }
+}
+
+//quill tables
+.investigation-build-page .quill-better-table {
+  background: var(--off-white);
+  border: none !important;
+  table {
+    border: none !important;
+  }
+  tr, td {
+    border: 3px solid var(--white) !important;
+  }
+}
+
+// aspect ratio is too high hide phone and make build bigger
+@media (max-aspect-ratio: 160/98) {
+  .investigation-build-page .fixed-build-phone {
+    display: none;
+  }
+  .investigation-build-page .question-container {
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+  }
+  .investigation-build-page {
+    .build-brick-title {
+      justify-content: flex-start;
+    }
+  }
+  .investigation-build-page .saved-info {
+    display: none;
+  }
+
+  // font sizes bigger
+  .investigation-build-page {
+    $font-size-custom: 1.8vw;
+    .question-type .inner-question-type .label-question-type {
+      font-size: 2vw;
+    }
+    .build-question-page .help-arrow-text {
+      left: 13.8vw;
+    }
+    .question-type .inner-question-type .label-question-type svg {
+      width: 2vw;
+      height: 2vw;
+    }
+    .build-question-page .help-arrow {
+      left: 14vw;
+    }
+    .tutorial-panel.tutorial-proposal-panel .button-row {
+      font-size: 2vw;
+    }
+    .question-type .question-container .link-description {
+      font-size: 2vw !important;
+      line-height: 2.7vw !important;
+    }
+    .ql-global-toolbar button, .ql-global-toolbar .picker.q-color, .ql-custom-toolbar button, .ql-custom-toolbar .picker.q-color {
+      width: 2.2vw !important;
+      height: 2.2vw !important;
+    }
+    .quill-document-editor .ql-container .ql-editor {
+      font-size: $font-size-custom;
+    }
+    .component-title {
+      font-size: 1.2vw;
+      svg {
+        width: 1.3vw;
+        height: 1.3vw;
+      }
+    }
+    .question-comments-panel.hidden {
+      right: -19vw;
+    }
+    .plan-page .inner-question-type .inner-quills .key-words {
+      input {
+        font-size: $font-size-custom !important;
+      }
+      .key-word {
+        font-size: $font-size-custom !important;
+      }
+    }
+    .comment-button .custom-tooltip {
+      font-size: 1.2vw;
+      width: 8vw;
+    }
+    .comment-item-container {
+      font-size: 1.3vw !important;
+    }
+    .synthesis-words-count {
+      font-size: $font-size-custom !important;
+    }
+    .synthesis-page .inner-question-type .synthesis-input-container .ql-container .ql-editor p {
+      font-size: $font-size-custom !important;
+    }
+    .comment-reply-text-form textarea {
+      font-size: 1.3vw;
+    }
+    .build-question-page .select-question-type  {
+      font-size: 1.3vw !important;
+    }
+
+    .build-question-page .select-type-container {
+      font-size: 1.3vw;
+    }
+
+    button.comment-action-button.in-child {
+      font-size: 1.2vw;
+    }
+
+    .plan-page .inner-question-type .inner-quills .level-and-length-container .difficulty-select .MuiInputBase-root .MuiSelect-root {
+      font-size: $font-size-custom !important;
+    }
+    .plan-page .inner-question-type .inner-quills .subject-select-container .MuiInputBase-root .MuiSelect-root .MuiTypography-root {
+      font-size: $font-size-custom !important;
+    }
+    .plan-page .inner-question-type .inner-quills .level-and-length-container .brick-length .MuiSelect-root  {
+      padding-left: 3.8vw;
+      font-size: $font-size-custom !important;
+    }
+    .core-select .MuiSelect-root.MuiSelect-select.MuiSelect-selectMenu.MuiInputBase-input.MuiInput-input {
+      font-size: 0.97vw !important;
+    }
+  }
+}
+
+//audio preview
+.fixed-build-phone {
+  .play-wave-container {
+    display: flex;
+    height: 3vw;
+    .react-waves {
+      height: 3vw;
+      width: 90%;
+      padding: 0 !important;
+      margin-left: 5%;
+
+      wave {
+        height: 3vw !important;
+      }
+    }
+  }
+
+  .absolute-start-time,
+  .absolute-end-time {
+    font-size: 0.9vw;
+  }
+
+  .choose-choice .play-wave-container {
+    height: 3.5vw;
+    .relative-waves-container {
+      width: calc(100% - 4.5vw);
+    }
+    .play-icon-container-d1 .play-icon-d1 {
+      width: 2vw;
+      height: 2vw;
+    }
+  }
+  .custom-audio-controls input {
+    display: none;
+  }
+}
+
+
+// blockqoutes
+.fixed-build-phone {
+  blockquote {
+    border-left: 3px solid var(--tab-gray) !important;
+    overflow-x: auto;
+  }
+  .question-hint, .question-hint-global {
+    blockquote {
+      border-left: 3px solid var(--theme-dark-blue) !important;
+    }
+  }
+}
+.desktop-version-dialog {
+  display: none;
+}
+.build-hide-popup {
+  display: none;
+}
+
+.build-show-container {
+  height: 100%;
+}
+
+// caption font size
+.investigation-build-page .image-caption {
+  font-size: 0.9vw !important;
+  p {
+    font-size: 0.9vw !important;
+  }
+}
+
+
+@media only screen and (max-width: 760px) {
+  .desktop-version-dialog {
+    display: block;
+  }
+  
+  .investigation-build-page {
+    .build-show-container {
+      display: none;
+    }
+    .build-hide-popup {
+      display: block;
+    }  
+    .build-navigation-buttons {
+      display: none !important;
+    }
+    .play-preview {
+      display: none !important;
+    }
+  }
 }

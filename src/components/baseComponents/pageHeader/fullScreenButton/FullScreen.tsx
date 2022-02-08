@@ -6,14 +6,18 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 interface Props { }
 
 const FullScreenButton: React.FC<Props> = () => {
+  const [toggle, setToggle] = React.useState(false);
   const [state, setState] = React.useState(false);
 
   useEffect(() => {
-    document.onfullscreenchange = function () { 
-      setState(!state);
-    };
+    document.onfullscreenchange = () => setState(!state);
+    const rerenderButton = () => setToggle(!toggle);
+    document.addEventListener('fullscreenchange', rerenderButton);
+    return () => {
+      document.removeEventListener('fullscreenchange', rerenderButton);
+    }
   /*eslint-disable-next-line*/
-  }, []);
+  }, [toggle]);
 
   const fullscreen = document.fullscreenElement;
   let label = 'Enter Full Screen';

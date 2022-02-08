@@ -13,6 +13,21 @@
     align-items: center;
     justify-content: center;
   }
+  
+  .top-wave {
+    margin-top: 5vw;
+  }
+
+  .wave {
+    position: absolute;
+    width: calc(100% - 1vw);
+    top: 1vw;
+    left: 0.5vw;
+
+    > wave {
+      height: 4vw !important;
+    }
+  }
 
   .btn {
     width: 7.5vw;
@@ -72,5 +87,17 @@
   .disabled {
     background: #f2f2f2;
     color: var(--muted) !important;
+  }
+}
+
+.react-recording .stop-record {
+  position: relative;
+  .svg {
+    $size: 1.2vw;
+    stroke-width: 2.5;
+    width: $size;
+    height: $size;
+    position: absolute !important;
+    left: 0.6vw !important;
   }
 }

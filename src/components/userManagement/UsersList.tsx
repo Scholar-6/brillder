@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
 
 import actions from 'redux/actions/requestFailed';
-import { User, UserType, UserStatus, RolePreference } from "model/user";
+import { User, UserType, UserStatus, UserPreferenceType } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
@@ -19,8 +19,8 @@ import AddUserButton from "./components/AddUserButton";
 import UserActionsCell from "./components/UserActionsCell";
 import RoleDescription from "components/baseComponents/RoleDescription";
 import CustomToggle from './components/CustomToggle';
-import CustomFilterBox from "components/library/components/CustomFilterBox";
 import UsersListPagination from "./components/Pagination";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -40,7 +40,9 @@ interface UsersListProps {
 
 enum UserSortBy {
   Name,
-  Joined
+  Joined,
+  Subscription,
+  Status,
 }
 
 interface UsersListState {
@@ -73,14 +75,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     this.state = {
       users: [],
       page: 0,
-      pageSize: 12,
+      pageSize: 14,
       subjects: [],
       filterExpanded: true,
 
       roles: [
-        { name: "Student", type: RolePreference.Student, checked: false },
-        { name: "Teacher", type: RolePreference.Teacher, checked: false },
-        { name: "Builder", type: RolePreference.Builder, checked: false },
+        { name: "Learner", type: UserPreferenceType.Student, checked: false, isPreference: true },
+        { name: "Educator", type: UserPreferenceType.Teacher, checked: false, isPreference: true },
+        { name: "Builder", type: UserPreferenceType.Builder, checked: false, isPreference: true },
         { name: "Publisher", type: UserType.Publisher, checked: false },
         { name: "Admin", type: UserType.Admin, checked: false },
       ],
@@ -90,8 +92,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       isSearching: false,
       filterHeight: "auto",
 
-      sortBy: UserSortBy.Name,
-      isAscending: false,
+      sortBy: UserSortBy.Joined,
+      isAscending: true,
       isAdmin: checkAdmin(props.user.roles),
       isClearFilter: false,
       isDeleteDialogOpen: false,
@@ -122,6 +124,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
     if (sortBy === UserSortBy.Joined) {
       orderBy = "user.created";
+    } else if (sortBy === UserSortBy.Status) {
+      orderBy = "user.status";
+    } else if (sortBy === UserSortBy.Subscription) {
+      orderBy = "subscription.subscriptionState";
     }
 
     if (isAscending === null) {
@@ -268,14 +274,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     let filterSubjects = this.getCheckedSubjectIds();
     let roles = this.getCheckedRoles();
     this.getUsers(0, this.state.sortBy, filterSubjects, roles);
-    this.setState({...this.state});
+    this.setState({...this.state, page: 0});
   }
 
   filterBySubject = (i: number) => {
     const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked;
     this.filter();
-    this.setState({ ...this.state });
+    this.setState({ ...this.state, page: 0 });
     this.filterClear();
   };
 
@@ -292,8 +298,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   filter() {
-    let filterSubjects = this.getCheckedSubjectIds();
-    let filterRoles = this.getCheckedRoles();
+    const filterSubjects = this.getCheckedSubjectIds();
+    const filterRoles = this.getCheckedRoles();
     this.getUsers(0, this.state.sortBy, filterSubjects, filterRoles);
   }
 
@@ -327,7 +333,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       <div className="flex-height-box">
         <div className="sort-box">
           <div className="filter-container sort-by-box">
-            <div className="sort-header">Filter by: Role</div>
+            <div className="sort-header">User Type</div>
+            <RoleDescription />
             <RadioGroup
               className="sort-group"
               aria-label="SortBy"
@@ -347,12 +354,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
               </Grid>
             </RadioGroup>
           </div>
-          <CustomFilterBox
-            label="Filter by: Subject"
-            isClearFilter={this.state.isClearFilter}
-            setHeight={filterHeight => this.setState({filterHeight})}
-            clear={this.clearStatus.bind(this)}
-          />
+          <div className="filter-header">
+            <span>Subject</span>
+         </div>
         </div>
         <div className="sort-box subject-scrollable">
           <SubjectsList
@@ -370,14 +374,16 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     const {page} = this.state;
     this.setState({ ...this.state, page: page + 1 });
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(page + 1, this.state.sortBy, filterSubjects);
+    const filterRoles = this.getCheckedRoles();
+    this.getUsers(page + 1, this.state.sortBy, filterSubjects, filterRoles);
   }
 
   previousPage() {
     const {page} = this.state;
     this.setState({ ...this.state, page: page - 1 });
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(page - 1, this.state.sortBy, filterSubjects);
+    const filterRoles = this.getCheckedRoles();
+    this.getUsers(page - 1, this.state.sortBy, filterSubjects, filterRoles);
   }
 
   renderUserType(user: User) {
@@ -390,12 +396,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         type += "P";
       }
     }
-    if (user.rolePreference?.roleId === RolePreference.Builder) {
+    if (user.userPreference?.preferenceId === UserPreferenceType.Builder) {
       type += "B";
-    } else if (user.rolePreference?.roleId === RolePreference.Student) {
-      type += "S";
-    } else if (user.rolePreference?.roleId === RolePreference.Teacher) {
-      type += "T";
+    } else if (user.userPreference?.preferenceId === UserPreferenceType.Student) {
+      type += "L";
+    } else if (user.userPreference?.preferenceId === UserPreferenceType.Teacher) {
+      type += "E";
+    } else if (user.userPreference?.preferenceId === UserPreferenceType.Institution) {
+      type += "I";
     }
     return type;
   }
@@ -418,15 +426,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     const { sortBy, isAscending } = this.state;
 
     return (
-      <img
+      <SpriteIcon
         className="sort-button"
-        alt=""
-        src={
+        name={
           sortBy === currentSortBy
             ? !isAscending
-              ? "/feathericons/chevron-down.svg"
-              : "/feathericons/chevron-up.svg"
-            : "/feathericons/chevron-right.svg"
+                ? "arrow-down"
+                : "arrow-up"
+              : "arrow-right"
         }
         onClick={() => this.sortBy(currentSortBy)}
       />
@@ -437,18 +444,18 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     return (
       <tr>
         <th className="subject-title">
-          <Grid container>JOINED {this.renderSortArrow(UserSortBy.Joined)}</Grid>
+          <Grid container>Joined {this.renderSortArrow(UserSortBy.Joined)}</Grid>
         </th>
         <th className="user-full-name">
-          <Grid container>NAME {this.renderSortArrow(UserSortBy.Name)}</Grid>
+          <Grid container>Name {this.renderSortArrow(UserSortBy.Name)}</Grid>
         </th>
-        <th className="email-column">EMAIL</th>
+        <th className="email-column">Email</th>
         <th>
-          <Grid container>ROLE</Grid>
+          <Grid container>User Type {this.renderSortArrow(UserSortBy.Subscription)}</Grid>
         </th>
         <th>
           <Grid container>
-            ACTIVE?
+            Active? {this.renderSortArrow(UserSortBy.Status)}
           </Grid>
         </th>
         <th className="edit-button-column"></th>
@@ -495,9 +502,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                     <span className="user-last-name">{user.lastName}</span>
                   </td>
                   <td>{user.email}</td>
-                  <td>{this.renderUserType(user)}</td>
+                  <td className="preference-type">
+                    {this.renderUserType(user)}
+                    {user.subscriptionState > 1 && <SpriteIcon name="hero-sparkle" />}
+                  </td>
                   <td className="activate-button-container">
-                    <CustomToggle checked={user.status === UserStatus.Active} onClick={() => this.toggleUser(user)} />
+                    <CustomToggle checked={user.status === UserStatus.Active} name={user.firstName} onClick={() => this.toggleUser(user)} />
                   </td>
                   <UserActionsCell
                     userId={user.id}
@@ -535,7 +545,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderTableHeader() {
     return (
       <div className="user-header">
-        <h1 className="brick-row-title">ALL USERS</h1>
+        <h1 className="brick-row-title">All Users</h1>
         <AddUserButton history={this.props.history} />
       </div>
     );
@@ -561,7 +571,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           <Grid item xs={9} className="brick-row-container">
             {this.renderTableHeader()}
             {this.renderUsers()}
-            <RoleDescription />
             <UsersListPagination
               page={this.state.page}
               totalCount={this.state.totalCount}

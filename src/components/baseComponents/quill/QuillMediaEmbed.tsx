@@ -2,26 +2,29 @@ import Quill from "quill";
 import Delta from "quill-delta";
 import { Quill as GlobalQuill } from "react-quill";
 
-export const YOUTUBE_REGEXP = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]*)(&(amp;)?[\w\?=]*)?/g;
+export const YOUTUBE_REGEXP = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]*(&?(amp;)?[\w?=]*))*/g;
 const EMBED_REGEXP = /https:\/\/www.youtube.com\/embed\/([\w\-_]*)/;
 
-const BlockEmbed = GlobalQuill.import("blots/block/embed");
+const BlockEmbed = GlobalQuill.import("blots/block/embed"); 
 class YoutubeEmbed extends BlockEmbed {
-    static create(value: string) {
+    static create(value: string, time: string) {
         let node = super.create();
         node.setAttribute("width", "560");
         node.setAttribute("height", "315");
         node.setAttribute("frameborder", "0");
         node.setAttribute("allowfullscreen", "true")
+        value = value.replace("t=","start=");
         node.setAttribute("src", "https://www.youtube.com/embed/" + value);
         return node;
     }
 
     static value(node: YoutubeEmbed) {
         const src: string = node.getAttribute("src");
+        // Not sure why this matches capture group 1 here because the group we care about is actually 0?
         const id = src.match(EMBED_REGEXP)![1];
         return id;
     }
+
 }
 YoutubeEmbed.blotName = 'youtube';
 YoutubeEmbed.className = 'youtube-video';

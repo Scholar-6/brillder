@@ -1,7 +1,11 @@
+import React, { useEffect } from 'react';
+
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { checkTeacherOrAdmin } from 'components/services/brickService';
+import { isBuilderPreference } from 'components/services/preferenceService';
 import { User } from 'model/user';
-import React from 'react';
+import { getAllClassrooms } from 'components/teach/service';
+
 
 interface ButtonProps {
   user: User;
@@ -12,21 +16,39 @@ interface ButtonProps {
 
 const AdaptButton: React.FC<ButtonProps> = (props) => {
   const [hovered, setHover] = React.useState(false);
+  const [hassigned, setAssigned] = React.useState(false);
+
+  const getAssigned = async () => {
+    const classes = await getAllClassrooms();
+    if (classes && classes.length > 0) {
+      var classWithAssignments = classes.find(c => c.assignmentsCount && c.assignmentsCount > 0);
+      if (classWithAssignments) {
+        setAssigned(true);
+      }
+    }
+  }
+
+  useEffect(() => {
+    getAssigned();
+  }, []);
 
   if (!props.user) { return <span />; }
-  let canSee = checkTeacherOrAdmin(props.user);
+  if (!hassigned) { return <span />; }
+
+  const canSee = checkTeacherOrAdmin(props.user) || isBuilderPreference(props.user);
   if (!canSee) { return <span />; }
 
   if (!props.sidebarRolledUp) {
     return (
-      <button onClick={props.onClick} className="assign-class-button svgOnHover blue">
-        <span>Adapt Brick</span>
-      </button>
+      <div onClick={props.onClick} className="assign-class-button bigger-button-v3 blue-v3">
+        <SpriteIcon name="copy" />
+        <div>Adapt</div>
+      </div>
     );
   }
 
   const renderTooltip = () => (
-    <div className="custom-tooltip">
+    <div className="custom-tooltip bold">
       <div>Adapt Brick</div>
     </div>
   );
@@ -52,3 +74,4 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
 }
 
 export default AdaptButton;
+

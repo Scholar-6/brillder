@@ -12,6 +12,7 @@ import { getAssignmentStats } from "services/axios/stats";
 import ExpandedStudentAssignment from "./ExpandedStudentAssignment";
 
 interface ActiveStudentBricksProps {
+  history: any;
   classroom: TeachClassroom | null;
   subjects: Subject[];
   isArchive: boolean;
@@ -57,8 +58,8 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
   async loadAssignments() {
     const res = (await getStudentAssignments(this.props.activeStudent.id)) as Assignment[] | null;
     if (res) {
-      const archived = res.filter(res => res.studentStatus && res.studentStatus.length > 0 &&  res.studentStatus[0].status === 3);
-      const assignments = res.filter(res => !res.studentStatus || !res.studentStatus[0] ||  res.studentStatus[0].status < 3);
+      const archived = res.filter(res => res.studentStatus && res.studentStatus.length > 0 && res.studentStatus[0].status === 3);
+      const assignments = res.filter(res => !res.studentStatus || !res.studentStatus[0] || res.studentStatus[0].status < 3);
       this.setState({ isLoaded: true, assignments, archived });
     }
   }
@@ -114,11 +115,13 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
                     isStudent={true}
                     isArchive={this.props.isArchive}
                     isStudentAssignment={true}
+                    activeStudent={this.props.activeStudent}
                     expand={() => this.setActiveAssignment(a)}
                     key={i}
                     assignment={a as any}
                     archive={this.loadAssignments.bind(this)}
-                    onRemind={this.props.onRemind?.bind(this)}
+                    unarchive={() => { }}
+                    onRemind={this.props.onRemind}
                   />
                 </div>
               </Grow>
@@ -132,34 +135,40 @@ class ActiveStudentBricks extends Component<ActiveStudentBricksProps, ActiveStud
 
   renderExpandedAssignment(a: Assignment) {
     return (
-      <ExpandedStudentAssignment
-        assignment={a}
-        student={this.props.activeStudent}
-        stats={this.state.assignmentStats}
-        subjects={this.props.subjects}
-        minimize={() =>
-          this.setState({ assignmentStats: null, activeAssignment: null })
-        }
-      />
+      <div>
+        <div style={{ height: 'calc(3vh + 1.5vw)' }} />
+        <ExpandedStudentAssignment
+          assignment={a}
+          isStudentAssignment={true}
+          history={this.props.history}
+          student={this.props.activeStudent}
+          stats={this.state.assignmentStats}
+          subjects={this.props.subjects}
+          onRemind={this.props.onRemind}
+          minimize={() =>
+            this.setState({ assignmentStats: null, activeAssignment: null })
+          }
+        />
+      </div>
     );
   }
 
   render() {
-    let list = this.state.assignments;
-    if (this.props.isArchive) {
-      list = this.state.archived;
+    let assignments: Assignment[] = [];
+    if (this.props.classroom?.assignments) {
+      assignments = this.props.classroom.assignments;
     }
     const { activeStudent } = this.props;
     const { activeAssignment } = this.state;
     return (
       <div className="student-assignments">
-        <div className="classroom-title">
+        <div className="classroom-title hh-student-name">
           <div>{activeStudent.firstName} {activeStudent.lastName}</div>
         </div>
         {activeAssignment
           ? this.renderExpandedAssignment(activeAssignment)
-          : this.renderStudentAssignments(list)}
-        {this.renderPagination(list)}
+          : this.renderStudentAssignments(assignments)}
+        {this.renderPagination(assignments)}
       </div>
     );
   }
