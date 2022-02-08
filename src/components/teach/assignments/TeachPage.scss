@@ -453,6 +453,11 @@
         @extend %flexCenter;
         height: 6vw;
         z-index: 1000;
+
+        .eye-pupil {
+          width: 2vw;
+          height: 2vw;
+        }
       }
       .glass-eyes-right,
       .glass-eyes-left {

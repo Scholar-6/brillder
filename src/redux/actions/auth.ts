@@ -138,4 +138,11 @@ const setIntendedPath = (path: string) => {
   }
 }
 
-export default { login, logout, loginSuccess, setLogoutSuccess, isAuthorized, redirectedToProfile, setDefaultUserProperties, setIntendedPath }
+const setReferralId = (referralId: string) => {
+  return {
+    type: types.SET_REFERRAL_ID,
+    referralId,
+  }
+}
+
+export default { login, logout, loginSuccess, setLogoutSuccess, isAuthorized, redirectedToProfile, setDefaultUserProperties, setIntendedPath, setReferralId }

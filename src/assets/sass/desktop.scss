@@ -1162,3 +1162,13 @@
     font-family: $font-family-bold;
   }
 }
+
+.autocomplete-username {
+  .MuiChip-root {
+    border-radius: 4vw !important;
+
+    .MuiChip-avatar {
+      margin-left: 0.4vw;
+    }
+  }
+}

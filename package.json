@@ -1,6 +1,6 @@
 {
   "name": "brillder",
-  "version": "12.5.0",
+  "version": "12.6.0",
   "private": false,
   "dependencies": {
     "@datadog/datadog-ci": "^0.11.11",
@@ -37,7 +37,7 @@
     "@vx/axis": "0.0.198",
     "@vx/grid": "0.0.198",
     "@vx/stats": "0.0.198",
-    "axios": ">=0.21.2",
+    "axios": "^0.25.0",
     "caniuse-lite": "^1.0.30001187",
     "desmos": "^1.5.4",
     "dot-prop": "^4.2.1",

@@ -36,7 +36,7 @@ const EmptyTabContent: React.FC<Props> = (props) => {
       <div className={"tab-content-centered " + (activeClassroom ? 'empty-tab-content' : '')}>
         <div>
           {activeClassroom && <div className="bold"> {activeClassroom.name} has no assignments for the moment</div>}
-          <div className="icon-container glasses-icon-container" onClick={() => props.history.push(map.ViewAllPage)}>
+          <div className="icon-container glasses-icon-container" onClick={() => props.history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true')}>
             <SpriteIcon name="glasses-home-blue" className="glasses-icon" />
             <div className="glass-eyes-inside">
               <div className="glass-eyes-left svgOnHover">
@@ -59,7 +59,7 @@ const EmptyTabContent: React.FC<Props> = (props) => {
               </div>
             </div>
           </div>
-          <div className="bold">Click the icon above to search for brick to assign</div>
+          <div className="bold">Click on the glasses above to search for brick to assign</div>
         </div>
       </div>
     </div>
