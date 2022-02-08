@@ -11,6 +11,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { User } from 'model/user';
 import map from 'components/map';
 import { isIPad13, isTablet } from 'react-device-detect';
+import { checkCoupon } from 'services/axios/stripe';
 
 
 const TabletTheme = React.lazy(() => import('./themes/StripeTabletTheme'));
@@ -37,6 +38,9 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   }
 
   const [discount, setDiscount] = useState('WELCOME50');
+
+  const [tempDiscount, setTempDiscount] = useState('WELCOME50');
+  const [changed, setChanged] = useState(false);
 
   const [clicked, setClicked] = useState(false);
 
@@ -99,6 +103,10 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     }
   }, [elements]);
 
+  const applyCode = () => {
+    checkCoupon(tempDiscount);
+  }
+
   const handlePayment = async (e: any) => {
     debugger
     if (e)
@@ -155,12 +163,14 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
           <SpriteIcon name="brain-storm" />
           <div className="absolute-voucher">
             <div className="light label">Your discount code has been added!{/*Have a discount code? Add it here*/}</div>
-            <input value={discount} disabled onChange={e => {
+            <input value={tempDiscount} onChange={e => {
               const { value } = e.target;
+              setChanged(true);
               if (value.length < 20) {
-                setDiscount(e.target.value)
+                setTempDiscount(e.target.value);
               }
             }} />
+            {changed && tempDiscount.length > 2 && <div className="apply-btn flex-center" onClick={applyCode}>Apply</div>}
           </div>
         </div>
         <div className="pay-box">
