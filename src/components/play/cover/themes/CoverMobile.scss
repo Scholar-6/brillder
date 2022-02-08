@@ -33,8 +33,13 @@
     align-items: center;
     justify-content: flex-end;
     display: flex;
-    > img {
+    img {
       width: 30vw;
+    }
+    svg {
+      stroke-width: 1.5;
+      width: 6vw;
+      height: 6vw;
     }
     .dropzone {
       padding: 1.5vw !important;
