@@ -70,6 +70,7 @@ import ChoosePlan from 'components/choosePlan/ChoosePlan';
 interface AppProps {
   user: User;
   setLogoutSuccess(): void;
+  setReferralId(referralId: string): void;
 }
 
 const App: React.FC<AppProps> = props => {
@@ -116,6 +117,14 @@ const App: React.FC<AppProps> = props => {
     // download mamoto
     setupMatomo();
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const referralId = params.get("referralId");
+    if(referralId) {
+      props.setReferralId(referralId);
+    }
+  }, [location])
 
   // lock screen for phone
   if (isPhone()) {
@@ -310,6 +319,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   setLogoutSuccess: () => dispatch(actions.setLogoutSuccess()),
+  setReferralId: (referralId: string) => dispatch(actions.setReferralId(referralId)),
 });
 
 export default connect(mapState, mapDispatch)(App);

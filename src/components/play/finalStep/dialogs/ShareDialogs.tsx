@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from "axios";
 
 import './ShareDialog.scss';
 import { Brick } from 'model/brick';
@@ -34,7 +35,15 @@ const ShareDialogs: React.FC<ShareProps> = props => {
     name: ''
   } as InviteResult);
 
-  const link = routes.playCover(props.brick);
+  const [referralId, setReferralId] = useState("");
+  React.useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/user/current/referral`, { withCredentials: true });
+      setReferralId(data.referralId);
+    })()
+  }, [props.user])
+
+  const link = routes.playCover(props.brick) + `?referralId=${referralId}`;
 
   let isAuthor = false;
   try {
