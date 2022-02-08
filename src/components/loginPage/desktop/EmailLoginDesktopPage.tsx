@@ -20,16 +20,22 @@ import { trackSignUp } from "services/matomo";
 import map from "components/map";
 import { getTerms } from "services/axios/terms";
 import LoginBricks from "../components/LoginBricks";
+import { ReduxCombinedState } from "redux/reducers";
+
+const mapState = (state: ReduxCombinedState) => ({
+  referralId: state.auth.referralId,
+})
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
 });
 
-const connector = connect(null, mapDispatch);
+const connector = connect(mapState, mapDispatch);
 
 interface LoginProps {
   history: History;
   match: any;
+  referralId?: string;
   loginSuccess(): void;
 }
 
@@ -130,7 +136,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
   const register = (email: string, password: string) => {
     axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp/3`,
-      { email, password, confirmPassword: password },
+      { email, password, confirmPassword: password, referralId: props.referralId },
       { withCredentials: true }
     ).then((resp) => {
       const { data } = resp;
