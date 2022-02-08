@@ -10,16 +10,22 @@ import LoginLogo from '../components/LoginLogo';
 import WrongLoginDialog from "../components/WrongLoginDialog";
 import DesktopLoginForm from "./DesktopLoginForm";
 import map from "components/map";
+import { ReduxCombinedState } from "redux/reducers";
+
+const mapState = (state: ReduxCombinedState) => ({
+  referralId: state.auth.referralId,
+})
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
 });
 
-const connector = connect(null, mapDispatch);
+const connector = connect(mapState, mapDispatch);
 
 interface LoginProps {
   history: History;
   email?: string;
+  referralId?: string;
   loginSuccess(): void;
 }
 
@@ -101,7 +107,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   const register = (email: string, password: string) => {
     axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp/3`,
-      { email, password, confirmPassword: password },
+      { email, password, confirmPassword: password, referralId: props.referralId },
       { withCredentials: true }
     ).then((resp) => {
       const { data } = resp;
