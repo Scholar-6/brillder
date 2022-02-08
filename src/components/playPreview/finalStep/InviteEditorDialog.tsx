@@ -108,7 +108,6 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
           <div className="audience-inputs border-rounded">
             <AutocompleteUsername
               canEdit={props.canEdit}
-              removeDisabled={true}
               editorError=""
               placeholder="Editor's username (first 3 characters)"
               onBlur={onBlur}

@@ -8,6 +8,7 @@ import { User } from 'model/user';
 import ImageSponsorDialog from './ImageSponsorDialog';
 import { updateBrick } from 'services/axios/brick';
 import { Brick } from 'model/brick';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface ImageProps {
   user: User;
@@ -63,8 +64,13 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
           window.location.href="https://scholar6.org";
         }
       }}>
-        <span className="italic">Commissioned by</span>
-        <img alt="scholar6" src={fileName ? fileUrl(fileName) : "/images/Scholar-6-Logo.svg"} />
+        <div className="italic">Commissioned by</div>
+        <div className="flex-center">
+          <img alt="scholar6" src={fileName ? fileUrl(fileName) : "/images/Scholar-6-Logo.svg"} />
+        </div>
+        <div className="flex-center">
+          <SpriteIcon name="feather-external-link" />
+        </div>
       </div>
     );
   }

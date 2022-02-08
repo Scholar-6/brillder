@@ -84,6 +84,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
               <Chip
                 label={`${user.username}`}
                 avatar={<Avatar src={fileUrl(user.profileImage)} />}
+                onDelete={e => console.log(e)}
               />
             ))}
           </>;

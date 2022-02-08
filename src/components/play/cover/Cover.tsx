@@ -116,8 +116,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const renderFirstRow = () => {
     return (
       <div className="first-row">
-        <div className="brick-id-container">Brick #{brick.id}</div>
-        <div className="question">What is a brick?</div>
+        <div className="brick-id-container">
+          Brick N<sub className="smaller">o.</sub> {brick.id}
+        </div>
         <div className="hover-area">
           <SpriteIcon name="help-circle-custom" onClick={() => setFirstPhonePopup(true)} />
           {!isPhone() &&

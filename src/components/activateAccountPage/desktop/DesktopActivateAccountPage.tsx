@@ -7,8 +7,9 @@ import 'components/loginPage/desktop/loginDesktopPage/LoginDesktopPage.scss';
 import TermsLink from "components/baseComponents/TermsLink"
 import TypingLabel from "components/baseComponents/TypingLabel";
 import EmailActivateDesktopPage from "./EmailActivateDesktopPage";
-import { ActivateAccount } from "components/loginPage/desktop/routes";
+import { ActivateAccount, ActivateAccountEmail } from "components/loginPage/desktop/routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
+import ActivateDesktopPage from "./ActivateDesktopPage";
 
 export enum LoginPage {
   Default,
@@ -43,6 +44,9 @@ const DesktopActivateAccountPage: React.FC<LoginProps> = (props) => {
       </div>
       <Switch>
         <Route exact path={ActivateAccount}>
+          <ActivateDesktopPage token={props.token} history={history} />
+        </Route>
+        <Route exact path={ActivateAccountEmail}>
           <EmailActivateDesktopPage history={history} email={props.email} token={props.token || ''} />
         </Route>
       </Switch>

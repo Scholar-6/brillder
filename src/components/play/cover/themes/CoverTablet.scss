@@ -370,6 +370,12 @@
   justify-content: center;
   font-family: $font-family-regular-italic;
   
+  svg {
+    height: 1.6vw;
+    width: 1.6vw;
+    stroke-width: 1.5;
+    padding-bottom: 0.3vw;
+  }
 
   img {
     margin-left: 0.3vw;
