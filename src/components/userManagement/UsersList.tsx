@@ -21,6 +21,7 @@ import RoleDescription from "components/baseComponents/RoleDescription";
 import CustomToggle from './components/CustomToggle';
 import UsersListPagination from "./components/Pagination";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -68,6 +69,8 @@ interface UsersListState {
   isDeleteDialogOpen: boolean;
   deleteUserId: number;
 }
+
+const MobileTheme = React.lazy(() => import('./themes/UserListPageMobileTheme'));
 
 class UsersListPage extends Component<UsersListProps, UsersListState> {
   constructor(props: UsersListProps) {
@@ -274,7 +277,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     let filterSubjects = this.getCheckedSubjectIds();
     let roles = this.getCheckedRoles();
     this.getUsers(0, this.state.sortBy, filterSubjects, roles);
-    this.setState({...this.state, page: 0});
+    this.setState({ ...this.state, page: 0 });
   }
 
   filterBySubject = (i: number) => {
@@ -356,7 +359,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           </div>
           <div className="filter-header">
             <span>Subject</span>
-         </div>
+          </div>
         </div>
         <div className="sort-box subject-scrollable">
           <SubjectsList
@@ -371,7 +374,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   };
 
   nextPage() {
-    const {page} = this.state;
+    const { page } = this.state;
     this.setState({ ...this.state, page: page + 1 });
     let filterSubjects = this.getCheckedSubjectIds();
     const filterRoles = this.getCheckedRoles();
@@ -379,7 +382,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   previousPage() {
-    const {page} = this.state;
+    const { page } = this.state;
     this.setState({ ...this.state, page: page - 1 });
     let filterSubjects = this.getCheckedSubjectIds();
     const filterRoles = this.getCheckedRoles();
@@ -431,9 +434,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         name={
           sortBy === currentSortBy
             ? !isAscending
-                ? "arrow-down"
-                : "arrow-up"
-              : "arrow-right"
+              ? "arrow-down"
+              : "arrow-up"
+            : "arrow-right"
         }
         onClick={() => this.sortBy(currentSortBy)}
       />
@@ -465,14 +468,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   formatDate(date: string) {
     var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
 
     return [year, month, day].join('-');
   }
@@ -497,11 +500,11 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   <td className="joing-date">
                     {this.renderDate(user.created)}
                   </td>
-                  <td>
+                  <td className="name-container">
                     <span className="user-first-name">{user.firstName} </span>
                     <span className="user-last-name">{user.lastName}</span>
                   </td>
-                  <td>{user.email}</td>
+                  <td className="email-container">{user.email}</td>
                   <td className="preference-type">
                     {this.renderUserType(user)}
                     {user.subscriptionState > 1 && <SpriteIcon name="hero-sparkle" />}
@@ -554,34 +557,37 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   render() {
     const { history } = this.props;
     return (
-      <div className="main-listing user-list-page">
-        <PageHeadWithMenu
-          page={PageEnum.ManageUsers}
-          placeholder="Search by Name, Email or Subject"
-          user={this.props.user}
-          history={history}
-          search={() => this.search()}
-          searching={(v: string) => this.searching(v)}
-        />
-        <Grid container direction="row" className="sorted-row">
-          <Grid container item xs={3} className="sort-and-filter-container users-filter">
-            {this.renderSortAndFilterBox()}
-            <div className="sidebar-footer" />
+      <React.Suspense fallback={<></>}>
+        {isPhone() && <MobileTheme />}
+        <div className="main-listing user-list-page">
+          <PageHeadWithMenu
+            page={PageEnum.ManageUsers}
+            placeholder="Search by Name, Email or Subject"
+            user={this.props.user}
+            history={history}
+            search={() => this.search()}
+            searching={(v: string) => this.searching(v)}
+          />
+          <Grid container direction="row" className="sorted-row">
+            <Grid container item xs={3} className="sort-and-filter-container users-filter">
+              {this.renderSortAndFilterBox()}
+              <div className="sidebar-footer" />
+            </Grid>
+            <Grid item xs={9} className="brick-row-container">
+              {this.renderTableHeader()}
+              {this.renderUsers()}
+              <UsersListPagination
+                page={this.state.page}
+                totalCount={this.state.totalCount}
+                users={this.state.users}
+                pageSize={this.state.pageSize}
+                nextPage={this.nextPage.bind(this)}
+                previousPage={this.previousPage.bind(this)}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={9} className="brick-row-container">
-            {this.renderTableHeader()}
-            {this.renderUsers()}
-            <UsersListPagination
-              page={this.state.page}
-              totalCount={this.state.totalCount}
-              users={this.state.users}
-              pageSize={this.state.pageSize}
-              nextPage={this.nextPage.bind(this)}
-              previousPage={this.previousPage.bind(this)}
-            />
-          </Grid>
-        </Grid>
-      </div>
+        </div>
+      </React.Suspense>
     );
   }
 }
