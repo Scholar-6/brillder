@@ -5,7 +5,6 @@ import "./ChoosePlan.scss";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 
-import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 
@@ -30,7 +29,6 @@ class ChoosePlanPage extends Component<ChoosePlanProps, ChoosePlanState> {
   render() {
     return (
       <div className="choose-plan-page">
-        <HomeButton link="/home" history={this.props.history} />
         <div className="title">
           Choose your Premium Plan. <span className="text-green"> Save 50%!</span>
         </div>
