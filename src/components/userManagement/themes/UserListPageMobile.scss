@@ -19,7 +19,7 @@
         .add-user-button {
           width: 20vw;
           font-size: 4vw;
-          margin-top: 0 !important;
+          margin-top: 4vw !important;
 
           >svg {
             width: 90%;
@@ -33,6 +33,7 @@
       }
 
       .users-table {
+        margin-top: 3vw;
         overflow: hidden;
         height: calc(100% - 13.5vw - 6vh) !important;
 
@@ -48,10 +49,34 @@
               width: 3vw;
               height: 3vw;
             }
+            .subject-title {
+              width: 14vw !important;
+            }
+            .user-full-name {
+              width: 20vw !important;
+            }
+            .email-column {
+              width: 40vw;
+            }
+            .type-column {
+              width: 10vw;
+            }
+            .active-column {
+              width: 15vw !important;
+            }
+            .edit-button-column {
+              width: 9vw !important;
+            }
           }
 
-          tr.user-row td {
-            font-size: 3vw;
+          tr.user-row {
+            height:7% !important;
+            td {
+              font-size: 3vw;
+            }
+            .preference-type {
+              height:100% !important;
+            }
           }
 
           thead,
@@ -61,15 +86,19 @@
             table-layout: fixed;
 
             .joing-date {
-              width: 9vw;
+              width: 14vw;
             }
 
             .name-container {
-              width: 15vw;
+              width: 20vw;
             }
 
             .email-container {
-              width: 55vw;
+              padding-right: 5vw;
+              width: 35vw;
+              text-overflow: ellipsis;
+              overflow-x: hidden;
+              white-space: nowrap;
             }
 
             .preference-type {
@@ -77,31 +106,33 @@
             }
 
             .activate-button-container {
-              width: 7vw;
+              width: 11vw;
 
               .custom-toggle {
-                width: 5vw;
+                width: 7vw;
 
                 svg {
-                  width: 5vw;
+                  width: 7vw;
                 }
               }
             }
 
             .user-actions-cell {
-              width: 6vw;
+              width: 14vw;
 
               >div {
-                display: block !important;
-
                 .delete-button {
-                  margin-left: 1vw;
+                  margin-left: 3vw;
                   display: block !important;
-                  margin-bottom: 2vw;
+                  margin-bottom: 0;
+                  width: 4vw !important;
+                  height: 3vw !important;
                 }
 
                 .edit-button {
                   margin: 0 !important;
+                  width: 4vw !important;
+                  height: 4vw !important;
                 }
 
                 svg {
@@ -124,14 +155,19 @@
         color: var(--theme-dark-blue);
         font-size: 4vw;
 
+        .left-pagination {
+          margin-left: 2vw;
+        }
+
         .bottom-next-button>div {
+          height: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
 
           .btn {
-            width: 5vw;
-            height: 5vw;
+            width: 8vw;
+            height: 8vw;
           }
         }
       }

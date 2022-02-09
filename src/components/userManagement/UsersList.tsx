@@ -453,10 +453,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           <Grid container>Name {this.renderSortArrow(UserSortBy.Name)}</Grid>
         </th>
         <th className="email-column">Email</th>
-        <th>
-          <Grid container>User Type {this.renderSortArrow(UserSortBy.Subscription)}</Grid>
+        <th className="type-column">
+          <Grid container>{!isPhone() && 'User'} Type {this.renderSortArrow(UserSortBy.Subscription)}</Grid>
         </th>
-        <th>
+        <th className="active-column">
           <Grid container>
             Active? {this.renderSortArrow(UserSortBy.Status)}
           </Grid>
@@ -470,14 +470,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     var d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
-      year = d.getFullYear();
+      year = d.getFullYear().toString();
 
     if (month.length < 2)
       month = '0' + month;
     if (day.length < 2)
       day = '0' + day;
 
-    return [year, month, day].join('-');
+    return [day, month, year.slice(2)].join('.');
   }
 
   renderDate(stringDate: string) {
