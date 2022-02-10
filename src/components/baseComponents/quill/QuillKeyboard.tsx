@@ -21,7 +21,7 @@ class QuillKeyboard extends Keyboard {
                 console.log(quill);
                 console.log(range);
                 quill.deleteText(range.index - 2, 2, "api");
-                quill.insertText(range.index - 2, "—", "api");
+                quill.insertText(range.index - 2, " — ", "api");
             }
         });
 
