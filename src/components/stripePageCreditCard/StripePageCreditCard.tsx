@@ -11,7 +11,8 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { User } from 'model/user';
 import map from 'components/map';
 import { isIPad13, isTablet } from 'react-device-detect';
-import { checkCoupon, Coupon } from 'services/axios/stripe';
+import { checkCoupon, Coupon, getPrices } from 'services/axios/stripe';
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 const TabletTheme = React.lazy(() => import('./themes/StripeTabletTheme'));
@@ -29,16 +30,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   const isLearner = props.match.params.type === 'learner';
 
-  let price = 9.99;
-  let annualPrice = 99;
-
-  if (!isLearner) {
-    price = 12.99;
-    annualPrice = 129;
-  }
-
-  const [originalPrice] = useState(price);
-  const [originalAnnualPrice] = useState(annualPrice);
+  const [originalPrice, setOriginalPrice] = useState(0);
+  const [originalAnnualPrice, setOriginalAnnualPrice] = useState(0);
 
   const [discount] = useState('WELCOME50');
 
@@ -54,6 +47,25 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   const [isMonthly, setMonthly] = useState(true);
   const [card, setCard] = useState(null as null | StripeCardElement);
+
+  const loadPrices = async () => {
+    const stripePrices = await getPrices();
+    if (stripePrices) {
+      if (isLearner) {
+        setOriginalPrice(stripePrices.studentMonth / 100);
+        setOriginalAnnualPrice(stripePrices.studentYearly / 100);
+      } else {
+        setOriginalPrice(stripePrices.teacherMonth / 100);
+        setOriginalAnnualPrice(stripePrices.teacherYearly / 100);
+      }
+    }
+  }
+
+  useEffect(() => {
+    loadPrices();
+    /*eslint-disable-next-line*/
+  }, []);
+
 
   useEffect(() => {
     var style = {
@@ -177,18 +189,48 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     return 'Save 50%';
   }
 
+  const renderAnnualPercentage = () => {
+    if (coupon && coupon.percentOff) {
+      // if forrever
+      if (coupon.duration === "forever") {
+        // percentage formula: 1 - (0.84 * 0.5)
+        return 'Save ' + Math.round(100 - (0.84 * (coupon.percentOff))) + '%';
+      } else if (coupon.duration === "repeating" && coupon.durationInMounths && coupon.durationInMounths > 0) {
+        // forumula adding percentages depands on duration (need to test)
+        const percentage = 100 - coupon.percentOff;
+        const finalPercentage = (1 - ((((12 - coupon.durationInMounths)) + (percentage * coupon.durationInMounths)) / 12)) * 100;
+        console.log(((12 - coupon.durationInMounths) + (percentage * coupon.durationInMounths)) );
+        return 'Save ' + Math.round(finalPercentage) + '%';
+      }
+      return '';
+    }
+    return 'Save 58%';
+  }
+
   const renderPriceValue = () => {
     if (coupon && coupon.percentOff) {
-      return Math.round(originalPrice * (100 - coupon.percentOff))/100;
+      return Math.round(originalPrice * (100 - coupon.percentOff)) / 100;
     }
-    return Math.round(originalPrice * 0.5 * 100)/100;
+    return Math.round(originalPrice * 0.5 * 100) / 100;
   }
 
   const renderAnnualPriceValue = () => {
     if (coupon && coupon.percentOff) {
-      return Math.round(originalAnnualPrice * (100 - coupon.percentOff))/100;
+      if (coupon.duration === "forever") {
+        return Math.round(originalAnnualPrice * Math.round(100 - coupon.percentOff)) / 100;
+      } else if (coupon.duration === "repeating" && coupon.durationInMounths && coupon.durationInMounths > 0) {
+        // forumula adding percentages depands on duration (need to test)
+        const percentage = 100 - coupon.percentOff;
+        const finalPercentage = ((100 * (12 - coupon.durationInMounths)) + (percentage * coupon.durationInMounths)) / 12;
+
+        return Math.round(originalAnnualPrice * finalPercentage) / 100;
+      }
     }
-    return Math.round(originalAnnualPrice * 0.5 * 100)/100;
+    return Math.round(originalAnnualPrice * 0.5 * 100) / 100;
+  }
+
+  if (originalPrice === -1) {
+    return <PageLoader content="loading prices" />;
   }
 
   return (
@@ -215,18 +257,18 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
             <div className="bigger">
               Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'}
             </div>
-            <div className="normal">From just £{price}/month. Cancel anytime.</div>
+            <div className="normal">From just £{originalPrice}/month. Cancel anytime.</div>
             <div className="radio-row">
               <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
                 <Radio checked={isMonthly} />
-                <div className="absoulte-price">£{price}</div>
+                <div className="absoulte-price">£{originalPrice}</div>
                 £{renderPriceValue()} <span className="label">Monthly</span>
                 <div className="absolute-label" >{renderPercentage()}</div>
               </div>
               <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
                 <Radio checked={!isMonthly} />
                 <span>£{renderAnnualPriceValue()}</span> <span className="label">Annually</span>
-                <div className="absolute-label" >{renderPercentage()}</div>
+                <div className="absolute-label" >{renderAnnualPercentage()}</div>
               </div>
             </div>
             <div className="label light">Card Number</div>
