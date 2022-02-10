@@ -11,7 +11,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { User } from 'model/user';
 import map from 'components/map';
 import { isIPad13, isTablet } from 'react-device-detect';
-import { checkCoupon } from 'services/axios/stripe';
+import { checkCoupon, Coupon } from 'services/axios/stripe';
 
 
 const TabletTheme = React.lazy(() => import('./themes/StripeTabletTheme'));
@@ -29,20 +29,24 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   const isLearner = props.match.params.type === 'learner';
 
-  let price = 4.99;
-  let annualPrice = 49;
+  let price = 9.99;
+  let annualPrice = 99;
 
   if (!isLearner) {
-    price = 6.49;
-    annualPrice = 64.99;
+    price = 12.99;
+    annualPrice = 129;
   }
 
-  const [discount, setDiscount] = useState('WELCOME50');
+  const [originalPrice] = useState(price);
+  const [originalAnnualPrice] = useState(annualPrice);
+
+  const [discount] = useState('WELCOME50');
 
   const [tempDiscount, setTempDiscount] = useState('WELCOME50');
   const [changed, setChanged] = useState(false);
 
   const [clicked, setClicked] = useState(false);
+  const [coupon, setCoupon] = useState(null as Coupon | null);
 
   const [cardValid, setCardValid] = useState(false);
   const [expireValid, setExpireValid] = useState(false);
@@ -103,8 +107,12 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     }
   }, [elements]);
 
-  const applyCode = () => {
-    checkCoupon(tempDiscount);
+  const applyCode = async () => {
+    const coupon = await checkCoupon(tempDiscount);
+    if (coupon) {
+      setCoupon(coupon);
+      console.log(coupon);
+    }
   }
 
   const handlePayment = async (e: any) => {
@@ -121,8 +129,13 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
     setClicked(true);
 
+    let couponString = discount;
+    if (coupon) {
+      couponString = coupon.code;
+    }
+
     var intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/subscription`,
-      { state: isLearner ? 2 : 3, interval: isMonthly ? 0 : 1, coupon: discount },
+      { state: isLearner ? 2 : 3, interval: isMonthly ? 0 : 1, coupon: couponString },
       { withCredentials: true });
 
     const clientSecret = intent.data.clientSecret;
@@ -155,6 +168,29 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     return false;
   };
 
+  const renderPercentage = () => {
+    if (coupon) {
+      if (coupon.percentOff) {
+        return 'Save ' + coupon.percentOff + '%';
+      }
+    }
+    return 'Save 50%';
+  }
+
+  const renderPriceValue = () => {
+    if (coupon && coupon.percentOff) {
+      return Math.round(originalPrice * (100 - coupon.percentOff))/100;
+    }
+    return Math.round(originalPrice * 0.5 * 100)/100;
+  }
+
+  const renderAnnualPriceValue = () => {
+    if (coupon && coupon.percentOff) {
+      return Math.round(originalAnnualPrice * (100 - coupon.percentOff))/100;
+    }
+    return Math.round(originalAnnualPrice * 0.5 * 100)/100;
+  }
+
   return (
     <div className="flex-center">
       <React.Suspense fallback={<></>}>
@@ -183,14 +219,14 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
             <div className="radio-row">
               <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
                 <Radio checked={isMonthly} />
-                <div className="absoulte-price">£9.99</div>
-                £{price} <span className="label">Monthly</span>
-                <div className="absolute-label" >Save 50%</div>
+                <div className="absoulte-price">£{price}</div>
+                £{renderPriceValue()} <span className="label">Monthly</span>
+                <div className="absolute-label" >{renderPercentage()}</div>
               </div>
               <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
                 <Radio checked={!isMonthly} />
-                <span>£{annualPrice}</span> <span className="label">Annually</span>
-                <div className="absolute-label" >Save 58%</div>
+                <span>£{renderAnnualPriceValue()}</span> <span className="label">Annually</span>
+                <div className="absolute-label" >{renderPercentage()}</div>
               </div>
             </div>
             <div className="label light">Card Number</div>
