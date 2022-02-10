@@ -1,13 +1,18 @@
-import { ApiAssignemntStats } from 'model/stats';
 import {post} from './index';
 
+export interface Coupon {
+  ammountOff: number | null;
+  code: string;
+  percentOff: number | null;
+}
+
 /**
- * Get assignment stats by Id
- * return brick or null if failed
+ * Get coupon by code name
+ * return coupon or null if failed
  */
 export const checkCoupon = async (coupon: string) => {
   try {
-    return await post<any>("/stripe/checkcoupon", { coupon });
+    return await post<Coupon>("/stripe/checkcoupon", { coupon });
   } catch {
     return null;
   }
