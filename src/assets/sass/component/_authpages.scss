@@ -379,7 +379,6 @@
         .MuiButton-label {
           @include phone_and_tabletP {
             font-family: $font-family-black;
-            letter-spacing: 1vw;
           }
         }
       }

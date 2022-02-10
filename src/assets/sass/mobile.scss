@@ -555,7 +555,12 @@
       padding: 2.5vh 5vw !important;
 
       span {
-        letter-spacing: 0.5vw !important;
+        font-size: 6.5vw;
+        letter-spacing: 0 !important;
+      }
+    }
+    .email-button {
+      span {
       }
     }
   }
