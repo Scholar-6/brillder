@@ -172,6 +172,22 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     return '';
   }
 
+  const renderCompetitionBanner = () => {
+    if (brick.competitions && brick.competitions.length > 0) {
+      const foundActive = brick.competitions.find(c => {
+        const endDate = new Date(c.endDate);
+        if (endDate.getTime() > new Date().getTime()) {
+          return true;  
+        }
+        return false;
+      });
+      if (foundActive) {
+        return <div className="competition-baner"><SpriteIcon name="star" /> competition</div>
+      }
+    }
+    return '';
+  }
+
   return (
     <div className="animated-brick-container">
       <Grow
@@ -192,7 +208,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
             {brick.coverImage ?
               <div className="p-cover-image">
                 <div className="scroll-block">
-                  {brick.competitions && brick.competitions.length > 0 && <div className="competition-baner"><SpriteIcon name="star" /> competition</div>}
+                  {renderCompetitionBanner()}
                   <img alt="" className={imgLoaded ? 'visible' : 'hidden'} onLoad={() => setImgLoaded(true)} src={fileUrl(brick.coverImage)} />
                 </div>
               </div>

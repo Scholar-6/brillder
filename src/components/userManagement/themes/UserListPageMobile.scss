@@ -1,0 +1,193 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.user-list-page {
+  .sorted-row {
+    height: 100%;
+
+    .brick-row-container {
+      height: calc(100% - 17.5vw);
+
+      .user-header {
+        .brick-row-title {
+          border-bottom: none;
+          margin-bottom: 0;
+          font-size: 6vw !important;
+        }
+
+        .add-user-button {
+          width: 20vw;
+          font-size: 4vw;
+          margin-top: 4vw !important;
+
+          >svg {
+            width: 90%;
+            height: 7vw;
+          }
+
+          &:hover svg {
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
+
+      .users-table {
+        margin-top: 3vw;
+        overflow: hidden;
+        height: calc(100% - 13.5vw - 6vh) !important;
+
+        >table {
+          height: 100%;
+          width: 100%;
+
+          thead {
+            width: 100%;
+            font-size: 3vw;
+
+            tr th .sort-button {
+              width: 3vw;
+              height: 3vw;
+            }
+            .subject-title {
+              width: 14vw !important;
+            }
+            .user-full-name {
+              width: 20vw !important;
+            }
+            .email-column {
+              width: 40vw;
+            }
+            .type-column {
+              width: 10vw;
+            }
+            .active-column {
+              width: 15vw !important;
+            }
+            .edit-button-column {
+              width: 9vw !important;
+            }
+          }
+
+          tr.user-row {
+            height:7% !important;
+            td {
+              font-size: 3vw;
+            }
+            .preference-type {
+              height:100% !important;
+
+              svg {
+                width: 4vw;
+                height: 4vw;
+              }
+            }
+          }
+
+          thead,
+          tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+
+            .joing-date {
+              width: 14vw;
+            }
+
+            .name-container {
+              width: 20vw;
+            }
+
+            .email-container {
+              padding-right: 5vw;
+              width: 35vw;
+              text-overflow: ellipsis;
+              overflow-x: hidden;
+              white-space: nowrap;
+            }
+
+            .preference-type {
+              width: 8vw;
+            }
+
+            .activate-button-container {
+              width: 11vw;
+
+              .custom-toggle {
+                width: 7vw;
+
+                svg {
+                  width: 7vw;
+                }
+              }
+            }
+
+            .user-actions-cell {
+              width: 14vw;
+
+              >div {
+                .delete-button {
+                  margin-left: 3vw;
+                  display: block !important;
+                  margin-bottom: 0;
+                  width: 4vw !important;
+                  height: 3vw !important;
+                }
+
+                .edit-button {
+                  margin: 0 !important;
+                  width: 4vw !important;
+                  height: 4vw !important;
+                }
+
+                svg {
+                  width: 4vw !important;
+                  height: 4vw !important;
+                }
+              }
+            }
+          }
+
+          tbody {
+            display: block;
+            height: calc(100% - 13.5vw);
+            overflow: scroll;
+          }
+        }
+      }
+
+      .users-pagination {
+        color: var(--theme-dark-blue);
+        font-size: 4vw;
+
+        .left-pagination {
+          margin-left: 2vw;
+        }
+
+        .bottom-next-button>div {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .btn {
+            width: 8vw;
+            height: 8vw;
+          }
+        }
+      }
+    }
+  }
+
+  .upper-part {
+    .page-header .logout-container {
+      .home-button-container {
+        margin-right: 24vw;
+      }
+      .search-container {
+        top: 2.5vw;
+        left: 44vw;
+      }
+    }
+  }
+}
