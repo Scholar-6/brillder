@@ -13,6 +13,14 @@
     font-family: $font-family-light;
   }
 
+  .hidden {
+    height: 0 !important;
+    overflow-y: hidden;
+    padding: 0 !important;
+    margin: 0 !important;
+    visibility: hidden;
+  }
+
   .voucher-box {
     position: relative;
     width: 60vw;
@@ -44,6 +52,18 @@
         color: var(--white);
         background: var(--theme-light-blue);
         border: 1px solid var(--white);
+      }
+
+      .apply-btn {
+        cursor: pointer;
+        width: 6vw;
+        top: 2.7vw;
+        left: 20vw;
+        height: $block-height;
+        position: absolute;
+        border-radius: 0.4vw;
+        background: var(--theme-green);
+        animation: all 300ms ease-in-out;
       }
     }
   }
@@ -139,6 +159,10 @@
           background: var(--theme-dark-blue);
         }
       }
+    }
+
+    &.one-button > div {
+      width: 100%;
     }
   }
 
