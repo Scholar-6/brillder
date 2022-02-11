@@ -47,6 +47,12 @@ interface RemindersData {
   isDeadlinePassed: boolean;
 }
 
+enum ClassroomSearchType {
+  Any,
+  StudentOnly,
+  TeacherOnly,
+}
+
 interface TeachProps {
   history: History;
   searchString: string;
@@ -72,6 +78,7 @@ interface TeachState {
   totalCount: number;
   subjects: Subject[];
   searchString: string;
+  searchType: ClassroomSearchType;
   isLoaded: boolean;
   remindersData: RemindersData;
   createClassOpen: boolean;
@@ -127,6 +134,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       totalCount: 0,
       searchString: '',
+      searchType: ClassroomSearchType.Any,
       subjects: [],
 
       haveArchivedBrick: false,
@@ -172,6 +180,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
           await this.setActiveAssignment(classroomId, activeAssignment.id);
         }
       }
+    } else if (values.search) {
+      this.searching(values.search as string);
+      this.search();
     } else {
       this.loadClasses();
     }
@@ -367,15 +378,23 @@ class TeachPage extends Component<TeachProps, TeachState> {
       });
       this.loadInitData();
     } else {
-      this.setState({ ...this.state, searchString });
+      const studentMatch = searchString.match(/^student:(.+)/)?.[1]
+      const teacherMatch = searchString.match(/^teacher:(.+)/)?.[1]
+      if (studentMatch) {
+        this.setState({ ...this.state, searchString: studentMatch, searchType: ClassroomSearchType.StudentOnly });
+      } else if (teacherMatch) {
+        this.setState({ ...this.state, searchString: teacherMatch, searchType: ClassroomSearchType.TeacherOnly });
+      } else {
+        this.setState({ ...this.state, searchString, searchType: ClassroomSearchType.Any });
+      }
     }
   }
 
   async search() {
-    let classrooms = await searchClassrooms(this.state.searchString) as TeachClassroom[] | null;
+    let classrooms = await searchClassrooms(this.state.searchString, this.state.searchType) as TeachClassroom[] | null;
     if (classrooms) {
       classrooms = classrooms.filter(c => c.subjectId);
-      this.setState({ ...this.state, activeClassroom: null, activeAssignment: null, activeStudent: null, classrooms, sortedIndex: 0 });
+      this.setState({ ...this.state, isLoaded: true, activeClassroom: null, activeAssignment: null, activeStudent: null, classrooms, sortedIndex: 0 });
     } else {
       // failed
     }

@@ -91,11 +91,11 @@ export const getAllClassrooms = async () => {
  * Search classroms
  * @returns list of classrooms if success or null if failed
  */
-export const searchClassrooms = async (searchString: string) => {
+export const searchClassrooms = async (searchString: string, searchType?: number) => {
   try {
     const res = await axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/classrooms",
-      { searchString }, { withCredentials: true }
+      { searchString, searchType }, { withCredentials: true }
     );
     if (res.data) {
       let classrooms = (res.data as ClassroomApi[]);
