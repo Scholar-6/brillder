@@ -127,8 +127,36 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     }
   }
 
+  const handleFreePayment = async (e: any) => {
+    if (e)
+      e.preventDefault();
+    if (clicked) {
+      return;
+    }
+
+    setClicked(true);
+
+    let couponString = discount;
+    if (coupon) {
+      couponString = coupon.code;
+    }
+
+    var intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/subscription`,
+      { state: isLearner ? 2 : 3, interval: isMonthly ? 0 : 1, coupon: couponString },
+      { withCredentials: true });
+
+    if (intent) {
+      await props.getUser();
+      props.history.push(map.MainPage + '?subscribedPopup=true');
+      setClicked(false);
+      return true
+    }
+
+    setClicked(false);
+    return false;
+  }
+
   const handlePayment = async (e: any) => {
-    debugger
     if (e)
       e.preventDefault();
     if (!stripe || !elements) {
@@ -199,7 +227,6 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
         // forumula adding percentages depands on duration (need to test)
         const percentage = 100 - coupon.percentOff;
         const finalPercentage = (1 - ((((12 - coupon.durationInMounths)) + (percentage * coupon.durationInMounths)) / 12)) * 100;
-        console.log(((12 - coupon.durationInMounths) + (percentage * coupon.durationInMounths)) );
         return 'Save ' + Math.round(finalPercentage) + '%';
       }
       return '';
@@ -233,6 +260,28 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     return <PageLoader content="loading prices" />;
   }
 
+  let isFree = false
+
+  // free coupon without stripe form
+  if (coupon && coupon.duration === 'forever' && coupon.percentOff === 100) {
+    isFree = true;
+  }
+
+  const renderSubmitButton = () => {
+    if (isFree) {
+      return (
+        <button type="submit" disabled={clicked}>
+          Agree & Subscribe
+        </button>
+      );
+    }
+    return (
+      <button type="submit" disabled={!cardValid || !expireValid || !cvcValid || !stripe || clicked}>
+        Agree & Subscribe
+      </button>
+    );
+  }
+
   return (
     <div className="flex-center">
       <React.Suspense fallback={<></>}>
@@ -252,28 +301,35 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
           </div>
         </div>
         <div className="pay-box">
-          <form className="CheckOut" onSubmit={handlePayment}>
+          <form className="CheckOut" onSubmit={(e) => {
+            if (isFree) {
+              handleFreePayment(e);
+            } else {
+              handlePayment(e);
+            }
+          }}>
             <div className="logo bold">Go Premium today</div>
             <div className="bigger">
               Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'}
             </div>
             <div className="normal">From just £{originalPrice}/month. Cancel anytime.</div>
-            <div className="radio-row">
+            <div className={`radio-row ${isFree ? 'one-button' : ''}`}>
               <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
                 <Radio checked={isMonthly} />
                 <div className="absoulte-price">£{originalPrice}</div>
                 £{renderPriceValue()} <span className="label">Monthly</span>
                 <div className="absolute-label" >{renderPercentage()}</div>
               </div>
-              <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
-                <Radio checked={!isMonthly} />
-                <span>£{renderAnnualPriceValue()}</span> <span className="label">Annually</span>
-                <div className="absolute-label" >{renderAnnualPercentage()}</div>
-              </div>
+              {!isFree &&
+                <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
+                  <Radio checked={!isMonthly} />
+                  <span>£{renderAnnualPriceValue()}</span> <span className="label">Annually</span>
+                  <div className="absolute-label" >{renderAnnualPercentage()}</div>
+                </div>}
             </div>
-            <div className="label light">Card Number</div>
-            <div id="card-number-element" className="field"></div>
-            <div className="two-columns">
+            <div className={`label light ${isFree ? 'hidden' : ''}`}>Card Number</div>
+            <div id="card-number-element" className={`field ${isFree ? 'hidden' : ''}`}></div>
+            <div className={`two-columns ${isFree ? 'hidden' : ''}`}>
               <div>
                 <div className="label light">Expiry Date</div>
                 <div id="card-expiry-element" className="field" />
@@ -284,9 +340,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
               </div>
             </div>
             <div className="small light">By clicking “Agree & Subscribe”, you are agreeing to start your subscription immediately, and you can withdraw from the contract and receive a refund within the first 14 days unless you have accessed Brillder content in that time. We will charge the monthly or annual fee to your stored payment method on a recurring basis. You can cancel at any time, effective at the end of the payment period.</div>
-            <button type="submit" disabled={!cardValid || !expireValid || !cvcValid || !stripe || clicked}>
-              Agree & Subscribe
-            </button>
+            {renderSubmitButton()}
           </form>
         </div>
       </React.Suspense>
