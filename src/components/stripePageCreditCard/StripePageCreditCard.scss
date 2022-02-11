@@ -13,6 +13,14 @@
     font-family: $font-family-light;
   }
 
+  .hidden {
+    height: 0 !important;
+    overflow-y: hidden;
+    padding: 0 !important;
+    margin: 0 !important;
+    visibility: hidden;
+  }
+
   .voucher-box {
     position: relative;
     width: 60vw;
@@ -151,6 +159,10 @@
           background: var(--theme-dark-blue);
         }
       }
+    }
+
+    &.one-button > div {
+      width: 100%;
     }
   }
 
