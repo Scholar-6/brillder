@@ -1,6 +1,6 @@
 import "./UsersList.scss";
 import React, { Component } from "react";
-import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { Grid, FormControlLabel, Radio, RadioGroup, Tooltip } from "@material-ui/core";
 import axios from "axios";
 import { connect } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
@@ -21,6 +21,7 @@ import RoleDescription from "components/baseComponents/RoleDescription";
 import CustomToggle from './components/CustomToggle';
 import UsersListPagination from "./components/Pagination";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import * as map from "components/map";
 import { isPhone } from "services/phone";
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -452,6 +453,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         <th className="user-full-name">
           <Grid container>Name {this.renderSortArrow(UserSortBy.Name)}</Grid>
         </th>
+        <th className="see-column"></th>
+        <th className="see-column"></th>
         <th className="email-column">Email</th>
         <th className="type-column">
           <Grid container>{!isPhone() && 'User'} Type {this.renderSortArrow(UserSortBy.Subscription)}</Grid>
@@ -503,6 +506,28 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   <td className="name-container">
                     <span className="user-first-name">{user.firstName} </span>
                     <span className="user-last-name">{user.lastName}</span>
+                  </td>
+                  <td className="see-container" style={{ position: "relative", width: "2.5vw" }}>
+                    <Tooltip title="See Taught Classrooms">
+                      <span
+                        className="btn"
+                        style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "#800080", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                        onClick={() => this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=teacher:${user.email}` })}
+                      >
+                        <SpriteIcon name="glasses" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                      </span>
+                    </Tooltip>
+                  </td>
+                  <td className="see-container" style={{ position: "relative", width: "2.5vw" }}>
+                    <Tooltip title="See Study Classrooms">
+                      <span
+                        className="btn"
+                        style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-green)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                        onClick={() => this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=student:${user.email}` })}
+                      >
+                        <SpriteIcon name="glasses" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                      </span>
+                    </Tooltip>
                   </td>
                   <td className="email-container">{user.email}</td>
                   <td className="preference-type">
