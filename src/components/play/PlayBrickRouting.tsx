@@ -252,7 +252,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         setPremiumEOpen(true);
       }
     }
-    console.log(user);
   }
 
   // only cover page should have big sidebar
@@ -327,6 +326,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const finishReview = () => {
     const ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
     setBrickAttempt(ba);
+    if (competitionId > -1) {
+      ba.competitionId = competitionId;
+    }
     setStatus(PlayStatus.Ending);
     saveBrickAttempt(ba);
     settingReviewDuration();
