@@ -64,7 +64,7 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
           window.location.href="https://scholar6.org";
         }
       }}>
-        <div className="italic">Commissioned by</div>
+        <div className="italic">Created for</div>
         <div className="flex-center">
           <img alt="scholar6" src={fileName ? fileUrl(fileName) : "/images/Scholar-6-Logo.svg"} />
         </div>
@@ -78,7 +78,7 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
 
   return (
     <div className="cover-sponsors">
-      Commissioned by
+      Created for
       <div className={className} onClick={() => setOpen(true)}>
         {
           fileName
