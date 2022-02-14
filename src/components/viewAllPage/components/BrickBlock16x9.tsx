@@ -7,7 +7,7 @@ import { AcademicLevelLabels, Brick } from "model/brick";
 import { UserPreferenceType, User } from "model/user";
 import { ReactComponent as CircleCheck } from 'assets/img/circle-check.svg';
 
-import routes, { playCover } from "components/play/routes";
+import { playCover } from "components/play/routes";
 import { setAssignmentId } from "localStorage/playAssignmentId";
 import map from "components/map";
 import buildRoutes from 'components/build/routes';
@@ -98,6 +98,9 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
 
     if (props.isPlay) {
       const values = queryString.parse(props.history.location.search);
+      if (brick.competitions && brick.competitions.length > 0) {
+        brick.competitionId = brick.competitions[0].id;
+      }
       let link = playCover(brick);
       if (values.newTeacher) {
         link += '?' + map.NewTeachQuery;
@@ -195,7 +198,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
         style={{ transformOrigin: "0 0 0" }}
         timeout={index * 150}
       >
-        <a href={window.location.origin + routes.playCover(brick)} className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
+        <div className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
           {props.isAssignment && props.teacher && <div className="absolute-assignment-title">Assigned by {props.teacher.firstName} {props.teacher.lastName}</div>}
           <div className="publish-brick-container">
             {renderDeadline()}
@@ -223,7 +226,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
               <BrickTitle className="bold brick-title" title={brick.title} searchString={props.searchString} />
             </div>
           </div>
-        </a>
+        </div>
       </Grow>
     </div>
   );
