@@ -271,6 +271,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       this.state.isAscending,
       searchString
     );
+
+    setTimeout(() => {
+      this.setState({isSearching: true});
+    })
   }
 
   toggleRole(role: any) {
