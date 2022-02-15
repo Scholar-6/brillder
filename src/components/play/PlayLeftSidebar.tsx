@@ -50,7 +50,7 @@ interface SidebarProps {
 
 interface SidebarState {
   isAdaptBrickOpen: boolean;
-  competitionPresent: boolean | null;
+  competitionId: number | null;
   isCompetitionOpen: boolean;
   isCoomingSoonOpen: boolean;
   isAssigningOpen: boolean;
@@ -67,7 +67,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     super(props);
     this.state = {
       isAdapting: false,
-      competitionPresent: null,
+      competitionId: null,
       isCompetitionOpen: false,
       isAdaptBrickOpen: false,
       isCoomingSoonOpen: false,
@@ -87,12 +87,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/competition/${this.props.user.id}/${this.props.brick.id}`, { withCredentials: true });
       if (res.status === 200 && res.data) {
         console.log(res.data);
-        this.setState({ competitionPresent: true });
+        this.setState({ competitionId: res.data.id });
       } else {
-        this.setState({ competitionPresent: false });
+        this.setState({ competitionId: null });
       }
     } catch {
-      this.setState({ competitionPresent: false });
+      this.setState({ competitionId: null });
     }
   }
 
@@ -192,8 +192,17 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     this.setState({ isCompetitionOpen: true });
   }
 
-  onDownload() {
-    // download pdf
+  async onDownload() {
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND_HOST}/competitionPDF/${this.state.competitionId}`,
+      { withCredentials: true, responseType: "blob" }
+    );
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'file.pdf');
+    document.body.appendChild(link);
+    link.click();
   }
 
   isLive() {
@@ -298,7 +307,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           />
         }
         {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) &&
-          <CompetitionButton competitionPresent={this.state.competitionPresent} sidebarRolledUp={sidebarRolledUp} onDownload={this.onDownload.bind(this)} onClick={this.onCompetition.bind(this)} />}
+          <CompetitionButton competitionPresent={this.state.competitionId !== null} sidebarRolledUp={sidebarRolledUp} onDownload={this.onDownload.bind(this)} onClick={this.onCompetition.bind(this)} />}
       </div>
     );
   }
