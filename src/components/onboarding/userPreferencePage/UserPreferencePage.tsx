@@ -112,10 +112,10 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               </div>
               <div className="ef-flex">
                 <RadioContainer preferenceId={UserPreferenceType.Teacher} name="Educator / Tutor">
-                  I want to assign Brillder content and provide feedback to my students.<br />
+                  I want to assign Brillder content and provide feedback to my learners.<br />
                 </RadioContainer>
                 <RadioContainer preferenceId={UserPreferenceType.Institution} name="Institution">
-                  I want to manage classes, students, and teachers.<br />
+                  I want to manage classes, learners, and teachers.<br />
                 </RadioContainer>
               </div>
             </div>
@@ -171,7 +171,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               <h2>Educator</h2>
               <p>I want to assign Brillder</p>
               <p>content and provide</p>
-              <p>feedback to my students.</p>
+              <p>feedback to my learners.</p>
             </RoleBox>
             <RoleBox preferenceId={UserPreferenceType.Institution} className="box3">
               <div className="flex-center">
@@ -179,7 +179,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
               </div>
               <h2>Institution</h2>
               <p>I want to manage</p>
-              <p>classes, students,</p>
+              <p>classes, learners,</p>
               <p>and teachers.</p>
             </RoleBox>
             <RoleBox preferenceId={UserPreferenceType.Builder} className="box4">

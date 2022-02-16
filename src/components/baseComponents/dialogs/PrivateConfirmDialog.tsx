@@ -16,7 +16,7 @@ const PrivateConfirmDialog: React.FC<SuccessDialogProps> = props => {
       className="dialog-box link-copied-dialog text-dialog"
     >
       <div className="dialog-header">
-        I am only sharing this brick with my own students and colleagues in my school or college consistent with the exemptions for education in the Copyright Designs and Patents Act, 1988.
+        I am only sharing this brick with my own learners and colleagues in my school or college consistent with the exemptions for education in the Copyright Designs and Patents Act, 1988.
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button"

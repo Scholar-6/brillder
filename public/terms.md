@@ -16,7 +16,7 @@ What is a Brick?
 
 A Brick is our unit of digital learning  content that is published at URL(s) and via our applications and services.  The Brick is partially public and details such as your username and/or your full name may be displayed for the general public to view if your brick is published.
 
-The default status of a new Brick is &#39;private&#39;.  This means you are able to share a link to your Bricks with other users (e.g. students), at your own discretion, but it will not appear in our public catalogue.  In order to keep our platform safe from inappropriate activity, we do monitor private content and activity for policy breaches.
+The default status of a new Brick is &#39;private&#39;.  This means you are able to share a link to your Bricks with other users (e.g. learners), at your own discretion, but it will not appear in our public catalogue.  In order to keep our platform safe from inappropriate activity, we do monitor private content and activity for policy breaches.
 
 # Terms of Service
 
@@ -46,7 +46,7 @@ In this contract:
 #
 
 1. Introduction
-    1. We are Scholar 6 Limited, a company registered in England and Wales under company number: 12023679.  Our registered office is at: c/o Jamieson Alexander Legal 222 Temple Chambers, 3-7 Temple Avenue, London, EC4Y 0DB. We are not currently registered for VAT.   We provide digital content to aid students in their education in various subject matters and courses.
+    1. We are Scholar 6 Limited, a company registered in England and Wales under company number: 12023679.  Our registered office is at: c/o Jamieson Alexander Legal 222 Temple Chambers, 3-7 Temple Avenue, London, EC4Y 0DB. We are not currently registered for VAT.   We provide digital content to aid learners in their education in various subject matters and courses.
     2. This contract is only available in English.  No other languages will apply to this contract.
     3. When using the Site you also agree to be legally bound by our user policies (including the Acceptable Use Policy).
     4. Any key information we give you by law forms part of this contract (as is set out in full here).
@@ -190,7 +190,7 @@ Third Party Rights
 3. Private Bricks are for non-commercial, educational use with a single individual, classroom, learning group (e.g. tutorial group or seminar), or learning cohort (e.g. a year group within a school).
 4. Public Bricks are bricks submitted by the creator and/or selected by us for inclusion in the public catalogue. They will form part of our commercial offering.
 5. Creators of Public Bricks will be issued a separate contract (as an addendum to this contract) during the submission to the public catalogue.
-6. We reserve the right to grant payment and/or privileges (e.g. discounts) to content creators whose Brick(s) are successfully published into the Public Catalogue to be accessed by other Teachers and Students.
+6. We reserve the right to grant payment and/or privileges (e.g. discounts) to content creators whose Brick(s) are successfully published into the Public Catalogue to be accessed by other Teachers and Learners.
 7. By creating a Brick, whether for a Private Catalogue or Submission to the Public Catalogue, you grant to us a royalty-free, irrevocable, non-exclusive, transferable licence to use, reproduce, modify, publish, edit, translate, distribute, perform and display the Brick (in whole or in part) on the Site, and on any other websites operated by us, indefinitely. However:
 
   - we undertake not to  publicly circulate a Private Catalogue Brick (i.e. adopt it into the Public Catalogue) without the author&#39;s permission; and
@@ -359,9 +359,9 @@ We use the analytics data from our anonymous users to improve our business and m
 
 8 **Learning Records**
 
-8.1 Teachers, tutors and school administrators who have permissions to set bricks to their students also have the capability to analyse results and data arising from brick assignments which they have set. (They do not have access to other brick assignments which a learner may have undertaken.)
+8.1 Teachers, tutors and school administrators who have permissions to set bricks to their learners also have the capability to analyse results and data arising from brick assignments which they have set. (They do not have access to other brick assignments which a learner may have undertaken.)
 
-8.2 Students have access to their own individual data sets within the context of the personalised library which they create as they play and collect bricks.
+8.2 Learners have access to their own individual data sets within the context of the personalised library which they create as they play and collect bricks.
 
 **9 Content Creators**
 
@@ -381,7 +381,7 @@ We may use aggregate data from many different people with a machine learning alg
 
 12 **Does Scholar 6 Ltd. share your information?**
 
-Your details will only be shared with other Brillder users on an individual and consensual basis. A student must first accept a teacher&#39;s invitation for the teacher to see their play attempts and learning records for the subject(s) they teach. As above, we do not share lists of user details with any third parties (such as selling your email as part of a list to another company).
+Your details will only be shared with other Brillder users on an individual and consensual basis. A learner must first accept a teacher&#39;s invitation for the teacher to see their play attempts and learning records for the subject(s) they teach. As above, we do not share lists of user details with any third parties (such as selling your email as part of a list to another company).
 
 13 **What are your rights?**
 

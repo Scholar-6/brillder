@@ -108,7 +108,7 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
         <h4>Do we share this information?</h4>
         <p>
           Your details will only be shared with other Brillder users on an individual and
-          consensual basis.  A student must first accept a teacher’s invitation for the
+          consensual basis.  A learner must first accept a teacher’s invitation for the
           teacher to see their play attempts and learning records for the subject(s) they
           teach. As above, we do <strong>not</strong> share lists of user details with any third parties (such
           as selling your email as part of a list to another company).
