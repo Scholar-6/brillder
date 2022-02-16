@@ -220,7 +220,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   const renderAnnualPercentage = () => {
     if (coupon && coupon.percentOff) {
-      // if forrever
+      // if forever
       if (coupon.duration === "forever") {
         // percentage formula: 1 - (0.84 * 0.5)
         return 'Save ' + Math.round(100 - (0.84 * (coupon.percentOff))) + '%';
@@ -269,7 +269,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   // other coupons
   let isOtherCoupon = false;
-  if (coupon && coupon.duration === 'repeating') {
+  if (coupon && coupon.percentOff && coupon.percentOff> 50) {
     isOtherCoupon = true;
   }
 
@@ -286,6 +286,27 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
         Agree & Subscribe
       </button>
     );
+  }
+
+  const renderGreenPricingBox = () => {
+    if (!isOtherCoupon) {
+      return (
+            <div className={`radio-row ${(isFree || isOtherCoupon) ? 'one-button' : ''}`}>
+              <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
+                {!(isFree || isOtherCoupon) && <Radio checked={isMonthly} />}
+                <div className="absoulte-price">£{originalPrice}</div>
+                £{renderPriceValue()} <span className="label">Monthly</span>
+                <div className="absolute-label" >{renderPercentage()}</div>
+              </div>
+              {!isFree && !isOtherCoupon &&
+                <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
+                  <Radio checked={!isMonthly} />
+                  <span>£{renderAnnualPriceValue()}</span> <span className="label">Annually</span>
+                  <div className="absolute-label" >{renderAnnualPercentage()}</div>
+                </div>}
+            </div>
+      )}
+      return;
   }
 
   return (
@@ -318,21 +339,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
             <div className="bigger">
               Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'}
             </div>
-            <div className="normal">From just £{originalPrice}/month. Cancel anytime.</div>
-            <div className={`radio-row ${(isFree || isOtherCoupon) ? 'one-button' : ''}`}>
-              <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
-                {!(isFree || isOtherCoupon) && <Radio checked={isMonthly} />}
-                <div className="absoulte-price">£{originalPrice}</div>
-                £{renderPriceValue()} <span className="label">Monthly</span>
-                <div className="absolute-label" >{renderPercentage()}</div>
-              </div>
-              {!isFree && !isOtherCoupon &&
-                <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
-                  <Radio checked={!isMonthly} />
-                  <span>£{renderAnnualPriceValue()}</span> <span className="label">Annually</span>
-                  <div className="absolute-label" >{renderAnnualPercentage()}</div>
-                </div>}
-            </div>
+            {!isOtherCoupon && <div className="normal">From just £{originalPrice}/month. Cancel anytime.</div>}
+            {renderGreenPricingBox()}
             {isOtherCoupon &&
             <div className="custom-voucher-label">
               <div> Custom Pricing Applies.</div>
