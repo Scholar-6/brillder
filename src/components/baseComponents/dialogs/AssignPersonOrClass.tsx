@@ -127,7 +127,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         console.log('class name is empty');
       }
     } catch {
-      console.log('failed create class and assign students');
+      console.log('failed create class and assign learners');
     }
     // clear data
     setUsers([]);
@@ -228,10 +228,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           <input value={newClassName} className={(validationRequired && !newClassName) ? 'invalid' : ''} placeholder="Class Name" onChange={e => setNewClassName(e.target.value)} />
           {renderBrickLevel()}
         </div>
-        <div className="r-regular-center">Invite between 1 and 50 students to your class</div>
+        <div className="r-regular-center">Invite between 1 and 50 learners to your class</div>
         <div className={`r-student-emails ${(validationRequired && users.length === 0) ? 'invalid' : ''}`}>
           <AutocompleteUsernameButEmail
-            placeholder="Type or paste student emails"
+            placeholder="Type or paste learner emails"
             currentEmail={currentEmail}
             users={users}
             onAddEmail={onAddUser}

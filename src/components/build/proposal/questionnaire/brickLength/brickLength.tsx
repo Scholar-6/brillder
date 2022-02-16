@@ -41,7 +41,7 @@ const BrickLengthPreviewComponent: React.FC<Props> = ({ data }) => {
       {data !== 0 ?
         <div className="preview-length-list">
           <div>
-            Students will have:
+            Learners will have:
           </div>
           <div>
             <ul className="a-1">

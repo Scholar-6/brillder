@@ -32,7 +32,7 @@ const CopyrightCheckboxes: React.FC<Props> = (props) => {
             className={validationRequired ? "required" : ""}
           />
         </div>
-          I am creating a brick for educational use with my own students and can therefore use licensed {props.isSound ? 'sounds' : 'images'} consistent with the exemptions for education in the Copyright Designs and Patents Act, 1988.
+          I am creating a brick for educational use with my own learners and can therefore use licensed {props.isSound ? 'sounds' : 'images'} consistent with the exemptions for education in the Copyright Designs and Patents Act, 1988.
       </div>
     </div>
   )
