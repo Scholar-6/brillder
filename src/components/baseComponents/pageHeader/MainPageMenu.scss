@@ -7,7 +7,7 @@
   flex-wrap: wrap;
   margin-left: auto;
   box-sizing: border-box;
-  width: 16vw;
+  width: 20vw;
   height: $page-head-height;
   right: 0;
   position: fixed;
@@ -33,7 +33,7 @@
     margin: auto;
     display: flex;
     margin-right: 0;
-    width: 11vw;
+    width: 19vw;
     @include phone_and_tabletP {
       width: 42vw;
       margin-top: 3px;
@@ -47,6 +47,18 @@
         width: 40%;
         margin: auto;
       }
+    }
+
+    .brills-number {
+      display: flex;
+      align-items: center;
+      height: 3.68vw;
+      color: white;
+    }
+    .brills-icon {
+      width: 7vw;
+      margin-right: 1vw;
+      height: 3.68vw;
     }
   }
   &.notification-expanded {
