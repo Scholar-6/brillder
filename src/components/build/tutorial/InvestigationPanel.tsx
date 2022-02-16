@@ -29,7 +29,7 @@ const InvestigationPanel: React.FC<TutorialProps> = (props) => {
             Having submitted the brief and prep in your proposal, your questions will guide learners through an interactive journey.
           </p>
           <p className="last-text">
-            The challenge is to ask questions which make students think, not questions which merely test their knowledge.
+            The challenge is to ask questions which make learners think, not questions which merely test their knowledge.
           </p>
         </div>
       </div>

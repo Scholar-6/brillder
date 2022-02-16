@@ -29,7 +29,7 @@ class ProfileIntroJs extends React.Component<Props, State> {
       if (props.user.userPreference) {
         const { preferenceId } = props.user.userPreference;
         if (preferenceId === UserPreferenceType.Student) {
-          return 'Student';
+          return 'Learner';
         } else if (preferenceId === UserPreferenceType.Teacher) {
           return "Teacher";
         } else if (preferenceId === UserPreferenceType.Builder) {

@@ -71,7 +71,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
     }
     var elem = document.createElement("div");
     elem.id = "student-drag-element";
-    elem.innerHTML = "Move " + count + ' students';
+    elem.innerHTML = "Move " + count + ' learners';
     elem.style.position = "absolute";
     elem.style.top = "-1000px";
     document.body.appendChild(elem);

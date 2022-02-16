@@ -70,6 +70,8 @@ export const getExistedUserState = (user: User) => {
     passwordChangedDialog: false,
     saveDisabled: true,
 
+    subscriptionState: user.subscriptionState,
+
     validationRequired: false,
     emailInvalid: false,
     previewAnimationFinished: false,

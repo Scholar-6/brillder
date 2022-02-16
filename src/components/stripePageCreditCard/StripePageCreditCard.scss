@@ -161,8 +161,24 @@
       }
     }
 
-    &.one-button > div {
-      width: 100%;
+    &.one-button {
+      margin-bottom: 1vh;
+      > div {
+        padding-left: 2.9vw;
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+  }
+
+  .custom-voucher-label {
+    border-radius: 0.4vw;
+    background: var(--tab-gray);
+    font-size: 1vw;
+    padding-left: 1vw;
+    margin-bottom: 2vh;
+    .smaller {
+      font-size: 0.8vw;
     }
   }
 

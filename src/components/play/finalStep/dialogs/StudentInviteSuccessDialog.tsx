@@ -17,7 +17,7 @@ interface InvitationProps {
 
 const StudentInviteSuccessDialog: React.FC<InvitationProps> = props => {
   const getCustomText = () => {
-    return `Ask your student${props.numStudentsInvited > 1 ? "s" : ""} to check their emails.`;
+    return `Ask your learner${props.numStudentsInvited > 1 ? "s" : ""} to check their emails.`;
   }
 
   return (

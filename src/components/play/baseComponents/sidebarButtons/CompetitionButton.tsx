@@ -10,12 +10,12 @@ interface ButtonProps {
 }
 
 const CompetitionButton: React.FC<ButtonProps> = (props) => {
-  if (props.sidebarRolledUp || props.competitionPresent === null || Brillder.testing.competition === false) {
+  if (props.sidebarRolledUp || props.competitionPresent === null) {
     return <span />
   }
 
   if (props.competitionPresent) {
-    return <button onClick={props.onClick} className="assign-class-button two-line-button svgOnHover blue">
+    return <button onClick={props.onDownload} className="assign-class-button two-line-button svgOnHover blue">
       <span>Download competition pdf</span>
     </button>
   }

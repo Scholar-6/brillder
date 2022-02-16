@@ -25,7 +25,7 @@ const EmptyTabContent: React.FC<Props> = (props) => {
               />
             </div>
             <div className="bold-hover">+ Create Class</div>
-            <div className="text-center f-s-2 m-t-2vh">You can invite between 1 and 50 students to a class</div>
+            <div className="text-center f-s-2 m-t-2vh">You can invite between 1 and 50 learners to a class</div>
           </div>
         </div>
       </div>

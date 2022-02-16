@@ -391,10 +391,10 @@ class TeachFilterSidebar extends Component<
             enabled={this.props.isNewTeacher}
             steps={[{
               element: '.classes-box',
-              intro: `<p>Invited students will remain amber until they accept to join your class</p>`,
+              intro: `<p>Invited learners will remain amber until they accept to join your class</p>`,
             }, {
               element: '.classes-box',
-              intro: `<p>Invited students will remain amber until they accept to join your class</p>`,
+              intro: `<p>Invited learners will remain amber until they accept to join your class</p>`,
             }]}
             initialStep={0}
             onChange={this.onIntroChanged.bind(this)}
