@@ -115,7 +115,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
                     <div className="white-circle">III</div>
                     <div className="l-text">
                       <div>Extension</div>
-                      <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) students</div>
+                      <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) learners</div>
                     </div>
                   </div>
                 </div>

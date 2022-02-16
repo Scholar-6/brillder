@@ -99,8 +99,8 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
         <SpriteIcon name="cancel" className="w100 h100 active" />
       </div>
       <div className="dialog-header">
-        <div className="bold m-b-10">Invite students by email.</div>
-        <div className="text-center f-s-2">You can invite between 1 and 50 students to a class</div>
+        <div className="bold m-b-10">Invite learners by email.</div>
+        <div className="text-center f-s-2">You can invite between 1 and 50 learners to a class</div>
         <AutocompleteUsernameButEmail
           currentEmail={currentEmail}
           users={users}

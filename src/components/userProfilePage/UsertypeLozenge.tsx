@@ -28,7 +28,7 @@ const UserTypeLozenge: React.FC<any> = (props) => {
   } else if (bestRole === UserType.Publisher) {
     name = "Publisher";
   } else if (bestType === UserPreferenceType.Student) {
-    name = 'Student'
+    name = 'Learner'
   } else if (bestType === UserPreferenceType.Builder) {
     name = 'Builder';
   } else if (bestType === UserPreferenceType.Teacher) {

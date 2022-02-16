@@ -330,7 +330,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       <ValidationFailedDialog
         isOpen={sameCategoryOpen}
         header="Some Category Headings are the same."
-        label="This will confuse students. Please make sure they are all different."
+        label="This will confuse learners. Please make sure they are all different."
         close={() => setSameCategory(false)}
       />
     </div>

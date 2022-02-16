@@ -123,6 +123,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     const coupon = await checkCoupon(tempDiscount);
     if (coupon) {
       setCoupon(coupon);
+      setMonthly(true);
       console.log(coupon);
     }
   }
@@ -260,11 +261,16 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     return <PageLoader content="loading prices" />;
   }
 
-  let isFree = false
-
   // free coupon without stripe form
+  let isFree = false;
   if (coupon && coupon.duration === 'forever' && coupon.percentOff === 100) {
     isFree = true;
+  }
+
+  // other coupons
+  let isOtherCoupon = false;
+  if (coupon && coupon.duration === 'repeating') {
+    isOtherCoupon = true;
   }
 
   const renderSubmitButton = () => {
@@ -313,20 +319,26 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
               Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'}
             </div>
             <div className="normal">From just £{originalPrice}/month. Cancel anytime.</div>
-            <div className={`radio-row ${isFree ? 'one-button' : ''}`}>
+            <div className={`radio-row ${(isFree || isOtherCoupon) ? 'one-button' : ''}`}>
               <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
-                <Radio checked={isMonthly} />
+                {!(isFree || isOtherCoupon) && <Radio checked={isMonthly} />}
                 <div className="absoulte-price">£{originalPrice}</div>
                 £{renderPriceValue()} <span className="label">Monthly</span>
                 <div className="absolute-label" >{renderPercentage()}</div>
               </div>
-              {!isFree &&
+              {!isFree && !isOtherCoupon &&
                 <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
                   <Radio checked={!isMonthly} />
                   <span>£{renderAnnualPriceValue()}</span> <span className="label">Annually</span>
                   <div className="absolute-label" >{renderAnnualPercentage()}</div>
                 </div>}
             </div>
+            {isOtherCoupon &&
+            <div className="custom-voucher-label">
+              <div> Custom Pricing Applies.</div>
+              <div className="smaller"> Please check your original email offer.</div>
+            </div>}
+
             <div className={`label light ${isFree ? 'hidden' : ''}`}>Card Number</div>
             <div id="card-number-element" className={`field ${isFree ? 'hidden' : ''}`}></div>
             <div className={`two-columns ${isFree ? 'hidden' : ''}`}>

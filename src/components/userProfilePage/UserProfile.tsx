@@ -70,6 +70,8 @@ interface UserProfileState {
   saveDisabled: boolean;
   minimizeTimeout?: number;
   introJsSuspended?: boolean;
+
+  subscriptionState?: number;
 }
 
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
@@ -95,7 +97,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.state = tempState;
         getUserById(userId).then(user => {
           if (user) {
-            this.setState({ user: getUserProfile(user) });
+            this.setState({ user: getUserProfile(user), subscriptionState: user.subscriptionState });
           } else {
             this.props.requestFailed("Can`t get user profile");
           }
@@ -360,7 +362,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               <div className="profile-header">
                 <UserTypeLozenge roles={user.roles} userPreference={this.props.user.userPreference} />
                 <div>{user.username ? user.username : "USERNAME"}</div>
-                {this.props.user && this.props.user.subscriptionState && this.props.user.subscriptionState > 1 && <SpriteIcon name="hero-sparkle" />}
+                {this.state.subscriptionState && this.state.subscriptionState > 1 && <SpriteIcon name="hero-sparkle" />}
               </div>
               <div className="save-button-container">
                 <SaveProfileButton
@@ -372,6 +374,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               <div className="profile-fields">
                 <ProfileImage
                   user={user}
+                  subscriptionState={this.state.subscriptionState}
                   currentUser={this.props.user}
                   setImage={this.onProfileImageChanged.bind(this)}
                   deleteImage={() => this.onProfileImageChanged('', false)}

@@ -236,9 +236,9 @@ const HintComponent: React.FC<HintProps> = ({
               title={
                 <React.Fragment>
                   <div>Hints written here are introduced to</div>
-                  <div>the student in the Review phase.</div>
+                  <div>the learner in the Review phase.</div>
                   <div style={{ marginTop: '1.2vw' }}>
-                    Good hints usher the student closer to the correct answer,
+                    Good hints usher the learner closer to the correct answer,
                     or the correct strategy, without giving it away.
                   </div>
                 </React.Fragment>

@@ -53,7 +53,7 @@
               width: 14vw !important;
             }
             .user-full-name {
-              width: 20vw !important;
+              width: 17vw !important;
             }
             .email-column {
               width: 40vw;
@@ -91,16 +91,33 @@
             table-layout: fixed;
 
             .joing-date {
-              width: 14vw;
+              text-align: center;
+              padding-left: 0 !important;
+              width: 12vw;
             }
 
             .name-container {
-              width: 20vw;
+              width: 17vw;
+              white-space: nowrap;
+              overflow-x: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .see-container {
+              width: 6vw !important;
+              .btn {
+                width: 5vw !important;
+                height: 5vw !important;
+               svg {
+                 width: 4vw !important;
+                 height: 4vw !important;
+               }
+             }
             }
 
             .email-container {
-              padding-right: 5vw;
-              width: 35vw;
+              padding-right: 1vw;
+              width: 28vw;
               text-overflow: ellipsis;
               overflow-x: hidden;
               white-space: nowrap;

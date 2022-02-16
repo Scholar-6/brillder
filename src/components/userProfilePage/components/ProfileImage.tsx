@@ -14,6 +14,7 @@ import map from "components/map";
 interface ProfileImageProps {
   user: UserProfile;
   currentUser: User;
+  subscriptionState?: number;
   setImage(profileImage: string, imagePublic: boolean): void;
   deleteImage(): void;
   suspendIntroJs(): void;
@@ -115,11 +116,11 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   const renderStatus = () => {
     if (status === UserStatus.Active) {
       console.log(props.currentUser)
-      if (props.currentUser.subscriptionState && props.currentUser.subscriptionState > 0) {
+      if (props.subscriptionState && props.subscriptionState > 0) {
         return (
           <div className="status-container active-status-container svgOnHover">
             <SpriteIcon name="circle-filled" className="active text-theme-green" />
-            <span><div className="flex-center premium-container">{props.currentUser.subscriptionState === 2 ? 'Premium Learner' : props.currentUser.subscriptionState === 3 ? 'Premium Educator' : ''}</div></span>
+            <span><div className="flex-center premium-container">{props.subscriptionState === 2 ? 'Premium Learner' : props.subscriptionState === 3 ? 'Premium Educator' : ''}</div></span>
           </div>
         );
       }
