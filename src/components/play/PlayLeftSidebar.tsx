@@ -50,7 +50,7 @@ interface SidebarProps {
 
 interface SidebarState {
   isAdaptBrickOpen: boolean;
-  competitionId: number | null;
+  competition: any | null;
   isCompetitionOpen: boolean;
   isCoomingSoonOpen: boolean;
   isAssigningOpen: boolean;
@@ -67,7 +67,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     super(props);
     this.state = {
       isAdapting: false,
-      competitionId: null,
+      competition: null,
       isCompetitionOpen: false,
       isAdaptBrickOpen: false,
       isCoomingSoonOpen: false,
@@ -86,13 +86,22 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     try {
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/competition/${this.props.user.id}/${this.props.brick.id}`, { withCredentials: true });
       if (res.status === 200 && res.data) {
-        console.log(res.data);
-        this.setState({ competitionId: res.data.id });
+        const c = res.data;
+        const endDate = new Date(c.endDate);
+        const startDate = new Date(c.startDate);
+        let isActive = false;
+        if (endDate.getTime() > new Date().getTime()) {
+          if (startDate.getTime() < new Date().getTime()) {
+            isActive = true;
+          }
+        }
+        res.data.isActive = isActive;
+        this.setState({ competition: res.data });
       } else {
-        this.setState({ competitionId: null });
+        this.setState({ competition: null });
       }
     } catch {
-      this.setState({ competitionId: null });
+      this.setState({ competition: null });
     }
   }
 
@@ -194,7 +203,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   async onDownload() {
     const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_HOST}/competitionPDF/${this.state.competitionId}`,
+      `${process.env.REACT_APP_BACKEND_HOST}/competitionPDF/${this.state.competition.id}`,
       { withCredentials: true, responseType: "blob" }
     );
     const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -278,6 +287,20 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     const { sidebarRolledUp } = this.props;
     const haveBriefCircles = this.props.history.location.pathname.slice(-routes.PlayBriefLastPrefix.length) === routes.PlayBriefLastPrefix;
 
+    const renderAdaptButton = () => {
+      if (this.state.competition && this.state.competition.isActive) {
+        return <div />;
+      }
+      return (
+        <AdaptButton
+          user={this.props.user}
+          haveCircle={haveBriefCircles}
+          sidebarRolledUp={sidebarRolledUp}
+          onClick={this.onAdaptDialog.bind(this)}
+        />
+      );
+    }
+
     return (
       <div className="sidebar-button">
         {(this.isPrep() || this.isSynthesis()) && <HighlightTextButton
@@ -293,12 +316,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           history={this.props.history}
           openAssignDialog={this.openAssignDialog.bind(this)}
         />
-        <AdaptButton
-          user={this.props.user}
-          haveCircle={haveBriefCircles}
-          sidebarRolledUp={sidebarRolledUp}
-          onClick={this.onAdaptDialog.bind(this)}
-        />
+        {renderAdaptButton()}
         <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
         {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) &&
           <GenerateCoverButton
@@ -307,7 +325,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           />
         }
         {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) &&
-          <CompetitionButton competitionPresent={this.state.competitionId !== null} sidebarRolledUp={sidebarRolledUp} onDownload={this.onDownload.bind(this)} onClick={this.onCompetition.bind(this)} />}
+          <CompetitionButton competitionPresent={this.state.competition !== null} sidebarRolledUp={sidebarRolledUp} onDownload={this.onDownload.bind(this)} onClick={this.onCompetition.bind(this)} />}
       </div>
     );
   }
@@ -440,14 +458,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                     </div>
                   </div>
                 </div>
-            </div>
-          </div>}
-        <div className="sidebar-button f-align-end">
-          {this.renderToggleButton()}
+              </div>
+            </div>}
+          <div className="sidebar-button f-align-end">
+            {this.renderToggleButton()}
+          </div>
+          {this.renderButtons()}
+          {this.renderDialogs()}
         </div>
-        {this.renderButtons()}
-        {this.renderDialogs()}
-      </div>
       </Grid >
     );
   }
