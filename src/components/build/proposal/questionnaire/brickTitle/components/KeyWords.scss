@@ -10,6 +10,13 @@
   flex-wrap: wrap;
   flex-basis: 100%;
 
+  > div {
+
+    flex-wrap: wrap;
+    flex-basis: 100%;
+    display: inline-flex;
+  }
+
   &.content-invalid {
     background: var(--theme-orange) !important;
     input {

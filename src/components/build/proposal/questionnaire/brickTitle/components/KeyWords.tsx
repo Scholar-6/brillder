@@ -9,6 +9,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyWord } from "model/brick";
 import KeyWordsPlay from "./KeywordsPlay";
 import { getKeywords } from "services/axios/brick";
+import { ReactSortable } from "react-sortablejs";
 
 export const MaxKeywordLength = 35;
 
@@ -76,7 +77,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
 
     const present = this.checkIfPresent(keyword);
     if (present) {
-      this.setState({keyWord: ''})
+      this.setState({ keyWord: '' })
       return;
     }
 
@@ -126,10 +127,22 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
     }
     return (
       <div>
-        <div className={`key-words ${invalid ? 'content-invalid' : ''}`}>
+        <div className={`key-words keywords-ordered ${invalid ? 'content-invalid' : ''}`}>
           {this.props.isHashtags
             ? <KeyWordsPlay keywords={this.state.keyWords} />
-            : this.state.keyWords.map(this.renderKeyWord.bind(this))
+            : <ReactSortable
+              list={this.state.keyWords as any[]}
+              group={{ name: "cloning-group-name", pull: "clone" }}
+              setList={newKeywords => {
+                for (let i = 0; i < newKeywords.length; i++) {
+                  newKeywords[i].order = i + 1; 
+                }
+                this.setState({keyWords: newKeywords});
+                this.props.onChange(newKeywords);
+               }}
+            >
+              {this.state.keyWords.map(this.renderKeyWord.bind(this))}
+            </ReactSortable>
           }
           <Autocomplete
             freeSolo
@@ -142,11 +155,11 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
             getOptionLabel={(option: any) => option.name}
             renderInput={(params: any) => {
               console.log(params);
-              params.inputProps.value = this.state.keyWord; 
+              params.inputProps.value = this.state.keyWord;
               return <TextField
                 {...params}
                 variant="standard"
-                onChange={(e) => this.setState({keyWord: e.target.value})}
+                onChange={(e) => this.setState({ keyWord: e.target.value })}
                 onKeyDown={this.checkKeyword.bind(this)}
                 label=""
                 placeholder="Type keyword "

@@ -76,6 +76,7 @@ export interface SubjectAItem extends Subject {
 
 export interface KeyWord {
   id?: number;
+  order?: number;
   name: string;
 }
 
