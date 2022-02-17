@@ -136,6 +136,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
           <SpriteIcon name="logo" />
           {stripHtml(brick.title)}
           <SpriteIcon className="icon-status" name={brick.isCore ? "globe" : "key"} />
+          {brick.id}
         </div>
       );
     } else if (suggestion.isSubjectRes && subject) {
