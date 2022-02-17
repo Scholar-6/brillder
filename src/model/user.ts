@@ -47,6 +47,7 @@ export interface User extends UserBase {
   userPreference?: UserPreference;
   hasPlayedBrick: boolean;
   termsAndConditionsAcceptedVersion: string;
+  brills?: number;
 
   freeAssignmentsLeft: number;
   freeAttemptsLeft: number;
