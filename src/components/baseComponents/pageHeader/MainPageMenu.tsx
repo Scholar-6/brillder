@@ -94,8 +94,10 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     return (
       <div className={className} ref={this.pageHeader}>
         <div className="menu-buttons">
-          <div className="brills-number">{renderBrills()}</div>
-          <img alt="" className="brills-icon" src="/images/Brill.svg" />
+          <div className="brill-intro-container">
+            <div className="brills-number">{renderBrills()}</div>
+            <img alt="" className="brills-icon" src="/images/Brill.svg" />
+          </div>
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
         </div>
