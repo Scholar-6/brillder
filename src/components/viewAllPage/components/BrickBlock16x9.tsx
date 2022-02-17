@@ -179,8 +179,11 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     if (brick.competitions && brick.competitions.length > 0) {
       const foundActive = brick.competitions.find(c => {
         const endDate = new Date(c.endDate);
+        const startDate = new Date(c.startDate);
         if (endDate.getTime() > new Date().getTime()) {
-          return true;  
+          if (startDate.getTime() < new Date().getTime()) {
+            return true;  
+          }
         }
         return false;
       });
