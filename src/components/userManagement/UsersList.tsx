@@ -63,6 +63,8 @@ interface UsersListState {
   filterHeight: string;
   isAdmin: boolean;
 
+  loading: boolean;
+
   sortBy: UserSortBy;
   isAscending: boolean;
   isClearFilter: boolean;
@@ -94,6 +96,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       totalCount: 0,
       searchString: "",
       isSearching: false,
+      loading: true,
       filterHeight: "auto",
 
       sortBy: UserSortBy.Joined,
@@ -123,6 +126,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     isAscending: any = null,
     search: string = ""
   ) {
+    this.setState({...this.state, loading: true});
     let searchString = "";
     let orderBy = "user.lastName";
 
@@ -162,6 +166,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       this.setState({
         ...this.state,
         users: res.data.pageData,
+        loading: false,
         totalCount: res.data.totalCount,
       });
     }).catch(() => {
@@ -495,6 +500,11 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderUsers() {
     if (!this.state.users) {
       return "";
+    }
+    if (this.state.loading === false && this.state.users.length === 0) {
+      return (<div className="no-user-found-message bold">
+        No users found
+      </div>)
     }
     return (
       <div className="users-table">
