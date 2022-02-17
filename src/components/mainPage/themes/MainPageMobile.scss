@@ -146,8 +146,8 @@
       padding-bottom: 1.05vw;
       display: flex;
       margin-right: 0;
-      width: 42vw;
-      margin-top: 10px;
+      width: 70vw;
+      margin-top: 0;
       flex-wrap: wrap;
       .bell-button {
         width: 56%;
@@ -161,14 +161,26 @@
     &.notification-expanded {
       height: 74px;
     }
+    .brills-number {
+      margin-right: 3vw;
+      height: 15vw !important;
+      font-size: 5vw !important;
+    }
+    .brills-icon {
+      width: 20vw !important;
+      height: 15vw !important;
+      margin-right: 4vw !important;
+    }
+    .more-button {
+      width: 20vw !important;
+    }
   }
   .main-page-menu {
     position: absolute;
-    width: 42vw;
-    height: 74px;
+    width: 100vw;
+    height: 17.5vw;
     bottom: 0;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 6vw;
+    border-radius: 0;
     z-index: 1;
 
     .more-button {
@@ -208,17 +220,17 @@
     }
 
     .prev-image {
-      margin-top: 10px;
+      margin-top: 0;
     }
 
     .next-image {
-      margin-bottom: 10px;
+      margin-bottom: 17vw;
     }
 
     .swiper-container {
       width: 100%;
-      height: calc(80%) !important;
-      margin: 1vh 0;
+      height: calc(86% - 17.5vw) !important;
+      margin: 0;
 
       .swiper-slide {
         width: 100%;
