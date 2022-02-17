@@ -470,6 +470,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
+  const moveToLibrary = () => {
+    if (props.isAuthenticated === isAuthenticated.True) {
+      history.push(map.MyLibrary);
+    } else if (userToken) {
+      history.push(map.ActivateAccount + "?token=" + userToken);
+    }
+  }
+
   const moveToPostPlay = () => {
     if (props.isAuthenticated === isAuthenticated.True) {
       history.push(map.postPlay(brick.id, props.user.id));
@@ -729,7 +737,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             user={props.user}
             brick={brick}
             history={history}
-            moveNext={moveToPostPlay}
+            moveNext={moveToLibrary}
           />
           {isPhone() && renderPhoneFooter(PlayPage.FinalStep)}
         </Route>
