@@ -324,9 +324,7 @@
     .btn .svg {
       height: 7.5vw;
       &:hover {
-        .btn svg {
-          transform: rotate(10deg) !important;
-        }
+        transform: rotate(10deg) !important;
       }
     }
   }

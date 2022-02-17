@@ -77,8 +77,8 @@
   .bottom-button {
     cursor: pointer;
     transition: all 300ms ease-out;
-    color: var(--white);
-    background: var(--theme-orange);
+    color: var(--theme-dark-blue);
+    background: var(--tab-gray);
     height: calc(10vh);
     display: flex;
     justify-content: center;
@@ -86,7 +86,7 @@
     font-size: 1.3vw;
 
     .MuiIconButton-colorSecondary {
-      color: var(--white) !important;
+      color: var(--theme-dark-blue) !important;
     }
 
     .MuiButtonBase-root {
