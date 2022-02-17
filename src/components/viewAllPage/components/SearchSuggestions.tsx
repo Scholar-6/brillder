@@ -6,6 +6,10 @@ import { fileUrl } from 'components/services/uploadFile';
 import routes from 'components/play/routes';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { ReduxCombinedState } from 'redux/reducers';
+import { connect } from 'react-redux';
+import { User } from 'model/user';
+import { checkAdmin } from 'components/services/brickService';
 
 
 interface ResultObj {
@@ -25,6 +29,8 @@ interface SearchSuggestionsProps {
   bricks: Brick[];
   keywords: KeyWord[];
   subjects: Subject[];
+
+  user: User;
 
   filterByAuthor(a: Author): void;
   filterBySubject(s: Subject): void;
@@ -136,7 +142,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
           <SpriteIcon name="logo" />
           {stripHtml(brick.title)}
           <SpriteIcon className="icon-status" name={brick.isCore ? "globe" : "key"} />
-          {brick.id}
+          <span className="light">{checkAdmin(props.user.roles) && brick.id}</span>
         </div>
       );
     } else if (suggestion.isSubjectRes && subject) {
@@ -171,4 +177,11 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
   );
 }
 
-export default SearchSuggestions;
+
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user
+});
+
+const connector = connect(mapState);
+
+export default connector(SearchSuggestions);
