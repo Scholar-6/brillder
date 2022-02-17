@@ -318,7 +318,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         />
         {renderAdaptButton()}
         <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
-        {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) &&
+        {checkTeacherOrAdmin(this.props.user) &&
           <GenerateCoverButton
             sidebarRolledUp={sidebarRolledUp}
             brick={this.props.brick}
