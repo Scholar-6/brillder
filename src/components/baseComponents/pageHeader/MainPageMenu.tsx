@@ -86,7 +86,7 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     const renderBrills = () => {
       const {brills} = this.props.user;
       if (brills && brills > 0) {
-        return brills * 100;
+        return brills;
       }
       return '';
     }
