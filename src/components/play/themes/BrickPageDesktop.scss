@@ -814,6 +814,17 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           display: flex;
           align-items: center;
           justify-content: center;
+          .top-brill-coins {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3vh;
+            img {
+              margin-left: 1vw;
+              width: 3.5vw;
+              height: 3.5vw;
+              margin-right: 1vw;
+            }
+          }
           .intro-header {
             font-size: 2vw;
             font-family: $font-family-black;
@@ -1134,7 +1145,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         }
         &.provisional-score-page .introduction-page .circle-progress-container {
           margin-bottom: 2vh;
-          $height: 30vh;
+          $height: 22vh;
           height: $height !important;
           .circle-progress {
             height: $height !important;

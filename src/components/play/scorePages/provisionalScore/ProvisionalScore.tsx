@@ -216,20 +216,83 @@ class ProvisionalScore extends React.Component<
 
     const renderContent = () => {
       if (this.props.user) {
+        if (this.state.finalValue >= 50) {
+          return (
+            <div className="introduction-page">
+              <h2 className="title">Your score so far ...</h2>
+              <div className="hr-sub-title provisional-sub-title">
+                Great effort!
+              </div>
+              <div className="percentage-container">
+                <Grid
+                  container
+                  justify="center"
+                  alignContent="center"
+                  className="circle-progress-container"
+                >
+                  <CircularProgressbar
+                    className="circle-progress"
+                    strokeWidth={4}
+                    counterClockwise={true}
+                    value={this.state.value}
+                  />
+                  <div className="score-data">
+                    <Grid container justify="center" alignContent="center">
+                      <div>
+                        <div className="score-precentage">
+                          {this.state.value}%
+                        </div>
+                      </div>
+                    </Grid>
+                  </div>
+                </Grid>
+              </div>
+              <div className="bold bottom-text">Now read the synthesis and boost your Brills in the Review stages.</div>
+              <div className="flex-center">
+                <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+                  Boost
+                </div>
+              </div>
+            </div>
+          );
+        }
+
         return (
           <div className="introduction-page">
-            <h2 className="title">You could earn 67 Brills!</h2>
-            <div className="hr-sub-title provisional-sub-title">
-              Great effort!
+            <h2 className="title">Your score so far ...</h2>
+            {this.state.score < this.state.maxScore &&
+              <div className="hr-sub-title provisional-sub-title">
+                That was a tough one.
+              </div>
+            }
+            <div className="percentage-container">
+              <Grid
+                container
+                justify="center"
+                alignContent="center"
+                className="circle-progress-container"
+              >
+                <CircularProgressbar
+                  className="circle-progress"
+                  strokeWidth={4}
+                  counterClockwise={true}
+                  value={this.state.value}
+                />
+                <div className="score-data">
+                  <Grid container justify="center" alignContent="center">
+                    <div>
+                      <div className="score-precentage">
+                        {this.state.value}%
+                      </div>
+                    </div>
+                  </Grid>
+                </div>
+              </Grid>
             </div>
-            <div className="brill-coin-img">
-              <img src="/images/Brill.svg" />
-              <SpriteIcon name="logo" />
-            </div>
-            <div className="bold bottom-text">Maximize your earnings by clicking through the review stage.</div>
+            <div className="bold bottom-text">Score 75% in the Review stage to start earning Brills.</div>
             <div className="flex-center">
-              <div className="btn bottom-btn btn-green">
-                Earn more brills
+              <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+                Keep Going!
               </div>
             </div>
           </div>
@@ -296,49 +359,50 @@ class ProvisionalScore extends React.Component<
               Keep Going!
             </div>
           </div>
-          {/*
-                <div className="question-live-play">
-                  <Grid
-                    container
-                    justify="center"
-                    alignContent="center"
-                    className="circle-progress-container"
-                  >
-                    <CircularProgressbar
-                      className="circle-progress"
-                      strokeWidth={4}
-                      counterClockwise={true}
-                      value={this.state.value}
-                    />
-                    <div className="score-data">
-                      <Grid container justify="center" alignContent="center">
-                        <div>
-                          <div className="score-precentage">
-                            {this.state.value}%
-                          </div>
-                        </div>
-                      </Grid>
-                    </div>
-                  </Grid>
-                  <div className="attempted-numbers">
-                    <div>
-                      <SpriteIcon name="cancel-custom" className="text-orange" />: {numberOfFailed}
-                    </div>
-                    <div>
-                      <SpriteIcon name="cancel-custom" className="text-yellow" />: {numberOfNotZero}
-                    </div>
-                    <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
-                      <SpriteIcon
-                        name="check-icon"
-                        className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
-                      />: {numberOfcorrect}
-                    </div>
-                  </div>
-                
-                </div>
-                  */}
         </div>
       )
+    }
+
+    const renderTopPartSidebar = () => {
+      if (this.state.finalValue >= 50) {
+        if (this.props.user) {
+          return (
+            <div className="top-brill-coins">
+              <div className="brill-coin-img">
+                <img src="/images/Brill-B.svg" />
+              </div>
+              <div className="bold">{this.state.value} Brills Earned!</div>
+            </div>
+          );
+        }
+        return (
+          <div className="percentage-container">
+            <Grid
+              container
+              justify="center"
+              alignContent="center"
+              className="circle-progress-container"
+            >
+              <CircularProgressbar
+                className="circle-progress"
+                strokeWidth={6}
+                counterClockwise={true}
+                value={this.state.value}
+              />
+              <div className="score-data">
+                <Grid container justify="center" alignContent="center">
+                  <div>
+                    <div className="score-precentage bold">
+                      {this.state.value}%
+                    </div>
+                  </div>
+                </Grid>
+              </div>
+            </Grid>
+          </div>
+        );
+      }
+      return <div className="m-t-5" />;
     }
 
     return (
@@ -383,30 +447,7 @@ class ProvisionalScore extends React.Component<
             </Grid>
             <Grid item xs={4}>
               <div className="introduction-info">
-                <div className="percentage-container">
-                  <Grid
-                    container
-                    justify="center"
-                    alignContent="center"
-                    className="circle-progress-container"
-                  >
-                    <CircularProgressbar
-                      className="circle-progress"
-                      strokeWidth={6}
-                      counterClockwise={true}
-                      value={this.state.value}
-                    />
-                    <div className="score-data">
-                      <Grid container justify="center" alignContent="center">
-                        <div>
-                          <div className="score-precentage bold">
-                            {this.state.value}%
-                          </div>
-                        </div>
-                      </Grid>
-                    </div>
-                  </Grid>
-                </div>
+                {renderTopPartSidebar()}
                 <div className="intro-text-row f-align-self-start">
                   <ReviewStepper
                     questions={brick.questions}
