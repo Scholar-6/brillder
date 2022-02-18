@@ -83,8 +83,6 @@ interface MainPageState {
 
   // for mobile popopup
   isDesktopOpen: boolean;
-  secondaryLabel: string;
-  secondPart: string;
 
   // intro
   stepsEnabled: boolean;
@@ -119,9 +117,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       {
         element: '.view-item-container',
         intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
-      }, {
-        element: '.view-item-container',
-        intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
       }
     ];
 
@@ -138,9 +133,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       }, {
         element: '.my-library-button',
         intro: `<p>Every time you complete a brick, and score over 50%, a book will be added to your very own virtual library!</p>`,
-      }, {
-        element: '.create-item-container',
-        intro: `<p>Once you start getting the hang of “bricks”, you'll be able to try your hand at building them - if you wish to.</p>`,
       }, {
         element: '.create-item-container',
         intro: `<p>Once you start getting the hang of “bricks”, you'll be able to try your hand at building them - if you wish to.</p>`,
@@ -172,8 +164,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       assignedCount: 0,
 
       isDesktopOpen: false,
-      secondaryLabel: '',
-      secondPart: ' not yet been optimised for mobile devices.',
       stepsEnabled: false,
       steps: isNewTeacher ? newTeacherSteps : newStudentSteps
     } as any;
@@ -397,17 +387,13 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     this.setState({ stepsEnabled: false });
   }
 
-  onIntroChanged(e: any) {
+  onCompleted() {
     if (this.state.isNewTeacher) {
-      if (e !== 0) {
-        this.props.history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true');
-        this.setState({ stepsEnabled: false });
-      }
+      this.props.history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true');
+      this.setState({ stepsEnabled: false });
     } else {
-      if (e > 4) {
-        this.props.history.push(map.ViewAllPage + '?mySubject=true');
-        this.setState({ stepsEnabled: false });
-      }
+      this.props.history.push(map.ViewAllPage + '?mySubject=true');
+      this.setState({ stepsEnabled: false });
     }
   }
 
@@ -458,9 +444,12 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
             enabled={this.state.stepsEnabled}
             steps={this.state.steps}
             initialStep={0}
-            onChange={this.onIntroChanged.bind(this)}
             onExit={this.onIntroExit.bind(this)}
-            onComplete={() => { }}
+            onComplete={this.onCompleted.bind(this)}
+            options={{
+              nextLabel: 'Next',
+              doneLabel: 'Start Exploring!'
+            }}
           />
           <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
           <LockedDialog
