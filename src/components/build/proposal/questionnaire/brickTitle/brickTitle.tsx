@@ -217,7 +217,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                     </HoverHelp>
                   </div>
                 </div>
-                <div className="audience-inputs">
+                <div className="audience-inputs keywords-box">
                   <KeyWordsComponent disabled={!canEdit} keyWords={parentState.keywords} onChange={this.props.setKeywords.bind(this)} />
                   <div className="absolute-keyword-help">
                     <HoverHelp>

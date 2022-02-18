@@ -98,6 +98,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
     if (this.props.placeholder) {
       placeholder = this.props.placeholder;
     }
+    console.log('user', this.props.user)
     return (
       <div>
         <PageHeader ref={this.pageHeader}
@@ -105,6 +106,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           link={this.props.link}
           page={this.props.page}
           suggestions={this.props.suggestions}
+          user={this.props.user}
           history={this.props.history}
           search={() => this.props.search && this.props.search()}
           searching={(v: string) => this.props.searching && this.props.searching(v)}

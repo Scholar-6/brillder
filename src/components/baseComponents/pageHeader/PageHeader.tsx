@@ -19,6 +19,7 @@ import { getPublishedBricks } from 'services/axios/brick';
 import { Brick, KeyWord, Subject } from 'model/brick';
 import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestions';
 import { getSubjects } from 'services/axios/subject';
+import { User } from 'model/user';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -38,6 +39,8 @@ interface Props {
   link?: string;
   page: PageEnum;
   suggestions?: boolean;
+
+  user?: User;
 
   history: any;
   search(): void;
@@ -221,6 +224,13 @@ class PageHeader extends Component<Props, State> {
                   <UnauthorizedMenu isOpen={this.state.dropdownShown} closeDropdown={this.hideDropdown.bind(this)} />
                 }
               </div>
+              {
+                this.props.user &&
+                <div>
+                  {this.props.user.brills}
+                  <img src="/images/Brill.svg" />
+                </div>
+              }
               {
                 !searchVisible && this.props.isAuthenticated === isAuthenticated.True &&
                 <BellButton

@@ -650,12 +650,66 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           font-family: $font-family-regular;
           position: relative;
           overflow-y: auto;
-          // height: 100%;
           height: calc(100vh - 15.8vh);
           padding: 3vh 2vw 4vh 7vw;
           .title {
-            @include desktop {
-              font-size: 4vw;
+            margin-top: 6vh;
+            text-align: center;
+            font-family: $font-family-bold;
+            font-size: 3vw;
+          }
+          @keyframes fliping-coin {
+            0% {
+              transform: rotate3d(0);
+            }
+            50% {
+              transform: rotate3d(0, 1, 0, 180deg);
+            }
+            100% {
+              transform: rotate3d(0);
+            }
+          }
+          .provisional-sub-title {
+            position: relative !important;
+            top: unset !important;
+            margin-top: 2vh;
+          }
+          .brill-coin-img {
+            margin-top: 5vh;
+            margin-bottom: 5vh;
+            width: 22vh;
+            height: 22vh;
+            margin-left: calc(50% - 11vh);
+            animation: fliping-coin 2s infinite linear;
+            position: relative;
+
+            img {
+              height: 100%;
+            }
+            svg {
+              color: var(--theme-orange);
+              width: 11vh;
+              height: 11vh;
+              position: absolute;
+              top: calc(50% - 5.5vh);
+              left: calc(50% - 5.5vh);
+            }
+          }
+          .bottom-text {
+            margin-top: 2vh;
+            text-align: center;
+          }
+          .btn.btn-green.bottom-btn {
+            cursor: pointer;
+            margin-top: 4vh;
+            padding: 0.5vw 2vw;
+            font-size: 2vw;
+            background: var(--theme-green);
+            color: white;
+            border-radius: 1vw;
+
+            &:hover {
+              background: var(--theme-dark-blue);
             }
           }
           p {
@@ -2701,4 +2755,19 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
 .play-preview-pages .sorted-row.sorted-row-expanded .live-container.static-top-part {
   border-radius: 1.9vw !important;
+}
+
+.provisional-container .provisional-title-column {
+  justify-content: flex-start !important;
+  padding-left: 2vw;
+
+  .duration {
+    padding-right: 2vw;
+    font-family: $font-family-regular;
+    svg {
+      width: 2vw;
+      height: 2vw;
+      stroke-width: 1.5;
+    }
+  }
 }

@@ -12,6 +12,19 @@
   .key-word {
     text-transform: capitalize !important;
   }
+
+  .keywords-box {
+    margin-top: 0 !important;
+  }
+
+  .subject-autocomplete {
+    margin-bottom: 0.5vw !important;
+    .MuiInputBase-root {
+      box-shadow: unset !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+  }
   .tooltip-container {
     position: relative;
     .css-custom-tooltip {
@@ -105,6 +118,16 @@
     }
 
     .key-words {
+      max-height: 7vw !important;
+      .key-word {
+        border-radius: 5vw;
+
+        svg {
+          width: 1.3vw;
+          height: 1.3vw;
+          margin-right: 0.5vw;
+        }
+      }
       input {
         margin: 0.5vh 0;
       }

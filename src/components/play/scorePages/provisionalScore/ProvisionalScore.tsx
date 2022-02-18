@@ -221,13 +221,23 @@ class ProvisionalScore extends React.Component<
           <Grid container direction="row">
             <Grid item xs={8}>
               <div className="introduction-page">
-                <h1 style={{marginTop: '1vw'}} className="title">Provisional Score</h1>
+                <h2 className="title">You earned {this.state.value} Brills!</h2>
                 {this.state.score < this.state.maxScore &&
-                  <div className="hr-sub-title">
-                    <div>To improve your score, now read the author's <span className="bold">Synthesis</span></div>
-                    <div>after which you can use the <span className="bold">Review</span> stage to adjust your answers.</div>
+                  <div className="hr-sub-title provisional-sub-title">
+                    Great effort!
                   </div>
                 }
+                <div className="brill-coin-img">
+                  <img src="/images/Brill.svg" />
+                  <SpriteIcon name="logo" />
+                </div>
+                <div className="bold bottom-text">Maximize your earnings by clicking through the review stage.</div>
+                <div className="flex-center">
+                  <div className="btn bottom-btn btn-green">
+                    Earn more brills
+                  </div>
+                </div>
+                {/*
                 <div className="question-live-play">
                   <Grid
                     container
@@ -265,22 +275,25 @@ class ProvisionalScore extends React.Component<
                       />: {numberOfcorrect}
                     </div>
                   </div>
-                  <AttemptedText
+                
+                </div>
+                  */}
+              </div>
+              <div className="new-layout-footer" style={{ display: "none" }}>
+                <div className="title-column provisional-title-column">
+                  {this.props.liveDuration &&
+                    <div className="duration">
+                      <SpriteIcon name="clock" />
+                      <div>{prepareDuration(this.props.liveDuration)}</div>
+                    </div>
+                  }
+                    <AttemptedText
                     attempted={attempted}
                     attemptsCount={attempts.length}
                     score={this.state.score}
                     maxScore={this.state.maxScore}
                   />
-                  {this.props.liveDuration && (
-                    <div className="duration">
-                      <SpriteIcon name="clock" />
-                      <div>{prepareDuration(this.props.liveDuration)}</div>
-                    </div>
-                  )}
                 </div>
-              </div>
-              <div className="new-layout-footer" style={{ display: "none" }}>
-                <div className="title-column">Learn more about this topic by reading an academic summary by the author.</div>
                 <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg"></img>
                 <div className="new-navigation-buttons">
                   <div
