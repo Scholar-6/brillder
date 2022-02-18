@@ -653,7 +653,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           height: calc(100vh - 15.8vh);
           padding: 3vh 2vw 4vh 7vw;
           .title {
-            margin-top: 6vh;
             text-align: center;
             font-family: $font-family-bold;
             font-size: 3vw;
@@ -2646,6 +2645,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
 .provisional-score-page {
  
+  .title {
+    margin-top: 6vh;
+  }
   .new-layout-footer {
     .title-column {
     width: 55.5vw !important;
