@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
@@ -16,15 +17,8 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import { User } from "model/user";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
+import map from "components/map";
 
-interface ProvisionalScoreState {
-  value: number;
-  score: number;
-  maxScore: number;
-  interval: any;
-  handleMove: any;
-  finalValue: number;
-}
 
 interface ProvisionalScoreProps {
   user?: User;
@@ -37,6 +31,15 @@ interface ProvisionalScoreProps {
   attempts: any[];
   moveNext?(): void;
   moveToPrep?(): void;
+}
+interface ProvisionalScoreState {
+  value: number;
+  score: number;
+  maxScore: number;
+  interval: any;
+  handleMove: any;
+  finalValue: number;
+  popupOpen: boolean;
 }
 
 class ProvisionalScore extends React.Component<
@@ -70,6 +73,7 @@ class ProvisionalScore extends React.Component<
       score,
       maxScore,
       interval: null,
+      popupOpen: false,
       handleMove: this.handleMove.bind(this),
     };
   }
@@ -250,7 +254,7 @@ class ProvisionalScore extends React.Component<
                 </div>
                 <div className="bold bottom-text">Claim your perfect score bonus by reading the Synthesis of this brick.</div>
                 <div className="flex-center">
-                  <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+                  <div className="btn bottom-btn btn-green" onClick={() => this.setState({popupOpen: true})}>
                     Claim now
                   </div>
                 </div>
@@ -500,6 +504,19 @@ class ProvisionalScore extends React.Component<
             </Grid>
           </Grid>
         </div>
+        {this.state.finalValue === 100 && <Dialog open={this.state.popupOpen} onClose={() => this.setState({ popupOpen: false })} className="dialog-box">
+          <div className="dialog-header">
+            <div className="bold" style={{ textAlign: 'center' }}>Do you want to review your answers?</div>
+          </div>
+          <div className="dialog-footer">
+            <button className="btn btn-md bg-theme-orange yes-button" onClick={() => this.props.history.push(map.MyLibrary)}>
+              <span>Yes</span>
+            </button>
+            <button className="btn btn-md bg-gray no-button" onClick={() => this.moveToSynthesis()}>
+              <span>No</span>
+            </button>
+          </div>
+        </Dialog>}
       </div>
     );
   }
