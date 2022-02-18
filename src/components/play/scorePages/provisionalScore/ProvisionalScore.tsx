@@ -23,6 +23,7 @@ interface ProvisionalScoreState {
   maxScore: number;
   interval: any;
   handleMove: any;
+  finalValue: number;
 }
 
 interface ProvisionalScoreProps {
@@ -65,6 +66,7 @@ class ProvisionalScore extends React.Component<
 
     this.state = {
       value: 0,
+      finalValue: Math.round((score * 100) / maxScore),
       score,
       maxScore,
       interval: null,
@@ -212,32 +214,89 @@ class ProvisionalScore extends React.Component<
       );
     }
 
-    return (
-      <div className="brick-row-container provisional-container">
-        <div className="brick-container play-preview-panel provisional-score-page">
-          <div className="fixed-upper-b-title">
-            <BrickTitle title={brick.title} />
+    const renderContent = () => {
+      if (this.props.user) {
+        return (
+          <div className="introduction-page">
+            <h2 className="title">You could earn 67 Brills!</h2>
+            <div className="hr-sub-title provisional-sub-title">
+              Great effort!
+            </div>
+            <div className="brill-coin-img">
+              <img src="/images/Brill.svg" />
+              <SpriteIcon name="logo" />
+            </div>
+            <div className="bold bottom-text">Maximize your earnings by clicking through the review stage.</div>
+            <div className="flex-center">
+              <div className="btn bottom-btn btn-green">
+                Earn more brills
+              </div>
+            </div>
           </div>
-          <Grid container direction="row">
-            <Grid item xs={8}>
-              <div className="introduction-page">
-                <h2 className="title">You earned {this.state.value} Brills!</h2>
-                {this.state.score < this.state.maxScore &&
-                  <div className="hr-sub-title provisional-sub-title">
-                    Great effort!
+        );
+      }
+
+      if (this.state.finalValue >= 50) {
+        return (
+          <div className="introduction-page">
+            <h2 className="title">You could earn {this.state.value} Brills!</h2>
+            <div className="hr-sub-title provisional-sub-title">
+              Great effort!
+            </div>
+            <div className="brill-coin-img">
+              <img src="/images/Brill.svg" />
+              <SpriteIcon name="logo" />
+            </div>
+            <div className="bold bottom-text">Sign up at the end of the Synthesis to bank your Brills.</div>
+            <div className="flex-center">
+              <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+                Read Synthesis
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // < 50
+      return (
+        <div className="introduction-page">
+          <h2 className="title">Your score so far ...</h2>
+          {this.state.score < this.state.maxScore &&
+            <div className="hr-sub-title provisional-sub-title">
+              That was a tough one.
+            </div>
+          }
+          <div className="percentage-container">
+            <Grid
+              container
+              justify="center"
+              alignContent="center"
+              className="circle-progress-container"
+            >
+              <CircularProgressbar
+                className="circle-progress"
+                strokeWidth={4}
+                counterClockwise={true}
+                value={this.state.value}
+              />
+              <div className="score-data">
+                <Grid container justify="center" alignContent="center">
+                  <div>
+                    <div className="score-precentage">
+                      {this.state.value}%
+                    </div>
                   </div>
-                }
-                <div className="brill-coin-img">
-                  <img src="/images/Brill.svg" />
-                  <SpriteIcon name="logo" />
-                </div>
-                <div className="bold bottom-text">Maximize your earnings by clicking through the review stage.</div>
-                <div className="flex-center">
-                  <div className="btn bottom-btn btn-green">
-                    Earn more brills
-                  </div>
-                </div>
-                {/*
+                </Grid>
+              </div>
+            </Grid>
+          </div>
+          <div className="bold bottom-text">Read the Synthesis and sign up to see where you went wrong.</div>
+          <div className="flex-center">
+            <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+              Keep Going!
+            </div>
+          </div>
+          {/*
                 <div className="question-live-play">
                   <Grid
                     container
@@ -278,7 +337,19 @@ class ProvisionalScore extends React.Component<
                 
                 </div>
                   */}
-              </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="brick-row-container provisional-container">
+        <div className="brick-container play-preview-panel provisional-score-page">
+          <div className="fixed-upper-b-title">
+            <BrickTitle title={brick.title} />
+          </div>
+          <Grid container direction="row">
+            <Grid item xs={8}>
+              {renderContent()}
               <div className="new-layout-footer" style={{ display: "none" }}>
                 <div className="title-column provisional-title-column">
                   {this.props.liveDuration &&
@@ -287,7 +358,7 @@ class ProvisionalScore extends React.Component<
                       <div>{prepareDuration(this.props.liveDuration)}</div>
                     </div>
                   }
-                    <AttemptedText
+                  <AttemptedText
                     attempted={attempted}
                     attemptsCount={attempts.length}
                     score={this.state.score}
@@ -308,7 +379,31 @@ class ProvisionalScore extends React.Component<
             </Grid>
             <Grid item xs={4}>
               <div className="introduction-info">
-                <div className="intro-text-row f-align-self-start m-t-5">
+                <div className="percentage-container">
+                  <Grid
+                    container
+                    justify="center"
+                    alignContent="center"
+                    className="circle-progress-container"
+                  >
+                    <CircularProgressbar
+                      className="circle-progress"
+                      strokeWidth={6}
+                      counterClockwise={true}
+                      value={this.state.value}
+                    />
+                    <div className="score-data">
+                      <Grid container justify="center" alignContent="center">
+                        <div>
+                          <div className="score-precentage bold">
+                            {this.state.value}%
+                          </div>
+                        </div>
+                      </Grid>
+                    </div>
+                  </Grid>
+                </div>
+                <div className="intro-text-row f-align-self-start">
                   <ReviewStepper
                     questions={brick.questions}
                     attempts={attempts}

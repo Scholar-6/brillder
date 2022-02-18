@@ -135,7 +135,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         intro: `<p>Every time you complete a brick, and score over 50%, a book will be added to your very own virtual library!</p>`,
       }, {
         element: '.create-item-container',
-        intro: `<p>Once you start getting the hang of “bricks”, you'll be able to try your hand at building them - if you wish to.</p>`,
+        intro: `<p>Once you start getting the hang of “bricks”, you'll be able to try your hand at building them if you want to</p>`,
       }
     ];
 

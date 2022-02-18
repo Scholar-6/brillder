@@ -673,6 +673,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             position: relative !important;
             top: unset !important;
             margin-top: 2vh;
+            font-family: $font-family-regular-italic;
           }
           .brill-coin-img {
             margin-top: 5vh;
@@ -696,12 +697,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
           }
           .bottom-text {
-            margin-top: 2vh;
+            margin-top: 6vh;
             text-align: center;
           }
           .btn.btn-green.bottom-btn {
             cursor: pointer;
-            margin-top: 4vh;
+            margin-top: 6vh;
             padding: 0.5vw 2vw;
             font-size: 2vw;
             background: var(--theme-green);
@@ -808,6 +809,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           background-color: var(--solitude-light);
           position: relative;
           padding: 4vh 2vw;
+          padding-top: 15vh;
           height: $introduction-desktop-height;
           display: flex;
           align-items: center;
@@ -1112,7 +1114,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                     font-family: $font-family-black;
                     color: var(--theme-dark-blue);
                     line-height: 1;
-                    font-size: 14vh;
+                    font-size: 7vh;
                   }
                 }
               }
@@ -1126,9 +1128,13 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         &.provisional-score-page .introduction-page .question-live-play {
           margin-top: calc(6vw + 11vh) !important;
         }
+        .percentage-container {
+          margin-top: 4vh;
+          margin-bottom: 2vh;
+        }
         &.provisional-score-page .introduction-page .circle-progress-container {
           margin-bottom: 2vh;
-          $height: 45vh;
+          $height: 30vh;
           height: $height !important;
           .circle-progress {
             height: $height !important;
@@ -2534,6 +2540,43 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
   .step.almost-failed svg {
     color: var(--theme-yellow) !important;
+  }
+}
+
+.play-preview-pages .provisional-score-page .introduction-info {
+  display: block !important;
+  height: 100% !important;
+  padding-top: 4vh !important;
+  .percentage-container {
+    margin-top: 0 !important;
+    margin-bottom: 5vh !important;
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    .CircularProgressbar .CircularProgressbar-path {
+      stroke: var(--theme-yellow) !important;
+    }
+    .circle-progress-container {
+      height: auto !important;
+      .circle-progress {
+        width: 12vh !important;
+      }
+      .score-data {
+        position: absolute;
+        top: 0;
+        height: 12vh !important;
+        width: 100%;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        > .MuiGrid-root {
+          height: auto !important;
+        }
+      }
+    }
   }
 }
 
