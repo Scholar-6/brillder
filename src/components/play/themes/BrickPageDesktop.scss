@@ -2590,7 +2590,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3vh;
+    font-size: 2.2vw;
+    color: white;
     font-family: $font-family-bold;
     > div {
       margin-left: 1vh;
@@ -2599,10 +2600,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       align-items: center;
     }
     svg {
-      $size: 3vh;
+      $size: 2.2vw;
       height: $size;
       width: $size;
-      stroke-width: 4;
+      stroke-width: 3;
     }
   }
   .attempted-text {
@@ -2635,7 +2636,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
  
   .new-layout-footer {
     .title-column {
-    width: 58vw !important;
+    width: 55.5vw !important;
     display: flex;
     justify-content: flex-end;
     margin-right: 1vw;

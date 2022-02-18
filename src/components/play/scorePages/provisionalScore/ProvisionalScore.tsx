@@ -365,14 +365,18 @@ class ProvisionalScore extends React.Component<
                     maxScore={this.state.maxScore}
                   />
                 </div>
-                <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg"></img>
-                <div className="new-navigation-buttons">
-                  <div
-                    className="n-btn next"
-                    onClick={this.moveToSynthesis.bind(this)}
-                  >
-                    Read Synthesis
-                    <SpriteIcon name="arrow-right" />
+                <div className="attempted-numbers">
+                  <div>
+                    <SpriteIcon name="cancel-custom" className="text-orange" />: {numberOfFailed}
+                  </div>
+                  <div>
+                    <SpriteIcon name="cancel-custom" className="text-yellow" />: {numberOfNotZero}
+                  </div>
+                  <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
+                    <SpriteIcon
+                      name="check-icon"
+                      className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
+                    />: {numberOfcorrect}
                   </div>
                 </div>
               </div>
