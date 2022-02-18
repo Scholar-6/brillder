@@ -2805,12 +2805,17 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   padding-left: 2vw;
 
   .duration {
-    padding-right: 2vw;
+    padding-right: 1vw;
     font-family: $font-family-regular;
     svg {
       width: 2vw;
       height: 2vw;
       stroke-width: 1.5;
+    }
+  }
+  .attempted-text {
+    .bold {
+      margin-left: 3vw;
     }
   }
 }
