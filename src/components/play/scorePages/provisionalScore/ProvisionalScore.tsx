@@ -217,6 +217,46 @@ class ProvisionalScore extends React.Component<
     const renderContent = () => {
       if (this.props.user) {
         if (this.state.finalValue >= 50) {
+          if (this.state.finalValue === 100) {
+            return (
+              <div className="introduction-page">
+                <h2 className="title">Wow - a perfect score!</h2>
+                <div className="hr-sub-title provisional-sub-title">
+                  You smashed it!
+                </div>
+                <div className="percentage-container">
+                  <Grid
+                    container
+                    justify="center"
+                    alignContent="center"
+                    className="circle-progress-container"
+                  >
+                    <CircularProgressbar
+                      className={`circle-progress ${this.state.value === 100 ? 'green' : ''}`}
+                      strokeWidth={4}
+                      counterClockwise={true}
+                      value={this.state.value}
+                    />
+                    <div className="score-data">
+                      <Grid container justify="center" alignContent="center">
+                        <div>
+                          <div className="score-precentage">
+                            {this.state.value}%
+                          </div>
+                        </div>
+                      </Grid>
+                    </div>
+                  </Grid>
+                </div>
+                <div className="bold bottom-text">Claim your perfect score bonus by reading the Synthesis of this brick.</div>
+                <div className="flex-center">
+                  <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+                    Claim now
+                  </div>
+                </div>
+              </div>
+            );
+          }
           return (
             <div className="introduction-page">
               <h2 className="title">Your score so far ...</h2>
@@ -406,7 +446,7 @@ class ProvisionalScore extends React.Component<
     }
 
     return (
-      <div className="brick-row-container provisional-container">
+      <div className="brick-row-container provisional-container" >
         <div className="brick-container play-preview-panel provisional-score-page">
           <div className="fixed-upper-b-title">
             <BrickTitle title={brick.title} />

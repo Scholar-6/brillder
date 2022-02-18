@@ -189,8 +189,6 @@ class PageHeader extends Component<Props, State> {
       className += ' no-bottom-border';
     }
 
-    console.log('user2', this.props.user)
-
     return (
       <div className="upper-part">
         <div className={!searchVisible ? "page-header" : "page-header active"}>

@@ -2569,6 +2569,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     .CircularProgressbar .CircularProgressbar-path {
       stroke: var(--theme-yellow) !important;
     }
+
     .circle-progress-container {
       height: auto !important;
       .circle-progress {
@@ -2830,4 +2831,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       margin-left: 3vw;
     }
   }
+}
+
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container.provisional-score-page .introduction-page .circle-progress-container .circle-progress.green .CircularProgressbar-path {
+  stroke: var(--theme-green) !important;
 }
