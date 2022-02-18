@@ -607,6 +607,7 @@ class Library extends Component<BricksListProps, BricksListState> {
 
 
   render() {
+    console.log('render', this.props, this.state)
     if (this.state.isLoading) {
       return <PageLoader content="...Getting Bricks..." />;
     }
