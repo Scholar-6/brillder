@@ -1052,7 +1052,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             .circle-progress-container {
               opacity: 0;
               animation: fadein 1s 0.5s forwards;
-              $height: calc(50vh);
+              $height: calc(36vh);
               height: $height !important;
               .circle-progress {
                 height: $height !important;
@@ -1070,22 +1070,22 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               height: $introduction-desktop-height;
               margin-bottom: 2vh;
               .circle-progress-first {
-                height: 50vh;
-                width: 50vh;
+                height: 36vh;
+                width: 36vh;
                 .CircularProgressbar-path {
                   stroke: #ffb55f !important;
                 }
               }
               .circle-progress-second {
-                height: 46vh;
-                width: 46vh;
+                height: 33.5vh;
+                width: 33.5vh;
                 .CircularProgressbar-path {
                   stroke: #317fe0 !important;
                 }
               }
               .circle-progress-third {
-                height: 42.5vh;
-                width: 42.5vh;
+                height: 31vh;
+                width: 31vh;
                 .CircularProgressbar-path {
                   stroke: #38c36d !important;
                 }
@@ -2643,6 +2643,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
+.ending-page,
 .provisional-score-page {
  
   .title {

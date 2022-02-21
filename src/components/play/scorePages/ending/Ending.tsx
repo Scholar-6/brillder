@@ -270,7 +270,10 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
           <Grid container direction="row">
             <Grid item xs={8}>
               <div className="introduction-page">
-                <h1 className="title">Final Score</h1>
+                <h1 className="title">Your final Score</h1>
+                <div className="hr-sub-title provisional-sub-title">
+                  Admirable!
+                </div>
                 {score < maxScore &&
                   <div className="hr-sub-title">This is an average of your provisional score and your review score</div>
                 }
