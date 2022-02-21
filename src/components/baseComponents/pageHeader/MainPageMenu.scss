@@ -16,7 +16,7 @@
   border-bottom-left-radius: 2vw;
 
   &.menu-expanded {
-    width: 16vw;
+    width: 20vw;
     border-bottom-left-radius: 0;
   }
 
@@ -54,6 +54,8 @@
     }
 
     .brills-number {
+      margin-left: 1vw;
+      font-size: 1.2vw;
       display: flex;
       align-items: center;
       height: 3.68vw;
