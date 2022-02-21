@@ -277,7 +277,6 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                 {score < maxScore &&
                   <div className="hr-sub-title">This is an average of your provisional score and your review score</div>
                 }
-                <div className="question-live-play">
                   <Grid
                     container
                     justify="center"
@@ -344,7 +343,6 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                       + {prepareDuration(this.props.reviewDuration)} Review
                     </div>
                   )}
-                </div>
               </div>
               <div className="new-layout-footer" style={{ display: "none" }}>
                 <div className="time-container" />
