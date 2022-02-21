@@ -16,7 +16,9 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import { User } from "model/user";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
+import { isMobile } from "react-device-detect";
 
+const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
 
 interface ProvisionalScoreProps {
   user?: User;
@@ -446,61 +448,64 @@ class ProvisionalScore extends React.Component<
     }
 
     return (
-      <div className="brick-row-container provisional-container" >
-        <div className="brick-container play-preview-panel provisional-score-page">
-          <div className="fixed-upper-b-title">
-            <BrickTitle title={brick.title} />
-          </div>
-          <Grid container direction="row">
-            <Grid item xs={8}>
-              {renderContent()}
-              <div className="new-layout-footer" style={{ display: "none" }}>
-                <div className="title-column provisional-title-column">
-                  {this.props.liveDuration &&
-                    <div className="duration">
-                      <SpriteIcon name="clock" />
-                      <div>{prepareDuration(this.props.liveDuration)}</div>
+      <React.Suspense fallback={<></>}>
+        {!isMobile && <DesktopTheme />}
+        <div className="brick-row-container provisional-container" >
+          <div className="brick-container play-preview-panel provisional-score-page">
+            <div className="fixed-upper-b-title">
+              <BrickTitle title={brick.title} />
+            </div>
+            <Grid container direction="row">
+              <Grid item xs={8}>
+                {renderContent()}
+                <div className="new-layout-footer" style={{ display: "none" }}>
+                  <div className="title-column provisional-title-column">
+                    {this.props.liveDuration &&
+                      <div className="duration">
+                        <SpriteIcon name="clock" />
+                        <div>{prepareDuration(this.props.liveDuration)}</div>
+                      </div>
+                    }
+                    <AttemptedText
+                      attempted={attempted}
+                      attemptsCount={attempts.length}
+                      score={this.state.score}
+                      maxScore={this.state.maxScore}
+                    />
+                  </div>
+                  <div className="attempted-numbers">
+                    <div>
+                      <SpriteIcon name="cancel-custom" className="text-orange" />: {numberOfFailed}
                     </div>
-                  }
-                  <AttemptedText
-                    attempted={attempted}
-                    attemptsCount={attempts.length}
-                    score={this.state.score}
-                    maxScore={this.state.maxScore}
-                  />
-                </div>
-                <div className="attempted-numbers">
-                  <div>
-                    <SpriteIcon name="cancel-custom" className="text-orange" />: {numberOfFailed}
-                  </div>
-                  <div>
-                    <SpriteIcon name="cancel-custom" className="text-yellow" />: {numberOfNotZero}
-                  </div>
-                  <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
-                    <SpriteIcon
-                      name="check-icon"
-                      className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
-                    />: {numberOfcorrect}
+                    <div>
+                      <SpriteIcon name="cancel-custom" className="text-yellow" />: {numberOfNotZero}
+                    </div>
+                    <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
+                      <SpriteIcon
+                        name="check-icon"
+                        className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
+                      />: {numberOfcorrect}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div className="introduction-info">
+                  {renderTopPartSidebar()}
+                  <div className="intro-text-row f-align-self-start">
+                    <ReviewStepper
+                      questions={brick.questions}
+                      attempts={attempts}
+                      isProvisional={true}
+                      handleStep={() => { }}
+                    />
+                  </div>
+                </div>
+              </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <div className="introduction-info">
-                {renderTopPartSidebar()}
-                <div className="intro-text-row f-align-self-start">
-                  <ReviewStepper
-                    questions={brick.questions}
-                    attempts={attempts}
-                    isProvisional={true}
-                    handleStep={() => { }}
-                  />
-                </div>
-              </div>
-            </Grid>
-          </Grid>
+          </div>
         </div>
-      </div>
+      </React.Suspense>
     );
   }
 }

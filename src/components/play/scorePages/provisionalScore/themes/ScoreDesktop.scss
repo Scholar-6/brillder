@@ -1,0 +1,85 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.provisional-container {
+  .provisional-sub-title {
+    text-align: center;
+  }
+
+  .percentage-container {
+    margin-top: 3vh;
+    display: flex;
+    justify-content: center;
+
+
+    .circle-progress-container {
+      position: relative;
+      width: 28vh !important;
+      height: 28vh !important;
+
+      .circle-progress {
+        width: 28vh !important;
+        height: 28vh !important;
+      }
+
+      .CircularProgressbar-path {
+        stroke: var(--theme-yellow);
+      }
+
+      .score-data {
+        top: 0;
+        left: 0;
+        font-size: 8vh;
+        font-family: $font-family-bold;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+      }
+    }
+  }
+
+  .bottom-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 0;
+    height: 9vh;
+    text-align: center;
+  }
+
+  .btn-green {
+    cursor:pointer;
+    font-size: 2vw;
+    margin-top: 3vh;
+    color: white;
+    padding: 0.5vw 3vw;
+    border-radius: 0.8vw;
+    background: var(--theme-green);
+
+    &:hover {
+      background: var(--theme-dark-blue);
+    }
+  }
+
+  .introduction-info {
+    display: block !important;
+    .top-brill-coins {
+      display: flex;
+      align-items: center;
+      margin-bottom: 3vh;
+      .brill-coin-img {
+        display: flex;
+        align-self: center;
+        img {
+          width: 4vw;
+          height: 4vw;
+          margin-right: 1.4vw;
+        }
+      }
+    }
+  }
+}
