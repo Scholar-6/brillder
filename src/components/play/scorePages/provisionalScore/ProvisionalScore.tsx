@@ -331,7 +331,7 @@ class ProvisionalScore extends React.Component<
                 </div>
               </Grid>
             </div>
-            <div className="bold bottom-text">Score 75% in the Review stage to start earning Brills.</div>
+            <div className="bold bottom-text">Score {100 - this.state.finalValue}% in the Review stage to start earning Brills.</div>
             <div className="flex-center">
               <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
                 Keep Going!
