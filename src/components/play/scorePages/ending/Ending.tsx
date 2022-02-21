@@ -130,7 +130,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 
   render() {
-    const {brick} = this.props;
+    const { brick } = this.props;
 
     if (this.props.status === PlayStatus.Live) {
       if (isPhone()) {
@@ -277,81 +277,83 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                 {score < maxScore &&
                   <div className="hr-sub-title">This is an average of your provisional score and your review score</div>
                 }
+                <Grid
+                  container
+                  justify="center"
+                  alignContent="center"
+                  className="circle-progress-container"
+                >
+                  <CircularProgressbar
+                    className="circle-progress-first"
+                    strokeWidth={4}
+                    counterClockwise={true}
+                    value={this.state.liveScore}
+                  />
                   <Grid
                     container
                     justify="center"
                     alignContent="center"
-                    className="circle-progress-container"
+                    className="score-circle"
                   >
                     <CircularProgressbar
-                      className="circle-progress-first"
-                      strokeWidth={4}
+                      className="circle-progress-second"
                       counterClockwise={true}
-                      value={this.state.liveScore}
+                      strokeWidth={4}
+                      value={this.state.reviewScore}
                     />
-                    <Grid
-                      container
-                      justify="center"
-                      alignContent="center"
-                      className="score-circle"
-                    >
-                      <CircularProgressbar
-                        className="circle-progress-second"
-                        counterClockwise={true}
-                        strokeWidth={4}
-                        value={this.state.reviewScore}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      justify="center"
-                      alignContent="center"
-                      className="score-circle"
-                    >
-                      <CircularProgressbar
-                        className="circle-progress-third"
-                        counterClockwise={true}
-                        strokeWidth={4}
-                        value={this.state.currentScore}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      justify="center"
-                      alignContent="center"
-                      className="score-circle"
-                    >
-                      <div>
-                        <div className="score-precentage">{this.state.currentScore}%</div>
-                      </div>
-                    </Grid>
                   </Grid>
+                  <Grid
+                    container
+                    justify="center"
+                    alignContent="center"
+                    className="score-circle"
+                  >
+                    <CircularProgressbar
+                      className="circle-progress-third"
+                      counterClockwise={true}
+                      strokeWidth={4}
+                      value={this.state.currentScore}
+                    />
+                  </Grid>
+                  <Grid
+                    container
+                    justify="center"
+                    alignContent="center"
+                    className="score-circle"
+                  >
+                    <div>
+                      <div className="score-precentage">{this.state.currentScore}%</div>
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+              <div className="new-layout-footer">
+                <div className="title-column provisional-title-column">
+                  {this.props.reviewDuration &&
+                    <div className="duration">
+                      <SpriteIcon name="clock" />
+                      <div>{prepareDuration(this.props.reviewDuration)}</div>
+                    </div>
+                  }
                   <AttemptedText
                     attempted={attempted}
                     attemptsCount={answers.length}
                     score={score}
                     maxScore={maxScore}
                   />
-                  {this.props.liveDuration && (
-                    <div className="duration">
-                      <SpriteIcon name="clock" />
-                      <div>{prepareDuration(this.props.liveDuration)}</div>
-                    </div>
-                  )}
-                  {this.props.reviewDuration && (
-                    <div className="review-duration">
-                      + {prepareDuration(this.props.reviewDuration)} Review
-                    </div>
-                  )}
-              </div>
-              <div className="new-layout-footer" style={{ display: "none" }}>
-                <div className="time-container" />
-                <div className="minutes-footer" />
-                <div className="footer-space" />
-                <div className="new-navigation-buttons">
-                  <div className="n-btn next" onClick={this.props.move}>
-                    Next
-                    <SpriteIcon name="arrow-right" />
+                </div>
+                <div className="attempted-numbers">
+                  <div>
+                    <SpriteIcon name="cancel-custom" className="text-orange" />: {numberOfFailed}
+                  </div>
+                  <div>
+                    <SpriteIcon name="cancel-custom" className="text-yellow" />: {numberOfyellow}
+                  </div>
+                  <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
+                    <SpriteIcon
+                      name="check-icon"
+                      className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
+                    />: {numberOfcorrect}
                   </div>
                 </div>
               </div>
