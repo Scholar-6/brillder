@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import Dialog from "@material-ui/core/Dialog";
 
 import "./Synthesis.scss";
+import map from "components/map";
+
 import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
 import { PlayMode } from "../model";
@@ -23,6 +26,8 @@ interface SynthesisProps {
   status: PlayStatus;
   brick: Brick;
 
+  attempts: any[];
+  history: any;
   endTime: any;
   setEndTime(t: any): void;
 
@@ -37,7 +42,11 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
   brick,
   ...props
 }) => {
+  const { attempts } = props;
+
+  const [percentageScore, setScore] = React.useState(-1);
   const [timerHidden, hideTimer] = React.useState(false);
+  const [popupOpen, setPopup] = React.useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -53,6 +62,26 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
       document.removeEventListener("keydown", handleMove, false);
     };
   });
+
+  useEffect(() => {
+    const score = attempts.reduce((acc, answer) => {
+      if (!answer || !answer.marks) {
+        return acc + 0;
+      }
+      return acc + answer.marks;
+    }, 0);
+    const maxScore = attempts.reduce((acc, answer) => {
+      if (!answer) {
+        return acc;
+      }
+      if (!answer.maxMarks) {
+        return acc + 5;
+      }
+      return acc + answer.maxMarks;
+    }, 0);
+
+    setScore(Math.round((score * 100) / maxScore));
+  }, [attempts])
 
   if (status === PlayStatus.Live) {
     if (isPhone()) {
@@ -132,18 +161,38 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
               </div>
               <div className="footer-space">
                 {!isMobile &&
-                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
-                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
-                </div>}
+                  <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                    {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                  </div>}
               </div>
               <div className="new-navigation-buttons">
-                <div className="n-btn next" onClick={props.moveNext}>
+                <div className="n-btn next" onClick={() => {
+                  if (percentageScore === 100) {
+                    setPopup(true);
+                  } else {
+                    props.moveNext();
+                  }
+                }}>
                   Review
                   <SpriteIcon name="arrow-right" />
                 </div>
               </div>
             </div>
           </div>
+          {popupOpen &&
+          <Dialog open={popupOpen} onClose={() => setPopup(false)} className="dialog-box">
+            <div className="dialog-header">
+              <div className="bold" style={{ textAlign: 'center' }}>Do you want to review your answers?</div>
+            </div>
+            <div className="dialog-footer">
+              <button className="btn btn-md bg-theme-orange yes-button" onClick={props.moveNext}>
+                <span>Yes</span>
+              </button>
+              <button className="btn btn-md bg-gray no-button" onClick={() => props.history.push(map.MyLibrary)}>
+                <span>No</span>
+              </button>
+            </div>
+          </Dialog>}
         </div>
       )}
     </div>

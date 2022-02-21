@@ -21,10 +21,14 @@
       .circle-progress {
         width: 28vh !important;
         height: 28vh !important;
-      }
 
-      .CircularProgressbar-path {
-        stroke: var(--theme-yellow);
+        .CircularProgressbar-path {
+          stroke: var(--theme-yellow);
+        }
+
+        &.green .CircularProgressbar-path {
+          stroke: var(--theme-green);
+        }
       }
 
       .score-data {
