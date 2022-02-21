@@ -332,7 +332,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/synthesis">
-              <Synthesis status={status} brick={brick} endTime={synthesisEndTime} setEndTime={setSynthesisEndTime} isPlayPreview={true} moveNext={moveToReview} />
+              <Synthesis status={status} history={history} brick={brick} attempts={attempts} endTime={synthesisEndTime} setEndTime={setSynthesisEndTime} isPlayPreview={true} moveNext={moveToReview} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/review">
               <Review

@@ -263,7 +263,7 @@ class PageHeader extends Component<Props, State> {
                     this.props.user &&
                     <div className="brill-top-label">
                       {this.props.user.brills}
-                      <img src="/images/Brill-B.svg" />
+                      <img alt="brill" src="/images/Brill-B.svg" />
                     </div>
                   }
                   <BellButton

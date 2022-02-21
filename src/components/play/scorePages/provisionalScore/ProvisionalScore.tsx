@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import Dialog from "@material-ui/core/Dialog";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
@@ -17,7 +16,6 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import { User } from "model/user";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
-import map from "components/map";
 
 
 interface ProvisionalScoreProps {
@@ -39,7 +37,6 @@ interface ProvisionalScoreState {
   interval: any;
   handleMove: any;
   finalValue: number;
-  popupOpen: boolean;
 }
 
 class ProvisionalScore extends React.Component<
@@ -73,7 +70,6 @@ class ProvisionalScore extends React.Component<
       score,
       maxScore,
       interval: null,
-      popupOpen: false,
       handleMove: this.handleMove.bind(this),
     };
   }
@@ -254,7 +250,7 @@ class ProvisionalScore extends React.Component<
                 </div>
                 <div className="bold bottom-text">Claim your perfect score bonus by reading the Synthesis of this brick.</div>
                 <div className="flex-center">
-                  <div className="btn bottom-btn btn-green" onClick={() => this.setState({popupOpen: true})}>
+                  <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
                     Claim now
                   </div>
                 </div>
@@ -351,7 +347,7 @@ class ProvisionalScore extends React.Component<
               Great effort!
             </div>
             <div className="brill-coin-img">
-              <img src="/images/Brill.svg" />
+              <img alt="brill" src="/images/Brill.svg" />
               <SpriteIcon name="logo" />
             </div>
             <div className="bold bottom-text">Sign up at the end of the Synthesis to bank your Brills.</div>
@@ -413,7 +409,7 @@ class ProvisionalScore extends React.Component<
           return (
             <div className="top-brill-coins">
               <div className="brill-coin-img">
-                <img src="/images/Brill-B.svg" />
+                <img alt="brill" src="/images/Brill-B.svg" />
               </div>
               <div className="bold">{this.state.value} Brills Earned!</div>
             </div>
@@ -504,19 +500,6 @@ class ProvisionalScore extends React.Component<
             </Grid>
           </Grid>
         </div>
-        {this.state.finalValue === 100 && <Dialog open={this.state.popupOpen} onClose={() => this.setState({ popupOpen: false })} className="dialog-box">
-          <div className="dialog-header">
-            <div className="bold" style={{ textAlign: 'center' }}>Do you want to review your answers?</div>
-          </div>
-          <div className="dialog-footer">
-            <button className="btn btn-md bg-theme-orange yes-button" onClick={() => this.props.history.push(map.MyLibrary)}>
-              <span>Yes</span>
-            </button>
-            <button className="btn btn-md bg-gray no-button" onClick={() => this.moveToSynthesis()}>
-              <span>No</span>
-            </button>
-          </div>
-        </Dialog>}
       </div>
     );
   }
