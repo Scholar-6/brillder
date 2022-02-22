@@ -254,7 +254,7 @@ class Sort extends CompComponent<SortProps, SortState> {
           <div className="sort-image-container">
             <SortImage valueFile={choice.valueFile} imageSource={choice.imageSource} />
           </div>
-          {choice.imageCaption && <div className="sort-caption" dangerouslySetInnerHTML={{__html: choice.imageCaption}} />}
+          {choice.imageCaption && <MathInHtml className="sort-caption" value={choice.imageCaption} />}
         </div>
       );
     } else if (choice.answerType === QuestionValueType.Sound) {
