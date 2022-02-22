@@ -23,6 +23,7 @@ import { isPhone } from "services/phone";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import ShareDialogs from "./dialogs/ShareDialogs";
 import GenerateCoverButton from "../baseComponents/sidebarButtons/GenerateCoverButton";
+import map from "components/map";
 
 interface FinalStepProps {
   brick: Brick;
@@ -128,6 +129,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
                   <h2>All done!</h2>
                   <p>Well done for completing “<BrickTitle title={brick.title} />”!</p>
                   {renderActionColumns()}
+                  <div className="flex-center">
+                    <div className="btn btn-green" onClick={() => history.push(map.ViewAllPage)}>Play Another Brick</div>
+                  </div>
                 </div>
               </div>
             </Grid>
