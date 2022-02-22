@@ -27,9 +27,7 @@ interface EndingState {
   reviewScore: number;
   currentScore: number;
 
-  currentPScore: number;
-  minPScore: number;
-  maxPScore: number;
+  fixedCurrentScore: number;
 
   interval: number;
 }
@@ -51,13 +49,10 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   constructor(props: EndingProps) {
     super(props);
 
-    const { oldScore, maxScore, score } = this.props.brickAttempt;
+    const { oldScore,  } = this.props.brickAttempt;
 
     const oldScoreNumber = oldScore ? oldScore : 0;
 
-    const currentPScore = 0;
-    const minPScore = Math.round((oldScoreNumber * 100) / maxScore);
-    const maxPScore = Math.round((score * 100) / maxScore);
 
     this.state = {
       oldScore: oldScoreNumber,
@@ -66,9 +61,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       liveScore: 0,
       reviewScore: 0,
 
-      currentPScore,
-      minPScore,
-      maxPScore,
+      fixedCurrentScore: 0,
 
       interval: 0,
     };
@@ -107,6 +100,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         liveScore: tempLiveScore,
         reviewScore: tempReviewScore,
         currentScore: tempCurrentScore,
+        fixedCurrentScore: currentScore
       });
 
       if (
@@ -135,6 +129,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 
   render() {
+    const { currentScore, fixedCurrentScore } = this.state;
     const { brick } = this.props;
 
     if (this.props.status === PlayStatus.Live) {
@@ -209,7 +204,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     className="circle-progress-third"
                     counterClockwise={true}
                     strokeWidth={4}
-                    value={this.state.currentScore}
+                    value={currentScore}
                   />
                 </Grid>
                 <div className="score-data">{this.state.currentScore}%</div>
@@ -266,6 +261,52 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       );
     }
 
+    const renderSubTitle = () => {
+      let text = '';
+      if (fixedCurrentScore >= 95) {
+        text = 'Superlative!'
+      } else if (fixedCurrentScore >= 90) {
+        text = 'Most excellent!';
+      } else if (fixedCurrentScore >= 85) {
+        text = 'Excellent!';
+      } else if (fixedCurrentScore >= 80) {
+        text = 'Admirable!'
+      } else if (fixedCurrentScore >= 75) {
+        text = 'Commendable!';
+      } else if (fixedCurrentScore >= 70) {
+        text = 'Respectable!';
+      } else if (fixedCurrentScore >= 65) {
+        text = 'Decent!';
+      } else if (fixedCurrentScore >= 60) {
+        text = 'Half decent!';
+      } else if (fixedCurrentScore >= 55) {
+        text = 'Something to build on!';
+      } else if (fixedCurrentScore >= 50) {
+        text = 'Room for improvement!';
+      } else if (fixedCurrentScore >= 45) {
+        text = 'Just missing the pass mark!';
+      } else if (fixedCurrentScore >= 40) {
+        text = 'Tough going!';
+      } else if (fixedCurrentScore >= 35) {
+        text = 'Very tough going!';
+      } else if (fixedCurrentScore >= 30) {
+        text = 'Ouch!';
+      } else if (fixedCurrentScore >= 25) {
+        text = 'Yikes!';
+      } else if (fixedCurrentScore >= 20) {
+        text = 'Call a brain ambulance!';
+      } else if (fixedCurrentScore >= 15) {
+        text = "You weren't even trying";
+      } else if (fixedCurrentScore >= 10) {
+        text = 'A monkey typing randomly would do better than that!';
+      } else if (fixedCurrentScore >= 5) {
+        text = 'Almost hard to do this badly - congratulations ?';
+      } else if (fixedCurrentScore >= 0) {
+        text = 'You have a genius, but just not for this brick!'
+      }
+      return text;
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         <DesktopTheme />
@@ -278,7 +319,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               <Grid item xs={8}>
                 <div className="introduction-page">
                   <h2 className="title">Your final score</h2>
-                  <div className="hr-sub-title">Admirable!</div>
+                  <div className="hr-sub-title">{renderSubTitle()}</div>
                   <div className="percentage-container">
                     <Grid
                       container
@@ -315,7 +356,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                           className="circle-progress-third"
                           counterClockwise={true}
                           strokeWidth={4}
-                          value={this.state.currentScore}
+                          value={currentScore}
                         />
                       </Grid>
                       <Grid
@@ -325,7 +366,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                         className="score-circle"
                       >
                         <div>
-                          <div className="score-precentage">{this.state.currentScore}%</div>
+                          <div className="score-precentage">{currentScore}%</div>
                         </div>
                       </Grid>
                     </Grid>
@@ -339,14 +380,14 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   </div>
                   <div className="flex-center number-status bold">
                     <div>{this.state.liveScore}</div>
-                    <div>{this.state.currentScore}</div>
+                    <div>{currentScore}</div>
                     <div>{this.state.reviewScore}</div>
                   </div>
                   <div className="flex-center number-status bold">
                     <div>Avg.</div>
                   </div>
                   <div className="flex-center">
-                    <div className="btn btn-orange" onClick={() => {this.props.history.push(map.MyLibrary)}}>Exit</div>
+                    <div className="btn btn-orange" onClick={() => { this.props.history.push(map.MyLibrary) }}>Exit</div>
                     <div className="btn btn-green" onClick={this.props.move}>More Options</div>
                   </div>
                 </div>
@@ -383,12 +424,14 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               </Grid>
               <Grid item xs={4}>
                 <div className="introduction-info">
-                  <div className="top-brill-coins">
-                    <div className="brill-coin-img">
-                      <img alt="brill" src="/images/Brill-B.svg" />
+                  {currentScore >= 50 &&
+                    <div className="top-brill-coins">
+                      <div className="brill-coin-img">
+                        <img alt="brill" src="/images/Brill-B.svg" />
+                      </div>
+                      <div className="bold">{currentScore} Brills Earned!</div>
                     </div>
-                    <div className="bold">{this.state.currentScore} Brills Earned!</div>
-                  </div>
+                  }
                   <div className="intro-text-row f-align-self-start m-t-5">
                     {this.renderStepper()}
                   </div>
