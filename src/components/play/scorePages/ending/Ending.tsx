@@ -387,7 +387,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     <div>Avg.</div>
                   </div>
                   <div className="flex-center">
-                    <div className="btn btn-orange" onClick={() => { this.props.history.push(map.MyLibrary) }}>Exit</div>
+                    <div className="btn btn-orange" onClick={() => { this.props.history.push(map.MyLibrarySubject(brick.subjectId)) }}>Exit</div>
                     <div className="btn btn-green" onClick={this.props.move}>More Options</div>
                   </div>
                 </div>
