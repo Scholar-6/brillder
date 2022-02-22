@@ -1851,7 +1851,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
     &.count-down-content {
       .title {
-        font-size: 4vh !important;
+        font-size: 3vw !important;
       }
       .footer {
         margin-top: 9vh;
@@ -2210,6 +2210,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     animation-name: fadein;
     animation-iteration-count: 1;
     animation-duration: 1s;
+
+    .regular {
+      line-height: 1;
+      font-family: $font-family-regular;
+      font-size: 1.4vw;
+    }
   }
   .s-fade1 {
     animation-delay: 0s;

@@ -223,17 +223,18 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .title {
       height: 10%;
       line-height: 0;
-      font-size: 6vw;
+      font-size: 10.5vw;
       font-family: $font-family-bold;
+      .regular {
+        line-height: 1;
+        font-size: 6vw;
+      }
       div {
         display: flex;
         align-items: center;
         justify-content: center;
         height: 50%;
-        .text-orange {
-          margin-left: 1.2vw;
-          margin-right: 1.2vw;
-        }
+        
       }
     }
     .ss-phone-after-title {
@@ -255,6 +256,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         align-items: center;
         justify-content: center;
         height: 25%;
+      }
+      .text-orange {
+        margin-left: 1.2vw;
+        margin-right: 1.2vw;
       }
     }
   }
