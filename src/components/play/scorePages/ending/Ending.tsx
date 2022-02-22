@@ -268,7 +268,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
 
     return (
       <React.Suspense fallback={<></>}>
-        {!isMobile && <DesktopTheme />}
+        <DesktopTheme />
         <div className="brick-row-container ending-container">
           <div className="brick-container play-preview-panel ending-page">
             <div className="fixed-upper-b-title">
