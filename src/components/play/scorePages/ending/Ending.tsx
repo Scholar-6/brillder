@@ -49,7 +49,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   constructor(props: EndingProps) {
     super(props);
 
-    const { oldScore,  } = this.props.brickAttempt;
+    const { oldScore, } = this.props.brickAttempt;
 
     const oldScoreNumber = oldScore ? oldScore : 0;
 
@@ -427,7 +427,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   {currentScore >= 50 &&
                     <div className="top-brill-coins">
                       <div className="brill-coin-img">
-                        <img alt="brill" src="/images/Brill-B.svg" />
+                        <img alt="brill" src="/images/Brill.svg" />
+                        <SpriteIcon name="logo" />
                       </div>
                       <div className="bold">{currentScore} Brills Earned!</div>
                     </div>

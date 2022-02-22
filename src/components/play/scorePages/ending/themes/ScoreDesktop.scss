@@ -20,6 +20,11 @@
     display: flex;
     justify-content: center;
 
+    .circle-progress-first {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
 
     .circle-progress-container {
       position: relative;
@@ -187,6 +192,11 @@
         svg {
           color: var(--theme-orange);
           position: absolute;
+          top: 1vw;
+          left: 1vw;
+          width: 2vw;
+          height: 2vw;
+          z-index: 2;
         }
   
         display: flex;
