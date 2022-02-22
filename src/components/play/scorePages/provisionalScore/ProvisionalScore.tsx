@@ -449,7 +449,7 @@ class ProvisionalScore extends React.Component<
 
     return (
       <React.Suspense fallback={<></>}>
-        {!isMobile && <DesktopTheme />}
+        <DesktopTheme />
         <div className="brick-row-container provisional-container" >
           <div className="brick-container play-preview-panel provisional-score-page">
             <div className="fixed-upper-b-title">
