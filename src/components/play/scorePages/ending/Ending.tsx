@@ -14,6 +14,10 @@ import routes from "../../routes";
 import moment from "moment";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
+import { isMobile } from "react-device-detect";
+
+const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
+
 
 interface EndingState {
   oldScore: number;
@@ -130,7 +134,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 
   render() {
-    const {brick} = this.props;
+    const { brick } = this.props;
 
     if (this.props.status === PlayStatus.Live) {
       if (isPhone()) {
@@ -262,114 +266,117 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     }
 
     return (
-      <div className="brick-row-container ending-container">
-        <div className="brick-container play-preview-panel ending-page">
-          <div className="fixed-upper-b-title">
-            <BrickTitle title={this.props.brick.title} />
-          </div>
-          <Grid container direction="row">
-            <Grid item xs={8}>
-              <div className="introduction-page">
-                <h1 className="title">Final Score</h1>
-                {score < maxScore &&
-                  <div className="hr-sub-title">This is an average of your provisional score and your review score</div>
-                }
-                <div className="question-live-play">
-                  <Grid
-                    container
-                    justify="center"
-                    alignContent="center"
-                    className="circle-progress-container"
-                  >
-                    <CircularProgressbar
-                      className="circle-progress-first"
-                      strokeWidth={4}
-                      counterClockwise={true}
-                      value={this.state.liveScore}
+      <React.Suspense fallback={<></>}>
+        {!isMobile && <DesktopTheme />}
+        <div className="brick-row-container ending-container">
+          <div className="brick-container play-preview-panel ending-page">
+            <div className="fixed-upper-b-title">
+              <BrickTitle title={this.props.brick.title} />
+            </div>
+            <Grid container direction="row">
+              <Grid item xs={8}>
+                <div className="introduction-page">
+                  <h1 className="title">Your final score</h1>
+                  {score < maxScore &&
+                    <div className="hr-sub-title">This is an average of your provisional score and your review score</div>
+                  }
+                  <div className="question-live-play">
+                    <Grid
+                      container
+                      justify="center"
+                      alignContent="center"
+                      className="circle-progress-container"
+                    >
+                      <CircularProgressbar
+                        className="circle-progress-first"
+                        strokeWidth={4}
+                        counterClockwise={true}
+                        value={this.state.liveScore}
+                      />
+                      <Grid
+                        container
+                        justify="center"
+                        alignContent="center"
+                        className="score-circle"
+                      >
+                        <CircularProgressbar
+                          className="circle-progress-second"
+                          counterClockwise={true}
+                          strokeWidth={4}
+                          value={this.state.reviewScore}
+                        />
+                      </Grid>
+                      <Grid
+                        container
+                        justify="center"
+                        alignContent="center"
+                        className="score-circle"
+                      >
+                        <CircularProgressbar
+                          className="circle-progress-third"
+                          counterClockwise={true}
+                          strokeWidth={4}
+                          value={this.state.currentScore}
+                        />
+                      </Grid>
+                      <Grid
+                        container
+                        justify="center"
+                        alignContent="center"
+                        className="score-circle"
+                      >
+                        <div>
+                          <div className="score-precentage">{this.state.currentScore}%</div>
+                        </div>
+                      </Grid>
+                    </Grid>
+                    <AttemptedText
+                      attempted={attempted}
+                      attemptsCount={answers.length}
+                      score={score}
+                      maxScore={maxScore}
                     />
-                    <Grid
-                      container
-                      justify="center"
-                      alignContent="center"
-                      className="score-circle"
-                    >
-                      <CircularProgressbar
-                        className="circle-progress-second"
-                        counterClockwise={true}
-                        strokeWidth={4}
-                        value={this.state.reviewScore}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      justify="center"
-                      alignContent="center"
-                      className="score-circle"
-                    >
-                      <CircularProgressbar
-                        className="circle-progress-third"
-                        counterClockwise={true}
-                        strokeWidth={4}
-                        value={this.state.currentScore}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      justify="center"
-                      alignContent="center"
-                      className="score-circle"
-                    >
-                      <div>
-                        <div className="score-precentage">{this.state.currentScore}%</div>
+                    {this.props.liveDuration && (
+                      <div className="duration">
+                        <SpriteIcon name="clock" />
+                        <div>{prepareDuration(this.props.liveDuration)}</div>
                       </div>
-                    </Grid>
-                  </Grid>
-                  <AttemptedText
-                    attempted={attempted}
-                    attemptsCount={answers.length}
-                    score={score}
-                    maxScore={maxScore}
-                  />
-                  {this.props.liveDuration && (
-                    <div className="duration">
-                      <SpriteIcon name="clock" />
-                      <div>{prepareDuration(this.props.liveDuration)}</div>
-                    </div>
-                  )}
-                  {this.props.reviewDuration && (
-                    <div className="review-duration">
-                      + {prepareDuration(this.props.reviewDuration)} Review
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="new-layout-footer" style={{ display: "none" }}>
-                <div className="time-container" />
-                <div className="minutes-footer" />
-                <div className="footer-space" />
-                <div className="new-navigation-buttons">
-                  <div className="n-btn next" onClick={this.props.move}>
-                    Next
-                    <SpriteIcon name="arrow-right" />
+                    )}
+                    {this.props.reviewDuration && (
+                      <div className="review-duration">
+                        + {prepareDuration(this.props.reviewDuration)} Review
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className="introduction-info">
-                <div className="intro-header">
-                  <div>
-                    Range: {this.state.minPScore}%-{this.state.maxPScore}%
+                <div className="new-layout-footer" style={{ display: "none" }}>
+                  <div className="time-container" />
+                  <div className="minutes-footer" />
+                  <div className="footer-space" />
+                  <div className="new-navigation-buttons">
+                    <div className="n-btn next" onClick={this.props.move}>
+                      Next
+                      <SpriteIcon name="arrow-right" />
+                    </div>
                   </div>
                 </div>
-                <div className="intro-text-row f-align-self-start m-t-5">
-                  {this.renderStepper()}
+              </Grid>
+              <Grid item xs={4}>
+                <div className="introduction-info">
+                  <div className="intro-header">
+                    <div>
+                      Range: {this.state.minPScore}%-{this.state.maxPScore}%
+                    </div>
+                  </div>
+                  <div className="intro-text-row f-align-self-start m-t-5">
+                    {this.renderStepper()}
+                  </div>
                 </div>
-              </div>
+              </Grid>
             </Grid>
-          </Grid>
+          </div>
         </div>
-      </div>
+      </React.Suspense>
     );
   }
 }
