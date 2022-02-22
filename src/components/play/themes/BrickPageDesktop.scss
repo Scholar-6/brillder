@@ -1843,7 +1843,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 .after-cover-page {
   .after-cover-main-content {
     .title {
-      padding-top: 7.5vh;
+      padding-top: 5.5vh;
       margin-bottom: 10vh;
       text-align: center;
       font-size: 6vh !important;
@@ -1851,7 +1851,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     }
     &.count-down-content {
       .title {
-        font-size: 3vw !important;
+        font-size: 3.5vw !important;
       }
       .footer {
         margin-top: 9vh;
