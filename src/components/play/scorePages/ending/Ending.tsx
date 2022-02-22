@@ -15,6 +15,7 @@ import moment from "moment";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
 import { isMobile } from "react-device-detect";
+import map from "components/map";
 
 const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
 
@@ -276,11 +277,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
             <Grid container direction="row">
               <Grid item xs={8}>
                 <div className="introduction-page">
-                  <h1 className="title">Your final score</h1>
-                  {score < maxScore &&
-                    <div className="hr-sub-title">This is an average of your provisional score and your review score</div>
-                  }
-                  <div className="question-live-play">
+                  <h2 className="title">Your final score</h2>
+                  <div className="hr-sub-title">Admirable!</div>
+                  <div className="percentage-container">
                     <Grid
                       container
                       justify="center"
@@ -330,43 +329,65 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                         </div>
                       </Grid>
                     </Grid>
+                  </div>
+                  <div className="flex-center status-circles bold">
+                    <div className="lable-rd">Investigation</div>
+                    <div className="circle-rd yellow" />
+                    <div className="circle-rd green" />
+                    <div className="circle-rd blue" />
+                    <div className="lable-rd">Review</div>
+                  </div>
+                  <div className="flex-center number-status bold">
+                    <div>{this.state.liveScore}</div>
+                    <div>{this.state.currentScore}</div>
+                    <div>{this.state.reviewScore}</div>
+                  </div>
+                  <div className="flex-center number-status bold">
+                    <div>Avg.</div>
+                  </div>
+                  <div className="flex-center">
+                    <div className="btn btn-orange" onClick={() => {this.props.history.push(map.MyLibrary)}}>Exit</div>
+                    <div className="btn btn-green" onClick={this.props.move}>More Options</div>
+                  </div>
+                </div>
+                <div className="new-layout-footer" style={{ display: "none" }}>
+                  <div className="title-column provisional-title-column">
+                    {this.props.liveDuration &&
+                      <div className="duration">
+                        <SpriteIcon name="clock" />
+                        <div>{prepareDuration(this.props.liveDuration)}</div>
+                      </div>
+                    }
                     <AttemptedText
                       attempted={attempted}
                       attemptsCount={answers.length}
                       score={score}
                       maxScore={maxScore}
                     />
-                    {this.props.liveDuration && (
-                      <div className="duration">
-                        <SpriteIcon name="clock" />
-                        <div>{prepareDuration(this.props.liveDuration)}</div>
-                      </div>
-                    )}
-                    {this.props.reviewDuration && (
-                      <div className="review-duration">
-                        + {prepareDuration(this.props.reviewDuration)} Review
-                      </div>
-                    )}
                   </div>
-                </div>
-                <div className="new-layout-footer" style={{ display: "none" }}>
-                  <div className="time-container" />
-                  <div className="minutes-footer" />
-                  <div className="footer-space" />
-                  <div className="new-navigation-buttons">
-                    <div className="n-btn next" onClick={this.props.move}>
-                      Next
-                      <SpriteIcon name="arrow-right" />
+                  <div className="attempted-numbers">
+                    <div>
+                      <SpriteIcon name="cancel-custom" className="text-orange" />: {numberOfFailed}
+                    </div>
+                    <div>
+                      <SpriteIcon name="cancel-custom" className="text-yellow" />: {numberOfyellow}
+                    </div>
+                    <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
+                      <SpriteIcon
+                        name="check-icon"
+                        className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
+                      />: {numberOfcorrect}
                     </div>
                   </div>
                 </div>
               </Grid>
               <Grid item xs={4}>
                 <div className="introduction-info">
-                  <div className="intro-header">
-                    <div>
-                      Range: {this.state.minPScore}%-{this.state.maxPScore}%
+                  <div className="top-brill-coins">
+                    <div className="brill-coin-img">
+                      <img alt="brill" src="/images/Brill-B.svg" />
                     </div>
+                    <div className="bold">{this.state.currentScore} Brills Earned!</div>
                   </div>
                   <div className="intro-text-row f-align-self-start m-t-5">
                     {this.renderStepper()}
