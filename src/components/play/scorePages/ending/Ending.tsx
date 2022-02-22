@@ -14,7 +14,6 @@ import routes from "../../routes";
 import moment from "moment";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
-import { isMobile } from "react-device-detect";
 import map from "components/map";
 
 const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));

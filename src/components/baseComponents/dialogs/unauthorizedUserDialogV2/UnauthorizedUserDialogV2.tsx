@@ -7,6 +7,9 @@ import SpriteIcon from "../../SpriteIcon";
 import { isPhone } from "services/phone";
 import { SetAuthBrickCoverId } from "localStorage/play";
 import GoogleDesktopButton from "components/loginPage/desktop/GoogleDesktopButton";
+import RegisterDesktopButton from "components/loginPage/desktop/RegisterDesktopButton";
+import map from "components/map";
+import { RegisterPage } from "components/loginPage/desktop/routes";
 
 interface UnauthorizedProps {
   isOpen: boolean;
@@ -23,9 +26,26 @@ const DesktopTheme = React.lazy(() => import('./themes/DesktopTheme'));
 const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
   const [warningOpen, setWaringOpen] = React.useState(false);
 
-  return (
-    <React.Suspense fallback={<></>}>
-      {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
+  const [registerClicked, setRegister] = React.useState(false);
+
+  const renderDialog = () => {
+    if (registerClicked) {
+      return (
+        <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
+        <div className="title bold">
+          {props.isBeforeReview
+            ? <span>To save and improve your score, and start building your personal library, create an account.</span>
+            : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
+        </div>
+        <GoogleDesktopButton label="Register with Google" newTab={true} />
+        <RegisterDesktopButton label="Register with email" onClick={() => props.history.push(RegisterPage)} />
+        <div className="small-text">
+          You will be redirected to this page after making your choice
+        </div>
+      </Dialog>
+      )
+    }
+    return (
       <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
         <div className="title bold">
           {props.isBeforeReview
@@ -34,15 +54,14 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
         </div>
         <button className="btn btn-md bg-white" onClick={() => {
           SetAuthBrickCoverId(props.brickId);
-          props.history.push('/login')
+          props.history.push(map.Login)
         }}>
           <SpriteIcon name="f-user-check" />
           <span>I’m a member, sign in</span>
         </button>
-        <GoogleDesktopButton label="Register with Google" newTab={true} />
         <button className="btn btn-md bg-orange" onClick={() => {
           SetAuthBrickCoverId(props.brickId);
-          props.history.push('/login/join');
+          setRegister(true);
         }}>
           <SpriteIcon name="f-check-clircle" />
           <span>I’d like to register in two clicks</span>
@@ -61,11 +80,18 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
           You will be redirected to this page after making your choice
         </div>
       </Dialog>
+    )
+  }
+
+  return (
+    <React.Suspense fallback={<></>}>
+      {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
+      {renderDialog()}
       <Dialog open={warningOpen} onClose={() => setWaringOpen(false)} className="dialog-box">
         <div className="dialog-header">
           <div className="bold" style={{ textAlign: 'center' }}>
-            Your score will not be saved and you will be unable to access<br/>
-            the review unless you create or log in to an account.<br/>
+            Your score will not be saved and you will be unable to access<br />
+            the review unless you create or log in to an account.<br />
             Are you OK with that?
           </div>
         </div>
