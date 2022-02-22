@@ -133,7 +133,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
             </Grid>
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={moveNext}>
-                Results
+                Exit
                 <SpriteIcon name="arrow-right" />
               </div>
             </div>

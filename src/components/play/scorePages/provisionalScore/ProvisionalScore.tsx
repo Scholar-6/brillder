@@ -127,6 +127,7 @@ class ProvisionalScore extends React.Component<
   }
 
   render() {
+    const { finalValue } = this.state;
     const { status, brick, attempts } = this.props;
 
     if (status === PlayStatus.Live) {
@@ -216,15 +217,61 @@ class ProvisionalScore extends React.Component<
       );
     }
 
+    const renderSubTitle = () => {
+      let text = '';
+      if (finalValue >= 95) {
+        text = 'Superlative!'
+      } else if (finalValue >= 90) {
+        text = 'Most excellent!';
+      } else if (finalValue >= 85) {
+        text = 'Excellent!';
+      } else if (finalValue >= 80) {
+        text = 'Admirable!'
+      } else if (finalValue >= 75) {
+        text = 'Commendable!';
+      } else if (finalValue >= 70) {
+        text = 'Respectable!';
+      } else if (finalValue >= 65) {
+        text = 'Decent!';
+      } else if (finalValue >= 60) {
+        text = 'Half decent!';
+      } else if (finalValue >= 55) {
+        text = 'Something to build on!';
+      } else if (finalValue >= 50) {
+        text = 'Room for improvement!';
+      } else if (finalValue >= 45) {
+        text = 'Just missing the pass mark!';
+      } else if (finalValue >= 40) {
+        text = 'Tough going!';
+      } else if (finalValue >= 35) {
+        text = 'Very tough going!';
+      } else if (finalValue >= 30) {
+        text = 'Ouch!';
+      } else if (finalValue >= 25) {
+        text = 'Yikes!';
+      } else if (finalValue >= 20) {
+        text = 'Call a brain ambulance!';
+      } else if (finalValue >= 15) {
+        text = "You weren't even trying";
+      } else if (finalValue >= 10) {
+        text = 'A monkey typing randomly would do better than that!';
+      } else if (finalValue >= 5) {
+        text = 'Almost hard to do this badly - congratulations ?';
+      } else if (finalValue >= 0) {
+        text = 'You have a genius, but just not for this brick!'
+      }
+      return text;
+    }
+
     const renderContent = () => {
       if (this.props.user) {
-        if (this.state.finalValue >= 50) {
-          if (this.state.finalValue === 100) {
+        if (finalValue >= 50) {
+          if (finalValue === 100) {
             return (
               <div className="introduction-page">
                 <h2 className="title">Wow - a perfect score!</h2>
                 <div className="hr-sub-title provisional-sub-title">
-                  You smashed it!
+                  {renderSubTitle()}
                 </div>
                 <div className="percentage-container">
                   <Grid
@@ -263,7 +310,7 @@ class ProvisionalScore extends React.Component<
             <div className="introduction-page">
               <h2 className="title">Your score so far ...</h2>
               <div className="hr-sub-title provisional-sub-title">
-                Great effort!
+                {renderSubTitle()}
               </div>
               <div className="percentage-container">
                 <Grid
@@ -302,11 +349,9 @@ class ProvisionalScore extends React.Component<
         return (
           <div className="introduction-page">
             <h2 className="title">Your score so far ...</h2>
-            {this.state.score < this.state.maxScore &&
-              <div className="hr-sub-title provisional-sub-title">
-                That was a tough one.
-              </div>
-            }
+            <div className="hr-sub-title provisional-sub-title">
+              {renderSubTitle()}
+            </div>
             <div className="percentage-container">
               <Grid
                 container
@@ -331,7 +376,7 @@ class ProvisionalScore extends React.Component<
                 </div>
               </Grid>
             </div>
-            <div className="bold bottom-text">Score {100 - this.state.finalValue}% in the Review stage to start earning Brills.</div>
+            <div className="bold bottom-text">Score {100 - finalValue}% in the Review stage to start earning Brills.</div>
             <div className="flex-center">
               <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
                 Keep Going!
@@ -341,12 +386,12 @@ class ProvisionalScore extends React.Component<
         );
       }
 
-      if (this.state.finalValue >= 50) {
+      if (finalValue >= 50) {
         return (
           <div className="introduction-page">
             <h2 className="title">You could earn {this.state.value} Brills!</h2>
             <div className="hr-sub-title provisional-sub-title">
-              Great effort!
+              {renderSubTitle()}
             </div>
             <div className="brill-coin-img">
               <img alt="brill" src="/images/Brill.svg" />
@@ -366,11 +411,9 @@ class ProvisionalScore extends React.Component<
       return (
         <div className="introduction-page">
           <h2 className="title">Your score so far ...</h2>
-          {this.state.score < this.state.maxScore &&
-            <div className="hr-sub-title provisional-sub-title">
-              That was a tough one.
-            </div>
-          }
+          <div className="hr-sub-title provisional-sub-title">
+            {renderSubTitle()}
+          </div>
           <div className="percentage-container">
             <Grid
               container
@@ -406,7 +449,7 @@ class ProvisionalScore extends React.Component<
     }
 
     const renderTopPartSidebar = () => {
-      if (this.state.finalValue >= 50) {
+      if (finalValue >= 50) {
         if (this.props.user) {
           return (
             <div className="top-brill-coins">
