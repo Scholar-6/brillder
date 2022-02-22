@@ -129,11 +129,14 @@
       .brill-coin-img {
         display: flex;
         align-self: center;
+        width: 4vw;
+        height: 4vw;
+        margin-right: 1vw;
+        margin-left: 1vw;
 
         img {
           width: 4vw;
           height: 4vw;
-          margin-right: 1.4vw;
         }
       }
     }
