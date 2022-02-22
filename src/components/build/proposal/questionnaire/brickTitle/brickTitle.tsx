@@ -20,7 +20,6 @@ import a from 'indefinite';
 import map from "components/map";
 import { User } from "model/user";
 import AddSubjectDialog from "./components/AddSubjectDialog";
-import KeyWordsComponent from "./components/KeyWords";
 import DifficultySelect from "./components/DifficultySelect";
 import KeyWordsPlay from "./components/KeywordsPlay";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";

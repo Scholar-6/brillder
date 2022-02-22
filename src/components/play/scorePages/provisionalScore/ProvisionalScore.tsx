@@ -16,7 +16,6 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import { User } from "model/user";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
-import { isMobile } from "react-device-detect";
 
 const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
 
