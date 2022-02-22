@@ -3,6 +3,22 @@
 @import 'src/assets/sass/partials/extensions';
 
 .auth-confirm-dialog {
+  .back-button-de {
+    cursor: pointer;
+    background: var(--white);
+    height: 3.5vw;
+    border-radius: 0.6vw;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.26vw;
+    margin-bottom: 0.26vw;
+    margin-right: 3.2vw;
+    margin-left: 0;
+    font-size: 1.3vw !important;
+    color: var(--theme-dark-blue) !important;
+  }
   .google-button-desktop {
     background: var(--white);
     height: 3.5vw;
