@@ -6,13 +6,14 @@ import { connect } from "react-redux";
 interface Props {
   intendedPath: string;
   label: string;
+  newTab?:boolean;
 }
 
-const GoogleDesktopButton: React.FC<Props> = ({label, intendedPath}) => {
+const GoogleDesktopButton: React.FC<Props> = ({label, newTab}) => {
   const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/onboarding/terms?onlyAcceptTerms=true`;
 
   return (
-    <a className="google-button-desktop svgOnHover" href={googleLink}>
+    <a className="google-button-desktop svgOnHover" target={newTab ? '_blank' : ''} href={googleLink}>
       <SpriteIcon name="gmail" className="active" />
       <span>{label}</span>
     </a>

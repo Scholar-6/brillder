@@ -6,6 +6,7 @@ import './UnauthorizedUserDialog.scss';
 import SpriteIcon from "../../SpriteIcon";
 import { isPhone } from "services/phone";
 import { SetAuthBrickCoverId } from "localStorage/play";
+import GoogleDesktopButton from "components/loginPage/desktop/GoogleDesktopButton";
 
 interface UnauthorizedProps {
   isOpen: boolean;
@@ -38,6 +39,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
           <SpriteIcon name="f-user-check" />
           <span>I’m a member, sign in</span>
         </button>
+        <GoogleDesktopButton label="Register with Google" newTab={true} />
         <button className="btn btn-md bg-orange" onClick={() => {
           SetAuthBrickCoverId(props.brickId);
           props.history.push('/login/join');
