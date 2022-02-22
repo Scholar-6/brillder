@@ -39,6 +39,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
         </div>
         <GoogleDesktopButton label="Register with Google" newTab={true} />
         <RegisterDesktopButton label="Register with email" onClick={() => props.history.push(RegisterPage)} />
+        <div className="back-button-de" onClick={() => setRegister(false)}>Back</div>
         <div className="small-text">
           You will be redirected to this page after making your choice
         </div>
