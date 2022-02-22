@@ -37,14 +37,14 @@ const CountdownInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
         <div className="introduction-page">
           <div className="after-cover-main-content count-down-content static-top-part-inner">
             <div className="title s-fade1">
-              You have <span className="text-orange">{minutes} minutes</span> to review your answers and improve your score.
+              <div>Round 2</div>
+              <div className="regular">Review</div>
             </div>
             <div className="flex-center">
               <Hourglass isRed={true} />
             </div>
             <div className="footer s-fade3">
-              <div>Your final score will be an average of your provisional and review scores.</div>
-              <div>You can replay this brick as many times as you like after this.</div>
+              You have <span className="text-orange">{minutes} minutes</span> to review your answers and improve your score.
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
