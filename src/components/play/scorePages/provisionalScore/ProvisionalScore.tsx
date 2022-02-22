@@ -16,14 +16,9 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import { User } from "model/user";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
+import { isMobile } from "react-device-detect";
 
-interface ProvisionalScoreState {
-  value: number;
-  score: number;
-  maxScore: number;
-  interval: any;
-  handleMove: any;
-}
+const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
 
 interface ProvisionalScoreProps {
   user?: User;
@@ -36,6 +31,14 @@ interface ProvisionalScoreProps {
   attempts: any[];
   moveNext?(): void;
   moveToPrep?(): void;
+}
+interface ProvisionalScoreState {
+  value: number;
+  score: number;
+  maxScore: number;
+  interval: any;
+  handleMove: any;
+  finalValue: number;
 }
 
 class ProvisionalScore extends React.Component<
@@ -65,6 +68,7 @@ class ProvisionalScore extends React.Component<
 
     this.state = {
       value: 0,
+      finalValue: Math.round((score * 100) / maxScore),
       score,
       maxScore,
       interval: null,
@@ -212,23 +216,17 @@ class ProvisionalScore extends React.Component<
       );
     }
 
-    return (
-      <div className="brick-row-container provisional-container">
-        <div className="brick-container play-preview-panel provisional-score-page">
-          <div className="fixed-upper-b-title">
-            <BrickTitle title={brick.title} />
-          </div>
-          <Grid container direction="row">
-            <Grid item xs={8}>
+    const renderContent = () => {
+      if (this.props.user) {
+        if (this.state.finalValue >= 50) {
+          if (this.state.finalValue === 100) {
+            return (
               <div className="introduction-page">
-                <h1 style={{marginTop: '1vw'}} className="title">Provisional Score</h1>
-                {this.state.score < this.state.maxScore &&
-                  <div className="hr-sub-title">
-                    <div>To improve your score, now read the author's <span className="bold">Synthesis</span></div>
-                    <div>after which you can use the <span className="bold">Review</span> stage to adjust your answers.</div>
-                  </div>
-                }
-                <div className="question-live-play">
+                <h2 className="title">Wow - a perfect score!</h2>
+                <div className="hr-sub-title provisional-sub-title">
+                  You smashed it!
+                </div>
+                <div className="percentage-container">
                   <Grid
                     container
                     justify="center"
@@ -236,7 +234,7 @@ class ProvisionalScore extends React.Component<
                     className="circle-progress-container"
                   >
                     <CircularProgressbar
-                      className="circle-progress"
+                      className={`circle-progress ${this.state.value === 100 ? 'green' : ''}`}
                       strokeWidth={4}
                       counterClockwise={true}
                       value={this.state.value}
@@ -251,6 +249,230 @@ class ProvisionalScore extends React.Component<
                       </Grid>
                     </div>
                   </Grid>
+                </div>
+                <div className="bold bottom-text">Claim your perfect score bonus by reading the Synthesis of this brick.</div>
+                <div className="flex-center">
+                  <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+                    Claim now
+                  </div>
+                </div>
+              </div>
+            );
+          }
+          return (
+            <div className="introduction-page">
+              <h2 className="title">Your score so far ...</h2>
+              <div className="hr-sub-title provisional-sub-title">
+                Great effort!
+              </div>
+              <div className="percentage-container">
+                <Grid
+                  container
+                  justify="center"
+                  alignContent="center"
+                  className="circle-progress-container"
+                >
+                  <CircularProgressbar
+                    className="circle-progress"
+                    strokeWidth={4}
+                    counterClockwise={true}
+                    value={this.state.value}
+                  />
+                  <div className="score-data">
+                    <Grid container justify="center" alignContent="center">
+                      <div>
+                        <div className="score-precentage">
+                          {this.state.value}%
+                        </div>
+                      </div>
+                    </Grid>
+                  </div>
+                </Grid>
+              </div>
+              <div className="bold bottom-text">Now read the synthesis and boost your Brills in the Review stages.</div>
+              <div className="flex-center">
+                <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+                  Boost
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        return (
+          <div className="introduction-page">
+            <h2 className="title">Your score so far ...</h2>
+            {this.state.score < this.state.maxScore &&
+              <div className="hr-sub-title provisional-sub-title">
+                That was a tough one.
+              </div>
+            }
+            <div className="percentage-container">
+              <Grid
+                container
+                justify="center"
+                alignContent="center"
+                className="circle-progress-container"
+              >
+                <CircularProgressbar
+                  className="circle-progress"
+                  strokeWidth={4}
+                  counterClockwise={true}
+                  value={this.state.value}
+                />
+                <div className="score-data">
+                  <Grid container justify="center" alignContent="center">
+                    <div>
+                      <div className="score-precentage">
+                        {this.state.value}%
+                      </div>
+                    </div>
+                  </Grid>
+                </div>
+              </Grid>
+            </div>
+            <div className="bold bottom-text">Score {100 - this.state.finalValue}% in the Review stage to start earning Brills.</div>
+            <div className="flex-center">
+              <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+                Keep Going!
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      if (this.state.finalValue >= 50) {
+        return (
+          <div className="introduction-page">
+            <h2 className="title">You could earn {this.state.value} Brills!</h2>
+            <div className="hr-sub-title provisional-sub-title">
+              Great effort!
+            </div>
+            <div className="brill-coin-img">
+              <img alt="brill" src="/images/Brill.svg" />
+              <SpriteIcon name="logo" />
+            </div>
+            <div className="bold bottom-text">Sign up at the end of the Synthesis to bank your Brills.</div>
+            <div className="flex-center">
+              <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+                Read Synthesis
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // < 50
+      return (
+        <div className="introduction-page">
+          <h2 className="title">Your score so far ...</h2>
+          {this.state.score < this.state.maxScore &&
+            <div className="hr-sub-title provisional-sub-title">
+              That was a tough one.
+            </div>
+          }
+          <div className="percentage-container">
+            <Grid
+              container
+              justify="center"
+              alignContent="center"
+              className="circle-progress-container"
+            >
+              <CircularProgressbar
+                className="circle-progress"
+                strokeWidth={4}
+                counterClockwise={true}
+                value={this.state.value}
+              />
+              <div className="score-data">
+                <Grid container justify="center" alignContent="center">
+                  <div>
+                    <div className="score-precentage">
+                      {this.state.value}%
+                    </div>
+                  </div>
+                </Grid>
+              </div>
+            </Grid>
+          </div>
+          <div className="bold bottom-text">Read the Synthesis and sign up to see where you went wrong.</div>
+          <div className="flex-center">
+            <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+              Keep Going!
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    const renderTopPartSidebar = () => {
+      if (this.state.finalValue >= 50) {
+        if (this.props.user) {
+          return (
+            <div className="top-brill-coins">
+              <div className="brill-coin-img">
+                <img alt="brill" src="/images/Brill-B.svg" />
+              </div>
+              <div className="bold">{this.state.value} Brills Earned!</div>
+            </div>
+          );
+        }
+        return (
+          <div className="percentage-container">
+            <Grid
+              container
+              justify="center"
+              alignContent="center"
+              className="circle-progress-container"
+            >
+              <CircularProgressbar
+                className="circle-progress"
+                strokeWidth={6}
+                counterClockwise={true}
+                value={this.state.value}
+              />
+              <div className="score-data">
+                <Grid container justify="center" alignContent="center">
+                  <div>
+                    <div className="score-precentage bold">
+                      {this.state.value}%
+                    </div>
+                  </div>
+                </Grid>
+              </div>
+            </Grid>
+          </div>
+        );
+      }
+      return <div className="m-t-5" />;
+    }
+
+    return (
+      <React.Suspense fallback={<></>}>
+        <DesktopTheme />
+        <div className="brick-row-container provisional-container" >
+          <div className="brick-container play-preview-panel provisional-score-page">
+            <div className="fixed-upper-b-title">
+              <BrickTitle title={brick.title} />
+            </div>
+            <Grid container direction="row">
+              <Grid item xs={8}>
+                {renderContent()}
+                <div className="new-layout-footer" style={{ display: "none" }}>
+                  <div className="title-column provisional-title-column">
+                    {this.props.liveDuration &&
+                      <div className="duration">
+                        <SpriteIcon name="clock" />
+                        <div>{prepareDuration(this.props.liveDuration)}</div>
+                      </div>
+                    }
+                    <AttemptedText
+                      attempted={attempted}
+                      attemptsCount={attempts.length}
+                      score={this.state.score}
+                      maxScore={this.state.maxScore}
+                    />
+                  </div>
                   <div className="attempted-numbers">
                     <div>
                       <SpriteIcon name="cancel-custom" className="text-orange" />: {numberOfFailed}
@@ -265,49 +487,25 @@ class ProvisionalScore extends React.Component<
                       />: {numberOfcorrect}
                     </div>
                   </div>
-                  <AttemptedText
-                    attempted={attempted}
-                    attemptsCount={attempts.length}
-                    score={this.state.score}
-                    maxScore={this.state.maxScore}
-                  />
-                  {this.props.liveDuration && (
-                    <div className="duration">
-                      <SpriteIcon name="clock" />
-                      <div>{prepareDuration(this.props.liveDuration)}</div>
-                    </div>
-                  )}
                 </div>
-              </div>
-              <div className="new-layout-footer" style={{ display: "none" }}>
-                <div className="title-column">Learn more about this topic by reading an academic summary by the author.</div>
-                <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg"></img>
-                <div className="new-navigation-buttons">
-                  <div
-                    className="n-btn next"
-                    onClick={this.moveToSynthesis.bind(this)}
-                  >
-                    Read Synthesis
-                    <SpriteIcon name="arrow-right" />
+              </Grid>
+              <Grid item xs={4}>
+                <div className="introduction-info">
+                  {renderTopPartSidebar()}
+                  <div className="intro-text-row f-align-self-start">
+                    <ReviewStepper
+                      questions={brick.questions}
+                      attempts={attempts}
+                      isProvisional={true}
+                      handleStep={() => { }}
+                    />
                   </div>
                 </div>
-              </div>
+              </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <div className="introduction-info">
-                <div className="intro-text-row f-align-self-start m-t-5">
-                  <ReviewStepper
-                    questions={brick.questions}
-                    attempts={attempts}
-                    isProvisional={true}
-                    handleStep={() => { }}
-                  />
-                </div>
-              </div>
-            </Grid>
-          </Grid>
+          </div>
         </div>
-      </div>
+      </React.Suspense>
     );
   }
 }

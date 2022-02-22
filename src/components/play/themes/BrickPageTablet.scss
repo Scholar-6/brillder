@@ -954,69 +954,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
             }
           }
         }
-        .circle-progress-container {
-          position: relative;
-          width: 100%;
-          height: $introduction-desktop-height;
-          .circle-progress-first {
-            height: 40vh;
-            width: 40vh;
-            .CircularProgressbar-path {
-              stroke: #ffb55f !important;
-            }
-          }
-          .circle-progress-second {
-            height: 37.5vh;
-            width: 37.5vh;
-            .CircularProgressbar-path {
-              stroke: #317fe0 !important;
-            }
-          }
-          .circle-progress-third {
-            height: 35vh;
-            width: 35vh;
-            .CircularProgressbar-path {
-              stroke: #38c36d !important;
-            }
-          }
-          .circle-progress {
-            height: 40vh;
-            width: 40vh;
-            .CircularProgressbar-path {
-              stroke: #ffb55f !important;
-            }
-            svg {
-              overflow: overlay;
-
-              circle {
-                stroke-width: 4.5 !important;
-              }
-            }
-          }
-          .score-circle {
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: inherit;
-            position: absolute;
-          }
-          .score-data {
-            position: absolute;
-            height: $introduction-desktop-height;
-            width: 40vh;
-            top: 0;
-            color: var(--theme-dark-blue);
-            @extend %textCenter;
-            > div {
-              height: $introduction-desktop-height;
-              .score-precentage {
-                font-family: $font-family-black;
-                color: var(--theme-dark-blue);
-                line-height: 1;
-              }
-            }
-          }
-        }
         .MuiCircularProgress-colorPrimary {
           color: #0076b4 !important;
         }
@@ -1251,23 +1188,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
           }
         }
       }
-      // only provisional score and final score
-      .provisional-container,
-      .ending-container {
-        .circle-progress-container {
-          $height: calc(40vh);
-          height: $height !important;
-          .circle-progress {
-            height: $height !important;
-          }
-          .score-data {
-            height: $height !important;
-            > div {
-              height: $height !important;
-            }
-          }
-        }
-      }
       // only synthesis score
       .synthesis-container {
         .synthesis-content {
@@ -1383,19 +1303,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
 
     .introduction-info {
       height: calc(100vh - 4vw) !important;
-    }
-
-    .circle-progress-container {
-      margin-top: 0 !important;
-      height: $introduction-expanded-height !important;
-
-      .score-data {
-        height: $introduction-expanded-height !important;
-
-        > div {
-          height: $introduction-expanded-height !important;
-        }
-      }
     }
   }
 }

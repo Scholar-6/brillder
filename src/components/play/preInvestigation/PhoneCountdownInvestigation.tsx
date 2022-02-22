@@ -21,8 +21,8 @@ const CountInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
       <div className="count-introduction-page">
         <div className="ss-phone-before-title" />
         <div className="title s-fade1">
-          <div>You have <span className="text-orange"> {minutes} minutes </span> to have a first</div>
-          <div>crack at the questions</div>
+          <div>Round 1</div>
+          <div className="regular">Investigation</div>
         </div>
         <div className="ss-phone-after-title" />
         <div className="flex-center">
@@ -30,10 +30,8 @@ const CountInvestigationPage: React.FC<Props> = ({ brick, ...props }) => {
         </div>
         <div className="ss-after-glasses" />
         <div className="last-text s-fade3">
-          <div>Don’t worry if you are unable to</div>
-          <div>answer everything in time - you can</div>
-          <div>have another go after reading the</div>
-          <div>Synthesis of this brick.</div>
+          <div>You have <span className="text-orange"> {minutes} minutes </span> to have a first</div>
+          <div>crack at the questions</div>
         </div>
       </div>
     </div>

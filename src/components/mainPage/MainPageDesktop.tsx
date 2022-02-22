@@ -83,8 +83,6 @@ interface MainPageState {
 
   // for mobile popopup
   isDesktopOpen: boolean;
-  secondaryLabel: string;
-  secondPart: string;
 
   // intro
   stepsEnabled: boolean;
@@ -104,10 +102,42 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isNewTeacher = true;
     }
 
+    let isNewStudent = false;
+    if (values.newStudent) {
+      isNewStudent = true;
+    }
+
+
     let subscribedPopup = false;
     if (values.subscribedPopup) {
       subscribedPopup = true;
     }
+
+    const newTeacherSteps = [
+      {
+        element: '.view-item-container',
+        intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
+      }
+    ];
+
+    const newStudentSteps = [
+      {
+        element: '.view-item-container',
+        intro: `<p>Click here to explore our catalogue and play academic challenges (“bricks”)</p>`,
+      }, {
+        element: '.brill-intro-container',
+        intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. You can use these to play in our prize competitions. We've given you 200 as a welcome gift!</p>`,
+      }, {
+        element: '.second-button.student-back-work',
+        intro: `<p>If a teacher has set you an assignment, you will be able to access it here. A red circle with white text will show the number of assignments you have to complete.</p>`,
+      }, {
+        element: '.my-library-button',
+        intro: `<p>Every time you complete a brick, and score over 50%, a book will be added to your very own virtual library!</p>`,
+      }, {
+        element: '.create-item-container',
+        intro: `<p>Once you start getting the hang of “bricks”, you'll be able to try your hand at building them - if you wish to.</p>`,
+      }
+    ];
 
     const isStudent = isStudentPreference(props.user);
     const isBuilder = isBuilderPreference(props.user);
@@ -134,23 +164,15 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       assignedCount: 0,
 
       isDesktopOpen: false,
-      secondaryLabel: '',
-      secondPart: ' not yet been optimised for mobile devices.',
       stepsEnabled: false,
-      steps: [{
-        element: '.view-item-container',
-        intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
-      },{
-        element: '.view-item-container',
-        intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
-      }]
+      steps: isNewTeacher ? newTeacherSteps : newStudentSteps
     } as any;
 
     if (isStudent) {
       this.preparationForStudent();
     }
     setTimeout(() => {
-      this.setState({stepsEnabled: isNewTeacher});
+      this.setState({ stepsEnabled: isNewTeacher || isNewStudent });
     }, 300);
   }
 
@@ -184,7 +206,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       <div className={`create-item-container ${isActive ? '' : 'disabled'}`} onClick={() => {
         if (disabled) {
           if (isMobile) {
-            this.setState({isDesktopOpen: true});
+            this.setState({ isDesktopOpen: true });
           }
           return;
         }
@@ -223,9 +245,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           <BlocksIcon disabled={!isActive} />
           <span className={`item-description flex-number ${isActive ? '' : 'disabled'}`}>
             My Assignments {this.state.assignedCount > 0 &&
-            <div className="m-red-circle bold">
-              <DynamicFont content={this.state.assignedCount.toString()} />
-            </div>}
+              <div className="m-red-circle bold">
+                <DynamicFont content={this.state.assignedCount.toString()} />
+              </div>}
           </span>
         </button>
       </div>
@@ -234,7 +256,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   renderSecondButton() {
     if (this.state.isTeacher || this.state.isAdmin) {
-      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher} onMobileClick={() => this.setState({isDesktopOpen: true})} />
+      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher} onMobileClick={() => this.setState({ isDesktopOpen: true })} />
     } else if (this.state.isStudent) {
       return this.renderStudentWorkButton();
     }
@@ -316,7 +338,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       <div className={className} onClick={() => {
         if (disabled) {
           if (isMobile) {
-            this.setState({isDesktopOpen: true});
+            this.setState({ isDesktopOpen: true });
           }
           return;
         }
@@ -336,16 +358,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   renderRightButton() {
     if (this.state.isBuilder) {
-      // Removed brick stats because it doesnt exist yet 11/10/21
-      // let isActive = false;
-      // return (
-      //   <div className="create-item-container stats">
-      //     <button className={`btn btn-transparent ${isActive ? 'zoom-item text-theme-orange active' : 'text-theme-light-blue'}`}>
-      //       <SpriteIcon name="f-trending-up" />
-      //       <span className={`item-description ${isActive ? '' : 'disabled'}`}>Brick Stats</span>
-      //     </button>
-      //   </div>
-      // );
       return ""
     }
     let isActive = this.props.user.hasPlayedBrick;
@@ -372,91 +384,97 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   onIntroExit() {
-    this.setState({stepsEnabled: false});
+    this.setState({ stepsEnabled: false });
   }
 
-  onIntroChanged(e: any) {
-    if (e !== 0) {
+  onCompleted() {
+    if (this.state.isNewTeacher) {
       this.props.history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true');
-      this.setState({stepsEnabled: false});
+      this.setState({ stepsEnabled: false });
+    } else {
+      this.props.history.push(map.ViewAllPage + '?mySubject=true');
+      this.setState({ stepsEnabled: false });
     }
   }
 
   render() {
     return (
       <React.Suspense fallback={<></>}>
-        {isTablet ? <TabletTheme/> : <DesktopTheme /> }
+        {isTablet ? <TabletTheme /> : <DesktopTheme />}
         <Grid container direction="row" className="mainPage">
-        <div className="welcome-col">
-          <WelcomeComponent
+          <div className="welcome-col">
+            <WelcomeComponent
+              user={this.props.user}
+              history={this.props.history}
+              notifications={this.props.notifications}
+              notificationClicked={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
+            />
+          </div>
+          <div className="first-col">
+            <div className="first-item">
+              <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
+              {this.renderSecondButton()}
+              {this.renderThirdButton()}
+            </div>
+            {this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState ?
+              <div className="second-item" onClick={() => this.props.history.push(map.ChoosePlan)}>
+                Go Premium <SpriteIcon name="hero-sparkle" />
+              </div> : <div className="second-item not-active light-blue" />
+            }
+          </div>
+          {(this.state.isTeacher || this.state.isAdmin) ?
+            <div className="second-col">
+              <div>
+                {this.renderRightButton()}
+                {this.renderRightBottomButton()}
+              </div>
+            </div>
+            : <div className="second-col">
+              {this.renderRightButton()}
+            </div>
+          }
+          <MainPageMenu
             user={this.props.user}
             history={this.props.history}
-            notifications={this.props.notifications}
-            notificationClicked={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
+            notificationExpanded={this.state.notificationExpanded}
+            toggleNotification={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
           />
-        </div>
-        <div className="first-col">
-          <div className="first-item">
-            <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
-            {this.renderSecondButton()}
-            {this.renderThirdButton()}
-          </div>
-          {this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState ?
-          <div className="second-item" onClick={() => this.props.history.push(map.ChoosePlan)}>
-            Go Premium <SpriteIcon name="hero-sparkle" />
-          </div> : <div className="second-item not-active light-blue" />
-          }
-        </div>
-        {(this.state.isTeacher || this.state.isAdmin) ?
-          <div className="second-col">
-            <div>
-              {this.renderRightButton()}
-              {this.renderRightBottomButton()}
-            </div>
-          </div>
-          : <div className="second-col">
-            {this.renderRightButton()}
-          </div>
-        }
-        <MainPageMenu
-          user={this.props.user}
-          history={this.props.history}
-          notificationExpanded={this.state.notificationExpanded}
-          toggleNotification={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
-        />
-        <TermsLink history={this.props.history}/>
-        <Steps
-          enabled={this.state.stepsEnabled}
-          steps={this.state.steps}
-          initialStep={0}
-          onChange={this.onIntroChanged.bind(this)}
-          onExit={this.onIntroExit.bind(this)}
-          onComplete={() => {}}
-        />
-        <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
-        <LockedDialog
-          label="Play a brick to unlock this feature"
-          isOpen={this.state.isMyLibraryOpen}
-          close={() => this.setState({ isMyLibraryOpen: false })} />
-        <LockedDialog
-          label="To unlock this, a brick needs to have been assigned to you"
-          isOpen={this.state.isBackToWorkOpen}
-          close={() => this.setState({ isBackToWorkOpen: false })} />
-        <LockedDialog
-          label="Play a brick to unlock this feature"
-          isOpen={this.state.isTryBuildOpen}
-          close={() => this.setState({ isTryBuildOpen: false })} />
-        <ReportsAlertDialog
-          isOpen={this.state.isReportLocked}
-          close={() => this.setState({ isReportLocked: false })} />
-        <InvalidDialog 
-          isOpen={this.state.isDesktopOpen} 
-          label="This feature is not available on this device, try a desktop browser."
-          close={() => this.setState({isDesktopOpen: false})} />
-        <ClassInvitationDialog />
-        <ClassTInvitationDialog />
-        <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({subscribedPopup: false})} />
-      </Grid>
+          <TermsLink history={this.props.history} />
+          <Steps
+            enabled={this.state.stepsEnabled}
+            steps={this.state.steps}
+            initialStep={0}
+            onExit={this.onIntroExit.bind(this)}
+            onComplete={this.onCompleted.bind(this)}
+            options={{
+              nextLabel: 'Next',
+              doneLabel: 'Start Exploring!'
+            }}
+          />
+          <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
+          <LockedDialog
+            label="Play a brick to unlock this feature"
+            isOpen={this.state.isMyLibraryOpen}
+            close={() => this.setState({ isMyLibraryOpen: false })} />
+          <LockedDialog
+            label="To unlock this, a brick needs to have been assigned to you"
+            isOpen={this.state.isBackToWorkOpen}
+            close={() => this.setState({ isBackToWorkOpen: false })} />
+          <LockedDialog
+            label="Play a brick to unlock this feature"
+            isOpen={this.state.isTryBuildOpen}
+            close={() => this.setState({ isTryBuildOpen: false })} />
+          <ReportsAlertDialog
+            isOpen={this.state.isReportLocked}
+            close={() => this.setState({ isReportLocked: false })} />
+          <InvalidDialog
+            isOpen={this.state.isDesktopOpen}
+            label="This feature is not available on this device, try a desktop browser."
+            close={() => this.setState({ isDesktopOpen: false })} />
+          <ClassInvitationDialog />
+          <ClassTInvitationDialog />
+          <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({ subscribedPopup: false })} />
+        </Grid>
       </React.Suspense>
     );
   }
