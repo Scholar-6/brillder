@@ -472,7 +472,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const moveToLibrary = () => {
     if (props.isAuthenticated === isAuthenticated.True) {
-      history.push(map.MyLibrary);
+      history.push(map.MyLibrarySubject(brick.subjectId));
     } else if (userToken) {
       history.push(map.ActivateAccount + "?token=" + userToken);
     }
