@@ -188,7 +188,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
               <button className="btn btn-md bg-theme-orange yes-button" onClick={props.moveNext}>
                 <span>Yes</span>
               </button>
-              <button className="btn btn-md bg-gray no-button" onClick={() => props.history.push(map.MyLibrary)}>
+              <button className="btn btn-md bg-gray no-button" onClick={() => props.history.push(map.MyLibrarySubject(brick.subjectId))}>
                 <span>No</span>
               </button>
             </div>
