@@ -1,6 +1,7 @@
 import React from "react";
 import { isMobile } from "react-device-detect";
 import Dialog from "@material-ui/core/Dialog";
+import { connect } from 'react-redux';
 
 import './UnauthorizedUserDialog.scss';
 import SpriteIcon from "../../SpriteIcon";
@@ -9,7 +10,10 @@ import { SetAuthBrickCoverId } from "localStorage/play";
 import GoogleDesktopButton from "components/loginPage/desktop/GoogleDesktopButton";
 import RegisterDesktopButton from "components/loginPage/desktop/RegisterDesktopButton";
 import map from "components/map";
-import { RegisterPage } from "components/loginPage/desktop/routes";
+import SignUpComponent from "./SignUpComponent";
+
+import actions from 'redux/actions/auth';
+import userActions from 'redux/actions/user';
 
 interface UnauthorizedProps {
   isOpen: boolean;
@@ -17,6 +21,8 @@ interface UnauthorizedProps {
   isBeforeReview?: boolean;
   history: any;
   notyet(): void;
+
+  getUser(): Promise<void>;
 }
 
 const MobileTheme = React.lazy(() => import('./themes/MobileTheme'));
@@ -27,26 +33,37 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
   const [warningOpen, setWaringOpen] = React.useState(false);
 
   const [registerClicked, setRegister] = React.useState(false);
+  const [registerWithEmailClicked, setRegisterEmail] = React.useState(false);
 
   const renderDialog = () => {
     if (registerClicked) {
+      if (registerWithEmailClicked) {
+        return (
+          <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
+            <SignUpComponent success={async () => {
+              await props.getUser();
+              props.notyet();
+            }} />
+          </Dialog>
+        )
+      }
       return (
         <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
-        <div className="title bold">
-          {props.isBeforeReview
-            ? <span>To save and improve your score, and start building your personal library, create an account.</span>
-            : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
-        </div>
-        <GoogleDesktopButton label="Register with Google" newTab={true} />
-        <RegisterDesktopButton label="Register with email" onClick={() => props.history.push(RegisterPage)} />
-        <div className="back-button-de" onClick={() => setRegister(false)}>
-          <SpriteIcon name="arrow-left" />
-          Back
+          <div className="title bold">
+            {props.isBeforeReview
+              ? <span>To save and improve your score, and start building your personal library, create an account.</span>
+              : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
           </div>
-        <div className="small-text">
-          You will be redirected to this page after making your choice
-        </div>
-      </Dialog>
+          <GoogleDesktopButton label="Register with Google" newTab={true} />
+          <RegisterDesktopButton label="Register with email" onClick={() => setRegisterEmail(true)} />
+          <div className="back-button-de" onClick={() => setRegister(false)}>
+            <SpriteIcon name="arrow-left" />
+            Back
+          </div>
+          <div className="small-text">
+            You will be redirected to this page after making your choice
+          </div>
+        </Dialog>
       )
     }
     return (
@@ -112,4 +129,8 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
   );
 }
 
-export default UnauthorizedUserDialogV2;
+const mapDispatch = (dispatch: any) => ({
+  getUser: () => dispatch(userActions.getUser()),
+});
+
+export default connect(null, mapDispatch)(UnauthorizedUserDialogV2);
