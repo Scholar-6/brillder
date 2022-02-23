@@ -167,6 +167,16 @@
 }
 
 .sign-up-form {
+  .logo-image {
+    margin-left: 7.5vw;
+    width: 5.5vw;
+    margin-bottom: 0.4vw;
+  }
+  .logo-text-image {
+    width: 5.5vw;
+    margin-bottom: 1.2vw;
+  }
+
   input {
     color: var(--white);
     text-align: center;
@@ -188,14 +198,14 @@
     outline: none;
     padding: 0.5vw 1vw !important;
     width: 100%;
-    background: var(--theme-orange);
+    background: var(--theme-green);
     font-family: $font-family-bold;
     border-radius: 0.6vw;
     line-height: 1.8 !important;
   }
 
   button:hover {
-    color: var(--theme-orange);
+    color: var(--theme-green);
     background: var(--white);
   }
 }
