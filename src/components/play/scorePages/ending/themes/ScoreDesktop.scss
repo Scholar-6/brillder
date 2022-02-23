@@ -4,15 +4,20 @@
 
 .ending-container {
   h2.title {
-    margin-top: 3vh;
-    text-align: center;
+    height: 15vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
     font-size: 2vw;
     font-family: $font-family-bold;
   }
 
   .hr-sub-title {
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: $font-family-regular-italic;
-    text-align: center;
   }
 
   .percentage-container {

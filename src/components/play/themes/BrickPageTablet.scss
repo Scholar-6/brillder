@@ -721,17 +721,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
             margin-top: 3vw;
           }
         }
-        &.provisional-score-page,
-        &.ending-page {
-          .introduction-page {
-            h1 {
-              text-transform: capitalize;
-            }
-          }
-          .question-live-play {
-            overflow: hidden;
-          }
-        }
         &.final-step-page {
           color: var(--theme-dark-blue) !important;
           .round-button {

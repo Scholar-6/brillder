@@ -964,33 +964,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         }
         &.provisional-score-page,
         &.ending-page {
-          .introduction-page {
-            h1{
-              opacity: 0;
-              animation: fadein 1s forwards;
-            }
-            h1 {
-              padding: 0;
-              text-transform: capitalize;
-            }
-            .question-live-play {
-              margin-top: calc(4vw + 11vh) !important;
-            }
-            .circle-progress-container {
-              opacity: 0;
-              animation: fadein 1s 0.5s forwards;
-            }
-          }
           .stepper .step svg {
             stroke-width: 3 !important;
             margin-left: 0.3vw;
           }
-        }
-        &.provisional-score-page .introduction-page .question-live-play {
-          margin-top: calc(6vw + 11vh) !important;
-        }
-        &.provisional-score-page .introduction-page .circle-progress-container {
-          margin-bottom: 2vh;
         }
         &.final-step-page {
           color: var(--theme-dark-blue) !important;
@@ -2437,29 +2414,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
-.provisional-score-page {
- 
-  .new-layout-footer {
-    .title-column {
-    width: 58vw !important;
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 1vw;
-    font-size: 1.55vw !important;
-    font-family: $font-family-bold;
-    }
-    .footer-arrow {
-      width: 4vw;
-    }
-    .new-navigation-buttons {
-      width: 25vw !important;
-      .next {
-        margin-left: 0 !important;
-      }
-    }
-  }
-}
-
 .play-preview-pages .sorted-row.sorted-row-expanded .live-container .intro-text-row {
   padding-left: 5.23vw !important;
 }
@@ -2604,11 +2558,4 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
 .play-preview-pages .sorted-row.sorted-row-expanded .live-container.static-top-part {
   border-radius: 1.9vw !important;
-}
-
-.provisional-score-page h2.title {
-  margin-top: 3vh;
-  text-align: center;
-  font-size: 2vw;
-  font-family: $font-family-bold;
 }
