@@ -33,13 +33,13 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
   const upload = async (file: File | null, sponsorName: string, sponsorUrl: string) => {
     if (file) {
       uploadFile(file, async (res: any) => {
-        const {fileName} = res.data;
+        const { fileName } = res.data;
         setFileName(fileName);
-        await updateBrick({...props.brick, sponsorLogo: fileName, sponsorName, sponsorUrl});
+        await updateBrick({ ...props.brick, sponsorLogo: fileName, sponsorName, sponsorUrl });
         setOpen(false);
       }, () => { });
     } else {
-      await updateBrick({...props.brick, sponsorLogo: '', sponsorName, sponsorUrl});
+      await updateBrick({ ...props.brick, sponsorLogo: '', sponsorName, sponsorUrl });
       setOpen(false);
     }
   }
@@ -58,11 +58,14 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
   if (!isAdmin) {
     return (
       <div className="cover-sponsors" onClick={() => {
+        const a = document.createElement('a');
         if (props.brick.sponsorUrl) {
-          window.location.href=props.brick.sponsorUrl;
+          a.href = props.brick.sponsorUrl;
         } else {
-          window.location.href="https://scholar6.org";
+          a.href = "https://scholar6.org";
         }
+        a.setAttribute('target', '_blank');
+        a.click();
       }}>
         <div className="italic">Created for</div>
         <div className="flex-center">
