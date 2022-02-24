@@ -414,7 +414,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     }
 
     const renderHighScore = () => {
-      const {bestScore} = this.props;
+      const { bestScore } = this.props;
       if (bestScore > 0) {
         if (this.props.sidebarRolledUp) {
           return (<div className="high-score-sm-d3s">
