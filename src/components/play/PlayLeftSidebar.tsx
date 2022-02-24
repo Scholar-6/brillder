@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from 'react-redux';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import actions from "redux/actions/brickActions";
 import { ReduxCombinedState } from 'redux/reducers';
@@ -31,6 +32,8 @@ interface SidebarProps {
   history: any;
   sidebarRolledUp: boolean;
   toggleSidebar(): void;
+
+  bestScore: number;
 
   // play
   brick: Brick;
@@ -410,6 +413,32 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       return <Grid container item className={className}></Grid>
     }
 
+    const renderHighScore = () => {
+      if (this.props.bestScore > 0) {
+        if (this.props.sidebarRolledUp) {
+          return (<div className="high-score-sm-d3s">
+            <img alt="" className="brills-icon" src="/images/Brill-B.svg" />
+            <div>{this.props.bestScore}</div>
+            <div className="custom-tooltip">
+              Your High Score
+            </div>
+          </div>);
+        }
+
+        return (<div className="high-score-d3s">
+          <div className="label-container">
+            <div>High</div>
+            <div>Score</div>
+          </div>
+          <LinearProgress variant="determinate" value={50} />
+          <div className="score-label">
+            {this.props.bestScore}
+          </div>
+        </div>);
+      }
+      return <div />;
+    }
+
     return (
       <Grid container item className={className}>
         <div className="collapsable-sidebar">
@@ -463,6 +492,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           <div className="sidebar-button f-align-end">
             {this.renderToggleButton()}
           </div>
+          {renderHighScore()}
           {this.renderButtons()}
           {this.renderDialogs()}
         </div>

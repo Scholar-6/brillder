@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import moment from 'moment';
 import queryString from 'query-string';
+import { getAttempts } from 'services/axios/attempt';
 
 import Cover from "./cover/Cover";
 import Sections from "./sections/Sections";
@@ -127,6 +128,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [restoredFromCash, setRestored] = useState(false);
   const [isSkipOpen, setPlaySkip] = useState(false);
+
+  const [bestScore, setBestScore] = useState(-1);
 
   if (cashAttemptString && !restoredFromCash) {
     // parsing cashed play
@@ -254,6 +257,24 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
+  const getBestScore = async () => {
+    const attempts = await getAttempts(brick.id, props.user.id);
+    if (attempts) {
+      let maxScore = 0;
+      let bestScore = -1;
+      for (let i = 0; i < attempts.length; i++) {
+        const loopScore = attempts[i].score;
+        if (bestScore < loopScore) {
+          maxScore = attempts[i].maxScore;
+          bestScore = loopScore;
+        }
+      }
+      if (bestScore && maxScore) {
+        setBestScore(Math.round((bestScore / maxScore) * 100));
+      }
+    }
+  }
+
   // only cover page should have big sidebar
   useEffect(() => {
     showInitDialogs();
@@ -280,6 +301,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       }
     }
     /*eslint-disable-next-line*/
+
+    getBestScore();
   }, [])
 
   const updateAttempts = (attempt: any, index: number) => {
@@ -785,6 +808,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               history={history}
               brick={brick}
               mode={mode}
+              bestScore={bestScore}
               sidebarRolledUp={sidebarRolledUp}
               empty={finalStep}
               setMode={setMode}
