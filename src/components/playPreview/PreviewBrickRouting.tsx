@@ -293,6 +293,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <PlayLeftSidebar
             history={history}
             brick={brick}
+            bestScore={-1}
             sidebarRolledUp={sidebarRolledUp}
             toggleSidebar={setSidebar}
             isPreview={true}

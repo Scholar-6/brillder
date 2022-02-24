@@ -203,6 +203,57 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         justify-content: flex-end;
         flex-direction: column;
         width: 100%;
+
+        .high-score-d3s {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          line-height: 1;
+          font-size: 1.2vw;
+          font-family: $font-family-bold;
+          margin-top: 4vh;
+          margin-bottom: 2.5vh;
+          .MuiLinearProgress-root {
+            width: 6vw;
+            height: 0.6vw !important;
+            border-radius: 0.4vw;
+
+            .MuiLinearProgress-bar {
+              border-radius: 0.4vw;
+              background: var(--theme-green);
+            }
+          }
+
+          .label-container {
+            margin-right: 1vw;
+          }
+          .score-label {
+            margin-left: 1vw;
+          }
+        }
+        .high-score-sm-d3s {
+          margin-top: 2vh;
+          margin-bottom: 2vh;
+          font-size: 1.2vw;
+          font-family: $font-family-bold;
+          text-align: center;
+          img {
+            width: 3.5vw;
+            height: 3.5vw;
+          }
+          .custom-tooltip {
+            display: none;
+            z-index: 100;
+            left: 0.5vw;
+            font-family: $font-family-bold;
+            width: 7vw;
+          }
+          &:hover .custom-tooltip {
+            display: inherit;
+          }
+        }
+
         .share-button,
         .assign-small,
         .adapt-small {
