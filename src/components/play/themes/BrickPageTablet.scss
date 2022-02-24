@@ -1407,23 +1407,86 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
       font-size: 2.5vw !important;
       font-family: $font-family-bold;
     }
+    @keyframes greyToBlue {
+      from {
+      }
+      to {
+        color: var(--white);
+        background: var(--theme-dark-blue);
+      }
+    }
     .like-buttons-container {
       margin-bottom: 10vh;
       .x-center {
         @extend %flexToXCenter;
 
         .like-button {
+          position: relative;
           font-family: $font-family-bold;
-          min-width: 18vw;
+          min-width: 17vw;
           text-align: center;
-          border-radius: 1.3vw;
+          border-radius: 1.9vh;
           padding: 1.5vh 1.5vw;
-          font-size: 4vh;
-          background: var(--tab-gray);
+          font-size: 4.5vh;
           margin: 1vh;
+
+          > div {
+            display: flex;
+            align-items: center;
+            height: 100%;
+          }
+
+          .absolute-arrow-right,
+          .absolute-arrow-left {
+            position: absolute;
+            top: 1.6vh;
+            left: -5.6vh;
+            width: 5vh;
+            height: 5vh;
+            background: none !important;
+            color: var(--theme-dark-blue) !important;
+          }
+          .absolute-arrow-right {
+            margin: 0;
+            left: unset;
+            right: -5.6vh;
+          }
+
+
+          svg {
+            width: 3vh;
+            height: 3vh;
+            color: var(--theme-green);
+            padding: 0.2vw;
+            border-radius: 50%;
+            background: var(--white);
+            margin-right: 1.4vw;
+
+            &.glass-icon-dd {
+              margin-right: 2vh;
+              color: var(--theme-dark-blue);
+              background: none;
+              border-radius: 0;
+              padding: 0;
+              margin-bottom: 0.5vh;
+            }
+          }
+
+          &.green {
+            display: flex;
+            color: white;
+            background: var(--theme-green);
+          }
+
           &.orange {
-            color: var(--white);
-            background: var(--theme-orange);
+            cursor: pointer;
+            color: var(--theme-dark-blue);
+            background: var(--tab-gray);
+            animation: greyToBlue 0.5s linear 0.5s 1 normal forwards;
+
+            svg {
+              color: white;
+            }
           }
         }
       }
@@ -1712,6 +1775,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   }
   .count-down-content {
     .title {
+      font-size: 4vw !important;
       margin-bottom: 0 !important;
     }
     .footer {
@@ -1767,6 +1831,11 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   .s-fade1, .s-fade2, .s-fade3 {
     opacity: 0;
   }
+  .regular {
+    line-height: 1;
+    font-family: $font-family-light;
+    font-size: 1.7vw;
+  }
   .s-fade1 {
     animation-duration: 1s;
     animation-timing-function: ease;
@@ -1806,6 +1875,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     font-size: 4.5vh;
     background: var(--tab-gray);
     margin: 1vh;
+    
 
     &.orange {
       cursor: pointer;
