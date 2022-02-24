@@ -1,5 +1,5 @@
 import React from "react";
-import { faHourglass } from "@fortawesome/free-solid-svg-icons";
+import { faHourglassStart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Brick } from "model/brick";
@@ -37,7 +37,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
         <div className="ss-phone-between-button" />
         <div className="like-button orange" onClick={moveNext}>
           <SpriteIcon name="arrow-right" className="absolute-arrow-left-df" />
-          <FontAwesomeIcon icon={faHourglass} className="glass-icon-dd" />
+          <FontAwesomeIcon icon={faHourglassStart} className="glass-icon-dd" />
           Investigation
         </div>
         <div className="ss-phone-between-button" />
