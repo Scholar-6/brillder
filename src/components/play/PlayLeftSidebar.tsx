@@ -418,7 +418,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       if (bestScore > 0) {
         if (this.props.sidebarRolledUp) {
           return (<div className="high-score-sm-d3s">
-            <img alt="" className="brills-icon" src="/images/Brill-B.svg" />
+            <div className="brill-coin-img">
+              <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
+              <SpriteIcon name="logo" />
+            </div>
             <div>{bestScore}</div>
             <div className="custom-tooltip">
               Your High Score
