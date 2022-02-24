@@ -172,13 +172,32 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-left: 10vw;
+      margin-left: 13vw;
       height: 10.5%;
       font-family: $font-family-bold;
       font-size: 8vw;
       border-radius: 3.4vw;
-      width: 80vw;
+      width: 74vw;
       background: var(--tab-gray);
+
+      svg {
+        width: 6vw;
+        height: 6vw;
+      }
+
+      &.green {
+        padding-right: 11vw;
+        svg {
+          margin-top: 2.7vw;
+          margin-right: 6vw;
+          padding: 0.6vw;
+          border-radius: 50%;
+          background: var(--white);
+          color: var(--theme-green);
+        }
+        color: white;
+        background: var(--theme-green);
+      }
     }
     .ss-phone-between-button {
       height: 2%;
@@ -2141,6 +2160,14 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     animation-delay: 1s;
   }
   .like-button {
+    position: relative;
+    .absolute-arrow-left-df {
+      position: absolute;
+      color: var(--theme-dark-blue);
+      width: 10vw !important;
+      height: 10vw !important;
+      left: -10vw;
+    }
     @keyframes greyToOrange {
       0% {
         opacity: 0;
@@ -2156,9 +2183,34 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         background: var(--theme-orange);
       }
     }
+
+    @keyframes greyToBlue {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+        color: var(--theme-dark-blue);
+        background: var(--tab-gray);
+      }
+      100% {
+        opacity: 1;
+        color: var(--white);
+        background: var(--theme-dark-blue);
+      }
+    }
     &.orange {
       opacity: 0;
-      animation: greyToOrange 1s 0.5s forwards !important;
+      animation: greyToBlue 1s 0.5s forwards !important;
+      padding-right: 8vw;
+
+      &.no-padding {
+        padding: 0;
+      }
+
+      svg {
+        margin-right: 5.5vw;
+      }
     }
   }
 }
