@@ -36,6 +36,8 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user })
         if (bestScore && maxScore) {
           setBestScore(Math.round((bestScore / maxScore) * 100));
         }
+      } else {
+        setBestScore(-1);
       }
     }
   }
@@ -43,7 +45,7 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user })
   // load best score
   useEffect(() => {
     getBestScore();
-  }, []);
+  }, [brick]);
 
   const checkAssignment = (brick: Brick) => {
     if (brick.assignments && user) {
