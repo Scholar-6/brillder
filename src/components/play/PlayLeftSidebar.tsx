@@ -414,11 +414,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     }
 
     const renderHighScore = () => {
-      if (this.props.bestScore > 0) {
+      const {bestScore} = this.props;
+      if (bestScore > 0) {
         if (this.props.sidebarRolledUp) {
           return (<div className="high-score-sm-d3s">
             <img alt="" className="brills-icon" src="/images/Brill-B.svg" />
-            <div>{this.props.bestScore}</div>
+            <div>{bestScore}</div>
             <div className="custom-tooltip">
               Your High Score
             </div>
@@ -430,9 +431,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
             <div>High</div>
             <div>Score</div>
           </div>
-          <LinearProgress variant="determinate" value={50} />
+          <LinearProgress variant="determinate" value={bestScore} />
           <div className="score-label">
-            {this.props.bestScore}
+            {bestScore}
           </div>
         </div>);
       }
