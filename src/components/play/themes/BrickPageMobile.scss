@@ -1917,13 +1917,14 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       line-height: 0;
       margin-top: 5vh;
       margin-bottom: 4vh;
-      font-family: $font-family-black;
+      font-family: $font-family-bold;
       text-align: center;
       color: var(--theme-dark-blue);
     }
     .hr-sub-title {
       text-align: center;
-      font-size: 4.5vw;
+      font-size: 6vw;
+      font-family: $font-family-regular-italic;
       padding-bottom: 1vh;
     }
 
