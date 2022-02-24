@@ -152,70 +152,6 @@ class ProvisionalScore extends React.Component<
       }
     }
 
-    if (isPhone()) {
-      return (
-        <div className="phone-provisional-score">
-          <div
-            className="fixed-upper-b-title"
-            dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
-          />
-          <div className="header">
-            <ReviewStepper
-              noScrolling={true}
-              questions={this.props.brick.questions}
-              attempts={this.props.attempts}
-              handleStep={() => { }}
-            />
-          </div>
-          <div className="content">
-            <div className="title">Provisional Score</div>
-            {this.state.score < this.state.maxScore &&
-              <div className="hr-sub-title">You can improve this when reviewing your answers</div>
-            }
-            <div className="pr-progress-center">
-              <div className="pr-progress-container">
-                <CircularProgressbar
-                  className="circle-progress"
-                  strokeWidth={4}
-                  counterClockwise={true}
-                  value={this.state.value}
-                />
-                <div className="score-data">{this.state.value}%</div>
-              </div>
-            </div>
-            <div className="attempted-numbers">
-              <div>
-                <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
-                {numberOfFailed}
-              </div>
-              <div>
-                <SpriteIcon name="cancel-custom" className="text-yellow" />:{" "}
-                {numberOfNotZero}
-              </div>
-              <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
-                <SpriteIcon
-                  name="check-icon"
-                  className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
-                />: {numberOfcorrect}
-              </div>
-            </div>
-            <AttemptedText
-              attempted={attempted}
-              attemptsCount={attempts.length}
-              score={this.state.score}
-              maxScore={this.state.maxScore}
-            />
-            {this.props.liveDuration && (
-              <div className="duration">
-                <SpriteIcon name="clock" />
-                <div>{prepareDuration(this.props.liveDuration)}</div>
-              </div>
-            )}
-          </div>
-        </div>
-      );
-    }
-
     const renderSubTitle = () => {
       let text = '';
       if (finalValue >= 95) {
@@ -260,6 +196,70 @@ class ProvisionalScore extends React.Component<
         text = 'You have a genius, but just not for this brick!'
       }
       return text;
+    }
+
+    if (isPhone()) {
+      return (
+        <div className="phone-provisional-score">
+          <div
+            className="fixed-upper-b-title"
+            dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
+          />
+          <div className="header">
+            <ReviewStepper
+              noScrolling={true}
+              questions={this.props.brick.questions}
+              attempts={this.props.attempts}
+              handleStep={() => { }}
+            />
+          </div>
+          <div className="content">
+            <div className="title">Your score so far...</div>
+            <div className="hr-sub-title">
+              {renderSubTitle()}
+            </div>
+            <div className="pr-progress-center">
+              <div className="pr-progress-container">
+                <CircularProgressbar
+                  className="circle-progress"
+                  strokeWidth={4}
+                  counterClockwise={true}
+                  value={this.state.value}
+                />
+                <div className="score-data">{this.state.value}%</div>
+              </div>
+            </div>
+            <div className="attempted-numbers">
+              <div>
+                <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
+                {numberOfFailed}
+              </div>
+              <div>
+                <SpriteIcon name="cancel-custom" className="text-yellow" />:{" "}
+                {numberOfNotZero}
+              </div>
+              <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
+                <SpriteIcon
+                  name="check-icon"
+                  className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
+                />: {numberOfcorrect}
+              </div>
+            </div>
+            <AttemptedText
+              attempted={attempted}
+              attemptsCount={attempts.length}
+              score={this.state.score}
+              maxScore={this.state.maxScore}
+            />
+            {this.props.liveDuration && (
+              <div className="duration">
+                <SpriteIcon name="clock" />
+                <div>{prepareDuration(this.props.liveDuration)}</div>
+              </div>
+            )}
+          </div>
+        </div>
+      );
     }
 
     const renderContent = () => {
