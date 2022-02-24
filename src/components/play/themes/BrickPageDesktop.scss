@@ -238,9 +238,20 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           font-size: 1.2vw;
           font-family: $font-family-bold;
           text-align: center;
-          img {
-            width: 3.5vw;
-            height: 3.5vw;
+          .brill-coin-img {
+            position: relative;
+            img {
+              width: 3.5vw;
+              height: 3.5vw;
+            }
+            svg {
+              color: var(--theme-orange);
+              position: absolute;
+              top: 0.75vw;
+              left: 0.75vw;
+              width: 2vw;
+              height: 2vw;
+            }
           }
           .custom-tooltip {
             display: none;
