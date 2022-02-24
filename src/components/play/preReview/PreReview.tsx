@@ -52,13 +52,13 @@ const PreReview: React.FC<Props> = ({ brick, moveNext }) => {
             </div>
             Preparation</div>
           <div className="ss-phone-between-button" />
-          <div className="like-button green animate-v1">
+          <div className="like-button green green-2 animate-v1">
             <div>
               <SpriteIcon name="check-icon" />
             </div>
             Investigation</div>
           <div className="ss-phone-between-button" />
-          <div className="like-button green animate-v1">
+          <div className="like-button green green-3 animate-v1">
             <div>
               <SpriteIcon name="check-icon" />
             </div>
