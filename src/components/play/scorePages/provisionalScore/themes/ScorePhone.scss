@@ -1,0 +1,96 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+
+.phone-provisional-score {
+  .title {
+    font-size: 8.5vw !important;
+  }
+  @keyframes fliping-coin {
+    0% {
+      transform: rotate3d(0, 0, 0);
+    }
+
+    50% {
+      transform: rotate3d(0, 1, 0, 180deg);
+    }
+
+    100% {
+      transform: rotate3d(0, 0, 0);
+    }
+  }
+
+  .brill-coin-img {
+    margin-bottom: 5vh;
+    width: 25vh;
+    height: 25vh;
+    margin-left: calc(50% - 12.5vh);
+    animation: fliping-coin 2s infinite linear;
+    position: relative;
+
+    img {
+      height: 100%;
+    }
+
+    svg {
+      position: absolute;
+      color: var(--theme-orange);
+      width: 12vh;
+      height: 12vh;
+      position: absolute;
+      top: calc(50% - 6vh);
+      left: calc(50% - 6vh);
+    }
+  }
+  .attempted-text {
+    color: white;
+  }
+  .duration {
+    color: white;
+  }
+
+  .btn-center {
+    display: flex;
+    justify-content: center;
+
+    .btn {
+      margin: 0 !important;
+      width: auto !important;
+      padding: 2vw 8vw !important;
+    }
+  }
+
+  &.bg-dark-blue {
+    color: white;
+    background: var(--theme-dark-blue);
+
+    .title {
+      margin: 0 !important;
+      height: 23%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      line-height: 1;
+      color: white;
+    }
+    .hr-sub-title {
+      color: white;
+    }
+
+    .content {
+      height: 100%;
+
+      .pr-progress-center {
+        margin: 0;
+        height: 50%;
+        align-items: center;
+
+        .pr-progress-container {
+          height: 25vh;
+          width: 25vh;
+        }
+      }
+    }
+  }
+}

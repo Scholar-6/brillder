@@ -258,19 +258,21 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const getBestScore = async () => {
-    const attempts = await getAttempts(brick.id, props.user.id);
-    if (attempts) {
-      let maxScore = 0;
-      let bestScore = -1;
-      for (let i = 0; i < attempts.length; i++) {
-        const loopScore = attempts[i].score;
-        if (bestScore < loopScore) {
-          maxScore = attempts[i].maxScore;
-          bestScore = loopScore;
+    if (props.user) {
+      const attempts = await getAttempts(brick.id, props.user.id);
+      if (attempts) {
+        let maxScore = 0;
+        let bestScore = -1;
+        for (let i = 0; i < attempts.length; i++) {
+          const loopScore = attempts[i].score;
+          if (bestScore < loopScore) {
+            maxScore = attempts[i].maxScore;
+            bestScore = loopScore;
+          }
         }
-      }
-      if (bestScore && maxScore) {
-        setBestScore(Math.round((bestScore / maxScore) * 100));
+        if (bestScore && maxScore) {
+          setBestScore(Math.round((bestScore / maxScore) * 100));
+        }
       }
     }
   }
