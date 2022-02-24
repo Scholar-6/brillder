@@ -17,6 +17,7 @@ import { User } from "model/user";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
 
+const PhoneTheme = React.lazy(() => import('./themes/ScorePhoneTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
 
 interface ProvisionalScoreProps {
@@ -38,6 +39,7 @@ interface ProvisionalScoreState {
   interval: any;
   handleMove: any;
   finalValue: number;
+  isMobileSecondPart: boolean;
 }
 
 class ProvisionalScore extends React.Component<
@@ -70,6 +72,7 @@ class ProvisionalScore extends React.Component<
       finalValue: Math.round((score * 100) / maxScore),
       score,
       maxScore,
+      isMobileSecondPart: false,
       interval: null,
       handleMove: this.handleMove.bind(this),
     };
@@ -199,66 +202,174 @@ class ProvisionalScore extends React.Component<
     }
 
     if (isPhone()) {
-      return (
-        <div className="phone-provisional-score">
-          <div
-            className="fixed-upper-b-title"
-            dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
-          />
-          <div className="header">
-            <ReviewStepper
-              noScrolling={true}
-              questions={this.props.brick.questions}
-              attempts={this.props.attempts}
-              handleStep={() => { }}
-            />
-          </div>
-          <div className="content">
-            <div className="title">Your score so far...</div>
-            <div className="hr-sub-title">
-              {renderSubTitle()}
-            </div>
-            <div className="pr-progress-center">
-              <div className="pr-progress-container">
-                <CircularProgressbar
-                  className="circle-progress"
-                  strokeWidth={4}
-                  counterClockwise={true}
-                  value={this.state.value}
+      if (this.state.isMobileSecondPart) {
+        return (
+          <React.Suspense fallback={<></>}>
+            <PhoneTheme />
+            <div className="phone-provisional-score bg-dark-blue">
+              <div className="content">
+                <div className="title">{this.state.value} Brills earned!</div>
+                <div className="pr-progress-center">
+                  <div className="pr-progress-container">
+                    <div className="brill-coin-img">
+                      <img alt="brill" src="/images/Brill.svg" />
+                      <SpriteIcon name="logo" />
+                    </div>
+                  </div>
+                </div>
+                <AttemptedText
+                  attempted={attempted}
+                  attemptsCount={attempts.length}
+                  score={this.state.score}
+                  maxScore={this.state.maxScore}
                 />
-                <div className="score-data">{this.state.value}%</div>
+                {this.props.liveDuration && (
+                  <div className="duration">
+                    <SpriteIcon name="clock" />
+                    <div>{prepareDuration(this.props.liveDuration)}</div>
+                  </div>
+                )}
               </div>
             </div>
-            <div className="attempted-numbers">
-              <div>
-                <SpriteIcon name="cancel-custom" className="text-orange" />:{" "}
-                {numberOfFailed}
+          </React.Suspense>
+        );
+      }
+
+      if (this.props.user) {
+        return (
+          <React.Suspense fallback={<></>}>
+            <PhoneTheme />
+            <div className="phone-provisional-score">
+              <div
+                className="fixed-upper-b-title"
+                dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
+              />
+              <div className="header">
+                <ReviewStepper
+                  noScrolling={true}
+                  questions={this.props.brick.questions}
+                  attempts={this.props.attempts}
+                  handleStep={() => { }}
+                />
               </div>
-              <div>
-                <SpriteIcon name="cancel-custom" className="text-yellow" />:{" "}
-                {numberOfNotZero}
-              </div>
-              <div className={numberOfcorrect >= 1 ? "" : "text-tab-gray"}>
-                <SpriteIcon
-                  name="check-icon"
-                  className={numberOfcorrect >= 1 ? "text-theme-green" : "text-tab-gray"}
-                />: {numberOfcorrect}
+              <div className="content">
+                <div className="title">Your score so far...</div>
+                <div className="hr-sub-title">
+                  {renderSubTitle()}
+                </div>
+                <div className="pr-progress-center">
+                  <div className="pr-progress-container">
+                    <CircularProgressbar
+                      className="circle-progress"
+                      strokeWidth={4}
+                      counterClockwise={true}
+                      value={this.state.value}
+                    />
+                    <div className="score-data">{this.state.value}%</div>
+                  </div>
+                </div>
+                <div className="bold bottom-text-d4">
+                  <div>
+                    <div>Now read the Synthesis and boost</div>
+                    <div>your Brills in the Review stage.</div>
+                  </div>
+                </div>
+                <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
               </div>
             </div>
-            <AttemptedText
-              attempted={attempted}
-              attemptsCount={attempts.length}
-              score={this.state.score}
-              maxScore={this.state.maxScore}
+          </React.Suspense>
+        );
+      }
+
+      if (this.state.finalValue >= 50) {
+        return (
+          <React.Suspense fallback={<></>}>
+            <PhoneTheme />
+            <div className="phone-provisional-score">
+              <div
+                className="fixed-upper-b-title"
+                dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
+              />
+              <div className="header">
+                <ReviewStepper
+                  noScrolling={true}
+                  questions={this.props.brick.questions}
+                  attempts={this.props.attempts}
+                  handleStep={() => { }}
+                />
+              </div>
+              <div className="content">
+                <div className="title">You could earn {this.state.value} Brills!</div>
+                <div className="hr-sub-title">
+                  {renderSubTitle()}
+                </div>
+                <div className="pr-progress-center">
+                  <div className="pr-progress-container">
+                    <div className="brill-coin-img">
+                      <img alt="brill" src="/images/Brill.svg" />
+                      <SpriteIcon name="logo" />
+                    </div>
+                  </div>
+                </div>
+                <div className="bold bottom-text-d4">
+                  <div>
+                    <div>Sign up at the end of the Synthesis to</div>
+                    <div>bank your Brills.</div>
+                  </div>
+                </div>
+                <div className="btn-center">
+                  <div className="btn btn-green" onClick={() => this.props.moveNext?.()}>
+                    Read Synthesis
+                  </div>
+                </div>
+              </div>
+            </div>
+          </React.Suspense>
+        );
+      }
+
+      return (
+        <React.Suspense fallback={<></>}>
+          <PhoneTheme />
+          <div className="phone-provisional-score">
+            <div
+              className="fixed-upper-b-title"
+              dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
             />
-            {this.props.liveDuration && (
-              <div className="duration">
-                <SpriteIcon name="clock" />
-                <div>{prepareDuration(this.props.liveDuration)}</div>
+            <div className="header">
+              <ReviewStepper
+                noScrolling={true}
+                questions={this.props.brick.questions}
+                attempts={this.props.attempts}
+                handleStep={() => { }}
+              />
+            </div>
+            <div className="content">
+              <div className="title">Your score so far...</div>
+              <div className="hr-sub-title">
+                {renderSubTitle()}
               </div>
-            )}
+              <div className="pr-progress-center">
+                <div className="pr-progress-container">
+                  <CircularProgressbar
+                    className="circle-progress"
+                    strokeWidth={4}
+                    counterClockwise={true}
+                    value={this.state.value}
+                  />
+                  <div className="score-data">{this.state.value}%</div>
+                </div>
+              </div>
+              <div className="bold bottom-text-d4">
+                <div>
+                  <div>Now read the Synthesis and boost</div>
+                  <div>your Brills in the Review stage.</div>
+                </div>
+              </div>
+              <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
+            </div>
           </div>
-        </div>
+        </React.Suspense>
       );
     }
 

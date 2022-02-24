@@ -1928,6 +1928,27 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       padding-bottom: 1vh;
     }
 
+    .bottom-text-d4 {
+      height: 14vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 6.3vw;
+    }
+
+    .btn.btn-green {
+      margin-top: 3vh;
+      margin-left: 27.5vw;
+      font-size: 9vw;
+      width: 45vw;
+      color: white;
+      border-radius: 4vw;
+      text-align: center;
+      background: var(--theme-green);
+      padding: 1vh 0;
+    }
+
     .pr-progress-center {
       opacity: 0;
       animation: fadein 1s 0.5s forwards;
