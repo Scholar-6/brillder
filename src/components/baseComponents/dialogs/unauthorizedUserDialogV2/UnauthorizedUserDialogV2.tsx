@@ -12,7 +12,6 @@ import RegisterDesktopButton from "components/loginPage/desktop/RegisterDesktopB
 import map from "components/map";
 import SignUpComponent from "./SignUpComponent";
 
-import actions from 'redux/actions/auth';
 import userActions from 'redux/actions/user';
 
 interface UnauthorizedProps {

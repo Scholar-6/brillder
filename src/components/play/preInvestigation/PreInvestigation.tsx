@@ -1,4 +1,6 @@
 import React from "react";
+import { faHourglass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Brick } from "model/brick";
 
@@ -41,17 +43,29 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
             </div>
             <div className="like-buttons-container s-fade2">
               <div className="x-center">
-                <div className="like-button">Preparation</div>
+                <div className="like-button green">
+                  <div>
+                    <SpriteIcon name="check-icon" />
+                  </div>
+                  Preparation
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button orange" onClick={moveNext}>Investigation</div><div className="like-button">Synthesis</div>
+                <div className="like-button orange" onClick={moveNext}>
+                  <SpriteIcon name="arrow-right" className="absolute-arrow-left" />
+                  <FontAwesomeIcon icon={faHourglass} className="glass-icon-dd" />
+                  Investigation
+                </div>
+                <div className="like-button">
+                  Synthesis
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button">Review</div>
+                <div className="like-button">
+                  <FontAwesomeIcon icon={faHourglass} className="glass-icon-dd" />
+                  Review
+                </div>
               </div>
-            </div>
-            <div className="footer s-fade3">
-              You have<span className="underline-border"> {minutes} minutes </span>to complete the investigation. Once time is up, you will get a provisional score.
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>

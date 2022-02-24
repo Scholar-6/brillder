@@ -71,17 +71,33 @@ const PreReview: React.FC<Props> = ({ brick, moveNext }) => {
             </div>
             <div className="like-buttons-container s-fade2">
               <div className="x-center">
-                <div className="like-button">Preparation</div>
+                <div className="like-button green">
+                  <div>
+                    <SpriteIcon name="check-icon" />
+                  </div>
+                  Preparation
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button">Investigation</div><div className="like-button">Synthesis</div>
+                <div className="like-button green">
+                  <div>
+                    <SpriteIcon name="check-icon" />
+                  </div>
+                  Investigation
+                </div>
+                <div className="like-button green">
+                  <div>
+                    <SpriteIcon name="check-icon" />
+                  </div>
+                  Synthesis
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button orange" onClick={moveNext}>Review</div>
+                <div className="like-button orange" onClick={moveNext}>
+                  <SpriteIcon name="arrow-right" className="absolute-arrow-left" />
+                  Review
+                </div>
               </div>
-            </div>
-            <div className="footer s-fade3">
-              You ha<span className="underline-border">ve {minutes} minutes</span> to review your answers. Once time is up, you will get a final score.
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>

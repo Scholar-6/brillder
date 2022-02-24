@@ -1816,6 +1816,16 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
 }
 
+
+@keyframes greyToBlue {
+  from {
+  }
+  to {
+    color: var(--white);
+    background: var(--theme-dark-blue);
+  }
+}
+
 // after cover page
 .after-cover-page {
   .after-cover-main-content {
@@ -1845,20 +1855,72 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         @extend %flexToXCenter;
 
         .like-button {
+          position: relative;
           font-family: $font-family-bold;
           min-width: 17vw;
           text-align: center;
           border-radius: 0.7vw;
           padding: 1.5vh 1.5vw;
           font-size: 4.5vh;
-          background: var(--tab-gray);
           margin: 1vh;
+
+          > div {
+            display: flex;
+            align-items: center;
+            height: 100%;
+          }
+
+          .absolute-arrow-right,
+          .absolute-arrow-left {
+            position: absolute;
+            top: 1.6vh;
+            left: -5.6vh;
+            width: 5vh;
+            height: 5vh;
+            background: none !important;
+            color: var(--theme-dark-blue) !important;
+          }
+          .absolute-arrow-right {
+            margin: 0;
+            left: unset;
+            right: -5.6vh;
+          }
+
+
+          svg {
+            width: 3vh;
+            height: 3vh;
+            color: var(--theme-green);
+            padding: 0.2vw;
+            border-radius: 50%;
+            background: var(--white);
+            margin-right: 1.4vw;
+
+            &.glass-icon-dd {
+              margin-right: 2vh;
+              color: var(--theme-dark-blue);
+              background: none;
+              border-radius: 0;
+              padding: 0;
+              margin-bottom: 0.5vh;
+            }
+          }
+
+          &.green {
+            display: flex;
+            color: white;
+            background: var(--theme-green);
+          }
 
           &.orange {
             cursor: pointer;
             color: var(--theme-dark-blue);
             background: var(--tab-gray);
-            animation: greyToOrange 0.5s linear 0.5s 1 normal forwards;
+            animation: greyToBlue 0.5s linear 0.5s 1 normal forwards;
+
+            svg {
+              color: white;
+            }
           }
         }
       }
