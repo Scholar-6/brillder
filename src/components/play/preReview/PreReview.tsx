@@ -116,12 +116,8 @@ const PreReview: React.FC<Props> = ({ brick, moveNext }) => {
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
-            <div className="title-column">
-              <DummyProgressbarCountdown value={100} deadline={true} />
-            </div>
-            <div className="minutes-footer">
-              {minutes}:00
-            </div>
+            <div className="title-column" />
+            <div className="minutes-footer" />
             <div className="footer-space" />
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={moveNext}>
