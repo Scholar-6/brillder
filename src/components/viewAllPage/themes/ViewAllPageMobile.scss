@@ -867,19 +867,50 @@
       overflow: hidden;
     }
 
+    .va-score {
+      position: absolute;
+      bottom: 0;
+      height: 18vw;
+      display: flex;
+      align-items: center;
+      font-family: $font-family-bold;
+
+      .label-container {
+        margin-right: 3vw;
+      }
+
+      .MuiLinearProgress-root {
+        width: 24vw;
+        height: 3vw;
+        border-radius: 1.5vw;
+        background: var(--theme-dark-blue);
+
+        .MuiLinearProgress-bar {
+          background: var(--theme-green);
+        }
+      }
+
+      .score-label {
+        margin-left: 3vw;
+      }
+    }
+
     .va-footer {
-      height: 16vw;
-      position: relative;
+      height: 14vw;
+      width: 30vw;
+      position: absolute;
+      bottom: 0;
+      right: 4vw;
 
       .va-right-play {
-        margin-top: 4vw;
         position: absolute;
+        width: 100%;
         right: 2vw;
-        padding: 1vw 5vw;
+        padding: 1vw 0;
         border-radius: 1.8vw;
         font-size: 5.5vw;
         color: var(--white);
-        background: var(--theme-orange);
+        background: var(--theme-green);
       }
     }
   }

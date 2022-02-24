@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import { Brick } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -6,6 +7,7 @@ import routes from "components/play/routes";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { User } from "model/user";
 import map from "components/map";
+import { getAttempts } from "services/axios/attempt";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -14,7 +16,35 @@ interface BrickBlockProps {
   hide(): void;
 }
 
-const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user, hide }) => {
+const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user }) => {
+  const [bestScore, setBestScore] = React.useState(-1);
+
+  const getBestScore = async () => {
+    if (user) {
+      const attempts = await getAttempts(brick.id, user.id);
+      if (attempts) {
+        let maxScore = 0;
+        let bestScore = -1;
+        for (let i = 0; i < attempts.length; i++) {
+          const loopScore = attempts[i].score;
+          if (bestScore < loopScore) {
+            maxScore = attempts[i].maxScore;
+            bestScore = loopScore;
+          }
+        }
+
+        if (bestScore && maxScore) {
+          setBestScore(Math.round((bestScore / maxScore) * 100));
+        }
+      }
+    }
+  }
+
+  // load best score
+  useEffect(() => {
+    getBestScore();
+  }, []);
+
   const checkAssignment = (brick: Brick) => {
     if (brick.assignments && user) {
       for (let assignmen of brick.assignments) {
@@ -28,17 +58,30 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user, h
     }
     return false;
   }
-  
+
   return (
     <div className="va-phone-expanded-brick">
       <div className="va-title-container">
-        <div className='va-title' dangerouslySetInnerHTML={{__html: brick.title}} />
+        <div className='va-title' dangerouslySetInnerHTML={{ __html: brick.title }} />
         <div className="va-clock-container">
           <SpriteIcon name="clock" />
           {brick.brickLength}
         </div>
       </div>
-      <div className="va-brief" dangerouslySetInnerHTML={{__html: stripHtml(brick.brief)}} />
+      <div className="va-brief" dangerouslySetInnerHTML={{ __html: stripHtml(brick.brief) }} />
+      {
+        bestScore > 0 &&
+        <div className="va-score">
+          <div className="label-container">
+            <div>High</div>
+            <div>Score</div>
+          </div>
+          <LinearProgress variant="determinate" value={20} />
+          <div className="score-label">
+            {bestScore}
+          </div>
+        </div>
+      }
       <div className="va-footer">
         <button className="btn va-right-play" onClick={() => {
           if (user && checkAssignment(brick)) {
