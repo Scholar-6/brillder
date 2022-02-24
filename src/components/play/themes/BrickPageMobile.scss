@@ -2174,12 +2174,22 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   }
   .like-button {
     position: relative;
+    @keyframes arrow-move {
+      0% {
+        top: -95%;
+      }
+      100% {
+        top: 25%;
+      }     
+    }
     .absolute-arrow-left-df {
       position: absolute;
       color: var(--theme-dark-blue);
       width: 10vw !important;
       height: 10vw !important;
       left: -10vw;
+      top: -95%;
+      animation: arrow-move 1s 1s linear forwards;
     }
     @keyframes greyToOrange {
       0% {
