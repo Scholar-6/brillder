@@ -1,4 +1,6 @@
 import React from "react";
+import { faHourglass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Brick } from "model/brick";
 
@@ -44,17 +46,31 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="like-buttons-container s-fade2">
               <div className="x-center">
-                <div className="like-button">Preparation</div>
+                <div className="like-button green">
+                  <div>
+                    <SpriteIcon name="check-icon" />
+                  </div>
+                  Preparation
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button">Investigation</div><div className="like-button orange" onClick={moveNext}>Synthesis</div>
+                <div className="like-button green">
+                  <div>
+                    <SpriteIcon name="check-icon" />
+                  </div>
+                  Investigation
+                </div>
+                <div className="like-button orange" onClick={moveNext}>
+                  <SpriteIcon name="arrow-left" className="absolute-arrow-right" />
+                  Synthesis
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button">Review</div>
+                <div className="like-button">
+                  <FontAwesomeIcon icon={faHourglass} className="glass-icon-dd" />
+                  Review
+                </div>
               </div>
-            </div>
-            <div className="footer s-fade3">
-              Spend about<span className="underline-border"> {minutes} minutes </span>on this stage before reviewing your answers to improve your score.
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
@@ -63,7 +79,7 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="minutes-footer">
               {minutes}:00
-              </div>
+            </div>
             <div className="footer-space" />
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={moveNext}>
