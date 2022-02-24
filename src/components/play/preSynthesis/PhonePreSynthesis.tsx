@@ -29,7 +29,7 @@ const PhonePreSynthesisPage: React.FC<Props> = ({ brick, moveNext }) => {
           Preparation
         </div>
         <div className="ss-phone-between-button" />
-        <div className="like-button green animate-v1">
+        <div className="like-button green green-2 animate-v1">
           <div>
             <SpriteIcon name="check-icon" />
           </div>

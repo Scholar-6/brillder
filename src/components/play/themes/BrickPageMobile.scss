@@ -197,6 +197,19 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         }
         color: white;
         background: var(--theme-green);
+
+        &.green-2 {
+          padding-right: 8vw;
+          svg {
+            margin-right: 5vw;
+          }
+        }
+        &.green-3 {
+          padding-right: 15vw;
+          svg {
+            margin-right: 8vw;
+          }
+        }
       }
     }
     .ss-phone-between-button {
