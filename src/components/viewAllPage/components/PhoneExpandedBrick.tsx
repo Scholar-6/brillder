@@ -76,7 +76,7 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user })
             <div>High</div>
             <div>Score</div>
           </div>
-          <LinearProgress variant="determinate" value={20} />
+          <LinearProgress variant="determinate" value={bestScore} />
           <div className="score-label">
             {bestScore}
           </div>
