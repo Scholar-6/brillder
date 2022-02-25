@@ -268,8 +268,8 @@ class ProvisionalScore extends React.Component<
             <div className="phone-provisional-score bg-dark-blue">
               <div className="content">
                 <div className="title">
-
-                  {this.state.value} Brills earned!
+                  {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
+                  {this.state.value} Brills Earned!
                 </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
@@ -381,7 +381,7 @@ class ProvisionalScore extends React.Component<
                   </div>
                 </div>
                 <div className="btn-center">
-                  <div className="btn btn-green bigger" onClick={() => this.props.moveNext?.()}>
+                  <div className="btn btn-green bigger" onClick={() => this.moveToSynthesis()}>
                     Read Synthesis
                   </div>
                 </div>
@@ -425,11 +425,11 @@ class ProvisionalScore extends React.Component<
               </div>
               <div className="bold bottom-text-d4">
                 <div>
-                  <div>Now read the Synthesis and boost</div>
-                  <div>your Brills in the Review stage.</div>
+                  <div>Read the Synthesis and sign up to see</div>
+                  <div>where you went wrong.</div>
                 </div>
               </div>
-              <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
+              <div className="btn btn-green bigger" onClick={() => this.moveToSynthesis()}>Keep Going!</div>
             </div>
           </div>
         </React.Suspense>

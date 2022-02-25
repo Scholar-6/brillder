@@ -223,7 +223,10 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
           return (
             <div className="phone-provisional-score bg-dark-blue">
               <div className="content">
-                <div className="title">{this.state.fixedCurrentScore} Brills earned!</div>
+                <div className="title">
+                  {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
+                  {this.state.fixedCurrentScore} Brills Earned!
+                </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
                     <div className="brill-coin-img">
