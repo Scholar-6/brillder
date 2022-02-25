@@ -48,7 +48,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       svg {
         padding-top: 4vh;
         width: 66vw;
-        color: var(--theme-orange);
+        color: var(--theme-green);
       }
     }
     .introduction-page {
@@ -319,7 +319,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
     .ss-brain {
       height: 100%;
-      color: var(--theme-orange);
+      color: var(--theme-green);
       animation: floating323 1.5s ease-out infinite;
     }
     .ss-phone-before-title {
@@ -1868,7 +1868,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 }
 
 .phone-provisional-score {
-  height: calc(100% - 17.5vw);
+  height: 100%;
 
   .header {
     background: var(--theme-light-blue);
@@ -1935,18 +1935,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       justify-content: center;
       text-align: center;
       font-size: 6.3vw;
-    }
-
-    .btn.btn-green {
-      margin-top: 3vh;
-      margin-left: 27.5vw;
-      font-size: 9vw;
-      width: 45vw;
-      color: white;
-      border-radius: 4vw;
-      text-align: center;
-      background: var(--theme-green);
-      padding: 1vh 0;
     }
 
     .pr-progress-center {

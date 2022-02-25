@@ -17,6 +17,7 @@ import AttemptedText from "../components/AttemptedText";
 import map from "components/map";
 
 const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
+const PhoneTheme = React.lazy(() => import('./themes/ScorePhoneTheme'));
 
 
 interface EndingState {
@@ -28,6 +29,8 @@ interface EndingState {
 
   fixedCurrentScore: number;
 
+  isMobileSecondPart: boolean;
+
   interval: number;
 }
 
@@ -37,6 +40,7 @@ interface EndingProps {
   history: any;
   location: any;
   brickAttempt: BrickAttempt;
+  bestScore: number;
 
   liveDuration?: null | moment.Duration;
   reviewDuration?: null | moment.Duration;
@@ -59,6 +63,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       currentScore: 0,
       liveScore: 0,
       reviewScore: 0,
+
+      isMobileSecondPart: false,
 
       fixedCurrentScore: 0,
 
@@ -162,107 +168,12 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       }
     }
 
-    if (isPhone()) {
-      return (
-        <div className="phone-provisional-score">
-          <div
-            className="fixed-upper-b-title"
-            dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
-          />
-          <div className="header">{this.renderStepper()}</div>
-          <div className="content">
-            <div className="title">Final Score</div>
-            <div className="pr-progress-center">
-              <div className="pr-progress-container">
-                <CircularProgressbar
-                  className="circle-progress-first"
-                  strokeWidth={4}
-                  counterClockwise={true}
-                  value={this.state.liveScore}
-                />
-                <Grid
-                  container
-                  justify="center"
-                  alignContent="center"
-                  className="score-circle"
-                >
-                  <CircularProgressbar
-                    className="circle-progress-second"
-                    counterClockwise={true}
-                    strokeWidth={4}
-                    value={this.state.reviewScore}
-                  />
-                </Grid>
-                <Grid
-                  container
-                  justify="center"
-                  alignContent="center"
-                  className="score-circle"
-                >
-                  <CircularProgressbar
-                    className="circle-progress-third"
-                    counterClockwise={true}
-                    strokeWidth={4}
-                    value={currentScore}
-                  />
-                </Grid>
-                <div className="score-data">{this.state.currentScore}%</div>
-              </div>
-            </div>
-            <div className="attempted-numbers">
-              <div className={numberOfFailed === 0 ? "text-tab-gray" : ""}>
-                <SpriteIcon
-                  name="cancel-custom"
-                  className={
-                    numberOfFailed === 0 ? "text-tab-gray" : "text-orange"
-                  }
-                />
-                : {numberOfFailed}
-              </div>
-              <div className={numberOfyellow === 0 ? "text-tab-gray" : ""}>
-                <SpriteIcon
-                  name="check-icon"
-                  className={
-                    numberOfyellow === 0 ? "text-tab-gray" : "text-yellow"
-                  }
-                />
-                : {numberOfyellow}
-              </div>
-              <div className={numberOfcorrect === 0 ? "text-tab-gray" : ""}>
-                <SpriteIcon
-                  name="check-icon"
-                  className={
-                    numberOfcorrect === 0 ? "text-tab-gray" : "text-theme-green"
-                  }
-                />
-                : {numberOfcorrect}
-              </div>
-            </div>
-            <AttemptedText
-              attempted={attempted}
-              attemptsCount={answers.length}
-              score={this.props.brickAttempt.score}
-              maxScore={this.props.brickAttempt.maxScore}
-            />
-            {this.props.liveDuration && (
-              <div className="duration">
-                <SpriteIcon name="clock" />
-                <div>{prepareDuration(this.props.liveDuration)}</div>
-              </div>
-            )}
-            {this.props.reviewDuration && (
-              <div className="review-duration">
-                + {prepareDuration(this.props.reviewDuration)} Review
-              </div>
-            )}
-          </div>
-        </div>
-      );
-    }
 
     const renderSubTitle = () => {
       let text = '';
-      if (fixedCurrentScore >= 95) {
+      if (this.props.bestScore && fixedCurrentScore >= this.props.bestScore) {
+        text = 'A New High Score!'
+      } else if (fixedCurrentScore >= 95) {
         text = 'Superlative!'
       } else if (fixedCurrentScore >= 90) {
         text = 'Most excellent!';
@@ -304,6 +215,126 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         text = 'You have a genius, but just not for this brick!'
       }
       return text;
+    }
+
+    if (isPhone()) {
+      const renderPhoneContent = () => {
+        if (this.state.isMobileSecondPart) {
+          return (
+            <div className="phone-provisional-score bg-dark-blue">
+              <div className="content">
+                <div className="title">{this.state.fixedCurrentScore} Brills earned!</div>
+                <div className="pr-progress-center">
+                  <div className="pr-progress-container">
+                    <div className="brill-coin-img">
+                      <img alt="brill" src="/images/Brill.svg" />
+                      <SpriteIcon name="logo" />
+                    </div>
+                  </div>
+                </div>
+                <AttemptedText
+                  attempted={attempted}
+                  attemptsCount={answers.length}
+                  score={this.props.brickAttempt.score}
+                  maxScore={this.props.brickAttempt.maxScore}
+                />
+                {this.props.liveDuration && (
+                  <div className="duration">
+                    <SpriteIcon name="clock" />
+                    <div>{prepareDuration(this.props.liveDuration)}</div>
+                  </div>
+                )}
+                {this.props.reviewDuration && (
+                  <div className="review-duration">
+                    + {prepareDuration(this.props.reviewDuration)} Review
+                  </div>
+                )}
+                <div className="btn-container">
+                  <div className="btn btn-green orange" onClick={() => { this.props.history.push(map.MyLibrarySubject(brick.subjectId)) }}>Exit</div>
+                  <div className="btn btn-green" onClick={this.props.move}>More Options</div>
+                </div>
+              </div>
+            </div>
+          );
+        }
+        return (
+          <div className="phone-provisional-score">
+            <div
+              className="fixed-upper-b-title"
+              dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
+            />
+            <div className="header">{this.renderStepper()}</div>
+            <div className="content">
+              <div className="title">Your final score</div>
+              <div className="hr-sub-title">
+                {renderSubTitle()}
+              </div>
+              <div className="pr-progress-center">
+                <div className="pr-progress-container">
+                  <CircularProgressbar
+                    className="circle-progress-first"
+                    strokeWidth={4}
+                    counterClockwise={true}
+                    value={this.state.liveScore}
+                  />
+                  <Grid
+                    container
+                    justify="center"
+                    alignContent="center"
+                    className="score-circle"
+                  >
+                    <CircularProgressbar
+                      className="circle-progress-second"
+                      counterClockwise={true}
+                      strokeWidth={4}
+                      value={this.state.reviewScore}
+                    />
+                  </Grid>
+                  <Grid
+                    container
+                    justify="center"
+                    alignContent="center"
+                    className="score-circle"
+                  >
+                    <CircularProgressbar
+                      className="circle-progress-third"
+                      counterClockwise={true}
+                      strokeWidth={4}
+                      value={currentScore}
+                    />
+                  </Grid>
+                  <div className="score-data">{this.state.currentScore}%</div>
+                </div>
+              </div>
+              <div className="flex-center status-circles bold">
+                <div className="lable-rd">Investigation</div>
+                <div className="circle-rd yellow" />
+                <div className="circle-rd green" />
+                <div className="circle-rd blue" />
+                <div className="lable-rd">Review</div>
+              </div>
+              <div className="flex-center number-status bold">
+                <div>{this.state.liveScore}</div>
+                <div>{currentScore}</div>
+                <div>{this.state.reviewScore}</div>
+              </div>
+              <div className="flex-center number-status bold">
+                <div>Avg.</div>
+              </div>
+              <div className="btn-container">
+                <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <React.Suspense fallback={<></>}>
+          <PhoneTheme />
+          {renderPhoneContent()}
+        </React.Suspense>
+      );
     }
 
     return (

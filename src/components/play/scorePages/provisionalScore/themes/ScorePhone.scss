@@ -20,6 +20,23 @@
       transform: rotate3d(0, 0, 0);
     }
   }
+  
+  .btn.btn-green {
+    margin-top: 3vh;
+    margin-left: 27.5vw;
+    font-size: 9vw;
+    width: 45vw;
+    color: white;
+    border-radius: 4vw;
+    text-align: center;
+    background: var(--theme-green);
+    padding: 1vh 0;
+
+    &.bigger {
+      margin-left: 22.5vw;
+      width: 55vw;
+    }
+  }
 
   .brill-coin-img {
     margin-bottom: 5vh;
@@ -67,7 +84,7 @@
 
     .title {
       margin: 0 !important;
-      height: 23%;
+      height: 19%;
       display: flex;
       justify-content: center;
       align-items: flex-end;
@@ -83,13 +100,18 @@
 
       .pr-progress-center {
         margin: 0;
-        height: 50%;
+        height: 45%;
         align-items: center;
 
         .pr-progress-container {
           height: 25vh;
           width: 25vh;
         }
+      }
+
+      .btn.btn-green {
+        color: var(--theme-dark-blue);
+        background: var(--white);
       }
     }
   }
