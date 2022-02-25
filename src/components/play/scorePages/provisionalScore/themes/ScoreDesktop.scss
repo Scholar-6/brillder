@@ -179,6 +179,9 @@
         font-family: $font-family-regular;
         font-size: 1.6vw;
 
+        opacity: 0;
+        animation: fadein 2s 1s forwards;
+
         svg {
           stroke-width: 1.5;
           width: 2.2vw;
@@ -194,12 +197,23 @@
         .bold {
           margin-left: 6vw;
         }
+
+        > span:first-child() {
+          opacity: 0;
+          animation: fadein 2s 1.5s forwards;
+        }
+        > span:nth-child(2) {
+          opacity: 0;
+          animation: fadein 2s 2s forwards;
+        }
       }
     }
 
     .attempted-numbers {
       color: white;
       font-size: 2vw;
+      opacity: 0;
+      animation: fadein 2.5s 2.5s forwards;
 
       svg {
         margin-top: 0.3vw;

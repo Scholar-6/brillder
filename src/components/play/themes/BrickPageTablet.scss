@@ -2246,10 +2246,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
       position: relative !important;
     }
   }
-  .attempted-numbers, .attempted-text, .duration, .review-duration {
-    opacity: 0;
-    animation: fadein 1s 1s forwards;
-  }
   .attempted-numbers {
     display: flex;
     align-items: center;

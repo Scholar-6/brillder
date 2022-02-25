@@ -2003,10 +2003,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         }
       }
     }
-    .attempted-numbers, .attempted-text, .duration, .review-duration {
-      opacity: 0;
-      animation: fadein 1s 1s forwards;
-    }
     .attempted-numbers {
       display: flex;
       align-items: center;
