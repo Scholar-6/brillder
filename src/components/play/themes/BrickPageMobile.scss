@@ -40,7 +40,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
   }
   .play-pre-prep-page {
-    height: calc(100% - 4vh - 5vw) !important;
+    height: calc(100% - 4vh - 5.5vw) !important;
     .icon-container {
       height: 55%;
       display: flex;
@@ -2077,7 +2077,30 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   .sorted-row
   .brick-row-container
   .brick-container.play-pre-prep-page {
-  height: calc(100% - 4vh - 5vw) !important;
+  height: calc(100% - 4vh - 6.8vw) !important;
+  .introduction-page {
+    padding-bottom: 0 !important;
+    .static-top-part-inner {
+      height: 100%;
+
+      .icon-container {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        height: 44%;
+
+        svg {
+          padding: 0 !important; 
+        }
+      }
+      .image-title {
+        height: 33%;
+      }
+      .help-text {
+        margin: 0;
+      }
+    }
+  }
 }
 
 .play-preview-pages
