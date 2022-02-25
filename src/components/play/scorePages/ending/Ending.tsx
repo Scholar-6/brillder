@@ -41,6 +41,7 @@ interface EndingProps {
   location: any;
   brickAttempt: BrickAttempt;
   bestScore: number;
+  reviewBrills: number;
 
   liveDuration?: null | moment.Duration;
   reviewDuration?: null | moment.Duration;
@@ -225,7 +226,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               <div className="content">
                 <div className="title">
                   {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
-                  {this.state.fixedCurrentScore} Brills Earned!
+                  {this.props.reviewBrills} Brills Earned!
                 </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
@@ -457,13 +458,13 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               </Grid>
               <Grid item xs={4}>
                 <div className="introduction-info">
-                  {currentScore >= 50 &&
+                  {this.props.reviewBrills >= 50 &&
                     <div className="top-brill-coins">
                       <div className="brill-coin-img">
                         <img alt="brill" src="/images/Brill.svg" />
                         <SpriteIcon name="logo" />
                       </div>
-                      <div className="bold">{currentScore} Brills Earned!</div>
+                      <div className="bold">{this.props.reviewBrills} Brills Earned!</div>
                     </div>
                   }
                   <div className="intro-text-row f-align-self-start m-t-5">

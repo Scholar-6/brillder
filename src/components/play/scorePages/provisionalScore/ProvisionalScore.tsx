@@ -29,6 +29,7 @@ interface ProvisionalScoreProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
+  liveBrills: number;
   bestScore: number;
   liveDuration?: null | moment.Duration;
   attempts: any[];
@@ -269,7 +270,7 @@ class ProvisionalScore extends React.Component<
               <div className="content">
                 <div className="title">
                   {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
-                  {this.state.value} Brills Earned!
+                  {this.props.liveBrills} Brills Earned!
                 </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
@@ -678,7 +679,7 @@ class ProvisionalScore extends React.Component<
               <div className="brill-coin-img">
                 <img alt="brill" src="/images/Brill-B.svg" />
               </div>
-              <div className="bold">{this.state.value} Brills Earned!</div>
+              <div className="bold">{this.props.liveBrills} Brills Earned!</div>
             </div>
           );
         }

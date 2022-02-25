@@ -327,6 +327,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 history={history}
                 location={location}
                 status={status}
+                liveBrills={-1}
                 bestScore={-1}
                 brick={brick}
                 attempts={attempts}
@@ -360,6 +361,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 status={status}
                 history={history}
                 brick={brick}
+                reviewBrills={-1}
                 bestScore={-1}
                 brickAttempt={brickAttempt}
                 move={saveBrickAttempt}

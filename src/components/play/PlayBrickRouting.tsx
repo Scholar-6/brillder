@@ -183,6 +183,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [brick, setBrick] = useState(parsedBrick);
   const [status, setStatus] = useState(initStatus);
+  const [liveBrills, setLiveBrills] = useState(-1);
+  const [reviewBrills, setReviewBrills] = useState(-1);
   const [competitionId, setCompetitionId] = useState(-1);
   const [brickAttempt, setBrickAttempt] = useState(initBrickAttempt as BrickAttempt);
 
@@ -385,6 +387,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         await props.getUser();
       }
       setAttemptId(response.data.id);
+      setLiveBrills(response.data.brills);
       setCreatingAttempt(false);
     }).catch(() => {
       setFailed(true);
@@ -414,6 +417,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         await props.getUser();
       }
       setAttemptId(response.data.Id);
+      setReviewBrills(response.data.brills);
     }).catch(() => {
       setFailed(true);
     });
@@ -676,6 +680,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={location}
             status={status}
             brick={brick}
+            liveBrills={liveBrills}
             bestScore={bestScore}
             attempts={attempts}
             liveDuration={liveDuration}
@@ -749,6 +754,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={location}
             brick={brick}
             history={history}
+            reviewBrills={reviewBrills}
             bestScore={bestScore}
             brickAttempt={brickAttempt}
             liveDuration={liveDuration}
