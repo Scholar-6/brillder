@@ -214,7 +214,9 @@ class ProvisionalScore extends React.Component<
 
     const renderSubTitle = () => {
       let text = '';
-      if (finalValue >= 95) {
+      if (this.props.bestScore && finalValue > this.props.bestScore) {
+        text = 'A New Hight Score!'
+      } else if (finalValue >= 95) {
         text = 'Superlative!'
       } else if (finalValue >= 90) {
         text = 'Most excellent!';
