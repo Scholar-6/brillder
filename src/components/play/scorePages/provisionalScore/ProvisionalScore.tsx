@@ -337,7 +337,7 @@ class ProvisionalScore extends React.Component<
                     <div>earning Brills.</div>
                   </div>
                 </div>
-                <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Keep Going!</div>
+                <div className="btn btn-green bigger" onClick={() => this.setState({ isMobileSecondPart: true })}>Keep Going!</div>
               </div>
             </div>
           </React.Suspense>
