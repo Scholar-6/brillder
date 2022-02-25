@@ -322,7 +322,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                 <div>Avg.</div>
               </div>
               <div className="btn-container">
-                <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
+                <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Next</div>
               </div>
             </div>
           </div>
