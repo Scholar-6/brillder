@@ -681,7 +681,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             liveDuration={liveDuration}
             moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}
           />
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} showQRCode={true} btnText="Next" next={() => history.push(routes.playPreSynthesis(brick))} />}
         </Route>
 
         <Route path={routes.preSynthesisRoute}>
@@ -750,14 +749,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={location}
             brick={brick}
             history={history}
+            bestScore={bestScore}
             brickAttempt={brickAttempt}
             liveDuration={liveDuration}
             reviewDuration={reviewDuration}
             move={finishBrick}
           />
-          {isPhone() && <PhonePlaySimpleFooter
-            brick={brick} history={history} btnText="Next" next={finishBrick}
-          />}
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">
           <FinalStep

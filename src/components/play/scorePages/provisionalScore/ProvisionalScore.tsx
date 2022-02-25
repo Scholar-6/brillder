@@ -215,7 +215,7 @@ class ProvisionalScore extends React.Component<
     const renderSubTitle = () => {
       let text = '';
       if (this.props.bestScore && finalValue > this.props.bestScore) {
-        text = 'A New Hight Score!'
+        text = 'A New High Score!'
       } else if (finalValue >= 95) {
         text = 'Superlative!'
       } else if (finalValue >= 90) {
@@ -291,6 +291,7 @@ class ProvisionalScore extends React.Component<
                     <div>{prepareDuration(this.props.liveDuration)}</div>
                   </div>
                 )}
+                <div className="btn btn-green bigger" onClick={this.moveToSynthesis.bind(this)}>Keep Going!</div>
               </div>
             </div>
           </React.Suspense>
@@ -380,7 +381,7 @@ class ProvisionalScore extends React.Component<
                   </div>
                 </div>
                 <div className="btn-center">
-                  <div className="btn btn-green" onClick={() => this.props.moveNext?.()}>
+                  <div className="btn btn-green bigger" onClick={() => this.props.moveNext?.()}>
                     Read Synthesis
                   </div>
                 </div>

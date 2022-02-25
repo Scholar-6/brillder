@@ -7,6 +7,7 @@
   .title {
     font-size: 8.5vw !important;
   }
+
   @keyframes fliping-coin {
     0% {
       transform: rotate3d(0, 0, 0);
@@ -20,21 +21,35 @@
       transform: rotate3d(0, 0, 0);
     }
   }
-  
+
+  .btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .attempted-numbers {
+    color: white !important;
+  }
+
   .btn.btn-green {
-    margin-top: 3vh;
-    margin-left: 27.5vw;
-    font-size: 9vw;
-    width: 45vw;
+    font-size: 7vw;
+    margin: 0 1vw;
+    width: 43vw;
     color: white;
     border-radius: 4vw;
     text-align: center;
+    margin-top: 3vh;
     background: var(--theme-green);
     padding: 1vh 0;
 
     &.bigger {
       margin-left: 22.5vw;
       width: 55vw;
+    }
+
+    &.orange {
+      background: var(--theme-orange);
     }
   }
 
@@ -60,11 +75,54 @@
       left: calc(50% - 6vh);
     }
   }
-  .attempted-text {
-    color: white;
-  }
+
+  .attempted-text,
+  .review-duration,
   .duration {
     color: white;
+  }
+
+  .number-status {
+    margin-left: 3vw;
+    line-height: 1;
+    div {
+      font-size: 5vw;
+      width: 9.8vw;
+      text-align: center;
+    }
+  }
+
+  .status-circles {
+    margin-right: 11vw;
+    margin-top: 3vh;
+    height: 6vh;
+
+    .lable-rd {
+      font-size: 6vw;
+      margin-left: 2vw;
+      margin-right: 2vw;
+    }
+
+    .circle-rd {
+      margin-top: 1.4vw;
+      border-radius: 50%;
+      width: 3.5vw;
+      height: 3.5vw;
+      margin-left: 3vw;
+      margin-right: 3vw;
+    }
+
+    .yellow {
+      background: var(--theme-yellow);
+    }
+
+    .blue {
+      background: #0081E2;
+    }
+
+    .green {
+      background: var(--theme-green);
+    }
   }
 
   .btn-center {
@@ -91,6 +149,7 @@
       line-height: 1;
       color: white;
     }
+
     .hr-sub-title {
       color: white;
     }
