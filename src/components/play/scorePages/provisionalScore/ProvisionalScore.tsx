@@ -333,11 +333,11 @@ class ProvisionalScore extends React.Component<
                 </div>
                 <div className="bold bottom-text-d4">
                   <div>
-                    <div>Now read the Synthesis and boost</div>
-                    <div>your Brills in the Review stage.</div>
+                    <div>Score {100 - this.state.finalValue}% in the Review stage to start</div>
+                    <div>earning Brills.</div>
                   </div>
                 </div>
-                <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
+                <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Keep Going!</div>
               </div>
             </div>
           </React.Suspense>
