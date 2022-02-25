@@ -93,7 +93,7 @@ class ProvisionalScore extends React.Component<
         return Math.random() * (max - min) + min;
       }
 
-      const interval3:any = setInterval(function () {
+      const interval3: any = setInterval(function () {
         var timeLeft = animationEnd - Date.now();
 
         if (timeLeft <= 0) {
@@ -299,6 +299,51 @@ class ProvisionalScore extends React.Component<
       }
 
       if (this.props.user) {
+        if (this.state.finalValue >= 50) {
+          return (
+            <React.Suspense fallback={<></>}>
+              <PhoneTheme />
+              <div className="phone-provisional-score">
+                <div
+                  className="fixed-upper-b-title"
+                  dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
+                />
+                <div className="header">
+                  <ReviewStepper
+                    noScrolling={true}
+                    questions={this.props.brick.questions}
+                    attempts={this.props.attempts}
+                    handleStep={() => { }}
+                  />
+                </div>
+                <div className="content">
+                  <div className="title">Your score so far...</div>
+                  <div className="hr-sub-title">
+                    {renderSubTitle()}
+                  </div>
+                  <div className="pr-progress-center">
+                    <div className="pr-progress-container">
+                      <CircularProgressbar
+                        className="circle-progress"
+                        strokeWidth={4}
+                        counterClockwise={true}
+                        value={this.state.value}
+                      />
+                      <div className="score-data">{this.state.value}%</div>
+                    </div>
+                  </div>
+                  <div className="bold bottom-text-d4">
+                    <div>
+                      <div>Now read the Synthesis and boost </div>
+                      <div>your Brills in the Review stage.</div>
+                    </div>
+                  </div>
+                  <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
+                </div>
+              </div>
+            </React.Suspense>
+          );
+        }
         return (
           <React.Suspense fallback={<></>}>
             <PhoneTheme />
@@ -337,7 +382,7 @@ class ProvisionalScore extends React.Component<
                     <div>earning Brills.</div>
                   </div>
                 </div>
-                <div className="btn btn-green bigger" onClick={() => this.setState({ isMobileSecondPart: true })}>Keep Going!</div>
+                <div className="btn btn-green bigger" onClick={() => this.moveToSynthesis()}>Keep Going!</div>
               </div>
             </div>
           </React.Suspense>
@@ -627,9 +672,9 @@ class ProvisionalScore extends React.Component<
           return (
             <div className="top-brill-coins">
               {this.props.bestScore && this.props.bestScore > 0 &&
-              <div className="absolute-high-score">
-                Previous High Score: {this.props.bestScore}
-              </div>}
+                <div className="absolute-high-score">
+                  Previous High Score: {this.props.bestScore}
+                </div>}
               <div className="brill-coin-img">
                 <img alt="brill" src="/images/Brill-B.svg" />
               </div>
