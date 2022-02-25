@@ -20,6 +20,8 @@ import AttemptedText from "../components/AttemptedText";
 const PhoneTheme = React.lazy(() => import('./themes/ScorePhoneTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
 
+const confetti = require('canvas-confetti');
+
 interface ProvisionalScoreProps {
   user?: User;
   history: any;
@@ -68,15 +70,68 @@ class ProvisionalScore extends React.Component<
       return acc + answer.maxMarks;
     }, 0);
 
+    const finalValue = Math.round((score * 100) / maxScore);
+
     this.state = {
       value: 0,
-      finalValue: Math.round((score * 100) / maxScore),
+      finalValue,
       score,
       maxScore,
       isMobileSecondPart: false,
       interval: null,
       handleMove: this.handleMove.bind(this),
     };
+
+    if (finalValue === 100) {
+      const duration = 15 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+      const randomInRange = (min: number, max: number) => {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval3:any = setInterval(function () {
+        var timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval3);
+        }
+
+        var particleCount = 50 * (timeLeft / duration);
+        // since particles fall down, start a bit higher than random
+        confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+        confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+      }, 250);
+    } else if (finalValue > 50) {
+      if (!props.bestScore || finalValue > props.bestScore) {
+        const end = Date.now() + (15 * 1000);
+
+        // go Buckeyes!z
+        const colors = ['#0681db', '#ffd900', '#30c474'];
+
+        (function frame() {
+          confetti.default({
+            particleCount: 2,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: colors
+          });
+          confetti.default({
+            particleCount: 2,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: colors
+          });
+
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        }());
+      }
+    }
   }
 
   componentDidMount() {
@@ -209,7 +264,10 @@ class ProvisionalScore extends React.Component<
             <PhoneTheme />
             <div className="phone-provisional-score bg-dark-blue">
               <div className="content">
-                <div className="title">{this.state.value} Brills earned!</div>
+                <div className="title">
+
+                  {this.state.value} Brills earned!
+                </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
                     <div className="brill-coin-img">

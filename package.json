@@ -43,6 +43,7 @@
     "@vx/stats": "0.0.198",
     "axios": "^0.25.0",
     "caniuse-lite": "^1.0.30001187",
+    "canvas-confetti": "^1.5.1",
     "desmos": "^1.5.4",
     "dot-prop": "^4.2.1",
     "dotenv": "^8.2.0",
