@@ -82,10 +82,12 @@ class ProvisionalScore extends React.Component<
       handleMove: this.handleMove.bind(this),
     };
 
+    const colors = ['#0681db', '#ffd900', '#30c474'];
+
     if (finalValue === 100) {
       const duration = 15 * 1000;
       const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors };
 
       const randomInRange = (min: number, max: number) => {
         return Math.random() * (max - min) + min;
@@ -108,7 +110,6 @@ class ProvisionalScore extends React.Component<
         const end = Date.now() + (15 * 1000);
 
         // go Buckeyes!z
-        const colors = ['#0681db', '#ffd900', '#30c474'];
 
         (function frame() {
           confetti.default({
