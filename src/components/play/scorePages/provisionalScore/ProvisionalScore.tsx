@@ -623,6 +623,10 @@ class ProvisionalScore extends React.Component<
         if (this.props.user) {
           return (
             <div className="top-brill-coins">
+              {this.props.bestScore && this.props.bestScore > 0 &&
+              <div className="absolute-high-score">
+                Previous High Score: {this.props.bestScore}
+              </div>}
               <div className="brill-coin-img">
                 <img alt="brill" src="/images/Brill-B.svg" />
               </div>
