@@ -173,5 +173,24 @@
         background: var(--white);
       }
     }
+
+    .attempted-text {
+      > span:first-child() {
+        opacity: 0;
+        animation: fadein 2s 1s forwards;
+      }
+      > span:nth-child(2) {
+        opacity: 0;
+        animation: fadein 2s 1.75s forwards;
+      }
+    }
+    .duration {
+      opacity: 0;
+      animation: fadein 2s 2.25s forwards;
+    }
+    .review-duration {
+      opacity: 0;
+      animation: fadein 2s 2.6s forwards;
+    }
   }
 }

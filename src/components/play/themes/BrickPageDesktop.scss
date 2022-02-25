@@ -2509,10 +2509,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
 .play-preview-pages .provisional-score-page,
 .play-preview-pages .ending-page {
-  .attempted-numbers, .attempted-text, .duration, .review-duration {
-    opacity: 0;
-    animation: fadein 1s 1s forwards;
-  }
   .attempted-numbers {
     display: flex;
     align-items: center;
