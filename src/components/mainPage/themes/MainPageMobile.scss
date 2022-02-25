@@ -180,7 +180,7 @@
   }
   .main-page-menu {
     position: absolute;
-    width: 100vw;
+    width: 100vw !important;
     height: 17.5vw;
     bottom: 0;
     border-radius: 0;
@@ -191,10 +191,6 @@
     }
     .bell-button {
       margin-right: 7.2vw;
-    }
-    &.menu-expanded {
-      border-top-left-radius: 0;
-      width: 58vw !important;
     }
   }
   .notification-expanded {

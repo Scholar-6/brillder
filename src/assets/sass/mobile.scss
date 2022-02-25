@@ -37,6 +37,19 @@
   height: 100%;
 }
 
+.unauthrozied-container .page-header {
+  .home-button-container {
+    position: absolute;
+    top: 3vw !important;
+    left: 23vw !important;
+  }
+
+  .search-container {
+    top: 3vw !important;
+    left: 43vw !important;
+  }
+}
+
 .MuiAutocomplete-popper {
   .MuiAutocomplete-option {
     font-size: 7vw;
