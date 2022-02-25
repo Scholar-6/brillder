@@ -98,8 +98,18 @@
       display: flex;
       justify-content: center;
       align-items: flex-end;
+      font-size: 9.5vw !important;
       line-height: 1;
       color: white;
+      position: relative;
+
+      .absoulte-high-score {
+        position: absolute;
+        bottom: 13.5vw;
+        left: 7vw;
+        font-size: 8vw;
+        font-family: $font-family-regular;
+      }
     }
     .hr-sub-title {
       color: white;
