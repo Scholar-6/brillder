@@ -27,6 +27,7 @@ interface ProvisionalScoreProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
+  bestScore: number;
   liveDuration?: null | moment.Duration;
   attempts: any[];
   moveNext?(): void;

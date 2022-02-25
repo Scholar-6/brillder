@@ -6,8 +6,6 @@ import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
-import { getReviewTime } from "../services/playTimes";
 
 interface Props {
   brick: Brick;
@@ -72,8 +70,6 @@ const PreReview: React.FC<Props> = ({ brick, moveNext }) => {
       </div>
     );
   }
-
-  const minutes = getReviewTime(brick.brickLength);
 
   return (
     <div className="brick-row-container live-container static-top-part">

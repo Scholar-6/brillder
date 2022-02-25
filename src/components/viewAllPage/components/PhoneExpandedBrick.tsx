@@ -45,6 +45,7 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user })
   // load best score
   useEffect(() => {
     getBestScore();
+    /*eslint-disable-next-line*/
   }, [brick]);
 
   const checkAssignment = (brick: Brick) => {

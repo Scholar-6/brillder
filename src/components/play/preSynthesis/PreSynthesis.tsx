@@ -7,8 +7,6 @@ import { Brick } from "model/brick";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
-import { getSynthesisTime } from "../services/playTimes";
 import routes from "../routes";
 
 interface Props {
@@ -32,8 +30,6 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
       document.removeEventListener("keydown", handleMove, false);
     };
   });
-
-  const minutes = getSynthesisTime(brick.brickLength);
 
   return (
     <div className="brick-row-container live-container static-top-part">
