@@ -302,9 +302,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         console.log('can`t convert competition id');
       }
     }
-    /*eslint-disable-next-line*/
-
     getBestScore();
+    /*eslint-disable-next-line*/
   }, [])
 
   const updateAttempts = (attempt: any, index: number) => {
@@ -677,6 +676,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={location}
             status={status}
             brick={brick}
+            bestScore={bestScore}
             attempts={attempts}
             liveDuration={liveDuration}
             moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}

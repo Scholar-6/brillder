@@ -7,8 +7,6 @@ import { Brick } from "model/brick";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
-import { getLiveTime } from "../services/playTimes";
 
 interface Props {
   brick: Brick;
@@ -29,8 +27,6 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
       document.removeEventListener("keydown", handleMove, false);
     };
   });
-
-  const minutes = getLiveTime(brick.brickLength);
 
   return (
     <div className="brick-row-container live-container static-top-part">
