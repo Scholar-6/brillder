@@ -106,11 +106,9 @@ class ProvisionalScore extends React.Component<
         confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
         confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
       }, 250);
-    } else if (finalValue >= 50) {
+    } else if (finalValue >= 50 && props.liveBrills > 0) {
       if (!props.bestScore || finalValue > props.bestScore) {
         const end = Date.now() + (15 * 1000);
-
-        // go Buckeyes!z
 
         (function frame() {
           confetti.default({
@@ -215,7 +213,11 @@ class ProvisionalScore extends React.Component<
 
     const renderSubTitle = () => {
       let text = '';
-      if (this.props.bestScore && finalValue > this.props.bestScore && finalValue >= 50) {
+      if (this.props.liveBrills === 0 && this.props.bestScore === 100) {
+        text = "You've still got it!";
+      } else if (finalValue >= 50 && this.props.liveBrills === 0) {
+        text = 'Same as last time!';
+      } else if (this.props.bestScore && finalValue > this.props.bestScore && finalValue >= 50) {
         text = 'A New High Score!'
       } else if (finalValue >= 95) {
         text = 'Superlative!'
@@ -322,7 +324,7 @@ class ProvisionalScore extends React.Component<
                     <div className="content">
                       <div className="title">Wow - a perfect score!</div>
                       <div className="hr-sub-title">
-                        You've still got it!
+                        {renderSubTitle()}
                       </div>
                       <div className="pr-progress-center">
                         <div className="pr-progress-container">
@@ -337,7 +339,7 @@ class ProvisionalScore extends React.Component<
                       </div>
                       <div className="bold bottom-text-d4">
                         <div>
-                          <div>You already got full marks on this brick, so you can't earn any more brills here.</div>
+                          <div>You already got full marks on this brick, so you can't earn any more brills.</div>
                         </div>
                       </div>
                       <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Next</div>
@@ -384,6 +386,51 @@ class ProvisionalScore extends React.Component<
                       </div>
                     </div>
                     <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Claim now</div>
+                  </div>
+                </div>
+              </React.Suspense>
+            );
+          }
+          if (this.props.liveBrills === 0) {
+            return (
+              <React.Suspense fallback={<></>}>
+                <PhoneTheme />
+                <div className="phone-provisional-score">
+                  <div
+                    className="fixed-upper-b-title"
+                    dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
+                  />
+                  <div className="header">
+                    <ReviewStepper
+                      noScrolling={true}
+                      questions={this.props.brick.questions}
+                      attempts={this.props.attempts}
+                      handleStep={() => { }}
+                    />
+                  </div>
+                  <div className="content">
+                    <div className="title">Improve your score to earn more brills.</div>
+                    <div className="hr-sub-title">
+                      {renderSubTitle()}
+                    </div>
+                    <div className="pr-progress-center">
+                      <div className="pr-progress-container">
+                        <CircularProgressbar
+                          className="circle-progress"
+                          strokeWidth={4}
+                          counterClockwise={true}
+                          value={this.state.value}
+                        />
+                        <div className="score-data">{this.state.value}%</div>
+                      </div>
+                    </div>
+                    <div className="bold bottom-text-d4">
+                      <div>
+                        <div>Now read the Synthesis and boost </div>
+                        <div>your Brills in the Review stage.</div>
+                      </div>
+                    </div>
+                    <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
                   </div>
                 </div>
               </React.Suspense>
@@ -574,6 +621,46 @@ class ProvisionalScore extends React.Component<
       if (this.props.user) {
         if (finalValue >= 50) {
           if (finalValue === 100) {
+            if (this.props.liveBrills === 0) {
+              return (
+                <div className="introduction-page">
+                  <h2 className="title">Wow - a perfect score!</h2>
+                  <div className="hr-sub-title provisional-sub-title">
+                    {renderSubTitle()}
+                  </div>
+                  <div className="percentage-container">
+                    <Grid
+                      container
+                      justify="center"
+                      alignContent="center"
+                      className="circle-progress-container"
+                    >
+                      <CircularProgressbar
+                        className={`circle-progress ${this.state.value === 100 ? 'green' : ''}`}
+                        strokeWidth={4}
+                        counterClockwise={true}
+                        value={this.state.value}
+                      />
+                      <div className="score-data">
+                        <Grid container justify="center" alignContent="center">
+                          <div>
+                            <div className="score-precentage">
+                              {this.state.value}%
+                            </div>
+                          </div>
+                        </Grid>
+                      </div>
+                    </Grid>
+                  </div>
+                  <div className="bold bottom-text">You already got full marks on this brick, so you can't earn any more brills.</div>
+                  <div className="flex-center">
+                    <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+                      Next
+                    </div>
+                  </div>
+                </div>
+              );
+            }
             return (
               <div className="introduction-page">
                 <h2 className="title">Wow - a perfect score!</h2>
@@ -608,6 +695,46 @@ class ProvisionalScore extends React.Component<
                 <div className="flex-center">
                   <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
                     Claim now
+                  </div>
+                </div>
+              </div>
+            );
+          }
+          if (this.props.liveBrills === 0) {
+            return (
+              <div className="introduction-page">
+                <h2 className="title">Improve your score to earn more brills.</h2>
+                <div className="hr-sub-title provisional-sub-title">
+                  {renderSubTitle()}
+                </div>
+                <div className="percentage-container">
+                  <Grid
+                    container
+                    justify="center"
+                    alignContent="center"
+                    className="circle-progress-container"
+                  >
+                    <CircularProgressbar
+                      className="circle-progress"
+                      strokeWidth={4}
+                      counterClockwise={true}
+                      value={this.state.value}
+                    />
+                    <div className="score-data">
+                      <Grid container justify="center" alignContent="center">
+                        <div>
+                          <div className="score-precentage">
+                            {this.state.value}%
+                          </div>
+                        </div>
+                      </Grid>
+                    </div>
+                  </Grid>
+                </div>
+                <div className="bold bottom-text">Now read the synthesis and boost your Brills in the Review stages.</div>
+                <div className="flex-center">
+                  <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
+                    Boost
                   </div>
                 </div>
               </div>
