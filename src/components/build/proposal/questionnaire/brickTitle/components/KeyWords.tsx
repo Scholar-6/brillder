@@ -156,32 +156,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
           <div className="hover-area flex-center">
             <SpriteIcon name="help-circle-custom" />
             <div className="hover-content">
-              <div>Brillder focusses on universal concepts and topics, not specific exam courses.</div>
-              <br />
-              <div>LEVELS:</div>
-              <div className="container">
-                <div className="white-circle">I</div>
-                <div className="l-text">
-                  <div>Foundation</div>
-                  <div className="regular">For 15-16 yr-olds, equivalent to GCSE / IB Middle Years / High School Diploma</div>
-                </div>
-              </div>
-              <br />
-              <div className="container">
-                <div className="white-circle">II</div>
-                <div className="l-text">
-                  <div>Core</div>
-                  <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
-                </div>
-              </div>
-              <br />
-              <div className="container">
-                <div className="white-circle">III</div>
-                <div className="l-text">
-                  <div>Extension</div>
-                  <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) learners</div>
-                </div>
-              </div>
+              Keywords are best thought of as likely search terms, and are ultimately curated by Publishers for each subject. For multi-word keywords, separate words with a hyphen, eg. ‘19th-Century’
             </div>
           </div>
         </div>
