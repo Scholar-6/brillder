@@ -67,7 +67,9 @@ const SponsorImageComponent: React.FC<ImageProps> = ({ ...props }) => {
         a.setAttribute('target', '_blank');
         a.click();
       }}>
-        <div className="italic">Created for</div>
+        <div className="flex-center">
+          <div className="italic">Created for</div>
+        </div>
         <div className="flex-center">
           <img alt="scholar6" src={fileName ? fileUrl(fileName) : "/images/Scholar-6-Logo.svg"} />
         </div>
