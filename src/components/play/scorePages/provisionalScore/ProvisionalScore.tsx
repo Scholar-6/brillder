@@ -213,7 +213,7 @@ class ProvisionalScore extends React.Component<
 
     const renderSubTitle = () => {
       let text = '';
-      if (this.props.liveBrills === 0 && this.props.bestScore === 100) {
+      if (this.props.liveBrills === 0 && finalValue === 100 && this.props.bestScore === 100) {
         text = "You've still got it!";
       } else if (finalValue >= 50 && this.props.liveBrills === 0) {
         text = 'Same as last time!';

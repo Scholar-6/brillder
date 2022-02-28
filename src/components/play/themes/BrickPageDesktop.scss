@@ -1100,7 +1100,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               @extend %flexToXCenter;
 
               svg {
-                color: var(--theme-orange) !important;
+                color: var(--theme-green) !important;
                 cursor: pointer;
                 $icon-size: 6vw;
                 height: $icon-size;

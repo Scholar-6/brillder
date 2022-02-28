@@ -1030,6 +1030,9 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         }
         &.final-step-page {
           color: var(--theme-dark-blue) !important;
+          .button-container .svg {
+            color: var(--theme-green);
+          }
           .introduction-page {
             margin-top: 4vw !important;
             .top-icon-container {

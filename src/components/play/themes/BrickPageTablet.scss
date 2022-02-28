@@ -895,6 +895,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
                 height: $icon-size;
                 width: $icon-size;
                 stroke-width: 1;
+                color: var(--theme-green);
               }
               .inline-button {
                 margin-left: 1.4vw;
