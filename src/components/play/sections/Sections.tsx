@@ -49,9 +49,6 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="like-button">Review</div>
               </div>
             </div>
-            <div className="footer s-fade3">
-              The Preparation phase presents some <span className="underline-border">tasks to get you thinking.</span>
-            </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
             <div className="title-column">
