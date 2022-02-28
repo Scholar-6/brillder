@@ -1919,7 +1919,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         .like-button {
           position: relative;
           font-family: $font-family-bold;
-          min-width: 17vw;
+          min-width: calc(31vh + 1.4vw);
           text-align: center;
           border-radius: 0.7vw;
           padding: 1.5vh 1.5vw;
@@ -2349,7 +2349,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   }
   .like-button {
     font-family: $font-family-bold;
-    min-width: 17vw;
+    min-width: calc(31vh + 1.4vw);
     text-align: center;
     border-radius: 0.7vw;
     padding: 1.5vh 1.5vw;
