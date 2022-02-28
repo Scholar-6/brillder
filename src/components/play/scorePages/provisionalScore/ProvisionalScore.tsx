@@ -106,7 +106,7 @@ class ProvisionalScore extends React.Component<
         confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
         confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
       }, 250);
-    } else if (finalValue > 50) {
+    } else if (finalValue >= 50) {
       if (!props.bestScore || finalValue > props.bestScore) {
         const end = Date.now() + (15 * 1000);
 
@@ -215,7 +215,7 @@ class ProvisionalScore extends React.Component<
 
     const renderSubTitle = () => {
       let text = '';
-      if (this.props.bestScore && finalValue > this.props.bestScore) {
+      if (this.props.bestScore && finalValue > this.props.bestScore && finalValue >= 50) {
         text = 'A New High Score!'
       } else if (finalValue >= 95) {
         text = 'Superlative!'
