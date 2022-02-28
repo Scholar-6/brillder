@@ -135,9 +135,20 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
           font-size: 1.2vw;
           font-family: $font-family-bold;
           text-align: center;
-          img {
-            width: 3.5vw;
-            height: 3.5vw;
+          .brill-coin-img {
+            position: relative;
+            img {
+              width: 3.5vw;
+              height: 3.5vw;
+            }
+            svg {
+              color: var(--theme-orange);
+              position: absolute;
+              top: 0.75vw;
+              left: 0.75vw;
+              width: 2vw;
+              height: 2vw;
+            }
           }
           .custom-tooltip {
             display: none;
@@ -1467,7 +1478,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
         .like-button {
           position: relative;
           font-family: $font-family-bold;
-          min-width: 17vw;
+          min-width: 31vh;
           text-align: center;
           border-radius: 1.9vh;
           padding: 1.5vh 1.5vw;
@@ -1539,6 +1550,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
       text-align: center;
       font-size: 1.9vw;
       position: relative;
+      font-family: $font-family-bold;
       .underline {
         text-decoration: underline;
         text-decoration-color: var(--theme-orange);
@@ -1878,7 +1890,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   .regular {
     line-height: 1;
     font-family: $font-family-light;
-    font-size: 1.7vw;
+    font-size: 2vw;
   }
   .s-fade1 {
     animation-duration: 1s;

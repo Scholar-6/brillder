@@ -409,7 +409,7 @@ class ProvisionalScore extends React.Component<
                     />
                   </div>
                   <div className="content">
-                    <div className="title">Improve your score to earn more brills.</div>
+                    <div className="title">Your score so far ...</div>
                     <div className="hr-sub-title">
                       {renderSubTitle()}
                     </div>
@@ -426,8 +426,7 @@ class ProvisionalScore extends React.Component<
                     </div>
                     <div className="bold bottom-text-d4">
                       <div>
-                        <div>Now read the Synthesis and boost </div>
-                        <div>your Brills in the Review stage.</div>
+                        <div>Improve your score to earn more brills.</div>
                       </div>
                     </div>
                     <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
@@ -703,7 +702,7 @@ class ProvisionalScore extends React.Component<
           if (this.props.liveBrills === 0) {
             return (
               <div className="introduction-page">
-                <h2 className="title">Improve your score to earn more brills.</h2>
+                <h2 className="title">Your score so far ...</h2>
                 <div className="hr-sub-title provisional-sub-title">
                   {renderSubTitle()}
                 </div>
@@ -731,7 +730,7 @@ class ProvisionalScore extends React.Component<
                     </div>
                   </Grid>
                 </div>
-                <div className="bold bottom-text">Now read the synthesis and boost your Brills in the Review stages.</div>
+                <div className="bold bottom-text">Improve your score to earn more brills.</div>
                 <div className="flex-center">
                   <div className="btn bottom-btn btn-green" onClick={this.moveToSynthesis.bind(this)}>
                     Boost
