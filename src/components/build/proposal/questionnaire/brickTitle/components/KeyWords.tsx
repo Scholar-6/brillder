@@ -76,7 +76,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
 
     const present = this.checkIfPresent(keyword);
     if (present) {
-      this.setState({keyWord: ''})
+      this.setState({ keyWord: '' })
       return;
     }
 
@@ -142,17 +142,48 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
             getOptionLabel={(option: any) => option.name}
             renderInput={(params: any) => {
               console.log(params);
-              params.inputProps.value = this.state.keyWord; 
+              params.inputProps.value = this.state.keyWord;
               return <TextField
                 {...params}
                 variant="standard"
-                onChange={(e) => this.setState({keyWord: e.target.value})}
+                onChange={(e) => this.setState({ keyWord: e.target.value })}
                 onKeyDown={this.checkKeyword.bind(this)}
                 label=""
                 placeholder="Type keyword "
               />
             }}
           />
+          <div className="hover-area flex-center">
+            <SpriteIcon name="help-circle-custom" />
+            <div className="hover-content">
+              <div>Brillder focusses on universal concepts and topics, not specific exam courses.</div>
+              <br />
+              <div>LEVELS:</div>
+              <div className="container">
+                <div className="white-circle">I</div>
+                <div className="l-text">
+                  <div>Foundation</div>
+                  <div className="regular">For 15-16 yr-olds, equivalent to GCSE / IB Middle Years / High School Diploma</div>
+                </div>
+              </div>
+              <br />
+              <div className="container">
+                <div className="white-circle">II</div>
+                <div className="l-text">
+                  <div>Core</div>
+                  <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
+                </div>
+              </div>
+              <br />
+              <div className="container">
+                <div className="white-circle">III</div>
+                <div className="l-text">
+                  <div>Extension</div>
+                  <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) learners</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         {overflowKey && <div className="text-orange">The tag ❝{overflowKey.name}❞ is too long; the maximum length is {MaxKeywordLength} characters.</div>}
       </div>

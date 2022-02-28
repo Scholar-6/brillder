@@ -6,6 +6,7 @@
   font-size: 1.6vw;
   color: var(--theme-dark-blue);
   display: inline-flex;
+  position: relative;
   width: 100%;
   flex-wrap: wrap;
   flex-basis: 100%;
@@ -49,6 +50,30 @@
       font-family: $font-family-bold !important;
       opacity: 0.42;
     }
+  }
+
+  .hover-content {
+    display: none;
+  }
+  .hover-area > svg {
+    position: absolute;
+    bottom: 1vw;
+    right: 0.5vw;
+    width: 2vw;
+    height: 2vw;
+  }
+  .hover-area:hover .hover-content {
+    width: 30vw;
+    font-size: 1.1vw;
+    z-index: 100000;
+    display: block;
+    position: fixed;
+    top: 10vw;
+    right: 20vw;
+    color: var(--white);
+    border-radius: 1vw;
+    padding: 1.4vw 2vw;
+    background: var(--theme-light-blue);
   }
 }
 
