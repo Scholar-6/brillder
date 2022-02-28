@@ -16,6 +16,7 @@ interface WordHighlightingProps extends CompQuestionProps {
 interface WordHighlightingState {
   userAnswers: any[];
   words: PlayWord[];
+  isLiveCorrect: boolean;
 }
 
 class WordHighlighting extends CompComponent<
@@ -24,7 +25,13 @@ class WordHighlighting extends CompComponent<
 > {
   constructor(props: WordHighlightingProps) {
     super(props);
-    this.state = { userAnswers: [], words: props.component.words };
+    let isLiveCorrect = false;
+    if (props.isReview && props.attempt) {
+      if (props.attempt.liveCorrect === true) {
+        isLiveCorrect = true;
+      }
+    }
+    this.state = { userAnswers: [], words: props.component.words, isLiveCorrect };
   }
 
   componentDidUpdate(prevProp: WordHighlightingProps) {
@@ -55,6 +62,9 @@ class WordHighlighting extends CompComponent<
   }
 
   highlighting(index: number) {
+    if (this.state.isLiveCorrect) {
+      return;
+    }
     this.state.words[index].selected = !this.state.words[index].selected;
     if (this.props.onAttempted) {
       this.props.onAttempted();
