@@ -123,6 +123,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initPrepEndTime: any = undefined;
   let initLiveDuration: null | moment.Duration = null;
   let initReviewDuration: null | moment.Duration = null;
+  let oldScore = null;
 
   const cashAttemptString = GetCashedPlayAttempt();
 
@@ -155,6 +156,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       initLiveDuration = cashAttempt.liveDuration;
       initBrickAttempt = cashAttempt.brickAttempt;
       initReviewDuration = cashAttempt.reviewDuration;
+      oldScore = cashAttempt.oldScore;
       if (cashAttempt.prepEndTime) {
         initPrepEndTime = moment(cashAttempt.prepEndTime);
       }
@@ -245,6 +247,24 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }));
   }
 
+  const cashFinalAttempt = (brickAttemptFinal: BrickAttempt) => {
+    CashAttempt(JSON.stringify({
+      brick,
+      lastPageUrl: '/ending',
+      status: PlayStatus.Ending,
+      attempts,
+      reviewAttempts,
+      attemptId,
+      prepEndTime,
+      reviewEndTime,
+      liveEndTime,
+      brickAttempt: brickAttemptFinal,
+      liveDuration,
+      reviewDuration,
+      mode,
+    }));
+  }
+
   const showInitDialogs = async () => {
     var user = await props.getUser();
     if (user) {
@@ -320,6 +340,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (attempt) {
       reviewAttempts[index] = attempt;
       setReviewAttempts(reviewAttempts);
+      // cashing review answers
       cashAttempt();
     }
   };
@@ -358,6 +379,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setStatus(PlayStatus.Ending);
     saveBrickAttempt(ba);
     settingReviewDuration();
+
+    // cashing review question answer could be faster. delay added.
+    setTimeout(() => {
+      cashFinalAttempt(ba);
+    }, 200);
   };
 
 
