@@ -172,7 +172,11 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
 
     const renderSubTitle = () => {
       let text = '';
-      if (this.props.bestScore && fixedCurrentScore > this.props.bestScore && fixedCurrentScore >= 50) {
+      if (this.props.reviewBrills === 0 && fixedCurrentScore === 100) {
+        text = "You've still got it!";
+      } else if (fixedCurrentScore >= 50 && this.props.reviewBrills === 0) {
+        text = 'Same as last time!';
+      } else if (this.props.bestScore && fixedCurrentScore > this.props.bestScore && fixedCurrentScore >= 50) {
         text = 'A New High Score!'
       } else if (fixedCurrentScore >= 95) {
         text = 'Superlative!'
