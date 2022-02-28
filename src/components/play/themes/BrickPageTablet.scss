@@ -777,6 +777,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
         }
         &.final-step-page {
           color: var(--theme-dark-blue) !important;
+
           .round-button {
             background: var(--theme-green) !important;
             svg {
@@ -1704,7 +1705,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     text-align: center;
 
     .underline {
-      border-bottom: 0.4vh solid var(--theme-orange);
+      border-bottom: 0.4vh solid var(--theme-green);
     }
   }
   .introduction-content {
@@ -2525,4 +2526,8 @@ html body #root .browser-type-container .sorted-row-expanded .brick-row-containe
 .play-preview-pages .ending-page .score-precentage {
     margin-top: 2vh;
   font-size: 10vh;
+}
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container.final-step-page .introduction-page p {
+  font-size: 2.1vw !important;
 }
