@@ -317,6 +317,16 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           brickId={brick.id}
           isOpen={unauthorizedOpenV2}
           notyet={() => {
+            console.log('not')
+            if (playClicked) {
+              startBrick()
+            } else {
+              setUnauthorizedV2(false);
+            }
+            setUnauthPopupShown(true);
+          }}
+          registered={() => {
+            console.log('cover');
             if (playClicked) {
               startBrick()
             } else {
@@ -464,6 +474,15 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         notyet={() => {
           if (playClicked) {
             startBrick();
+          } else {
+            setUnauthorizedV2(false);
+          }
+          setUnauthPopupShown(true);
+        }}
+        registered={() => {
+          console.log('cover');
+          if (playClicked) {
+            startBrick()
           } else {
             setUnauthorizedV2(false);
           }

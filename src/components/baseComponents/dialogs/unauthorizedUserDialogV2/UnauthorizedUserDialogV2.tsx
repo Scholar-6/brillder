@@ -20,6 +20,7 @@ interface UnauthorizedProps {
   isBeforeReview?: boolean;
   history: any;
   notyet(): void;
+  registered?(): void;
 
   getUser(): Promise<void>;
 }
@@ -42,7 +43,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
             <SignUpComponent success={async () => {
               console.log('success')
               await props.getUser();
-              props.notyet();
+              props.registered?.();
             }} />
             <div className="back-button-de" onClick={() => {
               setRegisterEmail(false);
