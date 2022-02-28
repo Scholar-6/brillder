@@ -85,7 +85,7 @@ class ProvisionalScore extends React.Component<
 
     const colors = ['#0681db', '#ffd900', '#30c474'];
 
-    if (finalValue === 100) {
+    if (finalValue === 100 && props.liveBrills > 0) {
       const duration = 15 * 1000;
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors };
@@ -301,6 +301,94 @@ class ProvisionalScore extends React.Component<
 
       if (this.props.user) {
         if (this.state.finalValue >= 50) {
+          if (this.state.finalValue === 100) {
+            if (this.props.liveBrills === 0) {
+              return (
+                <React.Suspense fallback={<></>}>
+                  <PhoneTheme />
+                  <div className="phone-provisional-score">
+                    <div
+                      className="fixed-upper-b-title"
+                      dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
+                    />
+                    <div className="header">
+                      <ReviewStepper
+                        noScrolling={true}
+                        questions={this.props.brick.questions}
+                        attempts={this.props.attempts}
+                        handleStep={() => { }}
+                      />
+                    </div>
+                    <div className="content">
+                      <div className="title">Wow - a perfect score!</div>
+                      <div className="hr-sub-title">
+                        You've still got it!
+                      </div>
+                      <div className="pr-progress-center">
+                        <div className="pr-progress-container">
+                          <CircularProgressbar
+                            className="circle-progress"
+                            strokeWidth={4}
+                            counterClockwise={true}
+                            value={this.state.value}
+                          />
+                          <div className="score-data">{this.state.value}%</div>
+                        </div>
+                      </div>
+                      <div className="bold bottom-text-d4">
+                        <div>
+                          <div>You already got full marks on this brick, so you can't earn any more brills here.</div>
+                        </div>
+                      </div>
+                      <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Next</div>
+                    </div>
+                  </div>
+                </React.Suspense>
+              );
+            }
+            return (
+              <React.Suspense fallback={<></>}>
+                <PhoneTheme />
+                <div className="phone-provisional-score">
+                  <div
+                    className="fixed-upper-b-title"
+                    dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
+                  />
+                  <div className="header">
+                    <ReviewStepper
+                      noScrolling={true}
+                      questions={this.props.brick.questions}
+                      attempts={this.props.attempts}
+                      handleStep={() => { }}
+                    />
+                  </div>
+                  <div className="content">
+                    <div className="title">Wow - a perfect score!</div>
+                    <div className="hr-sub-title">
+                      {renderSubTitle()}
+                    </div>
+                    <div className="pr-progress-center">
+                      <div className="pr-progress-container">
+                        <CircularProgressbar
+                          className="circle-progress"
+                          strokeWidth={4}
+                          counterClockwise={true}
+                          value={this.state.value}
+                        />
+                        <div className="score-data">{this.state.value}%</div>
+                      </div>
+                    </div>
+                    <div className="bold bottom-text-d4">
+                      <div>
+                        <div>Claim your perfect score bonus by reading the Synthesis of this brick.</div>
+                      </div>
+                    </div>
+                    <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Claim now</div>
+                  </div>
+                </div>
+              </React.Suspense>
+            );
+          }
           return (
             <React.Suspense fallback={<></>}>
               <PhoneTheme />

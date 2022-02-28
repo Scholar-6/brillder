@@ -40,6 +40,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
         return (
           <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
             <SignUpComponent success={async () => {
+              console.log('success')
               await props.getUser();
               props.notyet();
             }} />

@@ -141,6 +141,7 @@
     background: var(--theme-dark-blue);
 
     .title {
+      position: relative;
       margin: 0 !important;
       height: 19%;
       display: flex;
@@ -148,6 +149,13 @@
       align-items: flex-end;
       line-height: 1;
       color: white;
+      .absoulte-high-score {
+        position: absolute;
+        bottom: 13.5vw;
+        left: 7vw;
+        font-size: 8vw;
+        font-family: $font-family-regular;
+      }
     }
 
     .hr-sub-title {
@@ -171,6 +179,11 @@
       .btn.btn-green {
         color: var(--theme-dark-blue);
         background: var(--white);
+
+        &.orange {
+          color: white;
+          background: var(--theme-orange);
+        }
       }
     }
 

@@ -867,7 +867,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           brickId={brick.id}
           isOpen={unauthorizedOpen}
           notyet={() => {
-            history.push(map.ViewAllPage);
+            setUnauthorized(false);
+            moveToReview();
           }}
         />
         <TextDialog
