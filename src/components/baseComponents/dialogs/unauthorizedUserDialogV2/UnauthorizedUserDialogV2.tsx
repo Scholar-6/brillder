@@ -43,7 +43,10 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
               await props.getUser();
               props.notyet();
             }} />
-            <div className="back-button-de" onClick={() => setRegister(false)}>
+            <div className="back-button-de" onClick={() => {
+              setRegisterEmail(false);
+              setRegister(false);
+            }}>
               <SpriteIcon name="arrow-left" />
               Back
             </div>
