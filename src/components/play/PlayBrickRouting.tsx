@@ -10,6 +10,7 @@ import queryString from 'query-string';
 import { getAttempts } from 'services/axios/attempt';
 
 import actions from "redux/actions/auth";
+import playActions from 'redux/actions/play';
 import Cover from "./cover/Cover";
 import Sections from "./sections/Sections";
 import Introduction from "./newPrep/PhonePrep";
@@ -105,6 +106,7 @@ interface BrickRoutingProps {
   getUser(): Promise<any>;
   setUser(user: User): void;
   loginSuccess(): void;
+  storeLiveStep(liveStep: number, brickId: number): void;
 }
 
 const MobileTheme = React.lazy(() => import('./themes/BrickPageMobileTheme'));
@@ -126,7 +128,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initPrepEndTime: any = undefined;
   let initLiveDuration: null | moment.Duration = null;
   let initReviewDuration: null | moment.Duration = null;
-  let oldScore = null;
 
   const cashAttemptString = GetCashedPlayAttempt();
 
@@ -159,7 +160,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       initLiveDuration = cashAttempt.liveDuration;
       initBrickAttempt = cashAttempt.brickAttempt;
       initReviewDuration = cashAttempt.reviewDuration;
-      oldScore = cashAttempt.oldScore;
       if (cashAttempt.prepEndTime) {
         initPrepEndTime = moment(cashAttempt.prepEndTime);
       }
@@ -449,6 +449,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       }
       setAttemptId(response.data.Id);
       setReviewBrills(response.data.brills);
+      props.storeLiveStep(0, 0);
     }).catch(() => {
       setFailed(true);
     });
@@ -997,6 +998,7 @@ const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
   loginSuccess: () => dispatch(actions.loginSuccess()),
   setUser: (user: User) => dispatch(userActions.setUser(user)),
+  storeLiveStep: (liveStep: number, brickId: number) => dispatch(playActions.storeLiveStep(liveStep, brickId)),
 });
 
 const connector = connect(mapState, mapDispatch);
