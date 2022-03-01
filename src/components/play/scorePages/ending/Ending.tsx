@@ -4,6 +4,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import { connect } from "react-redux";
 
 import "./Ending.scss";
+import { CashAttempt, SetAuthBrickCoverId } from "localStorage/play";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../../model";
 import { BrickAttempt } from "../../model";
@@ -140,6 +141,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 
   moveToLibrary() {
+    CashAttempt('');
+    SetAuthBrickCoverId(-1);
     this.props.loginSuccess();
     this.props.history.push(map.MyLibrarySubject(this.props.brick.subjectId));
   }
@@ -185,7 +188,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       if (this.props.reviewBrills === 0 && fixedCurrentScore === 100) {
         text = "You've still got it!";
       } else if (fixedCurrentScore >= 50 && this.props.reviewBrills === 0) {
-        text = 'You equalled your best effort!';
+        text = 'No better than your best effort!';
       } else if (this.props.bestScore && fixedCurrentScore > this.props.bestScore && fixedCurrentScore >= 50) {
         text = 'A New High Score!'
       } else if (fixedCurrentScore >= 95) {
