@@ -110,7 +110,7 @@ class ProvisionalScore extends React.Component<
       }, 250);
     } else if (finalValue >= 50 && props.liveBrills > 0) {
       if (!props.bestScore || finalValue > props.bestScore) {
-        const end = Date.now() + (15 * 1000);
+        const end = Date.now() + (5 * 1000);
 
         (function frame() {
           confetti.default({
@@ -217,18 +217,20 @@ class ProvisionalScore extends React.Component<
       let text = '';
       if (this.props.liveBrills === 0 && finalValue === 100 && this.props.bestScore === 100) {
         text = "You've still got it!";
-      } else if (finalValue >= 50 && this.props.liveBrills === 0) {
+      } else if (finalValue === this.props.bestScore) {
         text = 'You equalled your best effort!';
-      } else if (this.props.bestScore && finalValue > this.props.bestScore && finalValue >= 50) {
-        text = 'A New High Score!'
+      } else if (finalValue >= 50 && this.props.liveBrills === 0 && this.props.user) {
+        text = "Uh-oh - you're getting worse!";
+      } else if (this.props.bestScore && finalValue > this.props.bestScore && finalValue >= 50 && this.props.user) {
+        text = 'A New High Score!';
       } else if (finalValue >= 95) {
-        text = 'Superlative!'
+        text = 'Superlative!';
       } else if (finalValue >= 90) {
         text = 'Most excellent!';
       } else if (finalValue >= 85) {
         text = 'Excellent!';
       } else if (finalValue >= 80) {
-        text = 'Admirable!'
+        text = 'Admirable!';
       } else if (finalValue >= 75) {
         text = 'Commendable!';
       } else if (finalValue >= 70) {
