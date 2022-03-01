@@ -734,6 +734,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Synthesis
             mode={mode} status={status} brick={brick}
             attempts={attempts}
+            user={props.user}
             moveNext={moveToPreReview} onHighlight={onHighlight}
             history={history}
             endTime={synthesisEndTime}

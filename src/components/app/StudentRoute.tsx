@@ -23,6 +23,7 @@ interface StudentRouteProps {
 }
 
 const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, innerComponent, user, ...rest }) => {
+  console.log('is authenticated', rest.isAuthenticated, rest);
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
       rest.getUser();
