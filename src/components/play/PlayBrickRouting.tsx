@@ -74,6 +74,7 @@ import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
 import LastAttemptDialog from "./baseComponents/dialogs/LastAttemptDialog";
 import PremiumEducatorDialog from "./baseComponents/dialogs/PremiumEducatorDialog";
 import PremiumLearnerDialog from "./baseComponents/dialogs/PremiumLearnerDialog";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 export enum PlayPage {
   Cover,
@@ -368,8 +369,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (competitionId > -1) {
       ba.competitionId = competitionId;
     }
-    saveBrickAttempt(ba);
+    const promise = saveBrickAttempt(ba);
     settingLiveDuration();
+    return promise;
   };
 
   const finishReview = () => {
@@ -420,6 +422,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }).catch(() => {
       setFailed(true);
       setCreatingAttempt(false);
+      setLiveBrills(0);
     });
   };
 
@@ -708,6 +711,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {isPhone() && renderPhoneFooter(PlayPage.Live)}
         </Route>
         <Route path="/play/brick/:brickId/provisionalScore">
+          {liveBrills >= 0 ?
           <ProvisionalScore
             user={props.user}
             history={history}
@@ -719,7 +723,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             attempts={attempts}
             liveDuration={liveDuration}
             moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}
-          />
+          /> : <PageLoader content="loading brills" />
+          }
         </Route>
 
         <Route path={routes.preSynthesisRoute}>

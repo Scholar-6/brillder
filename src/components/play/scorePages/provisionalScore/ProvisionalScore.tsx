@@ -85,6 +85,8 @@ class ProvisionalScore extends React.Component<
 
     const colors = ['#0681db', '#ffd900', '#30c474'];
 
+    console.log('data', score, maxScore, props.liveBrills, finalValue);
+
     if (finalValue === 100 && props.liveBrills > 0) {
       const duration = 15 * 1000;
       const animationEnd = Date.now() + duration;

@@ -43,7 +43,7 @@ interface LivePageProps {
   history: any;
   previewQuestionIndex?: number;
   updateAttempts(attempt: any, index: number): any;
-  finishBrick(): void;
+  finishBrick(): Promise<void>;
 
   // things related to count down
   endTime: any;
@@ -184,26 +184,26 @@ const LivePage: React.FC<LivePageProps> = ({
     }
   };
 
-  const nextFromShuffle = () => {
+  const nextFromShuffle = async () => {
     setShuffleDialog(false);
     onQuestionAttempted(activeStep);
 
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
       questions.forEach((question) => (question.edited = false));
-      props.finishBrick();
+      await props.finishBrick();
       moveToProvisional();
     }
   };
 
-  const nextFromCategorize = () => {
+  const nextFromCategorize = async () => {
     setCategorizeDialog(false);
     onQuestionAttempted(activeStep);
 
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
       questions.forEach((question) => (question.edited = false));
-      props.finishBrick();
+      await props.finishBrick();
       moveToProvisional();
     }
   };
@@ -268,17 +268,17 @@ const LivePage: React.FC<LivePageProps> = ({
     }
   };
 
-  const moveNext = () => {
+  const moveNext = async () => {
     handleStep(activeStep + 1)();
     questions.forEach((question) => (question.edited = false));
-    props.finishBrick();
+    await props.finishBrick();
     moveToProvisional();
   };
 
-  const submitAndMove = () => {
+  const submitAndMove = async () => {
     setActiveAnswer();
     questions.forEach((question) => (question.edited = false));
-    props.finishBrick();
+    await props.finishBrick();
     moveToProvisional();
   };
 
