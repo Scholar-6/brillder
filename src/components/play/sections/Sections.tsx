@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { faHourglassStart } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Brick } from "model/brick";
 import { rightKeyPressed } from "components/services/key";
@@ -40,13 +42,25 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="like-buttons-container s-fade2">
               <div className="x-center">
-                <div className="like-button orange" onClick={props.moveNext}>Preparation</div>
+                <div className="like-button orange" onClick={props.moveNext}>
+                  <SpriteIcon name="arrow-right" className="absolute-arrow-left" />
+                  Preparation
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button">Investigation</div><div className="like-button">Synthesis</div>
+                <div className="like-button">
+                  <FontAwesomeIcon icon={faHourglassStart} className="glass-icon-dd" />
+                  Investigation
+                </div>
+                <div className="like-button">
+                  Synthesis
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button">Review</div>
+                <div className="like-button">
+                  <FontAwesomeIcon icon={faHourglassStart} className="glass-icon-dd" />
+                  Review
+                </div>
               </div>
             </div>
           </div>
