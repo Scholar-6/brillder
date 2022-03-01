@@ -280,8 +280,8 @@ class ProvisionalScore extends React.Component<
                 </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
-                    <div className="brill-coin-img">
-                      <img alt="brill" src="/images/Brill.svg" />
+                    <div className={`brill-coin-img ${this.props.liveBrills === 0 ? 'no-spinning' : ''}`}>
+                      <img alt="brill" src={this.props.liveBrills === 0 ? '/images/Brill-Blue.svg' : "/images/Brill.svg"} />
                       <SpriteIcon name="logo" />
                     </div>
                   </div>

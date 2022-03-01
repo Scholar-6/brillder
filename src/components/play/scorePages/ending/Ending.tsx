@@ -247,8 +247,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                 </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
-                    <div className="brill-coin-img">
-                      <img alt="brill" src="/images/Brill.svg" />
+                    <div className={`brill-coin-img ${this.props.reviewBrills === 0 ? 'no-spinning' : ''}`}>
+                      <img alt="brill" src={this.props.reviewBrills === 0 ? '/images/Brill-Blue.svg' : "/images/Brill.svg"} />
                       <SpriteIcon name="logo" />
                     </div>
                   </div>

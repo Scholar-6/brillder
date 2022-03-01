@@ -289,8 +289,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         let maxScore = 0;
         let bestScore = -1;
         for (let i = 0; i < attempts.length; i++) {
-          const loopScore = attempts[i].score;
+          const loopScore = (attempts[i].score + attempts[i].oldScore) / 2;
           if (bestScore < loopScore) {
+            console.log(attempts[i])
             maxScore = attempts[i].maxScore;
             bestScore = loopScore;
           }

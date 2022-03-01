@@ -126,6 +126,14 @@
         .pr-progress-container {
           height: 25vh;
           width: 25vh;
+
+          .brill-coin-img.no-spinning {
+            animation: none;
+
+            svg {
+              color: var(--theme-dark-blue);
+            }
+          }
         }
       }
 
