@@ -274,7 +274,7 @@ class ProvisionalScore extends React.Component<
               <div className="content">
                 <div className="title">
                   {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
-                  {this.props.liveBrills} Brills Earned!
+                  {Math.round(this.props.liveBrills)} Brills Earned!
                 </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
@@ -895,7 +895,7 @@ class ProvisionalScore extends React.Component<
               <div className="brill-coin-img">
                 <img alt="brill" src="/images/Brill-B.svg" />
               </div>
-              <div className="bold">{this.props.liveBrills} Brills Earned!</div>
+              <div className="bold">{Math.round(this.props.liveBrills)} Brills Earned!</div>
             </div>
           );
         }

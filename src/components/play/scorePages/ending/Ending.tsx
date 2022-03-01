@@ -240,7 +240,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               <div className="content">
                 <div className="title">
                   {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
-                  {this.props.reviewBrills} Brills Earned!
+                  {Math.round(this.props.reviewBrills)} Brills Earned!
                 </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
@@ -478,7 +478,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                         <img alt="brill" src="/images/Brill.svg" />
                         <SpriteIcon name="logo" />
                       </div>
-                      <div className="bold">{this.props.reviewBrills} Brills Earned!</div>
+                      <div className="bold">{Math.round(this.props.reviewBrills)} Brills Earned!</div>
                     </div>
                   }
                   <div className="intro-text-row f-align-self-start m-t-5">
