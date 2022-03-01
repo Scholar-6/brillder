@@ -9,6 +9,7 @@ import moment from 'moment';
 import queryString from 'query-string';
 import { getAttempts } from 'services/axios/attempt';
 
+import actions from "redux/actions/auth";
 import Cover from "./cover/Cover";
 import Sections from "./sections/Sections";
 import Introduction from "./newPrep/PhonePrep";
@@ -102,6 +103,7 @@ interface BrickRoutingProps {
   isAuthenticated: isAuthenticated;
   getUser(): Promise<any>;
   setUser(user: User): void;
+  loginSuccess(): void;
 }
 
 const MobileTheme = React.lazy(() => import('./themes/BrickPageMobileTheme'));
@@ -525,6 +527,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToLibrary = () => {
+    // set true when new user is true anyway in logged in users
+    props.loginSuccess();
+
     if (props.isAuthenticated === isAuthenticated.True) {
       history.push(map.MyLibrarySubject(brick.subjectId));
     } else if (userToken) {
@@ -533,6 +538,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToPostPlay = () => {
+    // set true when new user is true anyway in logged in users
+    props.loginSuccess();
+
     if (props.isAuthenticated === isAuthenticated.True) {
       history.push(map.postPlay(brick.id, props.user.id));
     } else if (userToken) {
@@ -982,6 +990,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
+  loginSuccess: () => dispatch(actions.loginSuccess()),
   setUser: (user: User) => dispatch(userActions.setUser(user)),
 });
 
