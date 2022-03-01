@@ -88,7 +88,7 @@ class ProvisionalScore extends React.Component<
     console.log('data', score, maxScore, props.liveBrills, finalValue);
 
     if (finalValue === 100 && props.liveBrills > 0) {
-      const duration = 15 * 1000;
+      const duration = 5 * 1000;
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors };
 
