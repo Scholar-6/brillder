@@ -47,7 +47,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       userAnswers = component.list;
     }
 
-    const canDrag = this.props.attempt?.correct ? false : true;
+    let canDrag = true;
+    if (this.props.isReview) {
+      canDrag = this.props.attempt?.correct ? false : true;
+    }
     this.state = { status, userAnswers, canDrag };
   }
 
