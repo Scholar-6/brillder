@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { connect } from "react-redux";
 
 import "./Ending.scss";
 import { Brick } from "model/brick";
@@ -15,6 +16,8 @@ import moment from "moment";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
 import map from "components/map";
+import actions from "redux/actions/auth";
+
 
 const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
 const PhoneTheme = React.lazy(() => import('./themes/ScorePhoneTheme'));
@@ -45,6 +48,8 @@ interface EndingProps {
 
   liveDuration?: null | moment.Duration;
   reviewDuration?: null | moment.Duration;
+
+  loginSuccess(): void;
 
   move(): void;
 }
@@ -132,6 +137,11 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         handleStep={() => { }}
       />
     );
+  }
+
+  moveToLibrary() {
+    this.props.loginSuccess();
+    this.props.history.push(map.MyLibrarySubject(this.props.brick.subjectId));
   }
 
   render() {
@@ -258,7 +268,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   </div>
                 )}
                 <div className="btn-container">
-                  <div className="btn btn-green orange" onClick={() => { this.props.history.push(map.MyLibrarySubject(brick.subjectId)) }}>Exit</div>
+                  <div className="btn btn-green orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
                   <div className="btn btn-green" onClick={this.props.move}>More Options</div>
                 </div>
               </div>
@@ -425,7 +435,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     <div>Avg.</div>
                   </div>
                   <div className="flex-center">
-                    <div className="btn btn-orange" onClick={() => { this.props.history.push(map.MyLibrarySubject(brick.subjectId)) }}>Exit</div>
+                    <div className="btn btn-orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
                     <div className="btn btn-green" onClick={this.props.move}>More Options</div>
                   </div>
                 </div>
@@ -484,4 +494,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 }
 
-export default EndingPage;
+const mapDispatch = (dispatch: any) => ({
+  loginSuccess: () => dispatch(actions.loginSuccess()),
+});
+
+export default connect(null, mapDispatch)(EndingPage);
