@@ -208,7 +208,10 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   render() {
-    const correct = this.props.attempt?.correct;
+    let cantDrag = false;
+    if (this.props.isReview) {
+      cantDrag = !!this.props.attempt?.correct;
+    }
     return (
       <div className="question-unique-play horizontal-shuffle-play">
         <p><span className="help-text">
@@ -223,7 +226,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
         {this.props.isBookPreview ? (
           <div>{this.renderAnswers()}</div>
         ) : (
-          correct === true
+          cantDrag === true
             ? <div>
               {this.renderAnswers()}
             </div>

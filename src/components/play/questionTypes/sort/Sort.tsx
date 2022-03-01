@@ -353,7 +353,10 @@ class Sort extends CompComponent<SortProps, SortState> {
     const incrementCount = () => count++;
 
     const unsorted = this.state.userCats[this.state.userCats.length - 1];
-    const correct = !!this.props.attempt?.correct;
+    let correct = false;
+    if (this.props.isReview) {
+      correct = !!this.props.attempt?.correct;
+    }
 
     const haveImage = this.checkImages();
 
