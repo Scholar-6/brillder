@@ -418,7 +418,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         await props.getUser();
       }
       setAttemptId(response.data.id);
-      setLiveBrills(response.data.brills);
+
+      let {brills} = response.data;
+      if (brills < 0) {
+        brills = 0;
+      }
+      setLiveBrills(brills);
+
       setCreatingAttempt(false);
     }).catch(() => {
       setFailed(true);
@@ -449,7 +455,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         await props.getUser();
       }
       setAttemptId(response.data.Id);
-      setReviewBrills(response.data.brills);
+
+      let {brills} = response.data;
+      if (brills < 0) {
+        brills = 0;
+      }
+      setReviewBrills(brills);
+      
       props.storeLiveStep(0, 0);
     }).catch(() => {
       setFailed(true);
