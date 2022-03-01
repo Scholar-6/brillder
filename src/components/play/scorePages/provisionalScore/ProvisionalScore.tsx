@@ -221,10 +221,10 @@ class ProvisionalScore extends React.Component<
         text = 'You equalled your best effort!';
       } else if (finalValue >= 50 && this.props.liveBrills === 0 && this.props.user) {
         text = "Uh-oh - you're getting worse!";
-      } else if (this.props.bestScore && finalValue > this.props.bestScore && finalValue >= 50 && this.props.user) {
-        text = 'A New High Score!';
       } else if (finalValue >= 95) {
         text = 'Superlative!';
+      } else if (this.props.bestScore && finalValue > this.props.bestScore && finalValue >= 50 && this.props.user) {
+        text = 'A New High Score!';
       } else if (finalValue >= 90) {
         text = 'Most excellent!';
       } else if (finalValue >= 85) {

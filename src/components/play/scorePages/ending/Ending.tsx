@@ -189,10 +189,10 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         text = "You've still got it!";
       } else if (fixedCurrentScore >= 50 && this.props.reviewBrills === 0) {
         text = 'No better than your best effort!';
-      } else if (this.props.bestScore && fixedCurrentScore > this.props.bestScore && fixedCurrentScore >= 50) {
-        text = 'A New High Score!'
       } else if (fixedCurrentScore >= 95) {
         text = 'Superlative!'
+      } else if (this.props.bestScore && fixedCurrentScore > this.props.bestScore && fixedCurrentScore >= 50) {
+        text = 'A New High Score!'
       } else if (fixedCurrentScore >= 90) {
         text = 'Most excellent!';
       } else if (fixedCurrentScore >= 85) {
