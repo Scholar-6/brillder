@@ -894,7 +894,7 @@ class ProvisionalScore extends React.Component<
                 <div className="absolute-high-score">
                   Previous High Score: {this.props.bestScore}
                 </div>}
-              <div className="brill-coin-img">
+              <div className={`brill-coin-img ${this.props.liveBrills === 0 ? 'no-spinning' : ""}`}>
                 <img alt="brill" src="/images/Brill-B.svg" />
               </div>
               <div className="bold">{Math.round(this.props.liveBrills)} Brills Earned!</div>

@@ -166,6 +166,10 @@
           width: 4vw;
           height: 4vw;
         }
+
+        &.no-spinning  {
+          animation: none;
+        }
       }
     }
   }
