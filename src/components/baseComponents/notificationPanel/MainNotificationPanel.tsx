@@ -242,6 +242,8 @@ class MainNotificationPanel extends Component<
       className += " no-notifications";
     }
 
+    console.log(this.props.notifications);
+
     return (
       <div className={className}>
         <div className="notification-content">

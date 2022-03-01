@@ -37,6 +37,23 @@
       color: var(--theme-dark-blue) !important;
     }
   }
+  .brill-icon-ff {
+    border: none !important;
+    width: 3.2vw;
+    height: 3.2vw;
+    img {
+      width: 3.2vw;
+      height: 3.2vw;
+    }
+    svg {
+      position: absolute;
+      color: var(--theme-orange) !important;
+      width: 55% !important;
+      height: 55% !important;
+      top: 22.5% !important;
+      left: 22.5% !important;
+    }
+  }
   .notification-content {
     background-color: var(--theme-light-blue);
     box-shadow: none !important;
@@ -74,6 +91,10 @@
             svg {
               width: 70% !important;
               height: 70% !important;
+            }
+            .brill-icon-ff svg {
+              width: 55% !important;
+              height: 55% !important;
             }
           }
         }

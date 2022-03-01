@@ -111,6 +111,11 @@ const NotificationItem: React.FC<Props> = ({
             />
           )}
           {notification.type === NotificationType.TeacherInvitation && <TeachIcon className="teach-icon-notif" />}
+          {notification.type === NotificationType.BrillsEarned && <div className="brill-icon-ff">
+            <img alt="brills" src="/images/Brill.svg" />
+            <SpriteIcon name="logo" />
+            </div>
+          }
         </div>
         <div className="content-box">
           <div className="notification-detail">
