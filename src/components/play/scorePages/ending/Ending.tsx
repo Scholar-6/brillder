@@ -45,6 +45,7 @@ interface EndingProps {
   location: any;
   brickAttempt: BrickAttempt;
   bestScore: number;
+  liveBrills: number;
   reviewBrills: number;
 
   liveDuration?: null | moment.Duration;
@@ -185,9 +186,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
 
     const renderSubTitle = () => {
       let text = '';
-      if (this.props.reviewBrills === 0 && fixedCurrentScore === 100) {
+      if ((this.props.reviewBrills + this.props.liveBrills) === 0 && fixedCurrentScore === 100) {
         text = "You've still got it!";
-      } else if (fixedCurrentScore >= 50 && this.props.reviewBrills === 0) {
+      } else if (fixedCurrentScore >= 50 && (this.props.reviewBrills + this.props.liveBrills === 0)) {
         text = 'No better than your best effort!';
       } else if (fixedCurrentScore >= 95) {
         text = 'Superlative!'
