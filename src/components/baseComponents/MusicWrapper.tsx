@@ -21,6 +21,7 @@ class MusicWrapper extends React.Component<MusicProps, MusicState> {
 
   togglePlay() {
     if (!this.props.disabled) {
+      /*eslint-disable-next-line*/
       this.state.audio.currentTime = this.props.startTime;
       this.state.audio.play();
     }

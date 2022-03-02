@@ -49,6 +49,8 @@ interface EndingProps {
   liveBrills: number;
   reviewBrills: number;
 
+  isPlayPreview?: boolean;
+
   liveDuration?: null | moment.Duration;
   reviewDuration?: null | moment.Duration;
 
@@ -273,10 +275,14 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     + {prepareDuration(this.props.reviewDuration)} Review
                   </div>
                 )}
-                <div className="btn-container">
-                  <div className="btn btn-green orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
-                  <div className="btn btn-green" onClick={this.props.move}>More Options</div>
-                </div>
+                {this.props.isPlayPreview ?
+                  <div className="btn-container">
+                    <div className="btn btn-green" onClick={this.props.move}>Next</div>
+                  </div> :
+                  <div className="btn-container">
+                    <div className="btn btn-green orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
+                    <div className="btn btn-green" onClick={this.props.move}>More Options</div>
+                  </div>}
               </div>
             </div>
           );
@@ -443,10 +449,15 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   <div className="flex-center number-status bold">
                     <div>Avg.</div>
                   </div>
-                  <div className="flex-center">
-                    <div className="btn btn-orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
-                    <div className="btn btn-green" onClick={this.props.move}>More Options</div>
-                  </div>
+                  {this.props.isPlayPreview ?
+                    <div className="flex-center">
+                      <div className="btn btn-green" onClick={this.props.move}>Next</div>
+                    </div>
+                    :
+                    <div className="flex-center">
+                      <div className="btn btn-orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
+                      <div className="btn btn-green" onClick={this.props.move}>More Options</div>
+                    </div>}
                 </div>
                 <div className="new-layout-footer" style={{ display: "none" }}>
                   <div className="title-column provisional-title-column">
