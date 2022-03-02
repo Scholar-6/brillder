@@ -1,3 +1,4 @@
+import { GetVolume } from 'localStorage/play';
 import React from 'react';
 
 interface MusicProps {
@@ -22,8 +23,12 @@ class MusicWrapper extends React.Component<MusicProps, MusicState> {
   togglePlay() {
     if (!this.props.disabled) {
       /*eslint-disable-next-line*/
-      this.state.audio.currentTime = this.props.startTime;
-      this.state.audio.play();
+      const volume = GetVolume();
+      console.log(44, volume);
+      if (volume === false) {
+        this.state.audio.currentTime = this.props.startTime;
+        this.state.audio.play();
+      }
     }
   }
 

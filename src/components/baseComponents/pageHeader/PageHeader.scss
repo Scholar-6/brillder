@@ -94,21 +94,6 @@
           background: var(--theme-light-blue);
         }
 
-        .volume-container-dr {
-          margin-right: 2vw;
-          cursor: pointer;
-          color: white;
-          border-radius: 50%;
-          width: 4vw;
-          height: 4vw;
-          background: var(--theme-dark-blue);
-          svg {
-            padding-left: 10%;
-            width: 65%;
-            height: 65%;
-          }
-        }
-
         .brill-intro-container {
           display: flex;
           color: white;
@@ -463,5 +448,20 @@
   font-family: $font-family-bold;
   &:hover {
     color: var(--theme-orange); 
+  }
+}
+
+.volume-container-dr {
+  margin-right: 2vw;
+  cursor: pointer;
+  color: white;
+  border-radius: 50%;
+  width: 4vw;
+  height: 4vw;
+  background: var(--theme-dark-blue);
+  svg {
+    padding-left: 10%;
+    width: 65%;
+    height: 65%;
   }
 }
