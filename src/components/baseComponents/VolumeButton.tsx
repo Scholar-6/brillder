@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { GetVolume, SetVolume } from 'localStorage/play';
 import SpriteIcon from './SpriteIcon';
 
-interface VolumeProps { }
+interface VolumeProps {
+  customClassName?: string;
+}
 
-const VolumeButton: React.FC<VolumeProps> = () => {
+const VolumeButton: React.FC<VolumeProps> = (props) => {
   const [volume, setVolume] = React.useState(false);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ const VolumeButton: React.FC<VolumeProps> = () => {
   }
 
   return (
-    <div className="volume-container-dr flex-center" onClick={toggle}>
+    <div className={`volume-container-dr flex-center ${props.customClassName}`} onClick={toggle}>
       <SpriteIcon name={volume === true ? "volume-x" : "volume-1"} />
     </div>
   );
