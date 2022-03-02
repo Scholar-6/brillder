@@ -20,8 +20,16 @@ export function SetVolume(volume: boolean) {
   localStorage.setItem(VolumeToggle, volume.toString());
 }
 
+/**
+ * Toggle volume
+ * @return boolean, true means disabled
+ */
 export function GetVolume() {
-  return localStorage.getItem(VolumeToggle);
+  const volume = localStorage.getItem(VolumeToggle);
+  if (volume === "true") {
+    return true;
+  }
+  return false;
 }
 
 export function CashAttempt(attemptCash: any) {
