@@ -1216,3 +1216,51 @@
     opacity: 1;
   }
 }
+
+.main-page-menu .brill-coin-img,
+.page-header .brill-coin-img {
+  position: relative;
+  margin-left: 1vw;
+  margin-right: 2vw;
+  width: 3.68vw;
+  height: 3.68vw;
+  img {
+    margin: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  svg {
+    color: var(--theme-orange);
+    position: absolute;
+    top: 22.5%;
+    left: 22.5%;
+    width: 55%;
+    height: 55%;
+  }
+  .css-custom-tooltip {
+    z-index: 100;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: none;
+    margin-top: 1vh;
+    width: 20vw;
+    background: var(--white);
+    padding: 1.4vw 2vw;
+    margin-left: -6vw;
+
+    .bold {
+      font-size: 1.2vw;
+      margin-bottom: 0.7vw;
+    }
+
+    .regular {
+      font-family: $font-family-regular;
+    }
+  }
+
+  &:hover {
+    .css-custom-tooltip {
+      display: block;
+      opacity: 1;
+    }
+  }
+}

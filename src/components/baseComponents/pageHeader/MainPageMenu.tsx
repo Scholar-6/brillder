@@ -17,6 +17,7 @@ import MoreButton from './MoreButton';
 import { PageEnum } from './PageHeadWithMenu';
 import { isMobile } from "react-device-detect";
 import NotificationPanel from "../notificationPanel/NotificationPanel";
+import BrillIcon from "../BrillIcon";
 
 interface MainPageMenuProps {
   history: any;
@@ -96,7 +97,7 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
         <div className="menu-buttons">
           <div className="brill-intro-container">
             <div className="brills-number">{renderBrills()}</div>
-            <img alt="" className="brills-icon" src="/images/Brill-B.svg" />
+            <BrillIcon />
           </div>
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />

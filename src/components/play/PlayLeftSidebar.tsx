@@ -27,6 +27,7 @@ import GenerateCoverButton from "./baseComponents/sidebarButtons/GenerateCoverBu
 import { isInstitutionPreference } from "components/services/preferenceService";
 import CompetitionButton from "./baseComponents/sidebarButtons/CompetitionButton";
 import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDialog";
+import BrillIcon from "components/baseComponents/BrillIcon";
 
 interface SidebarProps {
   history: any;
@@ -419,10 +420,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       if (bestScore > 0) {
         if (this.props.sidebarRolledUp) {
           return (<div className="high-score-sm-d3s">
-            <div className="brill-coin-img">
-              <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
-              <SpriteIcon name="logo" />
-            </div>
+            <BrillIcon />
             <div>{bestScore}</div>
             <div className="custom-tooltip">
               Your High Score

@@ -21,6 +21,7 @@ import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestio
 import { getSubjects } from 'services/axios/subject';
 import { User } from 'model/user';
 import VolumeButton from '../VolumeButton';
+import BrillIcon from '../BrillIcon';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -275,7 +276,7 @@ class PageHeader extends Component<Props, State> {
                   {
                     this.props.user && <div className="brill-intro-container">
                       <div className="brills-number">{renderBrills()}</div>
-                      <img alt="" className="brills-icon" src="/images/Brill-B.svg" />
+                      <BrillIcon />
                     </div>
                   }
                   <BellButton
