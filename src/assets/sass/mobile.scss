@@ -1635,6 +1635,7 @@
 
 .main-page-menu .brill-coin-img,
 .page-header .brill-coin-img {
+  position: relative;
   margin-left: 1vw;
   margin-right: 6vw;
   width: 15vw;
@@ -1656,7 +1657,7 @@
     z-index: 100;
     position: absolute;
     border-radius: 2vw;
-    left: 10vw;
+    left: -33vw;
     bottom: 20vw;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: none;
