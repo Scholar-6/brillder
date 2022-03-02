@@ -6,6 +6,7 @@ import { Brick } from "model/brick";
 import { rightKeyPressed } from "components/services/key";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 
 interface Props {
   brick: Brick;
@@ -30,6 +31,7 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
   if (isPhone()) {
     return (
       <div className="pre-investigation pre-synthesis">
+        <MusicAutoplay url="/sounds/mixkit-fast-sweep-transition.wav" />
         <div className="fixed-upper-b-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
         <div className="introduction-page">
           <div className="ss-phone-before-brain" />
@@ -61,6 +63,7 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
+      <MusicAutoplay url="/sounds/mixkit-fast-sweep-transition.wav" />
       <div className="fixed-upper-b-title text-white q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page after-cover-page animate-fade">
         <div className="introduction-page">
