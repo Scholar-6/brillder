@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface MusicProps {
-  url: string;
+  url?: string;
   startTime: number;
   disabled?: boolean;
   children: any;
