@@ -28,7 +28,35 @@ const SectionsPage: React.FC<Props> = ({ brick, ...props }) => {
   });
 
   if (isPhone()) {
-    return <div />;
+    return (
+      <div className="pre-investigation pre-synthesis">
+        <div className="fixed-upper-b-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+        <div className="introduction-page">
+          <div className="ss-phone-before-brain" />
+          <div className="ss-phone-before-title" />
+          <div className="title s-fade1">
+            A brick has four sections.
+          </div>
+          <div className="ss-phone-after-title" />
+          <div className="like-button orange animate-v1">
+            <SpriteIcon name="arrow-right" className="absolute-arrow-left-de" />
+            Preparation
+          </div>
+          <div className="ss-phone-between-button" />
+          <div className="like-button animate-v1">
+            Investigation
+          </div>
+          <div className="ss-phone-between-button" />
+
+          <div className="like-button no-padding" onClick={props.moveNext}>
+            Synthesis
+          </div>
+          <div className="ss-phone-between-button" />
+          <div className="like-button animate-v1">Review</div>
+          <div className="ss-phone-after-buttons" />
+        </div>
+      </div>
+    );
   }
 
   return (

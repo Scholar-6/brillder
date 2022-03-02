@@ -419,7 +419,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       }
       setAttemptId(response.data.id);
 
-      let {brills} = response.data;
+      let { brills } = response.data;
       if (brills < 0) {
         brills = 0;
       }
@@ -456,12 +456,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       }
       setAttemptId(response.data.Id);
 
-      let {brills} = response.data;
+      let { brills } = response.data;
       if (brills < 0) {
         brills = 0;
       }
       setReviewBrills(brills);
-      
+
       props.storeLiveStep(0, 0);
     }).catch(() => {
       setFailed(true);
@@ -502,16 +502,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         return;
       }
     }
-    if (isPhone()) {
+    if (props.user) {
       moveToBrief();
     } else {
-      if (props.user) {
-        moveToBrief();
-      } else {
-        moveToSections();
-      }
-      setSidebar(true);
+      moveToSections();
     }
+    setSidebar(true);
   }
 
   const moveToSections = () => history.push(playSections(brick));
@@ -663,7 +659,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route path={routes.sectionsRoute}>
           <Sections brick={brick} moveNext={moveToBrief} />
-          {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={() => { }} />}
+          {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={moveToBrief} />}
         </Route>
         <Route path={routes.prePrepRoute}>
           <PrePrep brick={brick} mode={mode} moveNext={moveToNewPrep} onHighlight={onHighlight} />
@@ -728,18 +724,18 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route path="/play/brick/:brickId/provisionalScore">
           {liveBrills >= 0 ?
-          <ProvisionalScore
-            user={props.user}
-            history={history}
-            location={location}
-            status={status}
-            brick={brick}
-            liveBrills={liveBrills}
-            bestScore={bestScore}
-            attempts={attempts}
-            liveDuration={liveDuration}
-            moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}
-          /> : <PageLoader content="loading brills" />
+            <ProvisionalScore
+              user={props.user}
+              history={history}
+              location={location}
+              status={status}
+              brick={brick}
+              liveBrills={liveBrills}
+              bestScore={bestScore}
+              attempts={attempts}
+              liveDuration={liveDuration}
+              moveNext={() => cashAttempt(routes.PlaySynthesisLastPrefix)}
+            /> : <PageLoader content="loading brills" />
           }
         </Route>
 

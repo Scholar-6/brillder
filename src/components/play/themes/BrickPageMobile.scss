@@ -2214,6 +2214,14 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         top: 25%;
       }     
     }
+    .absolute-arrow-left-de {
+      position: absolute;
+      color: var(--theme-dark-blue);
+      width: 10vw !important;
+      height: 10vw !important;
+      left: -10vw;
+      top: 4vw;
+    }
     .absolute-arrow-left-df {
       position: absolute;
       color: var(--theme-dark-blue);
