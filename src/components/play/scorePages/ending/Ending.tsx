@@ -18,6 +18,7 @@ import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
 import map from "components/map";
 import actions from "redux/actions/auth";
+import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 
 
 const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
@@ -241,6 +242,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         if (this.state.isMobileSecondPart) {
           return (
             <div className="phone-provisional-score bg-dark-blue">
+              {this.props.reviewBrills > 0 && <MusicAutoplay url="/sounds/mixkit-magical-coin-win.wav" />}
               <div className="content">
                 <div className="title">
                   {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
@@ -354,6 +356,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       return (
         <React.Suspense fallback={<></>}>
           <PhoneTheme />
+          <MusicAutoplay url="/sounds/mixkit-deep-cinematic-subtle-drum-impact.wav" />
           {renderPhoneContent()}
         </React.Suspense>
       );
@@ -362,6 +365,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     return (
       <React.Suspense fallback={<></>}>
         <DesktopTheme />
+        <MusicAutoplay url="/sounds/mixkit-deep-cinematic-subtle-drum-impact.wav" />
+        {this.props.reviewBrills > 0 && <MusicAutoplay url="/sounds/mixkit-magical-coin-win.wav" />}
         <div className="brick-row-container ending-container">
           <div className="brick-container play-preview-panel ending-page">
             <div className="fixed-upper-b-title">
@@ -476,7 +481,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               </Grid>
               <Grid item xs={4}>
                 <div className="introduction-info">
-                  {this.props.reviewBrills >= 50 &&
+                  {this.props.reviewBrills > 0 &&
                     <div className="top-brill-coins">
                       <div className="brill-coin-img">
                         <img alt="brill" src="/images/Brill.svg" />
