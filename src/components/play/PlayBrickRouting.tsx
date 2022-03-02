@@ -670,7 +670,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             ? <PhonePreInvestigationPage brick={brick} moveNext={moveToTimeInvestigation} />
             : <PreInvestigationPage brick={brick} moveNext={moveToTimeInvestigation} />
           }
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} btnText="Next" next={moveToTimeInvestigation} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} music={"/sounds/mixkit-ominous-drums.wav"} btnText="Next" next={moveToTimeInvestigation} />}
         </Route>
 
         <Route path={routes.countInvestigationRoute}>

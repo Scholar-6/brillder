@@ -11,6 +11,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
 import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
+import MusicWrapper from 'components/baseComponents/MusicWrapper';
 
 
 interface FooterProps {
@@ -18,6 +19,8 @@ interface FooterProps {
   history: any;
   btnText: string;
   next(): void;
+
+  music?: string;
 
   showQRCode?: boolean;
 
@@ -47,13 +50,15 @@ const PhonePlaySimpleFooter: React.FC<FooterProps> = (props) => {
         {props.showQRCode && <GenerateCoverButton brick={brick} isSvg={true} />}
         <SpriteIcon name="" />
         <SpriteIcon name="" />
-        <div
-          className="f-fixed-arrow-button"
-          onClick={props.next}
-        >
-          {props.btnText}
-          <SpriteIcon name="arrow-right" className="text-white" />
-        </div>
+        <MusicWrapper startTime={0} url={props.music} >
+          <div
+            className="f-fixed-arrow-button"
+            onClick={props.next}
+          >
+            {props.btnText}
+            <SpriteIcon name="arrow-right" className="text-white" />
+          </div>
+        </MusicWrapper>
       </div>
     );
   }

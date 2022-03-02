@@ -2,6 +2,7 @@ import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import TimeDropdowns from "../timeDropdowns/TimeDropdowns";
 import './CompetitionDialog.scss';
+import SpriteIcon from "../SpriteIcon";
 
 interface DialogProps {
   isOpen: boolean;
@@ -20,21 +21,29 @@ const CompetitionDialog: React.FC<DialogProps> = ({ isOpen, submit, close }) => 
 
   return (
     <Dialog open={isOpen} onClose={close} className="dialog-box competition-dialog">
+      <div className="close-button svgOnHover" onClick={close}>
+        <SpriteIcon name="cancel" className="w100 h100 active" />
+      </div>
       <div className="dialog-header">
-        Create competition
-        <div>
+        <div className="title-sr4">
+          How long will this competition run for?
+        </div>
+        <div className="flex-center">
+          <div>
+            Start
+          </div>
           <TimeDropdowns date={startDate} onChange={setStartDate} />
         </div>
-        <div>
+        <div className="flex-center">
+          <div>
+            End
+          </div>
           <TimeDropdowns date={endDate} onChange={setEndDate} />
         </div>
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button" onClick={() => submit(startDate, endDate)}>
-          <span>Yes</span>
-        </button>
-        <button className="btn btn-md bg-gray no-button" onClick={close}>
-          <span>No</span>
+        <button className="btn btn-md bg-theme-green yes-button" onClick={() => submit(startDate, endDate)}>
+          <span>Launch</span>
         </button>
       </div>
     </Dialog>

@@ -33,6 +33,7 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
   }, []);
 
   if (!props.user) { return <span />; }
+  console.log(hassigned);
   if (!hassigned) { return <span />; }
 
   const canSee = checkTeacherOrAdmin(props.user) || isBuilderPreference(props.user);
