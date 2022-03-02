@@ -1182,4 +1182,28 @@
   top: 3vw;
   right: -1vw;
   background: var(--theme-light-blue);
+
+  .css-custom-tooltip {
+    margin-right: 2vw;
+  }
+}
+
+.volume-container-dr {
+  .css-custom-tooltip {
+    display: none;
+    margin-top: 6vw;
+    padding: 0 !important;
+    margin-right: -1vw;
+    text-align: center;
+    font-family: $font-family-bold;
+    z-index: 100;
+  }
+
+  &:hover .css-custom-tooltip {
+    margin-top: 7vw;
+    text-align: center;
+    width: 7vw;
+    display: block;
+    opacity: 1;
+  }
 }

@@ -23,6 +23,9 @@ const VolumeButton: React.FC<VolumeProps> = (props) => {
   return (
     <div className={`volume-container-dr flex-center ${props.customClassName}`} onClick={toggle}>
       <SpriteIcon name={volume === true ? "volume-x" : "volume-1"} />
+      <div className="css-custom-tooltip">
+        {volume === true ? 'Enable sounds' : 'Mute sounds'}
+      </div>
     </div>
   );
 }
