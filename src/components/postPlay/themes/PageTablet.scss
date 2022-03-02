@@ -593,3 +593,23 @@
     }
   }
 }
+
+// header top right part
+.post-play-page .upper-part .page-header .logout-container {
+  padding-left: 65.3vw;
+  .action-container {
+    .brill-intro-container {
+      display: flex;
+      align-items: center;
+      font-family: $font-family-bold;
+      font-size: 1.2vw;
+
+      img {
+        width: 3.68vw;
+        height: 3.68vw;
+        margin-left: 1.2vw;
+        margin-right: 2vw;
+      }
+    }
+  }
+}
