@@ -1180,7 +1180,7 @@
 .volume-container-dr.absolute-right {
   position: absolute;
   top: 3vw;
-  right: -1vw;
+  right: -0.7vw;
   background: var(--theme-light-blue);
 
   .css-custom-tooltip {
@@ -1189,14 +1189,23 @@
 }
 
 .volume-container-dr {
+  transition: all 300ms ease-in-out;
+  svg {
+    stroke-width: 1;
+  }
   .css-custom-tooltip {
     display: none;
     margin-top: 6vw;
     padding: 0 !important;
-    margin-right: -1vw;
+    margin-right: 0vw;
     text-align: center;
     font-family: $font-family-bold;
     z-index: 100;
+  }
+
+  &.active-2 {
+    color: var(--theme-dark-blue);
+    background: white;
   }
 
   &:hover .css-custom-tooltip {

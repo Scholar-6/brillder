@@ -22,10 +22,9 @@ class MusicWrapper extends React.Component<MusicProps, MusicState> {
 
   togglePlay() {
     if (!this.props.disabled) {
-      /*eslint-disable-next-line*/
       const volume = GetVolume();
-      console.log(44, volume);
       if (volume === false) {
+        /*eslint-disable-next-line*/
         this.state.audio.currentTime = this.props.startTime;
         this.state.audio.play();
       }
