@@ -16,6 +16,7 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import { User } from "model/user";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
+import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 
 const PhoneTheme = React.lazy(() => import('./themes/ScorePhoneTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
@@ -272,6 +273,7 @@ class ProvisionalScore extends React.Component<
         return (
           <React.Suspense fallback={<></>}>
             <PhoneTheme />
+            {this.props.liveBrills > 0 && <MusicAutoplay url="/sounds/mixkit-magical-coin-win.wav" />}
             <div className="phone-provisional-score bg-dark-blue">
               <div className="content">
                 <div className="title">
@@ -934,6 +936,7 @@ class ProvisionalScore extends React.Component<
     return (
       <React.Suspense fallback={<></>}>
         <DesktopTheme />
+        {this.props.liveBrills > 0 && <MusicAutoplay url="/sounds/mixkit-magical-coin-win.wav" />}
         <div className="brick-row-container provisional-container" >
           <div className="brick-container play-preview-panel provisional-score-page">
             <div className="fixed-upper-b-title">
