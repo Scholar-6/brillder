@@ -20,6 +20,7 @@ import { Brick, KeyWord, Subject } from 'model/brick';
 import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestions';
 import { getSubjects } from 'services/axios/subject';
 import { User } from 'model/user';
+import VolumeButton from '../VolumeButton';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -270,6 +271,7 @@ class PageHeader extends Component<Props, State> {
               </div>
               {this.props.isAuthenticated === isAuthenticated.True &&
                 <Grid container direction="row" className="action-container">
+                  <VolumeButton />
                   {
                     this.props.user && <div className="brill-intro-container">
                       <div className="brills-number">{renderBrills()}</div>

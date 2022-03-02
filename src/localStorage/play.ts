@@ -1,4 +1,4 @@
-import {AttemptCash, YoutubeClicked, AuthBrickCoverId, PreviewAttemptCash} from './types';
+import {AttemptCash, YoutubeClicked, AuthBrickCoverId, PreviewAttemptCash, VolumeToggle} from './types';
 
 export function SetYoutubeClick() {
   localStorage.setItem(YoutubeClicked, "true");
@@ -12,6 +12,17 @@ export function UnsetYoutubeClick() {
   localStorage.removeItem(YoutubeClicked);
 }
 
+/**
+ * Toggle volume
+ * @param volume boolean, true means disabled
+ */
+export function SetVolume(volume: boolean) {
+  localStorage.setItem(VolumeToggle, volume.toString());
+}
+
+export function GetVolume() {
+  return localStorage.getItem(VolumeToggle);
+}
 
 export function CashAttempt(attemptCash: any) {
   localStorage.setItem(AttemptCash, attemptCash);
