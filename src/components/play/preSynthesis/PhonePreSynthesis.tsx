@@ -2,6 +2,7 @@ import React from "react";
 
 import { Brick } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 
 interface Props {
   brick: Brick;
@@ -11,6 +12,7 @@ interface Props {
 const PhonePreSynthesisPage: React.FC<Props> = ({ brick, moveNext }) => {
   return (
     <div className="pre-investigation pre-synthesis">
+      <MusicAutoplay url="/sounds/mixkit-fast-sweep-transition.wav" />
       <div className="fixed-upper-b-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="introduction-page">
         <div className="ss-phone-before-brain" />

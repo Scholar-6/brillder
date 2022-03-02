@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MusicWrapper from "components/baseComponents/MusicWrapper";
+import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 
 interface Props {
   brick: Brick;
@@ -31,6 +32,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
 
   return (
     <div className="brick-row-container live-container static-top-part">
+      <MusicAutoplay url="/sounds/mixkit-fast-sweep-transition.wav" />
       <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page after-cover-page pre-investigation animate-fade">
         <div className="introduction-page">

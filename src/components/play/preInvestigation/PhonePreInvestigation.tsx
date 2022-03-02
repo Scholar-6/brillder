@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Brick } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 
 interface Props {
   brick: Brick;
@@ -13,6 +14,7 @@ interface Props {
 const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
   return (
     <div className="pre-investigation">
+      <MusicAutoplay url="/sounds/mixkit-fast-sweep-transition.wav" />
       <div
         className="fixed-upper-b-title"
         dangerouslySetInnerHTML={{ __html: brick.title }}

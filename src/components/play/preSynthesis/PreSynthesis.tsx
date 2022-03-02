@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import routes from "../routes";
+import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 
 interface Props {
   brick: Brick;
@@ -33,6 +34,7 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container static-top-part">
+      <MusicAutoplay url="/sounds/mixkit-fast-sweep-transition.wav" />
       <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page after-cover-page pre-synthesis animate-fade">
         <div className="introduction-page">
