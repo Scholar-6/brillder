@@ -76,6 +76,7 @@ import LastAttemptDialog from "./baseComponents/dialogs/LastAttemptDialog";
 import PremiumEducatorDialog from "./baseComponents/dialogs/PremiumEducatorDialog";
 import PremiumLearnerDialog from "./baseComponents/dialogs/PremiumLearnerDialog";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import VolumeButton from "components/baseComponents/VolumeButton";
 
 export enum PlayPage {
   Cover,
@@ -859,6 +860,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
       <div className="play-preview-pages">
+        {sidebarRolledUp && <VolumeButton customClassName="absolute-right" />}
         {isPhone() ? <div /> : renderHead()}
         <div className={className}>
           {!isPhone() &&

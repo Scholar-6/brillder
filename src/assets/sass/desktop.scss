@@ -1176,3 +1176,10 @@
     }
   }
 }
+
+.volume-container-dr.absolute-right {
+  position: absolute;
+  top: 3vw;
+  right: -1vw;
+  background: var(--theme-light-blue);
+}
