@@ -33,6 +33,7 @@ import { getUniqueComponent } from "components/build/questionService/QuestionSer
 import CategoriseAnswersDialog from "components/baseComponents/dialogs/CategoriesAnswers";
 import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
+import MusicWrapper from "components/baseComponents/Music";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -491,23 +492,27 @@ const LivePage: React.FC<LivePageProps> = ({
                 </div>}
             </div>
             <div className="new-navigation-buttons">
+            <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
               <div className="n-btn back" onClick={prev}>
                 <SpriteIcon name="arrow-left" />
                 Back
               </div>
-              <div
-                className="n-btn next"
-                onClick={() => {
-                  if (questions.length - 1 > activeStep) {
-                    next();
-                  } else {
-                    setSubmitAnswers(true);
-                  }
-                }}
-              >
-                Next
-                <SpriteIcon name="arrow-right" />
-              </div>
+              </MusicWrapper>
+              <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
+                <div
+                  className="n-btn next"
+                  onClick={() => {
+                    if (questions.length - 1 > activeStep) {
+                      next();
+                    } else {
+                      setSubmitAnswers(true);
+                    }
+                  }}
+                >
+                  Next
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </MusicWrapper>
             </div>
           </div>
         </div>

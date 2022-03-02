@@ -7,6 +7,7 @@ import { Brick } from "model/brick";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import MusicWrapper from "components/baseComponents/Music";
 
 interface Props {
   brick: Brick;
@@ -65,14 +66,16 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
-            <div className="time-container"/>
+            <div className="time-container" />
             <div className="minutes" />
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={moveNext}>
-                Play Brick
-                <SpriteIcon name="arrow-right" />
-              </div>
+              <MusicWrapper startTime={0} url="/sounds/mixkit-ominous-drums.wav">
+                <div className="n-btn next" onClick={moveNext}>
+                  Play Brick
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </MusicWrapper>
             </div>
           </div>
         </div>
