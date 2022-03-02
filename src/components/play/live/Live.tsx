@@ -33,7 +33,7 @@ import { getUniqueComponent } from "components/build/questionService/QuestionSer
 import CategoriseAnswersDialog from "components/baseComponents/dialogs/CategoriesAnswers";
 import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
-import MusicWrapper from "components/baseComponents/Music";
+import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface LivePageProps {
   status: PlayStatus;
