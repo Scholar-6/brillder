@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { checkTeacherOrAdmin } from 'components/services/brickService';
+import { checkEditor, checkTeacherOrAdmin } from 'components/services/brickService';
 import { isBuilderPreference } from 'components/services/preferenceService';
 import { User } from 'model/user';
 import { getAllClassrooms } from 'components/teach/service';
@@ -32,11 +32,21 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
     getAssigned();
   }, []);
 
-  if (!props.user) { return <span />; }
-  console.log(hassigned);
-  if (!hassigned) { return <span />; }
+  let canSee = false;
 
-  const canSee = checkTeacherOrAdmin(props.user) || isBuilderPreference(props.user);
+
+
+  if (props.user) {
+    const isPublisher = checkEditor(props.user.roles);
+    if (isPublisher) {
+      canSee = true;
+    } else if (checkTeacherOrAdmin(props.user) || isBuilderPreference(props.user)) {
+      canSee = true;
+    } else if (hassigned) {
+      canSee = true;
+    }
+  }
+
   if (!canSee) { return <span />; }
 
   if (!props.sidebarRolledUp) {
