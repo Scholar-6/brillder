@@ -7,12 +7,14 @@ import PairMatchImageContent from './PairMatchImageContent';
 import { Hint, HintStatus } from 'model/question';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import HintBox from 'components/play/baseComponents/HintBox';
+import { ComponentAttempt } from 'components/play/model';
 
 interface OptionProps {
   index: number;
   item: any;
   isReview?: boolean;
   isPreview?: boolean;
+  attempt?: ComponentAttempt<any>;
   hint: Hint;
   state: any;
 }
@@ -22,6 +24,9 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
 
   let correct = false;
   if (props.state === 1) {
+    correct = true;
+  }
+  if (props.isReview && props.attempt?.correct) {
     correct = true;
   }
 
