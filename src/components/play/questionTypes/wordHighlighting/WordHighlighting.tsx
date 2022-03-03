@@ -133,6 +133,12 @@ class WordHighlighting extends CompComponent<
       }
     }
 
+    if (this.props.liveAttempt?.correct) {
+      if (word.checked === true) {
+        className += ' correct';
+      }
+    }
+
     if (this.props.isBookPreview && word.selected) {
       if (word.checked === true) {
         className += " correct";

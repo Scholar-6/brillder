@@ -109,6 +109,13 @@ class LineHighlighting extends CompComponent<
         }
       }
 
+      
+      if (this.props.liveAttempt?.correct) {
+        if (line.checked === true) {
+          className += ' correct';
+        }
+      }
+
       if (this.props.isBookPreview) {
         if (line.checked === true) {
           className += " correct";
