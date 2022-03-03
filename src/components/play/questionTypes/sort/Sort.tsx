@@ -312,6 +312,10 @@ class Sort extends CompComponent<SortProps, SortState> {
       }
     }
 
+    if (this.props.isReview && this.props.liveAttempt?.correct === true) {
+      className += ' correct';
+    }
+
     if (this.props.isBookPreview) {
       className += getValidationClassName(isCorrect);
     }
@@ -355,7 +359,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     const unsorted = this.state.userCats[this.state.userCats.length - 1];
     let correct = false;
     if (this.props.isReview) {
-      correct = !!this.props.attempt?.correct;
+      correct = !!this.props.liveAttempt?.correct;
     }
 
     const haveImage = this.checkImages();
