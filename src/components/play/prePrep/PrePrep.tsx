@@ -12,6 +12,7 @@ import { getPrepareTime } from "../services/playTimes";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { isPhone } from "services/phone";
+import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface Props {
   brick: Brick;
@@ -69,10 +70,12 @@ const PrePrepPage: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={props.moveNext}>
-                Start Prep
-                <SpriteIcon name="arrow-right" />
-              </div>
+              <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
+                <div className="n-btn next" onClick={props.moveNext}>
+                  Start Prep
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </MusicWrapper>
             </div>
           </div>
         </div>
