@@ -1,3 +1,4 @@
+import { GetVolume } from 'localStorage/play';
 import React from 'react';
 
 interface MusicProps {
@@ -16,7 +17,10 @@ class MusicAutoplay extends React.Component<MusicProps, MusicState> {
       audio,
     }
     audio.oncanplaythrough = function () {
-      audio.play();
+      const volume = GetVolume();
+      if (volume === false) {
+        audio.play();
+      }
     }
   }
 
