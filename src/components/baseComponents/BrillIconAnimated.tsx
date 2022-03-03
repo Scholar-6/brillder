@@ -10,27 +10,32 @@ interface Props {
 
 const BrillIconAnimated: React.FC<Props> = (props) => {
   const [currentBrills, setCurrentBrills] = useStateWithCallbackLazy(0);
+  const [flipCoin, setFlipCoin] = React.useState(false);
 
   const animateBrills = (low: number) => {
-    if (props.user.brills) {
+    if (props.user.brills && props.user.brills > low) {
       const high = props.user.brills;
 
-      let step = (props.user.brills - low) / 20;
+      let step = Math.round((props.user.brills - low) / 20);
       if (step < 2) {
         step = 2;
       }
+      setFlipCoin(true);
       const interval = setInterval(() => {
         if (low < high - step) {
           low += step;
           setCurrentBrills(low, () => {});
         } else {
           setCurrentBrills(high, () => {});
+          SetUserBrills(high);
           clearInterval(interval);
         }
       }, 100);
-    }
 
-    //setInterval();
+      setTimeout(() => {
+        setFlipCoin(false);
+      }, 2000);
+    }
   }
 
   // get cashed brills
@@ -38,7 +43,6 @@ const BrillIconAnimated: React.FC<Props> = (props) => {
     if (props.user) {
       const brills = GetUserBrills();
       if (brills) {
-        console.log(brills);
         setCurrentBrills(brills, () => {
           animateBrills(brills);
         });
@@ -61,7 +65,9 @@ const BrillIconAnimated: React.FC<Props> = (props) => {
   return (
     <div className="brill-intro-container">
       <div className="brills-number">{currentBrills}</div>
-      <BrillIcon />
+      <div className={`brill-coin-container ${flipCoin ? "flip" : ""}`}>
+        <BrillIcon />
+      </div>
     </div>
   );
 }

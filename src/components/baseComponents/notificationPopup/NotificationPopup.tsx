@@ -48,7 +48,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
 
   const [needDesktopOpen, setNeedDesktopOpen] = React.useState(false);
 
-  if(!(props.notifications && props.notifications.length > 0) || !props.shown) {
+  if (!(props.notifications && props.notifications.length > 0) || !props.shown) {
     return <></>;
   }
 
@@ -66,7 +66,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
       }
 
       if (notification.brick && notification.brick.id) {
-        const {type, brick} = notification;
+        const { type, brick } = notification;
         if (notification.type === NotificationType.BrickPublished) {
           history.push(routes.playCover(brick));
         } else if (type === NotificationType.NewCommentOnBrick) {
@@ -116,7 +116,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
     <Popper
       open={props.shown}
       anchorEl={props.anchorElement}
-      className={props.shown ? "notification-popup active":"notification-popup hidden"}
+      className={props.shown ? "notification-popup active" : "notification-popup hidden"}
       placement="bottom-end"
     >
       <div className="notification-content">
@@ -138,25 +138,25 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
               <SpriteIcon name="message-square-thick" className="w60 h60 active text-theme-dark-blue" />
             }
             {notification.type === NotificationType.InvitedToPlayBrick &&
-              <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginLeft: '0.2vw'}}>
+              <svg className="svg w60 h60 active text-theme-dark-blue" style={{ marginLeft: '0.2vw' }}>
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#play-thick"} />
               </svg>
             }
             {notification.type === NotificationType.BrickAttemptSaved &&
-              <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{marginRight: '0vw'}}>
+              <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{ marginRight: '0vw' }}>
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#book-open"} />
               </svg>
             }
             {notification.type === NotificationType.ReturnedToAuthor &&
-              <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{marginRight: '0vw'}}>
+              <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{ marginRight: '0vw' }}>
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#repeat"} />
               </svg>
             }
             {notification.type === NotificationType.ReturnedToEditor &&
-              <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{marginRight: '0vw'}}>
+              <svg className="svg w60 h60 active text-theme-dark-blue stroke-2" style={{ marginRight: '0vw' }}>
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#repeat"} />
               </svg>
@@ -167,11 +167,16 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
             {notification.type === NotificationType.RemindedToPlayBrick &&
               <SpriteIcon name="reminder" className="w60 h60 active text-theme-dark-blue stroke-2" />
             }
+            {notification.type === NotificationType.BrillsEarned && <div className="brill-icon-ff">
+              <img alt="brills" src="/images/Brill.svg" />
+              <SpriteIcon name="logo" />
+            </div>
+            }
           </div>
           <div className="content-box" onClick={() => move(notification)}>
             <div className="notification-detail">
-              <p className="notif-title" dangerouslySetInnerHTML={{__html: notification.title}} />
-              <p className="notif-desc" dangerouslySetInnerHTML={{__html: notification.text}} />
+              <p className="notif-title" dangerouslySetInnerHTML={{ __html: notification.title }} />
+              <p className="notif-desc" dangerouslySetInnerHTML={{ __html: notification.text }} />
             </div>
             <div className="actions">
               <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={(e) => {
