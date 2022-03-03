@@ -144,6 +144,25 @@
     color: white;
     background: var(--theme-dark-blue);
 
+    .brick-title {
+      height: 4%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      font-size: 5vw;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .score {
+      text-align: center;
+      color: white;
+      font-size: 5vw;
+    }
+
     .title {
       position: relative;
       margin: 0 !important;

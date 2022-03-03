@@ -276,6 +276,8 @@ class ProvisionalScore extends React.Component<
             {this.props.liveBrills > 0 && <MusicAutoplay url="/sounds/mixkit-magical-coin-win.wav" />}
             <div className="phone-provisional-score bg-dark-blue">
               <div className="content">
+                <div className="brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+                <div className="score">Score: {finalValue}</div>
                 <div className="title">
                   {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
                   {Math.round(this.props.liveBrills)} Brills Earned!
