@@ -22,6 +22,7 @@ export enum NotificationType {
   RemindedToPlayBrick,
   DontKnow,
   TeacherInvitation,
+  BrillsEarned,
 }
 
 export interface Notification {
@@ -52,4 +53,5 @@ export const notificationTypeColors = {
   [NotificationType.RemindedToPlayBrick]: "red",
   [NotificationType.DontKnow]: "red",
   [NotificationType.TeacherInvitation]: "white",
+  [NotificationType.BrillsEarned]: "white",
 };

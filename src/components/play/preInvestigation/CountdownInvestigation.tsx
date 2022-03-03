@@ -7,6 +7,7 @@ import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getLiveTime } from "../services/playTimes";
 import Hourglass from "../baseComponents/hourglass/Hourglass";
+import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface Props {
   brick: Brick;
@@ -37,14 +38,14 @@ const CountdownInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
         <div className="introduction-page">
           <div className="after-cover-main-content static-top-part-inner count-down-content">
             <div className="title s-fade1">
-              You have <span className="text-orange">{minutes} minutes</span> to have a first crack at the questions.
+              <div className="bold">Round 1</div>
+              <div className="regular">Investigation</div>
             </div>
             <div className="flex-center hourglass-container s-fade2">
               <Hourglass />
             </div>
             <div className="footer s-fade3">
-              <div>Don’t worry if you are unable to answer everything in time - you can</div>
-              <div>have another go after reading the Synthesis of this brick.</div>
+              <div>You have <span className="text-orange">{minutes} minutes</span> to have a first crack at the questions.</div>
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
@@ -52,10 +53,12 @@ const CountdownInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
             <div className="minutes" />
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={moveNext}>
-                Start Timer
-                <SpriteIcon name="arrow-right" />
-              </div>
+              <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
+                <div className="n-btn next" onClick={moveNext}>
+                  Start Timer
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </MusicWrapper>
             </div>
           </div>
         </div>

@@ -5,8 +5,8 @@
 .notification-box .MuiPaper-root {
   width: 100%;
   max-width: unset !important;
-  height: calc(100% - 73px);
-  bottom: 73px !important;
+  height: calc(100% - 17.5vw);
+  bottom: 17.5vw !important;
   background: transparent;
   .notification-content {
     $top-size: 20vw;
@@ -46,6 +46,23 @@
       .n-secondary {
         font-size: 5vw;
         font-family: $font-family-regular-italic;
+      }
+    }
+    .brill-icon-ff {
+      border: none !important;
+      width: 13vw;
+      height: 13vw;
+      img {
+        width: 13vw;
+        height: 13vw;
+      }
+      svg {
+        position: absolute;
+        color: var(--theme-orange) !important;
+        width: 55% !important;
+        height: 55% !important;
+        top: 22.5% !important;
+        left: 22.5% !important;
       }
     }
     .notification-list {

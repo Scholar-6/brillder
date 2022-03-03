@@ -119,7 +119,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
 
 
     let disabled = false;
-    if (this.props.isReview && this.props.attempt === this.props.liveAttempt) {
+    if (this.props.isReview && (this.props.attempt === this.props.liveAttempt || (this.props.liveAttempt && this.props.liveAttempt.correct === true))) {
       disabled = this.isAnswerCorrect(index);
     }
 

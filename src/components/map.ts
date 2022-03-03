@@ -12,6 +12,10 @@ export const MyLibrary = '/my-library';
 export const TermsPage = '/terms';
 export const ChoosePlan = '/choose-plan';
 
+export const MyLibrarySubject = (subjectId: number) => {
+  return MyLibrary + '?subjectId=' + subjectId;
+}
+
 export const AssignmentsPage = '/assignments';
 export const AssignmentsClassPage = AssignmentsPage + '/:classId';
 
@@ -140,11 +144,13 @@ export default {
   UserProfile,
   Login,
   MainPage,
-  MyLibrary,
   LeaderboardPage,
   ChoosePlan,
   StripeLearner,
   StripeEducator,
+
+  MyLibrary,
+  MyLibrarySubject,
   
   TermsPage,
   TermsSignUp,

@@ -4,7 +4,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { isMobileOnly, isSafari, isTablet} from 'react-device-detect';
+import { isMobileOnly, isSafari, isTablet } from 'react-device-detect';
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -67,6 +67,7 @@ import StripePage from 'components/stripePage/StripePage';
 import LeaderboardPage from 'components/competitions/LeaderboardPage';
 import ChoosePlan from 'components/choosePlan/ChoosePlan';
 
+
 interface AppProps {
   user: User;
   setLogoutSuccess(): void;
@@ -84,7 +85,7 @@ const App: React.FC<AppProps> = props => {
   const [zendeskCreated, setZendesk] = React.useState(false);
   const isHorizontal = () => {
     // Apple does not seem to have the window.screen api so we have to use deprecated window.orientation instead.
-    if (window.orientation && typeof window.orientation === "number" && Math.abs(window.orientation) === 90 ) {
+    if (window.orientation && typeof window.orientation === "number" && Math.abs(window.orientation) === 90) {
       return true;
     }
     if (window.screen.orientation && window.screen.orientation.type.includes('/^landscape-.+$/') === true) {
@@ -95,7 +96,7 @@ const App: React.FC<AppProps> = props => {
   const [horizontal, setHorizontal] = React.useState(isHorizontal());
 
   useEffect(() => {
-    document.addEventListener('fullscreenchange', (event:any) => {
+    document.addEventListener('fullscreenchange', (event: any) => {
       try {
         if (document.fullscreenElement) {
           if (event.target.tagName === 'IFRAME') {
@@ -121,10 +122,10 @@ const App: React.FC<AppProps> = props => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const referralId = params.get("referralId");
-    if(referralId) {
+    if (referralId) {
       props.setReferralId(referralId);
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [location])
 
   // lock screen for phone
@@ -190,7 +191,7 @@ const App: React.FC<AppProps> = props => {
   });
 
   // If is tablet and portrait tell them to go to landscape
-  if ( isTablet && !horizontal) {
+  if (isTablet && !horizontal) {
     return <RotateIPadInstruction />;
   }
 
@@ -205,12 +206,12 @@ const App: React.FC<AppProps> = props => {
 
   // get terms version
   if (props.user && props.user.termsAndConditionsAcceptedVersion && !termsData.termsVersion && !termsData.isLoading) {
-    setTermsData({isLoading: true, termsVersion: ''});
+    setTermsData({ isLoading: true, termsVersion: '' });
     getTerms().then(r => {
       if (r) {
-        setTermsData({isLoading: false, termsVersion: r.lastModifiedDate});
+        setTermsData({ isLoading: false, termsVersion: r.lastModifiedDate });
       } else {
-        setTermsData({isLoading: false, termsVersion: ''});
+        setTermsData({ isLoading: false, termsVersion: '' });
       }
     });
   }
@@ -219,7 +220,7 @@ const App: React.FC<AppProps> = props => {
   if (termsData.termsVersion && props.user && props.user.termsAndConditionsAcceptedVersion) {
     console.log(termsData.termsVersion, props.user.termsAndConditionsAcceptedVersion);
     if (termsData.termsVersion !== props.user.termsAndConditionsAcceptedVersion) {
-      window.location.href= map.TermsSignUp + '?onlyAcceptTerms=true';
+      window.location.href = map.TermsSignUp + '?onlyAcceptTerms=true';
     }
   }
 
@@ -242,74 +243,74 @@ const App: React.FC<AppProps> = props => {
 
   return (
     <div className={isSafari ? 'root-safari browser-type-container' : 'browser-type-container'}>
-    <Helmet>
-      <title>{getBrillderTitle()}</title>
-    </Helmet>
-    <ThemeProvider theme={theme}>
-      <Profiler id="app-tsx" onRender={onRenderCallback} >
-      {/* all page routes are here order of routes is important */}
-      <Switch>
-        <AllUsersRoute path="/stripe-subscription/:type" component={StripePage} />
-        <UnauthorizedRoute path={map.SubjectCategories} component={ViewAll} />
-        <UnauthorizedRoute path={map.SearchPublishBrickPage} component={ViewAll} />
-        <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
-        <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
-        <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />
+      <Helmet>
+        <title>{getBrillderTitle()}</title>
+      </Helmet>
+      <ThemeProvider theme={theme}>
+        <Profiler id="app-tsx" onRender={onRenderCallback} >
+          {/* all page routes are here order of routes is important */}
+          <Switch>
+            <AllUsersRoute path="/stripe-subscription/:type" component={StripePage} />
+            <UnauthorizedRoute path={map.SubjectCategories} component={ViewAll} />
+            <UnauthorizedRoute path={map.SearchPublishBrickPage} component={ViewAll} />
+            <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
+            <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
+            <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />
 
-        <StudentRoute path="/my-library/:userId" component={Library} />
-        <StudentRoute path="/my-library" component={Library} />
-        <StudentRoute path="/post-play/brick/:brickId/:userId/:classId" component={PostPlay} />
-        <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
+            <StudentRoute path="/my-library/:userId" component={Library} />
+            <StudentRoute path="/my-library" component={Library} />
+            <StudentRoute path="/post-play/brick/:brickId/:userId/:classId" component={PostPlay} />
+            <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 
-        <StudentRoute path={map.ChoosePlan} component={ChoosePlan} />
+            <StudentRoute path={map.ChoosePlan} component={ChoosePlan} />
 
-        <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
-        <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
-        <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
+            <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
+            <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
+            <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
-        <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
-        {/* Creating new bricks */}
-        <ProposalBrickRoute path={map.ProposalStart} component={StartBuildingPage} location={location} />
-        <ProposalBrickRoute path={map.NewBrick} component={Proposal} location={location} />
-        {/* Investigation Build */}
-        <BuildBrickRoute
-          path={[
-            "/build/brick/:brickId/investigation/question-component/:questionId",
-            "/build/brick/:brickId/investigation/question/:questionId",
-            "/build/brick/:brickId"
-          ]}
-          component={BuildRouter}
-          location={location}
-        />
-        <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
-        <BuildRoute path={map.AssignmentsClassPage} component={AssignmentsPage} location={location} />
-        <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />
-        <BuildRoute path="/users" component={UsersListPage} location={location} />
-        <BuildRoute path={map.UserProfile + '/:userId'} component={UserProfilePage} location={location} />
-        <BuildRoute path="/home" component={MainPage} location={location} />
+            <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
+            {/* Creating new bricks */}
+            <ProposalBrickRoute path={map.ProposalStart} component={StartBuildingPage} location={location} />
+            <ProposalBrickRoute path={map.NewBrick} component={Proposal} location={location} />
+            {/* Investigation Build */}
+            <BuildBrickRoute
+              path={[
+                "/build/brick/:brickId/investigation/question-component/:questionId",
+                "/build/brick/:brickId/investigation/question/:questionId",
+                "/build/brick/:brickId"
+              ]}
+              component={BuildRouter}
+              location={location}
+            />
+            <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
+            <BuildRoute path={map.AssignmentsClassPage} component={AssignmentsPage} location={location} />
+            <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />
+            <BuildRoute path="/users" component={UsersListPage} location={location} />
+            <BuildRoute path={map.UserProfile + '/:userId'} component={UserProfilePage} location={location} />
+            <BuildRoute path="/home" component={MainPage} location={location} />
 
-        <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
-        <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
-        <AllUsersRoute path={map.UserPreferencePage} component={UserPreferencePage} isPreferencePage={true} />
-        <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
-        <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
-        <UnauthorizedRoute path={map.LeaderboardPage + '/:competitionId'} component={LeaderboardPage} />
+            <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
+            <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
+            <AllUsersRoute path={map.UserPreferencePage} component={UserPreferencePage} isPreferencePage={true} />
+            <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
+            <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
+            <UnauthorizedRoute path={map.LeaderboardPage + '/:competitionId'} component={LeaderboardPage} />
 
-        <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
-        <AuthRoute path={map.Login} component={LoginPage} />
-        <AuthRoute path="/login/:privacy" component={LoginPage} />
-        <AuthRoute path={map.ResetPassword} component={ResetPasswordPage} />
-        <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
+            <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
+            <AuthRoute path={map.Login} component={LoginPage} />
+            <AuthRoute path="/login/:privacy" component={LoginPage} />
+            <AuthRoute path={map.ResetPassword} component={ResetPasswordPage} />
+            <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
 
-        <Route path={map.TermsSignUp} component={Terms} />
-        <Route path={map.TermsPage} component={PublicTerms} />
+            <Route path={map.TermsSignUp} component={Terms} />
+            <Route path={map.TermsPage} component={PublicTerms} />
 
-        <Route component={AuthRedirectRoute} />
-      </Switch>
-      <VersionLabel />
-      <GlobalFailedRequestDialog />
-      </Profiler>
-    </ThemeProvider>
+            <Route component={AuthRedirectRoute} />
+          </Switch>
+          <VersionLabel />
+          <GlobalFailedRequestDialog />
+        </Profiler>
+      </ThemeProvider>
     </div>
   );
 }

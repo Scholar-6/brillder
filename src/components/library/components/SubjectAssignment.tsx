@@ -35,6 +35,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     className += " length-" + BrickLengthEnum.S40min;
   }
   const minHeight = 5;
+  const score = assignment.bestAttemptPercentScore ? assignment.bestAttemptPercentScore : 0;
   const height = assignment.bestAttemptPercentScore ? assignment.bestAttemptPercentScore : minHeight;
 
   let { color } = subject;
@@ -128,12 +129,12 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
               <BrickTitle title={brick.title} />
             </div>
             <div className="relative">
-              <div className="circle-score bold">{Math.round(height)}</div>
+              <div className="circle-score bold">{Math.round(score)}</div>
               <CircularProgressbar
                 className="circle-progress-second"
                 counterClockwise={true}
                 strokeWidth={8}
-                value={height}
+                value={score}
               />
             </div>
           </div>

@@ -21,8 +21,8 @@ const CountdownReview: React.FC<Props> = ({ brick, ...props }) => {
       <div className="count-introduction-page">
         <div className="ss-phone-before-title" />
         <div className="title s-fade1">
-          <div>You have <span className="text-orange">{minutes} minutes</span> to review your</div>
-          <div>answers and improve your score.</div>
+          <div>Round 2</div>
+          <div className="regular">Review</div>
         </div>
         <div className="ss-phone-after-title" />
         <div className="flex-center">
@@ -30,10 +30,8 @@ const CountdownReview: React.FC<Props> = ({ brick, ...props }) => {
         </div>
         <div className="ss-after-glasses" />
         <div className="last-text s-fade3">
-          <div>Your final score will be an average of</div>
-          <div>your provisional and review scores.</div>
-          <div>You can replay this brick as many</div>
-          <div>times as you like after this.</div>
+          <div>You have <span className="text-orange">{minutes} minutes</span> to review your</div>
+          <div>answers and improve your score.</div>
         </div>
       </div>
     </div>

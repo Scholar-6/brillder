@@ -7,3 +7,5 @@ export const AttemptCash = 'AttemptCash';
 export const PreviewAttemptCash = 'PreviewAttemptCash';
 export const LoginRedirectUrl = 'LoginRedirectUrl';
 export const AuthBrickCoverId = 'AuthBrickCoverId';
+export const VolumeToggle = 'VolumeToggle';
+export const UserBrills = 'UserBrills';

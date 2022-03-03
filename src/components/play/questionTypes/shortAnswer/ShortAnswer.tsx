@@ -28,12 +28,15 @@ interface ShortAnswerProps extends CompQuestionProps {
 }
 
 interface ShortAnswerState {
+  correct: boolean;
   userAnswers: string[];
 }
 
 class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   constructor(props: ShortAnswerProps) {
     super(props);
+
+    console.log('short answer', props)
 
     let userAnswers: string[] = [];
     if (props.answers) {
@@ -44,7 +47,13 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       props.component.list.forEach(() => userAnswers.push(""));
     }
 
-    this.state = { userAnswers } as ShortAnswerState;
+    let correct = false;
+
+    if (props.isReview) {
+      correct = props.attempt.correct;
+    }
+
+    this.state = { userAnswers, correct } as ShortAnswerState;
   }
 
   componentDidUpdate(prevProps: ShortAnswerProps) {
@@ -116,7 +125,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       />
     }
 
-    return <QuillShortAnswer disabled={false}
+    return <QuillShortAnswer disabled={this.state.correct}
       data={value}
       placeholder={placeholder}
       onChange={v => this.setUserAnswer(v, index)}

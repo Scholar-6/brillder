@@ -73,8 +73,8 @@ class ProfileIntroJs extends React.Component<Props, State> {
           intro: 'Write an academic bio (in the third person) so that the Brillder community can know more about your intellectual background'
         },
         {
-          element: '.profile-username',
-          intro: "This is your username that others see, it's only useful if your name is very common like John, or Smith.' to the tutorial on the profile page."
+          element: '.profile-username-v2',
+          intro: "Your username will be visible to others in public leaderboards should you wish to compete, or in dropdowns should another user want to share a brick or class with you."
         },
         {
           element: '.save-button-container',
@@ -165,7 +165,7 @@ class ProfileIntroJs extends React.Component<Props, State> {
           initialStep={0}
           onChange={this.onChange.bind(this)}
           onExit={this.onExit.bind(this)}
-          onComplete={() => this.props.history.push('')}
+          onComplete={this.onExit.bind(this)}
           options={{
             nextLabel: this.state.nextLabel,
             doneLabel: 'Explore Brillder'

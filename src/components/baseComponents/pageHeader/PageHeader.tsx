@@ -19,10 +19,14 @@ import { getPublishedBricks } from 'services/axios/brick';
 import { Brick, KeyWord, Subject } from 'model/brick';
 import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestions';
 import { getSubjects } from 'services/axios/subject';
+import { User } from 'model/user';
+import VolumeButton from '../VolumeButton';
+import BrillIconAnimated from '../BrillIconAnimated';
 
 
 const mapState = (state: ReduxCombinedState) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  user: state.user.user,
   notifications: state.notifications.notifications
 });
 
@@ -39,6 +43,7 @@ interface Props {
   page: PageEnum;
   suggestions?: boolean;
 
+  user: User;
   history: any;
   search(): void;
   searching(value: string): void;
@@ -84,8 +89,8 @@ class PageHeader extends Component<Props, State> {
   }
 
   collectKeywords(bricks: Brick[]) {
-    let keywords:KeyWord[] = [];
-    for(let brick of bricks) {
+    let keywords: KeyWord[] = [];
+    for (let brick of bricks) {
       if (brick.keywords && brick.keywords.length > 0) {
         for (let keyword of brick.keywords) {
           /*eslint-disable-next-line*/
@@ -100,7 +105,7 @@ class PageHeader extends Component<Props, State> {
   }
 
   async prepareSuggestions() {
-    let subjects:Subject[] = [];
+    let subjects: Subject[] = [];
     const bricks = await getPublishedBricks();
     if (bricks) {
       let keywords = this.collectKeywords(bricks);
@@ -108,7 +113,7 @@ class PageHeader extends Component<Props, State> {
       if (subjects2) {
         subjects = subjects2;
       }
-      this.setState({bricks, subjects, keywords});
+      this.setState({ bricks, subjects, keywords });
     }
   }
 
@@ -204,7 +209,7 @@ class PageHeader extends Component<Props, State> {
                       className="search-input"
                       onKeyUp={(e) => this.keySearch(e)}
                       onChange={(e) => {
-                        this.setState({...this.state, value: e.target.value});
+                        this.setState({ ...this.state, value: e.target.value });
                         this.props.searching(e.target.value);
                       }}
                       placeholder={this.props.searchPlaceholder}
@@ -221,6 +226,7 @@ class PageHeader extends Component<Props, State> {
                   <UnauthorizedMenu isOpen={this.state.dropdownShown} closeDropdown={this.hideDropdown.bind(this)} />
                 }
               </div>
+
               {
                 !searchVisible && this.props.isAuthenticated === isAuthenticated.True &&
                 <BellButton
@@ -247,7 +253,7 @@ class PageHeader extends Component<Props, State> {
                     value={this.state.value}
                     onKeyUp={(e) => this.keySearch(e)}
                     onChange={(e) => {
-                      this.setState({...this.state, value: e.target.value});
+                      this.setState({ ...this.state, value: e.target.value });
                       this.props.searching(e.target.value);
                     }}
                     placeholder={this.props.searchPlaceholder}
@@ -256,6 +262,8 @@ class PageHeader extends Component<Props, State> {
               </div>
               {this.props.isAuthenticated === isAuthenticated.True &&
                 <Grid container direction="row" className="action-container">
+                  <VolumeButton />
+                  <BrillIconAnimated user={this.props.user} />
                   <BellButton
                     notificationCount={notificationCount}
                     onClick={evt => this.props.showNotifications(evt)}

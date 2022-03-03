@@ -1,0 +1,240 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+
+.phone-provisional-score {
+  .title {
+    font-size: 8.5vw !important;
+  }
+
+  @keyframes fliping-coin {
+    0% {
+      transform: rotate3d(0, 0, 0);
+    }
+
+    50% {
+      transform: rotate3d(0, 1, 0, 180deg);
+    }
+
+    100% {
+      transform: rotate3d(0, 0, 0);
+    }
+  }
+
+  .btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .attempted-numbers {
+    color: white !important;
+  }
+
+  .btn.btn-green {
+    font-size: 7vw;
+    margin: 0 1vw;
+    width: 43vw;
+    color: white;
+    border-radius: 4vw;
+    text-align: center;
+    margin-top: 3vh;
+    background: var(--theme-green);
+    padding: 1vh 0;
+
+    &.bigger {
+      margin-left: 22.5vw;
+      width: 55vw;
+    }
+
+    &.orange {
+      background: var(--theme-orange);
+    }
+  }
+
+  .brill-coin-img {
+    margin-bottom: 5vh;
+    width: 25vh;
+    height: 25vh;
+    margin-left: calc(50% - 12.5vh);
+    animation: fliping-coin 2s infinite linear;
+    position: relative;
+
+    img {
+      height: 100%;
+    }
+
+    svg {
+      position: absolute;
+      color: var(--theme-orange);
+      width: 12vh;
+      height: 12vh;
+      position: absolute;
+      top: calc(50% - 6vh);
+      left: calc(50% - 6vh);
+    }
+  }
+
+  .attempted-text,
+  .review-duration,
+  .duration {
+    color: white;
+  }
+
+  .number-status {
+    margin-left: 3vw;
+    line-height: 1;
+    div {
+      font-size: 5vw;
+      width: 9.8vw;
+      text-align: center;
+    }
+  }
+
+  .status-circles {
+    margin-right: 11vw;
+    margin-top: 3vh;
+    height: 6vh;
+
+    .lable-rd {
+      font-size: 6vw;
+      margin-left: 2vw;
+      margin-right: 2vw;
+    }
+
+    .circle-rd {
+      margin-top: 1.4vw;
+      border-radius: 50%;
+      width: 3.5vw;
+      height: 3.5vw;
+      margin-left: 3vw;
+      margin-right: 3vw;
+    }
+
+    .yellow {
+      background: var(--theme-yellow);
+    }
+
+    .blue {
+      background: #0081E2;
+    }
+
+    .green {
+      background: var(--theme-green);
+    }
+  }
+
+  .content .pr-progress-center .pr-progress-container .score-data {
+    font-size: 17vw;
+  }
+
+  .btn-center {
+    display: flex;
+    justify-content: center;
+
+    .btn {
+      margin: 0 !important;
+      width: auto !important;
+      padding: 2vw 8vw !important;
+    }
+  }
+
+  &.bg-dark-blue {
+    color: white;
+    background: var(--theme-dark-blue);
+
+    .brick-title {
+      height: 4%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      font-size: 5vw;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .score {
+      text-align: center;
+      color: white;
+      font-size: 5vw;
+    }
+
+    .title {
+      position: relative;
+      margin: 0 !important;
+      height: 19%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      line-height: 1;
+      color: white;
+      .absoulte-high-score {
+        position: absolute;
+        bottom: 13.5vw;
+        left: 7vw;
+        font-size: 8vw;
+        font-family: $font-family-regular;
+      }
+    }
+
+    .hr-sub-title {
+      color: white;
+    }
+
+    .content {
+      height: 100%;
+
+      .pr-progress-center {
+        margin: 0;
+        height: 45%;
+        align-items: center;
+
+        .pr-progress-container {
+          height: 25vh;
+          width: 25vh;
+
+          .brill-coin-img.no-spinning {
+            animation: none;
+
+            svg {
+              color: var(--theme-dark-blue);
+            }
+          }
+        }
+      }
+
+      .btn.btn-green {
+        color: var(--theme-dark-blue);
+        background: var(--white);
+
+        &.orange {
+          color: white;
+          background: var(--theme-orange);
+        }
+      }
+    }
+
+    .attempted-text {
+      > span:first-child() {
+        opacity: 0;
+        animation: fadein 2s 1s forwards;
+      }
+      > span:nth-child(2) {
+        opacity: 0;
+        animation: fadein 2s 1.75s forwards;
+      }
+    }
+    .duration {
+      opacity: 0;
+      animation: fadein 2s 2.25s forwards;
+    }
+    .review-duration {
+      opacity: 0;
+      animation: fadein 2s 2.6s forwards;
+    }
+  }
+}

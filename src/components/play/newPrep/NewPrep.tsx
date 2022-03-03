@@ -15,6 +15,7 @@ import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 export interface IntroductionState {
   isStopped: boolean;
@@ -182,7 +183,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
                 {!timerHidden &&
                   <TimeProgressbar
                     isIntro={true}
-                    onEnd={() => {}}
+                    onEnd={() => { }}
                     minutes={minutes}
                     endTime={props.endTime}
                     brickLength={brick.brickLength}
@@ -192,15 +193,17 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
               </div>
               <div className="footer-space">
                 {!isMobile &&
-                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
-                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
-                </div>}
+                  <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                    {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                  </div>}
               </div>
               <div className="new-navigation-buttons">
-                <div className="n-btn next" onClick={() => props.moveNext(isResume)}>
-                  {isResume ? 'Resume' : 'Investigation'}
-                  <SpriteIcon name="arrow-right" />
-                </div>
+                <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
+                  <div className="n-btn next" onClick={() => props.moveNext(isResume)}>
+                    {isResume ? 'Resume' : 'Investigation'}
+                    <SpriteIcon name="arrow-right" />
+                  </div>
+                </MusicWrapper>
               </div>
             </div>
           </div>

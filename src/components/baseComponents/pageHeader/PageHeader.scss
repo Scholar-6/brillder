@@ -94,6 +94,19 @@
           background: var(--theme-light-blue);
         }
 
+        .brill-intro-container {
+          display: flex;
+          color: white;
+          font-family: $font-family-bold;
+          align-items: center;
+          font-size: 1.2vw;
+          img {
+            width: 3.6vw;
+            margin-left: 1vw;
+            margin-right: 2vw;
+          }
+        }
+
         .search-container {
           display: flex;
           position: absolute;
@@ -435,5 +448,19 @@
   font-family: $font-family-bold;
   &:hover {
     color: var(--theme-orange); 
+  }
+}
+
+.volume-container-dr {
+  margin-right: 2vw;
+  cursor: pointer;
+  color: white;
+  border-radius: 50%;
+  width: 3.68vw;
+  height: 3.68vw;
+  background: var(--theme-dark-blue);
+  svg {
+    width: 65%;
+    height: 65%;
   }
 }
