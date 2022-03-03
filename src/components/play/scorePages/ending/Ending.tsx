@@ -247,6 +247,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
             <div className="phone-provisional-score bg-dark-blue">
               {this.props.reviewBrills > 0 && <MusicAutoplay url="/sounds/mixkit-magical-coin-win.wav" />}
               <div className="content">
+                <div className="brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+                <div className="score">Score: {fixedCurrentScore}</div>
                 <div className="title">
                   {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
                   {Math.round(this.props.reviewBrills)} Brills Earned!

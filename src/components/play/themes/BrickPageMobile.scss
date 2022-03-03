@@ -1067,7 +1067,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               }
               svg {
                 color: var(--white);
-                animation: grow 1s ease-out infinite;
+                width: $star-base-size;
+                height: $star-base-size;
               }
             }
             p {
