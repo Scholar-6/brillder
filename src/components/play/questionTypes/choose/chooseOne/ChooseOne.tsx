@@ -33,6 +33,7 @@ export interface ActiveItem {
 }
 
 interface ChooseOneState {
+  isLiveCorrect: boolean;
   activeItem: ActiveItem;
 }
 
@@ -40,7 +41,14 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   constructor(props: ChooseOneProps) {
     super(props);
     const activeItem = this.getActiveItem(props);
-    this.state = { activeItem };
+
+    let correct = false;
+
+    if (props.isReview) {
+      correct = props.attempt.correct;
+    }
+
+    this.state = { activeItem, isLiveCorrect: correct };
   }
 
   getActiveItem(props: ChooseOneProps) {
@@ -201,7 +209,11 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       <div
         className={className}
         key={index}
-        onClick={() => this.setActiveItem(choice.index, index)}
+        onClick={() => {
+          if (this.state.isLiveCorrect === false) {
+            this.setActiveItem(choice.index, index);
+          }
+        }}
       >
         {this.renderData(choice)}
         {this.props.isPreview ?

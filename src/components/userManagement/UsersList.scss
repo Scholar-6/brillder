@@ -89,6 +89,14 @@
         }
       }
 
+      .no-user-found-message {
+        padding-top: 15vh;
+        font-size: 3vw;
+        width: 100%;
+        text-align: center;
+        color: var(--dark-gray);
+      }
+
       .users-table {
         width: 100%;
         height: calc(100vh - 7.834vw - 6.5vh - 6vh) !important;

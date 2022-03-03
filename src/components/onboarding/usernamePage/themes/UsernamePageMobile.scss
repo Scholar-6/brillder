@@ -63,7 +63,7 @@
         border: none;
         outline: none;
         color: var(--white);
-        background: var(--theme-orange);
+        background: var(--theme-green);
       }
 
       .MuiInput-underline {
@@ -125,7 +125,7 @@
         text-transform: capitalize;
       }
       .MuiInputBase-root.MuiInput-root.invalid {
-        background: var(--theme-orange);
+        background: var(--theme-green);
       }
     }
 
@@ -140,13 +140,16 @@
       font-family: $font-family-bold;
 
       button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-size: 8vw;
         border: none;
         outline: none;
         border-radius: 1.5vw;
         padding: 1.2vh 0;
         width: 60vw;
-        background: var(--theme-orange);
+        background: var(--theme-green);
         font-family: $font-family-bold;
         transition: all 300ms ease-out !important;
         &.invalid {
@@ -156,9 +159,10 @@
       }
 
       svg {
-        height: 5vw;
-        width: 5vw;
-        color: var(--theme-orange);
+        margin-left: 3vw;
+        height: 7vw;
+        width: 7vw;
+        color: var(--theme-white);
 
         &.invalid {
           color: var(--theme-light-blue);

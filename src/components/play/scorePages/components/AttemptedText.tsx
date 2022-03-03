@@ -10,8 +10,12 @@ interface Props {
 const AttemptedText: React.FC<Props> = (props) => {
   return (
     <div className="attempted-text">
-      <span className="bold">Attempted:</span> {props.attempted} / {props.attemptsCount}
-      <span className="bold"> Marks:</span> {props.score} / {props.maxScore}
+      <span>
+        <span className="bold">Attempted:</span> {props.attempted} / {props.attemptsCount}
+      </span>
+      <span>
+        <span className="bold"> Marks:</span> {props.score} / {props.maxScore}
+      </span>
     </div>
   );
 }

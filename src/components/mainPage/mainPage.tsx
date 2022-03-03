@@ -20,7 +20,7 @@ class MainPage extends Component<MainPageProps> {
     const moveBrickId = GetAuthBrickCoverId();
     if (moveBrickId > 0) {
       SetAuthBrickCoverId(-1);
-      props.history.push(routes.playCover({id: moveBrickId} as Brick));
+      props.history.push(routes.playBrief({id: moveBrickId} as Brick));
     }
   }
 

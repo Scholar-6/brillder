@@ -23,6 +23,8 @@ import { isPhone } from "services/phone";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import ShareDialogs from "./dialogs/ShareDialogs";
 import GenerateCoverButton from "../baseComponents/sidebarButtons/GenerateCoverButton";
+import map from "components/map";
+import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface FinalStepProps {
   brick: Brick;
@@ -128,14 +130,19 @@ const FinalStep: React.FC<FinalStepProps> = ({
                   <h2>All done!</h2>
                   <p>Well done for completing “<BrickTitle title={brick.title} />”!</p>
                   {renderActionColumns()}
+                  <div className="flex-center">
+                    <div className="btn btn-green" onClick={() => history.push(map.ViewAllPage)}>Play Another Brick</div>
+                  </div>
                 </div>
               </div>
             </Grid>
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={moveNext}>
-                Results
-                <SpriteIcon name="arrow-right" />
-              </div>
+              <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
+                <div className="n-btn next" onClick={moveNext}>
+                  Exit
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </MusicWrapper>
             </div>
           </Grid>
         </div>
@@ -145,7 +152,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           <div className="introduction-page">
             <div className="top-icon-container">
               <div className="icon-background">
-                <SpriteIcon name="star" />
+                <SpriteIcon name="check-icon" />
               </div>
             </div>
             <p>Well done for completing</p>

@@ -34,7 +34,7 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
     }
   }
 
-  render() {    
+  render() {
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box">
@@ -47,20 +47,20 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
             onChange={this.props.handleSortChange}
           >
             <Grid container direction="row">
-              <Grid item xs={4}>
-                <FormControlLabel
-                  value={SortBy.Score}
-                  style={{ marginRight: 0, width: "50%" }}
-                  control={<Radio className="sortBy" />}
-                  label="My Score"
-                />
-              </Grid>
               <Grid item xs={5}>
                 <FormControlLabel
                   value={SortBy.Date}
                   style={{ marginRight: 0 }}
                   control={<Radio className="sortBy" />}
                   label="Date Added"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <FormControlLabel
+                  value={SortBy.Score}
+                  style={{ marginRight: 0, width: "50%" }}
+                  control={<Radio className="sortBy" />}
+                  label="My Score"
                 />
               </Grid>
               <Grid item xs={3}>
@@ -77,7 +77,7 @@ class LibraryFilter extends Component<FilterProps, FilterState> {
         <CustomFilterBox
           label="Filter"
           isClearFilter={this.props.isClearFilter}
-          setHeight={filterHeight => this.setState({filterHeight})}
+          setHeight={filterHeight => this.setState({ filterHeight })}
           clear={this.props.clearSubjects}
         />
         <SubjectsListLibrary

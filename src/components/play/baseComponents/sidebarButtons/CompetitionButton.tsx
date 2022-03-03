@@ -16,13 +16,13 @@ const CompetitionButton: React.FC<ButtonProps> = (props) => {
 
   if (props.competitionPresent) {
     return <button onClick={props.onDownload} className="assign-class-button two-line-button svgOnHover blue">
-      <span>Download competition pdf</span>
+      <span>Download Competition pdf</span>
     </button>
   }
 
   return (
     <button onClick={props.onClick} className="assign-class-button two-line-button svgOnHover blue">
-      <span>Create competition</span>
+      <span>Launch Competition</span>
     </button>
   );
 }

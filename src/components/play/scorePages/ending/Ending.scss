@@ -40,4 +40,10 @@
   .blue {
     color: var(--theme-dark-blue);
   }
+
+  .circle-progress-container {
+    position: relative;
+    width: 28vh !important;
+    height: 28vh !important;
+  }
 }

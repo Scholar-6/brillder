@@ -1,5 +1,10 @@
 import React from "react";
+import { faHourglassStart } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { Brick } from "model/brick";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 
 interface Props {
   brick: Brick;
@@ -9,6 +14,7 @@ interface Props {
 const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
   return (
     <div className="pre-investigation">
+      <MusicAutoplay url="/sounds/mixkit-fast-sweep-transition.wav" />
       <div
         className="fixed-upper-b-title"
         dangerouslySetInnerHTML={{ __html: brick.title }}
@@ -24,9 +30,16 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
           <div>Time for some questions.</div>
         </div>
         <div className="ss-phone-after-title" />
-        <div className="like-button animate-v1">Preparation</div>
+        <div className="like-button green animate-v1">
+          <div>
+            <SpriteIcon name="check-icon" />
+          </div>
+          Preparation
+        </div>
         <div className="ss-phone-between-button" />
         <div className="like-button orange" onClick={moveNext}>
+          <SpriteIcon name="arrow-right" className="absolute-arrow-left-df" />
+          <FontAwesomeIcon icon={faHourglassStart} className="glass-icon-dd" />
           Investigation
         </div>
         <div className="ss-phone-between-button" />

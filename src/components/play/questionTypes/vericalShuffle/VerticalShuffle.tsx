@@ -67,7 +67,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     }
 
     let canDrag = true;
-    if (this.props.attempt?.correct) {
+    if (this.props.isReview && this.props.attempt?.correct) {
       canDrag = false;
     }
 

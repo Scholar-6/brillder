@@ -9,7 +9,8 @@
 }
 
 .introjs-tooltip {
-  max-width: 30vw !important;
+  min-width: 18vw;
+  max-width: 50vw !important;
 }
 
 .introjs-tooltipReferenceLayer {

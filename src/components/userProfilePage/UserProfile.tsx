@@ -346,6 +346,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       push() { }
     } as any;
 
+    const renderSubscribeIcon = () => {
+      if (this.state.subscriptionState && this.state.subscriptionState > 1) {
+        return <SpriteIcon name="hero-sparkle" />
+      }
+      return '';
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         <div className="main-listing user-profile-page">
@@ -361,8 +368,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <div className="profile-block">
               <div className="profile-header">
                 <UserTypeLozenge roles={user.roles} userPreference={this.props.user.userPreference} />
-                <div>{user.username ? user.username : "USERNAME"}</div>
-                {this.state.subscriptionState && this.state.subscriptionState > 1 && <SpriteIcon name="hero-sparkle" />}
+                <div className="profile-username-v2">{user.username ? user.username : "USERNAME"}</div>
+                {renderSubscribeIcon()}
               </div>
               <div className="save-button-container">
                 <SaveProfileButton

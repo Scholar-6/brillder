@@ -99,7 +99,19 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     if (props.isPlay) {
       const values = queryString.parse(props.history.location.search);
       if (brick.competitions && brick.competitions.length > 0) {
-        brick.competitionId = brick.competitions[0].id;
+        const foundActive = brick.competitions.find(c => {
+          const endDate = new Date(c.endDate);
+          const startDate = new Date(c.startDate);
+          if (endDate.getTime() > new Date().getTime()) {
+            if (startDate.getTime() < new Date().getTime()) {
+              return true;  
+            }
+          }
+          return false;
+        });
+        if (foundActive) {
+          brick.competitionId = foundActive.id;
+        }
       }
       let link = playCover(brick);
       if (values.newTeacher) {
@@ -179,8 +191,11 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     if (brick.competitions && brick.competitions.length > 0) {
       const foundActive = brick.competitions.find(c => {
         const endDate = new Date(c.endDate);
+        const startDate = new Date(c.startDate);
         if (endDate.getTime() > new Date().getTime()) {
-          return true;  
+          if (startDate.getTime() < new Date().getTime()) {
+            return true;  
+          }
         }
         return false;
       });

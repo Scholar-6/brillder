@@ -24,6 +24,7 @@ import { isMobile } from 'react-device-detect';
 
 interface UserCategory {
   name: string;
+  isUnsorted?: boolean; // true is unsorted category
   choices: SortAnswer[];
 }
 
@@ -73,7 +74,7 @@ class Sort extends CompComponent<SortProps, SortState> {
 
     choices = this.shuffle(choices);
 
-    userCats.push({ choices: [], name: Sort.unsortedTitle });
+    userCats.push({ choices: [], name: Sort.unsortedTitle, isUnsorted: true });
     this.prepareChoices(userCats, choices);
 
     // this is bad but it fixed issue. input answers should not be array.
@@ -86,6 +87,14 @@ class Sort extends CompComponent<SortProps, SortState> {
       userCats = this.getPhonePreviewCats(props);
     }
 
+    // if unsorted don`t have choices remove unsorted
+    try {
+      const unsorted = userCats.find(c => c.isUnsorted === true);
+      if (unsorted?.choices.length === 0) {
+        userCats.pop();
+      } 
+    } catch {}
+    
     this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };
   }
 
@@ -244,6 +253,11 @@ class Sort extends CompComponent<SortProps, SortState> {
       this.props.onAttempted();
     }
 
+    const unsorted = userCats.find(c => c.isUnsorted === true);
+    if (unsorted?.choices.length === 0) {
+      userCats.pop();
+    } 
+
     this.setState({ status, userCats });
   }
 
@@ -254,7 +268,7 @@ class Sort extends CompComponent<SortProps, SortState> {
           <div className="sort-image-container">
             <SortImage valueFile={choice.valueFile} imageSource={choice.imageSource} />
           </div>
-          {choice.imageCaption && <div className="sort-caption" dangerouslySetInnerHTML={{__html: choice.imageCaption}} />}
+          {choice.imageCaption && <MathInHtml className="sort-caption" value={choice.imageCaption} />}
         </div>
       );
     } else if (choice.answerType === QuestionValueType.Sound) {
@@ -298,6 +312,10 @@ class Sort extends CompComponent<SortProps, SortState> {
       }
     }
 
+    if (this.props.isReview && this.props.liveAttempt?.correct === true) {
+      className += ' correct';
+    }
+
     if (this.props.isBookPreview) {
       className += getValidationClassName(isCorrect);
     }
@@ -339,7 +357,10 @@ class Sort extends CompComponent<SortProps, SortState> {
     const incrementCount = () => count++;
 
     const unsorted = this.state.userCats[this.state.userCats.length - 1];
-    const correct = !!this.props.attempt?.correct;
+    let correct = false;
+    if (this.props.isReview) {
+      correct = !!this.props.liveAttempt?.correct;
+    }
 
     const haveImage = this.checkImages();
 
@@ -358,7 +379,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>
-              <div className={`sort-category ${i === this.state.userCats.length - 1 && 'bg-theme-orange text-white'}`}>
+              <div className={`sort-category ${cat.isUnsorted === true && 'bg-theme-orange text-white'}`}>
                 <MathInHtml value={cat.name} />
               </div>
               <div className="sort-category-list-container">

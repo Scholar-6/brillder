@@ -30,6 +30,10 @@
   }
 }
 
+.light {
+  font-family: $font-family-light;
+}
+
 .global-base-font {
   font-size: 1.4vw;
 }
@@ -1170,5 +1174,119 @@
     .MuiChip-avatar {
       margin-left: 0.4vw;
     }
+  }
+}
+
+.volume-container-dr.absolute-right {
+  position: absolute;
+  top: 3vw;
+  right: -0.7vw;
+  background: var(--theme-light-blue);
+
+  .css-custom-tooltip {
+    margin-right: 2vw;
+  }
+}
+
+.volume-container-dr {
+  transition: all 300ms ease-in-out;
+  svg {
+    stroke-width: 1;
+  }
+  .css-custom-tooltip {
+    display: none;
+    margin-top: 6vw;
+    padding: 0 !important;
+    margin-right: 0vw;
+    text-align: center;
+    font-family: $font-family-bold;
+    z-index: 100;
+  }
+
+  &.active-2 {
+    color: var(--theme-dark-blue);
+    background: white;
+  }
+
+  &:hover .css-custom-tooltip {
+    margin-top: 7vw;
+    text-align: center;
+    width: 7vw;
+    display: block;
+    opacity: 1;
+  }
+}
+
+.main-page-menu .brill-coin-img,
+.page-header .brill-coin-img {
+  position: relative;
+  margin-left: 1vw;
+  margin-right: 2vw;
+  width: 3.68vw;
+  height: 3.68vw;
+  img {
+    margin: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  svg {
+    color: var(--theme-orange);
+    position: absolute;
+    top: 22.5%;
+    left: 22.5%;
+    width: 55%;
+    height: 55%;
+  }
+  .css-custom-tooltip {
+    z-index: 100;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: none;
+    margin-top: 1vh;
+    width: 20vw;
+    background: var(--white);
+    padding: 1.4vw 2vw;
+    margin-left: -6vw;
+
+    .bold {
+      font-size: 1.2vw;
+      margin-bottom: 0.7vw;
+    }
+
+    .regular {
+      font-family: $font-family-regular;
+    }
+  }
+
+  &:hover {
+    .css-custom-tooltip {
+      display: block;
+      opacity: 1;
+    }
+  }
+}
+
+
+.brill-intro-container {
+  
+  @keyframes fliping-coin2 {
+    0% {
+      transform: rotate3d(0, 0, 0);
+    }
+    100% {
+      transform: rotate3d(0, 1, 0, 360deg);
+    }
+  }
+
+  .brill-coin-container {
+    margin-left: 1vw;
+    margin-right: 2vw;
+
+    > div {
+      margin: 0 !important;
+    }
+  }
+
+  .flip {
+    animation: fliping-coin2 1.8s linear;
   }
 }

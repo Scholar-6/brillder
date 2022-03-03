@@ -8,7 +8,12 @@
   }
 }
 
+.proposal-router {
+  overflow-y: hidden;
+}
+
 .brick-title-page {
+  overflow-y: hidden;
   .key-word {
     text-transform: capitalize !important;
   }
@@ -49,11 +54,8 @@
   }
   .left-block {
     $margin-desktop-left: 11vw;
-
-    @include tabletL {
-      margin-top: 10.5vh;
-    }
-
+    padding-top: 10.5vh;
+    height: 100vh;
     h1 {
       position: relative;
       margin-left: $margin-desktop-left;
@@ -105,6 +107,16 @@
     }
 
     .key-words {
+      .subject-autocomplete {
+        margin-bottom: 1vh !important;
+      }
+      .MuiInput-root {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      .MuiInput-formControl {
+        box-shadow: unset !important;
+      }
       input {
         margin: 0.5vh 0;
       }

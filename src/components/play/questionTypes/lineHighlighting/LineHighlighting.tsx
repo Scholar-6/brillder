@@ -15,6 +15,7 @@ interface LineHighlightingProps extends CompQuestionProps {
 interface LineHighlightingState {
   userAnswers: any[];
   lines: any[];
+  isLiveCorrect: boolean;
 }
 
 class LineHighlighting extends CompComponent<
@@ -23,7 +24,13 @@ class LineHighlighting extends CompComponent<
 > {
   constructor(props: LineHighlightingProps) {
     super(props);
-    this.state = { userAnswers: [], lines: props.component.lines };
+    let isLiveCorrect = false;
+    if (props.isReview && props.attempt) {
+      if (props.attempt.liveCorrect === true) {
+        isLiveCorrect = true;
+      }
+    }
+    this.state = { userAnswers: [], lines: props.component.lines, isLiveCorrect };
   }
 
   componentDidUpdate(prevProp: LineHighlightingProps) {
@@ -54,6 +61,9 @@ class LineHighlighting extends CompComponent<
   }
 
   highlighting(index: number) {
+    if (this.state.isLiveCorrect) {
+      return;
+    }
     this.state.lines[index].selected = !this.state.lines[index].selected;
     if (this.props.onAttempted) {
       this.props.onAttempted();
@@ -96,6 +106,13 @@ class LineHighlighting extends CompComponent<
           } else {
             className += " wrong";
           }
+        }
+      }
+
+      
+      if (this.props.liveAttempt?.correct) {
+        if (line.checked === true) {
+          className += ' correct';
         }
       }
 

@@ -38,7 +38,7 @@
     }
 
     &.bg-orange {
-      background: var(--theme-orange);
+      background: var(--theme-green);
 
       svg {
         margin-right: 1.6vw;
@@ -67,10 +67,101 @@
     }
   }
 
+  .google-button-desktop {
+    border-radius: 1.8vw;
+    margin-top: 1.2vw;
+    margin-bottom: 1.2vw;
+    width: 100%;
+    height: 13vw !important;
+    display: flex;
+    font-size: 5vw !important;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0;
+    background: white !important;
+    color: var(--theme-dark-blue);
+
+    svg {
+      left: 8vw;
+      width: 8vw;
+      height: 8vw;
+    }
+  }
+
+  .email-button {
+    border: none;
+    outline: none;
+    margin-top: 1.2vw;
+    margin-bottom: 1.2vw;
+    width: 100%;
+    height: 13vw !important;
+    background: var(--theme-green);
+    font-size: 5vw;
+    font-family: $font-family-regular;
+    svg {
+      left: 8vw;
+      width: 8vw;
+      height: 8vw;
+    }
+  }
+
+  .back-button-de {
+    display: flex;
+    align-items: center;
+    svg {
+      margin-left: 4vw;
+      width: 8vw;
+      height: 8vw;
+    }
+  }
+
   .small-text {
     margin-top: 0.3vw;
     text-align: center;
     font-size: 3.3vw;
     font-family: $font-family-light-italic;
+  }
+
+  .sign-up-form {
+    .logo {
+      padding-left: 26vw;
+      width: 20vw;
+      margin-bottom: 1vh;
+    }
+    img {
+      width: 20vw;
+    }
+
+    .input-block {
+      margin-bottom: 0 !important;
+    }
+
+    .login-field {
+      border-radius: 1.8vw;
+      text-align: center;
+      color: white;
+      margin-top: 1.2vw;
+      margin-bottom: 1.2vw;
+      width: 100%;
+      padding: 0 !important;
+      line-height: 1 !important;
+      height: 13vw !important;
+      background: var(--theme-dark-blue);
+    }
+    .button-box {
+      width: 100%;
+    }
+    .sign-in-button {
+      margin-top: 1.2vw;
+      margin-bottom: 1.2vw;
+      border-radius: 1.8vw;
+      font-size: 6vw;
+      height: 13vw !important;
+      font-family: $font-family-bold;
+      outline: 0;
+      border: 0;
+      width:100%;
+      background: var(--theme-green);
+    }
   }
 }

@@ -347,9 +347,11 @@
 
         .percentage {
           @extend %flexCenter;
+          padding-top: 0.2vw;
           font-size: 1.5vw;
           width: 2.5vw;
-          height: 2.5vw;
+          height: 2.3vw;
+          font-family: $font-family-bold;
           color: var(--white);
           margin-right: 1vw;
           background: var(--theme-green);

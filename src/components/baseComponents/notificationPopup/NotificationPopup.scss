@@ -19,6 +19,23 @@
       border-radius: 1.5vw !important;
     }
   }
+  .brill-icon-ff {
+    border: none !important;
+    width: 3.2vw;
+    height: 3.2vw;
+    img {
+      width: 3.2vw;
+      height: 3.2vw;
+    }
+    svg {
+      position: absolute;
+      color: var(--theme-orange) !important;
+      width: 55% !important;
+      height: 55% !important;
+      top: 22.5% !important;
+      left: 22.5% !important;
+    }
+  }
   .notification-content {
     background-color: var(--theme-light-blue);
     &:hover {
@@ -98,6 +115,10 @@
             color: var(--dark-gray);
             word-break: break-word;
             font-family: $font-family-regular;
+
+            p {
+              display: inline;
+            }
           }
         }
         .actions {

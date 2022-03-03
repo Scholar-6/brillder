@@ -47,7 +47,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       userAnswers = component.list;
     }
 
-    const canDrag = this.props.attempt?.correct ? false : true;
+    let canDrag = true;
+    if (this.props.isReview) {
+      canDrag = this.props.attempt?.correct ? false : true;
+    }
     this.state = { status, userAnswers, canDrag };
   }
 
@@ -149,6 +152,9 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         }
       }
     }
+    if (this.props.liveAttempt && this.props.isReview && this.props.liveAttempt.correct === true) {
+      className += " correct";
+    }
     if (this.props.isBookPreview) {
       try {
         let state = this.getBookState(answer.index);
@@ -202,6 +208,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
                   state={this.getState(i)}
                   item={item}
                   key={i}
+                  attempt={this.props.liveAttempt}
                   isPreview={this.props.isPreview}
                   hint={this.props.question.hint}
                   isReview={this.props.isReview}
