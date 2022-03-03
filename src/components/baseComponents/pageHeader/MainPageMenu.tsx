@@ -17,7 +17,7 @@ import MoreButton from './MoreButton';
 import { PageEnum } from './PageHeadWithMenu';
 import { isMobile } from "react-device-detect";
 import NotificationPanel from "../notificationPanel/NotificationPanel";
-import BrillIcon from "../BrillIcon";
+import BrillIconAnimated from "../BrillIconAnimated";
 
 interface MainPageMenuProps {
   history: any;
@@ -84,21 +84,10 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
       className += " notification-expanded"
     }
 
-    const renderBrills = () => {
-      const {brills} = this.props.user;
-      if (brills && brills > 0) {
-        return brills;
-      }
-      return '';
-    }
-
     return (
       <div className={className} ref={this.pageHeader}>
         <div className="menu-buttons">
-          <div className="brill-intro-container">
-            <div className="brills-number">{renderBrills()}</div>
-            <BrillIcon />
-          </div>
+          <BrillIconAnimated user={this.props.user} />
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
         </div>
