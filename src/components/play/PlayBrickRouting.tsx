@@ -415,7 +415,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       { withCredentials: true }
     ).then(async (response) => {
       clearAssignmentId();
-      if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
+      if (props.user) {
         await props.getUser();
       }
       setAttemptId(response.data.id);
@@ -452,9 +452,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       { withCredentials: true }
     ).then(async (response) => {
       clearAssignmentId();
-      if (!props.user.hasPlayedBrick && props.isAuthenticated === isAuthenticated.True) {
-        await props.getUser();
-      }
+      await props.getUser();
       setAttemptId(response.data.Id);
 
       let { brills } = response.data;
