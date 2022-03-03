@@ -12,6 +12,7 @@ import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
 import { PlayMode } from "../model";
 import { User } from "model/user";
+import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface Props {
   brick: Brick;
@@ -91,10 +92,12 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
               </div>
               <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg" />
               <div className="new-navigation-buttons">
-                <div className="n-btn next" onClick={props.moveNext}>
-                  Next
-                  <SpriteIcon name="arrow-right" />
-                </div>
+                <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
+                  <div className="n-btn next" onClick={props.moveNext}>
+                    Next
+                    <SpriteIcon name="arrow-right" />
+                  </div>
+                </MusicWrapper>
               </div>
             </div>
           </div>

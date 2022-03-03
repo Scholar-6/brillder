@@ -7,6 +7,7 @@ import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getLiveTime } from "../services/playTimes";
 import Hourglass from "../baseComponents/hourglass/Hourglass";
+import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface Props {
   brick: Brick;
@@ -52,10 +53,12 @@ const CountdownInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
             <div className="minutes" />
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={moveNext}>
-                Start Timer
-                <SpriteIcon name="arrow-right" />
-              </div>
+              <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
+                <div className="n-btn next" onClick={moveNext}>
+                  Start Timer
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </MusicWrapper>
             </div>
           </div>
         </div>

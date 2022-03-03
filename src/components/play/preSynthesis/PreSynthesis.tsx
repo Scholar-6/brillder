@@ -9,6 +9,7 @@ import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import routes from "../routes";
 import MusicAutoplay from "components/baseComponents/MusicAutoplay";
+import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface Props {
   brick: Brick;
@@ -76,10 +77,12 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
             <div className="minutes-footer" />
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={moveNext}>
-                Read Synthesis
-                <SpriteIcon name="arrow-right" />
-              </div>
+              <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
+                <div className="n-btn next" onClick={moveNext}>
+                  Read Synthesis
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </MusicWrapper>
             </div>
           </div>
         </div>

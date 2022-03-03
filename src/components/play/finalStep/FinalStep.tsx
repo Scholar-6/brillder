@@ -24,6 +24,7 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import ShareDialogs from "./dialogs/ShareDialogs";
 import GenerateCoverButton from "../baseComponents/sidebarButtons/GenerateCoverButton";
 import map from "components/map";
+import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface FinalStepProps {
   brick: Brick;
@@ -136,10 +137,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
               </div>
             </Grid>
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={moveNext}>
-                Exit
-                <SpriteIcon name="arrow-right" />
-              </div>
+              <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
+                <div className="n-btn next" onClick={moveNext}>
+                  Exit
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </MusicWrapper>
             </div>
           </Grid>
         </div>
