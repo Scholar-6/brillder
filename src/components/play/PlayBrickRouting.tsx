@@ -800,6 +800,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {isPhone() && renderPhoneFooter(PlayPage.Review)}
         </Route>
         <Route exac path="/play/brick/:brickId/ending">
+          {reviewBrills >= 0 ? 
           <Ending
             status={status}
             location={location}
@@ -812,7 +813,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             liveDuration={liveDuration}
             reviewDuration={reviewDuration}
             move={finishBrick}
-          />
+          /> : <PageLoader content="loading brills" />}
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">
           <FinalStep
