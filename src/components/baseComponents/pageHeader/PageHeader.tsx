@@ -21,7 +21,7 @@ import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestio
 import { getSubjects } from 'services/axios/subject';
 import { User } from 'model/user';
 import VolumeButton from '../VolumeButton';
-import BrillIcon from '../BrillIcon';
+import BrillIconAnimated from '../BrillIconAnimated';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -191,16 +191,6 @@ class PageHeader extends Component<Props, State> {
       className += ' no-bottom-border';
     }
 
-    const renderBrills = () => {
-      const { brills } = this.props.user;
-      if (brills && brills > 0) {
-        return brills;
-      }
-      return '';
-    }
-
-    console.log(55, this.props.user)
-
     return (
       <div className="upper-part">
         <div className={!searchVisible ? "page-header" : "page-header active"}>
@@ -273,12 +263,7 @@ class PageHeader extends Component<Props, State> {
               {this.props.isAuthenticated === isAuthenticated.True &&
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
-                  {
-                    this.props.user && <div className="brill-intro-container">
-                      <div className="brills-number">{renderBrills()}</div>
-                      <BrillIcon />
-                    </div>
-                  }
+                  <BrillIconAnimated user={this.props.user} />
                   <BellButton
                     notificationCount={notificationCount}
                     onClick={evt => this.props.showNotifications(evt)}

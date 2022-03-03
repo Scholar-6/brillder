@@ -1,4 +1,4 @@
-import {AttemptCash, YoutubeClicked, AuthBrickCoverId, PreviewAttemptCash, VolumeToggle} from './types';
+import {AttemptCash, YoutubeClicked, AuthBrickCoverId, PreviewAttemptCash, VolumeToggle, UserBrills} from './types';
 
 export function SetYoutubeClick() {
   localStorage.setItem(YoutubeClicked, "true");
@@ -58,4 +58,16 @@ export function GetAuthBrickCoverId() {
     return parseInt(stringId);
   }
   return -1;
+}
+
+export function SetUserBrills(brills: number) {
+  localStorage.setItem(UserBrills, brills.toString());
+}
+
+export function GetUserBrills() {
+  const brills = localStorage.getItem(UserBrills);
+  if (brills) {
+    return parseInt(brills);
+  }
+  return 0;
 }
