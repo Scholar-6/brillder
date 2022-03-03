@@ -1264,3 +1264,29 @@
     }
   }
 }
+
+
+.brill-intro-container {
+  
+  @keyframes fliping-coin2 {
+    0% {
+      transform: rotate3d(0, 0, 0);
+    }
+    100% {
+      transform: rotate3d(0, 1, 0, 360deg);
+    }
+  }
+
+  .brill-coin-container {
+    margin-left: 1vw;
+    margin-right: 2vw;
+
+    > div {
+      margin: 0 !important;
+    }
+  }
+
+  .flip {
+    animation: fliping-coin2 1.8s linear;
+  }
+}
