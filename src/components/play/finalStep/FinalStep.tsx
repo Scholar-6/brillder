@@ -152,7 +152,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           <div className="introduction-page">
             <div className="top-icon-container">
               <div className="icon-background">
-                <SpriteIcon name="star" />
+                <SpriteIcon name="check-icon" />
               </div>
             </div>
             <p>Well done for completing</p>
