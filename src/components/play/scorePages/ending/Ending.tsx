@@ -260,8 +260,52 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
 
     const renderSubTitle = () => {
       let text = '';
-      if (this.props.bestScore && fixedCurrentScore > this.props.bestScore && fixedCurrentScore >= 50) {
-        text = 'A New High Score!'
+      if ((this.props.reviewBrills + this.props.liveBrills) === 0 && fixedCurrentScore === 100) {
+        text = "You've still got it!";
+      } else if (fixedCurrentScore >= 50 && (this.props.reviewBrills + this.props.liveBrills === 0)) {
+        text = 'No better than your best effort!';
+      } else if (fixedCurrentScore >= 95) {
+        text = 'Superlative!'
+      } else if (this.props.bestScore && fixedCurrentScore > this.props.bestScore && fixedCurrentScore >= 50) {
+        text = 'A New High Score!';
+      } else if (fixedCurrentScore >= 90) {
+        text = 'Most excellent!';
+      } else if (fixedCurrentScore >= 85) {
+        text = 'Excellent!';
+      } else if (fixedCurrentScore >= 80) {
+        text = 'Admirable!'
+      } else if (fixedCurrentScore >= 75) {
+        text = 'Commendable!';
+      } else if (fixedCurrentScore >= 70) {
+        text = 'Respectable!';
+      } else if (fixedCurrentScore >= 65) {
+        text = 'Decent!';
+      } else if (fixedCurrentScore >= 60) {
+        text = 'Half decent!';
+      } else if (fixedCurrentScore >= 55) {
+        text = 'Something to build on!';
+      } else if (fixedCurrentScore >= 50) {
+        text = 'Room for improvement!';
+      } else if (fixedCurrentScore >= 45) {
+        text = 'Just missing the pass mark!';
+      } else if (fixedCurrentScore >= 40) {
+        text = 'Tough going!';
+      } else if (fixedCurrentScore >= 35) {
+        text = 'Very tough going!';
+      } else if (fixedCurrentScore >= 30) {
+        text = 'Ouch!';
+      } else if (fixedCurrentScore >= 25) {
+        text = 'Yikes!';
+      } else if (fixedCurrentScore >= 20) {
+        text = 'Call a brain ambulance!';
+      } else if (fixedCurrentScore >= 15) {
+        text = "You weren't even trying";
+      } else if (fixedCurrentScore >= 10) {
+        text = 'A monkey typing randomly would do better than that!';
+      } else if (fixedCurrentScore >= 5) {
+        text = 'Almost hard to do this badly - congratulations ?';
+      } else if (fixedCurrentScore >= 0) {
+        text = 'You have a genius, but just not for this brick!'
       }
       return text;
     }
