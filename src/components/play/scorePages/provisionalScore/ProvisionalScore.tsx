@@ -338,7 +338,9 @@ class ProvisionalScore extends React.Component<
                           <div>You already got full marks on this brick, so you can't earn any more brills.</div>
                         </div>
                       </div>
-                      <div className="btn btn-green" onClick={() => this.openSecondPart()}>Next</div>
+                      <div className="flex-center">
+                        <div className="btn btn-green" onClick={() => this.openSecondPart()}>Next</div>
+                      </div>
                     </div>
                   </div>
                 </React.Suspense>
@@ -381,7 +383,9 @@ class ProvisionalScore extends React.Component<
                         <div>Claim your perfect score bonus by reading the Synthesis of this brick.</div>
                       </div>
                     </div>
-                    <div className="btn btn-green" onClick={() => this.openSecondPart()}>Claim now</div>
+                    <div className="flex-center">
+                      <div className="btn btn-green" onClick={() => this.openSecondPart()}>Claim now</div>
+                    </div>
                   </div>
                 </div>
               </React.Suspense>
