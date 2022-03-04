@@ -425,7 +425,9 @@ class ProvisionalScore extends React.Component<
                         <div>Improve your score to earn more brills.</div>
                       </div>
                     </div>
-                    <div className="btn btn-green" onClick={() => this.openSecondPart()}>Boost</div>
+                    <div className="flex-center">
+                      <div className="btn btn-green" onClick={() => this.openSecondPart()}>Boost</div>
+                    </div>
                   </div>
                 </div>
               </React.Suspense>
@@ -469,7 +471,9 @@ class ProvisionalScore extends React.Component<
                       <div>your Brills in the Review stage.</div>
                     </div>
                   </div>
-                  <div className="btn btn-green" onClick={() => this.openSecondPart()}>Boost</div>
+                  <div className="flex-center">
+                    <div className="btn btn-green" onClick={() => this.openSecondPart()}>Boost</div>
+                  </div>
                 </div>
               </div>
             </React.Suspense>
