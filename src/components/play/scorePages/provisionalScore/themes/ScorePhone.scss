@@ -4,6 +4,18 @@
 
 
 .phone-provisional-score {
+  .header .stepper {
+    //padding: 0 !important;
+    .step > div {
+      > span {
+      font-size: 4.5vw !important;
+      }
+      > svg {
+        width: 5vw;
+        height: 5vw;
+      }
+    }
+  }
   .title {
     font-size: 8.5vw !important;
   }

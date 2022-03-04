@@ -8,6 +8,19 @@
     font-size: 8.5vw !important;
   }
 
+  .header .stepper {
+    //padding: 0 !important;
+    .step > div {
+      > span {
+      font-size: 4.5vw !important;
+      }
+      > svg {
+        width: 5vw;
+        height: 5vw;
+      }
+    }
+  }
+
   @keyframes fliping-coin {
     0% {
       transform: rotate3d(0, 0, 0);
