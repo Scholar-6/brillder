@@ -21,6 +21,7 @@ import actions from "redux/actions/auth";
 import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 import MusicWrapper from "components/baseComponents/MusicWrapper";
 
+const confetti = require('canvas-confetti');
 
 const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
 const PhoneTheme = React.lazy(() => import('./themes/ScorePhoneTheme'));
@@ -84,6 +85,70 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     };
   }
 
+  lauchSmallConfetti(colors: string[]) {
+    const end = Date.now() + (5 * 1000);
+
+    (function frame() {
+      confetti.default({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors
+      });
+      confetti.default({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    }());
+  }
+
+  launchBigConfetti(colors: string[]) {
+    const duration = 5 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors };
+
+    const randomInRange = (min: number, max: number) => {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval3: any = setInterval(function () {
+      var timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval3);
+      }
+
+      var particleCount = 50 * (timeLeft / duration);
+      // since particles fall down, start a bit higher than random
+      confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+      confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+    }, 250);
+  }
+
+  runFirework(currentScore: number) {
+    const { liveBrills, reviewBrills, bestScore } = this.props;
+    const colors = ['#0681db', '#ffd900', '#30c474'];
+    console.log('firework', currentScore, liveBrills, reviewBrills, bestScore);
+
+    if (currentScore === 100 && (liveBrills > 0 || reviewBrills > 0)) {
+      this.launchBigConfetti(colors);
+    } else if (currentScore >= 50 && (liveBrills > 0 || reviewBrills > 0)) {
+      if (bestScore && currentScore > bestScore) {
+        this.lauchSmallConfetti(colors);
+      } else if (!bestScore) {
+        this.lauchSmallConfetti(colors);
+      }
+    }
+  }
+
   componentDidMount() {
     const step = 3;
     const { oldScore } = this.state;
@@ -91,6 +156,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     const liveScore = Math.round((oldScore * 100) / maxScore);
     const reviewScore = Math.round((score * 100) / maxScore);
     const currentScore = Math.round(((oldScore + score) * 50) / maxScore);
+
     const interval = setInterval(() => {
       let tempReviewScore = this.state.reviewScore;
       let tempLiveScore = this.state.liveScore;
@@ -129,6 +195,10 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       }
     }, 100);
     this.setState({ interval });
+
+    if (!isPhone()) {
+      this.runFirework(currentScore);
+    }
   }
 
   componentWillUnmount() {
@@ -311,7 +381,11 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                 <div>Avg.</div>
               </div>
               <div className="btn-container">
-                <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Next</div>
+                <div className="btn btn-green" onClick={() => {
+                  this.setState({ isMobileSecondPart: true })
+                  console.log('run mobile firework')
+                  this.runFirework(this.state.fixedCurrentScore);
+                }}>Next</div>
               </div>
             </div>
           </div>
