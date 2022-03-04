@@ -84,12 +84,22 @@ class ProvisionalScore extends React.Component<
       handleMove: this.handleMove.bind(this),
     };
 
-    const colors = ['#0681db', '#ffd900', '#30c474'];
 
-    if (finalValue === 100 && props.liveBrills > 0) {
+    if (!isPhone()) {
+      this.launchBigConfetti(finalValue);
+    }
+  }
+
+  launchBigConfetti(finalValue: number) {
+    console.log(finalValue, this.props.liveBrills);
+    if (finalValue === 100 && this.props.liveBrills > 0) {
+      const colors = ['#0681db', '#ffd900', '#30c474'];
+
       const duration = 5 * 1000;
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors };
+
+      console.log('launch animation');
 
       const randomInRange = (min: number, max: number) => {
         return Math.random() * (max - min) + min;
@@ -147,6 +157,11 @@ class ProvisionalScore extends React.Component<
     }
     this.props.history.push(link);
     this.props.moveToPrep?.();
+  }
+
+  openSecondPart() {
+    this.launchBigConfetti(this.state.finalValue);
+    this.setState({ isMobileSecondPart: true });
   }
 
   moveToSynthesis() {
@@ -323,7 +338,7 @@ class ProvisionalScore extends React.Component<
                           <div>You already got full marks on this brick, so you can't earn any more brills.</div>
                         </div>
                       </div>
-                      <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Next</div>
+                      <div className="btn btn-green" onClick={() => this.openSecondPart()}>Next</div>
                     </div>
                   </div>
                 </React.Suspense>
@@ -366,7 +381,7 @@ class ProvisionalScore extends React.Component<
                         <div>Claim your perfect score bonus by reading the Synthesis of this brick.</div>
                       </div>
                     </div>
-                    <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Claim now</div>
+                    <div className="btn btn-green" onClick={() => this.openSecondPart()}>Claim now</div>
                   </div>
                 </div>
               </React.Suspense>
@@ -410,7 +425,7 @@ class ProvisionalScore extends React.Component<
                         <div>Improve your score to earn more brills.</div>
                       </div>
                     </div>
-                    <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
+                    <div className="btn btn-green" onClick={() => this.openSecondPart()}>Boost</div>
                   </div>
                 </div>
               </React.Suspense>
@@ -454,7 +469,7 @@ class ProvisionalScore extends React.Component<
                       <div>your Brills in the Review stage.</div>
                     </div>
                   </div>
-                  <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
+                  <div className="btn btn-green" onClick={() => this.openSecondPart()}>Boost</div>
                 </div>
               </div>
             </React.Suspense>
