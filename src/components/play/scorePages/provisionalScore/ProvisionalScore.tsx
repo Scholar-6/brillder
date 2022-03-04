@@ -84,14 +84,10 @@ class ProvisionalScore extends React.Component<
       handleMove: this.handleMove.bind(this),
     };
 
-
-    if (!isPhone()) {
-      this.launchBigConfetti(finalValue);
-    }
+    this.launchBigConfetti(finalValue);
   }
 
   launchBigConfetti(finalValue: number) {
-    console.log(finalValue, this.props.liveBrills);
     if (finalValue === 100 && this.props.liveBrills > 0) {
       const colors = ['#0681db', '#ffd900', '#30c474'];
 
@@ -160,7 +156,6 @@ class ProvisionalScore extends React.Component<
   }
 
   openSecondPart() {
-    this.launchBigConfetti(this.state.finalValue);
     this.setState({ isMobileSecondPart: true });
   }
 
