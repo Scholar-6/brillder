@@ -2090,15 +2090,17 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       .icon-container {
         margin: 0;
         display: flex;
-        align-items: center;
-        height: 44%;
+        align-items: flex-end;
+        height: 49%;
+        padding-bottom: 4vh;
 
         svg {
+          height: 60%;
           padding: 0 !important; 
         }
       }
       .image-title {
-        height: 33%;
+        height: 23.3%;
       }
       .help-text {
         margin: 0;
