@@ -104,13 +104,14 @@
     background: var(--theme-dark-blue);
 
     .brick-title {
-      height: 4%;
+      height: 6%;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-end;
       text-align: center;
       color: white;
-      font-size: 5vw;
+      font-family: $font-family-bold;
+      font-size: 6.5vw;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -136,8 +137,8 @@
       .absoulte-high-score {
         position: absolute;
         bottom: 13.5vw;
-        left: 7vw;
-        font-size: 8vw;
+        text-align: center;
+        font-size: 6vw;
         font-family: $font-family-regular;
       }
     }
@@ -150,7 +151,7 @@
 
       .pr-progress-center {
         margin: 0;
-        height: 45%;
+        height: 35%;
         align-items: center;
 
         .pr-progress-container {
