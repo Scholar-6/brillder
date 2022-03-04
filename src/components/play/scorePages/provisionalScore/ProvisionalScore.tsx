@@ -84,14 +84,18 @@ class ProvisionalScore extends React.Component<
       handleMove: this.handleMove.bind(this),
     };
 
-    const colors = ['#0681db', '#ffd900', '#30c474'];
+    this.launchBigConfetti(finalValue);
+  }
 
-    console.log('data', score, maxScore, props.liveBrills, finalValue);
+  launchBigConfetti(finalValue: number) {
+    if (finalValue === 100 && this.props.liveBrills > 0) {
+      const colors = ['#0681db', '#ffd900', '#30c474'];
 
-    if (finalValue === 100 && props.liveBrills > 0) {
       const duration = 5 * 1000;
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors };
+
+      console.log('launch animation');
 
       const randomInRange = (min: number, max: number) => {
         return Math.random() * (max - min) + min;
@@ -109,31 +113,6 @@ class ProvisionalScore extends React.Component<
         confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
         confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
       }, 250);
-    } else if (finalValue >= 50 && props.liveBrills > 0) {
-      if (!props.bestScore || finalValue > props.bestScore) {
-        const end = Date.now() + (5 * 1000);
-
-        (function frame() {
-          confetti.default({
-            particleCount: 2,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-            colors: colors
-          });
-          confetti.default({
-            particleCount: 2,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-            colors: colors
-          });
-
-          if (Date.now() < end) {
-            requestAnimationFrame(frame);
-          }
-        }());
-      }
     }
   }
 
@@ -174,6 +153,10 @@ class ProvisionalScore extends React.Component<
     }
     this.props.history.push(link);
     this.props.moveToPrep?.();
+  }
+
+  openSecondPart() {
+    this.setState({ isMobileSecondPart: true });
   }
 
   moveToSynthesis() {
@@ -224,8 +207,6 @@ class ProvisionalScore extends React.Component<
         text = "Uh-oh - you're getting worse!";
       } else if (finalValue >= 95) {
         text = 'Superlative!';
-      } else if (this.props.bestScore && finalValue > this.props.bestScore && finalValue >= 50 && this.props.user) {
-        text = 'A New High Score!';
       } else if (finalValue >= 90) {
         text = 'Most excellent!';
       } else if (finalValue >= 85) {
@@ -350,7 +331,9 @@ class ProvisionalScore extends React.Component<
                           <div>You already got full marks on this brick, so you can't earn any more brills.</div>
                         </div>
                       </div>
-                      <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Next</div>
+                      <div className="flex-center">
+                        <div className="btn btn-green" onClick={() => this.openSecondPart()}>Next</div>
+                      </div>
                     </div>
                   </div>
                 </React.Suspense>
@@ -393,7 +376,9 @@ class ProvisionalScore extends React.Component<
                         <div>Claim your perfect score bonus by reading the Synthesis of this brick.</div>
                       </div>
                     </div>
-                    <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Claim now</div>
+                    <div className="flex-center">
+                      <div className="btn btn-green" onClick={() => this.openSecondPart()}>Claim now</div>
+                    </div>
                   </div>
                 </div>
               </React.Suspense>
@@ -437,7 +422,9 @@ class ProvisionalScore extends React.Component<
                         <div>Improve your score to earn more brills.</div>
                       </div>
                     </div>
-                    <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
+                    <div className="flex-center">
+                      <div className="btn btn-green" onClick={() => this.openSecondPart()}>Boost</div>
+                    </div>
                   </div>
                 </div>
               </React.Suspense>
@@ -481,7 +468,9 @@ class ProvisionalScore extends React.Component<
                       <div>your Brills in the Review stage.</div>
                     </div>
                   </div>
-                  <div className="btn btn-green" onClick={() => this.setState({ isMobileSecondPart: true })}>Boost</div>
+                  <div className="flex-center">
+                    <div className="btn btn-green" onClick={() => this.openSecondPart()}>Boost</div>
+                  </div>
                 </div>
               </div>
             </React.Suspense>

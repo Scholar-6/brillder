@@ -1290,3 +1290,9 @@
     animation: fliping-coin2 1.8s linear;
   }
 }
+
+
+// fix
+.play-preview-pages .sorted-row.sorted-row-expanded .high-score-sm-d3s .brill-coin-img .css-custom-tooltip {
+  display: none;
+}
