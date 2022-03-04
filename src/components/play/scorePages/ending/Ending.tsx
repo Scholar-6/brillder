@@ -196,9 +196,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     }, 100);
     this.setState({ interval });
 
-    if (!isPhone()) {
-      this.runFirework(currentScore);
-    }
+    this.runFirework(currentScore);
   }
 
   componentWillUnmount() {
@@ -427,8 +425,6 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               <div className="btn-container">
                 <div className="btn btn-green" onClick={() => {
                   this.setState({ isMobileSecondPart: true })
-                  console.log('run mobile firework')
-                  this.runFirework(this.state.fixedCurrentScore);
                 }}>Next</div>
               </div>
             </div>
