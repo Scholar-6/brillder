@@ -86,8 +86,6 @@ class ProvisionalScore extends React.Component<
 
     const colors = ['#0681db', '#ffd900', '#30c474'];
 
-    console.log('data', score, maxScore, props.liveBrills, finalValue);
-
     if (finalValue === 100 && props.liveBrills > 0) {
       const duration = 5 * 1000;
       const animationEnd = Date.now() + duration;
@@ -109,31 +107,6 @@ class ProvisionalScore extends React.Component<
         confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
         confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
       }, 250);
-    } else if (finalValue >= 50 && props.liveBrills > 0) {
-      if (!props.bestScore || finalValue > props.bestScore) {
-        const end = Date.now() + (5 * 1000);
-
-        (function frame() {
-          confetti.default({
-            particleCount: 2,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-            colors: colors
-          });
-          confetti.default({
-            particleCount: 2,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-            colors: colors
-          });
-
-          if (Date.now() < end) {
-            requestAnimationFrame(frame);
-          }
-        }());
-      }
     }
   }
 
