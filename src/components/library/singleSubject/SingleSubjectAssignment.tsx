@@ -159,7 +159,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
                 brick={brick}
               />
             )}
-            {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
+            {assignment.brick.competitions && assignment.brick.competitions.length > 0 && height < 50 &&
             <div className="competition-star bigger">
               <SpriteIcon name="book-star" style={{ color: color, stroke: color, fill: color }} />
             </div>}

@@ -56,6 +56,7 @@ const BrillIconAnimated: React.FC<Props> = (props) => {
         setCurrentBrills(props.user.brills, () => {});
       }
     }
+    /*eslint-disable-next-line*/
   }, []);
 
   if (!props.user) {
