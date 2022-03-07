@@ -362,20 +362,20 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       <div className="brick-container play-preview-panel review-page">
         {renderPrepButton()}
         <div className="introduction-page">
-            <div className="introduction-info">
-              <div className="intro-text-row">
-                <ReviewStepper
-                  questions={questions}
-                  attempts={props.liveAttempts}
-                  activeStep={activeStep}
-                  handleStep={handleStep}
-                />
-              </div>
+          <div className="introduction-info">
+            <div className="intro-text-row">
+              <ReviewStepper
+                questions={questions}
+                attempts={props.liveAttempts}
+                activeStep={activeStep}
+                handleStep={handleStep}
+              />
             </div>
-            {questions.map(renderQuestionContainer)}
-            <div className="new-layout-footer" style={{ display: "none" }}>
-              <div className="time-container">
-                {!timerHidden &&
+          </div>
+          {questions.map(renderQuestionContainer)}
+          <div className="new-layout-footer" style={{ display: "none" }}>
+            <div className="time-container">
+              {!timerHidden &&
                 <TimeProgressbar
                   onEnd={onEnd}
                   minutes={minutes}
@@ -386,33 +386,33 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                     props.setEndTime(a);
                   }}
                 />}
-              </div>
-              <div className="footer-space">
-                {!isMobile &&
+            </div>
+            <div className="footer-space">
+              {!isMobile &&
                 <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
                   {timerHidden ? 'Show Timer' : 'Hide Timer'}
                 </div>}
+            </div>
+            <div className="new-navigation-buttons">
+              <div className="n-btn back" onClick={prev}>
+                <SpriteIcon name="arrow-left" />
+                Back
               </div>
-              <div className="new-navigation-buttons">
-                <div className="n-btn back" onClick={prev}>
-                  <SpriteIcon name="arrow-left" />
-                  Back
-                </div>
-                <div
-                  className="n-btn next"
-                  onClick={() => {
-                    if (questions.length - 1 > activeStep) {
-                      next();
-                    } else {
-                      setSubmitAnswers(true);
-                    }
-                  }}
-                >
-                  Next
-                  <SpriteIcon name="arrow-right" />
-                </div>
+              <div
+                className="n-btn next"
+                onClick={() => {
+                  if (questions.length - 1 > activeStep) {
+                    next();
+                  } else {
+                    setSubmitAnswers(true);
+                  }
+                }}
+              >
+                Next
+                <SpriteIcon name="arrow-right" />
               </div>
             </div>
+          </div>
           <SubmitAnswersDialog
             isOpen={isSubmitOpen}
             submit={submitAndMove}

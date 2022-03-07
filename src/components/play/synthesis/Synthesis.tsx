@@ -20,12 +20,14 @@ import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 
 import routes from "../routes";
 import { isMobile } from "react-device-detect";
+import { User } from "model/user";
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
 
+  user?: User;
   attempts: any[];
   history: any;
   endTime: any;
@@ -167,7 +169,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
               </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn next" onClick={() => {
-                  if (percentageScore === 100) {
+                  if (props.user && percentageScore === 100) {
                     setPopup(true);
                   } else {
                     props.moveNext();
@@ -188,7 +190,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
               <button className="btn btn-md bg-theme-orange yes-button" onClick={props.moveNext}>
                 <span>Yes</span>
               </button>
-              <button className="btn btn-md bg-gray no-button" onClick={() => props.history.push(map.MyLibrary)}>
+              <button className="btn btn-md bg-gray no-button" onClick={() => props.history.push(map.MyLibrarySubject(brick.subjectId))}>
                 <span>No</span>
               </button>
             </div>

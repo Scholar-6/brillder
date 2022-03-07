@@ -4,7 +4,47 @@
 @import 'src/assets/sass/partials/extensions';
 
 .competition-dialog.dialog-box {
+  .close-button .svg {
+    color: var(--theme-dark-blue);
+  }
   .dialog-header .MuiInputBase-root {
-    background: var(--theme-dark-blue) !important;
+    color: var(--theme-dark-blue) !important;
+    background: var(--tab-gray) !important;
+  }
+  .title-sr4 {
+    padding-bottom: 3vh;
+  }
+
+  .MuiSelect-root.MuiSelect-select {
+    font-size: 1.2vw !important;
+  }
+
+  input {
+    height: 100%;
+  }
+
+  .MuiSvgIcon-root {
+    color: var(--theme-dark-blue) !important;
+    top: 0.2vw !important;
+  }
+
+  .flex-center > div:first-child {
+    width: 4vw;
+    font-family: $font-family-regular;
+  }
+
+  .dialog-header {
+    margin-bottom: 0.8vw !important;
+  }
+
+  .dialog-footer {
+    margin-top: 3vh;
+    .yes-button {
+      color: white;
+      background: var(--theme-green);
+      &:hover {
+        background: var(--theme-dark-blue);
+      }
+    }
   }
 }

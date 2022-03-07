@@ -37,6 +37,19 @@
   height: 100%;
 }
 
+.unauthrozied-container .page-header {
+  .home-button-container {
+    position: absolute;
+    top: 3vw !important;
+    left: 23vw !important;
+  }
+
+  .search-container {
+    top: 3vw !important;
+    left: 43vw !important;
+  }
+}
+
 .MuiAutocomplete-popper {
   .MuiAutocomplete-option {
     font-size: 7vw;
@@ -1285,7 +1298,7 @@
 }
 
 .question-hint-global {
-  width: 79vw !important;
+  width: 90vw !important;
 }
 
 // preview caption
@@ -1616,5 +1629,69 @@
     .bio-container-2 {
       padding-bottom: 20vw !important;
     }
+  }
+}
+
+
+.main-page-menu .brill-coin-img,
+.page-header .brill-coin-img {
+  position: relative;
+  margin-left: 1vw;
+  margin-right: 6vw;
+  width: 15vw;
+  height: 15vw;
+  img {
+    margin: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  svg {
+    color: var(--theme-orange);
+    position: absolute;
+    top: 22.5%;
+    left: 22.5%;
+    width: 55%;
+    height: 55%;
+  }
+  .css-custom-tooltip {
+    z-index: 100;
+    position: absolute;
+    border-radius: 2vw;
+    left: -33vw;
+    bottom: 20vw;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: none;
+    color: var(--theme-dark-blue);
+    width: 80vw;
+    background: var(--white);
+    padding: 3vw 5vw;
+
+    .bold {
+      font-size: 7vw;
+      margin-bottom: 0.7vw;
+    }
+
+    .regular {
+      font-family: $font-family-regular;
+    }
+  }
+
+  .visible.css-custom-tooltip {
+    display: block;
+    opacity: 1;
+  }
+}
+
+.volume-container-dr {
+  display: none;
+}
+
+.volume-container-dr-m {
+  .menu-text {
+    width: 40vw !important;
+  }
+  svg {
+    width: 7vw;
+    height: 7vw;
   }
 }

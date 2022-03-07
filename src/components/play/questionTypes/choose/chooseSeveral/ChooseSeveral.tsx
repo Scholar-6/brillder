@@ -28,6 +28,7 @@ interface ChooseSeveralProps extends CompQuestionProps {
 }
 
 interface ChooseSeveralState {
+  isLiveCorrect: boolean;
   activeItems: ActiveItem[];
 }
 
@@ -35,8 +36,14 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   constructor(props: ChooseSeveralProps) {
     super(props);
 
+    let correct = false;
+
+    if (props.isReview) {
+      correct = props.attempt.correct;
+    }
+
     let activeItems = this.getActiveItems(props);
-    this.state = { activeItems };
+    this.state = { activeItems, isLiveCorrect: correct };
   }
 
   getActiveItems(props: ChooseSeveralProps) {
@@ -187,7 +194,11 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       <div
         className={className}
         key={index}
-        onClick={() => this.setActiveItem(choice.index, index)}
+        onClick={() => {
+          if (this.state.isLiveCorrect === false) {
+            this.setActiveItem(choice.index, index)
+          }
+        }}
       >
         {this.renderData(choice)}
         {this.props.isPreview ?

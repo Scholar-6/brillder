@@ -1,8 +1,10 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { connect } from "react-redux";
 
 import "./Ending.scss";
+import { CashAttempt, SetAuthBrickCoverId } from "localStorage/play";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../../model";
 import { BrickAttempt } from "../../model";
@@ -14,10 +16,14 @@ import routes from "../../routes";
 import moment from "moment";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
-import { isMobile } from "react-device-detect";
 import map from "components/map";
+import actions from "redux/actions/auth";
+import MusicAutoplay from "components/baseComponents/MusicAutoplay";
+
+const confetti = require('canvas-confetti');
 
 const DesktopTheme = React.lazy(() => import('./themes/ScoreDesktopTheme'));
+const PhoneTheme = React.lazy(() => import('./themes/ScorePhoneTheme'));
 
 
 interface EndingState {
@@ -29,6 +35,8 @@ interface EndingState {
 
   fixedCurrentScore: number;
 
+  isMobileSecondPart: boolean;
+
   interval: number;
 }
 
@@ -38,9 +46,16 @@ interface EndingProps {
   history: any;
   location: any;
   brickAttempt: BrickAttempt;
+  bestScore: number;
+  liveBrills: number;
+  reviewBrills: number;
+
+  isPlayPreview?: boolean;
 
   liveDuration?: null | moment.Duration;
   reviewDuration?: null | moment.Duration;
+
+  loginSuccess(): void;
 
   move(): void;
 }
@@ -49,7 +64,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   constructor(props: EndingProps) {
     super(props);
 
-    const { oldScore,  } = this.props.brickAttempt;
+    const { oldScore, } = this.props.brickAttempt;
 
     const oldScoreNumber = oldScore ? oldScore : 0;
 
@@ -61,10 +76,76 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       liveScore: 0,
       reviewScore: 0,
 
+      isMobileSecondPart: false,
+
       fixedCurrentScore: 0,
 
       interval: 0,
     };
+  }
+
+  lauchSmallConfetti(colors: string[]) {
+    const end = Date.now() + (5 * 1000);
+
+    (function frame() {
+      confetti.default({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors
+      });
+      confetti.default({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    }());
+  }
+
+  launchBigConfetti(colors: string[]) {
+    const duration = 5 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors };
+
+    const randomInRange = (min: number, max: number) => {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval3: any = setInterval(function () {
+      var timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval3);
+      }
+
+      var particleCount = 50 * (timeLeft / duration);
+      // since particles fall down, start a bit higher than random
+      confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+      confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+    }, 250);
+  }
+
+  runFirework(currentScore: number) {
+    const { liveBrills, reviewBrills, bestScore } = this.props;
+    const colors = ['#0681db', '#ffd900', '#30c474'];
+    console.log('firework', currentScore, liveBrills, reviewBrills, bestScore);
+
+    if (currentScore === 100 && (liveBrills > 0 || reviewBrills > 0)) {
+      this.launchBigConfetti(colors);
+    } else if (currentScore >= 50 && (liveBrills > 0 || reviewBrills > 0)) {
+      if (bestScore && currentScore > bestScore) {
+        this.lauchSmallConfetti(colors);
+      } else if (!bestScore) {
+        this.lauchSmallConfetti(colors);
+      }
+    }
   }
 
   componentDidMount() {
@@ -74,6 +155,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     const liveScore = Math.round((oldScore * 100) / maxScore);
     const reviewScore = Math.round((score * 100) / maxScore);
     const currentScore = Math.round(((oldScore + score) * 50) / maxScore);
+
     const interval = setInterval(() => {
       let tempReviewScore = this.state.reviewScore;
       let tempLiveScore = this.state.liveScore;
@@ -112,6 +194,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       }
     }, 100);
     this.setState({ interval });
+
+    this.runFirework(currentScore);
   }
 
   componentWillUnmount() {
@@ -126,6 +210,13 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
         handleStep={() => { }}
       />
     );
+  }
+
+  moveToLibrary() {
+    CashAttempt('');
+    SetAuthBrickCoverId(-1);
+    this.props.loginSuccess();
+    this.props.history.push(map.MyLibrarySubject(this.props.brick.subjectId));
   }
 
   render() {
@@ -163,108 +254,17 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       }
     }
 
-    if (isPhone()) {
-      return (
-        <div className="phone-provisional-score">
-          <div
-            className="fixed-upper-b-title"
-            dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
-          />
-          <div className="header">{this.renderStepper()}</div>
-          <div className="content">
-            <div className="title">Final Score</div>
-            <div className="pr-progress-center">
-              <div className="pr-progress-container">
-                <CircularProgressbar
-                  className="circle-progress-first"
-                  strokeWidth={4}
-                  counterClockwise={true}
-                  value={this.state.liveScore}
-                />
-                <Grid
-                  container
-                  justify="center"
-                  alignContent="center"
-                  className="score-circle"
-                >
-                  <CircularProgressbar
-                    className="circle-progress-second"
-                    counterClockwise={true}
-                    strokeWidth={4}
-                    value={this.state.reviewScore}
-                  />
-                </Grid>
-                <Grid
-                  container
-                  justify="center"
-                  alignContent="center"
-                  className="score-circle"
-                >
-                  <CircularProgressbar
-                    className="circle-progress-third"
-                    counterClockwise={true}
-                    strokeWidth={4}
-                    value={currentScore}
-                  />
-                </Grid>
-                <div className="score-data">{this.state.currentScore}%</div>
-              </div>
-            </div>
-            <div className="attempted-numbers">
-              <div className={numberOfFailed === 0 ? "text-tab-gray" : ""}>
-                <SpriteIcon
-                  name="cancel-custom"
-                  className={
-                    numberOfFailed === 0 ? "text-tab-gray" : "text-orange"
-                  }
-                />
-                : {numberOfFailed}
-              </div>
-              <div className={numberOfyellow === 0 ? "text-tab-gray" : ""}>
-                <SpriteIcon
-                  name="check-icon"
-                  className={
-                    numberOfyellow === 0 ? "text-tab-gray" : "text-yellow"
-                  }
-                />
-                : {numberOfyellow}
-              </div>
-              <div className={numberOfcorrect === 0 ? "text-tab-gray" : ""}>
-                <SpriteIcon
-                  name="check-icon"
-                  className={
-                    numberOfcorrect === 0 ? "text-tab-gray" : "text-theme-green"
-                  }
-                />
-                : {numberOfcorrect}
-              </div>
-            </div>
-            <AttemptedText
-              attempted={attempted}
-              attemptsCount={answers.length}
-              score={this.props.brickAttempt.score}
-              maxScore={this.props.brickAttempt.maxScore}
-            />
-            {this.props.liveDuration && (
-              <div className="duration">
-                <SpriteIcon name="clock" />
-                <div>{prepareDuration(this.props.liveDuration)}</div>
-              </div>
-            )}
-            {this.props.reviewDuration && (
-              <div className="review-duration">
-                + {prepareDuration(this.props.reviewDuration)} Review
-              </div>
-            )}
-          </div>
-        </div>
-      );
-    }
 
     const renderSubTitle = () => {
       let text = '';
-      if (fixedCurrentScore >= 95) {
+      if ((this.props.reviewBrills + this.props.liveBrills) === 0 && fixedCurrentScore === 100) {
+        text = "You've still got it!";
+      } else if (fixedCurrentScore >= 50 && (this.props.reviewBrills + this.props.liveBrills === 0)) {
+        text = 'No better than your best effort!';
+      } else if (fixedCurrentScore >= 95) {
         text = 'Superlative!'
+      } else if (this.props.bestScore && fixedCurrentScore > this.props.bestScore && fixedCurrentScore >= 50) {
+        text = 'A New High Score!';
       } else if (fixedCurrentScore >= 90) {
         text = 'Most excellent!';
       } else if (fixedCurrentScore >= 85) {
@@ -307,9 +307,144 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       return text;
     }
 
+    if (isPhone()) {
+      const renderPhoneContent = () => {
+        if (this.state.isMobileSecondPart) {
+          return (
+            <div className="phone-provisional-score bg-dark-blue">
+              {this.props.reviewBrills > 0 && <MusicAutoplay url="/sounds/mixkit-magical-coin-win.wav" />}
+              <div className="content">
+                <div className="brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
+                <div className="score">Score: {fixedCurrentScore}</div>
+                <div className="title">
+                  {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
+                  {Math.round(this.props.reviewBrills)} Brills Earned!
+                </div>
+                <div className="pr-progress-center">
+                  <div className="pr-progress-container">
+                    <div className={`brill-coin-img ${this.props.reviewBrills === 0 ? 'no-spinning' : ''}`}>
+                      <img alt="brill" src={this.props.reviewBrills === 0 ? '/images/Brill-Blue.svg' : "/images/Brill.svg"} />
+                      <SpriteIcon name="logo" />
+                    </div>
+                  </div>
+                </div>
+                <AttemptedText
+                  attempted={attempted}
+                  attemptsCount={answers.length}
+                  score={this.props.brickAttempt.score}
+                  maxScore={this.props.brickAttempt.maxScore}
+                />
+                {this.props.liveDuration && (
+                  <div className="duration">
+                    <SpriteIcon name="clock" />
+                    <div>{prepareDuration(this.props.liveDuration)}</div>
+                  </div>
+                )}
+                {this.props.reviewDuration && (
+                  <div className="review-duration">
+                    + {prepareDuration(this.props.reviewDuration)} Review
+                  </div>
+                )}
+                {this.props.isPlayPreview ?
+                  <div className="btn-container">
+                    <div className="btn btn-green" onClick={this.props.move}>Next</div>
+                  </div> :
+                  <div className="btn-container">
+                    <div className="btn btn-green orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
+                    <div className="btn btn-green" onClick={this.props.move}>More Options</div>
+                  </div>}
+              </div>
+            </div>
+          );
+        }
+        return (
+          <div className="phone-provisional-score">
+            <div
+              className="fixed-upper-b-title"
+              dangerouslySetInnerHTML={{ __html: this.props.brick.title }}
+            />
+            <div className="header">{this.renderStepper()}</div>
+            <div className="content">
+              <div className="title">Your final score</div>
+              <div className="hr-sub-title">
+                {renderSubTitle()}
+              </div>
+              <div className="pr-progress-center">
+                <div className="pr-progress-container">
+                  <CircularProgressbar
+                    className="circle-progress-first"
+                    strokeWidth={4}
+                    counterClockwise={true}
+                    value={this.state.liveScore}
+                  />
+                  <Grid
+                    container
+                    justify="center"
+                    alignContent="center"
+                    className="score-circle"
+                  >
+                    <CircularProgressbar
+                      className="circle-progress-second"
+                      counterClockwise={true}
+                      strokeWidth={4}
+                      value={this.state.reviewScore}
+                    />
+                  </Grid>
+                  <Grid
+                    container
+                    justify="center"
+                    alignContent="center"
+                    className="score-circle"
+                  >
+                    <CircularProgressbar
+                      className="circle-progress-third"
+                      counterClockwise={true}
+                      strokeWidth={4}
+                      value={currentScore}
+                    />
+                  </Grid>
+                  <div className="score-data">{this.state.currentScore}%</div>
+                </div>
+              </div>
+              <div className="flex-center status-circles bold">
+                <div className="lable-rd">Investigation</div>
+                <div className="circle-rd yellow" />
+                <div className="circle-rd green" />
+                <div className="circle-rd blue" />
+                <div className="lable-rd">Review</div>
+              </div>
+              <div className="flex-center number-status bold">
+                <div>{this.state.liveScore}</div>
+                <div>{currentScore}</div>
+                <div>{this.state.reviewScore}</div>
+              </div>
+              <div className="flex-center number-status bold">
+                <div>Avg.</div>
+              </div>
+              <div className="btn-container">
+                <div className="btn btn-green" onClick={() => {
+                  this.setState({ isMobileSecondPart: true })
+                }}>Next</div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <React.Suspense fallback={<></>}>
+          <PhoneTheme />
+          <MusicAutoplay url="/sounds/mixkit-deep-cinematic-subtle-drum-impact.wav" />
+          {renderPhoneContent()}
+        </React.Suspense>
+      );
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         <DesktopTheme />
+        <MusicAutoplay url="/sounds/mixkit-deep-cinematic-subtle-drum-impact.wav" />
+        {this.props.reviewBrills > 0 && <MusicAutoplay url="/sounds/mixkit-magical-coin-win.wav" />}
         <div className="brick-row-container ending-container">
           <div className="brick-container play-preview-panel ending-page">
             <div className="fixed-upper-b-title">
@@ -386,10 +521,15 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   <div className="flex-center number-status bold">
                     <div>Avg.</div>
                   </div>
-                  <div className="flex-center">
-                    <div className="btn btn-orange" onClick={() => { this.props.history.push(map.MyLibrary) }}>Exit</div>
-                    <div className="btn btn-green" onClick={this.props.move}>More Options</div>
-                  </div>
+                  {this.props.isPlayPreview ?
+                    <div className="flex-center">
+                      <div className="btn btn-green" onClick={this.props.move}>Next</div>
+                    </div>
+                    :
+                    <div className="flex-center">
+                      <div className="btn btn-orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
+                      <div className="btn btn-green" onClick={this.props.move}>More Options</div>
+                    </div>}
                 </div>
                 <div className="new-layout-footer" style={{ display: "none" }}>
                   <div className="title-column provisional-title-column">
@@ -424,12 +564,13 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               </Grid>
               <Grid item xs={4}>
                 <div className="introduction-info">
-                  {currentScore >= 50 &&
+                  {this.props.reviewBrills > 0 &&
                     <div className="top-brill-coins">
                       <div className="brill-coin-img">
-                        <img alt="brill" src="/images/Brill-B.svg" />
+                        <img alt="brill" src="/images/Brill.svg" />
+                        <SpriteIcon name="logo" />
                       </div>
-                      <div className="bold">{currentScore} Brills Earned!</div>
+                      <div className="bold">{Math.round(this.props.reviewBrills)} Brills Earned!</div>
                     </div>
                   }
                   <div className="intro-text-row f-align-self-start m-t-5">
@@ -445,4 +586,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 }
 
-export default EndingPage;
+const mapDispatch = (dispatch: any) => ({
+  loginSuccess: () => dispatch(actions.loginSuccess()),
+});
+
+export default connect(null, mapDispatch)(EndingPage);

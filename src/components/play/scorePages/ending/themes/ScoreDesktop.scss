@@ -4,15 +4,20 @@
 
 .ending-container {
   h2.title {
-    margin-top: 3vh;
-    text-align: center;
+    height: 15vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
     font-size: 2vw;
     font-family: $font-family-bold;
   }
 
   .hr-sub-title {
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: $font-family-regular-italic;
-    text-align: center;
   }
 
   .percentage-container {
@@ -20,6 +25,11 @@
     display: flex;
     justify-content: center;
 
+    .circle-progress-first {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
 
     .circle-progress-container {
       position: relative;
@@ -58,6 +68,7 @@
 
       .score-circle {
         position: absolute;
+        height: 100%;
         top: 0;
         left: 0;
 
@@ -187,6 +198,11 @@
         svg {
           color: var(--theme-orange);
           position: absolute;
+          top: 1vw;
+          left: 1vw;
+          width: 2vw;
+          height: 2vw;
+          z-index: 2;
         }
   
         display: flex;
@@ -210,6 +226,9 @@
       .duration {
         font-family: $font-family-regular;
         font-size: 1.6vw;
+
+        opacity: 0;
+        animation: fadein 2s 1s forwards;
         svg {
           stroke-width: 1.5;
           width: 2.2vw;
@@ -220,12 +239,22 @@
       .attempted-text {
         font-family: $font-family-regular;
         font-size: 1.6vw;
+        > span:first-child() {
+          opacity: 0;
+          animation: fadein 2s 1.5s forwards;
+        }
+        > span:nth-child(2) {
+          opacity: 0;
+          animation: fadein 2s 2s forwards;
+        }
         .bold {
           margin-left: 6vw;
         }
       }
     }
     .attempted-numbers {
+      opacity: 0;
+      animation: fadein 2.5s 2.5s forwards;
       color: white;
       font-size: 2vw;
 

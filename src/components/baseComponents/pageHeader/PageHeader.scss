@@ -450,3 +450,17 @@
     color: var(--theme-orange); 
   }
 }
+
+.volume-container-dr {
+  margin-right: 2vw;
+  cursor: pointer;
+  color: white;
+  border-radius: 50%;
+  width: 3.68vw;
+  height: 3.68vw;
+  background: var(--theme-dark-blue);
+  svg {
+    width: 65%;
+    height: 65%;
+  }
+}

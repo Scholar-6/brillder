@@ -32,7 +32,7 @@ const PhoneTimeSynthesisPage: React.FC<Props> = ({ brick }) => {
           <div>time you have spent on the synthesis.</div>
         </div>
         <div className="fe-arrow-container">
-          <SpriteIcon name="play-red-arrow" />
+          <SpriteIcon name="play-green-arrow" />
         </div>
         <div className="new-layout-footer">
           <div className="time-container">

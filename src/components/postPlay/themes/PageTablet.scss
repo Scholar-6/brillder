@@ -115,7 +115,7 @@
     border-bottom-left-radius: $radius;
     display: flex;
     align-items: center;
-    padding-left: 80.3vw;
+    padding-left: 7.3vw;
     margin-left: calc(#{$home-button-size} + 2vw);
     width: calc(100vw - #{$home-button-size} - 2vw);
     height: $home-button-size;
@@ -589,6 +589,26 @@
         &:hover {
           color: var(--theme-dark-blue);
         }
+      }
+    }
+  }
+}
+
+// header top right part
+.post-play-page .upper-part .page-header .logout-container {
+  padding-left: 65.3vw;
+  .action-container {
+    .brill-intro-container {
+      display: flex;
+      align-items: center;
+      font-family: $font-family-bold;
+      font-size: 1.2vw;
+
+      img {
+        width: 3.68vw;
+        height: 3.68vw;
+        margin-left: 1.2vw;
+        margin-right: 2vw;
       }
     }
   }

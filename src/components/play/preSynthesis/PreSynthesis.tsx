@@ -1,13 +1,14 @@
 import React from "react";
+import { faHourglassStart } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Brick } from "model/brick";
 
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
-import { getSynthesisTime } from "../services/playTimes";
 import routes from "../routes";
+import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 
 interface Props {
   brick: Brick;
@@ -31,10 +32,9 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
     };
   });
 
-  const minutes = getSynthesisTime(brick.brickLength);
-
   return (
     <div className="brick-row-container live-container static-top-part">
+      <MusicAutoplay url="/sounds/mixkit-fast-sweep-transition.wav" />
       <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page after-cover-page pre-synthesis animate-fade">
         <div className="introduction-page">
@@ -44,26 +44,36 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
             </div>
             <div className="like-buttons-container s-fade2">
               <div className="x-center">
-                <div className="like-button">Preparation</div>
+                <div className="like-button green">
+                  <div>
+                    <SpriteIcon name="check-icon" />
+                  </div>
+                  Preparation
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button">Investigation</div><div className="like-button orange" onClick={moveNext}>Synthesis</div>
+                <div className="like-button green">
+                  <div>
+                    <SpriteIcon name="check-icon" />
+                  </div>
+                  Investigation
+                </div>
+                <div className="like-button orange" onClick={moveNext}>
+                  <SpriteIcon name="arrow-left" className="absolute-arrow-right" />
+                  Synthesis
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button">Review</div>
+                <div className="like-button">
+                  <FontAwesomeIcon icon={faHourglassStart} className="glass-icon-dd" />
+                  Review
+                </div>
               </div>
-            </div>
-            <div className="footer s-fade3">
-              Spend about<span className="underline-border"> {minutes} minutes </span>on this stage before reviewing your answers to improve your score.
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
-            <div className="title-column">
-              <DummyProgressbarCountdown value={23} />
-            </div>
-            <div className="minutes-footer">
-              {minutes}:00
-              </div>
+            <div className="title-column" />
+            <div className="minutes-footer" />
             <div className="footer-space" />
             <div className="new-navigation-buttons">
               <div className="n-btn next" onClick={moveNext}>

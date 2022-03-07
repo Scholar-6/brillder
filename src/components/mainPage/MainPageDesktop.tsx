@@ -129,13 +129,13 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. You can use these to play in our prize competitions. We've given you 200 as a welcome gift!</p>`,
       }, {
         element: '.second-button.student-back-work',
-        intro: `<p>If a teacher has set you an assignment, you will be able to access it here. A red circle with white text will show the number of assignments you have to complete.</p>`,
+        intro: `<p>If a teacher has set you an assignment, you'll be able to access it here. A red circle with white numbers will show how many assignments you still have to complete.</p>`,
       }, {
         element: '.my-library-button',
         intro: `<p>Every time you complete a brick, and score over 50%, a book will be added to your very own virtual library!</p>`,
       }, {
         element: '.create-item-container',
-        intro: `<p>Once you start getting the hang of “bricks”, you'll be able to try your hand at building them - if you wish to.</p>`,
+        intro: `<p>Once you start getting the hang of “bricks”, you'll be able to have a go at building them.</p>`,
       }
     ];
 

@@ -31,12 +31,15 @@
   
   .cover-sponsors {
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     display: flex;
     img {
       margin-left: 2vw;
       margin-right: 2vw;
-      width: 15vw;
+      width: 22vw;
+    }
+    .flex-center {
+      height: 100%;
     }
     svg {
       stroke-width: 1.5;
@@ -169,6 +172,9 @@
 
   .image-container {
     margin-right: 2vw;
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+
     width: 100%;
     position: relative;
 
@@ -211,19 +217,18 @@
     }
 
     .image-drag-n-drop {
-      margin-top: 1vh;
       width: 100%;
       padding-left: 3px;
       padding-right: 3px;
       padding-bottom: 3px;
       background: var(--theme-dark-blue) !important;
-      border-radius: 3vw;
+      border-radius: 2vw;
       padding-top: 10vw;
 
       .dropzone {
         padding: 0;
         border: none !important;
-        border-radius: 3vw;
+        border-radius: 2vw;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         min-height: 42vw;

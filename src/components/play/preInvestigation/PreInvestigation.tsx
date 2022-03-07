@@ -1,12 +1,14 @@
 import React from "react";
+import { faHourglassStart } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Brick } from "model/brick";
 
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
-import { getLiveTime } from "../services/playTimes";
+import MusicWrapper from "components/baseComponents/MusicWrapper";
+import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 
 interface Props {
   brick: Brick;
@@ -28,10 +30,9 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
     };
   });
 
-  const minutes = getLiveTime(brick.brickLength);
-
   return (
     <div className="brick-row-container live-container static-top-part">
+      <MusicAutoplay url="/sounds/mixkit-fast-sweep-transition.wav" />
       <div className="fixed-upper-b-title q-brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
       <div className="brick-container play-preview-panel live-page after-cover-page pre-investigation animate-fade">
         <div className="introduction-page">
@@ -41,30 +42,42 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
             </div>
             <div className="like-buttons-container s-fade2">
               <div className="x-center">
-                <div className="like-button">Preparation</div>
+                <div className="like-button green">
+                  <div>
+                    <SpriteIcon name="check-icon" />
+                  </div>
+                  Preparation
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button orange" onClick={moveNext}>Investigation</div><div className="like-button">Synthesis</div>
+                <div className="like-button orange" onClick={moveNext}>
+                  <SpriteIcon name="arrow-right" className="absolute-arrow-left" />
+                  <FontAwesomeIcon icon={faHourglassStart} className="glass-icon-dd" />
+                  Investigation
+                </div>
+                <div className="like-button">
+                  Synthesis
+                </div>
               </div>
               <div className="x-center">
-                <div className="like-button">Review</div>
+                <div className="like-button">
+                  <FontAwesomeIcon icon={faHourglassStart} className="glass-icon-dd" />
+                  Review
+                </div>
               </div>
-            </div>
-            <div className="footer s-fade3">
-              You have<span className="underline-border"> {minutes} minutes </span>to complete the investigation. Once time is up, you will get a provisional score.
             </div>
           </div>
           <div className="new-layout-footer" style={{ display: 'none' }}>
-            <div className="time-container">
-              <DummyProgressbarCountdown value={100} deadline={true} />
-            </div>
-            <div className="minutes">{minutes}:00</div>
+            <div className="time-container" />
+            <div className="minutes" />
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <div className="n-btn next" onClick={moveNext}>
-                Play Brick
-                <SpriteIcon name="arrow-right" />
-              </div>
+              <MusicWrapper startTime={0} url="/sounds/mixkit-horror-deep-drum-heartbeat.wav">
+                <div className="n-btn next" onClick={moveNext}>
+                  Play Brick
+                  <SpriteIcon name="arrow-right" />
+                </div>
+              </MusicWrapper>
             </div>
           </div>
         </div>

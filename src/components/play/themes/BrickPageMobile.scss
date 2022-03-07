@@ -40,7 +40,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
   }
   .play-pre-prep-page {
-    height: calc(100% - 4vh - 5vw) !important;
+    height: calc(100% - 4vh - 5.5vw) !important;
     .icon-container {
       height: 55%;
       display: flex;
@@ -48,7 +48,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       svg {
         padding-top: 4vh;
         width: 66vw;
-        color: var(--theme-orange);
+        color: var(--theme-green);
       }
     }
     .introduction-page {
@@ -172,13 +172,45 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-left: 10vw;
+      margin-left: 13vw;
       height: 10.5%;
       font-family: $font-family-bold;
       font-size: 8vw;
       border-radius: 3.4vw;
-      width: 80vw;
+      width: 74vw;
       background: var(--tab-gray);
+
+      svg {
+        width: 6vw;
+        height: 6vw;
+      }
+
+      &.green {
+        padding-right: 11vw;
+        svg {
+          margin-top: 2.7vw;
+          margin-right: 6vw;
+          padding: 0.6vw;
+          border-radius: 50%;
+          background: var(--white);
+          color: var(--theme-green);
+        }
+        color: white;
+        background: var(--theme-green);
+
+        &.green-2 {
+          padding-right: 8vw;
+          svg {
+            margin-right: 5vw;
+          }
+        }
+        &.green-3 {
+          padding-right: 15vw;
+          svg {
+            margin-right: 8vw;
+          }
+        }
+      }
     }
     .ss-phone-between-button {
       height: 2%;
@@ -287,7 +319,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
     .ss-brain {
       height: 100%;
-      color: var(--theme-orange);
+      color: var(--theme-green);
       animation: floating323 1.5s ease-out infinite;
     }
     .ss-phone-before-title {
@@ -998,6 +1030,9 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         }
         &.final-step-page {
           color: var(--theme-dark-blue) !important;
+          .button-container .svg {
+            color: var(--theme-green);
+          }
           .introduction-page {
             margin-top: 4vw !important;
             .top-icon-container {
@@ -1032,7 +1067,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               }
               svg {
                 color: var(--white);
-                animation: grow 1s ease-out infinite;
+                width: $star-base-size;
+                height: $star-base-size;
               }
             }
             p {
@@ -1836,7 +1872,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 }
 
 .phone-provisional-score {
-  height: calc(100% - 17.5vw);
+  height: 100%;
 
   .header {
     background: var(--theme-light-blue);
@@ -1885,14 +1921,24 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       line-height: 0;
       margin-top: 5vh;
       margin-bottom: 4vh;
-      font-family: $font-family-black;
+      font-family: $font-family-bold;
       text-align: center;
       color: var(--theme-dark-blue);
     }
     .hr-sub-title {
       text-align: center;
-      font-size: 4.5vw;
+      font-size: 6vw;
+      font-family: $font-family-regular-italic;
       padding-bottom: 1vh;
+    }
+
+    .bottom-text-d4 {
+      height: 14vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 6.3vw;
     }
 
     .pr-progress-center {
@@ -1960,10 +2006,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
           font-family: $font-family-bold;
         }
       }
-    }
-    .attempted-numbers, .attempted-text, .duration, .review-duration {
-      opacity: 0;
-      animation: fadein 1s 1s forwards;
     }
     .attempted-numbers {
       display: flex;
@@ -2039,7 +2081,32 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   .sorted-row
   .brick-row-container
   .brick-container.play-pre-prep-page {
-  height: calc(100% - 4vh - 5vw) !important;
+  height: calc(100% - 4vh - 6.8vw) !important;
+  .introduction-page {
+    padding-bottom: 0 !important;
+    .static-top-part-inner {
+      height: 100%;
+
+      .icon-container {
+        margin: 0;
+        display: flex;
+        align-items: flex-end;
+        height: 49%;
+        padding-bottom: 4vh;
+
+        svg {
+          height: 60%;
+          padding: 0 !important; 
+        }
+      }
+      .image-title {
+        height: 23.3%;
+      }
+      .help-text {
+        margin: 0;
+      }
+    }
+  }
 }
 
 .play-preview-pages
@@ -2141,6 +2208,32 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     animation-delay: 1s;
   }
   .like-button {
+    position: relative;
+    @keyframes arrow-move {
+      0% {
+        top: -95%;
+      }
+      100% {
+        top: 25%;
+      }     
+    }
+    .absolute-arrow-left-de {
+      position: absolute;
+      color: var(--theme-dark-blue);
+      width: 10vw !important;
+      height: 10vw !important;
+      left: -10vw;
+      top: 4vw;
+    }
+    .absolute-arrow-left-df {
+      position: absolute;
+      color: var(--theme-dark-blue);
+      width: 10vw !important;
+      height: 10vw !important;
+      left: -10vw;
+      top: -95%;
+      animation: arrow-move 1s 1s linear forwards;
+    }
     @keyframes greyToOrange {
       0% {
         opacity: 0;
@@ -2156,9 +2249,34 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         background: var(--theme-orange);
       }
     }
+
+    @keyframes greyToBlue {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+        color: var(--theme-dark-blue);
+        background: var(--tab-gray);
+      }
+      100% {
+        opacity: 1;
+        color: var(--white);
+        background: var(--theme-dark-blue);
+      }
+    }
     &.orange {
       opacity: 0;
-      animation: greyToOrange 1s 0.5s forwards !important;
+      animation: greyToBlue 1s 0.5s forwards !important;
+      padding-right: 8vw;
+
+      &.no-padding {
+        padding: 0;
+      }
+
+      svg {
+        margin-right: 5.5vw;
+      }
     }
   }
 }

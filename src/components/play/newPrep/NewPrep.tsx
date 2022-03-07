@@ -182,7 +182,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
                 {!timerHidden &&
                   <TimeProgressbar
                     isIntro={true}
-                    onEnd={() => {}}
+                    onEnd={() => { }}
                     minutes={minutes}
                     endTime={props.endTime}
                     brickLength={brick.brickLength}
@@ -192,9 +192,9 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
               </div>
               <div className="footer-space">
                 {!isMobile &&
-                <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
-                  {timerHidden ? 'Show Timer' : 'Hide Timer'}
-                </div>}
+                  <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
+                    {timerHidden ? 'Show Timer' : 'Hide Timer'}
+                  </div>}
               </div>
               <div className="new-navigation-buttons">
                 <div className="n-btn next" onClick={() => props.moveNext(isResume)}>

@@ -705,6 +705,14 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
       font-size: 1.4vw !important;
     }
   }
+  .sorted-row .sort-and-filter-container .sort-box .filter-container {
+    .MuiIconButton-root {
+      margin-right: 0.2vw !important;
+    }
+    .MuiFormControlLabel-label {
+      font-size: 1.2vw !important;
+    }
+  }
 }
 
 .my-library {

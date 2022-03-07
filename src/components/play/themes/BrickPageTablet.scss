@@ -100,6 +100,60 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
         justify-content: flex-end;
         flex-direction: column;
         width: 100%;
+
+        .high-score-d3s {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          line-height: 1;
+          font-size: 1.2vw;
+          font-family: $font-family-bold;
+          margin-top: 4vh;
+          margin-bottom: 2.5vh;
+          .MuiLinearProgress-root {
+            width: 6vw;
+            height: 0.6vw !important;
+            border-radius: 0.4vw;
+
+            .MuiLinearProgress-bar {
+              border-radius: 0.4vw;
+              background: var(--theme-green);
+            }
+          }
+
+          .label-container {
+            margin-right: 1vw;
+          }
+          .score-label {
+            margin-left: 1vw;
+          }
+        }
+        .high-score-sm-d3s {
+          margin-top: 2vh;
+          margin-bottom: 2vh;
+          font-size: 1.2vw;
+          font-family: $font-family-bold;
+          text-align: center;
+          .brill-coin-img {
+            position: relative;
+            img {
+              width: 3.5vw;
+              height: 3.5vw;
+            }
+            svg {
+              color: var(--theme-orange);
+              position: absolute;
+              top: 0.75vw;
+              left: 0.75vw;
+              width: 2vw;
+              height: 2vw;
+            }
+          }
+          .custom-tooltip {
+            display: none;
+          }
+        }
         .share-button,
         .assign-small,
         .adapt-small {
@@ -721,19 +775,9 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
             margin-top: 3vw;
           }
         }
-        &.provisional-score-page,
-        &.ending-page {
-          .introduction-page {
-            h1 {
-              text-transform: capitalize;
-            }
-          }
-          .question-live-play {
-            overflow: hidden;
-          }
-        }
         &.final-step-page {
           color: var(--theme-dark-blue) !important;
+
           .round-button {
             background: var(--theme-green) !important;
             svg {
@@ -863,6 +907,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
                 height: $icon-size;
                 width: $icon-size;
                 stroke-width: 1;
+                color: var(--theme-green);
               }
               .inline-button {
                 margin-left: 1.4vw;
@@ -1418,23 +1463,86 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
       font-size: 2.5vw !important;
       font-family: $font-family-bold;
     }
+    @keyframes greyToBlue {
+      from {
+      }
+      to {
+        color: var(--white);
+        background: var(--theme-dark-blue);
+      }
+    }
     .like-buttons-container {
       margin-bottom: 10vh;
       .x-center {
         @extend %flexToXCenter;
 
         .like-button {
+          position: relative;
           font-family: $font-family-bold;
-          min-width: 18vw;
+          min-width: 31vh;
           text-align: center;
-          border-radius: 1.3vw;
+          border-radius: 1.9vh;
           padding: 1.5vh 1.5vw;
-          font-size: 4vh;
-          background: var(--tab-gray);
+          font-size: 4.5vh;
           margin: 1vh;
+
+          > div {
+            display: flex;
+            align-items: center;
+            height: 100%;
+          }
+
+          .absolute-arrow-right,
+          .absolute-arrow-left {
+            position: absolute;
+            top: 1.6vh;
+            left: -5.6vh;
+            width: 5vh;
+            height: 5vh;
+            background: none !important;
+            color: var(--theme-dark-blue) !important;
+          }
+          .absolute-arrow-right {
+            margin: 0;
+            left: unset;
+            right: -5.6vh;
+          }
+
+
+          svg {
+            width: 3vh;
+            height: 3vh;
+            color: var(--theme-green);
+            padding: 0.2vw;
+            border-radius: 50%;
+            background: var(--white);
+            margin-right: 1.4vw;
+
+            &.glass-icon-dd {
+              margin-right: 2vh;
+              color: var(--theme-dark-blue);
+              background: none;
+              border-radius: 0;
+              padding: 0;
+              margin-bottom: 0.5vh;
+            }
+          }
+
+          &.green {
+            display: flex;
+            color: white;
+            background: var(--theme-green);
+          }
+
           &.orange {
-            color: var(--white);
-            background: var(--theme-orange);
+            cursor: pointer;
+            color: var(--theme-dark-blue);
+            background: var(--tab-gray);
+            animation: greyToBlue 0.5s linear 0.5s 1 normal forwards;
+
+            svg {
+              color: white;
+            }
           }
         }
       }
@@ -1443,6 +1551,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
       text-align: center;
       font-size: 1.9vw;
       position: relative;
+      font-family: $font-family-bold;
       .underline {
         text-decoration: underline;
         text-decoration-color: var(--theme-orange);
@@ -1579,7 +1688,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     display: flex;
     justify-content: center;
     svg {
-      color: var(--theme-orange);
+      color: var(--theme-green);
       width: 27.5vh;
       height: 27.5vh;
     }
@@ -1596,7 +1705,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     text-align: center;
 
     .underline {
-      border-bottom: 0.4vh solid var(--theme-orange);
+      border-bottom: 0.4vh solid var(--theme-green);
     }
   }
   .introduction-content {
@@ -1723,6 +1832,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   }
   .count-down-content {
     .title {
+      font-size: 4vw !important;
       margin-bottom: 0 !important;
     }
     .footer {
@@ -1778,6 +1888,11 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
   .s-fade1, .s-fade2, .s-fade3 {
     opacity: 0;
   }
+  .regular {
+    line-height: 1;
+    font-family: $font-family-light;
+    font-size: 2vw;
+  }
   .s-fade1 {
     animation-duration: 1s;
     animation-timing-function: ease;
@@ -1817,6 +1932,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
     font-size: 4.5vh;
     background: var(--tab-gray);
     margin: 1vh;
+    
 
     &.orange {
       cursor: pointer;
@@ -2144,10 +2260,6 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
       position: relative !important;
     }
   }
-  .attempted-numbers, .attempted-text, .duration, .review-duration {
-    opacity: 0;
-    animation: fadein 1s 1s forwards;
-  }
   .attempted-numbers {
     display: flex;
     align-items: center;
@@ -2414,4 +2526,8 @@ html body #root .browser-type-container .sorted-row-expanded .brick-row-containe
 .play-preview-pages .ending-page .score-precentage {
     margin-top: 2vh;
   font-size: 10vh;
+}
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container.final-step-page .introduction-page p {
+  font-size: 2.1vw !important;
 }

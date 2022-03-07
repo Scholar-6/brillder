@@ -141,6 +141,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setBrickAttempt(ba);
     setReviewAttempts(Object.assign([], attempts));
     setStatus(PlayStatus.Review);
+    return new Promise<void>(function(resolve) { resolve() });
   }
 
   const finishReview = () => {
@@ -293,6 +294,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <PlayLeftSidebar
             history={history}
             brick={brick}
+            bestScore={-1}
             sidebarRolledUp={sidebarRolledUp}
             toggleSidebar={setSidebar}
             isPreview={true}
@@ -326,6 +328,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 history={history}
                 location={location}
                 status={status}
+                liveBrills={-1}
+                bestScore={-1}
                 brick={brick}
                 attempts={attempts}
                 isPlayPreview={true}
@@ -358,6 +362,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 status={status}
                 history={history}
                 brick={brick}
+                isPlayPreview={true}
+                liveBrills={-1}
+                reviewBrills={-1}
+                bestScore={-1}
                 brickAttempt={brickAttempt}
                 move={saveBrickAttempt}
               />

@@ -166,6 +166,12 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
               />
             }}
           />
+          <div className="hover-area flex-center">
+            <SpriteIcon name="help-circle-custom" />
+            <div className="hover-content">
+              Keywords are best thought of as likely search terms, and are ultimately curated by Publishers for each subject. For multi-word keywords, separate words with a hyphen, eg. ‘19th-Century’
+            </div>
+          </div>
         </div>
         {overflowKey && <div className="text-orange">The tag ❝{overflowKey.name}❞ is too long; the maximum length is {MaxKeywordLength} characters.</div>}
       </div>

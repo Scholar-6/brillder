@@ -56,7 +56,7 @@ const PrePrepPage: React.FC<Props> = ({ brick, ...props }) => {
               The <span className="underline">progress bar</span> will show you how much time you have spent preparing.
             </div>
             {isPhone() ? <div className="fe-arrow-container">
-              <SpriteIcon name="play-red-arrow" />
+              <SpriteIcon name="play-green-arrow" />
             </div> : <SpriteIcon name="pre-prep-arrow" className="fe-arrow" />
             }
           </div>
