@@ -137,12 +137,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
               </div>
             </Grid>
             <div className="new-navigation-buttons">
-              <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
-                <div className="n-btn next" onClick={moveNext}>
-                  Exit
-                  <SpriteIcon name="arrow-right" />
-                </div>
-              </MusicWrapper>
+              <div className="n-btn next" onClick={moveNext}>
+                Exit
+                <SpriteIcon name="arrow-right" />
+              </div>
             </div>
           </Grid>
         </div>
