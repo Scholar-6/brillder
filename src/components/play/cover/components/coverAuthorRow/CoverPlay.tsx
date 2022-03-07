@@ -11,12 +11,10 @@ const CoverPlay: React.FC<Props> = ({ onClick }) => {
   return (
     <div className="cover-play-button">
       <div className="c-next-btn-container">
-        <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
-          <button type="button" onClick={onClick}>
-            <SpriteIcon name="feather-play-circle" />
-            Play Now
-          </button>
-        </MusicWrapper>
+        <button type="button" onClick={onClick}>
+          <SpriteIcon name="feather-play-circle" />
+          Play Now
+        </button>
       </div>
     </div>
   );
