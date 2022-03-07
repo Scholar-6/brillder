@@ -677,7 +677,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             ? <PhoneCountInvestigationPage brick={brick} moveNext={moveToInvestigation} />
             : <CountdownInvestigationPage brick={brick} moveNext={moveToLive} />
           }
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} music={"/sounds/mixkit-ominous-drums.wav"} btnText="Start Timer" next={moveToInvestigation} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} music="/sounds/mixkit-horror-deep-drum-heartbeat.wav" btnText="Start Timer" next={moveToInvestigation} />}
         </Route>
 
         <Route path={["/play/brick/:brickId/intro", "/play/brick/:brickId/prep"]}>
@@ -777,7 +777,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             ? <PhoneCountdownReview brick={brick} moveNext={moveToReview} />
             : <CountdownReview brick={brick} moveNext={moveToReview} />
           }
-          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} music="/sounds/mixkit-ominous-drums-appear.wav" btnText="Start Timer" next={moveToReview} />}
+          {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} music="/sounds/mixkit-hard-horror-hit-drum.wav" btnText="Start Timer" next={moveToReview} />}
         </Route>
 
         <Route exac path={routes.reviewRoute}>
