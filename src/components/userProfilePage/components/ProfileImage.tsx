@@ -165,7 +165,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
               <SpriteIcon name="globe" className="fgr-icon" />
               <Checkbox checked={imagePublic === true} />
             </div>
-            Allow to show image during search and invitations.
+            Educators will never be able to view Learner profile pictures without their consent.
           </div>
         </div>
         <div className="dialog-footer">
