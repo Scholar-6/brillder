@@ -1,5 +1,5 @@
 .menu-dropdown {
-  width: 16vw;
+  width: 20vw;
   .MuiPaper-root {
     position: fixed;
     border-radius: 0;
@@ -11,7 +11,7 @@
     height: fit-content;
     left: auto !important;
     @include tabletP {
-      width: 16vw;
+      width: 20vw;
       top: calc(#{$page-head-height} - 1px) !important;
     }
     > ul {
