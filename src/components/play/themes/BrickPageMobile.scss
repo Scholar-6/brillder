@@ -1115,9 +1115,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             font-family: $font-family-bold;
           }
           .share-row {
-            margin-top: 7vh;
-            height: 45vh;
             display: flex;
+            height: 100%;
             align-items: center;
             .button-container {
               @extend %flexToXCenter;
@@ -1611,9 +1610,12 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       font-family: $font-family-bold;
       text-align: center;
     }
+    .share-row {
+      height: auto !important;
+      margin-top: 10vh !important;
+    }
     .share-column {
-      width: 100%;
-      max-width: 100%;
+      width: 31%;
       display: flex;
       justify-content: center;
       svg {
@@ -1624,6 +1626,13 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         font-size: 5vw !important;
       }
     }
+  }
+  .btn-green {
+    padding: 0.7vh 4vw;
+    border-radius: 2vw;
+    margin-top: 8vh !important;
+    background: var(--theme-green) !important;
+    font-size: 6vw !important;
   }
 }
 
@@ -1658,10 +1667,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     width: 100%;
     height: 100%;
   }
-}
-
-.final-assign-brick-column {
-  margin-top: 25%;
 }
 
 // fix for cutoff
