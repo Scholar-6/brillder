@@ -53,12 +53,10 @@ const CountdownInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
             <div className="minutes" />
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
-                <div className="n-btn next" onClick={moveNext}>
-                  Start Timer
-                  <SpriteIcon name="arrow-right" />
-                </div>
-              </MusicWrapper>
+              <div className="n-btn next" onClick={moveNext}>
+                Start Timer
+                <SpriteIcon name="arrow-right" />
+              </div>
             </div>
           </div>
         </div>
