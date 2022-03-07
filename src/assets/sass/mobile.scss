@@ -1685,3 +1685,13 @@
 .volume-container-dr {
   display: none;
 }
+
+.volume-container-dr-m {
+  .menu-text {
+    width: 40vw !important;
+  }
+  svg {
+    width: 7vw;
+    height: 7vw;
+  }
+}

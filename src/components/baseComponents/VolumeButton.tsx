@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { GetVolume, SetVolume } from 'localStorage/play';
 import SpriteIcon from './SpriteIcon';
+import { isPhone } from 'services/phone';
 
 interface VolumeProps {
   customClassName?: string;
@@ -14,7 +15,7 @@ const VolumeButton: React.FC<VolumeProps> = (props) => {
     const initVolume = GetVolume();
     setVolume(Boolean(initVolume));
   }, []);
-  
+
   const toggle = () => {
     const newVolume = !volume;
     SetVolume(newVolume);
@@ -45,6 +46,17 @@ const VolumeButton: React.FC<VolumeProps> = (props) => {
       return 'muted';
     }
     return 'active-2';
+  }
+
+  if (isPhone()) {
+    return (
+      <div className={`menu-item volume-container-dr-m ${prepareClassName()}  ${props.customClassName}`} onClick={toggle} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+        <div className="menu-text">
+          {volume === true ? 'Enable sounds' : 'Mute sounds'}
+        </div>
+        <SpriteIcon name={renderIconName()} />
+      </div>
+    );
   }
 
   return (

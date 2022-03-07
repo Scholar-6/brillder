@@ -92,12 +92,10 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
               </div>
               <img alt="" className="footer-arrow" src="/images/play-arrows/BriefArrow.svg" />
               <div className="new-navigation-buttons">
-                <MusicWrapper startTime={0.15} url="/sounds/mixkit-camera-shutter-click.wav">
-                  <div className="n-btn next" onClick={props.moveNext}>
-                    Next
-                    <SpriteIcon name="arrow-right" />
-                  </div>
-                </MusicWrapper>
+                <div className="n-btn next" onClick={props.moveNext}>
+                  Next
+                  <SpriteIcon name="arrow-right" />
+                </div>
               </div>
             </div>
           </div>

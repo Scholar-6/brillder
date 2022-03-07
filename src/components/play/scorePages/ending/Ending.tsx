@@ -528,12 +528,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     </div>
                     :
                     <div className="flex-center">
-                      <MusicWrapper startTime={0.15} url={"/sounds/mixkit-camera-shutter-click.wav"}>
-                        <div className="btn btn-orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
-                      </MusicWrapper>
-                      <MusicWrapper startTime={0.15} url={"/sounds/mixkit-camera-shutter-click.wav"}>
-                        <div className="btn btn-green" onClick={this.props.move}>More Options</div>
-                      </MusicWrapper>
+                      <div className="btn btn-orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
+                      <div className="btn btn-green" onClick={this.props.move}>More Options</div>
                     </div>}
                 </div>
                 <div className="new-layout-footer" style={{ display: "none" }}>

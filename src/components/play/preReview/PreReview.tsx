@@ -120,7 +120,7 @@ const PreReview: React.FC<Props> = ({ brick, moveNext }) => {
             <div className="minutes-footer" />
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <MusicWrapper startTime={0} url="/sounds/mixkit-ominous-drums-appear.wav">
+              <MusicWrapper startTime={0} url="/sounds/mixkit-hard-horror-hit-drum.wav">
                 <div className="n-btn next" onClick={moveNext}>
                   Start Review
                   <SpriteIcon name="arrow-right" />

@@ -72,7 +72,7 @@ const PreInvestigationPage: React.FC<Props> = ({ brick, moveNext }) => {
             <div className="minutes" />
             <div className="footer-space" />
             <div className="new-navigation-buttons">
-              <MusicWrapper startTime={0} url="/sounds/mixkit-ominous-drums.wav">
+              <MusicWrapper startTime={0} url="/sounds/mixkit-horror-deep-drum-heartbeat.wav">
                 <div className="n-btn next" onClick={moveNext}>
                   Play Brick
                   <SpriteIcon name="arrow-right" />
