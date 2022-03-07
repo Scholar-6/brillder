@@ -7,7 +7,6 @@ import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getReviewTime } from "../services/playTimes";
 import Hourglass from "../baseComponents/hourglass/Hourglass";
-import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface Props {
   brick: Brick;

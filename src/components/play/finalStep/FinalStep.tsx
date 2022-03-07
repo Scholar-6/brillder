@@ -24,7 +24,6 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import ShareDialogs from "./dialogs/ShareDialogs";
 import GenerateCoverButton from "../baseComponents/sidebarButtons/GenerateCoverButton";
 import map from "components/map";
-import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface FinalStepProps {
   brick: Brick;

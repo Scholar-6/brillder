@@ -15,7 +15,6 @@ import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
-import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 export interface IntroductionState {
   isStopped: boolean;
