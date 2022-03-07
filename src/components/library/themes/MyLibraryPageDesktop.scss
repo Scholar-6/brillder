@@ -13,7 +13,6 @@
     display: flex;
     justify-content: center;
     > svg {
-      background: white;
       border-bottom-left-radius: 0.4vw;
       border-bottom-right-radius: 0.4vw;
       width: 0.8vw;
@@ -802,8 +801,9 @@
     }
   }
   .assignment-progressbar.general .academic-lines {
-      &.smaller .level {
-        background: var(--theme-dark-blue) !important;
-      }
+
+    &.smaller .level {
+      background: var(--theme-dark-blue) !important;
+    }
   }
 }
