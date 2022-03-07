@@ -165,6 +165,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     ).then((res) => {
       this.setState({
         ...this.state,
+        page,
         users: res.data.pageData,
         loading: false,
         totalCount: res.data.totalCount,
