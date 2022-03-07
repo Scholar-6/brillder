@@ -284,17 +284,18 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     if (isTeacher) {
       return (
         <div>
-          <div className="green-button-container1 upper-button" onClick={() => {
-            CashAttempt('');
-            this.props.history.push(routes.playAssignment(brick, this.state.attempts[0].assignmentId));
-          }}>
-            <div className="green-button-container2">
-              <div className="play-text">Play Again</div>
-              <div className="green-button-container3">
-                <PlayGreenButton onClick={() => { }} />
+          {this.state.attempt && this.state.attempt.student && this.state.attempt.student.id === this.props.user.id &&
+            <div className="green-button-container1 upper-button" onClick={() => {
+              CashAttempt('');
+              this.props.history.push(routes.playAssignment(brick, this.state.attempts[0].assignmentId));
+            }}>
+              <div className="green-button-container2">
+                <div className="play-text">Play Again</div>
+                <div className="green-button-container3">
+                  <PlayGreenButton onClick={() => { }} />
+                </div>
               </div>
-            </div>
-          </div>
+            </div>}
           <div className="green-button-container1" onClick={() => {/* commenting logic */ }}>
             <div className="green-button-container2">
               <div className="play-text">Add comment</div>
