@@ -35,6 +35,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   }
 
   const [state, setState] = React.useState(data);
+  const [answerFlipped, setFlipped] = React.useState(false);
   const [removingIndex, setRemovingIndex] = React.useState(-1);
 
   useEffect(() => { setState(data) }, [data]);
@@ -65,6 +66,23 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   }
 
   const renderAnswer = (answer: Answer, i: number) => {
+    if (answerFlipped) {
+      return (
+        <Grid key={i} container direction="row" className="answers-container">
+          <PairAnswerComponent
+            index={i} length={data.list.length} locked={locked} editOnly={editOnly} answer={answer}
+            validationRequired={validationRequired}
+            removeFromList={removeFromList} update={update} save={save}
+            onBlur={() => showSameAnswerPopup(i, state.list, openSameAnswerDialog)}
+          />
+          <PairOptionComponent
+            index={i} locked={locked} editOnly={editOnly} answer={answer}
+            validationRequired={validationRequired}
+            update={update} save={save}
+          />
+        </Grid>
+      );
+    }
     return (
       <Grid key={i} container direction="row" className="answers-container">
         <PairOptionComponent
@@ -88,6 +106,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         <div>Enter Pairs below so that Option 1 matches Answer 1 and so on.</div>
         <ShuffleText />
       </div>
+      <button onClick={() => setFlipped(!answerFlipped)}>Flip</button>
       <ReactSortable
         list={state.list}
         animation={150}
