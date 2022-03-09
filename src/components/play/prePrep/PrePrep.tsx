@@ -12,7 +12,6 @@ import { getPrepareTime } from "../services/playTimes";
 import DummyProgressbarCountdown from "../baseComponents/timeProgressbar/DummyTimeProgressbar";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { isPhone } from "services/phone";
-import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface Props {
   brick: Brick;

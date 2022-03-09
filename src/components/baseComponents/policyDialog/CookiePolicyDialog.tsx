@@ -25,7 +25,7 @@ const CookiePolicyDialog: React.FC<PolicyDialogProps> = (props) => {
         </p>
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button" onClick={accept}>
+        <button className="btn btn-md bg-theme-green yes-button" onClick={accept}>
           <span>Keep exploring</span>
         </button>
       </div>
@@ -41,7 +41,7 @@ const CookiePolicyDialog: React.FC<PolicyDialogProps> = (props) => {
         </p>
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button" onClick={accept}>
+        <button className="btn btn-md bg-theme-green yes-button" onClick={accept}>
           <span>Keep exploring</span>
         </button>
       </div>

@@ -33,6 +33,7 @@ interface Props {
   brick: Brick;
   location: any;
   history: any;
+  canSeeCompetitionDialog?: boolean | null;
   setCompetitionId(id: number): void;
   setUser(data: CreateByEmailRes): void;
   moveNext(): void;
@@ -59,6 +60,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       setUnauthorizedV2(true);
     }
   }, 10000);
+
+  console.log(777, props.canSeeCompetitionDialog)
 
   const getNewestCompetition = (competitions: any[]) => {
     let competition = null;
@@ -91,7 +94,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
 
   useEffect(() => {
     getCompetitions();
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, []);
 
   useEffect(() => {
@@ -339,7 +342,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         {brick.editors && brick.editors.length > 0 &&
           <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
         }
-        {competitionData &&
+        {props.canSeeCompetitionDialog && competitionData &&
           <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog" onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}>
             <div className="dialog-header phone-competition">
               <div className="flex-center">
@@ -489,7 +492,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           setUnauthPopupShown(true);
         }}
       />
-      {competitionData &&
+      {props.canSeeCompetitionDialog && competitionData &&
         <Dialog open={competitionData.isOpen} className="dialog-box competition-dialog" onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}>
           <div className="dialog-header">
             <div className="flex-center">

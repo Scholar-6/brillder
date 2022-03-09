@@ -24,7 +24,6 @@ import BrickTitle from "components/baseComponents/BrickTitle";
 import ShareDialogs from "./dialogs/ShareDialogs";
 import GenerateCoverButton from "../baseComponents/sidebarButtons/GenerateCoverButton";
 import map from "components/map";
-import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface FinalStepProps {
   brick: Brick;
@@ -95,13 +94,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const renderActionColumns = () => {
     if (isPhone()) {
       return (
-        <Grid className="share-row" container direction="row" justify="center">
-          <div>
-            <ShareColumn onClick={() => setShare(true)} />
-            {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
-            {canSee && <GenerateCoverButton brick={brick} isFinal={true} />}
-          </div>
-        </Grid>
+        <div className="share-row flex-center">
+          <ShareColumn onClick={() => setShare(true)} />
+          {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
+          {canSee && <GenerateCoverButton brick={brick} isFinal={true} />}
+        </div>
       );
     }
     return (
@@ -156,8 +153,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
             <p>Well done for completing</p>
             <p className="gge-break-line">“<BrickTitle title={brick.title} />”!</p>
             {renderActionColumns()}
-            <div className="introduction-info">
-              <div className="intro-text-row"></div>
+            <div className="flex-center">
+              <div className="btn btn-green" onClick={() => history.push(map.ViewAllPage)}>Play Another Brick</div>
             </div>
           </div>
         </div>

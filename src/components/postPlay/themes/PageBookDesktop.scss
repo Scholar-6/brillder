@@ -301,8 +301,12 @@
           margin: 0 1.8vw;
           color: var(--theme-dark-blue);
           font-size: 2.5vw;
-          overflow-x: hidden;
-          height: 18vh;
+          height: 12vw;
+
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+          overflow: hidden;
         }
 
         .names-row {

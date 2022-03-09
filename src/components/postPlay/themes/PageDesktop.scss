@@ -394,6 +394,10 @@
             background: var(--off-white);
 
             .green-button-container1 {
+              &.upper-button {
+                margin-bottom: 10vh;
+              }
+            
               .green-button-container2 {
                 width: 100%;
                 @extend %flexCenter;

@@ -26,7 +26,6 @@ import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
 import { isMobile } from "react-device-detect";
 import { CashQuestionFromPlay } from "localStorage/buildLocalStorage";
-import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface ReviewPageProps {
   status: PlayStatus;

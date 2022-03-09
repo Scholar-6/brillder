@@ -187,11 +187,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [isCreatingAttempt, setCreatingAttempt] = useState(false);
 
+  const [prevAttempts, setPrevAttempts] = useState([] as any[]);
+
   const [brick, setBrick] = useState(parsedBrick);
   const [status, setStatus] = useState(initStatus);
   const [liveBrills, setLiveBrills] = useState(-1);
   const [reviewBrills, setReviewBrills] = useState(-1);
-  const [competitionId, setCompetitionId] = useState(-1);
+  const [competitionId, setCompetitionIdV2] = useState(-1);
   const [brickAttempt, setBrickAttempt] = useState(initBrickAttempt as BrickAttempt);
 
   const [attempts, setAttempts] = useState(initAttempts);
@@ -222,6 +224,22 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   // used for unauthenticated user.
   const [userToken, setUserToken] = useState<string>();
   const [emailInvalidPopup, setInvalidEmailPopup] = useState(false); // null - before submit button clicked, true - invalid
+
+  const [canSeeCompetitionDialog, setCanSeeCompetitionDialog] = useState(null as boolean | null); // null means some data not loaded
+
+
+  //#602 user can play competition only once in current brick.
+  const setCompetitionId = (compId: number, previousAttempts: any[]) => {
+    let found = previousAttempts.find(a => a.competitionId === compId);
+    console.log(777, found);
+    if (!found) {
+      setCompetitionIdV2(compId);
+      brick.competitionId = compId;
+      setCanSeeCompetitionDialog(true);
+    } else {
+      setCanSeeCompetitionDialog(false);
+    }
+  }
 
   const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
     let lastPageUrl = lastUrl;
@@ -300,6 +318,18 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         if (bestScore && maxScore) {
           setBestScore(Math.round((bestScore / maxScore) * 100));
         }
+        setPrevAttempts(attempts);
+      }
+
+      // competition
+      const values = queryString.parse(props.location.search);
+      if (values.competitionId) {
+        try {
+          var compId = parseInt(values.competitionId as string);
+          setCompetitionId(compId, attempts || []);
+        } catch {
+          console.log('can`t convert competition id');
+        }
       }
     }
   }
@@ -317,18 +347,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       showZendesk();
     }
 
-
-    // competition
-    const values = queryString.parse(props.location.search);
-    if (values.competitionId) {
-      try {
-        var compId = parseInt(values.competitionId as string);
-        setCompetitionId(compId);
-        brick.competitionId = compId;
-      } catch {
-        console.log('can`t convert competition id');
-      }
-    }
     getBestScore();
     /*eslint-disable-next-line*/
   }, [])
@@ -639,10 +657,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={history}
             brick={brick}
             setCompetitionId={id => {
-              setCompetitionId(id);
-              brick.competitionId = id;
+              setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
             }}
+            canSeeCompetitionDialog={canSeeCompetitionDialog}
             setUser={setUser}
             moveNext={coverMoveNext}
           />
@@ -650,8 +668,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route path={routes.briefRoute}>
           <Brief brick={brick} mode={mode} user={props.user} competitionId={competitionId} setCompetitionId={id => {
-            setCompetitionId(id);
-            brick.competitionId = id;
+            setCompetitionId(id, prevAttempts);
             history.push(routes.playBrief(brick));
           }} moveNext={moveToPrePrep} onHighlight={onHighlight} />
           {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={() => history.push(routes.playPrePrep(brick))} />}
@@ -800,20 +817,20 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {isPhone() && renderPhoneFooter(PlayPage.Review)}
         </Route>
         <Route exac path="/play/brick/:brickId/ending">
-          {reviewBrills >= 0 ? 
-          <Ending
-            status={status}
-            location={location}
-            brick={brick}
-            history={history}
-            liveBrills={liveBrills}
-            reviewBrills={reviewBrills}
-            bestScore={bestScore}
-            brickAttempt={brickAttempt}
-            liveDuration={liveDuration}
-            reviewDuration={reviewDuration}
-            move={finishBrick}
-          /> : <PageLoader content="loading brills" />}
+          {reviewBrills >= 0 ?
+            <Ending
+              status={status}
+              location={location}
+              brick={brick}
+              history={history}
+              liveBrills={liveBrills}
+              reviewBrills={reviewBrills}
+              bestScore={bestScore}
+              brickAttempt={brickAttempt}
+              liveDuration={liveDuration}
+              reviewDuration={reviewDuration}
+              move={finishBrick}
+            /> : <PageLoader content="loading brills" />}
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">
           <FinalStep

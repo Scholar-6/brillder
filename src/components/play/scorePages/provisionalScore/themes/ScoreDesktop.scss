@@ -146,6 +146,10 @@
       margin-bottom: 3vh;
       position: relative;
 
+      .bold {
+        white-space: nowrap;
+      }
+
       .absolute-high-score {
         position: absolute;
         top: calc(50% - 2.7vw);

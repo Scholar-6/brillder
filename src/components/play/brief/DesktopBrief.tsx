@@ -12,7 +12,6 @@ import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
 import { PlayMode } from "../model";
 import { User } from "model/user";
-import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface Props {
   brick: Brick;

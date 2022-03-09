@@ -161,7 +161,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
             )}
             {assignment.brick.competitions && assignment.brick.competitions.length > 0 && height < 50 &&
             <div className="competition-star bigger">
-              <SpriteIcon name="book-star" style={{ color: color, stroke: color, fill: color }} />
+              <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
             </div>}
           </div>
           {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
@@ -187,7 +187,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
           >
             {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
               <div className="competition-star bigger">
-                <SpriteIcon name="book-star" style={{ color: color, stroke: color, fill: color }} />
+                <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
               </div>}
             {renderRotatedTitle("white", height)}
             {assignment.brick.academicLevel >= AcademicLevel.First && (

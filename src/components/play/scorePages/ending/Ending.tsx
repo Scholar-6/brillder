@@ -19,7 +19,6 @@ import AttemptedText from "../components/AttemptedText";
 import map from "components/map";
 import actions from "redux/actions/auth";
 import MusicAutoplay from "components/baseComponents/MusicAutoplay";
-import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 const confetti = require('canvas-confetti');
 
