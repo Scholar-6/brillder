@@ -51,7 +51,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (this.props.isReview) {
       canDrag = this.props.attempt?.correct ? false : true;
     }
-    this.state = { status, userAnswers, answersFlipped: false, canDrag };
+    this.state = { status, userAnswers, canDrag };
   }
 
   UNSAFE_componentWillUpdate(props: PairMatchProps) {
@@ -65,10 +65,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         this.setState({ userAnswers: this.props.answers as any });
       }
     }
-  }
-
-  flipAnswers() {
-    this.setState({ answersFlipped: !this.state.answersFlipped });
   }
 
   setUserAnswers(userAnswers: any[]) {
@@ -255,18 +251,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return (
       <div className="question-unique-play pair-match-play">
         {this.renderHelpers()}
-        <button onClick={this.flipAnswers.bind(this)}>Flip</button>
-        {this.state.answersFlipped ?
-          <Grid container justify="center">
-            {this.renderAnswers()}
-            {this.renderOptions()}
-          </Grid>
-          :
-          <Grid container justify="center">
-            {this.renderOptions()}
-            {this.renderAnswers()}
-          </Grid>
-        }
+        <Grid container justify="center">
+          {this.renderOptions()}
+          {this.renderAnswers()}
+        </Grid>
         {this.renderGlobalHint()}
       </div>
     );
