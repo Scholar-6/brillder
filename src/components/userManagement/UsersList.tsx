@@ -465,6 +465,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         </th>
         <th className="see-column"></th>
         <th className="see-column"></th>
+        <th className="see-column"></th>
         <th className="email-column">Email</th>
         <th className="type-column">
           <Grid container>{!isPhone() && 'User'} Type {this.renderSortArrow(UserSortBy.Subscription)}</Grid>
@@ -541,6 +542,17 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                         onClick={() => this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=student:${user.email}` })}
                       >
                         <SpriteIcon name="glasses" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                      </span>
+                    </Tooltip>
+                  </td>
+                  <td className="see-container" style={{ position: "relative", width: "2.5vw" }}>
+                    <Tooltip title="See Users Library">
+                      <span
+                        className="btn"
+                        style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-dark-blue)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                        onClick={() => this.props.history.push({ pathname: map.MyLibrary + '/' + user.id})}
+                      >
+                        <SpriteIcon name="bar-chart-2" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
                       </span>
                     </Tooltip>
                   </td>
