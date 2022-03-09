@@ -31,5 +31,6 @@ export interface PairMatchProps extends CompQuestionProps {
 export interface PairMatchState {
   status: DragAndDropStatus;
   userAnswers: any[];
+  answersFlipped: boolean;
   canDrag: boolean;
 }

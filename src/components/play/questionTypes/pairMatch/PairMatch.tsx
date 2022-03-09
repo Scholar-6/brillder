@@ -51,7 +51,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (this.props.isReview) {
       canDrag = this.props.attempt?.correct ? false : true;
     }
-    this.state = { status, userAnswers, canDrag };
+    this.state = { status, userAnswers, answersFlipped: false, canDrag };
   }
 
   UNSAFE_componentWillUpdate(props: PairMatchProps) {
@@ -65,6 +65,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         this.setState({ userAnswers: this.props.answers as any });
       }
     }
+  }
+
+  flipAnswers() {
+    this.setState({ answersFlipped: !this.state.answersFlipped });
   }
 
   setUserAnswers(userAnswers: any[]) {
@@ -182,60 +186,87 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return !!this.props.component.list.find((a: any) => a.valueFile || a.optionFile);
   }
 
-  render() {
+  renderHelpers() {
     const haveImage = this.checkImages();
+
     return (
-      <div className="question-unique-play pair-match-play">
-        <p>
-          <span className="help-text">
-            <DragIcon /><span>Drag to rearrange.</span> {
-              haveImage && (isMobile
-                ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
-                : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
-            }
-          </span>
-          {!isPhone() && isMobile &&
+      <p>
+        <span className="help-text">
+          <DragIcon /><span>Drag to rearrange.</span> {
+            haveImage && (isMobile
+              ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
+              : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
+          }
+        </span>
+        {!isPhone() && isMobile &&
           <span className="help-text">
             <SpriteIcon name="hero-cursor-click" />
             Click and hold to move if using an Apple Pencil
           </span>}
-        </p>
-        <Grid container justify="center">
-          <List style={{ padding: 0 }} className="answers-list">
-            {
-              this.props.component.list.map((item: any, i) =>
-                <PairMatchOption
-                  state={this.getState(i)}
-                  item={item}
-                  key={i}
-                  attempt={this.props.liveAttempt}
-                  isPreview={this.props.isPreview}
-                  hint={this.props.question.hint}
-                  isReview={this.props.isReview}
-                  index={i}
-                />
-              )
-            }
-          </List>
-          {
-            this.props.isBookPreview || this.props.isPreview || !this.state.canDrag ?
-              <div className="answers-list">
-                {this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))}
-              </div>
-              :
-              <ReactSortable
-                list={this.state.userAnswers}
-                animation={150}
-                group={{ name: "cloning-group-name" }}
-                className="answers-list"
-                setList={(choices) => this.setUserAnswers(choices)}
-              >
-                {
-                  this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
-                }
-              </ReactSortable>
-          }
-        </Grid>
+      </p>
+    );
+  }
+
+  renderOptions() {
+    return (
+      <List style={{ padding: 0 }} className="answers-list">
+        {
+          this.props.component.list.map((item: any, i) =>
+            <PairMatchOption
+              state={this.getState(i)}
+              item={item}
+              key={i}
+              attempt={this.props.liveAttempt}
+              isPreview={this.props.isPreview}
+              hint={this.props.question.hint}
+              isReview={this.props.isReview}
+              index={i}
+            />
+          )
+        }
+      </List>
+    )
+  }
+
+  renderAnswers() {
+    if (this.props.isBookPreview || this.props.isPreview || !this.state.canDrag) {
+      return (
+        <div className="answers-list">
+          {this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))}
+        </div>
+      )
+    }
+    return (
+      <ReactSortable
+        list={this.state.userAnswers}
+        animation={150}
+        group={{ name: "cloning-group-name" }}
+        className="answers-list"
+        setList={(choices) => this.setUserAnswers(choices)}
+      >
+        {
+          this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
+        }
+      </ReactSortable>
+    );
+  }
+
+  render() {
+    return (
+      <div className="question-unique-play pair-match-play">
+        {this.renderHelpers()}
+        <button onClick={this.flipAnswers.bind(this)}>Flip</button>
+        {this.state.answersFlipped ?
+          <Grid container justify="center">
+            {this.renderAnswers()}
+            {this.renderOptions()}
+          </Grid>
+          :
+          <Grid container justify="center">
+            {this.renderOptions()}
+            {this.renderAnswers()}
+          </Grid>
+        }
         {this.renderGlobalHint()}
       </div>
     );
