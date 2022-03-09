@@ -110,6 +110,8 @@ class BookPages extends React.Component<BookProps, BookState> {
     const { color } = this.props;
     const { brick, student } = this.props.attempt;
 
+    const isOwner = student.id === this.props.user.id;
+
     let bookClass = "book-main-container";
 
     if (this.state.bookHovered) {
@@ -136,11 +138,11 @@ class BookPages extends React.Component<BookProps, BookState> {
             justify="center"
           >
             <Grid className="main-text-container">
-              <h1>This book is yours.</h1>
+              <h1>{isOwner ? 'This book is yours.' : <span>This is <span className="capitalize">{student.firstName} {student.lastName}{student.lastName[student.lastName.length - 1] === 's' ? '' : "'s"}</span> book</span>}</h1>
               <h2>Hover your mouse over the cover to</h2>
               <h2>see a summary of your results.</h2>
-              <button onClick={() => this.props.history.push(map.MyLibrary + '?subjectId=' + brick.subjectId)}>
-                View it in my library
+              <button onClick={() => this.props.history.push(map.MyLibrary + '/' + student.id + '?subjectId=' + brick.subjectId)}>
+                View it in {isOwner ? 'my' : 'their'} library
               </button>
             </Grid>
             <div className={bookClass}>

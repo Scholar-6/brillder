@@ -9,7 +9,6 @@ import { rightKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import routes from "../routes";
 import MusicAutoplay from "components/baseComponents/MusicAutoplay";
-import MusicWrapper from "components/baseComponents/MusicWrapper";
 
 interface Props {
   brick: Brick;

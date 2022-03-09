@@ -1,7 +1,6 @@
 import React from 'react';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import './CoverPlay.scss';
-import MusicWrapper from 'components/baseComponents/MusicWrapper';
 
 interface Props {
   onClick(): any;

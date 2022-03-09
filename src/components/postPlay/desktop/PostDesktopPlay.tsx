@@ -283,13 +283,27 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
     if (isTeacher) {
       return (
-        <div className="green-button-container1" onClick={() => {/* commenting logic */ }}>
-          <div className="green-button-container2">
-            <div className="play-text">Add comment</div>
-            <div className="green-button-container3">
-              <button type="button" className="play-green-button bg-tab-gray">
-                <SpriteIcon name="pen-tool" className="colored w60 m-0 h60 text-white" />
-              </button>
+        <div>
+          {this.state.attempt && this.state.attempt.student && this.state.attempt.student.id === this.props.user.id &&
+            <div className="green-button-container1 upper-button" onClick={() => {
+              CashAttempt('');
+              this.props.history.push(routes.playAssignment(brick, this.state.attempts[0].assignmentId));
+            }}>
+              <div className="green-button-container2">
+                <div className="play-text">Play Again</div>
+                <div className="green-button-container3">
+                  <PlayGreenButton onClick={() => { }} />
+                </div>
+              </div>
+            </div>}
+          <div className="green-button-container1" onClick={() => {/* commenting logic */ }}>
+            <div className="green-button-container2">
+              <div className="play-text">Add comment</div>
+              <div className="green-button-container3">
+                <button type="button" className="play-green-button bg-tab-gray">
+                  <SpriteIcon name="pen-tool" className="colored w60 m-0 h60 text-white" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -405,7 +419,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
     const renderTopUserData = () => {
       if (this.state.attempt) {
-        const {student} = this.state.attempt;
+        const { student } = this.state.attempt;
         return (
           <div className="absolute-top-part">
             {this.renderClassroom()}
