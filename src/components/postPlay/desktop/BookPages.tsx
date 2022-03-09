@@ -138,7 +138,7 @@ class BookPages extends React.Component<BookProps, BookState> {
             justify="center"
           >
             <Grid className="main-text-container">
-              <h1>{isOwner ? 'This book is yours.' : <span>This book belongs to <span className="capitalize">{student.firstName} {student.lastName}</span></span>}</h1>
+              <h1>{isOwner ? 'This book is yours.' : <span>This is <span className="capitalize">{student.firstName} {student.lastName}{student.lastName[student.lastName.length - 1] === 's' ? '' : "'s"}</span> book</span>}</h1>
               <h2>Hover your mouse over the cover to</h2>
               <h2>see a summary of your results.</h2>
               <button onClick={() => this.props.history.push(map.MyLibrary + '/' + student.id + '?subjectId=' + brick.subjectId)}>
