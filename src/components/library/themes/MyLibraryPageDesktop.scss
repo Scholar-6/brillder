@@ -27,7 +27,7 @@
     &.bigger {
       > svg {
         width: 2vw;
-        height: 2.8vw;
+        height: 3.9vw;
         border-bottom-left-radius: 1vw;
         border-bottom-right-radius: 1vw;
       }
@@ -287,7 +287,7 @@
         .assignment {
           margin-left: $base-side-margin;
           margin-right: $base-side-margin;
-          $base-radius: 0.35vw;
+          $base-radius: 0.55vw;
           border-radius: $base-radius;
 
           .progress-value {

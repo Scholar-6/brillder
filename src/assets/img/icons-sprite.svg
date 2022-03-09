@@ -1192,7 +1192,7 @@
   </svg>
   <svg id="book-star-general" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 43">
     <g id="Group_473" data-name="Group 473" transform="translate(-752 -352)">
-      <path id="Rectangle_1221" data-name="Rectangle 1221" d="M4.125,0h13.75A4.125,4.125,0,0,1,22,4.125V32A11,11,0,0,1,11,43h0A11,11,0,0,1,0,32V4.125A4.125,4.125,0,0,1,4.125,0Z" stroke="none" transform="translate(752 352)" fill="#001c58"/>
+      <path id="Rectangle_1221" data-name="Rectangle 1221" d="M4.125,0h13.75A4.125,4.125,0,0,1,22,4.125V32A11,11,0,0,1,11,43h0A11,11,0,0,1,0,32V4.125A4.125,4.125,0,0,1,4.125,0Z" stroke="none" transform="translate(752 352)" fill="#193266"/>
       <path id="Icon_feather-star" data-name="Icon feather-star" d="M9.756,3l2.087,4.229,4.668.682L13.133,11.2l.8,4.648-4.175-2.2-4.175,2.2.8-4.648L3,7.911l4.668-.682Z" transform="translate(753.245 360.121)" fill="inherit" stroke="inherit" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
     </g>
   </svg>
