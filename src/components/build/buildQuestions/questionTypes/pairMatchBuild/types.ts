@@ -13,8 +13,8 @@ export interface Answer extends MainImageProps {
   // only for pairMatch
   option: string;
   optionFile: string;
-  imageOptionSource: string; 
-  imageOptionCaption: string; 
+  imageOptionSource?: string; 
+  imageOptionCaption?: string; 
 
   optionSoundFile: string;
   optionSoundCaption: string;

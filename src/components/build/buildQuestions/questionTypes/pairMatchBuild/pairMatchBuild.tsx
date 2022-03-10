@@ -35,8 +35,9 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
     updateComponent(data);
   }
 
+  const [sortableKey, setSortableKey] = React.useState(3);
+
   const [state, setState] = React.useState(data);
-  const [answerFlipped, setFlipped] = React.useState(false);
   const [removingIndex, setRemovingIndex] = React.useState(-1);
 
   useEffect(() => { setState(data) }, [data]);
@@ -44,6 +45,36 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   const update = () => {
     setState(Object.assign({}, state));
     updateComponent(state);
+  }
+
+  const flip = (answer: Answer) => {
+    console.log(answer);
+    const tempObj = Object.assign({}, answer);
+
+    answer.optionType = tempObj.answerType;
+    answer.answerType = tempObj.optionType;
+
+    answer.option = tempObj.value;
+    answer.value = tempObj.option;
+
+    answer.valueSoundFile = tempObj.optionSoundFile;
+    answer.optionSoundFile = tempObj.valueSoundFile;
+
+    answer.valueFile = tempObj.optionFile;
+    answer.optionFile = tempObj.valueFile;
+
+    answer.imageCaption = tempObj.imageOptionCaption;
+    answer.imageOptionCaption = tempObj.imageCaption;
+
+    answer.imageOptionSource = tempObj.imageSource;
+    answer.imageSource = tempObj.imageOptionSource;
+
+    answer.valueSoundCaption = tempObj.optionSoundCaption;
+    answer.optionSoundCaption = tempObj.valueSoundCaption;
+
+    update();
+    save();
+    setSortableKey(sortableKey+1);
   }
 
   const addAnswer = () => {
@@ -69,7 +100,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   const renderAnswer = (answer: Answer, i: number) => {
     return (
       <Grid key={i} container direction="row" className="answers-container">
-        <div className="flip-button" onClick={() => setFlipped(!answerFlipped)}>
+        <div className="flip-button" onClick={() => flip(answer)}>
           <SpriteIcon name="hero-horizontal-switch" />  
         </div>
         <PairOptionComponent
@@ -99,6 +130,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
       <ReactSortable
         list={state.list}
         animation={150}
+        key={sortableKey}
         group={{ name: "cloning-group-name", pull: "clone" }}
         setList={newList => setState({ ...state, list: newList })}
       >
