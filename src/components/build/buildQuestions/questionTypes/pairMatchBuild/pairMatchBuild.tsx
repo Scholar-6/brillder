@@ -12,6 +12,7 @@ import { showSameAnswerPopup } from '../service/questionBuild';
 import ShuffleText from '../shuffle/components/ShuffleText';
 import { ReactSortable } from 'react-sortablejs';
 import DeleteDialog from 'components/build/baseComponents/dialogs/DeleteDialog';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface PairMatchBuildProps extends UniqueComponentProps { }
@@ -68,7 +69,9 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   const renderAnswer = (answer: Answer, i: number) => {
     return (
       <Grid key={i} container direction="row" className="answers-container">
-        <div className="flip-button" onClick={() => setFlipped(!answerFlipped)}>Flip</div>
+        <div className="flip-button" onClick={() => setFlipped(!answerFlipped)}>
+          <SpriteIcon name="hero-horizontal-switch" />  
+        </div>
         <PairOptionComponent
           index={i} locked={locked} editOnly={editOnly} answer={answer}
           validationRequired={validationRequired}
@@ -80,6 +83,9 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
           removeFromList={removeFromList} update={update} save={save}
           onBlur={() => showSameAnswerPopup(i, state.list, openSameAnswerDialog)}
         />
+        <div className="move-container">
+          <SpriteIcon name="feather-move" />
+        </div>
       </Grid>
     );
   }
