@@ -1699,3 +1699,49 @@
 .play-preview-pages > .volume-container-dr-m {
   display: none;
 }
+
+
+
+.dialog-box.image-dialog-v56 .MuiPaper-root {
+  max-width: 80vw !important;
+  .dropzone {
+    height: 200px !important;
+  }
+  .dropzone-instructions {
+    width: 76vw;
+  }
+  .dialog-header svg {
+    width: 4vw;
+    height: 4vw;
+  }
+  .dropzone-instructions--main {
+    &::after {
+      font-size: 6vw;
+      font-family: $font-family-bold;
+    }
+  }
+  .dropzone-instructions--sub {
+    font-family: $font-family-light;
+  }
+  .light {
+    font-size: 3.6vw;
+  }
+  .btn {
+    font-family: $font-family-bold !important;
+    svg {
+      margin-left: 3vw;
+      width: 7vw;
+      height: 7vw;
+    }
+  }
+  .dialog-header.checkbox-container {
+    margin-top: 2vw;
+    margin-bottom: 4vw;
+    position: relative;
+    .fgr-icon {
+      position: absolute;
+      top: 18vw;
+      left: 2.4vw;
+    }
+  }
+}
