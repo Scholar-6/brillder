@@ -86,6 +86,7 @@
 
       &:hover {
         .css-custom-tooltip {
+          display: block;
           opacity: 1;
         }
       }
@@ -221,6 +222,29 @@
     .right-top-icon {
       top: 0.1vw !important;
       right: 0vw !important;
+    }
+  }
+}
+
+.phone-question-preview .question-unique-play.pair-match-play {
+  .play-wave-container {
+    height: 100% !important;
+    .relative-waves-container {
+      width: 45% !important;
+    }
+    .play-icon-container-d1 {
+      padding-left: 0;
+      .play-icon-d1 {
+        width: 2vw;
+        height: 2vw;
+      }
+    }
+    .volume-container {
+      width: 1.5vw;
+    }
+    .absolute-start-time,
+    .absolute-end-time {
+      display: none;
     }
   }
 }
