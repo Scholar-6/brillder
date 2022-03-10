@@ -12,6 +12,13 @@
   .button-box {
     margin-top: 0 !important;
   }
+  position: relative;
+
+  .flip-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 
   .pair-match-option,
   .pair-match-answer {
