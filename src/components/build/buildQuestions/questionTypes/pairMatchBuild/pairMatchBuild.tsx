@@ -134,7 +134,9 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         animation={150}
         key={sortableKey}
         group={{ name: "cloning-group-name", pull: "clone" }}
-        setList={newList => setState({ ...state, list: newList })}
+        setList={newList => {
+          setState({ ...state, list: newList })
+        }}
       >
         {state.list.map((answer: Answer, i: number) => renderAnswer(answer, i))}
       </ReactSortable>
