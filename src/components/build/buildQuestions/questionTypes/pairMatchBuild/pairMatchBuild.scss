@@ -14,10 +14,48 @@
   }
   position: relative;
 
-  .flip-button {
+  .question-image-drop  {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0 !important;
+    height: 50% !important;
+    right: 0.5vw !important;
+  }
+
+  .sound-record-button {
+    position: absolute;
+    top: 50% !important;
+    height: 50% !important;
+    right: 2vw !important;
+  }
+
+  .answers-container {
+    position: relative;
+    .flip-button {
+      z-index: 100;
+      position: absolute;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      top: 0;
+      left: calc(50% - 0.5vw);
+
+      svg {
+        cursor: pointer;
+        width: 1.4vw;
+        height: 1.4vw;
+      }
+    }
+    .move-container {
+      position: absolute;
+      z-index: 100;
+      bottom: 0.2vw;
+      right: 0.2vw;
+      svg {
+        cursor: pointer;
+        width: 1vw;
+        height: 1vw;
+      }
+    }
   }
 
   .pair-match-option,
@@ -44,6 +82,8 @@
 
         .ql-container {
           .ql-editor {
+            padding-top: 1.5vw;
+            padding-bottom: 1.5vw;
             padding-left: 0.5vw;
             padding-right: 6vw;
           }
@@ -53,12 +93,9 @@
   }
 
   .question-image-drop {
-    height: 100%;
     display: flex;
-    top: 0;
     align-items: center;
     width: 5vw;
-    right: 2vw !important;
     left: unset !important;
   }
 
