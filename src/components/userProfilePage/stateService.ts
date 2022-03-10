@@ -19,6 +19,7 @@ export const getNewUserState = (isAdmin: boolean) => {
     passwordChangedDialog: false,
 
     saveDisabled: true,
+    isProfile: true,
     validationRequired: false,
     emailInvalid: false,
     previewAnimationFinished: false,
@@ -58,6 +59,7 @@ export const getExistedUserState = (user: User) => {
     },
     subjects: [],
     isNewUser: false,
+    isProfile: true,
     isStudent: isOnlyStudent,
     isAdmin,
     roles: [

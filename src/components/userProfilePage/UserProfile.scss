@@ -39,9 +39,7 @@
     position: relative;
     background: var(--solitude-light);
     height: 85.9vh;
-    margin-top: 3.6vh;
     width: 72.5vw;
-    border-top-right-radius: 2vw;
     overflow-y: auto;
 
     @include phone_and_tabletP {
@@ -108,9 +106,12 @@
     }
 
     .save-button-container {
-      position: fixed;
-      top: calc(5.834vw + 3.6vh + 1vh);
-      left: 65.5vw;
+      position: absolute;
+      top: 0.5vw;
+      right: 2vw;
+      .css-custom-tooltip {
+        z-index: 10;
+      }
     }
 
     .profile-fields {
