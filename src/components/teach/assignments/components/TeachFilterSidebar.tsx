@@ -205,7 +205,7 @@ class TeachFilterSidebar extends Component<
   }
 
   renderPremiumBox() {
-    let className = 'index-box pay-info ';
+    let className = 'pay-info ';
     let noFreeTries = false;
     if (this.props.user && this.props.user.freeAssignmentsLeft < 1) {
       className += " no-free-tries";
@@ -213,11 +213,13 @@ class TeachFilterSidebar extends Component<
     }
     return (
       <div className={className}>
-        <div className="premium-label">
-          {noFreeTries ? 'No Free Assignments Left!' : <span>{this.props.user && this.props.user.freeAssignmentsLeft} Free Assignment{this.props.user.freeAssignmentsLeft > 1 ? 's' : ''} Left</span>}
-        </div>
-        <div className="premium-btn" onClick={this.props.moveToPremium}>
-          Go Premium <SpriteIcon name="hero-sparkle" />
+        <div>
+          <div className="premium-label">
+            {noFreeTries ? 'No Free Assignments Left!' : <span>{this.props.user && this.props.user.freeAssignmentsLeft} Free Assignment{this.props.user.freeAssignmentsLeft > 1 ? 's' : ''} Left</span>}
+          </div>
+          <div className="premium-btn" onClick={this.props.moveToPremium}>
+            Go Premium <SpriteIcon name="hero-sparkle" />
+          </div>
         </div>
       </div>
     );
@@ -275,7 +277,6 @@ class TeachFilterSidebar extends Component<
               </div>
             </div>
           </div>
-          {(this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState) && this.renderPremiumBox()}
           <div
             className={
               "index-box m-view-all " +
@@ -342,6 +343,7 @@ class TeachFilterSidebar extends Component<
             {finalClasses.map(this.renderClassroom.bind(this))}
           </div>
         </div>
+        {(this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState) && this.renderPremiumBox()}
       </div>
     );
   }
