@@ -176,7 +176,7 @@
         color: var(--theme-dark-blue);
         @extend %textCenter;
         display: block;
-        content: 'Drag Image Here | Click to Select Image';
+        content: 'Click to Select Image';
         font-family: $font-family-regular;
         font-size: 4vw;
       }

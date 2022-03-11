@@ -12,9 +12,10 @@
   .button-box {
     margin-top: 0 !important;
   }
+
   position: relative;
 
-  .question-image-drop  {
+  .question-image-drop {
     position: absolute;
     top: 0 !important;
     height: 50% !important;
@@ -36,8 +37,27 @@
     width: 4vw !important;
   }
 
+  .play-wave-container {
+    padding-right: 2vw;
+    .play-icon-container-d1 .play-icon-d1 {
+      width: 2vw;
+      height: 2vw;
+      margin-left: 0.5vw;
+      margin-right: 0.5vw;
+    }
+
+    .absolute-end-time,
+    .absolute-start-time {
+      font-size: 0.7vw;
+    }
+    .custom-audio-controls {
+      display: none;
+    }
+  }
+
   .answers-container {
     position: relative;
+
     .flip-button {
       z-index: 100;
       position: absolute;
@@ -45,23 +65,57 @@
       display: flex;
       align-items: center;
       top: 0;
-      left: calc(50% - 0.5vw);
+      left: calc(50% - 0.7vw);
 
       svg {
+        background: var(--tab-gray);
+        border-radius: 50%;
+        padding: 0.15vw;
         cursor: pointer;
         width: 1.4vw;
         height: 1.4vw;
       }
+
+      .css-custom-tooltip {
+        display: none;
+        top: 3.4vw;
+        left: -2.5vw;
+        padding: 0;
+        width: 7vw;
+      }
+
+      &:hover {
+        .css-custom-tooltip {
+          display: block;
+          opacity: 1;
+        }
+      }
     }
+
     .move-container {
       position: absolute;
       z-index: 100;
       bottom: 0.2vw;
       right: 0.2vw;
+      z-index: 100000;
+
       svg {
         cursor: pointer;
         width: 1vw;
         height: 1vw;
+      }
+
+      .css-custom-tooltip {
+        display: none;
+        top: 0.3vw;
+        padding: 0;
+        width: 10.6vw;
+        right: 1.3vw;
+      }
+      
+      &:hover .css-custom-tooltip {
+        display: block;
+        opacity: 1;
       }
     }
   }
@@ -168,6 +222,29 @@
     .right-top-icon {
       top: 0.1vw !important;
       right: 0vw !important;
+    }
+  }
+}
+
+.phone-question-preview .question-unique-play.pair-match-play {
+  .play-wave-container {
+    height: 100% !important;
+    .relative-waves-container {
+      width: 45% !important;
+    }
+    .play-icon-container-d1 {
+      padding-left: 0;
+      .play-icon-d1 {
+        width: 2vw;
+        height: 2vw;
+      }
+    }
+    .volume-container {
+      width: 1.5vw;
+    }
+    .absolute-start-time,
+    .absolute-end-time {
+      display: none;
     }
   }
 }
