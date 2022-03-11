@@ -1,5 +1,6 @@
 import React from 'react'
 import { Grid } from '@material-ui/core';
+import { ReactSortable } from 'react-sortablejs';
 
 import './horizontalShuffleBuild.scss'
 import { QuestionValueType, UniqueComponentProps } from '../../types';
@@ -11,7 +12,6 @@ import { stripHtml } from 'components/build/questionService/ConvertService';
 import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
 import RemoveButton from '../../components/RemoveButton';
 import SoundRecord from '../../sound/SoundRecord';
-import { ReactSortable } from 'react-sortablejs';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import ShuffleText from '../components/ShuffleText';
 
@@ -34,7 +34,6 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
   }
 
   const [state, setState] = React.useState(data);
-  const [sortableKey, setSortableKey] = React.useState(-1);
 
   const update = () => {
     setState(Object.assign({}, state));
@@ -162,12 +161,12 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
       <ReactSortable
         list={state.list}
         animation={150}
-        key={sortableKey}
         className="answer-container"
         group={{ name: "cloning-group-name", pull: "clone" }}
         setList={newList => {
-          setState(Object.assign({}, { ...state, list: newList }));
-          updateComponent(state);
+          const newState = { ...state, list: newList };
+          setState(Object.assign({}, newState));
+          updateComponent(newState);
           save();
         }}
       >
