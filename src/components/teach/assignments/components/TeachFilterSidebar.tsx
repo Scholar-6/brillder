@@ -277,6 +277,43 @@ class TeachFilterSidebar extends Component<
               </div>
             </div>
           </div>
+          <div className="sort-row-v3y3">
+            <div className="sort-v3y3"
+              onClick={() => {
+                this.setState({ sortByName: !this.state.sortByName, ascending: null })
+              }}
+            >
+              <SpriteIcon
+                name={
+                  this.state.sortByName
+                    ? "f-arrow-down"
+                    : "f-arrow-up"
+                }
+              />
+              {this.state.sortByName ? 'A-Z' : 'Z-A'}
+              <div className="css-custom-tooltip">
+                {this.state.sortByName ? 'Sort Alphabetically: Z-A' : 'Sort Alphabetically: A-Z'}
+              </div>
+            </div>
+            <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
+                <SpriteIcon name="plus-circle" /> Create Class
+              </div>
+            <div className="sort-v4y4">
+              <SpriteIcon
+                name={
+                  this.state.ascending
+                    ? "hero-sort-descending"
+                    : "hero-sort-ascending"
+                }
+                onClick={() =>
+                  this.setState({ ascending: !this.state.ascending, sortByName: null })
+                }
+              />
+              <div className="css-custom-tooltip">
+                {this.state.ascending ? 'Sort by ascending number of assignments' : 'Sort by descending number of assignments'}
+              </div>
+            </div>
+          </div>
           <div
             className={
               "index-box m-view-all " +
@@ -285,55 +322,14 @@ class TeachFilterSidebar extends Component<
             onClick={this.removeClassrooms.bind(this)}
           >
             <div>
-              View All Classes
+              View All Classes ({finalClasses.length})
               <div className="right-index">
-                <div className="classrooms-box">
-                  {finalClasses.length}
-                  <SpriteIcon name={this.props.activeClassroom ? "manage-class-blue" : "manage-class"} />
-                </div>
                 {totalCount}
                 <SpriteIcon name="users-custom" className="active" />
                 <div className="classrooms-box">
                   {assignmentsCount}
                   <SpriteIcon name="file-plus" />
                 </div>
-              </div>
-              <div className="m-absolute-sort sort-v2"
-                onClick={() => {
-                  this.setState({ sortByName: !this.state.sortByName, ascending: null })
-                }}
-              >
-                <SpriteIcon
-                  name={
-                    this.state.sortByName
-                      ? "f-arrow-down"
-                      : "f-arrow-up"
-                  }
-                />
-                {this.state.sortByName ? 'A-Z' : 'Z-A'}
-                <div className="css-custom-tooltip">
-                  {this.state.sortByName ? 'Sort Alphabetically: Z-A' : 'Sort Alphabetically: A-Z'}
-                </div>
-              </div>
-              <div className="m-absolute-sort">
-                <SpriteIcon
-                  name={
-                    this.state.ascending
-                      ? "hero-sort-descending"
-                      : "hero-sort-ascending"
-                  }
-                  onClick={() =>
-                    this.setState({ ascending: !this.state.ascending, sortByName: null })
-                  }
-                />
-                <div className="css-custom-tooltip">
-                  {this.state.ascending ? 'Sort by ascending number of assignments' : 'Sort by descending number of assignments'}
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
-                <SpriteIcon name="plus-circle" /> Create Class
               </div>
             </div>
           </div>
