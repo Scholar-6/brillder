@@ -412,51 +412,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     return (
       <div className={className} onClick={() => this.unselectClasses()}>
-        View All Learners
+        View All Learners ({this.state.classrooms.length})
         <div className="right-index right-index2">
-          <div className="classrooms-box">
-            {this.state.classrooms.length}
-            <SpriteIcon name={this.state.activeClassroom ? "manage-class-blue" : "manage-class"} />
-          </div>
           {this.state.users.length}
           <SpriteIcon name="users-custom" className="active" />
-        </div>
-        <div className="m-absolute-sort sort-v2"
-          onClick={() => {
-            this.setState({ filterSortByName: !this.state.filterSortByName, filterSortAscending: null })
-          }}
-        >
-          <SpriteIcon
-            name={
-              this.state.filterSortByName
-                ? "f-arrow-down"
-                : "f-arrow-up"
-            }
-          />
-          {this.state.filterSortByName ? 'A-Z' : 'Z-A'}
-          <div className="css-custom-tooltip bold">
-            {this.state.filterSortByName ? 'Sort Alphabetically: Z-A' : 'Sort Alphabetically: A-Z'}
-          </div>
-        </div>
-        <div className="m-absolute-sort">
-          <SpriteIcon
-            name={
-              this.state.filterSortAscending
-                ? "hero-sort-descending"
-                : "hero-sort-ascending"
-            }
-            onClick={() =>
-              this.setState({ filterSortAscending: !this.state.filterSortAscending, filterSortByName: null })
-            }
-          />
-          <div className="css-custom-tooltip bold">
-            {this.state.filterSortAscending ? 'Sort by ascending number of assignments' : 'Sort by descending number of assignments'}
-          </div>
-        </div>
-        <div>
-          <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
-            <SpriteIcon name="plus-circle" /> Create Class
-          </div>
         </div>
       </div>
     );
@@ -493,7 +452,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     const { classrooms } = this.state;
 
-    let finalClasses:ClassroomApi[] = [];
+    let finalClasses: ClassroomApi[] = [];
 
     if (this.state.filterSortAscending === false) {
       finalClasses = classrooms.sort((a, b) => a.students.length - b.students.length);
@@ -523,6 +482,43 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <div className="filter-container sort-by-box flex-center">
             <div className="class-header">
               {this.state.users.length} Learners in {classrooms.length > 1 ? `${classrooms.length} Classes` : `${classrooms.length} Class`}
+            </div>
+          </div>
+          <div className="sort-row-v3y3">
+            <div className="sort-v3y3"
+              onClick={() => {
+                this.setState({ filterSortByName: !this.state.filterSortByName, filterSortAscending: null })
+              }}
+            >
+              <SpriteIcon
+                name={
+                  this.state.filterSortByName
+                    ? "f-arrow-down"
+                    : "f-arrow-up"
+                }
+              />
+              {this.state.filterSortByName ? 'A-Z' : 'Z-A'}
+              <div className="css-custom-tooltip bold">
+                {this.state.filterSortByName ? 'Sort Alphabetically: Z-A' : 'Sort Alphabetically: A-Z'}
+              </div>
+            </div>
+            <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
+              <SpriteIcon name="plus-circle" /> Create Class
+            </div>
+            <div className="sort-v4y4">
+              <SpriteIcon
+                name={
+                  this.state.filterSortAscending
+                    ? "hero-sort-descending"
+                    : "hero-sort-ascending"
+                }
+                onClick={() =>
+                  this.setState({ filterSortAscending: !this.state.filterSortAscending, filterSortByName: null })
+                }
+              />
+              <div className="css-custom-tooltip bold">
+                {this.state.filterSortAscending ? 'Sort by ascending number of assignments' : 'Sort by descending number of assignments'}
+              </div>
             </div>
           </div>
           {this.renderViewAllFilter()}

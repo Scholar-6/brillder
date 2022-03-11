@@ -9,6 +9,65 @@
   }
 }
 
+.manage-classrooms-page .sort-row-v3y3 {
+  display: flex;
+  height: 6vh;
+  .sort-v3y3 {
+    position: relative;
+    cursor: pointer;
+    width: 4.8vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-family-bold;
+    font-size: 1.2vw;
+    margin-right: 0.5vw;
+    svg {
+      width: 1.7vw;
+      height: 1.7vw;
+      stroke-width: 1.5;
+    }
+    
+    .css-custom-tooltip {
+      display: none;
+      z-index: 100;
+      top: 3vw;
+      left: 0.5vw;
+      width: 11vw;
+    }
+
+    &:hover .css-custom-tooltip {
+      display: block;
+      opacity: 1;
+    }
+  }
+  .create-class-button {
+    width: 14vw;
+  }
+  .sort-v4y4 {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    svg {
+      width: 1.7vw;
+      height: 1.7vw;
+    }
+    .css-custom-tooltip {
+      display: none;
+      z-index: 100;
+      top: 3vw;
+      left: -3vw;
+      width: 11vw;
+    }
+
+    &:hover .css-custom-tooltip {
+      display: block;
+      opacity: 1;
+    }
+  }
+}
+
 .manage-classrooms-page .pay-info {
   background: var(--white) !important;
   font-family: $font-family-bold !important;
