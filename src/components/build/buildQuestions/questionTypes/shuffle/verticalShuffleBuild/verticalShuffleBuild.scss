@@ -88,9 +88,14 @@
       }
     }
     .quill-document-editor {
+      .ql-container {
+        border-radius: 0.6vw;
+        background: var(--solitude-light);
+      }
+
       .ql-editor {
         padding-left: 2vw;
-        padding-right: 10vw;
+        margin-right: 10vw;
         &::before {
           margin-left: 4vw;
         }
@@ -119,6 +124,34 @@
             color: var(--theme-orange);
           }
         }
+      }
+    }
+  }
+
+  .move-container {
+    z-index: 1000;
+    position: absolute;
+    bottom: 0;
+    right: 0.2vw;
+
+    svg {
+      cursor: pointer;
+      width: 1vw;
+      height: 1vw;
+    }
+
+    .css-custom-tooltip {
+      display: none;
+      top: 1.5vw;
+      right: -0.2vw;
+      padding: 0;
+      width: 9vw;
+    }
+
+    &:hover {
+      .css-custom-tooltip {
+        display: block;
+        opacity: 1;
       }
     }
   }
