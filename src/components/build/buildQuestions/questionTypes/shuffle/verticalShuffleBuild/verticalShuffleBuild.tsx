@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { ReactSortable } from 'react-sortablejs';
 
 import './verticalShuffleBuild.scss'
 import { QuestionValueType, UniqueComponentProps } from '../../types';
@@ -132,6 +133,10 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
             save={setSound}
             clear={() => onTextChanged(answer, '')}
           />
+          <div className="move-container">
+            <SpriteIcon name="feather-move" />
+            <div className="css-custom-tooltip bold">Drag to rearrange</div>
+          </div>
         </div>
       );
     } else if (answer.answerType === QuestionValueType.Image) {
@@ -149,6 +154,10 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
             fileName={answer.valueFile}
             update={setImage}
           />
+          <div className="move-container">
+            <SpriteIcon name="feather-move" />
+            <div className="css-custom-tooltip bold">Drag to rearrange</div>
+          </div>
         </div>
       );
     }
@@ -184,6 +193,10 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           save={setSound}
           clear={() => onTextChanged(answer, '')}
         />
+        <div className="move-container">
+          <SpriteIcon name="feather-move" />
+          <div className="css-custom-tooltip bold">Drag to rearrange</div>
+        </div>
       </div>
     );
   }
@@ -197,9 +210,22 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         </div>
         <ShuffleText />
       </div>
-      {
-        state.list.map((answer: any, i: number) => renderAnswer(answer, i))
-      }
+      <ReactSortable
+        list={state.list}
+        animation={150}
+        className="answer-container"
+        group={{ name: "cloning-group-name", pull: "clone" }}
+        setList={newList => {
+          let newState = { ...state, list: newList };
+          setState(Object.assign({}, newState));
+          updateComponent(newState);
+          save();
+        }}
+      >
+        {
+          state.list.map((answer: any, i: number) => renderAnswer(answer, i))
+        }
+      </ReactSortable>
       <AddAnswerButton
         locked={locked}
         addAnswer={addAnswer}
