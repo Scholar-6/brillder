@@ -37,6 +37,8 @@ import UserTypeLozenge from "./UsertypeLozenge";
 import { maximizeZendeskButton, minimizeZendeskButton } from "services/zendesk";
 import SaveIntroJs from "./components/SaveIntroJs";
 import ProfileTab from "./ProfileTab";
+import map from "components/map";
+import { cancelSubscription } from "services/axios/stripe";
 
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
 
@@ -140,6 +142,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       clearTimeout(this.state.minimizeTimeout);
     }
     maximizeZendeskButton();
+  }
+
+  async cancelSubscription() {
+    const res = await cancelSubscription(this.state.user.id);
+    if (res === true) {
+      this.props.getUser();
+    }
   }
 
   saveStudentProfile(user: UserProfile) {
@@ -481,7 +490,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <span>
             {renderLabel()} Free Trial
           </span>
-          <div className="price">
+          <div className="price" onClick={() => this.props.history.push(map.StripeEducator)}>
             <div>Go Premium</div>
           </div>
         </div>
@@ -507,16 +516,25 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       return '';
     }
 
+    const renderLeaveContainer = () => {
+      if (this.props.user.subscriptionState && this.props.user.subscriptionState >= 1) {
+        return (
+          <div className="leave-container">
+            <div className="label">Thinking of leaving us?</div>
+            <div className="btn">Tell us what would make you stay</div>
+            <div className="btn" onClick={() => this.cancelSubscription()}>Cancel Subscription</div>
+          </div>
+        )
+      }
+      return '';
+    }
+
     return (
       <div className="profile-block manage-account-block" >
         {renderCurrentPlan()}
         {renderCredits()}
         <div className="card-details" />
-        <div className="leave-container">
-          <div className="label">Thinking of leaving us?</div>
-          <div className="btn">Tell us what would make you stay</div>
-          <div className="btn">Cancel Subscription</div>
-        </div>
+        {renderLeaveContainer()}
       </div>
     );
   }

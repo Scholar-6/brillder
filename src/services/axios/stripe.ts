@@ -1,4 +1,4 @@
-import {get, post} from './index';
+import { get, post } from './index';
 
 export interface Coupon {
   ammountOff: number | null;
@@ -31,9 +31,20 @@ export const checkCoupon = async (coupon: string) => {
  * Get prices
  * return pirces or null if failed
  */
- export const getPrices = async () => {
+export const getPrices = async () => {
   try {
     return await get<StripePrices>("/stripe/getprices");
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Cancel Subscription
+ */
+export const cancelSubscription = async (userId: number) => {
+  try {
+    return await post<Boolean>("/stripe/cancelSubscription", { userId });
   } catch {
     return null;
   }
