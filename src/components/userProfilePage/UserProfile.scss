@@ -556,3 +556,111 @@
     height: 2vw;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.user-profile-page .manage-account-block {
+  padding: 3vh 3vw 3vh 3vw;
+  font-size: 1.5vw;
+  color: var(--theme-dark-blue);
+  $border-radius: 0.5vw;
+  .current-plan {
+    display: flex;
+    position: relative;
+    padding: 1vh 1vw;
+    border-radius: $border-radius;
+    background: var(--tab-gray);
+    width: 100%;
+
+    > span {
+      display: flex;
+      align-items: center;
+      width: 85%;
+
+      > span {
+        margin-right: 0.5vw;
+      }
+
+      svg {
+        width: 2vw;
+        height: 2vw;
+      }
+    }
+
+    .price {
+      width: 15%;
+    }
+  }
+
+  .credits-container {
+    margin-top: 10vh;
+    min-height: 20vh;
+    padding: 1vw;
+    border-radius: $border-radius;
+    background: var(--tab-gray);
+    .brills-container {
+      width: 12vw;
+      justify-content: flex-start;
+
+      .brill-coin-img {
+        width: 4vw;
+        height: 4vw;
+        position: relative;
+    
+        > img {
+          width: 100%;
+          height: 100%;
+        }
+        svg {
+          color: var(--theme-orange);
+          position: absolute;
+          top: 25%;
+          left: 25%;
+          width: 50%;
+          height: 50%;
+        }
+      }
+
+      .bold {
+        margin-left: 1.2vw;
+      }
+    }
+  }
+  
+  .card-details {
+    border-radius: $border-radius;
+    margin-top: 3vh;
+    height: 9vh;
+    background: var(--tab-gray);
+  }
+
+  .leave-container {
+    display: flex;
+    margin-top: 5vh;  
+
+    .label {
+      font-family: $font-family-light;
+      width: 28.5vw;
+    }
+    .btn {
+      border-radius: $border-radius;
+      background: var(--tab-gray);
+      padding: 0.3vh 1vw;
+      margin-left: 1vw;
+    }
+  }
+}

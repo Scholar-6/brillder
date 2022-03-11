@@ -449,8 +449,74 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderManageAccount() {
+    const { subscriptionState } = this.props.user;
+
+
+    const renderCurrentPlan = () => {
+      const renderLabel = () => {
+        return <span className="bold">Current Plan</span>
+      }
+
+      if (subscriptionState === 2) {
+        return (
+          <div className="current-plan">
+            <span>
+              {renderLabel()} Premium Learner <SpriteIcon name="hero-sparkle" />
+            </span>
+            <div className="price">£5 monthly</div>
+          </div>
+        );
+      } else if (subscriptionState === 3) {
+        return (
+          <div className="current-plan">
+            <span>
+              {renderLabel()} Premium Educator <SpriteIcon name="hero-sparkle" />
+            </span>
+            <div className="price">£6.5 monthly</div>
+          </div>
+        );
+      }
+      return (
+        <div className="current-plan">
+          <span>
+            {renderLabel()} Free Trial
+          </span>
+          <div className="price">
+            <div>Go Premium</div>
+          </div>
+        </div>
+      );
+    }
+
+    const renderCredits = () => {
+      if (this.props.user.brills || this.props.user.brills === 0) {
+        return (
+          <div className="credits-container">
+            <div className="brills-container flex-center">
+              <div className="brill-coin-img">
+                <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
+                <SpriteIcon name="logo" />
+              </div>
+              <div className="bold">
+                {this.props.user.brills} Brills
+              </div>
+            </div>
+          </div>
+        );
+      }
+      return '';
+    }
+
     return (
-      <div className="profile-block">
+      <div className="profile-block manage-account-block" >
+        {renderCurrentPlan()}
+        {renderCredits()}
+        <div className="card-details" />
+        <div className="leave-container">
+          <div className="label">Thinking of leaving us?</div>
+          <div className="btn">Tell us what would make you stay</div>
+          <div className="btn">Cancel Subscription</div>
+        </div>
       </div>
     );
   }
