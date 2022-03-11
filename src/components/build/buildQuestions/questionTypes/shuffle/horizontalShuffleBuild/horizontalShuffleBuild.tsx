@@ -11,6 +11,7 @@ import { stripHtml } from 'components/build/questionService/ConvertService';
 import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
 import RemoveButton from '../../components/RemoveButton';
 import SoundRecord from '../../sound/SoundRecord';
+import { ReactSortable } from 'react-sortablejs';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import ShuffleText from '../components/ShuffleText';
 
@@ -33,6 +34,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
   }
 
   const [state, setState] = React.useState(data);
+  const [sortableKey, setSortableKey] = React.useState(-1);
 
   const update = () => {
     setState(Object.assign({}, state));
@@ -117,7 +119,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     }
 
     return (
-      <Grid container item xs={4} key={i}>
+      <div key={i}>
         <div className={className + " horizontal-string"}>
           <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
           <QuillEditorContainer
@@ -139,8 +141,12 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
             save={setSound}
             clear={() => onTextChanged(answer, '')}
           />
+          <div className="move-container">
+            <SpriteIcon name="feather-move" />
+            <div className="css-custom-tooltip bold">Drag to rearrange</div>
+          </div>
         </div>
-      </Grid>
+      </div>
     );
   }
 
@@ -148,16 +154,27 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     <div className="horizontal-shuffle-build">
       <div className="component-title">
         <div className="flex-center">
-          <SpriteIcon name="feather-arrow-right"/>
+          <SpriteIcon name="feather-arrow-right" />
           <div>Enter Answers in the correct order from left to right.</div>
         </div>
         <ShuffleText />
       </div>
-      <Grid container direction="row" className="answers-container">
+      <ReactSortable
+        list={state.list}
+        animation={150}
+        key={sortableKey}
+        className="answer-container"
+        group={{ name: "cloning-group-name", pull: "clone" }}
+        setList={newList => {
+          setState(Object.assign({}, { ...state, list: newList }));
+          updateComponent(state);
+          save();
+        }}
+      >
         {
           state.list.map((answer: any, i: number) => renderAnswer(answer, i))
         }
-      </Grid>
+      </ReactSortable>
       <AddAnswerButton
         locked={locked}
         addAnswer={addAnswer}
