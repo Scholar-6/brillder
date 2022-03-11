@@ -112,6 +112,10 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
               save={setSound}
               clear={() => onTextChanged(answer, '')}
             />
+            <div className="move-container">
+              <SpriteIcon name="feather-move" />
+              <div className="css-custom-tooltip bold">Drag to rearrange</div>
+            </div>
           </div>
         </Grid>
       );

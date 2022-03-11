@@ -28,29 +28,36 @@
     }
     .custom-audio-controls {
       margin: 0 !important;
+      display: none;
     }
 
     .play-wave-container {
-      .play-icon-d1 {
-        width: 3vw !important;
-        height: 3vw !important;
-      }
       .relative-waves-container {
-        width: calc(100% - 4.5vw);
+        height: 2.3vw;
+        width: calc(100% - 3.5vw);
       }
       .absolute-start-time {
-        left: -18%;
+        left: -10%;
       }
       .absolute-end-time {
-        right: -18%;
+        right: -5%;
+      }
+      .absolute-end-time,
+      .absolute-start-time {
+        font-size: 0.7vw;
       }
     }
 
     .play-wave-container {
       height: 4vw;
+      .play-icon-container-d1 {
+        height: 2.3vw;
+        padding-left: 0.2vw;
+        padding-right: 0.2vw;
+      }
       .play-icon-d1 {
-        width: 2vw !important;
-        height: 2vw !important;
+        width: 1.4vw !important;
+        height: 1.4vw !important;
       }
       .react-waves .wave wave {
         height: 2.3vw !important;
@@ -130,6 +137,7 @@
     position: absolute;
     bottom: 0;
     right: 0.2vw;
+    width: 1vw !important;
 
     svg {
       cursor: pointer;
