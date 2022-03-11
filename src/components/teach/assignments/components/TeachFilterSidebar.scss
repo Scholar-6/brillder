@@ -9,13 +9,18 @@
   }
 }
 
-.manage-classrooms-page .teach-sort-box .pay-info {
+.manage-classrooms-page .pay-info {
   background: var(--white) !important;
   font-family: $font-family-bold !important;
   color: var(--theme-dark-blue) !important;
   padding-left: 1.4vw;
+  > div {
+    display: flex;
+    align-items: center;
+  }
   .premium-label {
     width: 55%;
+    font-size: 1.05vw;
   }
   .premium-btn {
     width: 45%;
