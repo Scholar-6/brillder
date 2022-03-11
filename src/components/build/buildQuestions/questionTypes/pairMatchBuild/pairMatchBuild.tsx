@@ -101,7 +101,8 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
     return (
       <Grid key={i} container direction="row" className="answers-container">
         <div className="flip-button" onClick={() => flip(answer)}>
-          <SpriteIcon name="hero-horizontal-switch" />  
+          <SpriteIcon name="hero-horizontal-switch" />
+          <div className="css-custom-tooltip bold">Flip Content</div>
         </div>
         <PairOptionComponent
           index={i} locked={locked} editOnly={editOnly} answer={answer}
@@ -116,6 +117,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         />
         <div className="move-container">
           <SpriteIcon name="feather-move" />
+          <div className="css-custom-tooltip bold">Drag to rearrange pairs</div>
         </div>
       </Grid>
     );
@@ -132,7 +134,9 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         animation={150}
         key={sortableKey}
         group={{ name: "cloning-group-name", pull: "clone" }}
-        setList={newList => setState({ ...state, list: newList })}
+        setList={newList => {
+          setState({ ...state, list: newList })
+        }}
       >
         {state.list.map((answer: Answer, i: number) => renderAnswer(answer, i))}
       </ReactSortable>
