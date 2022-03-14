@@ -10,10 +10,10 @@
   font-family: $font-family-regular;
 
   input:-webkit-autofill {
-    background: var(--solitude-light) !important;
+    background: var(--off-white) !important;
   }
   input:autofill {
-    background: var(--solitude-light) !important ;
+    background: var(--off-white) !important ;
   }
 
   .phone-question-preview-box {
@@ -50,16 +50,16 @@
     }
 
     .profile-header {
-      padding-top: 3.1vh;
-      margin-right: 7vw;
-      font-size: 4vw;
-      @extend %textCenter;
+      padding-top: 1vh;
+      font-size: 2vw;
       font-family: $font-family-bold;
       color: var(--theme-dark-blue);
       line-height: 1;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding-left: calc(2vw);
+      width: 18vw;
 
       > div {
         text-transform: capitalize;
@@ -70,19 +70,6 @@
         stroke-width: 1.5;
         width: 4.6vw;
         height: 4.6vw;
-      }
-
-      .user-type-lozenge {
-        border-radius: 3vw;
-        padding-left: 2vw;
-        padding-right: 2vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 4.5vw;
-        margin-right: 1vw;
-        font-size: 2.7vw !important;
-        background: var(--tab-gray);
       }
 
       @include phone_and_tabletP {
@@ -105,10 +92,52 @@
       }
     }
 
-    .save-button-container {
+    .absolute-top-container {
       position: absolute;
-      top: 0.5vw;
-      right: 2vw;
+      height: calc(5.1vh + 1vh + 2vw);
+      top: 0;
+      right: 5vw;
+
+      .brill-coin-img {
+        position: relative;
+        width: 3vw;
+        height: 3vw;
+
+        margin-right: 1.2vw;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+
+        svg {
+          position: absolute;
+          top: 22.5%;
+          left: 22.5%;
+          color: var(--theme-orange);
+          width: 55%;
+          height: 55%;
+        }
+      }
+    }
+
+
+    .absolute-library-link {
+      margin-right: 1.2vw;
+      border-radius: 50%;
+      background: var(--theme-dark-blue);
+      color: white;
+
+      width: 3vw;
+      height: 3vw;
+      
+      svg {
+        width: 70%;
+        height: 70%;
+      }
+    }
+
+    .save-button-container {
       .css-custom-tooltip {
         z-index: 10;
       }
@@ -143,8 +172,7 @@
           height: 11vw;
           width: 11vw;
           background: var(--tab-gray) 0% 0% no-repeat padding-box;
-          border: 0.25vw solid var(--solitude-light);
-          box-shadow: $base-shadow;
+          border: 0.25vw solid var(--off-white);
           border-radius: 50%;
 
           @include phone_and_tabletP {
@@ -352,7 +380,7 @@
           min-height: calc(6.8vw + 13.2vh);
           width: 100%;
           border-radius: 1.7vh;
-          box-shadow: $base-shadow;
+          background: var(--off-white);
           padding: 1.15vw;
           padding-top: 2vw;
 
@@ -423,6 +451,10 @@
         }
       }
     }
+    .MuiAutocomplete-root .MuiInput-formControl {
+      box-shadow: none !important;
+      background: var(--off-white);
+    }
 
     .big-input-container {
       margin-top: 2.3vh;
@@ -472,11 +504,10 @@
       textarea {
         width: 100%;
         height: 15vh;
-        background: var(--solitude-light);
+        background: var(--off-white);
         color: var(--theme-dark-blue);
         border: none;
         border-radius: 0.5vw;
-        box-shadow: $base-shadow;
         padding-top: 0;
         padding-left: 0.65vw;
         max-height: 18vh;

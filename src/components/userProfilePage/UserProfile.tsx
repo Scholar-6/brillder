@@ -33,7 +33,6 @@ import ProfilePhonePreview from "./components/ProfilePhonePreview";
 import { getExistedUserState, getNewUserState } from "./stateService";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
-import UserTypeLozenge from "./UsertypeLozenge";
 import { maximizeZendeskButton, minimizeZendeskButton } from "services/zendesk";
 import SaveIntroJs from "./components/SaveIntroJs";
 import ProfileTab from "./ProfileTab";
@@ -370,16 +369,24 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return (
       <div className="profile-block">
         <div className="profile-header">
-          <UserTypeLozenge roles={user.roles} userPreference={this.props.user.userPreference} />
           <div className="profile-username-v2">{user.username ? user.username : "USERNAME"}</div>
           {renderSubscribeIcon()}
         </div>
-        <div className="save-button-container">
-          <SaveProfileButton
-            user={user}
-            disabled={this.state.saveDisabled}
-            onClick={() => this.saveUserProfile()}
-          />
+        <div className="absolute-top-container flex-center">
+          <div className="brill-coin-img">
+            <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
+            <SpriteIcon name="logo" />
+          </div>
+          <div className="absolute-library-link flex-center">
+            <SpriteIcon name="bar-chart-2" />
+          </div>
+          <div className="save-button-container">
+            <SaveProfileButton
+              user={user}
+              disabled={this.state.saveDisabled}
+              onClick={() => this.saveUserProfile()}
+            />
+          </div>
         </div>
         <div className="profile-fields">
           <ProfileImage
@@ -592,7 +599,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             search={() => { }}
             searching={() => { }}
           />
-          <ProfileTab isProfile={this.state.isProfile} onSwitch={() => this.setState({ isProfile: !this.state.isProfile })} />
+          <ProfileTab roles={this.state.roles} userPreference={this.state.user.userPreference} isProfile={this.state.isProfile} onSwitch={() => this.setState({ isProfile: !this.state.isProfile })} />
           <Grid container direction="row" className="user-profile-content">
             {this.state.isProfile ? this.renderProfileBlock(user) : this.renderManageAccount()}
             <ProfilePhonePreview user={user} previewAnimationFinished={this.previewAnimationFinished.bind(this)} />

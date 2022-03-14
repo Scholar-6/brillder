@@ -22,6 +22,14 @@
     align-items: center;
     justify-content: center;
 
+    .user-type-lozenge {
+      padding: 0 1vw;
+      margin-left: 10vw;
+      font-size: 1.3vw;
+      border-radius: 4vw;
+      background: var(--tab-gray);
+    }
+
     &:first-child {
       padding-left: 5vw;
       justify-content: flex-start;
