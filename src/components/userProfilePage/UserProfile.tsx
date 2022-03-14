@@ -377,7 +377,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
             <SpriteIcon name="logo" />
           </div>
-          <div className="absolute-library-link flex-center">
+          <div className="absolute-library-link flex-center" onClick={() => this.props.history.push(map.MyLibrary + '/' + this.state.user.id)}>
             <SpriteIcon name="bar-chart-2" />
           </div>
           <div className="save-button-container">

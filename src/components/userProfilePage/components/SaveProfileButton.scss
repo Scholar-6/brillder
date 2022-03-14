@@ -5,6 +5,7 @@
 .save-image {
   $image-size: 3vw;
   cursor: pointer;
+  position: relative;
   @extend %textCenter;
   height: $image-size;
   width: $image-size;
@@ -16,8 +17,9 @@
 
   .css-custom-tooltip {
     display: none;
-    left: -9vw !important;
+    right: -2.8vw !important;
     top: calc(50% - 0.5vw);
+    top: 3vw;
     width: 8vw;
     height: 0vw;
     overflow: hidden;
@@ -32,8 +34,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      left: -4vw !important;
-      top: 4vw;
       height: 1.5vw;
       padding: 0.1vw 0;
       opacity: 1;
