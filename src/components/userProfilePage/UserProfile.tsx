@@ -39,6 +39,7 @@ import ProfileTab from "./ProfileTab";
 import map from "components/map";
 import { cancelSubscription, getCardDetails } from "services/axios/stripe";
 
+const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
 
 interface UserProfileProps {
@@ -591,7 +592,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return (
       <React.Suspense fallback={<></>}>
         <div className="main-listing user-profile-page">
-          {!isPhone() && isMobile && <TabletTheme />}
+          {isPhone() ? <MobileTheme /> : isMobile && <TabletTheme />}
           <PageHeadWithMenu
             page={PageEnum.Profile}
             user={this.props.user}

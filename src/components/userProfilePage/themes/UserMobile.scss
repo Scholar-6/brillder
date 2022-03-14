@@ -1,0 +1,59 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.user-profile-page {
+  .profile-tab {
+    width: 100vw;
+
+    >div {
+      font-size: 5vw;
+
+      svg {
+        width: 5vw;
+        height: 5vw;
+      }
+
+      .user-type-lozenge {
+        margin-left: 2vw;
+        font-size: 4vw;
+        padding-left: 2vw;
+        padding-right: 2vw;
+      }
+    }
+
+    >div:first-child {
+      padding-left: 2.5vw;
+      border-top-right-radius: 4vw;
+    }
+
+    >div#manage-account-tab {
+      border-top-left-radius: 4vw;
+      border-top-right-radius: 0;
+    }
+  }
+
+  .profile-header {
+    padding-top: 0 !important;
+    text-align: center;
+    padding-left: 0 !important;
+    margin-left: 10vw !important;
+    width: 80vw !important;
+    height: calc(5.1vh + 1vh + 2vw);
+  }
+
+  .profile-image-container {
+    padding-top: 0.5vh !important;
+  }
+
+  .profile-block {
+    padding-bottom: 10vw;
+    .absolute-top-container {
+      .absolute-library-link,
+      .brill-coin-img {
+        width: 9vw;
+        height: 9vw;
+      }
+    }
+  }
+}

@@ -10,8 +10,8 @@
   height: $image-size;
   width: $image-size;
   background: var(--tab-gray) 0% 0% no-repeat padding-box;
-  border: 0.25vw solid var(--solitude-light);
   svg {
+    margin-top: 0.2vw;
     color: var(--dark-gray) !important;
   }
 
