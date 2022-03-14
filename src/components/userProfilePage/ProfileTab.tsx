@@ -22,7 +22,7 @@ const ProfileTab: React.FC<Props> = ({ roles, userPreference, isProfile, onSwitc
         My Profile
         <UserTypeLozenge roles={roles} userPreference={userPreference} />
       </div>
-      <div className={isProfile ? '' : 'active'} onClick={() => isProfile && onSwitch()}>
+      <div id="manage-account-tab" className={isProfile ? '' : 'active'} onClick={() => isProfile && onSwitch()}>
         <SpriteIcon name="feather-box" />
         Manage Account
       </div>
