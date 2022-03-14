@@ -38,7 +38,7 @@ import { maximizeZendeskButton, minimizeZendeskButton } from "services/zendesk";
 import SaveIntroJs from "./components/SaveIntroJs";
 import ProfileTab from "./ProfileTab";
 import map from "components/map";
-import { cancelSubscription } from "services/axios/stripe";
+import { cancelSubscription, getCardDetails } from "services/axios/stripe";
 
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
 
@@ -49,7 +49,7 @@ interface UserProfileProps {
   match: any;
   forgetBrick(): void;
   redirectedToProfile(): void;
-  getUser(): void;
+  getUser(): Promise<void>;
   requestFailed(e: string): void;
 }
 
@@ -517,7 +517,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     const renderLeaveContainer = () => {
-      if (this.props.user.subscriptionState && this.props.user.subscriptionState >= 1) {
+      if (this.props.user.subscriptionState && this.props.user.subscriptionState >= 2) {
         return (
           <div className="leave-container">
             <div className="label">Thinking of leaving us?</div>

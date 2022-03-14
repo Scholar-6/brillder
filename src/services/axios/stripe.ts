@@ -49,3 +49,11 @@ export const cancelSubscription = async (userId: number) => {
     return null;
   }
 }
+
+export const getCardDetails = async () => {
+  try {
+    return await get("/stripe/cardDetails");
+  } catch {
+    return null;
+  }
+}
