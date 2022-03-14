@@ -37,7 +37,7 @@
 
   .profile-block {
     position: relative;
-    background: var(--solitude-light);
+    background: var(--white);
     height: 85.9vh;
     width: 72.5vw;
     overflow-y: auto;
@@ -583,7 +583,7 @@
     position: relative;
     padding: 1vh 1vw;
     border-radius: $border-radius;
-    background: var(--tab-gray);
+    background: var(--off-white);
     width: 100%;
 
     > span {
@@ -611,7 +611,7 @@
     min-height: 20vh;
     padding: 1vw;
     border-radius: $border-radius;
-    background: var(--tab-gray);
+    background: var(--off-white);
     .brills-container {
       width: 12vw;
       justify-content: flex-start;
@@ -642,10 +642,32 @@
   }
   
   .card-details {
+    display: flex;
+    align-items: center;
     border-radius: $border-radius;
     margin-top: 3vh;
     height: 9vh;
-    background: var(--tab-gray);
+    padding-left: 1vw;
+    font-family: $font-family-bold;
+    background: var(--off-white);
+
+    .bigger-circles {
+      margin-left: 1vw;
+      margin-right: 1vw;
+      font-size: 2.8vw;
+      margin-bottom: 0.6vw;
+    }
+
+    .btn {
+      margin-left: 17vw;
+      padding: 0.5vh 1vw;
+      background: var(--tab-gray);
+      svg {
+        width: 1.5vw;
+        height: 1.5vw;
+        margin-right: 0.8vw;
+      }
+    }
   }
 
   .leave-container {
