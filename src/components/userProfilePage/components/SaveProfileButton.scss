@@ -3,14 +3,13 @@
 @import 'src/assets/sass/partials/extensions';
 
 .save-image {
-  $image-size: 6.5vw;
+  $image-size: 3vw;
   cursor: pointer;
   @extend %textCenter;
   height: $image-size;
   width: $image-size;
   background: var(--tab-gray) 0% 0% no-repeat padding-box;
   border: 0.25vw solid var(--solitude-light);
-  box-shadow: $base-shadow;
   svg {
     color: var(--dark-gray) !important;
   }
@@ -19,7 +18,7 @@
     display: none;
     left: -9vw !important;
     top: calc(50% - 0.5vw);
-    width: 9vw;
+    width: 8vw;
     height: 0vw;
     overflow: hidden;
     padding: 0.1vw 0;
@@ -33,8 +32,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      left:-1vw !important;
-      top: 7vw;
+      left: -4vw !important;
+      top: 4vw;
       height: 1.5vw;
       padding: 0.1vw 0;
       opacity: 1;
