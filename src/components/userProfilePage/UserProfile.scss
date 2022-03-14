@@ -606,8 +606,14 @@
     }
   }
 
+  .next-billing-date {
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
   .credits-container {
-    margin-top: 10vh;
     min-height: 20vh;
     padding: 1vw;
     border-radius: $border-radius;

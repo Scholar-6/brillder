@@ -16,7 +16,7 @@ import { getUserById, createUser, updateUser, saveProfileImageName } from 'servi
 import { isValid, getUserProfile } from './service';
 import { User, UserType, UserProfile } from "model/user";
 import { Subject } from "model/brick";
-import { checkAdmin } from "components/services/brickService";
+import { checkAdmin, formatTwoLastDigits } from "components/services/brickService";
 
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import SubjectDialog from "./components/SubjectDialog";
@@ -62,6 +62,7 @@ interface UserProfileState {
   previewAnimationFinished: boolean;
 
   last4?: string | null; // credit card last 4 digits
+  nextPaymentDate?: number | null; // dateTime() number
 
   user: UserProfile;
   subjects: Subject[];
@@ -136,8 +137,14 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const minimizeTimeout = setTimeout(() => {
       minimizeZendeskButton();
     }, 1400);
-    const last4 = await getCardDetails();
-    this.setState({ minimizeTimeout, last4 });
+    let nextPaymentDate: number | null = null;
+    let last4: string | null = null;
+    const cardDetails = await getCardDetails();
+    if (cardDetails) {
+      last4 = cardDetails.last4;
+      nextPaymentDate = cardDetails.nextPaymentDate;
+    }
+    this.setState({ minimizeTimeout, nextPaymentDate, last4 });
   }
 
   componentWillUnmount() {
@@ -500,6 +507,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       );
     }
 
+    const renderNextBillingDate = (nextBillingDate: number) => {
+      const date = new Date(nextBillingDate);
+      return <span>Your next billing date is {formatTwoLastDigits(date.getMonth() + 1)}.{formatTwoLastDigits(date.getDate())}.{date.getFullYear()}</span>
+    }
+
     const renderCredits = () => {
       if (this.props.user.brills || this.props.user.brills === 0) {
         return (
@@ -550,6 +562,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return (
       <div className="profile-block manage-account-block" >
         {renderCurrentPlan()}
+        <div className="next-billing-date">
+          {this.state.nextPaymentDate && renderNextBillingDate(this.state.nextPaymentDate)}
+        </div>
         {renderCredits()}
         {renderPaymentMethod()}
         {renderLeaveContainer()}

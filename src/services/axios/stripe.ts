@@ -15,6 +15,11 @@ export interface StripePrices {
   teacherYearly: number;
 }
 
+export interface CardDetails {
+  last4: string;
+  nextPaymentDate: number;
+}
+
 /**
  * Get coupon by code name
  * return coupon or null if failed
@@ -52,7 +57,7 @@ export const cancelSubscription = async (userId: number) => {
 
 export const getCardDetails = async () => {
   try {
-    return await get<string>("/stripe/cardDetails");
+    return await get<CardDetails>("/stripe/cardDetails");
   } catch {
     return null;
   }
