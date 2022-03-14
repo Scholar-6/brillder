@@ -12,8 +12,8 @@
     $border-radius: 1vw;
     min-height: 8vh;
     width: 50%;
+    color: var(--dark-gray);
     background: var(--tab-gray);
-    color: var(--theme-dark-blue);
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
     margin-left: 3px;
@@ -31,7 +31,8 @@
     }
 
     &.active {
-      background: var(--solitude-light);
+      background: var(--white);
+      color: var(--theme-dark-blue);
     }
 
     font-size: 2vw;

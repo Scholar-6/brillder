@@ -52,7 +52,7 @@ export const cancelSubscription = async (userId: number) => {
 
 export const getCardDetails = async () => {
   try {
-    return await get("/stripe/cardDetails");
+    return await get<string>("/stripe/cardDetails");
   } catch {
     return null;
   }

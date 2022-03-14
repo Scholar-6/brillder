@@ -61,6 +61,8 @@ interface UserProfileState {
 
   previewAnimationFinished: boolean;
 
+  last4?: string | null; // credit card last 4 digits
+
   user: UserProfile;
   subjects: Subject[];
   isNewUser: boolean;
@@ -129,12 +131,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     minimizeZendeskButton();
     const minimizeTimeout = setTimeout(() => {
       minimizeZendeskButton();
     }, 1400);
-    this.setState({ minimizeTimeout });
+    const last4 = await getCardDetails();
+    this.setState({ minimizeTimeout, last4 });
   }
 
   componentWillUnmount() {
@@ -529,11 +532,26 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       return '';
     }
 
+    const renderPaymentMethod = () => {
+      if (this.state.last4) {
+        return (
+          <div className="card-details">
+            Credit Card <span className="bigger-circles">•••• •••• ••••</span> <span className="light">[{this.state.last4}]</span>
+            <div className="flex-center btn">
+              <SpriteIcon name="edit-outline" />
+              Change payment method
+            </div>
+          </div>
+        );
+      }
+      return '';
+    }
+
     return (
       <div className="profile-block manage-account-block" >
         {renderCurrentPlan()}
         {renderCredits()}
-        <div className="card-details" />
+        {renderPaymentMethod()}
         {renderLeaveContainer()}
       </div>
     );
