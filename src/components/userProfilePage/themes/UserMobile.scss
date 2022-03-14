@@ -56,4 +56,35 @@
       }
     }
   }
+
+  .manage-account-block {
+    font-size: 4vw;
+    .current-plan {
+      font-size: 5vw;
+
+      > span {
+        width: 60vw;
+
+        .bold {
+          margin-right: 3vw;
+        }
+      }
+
+      .price {
+        width: 30%;
+      }
+    }
+
+    .next-billing-date {
+      font-size: 5vw;
+    }
+    
+    .credits-container .brills-container {
+      width: 30vw;
+      .brill-coin-img {
+        width: 8vw;
+        height: 8vw;
+      }
+    }
+  }
 }
