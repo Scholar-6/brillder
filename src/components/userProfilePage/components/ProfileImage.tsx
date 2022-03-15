@@ -167,7 +167,8 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
             </div>
             <span>
               <span className="bold">Educators will never be able to view Learner profile pictures without their consent.</span><br />
-              When a Builder invites an editor to peer review their work, or an Educator wants to share a class with a colleague, pictures (of users who have not selected the Learner preference) can help them choose the right user and make interactions feel more personal. Do you consent to your picture appearing in both of these scenarios?
+              When a Builder invites an editor to peer review their work, or an Educator wants to share a class with a colleague, pictures can help them choose the right user and make interactions feel more personal.
+              Check the box to consent to your picture being visible to fellow Educators.
             </span>
           </div>
         </div>
