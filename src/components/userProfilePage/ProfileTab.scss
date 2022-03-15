@@ -17,10 +17,12 @@
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
     margin-left: 3px;
+    transition: all 300ms ease-in-out;
 
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-left: 2vw;
 
     .user-type-lozenge {
       padding: 0 1vw;
@@ -30,9 +32,11 @@
       background: var(--tab-gray);
     }
 
+    &:hover {
+      background: var(--off-white);
+    }
+
     &:first-child {
-      padding-left: 5vw;
-      justify-content: flex-start;
       margin-left: 0;
       margin-right: 3px;
       border-top-left-radius: 0;
@@ -41,6 +45,10 @@
     &.active {
       background: var(--white);
       color: var(--theme-dark-blue);
+
+      &:hover {
+        background: var(--white);
+      }
     }
 
     font-size: 2vw;

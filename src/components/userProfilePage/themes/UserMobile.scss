@@ -7,7 +7,7 @@
     width: 100vw;
 
     >div {
-      font-size: 5vw;
+      font-size: 4.5vw;
 
       svg {
         width: 5vw;
@@ -16,7 +16,7 @@
 
       .user-type-lozenge {
         margin-left: 2vw;
-        font-size: 4vw;
+        font-size: 4.5vw;
         padding-left: 2vw;
         padding-right: 2vw;
       }
@@ -33,40 +33,69 @@
     }
   }
 
-  .profile-header {
-    padding-top: 0 !important;
-    text-align: center;
-    padding-left: 0 !important;
-    margin-left: 10vw !important;
-    width: 80vw !important;
-    height: calc(5.1vh + 1vh + 2vw);
-  }
-
   .profile-image-container {
-    padding-top: 0.5vh !important;
+    padding-top: 3vh !important;
   }
 
   .profile-block {
     padding-bottom: 10vw;
+
+    .profile-header {
+      padding-top: 0 !important;
+      text-align: center;
+      padding-left: 0 !important;
+      margin-left: 0 !important;
+      width: 100vw !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: unset !important;
+      height: calc(5.1vh + 1vh + 6vw);
+    }
+
     .absolute-top-container {
+      width: 100vw;
+      right: 0;
+      top: calc(3vh + 35vw + 5.1vh + 1vh + 6vw);
+
+      .brills-number {
+        font-size: 4.5vw;
+      }
+
       .absolute-library-link,
       .brill-coin-img {
         width: 9vw;
         height: 9vw;
       }
+
+      .brill-coin-img {
+        margin-left: 1vw;
+        margin-right: 3vw;
+      }
+    }
+
+    .profile-inputs-container {
+      padding-top: 10vw !important;
     }
   }
+
   .search-container {
     display: none !important;
   }
 
   .manage-account-block {
-    font-size: 4vw;
-    .current-plan {
-      font-size: 5vw;
+    font-size: 4.5vw;
 
-      > span {
-        width: 60vw;
+    .current-plan-box {
+      display: block;
+    }
+
+    .current-plan {
+      font-size: 4.5vw;
+      width: 100%;
+
+      >span {
+        width: 75%;
 
         .bold {
           margin-right: 3vw;
@@ -74,20 +103,90 @@
       }
 
       .price {
-        width: 30%;
+        width: 25%;
+
+        &.btn {
+          width: 37%;
+        }
+      }
+
+      svg {
+        width: 5vw !important;
+        height: 5vw !important;
       }
     }
 
     .next-billing-date {
-      font-size: 5vw;
+      width: 100% !important;
+      min-height: 10vw;
+      font-size: 4.5vw;
     }
-    
-    .credits-container .brills-container {
-      width: 30vw;
-      .brill-coin-img {
-        width: 8vw;
-        height: 8vw;
+
+    .credits-container {
+      margin-top: 0;
+
+      .brills-container {
+        width: 30vw;
+
+        .brill-coin-img {
+          width: 8vw;
+          height: 8vw;
+        }
+      }
+    }
+
+    .card-details {
+      height: 22vw;
+      position: relative;
+      padding-bottom: 12vw;
+      font-size: 4.5vw;
+
+      .light,
+      .bigger-circles {
+        font-size: 4.5vw;
+        font-family: $font-family-regular;
+      }
+
+      .btn {
+        bottom: 2vw;
+        position: absolute;
+
+        svg {
+          width: 5vw;
+          height: 5vw;
+        }
+      }
+    }
+
+    .leave-container {
+      display: block;
+      position: relative;
+      padding-top: 6vw;
+
+      .label {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0.3vw;
+      }
+
+      .btn {
+        margin-top: 1vw;
+        margin-bottom: 1vw;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0.5vw 2vw;
+        width: 100%;
       }
     }
   }
+}
+
+.user-profile-page .profile-block .profile-fields .profile-roles-container .roles-box .MuiGrid-item .MuiFormControlLabel-label {
+  font-size: 4.5vw !important;
+}
+
+.user-profile-page .profile-block .profile-fields .profile-roles-container .roles-box {
+  padding-top: 8vw;
+  min-height: unset !important;
 }

@@ -50,7 +50,7 @@
     }
 
     .profile-header {
-      padding-top: 1vh;
+      padding-top: 2vw;
       font-size: 2vw;
       font-family: $font-family-bold;
       color: var(--theme-dark-blue);
@@ -94,9 +94,16 @@
 
     .absolute-top-container {
       position: absolute;
-      height: calc(5.1vh + 1vh + 2vw);
+      height: calc(5vw);
       top: 0;
       right: 5vw;
+
+      .brills-number {
+        margin-right: 1vw;
+        font-size: 1.3vw;
+        color: var(--theme-dark-blue);
+        font-family: $font-family-bold;
+      }
 
       .brill-coin-img {
         position: relative;
@@ -124,6 +131,7 @@
 
     .absolute-library-link {
       cursor: pointer;
+      position: relative;
       margin-right: 1.2vw;
       border-radius: 50%;
       background: var(--theme-dark-blue);
@@ -135,6 +143,21 @@
       svg {
         width: 70%;
         height: 70%;
+      }
+      .css-custom-tooltip {
+        z-index: 100;
+        display: none;
+        top: 3vw;
+        font-family: $font-family-bold;
+      }
+      &:hover {
+        .css-custom-tooltip {
+          display: block;
+          text-align: center;
+          padding-left:0;
+          opacity: 1;
+          width: 6.5vw;
+        }
       }
     }
 
@@ -296,7 +319,7 @@
       }
 
       .profile-inputs-container {
-        padding-top: 5.1vh;
+        padding-top: 5vw;
         width: 25vw;
         margin: 0 0.5vw 0 1vw;
 
@@ -377,7 +400,7 @@
         }
 
         .roles-box {
-          margin-top: 5.1vh;
+          margin-top: 5vw;
           min-height: calc(6.8vw + 13.2vh);
           width: 100%;
           border-radius: 1.7vh;
@@ -459,7 +482,7 @@
 
     .big-input-container {
       margin-top: 2.3vh;
-      padding-left: 4.5vw;
+      padding-left: 2vw;
 
       @include tabletL {
         width: 68.25vw;
@@ -616,12 +639,12 @@
     padding: 1vh 1vw;
     border-radius: $border-radius;
     background: var(--off-white);
-    width: 100%;
+    width: 65%;
 
     > span {
       display: flex;
       align-items: center;
-      width: 85%;
+      width: 75%;
 
       > span {
         margin-right: 0.5vw;
@@ -634,18 +657,41 @@
     }
 
     .price {
-      width: 15%;
+      width: 25%;
+      > div {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        background: var(--theme-green);
+        border-radius: 5vw;
+        transition: all 300ms ease-in-out;
+        font-family: $font-family-bold;
+
+        svg {
+          margin-left: 0.2vw;
+          width: 1.5vw;
+          height: 1.5vw;
+          stroke-width: 2;
+        }
+
+        &:hover {
+          background: var(--theme-dark-blue);
+        }
+      }
     }
   }
 
   .next-billing-date {
-    height: 10vh;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    width: 35%;
   }
 
   .credits-container {
+    margin-top: 2vh;
     min-height: 20vh;
     padding: 1vw;
     border-radius: $border-radius;

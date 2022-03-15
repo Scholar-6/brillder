@@ -362,26 +362,19 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderProfileBlock(user: UserProfile) {
-    const renderSubscribeIcon = () => {
-      if (this.state.subscriptionState && this.state.subscriptionState > 1) {
-        return <SpriteIcon name="hero-sparkle" />
-      }
-      return '';
-    }
-
     return (
       <div className="profile-block">
-        <div className="profile-header">
-          <div className="profile-username-v2">{user.username ? user.username : "USERNAME"}</div>
-          {renderSubscribeIcon()}
-        </div>
         <div className="absolute-top-container flex-center">
+          <div className="brills-number">
+            {this.state.userBrills}
+          </div>
           <div className="brill-coin-img">
             <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
             <SpriteIcon name="logo" />
           </div>
           <div className="absolute-library-link flex-center" onClick={() => this.props.history.push(map.MyLibrary + '/' + this.state.user.id)}>
             <SpriteIcon name="bar-chart-2" />
+            <div className="css-custom-tooltip">View library</div>
           </div>
           <div className="save-button-container">
             <SaveProfileButton
@@ -480,6 +473,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   renderManageAccount() {
     const { subscriptionState } = this.props.user;
 
+    const renderNextBillingDate = (nextBillingDate?: number | null) => {
+      if (nextBillingDate && subscriptionState && subscriptionState > 1) {
+        const date = new Date(nextBillingDate);
+        return <span className="next-billing-date">Your next billing date is {formatTwoLastDigits(date.getMonth() + 1)}.{formatTwoLastDigits(date.getDate())}.{date.getFullYear()}</span>
+      }
+      return <span className="next-billing-date" />;
+    }
 
     const renderCurrentPlan = () => {
       const renderLabel = () => {
@@ -510,16 +510,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <span>
             {renderLabel()} Free Trial
           </span>
-          <div className="price" onClick={() => this.props.history.push(map.StripeEducator)}>
-            <div>Go Premium</div>
+          <div className="price btn" onClick={() => this.props.history.push(map.StripeEducator)}>
+            <div>Go Premium <SpriteIcon name="hero-sparkle"/></div>
           </div>
         </div>
       );
-    }
-
-    const renderNextBillingDate = (nextBillingDate: number) => {
-      const date = new Date(nextBillingDate);
-      return <span>Your next billing date is {formatTwoLastDigits(date.getMonth() + 1)}.{formatTwoLastDigits(date.getDate())}.{date.getFullYear()}</span>
     }
 
     const renderCredits = () => {
@@ -546,7 +541,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         return (
           <div className="leave-container">
             <div className="label">Thinking of leaving us?</div>
-            <div className="btn">Tell us what would make you stay</div>
+            <div className="btn first-btn">Tell us what would make you stay</div>
             <div className="btn" onClick={() => this.cancelSubscription()}>Cancel Subscription</div>
           </div>
         )
@@ -571,9 +566,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
     return (
       <div className="profile-block manage-account-block" >
-        {renderCurrentPlan()}
-        <div className="next-billing-date">
-          {this.state.nextPaymentDate && renderNextBillingDate(this.state.nextPaymentDate)}
+        <div className="current-plan-box flex-center">
+          {renderCurrentPlan()}
+          {renderNextBillingDate(this.state.nextPaymentDate)}
         </div>
         {renderCredits()}
         {renderPaymentMethod()}
