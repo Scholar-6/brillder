@@ -7,7 +7,11 @@ interface Props {
 }
 
 const UserTypeLozenge: React.FC<any> = (props) => {
-  let bestType = props.userPreference.preferenceId;
+  if (!props.userPreference) {
+    return <div />;
+  }
+
+  const bestType = props.userPreference.preferenceId;
   let bestRole = null;
 
   if (props.roles) {
