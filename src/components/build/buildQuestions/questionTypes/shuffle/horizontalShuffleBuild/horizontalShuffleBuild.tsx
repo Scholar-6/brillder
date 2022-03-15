@@ -9,11 +9,11 @@ import { showSameAnswerPopup } from '../../service/questionBuild';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import RemoveItemButton from '../../components/RemoveItemButton';
 import { stripHtml } from 'components/build/questionService/ConvertService';
-import QuillEditorContainer from 'components/baseComponents/quill/QuillEditorContainer';
 import RemoveButton from '../../components/RemoveButton';
 import SoundRecord from '../../sound/SoundRecord';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import ShuffleText from '../components/ShuffleText';
+import QuillHorizontalEditorContainer from 'components/baseComponents/quill/QuillHorizontalContainerEditor';
 
 
 export const getDefaultHorizontalShuffleAnswer = () => {
@@ -125,7 +125,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
       <div key={i}>
         <div className={className + " horizontal-string"}>
           <RemoveItemButton index={i} length={state.list.length} onClick={removeFromList} />
-          <QuillEditorContainer
+          <QuillHorizontalEditorContainer
             locked={locked}
             object={answer}
             fieldName="value"
