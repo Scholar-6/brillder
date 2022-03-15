@@ -64,6 +64,8 @@ interface UserProfileState {
   last4?: string | null; // credit card last 4 digits
   nextPaymentDate?: number | null; // dateTime() number
 
+  userBrills?: number;
+
   user: UserProfile;
   subjects: Subject[];
   isNewUser: boolean;
@@ -105,7 +107,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.state = tempState;
         getUserById(userId).then(user => {
           if (user) {
-            this.setState({ user: getUserProfile(user), subscriptionState: user.subscriptionState });
+            this.setState({ user: getUserProfile(user), userBrills: user.brills, subscriptionState: user.subscriptionState });
           } else {
             this.props.requestFailed("Can`t get user profile");
           }
@@ -521,7 +523,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     const renderCredits = () => {
-      if (this.props.user.brills || this.props.user.brills === 0) {
+      if (this.state.userBrills || this.state.userBrills === 0) {
         return (
           <div className="credits-container">
             <div className="brills-container flex-center">
@@ -530,7 +532,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 <SpriteIcon name="logo" />
               </div>
               <div className="bold">
-                {this.props.user.brills} Brills
+                {this.state.userBrills} Brills
               </div>
             </div>
           </div>
