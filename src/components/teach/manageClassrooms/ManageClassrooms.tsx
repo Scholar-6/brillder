@@ -412,7 +412,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
     return (
       <div className={className} onClick={() => this.unselectClasses()}>
-        View All Learners ({this.state.classrooms.length})
+        View All Learners
         <div className="right-index right-index2">
           {this.state.users.length}
           <SpriteIcon name="users-custom" className="active" />

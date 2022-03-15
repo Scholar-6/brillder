@@ -76,7 +76,7 @@ $base-build-font-size: 1.25vw;
     .class-header,
     .record-header,
     .individuals-header {
-      font-size: 1.3vw;
+      font-size: 1.5vw;
     }
 
     .class-header-container {
@@ -150,6 +150,11 @@ $base-build-font-size: 1.25vw;
           left: 2.7vw;
           font-size: 1vw;
         }
+      }
+    }
+    &:hover {
+      svg {
+        color: var(--theme-orange);
       }
     }
   }
