@@ -760,7 +760,7 @@
 
     .label {
       font-family: $font-family-light;
-      width: 28.5vw;
+      width: 26vw;
     }
     .btn {
       cursor: pointer;
@@ -768,6 +768,16 @@
       background: var(--tab-gray);
       padding: 0.3vh 1vw;
       margin-left: 1vw;
+    }
+    .first-btn {
+      display: flex;
+      align-items: center;
+      color: var(--theme-dark-blue) !important;
+      svg {
+        width: 1.5vw;
+        height: 1.5vw;
+        margin-right: 0.5vw;
+      }
     }
   }
 }
