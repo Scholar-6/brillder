@@ -43,6 +43,7 @@ export interface UserBase {
 }
 
 export interface User extends UserBase {
+  created: string;
   roles: UserRole[];
   userPreference?: UserPreference;
   hasPlayedBrick: boolean;
@@ -53,6 +54,9 @@ export interface User extends UserBase {
   freeAttemptsLeft: number;
   freeCompetitionLeft: number;
   subscriptionState?: number;
+
+  teachClassroomCount?: number;
+  studyClassroomCount?: number;
 }
 
 export interface UserProfile extends UserBase {
