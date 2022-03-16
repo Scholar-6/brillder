@@ -9,6 +9,7 @@ export const getNewUserState = (isAdmin: boolean) => {
     isNewUser: true,
     isStudent: false,
     isAdmin,
+    brills: 0,
     roles: [
       { roleId: UserType.Publisher, name: "Publisher", disabled: false },
       { roleId: UserType.Admin, name: "Admin", disabled: false },
@@ -58,6 +59,7 @@ export const getExistedUserState = (user: User) => {
       profileImagePublic: user.profileImagePublic || false,
     },
     subjects: [],
+    userBrills: user.brills,
     isNewUser: false,
     isProfile: true,
     isStudent: isOnlyStudent,
