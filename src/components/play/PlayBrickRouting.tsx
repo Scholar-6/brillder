@@ -887,6 +887,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               bestScore={bestScore}
               sidebarRolledUp={sidebarRolledUp}
               empty={finalStep}
+              competitionId={competitionId}
               setMode={setMode}
               showPremium={() => setPremiumEOpen(true)}
               toggleSidebar={setSidebar}

@@ -49,6 +49,7 @@ interface SidebarProps {
 
   //redux
   user: User;
+  competitionId?: number;
   fetchBrick(brickId: number): Promise<Brick | null>;
 }
 
@@ -88,7 +89,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   async getCompetition() {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/competition/${this.props.user.id}/${this.props.brick.id}`, { withCredentials: true });
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/competition/${this.props.user.id}/${this.props.brick.id}`, { withCredentials: true }); 
       if (res.status === 200 && res.data) {
         const c = res.data;
         const endDate = new Date(c.endDate);
@@ -293,7 +294,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     const haveBriefCircles = this.props.history.location.pathname.slice(-routes.PlayBriefLastPrefix.length) === routes.PlayBriefLastPrefix;
 
     const renderAdaptButton = () => {
-      if (this.state.competition && this.state.competition.isActive) {
+      if (this.props.competitionId) {
         return <div />;
       }
       return (
