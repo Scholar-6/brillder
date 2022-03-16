@@ -18,7 +18,6 @@ export const getSubjectWidth = (subjectAssignment: SubjectAssignments) => {
         width += baseWidth * 4;
       }
     }
-    console.log(width);
     return width;
   } else {
     const paddingWidth = 0.4 * 2;

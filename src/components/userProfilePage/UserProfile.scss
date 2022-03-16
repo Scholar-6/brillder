@@ -10,10 +10,10 @@
   font-family: $font-family-regular;
 
   input:-webkit-autofill {
-    background: var(--solitude-light) !important;
+    background: var(--off-white) !important;
   }
   input:autofill {
-    background: var(--solitude-light) !important ;
+    background: var(--off-white) !important ;
   }
 
   .phone-question-preview-box {
@@ -37,11 +37,9 @@
 
   .profile-block {
     position: relative;
-    background: var(--solitude-light);
+    background: var(--white);
     height: 85.9vh;
-    margin-top: 3.6vh;
     width: 72.5vw;
-    border-top-right-radius: 2vw;
     overflow-y: auto;
 
     @include phone_and_tabletP {
@@ -52,16 +50,16 @@
     }
 
     .profile-header {
-      padding-top: 3.1vh;
-      margin-right: 7vw;
-      font-size: 4vw;
-      @extend %textCenter;
+      padding-top: 2vw;
+      font-size: 2vw;
       font-family: $font-family-bold;
       color: var(--theme-dark-blue);
       line-height: 1;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding-left: calc(2vw);
+      width: 18vw;
 
       > div {
         text-transform: capitalize;
@@ -72,19 +70,6 @@
         stroke-width: 1.5;
         width: 4.6vw;
         height: 4.6vw;
-      }
-
-      .user-type-lozenge {
-        border-radius: 3vw;
-        padding-left: 2vw;
-        padding-right: 2vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 4.5vw;
-        margin-right: 1vw;
-        font-size: 2.7vw !important;
-        background: var(--tab-gray);
       }
 
       @include phone_and_tabletP {
@@ -107,10 +92,79 @@
       }
     }
 
+    .absolute-top-container {
+      position: absolute;
+      height: calc(5vw);
+      top: 0;
+      right: 5vw;
+
+      .brills-number {
+        margin-right: 1vw;
+        font-size: 1.3vw;
+        color: var(--theme-dark-blue);
+        font-family: $font-family-bold;
+      }
+
+      .brill-coin-img {
+        position: relative;
+        width: 3vw;
+        height: 3vw;
+
+        margin-right: 1.2vw;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+
+        svg {
+          position: absolute;
+          top: 22.5%;
+          left: 22.5%;
+          color: var(--theme-orange);
+          width: 55%;
+          height: 55%;
+        }
+      }
+    }
+
+
+    .absolute-library-link {
+      cursor: pointer;
+      position: relative;
+      margin-right: 1.2vw;
+      border-radius: 50%;
+      background: var(--theme-dark-blue);
+      color: white;
+
+      width: 3vw;
+      height: 3vw;
+      
+      svg {
+        width: 70%;
+        height: 70%;
+      }
+      .css-custom-tooltip {
+        z-index: 100;
+        display: none;
+        top: 3vw;
+        font-family: $font-family-bold;
+      }
+      &:hover {
+        .css-custom-tooltip {
+          display: block;
+          text-align: center;
+          padding-left:0;
+          opacity: 1;
+          width: 6.5vw;
+        }
+      }
+    }
+
     .save-button-container {
-      position: fixed;
-      top: calc(5.834vw + 3.6vh + 1vh);
-      left: 65.5vw;
+      .css-custom-tooltip {
+        z-index: 10;
+      }
     }
 
     .profile-fields {
@@ -142,8 +196,7 @@
           height: 11vw;
           width: 11vw;
           background: var(--tab-gray) 0% 0% no-repeat padding-box;
-          border: 0.25vw solid var(--solitude-light);
-          box-shadow: $base-shadow;
+          border: 0.25vw solid var(--off-white);
           border-radius: 50%;
 
           @include phone_and_tabletP {
@@ -266,7 +319,7 @@
       }
 
       .profile-inputs-container {
-        padding-top: 5.1vh;
+        padding-top: 5vw;
         width: 25vw;
         margin: 0 0.5vw 0 1vw;
 
@@ -347,11 +400,11 @@
         }
 
         .roles-box {
-          margin-top: 5.1vh;
+          margin-top: 5vw;
           min-height: calc(6.8vw + 13.2vh);
           width: 100%;
           border-radius: 1.7vh;
-          box-shadow: $base-shadow;
+          background: var(--off-white);
           padding: 1.15vw;
           padding-top: 2vw;
 
@@ -422,10 +475,14 @@
         }
       }
     }
+    .MuiAutocomplete-root .MuiInput-formControl {
+      box-shadow: none !important;
+      background: var(--off-white);
+    }
 
     .big-input-container {
       margin-top: 2.3vh;
-      padding-left: 4.5vw;
+      padding-left: 2vw;
 
       @include tabletL {
         width: 68.25vw;
@@ -471,11 +528,10 @@
       textarea {
         width: 100%;
         height: 15vh;
-        background: var(--solitude-light);
+        background: var(--off-white);
         color: var(--theme-dark-blue);
         border: none;
         border-radius: 0.5vw;
-        box-shadow: $base-shadow;
         padding-top: 0;
         padding-left: 0.65vw;
         max-height: 18vh;
@@ -528,6 +584,190 @@
 
     .custom-component {
       background-color: white;
+    }
+  }
+}
+
+.dialog-box.image-dialog-v56 .MuiPaper-root {
+  max-width: 48vw !important;
+  .dropzone-instructions {
+    width: 40vw;
+  }
+  .dropzone-instructions--main {
+    &::after {
+      font-size: 2vw;
+      font-family: $font-family-bold;
+    }
+  }
+  .dropzone-instructions--sub {
+    font-family: $font-family-light;
+  }
+  .light {
+    font-size: 1.2vw;
+  }
+  .btn svg {
+    margin-left: 1vw;
+    width: 2vw;
+    height: 2vw;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.user-profile-page .manage-account-block {
+  padding: 3vh 3vw 3vh 3vw;
+  font-size: 1.5vw;
+  color: var(--theme-dark-blue);
+  $border-radius: 0.5vw;
+  .current-plan {
+    display: flex;
+    position: relative;
+    padding: 1vh 1vw;
+    border-radius: $border-radius;
+    background: var(--off-white);
+    width: 65%;
+
+    > span {
+      display: flex;
+      align-items: center;
+      width: 75%;
+
+      > span {
+        margin-right: 0.5vw;
+      }
+
+      svg {
+        width: 2vw;
+        height: 2vw;
+      }
+    }
+
+    .price {
+      width: 25%;
+      > div {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        background: var(--theme-green);
+        border-radius: 5vw;
+        transition: all 300ms ease-in-out;
+        font-family: $font-family-bold;
+
+        svg {
+          margin-left: 0.2vw;
+          width: 1.5vw;
+          height: 1.5vw;
+          stroke-width: 2;
+        }
+
+        &:hover {
+          background: var(--theme-dark-blue);
+        }
+      }
+    }
+  }
+
+  .next-billing-date {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 35%;
+  }
+
+  .credits-container {
+    margin-top: 2vh;
+    min-height: 20vh;
+    padding: 1vw;
+    border-radius: $border-radius;
+    background: var(--off-white);
+    .brills-container {
+      width: 12vw;
+      justify-content: flex-start;
+
+      .brill-coin-img {
+        width: 4vw;
+        height: 4vw;
+        position: relative;
+    
+        > img {
+          width: 100%;
+          height: 100%;
+        }
+        svg {
+          color: var(--theme-orange);
+          position: absolute;
+          top: 25%;
+          left: 25%;
+          width: 50%;
+          height: 50%;
+        }
+      }
+
+      .bold {
+        margin-left: 1.2vw;
+      }
+    }
+  }
+  
+  .card-details {
+    display: flex;
+    align-items: center;
+    border-radius: $border-radius;
+    margin-top: 3vh;
+    height: 9vh;
+    padding-left: 1vw;
+    font-family: $font-family-bold;
+    background: var(--off-white);
+
+    .bigger-circles {
+      margin-left: 1vw;
+      margin-right: 1vw;
+      font-size: 2.8vw;
+      margin-bottom: 0.6vw;
+    }
+
+    .btn {
+      margin-left: 17vw;
+      padding: 0.5vh 1vw;
+      background: var(--tab-gray);
+      svg {
+        width: 1.5vw;
+        height: 1.5vw;
+        margin-right: 0.8vw;
+      }
+    }
+  }
+
+  .leave-container {
+    display: flex;
+    margin-top: 5vh;  
+
+    .label {
+      font-family: $font-family-light;
+      width: 28.5vw;
+    }
+    .btn {
+      cursor: pointer;
+      border-radius: $border-radius;
+      background: var(--tab-gray);
+      padding: 0.3vh 1vw;
+      margin-left: 1vw;
     }
   }
 }

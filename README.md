@@ -74,6 +74,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ## MAP
 /back-to-work       - auto redirect to build learn or teach tab based on user roles
 
+
 /play/dashboard        - view all page
 /build/new-brick - create new brick page
 /build/brick/{brickId}/investigation/question - investigation build page
