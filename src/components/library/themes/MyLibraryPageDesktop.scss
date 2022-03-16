@@ -507,10 +507,51 @@
 
   .my-library-list {
     height: 100%;
-    overflow-y: auto;
     padding-top: 2vh;
     padding-left: 1.5vw;
     margin-right: 2vw;
+
+    .pagination {
+      height: 6vh;
+      position: absolute;
+      bottom: 1vh;
+      padding-left: 0.7vw;
+      padding-right: 0.7vw;
+      display: flex;
+      width: 100%;
+
+      font-size: 0.9vw;
+
+      .gray {
+        margin-left: 0.3vw;
+        color: var(--gray);
+      }
+
+      svg {
+        width: 4.7vh;
+        height: 4.7vh;
+        cursor: pointer;
+        color: var(--theme-orange);
+        transition: all 150ms ease-in-out;
+
+        &:hover {
+          color: var(--theme-dark-blue);
+        }
+      }
+
+      .left-part {
+        display:flex;
+        align-items: center;
+        width: 33%;
+      }
+
+      .center-part {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28%;
+      }
+    }
 
     .libary-container-1 {
       height: calc(100% / 3);
