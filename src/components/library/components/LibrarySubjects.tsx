@@ -34,7 +34,7 @@ const LibrarySubjects: React.FC<LibrarySubjectsProps> = (props) => {
       item.width = itemWidth;
       item.row = rows;
 
-      if (tempWidth == 0) {
+      if (tempWidth === 0) {
         tempWidth += itemWidth + margin;
       } else if (tempWidth + itemWidth + margin > rowWidth) {
         rows += 1;
