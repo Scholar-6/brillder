@@ -174,6 +174,8 @@ class Library extends Component<BricksListProps, BricksListState> {
         if (subject) {
           subjectAssignments.push({
             subject,
+            width: 0,
+            row: 0,
             assignments: []
           });
         } else {
