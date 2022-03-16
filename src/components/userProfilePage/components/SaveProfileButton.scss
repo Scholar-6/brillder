@@ -3,23 +3,24 @@
 @import 'src/assets/sass/partials/extensions';
 
 .save-image {
-  $image-size: 6.5vw;
+  $image-size: 3vw;
   cursor: pointer;
+  position: relative;
   @extend %textCenter;
   height: $image-size;
   width: $image-size;
   background: var(--tab-gray) 0% 0% no-repeat padding-box;
-  border: 0.25vw solid var(--solitude-light);
-  box-shadow: $base-shadow;
   svg {
+    margin-top: 0.2vw;
     color: var(--dark-gray) !important;
   }
 
   .css-custom-tooltip {
     display: none;
-    left: -9vw !important;
+    right: -2.8vw !important;
     top: calc(50% - 0.5vw);
-    width: 9vw;
+    top: 3vw;
+    width: 8vw;
     height: 0vw;
     overflow: hidden;
     padding: 0.1vw 0;
@@ -33,8 +34,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      left:-1vw !important;
-      top: 7vw;
       height: 1.5vw;
       padding: 0.1vw 0;
       opacity: 1;

@@ -4,12 +4,10 @@ import DropNCrop from '@synapsestudios/react-drop-n-crop';
 import Dialog from "@material-ui/core/Dialog";
 import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 import Checkbox from "@material-ui/core/Checkbox";
-import { useHistory } from "react-router-dom";
 
 import { uploadFile } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { User, UserProfile, UserStatus } from "model/user";
-import map from "components/map";
+import { User, UserProfile } from "model/user";
 
 interface ProfileImageProps {
   user: UserProfile;
@@ -22,7 +20,6 @@ interface ProfileImageProps {
 }
 
 const ProfileImage: React.FC<ProfileImageProps> = (props) => {
-  const history = useHistory();
   const [imagePublic, setPublic] = useState(false);
   const [state, setState] = useState({
     result: null,
@@ -33,7 +30,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   })
   const [isUploadOpen, setUploadDialog] = useState(false);
   const [isDeleteOpen, setDeleteDialog] = useState(false);
-  const { profileImage, status } = props.user;
+  const { profileImage } = props.user;
 
   const handleClick = () => {
     if (profileImage) {
@@ -113,30 +110,11 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     className += " remove-image"
   }
 
-  const renderStatus = () => {
-    if (status === UserStatus.Active) {
-      console.log(props.currentUser)
-      if (props.subscriptionState && props.subscriptionState > 0) {
-        return (
-          <div className="status-container active-status-container svgOnHover">
-            <SpriteIcon name="circle-filled" className="active text-theme-green" />
-            <span><div className="flex-center premium-container">{props.subscriptionState === 2 ? 'Premium Learner' : props.subscriptionState === 3 ? 'Premium Educator' : ''}</div></span>
-          </div>
-        );
-      }
-      return (
-        <div className="status-container active-status-container svgOnHover">
-          <SpriteIcon name="circle-filled" className="active text-theme-green" />
-          <span><div className="flex-center premium-container">Free Trial <div className="btn-premium" onClick={() => history.push(map.ChoosePlan)}>Go Premium <SpriteIcon name="hero-sparkle" /></div></div></span>
-        </div>
-      );
+  const renderSubscribeIcon = () => {
+    if (props.subscriptionState && props.subscriptionState > 1) {
+      return <SpriteIcon name="hero-sparkle" />
     }
-    return (
-      <div className="status-container svgOnHover">
-        <SpriteIcon name="circle-filled" className="active text-theme-orange" />
-        <span>Inactive</span>
-      </div>
-    );
+    return '';
   }
 
   return (
@@ -147,30 +125,38 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
           <SpriteIcon name="plus" className="svg-plus active text-white" />
         </div>
       </div>
-      {renderStatus()}
+      <div className="profile-header">
+        <div className="profile-username-v2">{props.user.username ? props.user.username : "USERNAME"}</div>
+        {renderSubscribeIcon()}
+      </div>
       <Dialog
         open={isUploadOpen}
         onClose={() => {
           setUploadDialog(false);
           props.resumeIntroJs();
         }}
-        className="dialog-box"
+        className="dialog-box image-dialog-v56"
       >
         <div className="dialog-header">
           <DropNCrop onChange={(value: any) => setState(value)} value={state} />
         </div>
-        <div className="dialog-header">
-          <div className="flex-center" onClick={() => setPublic(!imagePublic)}>
+        <div className="dialog-header checkbox-container">
+          <div className="flex-center light" onClick={() => setPublic(!imagePublic)}>
             <div className="flex-center">
               <SpriteIcon name="globe" className="fgr-icon" />
               <Checkbox checked={imagePublic === true} />
             </div>
-            Educators will never be able to view Learner profile pictures without their consent.
+            <span>
+              <span className="bold">Educators will never be able to view Learner profile pictures without their consent.</span><br />
+              When a Builder invites an editor to peer review their work, or an Educator wants to share a class with a colleague, pictures can help them choose the right user and make interactions feel more personal.
+              Check the box to consent to your picture being visible to fellow Educators.
+            </span>
           </div>
         </div>
         <div className="dialog-footer">
-          <button className="btn btn-md bg-theme-orange yes-button" onClick={uploadCropedFile}>
+          <button className="btn btn-md bg-theme-green yes-button flex-center" onClick={uploadCropedFile}>
             <span>Upload</span>
+            <SpriteIcon name="feather-cloud-upload" />
           </button>
         </div>
       </Dialog>

@@ -136,13 +136,20 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
 
   const renderItem = (suggestion: ResultObj) => {
     const { brick, subject, author, keyword } = suggestion;
+
+    const renderId = () => {
+      if (brick && props.user && checkAdmin(props.user.roles)) {
+        return <span className="light">{brick.id}</span>;
+      }
+    }
+
     if (suggestion.isTitleRes && brick) {
       return (
         <div onClick={() => props.history.push(routes.playCover(brick))}>
           <SpriteIcon name="logo" />
           {stripHtml(brick.title)}
           <SpriteIcon className="icon-status" name={brick.isCore ? "globe" : "key"} />
-          <span className="light">{checkAdmin(props.user.roles) && brick.id}</span>
+          {renderId()}
         </div>
       );
     } else if (suggestion.isSubjectRes && subject) {

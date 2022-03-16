@@ -111,6 +111,7 @@ export interface Brick {
   editors?: Editor[];
   publisher?: Editor;
   expanded?: boolean;
+  currentUserAttempted?: boolean;
   expandFinished?: boolean;
   status: BrickStatus;
   attemptsCount: number;

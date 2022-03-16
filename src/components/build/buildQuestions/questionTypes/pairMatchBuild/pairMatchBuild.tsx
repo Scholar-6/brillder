@@ -12,6 +12,7 @@ import { showSameAnswerPopup } from '../service/questionBuild';
 import ShuffleText from '../shuffle/components/ShuffleText';
 import { ReactSortable } from 'react-sortablejs';
 import DeleteDialog from 'components/build/baseComponents/dialogs/DeleteDialog';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 export interface PairMatchBuildProps extends UniqueComponentProps { }
@@ -34,8 +35,9 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
     updateComponent(data);
   }
 
+  const [sortableKey, setSortableKey] = React.useState(3);
+
   const [state, setState] = React.useState(data);
-  const [answerFlipped, setFlipped] = React.useState(false);
   const [removingIndex, setRemovingIndex] = React.useState(-1);
 
   useEffect(() => { setState(data) }, [data]);
@@ -43,6 +45,36 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   const update = () => {
     setState(Object.assign({}, state));
     updateComponent(state);
+  }
+
+  const flip = (answer: Answer) => {
+    console.log(answer);
+    const tempObj = Object.assign({}, answer);
+
+    answer.optionType = tempObj.answerType;
+    answer.answerType = tempObj.optionType;
+
+    answer.option = tempObj.value;
+    answer.value = tempObj.option;
+
+    answer.valueSoundFile = tempObj.optionSoundFile;
+    answer.optionSoundFile = tempObj.valueSoundFile;
+
+    answer.valueFile = tempObj.optionFile;
+    answer.optionFile = tempObj.valueFile;
+
+    answer.imageCaption = tempObj.imageOptionCaption;
+    answer.imageOptionCaption = tempObj.imageCaption;
+
+    answer.imageOptionSource = tempObj.imageSource;
+    answer.imageSource = tempObj.imageOptionSource;
+
+    answer.valueSoundCaption = tempObj.optionSoundCaption;
+    answer.optionSoundCaption = tempObj.valueSoundCaption;
+
+    update();
+    save();
+    setSortableKey(sortableKey+1);
   }
 
   const addAnswer = () => {
@@ -66,25 +98,12 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   }
 
   const renderAnswer = (answer: Answer, i: number) => {
-    if (answerFlipped) {
-      return (
-        <Grid key={i} container direction="row" className="answers-container">
-          <PairAnswerComponent
-            index={i} length={data.list.length} locked={locked} editOnly={editOnly} answer={answer}
-            validationRequired={validationRequired}
-            removeFromList={removeFromList} update={update} save={save}
-            onBlur={() => showSameAnswerPopup(i, state.list, openSameAnswerDialog)}
-          />
-          <PairOptionComponent
-            index={i} locked={locked} editOnly={editOnly} answer={answer}
-            validationRequired={validationRequired}
-            update={update} save={save}
-          />
-        </Grid>
-      );
-    }
     return (
       <Grid key={i} container direction="row" className="answers-container">
+        <div className="flip-button" onClick={() => flip(answer)}>
+          <SpriteIcon name="hero-horizontal-switch" />
+          <div className="css-custom-tooltip bold">Flip Content</div>
+        </div>
         <PairOptionComponent
           index={i} locked={locked} editOnly={editOnly} answer={answer}
           validationRequired={validationRequired}
@@ -96,6 +115,10 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
           removeFromList={removeFromList} update={update} save={save}
           onBlur={() => showSameAnswerPopup(i, state.list, openSameAnswerDialog)}
         />
+        <div className="move-container">
+          <SpriteIcon name="feather-move" />
+          <div className="css-custom-tooltip bold">Drag to rearrange pairs</div>
+        </div>
       </Grid>
     );
   }
@@ -106,12 +129,14 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         <div>Enter Pairs below so that Option 1 matches Answer 1 and so on.</div>
         <ShuffleText />
       </div>
-      <button onClick={() => setFlipped(!answerFlipped)}>Flip</button>
       <ReactSortable
         list={state.list}
         animation={150}
+        key={sortableKey}
         group={{ name: "cloning-group-name", pull: "clone" }}
-        setList={newList => setState({ ...state, list: newList })}
+        setList={newList => {
+          setState({ ...state, list: newList })
+        }}
       >
         {state.list.map((answer: Answer, i: number) => renderAnswer(answer, i))}
       </ReactSortable>

@@ -28,29 +28,36 @@
     }
     .custom-audio-controls {
       margin: 0 !important;
+      display: none;
     }
 
     .play-wave-container {
-      .play-icon-d1 {
-        width: 3vw !important;
-        height: 3vw !important;
-      }
       .relative-waves-container {
-        width: calc(100% - 4.5vw);
+        height: 2.3vw;
+        width: calc(100% - 3.5vw);
       }
       .absolute-start-time {
-        left: -18%;
+        left: -10%;
       }
       .absolute-end-time {
-        right: -18%;
+        right: -5%;
+      }
+      .absolute-end-time,
+      .absolute-start-time {
+        font-size: 0.7vw;
       }
     }
 
     .play-wave-container {
       height: 4vw;
+      .play-icon-container-d1 {
+        height: 2.3vw;
+        padding-left: 0.2vw;
+        padding-right: 0.2vw;
+      }
       .play-icon-d1 {
-        width: 2vw !important;
-        height: 2vw !important;
+        width: 1.4vw !important;
+        height: 1.4vw !important;
       }
       .react-waves .wave wave {
         height: 2.3vw !important;
@@ -65,14 +72,17 @@
     position: relative;
     width: 100%;
     margin: 0;
+    height: 100%;
     .quill-document-editor {
       .quill {
         height: 100%;
         .ql-container {
+          border-radius: 0.6vw;
+          background: var(--solitude-light);
           .ql-editor {
             padding-top: 1vw;
             padding-left: 0.5vw;
-            padding-right: 3vw;
+            margin-right: 3vw;
             &.ql-blank::before {
               text-align: left;
             }
@@ -111,5 +121,44 @@
   }
   .horizontal-column-3 {
     margin-left: 1%;
+  }
+
+  .answer-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    > div {
+      margin-top: 0.1vw;
+      margin-bottom: 0.1vw;
+      width: 33%;
+    }
+  }
+  .move-container {
+    z-index: 1000;
+    position: absolute;
+    bottom: 0;
+    right: 0.2vw;
+    width: 1vw !important;
+
+    svg {
+      cursor: pointer;
+      width: 1vw;
+      height: 1vw;
+    }
+
+    .css-custom-tooltip {
+      display: none;
+      top: 1.5vw;
+      left: -4vw;
+      padding: 0;
+      width: 9vw;
+    }
+
+    &:hover {
+      .css-custom-tooltip {
+        display: block;
+        opacity: 1;
+      }
+    }
   }
 }
