@@ -541,7 +541,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         return (
           <div className="leave-container">
             <div className="label">Thinking of leaving us?</div>
-            <div className="btn first-btn">Tell us what would make you stay</div>
+            <a className="btn first-btn" href = "mailto: support@scholar6.org"><SpriteIcon name="email"/> Tell us what would make you stay</a>
             <div className="btn" onClick={() => this.cancelSubscription()}>Cancel Subscription</div>
           </div>
         )
