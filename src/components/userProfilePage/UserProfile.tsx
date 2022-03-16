@@ -16,7 +16,7 @@ import { getUserById, createUser, updateUser, saveProfileImageName } from 'servi
 import { isValid, getUserProfile } from './service';
 import { User, UserType, UserProfile } from "model/user";
 import { Subject } from "model/brick";
-import { checkAdmin } from "components/services/brickService";
+import { checkAdmin, formatTwoLastDigits } from "components/services/brickService";
 
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import SubjectDialog from "./components/SubjectDialog";
@@ -33,10 +33,13 @@ import ProfilePhonePreview from "./components/ProfilePhonePreview";
 import { getExistedUserState, getNewUserState } from "./stateService";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
-import UserTypeLozenge from "./UsertypeLozenge";
 import { maximizeZendeskButton, minimizeZendeskButton } from "services/zendesk";
 import SaveIntroJs from "./components/SaveIntroJs";
+import ProfileTab from "./ProfileTab";
+import map from "components/map";
+import { cancelSubscription, getCardDetails } from "services/axios/stripe";
 
+const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
 
 interface UserProfileProps {
@@ -46,7 +49,7 @@ interface UserProfileProps {
   match: any;
   forgetBrick(): void;
   redirectedToProfile(): void;
-  getUser(): void;
+  getUser(): Promise<void>;
   requestFailed(e: string): void;
 }
 
@@ -57,6 +60,11 @@ interface UserProfileState {
   passwordChangedDialog: boolean;
 
   previewAnimationFinished: boolean;
+
+  last4?: string | null; // credit card last 4 digits
+  nextPaymentDate?: number | null; // dateTime() number
+
+  userBrills?: number;
 
   user: UserProfile;
   subjects: Subject[];
@@ -70,6 +78,8 @@ interface UserProfileState {
   saveDisabled: boolean;
   minimizeTimeout?: number;
   introJsSuspended?: boolean;
+
+  isProfile: boolean;
 
   subscriptionState?: number;
 }
@@ -97,7 +107,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.state = tempState;
         getUserById(userId).then(user => {
           if (user) {
-            this.setState({ user: getUserProfile(user), subscriptionState: user.subscriptionState });
+            this.setState({ user: getUserProfile(user), userBrills: user.brills, subscriptionState: user.subscriptionState });
           } else {
             this.props.requestFailed("Can`t get user profile");
           }
@@ -124,12 +134,19 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     minimizeZendeskButton();
     const minimizeTimeout = setTimeout(() => {
       minimizeZendeskButton();
     }, 1400);
-    this.setState({ minimizeTimeout });
+    let nextPaymentDate: number | null = null;
+    let last4: string | null = null;
+    const cardDetails = await getCardDetails();
+    if (cardDetails) {
+      last4 = cardDetails.last4;
+      nextPaymentDate = cardDetails.nextPaymentDate;
+    }
+    this.setState({ minimizeTimeout, nextPaymentDate, last4 });
   }
 
   componentWillUnmount() {
@@ -137,6 +154,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       clearTimeout(this.state.minimizeTimeout);
     }
     maximizeZendeskButton();
+  }
+
+  async cancelSubscription() {
+    const res = await cancelSubscription(this.state.user.id);
+    if (res === true) {
+      this.props.getUser();
+    }
   }
 
   saveStudentProfile(user: UserProfile) {
@@ -337,6 +361,222 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({ previewAnimationFinished: true })
   }
 
+  renderProfileBlock(user: UserProfile) {
+    return (
+      <div className="profile-block">
+        <div className="absolute-top-container flex-center">
+          <div className="brills-number">
+            {this.state.userBrills}
+          </div>
+          <div className="brill-coin-img">
+            <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
+            <SpriteIcon name="logo" />
+          </div>
+          <div className="absolute-library-link flex-center" onClick={() => this.props.history.push(map.MyLibrary + '/' + this.state.user.id)}>
+            <SpriteIcon name="bar-chart-2" />
+            <div className="css-custom-tooltip">View library</div>
+          </div>
+          <div className="save-button-container">
+            <SaveProfileButton
+              user={user}
+              disabled={this.state.saveDisabled}
+              onClick={() => this.saveUserProfile()}
+            />
+          </div>
+        </div>
+        <div className="profile-fields">
+          <ProfileImage
+            user={user}
+            subscriptionState={this.state.subscriptionState}
+            currentUser={this.props.user}
+            setImage={this.onProfileImageChanged.bind(this)}
+            deleteImage={() => this.onProfileImageChanged('', false)}
+            suspendIntroJs={this.suspendIntroJs.bind(this)}
+            resumeIntroJs={this.resumeIntroJs.bind(this)}
+          />
+          <div className="profile-inputs-container">
+            <div className="input-group">
+              <ProfileInput
+                value={user.firstName} validationRequired={this.state.validationRequired}
+                className="first-name" placeholder="Name"
+                onChange={e => this.onFieldChanged(e, UserProfileField.FirstName)}
+              />
+              <ProfileInput
+                value={user.lastName} validationRequired={this.state.validationRequired}
+                className="last-name" placeholder="Surname"
+                onChange={e => this.onFieldChanged(e, UserProfileField.LastName)}
+              />
+            </div>
+            <ProfileInput
+              value={user.email} validationRequired={this.state.validationRequired}
+              className="" placeholder="Email" type="email"
+              onChange={e => this.onEmailChanged(e)}
+            />
+            <div className="password-container">
+              <ProfileInput
+                value={user.password} validationRequired={this.state.validationRequired}
+                className="" placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
+                onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
+              /*disabled={!this.state.editPassword}*/
+              />
+              {!this.state.editPassword &&
+                <div className="button-container">
+                  <button onClick={() => this.setState({ editPassword: true })}>Edit</button>
+                </div>}
+              {this.state.editPassword &&
+                <div className="confirm-container">
+                  <SpriteIcon name="check-icon" className="start" onClick={this.changePassword.bind(this)} />
+                  <SpriteIcon name="cancel-custom" className="end" onClick={() => {
+                    this.setState({ editPassword: false })
+                  }} />
+                </div>}
+            </div>
+          </div>
+          <div className="profile-roles-container">
+            {this.state.user.userPreference &&
+              <RolesBox
+                roles={this.state.roles}
+                userId={this.state.user.id}
+                userRoles={this.state.user.roles}
+                isAdmin={this.state.isAdmin}
+                userPreference={this.state.user.userPreference?.preferenceId}
+                togglePreference={() => this.setState({ saveDisabled: false })}
+                toggleRole={this.toggleRole.bind(this)}
+              />}
+          </div>
+        </div>
+        <div style={{ display: 'flex' }}>
+          {this.renderSubjects(user)}
+          <div className="centered">
+            <SpriteIcon
+              name="arrow-left-2"
+              className={`svg red-circle ${this.state.previewAnimationFinished ? '' : 'hidden'}`}
+            />
+          </div>
+        </div>
+        <Grid container direction="row" className="big-input-container bio-container-2">
+          <textarea
+            className="style2 bio-container"
+            value={user.bio}
+            onClick={this.suspendIntroJs.bind(this)}
+            placeholder="Write a short bio here..."
+            onChange={e => {
+              this.onFieldChanged(e as any, UserProfileField.Bio)
+            }}
+            onBlur={this.resumeIntroJs.bind(this)}
+          />
+        </Grid>
+      </div>
+    );
+  }
+
+  renderManageAccount() {
+    const { subscriptionState } = this.props.user;
+
+    const renderNextBillingDate = (nextBillingDate?: number | null) => {
+      if (nextBillingDate && subscriptionState && subscriptionState > 1) {
+        const date = new Date(nextBillingDate);
+        return <span className="next-billing-date">Your next billing date is {formatTwoLastDigits(date.getMonth() + 1)}.{formatTwoLastDigits(date.getDate())}.{date.getFullYear()}</span>
+      }
+      return <span className="next-billing-date" />;
+    }
+
+    const renderCurrentPlan = () => {
+      const renderLabel = () => {
+        return <span className="bold">Current Plan</span>
+      }
+
+      if (subscriptionState === 2) {
+        return (
+          <div className="current-plan">
+            <span>
+              {renderLabel()} Premium Learner <SpriteIcon name="hero-sparkle" />
+            </span>
+            <div className="price">£5 monthly</div>
+          </div>
+        );
+      } else if (subscriptionState === 3) {
+        return (
+          <div className="current-plan">
+            <span>
+              {renderLabel()} Premium Educator <SpriteIcon name="hero-sparkle" />
+            </span>
+            <div className="price">£6.5 monthly</div>
+          </div>
+        );
+      }
+      return (
+        <div className="current-plan">
+          <span>
+            {renderLabel()} Free Trial
+          </span>
+          <div className="price btn" onClick={() => this.props.history.push(map.StripeEducator)}>
+            <div>Go Premium <SpriteIcon name="hero-sparkle"/></div>
+          </div>
+        </div>
+      );
+    }
+
+    const renderCredits = () => {
+      if (this.state.userBrills || this.state.userBrills === 0) {
+        return (
+          <div className="credits-container">
+            <div className="brills-container flex-center">
+              <div className="brill-coin-img">
+                <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
+                <SpriteIcon name="logo" />
+              </div>
+              <div className="bold">
+                {this.state.userBrills} Brills
+              </div>
+            </div>
+          </div>
+        );
+      }
+      return '';
+    }
+
+    const renderLeaveContainer = () => {
+      if (this.props.user.subscriptionState && this.props.user.subscriptionState >= 2) {
+        return (
+          <div className="leave-container">
+            <div className="label">Thinking of leaving us?</div>
+            <div className="btn first-btn">Tell us what would make you stay</div>
+            <div className="btn" onClick={() => this.cancelSubscription()}>Cancel Subscription</div>
+          </div>
+        )
+      }
+      return '';
+    }
+
+    const renderPaymentMethod = () => {
+      if (this.state.last4) {
+        return (
+          <div className="card-details">
+            Credit Card <span className="bigger-circles">•••• •••• ••••</span> <span className="light">[{this.state.last4}]</span>
+            <div className="flex-center btn">
+              <SpriteIcon name="edit-outline" />
+              Change payment method
+            </div>
+          </div>
+        );
+      }
+      return '';
+    }
+
+    return (
+      <div className="profile-block manage-account-block" >
+        <div className="current-plan-box flex-center">
+          {renderCurrentPlan()}
+          {renderNextBillingDate(this.state.nextPaymentDate)}
+        </div>
+        {renderCredits()}
+        {renderPaymentMethod()}
+        {renderLeaveContainer()}
+      </div>
+    );
+  }
+
   render() {
     const { user } = this.state;
     const canMove = user.username ? true : false;
@@ -346,17 +586,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       push() { }
     } as any;
 
-    const renderSubscribeIcon = () => {
-      if (this.state.subscriptionState && this.state.subscriptionState > 1) {
-        return <SpriteIcon name="hero-sparkle" />
-      }
-      return '';
-    }
-
     return (
       <React.Suspense fallback={<></>}>
         <div className="main-listing user-profile-page">
-          {!isPhone() && isMobile && <TabletTheme />}
+          {isPhone() ? <MobileTheme /> : isMobile && <TabletTheme />}
           <PageHeadWithMenu
             page={PageEnum.Profile}
             user={this.props.user}
@@ -364,104 +597,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             search={() => { }}
             searching={() => { }}
           />
+          <ProfileTab roles={this.state.roles} userPreference={this.state.user.userPreference} isProfile={this.state.isProfile} onSwitch={() => this.setState({ isProfile: !this.state.isProfile })} />
           <Grid container direction="row" className="user-profile-content">
-            <div className="profile-block">
-              <div className="profile-header">
-                <UserTypeLozenge roles={user.roles} userPreference={this.props.user.userPreference} />
-                <div className="profile-username-v2">{user.username ? user.username : "USERNAME"}</div>
-                {renderSubscribeIcon()}
-              </div>
-              <div className="save-button-container">
-                <SaveProfileButton
-                  user={user}
-                  disabled={this.state.saveDisabled}
-                  onClick={() => this.saveUserProfile()}
-                />
-              </div>
-              <div className="profile-fields">
-                <ProfileImage
-                  user={user}
-                  subscriptionState={this.state.subscriptionState}
-                  currentUser={this.props.user}
-                  setImage={this.onProfileImageChanged.bind(this)}
-                  deleteImage={() => this.onProfileImageChanged('', false)}
-                  suspendIntroJs={this.suspendIntroJs.bind(this)}
-                  resumeIntroJs={this.resumeIntroJs.bind(this)}
-                />
-                <div className="profile-inputs-container">
-                  <div className="input-group">
-                    <ProfileInput
-                      value={user.firstName} validationRequired={this.state.validationRequired}
-                      className="first-name" placeholder="Name"
-                      onChange={e => this.onFieldChanged(e, UserProfileField.FirstName)}
-                    />
-                    <ProfileInput
-                      value={user.lastName} validationRequired={this.state.validationRequired}
-                      className="last-name" placeholder="Surname"
-                      onChange={e => this.onFieldChanged(e, UserProfileField.LastName)}
-                    />
-                  </div>
-                  <ProfileInput
-                    value={user.email} validationRequired={this.state.validationRequired}
-                    className="" placeholder="Email" type="email"
-                    onChange={e => this.onEmailChanged(e)}
-                  />
-                  <div className="password-container">
-                    <ProfileInput
-                      value={user.password} validationRequired={this.state.validationRequired}
-                      className="" placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
-                      onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
-                    /*disabled={!this.state.editPassword}*/
-                    />
-                    {!this.state.editPassword &&
-                      <div className="button-container">
-                        <button onClick={() => this.setState({ editPassword: true })}>Edit</button>
-                      </div>}
-                    {this.state.editPassword &&
-                      <div className="confirm-container">
-                        <SpriteIcon name="check-icon" className="start" onClick={this.changePassword.bind(this)} />
-                        <SpriteIcon name="cancel-custom" className="end" onClick={() => {
-                          this.setState({ editPassword: false })
-                        }} />
-                      </div>}
-                  </div>
-                </div>
-                <div className="profile-roles-container">
-                  {this.state.user.userPreference &&
-                    <RolesBox
-                      roles={this.state.roles}
-                      userId={this.state.user.id}
-                      userRoles={this.state.user.roles}
-                      isAdmin={this.state.isAdmin}
-                      userPreference={this.state.user.userPreference?.preferenceId}
-                      togglePreference={() => this.setState({ saveDisabled: false })}
-                      toggleRole={this.toggleRole.bind(this)}
-                    />}
-                </div>
-              </div>
-              <div style={{ display: 'flex' }}>
-                {this.renderSubjects(user)}
-                <div className="centered">
-                  <SpriteIcon
-                    name="arrow-left-2"
-                    className={`svg red-circle ${this.state.previewAnimationFinished ? '' : 'hidden'}`}
-                  />
-                </div>
-              </div>
-              <Grid container direction="row" className="big-input-container bio-container-2">
-                <textarea
-                  className="style2 bio-container"
-                  value={user.bio}
-                  onClick={this.suspendIntroJs.bind(this)}
-                  placeholder="Write a short bio here..."
-                  onChange={e => {
-                    this.onFieldChanged(e as any, UserProfileField.Bio)
-                  }}
-                  onBlur={this.resumeIntroJs.bind(this)}
-                />
-              </Grid>
-            </div>
-            <ProfilePhonePreview user={this.state.user} previewAnimationFinished={this.previewAnimationFinished.bind(this)} />
+            {this.state.isProfile ? this.renderProfileBlock(user) : this.renderManageAccount()}
+            <ProfilePhonePreview user={user} previewAnimationFinished={this.previewAnimationFinished.bind(this)} />
           </Grid>
           <ValidationFailedDialog
             isOpen={this.state.emailInvalidOpen}

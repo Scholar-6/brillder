@@ -9,7 +9,6 @@ input {
     border-radius: 0.5vw;
     border: none;
     color: var(--theme-dark-blue);
-    box-shadow: $base-shadow !important;
     @include placeholder {
       color: var(--theme-dark-blue);
     }
