@@ -597,6 +597,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             search={() => { }}
             searching={() => { }}
           />
+          <div className="mobile-upper-space" />
           <ProfileTab roles={this.state.roles} userPreference={this.state.user.userPreference} isProfile={this.state.isProfile} onSwitch={() => this.setState({ isProfile: !this.state.isProfile })} />
           <Grid container direction="row" className="user-profile-content">
             {this.state.isProfile ? this.renderProfileBlock(user) : this.renderManageAccount()}
