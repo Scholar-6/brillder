@@ -1409,6 +1409,10 @@
   }
 }
 
+.StripePayPage ~ .beta-text {
+  display: none;
+}
+
 // Stripe page mobile
 .StripePayPage {
   display: block;
@@ -1433,7 +1437,7 @@
         font-size: 4vw;
         margin-left: 30vw;
         width: 40vw;
-        height: calc(6vh - 2px);
+        height: calc(5vh - 2px);
       }
     }
   }
@@ -1450,6 +1454,7 @@
     padding-left: 5vw;
     padding-right:5vw;
     padding-bottom: 2vh;
+    padding-top: 2vh;
     .CheckOut {
       .two-columns {
         > div:first-child {
@@ -1462,12 +1467,10 @@
       }
       .bigger {
         font-size: 3.7vw;
-      }
-      .normal {
-        font-size: 3.5vw;
+        margin-bottom: 2vh;
       }
 
-      $box-height: 6vh;
+      $box-height: 5vh;
 
       .radio-row > div {
         height: $box-height;
@@ -1518,10 +1521,12 @@
       }
 
       .small {
+        margin-top: 1vh;
         font-size: 3.5vw;
       }
 
       button {
+        margin-top: 1vh;
         border-radius: 2vw;
         font-size: 6.5vw !important;
       }

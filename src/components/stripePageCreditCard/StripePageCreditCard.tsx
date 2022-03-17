@@ -13,6 +13,7 @@ import map from 'components/map';
 import { isIPad13, isTablet } from 'react-device-detect';
 import { checkCoupon, Coupon, getPrices } from 'services/axios/stripe';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
+import { isPhone } from 'services/phone';
 
 
 const TabletTheme = React.lazy(() => import('./themes/StripeTabletTheme'));
@@ -269,7 +270,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   // other coupons
   let isOtherCoupon = false;
-  if (coupon && coupon.percentOff && coupon.percentOff> 50) {
+  if (coupon && coupon.percentOff && coupon.percentOff > 50) {
     isOtherCoupon = true;
   }
 
@@ -291,22 +292,23 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   const renderGreenPricingBox = () => {
     if (!isOtherCoupon) {
       return (
-            <div className={`radio-row ${(isFree || isOtherCoupon) ? 'one-button' : ''}`}>
-              <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
-                {!(isFree || isOtherCoupon) && <Radio checked={isMonthly} />}
-                <div className="absoulte-price">£{originalPrice}</div>
-                £{renderPriceValue()} <span className="label">Monthly</span>
-                <div className="absolute-label" >{renderPercentage()}</div>
-              </div>
-              {!isFree && !isOtherCoupon &&
-                <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
-                  <Radio checked={!isMonthly} />
-                  <span>£{renderAnnualPriceValue()}</span> <span className="label">Annually</span>
-                  <div className="absolute-label" >{renderAnnualPercentage()}</div>
-                </div>}
-            </div>
-      )}
-      return;
+        <div className={`radio-row ${(isFree || isOtherCoupon) ? 'one-button' : ''}`}>
+          <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
+            {!(isFree || isOtherCoupon) && <Radio checked={isMonthly} />}
+            <div className="absoulte-price">£{originalPrice}</div>
+            £{renderPriceValue()} <span className="label">Monthly</span>
+            <div className="absolute-label" >{renderPercentage()}</div>
+          </div>
+          {!isFree && !isOtherCoupon &&
+            <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
+              <Radio checked={!isMonthly} />
+              <span>£{renderAnnualPriceValue()}</span> <span className="label">Annually</span>
+              <div className="absolute-label" >{renderAnnualPercentage()}</div>
+            </div>}
+        </div>
+      )
+    }
+    return;
   }
 
   return (
@@ -336,16 +338,20 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
             }
           }}>
             <div className="logo bold">Go Premium today</div>
-            <div className="bigger">
-              Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'}
-            </div>
-            {!isOtherCoupon && <div className="normal">From just £{originalPrice}/month. Cancel anytime.</div>}
+            {isPhone() ? <div className="bigger">
+              Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'} From just £{originalPrice}/month. Cancel anytime.
+            </div> : <div>
+              <div className="bigger">
+                Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'}
+              </div>
+              {!isOtherCoupon && <div className="normal">From just £{originalPrice}/month. Cancel anytime.</div>}
+            </div>}
             {renderGreenPricingBox()}
             {isOtherCoupon &&
-            <div className="custom-voucher-label">
-              <div> Custom Pricing Applies.</div>
-              <div className="smaller"> Please check your original email offer.</div>
-            </div>}
+              <div className="custom-voucher-label">
+                <div> Custom Pricing Applies.</div>
+                <div className="smaller"> Please check your original email offer.</div>
+              </div>}
 
             <div className={`label light ${isFree ? 'hidden' : ''}`}>Card Number</div>
             <div id="card-number-element" className={`field ${isFree ? 'hidden' : ''}`}></div>
