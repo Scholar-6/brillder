@@ -33,13 +33,23 @@
       }
     }
 
-    .custom-tooltip {
+    .css-custom-tooltip {
+      opacity: 0;
+      display: none;
       margin-top: 0.1vw;
+      top: 2vw;
       letter-spacing: 0 !important;
       margin-left: -0.4vw !important;
+      padding-left: 0.5vw;
+      padding-right: 0.5vw;
       z-index: 1000;
       background: var(--theme-dark-blue);
       color: var(--tab-gray);
+    }
+
+    .select-container:hover .css-custom-tooltip {
+      display: block;
+      opacity: 1;
     }
   }
 
@@ -60,8 +70,8 @@
       display: none;
       top: 2vw;
       color: white;
-      padding-left: 0.3vw;
-      padding-right: 0.3vw;
+      padding-left: 0.5vw;
+      padding-right: 0.5vw;
       background: var(--theme-dark-blue);
       left: 0.3vw;
       z-index: 100;
