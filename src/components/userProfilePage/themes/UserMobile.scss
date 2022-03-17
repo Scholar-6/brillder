@@ -3,10 +3,16 @@
 @import "src/assets/sass/partials/extensions";
 
 .user-profile-page {
+  .mobile-upper-space {
+    height: 4%;
+  }
   .profile-tab {
     width: 100vw;
+    margin-top: 0;
+    min-height: 8%;
 
     >div {
+      min-height: unset;
       font-size: 4.5vw;
 
       svg {
@@ -33,12 +39,16 @@
     }
   }
 
+  .user-profile-content {
+    height: calc(100% - 17.5vw - 4% - 8%);
+  }
+
   .profile-image-container {
     padding-top: 3vh !important;
   }
 
   .profile-block {
-    padding-bottom: 10vw;
+    height: 100%;
 
     .profile-header {
       padding-top: 0 !important;
