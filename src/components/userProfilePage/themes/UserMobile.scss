@@ -87,6 +87,14 @@
     .profile-inputs-container {
       padding-top: 10vw !important;
     }
+
+    .big-input-container textarea,
+    .MuiAutocomplete-root .MuiInput-formControl {
+      border-radius: 1.7vh !important;
+    }
+    .big-input-container textarea {
+      padding-top: 1.2vw;
+    }
   }
 
   .search-container {
