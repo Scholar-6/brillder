@@ -298,7 +298,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <CoverTimer brickLength={brick.brickLength} />
           </div>
           <div className="introduction-info">
-            <CoverCreditsPlay credits={props.user.credits} onClick={() => {
+            <CoverCreditsPlay credits={props.user.freeAttemptsLeft} onClick={() => {
               if (props.user) {
                 startBrick();
               } else {
@@ -447,7 +447,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="brief-ellipsis">
                   {briefText}
                 </div>
-                <CoverCreditsPlay credits={props.user.credits} onClick={() => {
+                <CoverCreditsPlay credits={props.user.freeAttemptsLeft} onClick={() => {
                   if (props.user) {
                     startBrick();
                   } else {
