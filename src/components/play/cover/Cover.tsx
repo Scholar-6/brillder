@@ -18,7 +18,6 @@ import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import SponsorImageComponent from "./SponsorImage";
 import CoverAuthorRow from "./components/coverAuthorRow/CoverAuthorRow";
-import CoverPlay from "./components/coverAuthorRow/CoverPlay";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 
 import { CreateByEmailRes } from "services/axios/user";
@@ -26,6 +25,7 @@ import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
 import map from "components/map";
+import CoverCreditsPlay from "./components/coverAuthorRow/CoverCreditsPlay";
 
 
 interface Props {
@@ -60,8 +60,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       setUnauthorizedV2(true);
     }
   }, 10000);
-
-  console.log(777, props.canSeeCompetitionDialog)
 
   const getNewestCompetition = (competitions: any[]) => {
     let competition = null;
@@ -300,7 +298,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <CoverTimer brickLength={brick.brickLength} />
           </div>
           <div className="introduction-info">
-            <CoverPlay onClick={() => {
+            <CoverCreditsPlay credits={props.user.credits} onClick={() => {
               if (props.user) {
                 startBrick();
               } else {
@@ -449,7 +447,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="brief-ellipsis">
                   {briefText}
                 </div>
-                <CoverPlay onClick={() => {
+                <CoverCreditsPlay credits={props.user.credits} onClick={() => {
                   if (props.user) {
                     startBrick();
                   } else {

@@ -49,6 +49,7 @@ export interface User extends UserBase {
   hasPlayedBrick: boolean;
   termsAndConditionsAcceptedVersion: string;
   brills?: number;
+  credits?: number;
 
   freeAssignmentsLeft: number;
   freeAttemptsLeft: number;

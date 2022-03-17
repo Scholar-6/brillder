@@ -201,6 +201,38 @@
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
     <polyline points="22,6 12,13 2,6"></polyline>
   </svg>
+  <svg id="circle-lines" viewBox="0 0 240 240">
+  <g id="Group_534" data-name="Group 534" transform="translate(-667 -361)">
+    <g id="Group_480" data-name="Group 480" transform="translate(21616 -7931)" style="isolation: isolate">
+      <g id="Ellipse_247" data-name="Ellipse 247" transform="translate(-20949 8292)" fill="#30c474" stroke="white" stroke-width="3">
+        <circle cx="120" cy="120" r="120" stroke="none"/>
+        <circle cx="120" cy="120" r="118.5" fill="none"/>
+      </g>
+      <line id="Line_23" data-name="Line 23" x1="2" y2="237.25" transform="translate(-20828.5 8292.5)" fill="none" stroke="white" stroke-width="3"/>
+      <path id="Path_5350" data-name="Path 5350" d="M45.873-.684,0,234" transform="translate(-20851 8295.482)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_26" data-name="Line 26" x1="88.001" y2="223" transform="translate(-20873.5 8300.5)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_27" data-name="Line 27" x1="124" y2="201" transform="translate(-20891.5 8311.75)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_28" data-name="Line 28" x1="162.705" y2="174.672" transform="translate(-20909.5 8325.078)" fill="none" stroke="white" stroke-width="3"/>
+      <path id="Path_5351" data-name="Path 5351" d="M45.873-.684,0,234" transform="translate(-20765.283 8311.915) rotate(43)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_29" data-name="Line 29" x1="88.001" y2="223" transform="translate(-20785.162 8300.239) rotate(43)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_30" data-name="Line 30" x1="229" y2="62" transform="translate(-20942.5 8380.75)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_31" data-name="Line 31" x1="236.855" y2="16.28" transform="translate(-20948.355 8404.75)" fill="none" stroke="white" stroke-width="3"/>
+      <path id="Path_5352" data-name="Path 5352" d="M45.438,1.2,0,234" transform="matrix(0.07, 0.998, -0.998, 0.07, -20713.484, 8382.051)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_32" data-name="Line 32" x1="227.017" y1="72.238" transform="translate(-20942.518 8375.512)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_33" data-name="Line 33" x1="209.364" y1="111.82" transform="translate(-20934.863 8355.93)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_34" data-name="Line 34" x1="184.755" y1="149.72" transform="translate(-20922.256 8337.029)" fill="none" stroke="white" stroke-width="3"/>
+      <path id="Path_5353" data-name="Path 5353" d="M45.279-.684,0,231.654" transform="translate(-20725.721 8467.229) rotate(129)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_35" x1="116.442" y1="207.028" transform="translate(-20886.941 8307.722)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_36" x1="78.489" y1="225.13" transform="translate(-20867.988 8298.62)" fill="none" stroke="white" stroke-width="3"/>
+      <line id="Line_37" x2="38" y2="234.75" transform="translate(-20846.5 8294.75)" fill="none" stroke="white" stroke-width="3"/>
+      <g id="Ellipse_248" data-name="Ellipse 248" transform="translate(-20929 8313)" fill="#30c474" stroke="white" stroke-width="3">
+        <circle cx="100" cy="100" r="100" stroke="none"/>
+        <circle cx="100" cy="100" r="98.5" fill="none"/>
+      </g>
+    </g>
+  </g>
+</svg>
+
   <svg id="email" viewBox="0 0 24 24">
     <path d="M0 0h24v24H0z" fill="none" />
     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
