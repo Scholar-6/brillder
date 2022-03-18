@@ -53,12 +53,12 @@ const StudentTableHead: React.FC<StudentTableProps> = props => {
       </div>
       <div className="user-full-name">
         <Grid container>
-          NAME
+          Name
           {renderSortArrow(UserSortBy.Name)}
         </Grid>
       </div>
       <div className="classes-names">
-        <Grid container>CLASSES</Grid>
+        <Grid container>Classes</Grid>
       </div>
       <div className="selected-column">
       </div>

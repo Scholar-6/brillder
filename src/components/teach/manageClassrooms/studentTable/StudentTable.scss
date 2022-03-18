@@ -72,8 +72,8 @@
       color: white;
       padding-left: 0.5vw;
       padding-right: 0.5vw;
-      background: var(--theme-dark-blue);
-      left: 0.3vw;
+      background: var(--theme-light-blue);
+      left: 0.7vw;
       z-index: 100;
       white-space: nowrap;
     }
@@ -89,14 +89,13 @@
     .students-table-head {
       display: flex;
       flex-direction: row;
-      font-size: 1.3vw;
-      letter-spacing: .25vw;
+      font-size: 1.5vw;
       color: var(--theme-dark-blue);
-      font-family: $font-family-black;
+      font-family: $font-family-bold;
 
       .sort-button {
         cursor: pointer;
-        margin-top: .3vh;
+        margin-top: .4vw;
         margin-left: .4vw;
         height: 1.5vw;
         width: 1.5vw;
