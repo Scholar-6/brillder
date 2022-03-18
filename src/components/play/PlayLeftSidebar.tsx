@@ -294,7 +294,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     const haveBriefCircles = this.props.history.location.pathname.slice(-routes.PlayBriefLastPrefix.length) === routes.PlayBriefLastPrefix;
 
     const renderAdaptButton = () => {
-      if (this.props.competitionId) {
+      if (this.props.competitionId && this.props.competitionId > 0) {
         return <div />;
       }
       return (
