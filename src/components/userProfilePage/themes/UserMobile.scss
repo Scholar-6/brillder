@@ -151,6 +151,16 @@
           height: 8vw;
         }
       }
+      .credits-part {
+        width: 24vw;
+        .user-credits {
+          width: 8vw;
+          height: 8vw;
+        }
+        .label {
+          margin-left: 1.2vw;
+        }
+      }
     }
 
     .card-details {

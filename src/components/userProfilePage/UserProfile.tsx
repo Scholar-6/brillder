@@ -65,6 +65,7 @@ interface UserProfileState {
   nextPaymentDate?: number | null; // dateTime() number
 
   userBrills?: number;
+  userCredits?: number;
 
   user: UserProfile;
   subjects: Subject[];
@@ -114,6 +115,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         });
       } else {
         tempState.user = getUserProfile(user);
+        tempState.userCredits = user.freeAttemptsLeft;
         this.state = tempState;
       }
     }
@@ -511,7 +513,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             {renderLabel()} Free Trial
           </span>
           <div className="price btn" onClick={() => this.props.history.push(map.StripeEducator)}>
-            <div>Go Premium <SpriteIcon name="hero-sparkle"/></div>
+            <div>Go Premium <SpriteIcon name="hero-sparkle" /></div>
           </div>
         </div>
       );
@@ -521,13 +523,24 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       if (this.state.userBrills || this.state.userBrills === 0) {
         return (
           <div className="credits-container">
-            <div className="brills-container flex-center">
-              <div className="brill-coin-img">
-                <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
-                <SpriteIcon name="logo" />
+            <div className="first-row flex-center">
+              <div className="brills-container flex-center">
+                <div className="brill-coin-img">
+                  <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
+                  <SpriteIcon name="logo" />
+                </div>
+                <div className="bold">
+                  {this.state.userBrills} Brills
+                </div>
               </div>
-              <div className="bold">
-                {this.state.userBrills} Brills
+              <div className="credits-part flex-center">
+                <div className="user-credits">
+                  <SpriteIcon name="circle-lines" />
+                  <div className="flex-center bold">{this.state.userCredits}</div>
+                </div>
+                <div className="bold label">
+                  Credits
+                </div>
               </div>
             </div>
           </div>
@@ -541,7 +554,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         return (
           <div className="leave-container">
             <div className="label">Thinking of leaving us?</div>
-            <a className="btn first-btn" href = "mailto: support@scholar6.org"><SpriteIcon name="email"/> Tell us what would make you stay</a>
+            <a className="btn first-btn" href="mailto: support@scholar6.org"><SpriteIcon name="email" /> Tell us what would make you stay</a>
             <div className="btn" onClick={() => this.cancelSubscription()}>Cancel Subscription</div>
           </div>
         )
