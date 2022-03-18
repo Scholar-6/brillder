@@ -68,8 +68,8 @@
       svg {
         margin-left: 1vw;
         stroke-width: 1.5;
-        width: 4.6vw;
-        height: 4.6vw;
+        width: 3vw;
+        height: 3vw;
       }
 
       @include phone_and_tabletP {
@@ -796,6 +796,10 @@
       background: var(--tab-gray);
       padding: 0.3vh 1vw;
       margin-left: 1vw;
+      &:hover {
+        color: white !important;
+        background: var(--theme-orange);
+      }
     }
     .first-btn {
       display: flex;
@@ -805,6 +809,10 @@
         width: 1.5vw;
         height: 1.5vw;
         margin-right: 0.5vw;
+      }
+      &:hover {
+        color: white !important;
+        background: var(--theme-dark-blue);
       }
     }
   }
