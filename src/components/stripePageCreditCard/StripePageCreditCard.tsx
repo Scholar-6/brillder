@@ -255,7 +255,11 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
         return Math.round(originalAnnualPrice * finalPercentage) / 100;
       }
     }
-    return Math.round(originalAnnualPrice * 0.50379 * 100) / 100;
+    if (isLearner) {
+      return 49.99;
+    } else {
+      return 64.99;
+    }
   }
 
   if (originalPrice === -1) {
