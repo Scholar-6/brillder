@@ -494,7 +494,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <span>
               {renderLabel()} Premium Learner <SpriteIcon name="hero-sparkle" />
             </span>
-            <div className="price">£5 monthly</div>
+            <div className="price">£4.99 monthly</div>
           </div>
         );
       } else if (subscriptionState === 3) {
@@ -503,7 +503,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <span>
               {renderLabel()} Premium Educator <SpriteIcon name="hero-sparkle" />
             </span>
-            <div className="price">£6.5 monthly</div>
+            <div className="price">£6.49 monthly</div>
           </div>
         );
       }
