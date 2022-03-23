@@ -71,23 +71,17 @@ interface QuillEditorProps {
 const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, forwardRef) => {
     /*eslint-disable-next-line*/
     const [currentQuillId, setCurrentQuillId] = React.useContext(QuillEditorContext);
+    const [data, setData] = React.useState(props.data);
 
-    const callOnChange = React.useCallback(
-        _.debounce((content: string, delta: Delta, source: Sources) => {
-            if(props.onChange) {
-                props.onChange(content);
-            }
-        }, 500),
-        [props.onChange]
-    );
-
-    const onChange = (content: string, delta: any, source: Sources) => {
+    const onChange = (content: string) => {
+        console.log(7777, content, data, props.data);
         setData(content);
-        callOnChange(content, delta, source);
+        if (props.onChange) {
+            props.onChange(content);
+        }
     }
 
     const [uniqueId] = React.useState(randomEditorId());
-    const [data, setData] = React.useState(props.data);
     const [quill, setQuill] = React.useState<Quill | null>(null);
 
     const [imageInvalid, setImageInvalid] = React.useState(false);
