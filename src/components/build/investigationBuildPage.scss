@@ -986,6 +986,15 @@ $base-build-border: $editor-radius;
 
 .build-image-caption {
   font-size: 1.05vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 1vw;
+  padding-right: 1vw;
+
+  p {
+    display: inline;
+  }
 }
 
 .phone-question-preview {
