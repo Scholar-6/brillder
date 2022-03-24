@@ -1762,3 +1762,33 @@
     font-size: 4vw;
   }
 }
+
+.question-live-play ol,
+.youtube-video-session ol,
+.phone-question-preview ol {
+  list-style: none;
+  counter-reset: my-awesome-counter;
+
+  li {
+    margin-top: 1.7vw;
+    position: relative;
+    padding-left: 1vw;
+    counter-increment: my-awesome-counter;
+  }
+
+  li::before {
+    position: absolute;
+    top: 0.2vw;
+    left: 0;
+    content: counter(my-awesome-counter) ". ";
+  }
+}
+
+.phone-question-preview li[data-list=ordered]::marker {
+  display: none;
+}
+
+.question-live-play ol li,
+.youtube-video-session ol li {
+  padding-left:5vw;
+}
