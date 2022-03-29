@@ -862,6 +862,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         isOpen={isPremiumLOpen}
         competitionId={activeCompetition?.id}
         user={user}
+        history={history}
         close={() => setPremiumLOpen(false)}
         submit={() => props.history.push(map.StripeLearner)}
       />

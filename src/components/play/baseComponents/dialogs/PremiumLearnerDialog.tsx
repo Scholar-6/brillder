@@ -7,11 +7,13 @@ import userActions from 'redux/actions/user';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { User } from "model/user";
 import { convertBrillsToCredits } from "services/axios/brills";
+import { StripeCredits } from "components/map";
 
 interface InvitationProps {
   isOpen: boolean;
   submit(): void;
   competitionId: number | null;
+  history: any;
   user: User;
   close(): void;
   getUser(): void;
@@ -60,7 +62,7 @@ const PremiumLearnerDialog: React.FC<InvitationProps> = ({ user, ...props}) => {
         <div className="green-btn" onClick={() => convert()}>
           Convert brills to credits
         </div>}
-        <div className="green-btn" onClick={() => props.submit()}>
+        <div className="green-btn" onClick={() => props.history.push(StripeCredits)}>
           Buy more credits
         </div>
       </div>
