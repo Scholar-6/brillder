@@ -126,7 +126,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         intro: `<p>Click here to explore our catalogue and play academic challenges (“bricks”)</p>`,
       }, {
         element: '.brill-intro-container',
-        intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. You can use these to play in our prize competitions. We've given you 200 as a welcome gift!</p>`,
+        intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`,
       }, {
         element: '.second-button.student-back-work',
         intro: `<p>If a teacher has set you an assignment, you'll be able to access it here. A red circle with white numbers will show how many assignments you still have to complete.</p>`,
