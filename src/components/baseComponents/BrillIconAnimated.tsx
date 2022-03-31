@@ -14,6 +14,7 @@ const BrillIconAnimated: React.FC<Props> = (props) => {
   const [currentBrills, setCurrentBrills] = useStateWithCallbackLazy(0);
   const [flipCoin, setFlipCoin] = React.useState(false);
 
+
   const animateBrills = (cashedBrills: number) => {
     const increaseCoins = (userBrills: number) => {
       const high = userBrills;
@@ -59,7 +60,11 @@ const BrillIconAnimated: React.FC<Props> = (props) => {
       setTimeout(() => setFlipCoin(false), 2000);
     }
 
-    if (props.user.brills && props.user.brills > cashedBrills) {
+    console.log(cashedBrills, props.user.brills);
+
+    if (props.user.brills === cashedBrills) {
+      
+    } else if (props.user.brills && props.user.brills > cashedBrills) {
       increaseCoins(props.user.brills);
     } else if (props.user.brills && props.user.brills < cashedBrills) {
       decreaseCoins(props.user.brills);
@@ -73,21 +78,21 @@ const BrillIconAnimated: React.FC<Props> = (props) => {
     if (props.user) {
       const brills = GetUserBrills();
       if (brills) {
-        setCurrentBrills(brills, () => {
+        console.log('updated', props.user)
+        console.log('updated 4', brills)
+        if (brills === currentBrills) {
           animateBrills(brills);
-        });
-
-        if (props.user.brills && props.user.brills > brills) {
-          setTimeout(() => {
-          }, 200);
+        } else {
+          setCurrentBrills(brills, () => animateBrills(brills));
         }
       } else if (props.user.brills) {
+        console.log('updated 5')
         SetUserBrills(props.user.brills);
         setCurrentBrills(props.user.brills, () => { });
       }
     }
     /*eslint-disable-next-line*/
-  }, []);
+  }, [props.user]);
 
   if (!props.user) {
     return <div />
