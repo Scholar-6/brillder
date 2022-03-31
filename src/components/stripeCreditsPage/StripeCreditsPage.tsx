@@ -22,7 +22,7 @@ interface StripePageProps {
 const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK as string);
 
-  return (<div className="StripePayPage">
+  return (<div className="StripePayPage BuyCredits">
     {!isPhone() && <HomeButton link={map.MainPage} history={props.history} />}
     <Elements stripe={stripePromise}>
       <StripeCredits user={props.user} history={props.history} match={props.match}></StripeCredits>
