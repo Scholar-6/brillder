@@ -1,3 +1,4 @@
+import { CreditPrice } from 'components/stripeCreditsPage/StripeCredits';
 import { get, post } from './index';
 
 export interface Coupon {
@@ -62,3 +63,11 @@ export const getCardDetails = async () => {
     return null;
   }
 }
+
+export const buyCredits = async (creditType: CreditPrice) => {
+  try {
+    return await post<any>(`/stripe/buyCredits/1`, {});
+  } catch {
+    return null;
+  }
+}   

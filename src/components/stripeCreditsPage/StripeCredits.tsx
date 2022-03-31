@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { Radio } from '@material-ui/core';
 import { StripeCardElement } from "@stripe/stripe-js"
-import axios from "axios";
 import { connect } from 'react-redux';
 
 import userActions from 'redux/actions/user';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { User } from 'model/user';
-import map from 'components/map';
-import PageLoader from 'components/baseComponents/loaders/pageLoader';
-import { isPhone } from 'services/phone';
+import { buyCredits } from 'services/axios/stripe';
 
+export enum CreditPrice {
+  Small = 1,
+  Medium
+}
 
 interface Props {
   user: User;
@@ -20,7 +20,7 @@ interface Props {
   getUser(): void;
 }
 
-const StripeCredits: React.FC<Props> = ({user, ...props}) => {
+const StripeCredits: React.FC<Props> = ({ user, ...props }) => {
   const stripe = useStripe();
   const elements = useElements() as any;
 
@@ -30,15 +30,9 @@ const StripeCredits: React.FC<Props> = ({user, ...props}) => {
   const [expireValid, setExpireValid] = useState(false);
   const [cvcValid, setCvcValid] = useState(false);
 
+  const [creditPrice, setCreditPrice] = useState(CreditPrice.Small);
+
   const [card, setCard] = useState(null as null | StripeCardElement);
-
-  const loadPrices = async () => {
-  }
-
-  useEffect(() => {
-    loadPrices();
-    /*eslint-disable-next-line*/
-  }, []);
 
 
   useEffect(() => {
@@ -104,11 +98,8 @@ const StripeCredits: React.FC<Props> = ({user, ...props}) => {
       return;
     }
 
-
-    var intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/buyCredits/1`, {}, { withCredentials: true });
-    console.log(intent)
+    const intent = await buyCredits(creditPrice);
     const clientSecret = intent.data;
-    console.log(clientSecret);
 
     if (card) {
       const result = await stripe.confirmCardPayment(clientSecret, {
@@ -128,7 +119,6 @@ const StripeCredits: React.FC<Props> = ({user, ...props}) => {
 
       if (result.paymentIntent?.status === 'succeeded') {
         await props.getUser();
-        //props.history.push(map.MainPage + '?subscribedPopup=true');
         setClicked(false);
         return true
       }
@@ -138,22 +128,22 @@ const StripeCredits: React.FC<Props> = ({user, ...props}) => {
     return false;
   };
 
-  //return <PageLoader content="loading prices" />;
-
-  const renderSubmitButton = () => {
-    return (
-      <button type="submit" disabled={!cardValid || !expireValid || !cvcValid || !stripe || clicked}>
-        Agree
-      </button>
-    );
-  }
-
   return (
     <div className="flex-center">
       <React.Suspense fallback={<></>}>
         <div className="pay-box">
           <form className="CheckOut" onSubmit={(e) => handlePayment(e)}>
             <div className="logo bold">Credits</div>
+            <div className="radio-row">
+              <div className={creditPrice === CreditPrice.Small ? "active" : ''} onClick={() => setCreditPrice(CreditPrice.Small)}>
+                <Radio checked={creditPrice === CreditPrice.Small} />
+                £5 for 5 Credits
+              </div>
+              <div className={creditPrice === CreditPrice.Medium ? 'active' : ''} onClick={() => setCreditPrice(CreditPrice.Medium)}>
+                <Radio checked={creditPrice === CreditPrice.Medium} />
+                <span>£10 for 11 Credits</span>
+              </div>
+            </div>
             <div className="label light">Card Number</div>
             <div id="card-number-element" className="field"></div>
             <div className="two-columns">
@@ -166,8 +156,9 @@ const StripeCredits: React.FC<Props> = ({user, ...props}) => {
                 <div id="card-cvc-element" className="field"></div>
               </div>
             </div>
-            <div className="small light">By clicking “Agree”, you are agreeing to start your subscription immediately, and you can withdraw from the contract and receive a refund within the first 14 days unless you have accessed Brillder content in that time. We will charge the monthly or annual fee to your stored payment method on a recurring basis. You can cancel at any time, effective at the end of the payment period.</div>
-            {renderSubmitButton()}
+            <button type="submit" disabled={!cardValid || !expireValid || !cvcValid || !stripe || clicked}>
+              Agree
+            </button>
           </form>
         </div>
       </React.Suspense>
