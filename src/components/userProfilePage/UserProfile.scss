@@ -817,3 +817,31 @@
     }
   }
 }
+
+
+.customer-real-library {
+  margin-top: 6vh;
+  .sub-title-d43 {
+    padding-left: 2vw;
+    margin-bottom: 1vh;
+  }
+  .MuiInputBase-root {
+    margin-bottom: 1.5vh;
+  }
+  .MuiSelect-root {
+    width: 19vw;
+    padding-top: 1.8vh;
+    border-radius: 1.7vh;
+    padding-bottom: 1.8vh;
+    font-size: 1.5vw;
+    line-height: 1.425;
+    background: var(--off-white);
+  }
+
+  .input-block {
+    > input {
+      width: 19vw;
+      margin-left: 2vw !important;
+    }
+  }
+}

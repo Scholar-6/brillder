@@ -38,6 +38,7 @@ import SaveIntroJs from "./components/SaveIntroJs";
 import ProfileTab from "./ProfileTab";
 import map from "components/map";
 import { cancelSubscription, getCardDetails } from "services/axios/stripe";
+import RealLibraryConnect from "./RealLibraryCoonect";
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
@@ -584,6 +585,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           {renderNextBillingDate(this.state.nextPaymentDate)}
         </div>
         {renderCredits()}
+        {this.state.isAdmin && <RealLibraryConnect />}
         {renderPaymentMethod()}
         {renderLeaveContainer()}
       </div>

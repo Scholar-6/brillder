@@ -20,7 +20,7 @@ interface Props {
   getUser(): void;
 }
 
-const StripeCredits: React.FC<Props> = (props) => {
+const StripeCredits: React.FC<Props> = ({user, ...props}) => {
   const stripe = useStripe();
   const elements = useElements() as any;
 
@@ -104,9 +104,37 @@ const StripeCredits: React.FC<Props> = (props) => {
       return;
     }
 
-    setClicked(true);
 
+    var intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/buyCredits/1`, {}, { withCredentials: true });
+    console.log(intent)
+    const clientSecret = intent.data;
+    console.log(clientSecret);
+
+    if (card) {
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card,
+          billing_details: {
+            email: user.email,
+          },
+        },
+      });
+
+      if (result.error) {
+        console.log('[error]', result.error);
+      } else {
+        console.log('[PaymentIntent]', result.paymentIntent);
+      }
+
+      if (result.paymentIntent?.status === 'succeeded') {
+        await props.getUser();
+        //props.history.push(map.MainPage + '?subscribedPopup=true');
+        setClicked(false);
+        return true
+      }
+    }
     setClicked(false);
+
     return false;
   };
 
