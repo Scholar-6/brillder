@@ -66,7 +66,7 @@ export const getCardDetails = async () => {
 
 export const buyCredits = async (creditType: CreditPrice) => {
   try {
-    return await post<any>(`/stripe/buyCredits/1`, {});
+    return await post<any>(`/stripe/buyCredits/` + creditType, {});
   } catch {
     return null;
   }

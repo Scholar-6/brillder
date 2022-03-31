@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import userActions from 'redux/actions/user';
 import { User } from 'model/user';
 import { buyCredits } from 'services/axios/stripe';
+import map from 'components/map';
 
 export enum CreditPrice {
   Small = 1,
@@ -98,8 +99,7 @@ const StripeCredits: React.FC<Props> = ({ user, ...props }) => {
       return;
     }
 
-    const intent = await buyCredits(creditPrice);
-    const clientSecret = intent.data;
+    const clientSecret = await buyCredits(creditPrice);
 
     if (card) {
       const result = await stripe.confirmCardPayment(clientSecret, {
@@ -120,6 +120,7 @@ const StripeCredits: React.FC<Props> = ({ user, ...props }) => {
       if (result.paymentIntent?.status === 'succeeded') {
         await props.getUser();
         setClicked(false);
+        props.history.push(map.MainPage);
         return true
       }
     }
