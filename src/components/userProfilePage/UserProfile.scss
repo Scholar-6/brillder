@@ -832,10 +832,18 @@
     width: 19vw;
     padding-top: 1.8vh;
     border-radius: 1.7vh;
+    height: 2.15vw !important;
     padding-bottom: 1.8vh;
     font-size: 1.5vw;
-    line-height: 1.425;
+    line-height: 1;
     background: var(--off-white);
+    .MuiListItemText-root {
+      margin: 0 !important;
+    }
+    .MuiTypography-body1 {
+      color: var(--theme-dark-blue);
+      font-size: 1.5vw !important;
+    }
   }
 
   .input-block {
@@ -843,5 +851,14 @@
       width: 19vw;
       margin-left: 2vw !important;
     }
+  }
+  .btn {
+    cursor: pointer;
+    margin-top: 2vh;
+    padding: 1vh 2vw;
+    color: white;
+    border-radius: 1.7vh;
+    font-size: 1.5vw;
+    background: var(--theme-green);
   }
 }
