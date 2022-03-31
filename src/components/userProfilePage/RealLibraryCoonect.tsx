@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { ListItemText, MenuItem, Select } from '@material-ui/core';
 
 import ProfileInput from "./components/ProfileInput";
-import { getRealLibraries } from "services/axios/realLibrary";
+import { claimLibraryAccount, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
+
 
 
 interface Props {
@@ -11,18 +12,25 @@ interface Props {
 const RealLibraryConnect: React.FC<Props> = () => {
   const [libraryCardNumber, setCardNumber] = React.useState('');
   const [pin, setPin] = React.useState('');
-  const [library, setLibrary] = React.useState(null);
-  const [libraries, setLibraries] = React.useState([] as any[]);
+  const [libraryId, setLibrary] = React.useState(null as null | number);
+  const [libraries, setLibraries] = React.useState([] as RealLibrary[]);
 
   const loadLibraries = async () => {
     const libraries = await getRealLibraries();
-    console.log(libraries);
-    setLibraries(libraries);
+    if (libraries) {
+      setLibraries(libraries);
+    }
   }
 
   useEffect(() => {
     loadLibraries();
   }, []);
+
+  const submit = async () => {
+    if (libraryId) {
+      const res = await claimLibraryAccount(libraryId, libraryCardNumber, pin);
+    }
+  }
 
   return (
     <div className="customer-real-library">
@@ -32,7 +40,7 @@ const RealLibraryConnect: React.FC<Props> = () => {
           <Select
             className="select-existed-class"
             placeholder="Library Name"
-            value={library}
+            value={libraryId}
             onChange={e => setLibrary(e.target.value as any)}
             MenuProps={{ classes: { paper: 'select-classes-list' } }}
           >
@@ -51,7 +59,7 @@ const RealLibraryConnect: React.FC<Props> = () => {
         </div>
       </div>
       <div className="flex-center">
-        <div className="btn">Claim Account</div>
+        <div className="btn" onClick={() => submit()}>Claim Account</div>
       </div>
     </div>
   )
