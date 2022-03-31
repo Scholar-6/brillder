@@ -28,7 +28,10 @@ const RealLibraryConnect: React.FC<Props> = () => {
 
   const submit = async () => {
     if (libraryId) {
-      const res = await claimLibraryAccount(libraryId, libraryCardNumber, pin);
+      const success = await claimLibraryAccount(libraryId, libraryCardNumber, pin);
+      if (success) {
+        // success
+      }
     }
   }
 

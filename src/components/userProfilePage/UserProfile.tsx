@@ -578,6 +578,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       return '';
     }
 
+    const renderLibrary = () => {
+      if (this.state.isAdmin && !this.state.subscriptionState) {
+        return <RealLibraryConnect />
+      }
+      return '';
+    }
+
     return (
       <div className="profile-block manage-account-block" >
         <div className="current-plan-box flex-center">
@@ -585,7 +592,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           {renderNextBillingDate(this.state.nextPaymentDate)}
         </div>
         {renderCredits()}
-        {this.state.isAdmin && <RealLibraryConnect />}
+        {renderLibrary()}
         {renderPaymentMethod()}
         {renderLeaveContainer()}
       </div>

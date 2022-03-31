@@ -15,9 +15,9 @@ export const getRealLibraries = async () => {
 
 export const claimLibraryAccount = async (libraryId: number, barcodeNumber: string, pin: string) => {
   try {
-    var dd2 = await post<any>('/user/claimLibraryAccount', {libraryId, barcodeNumber, pin });
-    console.log(dd2);
+    await post<any>('/user/claimLibraryAccount', {libraryId, barcodeNumber, pin });
+    return true;
   } catch {
-    return null;
+    return false;
   }
 }
