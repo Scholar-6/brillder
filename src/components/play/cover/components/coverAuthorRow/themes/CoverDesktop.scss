@@ -17,6 +17,10 @@
     left: 1.75vw;
     width: 3vw !important;
     height: 3vw !important;
+
+    &.always-visible {
+      display: block;
+    }
   }
 
   &:hover {
