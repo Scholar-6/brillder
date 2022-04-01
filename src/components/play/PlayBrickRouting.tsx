@@ -326,9 +326,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const getCompetition = async () => {
-    const competition = await getCompetitionByUser(props.user.id, brick.id);
-    if (competition && competition.isActive) {
-      setActiveCompetition(competition);
+    if (props.user) {
+      const competition = await getCompetitionByUser(props.user.id, brick.id);
+      if (competition && competition.isActive) {
+        setActiveCompetition(competition);
+      }
     }
   }
 
