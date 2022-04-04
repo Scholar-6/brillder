@@ -3,17 +3,17 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import './CoverPlay.scss';
 
 interface Props {
-  credits?: number;
   isAuthor: boolean;
+  isCompetition?: boolean;
   onClick(): any;
 }
 
-const CoverCreditsPlay: React.FC<Props> = ({ credits, isAuthor, onClick }) => {
+const CoverCreditsPlay: React.FC<Props> = ({ isCompetition, isAuthor, onClick }) => {
   const renderDynamicPart = () => {
     if (!isAuthor) {
       return (
         <div className="absolute-credits">
-          {credits}
+          {isCompetition ? 2 : 1 }
         </div>
       );
     }
