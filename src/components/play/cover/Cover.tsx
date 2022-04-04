@@ -26,6 +26,7 @@ import CoverTimer from "./CoverTimer";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
 import map from "components/map";
 import CoverCreditsPlay from "./components/coverAuthorRow/CoverCreditsPlay";
+import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 
 
 interface Props {
@@ -120,6 +121,12 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       <div className="first-row">
         <div className="brick-id-container">
           Brick N<sub className="smaller">o.</sub> {brick.id}
+        </div>
+        <div className="mobile-credit-coins">
+          <div>
+            <SpriteIcon name="circle-lines" />
+            <ReactiveUserCredits />
+          </div>
         </div>
         <div className="hover-area">
           <SpriteIcon name="help-circle-custom" onClick={() => setFirstPhonePopup(true)} />
