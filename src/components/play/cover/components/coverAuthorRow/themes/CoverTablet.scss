@@ -2,6 +2,20 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
+.cover-credits-play {
+  .absolute-credits {
+    position: absolute;
+    text-align: center;
+    width: 2.7vw;
+    font-size: 1.5vw;
+    left: 1.9vw;
+  }
+
+  .hover-icon {
+    display: none;
+  }
+}
+
 .author-row.cover-author-row {
   display: flex;
   padding-left: 0.5vw;

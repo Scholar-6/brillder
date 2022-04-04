@@ -427,6 +427,10 @@ $sidebar-font-size: 1.3vw;
 
 .dashboard-page .sorted-row .brick-row-container {
   padding-top: 0 !important;
+
+  .fwe1-16x9-deadline {
+    display: none;
+  }
 }
 
 html body #root .browser-type-container .dashboard-page .sorted-row {

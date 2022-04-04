@@ -128,7 +128,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                   <p>Well done for completing “<BrickTitle title={brick.title} />”!</p>
                   {renderActionColumns()}
                   <div className="flex-center">
-                    <div className="btn btn-green" onClick={() => history.push(map.ViewAllPage)}>Play Another Brick</div>
+                    <div className="btn btn-green" onClick={() => history.push(map.ViewAllPage + '?mySubject=true')}>Play Another Brick</div>
                   </div>
                 </div>
               </div>
@@ -154,7 +154,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
             <p className="gge-break-line">“<BrickTitle title={brick.title} />”!</p>
             {renderActionColumns()}
             <div className="flex-center">
-              <div className="btn btn-green" onClick={() => history.push(map.ViewAllPage)}>Play Another Brick</div>
+              <div className="btn btn-green" onClick={() => history.push(map.ViewAllPage + '?mySubject=true')}>Play Another Brick</div>
             </div>
           </div>
         </div>

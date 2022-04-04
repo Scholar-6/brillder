@@ -38,6 +38,8 @@ import SaveIntroJs from "./components/SaveIntroJs";
 import ProfileTab from "./ProfileTab";
 import map from "components/map";
 import { cancelSubscription, getCardDetails } from "services/axios/stripe";
+import RealLibraryConnect from "./RealLibraryCoonect";
+import ReactiveUserCredits from "./ReactiveUserCredits";
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
@@ -65,6 +67,7 @@ interface UserProfileState {
   nextPaymentDate?: number | null; // dateTime() number
 
   userBrills?: number;
+  userCredits?: number;
 
   user: UserProfile;
   subjects: Subject[];
@@ -114,6 +117,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         });
       } else {
         tempState.user = getUserProfile(user);
+        tempState.userCredits = user.freeAttemptsLeft;
         this.state = tempState;
       }
     }
@@ -492,7 +496,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <span>
               {renderLabel()} Premium Learner <SpriteIcon name="hero-sparkle" />
             </span>
-            <div className="price">£5 monthly</div>
+            <div className="price">£4.99 monthly</div>
           </div>
         );
       } else if (subscriptionState === 3) {
@@ -501,7 +505,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <span>
               {renderLabel()} Premium Educator <SpriteIcon name="hero-sparkle" />
             </span>
-            <div className="price">£6.5 monthly</div>
+            <div className="price">£6.49 monthly</div>
           </div>
         );
       }
@@ -511,7 +515,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             {renderLabel()} Free Trial
           </span>
           <div className="price btn" onClick={() => this.props.history.push(map.StripeEducator)}>
-            <div>Go Premium <SpriteIcon name="hero-sparkle"/></div>
+            <div>Go Premium <SpriteIcon name="hero-sparkle" /></div>
           </div>
         </div>
       );
@@ -521,13 +525,24 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       if (this.state.userBrills || this.state.userBrills === 0) {
         return (
           <div className="credits-container">
-            <div className="brills-container flex-center">
-              <div className="brill-coin-img">
-                <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
-                <SpriteIcon name="logo" />
+            <div className="first-row flex-center">
+              <div className="brills-container flex-center">
+                <div className="brill-coin-img">
+                  <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
+                  <SpriteIcon name="logo" />
+                </div>
+                <div className="bold">
+                  {this.state.userBrills} Brills
+                </div>
               </div>
-              <div className="bold">
-                {this.state.userBrills} Brills
+              <div className="credits-part flex-center">
+                <div className="user-credits">
+                  <SpriteIcon name="circle-lines" />
+                  <div className="flex-center bold">{this.props.match.params.userId ? this.state.userCredits : <ReactiveUserCredits />}</div>
+                </div>
+                <div className="bold label">
+                  Credits
+                </div>
               </div>
             </div>
           </div>
@@ -541,7 +556,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         return (
           <div className="leave-container">
             <div className="label">Thinking of leaving us?</div>
-            <div className="btn first-btn">Tell us what would make you stay</div>
+            <a className="btn first-btn" href="mailto: support@scholar6.org"><SpriteIcon name="email" /> Tell us what would make you stay</a>
             <div className="btn" onClick={() => this.cancelSubscription()}>Cancel Subscription</div>
           </div>
         )
@@ -564,6 +579,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       return '';
     }
 
+    const renderLibrary = () => {
+      if (this.state.isAdmin && !this.state.subscriptionState) {
+        return <RealLibraryConnect />
+      }
+      return '';
+    }
+
     return (
       <div className="profile-block manage-account-block" >
         <div className="current-plan-box flex-center">
@@ -571,6 +593,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           {renderNextBillingDate(this.state.nextPaymentDate)}
         </div>
         {renderCredits()}
+        {renderLibrary()}
         {renderPaymentMethod()}
         {renderLeaveContainer()}
       </div>
@@ -597,6 +620,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             search={() => { }}
             searching={() => { }}
           />
+          <div className="mobile-upper-space" />
           <ProfileTab roles={this.state.roles} userPreference={this.state.user.userPreference} isProfile={this.state.isProfile} onSwitch={() => this.setState({ isProfile: !this.state.isProfile })} />
           <Grid container direction="row" className="user-profile-content">
             {this.state.isProfile ? this.renderProfileBlock(user) : this.renderManageAccount()}

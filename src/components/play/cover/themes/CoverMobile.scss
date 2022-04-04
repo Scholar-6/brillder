@@ -2,6 +2,24 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+.cover-credits-play {
+  button {
+    position: relative;
+  }
+  .absolute-credits {
+    position: absolute;
+    text-align: center;
+    width: 9vw;
+    font-size: 5.5vw;
+    left: 7vw;
+  }
+
+  .hover-icon {
+    display: none;
+  }
+}
+
+
 .play-preview-pages .sorted-row .cover-page {
   color: var(--theme-dark-blue);
   overflow-y: auto;

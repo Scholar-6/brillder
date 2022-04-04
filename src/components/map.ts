@@ -38,6 +38,7 @@ export const SelectSubjectPage = Onboarding + '/select-subjects';
 export const UserPreferencePage = Onboarding + '/user-preference';
 export const UserProfile = Onboarding + '/profile-page';
 
+export const StripeCredits = '/stripe-credits';
 export const StripePage = '/stripe-subscription';
 export const StripeLearner = StripePage + '/learner';
 export const StripeEducator = StripePage + '/educator';
@@ -146,6 +147,7 @@ export default {
   MainPage,
   LeaderboardPage,
   ChoosePlan,
+  StripeCredits,
   StripeLearner,
   StripeEducator,
 
