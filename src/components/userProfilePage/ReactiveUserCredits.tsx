@@ -7,9 +7,6 @@ interface Props {
   getUser(): any;
 }
 
-/**
- *  Credits will reload every 2seconds. Works only for current logged in user.
- */
 const ReactiveUserCredits:React.FC<Props> = (props) => {
   const [credits, setCredits] = useState(0);
 
@@ -20,7 +17,7 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
 
   useEffect(() => {
     getCredits();
-    
+
     const interval = setInterval(() => {
       getCredits();
     }, 2000);
@@ -37,4 +34,7 @@ const mapDispatch = (dispatch: any) => ({
 });
 
 
+/**
+ *  Credits will reload every 2seconds. Works only for current logged in user.
+ */
 export default connect(null, mapDispatch)(ReactiveUserCredits);

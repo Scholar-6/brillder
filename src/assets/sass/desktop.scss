@@ -1325,3 +1325,26 @@
 .youtube-video-session ol li {
   padding-left: 1.6vw;
 }
+
+.desktop-credit-coins {
+  display: flex;
+  position: relative;
+  margin-right: 1.5vw;
+  svg {
+    width: 3.68vw;
+    height: 3.68vw;
+  }
+  span {
+    color: white;
+    font-family: $font-family-bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.5vw;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
