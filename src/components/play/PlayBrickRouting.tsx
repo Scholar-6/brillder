@@ -301,7 +301,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         for (let i = 0; i < attempts.length; i++) {
           const loopScore = (attempts[i].score + attempts[i].oldScore) / 2;
           if (bestScore < loopScore) {
-            console.log(attempts[i])
             maxScore = attempts[i].maxScore;
             bestScore = loopScore;
           }
@@ -658,6 +657,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
+            isCompetition={!!competitionId}
             setCompetitionId={id => {
               setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
@@ -916,7 +916,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history.push(map.ViewAllPage);
           }}
           registered={() => {
-            console.log('move');
             history.push(routes.playReview(brick));
             setUnauthorized(false);
           }}

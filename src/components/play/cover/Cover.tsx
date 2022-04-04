@@ -33,6 +33,7 @@ interface Props {
   brick: Brick;
   location: any;
   history: any;
+  isCompetition?: boolean;
   canSeeCompetitionDialog?: boolean | null;
   setCompetitionId(id: number): void;
   setUser(data: CreateByEmailRes): void;
@@ -298,7 +299,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <CoverTimer brickLength={brick.brickLength} />
           </div>
           <div className="introduction-info">
-            <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} credits={props.user.freeAttemptsLeft} onClick={() => {
+            <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isCompetition={props.isCompetition} onClick={() => {
               if (props.user) {
                 startBrick();
               } else {
@@ -447,7 +448,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="brief-ellipsis">
                   {briefText}
                 </div>
-                <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} credits={props.user?.freeAttemptsLeft} onClick={() => {
+                <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isCompetition={props.isCompetition} onClick={() => {
                   if (props.user) {
                     startBrick();
                   } else {

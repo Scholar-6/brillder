@@ -134,7 +134,7 @@ const StripeCredits: React.FC<Props> = ({ user, ...props }) => {
       <React.Suspense fallback={<></>}>
         <div className="pay-box">
           <form className="CheckOut" onSubmit={(e) => handlePayment(e)}>
-            <div className="logo bold">Credits</div>
+            <div className="logo bold">Buy Credits</div>
             <div className="radio-row">
               <div className={creditPrice === CreditPrice.Small ? "active" : ''} onClick={() => setCreditPrice(CreditPrice.Small)}>
                 <Radio checked={creditPrice === CreditPrice.Small} />
