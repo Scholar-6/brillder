@@ -87,7 +87,7 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     return (
       <div className={className} ref={this.pageHeader}>
         <div className="menu-buttons">
-          <BrillIconAnimated user={this.props.user} />
+          <BrillIconAnimated />
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
         </div>
@@ -125,13 +125,13 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
 }
 
 const mapState = (state: ReduxCombinedState) => ({
-    notifications: state.notifications.notifications
-  });
-  
-  const mapDispatch = (dispatch: any) => ({
-    getNotifications: () => dispatch(notificationActions.getNotifications())
-  });
+  notifications: state.notifications.notifications
+});
 
-  
+const mapDispatch = (dispatch: any) => ({
+  getNotifications: () => dispatch(notificationActions.getNotifications())
+});
+
+
 const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
 export default connector(PageHeadWithMenu);

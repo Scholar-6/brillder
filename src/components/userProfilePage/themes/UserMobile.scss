@@ -3,10 +3,16 @@
 @import "src/assets/sass/partials/extensions";
 
 .user-profile-page {
+  .mobile-upper-space {
+    height: 4%;
+  }
   .profile-tab {
     width: 100vw;
+    margin-top: 0;
+    min-height: 8%;
 
     >div {
+      min-height: unset;
       font-size: 4.5vw;
 
       svg {
@@ -33,12 +39,16 @@
     }
   }
 
+  .user-profile-content {
+    height: calc(100% - 17.5vw - 4% - 8%);
+  }
+
   .profile-image-container {
     padding-top: 3vh !important;
   }
 
   .profile-block {
-    padding-bottom: 10vw;
+    height: 100%;
 
     .profile-header {
       padding-top: 0 !important;
@@ -76,6 +86,14 @@
 
     .profile-inputs-container {
       padding-top: 10vw !important;
+    }
+
+    .big-input-container textarea,
+    .MuiAutocomplete-root .MuiInput-formControl {
+      border-radius: 1.7vh !important;
+    }
+    .big-input-container textarea {
+      padding-top: 1.2vw;
     }
   }
 
@@ -133,6 +151,16 @@
           height: 8vw;
         }
       }
+      .credits-part {
+        width: 24vw;
+        .user-credits {
+          width: 8vw;
+          height: 8vw;
+        }
+        .label {
+          margin-left: 1.2vw;
+        }
+      }
     }
 
     .card-details {
@@ -177,6 +205,14 @@
         margin-right: 0 !important;
         padding: 0.5vw 2vw;
         width: 100%;
+      }
+
+      .first-btn {
+        svg {
+          width: 5vw;
+          height: 5vw;
+          margin-right: 0.5vw;
+        }
       }
     }
   }

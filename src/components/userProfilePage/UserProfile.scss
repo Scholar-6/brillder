@@ -68,8 +68,8 @@
       svg {
         margin-left: 1vw;
         stroke-width: 1.5;
-        width: 4.6vw;
-        height: 4.6vw;
+        width: 3vw;
+        height: 3vw;
       }
 
       @include phone_and_tabletP {
@@ -696,6 +696,9 @@
     padding: 1vw;
     border-radius: $border-radius;
     background: var(--off-white);
+    .first-row {
+      justify-content: flex-start;
+    }
     .brills-container {
       width: 12vw;
       justify-content: flex-start;
@@ -720,6 +723,31 @@
       }
 
       .bold {
+        margin-left: 1.2vw;
+      }
+    }
+    .credits-part {
+      width: 12vw;
+      .user-credits {
+        width: 4vw;
+        height: 4vw;
+        position: relative;
+        svg {
+          border-radius: 50%;
+          background: var(--theme-green);
+          width: 100%;
+          height: 100%;
+        }
+        div {
+          color: white;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+        }
+      }
+      .label {
         margin-left: 1.2vw;
       }
     }
@@ -760,7 +788,7 @@
 
     .label {
       font-family: $font-family-light;
-      width: 28.5vw;
+      width: 26vw;
     }
     .btn {
       cursor: pointer;
@@ -768,6 +796,69 @@
       background: var(--tab-gray);
       padding: 0.3vh 1vw;
       margin-left: 1vw;
+      &:hover {
+        color: white !important;
+        background: var(--theme-orange);
+      }
     }
+    .first-btn {
+      display: flex;
+      align-items: center;
+      color: var(--theme-dark-blue) !important;
+      svg {
+        width: 1.5vw;
+        height: 1.5vw;
+        margin-right: 0.5vw;
+      }
+      &:hover {
+        color: white !important;
+        background: var(--theme-dark-blue);
+      }
+    }
+  }
+}
+
+
+.customer-real-library {
+  margin-top: 6vh;
+  .sub-title-d43 {
+    padding-left: 2vw;
+    margin-bottom: 1vh;
+  }
+  .MuiInputBase-root {
+    margin-bottom: 1.5vh;
+  }
+  .MuiSelect-root {
+    width: 19vw;
+    padding-top: 1.8vh;
+    border-radius: 1.7vh;
+    height: 2.15vw !important;
+    padding-bottom: 1.8vh;
+    font-size: 1.5vw;
+    line-height: 1;
+    background: var(--off-white);
+    .MuiListItemText-root {
+      margin: 0 !important;
+    }
+    .MuiTypography-body1 {
+      color: var(--theme-dark-blue);
+      font-size: 1.5vw !important;
+    }
+  }
+
+  .input-block {
+    > input {
+      width: 19vw;
+      margin-left: 2vw !important;
+    }
+  }
+  .btn {
+    cursor: pointer;
+    margin-top: 2vh;
+    padding: 1vh 2vw;
+    color: white;
+    border-radius: 1.7vh;
+    font-size: 1.5vw;
+    background: var(--theme-green);
   }
 }

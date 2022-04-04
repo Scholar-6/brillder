@@ -72,11 +72,10 @@ import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigatio
 import CountdownReview from "./preReview/CountdownReview";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
-import LastAttemptDialog from "./baseComponents/dialogs/LastAttemptDialog";
-import PremiumEducatorDialog from "./baseComponents/dialogs/PremiumEducatorDialog";
 import PremiumLearnerDialog from "./baseComponents/dialogs/PremiumLearnerDialog";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import VolumeButton from "components/baseComponents/VolumeButton";
+import { getCompetitionByUser } from "services/axios/competitions";
 
 export enum PlayPage {
   Cover,
@@ -134,6 +133,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [restoredFromCash, setRestored] = useState(false);
   const [isSkipOpen, setPlaySkip] = useState(false);
+
+  const [activeCompetition, setActiveCompetition] = useState(null as any | null); // active competition
 
   const [bestScore, setBestScore] = useState(-1);
 
@@ -214,9 +215,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [searchString, setSearchString] = useState("");
   const [saveFailed, setFailed] = useState(false);
 
-  const [isLastAttemptOpen, setLastAttemptDialog] = useState(false);
   const [isPremiumLOpen, setPremiumLOpen] = useState(false);
-  const [isPremiumEOpen, setPremiumEOpen] = useState(false);
 
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
@@ -231,7 +230,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   //#602 user can play competition only once in current brick.
   const setCompetitionId = (compId: number, previousAttempts: any[]) => {
     let found = previousAttempts.find(a => a.competitionId === compId);
-    console.log(777, found);
     if (!found) {
       setCompetitionIdV2(compId);
       brick.competitionId = compId;
@@ -289,15 +287,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const showInitDialogs = async () => {
     var user = await props.getUser();
-    if (user) {
-      /*eslint-disable-next-line*/
-      if (user.freeAttemptsLeft == 1) {
-        setLastAttemptDialog(true);
-      } else if (user.freeAttemptsLeft <= 0) {
-        setPremiumLOpen(true);
-      } else if (user.freeAssignmentsLeft <= 0) {
-        setPremiumEOpen(true);
-      }
+    if (user && user.freeAttemptsLeft <= 0) {
+      setPremiumLOpen(true);
     }
   }
 
@@ -310,7 +301,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         for (let i = 0; i < attempts.length; i++) {
           const loopScore = (attempts[i].score + attempts[i].oldScore) / 2;
           if (bestScore < loopScore) {
-            console.log(attempts[i])
             maxScore = attempts[i].maxScore;
             bestScore = loopScore;
           }
@@ -334,6 +324,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
+  const getCompetition = async () => {
+    if (props.user) {
+      const competition = await getCompetitionByUser(props.user.id, brick.id);
+      if (competition && competition.isActive) {
+        setActiveCompetition(competition);
+      }
+    }
+  }
+
   // only cover page should have big sidebar
   useEffect(() => {
     showInitDialogs();
@@ -348,6 +347,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
 
     getBestScore();
+
+    getCompetition();
     /*eslint-disable-next-line*/
   }, [])
 
@@ -656,6 +657,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
+            isCompetition={!!competitionId}
             setCompetitionId={id => {
               setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
@@ -858,16 +860,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const renderPremiumPopups = () => {
     const { user } = props;
     if (user) {
-      return <div>
-        {(user.subscriptionState === 0 || !user.subscriptionState) &&
-          <LastAttemptDialog isOpen={isLastAttemptOpen} history={history} close={() => setLastAttemptDialog(false)} submit={() => {
-            toggleSideBar(true);
-            setLastAttemptDialog(false);
-            moveToBrief();
-          }} />}
-        {(user.subscriptionState === 0 || !user.subscriptionState) && <PremiumEducatorDialog isOpen={isPremiumEOpen} close={() => setPremiumEOpen(false)} submit={() => props.history.push(map.StripeEducator)} />}
-        {(user.subscriptionState === 0 || !user.subscriptionState) && <PremiumLearnerDialog isOpen={isPremiumLOpen} close={() => setPremiumLOpen(false)} submit={() => props.history.push(map.StripeLearner)} />}
-      </div>
+      return <PremiumLearnerDialog
+        isOpen={isPremiumLOpen}
+        competitionId={activeCompetition?.id}
+        user={user}
+        history={history}
+        close={() => setPremiumLOpen(false)}
+        submit={() => props.history.push(map.StripeLearner)}
+      />
     }
     return '';
   }
@@ -887,8 +887,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               bestScore={bestScore}
               sidebarRolledUp={sidebarRolledUp}
               empty={finalStep}
+              competitionId={competitionId}
               setMode={setMode}
-              showPremium={() => setPremiumEOpen(true)}
+              showPremium={() => {}}
               toggleSidebar={setSidebar}
             />}
           {renderRouter()}
@@ -915,7 +916,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history.push(map.ViewAllPage);
           }}
           registered={() => {
-            console.log('move');
             history.push(routes.playReview(brick));
             setUnauthorized(false);
           }}

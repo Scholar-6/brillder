@@ -44,7 +44,7 @@ import BrickWrapper from './BrickWrapper';
 
 import { getBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'services/zendesk';
-import map from 'components/map';
+import map, { StripeCredits } from 'components/map';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/onboarding/terms/Terms';
@@ -66,6 +66,7 @@ import { GetYoutubeClick } from 'localStorage/play';
 import StripePage from 'components/stripePage/StripePage';
 import LeaderboardPage from 'components/competitions/LeaderboardPage';
 import ChoosePlan from 'components/choosePlan/ChoosePlan';
+import StripeCreditsPage from 'components/stripeCreditsPage/StripeCreditsPage';
 
 
 interface AppProps {
@@ -250,6 +251,7 @@ const App: React.FC<AppProps> = props => {
         <Profiler id="app-tsx" onRender={onRenderCallback} >
           {/* all page routes are here order of routes is important */}
           <Switch>
+            <AllUsersRoute path={StripeCredits} component={StripeCreditsPage} />
             <AllUsersRoute path="/stripe-subscription/:type" component={StripePage} />
             <UnauthorizedRoute path={map.SubjectCategories} component={ViewAll} />
             <UnauthorizedRoute path={map.SearchPublishBrickPage} component={ViewAll} />

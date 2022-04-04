@@ -18,7 +18,6 @@ import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import SponsorImageComponent from "./SponsorImage";
 import CoverAuthorRow from "./components/coverAuthorRow/CoverAuthorRow";
-import CoverPlay from "./components/coverAuthorRow/CoverPlay";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 
 import { CreateByEmailRes } from "services/axios/user";
@@ -26,6 +25,8 @@ import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
 import map from "components/map";
+import CoverCreditsPlay from "./components/coverAuthorRow/CoverCreditsPlay";
+import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 
 
 interface Props {
@@ -33,6 +34,7 @@ interface Props {
   brick: Brick;
   location: any;
   history: any;
+  isCompetition?: boolean;
   canSeeCompetitionDialog?: boolean | null;
   setCompetitionId(id: number): void;
   setUser(data: CreateByEmailRes): void;
@@ -60,8 +62,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       setUnauthorizedV2(true);
     }
   }, 10000);
-
-  console.log(777, props.canSeeCompetitionDialog)
 
   const getNewestCompetition = (competitions: any[]) => {
     let competition = null;
@@ -121,6 +121,12 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       <div className="first-row">
         <div className="brick-id-container">
           Brick N<sub className="smaller">o.</sub> {brick.id}
+        </div>
+        <div className="mobile-credit-coins">
+          <div>
+            <SpriteIcon name="circle-lines" />
+            <ReactiveUserCredits />
+          </div>
         </div>
         <div className="hover-area">
           <SpriteIcon name="help-circle-custom" onClick={() => setFirstPhonePopup(true)} />
@@ -300,7 +306,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <CoverTimer brickLength={brick.brickLength} />
           </div>
           <div className="introduction-info">
-            <CoverPlay onClick={() => {
+            <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isCompetition={props.isCompetition} onClick={() => {
               if (props.user) {
                 startBrick();
               } else {
@@ -449,7 +455,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="brief-ellipsis">
                   {briefText}
                 </div>
-                <CoverPlay onClick={() => {
+                <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isCompetition={props.isCompetition} onClick={() => {
                   if (props.user) {
                     startBrick();
                   } else {

@@ -94,7 +94,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
     return (
       <div className="student-library-link" onClick={() => props.history.push(map.MyLibrary + '/' + user.id)}>
         <SpriteIcon name="bar-chart-2" />
-        <div className="css-custom-tooltip">View {name} library</div>
+        <div className="css-custom-tooltip bold">View {name} library</div>
       </div>
     );
   }
@@ -120,11 +120,13 @@ const StudentTable: React.FC<StudentTableProps> = props => {
               <div className="drag-icon-container">
                 <DragIndicatorIcon className="user-drag-icon" />
               </div>
-              <Checkbox
-                checked={user.selected}
-                onMouseOver={() => onHover(user)} onMouseLeave={() => onBlur(user)} />
+              <div className="select-container">
+                <Checkbox
+                  checked={user.selected}
+                  onMouseOver={() => onHover(user)} onMouseLeave={() => onBlur(user)} />
+                <div className="css-custom-tooltip bold">Select</div>
+              </div>
               {!user.hasInvitation && renderLibraryLink(user)}
-              {user.selectHovered && <div className="custom-tooltip">Select</div>}
             </div>
             <div className="student-name">
               {user.hasInvitation
@@ -152,7 +154,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                       onClick={e => {
                         props.history.push(map.UserProfile + `/${user.id}`);
                         e.stopPropagation();
-                      }}/>
+                      }} />
                   </div>}
                 {props.isClassroom &&
                   <div className="trash-button svgOnHover" onClick={e => {
