@@ -39,6 +39,7 @@ import ProfileTab from "./ProfileTab";
 import map from "components/map";
 import { cancelSubscription, getCardDetails } from "services/axios/stripe";
 import RealLibraryConnect from "./RealLibraryCoonect";
+import ReactiveUserCredits from "./ReactiveUserCredits";
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
@@ -537,7 +538,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               <div className="credits-part flex-center">
                 <div className="user-credits">
                   <SpriteIcon name="circle-lines" />
-                  <div className="flex-center bold">{this.state.userCredits}</div>
+                  <div className="flex-center bold">{this.props.match.params.userId ? this.state.userCredits : <ReactiveUserCredits />}</div>
                 </div>
                 <div className="bold label">
                   Credits
