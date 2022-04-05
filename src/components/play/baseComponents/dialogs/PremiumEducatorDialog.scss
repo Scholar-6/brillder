@@ -28,6 +28,35 @@
       color: var(--theme-green);
       left: 0.2vw;
     }
+    &.smaller {
+      font-size: 1.7vw;
+    }
+  }
+  .top-popup-brill-icon {
+    .brill-coin-img {
+      position: relative;
+      width: 7vw;
+      height: 7vw;
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      svg {
+        color: var(--theme-orange);
+        position: absolute;
+        top: 22.5%;
+        left: 22.5%;
+        width: 55%;
+        height: 55%;
+      }
+    }
+
+    .css-custom-tooltip {
+      display: none !important;
+    }
   }
   .list {
     margin-top: 4vh;

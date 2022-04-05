@@ -1347,6 +1347,32 @@
     align-items: center;
     justify-content: center;
   }
+  .css-custom-tooltip {
+    left: unset !important;
+    top: 4.5vw;
+    right: -7vw;
+    z-index: 100;
+    width: 20vw;
+    padding: 1.4vw 2vw;
+    font-size: 1.05vw;
+    text-align: center;
+
+    .green-btn {
+      cursor: pointer;
+      margin-top: 1vw;
+      border-radius: 0.3vw;
+      font-size: 1.3vw;
+      padding: 0.2vw 0.8vw;
+      font-family: $font-family-bold;
+      color: white;
+      background: var(--theme-green) !important;
+    }
+  }
+  &:hover .css-custom-tooltip {
+    background: white;
+    opacity: 1;
+    display: block !important;
+  }
 }
 
 .out-of-credits-dialog {
