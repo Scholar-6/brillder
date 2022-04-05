@@ -1,4 +1,5 @@
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { StripeCredits } from 'components/map';
 import React, { useEffect, useState} from 'react';
 import { connect } from "react-redux";
 
@@ -7,6 +8,7 @@ import userActions from "redux/actions/user";
 interface Props {
   className?: string;
   getUser(): any;
+  history?: any;
 }
 
 const ReactiveUserCredits:React.FC<Props> = (props) => {
@@ -33,6 +35,18 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
     <div className={props.className}>
       {credits > 0 ? <SpriteIcon name="circle-lines" /> : <SpriteIcon name="circle-lines-blue" />}
       <span>{credits}</span>
+      <div className="css-custom-tooltip">
+        <div className="bold">You have {credits} credits remaining.</div>
+        <div className="flex-center">
+          <div className="green-btn" onClick={() => {
+            if (props.history) {
+              props.history.push(StripeCredits);
+            }
+          }}>
+            Buy more credits
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

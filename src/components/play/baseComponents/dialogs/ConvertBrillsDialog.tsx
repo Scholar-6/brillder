@@ -42,14 +42,13 @@ const BuyCreditsDialog: React.FC<InvitationProps> = ({ user, competitionId, ...p
       onClose={props.close}
       className="dialog-box premium-educator-dialog bold out-of-credits-dialog"
     >
-      <div className="flex-center">
-        <div className="red-circle"><SpriteIcon name="alert-triangle" /></div>
-      </div>
-      <div className="premium-label">
-        {competitionId ? <div>To enter this competition, you will need<br/>  toconvert 200 brills into 2 credits</div> : <div>To play this brick, you will need<br/> to convert 100 brills into 1 credit</div>}
-      </div>
-      <div className="grey-btn" onClick={convert}>
+      <div className="flex-center top-popup-brill-icon">
         <BrillIcon />
+      </div>
+      <div className="premium-label smaller">
+        {competitionId ? <div>To enter this competition, you will need<br/> to convert 200 brills into 2 credits.</div> : <div>To play this brick, you will need<br/> to convert 100 brills into 1 credit.</div>}
+      </div>
+      <div className="green-btn" onClick={convert}>
         Convert and Start Playing
       </div>
     </Dialog>
