@@ -1,9 +1,11 @@
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import React, { useEffect, useState} from 'react';
 import { connect } from "react-redux";
 
 import userActions from "redux/actions/user";
 
 interface Props {
+  className?: string;
   getUser(): any;
 }
 
@@ -24,9 +26,15 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
 
     // free resources
     return () => { clearInterval(interval); }
+    /*eslint-disable-next-line*/
   }, []);
 
-  return <span>{credits}</span>
+  return (
+    <div className={props.className}>
+      {credits > 0 ? <SpriteIcon name="circle-lines" /> : <SpriteIcon name="circle-lines-blue" />}
+      <span>{credits}</span>
+    </div>
+  );
 }
 
 const mapDispatch = (dispatch: any) => ({

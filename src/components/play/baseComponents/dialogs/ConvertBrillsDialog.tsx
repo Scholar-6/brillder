@@ -7,42 +7,30 @@ import userActions from 'redux/actions/user';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { User } from "model/user";
 import { convertBrillsToCredits } from "services/axios/brills";
-import { StripeCredits } from "components/map";
+import BrillIcon from "components/baseComponents/BrillIcon";
 
 interface InvitationProps {
   isOpen: boolean;
   submit(): void;
   competitionId: number | null;
-  history: any;
   user: User;
   close(): void;
   getUser(): void;
 }
 
-const PremiumLearnerDialog: React.FC<InvitationProps> = ({ user, ...props}) => {
-  let haveBrills = false;
-
+const BuyCreditsDialog: React.FC<InvitationProps> = ({ user, competitionId, ...props}) => {
   const [clicked, setClicked] = React.useState(false);
-
-  if (user.brills) {
-    if (props.competitionId && user.brills >= 200) {
-      haveBrills = true;
-    } else if (!props.competitionId && user.brills >= 100) {
-      haveBrills = true;
-    }
-  }
 
   const convert = async () => {
     if (clicked) {
       return;
     }
     setClicked(true);
-    const success = await convertBrillsToCredits(props.competitionId);
+    const success = await convertBrillsToCredits(competitionId);
     if (success) {
       props.getUser();
       props.close();
-      // get user
-      // animate brills
+      props.submit();
     }
     setClicked(false);
   }
@@ -57,17 +45,12 @@ const PremiumLearnerDialog: React.FC<InvitationProps> = ({ user, ...props}) => {
       <div className="flex-center">
         <div className="red-circle"><SpriteIcon name="alert-triangle" /></div>
       </div>
-      <div className="flex-center premium-label">
-        Oh no! You are out of credits.
+      <div className="premium-label">
+        {competitionId ? <div>To enter this competition, you will need<br/>  toconvert 200 brills into 2 credits</div> : <div>To play this brick, you will need<br/> to convert 100 brills into 1 credit</div>}
       </div>
-      <div className="flex-center">
-        {haveBrills &&
-        <div className="green-btn" onClick={() => convert()}>
-          Convert brills to credits
-        </div>}
-        <div className="green-btn" onClick={() => props.history.push(StripeCredits)}>
-          Buy more credits
-        </div>
+      <div className="grey-btn" onClick={convert}>
+        <BrillIcon />
+        Convert and Start Playing
       </div>
     </Dialog>
   );
@@ -78,4 +61,4 @@ const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
 });
 
-export default connect(null, mapDispatch)(PremiumLearnerDialog);
+export default connect(null, mapDispatch)(BuyCreditsDialog);

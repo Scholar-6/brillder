@@ -1535,8 +1535,13 @@
 }
 
 .premium-educator-dialog {
+  .MuiPaper-root {
+    padding: 5vw !important;
+  }
   .premium-label {
-    font-size: 6.7vw;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    font-size: 6vw;
 
     svg {
       width: 16vw;
@@ -1557,11 +1562,31 @@
       height: 4.5vw;
     }
   }
+  .grey-btn,
   .green-btn {
     font-size: 6vw;
+    color: var(--white);
     background: var(--theme-green) !important;
     border-radius: 2vw;
     padding: 2vw 4vw;
+  }
+
+  .grey-btn {
+    background: var(--tab-gray) !important;
+    color: var(--theme-dark-blue) !important;
+  }
+  
+  .mobile-block {
+    display: block !important;
+  }
+  .brill-coin-img {
+    margin-right: 2vw !important;
+    width: 8vw !important;
+    height: 8vw !important;
+
+    .css-custom-tooltip {
+      display: none !important;
+    }
   }
 }
 
