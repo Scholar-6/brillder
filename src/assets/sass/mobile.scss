@@ -1536,7 +1536,7 @@
 
 .premium-educator-dialog {
   .premium-label {
-    font-size: 11vw;
+    font-size: 6.7vw;
 
     svg {
       width: 16vw;
@@ -1821,6 +1821,29 @@
       justify-content: center;
       width: $size-3d2;
       height: $size-3d2;
+    }
+  }
+}
+
+
+.out-of-credits-dialog {
+  .red-circle {
+    margin-left: 1vw;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--theme-orange);
+    width: 18vw;
+    height: 18vw;
+
+    svg {
+      margin: 0;
+      stroke-width: 2;
+      margin-bottom: 0.3vw;
+      color: white;
+      width: 11vw;
+      height: 11vw;
     }
   }
 }
