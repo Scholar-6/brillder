@@ -52,10 +52,13 @@ const PremiumLearnerDialog: React.FC<InvitationProps> = ({ user, ...props}) => {
     <Dialog
       open={props.isOpen}
       onClose={props.close}
-      className="dialog-box premium-educator-dialog bold"
+      className="dialog-box premium-educator-dialog bold out-of-credits-dialog"
     >
+      <div className="flex-center">
+        <div className="red-circle"><SpriteIcon name="alert-triangle" /></div>
+      </div>
       <div className="flex-center premium-label">
-        You are out of credits. <SpriteIcon className="text-orange" name="alert-triangle" />
+        Oh no! You are out of credits.
       </div>
       <div className="flex-center">
         {haveBrills &&
