@@ -3,6 +3,12 @@
 @import 'src/assets/sass/partials/extensions';
 
 .premium-educator-dialog {
+  .close-button svg {
+    color: var(--theme-blue) !important;
+    &:hover {
+      color: var(--theme-orange) !important;
+    }
+  }
   .MuiPaper-root {
     padding: 2vw 2vw 2vw 2vw !important;
     color: var(--theme-dark-blue);
