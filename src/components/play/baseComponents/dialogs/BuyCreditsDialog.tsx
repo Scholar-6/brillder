@@ -33,6 +33,9 @@ const BuyCreditsDialog: React.FC<InvitationProps> = ({ user, ...props}) => {
       onClose={props.close}
       className="dialog-box premium-educator-dialog bold out-of-credits-dialog"
     >
+      <div className="close-button svgOnHover" onClick={props.close}>
+        <SpriteIcon name="cancel" className="w100 h100 active" />
+      </div>
       <div className="flex-center">
         <div className="red-circle"><SpriteIcon name="alert-triangle" /></div>
       </div>
