@@ -657,7 +657,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
-            isCompetition={!!competitionId}
+            isCompetition={!!activeCompetition}
             setCompetitionId={id => {
               setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
