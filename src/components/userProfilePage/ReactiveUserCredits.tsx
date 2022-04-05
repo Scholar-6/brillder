@@ -30,6 +30,7 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
     return () => { clearInterval(interval); }
     /*eslint-disable-next-line*/
   }, []);
+  
 
   return (
     <div className={props.className}>
