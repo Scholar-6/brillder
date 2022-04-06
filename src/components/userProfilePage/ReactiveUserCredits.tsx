@@ -39,7 +39,7 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
       {credits > 0 ? <SpriteIcon name="circle-lines" /> : <SpriteIcon name="circle-lines-blue" />}
       <span>{credits}</span>
       <div className="css-custom-tooltip">
-        <div className="bold">You have {credits} credits remaining.</div>
+        <div className="bold">You have {credits} credit{credits > 1 ? 's' : ''}  remaining.</div>
         <div className="flex-center">
           <div className="green-btn blue-on-hover" onClick={() => {
             if (props.history) {

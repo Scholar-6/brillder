@@ -1370,7 +1370,11 @@
       padding: 0.2vw 0.8vw;
       font-family: $font-family-bold;
       color: white;
+      transition: all 300ms ease-in-out;
       background: var(--theme-green) !important;
+    }
+    .blue-on-hover:hover {
+      background: var(--theme-dark-blue) !important;
     }
   }
   &:hover .css-custom-tooltip {
