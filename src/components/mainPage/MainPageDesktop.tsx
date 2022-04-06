@@ -423,9 +423,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
               </div> : <div className="second-item not-active light-blue" />
             }
           </div>
-          <div className="main-p-absolute-credits">
-            <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
-          </div>
           {(this.state.isTeacher || this.state.isAdmin) ?
             <div className="second-col">
               <div>
