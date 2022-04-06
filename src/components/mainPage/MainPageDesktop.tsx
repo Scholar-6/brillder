@@ -34,7 +34,6 @@ import InvalidDialog from "components/build/baseComponents/dialogs/InvalidDialog
 import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import SubscribedDialog from "./components/SubscibedDialog";
-import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 
 
 
