@@ -15,8 +15,10 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
   const [credits, setCredits] = useState(0);
 
   const getCredits = async () => {
-    const user = await props.getUser();
-    setCredits(user.freeAttemptsLeft);
+    try {
+      const user = await props.getUser();
+      setCredits(user.freeAttemptsLeft);
+    } catch {}
   }
 
   useEffect(() => {
