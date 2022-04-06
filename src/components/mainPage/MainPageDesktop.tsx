@@ -34,6 +34,7 @@ import InvalidDialog from "components/build/baseComponents/dialogs/InvalidDialog
 import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import SubscribedDialog from "./components/SubscibedDialog";
+import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 
 
 
@@ -421,6 +422,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
                 Go Premium <SpriteIcon name="hero-sparkle" />
               </div> : <div className="second-item not-active light-blue" />
             }
+          </div>
+          <div className="main-p-absolute-credits">
+            <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
           </div>
           {(this.state.isTeacher || this.state.isAdmin) ?
             <div className="second-col">

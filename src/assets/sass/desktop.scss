@@ -1329,7 +1329,9 @@
 .desktop-credit-coins {
   display: flex;
   position: relative;
-  margin-right: 1.5vw;
+  height: 5.68vw;
+  width: 3.68vw;
+  padding-bottom: 2vw;
   svg {
     width: 3.68vw;
     height: 3.68vw;
@@ -1340,6 +1342,8 @@
     position: absolute;
     top: 0;
     left: 0;
+    width: 3.68vw !important;
+    height: 3.68vw !important;
     font-size: 1.5vw;
     height: 100%;
     width: 100%;
@@ -1349,6 +1353,7 @@
   }
   .css-custom-tooltip {
     left: unset !important;
+    display: none;
     top: 4.5vw;
     right: -7vw;
     z-index: 100;
@@ -1395,4 +1400,17 @@
       height: 2.8vw;
     }
   }
+}
+
+.main-p-absolute-credits {
+  position: absolute;
+  z-index: 100;
+  top: 1vw;
+  left: 70vw;
+}
+
+.header-credits-container {
+  width: 3.68vw;
+  height: 3.68vw;
+  margin-right: 1.5vw;
 }
