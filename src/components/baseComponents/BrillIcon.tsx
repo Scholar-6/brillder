@@ -29,10 +29,9 @@ const BrillIcon: React.FC<any> = () => {
         <div className="bold">What are brills?</div>
         <div className="regular">
           If you score over 50% on a brick, your percentage converts into bonus points, called brills.
-          Collect enough brills and you can win cash prizes!
         </div>
         <div className="regular" style={{marginTop: '1vw'}}>
-          Collect enough brills and you can even win cash prizes!
+          Collect enough brills and you can win cash prizes!
         </div>
       </div>
     </div>

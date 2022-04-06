@@ -41,13 +41,16 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
       <div className="css-custom-tooltip">
         <div className="bold">You have {credits} credits remaining.</div>
         <div className="flex-center">
-          <div className="green-btn" onClick={() => {
+          <div className="green-btn blue-on-hover" onClick={() => {
             if (props.history) {
               props.history.push(StripeCredits);
             }
           }}>
             Buy more credits
           </div>
+        </div>
+        <div className="regular">
+          Spend 1 credit to play a Brick from the catalogue or 2 credits to enter a competition.
         </div>
       </div>
     </div>
