@@ -218,7 +218,6 @@ class Library extends Component<BricksListProps, BricksListState> {
       for (let assignment of rawAssignments) {
         if (assignment && !assignment.bestAttemptPercentScore && assignment.lastAttemptScore && assignment.maxScore) {
           assignment.bestAttemptPercentScore = assignment.lastAttemptScore / assignment.maxScore * 100;
-          console.log(777, assignment.lastAttemptScore/assignment.maxScore, assignment.lastAttemptScore, assignment.maxScore);
         }
       }
 

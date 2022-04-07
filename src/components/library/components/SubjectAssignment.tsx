@@ -38,10 +38,6 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   const score = assignment.bestAttemptPercentScore ? assignment.bestAttemptPercentScore : 0;
   const height = assignment.bestAttemptPercentScore ? assignment.bestAttemptPercentScore : minHeight;
 
-  if (subject.name === 'English Literature') {
-    console.log('5556', assignment, height);
-  }
-
   let { color } = subject;
   if (subject.name === GENERAL_SUBJECT) {
     color = "white";
