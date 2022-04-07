@@ -1251,3 +1251,70 @@ html body #root .browser-type-container .manage-classrooms-page .sorted-row {
 .youtube-video-session ol li {
   padding-left: 1.6vw;
 }
+
+
+.out-of-credits-dialog {
+  .red-circle {
+    margin-left: 1vw;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--theme-orange);
+    width: 4.5vw;
+    height: 4.5vw;
+
+    svg {
+      margin: 0;
+      stroke-width: 2;
+      margin-bottom: 0.3vw;
+      color: white;
+      width: 2.8vw;
+      height: 2.8vw;
+    }
+  }
+}
+
+
+.desktop-credit-coins {
+  display: flex;
+  position: relative;
+  height: 5.68vw;
+  width: 3.68vw;
+  padding-bottom: 2vw;
+  svg {
+    width: 3.68vw;
+    height: 3.68vw;
+  }
+  span {
+    color: white;
+    font-family: $font-family-bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3.68vw !important;
+    height: 3.68vw !important;
+    font-size: 1.5vw;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .css-custom-tooltip {
+    display: none;
+  }
+}
+
+.main-p-absolute-credits {
+  position: absolute;
+  z-index: 100;
+  top: 1vw;
+  left: 74vw;
+}
+
+.header-credits-container {
+  width: 3.68vw;
+  height: 3.68vw;
+  margin-right: 1.5vw;
+}

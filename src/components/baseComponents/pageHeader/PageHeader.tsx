@@ -265,9 +265,8 @@ class PageHeader extends Component<Props, State> {
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
                   <BrillIconAnimated />
-                  <div className="desktop-credit-coins">
-                    <SpriteIcon name="circle-lines" />
-                    <ReactiveUserCredits />
+                  <div className="header-credits-container">
+                    <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
                   </div>
                   <BellButton
                     notificationCount={notificationCount}

@@ -3,8 +3,14 @@
 @import 'src/assets/sass/partials/extensions';
 
 .premium-educator-dialog {
+  .close-button svg {
+    color: var(--theme-blue) !important;
+    &:hover {
+      color: var(--theme-orange) !important;
+    }
+  }
   .MuiPaper-root {
-    padding: 2vh 3.5vw 4vh 4.3vw !important;
+    padding: 2vw 2vw 2vw 2vw !important;
     color: var(--theme-dark-blue);
   }
   .flex-center {
@@ -13,7 +19,9 @@
   .premium-label {
     position: relative;
     display: flex;
-    font-size: 3.3vw;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    font-size: 2vw;
     svg {
       margin-left: 1vw;
       width: 6.7vw;
@@ -25,6 +33,35 @@
       bottom: 0.2vw;
       color: var(--theme-green);
       left: 0.2vw;
+    }
+    &.smaller {
+      font-size: 1.7vw;
+    }
+  }
+  .top-popup-brill-icon {
+    .brill-coin-img {
+      position: relative;
+      width: 7vw;
+      height: 7vw;
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      svg {
+        color: var(--theme-orange);
+        position: absolute;
+        top: 22.5%;
+        left: 22.5%;
+        width: 55%;
+        height: 55%;
+      }
+    }
+
+    .css-custom-tooltip {
+      display: none !important;
     }
   }
   .list {
@@ -48,6 +85,7 @@
     }
   }
 
+  .grey-btn,
   .green-btn {
     cursor: pointer;
     margin-top: 2vh;
@@ -59,13 +97,42 @@
     
     border-radius: 0.5vw;
     padding: 0.5vw 1.4vw;
-    font-size: 2.1vw;
+    font-size: 1.6vw;
     margin-right: 0.7vw;
 
     transition: all 300ms ease-in-out;
 
     &:hover {
       background: var(--theme-dark-blue);
+    }
+
+    .brill-coin-img {
+      position: relative;
+      width: 2.3vw;
+      height: 2.3vw;
+      margin-right: 0.5vw;
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      svg {
+        color: var(--theme-orange);
+        position: absolute;
+        top: 22.5%;
+        left: 22.5%;
+        width: 55%;
+        height: 55%;
+      }
+    }
+  }
+  .grey-btn {
+    background: var(--tab-gray);
+    color: var(--theme-dark-blue);
+    &:hover {
+      color: var(--white);
     }
   }
 }

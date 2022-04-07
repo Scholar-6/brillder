@@ -18,6 +18,7 @@ import { PageEnum } from './PageHeadWithMenu';
 import { isMobile } from "react-device-detect";
 import NotificationPanel from "../notificationPanel/NotificationPanel";
 import BrillIconAnimated from "../BrillIconAnimated";
+import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 
 interface MainPageMenuProps {
   history: any;
@@ -88,6 +89,9 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
       <div className={className} ref={this.pageHeader}>
         <div className="menu-buttons">
           <BrillIconAnimated />
+          <div className="header-credits-container">
+            <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
+          </div>
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
         </div>
