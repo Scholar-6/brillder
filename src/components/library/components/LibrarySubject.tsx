@@ -20,6 +20,10 @@ interface LibrarySubjectState {
 
 class LibrarySubjects extends Component<LibrarySubjectsProps, LibrarySubjectState> {
   renderAssignment(assignment: LibraryAssignmentBrick, key: number) {
+    if (this.props.subjectAssignment.subject.name === 'English Literature') {
+      console.log('555', this.props);
+    }
+
     return <div key={key}>
       <SubjectAssignment
         subject={this.props.subjectAssignment.subject}
