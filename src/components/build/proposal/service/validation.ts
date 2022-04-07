@@ -1,5 +1,6 @@
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { Brick } from "model/brick";
+import { User } from "model/user";
 import { MaxKeywordLength } from "../questionnaire/brickTitle/components/KeyWords";
 
 export interface ValidateProposalResult {
@@ -7,13 +8,20 @@ export interface ValidateProposalResult {
   url: string;
 }
 
-export function validateProposal(brick: Brick) {
+export function validateProposal(user: User, brick: Brick) {
   let isValid = true;
   const url = `/build/brick/${brick.id}/plan`;
 
+  let isAuthor = false;
+  try {
+    isAuthor = brick.author.id === user.id;
+  } catch { }
+
+  console.log(isAuthor);
+
   if (!brick.subjectId) {
     isValid = false;
-  } else if (!stripHtml(brick.title) || brick.academicLevel < 1 || brick.keywords.length === 0) {
+  } else if (!stripHtml(brick.title) || brick.academicLevel < 1) {
     isValid = false;
   } else if (!stripHtml(brick.openQuestion)) {
     isValid = false;
@@ -23,7 +31,10 @@ export function validateProposal(brick: Brick) {
     isValid = false;
   } else if (!brick.brickLength) {
     isValid = false;
-  } else {
+  } else if (!isAuthor) {
+    if (brick.keywords.length === 0) {
+      isValid = false;
+    }
     for (let k of brick.keywords) {
       if (k.name.length >= MaxKeywordLength) {
         isValid = false;
@@ -31,5 +42,6 @@ export function validateProposal(brick: Brick) {
       }
     }
   }
+  console.log(isValid);
   return { isValid, url };
 }
