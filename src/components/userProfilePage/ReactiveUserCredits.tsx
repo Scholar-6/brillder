@@ -32,14 +32,20 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
     return () => { clearInterval(interval); }
     /*eslint-disable-next-line*/
   }, []);
-  
+
+  const renderBoldTitle = () => {
+    if (credits === 0) {
+      return `No credits`;
+    }
+    return `You have ${credits} credit${credits > 1 ? 's' : ''}  remaining.`;
+  }
 
   return (
     <div className={props.className}>
       {credits > 0 ? <SpriteIcon name="circle-lines" /> : <SpriteIcon name="circle-lines-blue" />}
       <span>{credits}</span>
       <div className="css-custom-tooltip">
-        <div className="bold">You have {credits} credit{credits > 1 ? 's' : ''}  remaining.</div>
+        <div className="bold">{renderBoldTitle()}</div>
         <div className="regular">
           Spend 1 credit to play a Brick from the catalogue or 2 credits to enter a competition.
         </div>
