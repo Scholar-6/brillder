@@ -556,6 +556,12 @@ $base-build-border: $editor-radius;
     .subject-autocomplete {
       margin-bottom: 0.7vw !important;
     }
+
+    &.content-invalid {
+      .MuiInputBase-root {
+        background: var(--theme-orange) !important;
+      }
+    }
   }
 
   .fixed-build-phone .phone-question-preview-box .phone-question-preview .phone .phone-border .screen .custom-component .phone-preview-component .key-words-play {
