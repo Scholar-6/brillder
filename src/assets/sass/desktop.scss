@@ -1329,7 +1329,9 @@
 .desktop-credit-coins {
   display: flex;
   position: relative;
-  margin-right: 1.5vw;
+  height: 5.68vw;
+  width: 3.68vw;
+  padding-bottom: 2vw;
   svg {
     width: 3.68vw;
     height: 3.68vw;
@@ -1340,6 +1342,8 @@
     position: absolute;
     top: 0;
     left: 0;
+    width: 3.68vw !important;
+    height: 3.68vw !important;
     font-size: 1.5vw;
     height: 100%;
     width: 100%;
@@ -1347,4 +1351,70 @@
     align-items: center;
     justify-content: center;
   }
+  .css-custom-tooltip {
+    left: unset !important;
+    display: none;
+    top: 4.5vw;
+    right: -7vw;
+    z-index: 100;
+    width: 20vw;
+    padding: 1.4vw 2vw;
+    font-size: 1.05vw;
+    text-align: center;
+
+    .green-btn {
+      cursor: pointer;
+      margin-top: 1vw;
+      border-radius: 0.3vw;
+      font-size: 1.3vw;
+      padding: 0.2vw 0.8vw;
+      font-family: $font-family-bold;
+      color: white;
+      transition: all 300ms ease-in-out;
+      background: var(--theme-green) !important;
+    }
+    .blue-on-hover:hover {
+      background: var(--theme-dark-blue) !important;
+    }
+  }
+  &:hover .css-custom-tooltip {
+    background: white;
+    opacity: 1;
+    display: block !important;
+  }
+}
+
+.out-of-credits-dialog {
+  .red-circle {
+    margin-left: 1vw;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--theme-orange);
+    width: 4.5vw;
+    height: 4.5vw;
+
+    svg {
+      margin: 0;
+      stroke-width: 2;
+      margin-bottom: 0.3vw;
+      color: white;
+      width: 2.8vw;
+      height: 2.8vw;
+    }
+  }
+}
+
+.main-p-absolute-credits {
+  position: absolute;
+  z-index: 100;
+  top: 1vw;
+  left: 70vw;
+}
+
+.header-credits-container {
+  width: 3.68vw;
+  height: 3.68vw;
+  margin-right: 1.5vw;
 }

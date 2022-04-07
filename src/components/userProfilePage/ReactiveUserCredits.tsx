@@ -1,18 +1,24 @@
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { StripeCredits } from 'components/map';
 import React, { useEffect, useState} from 'react';
 import { connect } from "react-redux";
 
 import userActions from "redux/actions/user";
 
 interface Props {
+  className?: string;
   getUser(): any;
+  history?: any;
 }
 
 const ReactiveUserCredits:React.FC<Props> = (props) => {
   const [credits, setCredits] = useState(0);
 
   const getCredits = async () => {
-    const user = await props.getUser();
-    setCredits(user.freeAttemptsLeft);
+    try {
+      const user = await props.getUser();
+      setCredits(user.freeAttemptsLeft);
+    } catch {}
   }
 
   useEffect(() => {
@@ -24,9 +30,31 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
 
     // free resources
     return () => { clearInterval(interval); }
+    /*eslint-disable-next-line*/
   }, []);
+  
 
-  return <span>{credits}</span>
+  return (
+    <div className={props.className}>
+      {credits > 0 ? <SpriteIcon name="circle-lines" /> : <SpriteIcon name="circle-lines-blue" />}
+      <span>{credits}</span>
+      <div className="css-custom-tooltip">
+        <div className="bold">You have {credits} credit{credits > 1 ? 's' : ''}  remaining.</div>
+        <div className="flex-center">
+          <div className="green-btn blue-on-hover" onClick={() => {
+            if (props.history) {
+              props.history.push(StripeCredits);
+            }
+          }}>
+            Buy more credits
+          </div>
+        </div>
+        <div className="regular">
+          Spend 1 credit to play a Brick from the catalogue or 2 credits to enter a competition.
+        </div>
+      </div>
+    </div>
+  );
 }
 
 const mapDispatch = (dispatch: any) => ({

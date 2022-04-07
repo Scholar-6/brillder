@@ -72,10 +72,11 @@ import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigatio
 import CountdownReview from "./preReview/CountdownReview";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
-import PremiumLearnerDialog from "./baseComponents/dialogs/PremiumLearnerDialog";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import VolumeButton from "components/baseComponents/VolumeButton";
 import { getCompetitionByUser } from "services/axios/competitions";
+import BuyCreditsDialog from "./baseComponents/dialogs/BuyCreditsDialog";
+import ConvertBrillsDialog from "./baseComponents/dialogs/ConvertBrillsDialog";
 
 export enum PlayPage {
   Cover,
@@ -216,6 +217,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [saveFailed, setFailed] = useState(false);
 
   const [isPremiumLOpen, setPremiumLOpen] = useState(false);
+  const [converBrillsOpen, setConvertBrills] = useState(false);
 
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
@@ -657,7 +659,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
-            isCompetition={!!competitionId}
+            isCompetition={!!activeCompetition}
             setCompetitionId={id => {
               setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
@@ -857,16 +859,33 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     className += " sorted-row-expanded";
   }
 
-  const renderPremiumPopups = () => {
+  const renderCreditPopup = () => {
     const { user } = props;
     if (user) {
-      return <PremiumLearnerDialog
+      return <BuyCreditsDialog
         isOpen={isPremiumLOpen}
         competitionId={activeCompetition?.id}
         user={user}
         history={history}
+        convert={() => {
+          setPremiumLOpen(false);
+          setConvertBrills(true);
+        }}
         close={() => setPremiumLOpen(false)}
-        submit={() => props.history.push(map.StripeLearner)}
+      />
+    }
+    return '';
+  }
+
+  const renderConvertBrills = () => {
+    const { user } = props;
+    if (user) {
+      return <ConvertBrillsDialog
+        isOpen={converBrillsOpen}
+        competitionId={activeCompetition?.id}
+        user={user}
+        submit={() => {}}
+        close={() => setConvertBrills(false)}
       />
     }
     return '';
@@ -925,7 +944,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           label="You might already have an account, try signing in."
         />
       </div>
-      {renderPremiumPopups()}
+      {renderCreditPopup()}
+      {renderConvertBrills()}
     </React.Suspense>
   );
 };
