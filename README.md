@@ -34,6 +34,7 @@ Run the project locally (Windows and Linux) and connect to the dev-api:
 * Go to http://localbrillder.com:3000  
 * If you do not have an account registered on https://app.brillder.com then click signup option  
 
+
 ## Available Scripts
 
 The page will reload if you make edits.<br />

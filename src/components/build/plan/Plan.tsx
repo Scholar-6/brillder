@@ -49,6 +49,11 @@ const PlanPage: React.FC<PlanProps> = (props) => {
   const { currentBrick, validationRequired, locked } = props;
   const [apiSubjects, setApiSubjects] = React.useState([] as Subject[]);
 
+  let isAuthor = false;
+  try {
+    isAuthor = props.currentBrick.author.id === props.user.id;
+  } catch { }
+
   const [scrollArea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const [canScroll, setScroll] = React.useState(false);
 
@@ -184,7 +189,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                   <KeyWordsComponent
                     disabled={locked}
                     keyWords={currentBrick.keywords}
-                    validate={validationRequired}
+                    validate={!isAuthor && validationRequired}
                     onChange={keywords => changeBrick((brick) => ({ ...brick, keywords }))}
                   />
                   <div className="subject-select-container">

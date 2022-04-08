@@ -215,6 +215,12 @@ class Library extends Component<BricksListProps, BricksListState> {
     }
     const rawAssignments = await getLibraryBricks<LibraryAssignmentBrick>(userId);
     if (rawAssignments) {
+      for (let assignment of rawAssignments) {
+        if (assignment && !assignment.bestAttemptPercentScore && assignment.lastAttemptScore && assignment.maxScore) {
+          assignment.bestAttemptPercentScore = assignment.lastAttemptScore / assignment.maxScore * 100;
+        }
+      }
+
       subjects = this.prepareSubjects(rawAssignments, subjects);
       const finalAssignments = this.filter(rawAssignments, subjects);
       const subjectAssignments = this.getAssignmentSubjects(finalAssignments, subjects);

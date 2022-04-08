@@ -2341,3 +2341,20 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 .sort-play > p.flex-center {
   justify-content: flex-start;
 }
+
+.play-brief-page,
+.real-introduction-page {
+  .expanded-text {
+    table {
+      color: var(--theme-dark-blue);
+      background: var(--off-white);
+      tr {
+        border: 3px solid var(--white) !important;
+      }
+      td {
+        border: 3px solid var(--white) !important;
+        padding: 4px 8px !important;
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
 import { User } from "model/user";
-import { checkAdmin, checkPublisher } from "components/services/brickService";
+import { checkAdmin, checkPublisher, isAorP } from "components/services/brickService";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import { stripHtml } from "components/build/questionService/ConvertService";
@@ -303,7 +303,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <CoverTimer brickLength={brick.brickLength} />
           </div>
           <div className="introduction-info">
-            <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isCompetition={props.isCompetition} onClick={() => {
+            <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isPublisher={isAorP(props.user.roles)} isCompetition={props.isCompetition} onClick={() => {
               if (props.user) {
                 startBrick();
               } else {
@@ -452,7 +452,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="brief-ellipsis">
                   {briefText}
                 </div>
-                <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isCompetition={props.isCompetition} onClick={() => {
+                <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isPublisher={isAorP(props.user.roles)} isCompetition={props.isCompetition} onClick={() => {
                   if (props.user) {
                     startBrick();
                   } else {
