@@ -4,13 +4,14 @@ import './CoverPlay.scss';
 
 interface Props {
   isAuthor: boolean;
+  isPublisher: boolean;
   isCompetition?: boolean;
   onClick(): any;
 }
 
-const CoverCreditsPlay: React.FC<Props> = ({ isCompetition, isAuthor, onClick }) => {
+const CoverCreditsPlay: React.FC<Props> = ({ isCompetition, isAuthor, isPublisher, onClick }) => {
   const renderDynamicPart = () => {
-    if (!isAuthor) {
+    if (!isAuthor && !isPublisher) {
       return (
         <div className="absolute-credits">
           {isCompetition ? 2 : 1 }
