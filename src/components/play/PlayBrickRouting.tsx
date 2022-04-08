@@ -77,6 +77,7 @@ import VolumeButton from "components/baseComponents/VolumeButton";
 import { getCompetitionByUser } from "services/axios/competitions";
 import BuyCreditsDialog from "./baseComponents/dialogs/BuyCreditsDialog";
 import ConvertBrillsDialog from "./baseComponents/dialogs/ConvertBrillsDialog";
+import { isAorP } from "components/services/brickService";
 
 export enum PlayPage {
   Cover,
@@ -516,7 +517,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const coverMoveNext = () => {
     const { user } = props;
-    if (user && user.freeAttemptsLeft <= 0) { // Check if user exists (because of anonymous users)
+    const isPublisher = isAorP(user.roles);
+    if (user && !isPublisher && user.freeAttemptsLeft <= 0) { // Check if user exists (because of anonymous users)
       if (!user.subscriptionState || user.subscriptionState === 0) {
         setPremiumLOpen(true);
         return;
@@ -861,7 +863,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const renderCreditPopup = () => {
     const { user } = props;
-    if (user) {
+    if (user && !isAorP(user.roles)) {
       return <BuyCreditsDialog
         isOpen={isPremiumLOpen}
         competitionId={activeCompetition?.id}
