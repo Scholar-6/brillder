@@ -35,7 +35,7 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
 
   const renderBoldTitle = () => {
     if (credits === 0) {
-      return `No credits`;
+      return `You have no credits remaining`;
     }
     return `You have ${credits} credit${credits > 1 ? 's' : ''}  remaining.`;
   }
