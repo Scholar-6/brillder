@@ -129,7 +129,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`,
       }, {
         element: '.desktop-credit-coins',
-        intro: `<p>You need to spend credits to play bricks. Spend 1 credit to play a Brick from the catalogue or 2 credits to enter a competition.</p>`,
+        intro: `<p>You need to spend credits to play bricks. Spend 1 credit to play a brick from the catalogue or 2 credits to enter a competition.<br/>We've given you 5 free credits to get you started!</p>`,
       }, {
         element: '.second-button.student-back-work',
         intro: `<p>If a teacher has set you an assignment, you'll be able to access it here. A red circle with white numbers will show how many assignments you still have to complete.</p>`,
