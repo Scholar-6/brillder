@@ -164,8 +164,42 @@
     .brill-intro-container {
       display: flex;
     }
+    .header-credits-container {
+      position: absolute;
+      bottom: 2.5vw;
+      left: 18vw;
+      width: 12.5vw;
+      height: 12.5vw;
+
+      .desktop-credit-coins {
+        position: relative;
+      }
+
+      svg {
+        width: 12.5vw;
+        height: 12.5vw;
+      }
+      .css-custom-tooltip {
+        display: none;
+      }
+      span {
+        top: 0;
+        left: 0;
+        color: white;
+        font-size: 5vw;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 12.5vw;
+        height: 12.5vw;
+      }
+    }
     .brills-number {
-      margin-right: 3vw;
+      width: 13vw;
+      justify-content: flex-end;
+      margin-left: 3vw !important;
+      margin-right: 0;
       height: 15vw !important;
       font-size: 5vw !important;
     }
