@@ -922,6 +922,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         {sidebarRolledUp && <VolumeButton customClassName="absolute-right" />}
         {isPhone() ? <div /> : renderHead()}
         <div className={className}>
+
           {!isPhone() &&
             <PlayLeftSidebar
               history={history}
@@ -933,6 +934,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               competitionId={competitionId}
               setMode={setMode}
               showPremium={() => { }}
+              competition={activeCompetition}
+              competitionCreated={competition => {
+                brick.competitionId = competition.id;
+                history.push(props.history.location.pathname + '?competitionId=' + competition.id);
+                setCanSeeCompetitionDialog(true);
+                setActiveCompetition(competition);
+              }}
               toggleSidebar={setSidebar}
             />}
           {renderRouter()}

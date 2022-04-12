@@ -1,3 +1,4 @@
+import { Competition } from 'model/competition';
 import {get} from './index';
 
 
@@ -11,7 +12,7 @@ export const getCompetitionLeaderboard = async (competitionId: number) => {
 
 export const getCompetitionsByBrickId = async (brickId: number) => {
   try {
-    return await get<any[]>(`/competitionByBrick/` + brickId);
+    return await get<Competition[]>(`/competitionByBrick/` + brickId);
   } catch {
     return null;
   }
@@ -19,7 +20,7 @@ export const getCompetitionsByBrickId = async (brickId: number) => {
 
 export const getCompetitionByUser = async (userId: number, brickId: number) => {
   try {
-    const data = await get<any>(`/competition/${userId}/${brickId}`);
+    const data = await get<Competition>(`/competition/${userId}/${brickId}`);
 
     if (data) {
       const c = data;
