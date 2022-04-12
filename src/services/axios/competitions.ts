@@ -11,7 +11,7 @@ export const getCompetitionLeaderboard = async (competitionId: number) => {
 
 export const getCompetitionsByBrickId = async (brickId: number) => {
   try {
-    return await get<any>(`/competitionByBrick/` + brickId);
+    return await get<any[]>(`/competitionByBrick/` + brickId);
   } catch {
     return null;
   }

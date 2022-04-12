@@ -41,6 +41,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       isAssignment={true}
       completedDate={item.completedDate}
       assignmentStatus={item.status}
+      isPlay={true}
       assignmentId={item.assignmentId}
       history={this.props.history}
       color={color}

@@ -74,7 +74,7 @@ import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthor
 import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import VolumeButton from "components/baseComponents/VolumeButton";
-import { getCompetitionByUser } from "services/axios/competitions";
+import { getCompetitionsByBrickId } from "services/axios/competitions";
 import BuyCreditsDialog from "./baseComponents/dialogs/BuyCreditsDialog";
 import ConvertBrillsDialog from "./baseComponents/dialogs/ConvertBrillsDialog";
 import { isAorP } from "components/services/brickService";
@@ -327,11 +327,33 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
+  const getNewestCompetition = (competitions: any[]) => {
+    let competition = null;
+    const timeNow = new Date().getTime();
+    for (const comp of competitions) {
+      try {
+        var start = new Date(comp.startDate).getTime();
+        if (timeNow > start) {
+          var end = new Date(comp.endDate).getTime();
+          if (timeNow < end) {
+            competition = comp;
+          }
+        }
+      } catch {
+        console.log('competition time can`t be parsed');
+      }
+    }
+    return competition;
+  }
+
   const getCompetition = async () => {
     if (props.user) {
-      const competition = await getCompetitionByUser(props.user.id, brick.id);
-      if (competition && competition.isActive) {
-        setActiveCompetition(competition);
+      const res = await getCompetitionsByBrickId(brick.id);
+      if (res && res.length > 0) {
+        const competition = getNewestCompetition(res);
+        if (competition) {
+          setActiveCompetition(competition);
+        }
       }
     }
   }
@@ -661,7 +683,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
-            isCompetition={!!activeCompetition}
+            activeCompetition={activeCompetition}
             setCompetitionId={id => {
               setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
@@ -886,7 +908,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         isOpen={converBrillsOpen}
         competitionId={activeCompetition?.id}
         user={user}
-        submit={() => {}}
+        submit={() => { }}
         close={() => setConvertBrills(false)}
       />
     }
@@ -910,7 +932,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               empty={finalStep}
               competitionId={competitionId}
               setMode={setMode}
-              showPremium={() => {}}
+              showPremium={() => { }}
               toggleSidebar={setSidebar}
             />}
           {renderRouter()}
