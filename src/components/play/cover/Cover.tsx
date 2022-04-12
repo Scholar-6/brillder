@@ -23,7 +23,6 @@ import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthor
 import { CreateByEmailRes } from "services/axios/user";
 import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
-import { getCompetitionsByBrickId } from "services/axios/competitions";
 import map from "components/map";
 import CoverCreditsPlay from "./components/coverAuthorRow/CoverCreditsPlay";
 import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
@@ -34,7 +33,7 @@ interface Props {
   brick: Brick;
   location: any;
   history: any;
-  isCompetition?: boolean;
+  activeCompetition: any;
   canSeeCompetitionDialog?: boolean | null;
   setCompetitionId(id: number): void;
   setUser(data: CreateByEmailRes): void;
@@ -63,39 +62,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     }
   }, 10000);
 
-  const getNewestCompetition = (competitions: any[]) => {
-    let competition = null;
-    const timeNow = new Date().getTime();
-    for (const comp of competitions) {
-      try {
-        var start = new Date(comp.startDate).getTime();
-        if (timeNow > start) {
-          var end = new Date(comp.endDate).getTime();
-          if (timeNow < end) {
-            competition = comp;
-          }
-        }
-      } catch {
-        console.log('competition time can`t be parsed');
-      }
-    }
-    return competition;
-  }
-
-  const getCompetitions = async () => {
-    const res = await getCompetitionsByBrickId(brick.id);
-    if (res && res.length > 0) {
-      const competition = getNewestCompetition(res);
-      if (competition) {
-        setCompetitionData({ isOpen: true, competition });
-      }
-    }
-  }
-
-  useEffect(() => {
-    getCompetitions();
-    /*eslint-disable-next-line*/
-  }, []);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -111,6 +77,13 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       clearTimeout(userTimeout);
     };
   });
+
+  useEffect(() => {
+    if (props.activeCompetition && competitionData === null) {
+      setCompetitionData({ isOpen: true, competition: props.activeCompetition });
+    }
+    /*eslint-disable-next-line*/
+  }, [props.activeCompetition]);
 
   const startBrick = () => {
     props.moveNext();
@@ -303,7 +276,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <CoverTimer brickLength={brick.brickLength} />
           </div>
           <div className="introduction-info">
-            <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isPublisher={isAorP(props.user.roles)} isCompetition={props.isCompetition} onClick={() => {
+            <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isPublisher={isAorP(props.user.roles)} isCompetition={!!props.activeCompetition} onClick={() => {
               if (props.user) {
                 startBrick();
               } else {
@@ -452,7 +425,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="brief-ellipsis">
                   {briefText}
                 </div>
-                <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isPublisher={isAorP(props.user.roles)} isCompetition={props.isCompetition} onClick={() => {
+                <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isPublisher={isAorP(props.user.roles)} isCompetition={!!props.activeCompetition} onClick={() => {
                   if (props.user) {
                     startBrick();
                   } else {
