@@ -9,6 +9,7 @@ interface Props {
 }
 
 interface State {
+  minutes: number[];
   hours: number[];
   days: number[];
   months: number[];
@@ -37,12 +38,15 @@ class TimeHourDropdowns extends React.Component<Props, State> {
       days = this.getDays(props.date.getMonth(), props.date.getFullYear());
     }
 
+    let minutes = [0, 15, 30, 45];
+
     let hours = [];
     for (let i = 1; i <= 24; i++) {
       hours.push(i);
     }
 
     this.state = {
+      minutes,
       hours,
       days,
       months,
@@ -59,9 +63,10 @@ class TimeHourDropdowns extends React.Component<Props, State> {
     return days;
   }
 
-  onChange({ year, month, day, hour }: { year?: number, month?: number, day?: number, hour?: number }) {
+  onChange({ year, month, day, hour, minute }: { year?: number, month?: number, day?: number, hour?: number, minute?: number }) {
     const newDate = new Date(this.props.date);
     newDate.setMinutes(0);
+    if(minute) newDate.setMinutes(minute);
     if(hour) newDate.setHours(hour);
     if(year) newDate.setFullYear(year);
     if(month || month === 0) newDate.setMonth(month);
@@ -73,6 +78,10 @@ class TimeHourDropdowns extends React.Component<Props, State> {
     if (newDate.getTime() > compareDate.getTime()) {
       this.props.onChange(newDate);
     }
+  }
+
+  setMinutes(newMinutes: number) {
+    this.onChange({ minute: newMinutes });
   }
 
   setHour(newHour: number) {
@@ -108,11 +117,30 @@ class TimeHourDropdowns extends React.Component<Props, State> {
     );
   }
 
+  renderMinuteSelect(value: number, choices: number[], setChoice: Function) {
+    return (
+      <Select
+        className="select-date minutes"
+        value={value}
+        MenuProps={{ classes: { paper: 'select-time-list' } }}
+        onChange={e => setChoice(e.target.value)}
+      >
+        {choices.map((c, i) => {
+          if (c == 0) {
+            return <MenuItem value={c} key={i}>00</MenuItem>;
+          }
+          return <MenuItem value={c} key={i}>{c}</MenuItem>;
+        })}
+      </Select>
+    );
+  }
 
   render() {
     return (
-      <div className="inline">
+      <div className="inline time-dropdown-time">
         {this.renderSelect(this.props.date.getHours(), this.state.hours, (newHours: number) => this.setHour(newHours), 'hours')} 
+        {this.renderMinuteSelect(this.props.date.getMinutes(), this.state.minutes, (newMinutes: number) => this.setMinutes(newMinutes))} 
+        on
         {this.renderSelect(this.props.date.getDate() - 1, this.state.days, (newDay: number) => this.setDay(newDay), 'first', true) /* Months are 0-indexed */}
         {this.renderSelect(this.props.date.getMonth(), this.state.months, (newMonth: number) => this.setMonth(newMonth), 'second', true) /* Months are 0-indexed */}
         {this.renderSelect(this.props.date.getFullYear(), this.state.years, (newYear: number) => this.setYear(newYear), 'last')}
