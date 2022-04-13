@@ -112,8 +112,8 @@ class TimeHourDropdowns extends React.Component<Props, State> {
   render() {
     return (
       <div className="inline">
-        {this.renderSelect(this.props.date.getHours(), this.state.hours, (newHours: number) => this.setHour(newHours), 'first')}
-        {this.renderSelect(this.props.date.getDate() - 1, this.state.days, (newDay: number) => this.setDay(newDay), 'second', true) /* Months are 0-indexed */}
+        {this.renderSelect(this.props.date.getHours(), this.state.hours, (newHours: number) => this.setHour(newHours), 'hours')} 
+        {this.renderSelect(this.props.date.getDate() - 1, this.state.days, (newDay: number) => this.setDay(newDay), 'first', true) /* Months are 0-indexed */}
         {this.renderSelect(this.props.date.getMonth(), this.state.months, (newMonth: number) => this.setMonth(newMonth), 'second', true) /* Months are 0-indexed */}
         {this.renderSelect(this.props.date.getFullYear(), this.state.years, (newYear: number) => this.setYear(newYear), 'last')}
       </div>

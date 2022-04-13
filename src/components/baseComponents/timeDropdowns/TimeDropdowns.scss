@@ -18,6 +18,11 @@
 
   $radius: 0.5vw;
 
+  &.hours {
+    margin-right: 1vw;
+    border-radius: $radius;
+  }
+
   &.first {
     border-top-left-radius: $radius;
     border-bottom-left-radius: $radius;
