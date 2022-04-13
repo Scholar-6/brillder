@@ -181,6 +181,25 @@
       }
       .css-custom-tooltip {
         display: none;
+        position: absolute;
+        border-radius: 2vw;
+        left: -10vw;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        color: var(--theme-dark-blue);
+        width: 68vw;
+        background: var(--white);
+        padding: 3vw 5vw;
+        bottom: 20vw;
+        &.visible {
+          display: block;
+        }
+        .green-btn {
+          margin-top: 3vw;
+          border-radius: 9vw;
+          padding: 0.7vw 3vw;
+          color: white;
+          background: var(--theme-green);
+        }
       }
       span {
         top: 0;

@@ -94,13 +94,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   async getCompetition() {
     const c = await getCompetitionByUser(this.props.user.id, this.props.brick.id);
     if (c) {
-      console.log(9999, c);
       const endDate = new Date(c.endDate);
       const startDate = new Date(c.startDate);
-      let isActive = false;
       if (endDate.getTime() > new Date().getTime()) {
         if (startDate.getTime() < new Date().getTime()) {
-          isActive = true;
           this.props.competitionCreated(c);
         }
       }
