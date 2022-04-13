@@ -160,6 +160,27 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       </div>
     );
   }
+  
+  const renderCoverPlay = () => {
+    let isPublisher = false;
+    if (props.user) {
+      isPublisher = isAorP(props.user.roles);
+    }
+    return (
+      <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isPublisher={isPublisher} isCompetition={!!props.activeCompetition} onClick={() => {
+        if (props.user) {
+          startBrick();
+        } else {
+          if (!unauthPopupShown) {
+            setUnauthorizedV2(true);
+          } else {
+            startBrick();
+          }
+          setClickPlay(true);
+        }
+      }} />
+    )
+  }
 
   if (isPhone()) {
     return (
@@ -276,19 +297,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <CoverTimer brickLength={brick.brickLength} />
           </div>
           <div className="introduction-info">
-            <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isPublisher={isAorP(props.user.roles)} isCompetition={!!props.activeCompetition} onClick={() => {
-              if (props.user) {
-                startBrick();
-              } else {
-                if (!unauthPopupShown) {
-                  setUnauthorizedV2(true);
-                } else {
-                  startBrick();
-                }
-                setClickPlay(true);
-              }
-            }}
-            />
+            {renderCoverPlay()}
           </div>
         </div>
         <UnauthorizedUserDialogV2
@@ -425,18 +434,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 <div className="brief-ellipsis">
                   {briefText}
                 </div>
-                <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isPublisher={isAorP(props.user.roles)} isCompetition={!!props.activeCompetition} onClick={() => {
-                  if (props.user) {
-                    startBrick();
-                  } else {
-                    if (!unauthPopupShown) {
-                      setUnauthorizedV2(true);
-                    } else {
-                      startBrick();
-                    }
-                    setClickPlay(true);
-                  }
-                }} />
+                {renderCoverPlay()}
               </div>
             </Grid>
           </Grid>
