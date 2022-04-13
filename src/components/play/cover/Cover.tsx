@@ -305,7 +305,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           brickId={brick.id}
           isOpen={unauthorizedOpenV2}
           notyet={() => {
-            console.log('not')
             if (playClicked) {
               startBrick()
             } else {
