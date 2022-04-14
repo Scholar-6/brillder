@@ -15,6 +15,7 @@ interface BackToWorkState {
   isSearching: boolean;
   dropdownShown: boolean;
   notificationsShown: boolean;
+  searchDataLoaded: boolean;
 }
 
 export interface BackToWorkProps {
@@ -30,6 +31,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.state = {
       searchString: "",
       isSearching: false,
+      searchDataLoaded: false,
 
       dropdownShown: false,
       notificationsShown: false,
@@ -41,10 +43,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       this.setState({
         ...this.state,
         searchString,
+        searchDataLoaded: false,
         isSearching: false,
       });
     } else {
-      this.setState({ ...this.state, isSearching: false, searchString });
+      this.setState({ ...this.state, isSearching: false, searchDataLoaded: false, searchString });
     }
   }
 
@@ -66,8 +69,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         <BuildPage
           isSearching={this.state.isSearching}
           searchString={this.state.searchString}
+          searchDataLoaded={this.state.searchDataLoaded}
           location={this.props.location}
           history={this.props.history}
+          searchFinished={() => {
+            this.setState({searchDataLoaded: true});
+          }}
         />
         <ClassInvitationDialog />
         <ClassTInvitationDialog />
