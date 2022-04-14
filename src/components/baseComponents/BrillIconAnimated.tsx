@@ -60,8 +60,6 @@ const BrillIconAnimated: React.FC<Props> = (props) => {
       setTimeout(() => setFlipCoin(false), 2000);
     }
 
-    console.log(cashedBrills, props.user.brills);
-
     if (props.user.brills === cashedBrills) {
       
     } else if (props.user.brills && props.user.brills > cashedBrills) {
@@ -78,15 +76,12 @@ const BrillIconAnimated: React.FC<Props> = (props) => {
     if (props.user) {
       const brills = GetUserBrills();
       if (brills) {
-        console.log('updated', props.user)
-        console.log('updated 4', brills)
         if (brills === currentBrills) {
           animateBrills(brills);
         } else {
           setCurrentBrills(brills, () => animateBrills(brills));
         }
       } else if (props.user.brills) {
-        console.log('updated 5')
         SetUserBrills(props.user.brills);
         setCurrentBrills(props.user.brills, () => { });
       }
