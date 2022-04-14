@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from 'react-redux';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import axios from "axios";
 
 import actions from "redux/actions/brickActions";
 import { ReduxCombinedState } from 'redux/reducers';
@@ -15,7 +16,6 @@ import UnauthorizedText from "./UnauthorizedText";
 import { Brick } from "model/brick";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
-import axios from "axios";
 import HighlightTextButton from "./baseComponents/sidebarButtons/HighlightTextButton";
 import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
@@ -28,6 +28,8 @@ import { isInstitutionPreference } from "components/services/preferenceService";
 import CompetitionButton from "./baseComponents/sidebarButtons/CompetitionButton";
 import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDialog";
 import BrillIcon from "components/baseComponents/BrillIcon";
+import { getCompetitionByUser } from "services/axios/competitions";
+import { Competition } from "model/competition";
 
 interface SidebarProps {
   history: any;
@@ -44,8 +46,10 @@ interface SidebarProps {
 
   //play-preview
   isPreview?: boolean;
+  competition: any;
   showPremium?(): void;
   moveToBuild?(): void;
+  competitionCreated(c: Competition): void;
 
   //redux
   user: User;
@@ -88,25 +92,15 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   async getCompetition() {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/competition/${this.props.user.id}/${this.props.brick.id}`, { withCredentials: true }); 
-      if (res.status === 200 && res.data) {
-        const c = res.data;
-        const endDate = new Date(c.endDate);
-        const startDate = new Date(c.startDate);
-        let isActive = false;
-        if (endDate.getTime() > new Date().getTime()) {
-          if (startDate.getTime() < new Date().getTime()) {
-            isActive = true;
-          }
+    const c = await getCompetitionByUser(this.props.user.id, this.props.brick.id);
+    if (c) {
+      const endDate = new Date(c.endDate);
+      const startDate = new Date(c.startDate);
+      if (endDate.getTime() > new Date().getTime()) {
+        if (startDate.getTime() < new Date().getTime()) {
+          this.props.competitionCreated(c);
         }
-        res.data.isActive = isActive;
-        this.setState({ competition: res.data });
-      } else {
-        this.setState({ competition: null });
       }
-    } catch {
-      this.setState({ competition: null });
     }
   }
 

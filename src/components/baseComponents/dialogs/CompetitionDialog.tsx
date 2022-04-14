@@ -1,8 +1,9 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
-import TimeDropdowns from "../timeDropdowns/TimeDropdowns";
+
 import './CompetitionDialog.scss';
 import SpriteIcon from "../SpriteIcon";
+import TimeHourDropdowns from "../timeDropdowns/TimeHourDropdowns";
 
 interface DialogProps {
   isOpen: boolean;
@@ -11,8 +12,12 @@ interface DialogProps {
 }
 
 const CompetitionDialog: React.FC<DialogProps> = ({ isOpen, submit, close }) => {
-  const [startDate, setStartDate] = React.useState(new Date());
-  const [endDate, setEndDate] = React.useState(new Date());
+  let initialStartDate = new Date();
+  initialStartDate.setMinutes(0);
+  let initialEndDate = new Date();
+  initialEndDate.setMinutes(0);
+  const [startDate, setStartDate] = React.useState(initialStartDate);
+  const [endDate, setEndDate] = React.useState(initialEndDate);
 
   /*
   const getStringDate = (date: Date) => {
@@ -32,13 +37,13 @@ const CompetitionDialog: React.FC<DialogProps> = ({ isOpen, submit, close }) => 
           <div>
             Start
           </div>
-          <TimeDropdowns date={startDate} onChange={setStartDate} />
+          <TimeHourDropdowns date={startDate} onChange={setStartDate} />
         </div>
         <div className="flex-center">
           <div>
             End
           </div>
-          <TimeDropdowns date={endDate} onChange={setEndDate} />
+          <TimeHourDropdowns date={endDate} onChange={setEndDate} />
         </div>
       </div>
       <div className="dialog-footer">

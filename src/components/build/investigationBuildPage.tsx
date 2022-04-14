@@ -113,6 +113,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const { history } = props;
 
+  /*eslint-disable-next-line*/
   let proposalRes = React.useMemo(() => validateProposal(props.user, props.brick), [props.brick]);
 
   const [questions, setQuestions] = React.useState([] as Question[]);
