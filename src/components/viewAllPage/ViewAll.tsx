@@ -811,7 +811,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       const finalBricks = this.filter(
         this.state.bricks,
         this.state.isAllSubjects,
-        this.state.isCore
+        this.state.isCore,
+        undefined,
+        this.state.filterLevels,
+        this.state.filterLength,
+        this.state.filterCompetition
       );
       this.setState({
         isViewAll,
@@ -1302,7 +1306,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             const finalBricks = this.filter(
               this.state.bricks,
               isAllSubjects,
-              this.state.isCore
+              this.state.isCore,
+              undefined,
+              this.state.filterLevels,
+              this.state.filterLength,
+              this.state.filterCompetition
             );
             this.setState({ isAllSubjects, finalBricks, sortedIndex: 0 });
           }}
