@@ -73,7 +73,8 @@ import {
 import {
   filterByCurretUser,
   filterByLevels,
-  filterByLength
+  filterByLength,
+  filterByCompetitions
 } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import MobileCategory from "./MobileCategory";
@@ -105,6 +106,7 @@ interface ViewAllState {
   sortBy: SortBy;
   keywords: KeyWord[];
 
+  filterCompetition: boolean;
   filterLevels: AcademicLevel[];
   filterLength: BrickLengthEnum[];
   subjects: SubjectItem[];
@@ -243,6 +245,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       }],
       isAllCategory,
 
+      filterCompetition: false,
       filterLevels: [],
       filterLength: [],
       keywords: [],
@@ -517,9 +520,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     showAll?: boolean,
     levels?: AcademicLevel[],
     filterLength?: BrickLengthEnum[],
-    noSearching?: boolean
+    filterCompetition?: boolean,
   ) {
-    if (!noSearching && this.state.isSearching) {
+    if (this.state.isSearching) {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
@@ -564,6 +567,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks = filterByLength(bricks, filterLength)
     }
 
+    if (filterCompetition) {
+      bricks = filterByCompetitions(bricks);
+      console.log(bricks);
+    }
+
     if (filterSubjects.length > 0) {
       return sortAndFilterBySubject(bricks, filterSubjects);
     }
@@ -594,7 +602,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             this.state.isCore,
             false,
             this.state.filterLevels,
-            this.state.filterLength
+            this.state.filterLength,
+            this.state.filterCompetition
           );
         } else {
           finalBricks = this.filterUnauthorized(
@@ -625,13 +634,48 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             this.state.isCore,
             false,
             filterLevels,
-            this.state.filterLength
+            this.state.filterLength,
+            this.state.filterCompetition
           );
         } else {
           finalBricks = this.filterUnauthorized(
             this.state.bricks,
             this.state.isViewAll,
             filterLevels
+          );
+        }
+        this.setState({
+          ...this.state,
+          isClearFilter: this.isFilterClear(),
+          finalBricks,
+          shown: true,
+        });
+      } catch { }
+    }, 1400);
+  }
+
+  filterByCompetition() {
+    let filterCompetition = !this.state.filterCompetition;
+    console.log(777, filterCompetition);
+    this.setState({ filterCompetition, shown: false });
+    setTimeout(() => {
+      try {
+        let finalBricks: Brick[] = [];
+        if (this.props.user) {
+          finalBricks = this.filter(
+            this.state.bricks,
+            this.state.isAllSubjects,
+            this.state.isCore,
+            false,
+            this.state.filterLevels,
+            this.state.filterLength,
+            filterCompetition
+          );
+        } else {
+          finalBricks = this.filterUnauthorized(
+            this.state.bricks,
+            this.state.isViewAll,
+            this.state.filterLevels,
           );
         }
         this.setState({
@@ -656,7 +700,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             this.state.isCore,
             false,
             this.state.filterLevels,
-            filterLength
+            filterLength,
+            this.state.filterCompetition
           );
         } else {
           finalBricks = this.filterUnauthorized(
@@ -1271,7 +1316,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           lengths={this.state.filterLength}
           filterByLength={lens => this.filterByLength(lens)}
           filterBySubject={(id) => this.filterBySubject(id)}
-        />
+          filterCompetition={this.state.filterCompetition}
+          filterByCompetition={this.filterByCompetition.bind(this)}
+         />
         <Grid item xs={9} className="brick-row-container">
           {this.renderDesktopBricks(bricks)}
         </Grid>
