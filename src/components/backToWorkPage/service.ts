@@ -63,6 +63,10 @@ export const filterByLength = (bricks: Brick[], length: BrickLengthEnum[]) => {
   });
 }
 
+export const filterByCompetitions = (bricks: Brick[]) => {
+  return bricks.filter(b => (b.competitions && b.competitions.length > 0) ? true : false);
+}
+
 export const checkPrivateBrick = (b: Brick) => {
   return !b.isCore;
 }

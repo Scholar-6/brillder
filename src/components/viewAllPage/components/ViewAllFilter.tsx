@@ -39,6 +39,9 @@ interface FilterProps {
   setAllSubjects(value: boolean): void;
   selectUserSubjects(value: boolean): void;
 
+  filterCompetition: boolean;
+  filterByCompetition(): void;
+
   openAddSubjectPopup(): void;
 
   isViewAll: boolean;
@@ -261,6 +264,26 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     );
   }
 
+  
+  renderCompetitionFilter() {
+    return (
+      <div className="">
+        <FormControlLabel
+          value={SortBy.Popularity}
+          style={{ marginRight: 0 }}
+          control={
+            <Radio
+              className="sortBy"
+              checked={this.props.filterCompetition}
+              onClick={() => this.props.filterByCompetition()}
+            />
+          }
+          label={`Competition Arena`}
+        />
+      </div>
+    );
+  }
+
   render() {
     let { subjects, isAllSubjects } = this.props;
     if (!isAllSubjects) {
@@ -311,7 +334,10 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               </RadioGroup>
             </div>
             {this.renderFilterLabelBox()}
-            <div className="sort-box level-filter-box">
+            <div className="competition-filter-box">
+              {this.renderCompetitionFilter()}
+            </div>
+            <div className="sort-box level-filter-box less-top-padding-s3">
               {this.renderAcademicLevel(AcademicLevel.First, BrickLengthEnum.S20min)}
               {this.renderAcademicLevel(AcademicLevel.Second, BrickLengthEnum.S40min)}
               {this.renderAcademicLevel(AcademicLevel.Third, BrickLengthEnum.S60min)}

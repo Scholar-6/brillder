@@ -126,7 +126,7 @@ class TimeHourDropdowns extends React.Component<Props, State> {
         onChange={e => setChoice(e.target.value)}
       >
         {choices.map((c, i) => {
-          if (c == 0) {
+          if (c === 0) {
             return <MenuItem value={c} key={i}>00</MenuItem>;
           }
           return <MenuItem value={c} key={i}>{c}</MenuItem>;
