@@ -36,7 +36,7 @@ interface HeaderMenuState {
   width: string;
 }
 
-class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
+class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
   pageHeader: React.RefObject<any>;
 
   constructor(props: MainPageMenuProps) {
@@ -138,4 +138,4 @@ const mapDispatch = (dispatch: any) => ({
 
 
 const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
-export default connector(PageHeadWithMenu);
+export default connector(MainPageMenu);
