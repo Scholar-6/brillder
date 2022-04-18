@@ -78,6 +78,7 @@ import { getCompetitionsByBrickId } from "services/axios/competitions";
 import BuyCreditsDialog from "./baseComponents/dialogs/BuyCreditsDialog";
 import ConvertBrillsDialog from "./baseComponents/dialogs/ConvertBrillsDialog";
 import { isAorP } from "components/services/brickService";
+import { checkCompetitionActive } from "services/competition";
 
 export enum PlayPage {
   Cover,
@@ -329,15 +330,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const getNewestCompetition = (competitions: any[]) => {
     let competition = null;
-    const timeNow = new Date().getTime();
     for (const comp of competitions) {
       try {
-        var start = new Date(comp.startDate).getTime();
-        if (timeNow > start) {
-          var end = new Date(comp.endDate).getTime();
-          if (timeNow < end) {
-            competition = comp;
-          }
+        const isActive = checkCompetitionActive(comp);
+        if (isActive) {
+          competition = comp;
         }
       } catch {
         console.log('competition time can`t be parsed');
