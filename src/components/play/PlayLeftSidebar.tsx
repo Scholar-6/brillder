@@ -30,6 +30,7 @@ import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDial
 import BrillIcon from "components/baseComponents/BrillIcon";
 import { getCompetitionByUser } from "services/axios/competitions";
 import { Competition } from "model/competition";
+import { checkCompetitionActive } from "services/competition";
 
 interface SidebarProps {
   history: any;
@@ -94,12 +95,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   async getCompetition() {
     const c = await getCompetitionByUser(this.props.user.id, this.props.brick.id);
     if (c) {
-      const endDate = new Date(c.endDate);
-      const startDate = new Date(c.startDate);
-      if (endDate.getTime() > new Date().getTime()) {
-        if (startDate.getTime() < new Date().getTime()) {
-          this.props.competitionCreated(c);
-        }
+      const isActive = checkCompetitionActive(c);
+      if (isActive) {
+        this.props.competitionCreated(c);
       }
     }
   }
@@ -418,7 +416,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
             <BrillIcon />
             <div>{bestScore}</div>
             <div className="custom-tooltip">
-              Your High Score
+              Total Brills earned from this Brick
             </div>
           </div>);
         }

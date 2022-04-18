@@ -13,6 +13,7 @@ import { isTeacherPreference } from "components/services/preferenceService";
 import { User } from "model/user";
 import { CircularProgressbar } from "react-circular-progressbar";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { checkCompetitionActive } from "services/competition";
 
 interface LibrarySubjectsProps {
   subject: Subject;
@@ -45,6 +46,11 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
 
   className += " default";
 
+  let isActiveCompetition = false;
+  if (brick.competitions && brick.competitions.length > 0) {
+    isActiveCompetition = brick.competitions.find(checkCompetitionActive);
+  }
+
   const renderValueBar = () => {
     return (
       <div
@@ -56,7 +62,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           maxHeight: "100%",
         }}
       >
-        {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
+        {isActiveCompetition &&
           <div className="competition-star">
             <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
           </div>}
@@ -83,7 +89,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           maxHeight: "100%",
         }}
       >
-        {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
+        {isActiveCompetition &&
           <div className="competition-star">
             <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
           </div>}
@@ -107,6 +113,9 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
       <div
         className={className}
         onClick={() => {
+          if (isActiveCompetition) {
+            return;
+          }
           if (assignment.maxScore) {
             let userId = props.user.id;
             if (props.student) {
