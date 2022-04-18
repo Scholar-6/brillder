@@ -14,6 +14,7 @@ import { User } from "model/user";
 import { CircularProgressbar } from "react-circular-progressbar";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { checkCompetitionActive } from "services/competition";
+import CompetitionLibraryDialog from "components/baseComponents/dialogs/CompetitionLibraryDialog";
 
 interface LibrarySubjectsProps {
   subject: Subject;
@@ -25,6 +26,8 @@ interface LibrarySubjectsProps {
 
 const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   const [hovered, setHover] = React.useState(false);
+  const [competitionClicked, setCompetitionClicked] = React.useState(false);
+
   let className = "assignment";
 
   const { assignment, subject } = props;
@@ -114,6 +117,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         className={className}
         onClick={() => {
           if (isActiveCompetition) {
+            setCompetitionClicked(true);
             return;
           }
           if (assignment.maxScore) {
@@ -154,6 +158,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         />
         {height >= 50 ? renderValueBar() : renderFullBar()}
       </div>
+      {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} close={() => setCompetitionClicked(false)} />}
     </div>
   );
 };
