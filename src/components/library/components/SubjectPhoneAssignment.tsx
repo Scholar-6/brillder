@@ -106,6 +106,9 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         }}
         style={{ background: color }}
       >
+        {height < 50 && isActiveCompetition && <div className="competition-star bigger">
+          <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
+        </div>}
         <div className="progress-value default-value">
           <div className="background" style={{ background: height < 50 ? color : '', opacity: height < 50 ? 0.3 : 0.5 }}>
             {height < 50 && (
