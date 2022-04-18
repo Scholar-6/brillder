@@ -25,12 +25,15 @@ interface MainPageMenuProps {
   user: User;
   notificationExpanded: boolean;
 
+
   notifications: Notification[] | null;
   toggleNotification(): void;
   getNotifications(): void;
 }
 
 interface HeaderMenuState {
+  popupShown: number; // 0 - nothing opened
+
   dropdownShown: boolean;
   logoutOpen: boolean;
   width: string;
@@ -43,6 +46,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     super(props);
 
     this.state = {
+      popupShown: 0,
       dropdownShown: false,
       logoutOpen: false,
       width: '16vw'
@@ -88,9 +92,21 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     return (
       <div className={className} ref={this.pageHeader}>
         <div className="menu-buttons">
-          <BrillIconAnimated />
+          <BrillIconAnimated popupShown={this.state.popupShown === 2} onClick={() => {
+            if (this.state.popupShown === 2) {
+              this.setState({popupShown: 0});
+            } else {
+              this.setState({popupShown: 2});
+            }
+          }} />
           <div className="header-credits-container">
-            <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
+            <ReactiveUserCredits popupShown={this.state.popupShown === 1} onClick={() => {
+              if (this.state.popupShown === 1) {
+                this.setState({popupShown: 0});
+              } else {
+                this.setState({popupShown: 1});
+              }
+            }} className="desktop-credit-coins" history={this.props.history} />
           </div>
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
