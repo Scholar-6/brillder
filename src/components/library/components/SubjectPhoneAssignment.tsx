@@ -12,6 +12,8 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import routes from "components/play/routes";
 import { User } from "model/user";
 import { isTeacherPreference } from "components/services/preferenceService";
+import { checkCompetitionActive } from "services/competition";
+import CompetitionLibraryDialog from "components/baseComponents/dialogs/CompetitionLibraryDialog";
 
 interface LibrarySubjectsProps {
   subject: Subject;
@@ -22,6 +24,8 @@ interface LibrarySubjectsProps {
 }
 
 const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
+  const [competitionClicked, setCompetitionClicked] = React.useState(false);
+
   let className = "assignment";
 
   const { assignment, subject } = props;
@@ -76,11 +80,20 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     );
   };
 
+  let isActiveCompetition = false;
+  if (brick.competitions && brick.competitions.length > 0) {
+    isActiveCompetition = brick.competitions.find(checkCompetitionActive);
+  }
+
   return (
     <div className={`assignment-progressbar ${subject.name === GENERAL_SUBJECT ? 'general' : ''}`}>
       <div
         className={className}
         onClick={() => {
+          if (isActiveCompetition) {
+            setCompetitionClicked(true);
+            return;
+          }
           if (assignment.maxScore) {
             if (isTeacherPreference(props.user)) {
               props.history.push(map.postAssignment(brick.id, props.user.id));
@@ -120,6 +133,7 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         </div>
         {height >= 50 && renderProgressValue()}
       </div>
+      {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} close={() => setCompetitionClicked(false)} />}
     </div>
   );
 };
