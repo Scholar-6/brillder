@@ -536,14 +536,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const coverMoveNext = () => {
     const { user } = props;
-    const isPublisher = isAorP(user.roles);
-    if (user && !isPublisher && user.freeAttemptsLeft <= 0) { // Check if user exists (because of anonymous users)
-      if (!user.subscriptionState || user.subscriptionState === 0) {
-        setPremiumLOpen(true);
-        return;
-      }
-    }
+
     if (props.user) {
+      const isPublisher = isAorP(user.roles);
+      if (user && !isPublisher && user.freeAttemptsLeft <= 0) { // Check if user exists (because of anonymous users)
+        if (!user.subscriptionState || user.subscriptionState === 0) {
+          setPremiumLOpen(true);
+          return;
+        }
+      }
       moveToBrief();
     } else {
       moveToSections();
