@@ -89,7 +89,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       failedItems: []
     }
 
-    this.getCompetition();
+    if (this.props.user) {
+      this.getCompetition();
+    }
   }
 
   async getCompetition() {
