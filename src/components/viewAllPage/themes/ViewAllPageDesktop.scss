@@ -405,3 +405,23 @@
     display: none;
   }
 }
+
+.learn-more-btn-d3 {
+  cursor: pointer;
+  margin-left: 1vw;
+  padding: 0.2vw 0.9vw;
+  color: var(--white);
+  border-radius: 0.7vw;
+  background: var(--theme-orange);
+
+  &:hover {
+    background: var(--theme-dark-blue);
+  }
+}
+
+.competition-filter-d32 {
+  .star-d32 {
+    margin-top: 0.3vw;
+    margin-left: 0.6vw;
+  }
+}

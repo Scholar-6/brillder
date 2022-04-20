@@ -267,7 +267,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
   
   renderCompetitionFilter() {
     return (
-      <div className="">
+      <div className="flex-center competition-filter-d32">
         <FormControlLabel
           value={SortBy.Popularity}
           style={{ marginRight: 0 }}
@@ -280,6 +280,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
           }
           label={`Competition Arena`}
         />
+        <div><SpriteIcon className="star-d32" name="star"/></div>
       </div>
     );
   }
