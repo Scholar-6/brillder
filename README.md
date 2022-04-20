@@ -6,6 +6,7 @@ All changes to development branch are automatically deployed to http://dev-brill
 ## Run Project  
 
 Run the project locally (Windows and Linux) and connect to the dev-api:
+.
 
 * Requires Git and NPM  
 * `git clone git@github.com:Scholar-6/brillder`  
