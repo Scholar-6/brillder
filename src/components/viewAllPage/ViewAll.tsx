@@ -569,7 +569,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if (filterCompetition) {
       bricks = filterByCompetitions(bricks);
-      console.log(bricks);
     }
 
     if (filterSubjects.length > 0) {
@@ -656,7 +655,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   filterByCompetition() {
     let filterCompetition = !this.state.filterCompetition;
-    console.log(777, filterCompetition);
     this.setState({ filterCompetition, shown: false });
     setTimeout(() => {
       try {
@@ -1209,6 +1207,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   renderFirstRow(bricks: Brick[]) {
+    if (this.state.filterCompetition) {
+      return (
+        <div className="main-brick-container">
+          <div className="centered text-theme-dark-blue title found">
+            Enter the competitions below for a chance to maximise your brills and earn cash prizes
+          </div>
+        </div>
+      );
+    }
     if (bricks.length > 0) {
       return (
         <div className="main-brick-container">

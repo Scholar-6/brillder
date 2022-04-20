@@ -51,7 +51,6 @@ const RealLibraryConnect: React.FC<Props> = () => {
     el.setAttribute('href', 'mailto: ivanadmin@gmail.com"');
   }
 
-  /*
   if (libraryId === -2) {
     return (
       <div className="customer-real-library">
@@ -81,7 +80,7 @@ const RealLibraryConnect: React.FC<Props> = () => {
         </div>
       </div>
     );
-  }*/
+  }
 
   return (
     <div className="customer-real-library">
