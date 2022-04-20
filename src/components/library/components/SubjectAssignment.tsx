@@ -51,7 +51,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
 
   let isActiveCompetition = false;
   if (brick.competitions && brick.competitions.length > 0) {
-    isActiveCompetition = brick.competitions.find(checkCompetitionActive);
+    isActiveCompetition = !!brick.competitions.find(checkCompetitionActive);
   }
 
   const renderValueBar = () => {

@@ -18,6 +18,7 @@ import { AssignmentBrickStatus } from "model/assignment";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { checkCompetitionActive } from "services/competition";
+import CompetitionTimer from "./CompetitionTimer";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -183,7 +184,12 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     if (brick.competitions && brick.competitions.length > 0) {
       const foundActive = brick.competitions.find(checkCompetitionActive);
       if (foundActive) {
-        return <div className="competition-baner"><SpriteIcon name="star" /> competition</div>
+        return (
+          <div>
+            <CompetitionTimer competition={foundActive} />
+            <div className="competition-baner"><SpriteIcon name="star" /> competition</div>
+          </div>
+        );
       }
     }
     return '';

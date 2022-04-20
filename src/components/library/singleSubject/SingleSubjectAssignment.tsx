@@ -128,7 +128,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
 
   let isActiveCompetition = false;
   if (brick.competitions && brick.competitions.length > 0) {
-    isActiveCompetition = brick.competitions.find(checkCompetitionActive);
+    isActiveCompetition = !!brick.competitions.find(checkCompetitionActive);
   }
 
   return (
