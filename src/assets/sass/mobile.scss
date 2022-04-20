@@ -1875,3 +1875,51 @@
     }
   }
 }
+
+.cover-competition-timer-d33 {
+  position: absolute;
+  top: calc(50% - 8vw);
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  font-size: 8vw;
+  color: var(--white);
+  font-family: $font-family-bold;
+
+  > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .time-character {
+    font-size: 4vw;
+    margin-left: 1vw;
+    margin-right: 2vw;
+  }
+}
+
+.phone-top-brick-16x9 .competition-baner {
+  background: var(--theme-orange);
+  z-index: 1000;
+  top: 5vw;
+  font-family: $font-family-bold;
+  margin-right: 0.5vw;
+  width: 26vw;
+  left: -4.4vw;
+  transform: rotate(-37deg);
+  display: flex;
+  align-items: center;
+  font-size: 2.3vw;
+  text-transform: uppercase;
+  justify-content: center;
+  color: var(--white);
+  position: absolute;
+  svg {
+    height: 2.3vw;
+    width: 2.3vw;
+  }
+}
