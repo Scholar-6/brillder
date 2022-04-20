@@ -110,6 +110,21 @@
     }
   }
 
+  .competition-item-container {
+    button {
+      display: block !important;
+
+      svg {
+        color: var(--theme-orange);
+      }
+      .item-description {
+        font-size: 25px;
+        font-family: $font-family-light;
+        color: var(--tab-gray) !important;
+      }
+    }
+  }
+
   .back-item-container {
     .flex-number {
       display: flex;
