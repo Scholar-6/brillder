@@ -1211,7 +1211,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       return (
         <div className="main-brick-container">
           <div className="centered text-theme-dark-blue title found">
-            Enter the competitions below for a chance to maximise your brills and earn cash prizes
+            <div className="italic">
+              Enter the competitions below for a chance to maximise your brills and earn cash prizes:
+            </div>
+            <div className="btn learn-more-btn-d3" onClick={() => {
+               window.location.href="https://brillder.com/brilliant-minds-prizes/";
+            }}>
+              Learn more
+            </div>
           </div>
         </div>
       );
