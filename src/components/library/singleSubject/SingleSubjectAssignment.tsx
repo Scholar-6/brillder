@@ -14,6 +14,8 @@ import routes from "components/play/routes";
 import { User } from "model/user";
 import { isTeacherPreference } from "components/services/preferenceService";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { checkCompetitionActive } from "services/competition";
+import CompetitionLibraryDialog from "components/baseComponents/dialogs/CompetitionLibraryDialog";
 
 interface LibrarySubjectsProps {
   subject: Subject;
@@ -28,6 +30,8 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
   props
 ) => {
   const [hovered, setHover] = React.useState(false);
+  const [competitionClicked, setCompetitionClicked] = React.useState(false);
+
   let className = "assignment";
 
   const { assignment, subject } = props;
@@ -122,6 +126,11 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
     return '';
   }
 
+  let isActiveCompetition = false;
+  if (brick.competitions && brick.competitions.length > 0) {
+    isActiveCompetition = !!brick.competitions.find(checkCompetitionActive);
+  }
+
   return (
     <div
       className={`assignment-progressbar single-assignment-progressbar ${subject.name === GENERAL_SUBJECT ? 'general' : ''}`}
@@ -131,6 +140,10 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
       <div
         className={className}
         onClick={() => {
+          if (isActiveCompetition) {
+            setCompetitionClicked(true);
+            return;
+          }
           if (assignment.maxScore) {
             let userId = props.user.id;
             if (props.student) {
@@ -159,7 +172,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
                 brick={brick}
               />
             )}
-            {assignment.brick.competitions && assignment.brick.competitions.length > 0 && height < 50 &&
+            {isActiveCompetition && height < 50 &&
             <div className="competition-star bigger">
               <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
             </div>}
@@ -185,7 +198,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
             onMouseEnter={() => setHover(true)}
             style={{ background: color, height: height + "%" }}
           >
-            {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
+            {isActiveCompetition &&
               <div className="competition-star bigger">
                 <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
               </div>}
@@ -199,6 +212,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
           </div>
         }
       </div>
+      {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} close={() => setCompetitionClicked(false)} />}
     </div>
   );
 };

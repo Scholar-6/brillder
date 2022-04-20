@@ -1,4 +1,5 @@
 import { Competition } from 'model/competition';
+import { checkCompetitionActive } from 'services/competition';
 import {get} from './index';
 
 
@@ -24,15 +25,7 @@ export const getCompetitionByUser = async (userId: number, brickId: number) => {
 
     if (data) {
       const c = data;
-      const endDate = new Date(c.endDate);
-      const startDate = new Date(c.startDate);
-      let isActive = false;
-      if (endDate.getTime() > new Date().getTime()) {
-        if (startDate.getTime() < new Date().getTime()) {
-          isActive = true;
-        }
-      }
-      data.isActive = isActive;
+      data.isActive = checkCompetitionActive(c);
       return data;
     }
     return null;

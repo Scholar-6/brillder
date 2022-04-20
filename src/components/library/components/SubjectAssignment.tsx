@@ -13,6 +13,8 @@ import { isTeacherPreference } from "components/services/preferenceService";
 import { User } from "model/user";
 import { CircularProgressbar } from "react-circular-progressbar";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { checkCompetitionActive } from "services/competition";
+import CompetitionLibraryDialog from "components/baseComponents/dialogs/CompetitionLibraryDialog";
 
 interface LibrarySubjectsProps {
   subject: Subject;
@@ -24,6 +26,8 @@ interface LibrarySubjectsProps {
 
 const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
   const [hovered, setHover] = React.useState(false);
+  const [competitionClicked, setCompetitionClicked] = React.useState(false);
+
   let className = "assignment";
 
   const { assignment, subject } = props;
@@ -45,6 +49,11 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
 
   className += " default";
 
+  let isActiveCompetition = false;
+  if (brick.competitions && brick.competitions.length > 0) {
+    isActiveCompetition = !!brick.competitions.find(checkCompetitionActive);
+  }
+
   const renderValueBar = () => {
     return (
       <div
@@ -56,7 +65,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           maxHeight: "100%",
         }}
       >
-        {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
+        {isActiveCompetition &&
           <div className="competition-star">
             <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
           </div>}
@@ -83,7 +92,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           maxHeight: "100%",
         }}
       >
-        {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
+        {isActiveCompetition &&
           <div className="competition-star">
             <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
           </div>}
@@ -107,6 +116,10 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
       <div
         className={className}
         onClick={() => {
+          if (isActiveCompetition) {
+            setCompetitionClicked(true);
+            return;
+          }
           if (assignment.maxScore) {
             let userId = props.user.id;
             if (props.student) {
@@ -145,6 +158,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         />
         {height >= 50 ? renderValueBar() : renderFullBar()}
       </div>
+      {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} close={() => setCompetitionClicked(false)} />}
     </div>
   );
 };

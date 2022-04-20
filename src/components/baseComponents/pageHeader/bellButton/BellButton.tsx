@@ -10,7 +10,7 @@ interface BellButtonProps {
 }
 
 const BellButton: React.FC<BellButtonProps> = (props) => {
-  const {notificationCount} = props;
+  const { notificationCount } = props;
   let className = "header-btn bell-button svgOnHover rotate animated";
   if (notificationCount !== 0) {
     className += " bell-full";
@@ -22,14 +22,13 @@ const BellButton: React.FC<BellButtonProps> = (props) => {
 
   const renderCount = () => {
     if (notificationCount <= 0) { return ""; }
- 
-      return (
-        <div className="bell-circle">
-          {!isPhone() && <DynamicFont content={notificationCount.toString()} />}
-        </div>
-      );
-  }
 
+    return (
+      <div className="bell-circle">
+        {!isPhone() && <DynamicFont content={notificationCount.toString()} />}
+      </div>
+    );
+  }
 
   return (
     <div

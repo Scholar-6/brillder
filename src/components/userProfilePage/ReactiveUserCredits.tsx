@@ -9,11 +9,12 @@ interface Props {
   className?: string;
   getUser(): any;
   history?: any;
+  popupShown?: boolean;
+  onClick?(): void;
 }
 
 const ReactiveUserCredits:React.FC<Props> = (props) => {
   const [credits, setCredits] = useState(0);
-  const [popupShown, setPopup] = useState(false);
 
   const getCredits = async () => {
     try {
@@ -41,13 +42,13 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
     return `You have ${credits} credit${credits > 1 ? 's' : ''}  remaining.`;
   }
 
-  console.log(666, popupShown);
-
   return (
     <div className={props.className}>
       {credits > 0 ? <SpriteIcon name="circle-lines" /> : <SpriteIcon name="circle-lines-blue" />}
-      <span onClick={() => setPopup(!popupShown)}>{credits}</span>
-      <div className={`css-custom-tooltip ${popupShown ? 'visible' : ''}`}>
+      <span onClick={() => {
+        props.onClick?.();
+      }}>{credits}</span>
+      <div className={`css-custom-tooltip ${props.popupShown ? 'visible' : ''}`}>
         <div className="bold">{renderBoldTitle()}</div>
         <div className="regular">
           Spend 1 credit to play a Brick from the catalogue or 2 credits to enter a competition.

@@ -110,6 +110,21 @@
     }
   }
 
+  .competition-item-container {
+    button {
+      display: block !important;
+
+      svg {
+        color: var(--theme-orange);
+      }
+      .item-description {
+        font-size: 25px;
+        font-family: $font-family-light;
+        color: var(--tab-gray) !important;
+      }
+    }
+  }
+
   .back-item-container {
     .flex-number {
       display: flex;
@@ -186,12 +201,15 @@
         left: -10vw;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         color: var(--theme-dark-blue);
-        width: 68vw;
+        width: 82vw;
         background: var(--white);
         padding: 3vw 5vw;
         bottom: 20vw;
         &.visible {
           display: block;
+        }
+        .bold {
+          font-size: 6vw;
         }
         .green-btn {
           margin-top: 3vw;

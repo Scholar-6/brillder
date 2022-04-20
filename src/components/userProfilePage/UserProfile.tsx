@@ -580,7 +580,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     const renderLibrary = () => {
-      if (this.state.isAdmin && !this.state.subscriptionState) {
+      if (!this.state.subscriptionState) {
         return <RealLibraryConnect />
       }
       return '';
