@@ -130,6 +130,29 @@
           height: 100%;
           display: inline-block;
 
+          .competition-star {
+            position: absolute;
+            top: 0;
+            width: 10vw;
+            z-index: 100;
+            svg {
+              height: 20vw;
+              width: 100%;
+            }
+          }
+
+          .assignment {
+            &.length-20 .competition-star svg {
+            }
+
+            &.length-40 .competition-star {
+              left: 5vw;
+            }
+
+            &.length-60 {
+            }
+          }
+
           .assignment {
             cursor: pointer;
             height: 100%;

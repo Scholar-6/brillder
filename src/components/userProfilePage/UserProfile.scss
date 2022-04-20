@@ -866,6 +866,9 @@
       margin-left: 2vw !important;
     }
   }
+  .btn-container {
+    justify-content: flex-end;
+  }
   .btn {
     cursor: pointer;
     margin-top: 2vh;
@@ -873,6 +876,15 @@
     color: white;
     border-radius: 1.7vh;
     font-size: 1.5vw;
+    width: 12vw;
+    text-align: center;
     background: var(--theme-green);
+
+    &.custom-d42 {
+      margin: 0;
+      margin-left: 4vw;
+      padding: 1.8vh 2vw;
+      margin-bottom: 1.5vh;
+    }
   }
 }

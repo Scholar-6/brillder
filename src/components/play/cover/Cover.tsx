@@ -9,7 +9,7 @@ import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
-import { User } from "model/user";
+import { SubscriptionState, User } from "model/user";
 import { checkAdmin, checkPublisher, isAorP } from "components/services/brickService";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
@@ -160,25 +160,29 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       </div>
     );
   }
-  
+
   const renderCoverPlay = () => {
     let isPublisher = false;
     if (props.user) {
       isPublisher = isAorP(props.user.roles);
     }
     return (
-      <CoverCreditsPlay isAuthor={brick.author.id === props.user?.id} isPublisher={isPublisher} isCompetition={!!props.activeCompetition} onClick={() => {
-        if (props.user) {
-          startBrick();
-        } else {
-          if (!unauthPopupShown) {
-            setUnauthorizedV2(true);
-          } else {
+      <CoverCreditsPlay
+        isAuthor={brick.author.id === props.user?.id} isPublisher={isPublisher}
+        isPaidEducator={props.user.subscriptionState === SubscriptionState.PaidTeacher} isCompetition={!!props.activeCompetition}
+        onClick={() => {
+          if (props.user) {
             startBrick();
+          } else {
+            if (!unauthPopupShown) {
+              setUnauthorizedV2(true);
+            } else {
+              startBrick();
+            }
+            setClickPlay(true);
           }
-          setClickPlay(true);
-        }
-      }} />
+        }}
+      />
     )
   }
 
@@ -426,7 +430,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             </Grid>
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
-                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
+                {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
                   user={props.user}
                   brick={brick}
                 />}

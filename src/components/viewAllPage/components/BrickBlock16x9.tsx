@@ -17,6 +17,8 @@ import { getDate, getMonth, getYear } from "components/services/brickService";
 import { AssignmentBrickStatus } from "model/assignment";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { checkCompetitionActive } from "services/competition";
+import CompetitionTimer from "./CompetitionTimer";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -99,16 +101,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     if (props.isPlay) {
       const values = queryString.parse(props.history.location.search);
       if (brick.competitions && brick.competitions.length > 0) {
-        const foundActive = brick.competitions.find(c => {
-          const endDate = new Date(c.endDate);
-          const startDate = new Date(c.startDate);
-          if (endDate.getTime() > new Date().getTime()) {
-            if (startDate.getTime() < new Date().getTime()) {
-              return true;  
-            }
-          }
-          return false;
-        });
+        const foundActive = brick.competitions.find(checkCompetitionActive);
         if (foundActive) {
           brick.competitionId = foundActive.id;
         }
@@ -189,18 +182,14 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
 
   const renderCompetitionBanner = () => {
     if (brick.competitions && brick.competitions.length > 0) {
-      const foundActive = brick.competitions.find(c => {
-        const endDate = new Date(c.endDate);
-        const startDate = new Date(c.startDate);
-        if (endDate.getTime() > new Date().getTime()) {
-          if (startDate.getTime() < new Date().getTime()) {
-            return true;  
-          }
-        }
-        return false;
-      });
+      const foundActive = brick.competitions.find(checkCompetitionActive);
       if (foundActive) {
-        return <div className="competition-baner"><SpriteIcon name="star" /> competition</div>
+        return (
+          <div>
+            <CompetitionTimer competition={foundActive} />
+            <div className="competition-baner"><SpriteIcon name="star" /> competition</div>
+          </div>
+        );
       }
     }
     return '';

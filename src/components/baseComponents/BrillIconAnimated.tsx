@@ -8,12 +8,13 @@ import BrillIcon from './BrillIcon';
 import { ReduxCombinedState } from 'redux/reducers';
 interface Props {
   user: User;
+  popupShown?: boolean;
+  onClick?(): void;
 }
 
 const BrillIconAnimated: React.FC<Props> = (props) => {
   const [currentBrills, setCurrentBrills] = useStateWithCallbackLazy(0);
   const [flipCoin, setFlipCoin] = React.useState(false);
-
 
   const animateBrills = (cashedBrills: number) => {
     const increaseCoins = (userBrills: number) => {
@@ -97,7 +98,7 @@ const BrillIconAnimated: React.FC<Props> = (props) => {
     <div className="brill-intro-container">
       <div className="brills-number">{currentBrills}</div>
       <div className={`brill-coin-container ${flipCoin ? "flip" : ""}`}>
-        <BrillIcon />
+        <BrillIcon popupShown={props.popupShown} onClick={props.onClick} />
       </div>
     </div>
   );

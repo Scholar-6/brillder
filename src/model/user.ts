@@ -13,6 +13,15 @@ export enum UserPreferenceType {
   Institution
 }
 
+export enum SubscriptionState {
+  Free,
+  Pending,
+  PaidStudent,
+  PaidTeacher,
+  PaidInstitution,
+  FreePass
+}
+
 export enum UserStatus {
   Pending,
   Active,
@@ -54,7 +63,7 @@ export interface User extends UserBase {
   freeAssignmentsLeft: number;
   freeAttemptsLeft: number;
   freeCompetitionLeft: number;
-  subscriptionState?: number;
+  subscriptionState?: SubscriptionState;
 
   teachClassroomCount?: number;
   studyClassroomCount?: number;

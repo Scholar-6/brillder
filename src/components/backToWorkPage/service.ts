@@ -1,4 +1,5 @@
 import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus } from 'model/brick';
+import { checkCompetitionActive } from 'services/competition';
 import { SortBy, Filters, ThreeColumns } from './model';
 
 const getBrickById = (bricks: Brick[], brickId: number) => {
@@ -60,6 +61,28 @@ export const filterByLength = (bricks: Brick[], length: BrickLengthEnum[]) => {
     /*eslint-disable-next-line*/
     const found = length.find(l => b.brickLength == l);
     return !!found;
+  });
+}
+
+/**
+ * Get bricks with active competition.
+ * @param bricks Array of bricks
+ * @returns bricks with active competitions
+ */
+export const filterByCompetitions = (bricks: Brick[]) => {
+  return bricks.filter(b => {
+    let isActive = false;
+
+    if (b.competitions) {
+      for (let comp of b.competitions) {
+        let isLoopedActive = checkCompetitionActive(comp);
+        if (isLoopedActive) {
+          isActive = true;
+          break;
+        }
+      }
+    }
+    return isActive;
   });
 }
 

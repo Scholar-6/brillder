@@ -8,6 +8,7 @@ import HighlightHtml from '../baseComponents/HighlightHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
+import { checkCompetitionActive } from "services/competition";
 
 interface Props {
   brick: Brick;
@@ -30,15 +31,11 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
 
   const getNewestCompetition = (competitions: any[]) => {
     let competition = null;
-    const timeNow = new Date().getTime();
     for (const comp of competitions) {
       try {
-        var start = new Date(comp.startDate).getTime();
-        if (timeNow > start) {
-          var end = new Date(comp.endDate).getTime();
-          if (timeNow < end) {
-            competition = comp;
-          }
+        let isActive = checkCompetitionActive(comp)
+        if (isActive) {
+          competition = comp;
         }
       } catch {
         console.log('competition time can`t be parsed');
