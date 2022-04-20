@@ -1458,3 +1458,29 @@
   height: 3.68vw;
   margin-right: 1.5vw;
 }
+
+.cover-competition-timer-d33 {
+  position: absolute;
+  top: calc(50% - 3vw);
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  font-size: 3vw;
+  color: var(--white);
+  font-family: $font-family-bold;
+
+  > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .time-character {
+    font-size: 1.3vw;
+    margin-left: 0.2vw;
+    margin-right: 0.6vw;
+  }
+}
