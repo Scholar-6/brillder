@@ -839,6 +839,14 @@
     padding-left: 2vw;
     margin-bottom: 1vh;
   }
+  .absolute-placeholder {
+    pointer-events: none;
+    position: absolute;
+    z-index: 2;
+    padding-top: 1.8vh;
+    margin-left: 2vw;
+    letter-spacing: 0.3vw;
+  }
   .MuiInputBase-root {
     margin-bottom: 1.5vh;
   }
