@@ -281,6 +281,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({ user, emailInvalid, saveDisabled: false });
   }
 
+  async reloadLibrary () {
+    await this.props.getUser();
+  }
+
   onProfileImageChanged(name: string, imagePublic: boolean) {
     const { user } = this.state;
     user.profileImage = name;
@@ -309,7 +313,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         if (!foundUpperRole) {
           return;
         }
-      }
+      } 
       this.state.user.roles.splice(index, 1);
     } else {
       this.state.user.roles.push(roleId);
@@ -509,6 +513,20 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           </div>
         );
       }
+
+      if (this.props.user.library) {
+        return (
+          <div className="current-plan">
+            <span>
+              {renderLabel()} Library User
+            </span>
+            <div className="price btn" onClick={() => this.props.history.push(map.StripeEducator)}>
+              <div>Go Premium <SpriteIcon name="hero-sparkle" /></div>
+            </div>
+          </div>
+        );
+      }
+
       return (
         <div className="current-plan">
           <span>
@@ -581,7 +599,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
     const renderLibrary = () => {
       if (!this.state.subscriptionState) {
-        return <RealLibraryConnect />
+        return <RealLibraryConnect user={this.props.user} reloadLibrary={() => {}} />
       }
       return '';
     }
