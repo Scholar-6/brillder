@@ -5,6 +5,7 @@ import ProfileInput from "./components/ProfileInput";
 import { claimLibraryAccount, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
 import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
 import LibrarySuccessDialog from "components/baseComponents/dialogs/LibrarySuccessDialog";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 
@@ -109,7 +110,10 @@ const RealLibraryConnect: React.FC<Props> = () => {
         </div>
       </div>
       <div className="flex-center btn-container">
-        <div className="btn" onClick={() => submit()}>Apply</div>
+        <div className="btn" onClick={() => submit()}>
+          <SpriteIcon name="link" />
+          <div>Link</div>
+        </div>
       </div>
       <LibraryFailedDialog isOpen={failed} close={() => setFailed(false)} />
       <LibrarySuccessDialog isOpen={success} close={() => setSuccess(false)} />

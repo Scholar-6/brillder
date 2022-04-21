@@ -836,8 +836,8 @@
 .customer-real-library {
   margin-top: 6vh;
   .sub-title-d43 {
-    padding-left: 2vw;
-    margin-bottom: 1vh;
+    padding-left: 1vw;
+    margin-bottom: 3vh;
   }
   .absolute-placeholder {
     pointer-events: none;
@@ -887,6 +887,16 @@
     width: 12vw;
     text-align: center;
     background: var(--theme-green);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 1.4vw;
+      height: 1.4vw;
+      margin-right: 0.4vw;
+    }
 
     &.custom-d42 {
       margin: 0;

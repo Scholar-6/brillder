@@ -296,6 +296,12 @@
       width: 92vw;
       text-align: center;
       background: var(--theme-green);
+
+      svg {
+        width: 6vw;
+        height: 6vw;
+        margin-right: 2vw;
+      }
   
       &.custom-d42 {
         margin: 0;
