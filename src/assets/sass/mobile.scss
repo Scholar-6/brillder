@@ -1923,3 +1923,36 @@
     width: 2.3vw;
   }
 }
+
+.custom-popup-d35 {
+  .red-circle-icon-d35 {
+    background: var(--theme-orange);
+    border-radius: 50%;
+    color: var(--white) !important;
+    width: 20vw;
+    height: 20vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    svg {
+      stroke-width: 1.5;
+      margin: 0;
+      width: 12vw !important;
+      height: 12vw !important;
+      margin-bottom: 1.5vw;
+    }
+  }
+  
+  .custom-title-d35 {
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+    font-size: 7vw;
+    font-family: $font-family-bold;
+  }
+  
+  .custom-text-d35 {
+    margin: 0 !important;
+    font-family: $font-family-regular-italic;
+  }
+}
