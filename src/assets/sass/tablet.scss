@@ -1345,6 +1345,7 @@ html body #root .browser-type-container .manage-classrooms-page .sorted-row {
 }
 
 .custom-popup-d35 {
+  .green-circle-icon-d35,
   .red-circle-icon-d35 {
     background: var(--theme-orange);
     border-radius: 50%;
@@ -1363,6 +1364,10 @@ html body #root .browser-type-container .manage-classrooms-page .sorted-row {
       height: 4vw !important;
       margin-bottom: 0.4vw;
     }
+  }
+
+  .green-circle-icon-d35 {
+    background: var(--theme-green);
   }
   
   .custom-title-d35 {

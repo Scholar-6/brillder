@@ -1486,6 +1486,7 @@
 }
 
 .custom-popup-d35 {
+  .green-circle-icon-d35,
   .red-circle-icon-d35 {
     background: var(--theme-orange);
     border-radius: 50%;
@@ -1503,6 +1504,16 @@
       width: 4vw !important;
       height: 4vw !important;
       margin-bottom: 0.4vw;
+    }
+  }
+
+  .green-circle-icon-d35 {
+    background: var(--theme-green);
+
+    svg {
+      stroke-width: 2.3;
+      margin-top: 0.5vw;
+      margin-bottom: 0;
     }
   }
   
