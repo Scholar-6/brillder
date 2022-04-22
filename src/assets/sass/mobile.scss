@@ -1890,6 +1890,7 @@
   font-family: $font-family-bold;
 
   > span {
+    text-shadow: 0 0 2vw var(--theme-orange);
     display: flex;
     justify-content: center;
     align-items: center;

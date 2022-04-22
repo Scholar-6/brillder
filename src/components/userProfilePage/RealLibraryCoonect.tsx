@@ -21,7 +21,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
   const [libraryId, setLibrary] = useState(null as null | number);
   const [libraries, setLibraries] = useState([] as RealLibrary[]);
   const [linked, setLinked] = useState(null as null | boolean); // false - unlinked, true - linked, null - loading
-  const [suggestedName, setSuggestedName] = useState('');
+  //const [suggestedName, setSuggestedName] = useState('');
 
   const [success, setSuccess] = useState(false);
   const [failed, setFailed] = useState(false);
