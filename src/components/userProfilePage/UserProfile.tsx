@@ -598,10 +598,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     const renderLibrary = () => {
-      if (!this.state.subscriptionState) {
-        return <RealLibraryConnect user={this.props.user} reloadLibrary={() => {}} />
-      }
-      return '';
+      return <RealLibraryConnect user={this.props.user} reloadLibrary={() => {}} />
     }
 
     return (
@@ -611,9 +608,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           {renderNextBillingDate(this.state.nextPaymentDate)}
         </div>
         {renderCredits()}
-        {renderLibrary()}
         {renderPaymentMethod()}
         {renderLeaveContainer()}
+        {renderLibrary()}
       </div>
     );
   }

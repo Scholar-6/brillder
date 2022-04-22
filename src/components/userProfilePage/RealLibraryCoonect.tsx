@@ -65,7 +65,6 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
     if (libraryId) {
       const success = await unclaimLibraryAccount(libraryId);
       if (success) {
-        console.log('unlinked successfully');
         reloadLibrary();
         setLinked(false);
       }
@@ -113,7 +112,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
       return (
         <div className="btn" onClick={unlink}>
           <SpriteIcon name="link" />
-          <div>Unlink Library</div>
+          <div>Unlink from Library</div>
         </div>
       );
     }

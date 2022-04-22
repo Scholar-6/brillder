@@ -631,6 +631,7 @@
 .user-profile-page .manage-account-block {
   padding: 3vh 3vw 3vh 3vw;
   font-size: 1.5vw;
+  height: calc(100vh - #{$home-button-size} - 4vh - 8vh);
   color: var(--theme-dark-blue);
   $border-radius: 0.5vw;
   .current-plan {
