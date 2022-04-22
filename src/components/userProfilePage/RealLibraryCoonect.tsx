@@ -7,6 +7,7 @@ import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailed
 import LibrarySuccessDialog from "components/baseComponents/dialogs/LibrarySuccessDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { User } from "model/user";
+import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
 
 
 
@@ -126,7 +127,14 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
 
   return (
     <div className="customer-real-library">
-      <div className="sub-title-d43"> Get a premium account for free through your UK library</div>
+      <div className="sub-title-d43">
+        Get a premium account for free through your UK library
+        <div className="link-library-help">
+          <HoverHelp>
+            <div>If you belong to a participating Library.</div>
+          </HoverHelp>
+        </div>
+      </div>
       <div className="flex-center">
         <div className="relative">
           {(libraryId === -1 || libraryId === null) && <div className="absolute-placeholder unselectable" onClick={e => e.preventDefault()}>Library Authority</div>}
