@@ -238,8 +238,26 @@
     display: block !important;
   }
   .sub-title-d43 {
+    width: 90vw;
+    align-items: center;
     padding-left: 2vw;
     margin-bottom: 1vh;
+
+    svg {
+      width: 8vw;
+      height: 8vw;
+      margin-right: 1vw;
+    }
+
+    .hover-content {
+      top: 10vw !important;
+      padding: 1vw 4vw !important;
+      border-radius: 2vw !important;
+      width: 50vw !important;
+      font-size: 5vw !important;
+      left: unset !important;
+      right: -6vw !important;
+    }
   }
   .absolute-placeholder {
     pointer-events: none;

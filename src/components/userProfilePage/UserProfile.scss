@@ -837,8 +837,18 @@
 .customer-real-library {
   margin-top: 6vh;
   .sub-title-d43 {
+    display: flex;
     padding-left: 1vw;
     margin-bottom: 3vh;
+
+    svg {
+      margin-left: 1vw;
+    }
+
+    .hover-content {
+      width: 22vw !important;
+      margin: 0.4vw 1vw !important;
+    }
   }
   .absolute-placeholder {
     pointer-events: none;
