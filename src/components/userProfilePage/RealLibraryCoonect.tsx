@@ -43,6 +43,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
     } else {
       setLinked(false);
     }
+    /*eslint-disable-next-line*/
   }, []);
 
   const submit = async () => {

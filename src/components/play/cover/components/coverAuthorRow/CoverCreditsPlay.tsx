@@ -7,12 +7,13 @@ interface Props {
   isPublisher: boolean;
   isCompetition?: boolean;
   isPaidEducator?: boolean;
+  isLibraryUser?: boolean;
   onClick(): any;
 }
 
-const CoverCreditsPlay: React.FC<Props> = ({ isCompetition, isAuthor, isPublisher, isPaidEducator, onClick }) => {
+const CoverCreditsPlay: React.FC<Props> = ({ isCompetition, isLibraryUser, isAuthor, isPublisher, isPaidEducator, onClick }) => {
   const renderDynamicPart = () => {
-    if (isPaidEducator) {
+    if (isPaidEducator || isLibraryUser) {
       if (isCompetition) {
         return <div className="absolute-credits">{2}</div>;
       }
