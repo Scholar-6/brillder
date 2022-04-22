@@ -1469,11 +1469,11 @@
   align-items: center;
   z-index: 10;
   font-size: 3vw;
-  color: var(--white);
+  color: var(--theme-dark-blue);
   font-family: $font-family-bold;
 
   > span {
-    text-shadow: 0 0 1vw var(--theme-orange);
+    text-shadow: 0 0 1vw var(--theme-dark-blue);
     display: flex;
     justify-content: center;
     align-items: center;

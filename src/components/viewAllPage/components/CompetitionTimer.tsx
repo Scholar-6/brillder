@@ -36,6 +36,7 @@ const CompetitionTimer: React.FC<Props> = ({ competition }) => {
     const interval = setInterval(setAllTime, 1000);
 
     return () => { clearInterval(interval) }
+    /*eslint-disable-next-line*/
   }, []);
 
   return (
