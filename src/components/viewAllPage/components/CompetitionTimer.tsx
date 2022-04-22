@@ -40,11 +40,14 @@ const CompetitionTimer: React.FC<Props> = ({ competition }) => {
   }, []);
 
   return (
-    <div className="cover-competition-timer-d33">
-      {days > 0 && <span>{days}<span className="time-character">D</span></span>}
-      {hours >= 0 && <span>{hours}<span className="time-character">H</span></span>}
-      {minutes >= 0 && <span>{minutes}<span className="time-character">M</span></span>}
-      {seconds >= 0 && <span>{seconds}<span className="time-character">S</span></span>}
+    <div>
+      <div className="background-d33" />
+      <div className="cover-competition-timer-d33">
+        {days > 0 && <span>{days}<span className="time-character">D</span></span>}
+        {hours >= 0 && <span>{hours}<span className="time-character">H</span></span>}
+        {minutes >= 0 && <span>{minutes}<span className="time-character">M</span></span>}
+        {seconds >= 0 && <span>{seconds}<span className="time-character">S</span></span>}
+      </div>
     </div>
   )
 }

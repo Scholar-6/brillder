@@ -1876,6 +1876,18 @@
   }
 }
 
+
+.background-d33 {
+  position: absolute;
+  z-index: 9;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  height: calc(100% - 9vw);
+  width:100%;
+  background: var(--tab-gray);
+}
+
 .cover-competition-timer-d33 {
   position: absolute;
   top: calc(50% - 8vw);
