@@ -25,11 +25,17 @@ export const getNewUserState = (isAdmin: boolean) => {
     emailInvalid: false,
     previewAnimationFinished: false,
     profileImagePublic: false,
-    editPassword: false
-  };
+    editPassword: false,
+    stepsEnabled: false,
+    originLibrary: false,
+    librarySteps: [{
+      emement: '',
+      intro: `<p>Link your library account by filling in your details below.</p>`
+    }]
+  }
 }
 
-export const getExistedUserState = (user: User) => {
+export const getExistingUserState = (user: User) => {
   const isAdmin = checkAdmin(user.roles);
   let isEditor = canEdit(user);
 
@@ -79,6 +85,12 @@ export const getExistedUserState = (user: User) => {
     validationRequired: false,
     emailInvalid: false,
     previewAnimationFinished: false,
-    editPassword: false
+    editPassword: false,
+    stepsEnabled: false,
+    originLibrary: false,
+    librarySteps: [{
+      emement: '',
+      intro: `<p>Link your library account by filling in your details below.</p>`
+    }]
   };
 }
