@@ -43,6 +43,7 @@ import ReactiveUserCredits from "./ReactiveUserCredits";
 // @ts-ignore
 import { Steps } from 'intro.js-react';
 import queryString from "query-string";
+import { GetOrigin } from "localStorage/origin";
 
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
@@ -128,8 +129,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         tempState.userCredits = user.freeAttemptsLeft;
         this.state = tempState;
       }
-      const values = queryString.parse(props.location.search);
-      if (values.origin === 'library') {
+      if (GetOrigin() === 'library') {
         this.state = { ...this.state, originLibrary: true, stepsEnabled: true, isProfile: false };
       }
     }
