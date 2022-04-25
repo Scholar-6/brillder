@@ -130,7 +130,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       }
       const values = queryString.parse(props.location.search);
       if (values.origin === 'library') {
-        this.setState({stepsEnabled: true});
+        this.state = { ...this.state, originLibrary: true, stepsEnabled: true, isProfile: false };
       }
     }
 
