@@ -1,20 +1,8 @@
 export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean, isLibraryOrigin: boolean) {
   let steps:any = [];
-  if (isTeacher) {
-    return [
-      {
-        element: '.view-item-container',
-        intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
-      }
-    ];
-  }
 
   if (isStudent) {
     steps = [
-      {
-        emement: '',
-        intro: `<p>We offer free accounts to participating UK libraries. Link your account at the end of this tutorial.</p>`
-      },
       {
         element: '.view-item-container',
         intro: `<p>Click here to explore our catalogue and play academic challenges (“bricks”)</p>`,
@@ -33,13 +21,34 @@ export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean,
       }, {
         element: '.create-item-container',
         intro: `<p>Once you start getting the hang of “bricks”, you'll be able to have a go at building them.</p>`,
-      },
-      {
-        emement: '',
-        intro: `<p>Link your library account by filling in your details below.</p>`
       }
     ];
   }
 
+  if (isTeacher) {
+    return [
+      {
+        element: '.view-item-container',
+        intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
+      }
+    ];
+  }
+
+  if (isLibraryOrigin) {
+    steps.unshift({
+      emement: '',
+      intro: `<p>We offer free accounts to participating UK libraries. Link your account at the end of this tutorial.</p>`
+    });
+  }
+
   return steps;
 }
+
+
+// {
+//   element: '.selector1', // css selector
+//   intro: 'test 1', // tooltip content
+//   position: 'right', // position of tooltip
+//   tooltipClass: 'myTooltipClass', // css class of the tootip
+//   highlightClass: 'myHighlightClass', // css class of the helperLayer
+// },
