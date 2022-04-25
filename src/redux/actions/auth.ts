@@ -8,6 +8,7 @@ import { socketLogout } from './socket';
 import notificationActions from './notifications';
 import { enableTracking, disableTracking } from 'services/matomo';
 import {UserType} from 'model/user';
+import { SetOrigin } from 'localStorage/origin';
 
 const loginSuccess = () => {
   enableTracking();
@@ -87,6 +88,7 @@ const logout = () => {
         dispatch(logoutSuccess());
         dispatch(socketLogout());
         dispatch(notificationActions.notificationReset());
+        SetOrigin("");
         return;
       }
       let {msg} = data;

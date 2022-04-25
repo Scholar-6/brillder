@@ -35,6 +35,7 @@ import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTe
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import SubscribedDialog from "./components/SubscibedDialog";
 import getMainPageSteps from "./MainPageSteps";
+import { GetOrigin } from "localStorage/origin";
 
 
 
@@ -105,7 +106,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     }
 
     let isLibraryOrigin = false;
-    if (values.origin && values.origin === 'library') {
+    if (GetOrigin() === 'library') {
       isLibraryOrigin = true;
     }
 
