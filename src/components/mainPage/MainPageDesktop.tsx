@@ -375,8 +375,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       this.props.history.push(map.UserProfile + '?origin=library');
       this.setState({ stepsEnabled: false }); }
     else if (this.state.isNewTeacher) {
-        this.props.history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true');
-        this.setState({ stepsEnabled: false });
+      this.props.history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true');
+      this.setState({ stepsEnabled: false });
     } else {
       this.props.history.push(map.ViewAllPage + '?mySubject=true');
       this.setState({ stepsEnabled: false });

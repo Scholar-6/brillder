@@ -26,6 +26,7 @@ export const getNewUserState = (isAdmin: boolean) => {
     previewAnimationFinished: false,
     profileImagePublic: false,
     editPassword: false,
+    isLoaded: true,
     stepsEnabled: false,
     originLibrary: false,
     librarySteps: [{
@@ -70,6 +71,7 @@ export const getExistingUserState = (user: User) => {
     isProfile: true,
     isStudent: isOnlyStudent,
     isAdmin,
+    isLoaded: true,
     roles: [
       { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
       { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
