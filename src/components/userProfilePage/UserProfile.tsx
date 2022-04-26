@@ -42,7 +42,6 @@ import RealLibraryConnect from "./RealLibraryCoonect";
 import ReactiveUserCredits from "./ReactiveUserCredits";
 // @ts-ignore
 import { Steps } from 'intro.js-react';
-import queryString from "query-string";
 import { GetOrigin } from "localStorage/origin";
 
 
@@ -90,6 +89,8 @@ interface UserProfileState {
   isProfile: boolean;
 
   subscriptionState?: number;
+
+  isLoaded: boolean;
 
   originLibrary: boolean;
   stepsEnabled: boolean;
@@ -689,7 +690,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <ProfileIntroJs user={this.props.user} suspended={this.state.introJsSuspended} history={this.props.history} location={this.props.location} />
           {!this.state.saveDisabled && <SaveIntroJs />}
         </div>
-        {this.state.originLibrary &&
+        {this.state.originLibrary && this.state.isLoaded &&
           <Steps
             enabled={this.state.stepsEnabled}
             steps={this.state.librarySteps}
