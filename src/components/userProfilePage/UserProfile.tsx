@@ -30,7 +30,7 @@ import ProfileInput from "./components/ProfileInput";
 import ProfileIntroJs from "./components/ProfileIntroJs";
 import PasswordChangedDialog from "components/baseComponents/dialogs/PasswordChangedDialog";
 import ProfilePhonePreview from "./components/ProfilePhonePreview";
-import { getExistedUserState, getNewUserState } from "./stateService";
+import { getExistingUserState, getNewUserState } from "./stateService";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import { maximizeZendeskButton, minimizeZendeskButton } from "services/zendesk";
@@ -40,6 +40,10 @@ import map from "components/map";
 import { cancelSubscription, getCardDetails } from "services/axios/stripe";
 import RealLibraryConnect from "./RealLibraryCoonect";
 import ReactiveUserCredits from "./ReactiveUserCredits";
+// @ts-ignore
+import { Steps } from 'intro.js-react';
+import { GetOrigin } from "localStorage/origin";
+
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
 const TabletTheme = React.lazy(() => import("./themes/UserTabletTheme"));
@@ -85,6 +89,12 @@ interface UserProfileState {
   isProfile: boolean;
 
   subscriptionState?: number;
+
+  isLoaded: boolean;
+
+  originLibrary: boolean;
+  stepsEnabled: boolean;
+  librarySteps: any[];
 }
 
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
@@ -104,7 +114,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     } else {
       const { user } = props;
 
-      let tempState: UserProfileState = getExistedUserState(user);
+      let tempState: UserProfileState = getExistingUserState(user);
 
       if (userId) {
         this.state = tempState;
@@ -119,6 +129,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         tempState.user = getUserProfile(user);
         tempState.userCredits = user.freeAttemptsLeft;
         this.state = tempState;
+      }
+      if (GetOrigin() === 'library') {
+        this.state = { ...this.state, originLibrary: true, isProfile: false };
+        // IntroJS errors if you start a new intro too quickly after a previous one. Delay enabling the steps a little bit to prevent this.
+        setTimeout(() => {
+          this.setState({ stepsEnabled: true });
+        }, 1000);
       }
     }
 
@@ -478,6 +495,16 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
+  onIntroExit() {
+    this.setState({ stepsEnabled: false });
+  }
+
+  onIntroChanged(e: any) {
+    if (e >= 2) {
+       this.setState({ stepsEnabled: false });
+    }
+  }
+
   renderManageAccount() {
     const { subscriptionState } = this.props.user;
 
@@ -663,6 +690,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <ProfileIntroJs user={this.props.user} suspended={this.state.introJsSuspended} history={this.props.history} location={this.props.location} />
           {!this.state.saveDisabled && <SaveIntroJs />}
         </div>
+        {this.state.originLibrary && this.state.isLoaded &&
+          <Steps
+            enabled={this.state.stepsEnabled}
+            steps={this.state.librarySteps}
+            initialStep={0}
+            onChange={this.onIntroChanged.bind(this)}
+            onExit={this.onIntroExit.bind(this)}
+            onComplete={() => { }}
+          />}
       </React.Suspense>
     );
   }
