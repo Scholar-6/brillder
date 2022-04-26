@@ -130,7 +130,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.state = tempState;
       }
       if (GetOrigin() === 'library') {
-        this.state = { ...this.state, originLibrary: true, stepsEnabled: true, isProfile: false };
+        this.state = { ...this.state, originLibrary: true, isProfile: false };
+        // IntroJS errors if you start a new intro too quickly after a previous one. Delay enabling the steps a little bit to prevent this.
+        setTimeout(() => {
+          this.setState({ stepsEnabled: true });
+        }, 1000);
       }
     }
 
