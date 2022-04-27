@@ -151,7 +151,7 @@ const App: React.FC<AppProps> = props => {
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    let { url } = error.response.config;
+    let { url } = error.response?.config;
 
     // exception for login, play and view all pages
     if (error.response.status === 401) {
@@ -166,7 +166,7 @@ const App: React.FC<AppProps> = props => {
     return Promise.reject(error);
   });
 
-  if(!GetOrigin()) {
+  if (!GetOrigin()) {
     const values = queryString.parse(location.search);
     SetOrigin((values.origin ?? "") as string);
   }

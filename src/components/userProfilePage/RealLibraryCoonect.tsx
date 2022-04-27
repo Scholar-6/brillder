@@ -8,7 +8,8 @@ import LibrarySuccessDialog from "components/baseComponents/dialogs/LibrarySucce
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { User } from "model/user";
 import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
-
+import { createTicket } from "services/axios/zendesk";
+import LibrarySuggestSuccessDialog from "components/baseComponents/dialogs/LibrarySuggestSuccessDialog";
 
 
 interface Props {
@@ -22,10 +23,13 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
   const [libraryId, setLibrary] = useState(null as null | number);
   const [libraries, setLibraries] = useState([] as RealLibrary[]);
   const [linked, setLinked] = useState(null as null | boolean); // false - unlinked, true - linked, null - loading
-  //const [suggestedName, setSuggestedName] = useState('');
+  const [suggestedName, setSuggestedName] = useState('');
 
   const [success, setSuccess] = useState(false);
   const [failed, setFailed] = useState(false);
+
+  const [suggestionSuccess, setSuggestionSuccess] = useState(false);
+  const [suggestionFailed, setSuggestionFailed] = useState(false);
 
   const loadLibraries = async () => {
     const libraries = await getRealLibraries();
@@ -33,6 +37,12 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
       libraries.push({ id: -2, name: 'Other' });
       setLibraries(libraries);
     }
+  }
+
+  const createNewTicket = async (librarySuggestion: string) => {
+    const res = await createTicket(user, librarySuggestion);
+    setSuggestedName('');
+    setSuggestionSuccess(true);
   }
 
   useEffect(() => {
@@ -72,11 +82,6 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
     }
   }
 
-  const sendSuggestion = () => {
-    const el = document.createElement('a');
-    el.setAttribute('href', 'mailto: ivanadmin@gmail.com"');
-  }
-
   if (libraryId === -2) {
     return (
       <div className="customer-real-library">
@@ -98,12 +103,14 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
             </Select>
           </div>
           <div>
-            <ProfileInput value={libraryCardNumber} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Number" />
+            <ProfileInput value={suggestedName} validationRequired={false} className="" type="text" onChange={e => setSuggestedName(e.target.value)} placeholder="Library Name Suggestion" />
           </div>
           <div className="flex-center">
-            <div className="btn custom-d42" onClick={() => sendSuggestion()}>Send</div>
+            <div className="btn custom-d42" onClick={() => createNewTicket(suggestedName)}>Send</div>
           </div>
         </div>
+        <LibraryFailedDialog isOpen={suggestionFailed} close={() => setSuggestionFailed(false)} />
+        <LibrarySuggestSuccessDialog isOpen={suggestionSuccess} close={() => setSuggestionSuccess(false)} />
       </div>
     );
   }
