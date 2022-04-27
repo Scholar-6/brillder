@@ -68,6 +68,8 @@ import LeaderboardPage from 'components/competitions/LeaderboardPage';
 import ChoosePlan from 'components/choosePlan/ChoosePlan';
 import StripeCreditsPage from 'components/stripeCreditsPage/StripeCreditsPage';
 
+import queryString from "query-string";
+import { GetOrigin, SetOrigin } from 'localStorage/origin';
 
 interface AppProps {
   user: User;
@@ -163,6 +165,11 @@ const App: React.FC<AppProps> = props => {
     }
     return Promise.reject(error);
   });
+
+  if(!GetOrigin()) {
+    const values = queryString.parse(location.search);
+    SetOrigin((values.origin ?? "") as string);
+  }
 
   const theme = React.useMemo(() =>
     createMuiTheme({

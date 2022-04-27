@@ -21,3 +21,12 @@ export const claimLibraryAccount = async (libraryId: number, barcodeNumber: stri
     return false;
   }
 }
+
+export const unclaimLibraryAccount = async (libraryId: number) => {
+  try {
+    await post<any>('/user/unclaimLibraryAccount', {libraryId });
+    return true;
+  } catch {
+    return false;
+  }
+}

@@ -25,11 +25,18 @@ export const getNewUserState = (isAdmin: boolean) => {
     emailInvalid: false,
     previewAnimationFinished: false,
     profileImagePublic: false,
-    editPassword: false
-  };
+    editPassword: false,
+    isLoaded: true,
+    stepsEnabled: false,
+    originLibrary: false,
+    librarySteps: [{
+      emement: '',
+      intro: `<p>Link your library account by filling in your details below.</p>`
+    }]
+  }
 }
 
-export const getExistedUserState = (user: User) => {
+export const getExistingUserState = (user: User) => {
   const isAdmin = checkAdmin(user.roles);
   let isEditor = canEdit(user);
 
@@ -64,6 +71,7 @@ export const getExistedUserState = (user: User) => {
     isProfile: true,
     isStudent: isOnlyStudent,
     isAdmin,
+    isLoaded: true,
     roles: [
       { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
       { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
@@ -79,6 +87,12 @@ export const getExistedUserState = (user: User) => {
     validationRequired: false,
     emailInvalid: false,
     previewAnimationFinished: false,
-    editPassword: false
+    editPassword: false,
+    stepsEnabled: false,
+    originLibrary: false,
+    librarySteps: [{
+      emement: '',
+      intro: `<p>Link your library account by filling in your details below.</p>`
+    }]
   };
 }
