@@ -17,9 +17,8 @@ const LibrarySuggestSuccessDialog: React.FC<DialogProps> = ({ isOpen, close }) =
             <SpriteIcon name="check-custom" />
           </div>
         </div>
-        <div className="text-center custom-title-d35">Library Linked!</div>
+        <div className="text-center custom-title-d35">Library suggestion has been sent!</div>
         <div className="custom-text-d35">
-          Your suggestion has been send.
         </div>
       </div>
     </Dialog>
