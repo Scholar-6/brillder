@@ -9,3 +9,4 @@ export const LoginRedirectUrl = 'LoginRedirectUrl';
 export const AuthBrickCoverId = 'AuthBrickCoverId';
 export const VolumeToggle = 'VolumeToggle';
 export const UserBrills = 'UserBrills';
+export const Origin = 'Origin';

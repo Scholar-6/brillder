@@ -1,3 +1,5 @@
+import { RealLibrary } from "services/axios/realLibrary";
+
 export enum UserType {
   Student = 1,
   Teacher,
@@ -64,6 +66,9 @@ export interface User extends UserBase {
   freeAttemptsLeft: number;
   freeCompetitionLeft: number;
   subscriptionState?: SubscriptionState;
+
+  library?: RealLibrary;
+  libraryCardNumber?: string;
 
   teachClassroomCount?: number;
   studyClassroomCount?: number;

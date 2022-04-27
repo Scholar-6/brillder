@@ -1,9 +1,5 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
-import Avatar from "@material-ui/core/Avatar";
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import SpriteIcon from "../SpriteIcon";
 
@@ -14,16 +10,17 @@ interface DialogProps {
 
 const LibraryFailedDialog: React.FC<DialogProps> = ({ isOpen, close }) => {
   return (
-    <Dialog open={isOpen} onClose={close} className="dialog-box">
+    <Dialog open={isOpen} onClose={close} className="dialog-box custom-popup-d35">
       <div className="dialog-header">
-        <ListItem>
-          <ListItemText primary='That did not work. Please try again, or select "other" and suggest a Library and we will check if they have a partnership scheme with Brillder.' className="bold" style={{ maxWidth: '50vw' }} />
-          <ListItemAvatar>
-            <Avatar className="circle-check alert-icon">
-              <SpriteIcon name="alert-triangle" className="active stroke-2 m-b-03" />
-            </Avatar>
-          </ListItemAvatar>
-        </ListItem>
+        <div className="flex-center">
+          <div className="red-circle-icon-d35">
+            <SpriteIcon name="alert-triangle" />
+          </div>
+        </div>
+        <div className="text-center custom-title-d35">Authentification unsuccessful</div>
+        <div className="custom-text-d35">
+          Please try again or click the help button in the bottom left to send us a ticket.
+        </div>
       </div>
     </Dialog>
   );
