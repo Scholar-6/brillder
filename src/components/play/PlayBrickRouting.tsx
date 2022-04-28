@@ -243,9 +243,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
-  const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
-    let lastPageUrl = lastUrl;
-
+  const setCompetitionAndClearCash = () => {
     // set competition id of cashed brick
     const cash = GetAuthBrickCash();
     /*eslint-disable-next-line*/
@@ -254,6 +252,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       setCompetitionIdV2(cash.competitionId);
       ClearAuthBrickCash();
     }
+  }
+
+  const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
+    let lastPageUrl = lastUrl;
+
+    setCompetitionAndClearCash();
 
     if (!lastUrl) {
       const found = location.pathname.match(`[^/]+(?=/$|$)`);
@@ -387,8 +391,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
 
     getBestScore();
-
     getCompetition();
+    setCompetitionAndClearCash();
     /*eslint-disable-next-line*/
   }, [])
 
@@ -985,7 +989,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history.push(map.ViewAllPage);
           }}
           registered={() => {
-            history.push(routes.playReview(brick)); 
+            history.push(routes.playReview(brick));
             setUnauthorized(false);
           }}
         />
