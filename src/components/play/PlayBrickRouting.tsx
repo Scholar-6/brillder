@@ -325,6 +325,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           console.log('can`t convert competition id');
         }
       }
+    } else {
+      const values = queryString.parse(props.location.search);
+      if (values.competitionId) {
+        try {
+          var compId = parseInt(values.competitionId as string);
+          setCompetitionId(compId, []);
+        } catch {
+          console.log('can`t convert competition id');
+        }
+      }
     }
   }
 
@@ -344,13 +354,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const getCompetition = async () => {
-    if (props.user) {
-      const res = await getCompetitionsByBrickId(brick.id);
-      if (res && res.length > 0) {
-        const competition = getNewestCompetition(res);
-        if (competition) {
-          setActiveCompetition(competition);
-        }
+    const res = await getCompetitionsByBrickId(brick.id);
+    if (res && res.length > 0) {
+      const competition = getNewestCompetition(res);
+      if (competition) {
+        setActiveCompetition(competition);
       }
     }
   }

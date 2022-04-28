@@ -362,6 +362,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
 
   const briefText = stripHtml(brick.brief);
 
+  console.log(888, props.canSeeCompetitionDialog, competitionData)
+
   return (
     <React.Suspense fallback={<></>}>
       <HoveredImage />
