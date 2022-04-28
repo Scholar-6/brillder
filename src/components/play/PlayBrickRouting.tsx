@@ -490,16 +490,23 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       setLiveBrills(brills);
 
       setCreatingAttempt(false);
+      return brills;
     }).catch(() => {
       setFailed(true);
       setCreatingAttempt(false);
       setLiveBrills(0);
+      return 0;
     });
   };
 
   const saveBrickAttempt = async (brickAttempt: BrickAttempt) => {
     if (!attemptId) {
-      return createBrickAttempt(brickAttempt);
+      console.log('setting brills')
+      const brillsSv = await createBrickAttempt(brickAttempt);
+      setLiveBrills(0);
+      console.log(brillsSv);
+      setReviewBrills(brillsSv);
+      return;
     }
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
@@ -522,6 +529,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       if (brills < 0) {
         brills = 0;
       }
+      console.log(666, 'set briils', brills, reviewBrills)
       setReviewBrills(brills);
 
       props.storeLiveStep(0, 0);

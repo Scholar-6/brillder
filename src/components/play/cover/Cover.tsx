@@ -169,6 +169,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     }
     return (
       <CoverCreditsPlay
+        user={props.user}
         isAuthor={brick.author.id === props.user?.id} isPublisher={isPublisher}
         isLibraryUser={!!props.user?.library}
         isPaidEducator={props.user?.subscriptionState === SubscriptionState.PaidTeacher} isCompetition={!!props.activeCompetition}
