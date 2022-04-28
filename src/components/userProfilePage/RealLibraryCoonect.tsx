@@ -40,7 +40,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
   }
 
   const createNewTicket = async (librarySuggestion: string) => {
-    const res = await createTicket(user, librarySuggestion);
+    await createTicket(user, librarySuggestion);
     setSuggestedName('');
     setSuggestionSuccess(true);
   }
