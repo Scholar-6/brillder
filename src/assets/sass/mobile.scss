@@ -99,6 +99,15 @@
   }
 }
 
+.dialog-box .close-button {
+  top: 4vw;
+  right: 4vw;
+
+  svg {
+    color: var(--theme-orange);
+  }
+}
+
 .MuiDialog-root.dialog-box.light-blue.unlimited {
   .close-button {
     top: 4vw;
