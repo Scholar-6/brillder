@@ -8,6 +8,8 @@ import userActions from 'redux/actions/user';
 import { User } from 'model/user';
 import { buyCredits } from 'services/axios/stripe';
 import map from 'components/map';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import CreditCardFailedDialog from 'components/baseComponents/dialogs/CreditCardFailedDialog';
 
 export enum CreditPrice {
   Small = 1,
@@ -35,6 +37,7 @@ const StripeCredits: React.FC<Props> = ({ user, ...props }) => {
 
   const [card, setCard] = useState(null as null | StripeCardElement);
 
+  const [cardFailed, setCardFailed] = useState(false);
 
   useEffect(() => {
     var style = {
@@ -99,6 +102,8 @@ const StripeCredits: React.FC<Props> = ({ user, ...props }) => {
       return;
     }
 
+    setClicked(true);
+
     const clientSecret = await buyCredits(creditPrice);
 
     if (card) {
@@ -113,6 +118,7 @@ const StripeCredits: React.FC<Props> = ({ user, ...props }) => {
 
       if (result.error) {
         console.log('[error]', result.error);
+        setCardFailed(true);
       } else {
         console.log('[PaymentIntent]', result.paymentIntent);
       }
@@ -157,11 +163,13 @@ const StripeCredits: React.FC<Props> = ({ user, ...props }) => {
                 <div id="card-cvc-element" className="field"></div>
               </div>
             </div>
-            <button type="submit" disabled={!cardValid || !expireValid || !cvcValid || !stripe || clicked}>
-              Agree
+            <button type="submit" className={clicked ? 'loading' : ''} disabled={!cardValid || !expireValid || !cvcValid || !stripe || clicked}>
+              <SpriteIcon name="f-loader" className="spinning" />
+              Buy Now
             </button>
           </form>
         </div>
+        <CreditCardFailedDialog isOpen={cardFailed} close={() => setCardFailed(false)} />
       </React.Suspense>
     </div>
   );
