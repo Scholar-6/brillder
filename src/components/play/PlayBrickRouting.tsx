@@ -251,7 +251,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     /*eslint-disable-next-line*/
     if (cash && cash.brick && cash.competitionId && cash.brick.id == brick.id) {
       brick.competitionId = cash.competitionId;
-      setCompetitionIdV2(compId);
+      setCompetitionIdV2(cash.competitionId);
       ClearAuthBrickCash();
     }
 
