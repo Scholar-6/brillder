@@ -10,6 +10,10 @@ import { buyCredits } from 'services/axios/stripe';
 import map from 'components/map';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import CreditCardFailedDialog from 'components/baseComponents/dialogs/CreditCardFailedDialog';
+import { isPhone } from 'services/phone';
+
+
+const PhoneTheme = React.lazy(() => import('./themes/StripeMobileTheme'));
 
 export enum CreditPrice {
   Small = 1,
@@ -138,7 +142,8 @@ const StripeCredits: React.FC<Props> = ({ user, ...props }) => {
   return (
     <div className="flex-center">
       <React.Suspense fallback={<></>}>
-        <div className="pay-box">
+        {isPhone() && <PhoneTheme />}
+        <div className="pay-box stripe-credits-box">
           <form className="CheckOut" onSubmit={(e) => handlePayment(e)}>
             <div className="logo bold">Buy Credits</div>
             <div className="radio-row">
