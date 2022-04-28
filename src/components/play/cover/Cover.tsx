@@ -307,7 +307,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         </div>
         <UnauthorizedUserDialogV2
           history={props.history}
-          brickId={brick.id}
+          brick={brick}
           isOpen={unauthorizedOpenV2}
           notyet={() => {
             if (playClicked) {
@@ -450,7 +450,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       </div>
       <UnauthorizedUserDialogV2
         history={props.history}
-        brickId={brick.id}
+        brick={brick}
         isOpen={unauthorizedOpenV2}
         notyet={() => {
           if (playClicked) {

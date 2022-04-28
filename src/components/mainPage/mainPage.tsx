@@ -6,7 +6,7 @@ import MainPageDesktop from './MainPageDesktop';
 import { isPhone } from "services/phone";
 import { showZendesk } from "services/zendesk";
 import { GetLoginRedirectUrl, UnsetLoginRedirectUrl } from "localStorage/login";
-import { GetAuthBrickCoverId, SetAuthBrickCoverId } from "localStorage/play";
+import { ClearAuthBrickCash, GetAuthBrickCash } from "localStorage/play";
 import routes from "components/play/routes";
 import { Brick } from "model/brick";
 
@@ -17,10 +17,10 @@ interface MainPageProps {
 class MainPage extends Component<MainPageProps> {
   constructor(props: MainPageProps) {
     super(props);
-    const moveBrickId = GetAuthBrickCoverId();
-    if (moveBrickId > 0) {
-      SetAuthBrickCoverId(-1);
-      props.history.push(routes.playBrief({id: moveBrickId} as Brick));
+    const cashedDetails = GetAuthBrickCash();
+    if (cashedDetails && cashedDetails.brick) {
+      ClearAuthBrickCash();
+      props.history.push(routes.playBrief(cashedDetails.brick as Brick));
     }
   }
 

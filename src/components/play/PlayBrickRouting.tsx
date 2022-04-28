@@ -61,7 +61,7 @@ import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 import { trackSignUp } from "services/matomo";
-import { CashAttempt, GetCashedPlayAttempt, SetAuthBrickCoverId } from "localStorage/play";
+import { CashAttempt, ClearAuthBrickCash, GetCashedPlayAttempt } from "localStorage/play";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
@@ -585,7 +585,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     // set true when new user is true anyway in logged in users
     props.loginSuccess();
     CashAttempt('');
-    SetAuthBrickCoverId(-1);
+    ClearAuthBrickCash();
 
     if (props.isAuthenticated === isAuthenticated.True) {
       history.push(map.MyLibrarySubject(brick.subjectId));
@@ -959,7 +959,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <UnauthorizedUserDialogV2
           history={history}
           isBeforeReview={true}
-          brickId={brick.id}
+          brick={brick}
           isOpen={unauthorizedOpen}
           notyet={() => {
             history.push(map.ViewAllPage);

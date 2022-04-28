@@ -4,7 +4,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import { connect } from "react-redux";
 
 import "./Ending.scss";
-import { CashAttempt, SetAuthBrickCoverId } from "localStorage/play";
+import { CashAttempt, ClearAuthBrickCash } from "localStorage/play";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../../model";
 import { BrickAttempt } from "../../model";
@@ -214,7 +214,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
 
   moveToLibrary() {
     CashAttempt('');
-    SetAuthBrickCoverId(-1);
+    ClearAuthBrickCash();
     this.props.loginSuccess();
     this.props.history.push(map.MyLibrarySubject(this.props.brick.subjectId));
   }
