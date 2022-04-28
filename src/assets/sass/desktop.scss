@@ -1497,6 +1497,12 @@
 }
 
 .custom-popup-d35 {
+  .close-button svg {
+    color: var(--theme-dark-blue) !important;
+    &:hover {
+      color: var(--theme-orange) !important;
+    }
+  }
   .green-circle-icon-d35,
   .red-circle-icon-d35 {
     background: var(--theme-orange);
