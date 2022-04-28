@@ -19,8 +19,12 @@ class MainPage extends Component<MainPageProps> {
     super(props);
     const cashedDetails = GetAuthBrickCash();
     if (cashedDetails && cashedDetails.brick) {
-      ClearAuthBrickCash();
       props.history.push(routes.playBrief(cashedDetails.brick as Brick));
+
+      // competition brick cash is cleaning in play
+      if (!cashedDetails.competitionId) {
+        ClearAuthBrickCash();
+      }
     }
   }
 

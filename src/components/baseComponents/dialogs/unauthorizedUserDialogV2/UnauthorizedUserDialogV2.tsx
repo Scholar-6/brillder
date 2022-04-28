@@ -19,6 +19,7 @@ interface UnauthorizedProps {
   isOpen: boolean;
   brick: Brick;
   isBeforeReview?: boolean;
+  competitionId: number;
   history: any;
   notyet(): void;
   registered?(): void;
@@ -83,14 +84,14 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
             : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
         </div>
         <button className="btn btn-md bg-white" onClick={() => {
-          SetAuthBrickCash(props.brick, -1);
+          SetAuthBrickCash(props.brick, props.competitionId);
           props.history.push(map.Login);
         }}>
           <SpriteIcon name="f-user-check" />
           <span>I’m a member, sign in</span>
         </button>
         <button className="btn btn-md bg-orange" onClick={() => {
-          SetAuthBrickCash(props.brick, -1);
+          SetAuthBrickCash(props.brick, props.competitionId);
           setRegister(true);
         }}>
           <SpriteIcon name="f-check-clircle" />

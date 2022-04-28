@@ -61,7 +61,7 @@ import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 import { trackSignUp } from "services/matomo";
-import { CashAttempt, ClearAuthBrickCash, GetCashedPlayAttempt } from "localStorage/play";
+import { CashAttempt, ClearAuthBrickCash, GetAuthBrickCash, GetCashedPlayAttempt } from "localStorage/play";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
@@ -245,6 +245,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
     let lastPageUrl = lastUrl;
+
+    // set competition id of cashed brick
+    const cash = GetAuthBrickCash();
+    /*eslint-disable-next-line*/
+    if (cash && cash.brick && cash.competitionId && cash.brick.id == brick.id) {
+      brick.competitionId = cash.competitionId;
+      setCompetitionIdV2(compId);
+      ClearAuthBrickCash();
+    }
+
     if (!lastUrl) {
       const found = location.pathname.match(`[^/]+(?=/$|$)`);
       if (found) {
@@ -329,8 +339,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       const values = queryString.parse(props.location.search);
       if (values.competitionId) {
         try {
-          var compId = parseInt(values.competitionId as string);
-          setCompetitionId(compId, []);
+          var competId = parseInt(values.competitionId as string);
+          setCompetitionId(competId, []);
         } catch {
           console.log('can`t convert competition id');
         }
@@ -690,6 +700,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={history}
             brick={brick}
             activeCompetition={activeCompetition}
+            competitionId={competitionId}
             setCompetitionId={id => {
               setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
@@ -968,12 +979,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           history={history}
           isBeforeReview={true}
           brick={brick}
+          competitionId={competitionId}
           isOpen={unauthorizedOpen}
           notyet={() => {
             history.push(map.ViewAllPage);
           }}
           registered={() => {
-            history.push(routes.playReview(brick));
+            history.push(routes.playReview(brick)); 
             setUnauthorized(false);
           }}
         />
