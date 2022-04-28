@@ -99,6 +99,15 @@
   }
 }
 
+.dialog-box .close-button {
+  top: 4vw;
+  right: 4vw;
+
+  svg {
+    color: var(--theme-orange);
+  }
+}
+
 .MuiDialog-root.dialog-box.light-blue.unlimited {
   .close-button {
     top: 4vw;
@@ -1938,6 +1947,10 @@
 }
 
 .custom-popup-d35 {
+  .close-button svg {
+    color: var(--theme-dark-blue) !important;
+  }
+
   .green-circle-icon-d35,
   .red-circle-icon-d35 {
     margin-top: 6vw;
