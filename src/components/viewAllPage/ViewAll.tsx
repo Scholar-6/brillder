@@ -31,7 +31,7 @@ import {
 import {
   getPublicBricks,
   getPublishedBricks,
-  searchPublicBricks,
+  searchBricks,
 } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 
@@ -989,7 +989,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async search() {
     const { searchString } = this.state;
     this.setState({ shown: false, searchTyping: false, isSearchBLoading: true });
-    const bricks = await searchPublicBricks(searchString);
+    let bricks = await searchBricks(searchString);
 
     setTimeout(() => {
       try {
