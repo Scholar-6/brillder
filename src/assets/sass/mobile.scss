@@ -1938,6 +1938,10 @@
 }
 
 .custom-popup-d35 {
+  .close-button svg {
+    color: var(--theme-dark-blue) !important;
+  }
+
   .green-circle-icon-d35,
   .red-circle-icon-d35 {
     margin-top: 6vw;
