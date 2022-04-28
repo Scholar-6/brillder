@@ -33,6 +33,7 @@ interface Props {
   brick: Brick;
   location: any;
   history: any;
+  competitionId: number;
   activeCompetition: any;
   canSeeCompetitionDialog?: boolean | null;
   setCompetitionId(id: number): void;
@@ -309,6 +310,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           history={props.history}
           brick={brick}
           isOpen={unauthorizedOpenV2}
+          competitionId={props.competitionId}
           notyet={() => {
             if (playClicked) {
               startBrick()
@@ -453,6 +455,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       <UnauthorizedUserDialogV2
         history={props.history}
         brick={brick}
+        competitionId={props.competitionId}
         isOpen={unauthorizedOpenV2}
         notyet={() => {
           if (playClicked) {
