@@ -222,7 +222,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           this.props.history.push(map.AssignmentsPage);
         } else {
           this.setState({ isBackToWorkOpen: true });
-        } 
+        }
       }}>
         <button className={`btn btn-transparent ${isActive ? 'active zoom-item text-theme-orange' : disabledColor}`}>
           <BlocksIcon disabled={!isActive} />
@@ -366,6 +366,23 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return "";
   }
 
+  renderCompetitionArena() {
+    if (this.state.isStudent) {
+      return (
+        <div className="create-item-container">
+          <button className="btn btn-transparent zoom-item text-theme-orange active"
+            onClick={() => {
+              window.location.href = "https://brillder.com/brilliant-minds-prizes/";
+            }}
+          >
+            <SpriteIcon name="star" />
+            <span className="item-description ">Competition Arena</span>
+          </button>
+        </div>
+      )
+    }
+  }
+
   onIntroExit() {
     this.setState({ stepsEnabled: false });
   }
@@ -373,7 +390,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   onCompleted() {
     if (this.state.isLibraryOrigin) {
       this.props.history.push(map.UserProfile + '?origin=library');
-      this.setState({ stepsEnabled: false }); }
+      this.setState({ stepsEnabled: false });
+    }
     else if (this.state.isNewTeacher) {
       this.props.history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true');
       this.setState({ stepsEnabled: false });
@@ -416,7 +434,10 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
               </div>
             </div>
             : <div className="second-col">
-              {this.renderRightButton()}
+              <div>
+                {this.renderCompetitionArena()}
+                {this.renderRightButton()}
+              </div>
             </div>
           }
           <MainPageMenu
