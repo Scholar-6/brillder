@@ -330,7 +330,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         }
         setPrevAttempts(attempts);
       }
-      
+
       const brills = await getUserBrillsForBrick(brick.id);
       if (brills) {
         setTotalBrills(brills);

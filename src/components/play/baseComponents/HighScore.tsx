@@ -11,17 +11,40 @@ interface HighScoreProps {
 const HighScore: React.FC<HighScoreProps> = (props) => {
   const [brills, setBrills] = React.useState(0);
 
-  useEffect(() => {
-    
-  }, []);
+  const getStep = (low: number, high: number) => {
+    let step = Math.round((high - low) / 15);
+    if (step < 2) {
+      step = 2;
+    }
+    return step;
+  }
 
-  const { bestScore } = props;
-  if (bestScore > 0) {
+  const animateBrills = (low: number, high: number) => {
+    const step = getStep(low, high);
+
+    const interval = setInterval(() => {
+      if (low < high - step) {
+        low += step;
+        setBrills(low);
+      } else {
+        setBrills(high);
+        clearInterval(interval);
+      }
+    }, 100);
+  }
+
+  useEffect(() => {
+    if (brills != props.bestScore) {
+      animateBrills(brills, props.bestScore);
+    }
+  }, [props.bestScore]);
+
+  if (brills > 0) {
     if (props.sidebarRolledUp) {
       return (
         <div className="high-score-sm-d3s">
           <BrillIcon />
-          <div>{bestScore}</div>
+          <div>{brills}</div>
           <div className="custom-tooltip">
             Total Brills earned from this Brick
           </div>
@@ -35,9 +58,9 @@ const HighScore: React.FC<HighScoreProps> = (props) => {
           <div>Total</div>
           <div>Brills</div>
         </div>
-        <LinearProgress variant="determinate" value={bestScore > 100 ? 100 : bestScore} />
+        <LinearProgress variant="determinate" value={brills > 100 ? 100 : brills} />
         <div className="score-label">
-          {bestScore}
+          {brills}
         </div>
       </div>
     );
