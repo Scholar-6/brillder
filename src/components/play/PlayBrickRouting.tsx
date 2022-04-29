@@ -434,10 +434,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (competitionId > -1) {
       ba.competitionId = competitionId;
     }
-    const promise = saveBrickAttempt(ba);
+    const promise = createBrickAttempt(ba);
     settingLiveDuration();
     return promise;
-  };
+  }
 
   const finishReview = () => {
     const ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
@@ -446,15 +446,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       ba.competitionId = competitionId;
     }
     setStatus(PlayStatus.Ending);
-    saveBrickAttempt(ba);
+    saveReviewBrickAttempt(ba);
     settingReviewDuration();
 
     // cashing review question answer could be faster. delay added.
     setTimeout(() => {
       cashFinalAttempt(ba);
     }, 200);
-  };
-
+  }
 
   const createBrickAttempt = async (brickAttempt: BrickAttempt) => {
     if (isCreatingAttempt) {
@@ -499,15 +498,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     });
   };
 
-  const saveBrickAttempt = async (brickAttempt: BrickAttempt) => {
+  const saveReviewBrickAttempt = async (brickAttempt: BrickAttempt) => {
+    // if attempt was cashed then create attempt
     if (!attemptId) {
-      console.log('setting brills')
       const brillsSv = await createBrickAttempt(brickAttempt);
       setLiveBrills(0);
-      console.log(brillsSv);
       setReviewBrills(brillsSv);
       return;
     }
+    
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
@@ -529,7 +528,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       if (brills < 0) {
         brills = 0;
       }
-      console.log(666, 'set briils', brills, reviewBrills)
       setReviewBrills(brills);
 
       props.storeLiveStep(0, 0);
