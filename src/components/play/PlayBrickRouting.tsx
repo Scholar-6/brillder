@@ -79,6 +79,7 @@ import BuyCreditsDialog from "./baseComponents/dialogs/BuyCreditsDialog";
 import ConvertBrillsDialog from "./baseComponents/dialogs/ConvertBrillsDialog";
 import { isAorP } from "components/services/brickService";
 import { checkCompetitionActive } from "services/competition";
+import { getUserBrillsForBrick } from "services/axios/brills";
 
 export enum PlayPage {
   Cover,
@@ -314,19 +315,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (props.user) {
       const attempts = await getAttempts(brick.id, props.user.id);
       if (attempts) {
-        let maxScore = 0;
-        let bestScore = -1;
-        for (let i = 0; i < attempts.length; i++) {
-          const loopScore = (attempts[i].score + attempts[i].oldScore) / 2;
-          if (bestScore < loopScore) {
-            maxScore = attempts[i].maxScore;
-            bestScore = loopScore;
-          }
-        }
-        if (bestScore && maxScore) {
-          setBestScore(Math.round((bestScore / maxScore) * 100));
-        }
         setPrevAttempts(attempts);
+      }
+      const brills = await getUserBrillsForBrick(brick.id);
+      if (brills) {
+        setBestScore(brills);
       }
 
       // competition
