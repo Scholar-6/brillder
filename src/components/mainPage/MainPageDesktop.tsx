@@ -186,7 +186,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       disabled = true;
     }
     return (
-      <div className={`create-item-container ${isActive ? '' : 'disabled'}`} onClick={() => {
+      <div className={`create-item-container build-button-d71 ${isActive ? '' : 'disabled'}`} onClick={() => {
         if (disabled) {
           if (isMobile) {
             this.setState({ isDesktopOpen: true });
@@ -308,7 +308,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   renderTryBuildButton(isActive: boolean) {
     let disabled = false;
-    let className = "create-item-container";
+    let className = "create-item-container build-button-d71";
     if (isTablet || isIPad13) {
       isActive = false;
       disabled = true;

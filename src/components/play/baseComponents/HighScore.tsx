@@ -34,9 +34,11 @@ const HighScore: React.FC<HighScoreProps> = (props) => {
   }
 
   useEffect(() => {
+     /*eslint-disable-next-line*/
     if (brills != props.bestScore) {
       animateBrills(brills, props.bestScore);
     }
+    /*eslint-disable-next-line*/
   }, [props.bestScore]);
 
   if (brills > 0) {
