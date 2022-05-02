@@ -106,9 +106,8 @@
       position: relative;
       font-family: $font-family-bold;
       border-radius: 0.4vw;
-      width: 50%;
+      width: 100%;
       background: var(--tab-gray);
-      margin-left: 0.9vw;
       font-size: 1.1vw;
       display: flex;
       align-items: center;
@@ -144,10 +143,6 @@
         right: -0.8vw;
         color: var(--white);
         background: var(--theme-green);
-      }
-      &:first-child {
-        margin-left: 0;
-        margin-right: 0.9vw;
       }
       &.active {
         color: var(--white);

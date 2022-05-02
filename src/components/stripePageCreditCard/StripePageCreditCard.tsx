@@ -46,7 +46,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   const [expireValid, setExpireValid] = useState(false);
   const [cvcValid, setCvcValid] = useState(false);
 
-  const [isMonthly, setMonthly] = useState(true);
+  const [isMonthly, setMonthly] = useState(false);
   const [card, setCard] = useState(null as null | StripeCardElement);
 
   const loadPrices = async () => {
@@ -69,7 +69,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
 
   useEffect(() => {
-    var style = {
+    const style = {
       base: {
         fontFamily: 'Brandon Grotesque Regular',
         fontSize: '18px',
@@ -124,7 +124,6 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     const coupon = await checkCoupon(tempDiscount);
     if (coupon) {
       setCoupon(coupon);
-      setMonthly(true);
       console.log(coupon);
     }
   }
@@ -143,8 +142,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       couponString = coupon.code;
     }
 
-    var intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/subscription`,
-      { state: isLearner ? 2 : 3, interval: isMonthly ? 0 : 1, coupon: couponString },
+    const intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/subscription`,
+      { state: isLearner ? 2 : 3, interval: 1, coupon: couponString },
       { withCredentials: true });
 
     if (intent) {
@@ -176,8 +175,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       couponString = coupon.code;
     }
 
-    var intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/subscription`,
-      { state: isLearner ? 2 : 3, interval: isMonthly ? 0 : 1, coupon: couponString },
+    const intent: any = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/stripe/subscription`,
+      { state: isLearner ? 2 : 3, interval: 1, coupon: couponString },
       { withCredentials: true });
 
     const clientSecret = intent.data.clientSecret;
@@ -210,15 +209,6 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     return false;
   };
 
-  const renderPercentage = () => {
-    if (coupon) {
-      if (coupon.percentOff) {
-        return 'Save ' + coupon.percentOff + '%';
-      }
-    }
-    return 'Save 50%';
-  }
-
   const renderAnnualPercentage = () => {
     if (coupon && coupon.percentOff) {
       // if forever
@@ -234,13 +224,6 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       return '';
     }
     return 'Save 58%';
-  }
-
-  const renderPriceValue = () => {
-    if (coupon && coupon.percentOff) {
-      return Math.round(originalPrice * (100 - coupon.percentOff)) / 100;
-    }
-    return Math.round(originalPrice * 0.4999 * 100) / 100;
   }
 
   const renderAnnualPriceValue = () => {
@@ -297,15 +280,9 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     if (!isOtherCoupon) {
       return (
         <div className={`radio-row ${(isFree || isOtherCoupon) ? 'one-button' : ''}`}>
-          <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
-            {!(isFree || isOtherCoupon) && <Radio checked={isMonthly} />}
-            <div className="absoulte-price">£{originalPrice}</div>
-            £{renderPriceValue()} <span className="label">Monthly</span>
-            <div className="absolute-label" >{renderPercentage()}</div>
-          </div>
           {!isFree && !isOtherCoupon &&
-            <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
-              <Radio checked={!isMonthly} />
+            <div className="active">
+              <Radio checked={true} />
               <span>£{renderAnnualPriceValue()}</span> <span className="label">Annually</span>
               <div className="absolute-label" >{renderAnnualPercentage()}</div>
             </div>}
