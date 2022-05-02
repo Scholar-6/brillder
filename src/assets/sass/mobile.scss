@@ -1485,13 +1485,7 @@
         height: $box-height;
         border-radius: 2vw;
         font-size: 4.5vw;
-        margin-left: 2.5vw;
         
-        &:first-child {
-          margin-left: 0;
-          margin-right: 2.5vw;
-        }
-
         .absoulte-price {
           font-size: 3vw;
           left: 7.2vw;
