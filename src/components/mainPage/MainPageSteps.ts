@@ -19,7 +19,7 @@ export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean,
         element: '.my-library-button',
         intro: `<p>Every time you complete a brick, and score over 50%, a book will be added to your very own virtual library!</p>`,
       }, {
-        element: '.create-item-container',
+        element: '.build-button-d71',
         intro: `<p>Once you start getting the hang of “bricks”, you'll be able to have a go at building them.</p>`,
       }
     ];
