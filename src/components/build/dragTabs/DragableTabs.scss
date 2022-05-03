@@ -238,6 +238,12 @@ $tile-height: 100%;
     @include tabletP {
       font-size: 1.3vw;
     }
+    &.width-based {
+      width: 90% !important;
+      svg {
+        width: 100% !important;
+      }
+    }
   }
 
   .synthesis-tab {
