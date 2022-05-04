@@ -352,10 +352,15 @@
 
 // only case for new students
 .mobile-main-page.new-student {
+  padding-top: 28%;
+  padding-bottom: 20%;
+  height: calc(100% - 17.5vw);
   .view-item-container {
     height: 33vw;
   }
   > div {
+    display: flex;
+    align-items: center;
     height: 37%;
   }
   .eye-glass-frame {
@@ -370,10 +375,10 @@
     }
   }
   .back-item-container {
-    width: 70vw;
+    width: 230px !important;
   }
   .blocks-icon {
-    width: 100% !important;
+    width: 230px !important;
   }
   .zendesk-position {
     position: fixed;
