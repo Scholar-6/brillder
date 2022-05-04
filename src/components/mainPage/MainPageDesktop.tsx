@@ -369,7 +369,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   renderCompetitionArena() {
     if (this.state.isStudent) {
       return (
-        <div className="create-item-container">
+        <div className="create-item-container competition-arena-d54n">
           <button className="btn btn-transparent zoom-item text-theme-orange active"
             onClick={() => {
               window.location.href = "https://brillder.com/brilliant-minds-prizes/";
