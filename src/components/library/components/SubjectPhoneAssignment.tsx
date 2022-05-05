@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import { ReduxCombinedState } from 'redux/reducers';
@@ -9,7 +9,7 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademyDifficulty } from "../base/AcademyDifficulty";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import routes from "components/play/routes";
+import routes, { playCover } from "components/play/routes";
 import { User } from "model/user";
 import { isTeacherPreference } from "components/services/preferenceService";
 import { checkCompetitionActive } from "services/competition";
@@ -24,7 +24,17 @@ interface LibrarySubjectsProps {
 }
 
 const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
+  const [activeCompetitionId, setActiveCompetitionId] = React.useState(-1);
   const [competitionClicked, setCompetitionClicked] = React.useState(false);
+
+  useEffect(() => {
+    if (brick.competitions && brick.competitions.length > 0) {
+      const competition = brick.competitions.find(checkCompetitionActive);
+      if (competition) {
+        setActiveCompetitionId(competition.id);
+      }
+    }
+  }, []);
 
   let className = "assignment";
 
@@ -80,17 +90,12 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
     );
   };
 
-  let isActiveCompetition = false;
-  if (brick.competitions && brick.competitions.length > 0) {
-    isActiveCompetition = !!brick.competitions.find(checkCompetitionActive);
-  }
-
   return (
     <div className={`assignment-progressbar ${subject.name === GENERAL_SUBJECT ? 'general' : ''}`}>
       <div
         className={className}
         onClick={() => {
-          if (isActiveCompetition) {
+          if (activeCompetitionId > 0) {
             setCompetitionClicked(true);
             return;
           }
@@ -106,7 +111,7 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         }}
         style={{ background: color }}
       >
-        {height < 50 && isActiveCompetition && <div className="competition-star bigger">
+        {height < 50 && activeCompetitionId > 0 && <div className="competition-star bigger">
           <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
         </div>}
         <div className="progress-value default-value">
@@ -137,6 +142,10 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         {height >= 50 && renderProgressValue()}
       </div>
       {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} submit={() => {
+        const brickCopy = Object.assign(brick);
+        brickCopy.competitionId = activeCompetitionId;
+        const link = playCover(brickCopy);
+        history.push(link);
       }} close={() => setCompetitionClicked(false)} />}
     </div>
   );
