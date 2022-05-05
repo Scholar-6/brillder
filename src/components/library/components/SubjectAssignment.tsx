@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import { ReduxCombinedState } from 'redux/reducers';
@@ -8,7 +8,7 @@ import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademyDifficulty } from "../base/AcademyDifficulty";
 import BrickTitle from "components/baseComponents/BrickTitle";
-import routes from "components/play/routes";
+import routes, { playCover } from "components/play/routes";
 import { isTeacherPreference } from "components/services/preferenceService";
 import { User } from "model/user";
 import { CircularProgressbar } from "react-circular-progressbar";
@@ -25,14 +25,24 @@ interface LibrarySubjectsProps {
 }
 
 const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
+  const [activeCompetitionId, setActiveCompetitionId] = React.useState(-1);
   const [hovered, setHover] = React.useState(false);
   const [competitionClicked, setCompetitionClicked] = React.useState(false);
 
+  const { assignment, subject, history } = props;
+  const { brick } = assignment;
+
+  useEffect(() => {
+    if (brick.competitions && brick.competitions.length > 0) {
+      const competition = brick.competitions.find(checkCompetitionActive);
+      if (competition) {
+        setActiveCompetitionId(competition.id);
+      }
+    }
+  }, []);
+
   let className = "assignment";
 
-  const { assignment, subject } = props;
-
-  const { brick } = props.assignment;
   if (brick.brickLength) {
     className += " length-" + brick.brickLength;
   } else {
@@ -49,11 +59,6 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
 
   className += " default";
 
-  let isActiveCompetition = false;
-  if (brick.competitions && brick.competitions.length > 0) {
-    isActiveCompetition = !!brick.competitions.find(checkCompetitionActive);
-  }
-
   const renderValueBar = () => {
     return (
       <div
@@ -65,7 +70,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           maxHeight: "100%",
         }}
       >
-        {isActiveCompetition &&
+        {activeCompetitionId > 0 &&
           <div className="competition-star">
             <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
           </div>}
@@ -92,7 +97,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           maxHeight: "100%",
         }}
       >
-        {isActiveCompetition &&
+        {activeCompetitionId > 0 &&
           <div className="competition-star">
             <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
           </div>}
@@ -116,7 +121,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
       <div
         className={className}
         onClick={() => {
-          if (isActiveCompetition) {
+          if (activeCompetitionId > 0) {
             setCompetitionClicked(true);
             return;
           }
@@ -126,12 +131,12 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
               userId = props.student.id;
             }
             if (isTeacherPreference(props.user)) {
-              props.history.push(map.postAssignment(brick.id, userId));
+              history.push(map.postAssignment(brick.id, userId));
             } else {
-              props.history.push(map.postPlay(brick.id, userId));
+              history.push(map.postPlay(brick.id, userId));
             }
           } else {
-            props.history.push(routes.playNewPrep(brick));
+            history.push(routes.playNewPrep(brick));
           }
         }}
         style={{ background: color }}
@@ -158,7 +163,12 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         />
         {height >= 50 ? renderValueBar() : renderFullBar()}
       </div>
-      {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} close={() => setCompetitionClicked(false)} />}
+      {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} submit={() => {
+        const brickCopy = Object.assign(brick);
+        brickCopy.competitionId = activeCompetitionId;
+        const link = playCover(brickCopy);
+        history.push(link);
+      }} close={() => setCompetitionClicked(false)} />}
     </div>
   );
 };

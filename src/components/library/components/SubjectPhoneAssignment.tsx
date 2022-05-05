@@ -28,7 +28,7 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
 
   let className = "assignment";
 
-  const { assignment, subject } = props;
+  const { assignment, subject, history } = props;
 
   const { brick } = props.assignment;
   if (brick.brickLength) {
@@ -96,12 +96,12 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
           }
           if (assignment.maxScore) {
             if (isTeacherPreference(props.user)) {
-              props.history.push(map.postAssignment(brick.id, props.user.id));
+              history.push(map.postAssignment(brick.id, props.user.id));
             } else {
-              props.history.push(map.postPlay(brick.id, props.user.id));
+              history.push(map.postPlay(brick.id, props.user.id));
             }
           } else {
-            props.history.push(routes.playNewPrep(brick));
+            history.push(routes.playNewPrep(brick));
           }
         }}
         style={{ background: color }}
@@ -136,7 +136,8 @@ const SubjectPhoneAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         </div>
         {height >= 50 && renderProgressValue()}
       </div>
-      {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} close={() => setCompetitionClicked(false)} />}
+      {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} submit={() => {
+      }} close={() => setCompetitionClicked(false)} />}
     </div>
   );
 };

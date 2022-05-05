@@ -34,7 +34,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
 
   let className = "assignment";
 
-  const { assignment, subject } = props;
+  const { assignment, subject, history } = props;
   const [height, setHeight] = React.useState(0);
 
   // animate height
@@ -150,12 +150,12 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
               userId = props.student.id;
             }
             if (isTeacherPreference(props.user)) {
-              props.history.push(map.postAssignment(brick.id, userId));
+              history.push(map.postAssignment(brick.id, userId));
             } else {
-              props.history.push(map.postAssignment(brick.id, userId));
+              history.push(map.postAssignment(brick.id, userId));
             }
           } else {
-            props.history.push(routes.playNewPrep(brick));
+            history.push(routes.playNewPrep(brick));
           }
         }}
         style={{ background: color }}
@@ -212,7 +212,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
           </div>
         }
       </div>
-      {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} close={() => setCompetitionClicked(false)} />}
+      {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} submit={() => {}} close={() => setCompetitionClicked(false)} />}
     </div>
   );
 };
