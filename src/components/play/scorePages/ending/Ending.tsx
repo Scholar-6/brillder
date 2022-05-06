@@ -4,7 +4,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import { connect } from "react-redux";
 
 import "./Ending.scss";
-import { CashAttempt, SetAuthBrickCoverId } from "localStorage/play";
+import { CashAttempt, ClearAuthBrickCash } from "localStorage/play";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../../model";
 import { BrickAttempt } from "../../model";
@@ -214,7 +214,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
 
   moveToLibrary() {
     CashAttempt('');
-    SetAuthBrickCoverId(-1);
+    ClearAuthBrickCash();
     this.props.loginSuccess();
     this.props.history.push(map.MyLibrarySubject(this.props.brick.subjectId));
   }
@@ -307,23 +307,34 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       return text;
     }
 
+    let brillsEarned = 0;
+    if (this.props.reviewBrills > 0) {
+      brillsEarned += this.props.reviewBrills;
+    }
+    if (this.props.liveBrills > 0) {
+      brillsEarned += this.props.liveBrills;
+    }
+
+    brillsEarned = Math.round(brillsEarned);
+
+
     if (isPhone()) {
       const renderPhoneContent = () => {
         if (this.state.isMobileSecondPart) {
           return (
             <div className="phone-provisional-score bg-dark-blue">
-              {this.props.reviewBrills > 0 && <MusicAutoplay url="/sounds/mixkit-magical-coin-win.wav" />}
+              {brillsEarned > 0 && <MusicAutoplay url="/sounds/mixkit-magical-coin-win.wav" />}
               <div className="content">
                 <div className="brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
                 <div className="score">Score: {fixedCurrentScore}</div>
                 <div className="title">
                   {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
-                  {Math.round(this.props.reviewBrills)} Brills Earned!
+                  {brillsEarned} Brills Earned!
                 </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
-                    <div className={`brill-coin-img ${this.props.reviewBrills === 0 ? 'no-spinning' : ''}`}>
-                      <img alt="brill" src={this.props.reviewBrills === 0 ? '/images/Brill-Blue.svg' : "/images/Brill.svg"} />
+                    <div className={`brill-coin-img ${brillsEarned === 0 ? 'no-spinning' : ''}`}>
+                      <img alt="brill" src={brillsEarned === 0 ? '/images/Brill-Blue.svg' : "/images/Brill.svg"} />
                       <SpriteIcon name="logo" />
                     </div>
                   </div>
@@ -564,13 +575,13 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
               </Grid>
               <Grid item xs={4}>
                 <div className="introduction-info">
-                  {this.props.reviewBrills > 0 &&
+                  {brillsEarned > 0 &&
                     <div className="top-brill-coins">
                       <div className="brill-coin-img">
                         <img alt="brill" src="/images/Brill.svg" />
                         <SpriteIcon name="logo" />
                       </div>
-                      <div className="bold">{Math.round(this.props.reviewBrills)} Brills Earned!</div>
+                      <div className="bold">{brillsEarned} Brills Earned!</div>
                     </div>
                   }
                   <div className="intro-text-row f-align-self-start m-t-5">

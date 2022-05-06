@@ -42,7 +42,7 @@ import RealLibraryConnect from "./RealLibraryCoonect";
 import ReactiveUserCredits from "./ReactiveUserCredits";
 // @ts-ignore
 import { Steps } from 'intro.js-react';
-import { GetOrigin } from "localStorage/origin";
+import { GetOrigin, UnsetOrigin } from "localStorage/origin";
 
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
@@ -133,6 +133,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       if (GetOrigin() === 'library') {
         this.state = { ...this.state, originLibrary: true, isProfile: false };
         // IntroJS errors if you start a new intro too quickly after a previous one. Delay enabling the steps a little bit to prevent this.
+        this.props.history.push(this.props.history.location.pathname);
+        UnsetOrigin();
         setTimeout(() => {
           this.setState({ stepsEnabled: true });
         }, 1000);

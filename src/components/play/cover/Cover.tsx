@@ -33,6 +33,7 @@ interface Props {
   brick: Brick;
   location: any;
   history: any;
+  competitionId: number;
   activeCompetition: any;
   canSeeCompetitionDialog?: boolean | null;
   setCompetitionId(id: number): void;
@@ -168,6 +169,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     }
     return (
       <CoverCreditsPlay
+        user={props.user}
         isAuthor={brick.author.id === props.user?.id} isPublisher={isPublisher}
         isLibraryUser={!!props.user?.library}
         isPaidEducator={props.user?.subscriptionState === SubscriptionState.PaidTeacher} isCompetition={!!props.activeCompetition}
@@ -307,8 +309,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         </div>
         <UnauthorizedUserDialogV2
           history={props.history}
-          brickId={brick.id}
+          brick={brick}
           isOpen={unauthorizedOpenV2}
+          competitionId={props.competitionId}
           notyet={() => {
             if (playClicked) {
               startBrick()
@@ -361,6 +364,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   }
 
   const briefText = stripHtml(brick.brief);
+
+  console.log(888, props.canSeeCompetitionDialog, competitionData)
 
   return (
     <React.Suspense fallback={<></>}>
@@ -450,7 +455,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       </div>
       <UnauthorizedUserDialogV2
         history={props.history}
-        brickId={brick.id}
+        brick={brick}
+        competitionId={props.competitionId}
         isOpen={unauthorizedOpenV2}
         notyet={() => {
           if (playClicked) {

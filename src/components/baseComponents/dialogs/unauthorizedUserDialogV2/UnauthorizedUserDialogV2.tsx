@@ -6,18 +6,20 @@ import { connect } from 'react-redux';
 import './UnauthorizedUserDialog.scss';
 import SpriteIcon from "../../SpriteIcon";
 import { isPhone } from "services/phone";
-import { SetAuthBrickCoverId } from "localStorage/play";
+import { SetAuthBrickCash } from "localStorage/play";
 import GoogleDesktopButton from "components/loginPage/desktop/GoogleDesktopButton";
 import RegisterDesktopButton from "components/loginPage/desktop/RegisterDesktopButton";
 import map from "components/map";
 import SignUpComponent from "./SignUpComponent";
 
 import userActions from 'redux/actions/user';
+import { Brick } from "model/brick";
 
 interface UnauthorizedProps {
   isOpen: boolean;
-  brickId: number;
+  brick: Brick;
   isBeforeReview?: boolean;
+  competitionId: number;
   history: any;
   notyet(): void;
   registered?(): void;
@@ -82,14 +84,14 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
             : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
         </div>
         <button className="btn btn-md bg-white" onClick={() => {
-          SetAuthBrickCoverId(props.brickId);
+          SetAuthBrickCash(props.brick, props.competitionId);
           props.history.push(map.Login);
         }}>
           <SpriteIcon name="f-user-check" />
           <span>I’m a member, sign in</span>
         </button>
         <button className="btn btn-md bg-orange" onClick={() => {
-          SetAuthBrickCoverId(props.brickId);
+          SetAuthBrickCash(props.brick, props.competitionId);
           setRegister(true);
         }}>
           <SpriteIcon name="f-check-clircle" />

@@ -7,6 +7,9 @@ export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean,
         element: '.view-item-container',
         intro: `<p>Click here to explore our catalogue and play academic challenges (“bricks”)</p>`,
       }, {
+        element: '.competition-arena-d54n',
+        intro: `<p>Discover our daily competitions here - play to win brills, which can be converted to real cash over time!</p>`,
+      }, {
         element: '.brill-intro-container',
         intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`,
       }, {
@@ -19,7 +22,7 @@ export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean,
         element: '.my-library-button',
         intro: `<p>Every time you complete a brick, and score over 50%, a book will be added to your very own virtual library!</p>`,
       }, {
-        element: '.create-item-container',
+        element: '.build-button-d71',
         intro: `<p>Once you start getting the hang of “bricks”, you'll be able to have a go at building them.</p>`,
       }
     ];

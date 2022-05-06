@@ -124,8 +124,22 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         element: '.back-item-container',
         intro: `<p>Find and Play your assigned ‘bricks’ here</p>`,
       }, {
+        element: '.competition-item-container',
+        intro: `<p>Discover our daily competitions here - play to win brills, which can be converted to real cash over time!</p>`,
+      }, {
         element: '.zendesk-position',
         intro: `<p>If you spot anything that doesn't look right, or experience a technical issue, click here to create a help ticket</p>`
+      }, {
+        element: '.desktop-credit-coins',
+        intro: `
+          <p>
+            You need to spend credits to play bricks. Spend 1 credit to play a brick from the catalogue or 2 credits to enter a competition.
+            We've given you 5 free credits to get you started!
+          </p>
+        `
+      }, {
+        element: '.brill-coin-img',
+        intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`
       }]
     } as any;
 
@@ -267,6 +281,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <div className="zendesk-position" />
         </MobileButtonWrap>
         {this.renderAssignmentsButton()}
+        {this.renderCompetitionButton()}
         <Steps
           enabled={this.state.isNewStudent}
           steps={this.state.steps}
@@ -287,7 +302,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
     const firstButton = (index: number) => {
       return (
-        <SwiperSlide key={index}>
+        <SwiperSlide key={index}> 
           <MobileButtonWrap>
             <FirstButton
               user={user}

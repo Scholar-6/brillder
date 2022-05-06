@@ -61,7 +61,7 @@ import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 import { trackSignUp } from "services/matomo";
-import { CashAttempt, GetCashedPlayAttempt, SetAuthBrickCoverId } from "localStorage/play";
+import { CashAttempt, ClearAuthBrickCash, GetAuthBrickCash, GetCashedPlayAttempt } from "localStorage/play";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
@@ -79,6 +79,7 @@ import BuyCreditsDialog from "./baseComponents/dialogs/BuyCreditsDialog";
 import ConvertBrillsDialog from "./baseComponents/dialogs/ConvertBrillsDialog";
 import { isAorP } from "components/services/brickService";
 import { checkCompetitionActive } from "services/competition";
+import { getUserBrillsForBrick } from "services/axios/brills";
 
 export enum PlayPage {
   Cover,
@@ -140,6 +141,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [activeCompetition, setActiveCompetition] = useState(null as any | null); // active competition
 
   const [bestScore, setBestScore] = useState(-1);
+  const [totalBrills, setTotalBrills] = useState(-1);
 
   if (cashAttemptString && !restoredFromCash) {
     // parsing cashed play
@@ -228,9 +230,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [userToken, setUserToken] = useState<string>();
   const [emailInvalidPopup, setInvalidEmailPopup] = useState(false); // null - before submit button clicked, true - invalid
 
-  const [canSeeCompetitionDialog, setCanSeeCompetitionDialog] = useState(null as boolean | null); // null means some data not loaded
+  const [canSeeCompetitionDialog, setCanSeeCompetitionDialog] = useState(true as boolean | null); // null means some data not loaded
 
 
+  /*#4510 bellow lost effect commeting it before removing
   //#602 user can play competition only once in current brick.
   const setCompetitionId = (compId: number, previousAttempts: any[]) => {
     let found = previousAttempts.find(a => a.competitionId === compId);
@@ -241,10 +244,29 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     } else {
       setCanSeeCompetitionDialog(false);
     }
+  }*/
+
+  const setCompetitionId = (compId: number, previousAttempts: any[]) => {
+    setCompetitionIdV2(compId);
+    brick.competitionId = compId;
+  }
+
+  const setCompetitionAndClearCash = () => {
+    // set competition id of cashed brick
+    const cash = GetAuthBrickCash();
+    /*eslint-disable-next-line*/
+    if (cash && cash.brick && cash.competitionId && cash.brick.id == brick.id) {
+      brick.competitionId = cash.competitionId;
+      setCompetitionIdV2(cash.competitionId);
+      ClearAuthBrickCash();
+    }
   }
 
   const cashAttempt = (lastUrl?: string, tempStatus?: PlayStatus) => {
     let lastPageUrl = lastUrl;
+
+    setCompetitionAndClearCash();
+
     if (!lastUrl) {
       const found = location.pathname.match(`[^/]+(?=/$|$)`);
       if (found) {
@@ -315,12 +337,27 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         setPrevAttempts(attempts);
       }
 
+      const brills = await getUserBrillsForBrick(brick.id);
+      if (brills) {
+        setTotalBrills(brills);
+      }
+
       // competition
       const values = queryString.parse(props.location.search);
       if (values.competitionId) {
         try {
           var compId = parseInt(values.competitionId as string);
           setCompetitionId(compId, attempts || []);
+        } catch {
+          console.log('can`t convert competition id');
+        }
+      }
+    } else {
+      const values = queryString.parse(props.location.search);
+      if (values.competitionId) {
+        try {
+          var competId = parseInt(values.competitionId as string);
+          setCompetitionId(competId, []);
         } catch {
           console.log('can`t convert competition id');
         }
@@ -344,13 +381,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const getCompetition = async () => {
-    if (props.user) {
-      const res = await getCompetitionsByBrickId(brick.id);
-      if (res && res.length > 0) {
-        const competition = getNewestCompetition(res);
-        if (competition) {
-          setActiveCompetition(competition);
-        }
+    const res = await getCompetitionsByBrickId(brick.id);
+    if (res && res.length > 0) {
+      const competition = getNewestCompetition(res);
+      if (competition) {
+        setActiveCompetition(competition);
       }
     }
   }
@@ -369,8 +404,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
 
     getBestScore();
-
     getCompetition();
+    setCompetitionAndClearCash();
     /*eslint-disable-next-line*/
   }, [])
 
@@ -412,10 +447,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (competitionId > -1) {
       ba.competitionId = competitionId;
     }
-    const promise = saveBrickAttempt(ba);
+    const promise = createBrickAttempt(ba);
     settingLiveDuration();
     return promise;
-  };
+  }
 
   const finishReview = () => {
     const ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
@@ -424,15 +459,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       ba.competitionId = competitionId;
     }
     setStatus(PlayStatus.Ending);
-    saveBrickAttempt(ba);
+    saveReviewBrickAttempt(ba);
     settingReviewDuration();
 
     // cashing review question answer could be faster. delay added.
     setTimeout(() => {
       cashFinalAttempt(ba);
     }, 200);
-  };
-
+  }
 
   const createBrickAttempt = async (brickAttempt: BrickAttempt) => {
     if (isCreatingAttempt) {
@@ -461,24 +495,32 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       }
       setAttemptId(response.data.id);
 
-      let { brills } = response.data;
+      let { brills, totalBrills } = response.data;
       if (brills < 0) {
         brills = 0;
       }
       setLiveBrills(brills);
+      setTotalBrills(totalBrills);
 
       setCreatingAttempt(false);
+      return brills;
     }).catch(() => {
       setFailed(true);
       setCreatingAttempt(false);
       setLiveBrills(0);
+      return 0;
     });
   };
 
-  const saveBrickAttempt = async (brickAttempt: BrickAttempt) => {
+  const saveReviewBrickAttempt = async (brickAttempt: BrickAttempt) => {
+    // if attempt was cashed then create attempt
     if (!attemptId) {
-      return createBrickAttempt(brickAttempt);
+      const brillsSv = await createBrickAttempt(brickAttempt);
+      setLiveBrills(0);
+      setReviewBrills(brillsSv);
+      return;
     }
+    
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
@@ -585,7 +627,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     // set true when new user is true anyway in logged in users
     props.loginSuccess();
     CashAttempt('');
-    SetAuthBrickCoverId(-1);
+    ClearAuthBrickCash();
 
     if (props.isAuthenticated === isAuthenticated.True) {
       history.push(map.MyLibrarySubject(brick.subjectId));
@@ -682,6 +724,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={history}
             brick={brick}
             activeCompetition={activeCompetition}
+            competitionId={competitionId}
             setCompetitionId={id => {
               setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
@@ -926,7 +969,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               history={history}
               brick={brick}
               mode={mode}
-              bestScore={bestScore}
+              bestScore={totalBrills}
               sidebarRolledUp={sidebarRolledUp}
               empty={finalStep}
               competitionId={competitionId}
@@ -959,7 +1002,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <UnauthorizedUserDialogV2
           history={history}
           isBeforeReview={true}
-          brickId={brick.id}
+          brick={brick}
+          competitionId={competitionId}
           isOpen={unauthorizedOpen}
           notyet={() => {
             history.push(map.ViewAllPage);
