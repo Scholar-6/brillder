@@ -110,6 +110,11 @@ const StripeCredits: React.FC<Props> = ({ user, ...props }) => {
 
     const clientSecret = await buyCredits(creditPrice);
 
+    if (clientSecret == null) {
+      setCardFailed(true);
+      return;
+    }
+
     if (card) {
       const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {

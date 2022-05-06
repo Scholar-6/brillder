@@ -15,7 +15,7 @@ export interface SynthesisTabProps {
 
 const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
   let className = "synthesis-tab-icon";
-  if (props.columns > 23) {
+  if (props.columns > 40) {
     className += " width-based";
   }
   if (props.tutorialStep === TutorialStep.Synthesis) {

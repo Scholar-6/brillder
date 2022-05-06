@@ -1,4 +1,5 @@
-import {AttemptCash, YoutubeClicked, AuthBrickCoverId, PreviewAttemptCash, VolumeToggle, UserBrills} from './types';
+import { Brick } from 'model/brick';
+import {AttemptCash, YoutubeClicked, PreviewAttemptCash, VolumeToggle, UserBrills, AuthBrickCash} from './types';
 
 export function SetYoutubeClick() {
   localStorage.setItem(YoutubeClicked, "true");
@@ -48,16 +49,33 @@ export function GetPreviewCashedPlayAttempt() {
   return localStorage.getItem(PreviewAttemptCash);
 }
 
-export function SetAuthBrickCoverId(brickId: number) {
-  localStorage.setItem(AuthBrickCoverId, brickId.toString());
+export function SetAuthBrickCash(brick: Brick, competitionId: number) {
+  const obj = {
+    brick: {
+      id: brick.id,
+      title: brick.title,
+      subject: {
+        name: brick.subject?.name
+      }
+    },
+    competitionId
+  } as any;
+  const objString = JSON.stringify(obj);
+  localStorage.setItem(AuthBrickCash, objString);
 }
 
-export function GetAuthBrickCoverId() {
-  const stringId = localStorage.getItem(AuthBrickCoverId);
-  if (stringId) {
-    return parseInt(stringId);
+export function GetAuthBrickCash() {
+  const objString = localStorage.getItem(AuthBrickCash);
+  if (objString) {
+    try {
+      return JSON.parse(objString);
+    } catch (e) { }
   }
   return -1;
+}
+
+export function ClearAuthBrickCash() {
+  localStorage.removeItem(AuthBrickCash);
 }
 
 export function SetUserBrills(brills: number) {

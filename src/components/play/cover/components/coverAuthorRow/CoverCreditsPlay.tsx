@@ -1,8 +1,10 @@
 import React from 'react';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import './CoverPlay.scss';
+import { User } from 'model/user';
 
 interface Props {
+  user: User;
   isAuthor: boolean;
   isPublisher: boolean;
   isCompetition?: boolean;
@@ -11,8 +13,11 @@ interface Props {
   onClick(): any;
 }
 
-const CoverCreditsPlay: React.FC<Props> = ({ isCompetition, isLibraryUser, isAuthor, isPublisher, isPaidEducator, onClick }) => {
+const CoverCreditsPlay: React.FC<Props> = ({ user, isCompetition, isLibraryUser, isAuthor, isPublisher, isPaidEducator, onClick }) => {
   const renderDynamicPart = () => {
+    if (!user) {
+      return <div />;
+    }
     if (isPaidEducator || isLibraryUser) {
       if (isCompetition) {
         return <div className="absolute-credits">{2}</div>;
