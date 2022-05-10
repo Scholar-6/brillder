@@ -3,6 +3,16 @@
 @import "src/assets/sass/partials/extensions";
 
 .user-profile-page {
+  .credit-coins-sm {
+    width: 9vw;
+    height: 9vw;
+    margin-right: 3vw;
+
+    span {
+      font-size: 4.5vw;
+    }
+  }
+
   .mobile-upper-space {
     height: 4%;
   }
