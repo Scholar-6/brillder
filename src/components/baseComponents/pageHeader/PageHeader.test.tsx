@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import PageHead from './PageHeader';
 
 import { Provider } from 'react-redux';
@@ -32,14 +32,28 @@ describe("notification panel", () => {
       notifications: {
         notifications: [mockNotification]
       },
+      user: {
+        user: {
+          roles: []
+        }
+      },
       auth: {
         isAuthenticated: isAuthenticated.True
-      }
+      },
+      getNotifications: () => {}
     });
 
     render(
       <Provider store={store}>
-        <PageHead history={null} user={{ roles: [] }} search={() => { }} page={1} searching={() => { }} />
+        <PageHead
+          history={null}
+          search={() => { }}
+          page={1}
+          searching={() => { }}
+          searchPlaceholder=""
+          showDropdown={() => {}}
+          showNotifications={() => {}}
+        />
       </Provider>
     );
   });

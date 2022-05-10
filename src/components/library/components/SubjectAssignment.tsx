@@ -39,6 +39,7 @@ const SubjectAssignment: React.FC<LibrarySubjectsProps> = (props) => {
         setActiveCompetitionId(competition.id);
       }
     }
+    /*eslint-disable-next-line*/
   }, []);
 
   let className = "assignment";
