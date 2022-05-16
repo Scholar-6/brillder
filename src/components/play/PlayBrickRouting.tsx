@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import moment from 'moment';
 import queryString from 'query-string';
-import { getAttempts } from 'services/axios/attempt';
 
 import actions from "redux/actions/auth";
 import playActions from 'redux/actions/play';
@@ -47,7 +46,6 @@ import { User } from "model/user";
 import { ChooseOneComponent } from "./questionTypes/choose/chooseOne/ChooseOne";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import PhonePlayFooter from "./phoneComponents/PhonePlayFooter";
-import { CreateByEmailRes } from "services/axios/user";
 import routes, { playBrief, playCountInvesigation, PlayCoverLastPrefix, playInvestigation, playNewPrep, playPreInvesigation, playPrePrep, playSections } from "./routes";
 import { isPhone } from "services/phone";
 import Brief from "./brief/Brief";
@@ -74,12 +72,17 @@ import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthor
 import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import VolumeButton from "components/baseComponents/VolumeButton";
-import { getCompetitionsByBrickId } from "services/axios/competitions";
 import BuyCreditsDialog from "./baseComponents/dialogs/BuyCreditsDialog";
 import ConvertBrillsDialog from "./baseComponents/dialogs/ConvertBrillsDialog";
 import { isAorP } from "components/services/brickService";
 import { checkCompetitionActive } from "services/competition";
+
+import { getAttempts } from 'services/axios/attempt';
+import { CreateByEmailRes } from "services/axios/user";
+import { getAssignedBricks } from "services/axios/brick";
+import { getCompetitionsByBrickId } from "services/axios/competitions";
 import { getUserBrillsForBrick } from "services/axios/brills";
+
 
 export enum PlayPage {
   Cover,
@@ -213,6 +216,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [liveDuration, setLiveDuration] = useState(initLiveDuration);
   const [reviewDuration, setReviewDuration] = useState(initReviewDuration);
+
+  const [isAssignment, setAssignment] = useState(false);
 
   const [unauthorizedOpen, setUnauthorized] = useState(false);
   const [headerHidden, setHeader] = useState(false);
@@ -390,6 +395,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }
 
+  const getAndCheckAssignment = async () => {
+    const assignments = await getAssignedBricks();
+    if (assignments) {
+      for (let assignment of assignments) {
+        if (assignment && assignment.brick.id && assignment.brick.id === brick.id) {
+          setAssignment(true);
+        }
+      }
+    }
+  }
+
   // only cover page should have big sidebar
   useEffect(() => {
     showInitDialogs();
@@ -406,6 +422,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     getBestScore();
     getCompetition();
     setCompetitionAndClearCash();
+    getAndCheckAssignment();
     /*eslint-disable-next-line*/
   }, [])
 
@@ -723,6 +740,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
+            isAssignment={isAssignment}
             activeCompetition={activeCompetition}
             competitionId={competitionId}
             setCompetitionId={id => {
