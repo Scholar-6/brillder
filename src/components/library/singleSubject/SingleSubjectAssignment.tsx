@@ -45,6 +45,7 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
         setActiveCompetitionId(competition.id);
       }
     }
+    /*eslint-disable-next-line*/
   }, []);
 
   // animate height
