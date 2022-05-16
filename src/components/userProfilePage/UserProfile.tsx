@@ -43,6 +43,7 @@ import ReactiveUserCredits from "./ReactiveUserCredits";
 // @ts-ignore
 import { Steps } from 'intro.js-react';
 import { GetOrigin, UnsetOrigin } from "localStorage/origin";
+import UserCredits from "./UserCredits";
 
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
@@ -399,6 +400,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
             <SpriteIcon name="logo" />
           </div>
+          <UserCredits className="credit-coins-sm" credits={this.state.userCredits} />
           <div className="absolute-library-link flex-center" onClick={() => this.props.history.push(map.MyLibrary + '/' + this.state.user.id)}>
             <SpriteIcon name="bar-chart-2" />
             <div className="css-custom-tooltip">View library</div>
