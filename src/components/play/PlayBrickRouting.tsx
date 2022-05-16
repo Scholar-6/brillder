@@ -217,7 +217,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [liveDuration, setLiveDuration] = useState(initLiveDuration);
   const [reviewDuration, setReviewDuration] = useState(initReviewDuration);
 
-  const [isAssignment, setAssignment] = useState(false);
+  const [assignmentId, setAssignmentId] = useState(-1); // -1 if not set otherwise it is >= 1
 
   const [unauthorizedOpen, setUnauthorized] = useState(false);
   const [headerHidden, setHeader] = useState(false);
@@ -400,7 +400,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (assignments) {
       for (let assignment of assignments) {
         if (assignment && assignment.brick.id && assignment.brick.id === brick.id) {
-          setAssignment(true);
+          setAssignmentId(assignment.id);
         }
       }
     }
@@ -497,7 +497,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       brickAttempt.studentId = props.user.id;
     }
 
-    const assignmentId = getAssignmentId();
     if (assignmentId) {
       brickAttempt.assignmentId = assignmentId;
     }
@@ -740,7 +739,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             location={props.location}
             history={history}
             brick={brick}
-            isAssignment={isAssignment}
+            isAssignment={assignmentId !== -1}
             activeCompetition={activeCompetition}
             competitionId={competitionId}
             setCompetitionId={id => {
