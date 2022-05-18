@@ -36,6 +36,7 @@ export const ThankYouPage = Onboarding + '/thank-you';
 export const SetUsername = Onboarding + '/set-username';
 export const SelectSubjectPage = Onboarding + '/select-subjects';
 export const UserPreferencePage = Onboarding + '/user-preference';
+export const LibraryOnboarding = Onboarding + '/library-origin';
 export const UserProfile = Onboarding + '/profile-page';
 
 export const StripeCredits = '/stripe-credits';
@@ -160,6 +161,7 @@ export default {
   SetUsername,
   SelectSubjectPage,
   UserPreferencePage,
+  LibraryOnboarding,
 
   NewBrick,
   ProposalStart,

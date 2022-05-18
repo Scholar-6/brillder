@@ -15,6 +15,7 @@ import { isPhone } from "services/phone";
 import { hideZendesk } from "services/zendesk";
 import axios from "axios";
 import { User } from "model/user";
+import { GetOrigin } from "localStorage/origin";
 
 interface BricksListProps {
   history: any;
@@ -146,7 +147,12 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
                     if (user.userPreference?.preferenceId) {
                       this.props.history.push(map.MainPage);
                     } else {
-                      this.props.history.push(map.UserPreferencePage);
+                      const origin = GetOrigin();
+                      if (origin === 'library') {
+                        this.props.history.push(map.LibraryOnboarding);
+                      } else {
+                        this.props.history.push(map.UserPreferencePage);
+                      }
                     }
                   }
                 }
