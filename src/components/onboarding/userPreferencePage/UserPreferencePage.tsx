@@ -30,14 +30,16 @@ const DesktopTheme = React.lazy(() => import('./themes/PreferenceDesktopTheme'))
 const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
   const [preference, setPreference] = React.useState(props.user.userPreference?.preferenceId ?? props.defaultPreference ?? UserPreferenceType.Student);
 
-  const handleChange = async (preferenceId: UserPreferenceType, disabled: boolean) => {
+  const handleChange = async (preferenceId: UserPreferenceType, disabled: boolean, isInit?: boolean) => {
     if (disabled || !preferenceId) {
       return;
     }
     setPreference(preferenceId);
     try {
       await setUserPreference(preferenceId, true);
-      props.getUser();
+      if (!isInit && !isPhone()) {
+        props.history.push(map.SetUsername);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -51,7 +53,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
 
   React.useEffect(() => {
     if (preference) {
-      handleChange(preference, false);
+      handleChange(preference, false, true);
     }
     /* eslint-disable-next-line */
   }, [props.defaultPreference]);

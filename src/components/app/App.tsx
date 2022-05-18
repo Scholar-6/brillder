@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { isMobileOnly, isSafari, isTablet } from 'react-device-detect';
+import queryString from "query-string";
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -68,8 +69,8 @@ import LeaderboardPage from 'components/competitions/LeaderboardPage';
 import ChoosePlan from 'components/choosePlan/ChoosePlan';
 import StripeCreditsPage from 'components/stripeCreditsPage/StripeCreditsPage';
 
-import queryString from "query-string";
 import { GetOrigin, SetOrigin } from 'localStorage/origin';
+import LibraryOrigin from 'components/onboarding/libraryOrigin/LibraryOrigin';
 
 interface AppProps {
   user: User;
@@ -298,11 +299,17 @@ const App: React.FC<AppProps> = props => {
             <BuildRoute path={map.UserProfile + '/:userId'} component={UserProfilePage} location={location} />
             <BuildRoute path="/home" component={MainPage} location={location} />
 
+
             <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
+
+            {/* onboarding pages in order of progression */}
+            <Route path={map.TermsSignUp} component={Terms} />
+            <AllUsersRoute path={map.LibraryOnboarding} component={LibraryOrigin} isPreferencePage={true} />
             <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
             <AllUsersRoute path={map.UserPreferencePage} component={UserPreferencePage} isPreferencePage={true} />
             <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
             <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
+
             <UnauthorizedRoute path={map.LeaderboardPage + '/:competitionId'} component={LeaderboardPage} />
 
             <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
@@ -311,7 +318,6 @@ const App: React.FC<AppProps> = props => {
             <AuthRoute path={map.ResetPassword} component={ResetPasswordPage} />
             <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
 
-            <Route path={map.TermsSignUp} component={Terms} />
             <Route path={map.TermsPage} component={PublicTerms} />
 
             <Route component={AuthRedirectRoute} />
