@@ -14,7 +14,7 @@ class YoutubeEmbed extends BlockEmbed {
         node.setAttribute("height", "315");
         node.setAttribute("frameborder", "0");
         node.setAttribute("allowfullscreen", "true")
-        value = value.replace(/[&\?]t=/,"?start=");
+        value = value.replace(/[&?]t=/,"?start=");
         node.setAttribute("src", "https://www.youtube.com/embed/" + value);
         return node;
     }

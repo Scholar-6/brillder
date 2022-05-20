@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -401,10 +401,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       for (let assignment of assignments) {
         if (assignment && assignment.brick.id && assignment.brick.id === brick.id) {
           setAssignmentId(assignment.id);
+          return assignment.id;
         }
       }
     }
+    return -1;
   }
+
+  useLayoutEffect(() => {
+    getAndCheckAssignment();
+    console.log(assignmentId);
+  })
 
   // only cover page should have big sidebar
   useEffect(() => {
@@ -423,6 +430,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     getCompetition();
     setCompetitionAndClearCash();
     getAndCheckAssignment();
+    console.log(assignmentId);
     /*eslint-disable-next-line*/
   }, [])
 
@@ -598,7 +606,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (props.user) {
       const isPublisher = isAorP(user.roles);
       if (user && !isPublisher && user.freeAttemptsLeft <= 0) { // Check if user exists (because of anonymous users)
-        if (!user.subscriptionState || user.subscriptionState === 0) {
+        if (!user.subscriptionState) {
           setPremiumLOpen(true);
           return;
         }
