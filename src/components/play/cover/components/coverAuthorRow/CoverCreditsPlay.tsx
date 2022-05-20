@@ -1,7 +1,7 @@
 import React from 'react';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import './CoverPlay.scss';
-import { User, UserPreferenceType } from 'model/user';
+import { User } from 'model/user';
 
 interface Props {
   user: User;
@@ -19,10 +19,7 @@ const CoverCreditsPlay: React.FC<Props> = ({ user, isAssignment, isCompetition, 
     if (!user) {
       return <div />;
     }
-    if (user.userPreference && user.userPreference.preferenceId === UserPreferenceType.Student && isAssignment) {
-      return <div />;
-    }
-    if (isPaidEducator || isLibraryUser) {
+    if (isPaidEducator || isLibraryUser || isAssignment) {
       if (isCompetition) {
         return <div className="absolute-credits">{2}</div>;
       }
