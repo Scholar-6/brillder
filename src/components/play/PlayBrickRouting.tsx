@@ -408,9 +408,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     return -1;
   }
 
+  // This is synchronous because otherwise the play button never gets rerendered for
+  // cases where play is free
   useLayoutEffect(() => {
     getAndCheckAssignment();
-    console.log(assignmentId);
   })
 
   // only cover page should have big sidebar
