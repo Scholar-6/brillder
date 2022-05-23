@@ -138,6 +138,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
   const RoleBox: React.FC<{ preferenceId: UserPreferenceType | UserType, className: string }> = ({ preferenceId, className, children }) => {
     return <div className={"role-box " + className} onClick={async () => {
       await handleChange(preferenceId as UserPreferenceType, false);
+      await props.getUser();
       moveNext();
     }}>
       {children}
