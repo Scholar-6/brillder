@@ -19,7 +19,7 @@ const LibraryOrigin: React.FC<LibraryOriginProps> = (props) => {
   
   return (
     <div className="LibraryOnboarding">
-      <h1 className="title">Activate your Library Account.</h1>
+      <h1 className="title">Activate your Library Account</h1>
       <div className="sub-title-d563">Get a free premium account through a participating UK library</div>
       <RealLibraryConnect user={props.user} reloadLibrary={() => {
         // success
