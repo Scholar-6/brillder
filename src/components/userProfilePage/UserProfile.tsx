@@ -95,7 +95,6 @@ interface UserProfileState {
 
   originLibrary: boolean;
   stepsEnabled: boolean;
-  librarySteps: any[];
 }
 
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
@@ -694,15 +693,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <ProfileIntroJs user={this.props.user} suspended={this.state.introJsSuspended} history={this.props.history} location={this.props.location} />
           {!this.state.saveDisabled && <SaveIntroJs />}
         </div>
-        {this.state.originLibrary && this.state.isLoaded &&
-          <Steps
-            enabled={this.state.stepsEnabled}
-            steps={this.state.librarySteps}
-            initialStep={0}
-            onChange={this.onIntroChanged.bind(this)}
-            onExit={this.onIntroExit.bind(this)}
-            onComplete={() => { }}
-          />}
       </React.Suspense>
     );
   }

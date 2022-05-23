@@ -307,7 +307,7 @@ const App: React.FC<AppProps> = props => {
             <AllUsersRoute path={map.LibraryOnboarding} component={LibraryOrigin} isPreferencePage={true} />
             <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
             <AllUsersRoute path={map.UserPreferencePage} component={UserPreferencePage} isPreferencePage={true} />
-            <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
+            <AllUsersRoute path={map.SetUsername} component={UsernamePage} isPreferencePage={true} />
             <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
 
             <UnauthorizedRoute path={map.LeaderboardPage + '/:competitionId'} component={LeaderboardPage} />
