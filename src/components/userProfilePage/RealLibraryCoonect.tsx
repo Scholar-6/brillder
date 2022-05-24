@@ -118,14 +118,27 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
   const renderLinkButton = () => {
     if (linked) {
       return (
-        <div className="btn" onClick={unlink}>
+        <div className="btn linked" onClick={unlink}>
           <SpriteIcon name="link" />
           <div>Unlink from Library</div>
         </div>
       );
     }
+
+    let isValid = true;
+    if (libraryId === -1) {
+      isValid = false;
+    }
+    if (libraryCardNumber === '') {
+      isValid = false;
+    }
+
+    if (pin === '') {
+      isValid = false;
+    }
+
     return (
-      <div className="btn" onClick={submit}>
+      <div className={`btn ${isValid ? '' : 'invalid'}`} onClick={submit}>
         <SpriteIcon name="link" />
         <div>Link to Library</div>
       </div>

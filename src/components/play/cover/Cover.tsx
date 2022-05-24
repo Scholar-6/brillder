@@ -35,6 +35,7 @@ interface Props {
   history: any;
   competitionId: number;
   activeCompetition: any;
+  isAssignment: boolean;
   canSeeCompetitionDialog?: boolean | null;
   setCompetitionId(id: number): void;
   setUser(data: CreateByEmailRes): void;
@@ -170,6 +171,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     return (
       <CoverCreditsPlay
         user={props.user}
+        isAssignment={props.isAssignment}
         isAuthor={brick.author.id === props.user?.id} isPublisher={isPublisher}
         isLibraryUser={!!props.user?.library}
         isPaidEducator={props.user?.subscriptionState === SubscriptionState.PaidTeacher} isCompetition={!!props.activeCompetition}
