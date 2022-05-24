@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, Store } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import reducer from 'redux/reducers/index';
@@ -10,3 +10,9 @@ const store = createStore(reducer, applyMiddleware(thunkMiddleware, socketIoMidd
 store.dispatch(actions.isAuthorized());
 
 export default store;
+
+declare global {
+    interface Window { reduxStore: Store }
+}
+
+window.reduxStore = store;
