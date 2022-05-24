@@ -29,10 +29,7 @@ export const getNewUserState = (isAdmin: boolean) => {
     isLoaded: true,
     stepsEnabled: false,
     originLibrary: false,
-    librarySteps: [{
-      emement: '',
-      intro: `<p>Link your library account by filling in your details below.</p>`
-    }]
+    librarySteps: [{ }]
   }
 }
 
@@ -90,9 +87,6 @@ export const getExistingUserState = (user: User) => {
     editPassword: false,
     stepsEnabled: false,
     originLibrary: false,
-    librarySteps: [{
-      emement: '',
-      intro: `<p>Link your library account by filling in your details below.</p>`
-    }]
+    librarySteps: [{ }]
   };
 }
