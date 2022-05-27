@@ -37,12 +37,13 @@ export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean,
     ];
   }
 
+  /*
   if (isLibraryOrigin) {
     steps.unshift({
       emement: '',
       intro: `<p>We offer free accounts to participating UK libraries. Link your account at the end of this tutorial.</p>`
     });
-  }
+  }*/
 
   return steps;
 }
