@@ -15,9 +15,10 @@ import LibrarySuggestSuccessDialog from "components/baseComponents/dialogs/Libra
 interface Props {
   user: User;
   reloadLibrary(): void;
+  successPopupClosed?(): void;
 }
 
-const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
+const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopupClosed }) => {
   const [libraryCardNumber, setCardNumber] = useState('');
   const [pin, setPin] = useState('');
   const [libraryId, setLibrary] = useState(null as null | number);
@@ -173,7 +174,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
           </Select>
         </div>
         <div>
-          <ProfileInput value={libraryCardNumber} disabled={!!linked} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Number" />
+          <ProfileInput value={libraryCardNumber} disabled={!!linked} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Barcode Number" />
         </div>
         <div>
           <ProfileInput value={pin} disabled={!!linked} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Library Pin" />
@@ -183,7 +184,10 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary }) => {
         {renderLinkButton()}
       </div>
       <LibraryFailedDialog isOpen={failed} close={() => setFailed(false)} />
-      <LibrarySuccessDialog isOpen={success} close={() => setSuccess(false)} />
+      <LibrarySuccessDialog isOpen={success} close={() => {
+        setSuccess(false);
+        successPopupClosed?.();
+      }} />
     </div>
   )
 }
