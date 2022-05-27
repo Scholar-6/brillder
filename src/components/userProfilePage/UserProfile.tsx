@@ -40,8 +40,6 @@ import map from "components/map";
 import { cancelSubscription, getCardDetails } from "services/axios/stripe";
 import RealLibraryConnect from "./RealLibraryCoonect";
 import ReactiveUserCredits from "./ReactiveUserCredits";
-// @ts-ignore
-import { Steps } from 'intro.js-react';
 import { GetOrigin, UnsetOrigin } from "localStorage/origin";
 import UserCredits from "./UserCredits";
 
