@@ -8,22 +8,27 @@ export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean,
         intro: `<p>Click here to explore our catalogue and play academic challenges (“bricks”)</p>`,
       }, {
         element: '.competition-arena-d54n',
-        intro: `<p>Discover our daily competitions here - play to win brills, which can be converted to real cash over time!</p>`,
+        intro: isLibraryOrigin ?  `<p>Discover our daily competitions here - play to win brills, which can be converted to prizes!</p>` :  `<p>Discover our daily competitions here - play to win brills, which can be converted to real cash over time!</p>`,
       }, {
         element: '.brill-intro-container',
-        intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`,
+        intro: isLibraryOrigin
+          ? `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. We've given you 200 as a welcome gift!</p>`
+          :  `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`,
       }, {
         element: '.desktop-credit-coins',
-        intro: `<p>You need to spend credits to play bricks. Spend 1 credit to play a brick from the catalogue or 2 credits to enter a competition.<br/>We've given you 5 free credits to get you started!</p>`,
+        intro: isLibraryOrigin
+          ? `<p>As a library user, you don't need to spend credits to play bricks. But you can still use them to enter competitions.<br/>We've given you 5 free credits to get you started!</p>` : `<p>You need to spend credits to play bricks. Spend 1 credit to play a brick from the catalogue or 2 credits to enter a competition.<br/>We've given you 5 free credits to get you started!</p>`,
       }, {
         element: '.second-button.student-back-work',
-        intro: `<p>If a teacher has set you an assignment, you'll be able to access it here. A red circle with white numbers will show how many assignments you still have to complete.</p>`,
+        intro: isLibraryOrigin
+        ? `<p>If your school uses Brillder, you can view your assignments here.</p>`
+        : `<p>If a teacher has set you an assignment, you'll be able to access it here. A red circle with white numbers will show how many assignments you still have to complete.</p>`,
       }, {
         element: '.my-library-button',
-        intro: `<p>Every time you complete a brick, and score over 50%, a book will be added to your very own virtual library!</p>`,
+        intro: `<p>Every time you complete a brick, and score over 50%, a book will be added to your virtual library!</p>`,
       }, {
         element: '.build-button-d71',
-        intro: `<p>Once you start getting the hang of “bricks”, you'll be able to have a go at building them.</p>`,
+        intro: `<p>Once you start getting the hang of “bricks”, you can try building them yourself.</p>`,
       }
     ];
   }
@@ -37,12 +42,13 @@ export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean,
     ];
   }
 
+  /*
   if (isLibraryOrigin) {
     steps.unshift({
       emement: '',
       intro: `<p>We offer free accounts to participating UK libraries. Link your account at the end of this tutorial.</p>`
     });
-  }
+  }*/
 
   return steps;
 }

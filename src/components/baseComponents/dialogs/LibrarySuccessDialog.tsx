@@ -1,14 +1,15 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
- 
+
 import SpriteIcon from "../SpriteIcon";
 
 interface DialogProps {
   isOpen: boolean;
   close(): void;
+  submit(): void;
 }
 
-const LibrarySuccessDialog: React.FC<DialogProps> = ({ isOpen, close }) => {
+const LibrarySuccessDialog: React.FC<DialogProps> = ({ isOpen, close, submit }) => {
   return (
     <Dialog open={isOpen} onClose={close} className="dialog-box custom-popup-d35">
       <div className="dialog-header">
@@ -19,7 +20,12 @@ const LibrarySuccessDialog: React.FC<DialogProps> = ({ isOpen, close }) => {
         </div>
         <div className="text-center custom-title-d35">Library Linked!</div>
         <div className="custom-text-d35">
-          You can now play bricks in the catalogue for free. Competition bricks will still require 2 credits to enter.
+          You can now play bricks in the catalogue for free.
+        </div>
+        <div className="dialog-footer">
+          <button className="btn margin-top-d324 btn-md bg-theme-green yes-button" onClick={submit}>
+            <span>Continue</span>
+          </button>
         </div>
       </div>
     </Dialog>
