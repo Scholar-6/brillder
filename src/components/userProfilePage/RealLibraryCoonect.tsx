@@ -10,6 +10,7 @@ import { User } from "model/user";
 import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
 import { createTicket } from "services/axios/zendesk";
 import LibrarySuggestSuccessDialog from "components/baseComponents/dialogs/LibrarySuggestSuccessDialog";
+import LibraryUnlinkDialog from "components/baseComponents/dialogs/LibraryUnlinkDialog";
 
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopupClosed }) => {
+  const [unlinking, setUnlinking] = useState(false);
   const [libraryCardNumber, setCardNumber] = useState('');
   const [pin, setPin] = useState('');
   const [libraryId, setLibrary] = useState(null as null | number);
@@ -80,6 +82,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
         reloadLibrary();
         setLinked(false);
       }
+      setUnlinking(false);
     }
   }
 
@@ -119,7 +122,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
   const renderLinkButton = () => {
     if (linked) {
       return (
-        <div className="btn linked" onClick={unlink}>
+        <div className="btn linked" onClick={() => setUnlinking(true)}>
           <SpriteIcon name="link" />
           <div>Unlink from Library</div>
         </div>
@@ -188,6 +191,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
         setSuccess(false);
         successPopupClosed?.();
       }} />
+      <LibraryUnlinkDialog isOpen={unlinking} close={() => setUnlinking(false)} submit={unlink} />
     </div>
   )
 }
