@@ -17,9 +17,11 @@ interface Props {
   user: User;
   reloadLibrary(): void;
   successPopupClosed?(): void;
+  suggestionSubmitted?(): void;
+  linkedSuccess?(): void;
 }
 
-const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopupClosed }) => {
+const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopupClosed, suggestionSubmitted, linkedSuccess }) => {
   const [unlinking, setUnlinking] = useState(false);
   const [libraryCardNumber, setCardNumber] = useState('');
   const [pin, setPin] = useState('');
@@ -107,14 +109,22 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
             </Select>
           </div>
           <div>
-            <ProfileInput value={suggestedName} validationRequired={false} className="" type="text" onChange={e => setSuggestedName(e.target.value)} placeholder="Library Name Suggestion" />
+            <ProfileInput
+              value={suggestedName}
+              validationRequired={false}
+              className="" type="text" onChange={e => setSuggestedName(e.target.value)}
+              placeholder="Suggest a library"
+            />
           </div>
           <div className="flex-center">
-            <div className="btn custom-d42" onClick={() => createNewTicket(suggestedName)}>Send</div>
+            <div className="btn custom-d42" onClick={() => createNewTicket(suggestedName)}>
+              <div>Send us your suggestion</div>
+              <SpriteIcon name="send" />
+            </div>
           </div>
         </div>
         <LibraryFailedDialog isOpen={suggestionFailed} close={() => setSuggestionFailed(false)} />
-        <LibrarySuggestSuccessDialog isOpen={suggestionSuccess} close={() => setSuggestionSuccess(false)} />
+        <LibrarySuggestSuccessDialog isOpen={suggestionSuccess} close={() => setSuggestionSuccess(false)} submit={() => suggestionSubmitted?.()} />
       </div>
     );
   }
@@ -123,8 +133,8 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
     if (linked) {
       return (
         <div className="btn linked" onClick={() => setUnlinking(true)}>
-          <SpriteIcon name="link" />
-          <div>Unlink from Library</div>
+          <SpriteIcon name="x-square-feather" />
+          <div>Unlink library account</div>
         </div>
       );
     }
@@ -177,20 +187,25 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
           </Select>
         </div>
         <div>
-          <ProfileInput value={libraryCardNumber} disabled={!!linked} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Barcode Number" />
+          <ProfileInput value={libraryCardNumber} disabled={!!linked} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Barcode" />
         </div>
         <div>
-          <ProfileInput value={pin} disabled={!!linked} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Library Pin" />
+          <ProfileInput value={pin} disabled={!!linked} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
         </div>
       </div>
       <div className="flex-center btn-container">
         {renderLinkButton()}
       </div>
       <LibraryFailedDialog isOpen={failed} close={() => setFailed(false)} />
-      <LibrarySuccessDialog isOpen={success} close={() => {
-        setSuccess(false);
-        successPopupClosed?.();
-      }} />
+      <LibrarySuccessDialog isOpen={success}
+        close={() => {
+          setSuccess(false);
+          successPopupClosed?.();
+        }}
+        submit={() => {
+          linkedSuccess?.();
+        }}
+      />
       <LibraryUnlinkDialog isOpen={unlinking} close={() => setUnlinking(false)} submit={unlink} />
     </div>
   )

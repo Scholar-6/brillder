@@ -866,6 +866,11 @@
 
 .customer-real-library {
   margin-top: 6vh;
+
+  .custom-d42 svg {
+    margin-left: 0.5vw;
+  }
+
   .sub-title-d43 {
     display: flex;
     padding-left: 1vw;
@@ -948,7 +953,13 @@
     }
 
     &.linked {
+      stroke-width: 2;
       background: var(--theme-orange);
+
+      &:hover {
+        color: var(--theme-dark-blue);
+        background: var(--tab-gray);
+      }
     }
   }
 }

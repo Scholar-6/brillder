@@ -16,7 +16,7 @@
   }
 
   h1 {
-    padding-top: 8vh;
+    padding-top: 14vh;
     padding-bottom: 8vh;
     font-size: 4vw;
     text-align: center;
@@ -28,6 +28,10 @@
   }
 
   .customer-real-library {
+    margin-top: 6vw;
+    .absolute-placeholder {
+      letter-spacing: 0 !important;
+    }
     .MuiSelect-root {
       width: 28vw;
       background: var(--theme-light-blue);
@@ -45,6 +49,7 @@
 
     input {
       color: var(--white);
+      letter-spacing: 0 !important;
       background: var(--theme-light-blue);
 
       &::placeholder {
