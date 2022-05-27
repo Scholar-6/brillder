@@ -879,6 +879,7 @@
       width: 22vw !important;
       margin: 0.4vw 1vw !important;
     }
+
   }
   .absolute-placeholder {
     pointer-events: none;
@@ -944,6 +945,10 @@
       margin-left: 4vw;
       padding: 1.8vh 2vw;
       margin-bottom: 1.5vh;
+    }
+
+    &.linked {
+      background: var(--theme-orange);
     }
   }
 }
