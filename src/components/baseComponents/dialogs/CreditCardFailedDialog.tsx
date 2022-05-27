@@ -20,7 +20,8 @@ const CreditCardFailedDialog: React.FC<DialogProps> = ({ isOpen, close }) => {
             <SpriteIcon name="alert-triangle" />
           </div>
         </div>
-        <div className="text-center custom-title-d35">Card Failed please try another card</div>
+        <div className="text-center custom-title-d35">We were unable to proccess your payment</div>
+        <div className="text-center italic">Please check your details again or try another card</div>
       </div>
     </Dialog>
   );

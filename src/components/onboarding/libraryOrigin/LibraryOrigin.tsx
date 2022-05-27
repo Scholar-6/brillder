@@ -20,11 +20,23 @@ const LibraryOrigin: React.FC<LibraryOriginProps> = (props) => {
   return (
     <div className="LibraryOnboarding">
       <h1 className="title">Activate your Library Account</h1>
-      <div className="sub-title-d563">If you are a member of one of our partner libraries, enter your Library Region/Authority, barcode, and pin to unlock premium access for free</div>
-      <RealLibraryConnect user={props.user} reloadLibrary={() => {}} successPopupClosed={() => {
-        // success
-        props.history.push(map.UserPreferencePage);
-      }} />
+      <div className="sub-title-d563">
+        If you are a member of one of our partner libraries, enter your library region or authority, and your library card's barcode and pin to unlock premium access for free.
+      </div>
+      <RealLibraryConnect user={props.user} reloadLibrary={() => {}}
+        successPopupClosed={() => {
+          // success
+          props.history.push(map.UserPreferencePage);
+        }}
+        suggestionSubmitted={() => {
+          // move forward after suggestion
+          props.history.push(map.UserPreferencePage);
+        }}
+        linkedSuccess={() => {
+          // move forward after link
+          props.history.push(map.UserPreferencePage);
+        }}
+      />
     </div>
   );
 }

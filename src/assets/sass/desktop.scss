@@ -1539,9 +1539,30 @@
     margin-bottom: 2vw;
     font-size: 2vw;
   }
+
+  .custom-title-d35s {
+    font-family: $font-family-regular-italic;
+  }
   
   .custom-text-d35 {
     max-width: 34vw;
+  }
+
+  .margin-top-d324 {
+    margin-top: 3vh;
+  }
+
+  .custom-text-d35d {
+    margin-top: 3vh;
     font-family: $font-family-regular-italic;
+
+    .bg-theme-dark-blue {
+      color: white;
+      background: var(--theme-dark-blue);
+      &:hover {
+        color: var(--theme-dark-blue);
+        background: var(--tab-gray);
+      }
+    }
   }
 }
