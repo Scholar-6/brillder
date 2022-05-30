@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { History } from "history";
 import { Switch } from "react-router-dom";
@@ -20,6 +20,7 @@ import EmailRegisterDesktopPage from "../EmailRegisterDesktopPage";
 import Delayed from "components/services/Delayed";
 import { FirstPage, EmailSignPage, JoinPage, RegisterPage } from "../routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
+import { GetOrigin } from "localStorage/origin";
 
 
 const DesktopTheme = React.lazy(() => import('./themes/LoginDesktopTheme'));
@@ -37,6 +38,17 @@ interface LoginProps {
 }
 
 const LoginDesktopPage: React.FC<LoginProps> = (props) => {
+  const [isLibrary, setLibraryOrigin] = useState(false);
+
+  useEffect(() => {
+    var origin = GetOrigin();
+    if (origin === 'library') {
+      setLibraryOrigin(true);
+    } else {
+      // get it from query string
+    }    
+  }, []);
+
   let initPolicyOpen = false;
   if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
     initPolicyOpen = true;
@@ -50,6 +62,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
   } else if (pathname === RegisterPage) {
     page = LoginPage.Register;
   }
+  
 
   const moveToFirstPage = () => history.push(FirstPage)
   const moveToEmailLogin = () => history.push(EmailSignPage);
@@ -63,7 +76,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
         {(page === LoginPage.Join || page === LoginPage.Register) &&
           <div className="left-part-join">
             <h1>
-              <TypingLabel onEnd={() => { }} label="Join the revolution" />
+              <TypingLabel onEnd={() => { }} label={isLibrary ? "Sign up for a free Brillder library account today" : "Join the revolution2"} />
             </h1>
             <div className="image-container spinning">
               <img alt="" src="/images/login/PhoneWheellogin.svg" />
