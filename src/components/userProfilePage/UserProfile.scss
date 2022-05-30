@@ -928,11 +928,11 @@
   .btn {
     cursor: pointer;
     margin-top: 2vh;
-    padding: 1vh 2vw;
+    padding: 1.2vh 2vw;
     color: white;
     border-radius: 1.7vh;
     font-size: 1.5vw;
-    width: 19vw;
+    width: 21vw;
     text-align: center;
     background: var(--theme-green);
 
@@ -943,7 +943,7 @@
     svg {
       width: 1.4vw;
       height: 1.4vw;
-      margin-right: 0.4vw;
+      margin-right: 0.7vw;
     }
 
     &:hover {
