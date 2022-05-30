@@ -154,7 +154,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
     return (
       <div className={`btn ${isValid ? '' : 'invalid'}`} onClick={submit}>
         <SpriteIcon name="link" />
-        <div>Link to Library</div>
+        <div>Link My Library</div>
       </div>
     );
   }
