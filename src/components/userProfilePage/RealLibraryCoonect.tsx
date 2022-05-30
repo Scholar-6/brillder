@@ -162,12 +162,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
   return (
     <div className="customer-real-library">
       <div className="sub-title-d43">
-        Get a premium account for free through your UK library
-        <div className="link-library-help">
-          <HoverHelp>
-            <div>If you belong to a participating Library.</div>
-          </HoverHelp>
-        </div>
+        Get a free premium account through a participating UK library
       </div>
       <div className="flex-center">
         <div className="relative">

@@ -884,15 +884,14 @@
       width: 22vw !important;
       margin: 0.4vw 1vw !important;
     }
-
   }
   .absolute-placeholder {
     pointer-events: none;
     position: absolute;
     z-index: 2;
     padding-top: 1.8vh;
-    margin-left: 2vw;
-    letter-spacing: 0.3vw;
+    margin-left: 1vw;
+    letter-spacing: 0;
   }
   .MuiInputBase-root {
     margin-bottom: 1.5vh;
@@ -910,6 +909,7 @@
       margin: 0 !important;
     }
     .MuiTypography-body1 {
+      padding-left: 1vw;
       color: var(--theme-dark-blue);
       font-size: 1.5vw !important;
     }
@@ -918,6 +918,7 @@
   .input-block {
     > input {
       width: 19vw;
+      letter-spacing: 0 !important;
       margin-left: 2vw !important;
     }
   }
@@ -945,9 +946,14 @@
       margin-right: 0.4vw;
     }
 
+    &:hover {
+      background: var(--theme-dark-blue);
+    }
+
     &.custom-d42 {
       margin: 0;
-      margin-left: 4vw;
+      width: 22vw;
+      margin-left: 2vw;
       padding: 1.8vh 2vw;
       margin-bottom: 1.5vh;
     }
