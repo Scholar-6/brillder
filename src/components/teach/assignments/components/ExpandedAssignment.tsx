@@ -80,10 +80,12 @@ class ExpandedAssignment extends Component<
     }
 
     const students = prepared.sort((a, b) => {
-      const al = a.lastName.toUpperCase();
-      const bl = b.lastName.toUpperCase();
-      if (al < bl) { return -1; }
-      if (al > bl) { return 1; }
+      if (a.lastName && b.lastName) {
+        const al = a.lastName.toUpperCase();
+        const bl = b.lastName.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
+      }
       return 0;
     });
 
@@ -107,10 +109,12 @@ class ExpandedAssignment extends Component<
       const prepared = this.prepareStudents(res);
 
       const students = prepared.sort((a, b) => {
-        const al = a.lastName.toUpperCase();
-        const bl = b.lastName.toUpperCase();
-        if (al < bl) { return -1; }
-        if (al > bl) { return 1; }
+        if (a.lastName && b.lastName) {
+          const al = a.lastName.toUpperCase();
+          const bl = b.lastName.toUpperCase();
+          if (al < bl) { return -1; }
+          if (al > bl) { return 1; }
+        }
         return 0;
       });
 
