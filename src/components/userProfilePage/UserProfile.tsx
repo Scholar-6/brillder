@@ -14,7 +14,7 @@ import { getGeneralSubject, loadSubjects } from 'components/services/subject';
 import { UpdateUserStatus, UserProfileField, UserRoleItem } from './model';
 import { getUserById, createUser, updateUser, saveProfileImageName } from 'services/axios/user';
 import { isValid, getUserProfile } from './service';
-import { User, UserType, UserProfile } from "model/user";
+import { User, UserType, UserProfile, UserPreferenceType } from "model/user";
 import { Subject } from "model/brick";
 import { checkAdmin, formatTwoLastDigits } from "components/services/brickService";
 
@@ -42,6 +42,7 @@ import RealLibraryConnect from "./RealLibraryCoonect";
 import ReactiveUserCredits from "./ReactiveUserCredits";
 import { GetOrigin, UnsetOrigin } from "localStorage/origin";
 import UserCredits from "./UserCredits";
+import { isStudentPreference } from "components/services/preferenceService";
 
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
@@ -387,6 +388,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderProfileBlock(user: UserProfile) {
+    console.log(user)
+    let isStudent = user.userPreference?.preferenceId === UserPreferenceType.Student;
+
     return (
       <div className="profile-block">
         <div className="absolute-top-container flex-center">
@@ -480,6 +484,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             />
           </div>
         </div>
+        {!isStudent &&
         <Grid container direction="row" className="big-input-container bio-container-2">
           <textarea
             className="style2 bio-container"
@@ -491,7 +496,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             }}
             onBlur={this.resumeIntroJs.bind(this)}
           />
-        </Grid>
+        </Grid>}
       </div>
     );
   }

@@ -81,11 +81,18 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
       axios.get(
         `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
         { withCredentials: true }
-      ).then(response => {
+      ).then(async (response) => {
         const { data } = response;
         /*eslint-disable-next-line*/
         if (r && r.lastModifiedDate == data.termsAndConditionsAcceptedVersion) {
-          this.props.history.push(map.MainPage);
+          const user = await this.props.getUser() as User;
+
+          if (!user.userPreference) {
+            // this stops infinity loop from main page to terms if user press back button
+            this.props.history.push(map.UserPreferencePage);
+          } else {
+            this.props.history.push(map.MainPage);
+          }
         }
       }).catch(error => {
         console.log('can`t get user for terms onboarding page')
