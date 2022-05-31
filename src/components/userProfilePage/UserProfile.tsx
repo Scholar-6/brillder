@@ -42,7 +42,6 @@ import RealLibraryConnect from "./RealLibraryCoonect";
 import ReactiveUserCredits from "./ReactiveUserCredits";
 import { GetOrigin, UnsetOrigin } from "localStorage/origin";
 import UserCredits from "./UserCredits";
-import { isStudentPreference } from "components/services/preferenceService";
 
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));

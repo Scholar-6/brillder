@@ -153,7 +153,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       { id: attempt.id, userId: this.props.user.id, body: newAttempt },
       { withCredentials: true }
     ).catch(e => {
-      if (e.response.status !== 409) {
+      if (e.response && e.response.status !== 409) {
         throw e;
       }
     });
