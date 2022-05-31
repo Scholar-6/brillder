@@ -15,11 +15,18 @@ interface Props {
 
 const ReactiveUserCredits:React.FC<Props> = (props) => {
   const [credits, setCredits] = useState(0);
+  const [isLibraryUser, setLibraryUser] = useState(false);
 
   const getCredits = async () => {
     try {
       const user = await props.getUser();
       setCredits(user.freeAttemptsLeft);
+
+      if (user.library) {
+        setLibraryUser(true);
+      } else {
+        setLibraryUser(false);
+      }
     } catch {}
   }
 
@@ -51,7 +58,7 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
       <div className={`css-custom-tooltip ${props.popupShown ? 'visible' : ''}`}>
         <div className="bold">{renderBoldTitle()}</div>
         <div className="regular">
-          Spend 1 credit to play a Brick from the catalogue or 2 credits to enter a competition.
+          Spend {!isLibraryUser ? '1 credit to play a Brick from the catalogue or' : ''} 2 credits to enter a competition.
         </div>
         <div className="flex-center">
           <div className="green-btn blue-on-hover" onClick={() => {

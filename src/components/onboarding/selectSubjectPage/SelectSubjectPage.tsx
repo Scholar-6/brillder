@@ -15,7 +15,7 @@ import map from "components/map";
 import { GENERAL_SUBJECT } from "components/services/subject";
 
 import SubjectsColumnV2 from "./SubjectsColumnV2";
-import { isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
+import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import { isPhone } from "services/phone";
 import { hideZendesk } from "services/zendesk";
 import LabelTyping from "components/baseComponents/LabelTyping";
@@ -140,10 +140,11 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
   }
 
   render() {
+    const {user} = this.props;
     let titleVerb = 'build';
-    if (isTeacherPreference(this.props.user)) {
+    if (isTeacherPreference(user)) {
       titleVerb = 'teach';
-    } else if (isStudentPreference(this.props.user)) {
+    } else if (isStudentPreference(user)) {
       titleVerb = 'play';
     }
 
@@ -171,12 +172,24 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
       );
     }
 
+    let title = 'Which subjects are you interested in?';
+    if (isStudentPreference(user)) {
+      title = 'Which subjects are you interested in?';
+    } else if (isTeacherPreference(user)) {
+      title = 'Which subjects will you teach?';
+
+    } else if (isInstitutionPreference(user)) {
+      title = 'Which subjects would you like to provide for?';
+    } else if (isBuilderPreference(user)) {
+      title = 'What kind of content will you create?';
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
         <Grid container direction="row" className="select-subject-page">
           <h1>
-            <LabelTyping start={true} value={`What kind of bricks will you ${titleVerb}?`} onFinish={() => {}} />
+            <LabelTyping start={true} value={title} onFinish={() => {}} />
           </h1>
           <SubjectsColumnV2
             subjects={this.state.subjects}
