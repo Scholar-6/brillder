@@ -28,3 +28,38 @@
         background-color: var(--highlight-blue);
     }
 }
+
+.comment-button-e323 {
+    cursor: pointer;
+    border-radius: 0.5vw;
+    padding: 0.4vw;
+    color: var(--theme-dark-blue);
+    background: var(--tab-gray);
+    position: absolute;
+    right: 0;
+    transition: all 300ms ease-in-out;
+
+    &:hover {
+        color: white;
+        background: var(--theme-dark-blue);
+    }
+
+    .relative {
+        height: 1.6vw;
+    }
+
+    svg {
+        stroke-width: 2;
+        width: 1.6vw;
+        height: 1.6vw;  
+    }
+
+    .plus-icon {
+        position: absolute;
+        stroke-width: 3.5;
+        top: 0.2vw;
+        left: 0.35vw;
+        width: 0.9vw;
+        height: 0.9vw;
+    }
+}

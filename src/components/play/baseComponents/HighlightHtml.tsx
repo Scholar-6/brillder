@@ -11,6 +11,7 @@ import { Annotation } from "model/attempt";
 import { useLocation } from "react-router-dom";
 import YoutubeMathDesmos from "./YoutubeMathDesmos";
 import { User } from "model/user";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 let annotateCreateEvent: (el: HTMLElement) => void = () => {
   console.log('asdfasdf');
@@ -23,10 +24,10 @@ const annotator = rangy.createClassApplier("annotation", {
   elementTagName: "a",
   onElementCreate: onAnnotateCreate,
   elementProperties: {
-    onclick: function() {
-        var highlight = annotator.getHighlightForElement(this);
-        console.log(highlight);
-        return false;
+    onclick: function () {
+      var highlight = annotator.getHighlightForElement(this);
+      console.log(highlight);
+      return false;
     }
   }
 })
@@ -45,6 +46,11 @@ export interface HighlightRef {
 }
 
 const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, ref) => {
+  const [btnShown, setCommentButton] = React.useState({
+    shown: false,
+    top: 0
+  });
+  const refdd = React.useRef<any>();
   const [textBox, setTextBox] = React.useState<HTMLDivElement>();
   const shouldHighlight = props.mode === PlayMode.Highlighting && props.onHighlight;
 
@@ -143,12 +149,41 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
     deleteAnnotation(annotation: Annotation) { deleteAnnotation(annotation) },
   }));
 
+  console.log(btnShown.top)
+
   return (
-    <div className={`highlight-html${shouldHighlight ? " highlight-on" : ""}`} onClick={() => {
-      if (textBox)
-        props.onHighlight(textBox.innerHTML)
+    <div className="relative" ref={refdd} onBlur={() => {
+      setCommentButton({
+        shown: false,
+        top: 0
+      })
     }}>
-      <YoutubeMathDesmos ref={textRef} isSynthesisParser={props.isSynthesis} value={props.value} />
+      {btnShown.shown && <div className="comment-button-e323" style={{ top: btnShown.top }} onClick={() => {
+        if (textBox) {
+          props.onHighlight(textBox.innerHTML);
+        }
+      }}>
+        <div className="relative">
+          <SpriteIcon name="message-square" />
+          <SpriteIcon className="plus-icon" name="plus-line-custom" />
+        </div>
+      </div>}
+      <div className={`highlight-html${shouldHighlight ? " highlight-on" : ""}`} onClick={(e) => {
+        if (textBox) {
+          var wH = window.innerHeight;
+          var wW = window.innerWidth;
+
+          var vH = wH / 100;
+          var vW = wW / 100;
+
+          setCommentButton({
+            shown: true,
+            top: e.clientY - (19 * vW) - ((0.5 + 0.5 + 2 + 1) * vH)
+          });
+        }
+      }}>
+        <YoutubeMathDesmos ref={textRef} isSynthesisParser={props.isSynthesis} value={props.value} />
+      </div>
     </div>
   );
 });
