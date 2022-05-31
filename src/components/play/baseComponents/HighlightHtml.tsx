@@ -36,6 +36,7 @@ interface SelectableProps {
   value: string;
   user?: User;
   mode?: PlayMode;
+  scrollRef?: any;
   isSynthesis?: boolean;
   onHighlight(value: string): void;
 }
@@ -149,8 +150,6 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
     deleteAnnotation(annotation: Annotation) { deleteAnnotation(annotation) },
   }));
 
-  console.log(btnShown.top)
-
   return (
     <div className="relative" ref={refdd} onBlur={() => {
       setCommentButton({
@@ -172,6 +171,11 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
         if (textBox) {
           var wH = window.innerHeight;
           var wW = window.innerWidth;
+
+          const { scrollRef } = props;
+          console.log(scrollRef);
+          console.log(scrollRef.current)
+
 
           var vH = wH / 100;
           var vW = wW / 100;
