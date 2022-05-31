@@ -159,10 +159,12 @@ class TeachFilterSidebar extends Component<
   renderStudentList(c: TeachClassroom) {
     if (c.active) {
       const sts = c.students.sort((a, b) => {
-        const al = a.lastName.toUpperCase();
-        const bl = b.lastName.toUpperCase();
-        if (al < bl) { return -1; }
-        if (al > bl) { return 1; }
+        if (a.lastName && b.lastName) {
+          const al = a.lastName.toUpperCase();
+          const bl = b.lastName.toUpperCase();
+          if (al < bl) { return -1; }
+          if (al > bl) { return 1; }
+        }
         return 0;
       });
 
