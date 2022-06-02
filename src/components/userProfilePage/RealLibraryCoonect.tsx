@@ -198,6 +198,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
         }}
         submit={() => {
           linkedSuccess?.();
+          setSuccess(false);
         }}
       />
       <LibraryUnlinkDialog isOpen={unlinking} close={() => setUnlinking(false)} submit={unlink} />
