@@ -29,14 +29,18 @@
     }
 }
 
+.relative {
+    position: relative;
+}
+
 .comment-button-e323 {
+    position: absolute;
     cursor: pointer;
     border-radius: 0.5vw;
     padding: 0.4vw;
     color: var(--theme-dark-blue);
     background: var(--tab-gray);
-    position: absolute;
-    right: 0;
+    right: -2vw;
     transition: all 300ms ease-in-out;
 
     &:hover {
