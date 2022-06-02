@@ -49,6 +49,7 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
     shown: false,
     top: 0
   });
+  const parentRef = React.useRef<any>(null);
   const [textBox, setTextBox] = React.useState<HTMLDivElement>();
   const shouldHighlight = props.mode === PlayMode.Highlighting && props.onHighlight;
 
@@ -144,7 +145,7 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
   }));
 
   return (
-    <div className="relative" onBlur={() => {
+    <div className="relative" ref={parentRef} onBlur={() => {
       setCommentButton({
         shown: false,
         top: 0
@@ -162,22 +163,21 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
       </div>}
       <div className={`highlight-html${shouldHighlight ? " highlight-on" : ""}`} onClick={(e) => {
         if (textBox) {
-          var wH = window.innerHeight;
           var wW = window.innerWidth;
-
-          const { scrollRef } = props;
-
-          var vH = wH / 100;
           var vW = wW / 100;
 
-          let scrollTop = 0;
-          if (scrollRef && scrollRef.current) {
-            scrollTop = scrollRef.current.children[0].scrollTop;
+          let offsetTop = 0;
+          if (parentRef) {
+            console.log(parentRef)
+            console.log(parentRef.current)
+            offsetTop = parentRef.current.getBoundingClientRect().y;
           }
+
+          console.log(e.clientY, offsetTop);
 
           setCommentButton({
             shown: true,
-            top: e.clientY - (19 * vW) - ((0.5 + 0.5 + 2 + 1) * vH - scrollTop)
+            top: e.clientY - offsetTop - (2 * vW)
           });
         }
       }}>
