@@ -14,7 +14,6 @@ import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 let annotateCreateEvent: (el: HTMLElement) => void = () => {
-  console.log('asdfasdf');
 };
 const onAnnotateCreate = (el: HTMLElement) => annotateCreateEvent(el);
 
@@ -66,7 +65,6 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
         if ((!position && selection.anchorOffset > selection.focusOffset) || position === Node.DOCUMENT_POSITION_PRECEDING) {
           backwards = true;
         }
-        console.log(selection.anchorOffset, selection.focusOffset);
         if (!backwards) {
           classApplier.applyToSelection();
         } else {
@@ -81,7 +79,6 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
   }, [shouldHighlight]);
 
   const createAnnotation = (annotation: Annotation) => {
-    console.log(888, annotation)
     if (!textBox) return '';
     annotateCreateEvent = (el: HTMLElement) => {
       el.dataset.id = annotation.id.toString();
@@ -105,8 +102,6 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
     if (!textBox) return;
 
     const els = textBox.querySelectorAll(`.annotation[data-id="${annotation.id}"]`);
-
-    console.log('delete');
 
     els.forEach(el => {
       const range = rangy.createRange();

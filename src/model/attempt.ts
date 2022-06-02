@@ -16,6 +16,7 @@ export interface Annotation {
   location: AnnotationLocation;
   questionIndex?: number;
 
+  isNote?: any;
   id: number;
   user: User;
   priority: number;
