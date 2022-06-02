@@ -25,7 +25,6 @@ const annotator = rangy.createClassApplier("annotation", {
   elementProperties: {
     onclick: function () {
       var highlight = annotator.getHighlightForElement(this);
-      console.log(highlight);
       return false;
     }
   }
@@ -50,7 +49,6 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
     shown: false,
     top: 0
   });
-  const refdd = React.useRef<any>();
   const [textBox, setTextBox] = React.useState<HTMLDivElement>();
   const shouldHighlight = props.mode === PlayMode.Highlighting && props.onHighlight;
 
@@ -146,7 +144,7 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
   }));
 
   return (
-    <div className="relative" ref={refdd} onBlur={() => {
+    <div className="relative" onBlur={() => {
       setCommentButton({
         shown: false,
         top: 0
@@ -172,9 +170,14 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
           var vH = wH / 100;
           var vW = wW / 100;
 
+          let scrollTop = 0;
+          if (scrollRef && scrollRef.current) {
+            scrollTop = scrollRef.current.children[0].scrollTop;
+          }
+
           setCommentButton({
             shown: true,
-            top: e.clientY - (19 * vW) - ((0.5 + 0.5 + 2 + 1) * vH - scrollRef.current.children[0].scrollTop)
+            top: e.clientY - (19 * vW) - ((0.5 + 0.5 + 2 + 1) * vH - scrollTop)
           });
         }
       }}>
