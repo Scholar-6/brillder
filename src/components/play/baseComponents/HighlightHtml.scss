@@ -36,10 +36,11 @@
 .comment-button-e323 {
     position: absolute;
     cursor: pointer;
-    border-radius: 0.5vw;
-    padding: 0.4vw;
+    border-radius: 50%;
+    padding: 0.6vw;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     color: var(--theme-dark-blue);
-    background: var(--tab-gray);
+    background: var(--white);
     right: -2vw;
     transition: all 300ms ease-in-out;
 
@@ -49,21 +50,21 @@
     }
 
     .relative {
-        height: 1.6vw;
+        height: 1.5vw;
     }
 
     svg {
         stroke-width: 2;
-        width: 1.6vw;
-        height: 1.6vw;  
+        width: 1.5vw;
+        height: 1.5vw;  
     }
 
     .plus-icon {
         position: absolute;
         stroke-width: 3.5;
-        top: 0.2vw;
-        left: 0.35vw;
-        width: 0.9vw;
-        height: 0.9vw;
+        top: 0.25vw;
+        left: 0.4vw;
+        width: 0.7vw;
+        height: 0.7vw;
     }
 }
