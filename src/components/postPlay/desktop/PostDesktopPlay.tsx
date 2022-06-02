@@ -76,8 +76,6 @@ interface ProposalState {
 
 class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   highlightRef: React.RefObject<HighlightRef>;
-  scrollRef: React.RefObject<any>;
-
 
   constructor(props: ProposalProps) {
     super(props);
@@ -102,7 +100,6 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     };
 
     this.highlightRef = React.createRef();
-    this.scrollRef = React.createRef();
 
     this.loadData();
   }
@@ -485,7 +482,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
               </div>
               }
               {this.state.bookState === BookState.Brief && <div className="book-page">
-                <div className="real-content question-content brief-page" ref={this.scrollRef}>
+                <div className="real-content question-content brief-page">
                   <div>
                     <div className="open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }}></div>
                     <div className="expand-title brief-title">
@@ -500,7 +497,6 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                       ref={this.highlightRef}
                       value={brick.brief}
                       user={this.props.user}
-                      scrollRef={this.scrollRef}
                       mode={PlayMode.UnHighlighting}
                       onHighlight={this.setAttemptBrickProperty.bind(this, "brief")}
                     />
@@ -509,7 +505,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                 {this.renderAnnotationsPanel()}
               </div>}
               {this.state.bookState === BookState.Prep && <div className="book-page">
-                <div className="real-content question-content brief-page" ref={this.scrollRef}>
+                <div className="real-content question-content brief-page">
                   <div>
                     <div className="open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }}></div>
                     <div className="expand-title brief-title">
@@ -523,7 +519,6 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                     <HighlightHtml
                       ref={this.highlightRef}
                       value={brick.prep}
-                      scrollRef={this.scrollRef}
                       mode={PlayMode.UnHighlighting}
                       onHighlight={this.setAttemptBrickProperty.bind(this, "prep")}
                     />
@@ -544,7 +539,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                 </QuestionPage>
               )}
               {this.state.bookState === BookState.Synthesis && <div className="book-page">
-                <div className="real-content question-content brief-page" ref={this.scrollRef}>
+                <div className="real-content question-content brief-page">
                   <div>
                     <div className="open-question" dangerouslySetInnerHTML={{ __html: brick.openQuestion }}></div>
                     <div className="expand-title brief-title synthesis-title">
@@ -559,7 +554,6 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                     <HighlightHtml
                       ref={this.highlightRef}
                       value={brick.synthesis}
-                      scrollRef={this.scrollRef}
                       mode={PlayMode.UnHighlighting}
                       onHighlight={this.setAttemptBrickProperty.bind(this, "synthesis")}
                     />
