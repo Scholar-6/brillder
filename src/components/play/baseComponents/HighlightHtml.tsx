@@ -24,7 +24,6 @@ const annotator = rangy.createClassApplier("annotation", {
   onElementCreate: onAnnotateCreate,
   elementProperties: {
     onclick: function () {
-      var highlight = annotator.getHighlightForElement(this);
       return false;
     }
   }
