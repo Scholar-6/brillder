@@ -375,13 +375,7 @@ class ExpandedAssignment extends Component<
               </button>
             </div>
           </th>
-          <th>{/* 
-            <div className="center">
-              <button className="btn btn-transparent svgOnHover btn-grey-circle">
-                <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
-              </button>
-            </div>*/}
-          </th>
+          <th></th>
           <th></th>
           <th></th>
           <th></th>

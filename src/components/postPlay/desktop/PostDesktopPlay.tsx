@@ -224,12 +224,14 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       id: generateId(),
       location,
       priority: 0,
+      isNote: true,
       questionIndex: this.state.questionIndex,
       text,
       timestamp: new Date(),
       user: this.props.user,
       children: [],
     };
+
     newAttempt.annotations.push(newAnnotation);
 
     if (this.highlightRef.current) {
