@@ -34,8 +34,8 @@ interface SelectableProps {
   value: string;
   user?: User;
   mode?: PlayMode;
-  scrollRef?: any;
   isSynthesis?: boolean;
+  showCommentBtn?: boolean;
   onHighlight(value: string): void;
 }
 
@@ -151,7 +151,7 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
         top: 0
       })
     }}>
-      {btnShown.shown && <div className="comment-button-e323" style={{ top: btnShown.top }} onClick={() => {
+      {props.showCommentBtn && btnShown.shown && <div className="comment-button-e323" style={{ top: btnShown.top }} onClick={() => {
         if (textBox) {
           props.onHighlight(textBox.innerHTML);
         }
@@ -168,12 +168,8 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
 
           let offsetTop = 0;
           if (parentRef) {
-            console.log(parentRef)
-            console.log(parentRef.current)
             offsetTop = parentRef.current.getBoundingClientRect().y;
           }
-
-          console.log(e.clientY, offsetTop);
 
           setCommentButton({
             shown: true,
