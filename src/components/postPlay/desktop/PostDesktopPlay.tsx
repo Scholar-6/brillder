@@ -497,6 +497,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                       ref={this.highlightRef}
                       value={brick.brief}
                       user={this.props.user}
+                      showCommentBtn={true}
                       mode={PlayMode.UnHighlighting}
                       onHighlight={this.setAttemptBrickProperty.bind(this, "brief")}
                     />
@@ -519,6 +520,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                     <HighlightHtml
                       ref={this.highlightRef}
                       value={brick.prep}
+                      showCommentBtn={true}
                       mode={PlayMode.UnHighlighting}
                       onHighlight={this.setAttemptBrickProperty.bind(this, "prep")}
                     />
@@ -554,6 +556,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                     <HighlightHtml
                       ref={this.highlightRef}
                       value={brick.synthesis}
+                      showCommentBtn={true}
                       mode={PlayMode.UnHighlighting}
                       onHighlight={this.setAttemptBrickProperty.bind(this, "synthesis")}
                     />
