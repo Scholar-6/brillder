@@ -114,18 +114,26 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
       let tempState: UserProfileState = getExistingUserState(user);
 
+      // If userId in the url
       if (userId) {
+
         this.state = tempState;
         getUserById(userId).then(user => {
           if (user) {
-            this.setState({ user: getUserProfile(user), userBrills: user.brills, subscriptionState: user.subscriptionState });
+            this.setState({ 
+              user: getUserProfile(user), 
+              userBrills: user.brills, 
+              subscriptionState: user.subscriptionState,
+              userCredits: user.freeAttemptsLeft
+            });
           } else {
             this.props.requestFailed("Can`t get user profile");
           }
         });
       } else {
+        // Assume it is the current users profile instead
         tempState.user = getUserProfile(user);
-        tempState.userCredits = user.freeAttemptsLeft;
+        tempState.userCredits = tempState.user.freeAttemptsLeft;
         this.state = tempState;
       }
       if (GetOrigin() === 'library') {
