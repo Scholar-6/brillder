@@ -173,16 +173,13 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
           var wW = window.innerWidth;
 
           const { scrollRef } = props;
-          console.log(scrollRef);
-          console.log(scrollRef.current)
-
 
           var vH = wH / 100;
           var vW = wW / 100;
 
           setCommentButton({
             shown: true,
-            top: e.clientY - (19 * vW) - ((0.5 + 0.5 + 2 + 1) * vH)
+            top: e.clientY - (19 * vW) - ((0.5 + 0.5 + 2 + 1) * vH - scrollRef.current.children[0].scrollTop)
           });
         }
       }}>
