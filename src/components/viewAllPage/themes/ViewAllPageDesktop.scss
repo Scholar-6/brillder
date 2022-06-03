@@ -437,10 +437,95 @@
 }
 
 // one column catalogue
-.sorted-row .brick-row-container .bricks-list-container .bricks-list.one-column-t34 {
-  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)) !important;
+.main-listing.dashboard-page.one-column-inside .sorted-row {
+  .sort-and-filter-container {
+    width: 36vw;
+    .sort-box {
+      .sort-by-box {
+        height: 9vw !important;
+        .sort-group {
+          padding-top: 0.2vh;
+        }
 
-  .animated-brick-container .flex-brick-container .publish-brick-container {
-    border-radius: 2vw;
+        .sort-header {
+          font-size: 2.4vw;
+        }
+      }
+      .filter-container {
+        .sortBy svg {
+          width: 2vw;
+          height: 2vw;
+        }
+        .MuiFormControlLabel-label {
+          font-size: 1.6vw !important;
+        }
+      }
+    }
+  }
+  .sort-box .filter-container .sortBy svg,
+  .level-filter-box svg,
+  .competition-filter-box svg {
+    width: 1.7vw;
+    height: 1.7vw;
+  }
+
+  .competition-filter-box .MuiTypography-body1 {
+    font-size: 1.6vw !important;
+  }
+
+  .sort-and-filter-container .sort-box .filter-header {
+    font-size: 2.4vw !important;
+  }
+
+  .sort-and-filter-container .subjects-toggle .my-subjects div svg {
+    width: 2.4vw;
+    height: 2.4vw;
+  }
+
+  .sort-and-filter-container .subjects-toggle .toggle-button {
+    font-size: 1.6vw;
+  }
+
+  .sort-and-filter-container .scroll-buttons {
+    font-size: 1.6vw;
+  }
+
+  .create-subject-button {
+    font-size: 1.6vw;
+  }
+
+  .level-filter-box .MuiTypography-root {
+    font-size: 1.6vw;
+  }
+  .level-filter-box .MuiFormControlLabel-root {
+    width: 100% !important;
+  }
+  .brick-row-container .bricks-list-container .bricks-list.one-column-t34 {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)) !important;
+  
+    .animated-brick-container .flex-brick-container .publish-brick-container {
+      border-radius: 2vw;
+    }
+  }
+
+  .main-brick-container {
+    height: auto !important;
+    font-size: 2vw !important;
+    .title {
+      font-size: inherit !important;
+    }
+    .create-button {
+      font-size: inherit !important;
+      svg {
+        height: 5vw;
+        width: 7vw;
+      }
+    }
+  }
+  .main-title {
+    min-height: unset !important;
+  }
+  .private-core-toggle {
+    font-size: 1.6vw;
   }
 }
