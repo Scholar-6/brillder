@@ -9,11 +9,11 @@ interface Props {
   newTab?:boolean;
 }
 
-const GoogleDesktopButton: React.FC<Props> = ({label, newTab}) => {
+const GoogleDesktopButton: React.FC<Props> = ({label}) => {
   const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/onboarding/terms?onlyAcceptTerms=true`;
 
   return (
-    <a className="google-button-desktop svgOnHover" target={newTab ? '_blank' : ''} href={googleLink}>
+    <a className="google-button-desktop svgOnHover" href={googleLink}>
       <SpriteIcon name="gmail" className="active" />
       <span>{label}</span>
     </a>

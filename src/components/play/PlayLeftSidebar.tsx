@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from 'react-redux';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import axios from "axios";
 
 import actions from "redux/actions/brickActions";
 import { ReduxCombinedState } from 'redux/reducers';
@@ -15,7 +15,6 @@ import UnauthorizedText from "./UnauthorizedText";
 import { Brick } from "model/brick";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
-import axios from "axios";
 import HighlightTextButton from "./baseComponents/sidebarButtons/HighlightTextButton";
 import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
@@ -27,12 +26,18 @@ import GenerateCoverButton from "./baseComponents/sidebarButtons/GenerateCoverBu
 import { isInstitutionPreference } from "components/services/preferenceService";
 import CompetitionButton from "./baseComponents/sidebarButtons/CompetitionButton";
 import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDialog";
-import BrillIcon from "components/baseComponents/BrillIcon";
+import { getCompetitionByUser } from "services/axios/competitions";
+import { Competition } from "model/competition";
+import { checkCompetitionActive } from "services/competition";
+import HighScore from "./baseComponents/HighScore";
 
 interface SidebarProps {
   history: any;
   sidebarRolledUp: boolean;
   toggleSidebar(): void;
+
+  liveBrills?: number;
+  reviewBrills?: number;
 
   bestScore: number;
 
@@ -44,11 +49,14 @@ interface SidebarProps {
 
   //play-preview
   isPreview?: boolean;
+  competition: any;
   showPremium?(): void;
   moveToBuild?(): void;
+  competitionCreated(c: Competition): void;
 
   //redux
   user: User;
+  competitionId?: number;
   fetchBrick(brickId: number): Promise<Brick | null>;
 }
 
@@ -83,29 +91,18 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       failedItems: []
     }
 
-    this.getCompetition();
+    if (this.props.user) {
+      this.getCompetition();
+    }
   }
 
   async getCompetition() {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/competition/${this.props.user.id}/${this.props.brick.id}`, { withCredentials: true });
-      if (res.status === 200 && res.data) {
-        const c = res.data;
-        const endDate = new Date(c.endDate);
-        const startDate = new Date(c.startDate);
-        let isActive = false;
-        if (endDate.getTime() > new Date().getTime()) {
-          if (startDate.getTime() < new Date().getTime()) {
-            isActive = true;
-          }
-        }
-        res.data.isActive = isActive;
-        this.setState({ competition: res.data });
-      } else {
-        this.setState({ competition: null });
+    const c = await getCompetitionByUser(this.props.user.id, this.props.brick.id);
+    if (c) {
+      const isActive = checkCompetitionActive(c);
+      if (isActive) {
+        this.props.competitionCreated(c);
       }
-    } catch {
-      this.setState({ competition: null });
     }
   }
 
@@ -293,7 +290,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     const haveBriefCircles = this.props.history.location.pathname.slice(-routes.PlayBriefLastPrefix.length) === routes.PlayBriefLastPrefix;
 
     const renderAdaptButton = () => {
-      if (this.state.competition && this.state.competition.isActive) {
+      if (this.props.competitionId && this.props.competitionId > 0) {
         return <div />;
       }
       return (
@@ -415,33 +412,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       return <Grid container item className={className}></Grid>
     }
 
-    const renderHighScore = () => {
-      const { bestScore } = this.props;
-      if (bestScore > 0) {
-        if (this.props.sidebarRolledUp) {
-          return (<div className="high-score-sm-d3s">
-            <BrillIcon />
-            <div>{bestScore}</div>
-            <div className="custom-tooltip">
-              Your High Score
-            </div>
-          </div>);
-        }
-
-        return (<div className="high-score-d3s">
-          <div className="label-container">
-            <div>High</div>
-            <div>Score</div>
-          </div>
-          <LinearProgress variant="determinate" value={bestScore} />
-          <div className="score-label">
-            {bestScore}
-          </div>
-        </div>);
-      }
-      return <div />;
-    }
-
     return (
       <Grid container item className={className}>
         <div className="collapsable-sidebar">
@@ -495,7 +465,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           <div className="sidebar-button f-align-end">
             {this.renderToggleButton()}
           </div>
-          {renderHighScore()}
+          <HighScore
+            bestScore={this.props.bestScore}
+            sidebarRolledUp={this.props.sidebarRolledUp} />
           {this.renderButtons()}
           {this.renderDialogs()}
         </div>

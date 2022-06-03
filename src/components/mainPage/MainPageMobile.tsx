@@ -124,8 +124,22 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         element: '.back-item-container',
         intro: `<p>Find and Play your assigned ‘bricks’ here</p>`,
       }, {
+        element: '.competition-item-container',
+        intro: `<p>Discover our daily competitions here - play to win brills, which can be converted to real cash over time!</p>`,
+      }, {
         element: '.zendesk-position',
         intro: `<p>If you spot anything that doesn't look right, or experience a technical issue, click here to create a help ticket</p>`
+      }, {
+        element: '.desktop-credit-coins',
+        intro: `
+          <p>
+            You need to spend credits to play bricks. Spend 1 credit to play a brick from the catalogue or 2 credits to enter a competition.
+            We've given you 5 free credits to get you started!
+          </p>
+        `
+      }, {
+        element: '.brill-coin-img',
+        intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`
       }]
     } as any;
 
@@ -155,6 +169,22 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         <button className="btn btn-transparent zoom-item">
           <SpriteIcon name="trowel-home" className="text-theme-light-blue" />
           <span className="item-description">Build Bricks</span>
+        </button>
+      </div>
+    );
+  }
+
+  renderCompetitionButton() {
+    return (
+      <div
+        className="competition-item-container"
+        onClick={() => {
+          window.location.href="https://brillder.com/brilliant-minds-prizes/";
+        }}
+      >
+        <button className="btn btn-transparent zoom-item">
+          <SpriteIcon name="star" className="text-theme-orange" />
+          <span className="item-description">Competition Arena</span>
         </button>
       </div>
     );
@@ -251,6 +281,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <div className="zendesk-position" />
         </MobileButtonWrap>
         {this.renderAssignmentsButton()}
+        {this.renderCompetitionButton()}
         <Steps
           enabled={this.state.isNewStudent}
           steps={this.state.steps}
@@ -271,7 +302,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
     const firstButton = (index: number) => {
       return (
-        <SwiperSlide key={index}>
+        <SwiperSlide key={index}> 
           <MobileButtonWrap>
             <FirstButton
               user={user}
@@ -287,8 +318,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       const buttons = [];
       buttons.push(firstButton(1));
       buttons.push(<SwiperSlide key={2}>{this.renderAssignmentsButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide key={3}>{this.renderLibraryButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide key={4}>{this.renderCreateButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={3}>{this.renderCompetitionButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={4}>{this.renderLibraryButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={5}>{this.renderCreateButton()}</SwiperSlide>);
       return buttons;
     };
 
@@ -296,7 +328,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       const buttons = [];
       buttons.push(firstButton(1));
       buttons.push(<SwiperSlide key={2}>{this.renderCreateButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide key={3}>{this.renderAssignmentsButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={3}>{this.renderCompetitionButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={4}>{this.renderAssignmentsButton()}</SwiperSlide>);
       return buttons;
     };
 
@@ -319,8 +352,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           />
         </SwiperSlide>
       );
-      buttons.push(<SwiperSlide key={3}>{this.renderCreateButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide key={4}>{this.renderAssignmentsButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={3}>{this.renderCompetitionButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={4}>{this.renderCreateButton()}</SwiperSlide>);
+      buttons.push(<SwiperSlide key={5}>{this.renderAssignmentsButton()}</SwiperSlide>);
       return buttons;
     };
 

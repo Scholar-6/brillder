@@ -77,6 +77,10 @@ class ProfileIntroJs extends React.Component<Props, State> {
           intro: "Your username will be visible to others in public leaderboards should you wish to compete, or in dropdowns should another user want to share a brick or class with you."
         },
         {
+          element: '#manage-account-tab',
+          intro: "Click here to manage your account"
+        },
+        {
           element: '.save-button-container',
           intro: 'Click here to save changes',
         },

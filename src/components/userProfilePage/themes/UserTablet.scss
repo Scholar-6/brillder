@@ -3,8 +3,12 @@
 @import "src/assets/sass/partials/extensions";
 
 .user-profile-page {
+  $width: 68vw;
+  .profile-tab {
+    width: $width;
+  }
   .user-profile-content {
-    $width: 68vw;
+   
     height: 100% !important;
     .save-button-container {
       left: 60.5vw !important;

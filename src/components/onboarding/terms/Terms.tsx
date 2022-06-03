@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Checkbox from '@material-ui/core/Checkbox';
 import queryString from 'query-string';
 // @ts-ignore
-import {marked} from "marked";
+import { marked } from "marked";
 
 import map from "components/map";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
@@ -15,6 +15,7 @@ import { isPhone } from "services/phone";
 import { hideZendesk } from "services/zendesk";
 import axios from "axios";
 import { User } from "model/user";
+import { GetOrigin } from "localStorage/origin";
 
 interface BricksListProps {
   history: any;
@@ -80,11 +81,18 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
       axios.get(
         `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
         { withCredentials: true }
-      ).then(response => {
+      ).then(async (response) => {
         const { data } = response;
         /*eslint-disable-next-line*/
         if (r && r.lastModifiedDate == data.termsAndConditionsAcceptedVersion) {
-          this.props.history.push(map.MainPage);
+          const user = await this.props.getUser() as User;
+
+          if (!user.userPreference) {
+            // this stops infinity loop from main page to terms if user press back button
+            this.props.history.push(map.UserPreferencePage);
+          } else {
+            this.props.history.push(map.MainPage);
+          }
         }
       }).catch(error => {
         console.log('can`t get user for terms onboarding page')
@@ -129,7 +137,6 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
               const success = await acceptTerms(this.state.lastModifiedDate);
               if (success) {
                 this.setState({ accepted: true });
-                const user = await this.props.getUser() as User;
                 const values = queryString.parse(this.props.history.location.search);
                 if (isPhone()) {
                   setTimeout(() => {
@@ -143,8 +150,9 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
                   if (values.onlyAcceptTerms) {
                     this.props.history.push(map.MainPage);
                   } else {
-                    if (user.userPreference?.preferenceId) {
-                      this.props.history.push(map.MainPage);
+                    const origin = GetOrigin();
+                    if (origin === 'library') {
+                      this.props.history.push(map.LibraryOnboarding);
                     } else {
                       this.props.history.push(map.UserPreferencePage);
                     }

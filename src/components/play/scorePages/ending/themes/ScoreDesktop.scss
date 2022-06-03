@@ -188,6 +188,10 @@
       align-items: center;
       margin-bottom: 3vh;
 
+      .bold {
+        white-space: nowrap;
+      }
+
       .brill-coin-img {
         margin-right: 1vw;
         position: relative;

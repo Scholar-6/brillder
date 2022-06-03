@@ -178,14 +178,14 @@
           }
         }
         .action-container {
-          margin-left: 65vw;
+          margin-left: 60vw;
           justify-content: flex-end;
           @include phone_and_tabletP {
             width: 100%;
             display: flex;
           }
           @include tabletP {
-            width: 30%;
+            width: 35%;
           }
         }
 

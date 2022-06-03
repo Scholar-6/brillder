@@ -9,6 +9,7 @@ export const getNewUserState = (isAdmin: boolean) => {
     isNewUser: true,
     isStudent: false,
     isAdmin,
+    brills: 0,
     roles: [
       { roleId: UserType.Publisher, name: "Publisher", disabled: false },
       { roleId: UserType.Admin, name: "Admin", disabled: false },
@@ -19,15 +20,20 @@ export const getNewUserState = (isAdmin: boolean) => {
     passwordChangedDialog: false,
 
     saveDisabled: true,
+    isProfile: true,
     validationRequired: false,
     emailInvalid: false,
     previewAnimationFinished: false,
     profileImagePublic: false,
-    editPassword: false
-  };
+    editPassword: false,
+    isLoaded: true,
+    stepsEnabled: false,
+    originLibrary: false,
+    librarySteps: [{ }]
+  }
 }
 
-export const getExistedUserState = (user: User) => {
+export const getExistingUserState = (user: User) => {
   const isAdmin = checkAdmin(user.roles);
   let isEditor = canEdit(user);
 
@@ -57,9 +63,12 @@ export const getExistedUserState = (user: User) => {
       profileImagePublic: user.profileImagePublic || false,
     },
     subjects: [],
+    userBrills: user.brills,
     isNewUser: false,
+    isProfile: true,
     isStudent: isOnlyStudent,
     isAdmin,
+    isLoaded: true,
     roles: [
       { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
       { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
@@ -75,6 +84,9 @@ export const getExistedUserState = (user: User) => {
     validationRequired: false,
     emailInvalid: false,
     previewAnimationFinished: false,
-    editPassword: false
+    editPassword: false,
+    stepsEnabled: false,
+    originLibrary: false,
+    librarySteps: [{ }]
   };
 }

@@ -44,8 +44,20 @@
 }
 
 .dialog-box {
-  .bg-theme-orange {
+  .bg-theme-green {
     background-color: var(--theme-orange) !important;
+    &.btn {
+      color: var(--white);
+      &:hover {
+        background: var(--theme-light-blue) !important;
+      }
+    }
+  }
+}
+
+.dialog-box {
+  .bg-theme-green {
+    background-color: var(--theme-green) !important;
     &.btn {
       color: var(--white);
       &:hover {

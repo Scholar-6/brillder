@@ -165,6 +165,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     ).then((res) => {
       this.setState({
         ...this.state,
+        page,
         users: res.data.pageData,
         loading: false,
         totalCount: res.data.totalCount,
@@ -464,6 +465,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         </th>
         <th className="see-column"></th>
         <th className="see-column"></th>
+        <th className="see-column"></th>
         <th className="email-column">Email</th>
         <th className="type-column">
           <Grid container>{!isPhone() && 'User'} Type {this.renderSortArrow(UserSortBy.Subscription)}</Grid>
@@ -511,7 +513,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         <table cellSpacing="0" cellPadding="0">
           <thead>{this.renderUserTableHead()}</thead>
           <tbody>
-            {this.state.users.map((user: any, i: number) => {
+            {this.state.users.map((user: User, i: number) => {
               return (
                 <tr className="user-row" key={i}>
                   <td className="joing-date">
@@ -522,31 +524,46 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                     <span className="user-last-name">{user.lastName}</span>
                   </td>
                   <td className="see-container" style={{ position: "relative", width: "2.5vw" }}>
-                    <Tooltip title="See Taught Classrooms">
-                      <span
-                        className="btn"
-                        style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "#800080", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-                        onClick={() => this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=teacher:${user.email}` })}
-                      >
-                        <SpriteIcon name="glasses" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
-                      </span>
-                    </Tooltip>
+                    {(user.teachClassroomCount ?? 0) > 0 &&
+                      <Tooltip title="See Taught Classrooms">
+                        <span
+                          className="btn"
+                          style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "#800080", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                          onClick={() => this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=teacher:${user.email}` })}
+                        >
+                          <SpriteIcon name="glasses" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                        </span>
+                      </Tooltip>
+                    }
                   </td>
                   <td className="see-container" style={{ position: "relative", width: "2.5vw" }}>
-                    <Tooltip title="See Study Classrooms">
+                    {(user.studyClassroomCount ?? 0) > 0 &&
+                      <Tooltip title="See Study Classrooms">
+                        <span
+                          className="btn"
+                          style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-green)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                          onClick={() => this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=student:${user.email}` })}
+                        >
+                          <SpriteIcon name="student-back-to-work" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                        </span>
+                      </Tooltip>
+                    }
+                  </td>
+                  <td className="see-container" style={{ position: "relative", width: "2.5vw" }}>
+                    <Tooltip title="See Users Library">
                       <span
                         className="btn"
-                        style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-green)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-                        onClick={() => this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=student:${user.email}` })}
+                        style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-dark-blue)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                        onClick={() => this.props.history.push({ pathname: map.MyLibrary + '/' + user.id})}
                       >
-                        <SpriteIcon name="glasses" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                        <SpriteIcon name="bar-chart-2" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
                       </span>
                     </Tooltip>
                   </td>
                   <td className="email-container">{user.email}</td>
                   <td className="preference-type">
                     {this.renderUserType(user)}
-                    {user.subscriptionState > 1 && <SpriteIcon name="hero-sparkle" />}
+                    {(user.subscriptionState ?? 0) > 1 && <SpriteIcon name="hero-sparkle" />}
                   </td>
                   <td className="activate-button-container">
                     <CustomToggle checked={user.status === UserStatus.Active} name={user.firstName} onClick={() => this.toggleUser(user)} />

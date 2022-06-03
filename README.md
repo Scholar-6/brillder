@@ -3,10 +3,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Development Version
 All changes to development branch are automatically deployed to http://dev-brillder.scholar6.org
 
-
 ## Run Project  
 
 Run the project locally (Windows and Linux) and connect to the dev-api:
+.
 
 * Requires Git and NPM  
 * `git clone git@github.com:Scholar-6/brillder`  
@@ -33,6 +33,7 @@ Run the project locally (Windows and Linux) and connect to the dev-api:
 * `npm start`  
 * Go to http://localbrillder.com:3000  
 * If you do not have an account registered on https://app.brillder.com then click signup option  
+
 
 ## Available Scripts
 
@@ -70,9 +71,12 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
+.
+
 
 ## MAP
 /back-to-work       - auto redirect to build learn or teach tab based on user roles
+
 
 /play/dashboard        - view all page
 /build/new-brick - create new brick page

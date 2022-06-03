@@ -10,6 +10,9 @@ import BrickTitle from "./BrickTitle";
 import { fileUrl } from "components/services/uploadFile";
 import { getDate, getMonth, getYear } from "components/services/brickService";
 import { CircularProgressbar } from "react-circular-progressbar";
+import CompetitionTimer from "components/viewAllPage/components/CompetitionTimer";
+import { checkCompetitionActive } from "services/competition";
+import SpriteIcon from "./SpriteIcon";
 
 interface Props {
   brick: Brick;
@@ -72,6 +75,21 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
     );
   }
 
+  const renderCompetitionBanner = () => {
+    if (brick.competitions && brick.competitions.length > 0) {
+      const foundActive = brick.competitions.find(checkCompetitionActive);
+      if (foundActive) {
+        return (
+          <div>
+            <CompetitionTimer competition={foundActive} />
+            <div className="competition-baner"><SpriteIcon name="star" /> competition</div>
+          </div>
+        );
+      }
+    }
+    return '';
+  }
+
   const renderBestScore = () => {
     if (props.bestScore) {
       return (
@@ -94,6 +112,7 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
   return (
     <div className="phone-top-brick-16x9" onClick={() => props.onClick ? props.onClick() : {}}>
       {renderDeadline()}
+      {renderCompetitionBanner()}
       {color
         && (
           <BrickCircle

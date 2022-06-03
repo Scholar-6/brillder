@@ -17,6 +17,8 @@ import { getDate, getMonth, getYear } from "components/services/brickService";
 import { AssignmentBrickStatus } from "model/assignment";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { checkCompetitionActive } from "services/competition";
+import CompetitionTimer from "./CompetitionTimer";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -90,7 +92,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
       props.history.push(map.postAssignment(brick.id, props.user.id));
       return;
     }
-    if (props.isAssignment && props.assignmentId && props.assignmentStatus != null && props.assignmentStatus !== AssignmentBrickStatus.ToBeCompleted) {
+    if (isAssignment && props.assignmentId && props.assignmentStatus != null && props.assignmentStatus !== AssignmentBrickStatus.ToBeCompleted) {
       setAssignmentId(props.assignmentId);
       props.history.push(map.postAssignment(brick.id, props.user.id));
       return;
@@ -99,16 +101,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     if (props.isPlay) {
       const values = queryString.parse(props.history.location.search);
       if (brick.competitions && brick.competitions.length > 0) {
-        const foundActive = brick.competitions.find(c => {
-          const endDate = new Date(c.endDate);
-          const startDate = new Date(c.startDate);
-          if (endDate.getTime() > new Date().getTime()) {
-            if (startDate.getTime() < new Date().getTime()) {
-              return true;  
-            }
-          }
-          return false;
-        });
+        const foundActive = brick.competitions.find(checkCompetitionActive);
         if (foundActive) {
           brick.competitionId = foundActive.id;
         }
@@ -118,7 +111,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
         link += '?' + map.NewTeachQuery;
       }
       props.history.push(link);
-    } else if (props.isAssignment && props.assignmentId) {
+    } else if (isAssignment && props.assignmentId) {
       setAssignmentId(props.assignmentId);
       props.history.push(playCover(brick));
     } else {
@@ -131,7 +124,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
   }
 
   const renderDeadline = () => {
-    if (!props.isAssignment) { return '' }
+    if (!isAssignment) { return '' }
     let className = '';
     let res = 'NO DEADLINE';
 
@@ -189,18 +182,14 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
 
   const renderCompetitionBanner = () => {
     if (brick.competitions && brick.competitions.length > 0) {
-      const foundActive = brick.competitions.find(c => {
-        const endDate = new Date(c.endDate);
-        const startDate = new Date(c.startDate);
-        if (endDate.getTime() > new Date().getTime()) {
-          if (startDate.getTime() < new Date().getTime()) {
-            return true;  
-          }
-        }
-        return false;
-      });
+      const foundActive = brick.competitions.find(checkCompetitionActive);
       if (foundActive) {
-        return <div className="competition-baner"><SpriteIcon name="star" /> competition</div>
+        return (
+          <div>
+            <CompetitionTimer competition={foundActive} />
+            <div className="competition-baner"><SpriteIcon name="star" /> competition</div>
+          </div>
+        );
       }
     }
     return '';
@@ -214,12 +203,12 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
         timeout={index * 150}
       >
         <div className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
-          {props.isAssignment && props.teacher && <div className="absolute-assignment-title">Assigned by {props.teacher.firstName} {props.teacher.lastName}</div>}
+          {isAssignment && props.teacher && <div className="absolute-assignment-title">Assigned by {props.teacher.firstName} {props.teacher.lastName}</div>}
           <div className="publish-brick-container">
             {renderDeadline()}
             <div className="level">
               <div style={{ background: color }}>
-                {isAssignment ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
+                {(isAssignment || brick.currentUserAttempted) ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
               </div>
             </div>
             {renderScore()}

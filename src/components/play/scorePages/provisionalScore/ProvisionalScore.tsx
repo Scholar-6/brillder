@@ -260,7 +260,6 @@ class ProvisionalScore extends React.Component<
                 <div className="brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
                 <div className="score">Score: {finalValue}</div>
                 <div className="title">
-                  {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
                   {Math.round(this.props.liveBrills)} Brills Earned!
                 </div>
                 <div className="pr-progress-center">
@@ -883,10 +882,7 @@ class ProvisionalScore extends React.Component<
         if (this.props.user) {
           return (
             <div className="top-brill-coins">
-              {this.props.bestScore && this.props.bestScore > 0 &&
-                <div className="absolute-high-score">
-                  Previous High Score: {this.props.bestScore}
-                </div>}
+             
               <div className={`brill-coin-img ${this.props.liveBrills === 0 ? 'no-spinning' : ""}`}>
                 <img alt="brill" src="/images/Brill-B.svg" />
               </div>

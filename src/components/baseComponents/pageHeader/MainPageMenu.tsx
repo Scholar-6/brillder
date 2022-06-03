@@ -18,11 +18,13 @@ import { PageEnum } from './PageHeadWithMenu';
 import { isMobile } from "react-device-detect";
 import NotificationPanel from "../notificationPanel/NotificationPanel";
 import BrillIconAnimated from "../BrillIconAnimated";
+import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 
 interface MainPageMenuProps {
   history: any;
   user: User;
   notificationExpanded: boolean;
+
 
   notifications: Notification[] | null;
   toggleNotification(): void;
@@ -30,18 +32,21 @@ interface MainPageMenuProps {
 }
 
 interface HeaderMenuState {
+  popupShown: number; // 0 - nothing opened
+
   dropdownShown: boolean;
   logoutOpen: boolean;
   width: string;
 }
 
-class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
+class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
   pageHeader: React.RefObject<any>;
 
   constructor(props: MainPageMenuProps) {
     super(props);
 
     this.state = {
+      popupShown: 0,
       dropdownShown: false,
       logoutOpen: false,
       width: '16vw'
@@ -87,7 +92,22 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     return (
       <div className={className} ref={this.pageHeader}>
         <div className="menu-buttons">
-          <BrillIconAnimated user={this.props.user} />
+          <BrillIconAnimated popupShown={this.state.popupShown === 2} onClick={() => {
+            if (this.state.popupShown === 2) {
+              this.setState({popupShown: 0});
+            } else {
+              this.setState({popupShown: 2});
+            }
+          }} />
+          <div className="header-credits-container">
+            <ReactiveUserCredits popupShown={this.state.popupShown === 1} onClick={() => {
+              if (this.state.popupShown === 1) {
+                this.setState({popupShown: 0});
+              } else {
+                this.setState({popupShown: 1});
+              }
+            }} className="desktop-credit-coins" history={this.props.history} />
+          </div>
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
         </div>
@@ -125,13 +145,13 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
 }
 
 const mapState = (state: ReduxCombinedState) => ({
-    notifications: state.notifications.notifications
-  });
-  
-  const mapDispatch = (dispatch: any) => ({
-    getNotifications: () => dispatch(notificationActions.getNotifications())
-  });
+  notifications: state.notifications.notifications
+});
 
-  
+const mapDispatch = (dispatch: any) => ({
+  getNotifications: () => dispatch(notificationActions.getNotifications())
+});
+
+
 const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
-export default connector(PageHeadWithMenu);
+export default connector(MainPageMenu);

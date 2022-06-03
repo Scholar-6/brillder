@@ -547,18 +547,18 @@
     position: relative !important;
     cursor: pointer;
     padding-top: 1vh;
+    padding-bottom: 1vh;
     display: block;
     font-size: 1.05vw;
     font-family: $font-family-regular;
     padding-left: 1.4vw;
-    height: 9vh !important;
 
     color: var(--theme-dark-blue);
     background: var(--tab-gray);
 
     .right-index {
       color: var(--theme-dark-blue);
-      padding-top: calc(1vh + 0.5vw) !important;
+      padding-top: calc(1vh + 0.25vw) !important;
       transform: unset !important;
       top: 0 !important;
       height: 4vh !important;
@@ -635,7 +635,7 @@
     font-family: $font-family-bold;
   }
   .css-custom-tooltip {
-    color: var(--tab-gray);
-    background: var(--theme-light-blue);
+    color: var(--theme-dark-blue);
+    background: var(--tab-gray);
   }
 }

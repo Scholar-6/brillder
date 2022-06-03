@@ -2,6 +2,7 @@
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
 
+.simple.horizontal-shuffle-editor.quill-document-editor,
 .simple.open-question-plan-quill.simple.quill-document-editor,
 .simple.plan-brick-title.quill-document-editor {
   .MuiSnackbarContent-root {
@@ -57,4 +58,12 @@
 .simple.open-question-plan-quill.simple.quill-document-editor .MuiSnackbar-root {
   top: 64vh !important;
   width: 50vw;
+}
+
+.simple.horizontal-shuffle-editor.quill-document-editor {
+  position: relative;
+
+  .MuiSnackbar-root {
+    left: 0vw !important;
+  }
 }

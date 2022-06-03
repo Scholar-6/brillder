@@ -110,6 +110,21 @@
     }
   }
 
+  .competition-item-container {
+    button {
+      display: block !important;
+
+      svg {
+        color: var(--theme-orange);
+      }
+      .item-description {
+        font-size: 25px;
+        font-family: $font-family-light;
+        color: var(--tab-gray) !important;
+      }
+    }
+  }
+
   .back-item-container {
     .flex-number {
       display: flex;
@@ -164,8 +179,64 @@
     .brill-intro-container {
       display: flex;
     }
+    .header-credits-container {
+      position: absolute;
+      bottom: 2.5vw;
+      left: 18vw;
+      width: 12.5vw;
+      height: 12.5vw;
+
+      .desktop-credit-coins {
+        position: relative;
+      }
+
+      svg {
+        width: 12.5vw;
+        height: 12.5vw;
+      }
+      .css-custom-tooltip {
+        display: none;
+        position: absolute;
+        border-radius: 2vw;
+        left: -10vw;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        color: var(--theme-dark-blue);
+        width: 82vw;
+        background: var(--white);
+        padding: 3vw 5vw;
+        bottom: 20vw;
+        &.visible {
+          display: block;
+        }
+        .bold {
+          font-size: 6vw;
+        }
+        .green-btn {
+          margin-top: 3vw;
+          border-radius: 9vw;
+          padding: 0.7vw 3vw;
+          color: white;
+          background: var(--theme-green);
+        }
+      }
+      span {
+        top: 0;
+        left: 0;
+        color: white;
+        font-size: 5vw;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 12.5vw;
+        height: 12.5vw;
+      }
+    }
     .brills-number {
-      margin-right: 3vw;
+      width: 13vw;
+      justify-content: flex-end;
+      margin-left: 3vw !important;
+      margin-right: 0;
       height: 15vw !important;
       font-size: 5vw !important;
     }
@@ -281,10 +352,15 @@
 
 // only case for new students
 .mobile-main-page.new-student {
+  padding-top: 28%;
+  padding-bottom: 20%;
+  height: calc(100% - 17.5vw);
   .view-item-container {
     height: 33vw;
   }
   > div {
+    display: flex;
+    align-items: center;
     height: 37%;
   }
   .eye-glass-frame {
@@ -299,10 +375,10 @@
     }
   }
   .back-item-container {
-    width: 70vw;
+    width: 230px !important;
   }
   .blocks-icon {
-    width: 100% !important;
+    width: 230px !important;
   }
   .zendesk-position {
     position: fixed;

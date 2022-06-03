@@ -40,6 +40,7 @@ import PublishedBricks from "./PublishedBricks";
 interface BuildProps {
   searchString: string;
   isSearching: boolean;
+  searchDataLoaded: boolean;
 
   user: User;
   history: any;
@@ -47,6 +48,7 @@ interface BuildProps {
 
   // redux
   notifications: Notification[] | null;
+  searchFinished(): void;
   requestFailed(e: string): void;
 }
 
@@ -160,7 +162,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   componentWillReceiveProps(nextProps: BuildProps) {
-    if (nextProps.isSearching) {
+    if (nextProps.isSearching && nextProps.searchDataLoaded === false) {
       this.setState({ searchBricks: [], shown: false, bricksLoaded: false, sortedIndex: 0 });
       searchBricks(nextProps.searchString).then(bricks => {
         if (bricks) {
@@ -171,6 +173,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
               bricksLoaded: true, sortedIndex: 0,
               searchThreeColumns
             });
+            this.props.searchFinished();
           }, 1400);
         } else {
           this.props.requestFailed('Can`t get bricks by search');
@@ -406,11 +409,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
       }
 
       if (!filters.level1 && !filters.level2 && !filters.level3 && !filters.s20 && !filters.s40 && !filters.s60) {
-        console.log(444, filters);
         totalBricks = finalBricks;
       }
     }
-    console.log(totalBricks);
     this.setState({ ...this.state, filters, subjects, finalBricks: totalBricks, sortedIndex: 0 });
   }
 

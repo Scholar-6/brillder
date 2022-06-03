@@ -218,13 +218,31 @@
       width: 100%;
       font-family: $font-family-bold !important;
       background: var(--theme-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all 300ms ease-in-out;
+      padding-right: 2vw;
       &:hover {
         background: var(--theme-dark-blue);
       }
       &:disabled {
         color: var(--dark-gray) !important;
         background: var(--tab-gray) !important;
+      }
+
+      svg {
+        opacity: 0;
+        stroke-width: 2;
+        width: 1.5vw;
+        height: 1.5vw;
+        margin-right: 1vw;
+      }
+
+      &.loading {
+        svg {
+          opacity: 1;
+        }
       }
     }
   }
@@ -243,5 +261,16 @@
   .small {
     margin-top: 3vh;
     font-size: 0.8vw;
+  }
+}
+
+.StripePayPage.BuyCredits {
+  .pay-box {
+    width: 30vw;
+    margin-left: 35vw;
+
+    .logo {
+      margin-bottom: 2vh;
+    }
   }
 }

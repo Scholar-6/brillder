@@ -134,6 +134,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 allowTables={true}
                 allowDesmos={true}
                 allowLinks={true}
+                allowMediaEmbed={true}
                 validate={this.props.validationRequired}
                 isValid={!!stripHtml(this.state.synthesis)}
                 toolbar={[

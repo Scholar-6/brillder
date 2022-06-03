@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { isMobileOnly, isSafari, isTablet } from 'react-device-detect';
+import queryString from "query-string";
 
 import './app.scss';
 import actions from "redux/actions/auth";
@@ -44,7 +45,7 @@ import BrickWrapper from './BrickWrapper';
 
 import { getBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'services/zendesk';
-import map from 'components/map';
+import map, { StripeCredits } from 'components/map';
 import RotateInstruction from 'components/baseComponents/rotateInstruction/RotateInstruction';
 import TeachPage from 'components/teach/assignments/TeachPage';
 import Terms from 'components/onboarding/terms/Terms';
@@ -66,7 +67,10 @@ import { GetYoutubeClick } from 'localStorage/play';
 import StripePage from 'components/stripePage/StripePage';
 import LeaderboardPage from 'components/competitions/LeaderboardPage';
 import ChoosePlan from 'components/choosePlan/ChoosePlan';
+import StripeCreditsPage from 'components/stripeCreditsPage/StripeCreditsPage';
 
+import { GetOrigin, SetOrigin } from 'localStorage/origin';
+import LibraryOrigin from 'components/onboarding/libraryOrigin/LibraryOrigin';
 
 interface AppProps {
   user: User;
@@ -148,7 +152,7 @@ const App: React.FC<AppProps> = props => {
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    let { url } = error.response.config;
+    let { url } = error.response?.config;
 
     // exception for login, play and view all pages
     if (error.response.status === 401) {
@@ -162,6 +166,11 @@ const App: React.FC<AppProps> = props => {
     }
     return Promise.reject(error);
   });
+
+  if (!GetOrigin()) {
+    const values = queryString.parse(location.search);
+    SetOrigin((values.origin ?? "") as string);
+  }
 
   const theme = React.useMemo(() =>
     createMuiTheme({
@@ -250,6 +259,7 @@ const App: React.FC<AppProps> = props => {
         <Profiler id="app-tsx" onRender={onRenderCallback} >
           {/* all page routes are here order of routes is important */}
           <Switch>
+            <AllUsersRoute path={StripeCredits} component={StripeCreditsPage} />
             <AllUsersRoute path="/stripe-subscription/:type" component={StripePage} />
             <UnauthorizedRoute path={map.SubjectCategories} component={ViewAll} />
             <UnauthorizedRoute path={map.SearchPublishBrickPage} component={ViewAll} />
@@ -289,11 +299,17 @@ const App: React.FC<AppProps> = props => {
             <BuildRoute path={map.UserProfile + '/:userId'} component={UserProfilePage} location={location} />
             <BuildRoute path="/home" component={MainPage} location={location} />
 
+
             <AllUsersRoute path={map.UserProfile} component={UserProfilePage} />
+
+            {/* onboarding pages in order of progression */}
+            <Route path={map.TermsSignUp} component={Terms} />
+            <AllUsersRoute path={map.LibraryOnboarding} component={LibraryOrigin} isPreferencePage={true} />
             <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
             <AllUsersRoute path={map.UserPreferencePage} component={UserPreferencePage} isPreferencePage={true} />
-            <AllUsersRoute path={map.SetUsername} component={UsernamePage} />
+            <AllUsersRoute path={map.SetUsername} component={UsernamePage} isPreferencePage={true} />
             <AllUsersRoute path={map.SelectSubjectPage} component={SelectSubjectPage} />
+
             <UnauthorizedRoute path={map.LeaderboardPage + '/:competitionId'} component={LeaderboardPage} />
 
             <AuthRoute path={map.Login + '/email'} component={EmailLoginPage} />
@@ -302,7 +318,6 @@ const App: React.FC<AppProps> = props => {
             <AuthRoute path={map.ResetPassword} component={ResetPasswordPage} />
             <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
 
-            <Route path={map.TermsSignUp} component={Terms} />
             <Route path={map.TermsPage} component={PublicTerms} />
 
             <Route component={AuthRedirectRoute} />

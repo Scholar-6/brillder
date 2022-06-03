@@ -298,6 +298,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             sidebarRolledUp={sidebarRolledUp}
             toggleSidebar={setSidebar}
             isPreview={true}
+            competition={null}
+            competitionCreated={() => {}}
             moveToBuild={moveToBuild}
           />
           <Switch>

@@ -91,6 +91,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
     return this.state.subjects.some(r => r.checked);
   }
 
+  
   render() {
     return (
       <React.Suspense fallback={<></>}>
@@ -117,6 +118,8 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               levels={[]}
               filterByLevel={() => {}}
               lengths={[]}
+              filterCompetition={false}
+              filterByCompetition={() => {}}
               filterByLength={() => {}}
             />
             : this.props.user ? <AllSubjectsSidebar /> : <UnauthorizedSidebar />

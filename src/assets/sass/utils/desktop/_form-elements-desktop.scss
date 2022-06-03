@@ -5,11 +5,10 @@ input {
     font-size: 1.8vw;
     margin-bottom: 2.5vh;
     padding-left: 1vw;
-    background: var(--solitude-light);
+    background: var(--off-white);
     border-radius: 0.5vw;
     border: none;
     color: var(--theme-dark-blue);
-    box-shadow: $base-shadow;
     @include placeholder {
       color: var(--theme-dark-blue);
     }

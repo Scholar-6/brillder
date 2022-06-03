@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import { ReduxCombinedState } from 'redux/reducers';
@@ -10,10 +10,12 @@ import { AcademyDifficulty } from "../base/AcademyDifficulty";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import routes from "components/play/routes";
+import routes, { playCover } from "components/play/routes";
 import { User } from "model/user";
 import { isTeacherPreference } from "components/services/preferenceService";
 import { CircularProgressbar } from "react-circular-progressbar";
+import { checkCompetitionActive } from "services/competition";
+import CompetitionLibraryDialog from "components/baseComponents/dialogs/CompetitionLibraryDialog";
 
 interface LibrarySubjectsProps {
   subject: Subject;
@@ -27,11 +29,24 @@ interface LibrarySubjectsProps {
 const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
   props
 ) => {
+  const [activeCompetitionId, setActiveCompetitionId] = React.useState(-1);
   const [hovered, setHover] = React.useState(false);
+  const [competitionClicked, setCompetitionClicked] = React.useState(false);
+
   let className = "assignment";
 
-  const { assignment, subject } = props;
+  const { assignment, subject, history } = props;
   const [height, setHeight] = React.useState(0);
+
+  useEffect(() => {
+    if (brick.competitions && brick.competitions.length > 0) {
+      const competition = brick.competitions.find(checkCompetitionActive);
+      if (competition) {
+        setActiveCompetitionId(competition.id);
+      }
+    }
+    /*eslint-disable-next-line*/
+  }, []);
 
   // animate height
   setTimeout(() => {
@@ -131,18 +146,22 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
       <div
         className={className}
         onClick={() => {
+          if (activeCompetitionId > 0) {
+            setCompetitionClicked(true);
+            return;
+          }
           if (assignment.maxScore) {
             let userId = props.user.id;
             if (props.student) {
               userId = props.student.id;
             }
             if (isTeacherPreference(props.user)) {
-              props.history.push(map.postAssignment(brick.id, userId));
+              history.push(map.postAssignment(brick.id, userId));
             } else {
-              props.history.push(map.postAssignment(brick.id, userId));
+              history.push(map.postAssignment(brick.id, userId));
             }
           } else {
-            props.history.push(routes.playNewPrep(brick));
+            history.push(routes.playNewPrep(brick));
           }
         }}
         style={{ background: color }}
@@ -159,9 +178,9 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
                 brick={brick}
               />
             )}
-            {assignment.brick.competitions && assignment.brick.competitions.length > 0 && height < 50 &&
+            {activeCompetitionId > 0 && height < 50 &&
             <div className="competition-star bigger">
-              <SpriteIcon name="book-star" style={{ color: color, stroke: color, fill: color }} />
+              <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
             </div>}
           </div>
           {height === 0 && renderRotatedTitle("text-dark-gray", 100)}
@@ -185,9 +204,9 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
             onMouseEnter={() => setHover(true)}
             style={{ background: color, height: height + "%" }}
           >
-            {assignment.brick.competitions && assignment.brick.competitions.length > 0 &&
+            {activeCompetitionId > 0 &&
               <div className="competition-star bigger">
-                <SpriteIcon name="book-star" style={{ color: color, stroke: color, fill: color }} />
+                <SpriteIcon name={subject.name === GENERAL_SUBJECT ? "book-star-general" : "book-star"} style={{ color: color, stroke: color, fill: color }} />
               </div>}
             {renderRotatedTitle("white", height)}
             {assignment.brick.academicLevel >= AcademicLevel.First && (
@@ -199,6 +218,12 @@ const SingleSubjectAssignment: React.FC<LibrarySubjectsProps> = (
           </div>
         }
       </div>
+      {competitionClicked && <CompetitionLibraryDialog isOpen={competitionClicked} submit={() => {
+        const brickCopy = Object.assign(brick);
+        brickCopy.competitionId = activeCompetitionId;
+        const link = playCover(brickCopy);
+        history.push(link);
+      }} close={() => setCompetitionClicked(false)} />}
     </div>
   );
 };

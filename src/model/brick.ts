@@ -2,6 +2,7 @@
 import { Question } from "./question";
 import { UserBase, UserType } from "./user";
 import { Assignment } from "./classroom";
+import { Competition } from "./competition";
 
 export enum BrickLengthEnum {
   None = 0,
@@ -112,6 +113,7 @@ export interface Brick {
   editors?: Editor[];
   publisher?: Editor;
   expanded?: boolean;
+  currentUserAttempted?: boolean;
   expandFinished?: boolean;
   status: BrickStatus;
   attemptsCount: number;
@@ -122,7 +124,7 @@ export interface Brick {
   academicLevel: AcademicLevel;
 
   // cover page
-  competitions?: any[];
+  competitions?: Competition[];
   competitionId?: number;
   coverImage: string;
   coverImageCaption: string;

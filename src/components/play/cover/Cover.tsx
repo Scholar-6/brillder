@@ -9,8 +9,8 @@ import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { useEffect } from "react";
 import { rightKeyPressed } from "components/services/key";
-import { User } from "model/user";
-import { checkAdmin, checkPublisher } from "components/services/brickService";
+import { SubscriptionState, User } from "model/user";
+import { checkAdmin, checkPublisher, isAorP } from "components/services/brickService";
 import { isPhone } from "services/phone";
 import { isMobile } from "react-device-detect";
 import { stripHtml } from "components/build/questionService/ConvertService";
@@ -18,14 +18,14 @@ import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import SponsorImageComponent from "./SponsorImage";
 import CoverAuthorRow from "./components/coverAuthorRow/CoverAuthorRow";
-import CoverPlay from "./components/coverAuthorRow/CoverPlay";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
 
 import { CreateByEmailRes } from "services/axios/user";
 import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
-import { getCompetitionsByBrickId } from "services/axios/competitions";
 import map from "components/map";
+import CoverCreditsPlay from "./components/coverAuthorRow/CoverCreditsPlay";
+import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 
 
 interface Props {
@@ -33,6 +33,9 @@ interface Props {
   brick: Brick;
   location: any;
   history: any;
+  competitionId: number;
+  activeCompetition: any;
+  isAssignment: boolean;
   canSeeCompetitionDialog?: boolean | null;
   setCompetitionId(id: number): void;
   setUser(data: CreateByEmailRes): void;
@@ -61,41 +64,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     }
   }, 10000);
 
-  console.log(777, props.canSeeCompetitionDialog)
-
-  const getNewestCompetition = (competitions: any[]) => {
-    let competition = null;
-    const timeNow = new Date().getTime();
-    for (const comp of competitions) {
-      try {
-        var start = new Date(comp.startDate).getTime();
-        if (timeNow > start) {
-          var end = new Date(comp.endDate).getTime();
-          if (timeNow < end) {
-            competition = comp;
-          }
-        }
-      } catch {
-        console.log('competition time can`t be parsed');
-      }
-    }
-    return competition;
-  }
-
-  const getCompetitions = async () => {
-    const res = await getCompetitionsByBrickId(brick.id);
-    if (res && res.length > 0) {
-      const competition = getNewestCompetition(res);
-      if (competition) {
-        setCompetitionData({ isOpen: true, competition });
-      }
-    }
-  }
-
-  useEffect(() => {
-    getCompetitions();
-    /*eslint-disable-next-line*/
-  }, []);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -112,6 +80,13 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     };
   });
 
+  useEffect(() => {
+    if (props.activeCompetition && competitionData === null) {
+      setCompetitionData({ isOpen: true, competition: props.activeCompetition });
+    }
+    /*eslint-disable-next-line*/
+  }, [props.activeCompetition]);
+
   const startBrick = () => {
     props.moveNext();
   };
@@ -121,6 +96,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       <div className="first-row">
         <div className="brick-id-container">
           Brick N<sub className="smaller">o.</sub> {brick.id}
+        </div>
+        <div className="mobile-credit-coins">
+          <ReactiveUserCredits />
         </div>
         <div className="hover-area">
           <SpriteIcon name="help-circle-custom" onClick={() => setFirstPhonePopup(true)} />
@@ -183,6 +161,34 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         <div className="round-button" style={{ background: `${brick.subject?.color || '#B0B0AD'}` }} />
       </div>
     );
+  }
+
+  const renderCoverPlay = () => {
+    let isPublisher = false;
+    if (props.user) {
+      isPublisher = isAorP(props.user.roles);
+    }
+    return (
+      <CoverCreditsPlay
+        user={props.user}
+        isAssignment={props.isAssignment}
+        isAuthor={brick.author.id === props.user?.id} isPublisher={isPublisher}
+        isLibraryUser={!!props.user?.library}
+        isPaidEducator={props.user?.subscriptionState === SubscriptionState.PaidTeacher} isCompetition={!!props.activeCompetition}
+        onClick={() => {
+          if (props.user) {
+            startBrick();
+          } else {
+            if (!unauthPopupShown) {
+              setUnauthorizedV2(true);
+            } else {
+              startBrick();
+            }
+            setClickPlay(true);
+          }
+        }}
+      />
+    )
   }
 
   if (isPhone()) {
@@ -300,27 +306,15 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <CoverTimer brickLength={brick.brickLength} />
           </div>
           <div className="introduction-info">
-            <CoverPlay onClick={() => {
-              if (props.user) {
-                startBrick();
-              } else {
-                if (!unauthPopupShown) {
-                  setUnauthorizedV2(true);
-                } else {
-                  startBrick();
-                }
-                setClickPlay(true);
-              }
-            }}
-            />
+            {renderCoverPlay()}
           </div>
         </div>
         <UnauthorizedUserDialogV2
           history={props.history}
-          brickId={brick.id}
+          brick={brick}
           isOpen={unauthorizedOpenV2}
+          competitionId={props.competitionId}
           notyet={() => {
-            console.log('not')
             if (playClicked) {
               startBrick()
             } else {
@@ -372,6 +366,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   }
 
   const briefText = stripHtml(brick.brief);
+
+  console.log(888, props.canSeeCompetitionDialog, competitionData)
 
   return (
     <React.Suspense fallback={<></>}>
@@ -442,25 +438,14 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             </Grid>
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
-                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
+                {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
                   user={props.user}
                   brick={brick}
                 />}
                 <div className="brief-ellipsis">
                   {briefText}
                 </div>
-                <CoverPlay onClick={() => {
-                  if (props.user) {
-                    startBrick();
-                  } else {
-                    if (!unauthPopupShown) {
-                      setUnauthorizedV2(true);
-                    } else {
-                      startBrick();
-                    }
-                    setClickPlay(true);
-                  }
-                }} />
+                {renderCoverPlay()}
               </div>
             </Grid>
           </Grid>
@@ -472,7 +457,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       </div>
       <UnauthorizedUserDialogV2
         history={props.history}
-        brickId={brick.id}
+        brick={brick}
+        competitionId={props.competitionId}
         isOpen={unauthorizedOpenV2}
         notyet={() => {
           if (playClicked) {

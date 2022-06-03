@@ -1,0 +1,342 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.user-profile-page {
+  .credit-coins-sm {
+    width: 9vw;
+    height: 9vw;
+    margin-right: 3vw;
+
+    span {
+      font-size: 4.5vw;
+    }
+  }
+
+  .mobile-upper-space {
+    height: 4%;
+  }
+  .profile-tab {
+    width: 100vw;
+    margin-top: 0;
+    min-height: 8%;
+
+    >div {
+      min-height: unset;
+      font-size: 4.5vw;
+
+      svg {
+        width: 5vw;
+        height: 5vw;
+      }
+
+      .user-type-lozenge {
+        margin-left: 2vw;
+        font-size: 4.5vw;
+        padding-left: 2vw;
+        padding-right: 2vw;
+      }
+    }
+
+    >div:first-child {
+      padding-left: 2.5vw;
+      border-top-right-radius: 4vw;
+    }
+
+    >div#manage-account-tab {
+      border-top-left-radius: 4vw;
+      border-top-right-radius: 0;
+    }
+  }
+
+  .user-profile-content {
+    height: calc(100% - 17.5vw - 4% - 8%);
+  }
+
+  .profile-image-container {
+    padding-top: 3vh !important;
+  }
+
+  .profile-block {
+    height: 100%;
+
+    .profile-header {
+      padding-top: 0 !important;
+      text-align: center;
+      padding-left: 0 !important;
+      margin-left: 0 !important;
+      width: 100vw !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: unset !important;
+      height: calc(5.1vh + 1vh + 6vw);
+    }
+
+    .absolute-top-container {
+      width: 100vw;
+      right: 0;
+      top: calc(3vh + 35vw + 5.1vh + 1vh + 6vw);
+
+      .brills-number {
+        font-size: 4.5vw;
+      }
+
+      .absolute-library-link,
+      .brill-coin-img {
+        width: 9vw;
+        height: 9vw;
+      }
+
+      .brill-coin-img {
+        margin-left: 1vw;
+        margin-right: 3vw;
+      }
+    }
+
+    .profile-inputs-container {
+      padding-top: 10vw !important;
+    }
+
+    .big-input-container textarea,
+    .MuiAutocomplete-root .MuiInput-formControl {
+      border-radius: 1.7vh !important;
+    }
+    .big-input-container textarea {
+      padding-top: 1.2vw;
+    }
+  }
+
+  .search-container {
+    display: none !important;
+  }
+
+  .manage-account-block {
+    font-size: 4.5vw;
+
+    .current-plan-box {
+      display: block;
+    }
+
+    .current-plan {
+      font-size: 4.5vw;
+      width: 100%;
+
+      >span {
+        width: 75%;
+
+        .bold {
+          margin-right: 3vw;
+        }
+      }
+
+      .price {
+        width: 25%;
+
+        &.btn {
+          width: 37%;
+        }
+      }
+
+      svg {
+        width: 5vw !important;
+        height: 5vw !important;
+      }
+    }
+
+    .next-billing-date {
+      width: 100% !important;
+      min-height: 10vw;
+      font-size: 4.5vw;
+    }
+
+    .credits-container {
+      margin-top: 0;
+
+      .brills-container {
+        width: 30vw;
+
+        .brill-coin-img {
+          width: 8vw;
+          height: 8vw;
+        }
+      }
+      .credits-part {
+        width: 24vw;
+        .user-credits {
+          width: 8vw;
+          height: 8vw;
+          .css-custom-tooltip  {
+            display: none;
+          }
+        }
+        .label {
+          margin-left: 1.2vw;
+        }
+      }
+    }
+
+    .card-details {
+      height: 22vw;
+      position: relative;
+      padding-bottom: 12vw;
+      font-size: 4.5vw;
+
+      .light,
+      .bigger-circles {
+        font-size: 4.5vw;
+        font-family: $font-family-regular;
+      }
+
+      .btn {
+        bottom: 2vw;
+        position: absolute;
+
+        svg {
+          width: 5vw;
+          height: 5vw;
+        }
+      }
+    }
+
+    .leave-container {
+      display: block;
+      position: relative;
+      padding-top: 6vw;
+
+      .label {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0.3vw;
+      }
+
+      .btn {
+        margin-top: 1vw;
+        margin-bottom: 1vw;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0.5vw 2vw;
+        width: 100%;
+      }
+
+      .first-btn {
+        svg {
+          width: 5vw;
+          height: 5vw;
+          margin-right: 0.5vw;
+        }
+      }
+    }
+  }
+}
+
+.user-profile-page .profile-block .profile-fields .profile-roles-container .roles-box .MuiGrid-item .MuiFormControlLabel-label {
+  font-size: 4.5vw !important;
+}
+
+.user-profile-page .profile-block .profile-fields .profile-roles-container .roles-box {
+  padding-top: 8vw;
+  min-height: unset !important;
+}
+
+
+
+.customer-real-library {
+  margin-top: 6vh;
+  > .flex-center {
+    display: block !important;
+  }
+  .sub-title-d43 {
+    width: 90vw;
+    align-items: center;
+    padding-left: 2vw;
+    margin-bottom: 1vh;
+
+    svg {
+      width: 8vw;
+      height: 8vw;
+      margin-right: 1vw;
+    }
+
+    .hover-content {
+      top: 10vw !important;
+      padding: 1vw 4vw !important;
+      border-radius: 2vw !important;
+      width: 50vw !important;
+      font-size: 5vw !important;
+      left: unset !important;
+      right: -6vw !important;
+    }
+  }
+  .absolute-placeholder {
+    pointer-events: none;
+    position: absolute;
+    z-index: 2;
+    padding-top: calc(1.8vh - 1vw);
+    margin-left: 2vw;
+    letter-spacing: 0.3vw;
+    font-size: 5.5vw;
+  }
+  .MuiInputBase-root {
+    margin-bottom: 1.5vh;
+  }
+  .MuiSelect-root {
+    width: 91vw;
+    padding-right: 0 !important;
+    padding-top: 1.8vh;
+    border-radius: 1.7vh;
+    height: 5.645vw !important;
+    padding-bottom: 1.8vh;
+    font-size: 1.5vw;
+    line-height: 1;
+    background: var(--off-white);
+    .MuiListItemText-root {
+      margin: 0 !important;
+      padding-left: 2vw;
+
+      span {
+        line-height: 1;
+      }
+    }
+    .MuiTypography-body1 {
+      color: var(--theme-dark-blue);
+      font-size: 5.5vw !important;
+    }
+  }
+
+  .input-block {
+    > input {
+      width: 90vw;
+      margin-left: 0 !important;
+    }
+  }
+  .btn-container {
+    justify-content: flex-end;
+
+    .btn {
+      cursor: pointer;
+      margin-top: 2vh;
+      padding: 1.8vh 5vw;
+      color: white;
+      border-radius: 1.7vh;
+      font-size: 5.5vw;
+      width: 92vw;
+      text-align: center;
+      background: var(--theme-green);
+
+      svg {
+        width: 6vw;
+        height: 6vw;
+        margin-right: 2vw;
+      }
+  
+      &.custom-d42 {
+        margin: 0;
+        margin-left: 4vw;
+        padding: 1.8vh 2vw;
+        margin-bottom: 1.5vh;
+      }
+    }
+  }
+} 

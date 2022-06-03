@@ -3,7 +3,7 @@ import React from "react";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Brick } from "model/brick";
 import { User } from "model/user";
-import BrickTitle from "components/baseComponents/BrickTitle";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 interface FrontPageProps {
   brick: Brick;
@@ -36,7 +36,7 @@ const FrontPage: React.FC<FrontPageProps> = ({brick, student, color, onClick}) =
         <div className="image-background-container" style={{ color: color }}>
           <SpriteIcon name="brick-icon" className={"active"} />
         </div>
-        <div className="brick-title"><BrickTitle title={brick.title} /></div>
+        <div className="brick-title">{stripHtml(brick.title)}</div>
         {renderUserRow()}
       </div>
     </div>

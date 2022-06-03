@@ -22,6 +22,7 @@ import { getSubjects } from 'services/axios/subject';
 import { User } from 'model/user';
 import VolumeButton from '../VolumeButton';
 import BrillIconAnimated from '../BrillIconAnimated';
+import ReactiveUserCredits from 'components/userProfilePage/ReactiveUserCredits';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -263,7 +264,10 @@ class PageHeader extends Component<Props, State> {
               {this.props.isAuthenticated === isAuthenticated.True &&
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
-                  <BrillIconAnimated user={this.props.user} />
+                  <BrillIconAnimated />
+                  <div className="header-credits-container">
+                    <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
+                  </div>
                   <BellButton
                     notificationCount={notificationCount}
                     onClick={evt => this.props.showNotifications(evt)}

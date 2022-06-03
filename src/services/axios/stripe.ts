@@ -1,4 +1,5 @@
-import {get, post} from './index';
+import { CreditPrice } from 'components/stripeCreditsPage/StripeCredits';
+import { get, post } from './index';
 
 export interface Coupon {
   ammountOff: number | null;
@@ -13,6 +14,11 @@ export interface StripePrices {
   studentYearly: number;
   teacherMonth: number;
   teacherYearly: number;
+}
+
+export interface CardDetails {
+  last4: string;
+  nextPaymentDate: number;
 }
 
 /**
@@ -31,10 +37,37 @@ export const checkCoupon = async (coupon: string) => {
  * Get prices
  * return pirces or null if failed
  */
- export const getPrices = async () => {
+export const getPrices = async () => {
   try {
     return await get<StripePrices>("/stripe/getprices");
   } catch {
     return null;
   }
 }
+
+/**
+ * Cancel Subscription
+ */
+export const cancelSubscription = async (userId: number) => {
+  try {
+    return await post<Boolean>("/stripe/cancelSubscription", { userId });
+  } catch {
+    return null;
+  }
+}
+
+export const getCardDetails = async () => {
+  try {
+    return await get<CardDetails>("/stripe/cardDetails");
+  } catch {
+    return null;
+  }
+}
+
+export const buyCredits = async (creditType: CreditPrice) => {
+  try {
+    return await post<any>(`/stripe/buyCredits/` + creditType, {});
+  } catch {
+    return null;
+  }
+}   

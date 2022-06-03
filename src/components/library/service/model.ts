@@ -10,5 +10,7 @@ export enum SortBy {
 
 export interface SubjectAssignments {
   subject: Subject,
+  width: number;
+  row: number;
   assignments: LibraryAssignmentBrick[]
 }

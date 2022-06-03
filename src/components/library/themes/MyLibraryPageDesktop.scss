@@ -13,7 +13,6 @@
     display: flex;
     justify-content: center;
     > svg {
-      background: white;
       border-bottom-left-radius: 0.4vw;
       border-bottom-right-radius: 0.4vw;
       width: 0.8vw;
@@ -28,7 +27,7 @@
     &.bigger {
       > svg {
         width: 2vw;
-        height: 2.8vw;
+        height: 3.9vw;
         border-bottom-left-radius: 1vw;
         border-bottom-right-radius: 1vw;
       }
@@ -288,7 +287,7 @@
         .assignment {
           margin-left: $base-side-margin;
           margin-right: $base-side-margin;
-          $base-radius: 0.35vw;
+          $base-radius: 0.55vw;
           border-radius: $base-radius;
 
           .progress-value {
@@ -511,6 +510,48 @@
     padding-top: 2vh;
     padding-left: 1.5vw;
     margin-right: 2vw;
+
+    .pagination {
+      height: 6vh;
+      position: absolute;
+      bottom: 1vh;
+      padding-left: 0.7vw;
+      padding-right: 0.7vw;
+      display: flex;
+      width: 100%;
+
+      font-size: 0.9vw;
+
+      .gray {
+        margin-left: 0.3vw;
+        color: var(--gray);
+      }
+
+      svg {
+        width: 4.7vh;
+        height: 4.7vh;
+        cursor: pointer;
+        color: var(--theme-orange);
+        transition: all 150ms ease-in-out;
+
+        &:hover {
+          color: var(--theme-dark-blue);
+        }
+      }
+
+      .left-part {
+        display:flex;
+        align-items: center;
+        width: 33%;
+      }
+
+      .center-part {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28%;
+      }
+    }
 
     .libary-container-1 {
       height: calc(100% / 3);
@@ -802,8 +843,9 @@
     }
   }
   .assignment-progressbar.general .academic-lines {
-      &.smaller .level {
-        background: var(--theme-dark-blue) !important;
-      }
+
+    &.smaller .level {
+      background: var(--theme-dark-blue) !important;
+    }
   }
 }

@@ -34,6 +34,8 @@ import InvalidDialog from "components/build/baseComponents/dialogs/InvalidDialog
 import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import SubscribedDialog from "./components/SubscibedDialog";
+import getMainPageSteps from "./MainPageSteps";
+import { GetOrigin } from "localStorage/origin";
 
 
 
@@ -71,6 +73,7 @@ interface MainPageState {
   isBuilder: boolean;
 
   isNewTeacher: boolean;
+  isLibraryOrigin: boolean;
 
   assignedCount: number;
 
@@ -102,6 +105,11 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isNewTeacher = true;
     }
 
+    let isLibraryOrigin = false;
+    if (GetOrigin() === 'library') {
+      isLibraryOrigin = true;
+    }
+
     let isNewStudent = false;
     if (values.newStudent) {
       isNewStudent = true;
@@ -112,32 +120,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     if (values.subscribedPopup) {
       subscribedPopup = true;
     }
-
-    const newTeacherSteps = [
-      {
-        element: '.view-item-container',
-        intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
-      }
-    ];
-
-    const newStudentSteps = [
-      {
-        element: '.view-item-container',
-        intro: `<p>Click here to explore our catalogue and play academic challenges (“bricks”)</p>`,
-      }, {
-        element: '.brill-intro-container',
-        intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. You can use these to play in our prize competitions. We've given you 200 as a welcome gift!</p>`,
-      }, {
-        element: '.second-button.student-back-work',
-        intro: `<p>If a teacher has set you an assignment, you'll be able to access it here. A red circle with white numbers will show how many assignments you still have to complete.</p>`,
-      }, {
-        element: '.my-library-button',
-        intro: `<p>Every time you complete a brick, and score over 50%, a book will be added to your very own virtual library!</p>`,
-      }, {
-        element: '.create-item-container',
-        intro: `<p>Once you start getting the hang of “bricks”, you'll be able to have a go at building them.</p>`,
-      }
-    ];
 
     const isStudent = isStudentPreference(props.user);
     const isBuilder = isBuilderPreference(props.user);
@@ -153,6 +135,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isTryBuildOpen: false,
       isReportLocked: false,
       isNewTeacher,
+      isLibraryOrigin,
 
       subscribedPopup,
 
@@ -165,14 +148,14 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
       isDesktopOpen: false,
       stepsEnabled: false,
-      steps: isNewTeacher ? newTeacherSteps : newStudentSteps
+      steps: getMainPageSteps(isNewStudent, isNewTeacher, isLibraryOrigin)
     } as any;
 
     if (isStudent) {
       this.preparationForStudent();
     }
     setTimeout(() => {
-      this.setState({ stepsEnabled: isNewTeacher || isNewStudent });
+      this.setState({ stepsEnabled: isNewTeacher || isNewStudent || isLibraryOrigin });
     }, 300);
   }
 
@@ -203,7 +186,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       disabled = true;
     }
     return (
-      <div className={`create-item-container ${isActive ? '' : 'disabled'}`} onClick={() => {
+      <div className={`create-item-container build-button-d71 ${isActive ? '' : 'disabled'}`} onClick={() => {
         if (disabled) {
           if (isMobile) {
             this.setState({ isDesktopOpen: true });
@@ -325,7 +308,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   renderTryBuildButton(isActive: boolean) {
     let disabled = false;
-    let className = "create-item-container";
+    let className = "create-item-container build-button-d71";
     if (isTablet || isIPad13) {
       isActive = false;
       disabled = true;
@@ -383,6 +366,23 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return "";
   }
 
+  renderCompetitionArena() {
+    if (this.state.isStudent) {
+      return (
+        <div className="create-item-container competition-arena-d54n">
+          <button className="btn btn-transparent zoom-item text-theme-orange active"
+            onClick={() => {
+              window.location.href = "https://brillder.com/brilliant-minds-prizes/";
+            }}
+          >
+            <SpriteIcon name="star" />
+            <span className="item-description ">Competition Arena</span>
+          </button>
+        </div>
+      )
+    }
+  }
+
   onIntroExit() {
     this.setState({ stepsEnabled: false });
   }
@@ -430,7 +430,10 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
               </div>
             </div>
             : <div className="second-col">
-              {this.renderRightButton()}
+              <div>
+                {this.renderCompetitionArena()}
+                {this.renderRightButton()}
+              </div>
             </div>
           }
           <MainPageMenu
@@ -444,7 +447,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
             enabled={this.state.stepsEnabled}
             steps={this.state.steps}
             initialStep={0}
+            // Called before exiting intro
             onExit={this.onIntroExit.bind(this)}
+            // Callback when all steps are completed
             onComplete={this.onCompleted.bind(this)}
             options={{
               nextLabel: 'Next',
