@@ -505,6 +505,12 @@
   
     .animated-brick-container .flex-brick-container .publish-brick-container {
       border-radius: 2vw;
+
+      .bottom-description-color,
+      .bottom-description {
+        height: 5vw;
+        font-size: 1.8vw;
+      }
     }
   }
 
@@ -526,6 +532,10 @@
     min-height: unset !important;
   }
   .private-core-toggle {
+    font-size: 1.6vw;
+  }
+
+  .bricks-pagination {
     font-size: 1.6vw;
   }
 }
