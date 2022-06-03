@@ -430,4 +430,17 @@
 // two-columns catalogue
 .sorted-row .brick-row-container .bricks-list-container .bricks-list.two-columns-t34 {
   grid-template-columns: repeat(auto-fill, minmax(50%, 1fr)) !important;
+
+  .animated-brick-container .flex-brick-container .publish-brick-container {
+    border-radius: 1.5vw;
+  }
+}
+
+// one column catalogue
+.sorted-row .brick-row-container .bricks-list-container .bricks-list.one-column-t34 {
+  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)) !important;
+
+  .animated-brick-container .flex-brick-container .publish-brick-container {
+    border-radius: 2vw;
+  }
 }
