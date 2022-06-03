@@ -137,7 +137,6 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
               const success = await acceptTerms(this.state.lastModifiedDate);
               if (success) {
                 this.setState({ accepted: true });
-                const user = await this.props.getUser() as User;
                 const values = queryString.parse(this.props.history.location.search);
                 if (isPhone()) {
                   setTimeout(() => {
