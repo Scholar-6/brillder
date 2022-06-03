@@ -348,8 +348,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   getPageSize() {
     let pageSize = 6;
     const aspectRatio = this.getAspectRatio();
-    if (aspectRatio < 1.3) {
+    if (aspectRatio < 1.5) {
       pageSize = 4;
+    }
+    if (aspectRatio < 1.05) {
+      pageSize = 2;
     }
     return pageSize;
   }
@@ -1213,6 +1216,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     let className = 'bricks-list';
     if (this.state.pageSize === 4) {
       className += ' two-columns-t34';
+    } else if (this.state.pageSize === 2) {
+      className += ' one-column-t34';
     }
 
     return (
@@ -1271,7 +1276,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   renderDesktopViewAllPage(bricks: Brick[]) {
     return (
-      <Grid container direction="row" className="sorted-row">
+      <Grid container direction="row" className="sorted-row no-mobile-css">
         <ViewAllFilter
           user={this.props.user}
           sortBy={this.state.sortBy}
