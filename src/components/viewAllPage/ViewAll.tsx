@@ -1403,10 +1403,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
+    let className = 'main-listing dashboard-page';
+    if (this.state.pageSize === 4) {
+      className += ' two-columns-inside';
+    } else if (this.state.pageSize === 2) {
+      className += ' one-column-inside';
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
-        <div className="main-listing dashboard-page">
+        <div className={className}>
           {this.state.searchTyping === true && this.state.searchString.length >= 1 && <SearchSuggestions
             history={this.props.history} subjects={this.state.subjects}
             searchString={this.state.searchString} bricks={this.state.bricks}
