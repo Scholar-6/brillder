@@ -8,6 +8,7 @@ import { stripHtml } from "components/build/questionService/ConvertService";
 import { User } from "model/user";
 import map from "components/map";
 import { getAttempts } from "services/axios/attempt";
+import { saveFavorite } from "services/axios/brick";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -40,6 +41,10 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user })
         setBestScore(-1);
       }
     }
+  }
+
+  const saveFavorites = () => {
+    saveFavorite(brick.id);
   }
 
   // load best score
@@ -86,6 +91,7 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user })
         </div>
       }
       <div className="va-footer">
+        <div onClick={saveFavorites}>Save for later</div>
         <button className="btn va-right-play" onClick={() => {
           if (user && checkAssignment(brick)) {
             history.push(map.postAssignment(brick.id, user.id));

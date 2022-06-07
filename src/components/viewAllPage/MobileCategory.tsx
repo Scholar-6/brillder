@@ -23,7 +23,7 @@ import { getAssignmentIcon } from "components/services/brickService";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
-import { getPublicBricks, getPublishedBricks } from "services/axios/brick";
+import { getFavorites, getPublicBricks, getPublishedBricks } from "services/axios/brick";
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
@@ -176,6 +176,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           this.addBrickBySubject(categorySubjects, brick, true);
         }
       }
+
+      await getFavorites();
 
       this.setState({
         ...this.state,
