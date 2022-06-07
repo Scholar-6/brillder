@@ -155,6 +155,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
                 {!timerHidden &&
                   <TimeProgressbar
                     minutes={minutes}
+                    isSynthesis={true}
                     setEndTime={props.setEndTime}
                     onEnd={() => { }}
                     endTime={props.endTime}
