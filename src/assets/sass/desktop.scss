@@ -1566,3 +1566,19 @@
     }
   }
 }
+
+.help-image-text-d43 {
+  font-size: 1vw;
+  font-family: $font-family-regular-italic;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.3vw;
+
+  svg {
+    padding-right: 0.3vw;
+    width: 1.2vw;
+    height: 1.2vw;
+  }
+}
