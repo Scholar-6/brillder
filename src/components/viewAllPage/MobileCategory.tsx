@@ -40,6 +40,7 @@ const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 enum Tab {
   MySubjects,
   AllSubjects,
+  Favorites,
   SubjectCategory,
 }
 
@@ -74,10 +75,12 @@ interface BricksListState {
   isViewAll: boolean;
   mySubjects: SubjectWithBricks[];
   subjects: SubjectWithBricks[];
+  favoriteSubjects: SubjectWithBricks[];
   categorySubjects: SubjectWithBricks[];
   shown: boolean;
   activeTab: Tab;
   isLoading: boolean;
+  favorites: Brick[];
   subjectGroup: SubjectGroup | null;
   expandedSubject: SubjectWithBricks | null;
   filterLevels: AcademicLevel[];
@@ -119,7 +122,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       isViewAll,
       isCore: true,
       mySubjects: [],
+      favoriteSubjects: [],
       subjects: [],
+      favorites: [],
       categorySubjects: [],
       filterLevels: [],
       activeTab: initTab,
@@ -152,7 +157,21 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       const mySubjects: SubjectWithBricks[] = [];
       const categorySubjects: SubjectWithBricks[] = [];
 
+      let favorites = [];
+      let favoriteSubjects = [];
+
       if (this.props.user) {
+        favorites = await getFavorites();
+
+        for (let favorite of favorites) {
+          let found = favoriteSubjects.find(s => s.id === favorite.subject.id);
+          if (found) {
+            found.bricks.push(favorite);
+          } else {
+            favoriteSubjects.push({ ...favorite.subject, bricks: [favorite] });
+          }
+        }
+
         for (let ss of this.props.user.subjects) {
           mySubjects.push({ ...ss, bricks: [] });
         }
@@ -177,8 +196,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         }
       }
 
-      await getFavorites();
-
       this.setState({
         ...this.state,
         bricks,
@@ -187,6 +204,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         mySubjects: mySubjects.sort((a, b) => b.bricks.length - a.bricks.length),
         categorySubjects: categorySubjects.sort((a, b) => b.bricks.length - a.bricks.length),
         shown: true,
+        favorites,
+        favoriteSubjects,
         isLoading: false,
       });
     } else {
@@ -224,13 +243,19 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   setMySubjectsTab() {
     if (this.state.activeTab !== Tab.MySubjects) {
-      this.setState({ activeTab: Tab.MySubjects });
+      this.setState({ activeTab: Tab.MySubjects, expandedBrick: null });
     }
   }
 
   setAllSubjectsTab() {
     if (this.state.activeTab !== Tab.AllSubjects) {
-      this.setState({ activeTab: Tab.AllSubjects });
+      this.setState({ activeTab: Tab.AllSubjects, expandedBrick: null });
+    }
+  }
+
+  setFavoritesTab() {
+    if (this.state.activeTab !== Tab.Favorites) {
+      this.setState({ activeTab: Tab.Favorites, expandedBrick: null });
     }
   }
 
@@ -266,9 +291,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   hideSubject() {
     this.setState({ expandedSubject: null });
   }
-  
+
   toggleCore() {
-    const {mySubjects, subjects } = this.state;
+    const { mySubjects, subjects } = this.state;
     const newCore = !this.state.isCore;
     this.clearBricks(mySubjects);
     this.clearBricks(subjects);
@@ -278,7 +303,23 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       this.addBrickBySubject(mySubjects, brick, newCore);
     }
 
-    this.setState({isCore: newCore});
+    this.setState({ isCore: newCore });
+  }
+
+  async reloadFavorites() {
+    if (this.props.user) {
+      const favorites = await getFavorites();
+      const favoriteSubjects = [];
+
+      for (let favorite of favorites) {
+        let found = favoriteSubjects.find(s => s.id === favorite.subject.id);
+        if (found) {
+          found.bricks.push(favorite);
+        } else {
+          favoriteSubjects.push({ ...favorite.subject, bricks: [favorite] });
+        }
+      }
+    }
   }
 
   renderMobileBricks() {
@@ -470,10 +511,59 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     if (this.state.activeTab === Tab.AllSubjects) {
       subjects = this.state.subjects;
+    } else if (this.state.activeTab === Tab.Favorites) {
+      subjects = this.state.favoriteSubjects;
     }
 
     if (!this.props.user) {
       subjects = this.state.categorySubjects;
+    }
+
+    const renderAuthorizedTabs = () => {
+      return (
+        <div className="ss-tabs-scroll">
+          <div className="ss-tabs-container">
+            <div
+              className={`ss-tab-1 ${this.state.activeTab === Tab.MySubjects ? "active" : ""
+                }`}
+              onClick={this.setMySubjectsTab.bind(this)}
+            >
+              <SpriteIcon name="user-custom" />
+              My Subjects
+            </div>
+            <div
+              className={`ss-tab-2 ${this.state.activeTab === Tab.AllSubjects ? "active" : ""
+                }`}
+              onClick={this.setAllSubjectsTab.bind(this)}
+            >
+              All Subjects
+            </div>
+            <div
+              className={`ss-tab-3 ${this.state.activeTab === Tab.Favorites ? "active" : ""
+                }`}
+              onClick={this.setFavoritesTab.bind(this)}
+            >
+              Saved Bricks
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    const renderAnauthorizedTabs = () => {
+      return (
+        <div className="ss-tabs-container">
+          <div className="ss-tab-1 full active">
+            <SpriteIcon
+              name="arrow-left"
+              onClick={() => this.props.history.push(map.SubjectCategories)}
+            />
+            {this.state.subjectGroup
+              ? SubjectGroupNames[this.state.subjectGroup]
+              : "Subject Category"}
+          </div>
+        </div>
+      );
     }
 
     return (
@@ -492,37 +582,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           <div className="mobile-scroll-bricks phone-top-bricks16x9">
             {this.renderMobileBricks()}
           </div>
-          {this.props.user ? (
-            <div className="ss-tabs-container">
-              <div
-                className={`ss-tab-1 ${this.state.activeTab === Tab.MySubjects ? "active" : ""
-                  }`}
-                onClick={this.setMySubjectsTab.bind(this)}
-              >
-                <SpriteIcon name="user-custom" />
-                My Subjects
-              </div>
-              <div
-                className={`ss-tab-2 ${this.state.activeTab === Tab.AllSubjects ? "active" : ""
-                  }`}
-                onClick={this.setAllSubjectsTab.bind(this)}
-              >
-                All Subjects
-              </div>
-            </div>
-          ) : (
-            <div className="ss-tabs-container">
-              <div className="ss-tab-1 full active">
-                <SpriteIcon
-                  name="arrow-left"
-                  onClick={() => this.props.history.push(map.SubjectCategories)}
-                />
-                {this.state.subjectGroup
-                  ? SubjectGroupNames[this.state.subjectGroup]
-                  : "Subject Category"}
-              </div>
-            </div>
-          )}
+          {this.props.user ? renderAuthorizedTabs() : renderAnauthorizedTabs()}
           <div className="va-level-container">
             {this.renderAcademicLevel(AcademicLevel.First)}
             {this.renderAcademicLevel(AcademicLevel.Second)}
@@ -548,6 +608,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 brick={this.state.expandedBrick}
                 history={this.props.history}
                 user={this.props.user}
+                favoriteSaved={() => this.reloadFavorites()}
                 hide={() => this.setState({ expandedBrick: null })}
               />
             )}

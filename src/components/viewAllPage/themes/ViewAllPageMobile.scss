@@ -518,13 +518,21 @@
     }
   }
 
+  .ss-tabs-scroll {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+
   .ss-tabs-container {
     background: rgba(0, 28, 88, 0.22);
     $radius: 2vw;
     display: flex;
+    width: 140vw;
 
     .ss-tab-1,
-    .ss-tab-2 {
+    .ss-tab-2,
+    .ss-tab-3 {
       height: 6vh;
       font-size: 6vw;
       width: 49vw;
@@ -570,6 +578,10 @@
     }
 
     .ss-tab-2 {
+      border-top-right-radius: $radius;
+      border-top-left-radius: $radius;
+    }
+    .ss-tab-3 {
       margin-left: 1vw;
       border-top-left-radius: $radius;
     }

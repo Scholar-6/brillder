@@ -15,9 +15,10 @@ interface BrickBlockProps {
   user?: User;
   history: any;
   hide(): void;
+  favoriteSaved?(): void;
 }
 
-const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user }) => {
+const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user, favoriteSaved }) => {
   const [bestScore, setBestScore] = React.useState(-1);
 
   const getBestScore = async () => {
@@ -45,6 +46,7 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user })
 
   const saveFavorites = () => {
     saveFavorite(brick.id);
+    favoriteSaved?.();
   }
 
   // load best score
@@ -66,6 +68,8 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user })
     }
     return false;
   }
+
+  console.log(bestScore);
 
   return (
     <div className="va-phone-expanded-brick">
@@ -91,10 +95,11 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user })
         </div>
       }
       <div className="va-footer">
+        {bestScore === -1 &&
         <div className="va-favorites" onClick={saveFavorites}>
           <div>Saved for later</div>
           <SpriteIcon name="feather-heart-filled" />
-        </div>
+        </div>}
         <button className="btn va-right-play" onClick={() => {
           if (user && checkAssignment(brick)) { 
             history.push(map.postAssignment(brick.id, user.id));
