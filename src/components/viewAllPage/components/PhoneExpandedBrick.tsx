@@ -91,9 +91,12 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user })
         </div>
       }
       <div className="va-footer">
-        <div onClick={saveFavorites}>Save for later</div>
+        <div className="va-favorites" onClick={saveFavorites}>
+          <div>Saved for later</div>
+          <SpriteIcon name="feather-heart-filled" />
+        </div>
         <button className="btn va-right-play" onClick={() => {
-          if (user && checkAssignment(brick)) {
+          if (user && checkAssignment(brick)) { 
             history.push(map.postAssignment(brick.id, user.id));
           } else {
             history.push(routes.playBrief(brick));

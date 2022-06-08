@@ -896,15 +896,35 @@
     }
 
     .va-footer {
-      height: 14vw;
-      width: 30vw;
+      height: 13vw;
+      width: calc(100% - 4vw);
       position: absolute;
       bottom: 0;
       right: 4vw;
+      font-family: $font-family-bold;
+      display: flex;
+
+      .va-favorites {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        width: 100%;
+        left: 4vw;
+        padding: 1vw 0;
+        border-radius: 1.8vw;
+        font-size: 6vw;
+
+        svg {
+          margin-left: 3vw;
+          color: var(--white);
+          width: 9vw;
+          height: 9vw;
+        }
+      }
 
       .va-right-play {
         position: absolute;
-        width: 100%;
+        width: 30vw;
         right: 2vw;
         padding: 1vw 0;
         border-radius: 1.8vw;
