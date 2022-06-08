@@ -11,6 +11,7 @@ import Katex from 'components/baseComponents/katex/Katex';
 import { renderGraph } from 'services/graph';
 import HtmlWithSpaces from './HtmlWithSpaces';
 import SoundPlay from 'components/baseComponents/SoundPlay';
+import HtmlImageWithSpaces from './HtmlImageWithSpaces';
 
 interface MathHtmlProps {
   innerRef?: any;
@@ -69,11 +70,16 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
     return /<section (.*)class="ql-sound-custom"(.*)>/.test(el);
   }
 
+  const isImage = (el: string) => {
+    return /<img class="image-play"/.test(el);
+  }
+
   return (
     <div className="youtube-video-session" ref={props.innerRef}>
       <div ref={renderedRef}>
         {
           arr.map((el: any, i: number) => {
+
             let res = isMathJax(el);
             const latex = isLatex(el);
             const sound = isSound(el);
@@ -89,6 +95,12 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
             if (res) {
               return <YoutubeLink key={i} value={el} />;
             }
+
+            const image = isImage(el);
+            if (image) {
+              return <HtmlImageWithSpaces index={i} value={el} />;
+            }
+
             return <HtmlWithSpaces index={i} value={el} />;
           })
         }
