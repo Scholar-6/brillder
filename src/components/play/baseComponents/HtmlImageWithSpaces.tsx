@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ReduxCombinedState } from 'redux/reducers';
 import actions from 'redux/actions/play';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
@@ -12,13 +11,11 @@ interface SpacesProps {
   value: string;
   className?: string;
 
-  hovered: boolean;
   hover: any;
   blur: any;
 }
 
-const HtmlImageWithSpaces: React.FC<SpacesProps> = ({ index, className, value, hover, blur, hovered }) => {
-  const [lastClick, setLastClick] = React.useState(0);
+const HtmlImageWithSpaces: React.FC<SpacesProps> = ({ index, className, value, hover, blur }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   const onHover = () => {
@@ -34,37 +31,8 @@ const HtmlImageWithSpaces: React.FC<SpacesProps> = ({ index, className, value, h
     }
   }
 
-  const onDoubleClick = () => {
-    if (hovered) {
-      blur();
-    } else {
-      onHover();
-    }
-  }
-
   if (isPhone()) {
-    return (
-      <div>
-        <div className="help-image-text-d43">
-          <SpriteIcon name="f-zoom-in" />
-          Hover over image to zoom
-        </div>
-        <div
-          key={index}
-          ref={containerRef}
-          className={className}
-          dangerouslySetInnerHTML={{ __html: value }}
-          onClick={e => {
-            if (lastClick && e.timeStamp - lastClick < 250) {
-              setLastClick(0);
-              onDoubleClick();
-            } else {
-              setLastClick(e.timeStamp);
-            }
-          }}
-        />
-      </div>
-    );
+    return <div key={index} className={className} dangerouslySetInnerHTML={{ __html: value }} />
   }
 
   return (
@@ -85,13 +53,9 @@ const HtmlImageWithSpaces: React.FC<SpacesProps> = ({ index, className, value, h
   );
 }
 
-const mapState = (state: ReduxCombinedState) => ({
-  hovered: state.play.imageHovered, // for phones it is not hovered but double clicked
-});
-
 const mapDispatch = (dispatch: any) => ({
   hover: (fileName: string, imageSource: string) => dispatch(actions.setImageHover(fileName, imageSource)),
   blur: () => dispatch(actions.setImageBlur()),
 });
 
-export default connect(mapState, mapDispatch)(HtmlImageWithSpaces);
+export default connect(null, mapDispatch)(HtmlImageWithSpaces);
