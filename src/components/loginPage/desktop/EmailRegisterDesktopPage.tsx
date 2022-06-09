@@ -132,7 +132,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       }
     }).catch((e) => {
       toggleAlertMessage(true);
-      setAlertMessage("Something may be wrong with the connection.");
+      setAlertMessage("An account for this email address already exists. Click here to reset password or contact us.");
     });
   };
 
