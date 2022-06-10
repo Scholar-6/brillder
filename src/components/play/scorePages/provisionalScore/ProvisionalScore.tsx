@@ -32,6 +32,7 @@ interface ProvisionalScoreProps {
   brick: Brick;
   liveBrills: number;
   bestScore: number;
+  extraTry?: boolean;
   liveDuration?: null | moment.Duration;
   attempts: any[];
   moveNext?(): void;
@@ -260,7 +261,7 @@ class ProvisionalScore extends React.Component<
                 <div className="brick-title" dangerouslySetInnerHTML={{ __html: brick.title }} />
                 <div className="score">Score: {finalValue}</div>
                 <div className="title">
-                  {Math.round(this.props.liveBrills)} Brills Earned!
+                  {Math.round(this.props.liveBrills)} {this.props.extraTry ? 'Extra' : ''} Brills Earned!
                 </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
@@ -886,7 +887,7 @@ class ProvisionalScore extends React.Component<
               <div className={`brill-coin-img ${this.props.liveBrills === 0 ? 'no-spinning' : ""}`}>
                 <img alt="brill" src="/images/Brill-B.svg" />
               </div>
-              <div className="bold">{Math.round(this.props.liveBrills)} Brills Earned!</div>
+              <div className="bold">{Math.round(this.props.liveBrills)} {this.props.extraTry ? 'Extra' : ''} Brills Earned!</div>
             </div>
           );
         }
