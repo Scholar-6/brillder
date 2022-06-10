@@ -23,6 +23,7 @@ import UsersListPagination from "./components/Pagination";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import * as map from "components/map";
 import { isPhone } from "services/phone";
+import { getRealLibraries, RealLibrary } from "services/axios/realLibrary";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -57,6 +58,7 @@ interface UsersListState {
   isSearching: boolean;
 
   subjects: any[];
+  libraries: RealLibrary[];
   roles: any[];
 
   filterExpanded: boolean;
@@ -82,6 +84,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       users: [],
       page: 0,
       pageSize: 14,
+      libraries: [],
       subjects: [],
       filterExpanded: true,
 
@@ -113,9 +116,18 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       withCredentials: true,
     }).then((res) => {
       this.setState({ ...this.state, subjects: res.data });
+      this.getLibraries();
     }).catch(() => {
       this.props.requestFailed("Can`t get subjects");
     });
+
+  }
+
+  async getLibraries() {
+    const libraries = await getRealLibraries();
+    if (libraries) {
+      this.setState({libraries});
+    }
   }
 
   getUsers(
@@ -499,6 +511,20 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     return <div>{this.formatDate(stringDate)}</div>;
   }
 
+  renderLibrary(user: User) {
+    if (user.library) {
+      const libraryId = user.library.id;
+      const library = this.state.libraries.find(l => l.id === libraryId);
+
+      return <div className="library-user-icon">
+        <img alt="" src="/images/library.png" />
+        {library && <div className="css-custom-tooltip bold">{library.name}</div>}
+      </div>
+    }
+
+    return '';
+  }
+
   renderUsers() {
     if (!this.state.users) {
       return "";
@@ -563,6 +589,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   <td className="email-container">{user.email}</td>
                   <td className="preference-type">
                     {this.renderUserType(user)}
+                    {this.renderLibrary(user)}
                     {(user.subscriptionState ?? 0) > 1 && <SpriteIcon name="hero-sparkle" />}
                   </td>
                   <td className="activate-button-container">
