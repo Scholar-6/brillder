@@ -240,23 +240,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [canSeeCompetitionDialog, setCanSeeCompetitionDialog] = useState(true as boolean | null); // null means some data not loaded
 
 
-  //#602 user can play competition only once in current brick.
-  const setCompetitionId = (compId: number, previousAttempts: any[]) => {
-    let found = previousAttempts.find(a => a.competitionId === compId);
-    if (!found) {
-      setCompetitionIdV2(compId);
-      brick.competitionId = compId;
-      setCanSeeCompetitionDialog(true);
-    } else {
-      setCanSeeCompetitionDialog(false);
-    }
-  }
-
-  /* #4510 play competition more than once
   const setCompetitionId = (compId: number, previousAttempts: any[]) => {
     setCompetitionIdV2(compId);
     brick.competitionId = compId;
-  }*/
+    setCanSeeCompetitionDialog(true);
+  }
 
   const setCompetitionAndClearCash = () => {
     // set competition id of cashed brick
