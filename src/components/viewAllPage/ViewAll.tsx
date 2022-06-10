@@ -517,7 +517,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   filterUnauthorized(
     bricks: Brick[],
     showAll?: boolean,
-    levels?: AcademicLevel[]
+    levels?: AcademicLevel[],
+    filterCompetition?: boolean
   ) {
     if (this.state.isSearching) {
       bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
@@ -537,6 +538,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if (levels && levels.length > 0) {
       bricks = filterByLevels(bricks, levels);
+    }
+
+    if (filterCompetition) {
+      bricks = filterByCompetitions(bricks);
     }
 
     if (filterSubjects.length > 0) {
@@ -640,7 +645,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           finalBricks = this.filterUnauthorized(
             this.state.bricks,
             this.state.isViewAll,
-            this.state.filterLevels
+            this.state.filterLevels,
+            this.state.filterCompetition
           );
         }
         this.setState({
@@ -672,7 +678,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           finalBricks = this.filterUnauthorized(
             this.state.bricks,
             this.state.isViewAll,
-            filterLevels
+            filterLevels,
+            this.state.filterCompetition
           );
         }
         this.setState({
@@ -706,6 +713,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             this.state.bricks,
             this.state.isViewAll,
             this.state.filterLevels,
+            filterCompetition
           );
         }
         this.setState({
@@ -737,7 +745,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           finalBricks = this.filterUnauthorized(
             this.state.bricks,
             this.state.isViewAll,
-            this.state.filterLevels
+            this.state.filterLevels,
+            this.state.filterCompetition
           );
         }
         this.setState({
@@ -801,7 +810,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       const finalBricks = this.filterUnauthorized(
         this.state.bricks,
         isViewAll,
-        this.state.filterLevels
+        this.state.filterLevels,
+        this.state.filterCompetition
       );
       this.setState({
         isViewAll,
