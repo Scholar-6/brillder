@@ -410,7 +410,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
       this.setState({
         ...this.state,
-        bricks,
+        bricks: finalBricks,
         isLoading: false,
         finalBricks,
         shown: true,
