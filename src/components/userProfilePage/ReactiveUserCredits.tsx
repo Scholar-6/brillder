@@ -1,6 +1,6 @@
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { StripeCredits } from 'components/map';
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 
 import userActions from "redux/actions/user";
@@ -13,7 +13,7 @@ interface Props {
   onClick?(): void;
 }
 
-const ReactiveUserCredits:React.FC<Props> = (props) => {
+const ReactiveUserCredits: React.FC<Props> = (props) => {
   const [credits, setCredits] = useState(0);
   const [isLibraryUser, setLibraryUser] = useState(false);
 
@@ -27,7 +27,7 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
       } else {
         setLibraryUser(false);
       }
-    } catch {}
+    } catch { }
   }
 
   useEffect(() => {
@@ -60,15 +60,16 @@ const ReactiveUserCredits:React.FC<Props> = (props) => {
         <div className="regular">
           Spend {!isLibraryUser ? '1 credit to play a Brick from the catalogue or' : ''} 2 credits to enter a competition.
         </div>
-        <div className="flex-center">
-          <div className="green-btn blue-on-hover" onClick={() => {
-            if (props.history) {
-              props.history.push(StripeCredits);
-            }
-          }}>
-            Buy more credits
-          </div>
-        </div>
+        {!isLibraryUser &&
+          <div className="flex-center">
+            <div className="green-btn blue-on-hover" onClick={() => {
+              if (props.history) {
+                props.history.push(StripeCredits);
+              }
+            }}>
+              Buy more credits
+            </div>
+          </div>}
       </div>
     </div>
   );
