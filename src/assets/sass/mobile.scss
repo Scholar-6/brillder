@@ -1995,3 +1995,20 @@
     font-family: $font-family-regular-italic;
   }
 }
+
+
+.help-image-text-d43 {
+  font-size: 4.5vw;
+  font-family: $font-family-regular-italic;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.3vw;
+
+  svg {
+    padding-right: 1.3vw;
+    width: 5vw;
+    height: 5vw;
+  }
+}

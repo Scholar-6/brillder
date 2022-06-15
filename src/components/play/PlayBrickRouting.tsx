@@ -228,6 +228,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [isPremiumLOpen, setPremiumLOpen] = useState(false);
   const [converBrillsOpen, setConvertBrills] = useState(false);
 
+  const [extraTry, setExtraTry] = useState(false);
+
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
 
@@ -238,23 +240,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [canSeeCompetitionDialog, setCanSeeCompetitionDialog] = useState(true as boolean | null); // null means some data not loaded
 
 
-  //#602 user can play competition only once in current brick.
-  const setCompetitionId = (compId: number, previousAttempts: any[]) => {
-    let found = previousAttempts.find(a => a.competitionId === compId);
-    if (!found) {
-      setCompetitionIdV2(compId);
-      brick.competitionId = compId;
-      setCanSeeCompetitionDialog(true);
-    } else {
-      setCanSeeCompetitionDialog(false);
-    }
-  }
-
-  /* #4510 play competition more than once
   const setCompetitionId = (compId: number, previousAttempts: any[]) => {
     setCompetitionIdV2(compId);
     brick.competitionId = compId;
-  }*/
+    setCanSeeCompetitionDialog(true);
+  }
 
   const setCompetitionAndClearCash = () => {
     // set competition id of cashed brick
@@ -338,6 +328,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         }
         if (bestScore && maxScore) {
           setBestScore(Math.round((bestScore / maxScore) * 100));
+          setExtraTry(true);
         }
         setPrevAttempts(attempts);
       }
@@ -841,6 +832,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               location={location}
               status={status}
               brick={brick}
+              extraTry={extraTry}
               liveBrills={liveBrills}
               bestScore={bestScore}
               attempts={attempts}
@@ -924,6 +916,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               brickAttempt={brickAttempt}
               liveDuration={liveDuration}
               reviewDuration={reviewDuration}
+              extraTry={extraTry}
               move={finishBrick}
             /> : <PageLoader content="loading brills" />}
         </Route>

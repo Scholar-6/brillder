@@ -17,7 +17,6 @@ import map from "components/map";
 import PrepHoverHelp from "../baseComponents/PrepHoverHelp";
 import BriefHoverHelp from "../baseComponents/BriefHoverHelp";
 import OpenQHoverHelp from "../baseComponents/OpenQHoverHelp";
-import { stripHtml } from "../questionService/ConvertService";
 import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
 
 interface DialogProps {
@@ -52,8 +51,6 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
   }
 
   const renderCoverContent = () => {
-    const briefText = stripHtml(brick.brief);
-
     return (
       <div>
         <div className="dialog-header cover-content">
@@ -129,7 +126,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
             Aim to catch the educator or learner's eye.
           </HoverHelp>
           <div className="brief-ellipsis">
-            {briefText}
+            <div dangerouslySetInnerHTML={{ __html: brick.brief}} />
           </div>
           <CoverPlay onClick={() => setStatus(PlayStatus.Prep)} />
         </div>

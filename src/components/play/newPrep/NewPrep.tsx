@@ -15,6 +15,7 @@ import MathInHtml from "../baseComponents/MathInHtml";
 import HighlightHtml from "../baseComponents/HighlightHtml";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
+import HoveredImage from "../baseComponents/HoveredImage";
 
 export interface IntroductionState {
   isStopped: boolean;
@@ -162,6 +163,7 @@ const NewPrepPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <div className="brick-row-container live-container">
+      <HoveredImage />
       <div className="fixed-upper-b-title"><BrickTitle title={brick.title} /></div>
       <div className="brick-container play-preview-panel live-page play-brief-page new-prep-page">
         <div className="introduction-page">
