@@ -7,7 +7,6 @@ import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailed
 import LibrarySuccessDialog from "components/baseComponents/dialogs/LibrarySuccessDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { User } from "model/user";
-import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
 import { createTicket } from "services/axios/zendesk";
 import LibrarySuggestSuccessDialog from "components/baseComponents/dialogs/LibrarySuggestSuccessDialog";
 import LibraryUnlinkDialog from "components/baseComponents/dialogs/LibraryUnlinkDialog";
@@ -199,6 +198,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
         }}
         submit={() => {
           linkedSuccess?.();
+          setSuccess(false);
         }}
       />
       <LibraryUnlinkDialog isOpen={unlinking} close={() => setUnlinking(false)} submit={unlink} />

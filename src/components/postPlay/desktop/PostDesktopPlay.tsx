@@ -153,7 +153,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       { id: attempt.id, userId: this.props.user.id, body: newAttempt },
       { withCredentials: true }
     ).catch(e => {
-      if (e.response.status !== 409) {
+      if (e.response && e.response.status !== 409) {
         throw e;
       }
     });
@@ -208,16 +208,27 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
     if (!newAttempt) return;
     if (!newAttempt.annotations) newAttempt.annotations = [];
+
+
+    let location = AnnotationLocation.Brief;
+    if (property === 'prep') {
+      location = AnnotationLocation.Prep;
+    } else if (property === 'synthesis') {
+      location = AnnotationLocation.Synthesis;
+    }
+
     const newAnnotation: Annotation = {
       id: generateId(),
-      location: AnnotationLocation.Brief,
+      location,
       priority: 0,
+      isNote: true,
       questionIndex: this.state.questionIndex,
       text,
       timestamp: new Date(),
       user: this.props.user,
       children: [],
     };
+
     newAttempt.annotations.push(newAnnotation);
 
     if (this.highlightRef.current) {
@@ -326,7 +337,6 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   }
 
   render() {
-    console.log(this.state.attempt);
     if (!this.state.attempt) {
       return <PageLoader content="...Getting Attempt..." />;
     }
@@ -487,6 +497,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                       ref={this.highlightRef}
                       value={brick.brief}
                       user={this.props.user}
+                      showCommentBtn={true}
                       mode={PlayMode.UnHighlighting}
                       onHighlight={this.setAttemptBrickProperty.bind(this, "brief")}
                     />
@@ -509,6 +520,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                     <HighlightHtml
                       ref={this.highlightRef}
                       value={brick.prep}
+                      showCommentBtn={true}
                       mode={PlayMode.UnHighlighting}
                       onHighlight={this.setAttemptBrickProperty.bind(this, "prep")}
                     />
@@ -544,6 +556,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
                     <HighlightHtml
                       ref={this.highlightRef}
                       value={brick.synthesis}
+                      showCommentBtn={true}
                       mode={PlayMode.UnHighlighting}
                       onHighlight={this.setAttemptBrickProperty.bind(this, "synthesis")}
                     />

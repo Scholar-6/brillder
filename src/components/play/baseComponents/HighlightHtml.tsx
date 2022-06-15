@@ -11,9 +11,9 @@ import { Annotation } from "model/attempt";
 import { useLocation } from "react-router-dom";
 import YoutubeMathDesmos from "./YoutubeMathDesmos";
 import { User } from "model/user";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 let annotateCreateEvent: (el: HTMLElement) => void = () => {
-  console.log('asdfasdf');
 };
 const onAnnotateCreate = (el: HTMLElement) => annotateCreateEvent(el);
 
@@ -23,10 +23,9 @@ const annotator = rangy.createClassApplier("annotation", {
   elementTagName: "a",
   onElementCreate: onAnnotateCreate,
   elementProperties: {
-    onclick: function() {
-        var highlight = annotator.getHighlightForElement(this);
-        console.log(highlight);
-        return false;
+    onclick: function () {
+      annotator.getHighlightForElement(this);
+      return false;
     }
   }
 })
@@ -36,6 +35,7 @@ interface SelectableProps {
   user?: User;
   mode?: PlayMode;
   isSynthesis?: boolean;
+  showCommentBtn?: boolean;
   onHighlight(value: string): void;
 }
 
@@ -45,6 +45,11 @@ export interface HighlightRef {
 }
 
 const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, ref) => {
+  const [btnShown, setCommentButton] = React.useState({
+    shown: false,
+    top: 0
+  });
+  const parentRef = React.useRef<any>(null);
   const [textBox, setTextBox] = React.useState<HTMLDivElement>();
   const shouldHighlight = props.mode === PlayMode.Highlighting && props.onHighlight;
 
@@ -59,7 +64,6 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
         if ((!position && selection.anchorOffset > selection.focusOffset) || position === Node.DOCUMENT_POSITION_PRECEDING) {
           backwards = true;
         }
-        console.log(selection.anchorOffset, selection.focusOffset);
         if (!backwards) {
           classApplier.applyToSelection();
         } else {
@@ -74,7 +78,6 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
   }, [shouldHighlight]);
 
   const createAnnotation = (annotation: Annotation) => {
-    console.log(888, annotation)
     if (!textBox) return '';
     annotateCreateEvent = (el: HTMLElement) => {
       el.dataset.id = annotation.id.toString();
@@ -98,8 +101,6 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
     if (!textBox) return;
 
     const els = textBox.querySelectorAll(`.annotation[data-id="${annotation.id}"]`);
-
-    console.log('delete');
 
     els.forEach(el => {
       const range = rangy.createRange();
@@ -144,11 +145,40 @@ const HighlightHtml = React.forwardRef<HighlightRef, SelectableProps>((props, re
   }));
 
   return (
-    <div className={`highlight-html${shouldHighlight ? " highlight-on" : ""}`} onClick={() => {
-      if (textBox)
-        props.onHighlight(textBox.innerHTML)
+    <div className="relative" ref={parentRef} onBlur={() => {
+      setCommentButton({
+        shown: false,
+        top: 0
+      })
     }}>
-      <YoutubeMathDesmos ref={textRef} isSynthesisParser={props.isSynthesis} value={props.value} />
+      {props.showCommentBtn && btnShown.shown && <div className="comment-button-e323" style={{ top: btnShown.top }} onClick={() => {
+        if (textBox) {
+          props.onHighlight(textBox.innerHTML);
+        }
+      }}>
+        <div className="relative">
+          <SpriteIcon name="message-square" />
+          <SpriteIcon className="plus-icon" name="plus-line-custom" />
+        </div>
+      </div>}
+      <div className={`highlight-html${shouldHighlight ? " highlight-on" : ""}`} onClick={(e) => {
+        if (textBox) {
+          var wW = window.innerWidth;
+          var vW = wW / 100;
+
+          let offsetTop = 0;
+          if (parentRef) {
+            offsetTop = parentRef.current.getBoundingClientRect().y;
+          }
+
+          setCommentButton({
+            shown: true,
+            top: e.clientY - offsetTop - (2 * vW)
+          });
+        }
+      }}>
+        <YoutubeMathDesmos ref={textRef} isSynthesisParser={props.isSynthesis} value={props.value} />
+      </div>
     </div>
   );
 });

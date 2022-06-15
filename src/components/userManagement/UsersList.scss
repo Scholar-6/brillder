@@ -13,6 +13,27 @@
       margin-left: 2.4vw;
     }
   }
+  .library-user-icon {
+    position: relative;
+    margin-left: 0.2vw;
+    img {
+      width: 1.4vw;
+    }
+
+    .css-custom-tooltip {
+      color: var(--white);
+      background: var(--theme-dark-blue);
+      padding-right: 0.5vw;
+      left: -2vw;
+    }
+
+    &:hover {
+      .css-custom-tooltip {
+        opacity: 1;
+        display: block;
+      }
+    }
+  }
   .sorted-row {
     .sort-box {
       .subjects-filter {

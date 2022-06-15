@@ -51,12 +51,12 @@ interface EndingProps {
   reviewBrills: number;
 
   isPlayPreview?: boolean;
+  extraTry?: boolean;
 
   liveDuration?: null | moment.Duration;
   reviewDuration?: null | moment.Duration;
 
   loginSuccess(): void;
-
   move(): void;
 }
 
@@ -329,7 +329,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                 <div className="score">Score: {fixedCurrentScore}</div>
                 <div className="title">
                   {this.props.bestScore && this.props.bestScore > 0 && <div className="absoulte-high-score">Previous High Score: {this.props.bestScore}</div>}
-                  {brillsEarned} Brills Earned!
+                  {brillsEarned} {this.props.extraTry ? 'Extra' : ''} Brills Earned!
                 </div>
                 <div className="pr-progress-center">
                   <div className="pr-progress-container">
@@ -581,7 +581,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                         <img alt="brill" src="/images/Brill.svg" />
                         <SpriteIcon name="logo" />
                       </div>
-                      <div className="bold">{brillsEarned} Brills Earned!</div>
+                      <div className="bold">{brillsEarned} {this.props.extraTry ? 'Extra' : ''} Brills Earned!</div>
                     </div>
                   }
                   <div className="intro-text-row f-align-self-start m-t-5">

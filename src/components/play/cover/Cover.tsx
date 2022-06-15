@@ -365,10 +365,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     );
   }
 
-  const briefText = stripHtml(brick.brief);
-
-  console.log(888, props.canSeeCompetitionDialog, competitionData)
-
   return (
     <React.Suspense fallback={<></>}>
       <HoveredImage />
@@ -443,7 +439,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   brick={brick}
                 />}
                 <div className="brief-ellipsis">
-                  {briefText}
+                  <div dangerouslySetInnerHTML={{ __html: brick.brief}} />
                 </div>
                 {renderCoverPlay()}
               </div>

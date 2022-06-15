@@ -51,6 +51,7 @@ export interface UserBase {
   status: UserStatus;
   profileImage: string;
   profileImagePublic: boolean;
+  freeAttemptsLeft?: number;
 }
 
 export interface User extends UserBase {
@@ -61,6 +62,7 @@ export interface User extends UserBase {
   termsAndConditionsAcceptedVersion: string;
   brills?: number;
   credits?: number;
+  userCredits?: number;
 
   freeAssignmentsLeft: number;
   freeAttemptsLeft: number;

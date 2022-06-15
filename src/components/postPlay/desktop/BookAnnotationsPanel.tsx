@@ -28,6 +28,7 @@ interface BookAnnotationsPanelProps {
 const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
   const history = useHistory();
 
+
   const [mode, setMode] = React.useState(null as any);
 
   const location = React.useMemo(() => {
@@ -88,17 +89,11 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     const annotationIndex = newAttempt.annotations.findIndex(a => a.id === annotation.id);
     if (annotationIndex < 0) return;
 
-    console.log('remove', newAttempt.annotations.length, annotationIndex);
-
     newAttempt.annotations.splice(annotationIndex, 1);
-
-    console.log('removed', newAttempt.annotations.length, annotationIndex);
 
     if (props.highlightRef.current) {
       props.highlightRef.current.deleteAnnotation(annotation);
     }
-
-    console.log()
 
     props.setAttempt(newAttempt);
     /*eslint-disable-next-line*/
@@ -170,6 +165,13 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
     </div>
   }
 
+  let filtered: Annotation[] | undefined = undefined;
+  if (mode === true) {
+    filtered = filteredAnnotations?.filter(m => !!m.isNote)
+  } else {
+    filtered = filteredAnnotations?.filter(m => !m.isNote)
+  }
+
   return (
     <div className="annotations-no-scroll-panel">
       <div className="annotation-title bold">Notes and Comments</div>
@@ -184,7 +186,7 @@ const BookAnnotationsPanel: React.FC<BookAnnotationsPanelProps> = props => {
       />
       <div className="right-part annotations-panel">
 
-        {filteredAnnotations?.map(annotation => (
+        {filtered?.map(annotation => (
           <BookAnnotation
             key={annotation.id}
             annotation={annotation}

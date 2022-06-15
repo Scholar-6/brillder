@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Checkbox from '@material-ui/core/Checkbox';
 import queryString from 'query-string';
 // @ts-ignore
-import {marked} from "marked";
+import { marked } from "marked";
 
 import map from "components/map";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
@@ -137,7 +137,6 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
               const success = await acceptTerms(this.state.lastModifiedDate);
               if (success) {
                 this.setState({ accepted: true });
-                const user = await this.props.getUser() as User;
                 const values = queryString.parse(this.props.history.location.search);
                 if (isPhone()) {
                   setTimeout(() => {
@@ -151,15 +150,11 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
                   if (values.onlyAcceptTerms) {
                     this.props.history.push(map.MainPage);
                   } else {
-                    if (user.userPreference?.preferenceId) {
-                      this.props.history.push(map.MainPage);
+                    const origin = GetOrigin();
+                    if (origin === 'library') {
+                      this.props.history.push(map.LibraryOnboarding);
                     } else {
-                      const origin = GetOrigin();
-                      if (origin === 'library') {
-                        this.props.history.push(map.LibraryOnboarding);
-                      } else {
-                        this.props.history.push(map.UserPreferencePage);
-                      }
+                      this.props.history.push(map.UserPreferencePage);
                     }
                   }
                 }

@@ -24,7 +24,8 @@ export const getUserProfile = (user: User): UserProfile => {
     profileImagePublic: false,
     tutorialPassed: false,
     bio: user.bio ? user.bio : '',
-    password: ""
+    password: "",
+    freeAttemptsLeft: user.freeAttemptsLeft
   }
 }
 
