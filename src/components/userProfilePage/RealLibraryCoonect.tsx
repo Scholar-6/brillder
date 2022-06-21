@@ -181,10 +181,10 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
           </Select>
         </div>
         <div>
-          <ProfileInput value={libraryCardNumber} disabled={!!linked} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Barcode" />
+          <ProfileInput autoCompleteOff={true} value={libraryCardNumber} disabled={!!linked} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Barcode" />
         </div>
         <div>
-          <ProfileInput value={pin} disabled={!!linked} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
+          <ProfileInput autoCompleteOff={true} value={pin} disabled={!!linked} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
         </div>
       </div>
       <div className="flex-center btn-container">

@@ -8,6 +8,7 @@ interface InputProps {
   shouldBeFilled?: boolean;
   type?: string;
   disabled?: boolean;
+  autoCompleteOff?: boolean;
   onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
 }
 
@@ -22,6 +23,14 @@ const ProfileInput: React.FC<InputProps> = props => {
   
   if (props.validationRequired && !value && shouldBeFilled) {
     className += ' invalid';
+  }
+
+  if (props.autoCompleteOff) {
+    return (
+      <form autoComplete="off" className="input-block">
+        <input autoComplete='none' type={props.type} disabled={props.disabled} className={className} value={value} onChange={e => props.onChange && props.onChange(e)} placeholder={props.placeholder} />
+      </form>
+    );
   }
 
   return (
