@@ -121,6 +121,13 @@ const App: React.FC<AppProps> = props => {
 
     // download mamoto
     setupMatomo();
+
+    const values = queryString.parse(location.search);
+
+    if (values.origin === 'heartofmercia') {
+      window.location.href = 'https://uk.wikipedia.org/';
+    }
+    /*eslint-disable-next-line*/
   }, []);
 
   useEffect(() => {
@@ -166,6 +173,7 @@ const App: React.FC<AppProps> = props => {
     }
     return Promise.reject(error);
   });
+  
 
   if (!GetOrigin()) {
     const values = queryString.parse(location.search);
