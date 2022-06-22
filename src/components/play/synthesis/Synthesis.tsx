@@ -21,6 +21,7 @@ import TimeProgressbar from "../baseComponents/timeProgressbar/TimeProgressbar";
 import routes from "../routes";
 import { isMobile } from "react-device-detect";
 import { User } from "model/user";
+import HoveredImage from "../baseComponents/HoveredImage";
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
@@ -140,6 +141,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({
 
   return (
     <div className="brick-row-container synthesis-container">
+      <HoveredImage />
       {isPhone() ? (
         renderMobile()
       ) : (
