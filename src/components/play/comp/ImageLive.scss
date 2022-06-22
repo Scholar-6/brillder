@@ -20,6 +20,10 @@
   max-width: 100%;
   @extend %textCenter;
   margin-top: 5px;
+  // SVG images don't always have a width set.
+  &[src$=".svg"] {
+    min-width: 10vh;
+  }
 }
 .custom-component.mobile-question-component {
   .image-play {

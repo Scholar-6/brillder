@@ -84,7 +84,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
           } else {
             let el = document.createElement("input");
             el.setAttribute("type", "file");
-            el.setAttribute("accept", ".jpg, .jpeg, .png, .gif");
+            el.setAttribute("accept", ".jpg, .jpeg, .png, .gif, .svg");
             el.onchange = () => {
               if (el.files && el.files.length >= 0) {
                 setFile(el.files[0] as File);

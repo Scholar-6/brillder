@@ -26,6 +26,7 @@ import CoverTimer from "./CoverTimer";
 import map from "components/map";
 import CoverCreditsPlay from "./components/coverAuthorRow/CoverCreditsPlay";
 import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
+import MathInHtml from "../baseComponents/MathInHtml";
 
 
 interface Props {
@@ -439,7 +440,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   brick={brick}
                 />}
                 <div className="brief-ellipsis">
-                  <div dangerouslySetInnerHTML={{ __html: brick.brief}} />
+                  {/* <div dangerouslySetInnerHTML={{ __html: brick.brief}} /> */}
+                  <MathInHtml value={brick.brief} />
                 </div>
                 {renderCoverPlay()}
               </div>
