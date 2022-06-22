@@ -181,11 +181,11 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
             <span>
               <MathInHtml value={choice.before} />
               {this.renderSelect(choice, index)}
+              <Grid container direction="row" justify="center">
+                {this.renderEachHint(index)}
+              </Grid>
               <MathInHtml value={choice.after} />
             </span>
-            <Grid container direction="row" justify="center">
-              {this.renderEachHint(index)}
-            </Grid>
           </div>
         ))}
         {this.renderGlobalHint()}
