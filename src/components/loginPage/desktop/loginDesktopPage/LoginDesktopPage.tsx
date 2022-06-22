@@ -21,6 +21,7 @@ import Delayed from "components/services/Delayed";
 import { FirstPage, EmailSignPage, JoinPage, RegisterPage } from "../routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
 import { GetOrigin } from "localStorage/origin";
+import MicrosoftDesktopButton from "../MicrosoftDesktopButton";
 
 
 const DesktopTheme = React.lazy(() => import('./themes/LoginDesktopTheme'));
@@ -117,6 +118,9 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
               </div>
               <div className="button-box">
                 <GoogleDesktopButton label="Sign in with Google" />
+              </div>
+              <div className="button-box m-t-3vh">
+                <MicrosoftDesktopButton />
               </div>
               <div className="button-box">
                 <RegisterDesktopButton label="Sign in with email" onClick={moveToEmailLogin} />
