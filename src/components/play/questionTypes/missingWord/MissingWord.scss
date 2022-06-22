@@ -38,6 +38,10 @@
       font-family: $font-family-regular;
       font-size: 1.25vw;
       color: var(--theme-dark-blue);
+
+      .MuiSelect-root {
+        line-height: 1;
+      }
     }
 
     .question-hint.correct {
