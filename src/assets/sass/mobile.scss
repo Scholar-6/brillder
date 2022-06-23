@@ -611,6 +611,7 @@
 
   .mobile-register {
     .logo-box {
+      height: 35% !important;
       padding-top: 8%;
       align-items: flex-start;
 
@@ -646,7 +647,21 @@
     }
 
     .m-register-box {
+      height: calc(65% - 4vh) !important;
       margin-top: 4vh !important;
+
+      .google-button span{
+        font-size: 6vw !important;
+      }
+
+      .library-button {
+        background: var(--blue) !important;
+
+        span {
+          margin-left: 10vw;
+          color: white;
+        }
+      }
     }
   }
 
