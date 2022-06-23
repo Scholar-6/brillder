@@ -6,7 +6,7 @@ import MainPageDesktop from './MainPageDesktop';
 import { isPhone } from "services/phone";
 import { showZendesk } from "services/zendesk";
 import { GetLoginRedirectUrl, UnsetLoginRedirectUrl } from "localStorage/login";
-import { ClearAuthBrickCash, GetAuthBrickCash } from "localStorage/play";
+import { ClearAuthBrickCash, GetAuthBrickCash, GetUnauthBrickCash, ClearUnauthBrickCash } from "localStorage/play";
 import routes from "components/play/routes";
 import { Brick } from "model/brick";
 
@@ -24,6 +24,12 @@ class MainPage extends Component<MainPageProps> {
       // competition brick cash is cleaning in play
       if (!cashedDetails.competitionId) {
         ClearAuthBrickCash();
+      }
+    } else {
+      const cashedUnauthDetails = GetUnauthBrickCash();
+      if (cashedUnauthDetails && cashedUnauthDetails.brick) {
+        props.history.push(routes.playCover(cashedUnauthDetails.brick as Brick));
+        ClearUnauthBrickCash();
       }
     }
   }
