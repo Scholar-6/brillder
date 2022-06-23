@@ -1,5 +1,5 @@
 import { Brick } from 'model/brick';
-import {AttemptCash, YoutubeClicked, PreviewAttemptCash, VolumeToggle, UserBrills, AuthBrickCash} from './types';
+import {AttemptCash, YoutubeClicked, PreviewAttemptCash, VolumeToggle, UserBrills, AuthBrickCash, UnauthBrickCash} from './types';
 
 export function SetYoutubeClick() {
   localStorage.setItem(YoutubeClicked, "true");
@@ -49,6 +49,12 @@ export function GetPreviewCashedPlayAttempt() {
   return localStorage.getItem(PreviewAttemptCash);
 }
 
+
+
+
+
+
+// data used for redirection when user is trying to log in.
 export function SetAuthBrickCash(brick: Brick, competitionId: number) {
   const obj = {
     brick: {
@@ -78,6 +84,47 @@ export function ClearAuthBrickCash() {
   localStorage.removeItem(AuthBrickCash);
 }
 
+
+
+
+
+
+// needed for redirection of incognito user as he was trying to access personal brick.
+// he will be redirected to login and then after success will be redirected to personal brick again.
+export function SetUnauthBrickCash(brick: Brick) {
+  const obj = {
+    brick: {
+      id: brick.id,
+      title: brick.title,
+      subject: {
+        name: brick.subject?.name
+      }
+    },
+  } as any;
+  const objString = JSON.stringify(obj);
+  localStorage.setItem(UnauthBrickCash, objString);
+}
+
+export function GetUnauthBrickCash() {
+  const objString = localStorage.getItem(UnauthBrickCash);
+  if (objString) {
+    try {
+      return JSON.parse(objString);
+    } catch (e) { }
+  }
+  return -1;
+}
+
+export function ClearUnauthBrickCash() {
+  localStorage.removeItem(UnauthBrickCash);
+}
+
+
+
+
+
+
+// user brills
 export function SetUserBrills(brills: number) {
   localStorage.setItem(UserBrills, brills.toString());
 }
