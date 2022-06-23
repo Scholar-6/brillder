@@ -6,13 +6,14 @@ interface Props {
   onClick(): void;
 }
 
-const MicrosoftButton: React.FC<Props> = (props) => {
+const UKlibraryButton: React.FC<Props> = (props) => {
   return (
-    <a className="google-button library-button svgOnHover" onClick={props.onClick}>
+    <a className="google-button library-button" onClick={props.onClick}>
       <SpriteIcon name="library-icon" className="active" />
       <span>UK library user</span>
+      <SpriteIcon name="help-library" className="help-library" />
     </a>
   );
 };
 
-export default MicrosoftButton;
+export default UKlibraryButton;
