@@ -30,7 +30,7 @@ import {
 } from "components/services/brickService";
 import {
   getPublicBricks,
-  getPublishedBricks,
+  getPublishedBricksByPage,
   searchBricks,
 } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
@@ -59,7 +59,7 @@ import {
   sortByDate,
   sortAndFilterBySubject,
   getCheckedSubjects,
-  prepareVisibleBricks,
+  prepareVisibleBricks2,
   toggleSubject,
   renderTitle,
   sortAllBricks,
@@ -146,6 +146,9 @@ interface ViewAllState {
   isViewAll: boolean;
   userIdSearch: number;
 
+  bricksCount: number;
+  page: number;
+
   // rezise and apect ratio based on those show 3, 2 or 1 column
   aspectRatio: number;
   resize(e: any): void;
@@ -221,6 +224,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       subjects: [],
       userSubjects: props.user ? Object.assign([], props.user.subjects) : [],
       sortedIndex: 0,
+      bricksCount: 0,
+      page: 0,
 
       isSubjectPopupOpen: false,
       noSubjectOpen: false,
@@ -438,10 +443,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
-      const bricks = await getPublishedBricks();
-      if (bricks) {
-        var keywords = this.collectKeywords(bricks);
-        let bs = sortAllBricks(bricks);
+      const pageBricks = await getPublishedBricksByPage(6, this.state.sortedIndex / 6, true, [], []);
+      if (pageBricks) {
+        var keywords = this.collectKeywords(pageBricks.bricks);
+        let bs = sortAllBricks(pageBricks.bricks);
         let finalBricks = this.filter(
           bs,
           this.state.isAllSubjects,
@@ -453,15 +458,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         if (values && values.isViewAll) {
           this.checkSubjectsWithBricks(subjects);
           finalBricks = this.filter(
-            bricks,
+            pageBricks.bricks,
             this.state.isAllSubjects,
             this.state.isCore
           );
         }
+
         this.setState({
           ...this.state,
           subjects,
-          bricks,
+          bricksCount: pageBricks.pageCount,
+          bricks: pageBricks.bricks,
           keywords,
           isLoading: false,
           finalBricks,
@@ -478,6 +485,29 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       }, 300);
     } else {
       this.setState({ isLoading: false });
+    }
+  }
+
+  async loadAndSetBricks(page: number, isCore: boolean, levels: AcademicLevel[], length: BrickLengthEnum[]) {
+    if (this.props.user) {
+      const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length);
+
+      console.log(pageBricks);
+
+      if (pageBricks) {
+        this.setState({
+          ...this.state,
+          page,
+          bricksCount: pageBricks.pageCount,
+          bricks: pageBricks.bricks,
+          isCore,
+          filterLength: length,
+          filterLevels: levels,
+          isClearFilter: this.isFilterClear(),
+          isLoading: false,
+          shown: true
+        });
+      }
     }
   }
 
@@ -665,6 +695,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       try {
         let finalBricks: Brick[] = [];
         if (this.props.user) {
+          this.loadAndSetBricks(0, this.state.isCore, filterLevels, this.state.filterLength);
+          return;
+          /*
           finalBricks = this.filter(
             this.state.bricks,
             this.state.isAllSubjects,
@@ -673,7 +706,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             filterLevels,
             this.state.filterLength,
             this.state.filterCompetition
-          );
+          );*/
         } else {
           finalBricks = this.filterUnauthorized(
             this.state.bricks,
@@ -732,6 +765,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       try {
         let finalBricks: Brick[] = [];
         if (this.props.user) {
+          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, filterLength);
+          return;
+          /*
           finalBricks = this.filter(
             this.state.bricks,
             this.state.isAllSubjects,
@@ -740,7 +776,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             this.state.filterLevels,
             filterLength,
             this.state.filterCompetition
-          );
+          );*/
         } else {
           finalBricks = this.filterUnauthorized(
             this.state.bricks,
@@ -752,7 +788,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         this.setState({
           ...this.state,
           isClearFilter: this.isFilterClear(),
-          finalBricks,
           shown: true,
         });
       } catch { }
@@ -942,7 +977,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   moveAllBack() {
     let index = this.state.sortedIndex;
+
+
     if (index >= this.state.pageSize) {
+      this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength);
+
       this.setState({
         ...this.state,
         sortedIndex: index - this.state.pageSize,
@@ -952,14 +991,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   moveAllNext() {
     let index = this.state.sortedIndex;
-    const { pageSize } = this.state;
-    let bricks = this.state.finalBricks;
+    const { pageSize, bricksCount } = this.state;
 
     if (this.state.isSearching) {
-      bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
-    if (index + pageSize <= bricks.length - 1) {
+    if (index + pageSize <= bricksCount - 1) {
+      this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength);
+
       this.setState({
         ...this.state,
         sortedIndex: index + this.state.pageSize,
@@ -1040,12 +1079,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }, 1400);
   }
 
-  renderSortedBricks(bricks: Brick[]) {
-    const data = prepareVisibleBricks(
-      this.state.sortedIndex,
-      this.state.pageSize,
-      bricks
-    );
+  renderSortedBricks() {
+    const data = prepareVisibleBricks2(this.state.bricks);
     return data.map((item) => {
       let circleIcon = "";
       if (this.props.user) {
@@ -1075,7 +1110,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           shown={this.state.shown}
           history={this.props.history}
           circleIcon={circleIcon}
-          handleDeleteOpen={(brickId) => this.handleDeleteOpen(brickId)}
           isPlay={true}
         />
       );
@@ -1086,14 +1120,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const isCore = !this.state.isCore;
     this.setState({ isCore, shown: false, sortedIndex: 0 });
     setTimeout(() => {
-      try {
-        const finalBricks = this.filter(
-          this.state.bricks,
-          this.state.isAllSubjects,
-          isCore
-        );
-        this.setState({ shown: true, finalBricks, sortedIndex: 0 });
-      } catch { }
+      this.loadAndSetBricks(0, isCore, this.state.filterLevels, this.state.filterLength);
     }, 1400);
   }
 
@@ -1237,7 +1264,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       >
         {this.renderFirstRow(bricks)}
         {this.state.isSearchBLoading && <div className="ffef-loader-container"> <PageLoaderBlue content="" /></div>}
-        <div className={className}>{this.renderSortedBricks(bricks)}</div>
+        <div className={className}>{this.renderSortedBricks()}</div>
       </div>
     );
   }
@@ -1253,14 +1280,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  renderDesktopBricks(bricks: Brick[]) {
+  renderDesktopBricks() {
     const filterSubjects = getCheckedSubjectIds(this.state.subjects);
 
     return (
       <div>
         <div
-          className={`brick-row-title main-title ${filterSubjects.length === 1 && "subject-title"
-            }`}
+          className={`brick-row-title main-title ${filterSubjects.length === 1 && "subject-title"}`}
         >
           {this.renderMainTitle(filterSubjects)}
         </div>
@@ -1271,11 +1297,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             onSwitch={() => this.toggleCore()}
           />
         )}
-        {this.renderDesktopBricksPanel(bricks)}
+        {this.renderDesktopBricksPanel(this.state.bricks)}
         <ViewAllPagination
           pageSize={this.state.pageSize}
           sortedIndex={this.state.sortedIndex}
-          bricksLength={bricks.length}
+          bricksLength={this.state.bricksCount}
           moveAllNext={() => this.moveAllNext()}
           moveAllBack={() => this.moveAllBack()}
         />
@@ -1326,7 +1352,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           filterByCompetition={this.filterByCompetition.bind(this)}
          />
         <Grid item xs={9} className="brick-row-container">
-          {this.renderDesktopBricks(bricks)}
+          {this.renderDesktopBricks()}
         </Grid>
       </Grid>
     );
@@ -1513,3 +1539,4 @@ const mapDispatch = (dispatch: any) => ({
 });
 
 export default connect(mapState, mapDispatch)(ViewAllPage);
+

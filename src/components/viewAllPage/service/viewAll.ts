@@ -214,6 +214,22 @@ export const prepareVisibleBricks = (
   return data;
 }
 
+export const prepareVisibleBricks2 = (
+  bricks: Brick[]
+) => {
+  let data: any[] = [];
+  let count = 0;
+  for (let i = 0; i < bricks.length; i++) {
+    const brick = bricks[i];
+    if (brick) {
+      let row = Math.floor(count / 3);
+      data.push({ brick, key: i, index: count, row });
+      count++;
+    }
+  }
+  return data;
+}
+
 export const prepareUserSubjects = (subjects: SubjectItem[], userSubjects: Subject[]) => {
   const ss = [];
   for (let subject of userSubjects) {
