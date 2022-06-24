@@ -1,6 +1,6 @@
 import { getApiQuestion } from 'components/build/questionService/QuestionService';
 import { AssignmentBrick } from 'model/assignment';
-import { Brick, BrickStatus, KeyWord } from 'model/brick';
+import { Brick, BrickLengthEnum, BrickStatus, KeyWord } from 'model/brick';
 import { Question } from 'model/question';
 
 import { get, put, post, axiosDelete } from './index';
@@ -55,6 +55,31 @@ export const getPublishedBricks = async () => {
       bricks = bricks.filter(b => b.status == 4);
     }
     return bricks;
+  } catch {
+    return null;
+  }
+}
+
+
+interface PageBricks {
+  pageCount: number;
+  bricks: Brick[];
+}
+
+/**
+ * Get bricks by status
+ * return list of bricks if success or null if failed
+ */
+export const getPublishedBricksByPage = async (
+  pageSize: number, page: number, isCore: boolean, level: number[], length: BrickLengthEnum[]
+) => {
+  try {
+    return await post<PageBricks>(`/bricks/byStatus/${BrickStatus.Publish}/page/${page}`, {
+      isCore,
+      pageSize,
+      level,
+      length
+    });
   } catch {
     return null;
   }
