@@ -39,7 +39,6 @@ import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
-import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import ViewAllFilter, { SortBy } from "./components/ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
@@ -54,7 +53,6 @@ import RecommendButton from "components/viewAllPage/components/RecommendBuilderB
 import SubjectCategoriesComponent from "./subjectCategories/SubjectCategories";
 
 import {
-  removeByIndex,
   sortAndFilterBySubject,
   getCheckedSubjects,
   prepareVisibleBricks2,
@@ -113,7 +111,6 @@ interface ViewAllState {
   userSubjects: Subject[];
 
   sortedIndex: number;
-  finalBricks: Brick[];
   isLoading: boolean;
 
   isAllCategory: boolean;
@@ -122,8 +119,6 @@ interface ViewAllState {
   noSubjectOpen: boolean;
   activeSubject: SubjectItem;
   dropdownShown: boolean;
-  deleteDialogOpen: boolean;
-  deleteBrickId: number;
 
   subjectGroup: SubjectGroup | null;
 
@@ -227,9 +222,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       isSubjectPopupOpen: false,
       noSubjectOpen: false,
-      deleteDialogOpen: false,
-      deleteBrickId: -1,
-      finalBricks: [],
       dropdownShown: false,
       searchBricks: [],
       searchString,
@@ -322,7 +314,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   componentDidMount() {
     document.addEventListener("keydown", this.state.handleKey, false);
     window.addEventListener("resize", this.state.resize, false);
-    
+
     this.addWheelListener();
   }
 
@@ -361,7 +353,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   resize(e: any) {
-    this.setState({pageSize: this.getPageSize(), aspectRatio: this.getAspectRatio()});
+    this.setState({ pageSize: this.getPageSize(), aspectRatio: this.getAspectRatio() });
   }
 
   async loadData(values: queryString.ParsedQuery<string>) {
@@ -407,15 +399,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadUnauthorizedBricks() {
     const bricks = await getPublicBricks();
     if (bricks) {
-      const finalBricks = this.filter(bricks, this.state.isAllSubjects, true);
       const { subjects } = this.state;
       countSubjectBricks(subjects, bricks);
       subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
       this.setState({
         ...this.state,
-        bricks: finalBricks,
         isLoading: false,
-        finalBricks,
         shown: true,
       });
     } else {
@@ -441,7 +430,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
-      const pageBricks = await getPublishedBricksByPage(6, this.state.page, true, [], [], []);
+      const pageBricks = await getPublishedBricksByPage(6, this.state.page, true, [], [], [], this.state.filterCompetition);
       if (pageBricks) {
         var keywords = this.collectKeywords(pageBricks.bricks);
         let bs = sortAllBricks(pageBricks.bricks);
@@ -475,25 +464,23 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  async loadAndSetBricks(page: number, isCore: boolean, levels: AcademicLevel[], length: BrickLengthEnum[]) {
-    if (this.props.user) {
-      const subjectIds = this.getSubjectIds(this.state.subjects);
-      const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length, subjectIds);
+  async loadAndSetBricks(page: number, isCore: boolean, levels: AcademicLevel[], length: BrickLengthEnum[], filterCompetition: boolean) {
+    const subjectIds = this.getSubjectIds(this.state.subjects);
+    const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length, subjectIds, filterCompetition);
 
-      if (pageBricks) {
-        this.setState({
-          ...this.state,
-          page,
-          bricksCount: pageBricks.pageCount,
-          bricks: pageBricks.bricks,
-          isCore,
-          filterLength: length,
-          filterLevels: levels,
-          isClearFilter: this.isFilterClear(),
-          isLoading: false,
-          shown: true
-        });
-      }
+    if (pageBricks) {
+      this.setState({
+        ...this.state,
+        page,
+        bricksCount: pageBricks.pageCount,
+        bricks: pageBricks.bricks,
+        isCore,
+        filterLength: length,
+        filterLevels: levels,
+        isClearFilter: this.isFilterClear(),
+        isLoading: false,
+        shown: true
+      });
     }
   }
 
@@ -503,15 +490,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   onIntroChanged(e: any) {
     if (e >= 2) {
-       this.setState({ stepsEnabled: false });
+      this.setState({ stepsEnabled: false });
     }
-  }
-
-  delete(brickId: number) {
-    removeByIndex(this.state.bricks, brickId);
-    removeByIndex(this.state.finalBricks, brickId);
-    removeByIndex(this.state.searchBricks, brickId);
-    this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
   moveToPlay(brick: Brick) {
@@ -642,7 +622,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     toggleSubject(this.state.subjects, id);
     toggleSubject(this.state.userSubjects, id);
 
-    this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength);
+    this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
 
     this.setState({ ...this.state, isViewAll: false, shown: false });
     setTimeout(() => {
@@ -665,34 +645,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ filterLevels, shown: false });
     setTimeout(() => {
       try {
-        let finalBricks: Brick[] = [];
         if (this.props.user) {
-          this.loadAndSetBricks(0, this.state.isCore, filterLevels, this.state.filterLength);
-          return;
-          /*
-          finalBricks = this.filter(
-            this.state.bricks,
-            this.state.isAllSubjects,
-            this.state.isCore,
-            false,
-            filterLevels,
-            this.state.filterLength,
-            this.state.filterCompetition
-          );*/
+          this.loadAndSetBricks(0, this.state.isCore, filterLevels, this.state.filterLength, this.state.filterCompetition);
         } else {
-          finalBricks = this.filterUnauthorized(
-            this.state.bricks,
-            this.state.isViewAll,
-            filterLevels,
-            this.state.filterCompetition
-          );
+          this.loadAndSetBricks(0, true, filterLevels, this.state.filterLength, this.state.filterCompetition);
         }
-        this.setState({
-          ...this.state,
-          isClearFilter: this.isFilterClear(),
-          finalBricks,
-          shown: true,
-        });
       } catch { }
     }, 1400);
   }
@@ -702,31 +659,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ filterCompetition, shown: false });
     setTimeout(() => {
       try {
-        let finalBricks: Brick[] = [];
         if (this.props.user) {
-          finalBricks = this.filter(
-            this.state.bricks,
-            this.state.isAllSubjects,
-            this.state.isCore,
-            false,
-            this.state.filterLevels,
-            this.state.filterLength,
-            filterCompetition
-          );
+          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, filterCompetition);
         } else {
-          finalBricks = this.filterUnauthorized(
-            this.state.bricks,
-            this.state.isViewAll,
-            this.state.filterLevels,
-            filterCompetition
-          );
+          this.loadAndSetBricks(0, true, this.state.filterLevels, this.state.filterLength, filterCompetition);
         }
-        this.setState({
-          ...this.state,
-          isClearFilter: this.isFilterClear(),
-          finalBricks,
-          shown: true,
-        });
       } catch { }
     }, 1400);
   }
@@ -735,33 +672,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ filterLength, shown: false });
     setTimeout(() => {
       try {
-        let finalBricks: Brick[] = [];
         if (this.props.user) {
-          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, filterLength);
-          return;
-          /*
-          finalBricks = this.filter(
-            this.state.bricks,
-            this.state.isAllSubjects,
-            this.state.isCore,
-            false,
-            this.state.filterLevels,
-            filterLength,
-            this.state.filterCompetition
-          );*/
+          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, filterLength, this.state.filterCompetition);
         } else {
-          finalBricks = this.filterUnauthorized(
-            this.state.bricks,
-            this.state.isViewAll,
-            this.state.filterLevels,
-            this.state.filterCompetition
-          );
+          this.loadAndSetBricks(0, true, this.state.filterLevels, filterLength, this.state.filterCompetition);
         }
-        this.setState({
-          ...this.state,
-          isClearFilter: this.isFilterClear(),
-          shown: true,
-        });
       } catch { }
     }, 1400);
   }
@@ -798,51 +713,26 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (this.props.user) {
       if (isViewAll !== false) {
         checkAllSubjects(this.state.subjects, this.state.isCore);
-        const finalBricks = this.filter(
-          this.state.bricks,
-          this.state.isAllSubjects,
-          this.state.isCore,
-          isViewAll
-        );
-        this.setState({
-          isViewAll,
-          finalBricks,
-          isClearFilter: this.isFilterClear(),
-        });
+        this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
       }
     } else {
       for (let s of this.state.subjects) {
         s.checked = false;
       }
-      const finalBricks = this.filterUnauthorized(
-        this.state.bricks,
-        isViewAll,
-        this.state.filterLevels,
-        this.state.filterCompetition
-      );
-      this.setState({
-        isViewAll,
-        finalBricks,
-        isClearFilter: this.isFilterClear(),
-      });
+      this.loadAndSetBricks(0, true, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
     }
+    this.setState({
+      isViewAll,
+      isClearFilter: this.isFilterClear(),
+    });
   }
 
   selectUserSubjects(isViewAll: boolean) {
     if (this.props.user) {
       this.checkUserSubjects();
-      const finalBricks = this.filter(
-        this.state.bricks,
-        this.state.isAllSubjects,
-        this.state.isCore,
-        undefined,
-        this.state.filterLevels,
-        this.state.filterLength,
-        this.state.filterCompetition
-      );
+      this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
       this.setState({
         isViewAll,
-        finalBricks,
         isClearFilter: this.isFilterClear(),
       });
     }
@@ -857,7 +747,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isClearFilter: this.isFilterClear(),
       searchString: author.firstName + ' ' + author.lastName,
       searchBricks,
-      finalBricks: searchBricks,
       shown: true,
       isLoading: false,
       searchTyping: false,
@@ -875,7 +764,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isClearFilter: this.isFilterClear(),
       searchString: subject.name,
       searchBricks,
-      finalBricks: searchBricks,
       shown: true,
       isLoading: false,
       searchTyping: false,
@@ -901,7 +789,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isClearFilter: this.isFilterClear(),
       searchString: keyword.name,
       searchBricks,
-      finalBricks: searchBricks,
       shown: true,
       isLoading: false,
       searchTyping: false,
@@ -915,28 +802,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     toggleSubject(this.state.subjects, id);
     toggleSubject(this.state.userSubjects, id);
 
-    const finalBricks = this.filter(
-      this.state.bricks,
-      this.state.isAllSubjects,
-      this.state.isCore
-    );
     this.setState({
       ...this.state,
       isClearFilter: this.isFilterClear(),
       isViewAll: false,
-      finalBricks,
       shown: true,
     });
   }
 
   viewAll() {
     this.checkSubjectsWithBricks(this.state.subjects);
-    const finalBricks = this.filter(
-      this.state.bricks,
-      this.state.isAllSubjects,
-      this.state.isCore
-    );
-    this.setState({ finalBricks, isViewAll: true });
+    this.setState({ isViewAll: true });
   }
 
   clearSubjects = () => {
@@ -952,7 +828,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
 
     if (index >= this.state.pageSize) {
-      this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength);
+      this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
 
       this.setState({
         ...this.state,
@@ -969,21 +845,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     if (index + pageSize <= bricksCount - 1) {
-      this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength);
+      this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
 
       this.setState({
         ...this.state,
         sortedIndex: index + this.state.pageSize,
       });
     }
-  }
-
-  handleDeleteOpen(deleteBrickId: number) {
-    this.setState({ ...this.state, deleteDialogOpen: true, deleteBrickId });
-  }
-
-  handleDeleteClose() {
-    this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
   filterByCore(bricks: Brick[], isCore: boolean) {
@@ -994,12 +862,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   searching(searchString: string) {
     if (searchString.length === 0) {
-      const finalBricks = this.filter(this.state.bricks, this.state.isAllSubjects, this.state.isCore, false, this.state.filterLevels, this.state.filterLength, true);
 
       this.setState({
         ...this.state,
         searchString,
-        finalBricks,
         searchTyping: false,
         isSearching: false,
       });
@@ -1023,15 +889,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     setTimeout(() => {
       try {
         if (bricks) {
-          const finalBricks = this.filter(
-            bricks,
-            this.state.isAllSubjects,
-            this.state.isCore
-          );
           this.setState({
             ...this.state,
             searchBricks: bricks,
-            finalBricks,
             shown: true,
             isLoading: false,
             isSearchBLoading: false,
@@ -1092,7 +952,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const isCore = !this.state.isCore;
     this.setState({ isCore, shown: false, sortedIndex: 0 });
     setTimeout(() => {
-      this.loadAndSetBricks(0, isCore, this.state.filterLevels, this.state.filterLength);
+      this.loadAndSetBricks(0, isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
     }, 1400);
   }
 
@@ -1190,7 +1050,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               Enter the competitions below for a chance to maximise your brills and earn cash prizes:
             </div>
             <div className="btn learn-more-btn-d3" onClick={() => {
-               window.location.href="https://brillder.com/brilliant-minds-prizes/";
+              window.location.href = "https://brillder.com/brilliant-minds-prizes/";
             }}>
               Learn more
             </div>
@@ -1299,16 +1159,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           selectAllSubjects={this.selectAllSubjects.bind(this)}
           selectUserSubjects={this.selectUserSubjects.bind(this)}
           setAllSubjects={(isAllSubjects) => {
-            const finalBricks = this.filter(
-              this.state.bricks,
-              isAllSubjects,
-              this.state.isCore,
-              undefined,
-              this.state.filterLevels,
-              this.state.filterLength,
-              this.state.filterCompetition
-            );
-            this.setState({ isAllSubjects, finalBricks, sortedIndex: 0 });
+            this.setState({ isAllSubjects, sortedIndex: 0 });
           }}
           openAddSubjectPopup={() =>
             this.setState({ isSubjectPopupOpen: true })
@@ -1322,7 +1173,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           filterBySubject={(id) => this.filterBySubject(id)}
           filterCompetition={this.state.filterCompetition}
           filterByCompetition={this.filterByCompetition.bind(this)}
-         />
+        />
         <Grid item xs={9} className="brick-row-container">
           {this.renderDesktopBricks()}
         </Grid>
@@ -1337,7 +1188,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     const { user, history } = this.props;
 
-    let bricks = this.state.finalBricks;
+    let bricks = this.state.bricks;
 
     if (isPhone()) {
       return (
@@ -1376,12 +1227,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 />
               </Route>
             </Switch>
-            <DeleteBrickDialog
-              isOpen={this.state.deleteDialogOpen}
-              brickId={this.state.deleteBrickId}
-              close={() => this.handleDeleteClose()}
-              onDelete={(brickId) => this.delete(brickId)}
-            />
             <FailedRequestDialog
               isOpen={this.state.failedRequest}
               close={() =>
@@ -1459,12 +1304,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               </Route>
             </Switch>
           </div>
-          <DeleteBrickDialog
-            isOpen={this.state.deleteDialogOpen}
-            brickId={this.state.deleteBrickId}
-            close={() => this.handleDeleteClose()}
-            onDelete={(brickId) => this.delete(brickId)}
-          />
           <FailedRequestDialog
             isOpen={this.state.failedRequest}
             close={() => this.setState({ ...this.state, failedRequest: false })}
