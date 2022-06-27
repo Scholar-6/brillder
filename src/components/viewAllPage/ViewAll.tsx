@@ -55,8 +55,6 @@ import SubjectCategoriesComponent from "./subjectCategories/SubjectCategories";
 
 import {
   removeByIndex,
-  sortByPopularity,
-  sortByDate,
   sortAndFilterBySubject,
   getCheckedSubjects,
   prepareVisibleBricks2,
@@ -443,25 +441,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
-      const pageBricks = await getPublishedBricksByPage(6, this.state.sortedIndex / 6, true, [], []);
+      const pageBricks = await getPublishedBricksByPage(6, this.state.page, true, [], [], []);
       if (pageBricks) {
         var keywords = this.collectKeywords(pageBricks.bricks);
         let bs = sortAllBricks(pageBricks.bricks);
-        let finalBricks = this.filter(
-          bs,
-          this.state.isAllSubjects,
-          this.state.isCore
-        );
         let { subjects } = this.state;
         countSubjectBricksV2(subjects, bs, this.props.user, this.state.isAdmin);
         subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
         if (values && values.isViewAll) {
           this.checkSubjectsWithBricks(subjects);
-          finalBricks = this.filter(
-            pageBricks.bricks,
-            this.state.isAllSubjects,
-            this.state.isCore
-          );
         }
 
         this.setState({
@@ -471,7 +459,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           bricks: pageBricks.bricks,
           keywords,
           isLoading: false,
-          finalBricks,
           shown: true,
         });
       } else {
@@ -490,9 +477,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadAndSetBricks(page: number, isCore: boolean, levels: AcademicLevel[], length: BrickLengthEnum[]) {
     if (this.props.user) {
-      const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length);
-
-      console.log(pageBricks);
+      const subjectIds = this.getSubjectIds(this.state.subjects);
+      const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length, subjectIds);
 
       if (pageBricks) {
         this.setState({
@@ -535,13 +521,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   handleSortChange = (e: any) => {
     const { state } = this;
     const sortBy = parseInt(e.target.value) as SortBy;
-    let { finalBricks } = this.state;
-    if (sortBy === SortBy.Date) {
-      finalBricks = sortByDate(finalBricks);
-    } else if (sortBy === SortBy.Popularity) {
-      finalBricks = sortByPopularity(finalBricks);
-    }
-    this.setState({ ...state, finalBricks, sortBy });
+    this.setState({ ...state, sortBy });
   };
 
   filterUnauthorized(
@@ -648,41 +628,33 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return this.state.subjects.some((r) => r.checked);
   }
 
+  getSubjectIds(subjects: SubjectItem[]) {
+    let subjectIds: number[] = [];
+    const checked = this.state.subjects.find(s => s.checked === true);
+    if (checked) {
+      const checkedSubjects = this.state.subjects.filter(s => s.checked === true);
+      subjectIds = checkedSubjects.map(s => s.id);
+    }
+    return subjectIds;
+  }
+
   filterBySubject(id: number) {
     toggleSubject(this.state.subjects, id);
     toggleSubject(this.state.userSubjects, id);
 
-    let checked = this.state.subjects.find((s) => s.checked === true);
-    if (this.state.isAllSubjects && !checked) {
-      //this.props.history.push(map.SubjectCategories + "?filter=true");
-    }
+    this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength);
 
     this.setState({ ...this.state, isViewAll: false, shown: false });
     setTimeout(() => {
       try {
-        let finalBricks: Brick[] = [];
         if (this.props.user) {
-          finalBricks = this.filter(
-            this.state.bricks,
-            this.state.isAllSubjects,
-            this.state.isCore,
-            false,
-            this.state.filterLevels,
-            this.state.filterLength,
-            this.state.filterCompetition
-          );
+
         } else {
-          finalBricks = this.filterUnauthorized(
-            this.state.bricks,
-            this.state.isViewAll,
-            this.state.filterLevels,
-            this.state.filterCompetition
-          );
+          // no subjects here
         }
         this.setState({
           ...this.state,
           isClearFilter: this.isFilterClear(),
-          finalBricks,
           shown: true,
         });
       } catch { }

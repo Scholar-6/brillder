@@ -71,14 +71,15 @@ interface PageBricks {
  * return list of bricks if success or null if failed
  */
 export const getPublishedBricksByPage = async (
-  pageSize: number, page: number, isCore: boolean, level: number[], length: BrickLengthEnum[]
+  pageSize: number, page: number, isCore: boolean, level: number[], length: BrickLengthEnum[], subjectIds: number[]
 ) => {
   try {
     return await post<PageBricks>(`/bricks/byStatus/${BrickStatus.Publish}/page/${page}`, {
       isCore,
       pageSize,
       level,
-      length
+      length,
+      subjectIds
     });
   } catch {
     return null;
