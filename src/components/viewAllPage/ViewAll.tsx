@@ -29,8 +29,8 @@ import {
   getAssignmentIcon,
 } from "components/services/brickService";
 import {
-  getPublicBricks,
   getPublishedBricksByPage,
+  getUnauthPublishedBricksByPage,
   searchBricks,
 } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
@@ -59,7 +59,6 @@ import {
   toggleSubject,
   renderTitle,
   sortAllBricks,
-  countSubjectBricks,
   sortAndCheckSubjects,
   filterSearchBricks,
   getCheckedSubjectIds,
@@ -363,7 +362,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     } else if (this.props.user) {
       this.loadBricks(values);
     } else {
-      this.loadUnauthorizedBricks();
+      console.log('loading')
+      if (this.state.subjectGroup) {
+        this.loadUnauthorizedBricks(this.state.subjectGroup);
+      }
     }
   }
 
@@ -392,23 +394,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAllCategory: true,
       subjectGroup: sGroup,
     });
-    this.loadUnauthorizedBricks();
+    this.loadUnauthorizedBricks(sGroup);
   }
 
-  async loadUnauthorizedBricks() {
-    const bricks = await getPublicBricks();
-    if (bricks) {
-      const { subjects } = this.state;
-      countSubjectBricks(subjects, bricks);
-      subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
-      this.setState({
-        ...this.state,
-        isLoading: false,
-        shown: true,
-      });
-    } else {
-      this.setState({ ...this.state, isLoading: false, failedRequest: true });
-    }
+  async loadUnauthorizedBricks(sGroup: SubjectGroup) {
+    this.loadAndSetUnauthBricks(0, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, sGroup);
   }
 
   collectKeywords(bricks: Brick[]) {
@@ -469,8 +459,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     levels: AcademicLevel[],
     length: BrickLengthEnum[],
     filterCompetition: boolean,
-    isAllSubjects: boolean) {
-    const subjectIds = this.getSubjectIds(this.state.subjects);
+    isAllSubjects: boolean
+  ) {
+    const subjectIds = this.getSubjectIds();
     const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length, subjectIds, filterCompetition, isAllSubjects);
 
     if (pageBricks) {
@@ -485,6 +476,31 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         isClearFilter: this.isFilterClear(),
         isLoading: false,
         isAllSubjects,
+        shown: true
+      });
+    }
+  }
+
+  async loadAndSetUnauthBricks(
+    page: number,
+    levels: AcademicLevel[],
+    length: BrickLengthEnum[],
+    filterCompetition: boolean,
+    sGroup: SubjectGroup
+  ) {
+    const subjectIds = this.getSubjectIds();
+    const pageBricks = await getUnauthPublishedBricksByPage(6, page, levels, length, subjectIds, filterCompetition, sGroup);
+
+    if (pageBricks) {
+      this.setState({
+        ...this.state,
+        page,
+        bricksCount: pageBricks.pageCount,
+        bricks: pageBricks.bricks,
+        filterLength: length,
+        filterLevels: levels,
+        isClearFilter: this.isFilterClear(),
+        isLoading: false,
         shown: true
       });
     }
@@ -614,7 +630,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return this.state.subjects.some((r) => r.checked);
   }
 
-  getSubjectIds(subjects: SubjectItem[]) {
+  getSubjectIds() {
     let subjectIds: number[] = [];
     const checked = this.state.subjects.find(s => s.checked === true);
     if (checked) {
@@ -628,7 +644,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     toggleSubject(this.state.subjects, id);
     toggleSubject(this.state.userSubjects, id);
 
-    this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+    if (this.props.user) {
+      this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+    } else if (this.state.subjectGroup) {
+      this.loadAndSetUnauthBricks(0, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+    }
 
     this.setState({ ...this.state, isViewAll: false, shown: false });
     setTimeout(() => {
@@ -653,8 +673,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       try {
         if (this.props.user) {
           this.loadAndSetBricks(0, this.state.isCore, filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
-        } else {
-          this.loadAndSetBricks(0, true, filterLevels, this.state.filterLength, this.state.filterCompetition, true);
+        } else if (this.state.subjectGroup) {
+          this.loadAndSetUnauthBricks(0, filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
         }
       } catch { }
     }, 1400);
@@ -667,8 +687,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       try {
         if (this.props.user) {
           this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, filterCompetition, this.state.isAllSubjects);
-        } else {
-          this.loadAndSetBricks(0, true, this.state.filterLevels, this.state.filterLength, filterCompetition, true);
+        } else if (this.state.subjectGroup) {
+          this.loadAndSetUnauthBricks(0, this.state.filterLevels, this.state.filterLength, filterCompetition, this.state.subjectGroup);
         }
       } catch { }
     }, 1400);
@@ -680,8 +700,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       try {
         if (this.props.user) {
           this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, filterLength, this.state.filterCompetition, this.state.isAllSubjects);
-        } else {
-          this.loadAndSetBricks(0, true, this.state.filterLevels, filterLength, this.state.filterCompetition, true);
+        } else if (this.state.subjectGroup) {
+          this.loadAndSetUnauthBricks(0, this.state.filterLevels, filterLength, this.state.filterCompetition, this.state.subjectGroup);
         }
       } catch { }
     }, 1400);

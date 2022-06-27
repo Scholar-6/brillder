@@ -71,22 +71,56 @@ interface PageBricks {
  * return list of bricks if success or null if failed
  */
 export const getPublishedBricksByPage = async (
-  pageSize: number, page: number, isCore: boolean, level: number[], length: BrickLengthEnum[], subjectIds: number[], onlyCompetitions: boolean, isAllSubjects: boolean
+  pageSize: number, page: number, isCore: boolean, level: number[], length: BrickLengthEnum[], subjectIds: number[], onlyCompetitions: boolean, isAllSubjects: boolean, subjectGroup?: number
 ) => {
   try {
-    return await post<PageBricks>(`/bricks/byStatus/${BrickStatus.Publish}/page/${page}`, {
+
+    let data = {
       isCore,
       pageSize,
       level,
       length,
       subjectIds,
       isAllSubjects,
-      onlyCompetitions
-    });
+      onlyCompetitions,
+    } as any;
+
+    if (subjectGroup) {
+      data.subjectGroup = subjectGroup;
+    }
+
+    return await post<PageBricks>(`/bricks/byStatus/${BrickStatus.Publish}/page/${page}`, data);
   } catch {
     return null;
   }
 }
+
+
+/**
+ * Get bricks by status
+ * return list of bricks if success or null if failed
+ */
+ export const getUnauthPublishedBricksByPage = async (
+  pageSize: number, page: number, level: number[], length: BrickLengthEnum[],
+  subjectIds: number[], onlyCompetitions: boolean, subjectGroup: number
+) => {
+  try {
+
+    let data = {
+      pageSize,
+      level,
+      length,
+      subjectIds,
+      subjectGroup,
+      onlyCompetitions,
+    } as any;
+
+    return await post<PageBricks>(`/bricks/byStatusUnauth/${BrickStatus.Publish}/page/${page}`, data);
+  } catch {
+    return null;
+  }
+}
+
 
 /**
  * Get current user bricks
