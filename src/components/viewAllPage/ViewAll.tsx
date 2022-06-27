@@ -176,7 +176,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       userIdSearch = parseInt(values.searchUserId as string);
     }
 
-
     if (
       !isSubjectCategory &&
       !values.isViewAll &&
@@ -430,7 +429,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
-      const pageBricks = await getPublishedBricksByPage(6, this.state.page, true, [], [], [], this.state.filterCompetition);
+      const pageBricks = await getPublishedBricksByPage(6, this.state.page, true, [], [], [], this.state.filterCompetition, this.state.isAllSubjects);
       if (pageBricks) {
         var keywords = this.collectKeywords(pageBricks.bricks);
         let bs = sortAllBricks(pageBricks.bricks);
@@ -464,9 +463,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  async loadAndSetBricks(page: number, isCore: boolean, levels: AcademicLevel[], length: BrickLengthEnum[], filterCompetition: boolean) {
+  async loadAndSetBricks(
+    page: number,
+    isCore: boolean,
+    levels: AcademicLevel[],
+    length: BrickLengthEnum[],
+    filterCompetition: boolean,
+    isAllSubjects: boolean) {
     const subjectIds = this.getSubjectIds(this.state.subjects);
-    const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length, subjectIds, filterCompetition);
+    const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length, subjectIds, filterCompetition, isAllSubjects);
 
     if (pageBricks) {
       this.setState({
@@ -479,6 +484,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         filterLevels: levels,
         isClearFilter: this.isFilterClear(),
         isLoading: false,
+        isAllSubjects,
         shown: true
       });
     }
@@ -622,7 +628,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     toggleSubject(this.state.subjects, id);
     toggleSubject(this.state.userSubjects, id);
 
-    this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
+    this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
 
     this.setState({ ...this.state, isViewAll: false, shown: false });
     setTimeout(() => {
@@ -646,9 +652,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     setTimeout(() => {
       try {
         if (this.props.user) {
-          this.loadAndSetBricks(0, this.state.isCore, filterLevels, this.state.filterLength, this.state.filterCompetition);
+          this.loadAndSetBricks(0, this.state.isCore, filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
         } else {
-          this.loadAndSetBricks(0, true, filterLevels, this.state.filterLength, this.state.filterCompetition);
+          this.loadAndSetBricks(0, true, filterLevels, this.state.filterLength, this.state.filterCompetition, true);
         }
       } catch { }
     }, 1400);
@@ -660,9 +666,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     setTimeout(() => {
       try {
         if (this.props.user) {
-          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, filterCompetition);
+          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, filterCompetition, this.state.isAllSubjects);
         } else {
-          this.loadAndSetBricks(0, true, this.state.filterLevels, this.state.filterLength, filterCompetition);
+          this.loadAndSetBricks(0, true, this.state.filterLevels, this.state.filterLength, filterCompetition, true);
         }
       } catch { }
     }, 1400);
@@ -673,9 +679,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     setTimeout(() => {
       try {
         if (this.props.user) {
-          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, filterLength, this.state.filterCompetition);
+          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, filterLength, this.state.filterCompetition, this.state.isAllSubjects);
         } else {
-          this.loadAndSetBricks(0, true, this.state.filterLevels, filterLength, this.state.filterCompetition);
+          this.loadAndSetBricks(0, true, this.state.filterLevels, filterLength, this.state.filterCompetition, true);
         }
       } catch { }
     }, 1400);
@@ -711,15 +717,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   selectAllSubjects(isViewAll: boolean) {
     if (this.props.user) {
-      if (isViewAll !== false) {
-        checkAllSubjects(this.state.subjects, this.state.isCore);
-        this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
-      }
+      checkAllSubjects(this.state.subjects, this.state.isCore);
+      this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, true);
     } else {
       for (let s of this.state.subjects) {
         s.checked = false;
       }
-      this.loadAndSetBricks(0, true, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
+      this.loadAndSetBricks(0, true, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition   , true);
     }
     this.setState({
       isViewAll,
@@ -730,7 +734,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   selectUserSubjects(isViewAll: boolean) {
     if (this.props.user) {
       this.checkUserSubjects();
-      this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
+      this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
       this.setState({
         isViewAll,
         isClearFilter: this.isFilterClear(),
@@ -828,7 +832,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
 
     if (index >= this.state.pageSize) {
-      this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
+      this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
 
       this.setState({
         ...this.state,
@@ -845,7 +849,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     if (index + pageSize <= bricksCount - 1) {
-      this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
+      this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
 
       this.setState({
         ...this.state,
@@ -952,7 +956,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const isCore = !this.state.isCore;
     this.setState({ isCore, shown: false, sortedIndex: 0 });
     setTimeout(() => {
-      this.loadAndSetBricks(0, isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition);
+      this.loadAndSetBricks(0, isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
     }, 1400);
   }
 
@@ -1142,7 +1146,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
 
-  renderDesktopViewAllPage(bricks: Brick[]) {
+  renderDesktopViewAllPage() {
     return (
       <Grid container direction="row" className="sorted-row no-mobile-css">
         <ViewAllFilter
@@ -1159,7 +1163,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           selectAllSubjects={this.selectAllSubjects.bind(this)}
           selectUserSubjects={this.selectUserSubjects.bind(this)}
           setAllSubjects={(isAllSubjects) => {
-            this.setState({ isAllSubjects, sortedIndex: 0 });
+            this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, isAllSubjects);
           }}
           openAddSubjectPopup={() =>
             this.setState({ isSubjectPopupOpen: true })
@@ -1188,9 +1192,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     const { user, history } = this.props;
 
-    let bricks = this.state.bricks;
-
-    if (isPhone()) {
+     if (isPhone()) {
       return (
         <React.Suspense fallback={<></>}>
           <MobileTheme />
@@ -1253,7 +1255,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     if (this.state.isSearching) {
-      bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
+      //bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
     let className = 'main-listing dashboard-page';
@@ -1300,7 +1302,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 />
               </Route>
               <Route exec path={map.ViewAllPage}>
-                {this.renderDesktopViewAllPage(bricks)}
+                {this.renderDesktopViewAllPage()}
               </Route>
             </Switch>
           </div>
