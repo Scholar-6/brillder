@@ -472,6 +472,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         filterLevels: levels,
         isClearFilter: this.isFilterClear(),
         isLoading: false,
+        isSearching: false,
         isAllSubjects,
         shown: true
       });
@@ -813,12 +814,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         sortedIndex: index + this.state.pageSize,
       });
     }
-  }
-
-  filterByCore(bricks: Brick[], isCore: boolean) {
-    return isCore
-      ? bricks.filter((b) => b.isCore === true)
-      : bricks.filter((b) => b.isCore === false);
   }
 
   searching(searchString: string) {
