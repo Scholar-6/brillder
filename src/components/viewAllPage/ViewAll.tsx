@@ -362,6 +362,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       console.log('loading')
       if (this.state.subjectGroup) {
         this.loadUnauthorizedBricks(this.state.subjectGroup);
+      } else {
+        this.setState({
+          isLoading: false
+        });
       }
     }
   }
