@@ -764,7 +764,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  moveAllNext() {
+  moveAllNext() { 
     let index = this.state.page * this.state.pageSize;
     const { pageSize, bricksCount } = this.state;
 
@@ -800,7 +800,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number, isCore: boolean) {
     let pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore);
-    if (pageBricks && pageBricks.bricks) {
+
+    if (pageBricks && pageBricks.bricks.length >= 0) {
       this.setState({
         ...this.state,
         page,
