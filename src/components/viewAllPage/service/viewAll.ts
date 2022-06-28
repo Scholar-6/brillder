@@ -188,12 +188,11 @@ export const expandBrick = (bricks: Brick[], index: number) => {
   }
 }
 
-export const renderTitle = (bricks: Brick[]) => {
-  const { length } = bricks;
-  if (length === 1) {
+export const renderTitle = (bricksCount: number) => {
+  if (bricksCount === 1) {
     return '1 brick found';
   }
-  return length + ' bricks found';
+  return bricksCount + ' bricks found';
 }
 
 export const prepareVisibleBricks = (
