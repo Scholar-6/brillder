@@ -400,27 +400,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.loadAndSetUnauthBricks(0, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, sGroup);
   }
 
-  collectKeywords(bricks: Brick[]) {
-    let keywords: KeyWord[] = [];
-    for (let brick of bricks) {
-      if (brick.keywords && brick.keywords.length > 0) {
-        for (let keyword of brick.keywords) {
-          /*eslint-disable-next-line*/
-          var found = keywords.find(k => k.id == keyword.id);
-          if (!found) {
-            keywords.push(keyword);
-          }
-        }
-      }
-    }
-    return keywords;
-  }
-
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
       const pageBricks = await getPublishedBricksByPage(6, this.state.page, true, [], [], [], this.state.filterCompetition, this.state.isAllSubjects);
       if (pageBricks) {
-        var keywords = this.collectKeywords(pageBricks.bricks);
         let bs = sortAllBricks(pageBricks.bricks);
         let { subjects } = this.state;
         countSubjectBricksV2(subjects, bs, this.props.user, this.state.isAdmin);
@@ -434,7 +417,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           subjects,
           bricksCount: pageBricks.pageCount,
           bricks: pageBricks.bricks,
-          keywords,
           isLoading: false,
           shown: true,
         });
@@ -1220,7 +1202,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           {this.state.searchTyping === true && this.state.searchString.length >= 1 && <SearchSuggestions
             history={this.props.history} subjects={this.state.subjects}
             searchString={this.state.searchString} bricks={this.state.bricks}
-            keywords={this.state.keywords}
             filterByAuthor={this.filterByAuthor.bind(this)}
             filterBySubject={this.filterSuggestionSubject.bind(this)}
             filterByKeyword={this.filterSuggestionKeyword.bind(this)}

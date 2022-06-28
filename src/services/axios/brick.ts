@@ -163,6 +163,14 @@ export const getStudentAssignments = async (studentId: number) => {
   }
 }
 
+export const getSuggestedKeywords = async (suggestion: string) => {
+  try {
+    return await get<KeyWord[]>("/keywords/suggest/" + suggestion);
+  } catch {
+    return null;
+  }
+}
+
 export const searchBricks = async (searchString: string = '') => {
   try {
     return await post<Brick[]>("/bricks/search", { searchString });
