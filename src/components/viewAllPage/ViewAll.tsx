@@ -712,22 +712,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterSuggestionKeyword(keyword: KeyWord) {
-    const searchBricks = this.state.bricks.filter(b => {
-      if (b.keywords && b.keywords.length > 0) {
-        /*eslint-disable-next-line*/
-        let found = b.keywords.find(k => k.id == keyword.id);
-        if (found) {
-          return true;
-        }
-      }
-      return false;
-    });
+    this.loadAndSetSearchBricks(keyword.name, 0, this.state.pageSize, this.state.isCore);
 
     this.setState({
       ...this.state,
       isClearFilter: this.isFilterClear(),
       searchString: keyword.name,
-      searchBricks,
       shown: true,
       isLoading: false,
       searchTyping: false,
