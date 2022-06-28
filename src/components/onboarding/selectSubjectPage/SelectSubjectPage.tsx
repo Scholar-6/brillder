@@ -103,9 +103,12 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
     if (saved) {
       let isSchool = checkIfSchool();
+      
+      console.log('isschool', isSchool)
 
       if (isSchool) {
-        this.props.history.push('https://brillder.com/brilliant-minds-prizes/');
+        window.location.href = 'https://brillder.com/brilliant-minds-prizes/';
+        return;
       }
 
       await this.props.getUser();
