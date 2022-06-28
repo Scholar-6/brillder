@@ -718,14 +718,19 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterSuggestionSubject(subject: Subject) {
-    /*eslint-disable-next-line*/
-    const searchBricks = this.state.bricks.filter(b => b.subject && b.subject.id == subject.id);
+    toggleSubject(this.state.subjects, subject.id);
+    toggleSubject(this.state.userSubjects, subject.id);
+
+    if (this.props.user) {
+      this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, true);
+    } else if (this.state.subjectGroup) {
+      this.loadAndSetUnauthBricks(0, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+    }
 
     this.setState({
       ...this.state,
       isClearFilter: this.isFilterClear(),
       searchString: subject.name,
-      searchBricks,
       shown: true,
       isLoading: false,
       searchTyping: false,
