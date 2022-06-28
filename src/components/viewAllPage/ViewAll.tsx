@@ -716,18 +716,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterSuggestionSubject(subject: Subject) {
-    /*eslint-disable-next-line*/
-    const searchBricks = this.state.bricks.filter(b => b.subject && b.subject.id == subject.id);
+    toggleSubject(this.state.subjects, subject.id);
+    toggleSubject(this.state.userSubjects, subject.id);
+
+    this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
 
     this.setState({
       ...this.state,
       isClearFilter: this.isFilterClear(),
       searchString: subject.name,
-      searchBricks,
-      shown: true,
-      isLoading: false,
-      searchTyping: false,
-      isSearchBLoading: false,
       isSearching: true,
     });
   }
@@ -1017,7 +1014,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       return (
         <div className="main-brick-container">
           <div className="centered text-theme-dark-blue title found">
-            {renderTitle(bricks)}
+            {renderTitle(this.state.bricksCount)}
             <CreateOneButton onClick={this.moveToCreateOne.bind(this)} />
             {/*<RecommendButton />*/}
           </div>
