@@ -7,6 +7,8 @@ import PrevButton from "components/baseComponents/pagination/PrevButton";
 const DashboardPagination: React.FC<any> = props => {
   const { pageSize, sortedIndex, bricksLength } = props;
 
+  console.log(pageSize, sortedIndex, bricksLength);
+
   if (bricksLength <= pageSize) return <div></div>;
 
   const showPrev = sortedIndex >= pageSize;
