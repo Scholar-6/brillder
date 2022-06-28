@@ -106,7 +106,6 @@ interface ViewAllState {
   subjects: SubjectItem[];
   userSubjects: Subject[];
 
-  sortedIndex: number;
   isLoading: boolean;
 
   isAllCategory: boolean;
@@ -211,7 +210,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       sortBy: SortBy.Date,
       subjects: [],
       userSubjects: props.user ? Object.assign([], props.user.subjects) : [],
-      sortedIndex: 0,
       bricksCount: 0,
       page: 0,
 
@@ -786,7 +784,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   };
 
   moveAllBack() {
-    let index = this.state.sortedIndex;
+    let index = this.state.page * this.state.pageSize;
 
     if (index >= this.state.pageSize) {
       if (this.state.isSearching) {
@@ -794,16 +792,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       } else {
         this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
       }
-
-      this.setState({
-        ...this.state,
-        sortedIndex: index - this.state.pageSize,
-      });
     }
   }
 
   moveAllNext() {
-    let index = this.state.sortedIndex;
+    let index = this.state.page * this.state.pageSize;
     const { pageSize, bricksCount } = this.state;
 
     if (index + pageSize <= bricksCount - 1) {
@@ -812,11 +805,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       } else {
         this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
       }
-
-      this.setState({
-        ...this.state,
-        sortedIndex: index + this.state.pageSize,
-      });
     }
   }
 
@@ -917,7 +905,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   toggleCore() {
     const isCore = !this.state.isCore;
-    this.setState({ isCore, shown: false, sortedIndex: 0 });
+    this.setState({ isCore, shown: false, page: 0 });
     setTimeout(() => {
       this.loadAndSetBricks(0, isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
     }, 1400);
@@ -1099,7 +1087,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         {this.renderDesktopBricksPanel(this.state.bricks)}
         <ViewAllPagination
           pageSize={this.state.pageSize}
-          sortedIndex={this.state.sortedIndex}
+          sortedIndex={this.state.page * this.state.pageSize}
           bricksLength={this.state.bricksCount}
           moveAllNext={() => this.moveAllNext()}
           moveAllBack={() => this.moveAllBack()}
