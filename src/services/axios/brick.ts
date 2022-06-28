@@ -166,7 +166,15 @@ export const getStudentAssignments = async (studentId: number) => {
 export const searchBricks = async (searchString: string = '') => {
   try {
     return await post<Brick[]>("/bricks/search", { searchString });
-  } catch (e) {
+  } catch {
+    return null;
+  }
+}
+
+export const searchPaginateBricks = async (searchString: string = '', page: number, pageSize: number, isCore: boolean) => {
+  try {
+    return await post<PageBricks>(`/bricks/search/public/page/${page}`, { searchString, pageSize, isCore, });
+  } catch {
     return null;
   }
 }

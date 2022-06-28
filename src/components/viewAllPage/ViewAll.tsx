@@ -31,7 +31,7 @@ import {
 import {
   getPublishedBricksByPage,
   getUnauthPublishedBricksByPage,
-  searchBricks,
+  searchPaginateBricks,
 } from "services/axios/brick";
 import { getSubjects } from "services/axios/subject";
 
@@ -62,15 +62,12 @@ import {
   sortAndCheckSubjects,
   filterSearchBricks,
   getCheckedSubjectIds,
-  onlyPrepareUserSubjects,
   countSubjectBricksV2,
   getSubjectsWithBricks,
   checkAllSubjects,
 } from "./service/viewAll";
 import {
-  filterByCurretUser,
   filterByLevels,
-  filterByLength,
   filterByCompetitions
 } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
@@ -562,70 +559,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     return bricks;
   }
 
-  filter(
-    bricks: Brick[],
-    isAllSubjects: boolean,
-    isCore: boolean,
-    showAll?: boolean,
-    levels?: AcademicLevel[],
-    filterLength?: BrickLengthEnum[],
-    filterCompetition?: boolean,
-  ) {
-    if (this.state.isSearching) {
-      bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
-    }
-
-    let filterSubjects: any[] = [];
-    if (isAllSubjects) {
-      filterSubjects = getCheckedSubjectIds(this.state.subjects);
-    } else {
-      const userSubjects = onlyPrepareUserSubjects(
-        this.state.subjects,
-        this.state.userSubjects
-      );
-      const isChecked = userSubjects.find((s) => s.checked === true);
-      if (isChecked) {
-        filterSubjects = getCheckedSubjectIds(userSubjects);
-      } else {
-        filterSubjects = userSubjects.map((s) => s.id);
-      }
-    }
-    if (this.state.subjectGroup) {
-      // unauthorized user see groups of subjects
-      const groupSubjects = this.state.subjects.filter(
-        (s) => s.group === this.state.subjectGroup
-      );
-      filterSubjects = groupSubjects.map((s) => s.id);
-    }
-
-    if (showAll === true) {
-      filterSubjects = this.state.subjects.map((s) => s.id);
-    }
-
-    bricks = this.filterByCore(bricks, isCore);
-
-    if (!isCore && !this.state.isAdmin) {
-      bricks = filterByCurretUser(bricks, this.props.user.id);
-    }
-
-    if (levels && levels.length > 0) {
-      bricks = filterByLevels(bricks, levels);
-    }
-
-    if (filterLength && filterLength.length > 0) {
-      bricks = filterByLength(bricks, filterLength)
-    }
-
-    if (filterCompetition) {
-      bricks = filterByCompetitions(bricks);
-    }
-
-    if (filterSubjects.length > 0) {
-      return sortAndFilterBySubject(bricks, filterSubjects);
-    }
-    return bricks;
-  }
-
   isFilterClear() {
     return this.state.subjects.some((r) => r.checked);
   }
@@ -743,7 +676,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       for (let s of this.state.subjects) {
         s.checked = false;
       }
-      this.loadAndSetBricks(0, true, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition   , true);
+      this.loadAndSetBricks(0, true, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, true);
     }
     this.setState({
       isViewAll,
@@ -850,9 +783,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   moveAllBack() {
     let index = this.state.sortedIndex;
 
-
     if (index >= this.state.pageSize) {
-      this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+      if (this.state.isSearching) {
+        this.loadAndSetSearchBricks(this.state.searchString, this.state.page - 1, this.state.pageSize, this.state.isCore);
+      } else {
+        this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+      }
 
       this.setState({
         ...this.state,
@@ -865,11 +801,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     let index = this.state.sortedIndex;
     const { pageSize, bricksCount } = this.state;
 
-    if (this.state.isSearching) {
-    }
-
     if (index + pageSize <= bricksCount - 1) {
-      this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+      if (this.state.isSearching) {
+        this.loadAndSetSearchBricks(this.state.searchString, this.state.page + 1, this.state.pageSize, this.state.isCore);
+      } else {
+        this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+      }
 
       this.setState({
         ...this.state,
@@ -905,30 +842,37 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...this.state, dropdownShown: false });
   }
 
+  async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number, isCore: boolean) {
+    let pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore);
+    if (pageBricks && pageBricks.bricks) {
+      this.setState({
+        ...this.state,
+        page,
+        bricks: pageBricks.bricks,
+        bricksCount: pageBricks.pageCount,
+        searchBricks: pageBricks.bricks,
+        shown: true,
+        isLoading: false,
+        isSearchBLoading: false,
+        isSearching: true,
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        isLoading: false,
+        isSearchBLoading: false,
+        failedRequest: true,
+      });
+    }
+  }
+
   async search() {
     const { searchString } = this.state;
     this.setState({ shown: false, searchTyping: false, isSearchBLoading: true });
-    let bricks = await searchBricks(searchString);
 
     setTimeout(() => {
       try {
-        if (bricks) {
-          this.setState({
-            ...this.state,
-            searchBricks: bricks,
-            shown: true,
-            isLoading: false,
-            isSearchBLoading: false,
-            isSearching: true,
-          });
-        } else {
-          this.setState({
-            ...this.state,
-            isLoading: false,
-            isSearchBLoading: false,
-            failedRequest: true,
-          });
-        }
+        this.loadAndSetSearchBricks(searchString, 0, this.state.pageSize, this.state.isCore);
       } catch {
         this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
       }
@@ -1212,7 +1156,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     const { user, history } = this.props;
 
-     if (isPhone()) {
+    if (isPhone()) {
       return (
         <React.Suspense fallback={<></>}>
           <MobileTheme />
