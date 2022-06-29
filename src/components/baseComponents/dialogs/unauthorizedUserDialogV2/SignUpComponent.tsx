@@ -95,7 +95,7 @@ class SignUpComponent extends React.Component<LoginFormProps, LoginsState> {
 
     const register = (email: string, password: string) => {
       axios.post(
-        `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp/3`,
+        `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`,
         { email, password, confirmPassword: password },
         { withCredentials: true }
       ).then((resp) => {
