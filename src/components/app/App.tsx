@@ -137,7 +137,7 @@ const App: React.FC<AppProps> = props => {
       props.setReferralId(referralId);
     }
     /*eslint-disable-next-line*/
-  }, [location])
+  }, [location]);
 
   // lock screen for phone
   if (isPhone()) {

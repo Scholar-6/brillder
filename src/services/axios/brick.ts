@@ -1,6 +1,6 @@
 import { getApiQuestion } from 'components/build/questionService/QuestionService';
 import { AssignmentBrick } from 'model/assignment';
-import { Brick, BrickStatus, KeyWord } from 'model/brick';
+import { Brick, BrickLengthEnum, BrickStatus, KeyWord } from 'model/brick';
 import { Question } from 'model/question';
 
 import { get, put, post, axiosDelete } from './index';
@@ -60,6 +60,68 @@ export const getPublishedBricks = async () => {
   }
 }
 
+
+interface PageBricks {
+  pageCount: number;
+  bricks: Brick[];
+}
+
+/**
+ * Get bricks by status
+ * return list of bricks if success or null if failed
+ */
+export const getPublishedBricksByPage = async (
+  pageSize: number, page: number, isCore: boolean, level: number[], length: BrickLengthEnum[], subjectIds: number[], onlyCompetitions: boolean, isAllSubjects: boolean, subjectGroup?: number
+) => {
+  try {
+
+    let data = {
+      isCore,
+      pageSize,
+      level,
+      length,
+      subjectIds,
+      isAllSubjects,
+      onlyCompetitions,
+    } as any;
+
+    if (subjectGroup) {
+      data.subjectGroup = subjectGroup;
+    }
+
+    return await post<PageBricks>(`/bricks/byStatus/${BrickStatus.Publish}/page/${page}`, data);
+  } catch {
+    return null;
+  }
+}
+
+
+/**
+ * Get bricks by status
+ * return list of bricks if success or null if failed
+ */
+ export const getUnauthPublishedBricksByPage = async (
+  pageSize: number, page: number, level: number[], length: BrickLengthEnum[],
+  subjectIds: number[], onlyCompetitions: boolean, subjectGroup: number
+) => {
+  try {
+
+    let data = {
+      pageSize,
+      level,
+      length,
+      subjectIds,
+      subjectGroup,
+      onlyCompetitions,
+    } as any;
+
+    return await post<PageBricks>(`/bricks/byStatusUnauth/${BrickStatus.Publish}/page/${page}`, data);
+  } catch {
+    return null;
+  }
+}
+
+
 /**
  * Get current user bricks
  * return list of bricks if success or null if failed
@@ -101,10 +163,26 @@ export const getStudentAssignments = async (studentId: number) => {
   }
 }
 
+export const getSuggestedKeywords = async (suggestion: string) => {
+  try {
+    return await get<KeyWord[]>("/keywords/suggest/" + suggestion);
+  } catch {
+    return null;
+  }
+}
+
 export const searchBricks = async (searchString: string = '') => {
   try {
     return await post<Brick[]>("/bricks/search", { searchString });
-  } catch (e) {
+  } catch {
+    return null;
+  }
+}
+
+export const searchPaginateBricks = async (searchString: string = '', page: number, pageSize: number, isCore: boolean) => {
+  try {
+    return await post<PageBricks>(`/bricks/search/public/page/${page}`, { searchString, pageSize, isCore, });
+  } catch {
     return null;
   }
 }

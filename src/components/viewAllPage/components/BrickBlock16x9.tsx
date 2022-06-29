@@ -47,8 +47,6 @@ interface BrickBlockProps {
   bestScore?: number;
 
   teacher?: User;
-
-  handleDeleteOpen(brickId: number): void;
 }
 
 const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {

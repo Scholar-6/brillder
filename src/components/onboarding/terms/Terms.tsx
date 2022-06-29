@@ -14,7 +14,7 @@ import { getTerms } from "services/axios/terms";
 import { isPhone } from "services/phone";
 import { hideZendesk } from "services/zendesk";
 import axios from "axios";
-import { User } from "model/user";
+import { User, UserPreferenceType } from "model/user";
 import { GetOrigin } from "localStorage/origin";
 
 interface BricksListProps {
@@ -154,7 +154,15 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
                     if (origin === 'library') {
                       this.props.history.push(map.LibraryOnboarding);
                     } else {
-                      this.props.history.push(map.UserPreferencePage);
+                      const user = await this.props.getUser() as User;
+
+                      // if origin is school user will have user preference Student.
+                      // skip user preference for him
+                      if (user.userPreference?.preferenceId === UserPreferenceType.Student) {
+                        this.props.history.push(map.SetUsername);
+                      } else {
+                        this.props.history.push(map.UserPreferencePage);
+                      }
                     }
                   }
                 }
