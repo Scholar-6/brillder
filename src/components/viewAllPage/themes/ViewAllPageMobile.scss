@@ -518,13 +518,21 @@
     }
   }
 
+  .ss-tabs-scroll {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+
   .ss-tabs-container {
     background: rgba(0, 28, 88, 0.22);
     $radius: 2vw;
     display: flex;
+    width: 140vw;
 
     .ss-tab-1,
-    .ss-tab-2 {
+    .ss-tab-2,
+    .ss-tab-3 {
       height: 6vh;
       font-size: 6vw;
       width: 49vw;
@@ -570,6 +578,10 @@
     }
 
     .ss-tab-2 {
+      border-top-right-radius: $radius;
+      border-top-left-radius: $radius;
+    }
+    .ss-tab-3 {
       margin-left: 1vw;
       border-top-left-radius: $radius;
     }
@@ -896,15 +908,35 @@
     }
 
     .va-footer {
-      height: 14vw;
-      width: 30vw;
+      height: 13vw;
+      width: calc(100% - 4vw);
       position: absolute;
       bottom: 0;
       right: 4vw;
+      font-family: $font-family-bold;
+      display: flex;
+
+      .va-favorites {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        width: 100%;
+        left: 4vw;
+        padding: 1vw 0;
+        border-radius: 1.8vw;
+        font-size: 6vw;
+
+        svg {
+          margin-left: 3vw;
+          color: var(--white);
+          width: 9vw;
+          height: 9vw;
+        }
+      }
 
       .va-right-play {
         position: absolute;
-        width: 100%;
+        width: 30vw;
         right: 2vw;
         padding: 1vw 0;
         border-radius: 1.8vw;

@@ -372,6 +372,23 @@ export const copyBrick = async (brick: Brick, questions: Question[]) => {
   }
 }
 
+export const saveFavorite = async (brickId: number) => {
+  try {
+    await post<any>('/bricks/favorites/add', { brickId});
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export const getFavorites = async () => {
+  try {
+    return await get<any>('/bricks/favorites');
+  } catch {
+    return false;
+  }
+}
+
 export default {
   sendToPublisher
 }
