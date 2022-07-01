@@ -59,7 +59,7 @@ import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 import { trackSignUp } from "services/matomo";
-import { CashAttempt, ClearAuthBrickCash, GetAuthBrickCash, GetCashedPlayAttempt } from "localStorage/play";
+import { CashAttempt, ClearAuthBrickCash, GetAuthBrickCash, GetCashedPlayAttempt, SetUnauthBrickCash } from "localStorage/play";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
@@ -192,6 +192,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     parsedBrick = parseAndShuffleQuestions(props.brick);
     initAttempts = prefillAttempts(parsedBrick.questions);
     initReviewAttempts = initAttempts;
+  }
+
+  // if unauthenticated and personal brick move to login page
+  if (!props.user && parsedBrick.isCore === false) {
+    SetUnauthBrickCash(parsedBrick);
+    history.push(map.Login);
   }
 
   const [isCreatingAttempt, setCreatingAttempt] = useState(false);

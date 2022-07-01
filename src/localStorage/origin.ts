@@ -11,3 +11,12 @@ export function GetOrigin() {
 export function UnsetOrigin() {
   localStorage.removeItem(Origin);
 }
+
+
+export const checkIfSchool = () => {
+  var origin = GetOrigin();
+  if (origin === 'school') {
+    return true;
+  }
+  return false;
+}

@@ -20,7 +20,7 @@ const LibrarySuccessDialog: React.FC<DialogProps> = ({ isOpen, close, submit }) 
         </div>
         <div className="text-center custom-title-d35">Library Linked!</div>
         <div className="custom-text-d35">
-          You can now play bricks in the catalogue for free.
+          You now have free access to our entire catalogue.
         </div>
         <div className="dialog-footer">
           <button className="btn margin-top-d324 btn-md bg-theme-green yes-button" onClick={submit}>

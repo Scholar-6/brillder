@@ -285,6 +285,10 @@
   .cropping {
     img {
       max-width: 100%;
+      // Add minimum width for SVGs (don't always have set widths)
+      &[src*="svg"] {
+        min-width: 10vh;
+      }
     }
   }
   .cropping.empty {
