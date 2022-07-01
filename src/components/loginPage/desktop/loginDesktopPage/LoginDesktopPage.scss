@@ -118,7 +118,7 @@
     .google-button-desktop,
     .email-button {
       position: relative;
-      font-size: 1.4vw;
+      font-size: 1.2vw;
       font-family: $font-family-regular;
       border-radius: 0.5vw;
       transition: all 450ms ease-out;
@@ -126,10 +126,22 @@
 
       svg {
         position: absolute !important;
-        height: 100%;
         left: 2vw;
         width: 2vw;
         height: 2vw;
+      }
+
+      img {
+        position: absolute !important;
+        left: 1.1vw;
+        width: 1.7vw;
+        height: 1.7vw;
+      }
+    }
+
+    .microsoft-btn {
+      span {
+        margin-left: 2vw;
       }
     }
 
