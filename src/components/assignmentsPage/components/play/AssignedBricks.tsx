@@ -51,7 +51,6 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       circleIcon={circleIcon}
       deadline={item.deadline}
       searchString=""
-      handleDeleteOpen={() => {}}
     />
   }
 

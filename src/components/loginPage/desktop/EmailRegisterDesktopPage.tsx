@@ -11,6 +11,8 @@ import WrongLoginDialog from "../components/WrongLoginDialog";
 import DesktopLoginForm from "./DesktopLoginForm";
 import map from "components/map";
 import { ReduxCombinedState } from "redux/reducers";
+import { GetOrigin } from "localStorage/origin";
+import { UserPreferenceType } from "model/user";
 
 const mapState = (state: ReduxCombinedState) => ({
   referralId: state.auth.referralId,
@@ -105,9 +107,19 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   };
 
   const register = (email: string, password: string) => {
+    let data = {
+      email, password, confirmPassword: password, referralId: props.referralId
+    } as any;
+
+
+    var origin = GetOrigin();
+    if (origin === 'school') {
+      data.userPreference = UserPreferenceType.Student;
+    }
+
     axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp/3`,
-      { email, password, confirmPassword: password, referralId: props.referralId },
+      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`,
+      data,
       { withCredentials: true }
     ).then((resp) => {
       const { data } = resp;

@@ -286,7 +286,6 @@ class PageHeader extends Component<Props, State> {
         {this.props.suggestions && this.state.value.length >= 1 && <SearchSuggestions
           history={this.props.history} subjects={this.state.subjects}
           searchString={this.state.value} bricks={this.state.bricks}
-          keywords={this.state.keywords}
           filterByAuthor={a => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + a.firstName)}
           filterBySubject={s => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + s.name)}
           filterByKeyword={k => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + k.name)}
