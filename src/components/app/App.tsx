@@ -125,7 +125,7 @@ const App: React.FC<AppProps> = props => {
     const values = queryString.parse(location.search);
 
     if (values.origin === 'heartofmercia') {
-      window.location.href = 'https://dev-api.brillder.com/auth/microsoft/login/';
+      window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login/`;
     }
     /*eslint-disable-next-line*/
   }, []);
