@@ -3,7 +3,7 @@ import { Hidden } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Input } from "@material-ui/core";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
-import { FormControlLabel, Checkbox } from "@material-ui/core";
+import { Checkbox } from "@material-ui/core";
 
 import { ReduxCombinedState } from "redux/reducers";
 import userActions from "redux/actions/user";

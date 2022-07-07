@@ -113,9 +113,8 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
     setSuggestions(res.splice(0, 10));
   }
 
-  useEffect(() => {
-    search()
-  }, [searchString]);
+  /*eslint-disable-next-line*/
+  useEffect(() => { search() }, [searchString]);
 
   const renderAutorAvatar = (authorR: Author) => {
     if (authorR.profileImage) {
