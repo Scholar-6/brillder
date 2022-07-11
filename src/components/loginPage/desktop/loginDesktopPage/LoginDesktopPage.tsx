@@ -22,6 +22,7 @@ import { FirstPage, EmailSignPage, JoinPage, RegisterPage } from "../routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
 import { GetOrigin } from "localStorage/origin";
 import MicrosoftDesktopButton from "../MicrosoftDesktopButton";
+import LibraryDesktopButton from "../LibraryDesktopButton";
 
 
 const DesktopTheme = React.lazy(() => import('./themes/LoginDesktopTheme'));
@@ -94,6 +95,17 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
               </div>
               <div className="button-box">
                 <GoogleDesktopButton label="Register with Google" />
+              </div>
+              <div className="button-box m-t-3vh">
+                <MicrosoftDesktopButton />
+              </div>
+              <div className="button-box">
+                <LibraryDesktopButton onClick={moveToRegister} />
+              </div>
+              <div className="flex-center login-or-content">
+                <div className="line"></div>
+                <div>OR</div>
+                <div className="line"></div>
               </div>
               <div className="button-box">
                 <RegisterDesktopButton label="Register with email" onClick={moveToRegister} />
