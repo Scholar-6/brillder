@@ -63,9 +63,9 @@
     height: 100%;
     padding-top: 12.4vh;
     transition: all 500ms ease-out;
+    $logo-width: 11.3vw;
 
     .logo {
-      $logo-width: 11.3vw;
       margin-bottom: 5.6vh;
       .logo-image {
         width: $logo-width;
@@ -224,6 +224,7 @@
       }
     }
 
+    // right part now have more buttons. make upper image smaller
     &.right {
       position: absolute;
       padding-top: 5vh;
@@ -235,6 +236,20 @@
         }
         .logo-text-image {
           width: 8vw;
+        }
+      }
+
+      // register part have same buttons. make upper images same as in login.
+      &.register-part {
+        padding-top: 12.4vh;
+
+        .logo {
+          .logo-image {
+            width: $logo-width;
+          }
+          .logo-text-image {
+            width: $logo-width;
+          }
         }
       }
 
