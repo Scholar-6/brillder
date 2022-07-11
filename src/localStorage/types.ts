@@ -6,6 +6,7 @@ export const YoutubeClicked = 'youtube-clicked';
 export const AttemptCash = 'AttemptCash';
 export const PreviewAttemptCash = 'PreviewAttemptCash';
 export const LoginRedirectUrl = 'LoginRedirectUrl';
+export const LoginHeartOfMercia = 'LoginHeartOfMercia';
 export const AuthBrickCash = 'AuthBrickCash';
 export const UnauthBrickCash = 'UnauthBrickCash';
 export const VolumeToggle = 'VolumeToggle';
