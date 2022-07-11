@@ -26,6 +26,7 @@ const connector = connect(mapState, mapDispatch);
 
 interface LoginProps {
   history: History;
+  isLibrary?: boolean;
   email?: string;
   referralId?: string;
   loginSuccess(): void;
@@ -38,6 +39,8 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
   const [isLoginWrong, setLoginWrong] = React.useState(false);
+
+  const [libraryPart, setLibrary] = useState(props.isLibrary ? props.isLibrary : false);
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -148,8 +151,29 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
     });
   };
 
+  if (libraryPart) {
+    return (
+      <div className="left-part right register-part">
+        <div className="logo">
+          <LoginLogo />
+        </div>
+        <div className="button-box">
+        </div>
+        <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={alertShown}
+          autoHideDuration={1500}
+          onClose={() => toggleAlertMessage(false)}
+          message={alertMessage}
+          action={<React.Fragment></React.Fragment>}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="left-part right">
+    <div className="left-part right register-part">
       <div className="logo">
         <LoginLogo />
       </div>
