@@ -460,3 +460,56 @@
     }
   }
 }
+
+
+// library style
+.login-desktop-page {
+  .absolute-placeholder {
+    pointer-events: none;
+    z-index: 1;
+    color: #8D9AAB;
+    font-size: 1.3vw;
+    position: absolute;
+    top: 2.3vh;
+    width: 20vw;
+    text-align: center;
+    letter-spacing: 0.2vw;
+  }
+  .select-library {
+    margin-bottom: 1.5vh;
+    width: 20vw;
+    padding: 2vh 1vw 2.6vh 1vw !important;
+    border-radius: 0.5vw;
+    background: var(--theme-dark-blue);
+
+    &.MuiInput-underline:before {
+      display: none !important;
+    }
+
+    .MuiSvgIcon-root {
+      color: white;
+    }
+
+    .MuiTypography-root {
+      color: white;
+      text-align: center;
+      font-size: 1.5vw !important;
+    }
+
+    .MuiSelect-select {
+      height: 2.13vw;
+    }
+
+    .MuiInputBase-input {
+      padding: 0;
+    }
+  }
+  .input-block {
+    width: 20vw;
+    input::placeholder {
+      font-size: 1.3vw;
+      letter-spacing: 0.2vw;
+      color: #8D9AAB !important;
+    }
+  }
+}
