@@ -7,7 +7,7 @@ import GoogleButton from "../components/GoogleButton";
 import RegisterButton from "../components/RegisterButton";
 import TermsLink from "components/baseComponents/TermsLink";
 import { Route, Switch } from "react-router-dom";
-import { FirstPage, EmailSignPage, RegisterPage, JoinPage } from "../desktop/routes";
+import { FirstPage, EmailSignPage, RegisterPage, JoinPage, LibraryRegisterPage } from "../desktop/routes";
 import MobileRegisterPage from './MobileRegister';
 import MobileJoinPage from './MobileJoin';
 
@@ -107,6 +107,9 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
         </Route>
         <Route exact path={RegisterPage}>
           <MobileRegisterPage history={this.props.history} email="" />
+        </Route>
+        <Route exact path={LibraryRegisterPage}>
+          <MobileRegisterPage history={this.props.history} email="" isLibrary={true} />
         </Route>
       </Switch>
     );
