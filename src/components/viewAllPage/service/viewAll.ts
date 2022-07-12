@@ -188,12 +188,11 @@ export const expandBrick = (bricks: Brick[], index: number) => {
   }
 }
 
-export const renderTitle = (bricks: Brick[]) => {
-  const { length } = bricks;
-  if (length === 1) {
+export const renderTitle = (bricksCount: number) => {
+  if (bricksCount === 1) {
     return '1 brick found';
   }
-  return length + ' bricks found';
+  return bricksCount + ' bricks found';
 }
 
 export const prepareVisibleBricks = (
@@ -204,6 +203,22 @@ export const prepareVisibleBricks = (
   let data: any[] = [];
   let count = 0;
   for (let i = 0 + sortedIndex; i < pageSize + sortedIndex; i++) {
+    const brick = bricks[i];
+    if (brick) {
+      let row = Math.floor(count / 3);
+      data.push({ brick, key: i, index: count, row });
+      count++;
+    }
+  }
+  return data;
+}
+
+export const prepareVisibleBricks2 = (
+  bricks: Brick[]
+) => {
+  let data: any[] = [];
+  let count = 0;
+  for (let i = 0; i < bricks.length; i++) {
     const brick = bricks[i];
     if (brick) {
       let row = Math.floor(count / 3);

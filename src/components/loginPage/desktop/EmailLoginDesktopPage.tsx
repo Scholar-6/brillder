@@ -135,7 +135,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
 
   const register = (email: string, password: string) => {
     axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp/3`,
+      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`,
       { email, password, confirmPassword: password, referralId: props.referralId },
       { withCredentials: true }
     ).then((resp) => {
