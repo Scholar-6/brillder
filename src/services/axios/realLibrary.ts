@@ -30,3 +30,12 @@ export const unclaimLibraryAccount = async (libraryId: number) => {
     return false;
   }
 }
+
+export const checkLibraryAccount = async (libraryId: number, barcodeNumber: string, pin: string) => {
+  try {
+    await post<any>('/user/checkLibraryAccount', {libraryId, barcodeNumber, pin });
+    return true;
+  } catch {
+    return false;
+  }
+}

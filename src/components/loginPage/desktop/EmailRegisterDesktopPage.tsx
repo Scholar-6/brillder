@@ -14,8 +14,9 @@ import map from "components/map";
 import { ReduxCombinedState } from "redux/reducers";
 import { GetOrigin } from "localStorage/origin";
 import { UserPreferenceType } from "model/user";
-import { getRealLibraries, RealLibrary } from "services/axios/realLibrary";
+import { checkLibraryAccount, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
 import ProfileInput from "components/userProfilePage/components/ProfileInput";
+import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
 
 const mapState = (state: ReduxCombinedState) => ({
   referralId: state.auth.referralId,
@@ -40,7 +41,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   const [pin, setPin] = useState('');
   const [libraryId, setLibrary] = useState(null as null | number);
   const [libraries, setLibraries] = useState([] as RealLibrary[]);
-  const [linked, setLinked] = useState(null as null | boolean); // false - unlinked, true - linked, null - loading
+  const [suggestionFailed, setSuggestionFailed] = useState(false);
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
@@ -82,6 +83,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
     if (props.isLibrary) {
       getLibraries();
     }
+    /*eslint-disable-next-line*/
   }, []);
 
   const sendLogin = async (email: string, password: string) => {
@@ -142,6 +144,15 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       data.userPreference = UserPreferenceType.Student;
     }
 
+    if (props.isLibrary) {
+      // add library
+      data.library = {
+        library: libraryId,
+        barcodeNumber: libraryCardNumber,
+        pin: pin
+      }
+    }
+
     axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`,
       data,
@@ -173,9 +184,20 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
     });
   };
 
+  const verifyLibrary = async () => {
+    if (pin && libraryCardNumber && libraryId) {
+      var res = await checkLibraryAccount(libraryId, libraryCardNumber, pin);
+      if (res) {
+        setLibraryPart(false);
+      } else {
+        setSuggestionFailed(true);
+      }
+    }
+  }
+
   if (libraryPart) {
     return (
-      <div className="left-part right">
+      <div className="left-part right library-part-d432">
         <div className="logo">
           <LoginLogo />
         </div>
@@ -185,7 +207,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
             <Select
               className="select-library"
               value={libraryId}
-              disabled={!!linked}
+              disabled={false}
               onChange={e => setLibrary(e.target.value as any)}
               MenuProps={{ classes: { paper: 'select-classes-list' } }}
             >
@@ -198,10 +220,13 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
           </div>
         </div>
         <div className="button-box">
-          <ProfileInput autoCompleteOff={true} value={libraryCardNumber} disabled={!!linked} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Barcode" />
+          <ProfileInput autoCompleteOff={true} value={libraryCardNumber} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Barcode" />
         </div>
         <div className="button-box">
-          <ProfileInput autoCompleteOff={true} value={pin} disabled={!!linked} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
+          <ProfileInput autoCompleteOff={true} value={pin} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
+        </div>
+        <div className="button-box">
+          <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
         </div>
         <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
         <Snackbar
@@ -212,6 +237,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
           message={alertMessage}
           action={<React.Fragment></React.Fragment>}
         />
+        <LibraryFailedDialog isOpen={suggestionFailed} close={() => setSuggestionFailed(false)} />
       </div>
     );
   }
