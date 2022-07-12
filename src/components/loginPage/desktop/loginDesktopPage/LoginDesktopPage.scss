@@ -63,14 +63,9 @@
     height: 100%;
     padding-top: 12.4vh;
     transition: all 500ms ease-out;
-
-    &.right {
-      position: absolute;
-      left: 55vw;
-    }
+    $logo-width: 11.3vw;
 
     .logo {
-      $logo-width: 11.3vw;
       margin-bottom: 5.6vh;
       .logo-image {
         width: $logo-width;
@@ -152,6 +147,38 @@
     .email-button {
       margin-top: 3vh;
     }
+
+    .library-login-button {
+      position: relative;
+      background: var(--blue);
+
+      .hover-area-content {
+        width: 3vw;
+        position: absolute;
+        right: 2vw;
+        .hover-area {
+          .hover-content {
+            z-index: 100;
+            width: 12.6vw;
+            display: none;
+            position: absolute;
+            background: white;
+            color: var(--theme-dark-blue);
+            border-radius: 0.4vw;
+            padding: 0.7vw 1vw;
+            right: -0.9vw;
+            text-align: left;
+            top: 1.2vw;
+            font-size: 1vw;
+          }
+          &:hover {
+            .hover-content {
+              display: block;
+            }
+          }
+        }
+      }
+    }
     .text-box {
       padding-left: 1.4vw;
       margin-top: 2vh;
@@ -195,6 +222,52 @@
           height: 2vw;
         }
       }
+    }
+
+    // right part now have more buttons. make upper image smaller
+    &.right {
+      position: absolute;
+      padding-top: 5vh;
+      left: 55vw;
+
+      .logo {
+        .logo-image {
+          width: 8vw;
+        }
+        .logo-text-image {
+          width: 8vw;
+        }
+      }
+
+      // register part have same buttons. make upper images same as in login.
+      &.register-part {
+        padding-top: 12.4vh;
+
+        .logo {
+          .logo-image {
+            width: $logo-width;
+          }
+          .logo-text-image {
+            width: $logo-width;
+          }
+        }
+      }
+
+      .email-button-only {
+        margin-top: 0 !important;
+      }
+    }
+  }
+
+  .login-or-content {
+    height: 8vh;
+    color: white;
+    font-size: 1.1vw;
+    .line {
+      margin-left: 1vw;
+      margin-right: 1vw;
+      width: 4vw;
+      border-top: 1px solid var(--white);
     }
   }
 }
@@ -384,6 +457,86 @@
     font-size: 1vw;
     &:hover {
       color: var(--theme-orange);
+    }
+  }
+}
+
+
+// library style
+.login-desktop-page {
+  .library-part-d432 {
+    padding-top: 8vh !important;
+    .logo-text-image {
+      width: 9vw !important;
+      margin-top: 2.5vh !important;
+    }
+  }
+  .absolute-placeholder {
+    pointer-events: none;
+    z-index: 1;
+    color: #8D9AAB;
+    font-size: 1.3vw;
+    position: absolute;
+    top: 2.3vh;
+    width: 20vw;
+    text-align: center;
+    letter-spacing: 0.2vw;
+  }
+  .select-library {
+    margin-bottom: 1.5vh;
+    width: 20vw;
+    border-radius: 1.7vh;
+    background: var(--theme-dark-blue);
+
+    &.MuiInput-underline:before {
+      display: none !important;
+    }
+
+    .MuiSvgIcon-root {
+      color: white;
+    }
+
+    .MuiTypography-root {
+      color: white;
+      text-align: center;
+      font-size: 1.5vw !important;
+    }
+
+    .MuiSelect-select {
+      padding: 2vh 1vw 2.6vh 1vw !important;
+      height: 2.13vw;
+    }
+
+    .MuiInputBase-input {
+      padding: 0;
+    }
+  }
+  .input-block {
+    width: 20vw;
+    input::placeholder {
+      font-size: 1.3vw;
+      letter-spacing: 0.2vw;
+      color: #8D9AAB !important;
+    }
+  }
+  .sign-in-button {
+    padding: 2.3vh 1vw;
+    color: white;
+    border-radius: 1.7vh;
+    font-size: 1.5vw;
+    width: 20vw;
+    border: none;
+    outline: none;
+    background: var(--theme-orange);
+    font-family: $font-family-bold;
+
+    transition: all 300ms ease-in-out;
+
+    &.green {
+      background: var(--theme-green);
+    }
+    &:hover {
+      background: var(--theme-dark-blue);
     }
   }
 }
