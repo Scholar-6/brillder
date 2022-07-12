@@ -9,9 +9,9 @@ interface Props {
 const UKlibraryButton: React.FC<Props> = (props) => {
   return (
     <a className="google-button library-button" onClick={props.onClick}>
-      <SpriteIcon name="library-icon" className="active" />
+      <SpriteIcon name="library-user-icon" className="active" />
       <span>UK library user</span>
-      <SpriteIcon name="help-library" className="help-library" />
+      <SpriteIcon name="library-help" className="help-library" />
     </a>
   );
 };
