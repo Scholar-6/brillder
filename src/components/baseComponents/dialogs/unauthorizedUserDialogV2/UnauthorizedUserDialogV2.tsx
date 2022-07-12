@@ -14,6 +14,9 @@ import SignUpComponent from "./SignUpComponent";
 
 import userActions from 'redux/actions/user';
 import { Brick } from "model/brick";
+import MicrosoftDesktopButton from "components/loginPage/desktop/MicrosoftDesktopButton";
+import UKlibraryButton from "components/loginPage/components/UKLibraryButton";
+import FlexLinesWithOr from "components/baseComponents/FlexLinesWithOr/FlexLinesWithOr";
 
 interface UnauthorizedProps {
   isOpen: boolean;
@@ -65,6 +68,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
               : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
           </div>
           <GoogleDesktopButton label="Register with Google" newTab={true} />
+          <MicrosoftDesktopButton returnUrl={props.history.location.pathname} />
           <RegisterDesktopButton label="Register with email" onClick={() => setRegisterEmail(true)} />
           <div className="back-button-de" onClick={() => setRegister(false)}>
             <SpriteIcon name="arrow-left" />
@@ -78,24 +82,25 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
     }
     return (
       <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
-        <div className="title bold">
+        <div className="title bigger bold">
+          <span>Sign In or Create Account</span>
+        </div>
+        <div className="title">
           {props.isBeforeReview
             ? <span>To save and improve your score, and start building your personal library, create an account.</span>
             : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
         </div>
-        <button className="btn btn-md bg-white" onClick={() => {
+
+        <GoogleDesktopButton label="Continue with Google" newTab={true} />
+        <MicrosoftDesktopButton returnUrl={props.history.location.pathname} />
+        <UKlibraryButton onClick={() => { }} />
+        <FlexLinesWithOr />
+        <button className="btn btn-md bg-orange" onClick={() => {
           SetAuthBrickCash(props.brick, props.competitionId);
           props.history.push(map.Login);
         }}>
-          <SpriteIcon name="f-user-check" />
-          <span>I’m a member, sign in</span>
-        </button>
-        <button className="btn btn-md bg-orange" onClick={() => {
-          SetAuthBrickCash(props.brick, props.competitionId);
-          setRegister(true);
-        }}>
-          <SpriteIcon name="f-check-clircle" />
-          <span>Register in a few clicks</span>
+          <SpriteIcon name="email" />
+          <span>Continue with Email</span>
         </button>
         <button className="btn btn-md bg-blue" onClick={() => {
           if (props.isBeforeReview) {

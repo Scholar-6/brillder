@@ -23,6 +23,7 @@ import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; 
 import { GetOrigin } from "localStorage/origin";
 import MicrosoftDesktopButton from "../MicrosoftDesktopButton";
 import LibraryDesktopButton from "../LibraryDesktopButton";
+import FlexLinesWithOr from "components/baseComponents/FlexLinesWithOr/FlexLinesWithOr";
 
 
 const DesktopTheme = React.lazy(() => import('./themes/LoginDesktopTheme'));
@@ -109,11 +110,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
               <div className="button-box">
                 <LibraryDesktopButton onClick={moveToLibraryRegister} />
               </div>
-              <div className="flex-center login-or-content">
-                <div className="line"></div>
-                <div>OR</div>
-                <div className="line"></div>
-              </div>
+              <FlexLinesWithOr />
               <div className="button-box">
                 <RegisterDesktopButton label="Register with email" onClick={moveToRegister} />
               </div>
