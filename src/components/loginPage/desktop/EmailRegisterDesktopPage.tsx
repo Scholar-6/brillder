@@ -144,8 +144,8 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       data.userPreference = UserPreferenceType.Student;
     }
 
+    // add library
     if (props.isLibrary) {
-      // add library
       data.library = {
         library: libraryId,
         barcodeNumber: libraryCardNumber,
@@ -228,15 +228,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="button-box">
           <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
         </div>
-        <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
-        <Snackbar
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          open={alertShown}
-          autoHideDuration={1500}
-          onClose={() => toggleAlertMessage(false)}
-          message={alertMessage}
-          action={<React.Fragment></React.Fragment>}
-        />
         <LibraryFailedDialog isOpen={suggestionFailed} close={() => setSuggestionFailed(false)} />
       </div>
     );
