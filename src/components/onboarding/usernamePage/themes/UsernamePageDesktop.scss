@@ -7,6 +7,36 @@
   color: var(--white) !important;
   height: 100%;
 
+  .grey-checkbox-box {
+    margin-top: 3vw;
+    padding: 0.7vw;
+    padding-left: 0.4vw;
+    position: relative;
+    padding-bottom: 3.5vw;
+    display: flex;
+    align-items: flex-start;
+    max-width: 35vw;
+    border-radius: 0.6vw;
+    font-size: 1.4vw;
+    color: var(--theme-dark-blue);
+    background: var(--tab-gray);
+
+    .absolute-text {
+      font-family: $font-family-bold;
+      position: absolute;
+      bottom: 1vw;
+      left: 2.4vw;
+    }
+    .MuiButtonBase-root {
+      padding: 0.2vw !important;
+      padding-right: 0.4vw;
+      .MuiSvgIcon-root {
+        width: 1.6vw;
+        height: 1.6vw;
+      }
+    }
+  }
+
   .hidden {
     opacity: 0;
     transition: all 2000ms ease-out !important;

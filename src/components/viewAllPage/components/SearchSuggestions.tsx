@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import { Author, Brick, KeyWord, Subject } from 'model/brick';
@@ -10,6 +10,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
 import { checkAdmin } from 'components/services/brickService';
+import { getSuggestedKeywords } from 'services/axios/brick';
 
 
 interface ResultObj {
@@ -27,7 +28,6 @@ interface SearchSuggestionsProps {
   history: any;
   searchString: string;
   bricks: Brick[];
-  keywords: KeyWord[];
   subjects: Subject[];
 
   user: User;
@@ -38,78 +38,83 @@ interface SearchSuggestionsProps {
 }
 
 const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
-  let res: ResultObj[] = [];
+  const [suggestions, setSuggestions] = React.useState([] as any[]);
   var searchString = props.searchString.toLocaleLowerCase();
+  
+  const search = async () => {
+    let res: ResultObj[] = [];
 
-  const getTitlesResult = () => {
-    const titleRes = props.bricks.filter(b => stripHtml(b.title).toLowerCase().indexOf(searchString) >= 0);
-
-    for (let brick of titleRes) {
-      res.push({
-        isTitleRes: true,
-        brick: brick
-      });
-    }
-  }
-
-  const getAuthorResult = () => {
-    const authorFirstNameRes = props.bricks.filter(b => stripHtml(b.author.firstName).toLowerCase().indexOf(searchString) >= 0);
-    const authorLastNameRes = props.bricks.filter(b => stripHtml(b.author.lastName).toLowerCase().indexOf(searchString) >= 0);
-
-    var resR: ResultObj[] = [];
-    var united = [...authorFirstNameRes, ...authorLastNameRes];
-
-    for (let el of united) {
-      /*eslint-disable-next-line*/
-      let found = resR.find(a => a.author && a.author.id == el.author.id);
-      if (!found) {
-        resR.push({ isAuthorRes: true, author: el.author });
+    const getTitlesResult = () => {
+      const titleRes = props.bricks.filter(b => stripHtml(b.title).toLowerCase().indexOf(searchString) >= 0);
+  
+      for (let brick of titleRes) {
+        res.push({
+          isTitleRes: true,
+          brick: brick
+        });
       }
     }
 
-    res = [...res, ...resR];
-  }
-
-  const getKeyResult = () => {
-    const keysRes = props.keywords.filter(k => {
-      return k.name.toLocaleLowerCase().indexOf(searchString) >= 0;
-    });
-
-    console.log(keysRes);
-
-    for (let keyword of keysRes) {
-      res.push({
-        isKeyRes: true,
-        keyword
-      });
+    const getAuthorResult = () => {
+      const authorFirstNameRes = props.bricks.filter(b => stripHtml(b.author.firstName).toLowerCase().indexOf(searchString) >= 0);
+      const authorLastNameRes = props.bricks.filter(b => stripHtml(b.author.lastName).toLowerCase().indexOf(searchString) >= 0);
+  
+      var resR: ResultObj[] = [];
+      var united = [...authorFirstNameRes, ...authorLastNameRes];
+  
+      for (let el of united) {
+        /*eslint-disable-next-line*/
+        let found = resR.find(a => a.author && a.author.id == el.author.id);
+        if (!found) {
+          resR.push({ isAuthorRes: true, author: el.author });
+        }
+      }
+  
+      res = [...res, ...resR];
     }
-  }
 
-  const getSubjectResult = () => {
-    const subjectsRes = props.subjects.filter(s => s.name.toLocaleLowerCase().indexOf(searchString) >= 0);
-
-
-    for (let subject of subjectsRes) {
-      res.push({
-        isSubjectRes: true,
-        subject
-      });
+    const getKeyResult = async () => {
+      const keysRes = await getSuggestedKeywords(searchString);
+  
+      if (keysRes) {
+        for (let keyword of keysRes) {
+          res.push({
+            isKeyRes: true,
+            keyword
+          });
+        }
+      }
     }
-  }
+  
+    const getSubjectResult = () => {
+      const subjectsRes = props.subjects.filter(s => s.name.toLocaleLowerCase().indexOf(searchString) >= 0);
+  
+  
+      for (let subject of subjectsRes) {
+        res.push({
+          isSubjectRes: true,
+          subject
+        });
+      }
+    }
 
-  getTitlesResult();
+    getTitlesResult();
 
-  if (res.length < 10) {
-    getAuthorResult();
     if (res.length < 10) {
-      getKeyResult();
+      getAuthorResult();
       if (res.length < 10) {
-        getSubjectResult();
+        await getKeyResult();
+        if (res.length < 10) {
+          getSubjectResult();
+        }
       }
     }
+
+    setSuggestions(res.splice(0, 10));
   }
 
-  const suggestions = res.splice(0, 10);
+  /*eslint-disable-next-line*/
+  useEffect(() => { search() }, [searchString]);
 
   const renderAutorAvatar = (authorR: Author) => {
     if (authorR.profileImage) {

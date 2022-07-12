@@ -19,6 +19,7 @@ import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTe
 import { isPhone } from "services/phone";
 import { hideZendesk } from "services/zendesk";
 import LabelTyping from "components/baseComponents/LabelTyping";
+import { checkIfSchool } from "localStorage/origin";
 
 
 interface AllSubjectsProps {
@@ -101,6 +102,15 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     const saved = await updateUser(userToSave);
 
     if (saved) {
+      let isSchool = checkIfSchool();
+      
+      console.log('isschool', isSchool)
+
+      if (isSchool) {
+        window.location.href = 'https://brillder.com/brilliant-minds-prizes/';
+        return;
+      }
+
       await this.props.getUser();
       if (isStudentPreference(user)) {
         this.props.history.push(map.MainPage + '?newStudent=true');

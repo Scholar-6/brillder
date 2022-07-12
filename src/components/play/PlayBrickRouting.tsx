@@ -82,6 +82,7 @@ import { CreateByEmailRes } from "services/axios/user";
 import { getAssignedBricks } from "services/axios/brick";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
 import { getUserBrillsForBrick } from "services/axios/brills";
+import { SetHeartOfMerciaUser, SetLoginRedirectUrl } from "localStorage/login";
 
 
 export enum PlayPage {
@@ -428,7 +429,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     getCompetition();
     setCompetitionAndClearCash();
     getAndCheckAssignment();
-    console.log(assignmentId);
+
+    const values = queryString.parse(location.search);
+
+    console.log(location);
+
+    if (values.origin === 'heartofmercia') {
+      SetLoginRedirectUrl(location.pathname);
+      SetHeartOfMerciaUser();
+      window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
+    }
+
     /*eslint-disable-next-line*/
   }, [])
 

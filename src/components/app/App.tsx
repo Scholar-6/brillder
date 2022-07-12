@@ -1,5 +1,5 @@
 import React, { Profiler, useEffect } from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
@@ -71,6 +71,7 @@ import StripeCreditsPage from 'components/stripeCreditsPage/StripeCreditsPage';
 
 import { GetOrigin, SetOrigin } from 'localStorage/origin';
 import LibraryOrigin from 'components/onboarding/libraryOrigin/LibraryOrigin';
+import { GetLoginRedirectUrl, UnsetLoginRedirectUrl } from 'localStorage/login';
 
 interface AppProps {
   user: User;
@@ -79,6 +80,7 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = props => {
+  const history = useHistory();
   const location = useLocation();
   const [iframeFullScreen, setIframe] = React.useState(false);
   const [termsData, setTermsData] = React.useState({
@@ -121,6 +123,15 @@ const App: React.FC<AppProps> = props => {
 
     // download mamoto
     setupMatomo();
+
+    var redirectUrl = GetLoginRedirectUrl();
+
+    if (redirectUrl) {
+      UnsetLoginRedirectUrl();
+      history.push(redirectUrl);
+    }
+
+    /*eslint-disable-next-line*/
   }, []);
 
   useEffect(() => {
@@ -130,7 +141,7 @@ const App: React.FC<AppProps> = props => {
       props.setReferralId(referralId);
     }
     /*eslint-disable-next-line*/
-  }, [location])
+  }, [location]);
 
   // lock screen for phone
   if (isPhone()) {
@@ -166,6 +177,7 @@ const App: React.FC<AppProps> = props => {
     }
     return Promise.reject(error);
   });
+  
 
   if (!GetOrigin()) {
     const values = queryString.parse(location.search);
