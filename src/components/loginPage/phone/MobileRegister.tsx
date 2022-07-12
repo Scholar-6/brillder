@@ -2,32 +2,47 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { History } from "history";
 import { Snackbar } from "@material-ui/core";
+import { ListItemText, MenuItem, Select } from '@material-ui/core';
 import axios from "axios";
+
 
 import TermsLink from "components/baseComponents/TermsLink";
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
+import { GetOrigin } from "localStorage/origin";
 import DesktopLoginForm from "../desktop/DesktopLoginForm";
 import { isPhone } from "services/phone";
 import { hideZendesk, showZendesk } from "services/zendesk";
 import { ReduxCombinedState } from "redux/reducers";
+import { checkLibraryAccount, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
+import ProfileInput from "components/userProfilePage/components/ProfileInput";
+import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
+import { UserPreferenceType } from "model/user";
 
 interface MobileLoginProps {
   history: History;
   email?: string;
   referralId?: string;
+  isLibrary?: boolean;
   loginSuccess(): void;
 }
 
-const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
+const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
+  const [libraryCardNumber, setCardNumber] = useState('');
+  const [pin, setPin] = useState('');
+  const [libraryId, setLibrary] = useState(null as null | number);
+  const [libraries, setLibraries] = useState([] as RealLibrary[]);
+  const [suggestionFailed, setSuggestionFailed] = useState(false);
+  const [libraryPart, setLibraryPart] = useState(props.isLibrary ? props.isLibrary : false);
+
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
-  const [keyboardShown, mobileKeyboard] =  useState(false);
+  const [keyboardShown, mobileKeyboard] = useState(false);
   const [originalHeight] = useState(window.innerHeight);
 
   const resizeHandler = () => {
@@ -40,7 +55,16 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
     }
   }
 
+  const getLibraries = async () => {
+    const loadedLibraries = await getRealLibraries();
+    if (loadedLibraries) {
+      setLibraries(loadedLibraries);
+    }
+  }
+
   useEffect(() => {
+    getLibraries();
+
     if (isPhone()) {
       window.addEventListener("resize", resizeHandler);
 
@@ -48,7 +72,7 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
         window.removeEventListener("resize", resizeHandler);
       }
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, []);
 
   const validateForm = () => {
@@ -104,10 +128,26 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
   };
 
   const register = (email: string, password: string) => {
+    let data = {
+      email, password, confirmPassword: password, referralId: props.referralId
+    } as any;
+
+    var origin = GetOrigin();
+    if (origin === 'school') {
+      data.userPreference = UserPreferenceType.Student;
+    }
+
+    // add library
+    if (props.isLibrary) {
+      data.library = {
+        library: libraryId,
+        barcodeNumber: libraryCardNumber,
+        pin: pin
+      }
+    }
+
     axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`,
-      { email, password, confirmPassword: password, referralId: props.referralId },
-      { withCredentials: true }
+      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`, data, { withCredentials: true }
     ).then((resp) => {
       const { data } = resp;
 
@@ -130,6 +170,62 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
       setAlertMessage("Something may be wrong with the connection.");
     });
   };
+
+  const verifyLibrary = async () => {
+    if (pin && libraryCardNumber && libraryId) {
+      var res = await checkLibraryAccount(libraryId, libraryCardNumber, pin);
+      if (res) {
+        setLibraryPart(false);
+      } else {
+        setSuggestionFailed(true);
+      }
+    }
+  }
+
+  if (libraryPart) {
+    return (
+      <div className="first-col mobile-register mobile-register-library">
+        <div className="second-item">
+          <div className="title">
+            Brillder for Libraries
+          </div>
+          <div className="mobile-button-box button-box m-register-box">
+            <div className="mobile-library-box">
+              {(libraryId === -1 || libraryId === null) && <div className="absolute-placeholder unselectable" onClick={e => e.preventDefault()}>Library Authority</div>}
+              <Select
+                className="select-library"
+                value={libraryId}
+                onChange={e => setLibrary(e.target.value as any)}
+                MenuProps={{ classes: { paper: 'select-classes-list' } }}
+              >
+                {libraries.map((s, i) => (
+                  <MenuItem value={s.id} key={i}>
+                    <ListItemText>{s.name}</ListItemText>
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+            <div className="button-box">
+              <ProfileInput autoCompleteOff={true} value={libraryCardNumber} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Barcode" />
+            </div>
+            <div className="button-box">
+              <ProfileInput autoCompleteOff={true} value={pin} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
+            </div>
+            <div className="input-block library-button-box">
+              <div className="button-box">
+                <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
+              </div>
+            </div>
+            {!keyboardShown &&
+              <div className="mobile-policy-text">
+                <TermsLink history={props.history} />
+              </div>}
+          </div>
+        </div>
+        <LibraryFailedDialog isOpen={suggestionFailed} close={() => setSuggestionFailed(false)} />
+      </div>
+    );
+  }
 
   return (
     <div className="first-col mobile-register">
@@ -158,9 +254,9 @@ const MobileRegisterPage:React.FC<MobileLoginProps> = (props) => {
             handleSubmit={handleLoginSubmit}
           />
           {!keyboardShown &&
-          <div className="mobile-policy-text">
-            <TermsLink history={props.history} />
-          </div>}
+            <div className="mobile-policy-text">
+              <TermsLink history={props.history} />
+            </div>}
         </div>
       </div>
       <Snackbar

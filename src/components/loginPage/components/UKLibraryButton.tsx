@@ -8,11 +8,11 @@ interface Props {
 
 const UKlibraryButton: React.FC<Props> = (props) => {
   return (
-    <a className="google-button library-button" onClick={props.onClick}>
+    <div className="google-button library-button" onClick={props.onClick}>
       <SpriteIcon name="library-user-icon" className="active" />
       <span>UK library user</span>
       <SpriteIcon name="library-help" className="help-library" />
-    </a>
+    </div>
   );
 };
 

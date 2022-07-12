@@ -668,6 +668,109 @@
     }
   }
 
+  .mobile-register-library {
+    $box-height: 12%;
+    .mobile-button-box {
+    }
+    .title {
+      font-family: $font-family-bold;
+      background: var(--theme-light-blue) !important;
+      color: white;
+      font-size: 8vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 18%;
+      border-bottom-right-radius: 8vw;
+    }
+    .m-register-box {
+      height: calc(82% - 4vh) !important;
+    }
+
+    .library-space {
+      height: 3%;
+    }
+
+    .select-title {
+      height: 6%;
+      color: white;
+      font-size: 4vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mobile-library-box {
+      position: relative;
+      height: $box-height;
+      margin-bottom: 3.5vh;
+
+      .select-library {
+        width: 100%;
+        height: 100%;
+        color: white;
+        background: var(--theme-dark-blue);
+        border-radius: 2.4vw;
+
+        .MuiTypography-root {
+          font-size: 5.5vw !important;
+        }
+
+        &:before {
+          content: none;
+          display: none;
+        }
+
+        .MuiSelect-icon {
+          color: white;
+        }
+      }
+
+      .absolute-placeholder {
+        position: absolute;
+        pointer-events: none;
+        z-index: 1;
+        height: 100%;
+        width: 100%;
+        font-size: 5.5vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .button-box {
+      margin-bottom: 3.5vh;
+      height: $box-height;
+      input {
+        color: white;
+        background: var(--theme-dark-blue);
+        text-align: center;
+
+        &::placeholder {
+          color: white;
+        }
+      }
+      .input-block {
+        height: 100%;
+        margin: 0 !important;
+      }
+    }
+    .library-button-box {
+      height: $box-height !important;
+      .button-box {
+        margin: 0 !important;
+        height: 100%;
+        button {
+          height: 100%;
+
+          &.green {
+            background: var(--theme-green) !important;
+          }
+        }
+      }
+    }
+  }
+
   .mobile-join {
 
     .google-button,
