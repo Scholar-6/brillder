@@ -133,7 +133,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
                 <LoginLogo />
               </div>
               <div className="button-box">
-                <GoogleDesktopButton label="Sign in with Google" />
+                <GoogleDesktopButton label="Continue with Google" />
               </div>
               <div className="button-box m-t-3vh">
                 <MicrosoftDesktopButton />
