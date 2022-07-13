@@ -93,7 +93,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
 
         <GoogleDesktopButton label="Continue with Google" newTab={true} />
         <MicrosoftDesktopButton returnUrl={props.history.location.pathname} />
-        <UKlibraryButton onClick={() => { }} />
+        <UKlibraryButton history={props.history} />
         <FlexLinesWithOr />
         <button className="btn btn-md bg-orange" onClick={() => {
           SetAuthBrickCash(props.brick, props.competitionId);
@@ -102,6 +102,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
           <SpriteIcon name="email" />
           <span>Continue with Email</span>
         </button>
+        {!props.isBeforeReview &&
         <button className="btn btn-md bg-blue" onClick={() => {
           if (props.isBeforeReview) {
             setWaringOpen(true);
@@ -111,7 +112,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
         }}>
           <SpriteIcon name="feather-search-custom" />
           <span>Keep exploring</span>
-        </button>
+        </button>}
         <div className="small-text">
           You will be redirected to this page after making your choice
         </div>
