@@ -8,6 +8,7 @@ import GoogleButton from "../components/GoogleButton";
 import RegisterButton from "../components/RegisterButton";
 import { LibraryRegisterPage, RegisterPage } from "../desktop/routes";
 import UKLibraryButton from "../components/UKLibraryButton";
+import MicrosoftDesktopButton from "../desktop/MicrosoftDesktopButton";
 
 
 interface MobileLoginProps {
@@ -33,6 +34,7 @@ const MobileJoinPage: React.FC<MobileLoginProps> = (props) => {
         </div>
         <div className="mobile-button-box button-box m-register-box">
           <GoogleButton label="Continue with Google" />
+          <MicrosoftDesktopButton />
           <UKLibraryButton onClick={() => props.history.push(LibraryRegisterPage)} />
           <RegisterButton label="Register with email" onClick={() => props.history.push(RegisterPage)} />
           <div className="button-box">

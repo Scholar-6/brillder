@@ -528,7 +528,7 @@
   .logo-box {
     background: var(--theme-light-blue) !important;
     position: relative;
-    height: 45% !important;
+    height: 40% !important;
 
     .logo-box-inner {
       height: 65% !important;
@@ -574,15 +574,34 @@
 
     .google-button,
     .email-button {
-      padding: 2.5vh 5vw !important;
+      padding: 2vh 5vw !important;
 
       span {
-        font-size: 6.5vw;
+        font-family: $font-family-bold;
+        width: 100%;
+        text-align: center;
+        font-size: 5vw;
+        margin: 0 !important;
         letter-spacing: 0 !important;
       }
     }
-    .email-button {
+    
+    .microsoft-btn {
+      background: white;
+      min-height: 6.663vh;
+      display: flex;
+      padding: 2.5vh 2.5vw;
+
+      margin-bottom: 4% !important;
+
       span {
+        font-family: $font-family-bold;
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        letter-spacing: 0;
+        font-size: 5vw;
+        color: var(--theme-dark-blue);
       }
     }
   }
@@ -656,6 +675,7 @@
 
       .library-button {
         background: var(--blue) !important;
+        border-radius: 4vw;
 
         span {
           margin-left: 10vw;
@@ -776,7 +796,7 @@
     .google-button,
     .email-button {
       font-size: 5.5vw !important;
-      margin-bottom: 8% !important;
+      margin-bottom: 4% !important;
     }
 
     .email-button {
@@ -798,7 +818,7 @@
   display: flex;
   flex-direction: column-reverse;
   justify-content: flex-end !important;
-  padding: 8vh 9vw 0;
+  padding: 8vh 7vw 0;
 }
 
 // zendesk
