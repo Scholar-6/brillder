@@ -89,17 +89,6 @@ export const sortAndCheckSubjects = (subjects: Subject[], values: queryString.Pa
   }
 }
 
-export const prepareYourBricks = (currentBricks: Brick[]) => {
-  let yourBricks = currentBricks.filter(brick => brick.status === BrickStatus.Publish);
-  return yourBricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
-}
-
-export const sortAllBricks = (bricks: Brick[]) => {
-  let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
-  bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
-  return bs;
-}
-
 export const countSubjectBricks = (subjects: any[], bricks: Brick[]) => {
   subjects.forEach((s: any) => {
     s.publicCount = 0;
@@ -112,34 +101,6 @@ export const countSubjectBricks = (subjects: any[], bricks: Brick[]) => {
           s.publicCount += 1;
         } else {
           s.personalCount += 1;
-        }
-      }
-    }
-  }
-}
-
-const countPersonalBrick = (s: any, b: Brick, user: User, isAdmin: boolean) => {
-  if (isAdmin) {
-    s.personalCount += 1;
-  } else {
-    if (b.author.id === user.id) {
-      s.personalCount += 1;
-    }
-  }
-}
-
-export const countSubjectBricksV2 = (subjects: any[], bricks: Brick[], user: User, isAdmin: boolean) => {
-  subjects.forEach((s: any) => {
-    s.publicCount = 0;
-    s.personalCount = 0;
-  });
-  for (let b of bricks) {
-    for (let s of subjects) {
-      if (s.id === b.subjectId) {
-        if (b.isCore) {
-          s.publicCount += 1;
-        } else {
-          countPersonalBrick(s, b, user, isAdmin);
         }
       }
     }
