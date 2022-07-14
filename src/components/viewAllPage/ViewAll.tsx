@@ -772,7 +772,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (this.state.isSearching) {
         this.loadAndSetSearchBricks(this.state.searchString, this.state.page - 1, this.state.pageSize, this.state.isCore);
       } else {
-        this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+        if (this.props.user) {
+          this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+        } else if (this.state.subjectGroup) {
+          this.loadAndSetUnauthBricks(this.state.page - 1, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+        }
       }
     }
   }
@@ -781,11 +785,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     let index = this.state.page * this.state.pageSize;
     const { pageSize, bricksCount } = this.state;
 
+    console.log('move next', index, bricksCount);
+
     if (index + pageSize <= bricksCount - 1) {
       if (this.state.isSearching) {
         this.loadAndSetSearchBricks(this.state.searchString, this.state.page + 1, this.state.pageSize, this.state.isCore);
       } else {
-        this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+        if (this.props.user) {
+          this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+        } else if (this.state.subjectGroup) {
+          this.loadAndSetUnauthBricks(this.state.page + 1, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+        }
       }
     }
   }
