@@ -1,6 +1,6 @@
 import { getApiQuestion } from 'components/build/questionService/QuestionService';
 import { AssignmentBrick } from 'model/assignment';
-import { Brick, BrickLengthEnum, BrickStatus, KeyWord } from 'model/brick';
+import { Brick, BrickLengthEnum, BrickStatus, KeyWord, Subject } from 'model/brick';
 import { Question } from 'model/question';
 
 import { get, put, post, axiosDelete } from './index';
@@ -64,6 +64,7 @@ export const getPublishedBricks = async () => {
 interface PageBricks {
   pageCount: number;
   bricks: Brick[];
+  subjects: Subject[];
 }
 
 /**
