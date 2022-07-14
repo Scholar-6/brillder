@@ -58,11 +58,9 @@ import {
   prepareVisibleBricks2,
   toggleSubject,
   renderTitle,
-  sortAllBricks,
   sortAndCheckSubjects,
   filterSearchBricks,
   getCheckedSubjectIds,
-  countSubjectBricksV2,
   getSubjectsWithBricks,
   checkAllSubjects,
 } from "./service/viewAll";
@@ -404,10 +402,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (this.props.user) {
       const pageBricks = await getPublishedBricksByPage(6, this.state.page, true, [], [], [], this.state.filterCompetition, this.state.isAllSubjects);
       if (pageBricks) {
-        let bs = sortAllBricks(pageBricks.bricks);
         let { subjects } = this.state;
-        countSubjectBricksV2(subjects, bs, this.props.user, this.state.isAdmin);
-        subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
+
+        for (let subject of pageBricks.subjects) {
+          const filterSubject = subjects.find(s => s.id === subject.id);
+          if (filterSubject) {
+            filterSubject.personalCount = subject.count;
+            filterSubject.publicCount = subject.count;
+          }
+        }
         if (values && values.isViewAll) {
           this.checkSubjectsWithBricks(subjects);
         }
@@ -446,12 +449,22 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length, subjectIds, filterCompetition, isAllSubjects);
 
     if (pageBricks) {
+      const {subjects} = this.state;
+      for (let subject of pageBricks.subjects) {
+        const filterSubject = subjects.find(s => s.id === subject.id);
+        if (filterSubject) {
+          filterSubject.personalCount = subject.count;
+          filterSubject.publicCount = subject.count;
+        }
+      }
+
       this.setState({
         ...this.state,
         page,
         bricksCount: pageBricks.pageCount,
         bricks: pageBricks.bricks,
         isCore,
+        subjects,
         filterLength: length,
         filterLevels: levels,
         isClearFilter: this.isFilterClear(),
