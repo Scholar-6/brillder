@@ -363,6 +363,10 @@
           width: $size !important;
           height: $size !important;
         }
+
+        &.alternative-subject {
+          right: 1vw;
+        }
       }
 
       .bottom-description-color,
