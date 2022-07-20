@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus, Subject, SubjectItem } from "model/brick";
+import { AcademicLevel, Brick, BrickLengthEnum, Subject, SubjectItem } from "model/brick";
 import { User } from 'model/user';
 
 export const getCheckedSubjectIds = (subjects: Subject[]) => {

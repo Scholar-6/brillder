@@ -24,7 +24,7 @@ import VersionLabel from "components/baseComponents/VersionLabel";
 import { getBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
-import { BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, SubjectRoutePart, TitleRoutePart } from "./model";
+import { AlternateSubjectRoutePart, BrickFieldNames, BrickLengthRoutePart, BriefRoutePart, OpenQuestionRoutePart, PrepRoutePart, ProposalReviewPart, SubjectRoutePart, TitleRoutePart } from "./model";
 import map from "components/map";
 
 import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
@@ -215,6 +215,10 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveLocalBrick({ ...this.state.brick, subject: undefined, subjectId });
   }
 
+  setAlternateSubject = (alternateSubjectId: number) => {
+    this.saveLocalBrick({ ...this.state.brick, alternateSubject: undefined, alternateSubjectId });
+  }
+
   setCore = (isCore: boolean) =>
     this.saveLocalBrick({ ...this.state.brick, isCore });  
   setCoreAndSubject = (subjectId: number, isCore: boolean) => 
@@ -333,17 +337,28 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             style={{ width: "100%", height: "100%" }}
             className="proposal-router"
           >
-            <Route path={[baseUrl + '/subject']}>
+            <Route path={[baseUrl + SubjectRoutePart]}>
               <SubjectPage
                 location={history.location}
                 baseUrl={baseUrl}
                 subjects={user.subjects}
                 subjectId={this.state.brick.subjectId ? this.state.brick.subjectId : ""}
-                history={history}
+                title="Choose Main Subject"
                 saveSubject={this.setSubject}
               />
             </Route>
-            <Route path={[baseUrl + '/brick-title']}>
+            <Route path={[baseUrl + AlternateSubjectRoutePart]}>
+              <SubjectPage
+                location={history.location}
+                isAlternateSubject={true}
+                baseUrl={baseUrl}
+                title="Alternate Subject?"
+                subjects={user.subjects}
+                subjectId={this.state.brick.alternateSubjectId ? this.state.brick.alternateSubjectId : ""}
+                saveSubject={this.setAlternateSubject}
+              />
+            </Route>
+            <Route path={[baseUrl + TitleRoutePart]}>
               <BrickTitle
                 user={user}
                 brickId={brickId}
