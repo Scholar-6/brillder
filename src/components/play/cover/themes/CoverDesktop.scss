@@ -174,9 +174,23 @@
             align-items: center;
             margin-right: 0.6vw;
             .round-button {
+              z-index: 4;
               width: $circle-size;
               height: $circle-size;
               border-radius: 50%;
+            }
+            &.double-subjects {
+              width: 3vw;
+              .round-button {
+                z-index: 5;
+                left: 0;
+                position: absolute;
+              }
+              .after-main-subject {
+                z-index: 2;
+                position: absolute;
+                left: 1vw;
+              }
             }
           }
           .subject-and-name {
