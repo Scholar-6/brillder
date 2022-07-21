@@ -678,119 +678,206 @@ $base-build-border: $editor-radius;
         }
       }
 
-      .subject-select-container {
+      .subject-level-group {
+        $baseMargin: 0.9vw;
         margin-top: 0.5vw;
-        width: 100%;
-        display: flex;
+        overflow:hidden;
+        border-radius: 0.5vw;
+        background: var(--off-white);
+        color: var(--theme-dark-blue);
 
-        .MuiInputBase-root {
-          margin-right: 0.5vw;
-          width: 100%;
+        .header-d342 {
+          height: 2.5vw;
+          font-size: 1.1vw;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: $font-family-bold; 
+          background: var(--tab-gray);
+        }
 
-          &::before,
-          &::after {
-            content: none !important;
-          }
-
-          .MuiSelect-root {
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-            border-radius: $base-build-border;
-            background: var(--off-white);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--theme-dark-blue);
-
-            .MuiListItemIcon-root:first-child {
-              display: center;
-              justify-content: center;
-            }
-
-            .MuiTypography-root {
-              font-size: $baseFontSize;
-            }
+        .two-labels-d23 {
+          margin-top: 1vw;
+          display: flex;
+          font-family: $font-family-bold;
+          div {
+            font-size: $baseFontSize; 
+            margin-left: 1vw;
+            margin-right: 1vw;
+            width: 50%;
           }
         }
-      }
-
-      .level-and-length-container {
-        display: inline-flex;
-        margin-top: 0.5vw;
-        width: 100%;
-
-        .difficulty-select {
-          padding-right: 0.5vw;
+        .subject-select-container {
+          margin-top: 0.5vw;
           width: 100%;
+          display: flex;
 
+          .MuiListItemIcon-root {
+            width: 2.6vw;
+            .MuiSvgIcon-root {
+              width: 1.2vw;
+              height: 1.2vw;
+            }
+          }
+  
           .MuiInputBase-root {
+            margin-left: 0.5vw;
+            margin-right: $baseMargin;
+            &:first-child {
+              margin-left: $baseMargin;
+              margin-right: 0.5vw;
+            }
             width: 100%;
-
+  
             &::before,
             &::after {
               content: none !important;
             }
-
+  
             .MuiSelect-root {
-              font-size: $baseFontSize;
-              background: var(--off-white);
-              padding-left: 0.4vw;
+              padding-top: 0 !important;
+              padding-bottom: 0 !important;
               border-radius: $base-build-border;
+              background: var(--white);
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              color: var(--theme-dark-blue);
+  
+              .MuiListItemIcon-root:first-child {
+                display: center;
+                justify-content: center;
+              }
+  
+              .MuiTypography-root {
+                font-size: $baseFontSize;
+              }
             }
           }
         }
 
-        .brick-length {
-          width: 30%;
-          position: relative;
-          color: var(--theme-dark-blue);
-
-          .fixed-select-clock {
-            cursor: pointer;
-            z-index: 100;
-            height: 2vw;
-            position: absolute;
-            width: 29%;
-            border-top-left-radius: $base-build-border;
-            border-bottom-left-radius: $base-build-border;
-            pointer-events: none;
-            background: #e4e8ee;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            svg {
-              stroke-width: 2;
-              width: 1.5vw;
-              height: 1.5vw;
-            }
-          }
-
-          .select {
-            width: 100%;
-
-            &::before,
-            &::after {
-              content: none !important;
-            }
-          }
-
-          .MuiInputBase-root {
-            position: absolute;
-          }
-
-          .MuiSelect-root {
-            padding-left: 3.2vw;
-            padding-top: 0;
-            padding-bottom: 0;
-            min-height: 2vw;
-            color: var(--theme-dark-blue);
+        .three-labels-d23 {
+          margin-top: 0.8vw;
+          display: flex;
+          font-family: $font-family-bold;
+          div {
             font-size: $baseFontSize;
-            font-family: $font-family-regular;
-            background: var(--off-white);
-            border-radius: $base-build-border;
-            display: flex;
-            align-items: center;
+            padding-left: 1vw;
+            padding-right: 1vw;
+            width: 25%;
+
+            &:first-child {
+              width: calc(50% - 2vw);
+            }
+          }
+        }
+
+        .level-and-length-container {
+          display: inline-flex;
+          margin-top: 0.5vw;
+          margin-bottom: 0.5vw;
+          width: 100%;
+  
+          .difficulty-select {
+            margin-left: $baseMargin;
+            padding-right: 0.5vw;
+            width: 50%;
+  
+            .MuiInputBase-root {
+              width: 100%;
+  
+              &::before,
+              &::after {
+                content: none !important;
+              }
+  
+              .MuiSelect-root {
+                font-size: $baseFontSize;
+                background: var(--white);
+                padding-left: 0.4vw;
+                border-radius: $base-build-border;
+              }
+            }
+          }
+  
+          .brick-length {
+            width: 30%;
+            position: relative;
+            color: var(--theme-dark-blue);
+  
+            .fixed-select-clock {
+              cursor: pointer;
+              z-index: 100;
+              height: 2vw;
+              position: absolute;
+              width: 29%;
+              border-top-left-radius: $base-build-border;
+              border-bottom-left-radius: $base-build-border;
+              pointer-events: none;
+              background: #e4e8ee;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+  
+              svg {
+                stroke-width: 2;
+                width: 1.5vw;
+                height: 1.5vw;
+              }
+            }
+  
+            .select {
+              width: 100%;
+  
+              &::before,
+              &::after {
+                content: none !important;
+              }
+            }
+  
+            .MuiInputBase-root {
+              position: absolute;
+            }
+  
+            .MuiSelect-root {
+              padding-left: 3.2vw;
+              padding-top: 0;
+              padding-bottom: 0;
+              min-height: 2vw;
+              color: var(--theme-dark-blue);
+              font-size: $baseFontSize;
+              font-family: $font-family-regular;
+              background: var(--white);
+              border-radius: $base-build-border;
+              display: flex;
+              align-items: center;
+            }
+          }
+
+          .core-select {
+            border-radius: 0.5vw;
+            margin-right: 0.9vw;
+            background: var(--white);
+            margin-left: 0.5vw;
+            height: 2vw;
+            
+            .MuiInputBase-root {
+              padding-left: 26%;
+              width: 100%;
+              .MuiSelect-root {
+                color: var(--theme-dark-blue);
+                padding-left: 0.5vw;
+                padding-top: 0;
+                padding-bottom: 0;
+                display: flex;
+                align-items: center;
+                height: 2vw;
+              }
+            }
+            .MuiInput-underline:after,
+            .MuiInput-underline:before {
+              content: none;
+            }
           }
         }
       }

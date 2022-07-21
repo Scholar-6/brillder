@@ -158,8 +158,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
 
   const renderBrickCircle = () => {
     return (
-      <div className="round-button-container">
-        <div className="round-button" style={{ background: `${brick.subject?.color || '#B0B0AD'}` }} />
+      <div className={brick.alternateSubject ? "round-button-container double-subjects" : "round-button-container"}>
+        <div className={brick.alternateSubject ? "round-button" : "round-button"} style={{ background: `${brick.subject?.color || '#B0B0AD'}` }} />
+        {brick.alternateSubject && <div className="round-button after-main-subject" style={{ background: brick.alternateSubject.color }} /> }
       </div>
     );
   }
@@ -228,7 +229,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             />
             <div className="cover-info-row">
               {renderBrickCircle()}
-              <span>{brick.subject?.name}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}</span>
+              <span>{brick.subject?.name}{brick.alternateSubject ? ` - ${brick.alternateSubject.name}` : ''}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}</span>
               <SpriteIcon name="help-circle-custom" onClick={() => setSecondPhonePopup(true)} />
               {firstPhonePopup &&
                 <div className="mobile-help-container" onClick={() => setFirstPhonePopup(false)}>
@@ -389,7 +390,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   <div className="cover-info-row">
                     {renderBrickCircle()}
                     <div className="subject-and-name">
-                      {brick.subject?.name},
+                      {brick.subject?.name}{brick.alternateSubject ? ` - ${brick.alternateSubject.name}` : ''},
                       Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}
                     </div>
                     <div className="hover-area flex-center">
