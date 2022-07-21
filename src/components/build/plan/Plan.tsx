@@ -209,7 +209,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       />
                       <Subjects
                         disabled={locked}
-                        subjects={apiSubjects}
+                        subjects={[{ color: 'black', name: 'none' } as Subject, ...apiSubjects]}
                         subjectId={currentBrick.alternateSubjectId}
                         onChange={alternateSubjectId => changeBrick((brick) => ({ ...brick, alternateSubjectId, alternateSubject: apiSubjects.find(sub => sub.id === alternateSubjectId) }))}
                       />

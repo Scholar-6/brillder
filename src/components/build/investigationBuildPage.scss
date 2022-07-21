@@ -711,6 +711,14 @@ $base-build-border: $editor-radius;
           margin-top: 0.5vw;
           width: 100%;
           display: flex;
+
+          .MuiListItemIcon-root {
+            width: 2.6vw;
+            .MuiSvgIcon-root {
+              width: 1.2vw;
+              height: 1.2vw;
+            }
+          }
   
           .MuiInputBase-root {
             margin-left: 0.5vw;
