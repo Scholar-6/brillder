@@ -61,11 +61,11 @@ const PlanPage: React.FC<PlanProps> = (props) => {
   const editorIdState = React.useState("");
 
   React.useEffect(() => {
-   getSubjects().then(allSubjects => {
-     if (allSubjects) {
-       setApiSubjects(allSubjects);
-     }
-   });
+    getSubjects().then(allSubjects => {
+      if (allSubjects) {
+        setApiSubjects(allSubjects);
+      }
+    });
   }, []);
 
   React.useEffect(() => {
@@ -108,21 +108,21 @@ const PlanPage: React.FC<PlanProps> = (props) => {
         }
       });
     };
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, [currentBrick, props.saveBrick]);
 
-   /**
-   * if Admin, Publisher or Editor than true
-   * @returns 
-   */
-    const canSeeLock = () => {
-      const {user} = props;
-      const adminPublisherOrEditor = isAorPorE(currentBrick, user);
-      if (adminPublisherOrEditor) {
-        return true;
-      }
-      return false;
+  /**
+  * if Admin, Publisher or Editor than true
+  * @returns 
+  */
+  const canSeeLock = () => {
+    const { user } = props;
+    const adminPublisherOrEditor = isAorPorE(currentBrick, user);
+    if (adminPublisherOrEditor) {
+      return true;
     }
+    return false;
+  }
 
   const renderLock = () => {
     if (currentBrick.isCore === true) {
@@ -133,6 +133,8 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     }
     return ''
   }
+
+  console.log(currentBrick);
 
   return (
     <div className="question-type plan-page">
@@ -192,26 +194,44 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     validate={!isAuthor && validationRequired}
                     onChange={keywords => changeBrick((brick) => ({ ...brick, keywords }))}
                   />
-                  <div className="subject-select-container">
-                    <Subjects
-                      disabled={locked}
-                      subjects={apiSubjects}
-                      subjectId={currentBrick.subjectId}
-                      onChange={subjectId => changeBrick((brick) => ({ ...brick, subjectId, subject: apiSubjects.find(sub => sub.id === subjectId) }))}
-                    />
-                    <CoreSelect disabled={locked} brickStatus={currentBrick.status} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({...brick, isCore}))} />
-                  </div>
-                  <div className="level-and-length-container">
-                    <DifficultySelectV2
-                      disabled={locked}
-                      level={currentBrick.academicLevel}
-                      onChange={academicLevel => changeBrick((brick) => ({ ...brick, academicLevel }))}
-                    />
-                    <BrickLength
-                      disabled={locked}
-                      brickLength={currentBrick.brickLength}
-                      onChange={brickLength => changeBrick((brick) => ({ ...brick, brickLength }))}
-                    />
+                  <div className="subject-level-group">
+                    <div className="header-d342">Subject, Level and Length</div>
+                    <div className="two-labels-d23">
+                      <div>Main Subject</div>
+                      <div>Alternate Subject</div>
+                    </div>
+                    <div className="subject-select-container">
+                      <Subjects
+                        disabled={locked}
+                        subjects={apiSubjects}
+                        subjectId={currentBrick.subjectId}
+                        onChange={subjectId => changeBrick((brick) => ({ ...brick, subjectId, subject: apiSubjects.find(sub => sub.id === subjectId) }))}
+                      />
+                      <Subjects
+                        disabled={locked}
+                        subjects={apiSubjects}
+                        subjectId={currentBrick.alternateSubjectId}
+                        onChange={alternateSubjectId => changeBrick((brick) => ({ ...brick, alternateSubjectId, alternateSubject: apiSubjects.find(sub => sub.id === alternateSubjectId) }))}
+                      />
+                    </div>
+                    <div className="three-labels-d23">
+                      <div>Level</div>
+                      <div>Length</div>
+                      <div>Visibility</div>
+                    </div>
+                    <div className="level-and-length-container">
+                      <DifficultySelectV2
+                        disabled={locked}
+                        level={currentBrick.academicLevel}
+                        onChange={academicLevel => changeBrick((brick) => ({ ...brick, academicLevel }))}
+                      />
+                      <BrickLength
+                        disabled={locked}
+                        brickLength={currentBrick.brickLength}
+                        onChange={brickLength => changeBrick((brick) => ({ ...brick, brickLength }))}
+                      />
+                      <CoreSelect disabled={locked} brickStatus={currentBrick.status} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({ ...brick, isCore }))} />
+                    </div>
                   </div>
                   <div className="open-question-container">
                     <div className="header">Open Question</div>
@@ -276,7 +296,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                         "blockQuote",
                         "image",
                         "video",
-                        "table",  
+                        "table",
                         "align",
                         "sound", "desmos", "caps"
                       ]}
@@ -304,8 +324,8 @@ const PlanPage: React.FC<PlanProps> = (props) => {
             >
               <div className="comments-sidebar-default">
                 <div className="reundo-button-container">
-                  <UndoButton undo={() => {}} canUndo={() => false} />
-                  <RedoButton redo={() => {}} canRedo={() => false} />
+                  <UndoButton undo={() => { }} canUndo={() => false} />
+                  <RedoButton redo={() => { }} canRedo={() => false} />
                 </div>
                 <div className="comment-button-container">
                   <CommentButton
