@@ -235,6 +235,19 @@
               height: $circle-size;
               border-radius: 50%;
             }
+            &.double-subjects {
+              width: 3.3vw;
+              .round-button {
+                z-index: 5;
+                left: 0;
+                position: absolute;
+              }
+              .after-main-subject {
+                z-index: 2;
+                position: absolute;
+                left: 1.3vw;
+              }
+            }
           }
           .subject-and-name {
             margin-top: 0.2vw;

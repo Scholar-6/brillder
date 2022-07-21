@@ -225,6 +225,19 @@
           height: $circle-size;
           border-radius: 50%;
         }
+        &.double-subjects {
+          width: 11vw;
+          .round-button {
+            z-index: 5;
+            left: 0;
+            position: absolute;
+          }
+          .after-main-subject {
+            z-index: 2;
+            position: absolute;
+            left: 3vw;
+          }
+        }
       }
 
       svg {
