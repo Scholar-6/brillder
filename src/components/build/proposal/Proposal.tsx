@@ -216,7 +216,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   setAlternateSubject = (alternateSubjectId: number) => {
-    this.saveLocalBrick({ ...this.state.brick, alternateSubject: undefined, alternateSubjectId });
+    if (alternateSubjectId === -1) {
+      this.saveLocalBrick({ ...this.state.brick, alternateSubject: undefined, alternateSubjectId: null });
+    } else {
+      this.saveLocalBrick({ ...this.state.brick, alternateSubject: undefined, alternateSubjectId });
+    }
   }
 
   setCore = (isCore: boolean) =>

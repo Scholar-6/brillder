@@ -98,7 +98,7 @@ export interface Brick {
   subject?: Subject;
   subjectId: number;
   alternateSubject?: Subject;
-  alternateSubjectId: number;
+  alternateSubjectId: number | null;
   subTopic: string;
   topic: string,
   alternativeTopics: string,
