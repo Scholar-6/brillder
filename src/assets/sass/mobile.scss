@@ -2087,6 +2087,19 @@
   }
 }
 
+// when brick have two subjects it looks a little different
+.phone-top-brick-16x9.alternative-subject-container {
+  .left-brick-circle {
+    z-index: 10;
+    right: 5vw !important;
+  }
+
+  .alternative-subject {
+    z-index: 4;
+    right: 2vw !important;  
+  }
+}
+
 .custom-popup-d35 {
   .close-button svg {
     color: var(--theme-dark-blue) !important;
