@@ -110,7 +110,7 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="phone-top-brick-16x9" onClick={() => props.onClick ? props.onClick() : {}}>
+    <div className={brick.alternateSubject ? "phone-top-brick-16x9 alternative-subject-container" : "phone-top-brick-16x9"} onClick={() => props.onClick ? props.onClick() : {}}>
       {renderDeadline()}
       {renderCompetitionBanner()}
       {color
@@ -127,6 +127,16 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
           />
         )
       }
+      {brick.alternateSubject && <BrickCircle
+        color={brick.alternateSubject.color}
+        circleIcon={props.circleIcon}
+        circleClass={props.circleClass + ' alternative-subject'}
+        iconColor={props.iconColor}
+        isAssignment={props.isViewAllAssignment}
+        canHover={true}
+        label=""
+        onClick={e => props.onIconClick?.(e)}
+      />}
       {renderBestScore()}
       <div className="p-blue-background" />
       <img alt="" className={`p-cover-image ${imgLoaded ? 'visible' : 'hidden'}`} onLoad={() => setLoaded(true)} src={fileUrl(brick.coverImage)} />

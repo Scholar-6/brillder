@@ -13,14 +13,20 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 interface Props {
   disabled: boolean;
   subjects: Subject[];
-  subjectId: number;
+  subjectId: number | null;
   onChange(subjectId: number): void;
 }
 
 const Subjects: React.FC<Props> = (props) => {
   const { subjects, subjectId, onChange } = props;
 
-  const subjectIndex = React.useMemo(() => subjects.findIndex(s => s.id === subjectId), [subjects, subjectId]);
+  const subjectIndex = React.useMemo(() => {
+    if (subjectId) {
+      return subjects.findIndex(s => s.id === subjectId)
+    } else {
+      return 0;
+    }
+  }, [subjects, subjectId]);
 
   return (
     <Select
