@@ -397,6 +397,25 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     }
   }
 
+  renderBottomMidle() {
+    let renderPremiumButton = false;
+    if (this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState) {
+      renderPremiumButton = true;
+      if (this.props.user.library) {
+        renderPremiumButton = false;
+      }
+    }
+
+    if (renderPremiumButton === true) {
+      return (
+        <div className="second-item" onClick={() => this.props.history.push(map.ChoosePlan)}>
+          Go Premium <SpriteIcon name="hero-sparkle" />
+        </div>
+      );
+    }
+    return <div className="second-item not-active light-blue" />
+  }
+
   render() {
     return (
       <React.Suspense fallback={<></>}>
@@ -416,11 +435,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
               {this.renderSecondButton()}
               {this.renderThirdButton()}
             </div>
-            {this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState ?
-              <div className="second-item" onClick={() => this.props.history.push(map.ChoosePlan)}>
-                Go Premium <SpriteIcon name="hero-sparkle" />
-              </div> : <div className="second-item not-active light-blue" />
-            }
+            {this.renderBottomMidle()}
           </div>
           {(this.state.isTeacher || this.state.isAdmin) ?
             <div className="second-col">
