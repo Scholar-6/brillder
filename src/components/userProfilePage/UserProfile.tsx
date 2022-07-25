@@ -560,9 +560,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <span>
               {renderLabel()} Library User
             </span>
-            <div className="price btn" onClick={() => this.props.history.push(map.StripeEducator)}>
-              <div>Go Premium <SpriteIcon name="hero-sparkle" /></div>
-            </div>
           </div>
         );
       }

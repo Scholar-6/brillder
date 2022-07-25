@@ -19,7 +19,7 @@ const CoverCreditsPlay: React.FC<Props> = ({ user, isAssignment, isCompetition, 
     // All of this is just presentation on the frontend, the actual charging is sorted out on backend
     // play is free if: anonymous user, premium educator, library user, 
     // author of the brick, publisher, or the Brick has been assigned to the user 
-    if (!user || isPaidEducator || isLibraryUser || isAuthor || isPublisher || isAssignment) {
+    if (!user || isPaidEducator || isLibraryUser || isAuthor || isPublisher || isAssignment || user.isFromInstitution) {
       return (
         <>
           Play Free

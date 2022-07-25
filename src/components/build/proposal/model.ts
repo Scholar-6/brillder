@@ -1,12 +1,13 @@
 export enum ProposalStep {
   Subject = 1,
-  BrickTitle = 2,
-  OpenQuestion = 3,
-  BrickLength = 4,
-  Brief = 5,
-  Prep = 6,
-  Synthesis = 7,
-  ProposalReview = 8,
+  AlternateSubject = 2,
+  BrickTitle = 3,
+  OpenQuestion = 4,
+  BrickLength = 5,
+  Brief = 6,
+  Prep = 7,
+  Synthesis = 8,
+  ProposalReview = 9,
 }
 
 export enum BrickFieldNames {
@@ -24,6 +25,7 @@ export enum PlayButtonStatus {
 };
 
 export const SubjectRoutePart = '/subject';
+export const AlternateSubjectRoutePart = '/alternateSubject';
 export const TitleRoutePart = '/brick-title';
 export const OpenQuestionRoutePart = '/open-question';
 export const BrickLengthRoutePart = '/length';

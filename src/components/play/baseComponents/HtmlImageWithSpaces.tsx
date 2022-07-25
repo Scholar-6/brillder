@@ -22,17 +22,25 @@ const HtmlImageWithSpaces: React.FC<SpacesProps> = ({ index, className, value, h
   const [lastClick, setLastClick] = React.useState(0);
   const containerRef = React.useRef<HTMLDivElement>(null);
 
+  const [hoverTimeout, setHoverTimeout] = React.useState(-1);
+
   const onHover = () => {
-    try {
-      const fileNameArr = containerRef.current?.getElementsByTagName('img')[0].getAttribute('src')?.split('/');
-      if (fileNameArr) {
-        const fileName = fileNameArr[fileNameArr.length - 1];
-        const imageSource = containerRef.current?.getElementsByClassName('image-source')[0].innerHTML;
-        hover(fileName, imageSource);
+    clearTimeout(hoverTimeout);
+    
+    const timeout = setTimeout(() => {
+      try {
+        const fileNameArr = containerRef.current?.getElementsByTagName('img')[0].getAttribute('src')?.split('/');
+        if (fileNameArr) {
+          const fileName = fileNameArr[fileNameArr.length - 1];
+          const imageSource = containerRef.current?.getElementsByClassName('image-source')[0].innerHTML;
+          hover(fileName, imageSource);
+        }
+      } catch {
+        console.log('can`t get image. Error 14342');
       }
-    } catch {
-      console.log('can`t get image. Error 14342');
-    }
+    }, 450);
+
+    setHoverTimeout(timeout);
   }
 
   const onDoubleClick = () => {

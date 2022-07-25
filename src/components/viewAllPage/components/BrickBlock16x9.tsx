@@ -51,6 +51,7 @@ interface BrickBlockProps {
 
 const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
   const [imgLoaded, setImgLoaded] = React.useState(false);
+  var alternateColor = "";
   let color = "";
   if (!brick.subject) {
     color = "#B0B0AD";
@@ -61,13 +62,17 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     color = brick.subject.color;
   }
 
+  if (brick.alternateSubject) {
+    alternateColor = brick.alternateSubject.color;
+  }
+
   let isAssignment = false;
   let assignmentId = -1;
 
   if (brick.assignments) {
     for (let assignmen of brick.assignments) {
       const assignment = assignmen as any;
-      for (let student of assignment.stats.byStudent) {
+      for (let student of assignment.stats?.byStudent ?? []) {
         if (student.studentId === props.user.id) {
           assignmentId = assignment.id;
           isAssignment = true;
@@ -204,11 +209,15 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
           {isAssignment && props.teacher && <div className="absolute-assignment-title">Assigned by {props.teacher.firstName} {props.teacher.lastName}</div>}
           <div className="publish-brick-container">
             {renderDeadline()}
-            <div className="level">
+            <div className={alternateColor ? "level before-alternative" : "level"}>
               <div style={{ background: color }}>
                 {(isAssignment || brick.currentUserAttempted) ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
               </div>
             </div>
+            {alternateColor &&
+            <div className="level">
+              <div style={{ background: alternateColor }} />
+            </div>}
             {renderScore()}
             {brick.coverImage ?
               <div className="p-cover-image">

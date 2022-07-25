@@ -53,8 +53,23 @@ $box-radius: 0.4vw;
           padding: 0 4vw;
           margin-bottom: 2vh !important;
         }
+      }
+
+      .MuiFormControlLabel-root {
         @include tabletP {
           width: 20.5vw;
+        }
+      }
+
+      &.none-subject-group {
+        .MuiFormControlLabel-root {
+          @include tabletP {
+            width: 40vw;
+
+            .MuiTypography-root {
+              font-family: $font-family-bold !important;
+            }
+          }
         }
       }
 

@@ -89,6 +89,11 @@
         }
       }
 
+      .before-alternative {
+        z-index: 5;
+        right: calc(1vh + 1.1vw);
+      }
+
       .level>div {
         height: 4.5vh;
         width: 4.5vh;

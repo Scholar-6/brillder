@@ -105,6 +105,7 @@ export const Proposal = (brickId: number) => {
 // new brick link
 export const ProposalStart = `${NewBrick}/start-building`;
 export const ProposalSubjectLink = `${NewBrick}/subject`;
+export const ProposalAlternateSubjectLink = `${NewBrick}/alternateSubject`;
 export const ProposalSubjectCoreLink = (isCore: boolean) => `${NewBrick}/subject?isCore=` + isCore;
 export const ProposalTitleLink = `${NewBrick}/brick-title`;
 
@@ -174,6 +175,7 @@ export default {
   ProposalLength,
   ProposalReview,
   ProposalSubjectLink,
+  ProposalAlternateSubjectLink,
   ProposalSubjectCoreLink,
   ProposalTitleLink,
 

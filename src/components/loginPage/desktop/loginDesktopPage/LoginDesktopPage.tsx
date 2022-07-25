@@ -18,9 +18,12 @@ import PhoneIcon from "../PhoneIcon";
 import TypingLabel from "components/baseComponents/TypingLabel";
 import EmailRegisterDesktopPage from "../EmailRegisterDesktopPage";
 import Delayed from "components/services/Delayed";
-import { FirstPage, EmailSignPage, JoinPage, RegisterPage } from "../routes";
+import { FirstPage, EmailSignPage, JoinPage, RegisterPage, LibraryRegisterPage } from "../routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
 import { GetOrigin } from "localStorage/origin";
+import MicrosoftDesktopButton from "../MicrosoftDesktopButton";
+import LibraryDesktopButton from "../LibraryDesktopButton";
+import FlexLinesWithOr from "components/baseComponents/FlexLinesWithOr/FlexLinesWithOr";
 
 
 const DesktopTheme = React.lazy(() => import('./themes/LoginDesktopTheme'));
@@ -28,7 +31,8 @@ const DesktopTheme = React.lazy(() => import('./themes/LoginDesktopTheme'));
 export enum LoginPage {
   Default,
   Join,
-  Register
+  Register,
+  LibraryRegister
 }
 
 interface LoginProps {
@@ -61,6 +65,8 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
     page = LoginPage.Join;
   } else if (pathname === RegisterPage) {
     page = LoginPage.Register;
+  } else if (pathname === LibraryRegisterPage) {
+    page = LoginPage.LibraryRegister;
   }
   
 
@@ -68,21 +74,25 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
   const moveToEmailLogin = () => history.push(EmailSignPage);
   const moveToJoin = () => history.push(JoinPage);
   const moveToRegister = () => history.push(RegisterPage);
+  const moveToLibraryRegister = () => history.push(LibraryRegisterPage);
 
   return (
     <React.Suspense fallback={<></>}>
       {!isMobile && <DesktopTheme />}
       <div className="login-desktop-page">
-        {(page === LoginPage.Join || page === LoginPage.Register) &&
+        {(page === LoginPage.Join || page === LoginPage.Register || page === LoginPage.LibraryRegister) &&
           <div className="left-part-join">
             <h1>
-              <TypingLabel onEnd={() => { }} label={isLibrary ? "Sign up for a free Brillder library account today" : "Join the revolution"} />
+              <TypingLabel onEnd={() => { }} label={(isLibrary || page === LoginPage.LibraryRegister) ? "Sign up for a free Brillder library account today" : "Join the revolution"} />
             </h1>
             <div className="image-container spinning">
               <img alt="" src="/images/login/PhoneWheellogin.svg" />
             </div>
           </div>}
         <Switch>
+          <Route exact path={LibraryRegisterPage}>
+            <EmailRegisterDesktopPage history={history} isLibrary={true} />
+          </Route>
           <Route exact path={RegisterPage}>
             <EmailRegisterDesktopPage history={history} />
           </Route>
@@ -94,6 +104,13 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
               <div className="button-box">
                 <GoogleDesktopButton label="Register with Google" />
               </div>
+              <div className="button-box m-t-3vh">
+                <MicrosoftDesktopButton />
+              </div>
+              <div className="button-box">
+                <LibraryDesktopButton onClick={moveToLibraryRegister} />
+              </div>
+              <FlexLinesWithOr />
               <div className="button-box">
                 <RegisterDesktopButton label="Register with email" onClick={moveToRegister} />
               </div>
@@ -116,7 +133,10 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
                 <LoginLogo />
               </div>
               <div className="button-box">
-                <GoogleDesktopButton label="Sign in with Google" />
+                <GoogleDesktopButton label="Continue with Google" />
+              </div>
+              <div className="button-box m-t-3vh">
+                <MicrosoftDesktopButton />
               </div>
               <div className="button-box">
                 <RegisterDesktopButton label="Sign in with email" onClick={moveToEmailLogin} />

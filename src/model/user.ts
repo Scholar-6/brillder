@@ -63,6 +63,7 @@ export interface User extends UserBase {
   brills?: number;
   credits?: number;
   userCredits?: number;
+  isFromInstitution?: boolean;
 
   freeAssignmentsLeft: number;
   freeAttemptsLeft: number;
