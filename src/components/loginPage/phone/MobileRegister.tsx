@@ -35,6 +35,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
   const [libraryId, setLibrary] = useState(null as null | number);
   const [libraries, setLibraries] = useState([] as RealLibrary[]);
   const [suggestionFailed, setSuggestionFailed] = useState(false);
+  const [libraryLabel, setLibraryLabelFailed] = useState("");
   const [libraryPart, setLibraryPart] = useState(props.isLibrary ? props.isLibrary : false);
 
   const [alertMessage, setAlertMessage] = useState("");
@@ -174,9 +175,12 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
   const verifyLibrary = async () => {
     if (pin && libraryCardNumber && libraryId) {
       var res = await checkLibraryAccount(libraryId, libraryCardNumber, pin);
-      if (res) {
+      if (res.success) {
         setLibraryPart(false);
       } else {
+        if (res.data === 'User Found') {
+          setLibraryLabelFailed('There is already user with this library account. Try login with your email');
+        }
         setSuggestionFailed(true);
       }
     }
@@ -222,7 +226,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
               </div>}
           </div>
         </div>
-        <LibraryFailedDialog isOpen={suggestionFailed} close={() => setSuggestionFailed(false)} />
+        <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => setSuggestionFailed(false)} />
       </div>
     );
   }

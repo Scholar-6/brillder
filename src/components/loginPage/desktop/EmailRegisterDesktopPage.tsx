@@ -42,6 +42,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   const [libraryId, setLibrary] = useState(null as null | number);
   const [libraries, setLibraries] = useState([] as RealLibrary[]);
   const [suggestionFailed, setSuggestionFailed] = useState(false);
+  const [libraryLabel, setLibraryLabelFailed] = useState("");
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
@@ -187,10 +188,13 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   const verifyLibrary = async () => {
     if (pin && libraryCardNumber && libraryId) {
       var res = await checkLibraryAccount(libraryId, libraryCardNumber, pin);
-      if (res) {
+      if (res.success) {
         setLibraryPart(false);
       } else {
         setSuggestionFailed(true);
+        if (res.data === 'User Found') {
+          setLibraryLabelFailed('There is already user with this library account. Try login with your email');
+        }
       }
     }
   }
@@ -228,7 +232,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="button-box">
           <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
         </div>
-        <LibraryFailedDialog isOpen={suggestionFailed} close={() => setSuggestionFailed(false)} />
+        <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => setSuggestionFailed(false)} />
       </div>
     );
   }
