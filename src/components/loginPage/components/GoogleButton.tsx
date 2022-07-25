@@ -11,7 +11,7 @@ const GoogleButton: React.FC<Props> = (props) => {
   return (
     <a className="google-button svgOnHover" href={googleLink}>
       <SpriteIcon name="gmail" className="active" />
-      <span>{props.label ? props.label : 'Sign in with Google'}</span>
+      <span>{props.label ? props.label : 'Continue with Google'}</span>
     </a>
   );
 };

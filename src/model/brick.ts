@@ -60,6 +60,7 @@ export interface Subject {
   userCount: number;
   group: SubjectGroup;
   checked?: boolean;
+  count: number;
 
   // view all page
   publicCount?: number;
@@ -68,6 +69,7 @@ export interface Subject {
 
 export interface SubjectItem extends Subject {
   publicCount: number;
+  count: number;
 }
 
 export interface SubjectAItem extends Subject {
@@ -95,6 +97,8 @@ export interface Brick {
   id: number;
   subject?: Subject;
   subjectId: number;
+  alternateSubject?: Subject;
+  alternateSubjectId: number | null;
   subTopic: string;
   topic: string,
   alternativeTopics: string,

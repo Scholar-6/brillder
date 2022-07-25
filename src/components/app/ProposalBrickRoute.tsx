@@ -32,8 +32,6 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  console.log('render')
-
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!rest.user) {
       rest.getUser();

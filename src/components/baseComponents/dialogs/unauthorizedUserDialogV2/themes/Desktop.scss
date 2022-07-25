@@ -40,8 +40,8 @@
     border-radius: 0.6vw;
     display: flex;
     align-items: center;
-    margin-top: 0.26vw;
-    margin-bottom: 0.26vw;
+    margin-top: 0.3vw;
+    margin-bottom: 0.3vw;
 
     svg {
       transform: unset;
@@ -62,8 +62,8 @@
   }
 
   .email-button {
-    margin-top: 0.26vw;
-    margin-bottom: 0.26vw;
+    margin-top: 0.3vw;
+    margin-bottom: 0.3vw;
     background: var(--theme-green);
     height: 3.5vw;
     border-radius: 0.6vw;
@@ -90,12 +90,92 @@
     }
   }
 
+  .library-button {
+    cursor: pointer;
+    position: relative;
+    margin-top: 0.3vw;
+    margin-bottom: 0.3vw;
+    display: flex;
+    align-items: center;
+    background: var(--blue);
+    border-radius: 0.6vw;
+    height: 3.5vw;
+    font-size: 1.3vw;
+    text-align: center;
+
+    span {
+      padding-left: 3vw;
+      width: 100%;
+      text-align: center;
+    }
+
+    .library-user-icon {
+      position: absolute;
+      left: 1.1vw;
+    }
+    .help-library {
+      position: absolute;
+      right: 1.5vw;
+    }
+    svg {
+      width: 2vw;
+      height: 2vw !important;
+    }
+    .hover-area {
+      margin-right: 1vw;
+      .hover-content {
+        position: absolute;
+        background: white;
+        border-radius: 0.35vw;
+        color: var(--theme-dark-blue);
+        display: none;
+        width: 13vw;
+        padding: 0.4vw;
+        right: 0.8vw;
+        top: 3vw;
+        font-size: 1vw;
+      }
+      &:hover {
+        .hover-content {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .microsoft-btn {
+    img {
+      position: absolute;
+      left: 1.1vw;
+      width: 1.9vw;
+      height: 1.9vw;
+    }
+    span {
+      text-align: center;
+      padding-left: 7%;
+      width: 93%;
+      margin-right: 0;
+    }
+  }
+
+  .login-or-content {
+    height: 6vh;
+    color: white;
+    font-size: 1.1vw;
+    .line {
+      margin-left: 1vw;
+      margin-right: 1vw;
+      width: 7vw;
+      border-top: 1px solid var(--white);
+    }
+  }
+
   .MuiPaper-root {
     padding-left: 1.2vw !important;
     padding-right: 1.2vw !important;
     padding-top: 1.2vw !important;
     padding-bottom: 0.7vw !important;
-    width: 23vw !important;
+    width: 25vw !important;
   }
 
   .title {
@@ -105,8 +185,8 @@
   }
 
   .btn {
-    margin-top: 0.26vw;
-    margin-bottom: 0.26vw;
+    margin-top: 0.3vw;
+    margin-bottom: 0.3vw;
     width: 100%;
     height: 3.5vw !important;
     display: flex;
@@ -126,7 +206,7 @@
 
     &.bg-orange {
       padding-right: 3.8vw;
-      background: var(--theme-green);
+      background: var(--theme-orange);
 
       svg {
         margin-right: 1.8vw;

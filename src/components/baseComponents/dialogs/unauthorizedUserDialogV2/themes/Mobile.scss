@@ -4,24 +4,47 @@
 
 .auth-confirm-dialog {
   .MuiPaper-root {
+    border-radius: 5vw !important;
     padding-left: 4vw !important;
     padding-right: 4vw !important;
     padding-top: 4vw !important;
     padding-bottom: 2vw !important;
-    width: 80vw !important;
+    width: 92vw !important;
   }
 
-  .title span {
-    text-align: center;
-    font-size: 5vw !important;
-    margin-bottom: 0.4vw;
+  .login-or-content {
+    height: 6vh;
+    color: white;
+    font-size: 4.5vw;
+    .line {
+      margin-left: 4vw;
+      margin-right: 4vw;
+      width: 30vw;
+      border-top: 1px solid var(--white);
+    }
+  }
+
+  .title {
+    margin-bottom: 6vw;
+    span {
+      text-align: center;
+      font-size: 4.5vw !important;
+    }
+  }
+
+  .title.bigger {
+    margin-top: 3vw;
+    margin-bottom: 4vw;
+    span {
+      font-size: 5.5vw !important;
+    }
   }
 
   .btn {
     margin-top: 1.2vw;
     margin-bottom: 1.2vw;
     width: 100%;
-    height: 13vw !important;
+    height: 15vw !important;
     display: flex;
     font-size: 5vw !important;
     align-items: center;
@@ -38,10 +61,13 @@
     }
 
     &.bg-orange {
-      background: var(--theme-green);
+      background: var(--theme-orange);
 
       svg {
-        margin-right: 1.6vw;
+        position: absolute;
+        left: 7.5vw;
+        width: 8vw !important;
+        height: 8vw !important;
       }
     }
 
@@ -67,12 +93,55 @@
     }
   }
 
+  .library-button {
+    margin-top: 1.2vw;
+    margin-bottom: 1.2vw;
+    display: flex;
+    align-items: center;
+    background: var(--blue);
+    border-radius: 1.8vw;
+    height: 15vw;
+    text-align: center;
+
+    span {
+      width: 100%;
+      text-align: center;
+    }
+
+    .library-user-icon {
+      position: absolute;
+      left: 8vw;
+    }
+    .help-library {
+      position: absolute;
+      right: 6vw;
+    }
+    svg {
+      width: 7vw;
+      height: 7vw !important;
+    }
+  }
+
+  .microsoft-btn {
+    img {
+      position: absolute;
+      left: 4vw;
+      width: 7vw;
+      height: 7vw;
+    }
+    span {
+      text-align: center;
+      padding-left: 9%;
+      width: 91%;
+    }
+  }
+
   .google-button-desktop {
     border-radius: 1.8vw;
     margin-top: 1.2vw;
     margin-bottom: 1.2vw;
     width: 100%;
-    height: 13vw !important;
+    height: 15vw !important;
     display: flex;
     font-size: 5vw !important;
     align-items: center;

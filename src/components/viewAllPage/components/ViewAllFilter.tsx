@@ -296,8 +296,10 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
           }
         }
       }
-      subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
     }
+
+    subjects = subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
+
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
         <div className="flex-height-box">

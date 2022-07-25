@@ -13,6 +13,7 @@ import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePol
 import StopTrackingButton from './StopTrackingButton';
 import { getCookies, clearCookiePolicy, acceptCookies } from 'localStorage/cookies';
 import { isPhone } from 'services/phone';
+import { GetHeartOfMerciaUser } from 'localStorage/login';
 
 interface StudentRouteProps {
   path: string;
@@ -37,7 +38,12 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
     }
     
     if (!user.userPreference) {
-      return <Redirect to={map.TermsSignUp} />
+      let isHeartOfMercia = !!GetHeartOfMerciaUser();
+      if (isHeartOfMercia) {
+        return <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />;
+      } else {
+        return <Redirect to={map.TermsSignUp} />
+      }
     }
 
     if (!rest.isRedirectedToProfile) {

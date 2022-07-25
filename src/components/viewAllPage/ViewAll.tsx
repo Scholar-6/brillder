@@ -58,11 +58,9 @@ import {
   prepareVisibleBricks2,
   toggleSubject,
   renderTitle,
-  sortAllBricks,
   sortAndCheckSubjects,
   filterSearchBricks,
   getCheckedSubjectIds,
-  countSubjectBricksV2,
   getSubjectsWithBricks,
   checkAllSubjects,
 } from "./service/viewAll";
@@ -404,10 +402,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (this.props.user) {
       const pageBricks = await getPublishedBricksByPage(6, this.state.page, true, [], [], [], this.state.filterCompetition, this.state.isAllSubjects);
       if (pageBricks) {
-        let bs = sortAllBricks(pageBricks.bricks);
         let { subjects } = this.state;
-        countSubjectBricksV2(subjects, bs, this.props.user, this.state.isAdmin);
-        subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
+
+        for (let subject of pageBricks.subjects) {
+          const filterSubject = subjects.find(s => s.id === subject.id);
+          if (filterSubject) {
+            filterSubject.personalCount = subject.count;
+            filterSubject.publicCount = subject.count;
+          }
+        }
         if (values && values.isViewAll) {
           this.checkSubjectsWithBricks(subjects);
         }
@@ -446,12 +449,22 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length, subjectIds, filterCompetition, isAllSubjects);
 
     if (pageBricks) {
+      const {subjects} = this.state;
+      for (let subject of pageBricks.subjects) {
+        const filterSubject = subjects.find(s => s.id === subject.id);
+        if (filterSubject) {
+          filterSubject.personalCount = subject.count;
+          filterSubject.publicCount = subject.count;
+        }
+      }
+
       this.setState({
         ...this.state,
         page,
         bricksCount: pageBricks.pageCount,
         bricks: pageBricks.bricks,
         isCore,
+        subjects,
         filterLength: length,
         filterLevels: levels,
         isClearFilter: this.isFilterClear(),
@@ -759,7 +772,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (this.state.isSearching) {
         this.loadAndSetSearchBricks(this.state.searchString, this.state.page - 1, this.state.pageSize, this.state.isCore);
       } else {
-        this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+        if (this.props.user) {
+          this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+        } else if (this.state.subjectGroup) {
+          this.loadAndSetUnauthBricks(this.state.page - 1, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+        }
       }
     }
   }
@@ -768,11 +785,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     let index = this.state.page * this.state.pageSize;
     const { pageSize, bricksCount } = this.state;
 
+    console.log('move next', index, bricksCount);
+
     if (index + pageSize <= bricksCount - 1) {
       if (this.state.isSearching) {
         this.loadAndSetSearchBricks(this.state.searchString, this.state.page + 1, this.state.pageSize, this.state.isCore);
       } else {
-        this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+        if (this.props.user) {
+          this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
+        } else if (this.state.subjectGroup) {
+          this.loadAndSetUnauthBricks(this.state.page + 1, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+        }
       }
     }
   }

@@ -8,7 +8,7 @@ interface RegisterButtonProps {
 
 const RegisterDesktopButton: React.FC<RegisterButtonProps> = props => {
   return (
-    <button className="email-button svgOnHover" onClick={props.onClick}>
+    <button className="email-button email-button-only svgOnHover" onClick={props.onClick}>
       <SpriteIcon name="email" className="active" />
       <span>{props.label}</span>
     </button>

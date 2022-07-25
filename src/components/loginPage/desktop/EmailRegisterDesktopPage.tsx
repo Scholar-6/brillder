@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
+import { ListItemText, MenuItem, Select } from '@material-ui/core';
 
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
@@ -13,6 +14,9 @@ import map from "components/map";
 import { ReduxCombinedState } from "redux/reducers";
 import { GetOrigin } from "localStorage/origin";
 import { UserPreferenceType } from "model/user";
+import { checkLibraryAccount, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
+import ProfileInput from "components/userProfilePage/components/ProfileInput";
+import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
 
 const mapState = (state: ReduxCombinedState) => ({
   referralId: state.auth.referralId,
@@ -26,18 +30,28 @@ const connector = connect(mapState, mapDispatch);
 
 interface LoginProps {
   history: History;
+  isLibrary?: boolean;
   email?: string;
   referralId?: string;
   loginSuccess(): void;
 }
 
 const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
+  const [libraryCardNumber, setCardNumber] = useState('');
+  const [pin, setPin] = useState('');
+  const [libraryId, setLibrary] = useState(null as null | number);
+  const [libraries, setLibraries] = useState([] as RealLibrary[]);
+  const [suggestionFailed, setSuggestionFailed] = useState(false);
+  const [libraryLabel, setLibraryLabelFailed] = useState("");
+
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
   const [isLoginWrong, setLoginWrong] = React.useState(false);
+
+  const [libraryPart, setLibraryPart] = useState(props.isLibrary ? props.isLibrary : false);
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -59,15 +73,29 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
     sendLogin(email, password);
   }
 
+  const getLibraries = async () => {
+    const loadedLibraries = await getRealLibraries();
+    if (loadedLibraries) {
+      setLibraries(loadedLibraries);
+    }
+  }
+
+  useEffect(() => {
+    if (props.isLibrary) {
+      getLibraries();
+    }
+    /*eslint-disable-next-line*/
+  }, []);
+
   const sendLogin = async (email: string, password: string) => {
     let data = await login(email, password);
     if (!data.isError) {
       if (data === "OK") {
         axios.get(
           `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
-          {withCredentials: true}
+          { withCredentials: true }
         ).then(response => {
-          const {data} = response;
+          const { data } = response;
           if (data.termsAndConditionsAcceptedVersion === null) {
             props.history.push(map.TermsSignUp);
             props.loginSuccess();
@@ -117,6 +145,15 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       data.userPreference = UserPreferenceType.Student;
     }
 
+    // add library
+    if (props.isLibrary) {
+      data.library = {
+        library: libraryId,
+        barcodeNumber: libraryCardNumber,
+        pin: pin
+      }
+    }
+
     axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`,
       data,
@@ -148,8 +185,60 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
     });
   };
 
+  const verifyLibrary = async () => {
+    if (pin && libraryCardNumber && libraryId) {
+      var res = await checkLibraryAccount(libraryId, libraryCardNumber, pin);
+      if (res.success) {
+        setLibraryPart(false);
+      } else {
+        setSuggestionFailed(true);
+        if (res.data === 'User Found') {
+          setLibraryLabelFailed('There is already user with this library account. Try login with your email');
+        }
+      }
+    }
+  }
+
+  if (libraryPart) {
+    return (
+      <div className="left-part right library-part-d432">
+        <div className="logo">
+          <LoginLogo />
+        </div>
+        <div className="button-box">
+          <div className="relative">
+            {(libraryId === -1 || libraryId === null) && <div className="absolute-placeholder unselectable" onClick={e => e.preventDefault()}>Library Authority</div>}
+            <Select
+              className="select-library"
+              value={libraryId}
+              disabled={false}
+              onChange={e => setLibrary(e.target.value as any)}
+              MenuProps={{ classes: { paper: 'select-classes-list' } }}
+            >
+              {libraries.map((s, i) => (
+                <MenuItem value={s.id} key={i}>
+                  <ListItemText>{s.name}</ListItemText>
+                </MenuItem>
+              ))}
+            </Select>
+          </div>
+        </div>
+        <div className="button-box">
+          <ProfileInput autoCompleteOff={true} value={libraryCardNumber} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Barcode" />
+        </div>
+        <div className="button-box">
+          <ProfileInput autoCompleteOff={true} value={pin} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
+        </div>
+        <div className="button-box">
+          <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
+        </div>
+        <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => setSuggestionFailed(false)} />
+      </div>
+    );
+  }
+
   return (
-    <div className="left-part right">
+    <div className="left-part right register-part">
       <div className="logo">
         <LoginLogo />
       </div>

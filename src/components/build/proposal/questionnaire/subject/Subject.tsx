@@ -13,7 +13,9 @@ import TypingLabel from "components/baseComponents/TypingLabel";
 
 
 interface SubjectProps {
-  history: any;
+  isAlternateSubject?: boolean;
+
+  title: string;
   baseUrl: string;
   location: any;
   subjectId: any;
@@ -480,7 +482,7 @@ const PsychologyComponent: React.FC = () => {
       <div>
         {secondFinished && <TypingLabel label="awakes”" onEnd={() => setThirdEnd(true)} />}
       </div>
-      {thirdFinished &&     <div className="absolute-bottom">Carl Jung</div>}
+      {thirdFinished && <div className="absolute-bottom">Carl Jung</div>}
     </div>
   );
 }
@@ -523,8 +525,9 @@ const DefaultComponent: React.FC = () => {
   );
 }
 
+
 const SubjectPage: React.FC<SubjectProps> = ({
-  history, subjectId, subjects, baseUrl, location, saveSubject
+  isAlternateSubject, title, subjectId, subjects, baseUrl, location, saveSubject
 }) => {
   const getSubjectName = (subjectId: number) => {
     if (subjectId) {
@@ -623,7 +626,20 @@ const SubjectPage: React.FC<SubjectProps> = ({
         <Grid container justify="flex-start" className="subject-box" item md={10} xs={12}>
           <Grid justify="flex-start" container item md={8} xs={12}>
             <div className="subject-container">
-              <h1 className="only-tutorial-header">Choose Subject</h1>
+              <h1 className="only-tutorial-header">{title}</h1>
+              {isAlternateSubject && <div>
+                <RadioGroup
+                  className="subjects-group none-subject-group"
+                  value={subject}
+                  onChange={onSubjectChange}
+                >
+                  <FormControlLabel
+                    value={-1}
+                    control={<Radio className="sortBy" />}
+                    label="No - it’s only relevant to one subject"
+                  />
+                </RadioGroup>
+              </div>}
               <Grid container justify="flex-start" item xs={12}>
                 <RadioGroup
                   className="subjects-group"
@@ -650,11 +666,11 @@ const SubjectPage: React.FC<SubjectProps> = ({
         {subject &&
           <Grid className='tutorial-pagination'>
             <div className="centered text-theme-dark-blue bold" style={{ fontSize: '2vw', marginRight: '2vw' }}
-              onClick={() => { saveSubject(subject); history.push(map.ProposalTitleLink) }}>
+              onClick={() => { saveSubject(subject); }}>
               Next
             </div>
             <NextButton
-              isActive={true} step={ProposalStep.Subject}
+              isActive={true} step={isAlternateSubject ? ProposalStep.AlternateSubject : ProposalStep.Subject}
               baseUrl={baseUrl} canSubmit={true} onSubmit={saveSubject} data={subject}
             />
           </Grid>
