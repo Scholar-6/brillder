@@ -193,7 +193,9 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       } else {
         setSuggestionFailed(true);
         if (res.data === 'User Found') {
-          setLibraryLabelFailed('There is already user with this library account. Try login with your email');
+          setLibraryLabelFailed(`These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
+        } else {
+          setLibraryLabelFailed('');
         }
       }
     }
@@ -232,7 +234,10 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="button-box">
           <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
         </div>
-        <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => setSuggestionFailed(false)} />
+        <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => {
+          setSuggestionFailed(false);
+          setLibraryLabelFailed('');
+        }} />
       </div>
     );
   }
