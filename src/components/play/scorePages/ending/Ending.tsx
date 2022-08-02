@@ -367,7 +367,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     <div className="btn btn-green" onClick={this.props.move}>Next</div>
                   </div> :
                   <div className="btn-container">
-                    <div className="btn btn-green orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
+                    <div className="btn btn-green orange" onClick={() => {
+                      this.state.isHeartOfMercia ? window.location.href="https://www.heartofmercia.org.uk/" : this.moveToLibrary()
+                    }}>Exit</div>
                     {!this.state.isHeartOfMercia &&
                       <div className="btn btn-green" onClick={this.props.move}>More Options</div>
                     }
@@ -546,7 +548,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     </div>
                     :
                     <div className="flex-center">
-                      <div className="btn btn-orange" onClick={this.moveToLibrary.bind(this)}>Exit</div>
+                      <div className="btn btn-orange" onClick={() => {
+                        this.state.isHeartOfMercia ? window.location.href="https://www.heartofmercia.org.uk/" : this.moveToLibrary()
+                      }}>Exit</div>
                       {!this.state.isHeartOfMercia &&
                         <div className="btn btn-green" onClick={this.props.move}>More Options</div>
                       }
