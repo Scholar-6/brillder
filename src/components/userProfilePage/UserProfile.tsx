@@ -72,6 +72,8 @@ interface UserProfileState {
   userBrills?: number;
   userCredits?: number;
 
+  isFromInstitution: boolean | undefined;
+
   user: UserProfile;
   subjects: Subject[];
   isNewUser: boolean;
@@ -121,7 +123,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         getUserById(userId).then(user => {
           if (user) {
             this.setState({ 
-              user: getUserProfile(user), 
+              user: getUserProfile(user),
+              isFromInstitution: user.isFromInstitution,
               userBrills: user.brills, 
               subscriptionState: user.subscriptionState,
               userCredits: user.freeAttemptsLeft
@@ -395,7 +398,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderProfileBlock(user: UserProfile) {
-    console.log(user)
     let isStudent = user.userPreference?.preferenceId === UserPreferenceType.Student;
 
     return (
@@ -435,18 +437,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <div className="input-group">
               <ProfileInput
                 value={user.firstName} validationRequired={this.state.validationRequired}
-                className="first-name" placeholder="Name"
+                className="first-name" placeholder="Name" disabled={this.state.isFromInstitution}
                 onChange={e => this.onFieldChanged(e, UserProfileField.FirstName)}
               />
               <ProfileInput
                 value={user.lastName} validationRequired={this.state.validationRequired}
-                className="last-name" placeholder="Surname"
+                className="last-name" placeholder="Surname" disabled={this.state.isFromInstitution}
                 onChange={e => this.onFieldChanged(e, UserProfileField.LastName)}
               />
             </div>
             <ProfileInput
               value={user.email} validationRequired={this.state.validationRequired}
-              className="" placeholder="Email" type="email"
+              className="" placeholder="Email" type="email" disabled={this.state.isFromInstitution}
               onChange={e => this.onEmailChanged(e)}
             />
             <div className="password-container">
