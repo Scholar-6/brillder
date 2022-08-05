@@ -241,7 +241,7 @@ const App: React.FC<AppProps> = props => {
   if (termsData.termsVersion && props.user && props.user.termsAndConditionsAcceptedVersion) {
     console.log(termsData.termsVersion, props.user.termsAndConditionsAcceptedVersion);
     if (termsData.termsVersion !== props.user.termsAndConditionsAcceptedVersion) {
-      window.location.href = map.TermsSignUp + '?onlyAcceptTerms=true';
+      window.location.href = map.TermsOnlyAccept;
     }
   }
 

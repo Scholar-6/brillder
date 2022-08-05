@@ -14,6 +14,7 @@ import map from "components/map";
 import { checkAdmin } from "components/services/brickService";
 import { Helmet } from "react-helmet";
 import LoginRedirect from "components/baseComponents/LoginRedirect";
+import BaseTermsRedirect from "./BaseTermsRedirect";
 
 interface BuildRouteProps {
   exact?: any;
@@ -42,7 +43,7 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
     let { user } = rest;
 
     if (!user.userPreference) {
-      return <Redirect to={map.TermsSignUp} />;
+      return <BaseTermsRedirect />;
     }
 
     if (!rest.isRedirectedToProfile) {
