@@ -136,6 +136,15 @@
         font-family: $font-family-bold;
       }
     }
+
+    .institution-logo {
+      margin-top: 3vh;
+
+      svg {
+        cursor: pointer;
+        height: 4vw;
+      }
+    }
   }
 
   .first-col {
