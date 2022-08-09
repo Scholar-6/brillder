@@ -136,29 +136,33 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       intro: `<p>Find and Play your assigned ‘bricks’ here</p>`,
     });
 
-    steps.push({
-      element: '.competition-item-container',
-      intro: `<p>Discover our daily competitions here - play to win brills, which can be converted to real cash over time!</p>`,
-    });
+    if (!this.props.user.library) {
+      steps.push({
+        element: '.competition-item-container',
+        intro: `<p>Discover our daily competitions here - play to win brills, which can be converted to real cash over time!</p>`,
+      });
+    }
 
     steps.push({
       element: '.zendesk-position',
       intro: `<p>If you spot anything that doesn't look right, or experience a technical issue, click here to create a help ticket</p>`
-    })
+    });
 
-    steps.push({
-      element: '.desktop-credit-coins',
-      intro: `
+    if (!this.props.user.library) {
+      steps.push({
+        element: '.desktop-credit-coins',
+        intro: `
         <p>
           You need to spend credits to play bricks. Spend 1 credit to play a brick from the catalogue or 2 credits to enter a competition.
           We've given you 5 free credits to get you started!
         </p>
       `
-    });
+      });
+    }
 
     steps.push({
       element: '.brill-coin-img',
-      intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`
+      intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. As a library user, if you earn enough you'll become one of our Brilliant Minds! We've given you 200 as a welcome gift!</p>`
     });
 
     return steps;
@@ -299,7 +303,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <div className="zendesk-position" />
         </MobileButtonWrap>
         {this.renderAssignmentsButton()}
-        {this.renderCompetitionButton()}
+        {!this.props.user.library && this.renderCompetitionButton()}
         <Steps
           enabled={this.state.isNewStudent}
           steps={this.state.steps}
@@ -336,7 +340,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       const buttons = [];
       buttons.push(firstButton(1));
       buttons.push(<SwiperSlide key={2}>{this.renderAssignmentsButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide key={3}>{this.renderCompetitionButton()}</SwiperSlide>);
+      if (!this.props.user.library) {
+        buttons.push(<SwiperSlide key={3}>{this.renderCompetitionButton()}</SwiperSlide>);
+      }
       buttons.push(<SwiperSlide key={4}>{this.renderLibraryButton()}</SwiperSlide>);
       buttons.push(<SwiperSlide key={5}>{this.renderCreateButton()}</SwiperSlide>);
       return buttons;
