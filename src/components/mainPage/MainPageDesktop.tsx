@@ -367,6 +367,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   renderCompetitionArena() {
+    if (this.props.user.library) {
+      return <div />;
+    }
     if (this.state.isStudent) {
       return (
         <div className="create-item-container competition-arena-d54n">

@@ -247,40 +247,45 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
           label={`Level ${AcademicLevelLabels[loopLevel]}`}
         />
         <div>
-        <FormControlLabel
-          value={SortBy.Popularity}
-          style={{ marginRight: 0, width: "28%" }}
-          control={
-            <Radio
-              className="sortBy"
-              checked={!!found2}
-              onClick={() => this.filterByLength(length)}
-            />
-          }
-          label={`${length} mins`}
-        />
+          <FormControlLabel
+            value={SortBy.Popularity}
+            style={{ marginRight: 0, width: "28%" }}
+            control={
+              <Radio
+                className="sortBy"
+                checked={!!found2}
+                onClick={() => this.filterByLength(length)}
+              />
+            }
+            label={`${length} mins`}
+          />
         </div>
       </div>
     );
   }
 
-  
+
   renderCompetitionFilter() {
+    if (this.props.user && this.props.user.library) {
+      return <div />;
+    }
     return (
-      <div className="flex-center competition-filter-d32">
-        <FormControlLabel
-          value={SortBy.Popularity}
-          style={{ marginRight: 0 }}
-          control={
-            <Radio
-              className="sortBy"
-              checked={this.props.filterCompetition}
-              onClick={() => this.props.filterByCompetition()}
-            />
-          }
-          label={`Competition Arena`}
-        />
-        <div><SpriteIcon className="star-d32" name="star"/></div>
+      <div className="competition-filter-box">
+        <div className="flex-center competition-filter-d32">
+          <FormControlLabel
+            value={SortBy.Popularity}
+            style={{ marginRight: 0 }}
+            control={
+              <Radio
+                className="sortBy"
+                checked={this.props.filterCompetition}
+                onClick={() => this.props.filterByCompetition()}
+              />
+            }
+            label={`Competition Arena`}
+          />
+          <div><SpriteIcon className="star-d32" name="star" /></div>
+        </div>
       </div>
     );
   }
@@ -337,9 +342,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               </RadioGroup>
             </div>
             {this.renderFilterLabelBox()}
-            <div className="competition-filter-box">
-              {this.renderCompetitionFilter()}
-            </div>
+            {this.renderCompetitionFilter()}
             <div className="sort-box level-filter-box less-top-padding-s3">
               {this.renderAcademicLevel(AcademicLevel.First, BrickLengthEnum.S20min)}
               {this.renderAcademicLevel(AcademicLevel.Second, BrickLengthEnum.S40min)}
