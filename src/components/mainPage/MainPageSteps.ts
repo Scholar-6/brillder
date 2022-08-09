@@ -18,8 +18,8 @@ export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean,
 
     steps.push({
       element: '.brill-intro-container',
-      intro: isLibraryOrigin
-        ? `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. We've given you 200 as a welcome gift!</p>`
+      intro: library
+        ? `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. As a library user, if you earn enough you'll become one of our Brilliant Minds! We've given you 200 as a welcome gift!</p>`
         : `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`,
     });
 
