@@ -113,37 +113,55 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       secondaryLabel: "",
       secondPart: " not yet been optimised for mobile devices.",
       stepsEnabled: isNewStudent,
-      steps: [{
-        element: '.view-item-container',
-        intro: `<div class="ggf-new-student-popup">
-          <p class="bold">Welcome to brillder!</p>
-          <p>Explore our catalogue of ‘bricks’ by clicking <span class="bold">View & Play</span></p>
-        </div>
-        `,
-      },{
-        element: '.back-item-container',
-        intro: `<p>Find and Play your assigned ‘bricks’ here</p>`,
-      }, {
-        element: '.competition-item-container',
-        intro: `<p>Discover our daily competitions here - play to win brills, which can be converted to real cash over time!</p>`,
-      }, {
-        element: '.zendesk-position',
-        intro: `<p>If you spot anything that doesn't look right, or experience a technical issue, click here to create a help ticket</p>`
-      }, {
-        element: '.desktop-credit-coins',
-        intro: `
-          <p>
-            You need to spend credits to play bricks. Spend 1 credit to play a brick from the catalogue or 2 credits to enter a competition.
-            We've given you 5 free credits to get you started!
-          </p>
-        `
-      }, {
-        element: '.brill-coin-img',
-        intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`
-      }]
+      steps: this.prepareSteps()
     } as any;
 
     this.preparationForStudent();
+  }
+
+  prepareSteps() {
+    let steps = [] as any[];
+
+    steps.push({
+      element: '.view-item-container',
+      intro: `<div class="ggf-new-student-popup">
+        <p class="bold">Welcome to brillder!</p>
+        <p>Explore our catalogue of ‘bricks’ by clicking <span class="bold">View & Play</span></p>
+      </div>
+      `,
+    });
+
+    steps.push({
+      element: '.back-item-container',
+      intro: `<p>Find and Play your assigned ‘bricks’ here</p>`,
+    });
+
+    steps.push({
+      element: '.competition-item-container',
+      intro: `<p>Discover our daily competitions here - play to win brills, which can be converted to real cash over time!</p>`,
+    });
+
+    steps.push({
+      element: '.zendesk-position',
+      intro: `<p>If you spot anything that doesn't look right, or experience a technical issue, click here to create a help ticket</p>`
+    })
+
+    steps.push({
+      element: '.desktop-credit-coins',
+      intro: `
+        <p>
+          You need to spend credits to play bricks. Spend 1 credit to play a brick from the catalogue or 2 credits to enter a competition.
+          We've given you 5 free credits to get you started!
+        </p>
+      `
+    });
+
+    steps.push({
+      element: '.brill-coin-img',
+      intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`
+    });
+
+    return steps;
   }
 
   async preparationForStudent() {
@@ -179,7 +197,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <div
         className="competition-item-container"
         onClick={() => {
-          window.location.href="https://brillder.com/brilliant-minds-prizes/";
+          window.location.href = "https://brillder.com/brilliant-minds-prizes/";
         }}
       >
         <button className="btn btn-transparent zoom-item">
@@ -210,7 +228,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             if (this.state.assignedCount > 0) {
               this.props.history.push(map.AssignmentsPage);
             } else {
-              this.setState({isBackToWorkOpen: true});
+              this.setState({ isBackToWorkOpen: true });
             }
           }
         }}
@@ -266,7 +284,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   onIntroExit() {
-    this.setState({isNewStudent: false});
+    this.setState({ isNewStudent: false });
   }
 
   renderNewStudentPage() {
@@ -302,7 +320,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
     const firstButton = (index: number) => {
       return (
-        <SwiperSlide key={index}> 
+        <SwiperSlide key={index}>
           <MobileButtonWrap>
             <FirstButton
               user={user}
@@ -435,7 +453,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         />
         <ClassInvitationDialog />
         <ClassTInvitationDialog />
-        <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({subscribedPopup: false})} />
+        <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({ subscribedPopup: false })} />
       </Grid>
     );
   }
