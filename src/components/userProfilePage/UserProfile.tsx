@@ -72,6 +72,7 @@ interface UserProfileState {
   userBrills?: number;
   userCredits?: number;
 
+  library: any;
   isFromInstitution: boolean | undefined;
 
   user: UserProfile;
@@ -124,6 +125,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           if (user) {
             this.setState({ 
               user: getUserProfile(user),
+              library: user.library,
               isFromInstitution: user.isFromInstitution,
               userBrills: user.brills, 
               subscriptionState: user.subscriptionState,
@@ -410,7 +412,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
             <SpriteIcon name="logo" />
           </div>
-          <UserCredits className="credit-coins-sm" credits={this.state.userCredits} />
+          {(this.state.isFromInstitution || this.state.library) ? <div /> : <UserCredits className="credit-coins-sm" credits={this.state.userCredits} />}
           <div className="absolute-library-link flex-center" onClick={() => this.props.history.push(map.MyLibrary + '/' + this.state.user.id)}>
             <SpriteIcon name="bar-chart-2" />
             <div className="css-custom-tooltip">View library</div>
@@ -592,6 +594,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   {this.state.userBrills} Brills
                 </div>
               </div>
+              {(this.state.isFromInstitution || this.state.library) ? <div /> :
               <div className="credits-part flex-center">
                 <div className="user-credits">
                   <SpriteIcon name="circle-lines" />
@@ -600,7 +603,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 <div className="bold label">
                   Credits
                 </div>
-              </div>
+              </div>}
             </div>
           </div>
         );

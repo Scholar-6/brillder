@@ -218,7 +218,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
               }
             }} />
           </div> : <div />}
-
+            
         {/*(this.state.animatedNotificationText3 || (this.props.notifications && this.props.notifications.length >= 1 && this.state.animatedNotificationText)) &&
           <div className="link-to-landing" onClick={() => window.location.href = "https://brillder.com/brilliant-minds-prizes/"}>
             <SpriteIcon name="star" />

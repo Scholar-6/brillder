@@ -10,6 +10,7 @@ export const getNewUserState = (isAdmin: boolean) => {
     isStudent: false,
     isAdmin,
     isFromInstitution: false,
+    library: false,
     brills: 0,
     roles: [
       { roleId: UserType.Publisher, name: "Publisher", disabled: false },
@@ -82,6 +83,7 @@ export const getExistingUserState = (user: User) => {
 
     subscriptionState: user.subscriptionState,
     isFromInstitution: user.isFromInstitution,
+    library: user.library,
 
     validationRequired: false,
     emailInvalid: false,
