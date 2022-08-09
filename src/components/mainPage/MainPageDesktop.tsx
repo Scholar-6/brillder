@@ -148,7 +148,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
       isDesktopOpen: false,
       stepsEnabled: false,
-      steps: getMainPageSteps(isNewStudent, isNewTeacher, isLibraryOrigin)
+      steps: getMainPageSteps(isNewStudent, isNewTeacher, isLibraryOrigin, this.props.user.library)
     } as any;
 
     if (isStudent) {
