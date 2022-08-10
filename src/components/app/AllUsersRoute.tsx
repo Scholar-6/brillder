@@ -31,6 +31,9 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
       return <PageLoader content="...Getting User..." />;
     }
     if (!user.userPreference && !rest.isPreferencePage) {
+      if (user.username) {
+        return <Redirect to={map.TermsOnlyAccept} />;
+      }
       return <Redirect to={map.TermsSignUp} />
     }
     if (user.firstName === "" || user.lastName === "") {

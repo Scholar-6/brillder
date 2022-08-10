@@ -179,7 +179,9 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
         setLibraryPart(false);
       } else {
         if (res.data === 'User Found') {
-          setLibraryLabelFailed('There is already user with this library account. Try login with your email');
+          setLibraryLabelFailed(`These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
+        } else {
+          setLibraryLabelFailed('');
         }
         setSuggestionFailed(true);
       }
@@ -226,7 +228,10 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
               </div>}
           </div>
         </div>
-        <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => setSuggestionFailed(false)} />
+        <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => {
+          setSuggestionFailed(false);
+          setLibraryLabelFailed('');
+        }} />
       </div>
     );
   }

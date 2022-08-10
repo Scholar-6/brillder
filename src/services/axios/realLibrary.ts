@@ -7,7 +7,19 @@ export interface RealLibrary {
 
 export const getRealLibraries = async () => {
   try {
-    return await get<RealLibrary[]>(`/libraries`);
+    const libraries = await get<RealLibrary[]>(`/libraries`);
+    if (libraries) {
+      return libraries.sort((a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    return libraries;
   } catch {
     return null;
   }

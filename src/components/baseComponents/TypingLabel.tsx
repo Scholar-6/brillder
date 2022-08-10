@@ -45,6 +45,7 @@ class TypingLabel extends Component<LabelProps, LabelState> {
     }, this.randDelay(minTime ? minTime : 50, maxTime ? maxTime : 90));
   };
 
+  
   render() {
     const {props} = this;
     return (<span className={props.className ? props.className : ""}>{this.state.label}</span>);
