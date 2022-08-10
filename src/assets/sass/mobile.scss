@@ -586,7 +586,7 @@
     }
 
     .email-button {
-      padding: 2vh 12vw 2vh 5vw !important;
+      padding: 2vh 5vw !important;
     }
     
     .microsoft-btn {
@@ -680,16 +680,15 @@
           margin-left: 10vw;
           color: white;
         }
-        .help-library {
-        }
+      }
+      .email-button {
+        padding: 2vh 12vw 2vh 5vw !important;
       }
     }
   }
 
   .mobile-register-library {
     $box-height: 12%;
-    .mobile-button-box {
-    }
     .title {
       font-family: $font-family-bold;
       background: var(--theme-light-blue) !important;
