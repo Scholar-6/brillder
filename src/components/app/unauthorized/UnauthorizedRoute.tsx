@@ -14,6 +14,7 @@ import StopTrackingButton from './StopTrackingButton';
 import { getCookies, clearCookiePolicy, acceptCookies } from 'localStorage/cookies';
 import { isPhone } from 'services/phone';
 import { GetHeartOfMerciaUser } from 'localStorage/login';
+import BaseTermsRedirect from '../BaseTermsRedirect';
 
 interface StudentRouteProps {
   path: string;
@@ -42,7 +43,7 @@ const UnauthorizedRoute: React.FC<StudentRouteProps> = ({ component: Component, 
       if (isHeartOfMercia) {
         return <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />;
       } else {
-        return <Redirect to={map.TermsSignUp} />
+        return <BaseTermsRedirect />
       }
     }
 

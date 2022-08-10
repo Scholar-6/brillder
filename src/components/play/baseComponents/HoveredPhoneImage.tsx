@@ -1,8 +1,8 @@
 import React from 'react';
-
-import { fileUrl } from 'components/services/uploadFile';
 import { connect } from "react-redux";
+
 import actions from 'redux/actions/play';
+import { fileUrl } from 'components/services/uploadFile';
 
 interface AnswerProps {
   fileName: string;

@@ -1,20 +1,28 @@
 import React from 'react';
-
-import { fileUrl } from 'components/services/uploadFile';
 import { connect } from "react-redux";
-import { ReduxCombinedState } from 'redux/reducers';
-import { isPhone } from 'services/phone';
-import HoveredPhoneImage from './HoveredPhoneImage';
 import { isMobile } from 'react-device-detect';
+
+import { ReduxCombinedState } from 'redux/reducers';
+import actions from 'redux/actions/play';
+import { isPhone } from 'services/phone';
+import { fileUrl } from 'components/services/uploadFile';
+import HoveredPhoneImage from './HoveredPhoneImage';
 
 
 interface AnswerProps {
   imageHovered: boolean;
   fileName: string;
   imageSource: any;
+  blur(): void;
 }
 
-const HoveredImageContent: React.FC<AnswerProps> = ({ imageHovered, imageSource, fileName }) => {
+const HoveredImageContent: React.FC<AnswerProps> = ({ imageHovered, imageSource, fileName, blur }) => {
+  React.useEffect(() => {
+    return () => {
+      blur();
+    }
+  }, []);
+
   if (imageHovered) {
     if (isPhone()) {
       return <HoveredPhoneImage fileName={fileName} imageSource={imageSource} />
@@ -48,4 +56,8 @@ const mapState = (state: ReduxCombinedState) => ({
   imageSource: state.play.imageSource
 });
 
-export default connect(() => mapState)(HoveredImageContent);
+const mapDispatch = (dispatch: any) => ({
+  blur: () => dispatch(actions.setImageBlur()),
+});
+
+export default connect(mapState, mapDispatch)(HoveredImageContent);

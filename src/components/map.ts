@@ -32,6 +32,7 @@ export const backToWorkUserBased = (user: User) =>
 
 export const Onboarding = '/onboarding';
 export const TermsSignUp = Onboarding + '/terms';
+export const TermsOnlyAccept = TermsSignUp + '?onlyAcceptTerms=true';
 export const ThankYouPage = Onboarding + '/thank-you';
 export const SetUsername = Onboarding + '/set-username';
 export const SelectSubjectPage = Onboarding + '/select-subjects';
@@ -158,6 +159,7 @@ export default {
   
   TermsPage,
   TermsSignUp,
+  TermsOnlyAccept,
   ThankYouPage,
   SetUsername,
   SelectSubjectPage,

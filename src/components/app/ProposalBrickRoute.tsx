@@ -2,8 +2,9 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import actions from "redux/actions/auth";
-import brickActions from "redux/actions/brickActions";
+import { Helmet } from "react-helmet";
 
+import brickActions from "redux/actions/brickActions";
 import userActions from "../../redux/actions/user";
 import { isAuthenticated, Brick } from "model/brick";
 import { User } from "model/user";
@@ -11,8 +12,8 @@ import { getBrillderTitle } from "components/services/titleService";
 import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
-import { Helmet } from "react-helmet";
 import LoginRedirect from "components/baseComponents/LoginRedirect";
+import BaseTermsRedirect from "./BaseTermsRedirect";
 
 interface BuildRouteProps {
   exact?: any;
@@ -41,7 +42,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({
     let { user } = rest;
 
     if (!user.userPreference) {
-      return <Redirect to={map.TermsSignUp} />;
+      return <BaseTermsRedirect />;
     }
 
     if (!rest.isRedirectedToProfile) {

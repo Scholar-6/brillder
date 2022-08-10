@@ -148,7 +148,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
       isDesktopOpen: false,
       stepsEnabled: false,
-      steps: getMainPageSteps(isNewStudent, isNewTeacher, isLibraryOrigin)
+      steps: getMainPageSteps(isNewStudent, isNewTeacher, isLibraryOrigin, this.props.user.library)
     } as any;
 
     if (isStudent) {
@@ -367,6 +367,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   renderCompetitionArena() {
+    if (this.props.user.library) {
+      return <div />;
+    }
     if (this.state.isStudent) {
       return (
         <div className="create-item-container competition-arena-d54n">

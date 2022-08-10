@@ -10,6 +10,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import map from 'components/map';
 import LoginRedirect from 'components/baseComponents/LoginRedirect';
+import BaseTermsRedirect from './BaseTermsRedirect';
 
 interface StudentRouteProps {
   path: string;
@@ -31,7 +32,7 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, inner
     }
 
     if (!user.userPreference) {
-      return <Redirect to={map.TermsSignUp} />
+      return <BaseTermsRedirect />;
     }
 
     if (!rest.isRedirectedToProfile) {

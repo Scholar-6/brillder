@@ -99,6 +99,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
               this.setState({popupShown: 2});
             }
           }} />
+          {this.props.user.library ? <div /> :
           <div className="header-credits-container">
             <ReactiveUserCredits popupShown={this.state.popupShown === 1} onClick={() => {
               if (this.state.popupShown === 1) {
@@ -107,7 +108,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
                 this.setState({popupShown: 1});
               }
             }} className="desktop-credit-coins" history={this.props.history} />
-          </div>
+          </div>}
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
         </div>

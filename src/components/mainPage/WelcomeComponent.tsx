@@ -208,6 +208,17 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         <div className="notifications-text-2" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText2 }} />
         <div className="notifications-text-3" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText3 }} />
 
+        {this.props.user.isFromInstitution ?
+          <div className="institution-logo">
+            <SpriteIcon name="institution-heart-of-mercia" onClick={() => {
+              if (process.env.REACT_APP_HEART_OF_MEARCIA_HOMEPAGE) {
+                window.location.href=process.env.REACT_APP_HEART_OF_MEARCIA_HOMEPAGE;
+              } else {
+                window.location.href="https://www.heartofmercia.org.uk/"
+              }
+            }} />
+          </div> : <div />}
+            
         {/*(this.state.animatedNotificationText3 || (this.props.notifications && this.props.notifications.length >= 1 && this.state.animatedNotificationText)) &&
           <div className="link-to-landing" onClick={() => window.location.href = "https://brillder.com/brilliant-minds-prizes/"}>
             <SpriteIcon name="star" />
