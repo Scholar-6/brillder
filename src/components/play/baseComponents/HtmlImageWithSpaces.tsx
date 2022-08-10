@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { ReduxCombinedState } from 'redux/reducers';
@@ -21,6 +21,23 @@ interface SpacesProps {
 const HtmlImageWithSpaces: React.FC<SpacesProps> = ({ index, className, value, hover, blur, hovered }) => {
   const [lastClick, setLastClick] = React.useState(0);
   const containerRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const {current} = containerRef;
+    if (current) {
+      try {
+        var img = current.getElementsByTagName("img")[0];
+        img.onmouseenter = function () {
+          onHover();
+        }
+        img.onmouseleave = function () {
+          blur();
+        }
+      } catch (e) {
+        console.log('can`t find image', e);
+      }
+    }
+  });
 
   const [hoverTimeout, setHoverTimeout] = React.useState(-1);
 
@@ -90,8 +107,6 @@ const HtmlImageWithSpaces: React.FC<SpacesProps> = ({ index, className, value, h
         ref={containerRef}
         className={className}
         dangerouslySetInnerHTML={{ __html: value }}
-        onMouseEnter={onHover}
-        onMouseLeave={blur}
       />
     </div>
   );
