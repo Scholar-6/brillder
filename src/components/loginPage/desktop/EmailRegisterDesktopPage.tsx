@@ -44,6 +44,8 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   const [suggestionFailed, setSuggestionFailed] = useState(false);
   const [libraryLabel, setLibraryLabelFailed] = useState("");
 
+  console.log(libraryId);
+
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);

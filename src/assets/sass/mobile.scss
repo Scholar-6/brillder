@@ -478,7 +478,6 @@
     a,
     button.email-button {
       justify-content: flex-start !important;
-      font-size: 5.5vw;
       border-radius: 4vw !important;
 
       span {
@@ -585,12 +584,16 @@
         letter-spacing: 0 !important;
       }
     }
+
+    .email-button {
+      padding: 2vh 12vw 2vh 5vw !important;
+    }
     
     .microsoft-btn {
       background: white;
       min-height: 6.663vh;
       display: flex;
-      padding: 2.5vh 2.5vw;
+      padding: 2.5vh 2vw 2.5vh 5vw;
 
       margin-bottom: 4% !important;
 
@@ -669,10 +672,6 @@
       height: calc(65% - 4vh) !important;
       margin-top: 4vh !important;
 
-      .google-button span{
-        font-size: 6vw !important;
-      }
-
       .library-button {
         background: var(--blue) !important;
         border-radius: 4vw;
@@ -682,7 +681,6 @@
           color: white;
         }
         .help-library {
-          margin-left: 5vw;
         }
       }
     }
