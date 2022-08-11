@@ -70,7 +70,6 @@ import ChoosePlan from 'components/choosePlan/ChoosePlan';
 import StripeCreditsPage from 'components/stripeCreditsPage/StripeCreditsPage';
 
 import { GetOrigin, SetOrigin } from 'localStorage/origin';
-import LibraryOrigin from 'components/onboarding/libraryOrigin/LibraryOrigin';
 import { GetLoginRedirectUrl, UnsetLoginRedirectUrl } from 'localStorage/login';
 
 interface AppProps {
@@ -316,7 +315,6 @@ const App: React.FC<AppProps> = props => {
 
             {/* onboarding pages in order of progression */}
             <Route path={map.TermsSignUp} component={Terms} />
-            <AllUsersRoute path={map.LibraryOnboarding} component={LibraryOrigin} isPreferencePage={true} />
             <AllUsersRoute path={map.ThankYouPage} component={ThankYouPage} isPreferencePage={true} />
             <AllUsersRoute path={map.UserPreferencePage} component={UserPreferencePage} isPreferencePage={true} />
             <AllUsersRoute path={map.SetUsername} component={UsernamePage} isPreferencePage={true} />

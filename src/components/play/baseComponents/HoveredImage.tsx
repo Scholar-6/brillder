@@ -21,6 +21,7 @@ const HoveredImageContent: React.FC<AnswerProps> = ({ imageHovered, imageSource,
     return () => {
       blur();
     }
+    /*eslint-disable-next-line*/
   }, []);
 
   if (imageHovered) {

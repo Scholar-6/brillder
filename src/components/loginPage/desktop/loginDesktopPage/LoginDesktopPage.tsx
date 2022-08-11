@@ -48,9 +48,11 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
     var origin = GetOrigin();
     if (origin === 'library') {
       setLibraryOrigin(true);
+      history.push(LibraryRegisterPage);
     } else {
       // get it from query string
-    }    
+    }
+    /*eslint-disable-next-line*/
   }, []);
 
   let initPolicyOpen = false;
@@ -75,6 +77,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
   const moveToJoin = () => history.push(JoinPage);
   const moveToRegister = () => history.push(RegisterPage);
   const moveToLibraryRegister = () => history.push(LibraryRegisterPage);
+
 
   return (
     <React.Suspense fallback={<></>}>
