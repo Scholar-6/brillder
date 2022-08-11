@@ -159,6 +159,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     const values = queryString.parse(props.location.search);
+
+    if (!this.props.user) {
+      if (!values.subjectGroup) {
+        this.props.history.push(map.SubjectCategories);
+      }
+    }
+
     const searchString = (values.searchString as string) || "";
     const isSubjectCategory =
       props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) ===
