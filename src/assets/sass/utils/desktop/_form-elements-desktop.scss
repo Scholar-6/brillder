@@ -30,6 +30,12 @@ input {
       }
       background: var(--theme-orange);
     }
+
+    &.replace-text-with-dots {
+      font-family: text-security-disc;
+      /* Use -webkit-text-security if the browser supports it */
+      -webkit-text-security: disc;
+    }
   }
 }
 .input-group {
