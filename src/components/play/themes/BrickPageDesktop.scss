@@ -2442,7 +2442,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     position: relative;
   }
   img {
-    background: var(--theme-light-blue);
+    background: white;
     border: 0.4vw solid var(--theme-light-blue);
     border-radius: 0.3vw;
     padding-right: 1vw;

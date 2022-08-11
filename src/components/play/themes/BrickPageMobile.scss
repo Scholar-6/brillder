@@ -1766,7 +1766,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     position: relative;
   }
   img {
-    background: var(--theme-light-blue);
+    background: white;
     max-width: 80vw;
     max-height: 80vh;
     padding-right: 4vw;
