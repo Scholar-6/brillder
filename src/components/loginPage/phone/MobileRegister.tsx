@@ -140,6 +140,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
 
     // add library
     if (props.isLibrary) {
+      data.userPreference = UserPreferenceType.Student;
       data.library = {
         library: libraryId,
         barcodeNumber: libraryCardNumber,
