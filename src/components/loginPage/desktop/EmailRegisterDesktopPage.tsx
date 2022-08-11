@@ -141,7 +141,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       email, password, confirmPassword: password, referralId: props.referralId
     } as any;
 
-
     var origin = GetOrigin();
     if (origin === 'school') {
       data.userPreference = UserPreferenceType.Student;
@@ -149,6 +148,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
 
     // add library
     if (props.isLibrary) {
+      data.userPreference = UserPreferenceType.Student;
       data.library = {
         library: libraryId,
         barcodeNumber: libraryCardNumber,
@@ -157,9 +157,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
     }
 
     axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`,
-      data,
-      { withCredentials: true }
+      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`, data, { withCredentials: true }
     ).then((resp) => {
       const { data } = resp;
 
