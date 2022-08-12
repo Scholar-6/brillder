@@ -181,8 +181,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
       } else {
         if (res.data === 'User Found') {
           setLibraryLabelFailed(`
-            These credentials have already been connected to an account. Please check you are logged in with the same email address that you gave when connecting to your library, or contact us if this doesn't seem right.
-          `);
+          These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
         } else {
           setLibraryLabelFailed('');
         }
