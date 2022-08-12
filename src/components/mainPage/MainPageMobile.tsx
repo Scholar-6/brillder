@@ -112,7 +112,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isDesktopOpen: false,
       secondaryLabel: "",
       secondPart: " not yet been optimised for mobile devices.",
-      stepsEnabled: isNewStudent,
       steps: this.prepareSteps()
     } as any;
 
@@ -457,8 +456,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           secondaryLabel={this.state.secondaryLabel}
           onClick={() => this.setState({ isDesktopOpen: false })}
         />
-        <ClassInvitationDialog />
-        <ClassTInvitationDialog />
+        {!this.state.isNewStudent && <ClassInvitationDialog />}
+        {!this.state.isNewStudent && <ClassTInvitationDialog />}
         <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({ subscribedPopup: false })} />
       </Grid>
     );

@@ -91,6 +91,8 @@ interface MainPageState {
   stepsEnabled: boolean;
   steps: any[];
 
+  allLoaded: boolean;
+
   subscribedPopup: boolean;
 }
 
@@ -125,6 +127,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     const isBuilder = isBuilderPreference(props.user);
 
     this.state = {
+      allLoaded: false,
       createHober: false,
       backHober: false,
       isPolicyOpen: false,
@@ -155,7 +158,10 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       this.preparationForStudent();
     }
     setTimeout(() => {
-      this.setState({ stepsEnabled: isNewTeacher || isNewStudent || isLibraryOrigin });
+      this.setState({
+        allLoaded: true,
+        stepsEnabled: isNewTeacher || isNewStudent || isLibraryOrigin
+      });
     }, 300);
   }
 
@@ -494,8 +500,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
             isOpen={this.state.isDesktopOpen}
             label="This feature is not available on this device, try a desktop browser."
             close={() => this.setState({ isDesktopOpen: false })} />
-          <ClassInvitationDialog />
-          <ClassTInvitationDialog />
+          {this.state.allLoaded && !this.state.stepsEnabled && <ClassInvitationDialog />}
+          {this.state.allLoaded && !this.state.stepsEnabled && <ClassTInvitationDialog />}
           <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({ subscribedPopup: false })} />
         </Grid>
       </React.Suspense>
