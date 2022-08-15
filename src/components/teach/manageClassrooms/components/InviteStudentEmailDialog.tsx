@@ -4,9 +4,9 @@ import Dialog from '@material-ui/core/Dialog';
 import "./InviteStudentEmailDialog.scss";
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { ClassroomApi } from 'components/teach/service';
-import axios from 'axios';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
 import { User } from 'model/user';
+import { assignToClassByEmails } from 'services/axios/classroom';
 
 interface InviteStudentEmailProps {
   classroom: ClassroomApi;
@@ -29,7 +29,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
     try {
       if (matches) {
         const googleEmail = matches[1];
-        if(emailRegex.test(googleEmail)) {
+        if (emailRegex.test(googleEmail)) {
           return googleEmail;
         }
       }
@@ -49,7 +49,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
       }
     }
     setCurrentEmail('');
-    setUsers(users => [ ...users, { email } as User]);
+    setUsers(users => [...users, { email } as User]);
   }
 
   const onAddUser = React.useCallback(() => {
@@ -57,7 +57,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
       return;
     }
     setCurrentEmail('');
-    setUsers(users => [ ...users, { email: currentEmail} as User]);
+    setUsers(users => [...users, { email: currentEmail } as User]);
   }, [currentEmail]);
 
   const onSubmit = React.useCallback(async () => {
@@ -65,18 +65,19 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
     const currentUsers = users;
     if (!emailRegex.test(currentEmail)) {
       if (users.length <= 0) {
+        setSubmitting(false);
         return;
       }
     } else {
-      setUsers(users => [ ...users, { email: currentEmail } as User ]);
-      currentUsers.push({ email: currentEmail} as User);
+      setUsers(users => [...users, { email: currentEmail } as User]);
       setCurrentEmail("");
     }
-    await axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students/${props.classroom.id}/new`,
-      { emails: currentUsers.map(u => u.email) },
-      { withCredentials: true }
-    );
+
+
+    const res = await assignToClassByEmails(props.classroom, currentUsers.map(u => u.email));
+    if (!res) {
+      console.log('can`t assign student by email');
+    }
     setUsers([]);
     setSubmitting(false);
     props.close(currentUsers.length);
@@ -111,13 +112,13 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
             setUsers(users as User[]);
           }}
         />
-        <div className="dialog-footer centered-important" style={{justifyContent: 'center'}}>
-          <button className={`btn btn-md yes-button icon-button ${submiting ? 'b-dark-blue' : 'bg-theme-orange'}`} style={{width: 'auto'}} onClick={onSubmit}>
+        <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
+          <button className={`btn btn-md yes-button icon-button ${submiting ? 'b-dark-blue' : 'bg-theme-orange'}`} style={{ width: 'auto' }} onClick={onSubmit}>
             <div className="centered">
               <span className="label">Send Invites</span>
               {submiting ? <div className="loader-container ">
-              <SpriteIcon name="f-loader" className="spinning" />
-            </div> : <SpriteIcon name="send" />}
+                <SpriteIcon name="f-loader" className="spinning" />
+              </div> : <SpriteIcon name="send" />}
             </div>
           </button>
         </div>
