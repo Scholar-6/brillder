@@ -25,17 +25,37 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   const [subjects, setSubjects] = React.useState<Subject[]>();
   React.useEffect(() => {
     const initAllSubjects = async () => {
-      const subs = await loadSubjects();
-      if (subs) {
-        setSubjects(subs);
+
+      const setAdminSubjects = async () => {
+        const subs = await loadSubjects();
+        if (subs) {
+          setSubjects(subs);
+        }
+      }
+
+      const setUsersSubjects = async () => {
+        const subs = await loadSubjects();
+        if (subs) {
+          let sortedSubjects = [...props.user.subjects];
+
+          for (let subject of subs) {
+            let found = sortedSubjects.find(s => s.id === subject.id);
+            if (!found) {
+              sortedSubjects.push(subject);
+            }
+          }
+          setSubjects(sortedSubjects);
+        }
+      }
+
+      if (props.user.roles.some(role => role.roleId === UserType.Admin)) {
+        setAdminSubjects();
+      } else {
+        setUsersSubjects();
       }
     }
 
-    if (props.user.roles.some(role => role.roleId === UserType.Admin)) {
-      initAllSubjects();
-    } else {
-      setSubjects(props.user.subjects);
-    }
+    initAllSubjects();
   }, [props.user.roles, props.user.subjects]);
 
   React.useEffect(() => {
