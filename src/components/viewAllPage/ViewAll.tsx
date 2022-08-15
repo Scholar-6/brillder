@@ -235,13 +235,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isNewTeacher: !!values.newTeacher,
       teachSteps: [{
         element: '.bricks-list',
-        intro: `<p>Click a brick you would like to assign</p>`,
+        intro: `<p>You can browse our catalogue here to select a brick to assign</p>`,
       }, {
         element: '.private-core-toggle',
-        intro: `<p>Click on the key icon to view your personal catalogue and assign a brick you have published yourself</p>`,
-      }, {
-        element: '.private-core-toggle',
-        intro: `<p>Click on the key icon to view your personal catalogue and assign a brick you have published yourself</p>`,
+        intro: `<p>Click on the key icon to view your personal catalogue and assign a brick you have created yourself</p>`,
       }],
       isAllCategory,
 
@@ -1284,6 +1281,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             initialStep={0}
             onChange={this.onIntroChanged.bind(this)}
             onExit={this.onIntroExit.bind(this)}
+            options={{
+              doneLabel: 'Next'
+            }}
             onComplete={() => { }}
           />}
       </React.Suspense>
