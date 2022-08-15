@@ -4,6 +4,7 @@ import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material
 import { connect } from 'react-redux';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import queryString from 'query-string';
 
 import './AssignPersonOrClass.scss';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -42,6 +43,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [classes, setClasses] = React.useState<Classroom[]>([]);
   const [haveDeadline, toggleDeadline] = React.useState(false);
   const [newClassName, setNewClassName] = React.useState('');
+  const [isNewTeacher, setNewTeacher] = React.useState(false);
 
   // validation
   const [validationRequired, setValidation] = React.useState(false);
@@ -58,6 +60,13 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (!emailRegex.test(email)) { return; }
     setCurrentEmail('');
     setUsers(users => [...users, { email } as User]);
+  }
+
+  const success = (items: any[], failed: any[]) => {
+    props.success(items, failed);
+    if (isNewTeacher) {
+      props.history.push(map.TeachAssignedTab);
+    }
   }
 
   const checkSpaces = (email: string) => {
@@ -112,7 +121,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             if (props.user && props.user.freeAssignmentsLeft) {
               props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
             }
-            props.success([newClassroom], []);
+            success([newClassroom], []);
 
             // only for new classes
             if (classes.length === 0) {
@@ -158,6 +167,14 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     getClasses();
   }, [value, getClasses]);
 
+  useEffect(() => {
+    const values = queryString.parse(props.history.location.search);
+    if (values.newTeacher) {
+      setNewTeacher(true);
+    }
+  /*eslint-disable-next-line*/
+  }, []);
+
   const assignToExistingBrick = async (classroom: any) => {
     let data = { classesIds: [classroom.id], deadline: null } as AssignClassData;
     if (haveDeadline && deadlineDate) {
@@ -175,12 +192,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     // prevent from double click
     if (isSaving) { return; }
     setSaving(true);
-    console.log('eee');
 
     if (isCreating === false) {
       const res = await assignToExistingBrick(existingClass);
-
-      console.log(res);
 
       if (res.success && res.result.length > 0) {
         let allArchived = true;
@@ -193,7 +207,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           if (props.user && props.user.freeAssignmentsLeft) {
             props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
           }
-          props.success([existingClass], []);
+          success([existingClass], []);
         } else {
           setAssigned(true);
         }
@@ -202,7 +216,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
         }
 
-        props.success([existingClass], []);
+        success([existingClass], []);
       } else {
         if (res.error === 'Subscription is not valid.' && props.showPremium) {
           props.close();
