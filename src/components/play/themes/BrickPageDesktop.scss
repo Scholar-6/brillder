@@ -831,21 +831,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             position: absolute;
             right: 2.2vw;
             top: 2.2vw;
-            .clock-image {
-              width: 2vw;
-              height: 2vw;
-            }
-            .clock {
-              margin-left: 3vw;
-              display: flex;
-              align-items: center;
-              min-width: 6vw;
-
-              .clock-image {
-                width: 2vw;
-                height: 2vw;
-              }
-            }
             .counter {
               .counter-seconds {
                 font-size: 1vw;
@@ -2720,4 +2705,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       }
     }
   }
+}
+
+// no hover on profisional score page step
+.provisional-score-page .introduction-info .stepper .step:hover span {
+  opacity: 1 !important;
 }
