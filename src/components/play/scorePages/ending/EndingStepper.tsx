@@ -15,6 +15,7 @@ interface ReviewStepperProps {
 }
 
 const EndingStepper: React.FC<ReviewStepperProps> = ({
+  handleStep,
   questions,
   attempts,
 }) => {
@@ -29,14 +30,14 @@ const EndingStepper: React.FC<ReviewStepperProps> = ({
     // TODO figure out how to handle this properly on play-preview
     if (attempt && (attempt.liveCorrect || attempt.reviewCorrect)) {
       if (attempt.liveCorrect && attempt.reviewCorrect) {
-        return <SuccessStep key={index} index={index} handleStep={() => { }} />
+        return <SuccessStep key={index} index={index} handleStep={handleStep} />
       }
-      return <AmberStep key={index} index={index} handleStep={() => { }} />
+      return <AmberStep key={index} index={index} handleStep={handleStep} />
     }
     if (attempt && attempt.marks > 0) {
-      return <AlmostFailedStep key={index} index={index} handleStep={() => { }} />;
+      return <AlmostFailedStep key={index} index={index} handleStep={handleStep} />;
     }
-    return <FailedStep key={index} index={index} handleStep={() => { }} />;
+    return <FailedStep key={index} index={index} handleStep={handleStep} />;
   };
 
   return (

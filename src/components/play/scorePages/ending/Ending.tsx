@@ -2,6 +2,7 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { connect } from "react-redux";
+import moment from "moment";
 
 import "./Ending.scss";
 import { CashAttempt, ClearAuthBrickCash } from "localStorage/play";
@@ -13,13 +14,15 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import routes from "../../routes";
-import moment from "moment";
 import { prepareDuration } from "../service";
 import AttemptedText from "../components/AttemptedText";
 import map from "components/map";
 import actions from "redux/actions/auth";
 import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 import { GetHeartOfMerciaUser } from "localStorage/login";
+import { User } from 'model/user';
+import { ReduxCombinedState } from 'redux/reducers';
+
 
 const confetti = require('canvas-confetti');
 
@@ -59,6 +62,7 @@ interface EndingProps {
   liveDuration?: null | moment.Duration;
   reviewDuration?: null | moment.Duration;
 
+  user: User;
   loginSuccess(): void;
   move(): void;
 }
@@ -213,7 +217,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       <EndingStepper
         questions={this.props.brick.questions}
         attempts={this.props.brickAttempt.answers}
-        handleStep={() => { }}
+        handleStep={(index: number) => {
+          this.props.history.push(map.postAssignmentQuestion(this.props.brick.id, this.props.user.id, index))
+        }}
       />
     );
   }
@@ -611,8 +617,12 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   }
 }
 
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+});
+
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
 });
 
-export default connect(null, mapDispatch)(EndingPage);
+export default connect(mapState, mapDispatch)(EndingPage);
