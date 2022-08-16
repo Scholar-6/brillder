@@ -130,4 +130,16 @@
       }
     }
   }
+
+  &.checkbox-invalid .right-top-icon {
+    color: var(--dark-gray);
+    &:hover {
+      color: white;
+      opacity: 1;
+    }
+  }
+
+  .choose-sound {
+    padding-bottom: 0.4vw;
+  }
 }

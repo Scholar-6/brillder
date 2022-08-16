@@ -75,6 +75,12 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     containerClass = 'big-box';
   }
 
+
+  // if invalid 
+  if (validationRequired && !stripHtml(answer.value) && (answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None || answer.answerType === undefined)) {
+    className += " checkbox-invalid";
+  }
+
   let checkboxClass = "left-ckeckbox";
   if (validationRequired) {
     if (!checkBoxValid) {
@@ -82,10 +88,8 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     }
   }
 
-  if (validationRequired) {
-    if (!answer.value && (answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None)) {
-      className += ' invalid-answer';
-    }
+  if (validationRequired && !answer.value && (answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None)) {
+    className += ' invalid-answer';
   }
 
   const renderAnswerType = (answer: ChooseOneAnswer) => {
