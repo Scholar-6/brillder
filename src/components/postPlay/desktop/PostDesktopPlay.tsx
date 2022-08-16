@@ -80,6 +80,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
 
+    let questionIndex = 0;
     let bookState = BookState.Front;
 
     const values = queryString.parse(props.history.location.search);
@@ -89,9 +90,14 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       bookState = BookState.Brief;
     }
 
+    if (values.questionNumber) {
+      bookState = BookState.QuestionPage;
+      questionIndex = parseInt(values.questionNumber as string, 10);
+    }
+
     this.state = {
       bookState,
-      questionIndex: 0,
+      questionIndex,
       attempt: null,
       attempts: [],
       mode: true,
