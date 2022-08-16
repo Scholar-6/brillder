@@ -505,8 +505,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             font-size: 3vh !important;
             text-align: center !important;
           }
-          .brick-counter,
-          .play-clock {
+          .brick-counter {
             position: absolute;
             top: 1vw;
             font-size: 6vw;
@@ -670,9 +669,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
                   font-family: $font-family-bold;
                 }
               }
-              .play-clock {
-                display: none;
-              }
             }
           }
           .introduction-info {
@@ -692,8 +688,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               top: 0;
               left: 0;
               width: 100%;
-              .brick-counter,
-              .play-clock {
+              .brick-counter {
                 display: none;
               }
               h2 {
