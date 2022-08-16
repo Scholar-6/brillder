@@ -103,6 +103,10 @@
       .ql-editor.ql-blank::before {
         left: 2vw;
       }
+
+      &.content-invalid .ql-container {
+        background: var(--theme-orange);
+      }
     }
     
     &.vertical-string {

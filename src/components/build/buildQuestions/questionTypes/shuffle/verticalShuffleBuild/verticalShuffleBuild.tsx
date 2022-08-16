@@ -111,7 +111,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     let isValid = null;
     if (validationRequired) {
       isValid = true;
-      if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None) && !stripHtml(answer.value)) {
+      if ((answer.answerType === QuestionValueType.String || answer.answerType === QuestionValueType.None || answer.answerType === undefined) && !stripHtml(answer.value)) {
         isValid = false;
       }
     }

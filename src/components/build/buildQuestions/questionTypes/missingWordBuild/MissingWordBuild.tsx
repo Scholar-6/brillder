@@ -9,6 +9,7 @@ import { showSameAnswerPopup } from '../service/questionBuild';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import MissingWordQuill from 'components/baseComponents/quill/MissingWordQuill';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 
 interface Answer {
@@ -127,7 +128,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
 
   const getInputClass = (answer: any) => {
     let name = "input-answer";
-    if (validationRequired && !answer.value) {
+    if (validationRequired && !stripHtml(answer.value)) {
       name += " invalid";
     }
     return name;
@@ -135,7 +136,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
 
   const getAnswerClass = (answer: any) => {
     let name = "";
-    if (validationRequired && !answer.value) {
+    if (validationRequired && !stripHtml(answer.value)) {
       name += " invalid-answer";
     }
     return name;

@@ -89,7 +89,12 @@
           }
         }
       }
+
+      &.content-invalid .quill .ql-container {
+        background: var(--theme-orange);
+      }
     }
+    
     &.horizontal-string {
       .sound-record-button {
         position: absolute;
