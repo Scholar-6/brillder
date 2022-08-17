@@ -1,459 +1,459 @@
-%lhInherit {
+@mixin lhInherit {
   line-height: inherit !important;
 }
 
-%ellipsis {
+@mixin ellipsis {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-%widthAuto {
+@mixin widthAuto {
   width: auto;
 }
-%width100 {
+@mixin width100 {
   width: 100%;
 }
-%maxWidth100 {
+@mixin maxWidth100 {
   max-width: 100%;
 }
 
-%heightAuto {
+@mixin heightAuto {
   height: auto;
 }
-%height100 {
+@mixin height100 {
   height: 100%;
 }
 
-%posRelative {
+@mixin posRelative {
   position: relative;
 }
-%posAbsolute {
+@mixin posAbsolute {
   position: absolute;
 }
-%posFixed {
+@mixin posFixed {
   position: fixed;
 }
 
-%fontInherit {
+@mixin fontInherit {
   font-family: inherit;
 }
 
-%uppercase {
+@mixin uppercase {
   text-transform: uppercase;
 }
 
-%fontFamilyLight {
+@mixin fontFamilyLight {
   font-family: 'Brandon Grotesque Light';
 }
-%fontFamilyLightItalic {
+@mixin fontFamilyLightItalic {
   font-family: 'Brandon Grotesque Light Italic';
 }
-%fontFamilyRegular {
+@mixin fontFamilyRegular {
   font-family: 'Brandon Grotesque Regular';
 }
-%fontFamilyRegularItalic {
+@mixin fontFamilyRegularItalic {
   font-family: 'Brandon Grotesque Regular Italic';
 }
-%fontFamilyBold {
+@mixin fontFamilyBold {
   font-family: 'Brandon Grotesque Bold';
 }
-%fontFamilyBoldItalic {
+@mixin fontFamilyBoldItalic {
   font-family: 'Brandon Grotesque Bold Italic';
 }
-%fontFamilyBlack {
+@mixin fontFamilyBlack {
   font-family: 'Brandon Grotesque Black';
 }
-%fontFamilyBlackItalic {
+@mixin fontFamilyBlackItalic {
   font-family: 'Brandon Grotesque Black Italic';
 }
 
-%fs9 {
+@mixin fs9 {
   font-size: 9px;
 }
-%fs10 {
+@mixin fs10 {
   font-size: 10px;
 }
-%fs11 {
+@mixin fs11 {
   font-size: 11px;
 }
-%fs12 {
+@mixin fs12 {
   font-size: 12px;
 }
-%fs13 {
+@mixin fs13 {
   font-size: 13px;
 }
-%fs14 {
+@mixin fs14 {
   font-size: 14px;
 }
-%fs15 {
+@mixin fs15 {
   font-size: 15px;
 }
-%fs16 {
+@mixin fs16 {
   font-size: 16px;
 }
-%fs17 {
+@mixin fs17 {
   font-size: 17px;
 }
-%fs18 {
+@mixin fs18 {
   font-size: 18px;
 }
-%fs19 {
+@mixin fs19 {
   font-size: 19px;
 }
-%fs20 {
+@mixin fs20 {
   font-size: 20px;
 }
-%fs21 {
+@mixin fs21 {
   font-size: 21px;
 }
-%fs22 {
+@mixin fs22 {
   font-size: 22px;
 }
-%fs23 {
+@mixin fs23 {
   font-size: 23px;
 }
-%fs24 {
+@mixin fs24 {
   font-size: 24px;
 }
-%fs25 {
+@mixin fs25 {
   font-size: 25px;
 }
-%fs30 {
+@mixin fs30 {
   font-size: 30px;
 }
 
-%fw-3 {
+@mixin fw-3 {
   font-weight: 300;
 }
-%fw-4 {
+@mixin fw-4 {
   font-weight: 400;
 }
-%fw-5 {
+@mixin fw-5 {
   font-weight: 500;
 }
-%fw-6 {
+@mixin fw-6 {
   font-weight: 600;
 }
-%fw-7 {
+@mixin fw-7 {
   font-weight: 700;
 }
-%fw-8 {
+@mixin fw-8 {
   font-weight: 800;
 }
-%fw-9 {
+@mixin fw-9 {
   font-weight: 900;
 }
 
-%noWrap {
+@mixin noWrap {
   white-space: nowrap !important;
 }
 
-%displayFlex {
+@mixin displayFlex {
   display: flex;
 }
-%flexNone {
+@mixin flexNone {
   flex: none;
 }
-%flexRow {
+@mixin flexRow {
   flex-direction: row;
 }
-%flexColumn {
+@mixin flexColumn {
   flex-direction: column;
 }
-%flexJustifyCenter {
+@mixin flexJustifyCenter {
   justify-content: center;
 }
-%flexAlignStart {
+@mixin flexAlignStart {
   align-items: flex-start;
 }
-%flexAlignCenter {
+@mixin flexAlignCenter {
   align-items: center;
 }
-%flexAlignEnd {
+
+@mixin flexAlignEnd {
   align-items: flex-end;
 }
-%flexNowrap {
+@mixin flexNowrap {
   flex-wrap: nowrap;
 }
-%flexWrap {
+@mixin flexWrap {
   flex-wrap: wrap;
 }
 
-%flexFlowColumn {
+@mixin flexFlowColumn {
   flex-flow: column wrap;
 }
-%flexFlowColReverse {
+@mixin flexFlowColReverse {
   flex-flow: column-reverse wrap;
 }
-%flexFlowRow {
+@mixin flexFlowRow {
   flex-flow: row wrap;
 }
-%flexFlowRowReverse {
+@mixin flexFlowRowReverse {
   flex-flow: row-reverse wrap;
 }
-%flexFlowWrapReverse {
+@mixin flexFlowWrapReverse {
   flex-flow: wrap-reverse;
 }
 
-%noUserSelect {
+@mixin noUserSelect {
   @include user-select(none);
 }
-%noDisplay {
+@mixin noDisplay {
   display: none;
 }
-%noShadow {
+@mixin noShadow {
   box-shadow: none;
 }
-%noOutline {
+@mixin noOutline {
   outline: none;
 }
-%nolistStyle {
+@mixin nolistStyle {
   list-style: none;
 }
-%noTextDecor {
+@mixin noTextDecor {
   text-decoration: none;
 }
 
-%cursorDisabled {
+@mixin cursorDisabled {
   pointer-events: none;
 }
 
-%cursorPointer {
+@mixin cursorPointer {
   cursor: pointer;
 }
 
-%noPointerEvent {
+@mixin noPointerEvent {
   pointer-events: none;
 }
 
-%noBg {
+@mixin noBg {
   background: none;
 }
-%bgTransparent {
+@mixin bgTransparent {
   background-color: transparent;
 }
 
-%noRad {
+@mixin noRad {
   border-radius: 0;
 }
-%rad40 {
+@mixin rad40 {
   border-radius: 40px;
 }
-%radCircle {
+@mixin radCircle {
   border-radius: 50%;
 }
-%themeRadius {
+@mixin themeRadius {
   border-radius: $editor-radius;
 }
 
-%op0 {
+@mixin op0 {
   @include opacity(0);
 }
-%op03 {
+@mixin op03 {
   @include opacity(0.3);
 }
-%op04 {
+@mixin op04 {
   @include opacity(0.4);
 }
-%op05 {
+@mixin op05 {
   @include opacity(0.5);
 }
-%op1 {
+@mixin op1 {
   @include opacity(1);
 }
 
-%b0 {
+@mixin b0 {
   border: 0;
 }
-%b1 {
+@mixin b1 {
   border-width: 1px;
   border-style: solid;
 }
-%bb1 {
+@mixin bb1 {
   border-bottom-width: 1px;
   border-bottom-style: solid;
 }
-%br1 {
+@mixin br1 {
   border-right-width: 1px;
   border-right-style: solid;
 }
-%bl1 {
+@mixin bl1 {
   border-left-width: 1px;
   border-left-style: solid;
 }
 
-%shDefault {
+@mixin shDefault {
   box-shadow: 0 0px 3px 0 var(--black-alpha2);
 }
-%shActive {
+@mixin shActive {
   box-shadow: 0px 2px 5px var(--black-alpha2);
 }
-%sh14 {
+@mixin sh14 {
   box-shadow: 0 2px 10px var(--black-alpha2);
 }
 
-%cardDefault {
+@mixin cardDefault {
   background-color: var(--gray);
 }
-%cardActive {
+@mixin cardActive {
   background-color: var(--gray);
 }
 
-%borderGray {
+@mixin borderGray {
   border-color: var(--gray);
 }
-%borderGrayDark {
+@mixin borderGrayDark {
   border-color: var(--dark-gray);
 }
 
-%borderCollapse {
+@mixin borderCollapse {
   outline: none;
 }
 
-%overflowHidden {
+@mixin overflowHidden {
   overflow: hidden;
 }
 
-%removeAppearence {
+@mixin removeAppearence {
   @include appearance(none);
 }
 
-%removeAnimation {
+@mixin removeAnimation {
   animation: none !important;
 }
 
-%p0 {
+@mixin p0 {
   padding: 0px;
 }
-%p3 {
+@mixin p3 {
   padding: 3px;
 }
-%p5 {
+@mixin p5 {
   padding: 5px;
 }
-%p6 {
+@mixin p6 {
   padding: 6px;
 }
-%p7 {
+@mixin p7 {
   padding: 7px;
 }
-%p10 {
+@mixin p10 {
   padding: 10px;
 }
-%p13 {
+@mixin p13 {
   padding: 13px;
 }
-%p14 {
+@mixin p14 {
   padding: 14px;
 }
-%p15 {
+@mixin p15 {
   padding: 15px;
 }
-%p20 {
+@mixin p20 {
   padding: 20px;
 }
-%p28 {
+@mixin p28 {
   padding: 28px;
 }
-
-%marginAuto {
+@mixin marginAuto {
   margin: auto;
 }
-%m0 {
+@mixin m0 {
   margin: 0px;
 }
-%m5 {
+@mixin m5 {
   margin: 5px;
 }
-%m7 {
+@mixin m7 {
   margin: 7px;
 }
-%m10 {
+@mixin m10 {
   margin: 10px;
 }
-%m15 {
+@mixin m15 {
   margin: 15px;
 }
-%m20 {
+@mixin m20 {
   margin: 20px;
 }
 
-%mb5 {
+@mixin mb5 {
   margin-bottom: 5px;
 }
 
-%textCenter {
+@mixin textCenter {
   text-align: center;
 }
-%textRight {
+@mixin textRight {
   text-align: right;
 }
-%textLeft {
+@mixin textLeft {
   text-align: left;
 }
 
-%textUppercase {
+@mixin textUppercase {
   text-transform: uppercase;
 }
 
-%pullLeft {
+@mixin pullLeft {
   float: left;
 }
-%pullRight {
+@mixin pullRight {
   float: right;
 }
-%pullNone {
+@mixin pullNone {
   float: none;
 }
 
-%transitionAll150 {
+@mixin transitionAll150 {
   @include transition(all 150ms cubic-bezier(0.5, 1, 0.89, 1));
 }
-%transitionAll300 {
+@mixin transitionAll300 {
   @include transition(all 300ms cubic-bezier(0.5, 1, 0.89, 1));
 }
-%transitionAll400 {
+@mixin transitionAll400 {
   @include transition(all 400ms cubic-bezier(0.5, 1, 0.89, 1));
 }
-%transitionAll500 {
+@mixin transitionAll500 {
   @include transition(all 500ms cubic-bezier(0.5, 1, 0.89, 1));
 }
-%transitionAll600 {
+@mixin transitionAll600 {
   @include transition(all 600ms cubic-bezier(0.5, 1, 0.89, 1));
 }
 
-%floatToCenter {
-  @extend %posAbsolute;
+@mixin floatToCenter {
+  @include posAbsolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
-%floatToXCenter {
-  @extend %posAbsolute;
+@mixin floatToXCenter {
+  @include posAbsolute;
   left: 50%;
   transform: translateX(-50%);
 }
-%floatToYCenter {
-  @extend %posAbsolute;
+@mixin floatToYCenter {
+  @include posAbsolute;
   top: 50%;
   transform: translateY(-50%);
 }
-%flexCenter {
-  @extend %displayFlex;
-  @extend %flexAlignCenter;
-  @extend %flexJustifyCenter;
+@mixin flexCenter {
+  @include displayFlex;
+  @include flexAlignCenter;
+  @include flexJustifyCenter;
 }
-%flexToYCenter {
-  @extend %displayFlex;
-  @extend %flexAlignCenter;
+@mixin flexToYCenter {
+  @include displayFlex;
+  @include flexAlignCenter;
 }
-%flexToXCenter {
-  @extend %displayFlex;
-  @extend %flexJustifyCenter;
+@mixin flexToXCenter {
+  @include displayFlex;
+  @include flexJustifyCenter;
 }
 
-%radioBlue {
+@mixin radioBlue {
   .MuiIconButton-root {
     &.MuiRadio-colorSecondary {
       &:hover {
@@ -469,7 +469,7 @@
   }
 }
 
-%checkboxValidation {
+@mixin checkboxValidation {
   .MuiSvgIcon-root {
     color: var(--gray) !important;
     &:hover {
@@ -496,8 +496,8 @@
   }
 }
 
-%inputContainer {
-  @extend %flexCenter;
+@mixin inputContainer {
+  @include flexCenter;
   flex-direction: column;
   @include phone_and_tabletL {
     background-color: var(--solitude-light);
@@ -513,8 +513,8 @@
     border: transparent;
   }
 }
-%buildInputs {
-  @extend %posRelative;
+@mixin buildInputs {
+  @include posRelative;
   width: 100%;
   margin: 1vw 0;
   .MuiInput-underline {
@@ -528,7 +528,7 @@
   &:after,
   &:before {
     content: '';
-    @extend %floatToXCenter;
+    @include floatToXCenter;
     bottom: 0;
     pointer-events: none;
     transition: width 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -568,7 +568,7 @@
   }
 }
 
-%tutorialPanel {
+@mixin tutorialPanel {
   &.tutorial-panel {
     .tutorial-step-1 {
       margin: 0 3vw;
@@ -593,7 +593,7 @@
         position: relative;
         border: 0;
         border-radius: 50%;
-        @extend %flexCenter;
+        @include flexCenter;
         .svg {
           position: unset;
           top: unset;
@@ -611,13 +611,13 @@
         margin-top: 2.3vh;
         padding: 0;
         font-size: 1.28vw;
-        @extend %textCenter;
+        @include textCenter;
       }
       .center-second {
         margin: 0;
         padding: 0;
         font-size: 1.28vw;
-        @extend %textCenter;
+        @include textCenter;
       }
       .proposal-box {
         margin-left: 1vw;
@@ -669,32 +669,32 @@
         width: 2.5vw;
       }
       .left-arrow {
-        background-image: url('../../../../public/feathericons/chevron-left-orange.png');
+        background-image: url('/feathericons/chevron-left-orange.png');
         margin-left: 1.8vw;
         margin-right: 1.3vw;
       }
       .right-arrow {
-        background-image: url('../../../../public/feathericons/chevron-right-orange.png');
+        background-image: url('/feathericons/chevron-right-orange.png');
         margin-right: 2vw;
       }
     }
   }
 }
 
-%linkDescription {
+@mixin linkDescription {
   .link-description {
     font-family: $font-family-bold;
     margin-bottom: 0.5vh;
     color: var(--theme-dark-blue);
     margin: 0;
-    @extend %ellipsis;
+    @include ellipsis;
     font-size: 1.1vw;
   }
 }
 
-%questionLinkDescription {
+@mixin questionLinkDescription {
   .link-description {
-    @extend %textCenter;
+    @include textCenter;
     font-family: $font-family-regular;
     margin: 0;
     @include phone_and_tabletP {
@@ -708,29 +708,29 @@
   }
 }
 
-%removePosition {
+@mixin removePosition {
   position: unset !important;
   top: unset !important;
   left: unset !important;
   transform: unset !important;
 }
 
-%arrow-top-bottom {
+@mixin arrow-top-bottom {
   .top-scroll-area,
   .bottom-scroll-area {
     position: absolute;
     width: 100%;
     height: 5vh;
-    @extend %flexCenter;
+    @include flexCenter;
     .top-button-container,
     .bottom-button-container {
       position: relative;
       width: 100%;
       height: 100%;
-      @extend %flexCenter;
+      @include flexCenter;
       justify-content: flex-end;
       > button {
-        @extend %floatToCenter;
+        @include floatToCenter;
         .svg {
           $scroll-button-size: 2vw;
           height: $scroll-button-size;
@@ -742,8 +742,8 @@
       }
     }
     .scroll-text {
-      @extend %flexCenter;
-      @extend %flexCenter;
+      @include flexCenter;
+      @include flexCenter;
       span {
         font-size: 1vw;
         color: var(--theme-dark-blue);

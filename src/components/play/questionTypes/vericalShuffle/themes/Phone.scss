@@ -29,7 +29,7 @@
     &.full-height {
       > div {
         height: 100%;
-        @extend %flexCenter;
+        @include flexCenter;
       }
     }
     .image-container {

@@ -67,7 +67,7 @@
       .title {
         height: 3.5vh;
         align-items: flex-end;
-        @extend %ellipsis;
+        @include ellipsis;
         font-size: 1vw;
         width: calc(100% - 2vw) !important;
 

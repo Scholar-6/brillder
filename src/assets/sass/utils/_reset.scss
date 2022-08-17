@@ -42,8 +42,8 @@ a {
 	&.link {
 		color: var(--blue);
 		text-decoration: underline;
-		@extend %p0;
-		@extend %m0;
+		@include p0;
+		@include m0;
 	}
 
 	&:focus,

@@ -52,7 +52,7 @@
   margin-right: 0.4vw !important;
   padding: 0.05vw;
   border-radius: 50%;
-  @extend %flexToYCenter;
+  @include flexToYCenter;
 
   .radio-checked {
     stroke-width: 2;

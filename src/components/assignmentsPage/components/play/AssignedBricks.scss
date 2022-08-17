@@ -3,7 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 .big-search-icon-container {
-  @extend %transitionAll300;
+  @include transitionAll300;
   .big-search-icon {
     width: 10vw;
     height: 10vw;

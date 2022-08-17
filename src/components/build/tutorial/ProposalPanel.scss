@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .tutorial-proposal-panel {
-  @extend %tutorialPanel;
+  @include tutorialPanel;
   .tutorial-step-1 {
     .proposal-box {
       margin-left: 0.5vw;

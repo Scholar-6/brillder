@@ -44,7 +44,7 @@
 
   .welcome-col {
     width: $welcome-col-width;
-    @extend %textCenter;
+    @include textCenter;
     padding-top: 15vh;
 
     .welcome-box {
@@ -85,7 +85,7 @@
           stroke-width: 1.7;
         }
         .profile-image-border {
-          @extend %flexCenter;
+          @include flexCenter;
           border: 0.25vw solid var(--white);
           border-radius: 50%;
           img {
@@ -138,7 +138,7 @@
       height: 85%;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
-      @extend %flexCenter;
+      @include flexCenter;
       flex-direction: column;
     }
 
@@ -217,7 +217,7 @@
     font-size: $font-size;
     font-family: $font-family-light;
     width: calc(100vw - #{$welcome-col-width} - #{$first-col-width});
-    @extend %flexCenter;
+    @include flexCenter;
 
     div {
       cursor: pointer;
@@ -228,7 +228,7 @@
   .create-item-container,
   .back-item-container {
     width: auto;
-    @extend %flexCenter;
+    @include flexCenter;
     flex-direction: column;
     padding: 5vh 0;
 
@@ -236,12 +236,12 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      @extend %textCenter;
+      @include textCenter;
       flex-direction: column;
 
       .svg {
-        @extend %transitionAll300;
-        @extend %removePosition;
+        @include transitionAll300;
+        @include removePosition;
         width: 16vw;
         height: 8vw;
       }
@@ -295,7 +295,7 @@
 
     .item-description {
       padding: 0;
-      @extend %textCenter;
+      @include textCenter;
       margin: 0;
       font-family: $font-family-light;
       color: var(--tab-gray);

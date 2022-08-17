@@ -85,7 +85,7 @@
           flex-direction: column;
         }
         .icon-container {
-          @extend %flexCenter;
+          @include flexCenter;
           cursor: pointer;
         }
         svg {
@@ -126,14 +126,14 @@
     }
 
     .input-container {
-      @extend %flexCenter;
+      @include flexCenter;
       flex-direction: column;
       margin: 0 0 8.5vh $margin-desktop-left;
       width: 43vw;
       font-size: 1.4vw;
       border: transparent;
       .audience-inputs {
-        @extend %buildInputs;
+        @include buildInputs;
 
         .ql-custom-toolbar {
           display: none;
@@ -168,12 +168,12 @@
     }
     .brick-preview-container {
       overflow: hidden;
-      @extend %posRelative;
+      @include posRelative;
       padding: 0.6vh 1.25vw;
       font-size: 0.8vw;
-      @extend %width100;
+      @include width100;
       margin-top: 3vh;
-      @extend %themeRadius;
+      @include themeRadius;
       font-family: $font-family-regular;
       line-height: 1.2;
       letter-spacing: 0.03vw;
@@ -182,7 +182,7 @@
         font-family: $font-family-bold;
         margin-bottom: 0.5vh;
         width: 15.5vw;
-        @extend %ellipsis;
+        @include ellipsis;
       }
       .topic-filled {
         color: var(--white);
@@ -197,7 +197,7 @@
 
       .brick-topics {
         width: 15.5vw;
-        @extend %ellipsis;
+        @include ellipsis;
       }
       .author-row {
         margin-top: 0.5vh;

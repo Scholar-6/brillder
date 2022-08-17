@@ -3,7 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 .pair-match-build {
-  @extend %textCenter;
+  @include textCenter;
 
   .pair-match-answer {
     margin-left: $editor-spacing;
@@ -172,10 +172,10 @@
     right: 0.4vw;
     top: 0;
     height: 100%;
-    @extend %flexCenter;
+    @include flexCenter;
 
     svg {
-      @extend %transitionAll300;
+      @include transitionAll300;
       height: 100%;
       width: 2vw;
       color: var(--dark-gray);

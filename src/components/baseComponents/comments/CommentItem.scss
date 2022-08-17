@@ -12,15 +12,15 @@ $margin-left: 21%;
   border-radius: 1.2vh;
   background-color: #ffffff;
   font-size: 1vw;
-  @extend %posRelative;
+  @include posRelative;
   .profile-image-container {
-    @extend %flexCenter;
+    @include flexCenter;
     // width: $margin-left;
     width: 2.5vw;
     height: 2.5vw;
     cursor: pointer;
     .profile-image {
-      @extend %flexCenter;
+      @include flexCenter;
       background: var(--tab-gray);
       width: 2.2vw;
       height: 2.2vw;
@@ -62,7 +62,7 @@ $margin-left: 21%;
     // position: absolute;
     // top: 0;
     // right: 0;
-    @extend %flexToXCenter;
+    @include flexToXCenter;
     > button {
       height: 1.3vw;
       width: 1.3vw;
@@ -71,7 +71,7 @@ $margin-left: 21%;
       padding: 0;
       .svg {
         stroke-width: 2;
-        @extend %removePosition;
+        @include removePosition;
         height: 100%;
         width: 100%;
       }

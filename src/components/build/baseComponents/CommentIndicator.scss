@@ -9,8 +9,8 @@
   left: 0.3vw;
   top: 0.3vw;
   > div {
-    @extend %flexCenter;
-    @extend %radCircle;
+    @include flexCenter;
+    @include radCircle;
     position: absolute;
     &.outer-circle {
       background-color: var(--theme-orange-alpha5);

@@ -93,7 +93,7 @@
         margin-right: $tabs-margin-between;
         > div {
           span, .no-active {
-            @extend %transitionAll300;
+            @include transitionAll300;
             opacity: 0.2;
           }
           .round-button {
@@ -158,7 +158,7 @@
     background: var(--white);
     .bottom-next-button {
       position: inherit;
-      @extend %flexCenter;
+      @include flexCenter;
     }
   }
 
@@ -198,12 +198,12 @@
 
       &.description {
         .round-button {
-          @extend %flexCenter;
+          @include flexCenter;
           color: white;
         }
         .short-brick-info {
           top: 1.3vh !important;
-          @extend %flexCenter;
+          @include flexCenter;
           font-size: 1.35vw;
           height: 2.1vw;
           line-height: 1;
@@ -252,12 +252,12 @@
           color: var(--theme-orange);
           height: $size;
           width: $size;
-          @extend %transitionAll300;
+          @include transitionAll300;
         }
         span {
           margin-left: 1vw;
           height: 3.8vw;
-          @extend %flexToYCenter;
+          @include flexToYCenter;
         }
 
         &:hover {
@@ -422,14 +422,14 @@
             background-color: var(--white);
             color: var(--theme-dark-blue);
             margin-left: 0.3vw;
-            @extend %transitionAll300;
-            @extend %radCircle;
+            @include transitionAll300;
+            @include radCircle;
             width: 1.1vw;
             height: 1.1vw;
             .svg {
               width: 90%;
               height: 90%;
-              @extend %flexCenter;
+              @include flexCenter;
               margin: 0;
             }
           }
@@ -444,7 +444,7 @@
           }
           &.icon-animated {
             .classroom-icon {
-              @extend %transitionAll300;
+              @include transitionAll300;
               @include rotate(90deg);
             }
           }
@@ -477,7 +477,7 @@
     .right-index {
       right: 0.3vw !important;
       display: flex;
-      @extend %flexCenter;
+      @include flexCenter;
       background: transparent !important;
       color: white !important;
 
@@ -647,7 +647,7 @@
 }
 
 .filter-create-button-container {
-  @extend %flexCenter;
+  @include flexCenter;
 }
 
 .back-hover-area-filter {
@@ -688,18 +688,18 @@
     right: 0;
     top: 0;
     height: 6.6vh;
-    @extend %flexCenter;
+    @include flexCenter;
   }
   .round-button {
     border-radius: 50%;
     width: 3.8vh;
     height: 3.8vh;
-    @extend %flexCenter;
+    @include flexCenter;
     font-size: 1.8vh;
     letter-spacing: 0;
     color: white;
     margin-right: 0.5vw;
-    @extend %transitionAll300;
+    @include transitionAll300;
     font-family: $font-family-bold !important;
 
     &.draft {

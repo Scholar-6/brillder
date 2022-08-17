@@ -31,7 +31,7 @@
       border-radius: 40%;
       background-color: var(--tab-gray);
       > .svg {
-        @extend %removePosition;
+        @include removePosition;
         padding: $icon-padding;
         height: $icon-size;
         width: $icon-size;

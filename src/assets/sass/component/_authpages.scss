@@ -1,10 +1,10 @@
 .auth-page {
   background: var(--theme-dark-blue);
   height: 100%;
-  @extend %posRelative;
+  @include posRelative;
   .logo-box {
     background-color: var(--theme-light-blue) !important;
-    @extend %flexCenter;
+    @include flexCenter;
     @include phone_and_tabletP {
       background: var(--theme-light-blue);
       height: calc(39%) !important;
@@ -30,7 +30,7 @@
         width: 100%;
         height: 100%;
         color: var(--theme-orange);
-        @extend %flexCenter;
+        @include flexCenter;
         @include phone_and_tabletP {
         }
         @include tabletP {
@@ -100,7 +100,7 @@
       width: 32.3vw;
     }
     .back-box {
-      @extend %textCenter;
+      @include textCenter;
       @include phone_and_tabletP {
         display: flex;
         align-items: center;
@@ -146,7 +146,7 @@
     .second-item {
       margin-top: 4.7vh;
       height: 80.6vh;
-      @extend %textCenter;
+      @include textCenter;
       @include phone_and_tabletP {
         margin: 0;
         height: 100%;
@@ -201,7 +201,7 @@
     .content-box,
     .button-box {
       transition: width ease-in-out 300ms;
-      @extend %flexCenter;
+      @include flexCenter;
       @include phone {
         width: 100%;
       }
@@ -237,14 +237,14 @@
           position: fixed;
           bottom: 2.4vh;
           width: 88vw;
-          @extend %textCenter;
+          @include textCenter;
           font-size: 6vw;
           line-height: 1;
         }
       }
     }
     .content-box {
-      @extend %flexColumn;
+      @include flexColumn;
       .button-box {
         width: 100%;
       }
@@ -258,7 +258,7 @@
         }
         input {
           color: var(--white);
-          @extend %textCenter;
+          @include textCenter;
           background: var(--theme-dark-blue);
           box-sizing: border-box !important;
           padding: 2.5vh !important;
@@ -275,7 +275,7 @@
           }
         }
         .hide-password-icon-container {
-          @extend %flexCenter;
+          @include flexCenter;
           position: absolute;
           right: 1.3vw;
           top: 0;
@@ -299,12 +299,12 @@
         color: var(--white);
         .thanks-info {
           cursor: pointer;
-          @extend %posRelative;
+          @include posRelative;
           line-height: 1.43;
           font-size: 7.15vh;
 
           .register-success-icon {
-            @extend %posAbsolute;
+            @include posAbsolute;
             top: 0.3vh;
             left: -14.6vh;
             font-size: 10.7vh;
@@ -432,7 +432,7 @@
       }
       .email-button,
       .google-button {
-        @extend %flexCenter;
+        @include flexCenter;
         padding: 2.5vh;
         @include phone_and_tabletP {
           width: 100%;
@@ -448,7 +448,7 @@
         .svg {
           transition: all 0.2s ease-in-out;
           margin-right: 1vw;
-          @extend %removePosition;
+          @include removePosition;
           @include phone {
             width: 9.5vw;
             height: 9.5vw;

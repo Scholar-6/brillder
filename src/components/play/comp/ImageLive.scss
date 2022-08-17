@@ -4,7 +4,7 @@
 
 .image-play-container2 {
   display: flex;
-  @extend %flexCenter;
+  @include flexCenter;
   justify-content: flex-start;
   align-items: flex-start;
 
@@ -18,7 +18,7 @@
 }
 .image-play {
   max-width: 100%;
-  @extend %textCenter;
+  @include textCenter;
   margin-top: 5px;
   // SVG images don't always have a width set.
   &[src$=".svg"] {

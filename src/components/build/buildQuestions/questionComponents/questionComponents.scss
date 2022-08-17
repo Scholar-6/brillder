@@ -15,7 +15,7 @@
   }
   .drop-box {
     margin-top: 0.2vw;
-    @extend %themeRadius;
+    @include themeRadius;
     .dragableBox {
       margin-bottom: 0 !important;
       .dropzone {
@@ -114,7 +114,7 @@
     }
     input:not([type="checkbox"]) {
       width: 84%;
-      @extend %textCenter;
+      @include textCenter;
       border: none;
       background: var(--input-gray);
       padding-right: 8%;
@@ -174,7 +174,7 @@
   padding-bottom: 0;
   width: 100%;
   background: var(--tab-gray);
-  @extend %themeRadius;
+  @include themeRadius;
   .red-build-title {
     background: var(--theme-orange);
     color: var(--white);

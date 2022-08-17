@@ -47,7 +47,7 @@ $margin-left: 21%;
   }
 
   .scroll-buttons {
-    @extend %flexCenter;
+    @include flexCenter;
     margin-top: 6vh;
 
     svg {
@@ -61,7 +61,7 @@ $margin-left: 21%;
 
   .comments-title {
     position: relative;
-    @extend %textCenter;
+    @include textCenter;
     color: var(--theme-dark-blue);
     font-size: $suggestions-title-font-size;
     letter-spacing: 1px;
@@ -161,8 +161,8 @@ $margin-left: 21%;
 
   .comments-panel {
     .comments-title {
-      @extend %displayFlex;
-      @extend %flexAlignCenter;
+      @include displayFlex;
+      @include flexAlignCenter;
     }
     .comments-column-wrapper {
       bottom: 0;
@@ -188,8 +188,8 @@ $margin-left: 21%;
 
   .comments-panel {
     .comments-title {
-      @extend %displayFlex;
-      @extend %flexAlignCenter;
+      @include displayFlex;
+      @include flexAlignCenter;
     }
     .comments-column-wrapper {
       bottom: 0;

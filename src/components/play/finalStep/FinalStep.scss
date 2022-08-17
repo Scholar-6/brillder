@@ -43,14 +43,14 @@
   }
 
   p {
-    @extend %textCenter;
+    @include textCenter;
     font-size: 2.1vw;
     font-family: $font-family-bold;
   }
 
   .share-row {
     .button-container {
-      @extend %flexToXCenter;
+      @include flexToXCenter;
 
       svg {
         cursor: pointer;
@@ -66,10 +66,10 @@
     .link-text {
       margin-top: 2vh;
       font-family: $font-family-bold;
-      @extend %textCenter;
+      @include textCenter;
       font-size: 2vw;
     }
-    @extend %questionLinkDescription;
+    @include questionLinkDescription;
   }
 }
 

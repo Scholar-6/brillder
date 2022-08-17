@@ -11,7 +11,7 @@
     display: inline-block;
     margin-bottom: 0.5vh;
     background-color: var(--tab-gray);
-    @extend %themeRadius;
+    @include themeRadius;
     
     .quill-document-editor .ql-editor::before {
       font-size: 1.4vw;
@@ -65,7 +65,7 @@
         padding-right: 0.7vw;
         margin-right: 1vw;
         font-size: 1.2vw;
-        @extend %textCenter;
+        @include textCenter;
         font-weight: bold;
         font-family: $font-family-black;
         color: white;

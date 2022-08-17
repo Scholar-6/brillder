@@ -11,7 +11,7 @@
       border-radius: 0.6vw;
     }
   }
-  @extend %textCenter;
+  @include textCenter;
 
   .choose-several-box {
     position: relative;
@@ -35,10 +35,10 @@
       margin-bottom: $bottom-distance;
       width: 100%;
       min-height: $answer-height;
-      @extend %textCenter;
+      @include textCenter;
       border: none;
       background: var(--input-gray);
-      @extend %themeRadius;
+      @include themeRadius;
       font-size: $answer-input-text-size;
 
       .ql-editor {

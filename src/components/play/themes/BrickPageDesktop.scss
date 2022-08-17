@@ -362,7 +362,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           font-family: $font-family-bold !important;
           width: 100%;
           font-size: 1.6vw;
-          @extend %flexCenter;
+          @include flexCenter;
           flex-direction: column;
           span,
           .svg {
@@ -377,7 +377,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             overflow: hidden;
           }
           .svg {
-            @extend %removePosition;
+            @include removePosition;
             $size: calc(#{$icons-size} * 1.11);
             width: $size;
             height: $size;
@@ -417,8 +417,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             height: 3.5vw;
             font-size: 1.6vw;
             font-family: $font-family-bold;
-            @extend %flexCenter;
-            @extend %transitionAll300;
+            @include flexCenter;
+            @include transitionAll300;
             overflow: hidden;
 
             &.bigger-button-v3 {
@@ -437,11 +437,11 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
 
             span {
-              @extend %transitionAll300;
+              @include transitionAll300;
             }
 
             svg {
-              @extend %transitionAll300;
+              @include transitionAll300;
             }
 
             &:hover {
@@ -528,7 +528,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           font-family: $font-family-bold !important;
           width: 100%;
           font-size: 1.6vw;
-          @extend %flexCenter;
+          @include flexCenter;
           flex-direction: column;
           span,
           .svg {
@@ -543,7 +543,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             overflow: hidden;
           }
           .svg {
-            @extend %removePosition;
+            @include removePosition;
             $size: calc(#{$icons-size} * 1.11);
             width: $size;
             height: $size;
@@ -584,16 +584,16 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             height: 3.5vw;
             font-size: 1.6vw;
             font-family: $font-family-bold;
-            @extend %flexCenter;
-            @extend %transitionAll300;
+            @include flexCenter;
+            @include transitionAll300;
             overflow: hidden;
 
             span {
-              @extend %transitionAll300;
+              @include transitionAll300;
             }
 
             svg {
-              @extend %transitionAll300;
+              @include transitionAll300;
             }
 
             &:hover {
@@ -694,7 +694,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           top: 2.4vh;
           left: 1vw;
           > div {
-            @extend %radCircle;
+            @include radCircle;
             background-color: var(--gray);
             height: 5vw;
             width: 5vw;
@@ -724,7 +724,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             font-size: $base-font-size !important;
           }
           .intro-header {
-            @extend %transitionAll600;
+            @include transitionAll600;
             margin-bottom: 2vh;
           }
           .start-brick-button {
@@ -868,8 +868,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 height: 4vw;
               }
               .step {
-                @extend %posRelative;
-                @extend %flexCenter;
+                @include posRelative;
+                @include flexCenter;
                 justify-content: flex-start;
                 cursor: pointer;
                 font-size: 1.8vw;
@@ -900,7 +900,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                   height: 1.5vw;
                 }
                 .blue-circle-main-container {
-                  @extend %floatToXCenter;
+                  @include floatToXCenter;
                   width: 1.2vw;
                   height: 1.2vw;
                 }
@@ -1072,7 +1072,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
 
           p {
-            @extend %textCenter;
+            @include textCenter;
             font-size: 1.5vw !important;
             margin-top: 4.2vh;
             font-family: $font-family-bold;
@@ -1082,7 +1082,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             margin-top: 12.5vh;
 
             .button-container {
-              @extend %flexToXCenter;
+              @include flexToXCenter;
 
               svg {
                 color: var(--theme-green) !important;
@@ -1100,10 +1100,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               cursor: pointer;
               margin-top: 2vh;
               font-family: $font-family-bold;
-              @extend %textCenter;
+              @include textCenter;
               font-size: 2vw;
             }
-            @extend %questionLinkDescription;
+            @include questionLinkDescription;
           }
           .button-container {
             cursor: pointer;
@@ -1144,7 +1144,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
 
           p {
-            @extend %textCenter;
+            @include textCenter;
             font-size: 2.1vw;
             margin-top: 0vh;
             font-family: $font-family-bold;
@@ -1158,7 +1158,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             }
 
             .button-container {
-              @extend %flexToXCenter;
+              @include flexToXCenter;
 
               svg {
                 cursor: pointer;
@@ -1174,10 +1174,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             .link-text {
               margin-top: 2vh;
               font-family: $font-family-bold;
-              @extend %textCenter;
+              @include textCenter;
               font-size: 2vw;
             }
-            @extend %questionLinkDescription;
+            @include questionLinkDescription;
           }
         }
         &.synthesis-page {
@@ -1252,7 +1252,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
                 left: 50%;
                 transform: translateX(-50%);
                 top: 80%;
-                @extend %textCenter;
+                @include textCenter;
                 font-size: 1vw;
               }
             }
@@ -1675,7 +1675,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       .arrow {
         height: 80%;
         width: 80%;
-        @extend %posAbsolute;
+        @include posAbsolute;
         top: 55%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -1789,7 +1789,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   padding-left: 0 !important;
   margin-left: 0 !important;
   font-size: 1.75vw !important;
-  @extend %flexToYCenter;
+  @include flexToYCenter;
   font-family: $font-family-black;
   text-transform: uppercase;
   max-width: 47.3vw;
@@ -1899,7 +1899,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     .like-buttons-container {
       margin-bottom: 10vh;
       .x-center {
-        @extend %flexToXCenter;
+        @include flexToXCenter;
 
         .like-button {
           position: relative;
@@ -2016,7 +2016,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
         border-radius: 50%;
         color: var(--white);
         font-size: 2vw;
-        @extend %flexCenter;
+        @include flexCenter;
       }
     }
     .brick-title {
@@ -2024,7 +2024,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
       text-transform: uppercase;
       font-size: 2vw;
       max-width: 40vw;
-      @extend %ellipsis;
+      @include ellipsis;
     }
   }
 }
@@ -2269,7 +2269,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
   font-family: $font-family-black;
   text-transform: uppercase;
   width: 75.5vw;
-  @extend %ellipsis;
+  @include ellipsis;
 
   br {
     display: none;
