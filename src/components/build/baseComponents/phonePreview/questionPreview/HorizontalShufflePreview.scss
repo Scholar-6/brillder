@@ -22,7 +22,7 @@
     position: relative;
     font-family: $font-family-regular;
     width: 22%;
-    @extend %textCenter;
+    @include textCenter;
     margin: 1%;
     padding: 0vw 1vw;
     height: 4vw;

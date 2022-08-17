@@ -4,7 +4,7 @@
 
 .teach-book-button {
   width: 3vw;
-  @extend %flexCenter;
+  @include flexCenter;
 
   .book-container {
     cursor: pointer;
@@ -12,7 +12,7 @@
     $size: 2.18vw;
     width: $size;
     height: $size;
-    @extend %flexCenter;
+    @include flexCenter;
     background: var(--theme-green);
     border-radius: 50%;
   }

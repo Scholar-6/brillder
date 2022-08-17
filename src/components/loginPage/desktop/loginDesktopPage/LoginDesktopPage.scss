@@ -87,7 +87,7 @@
     .email-button,
     .google-button-desktop {
       border: none;
-      @extend %flexCenter;
+      @include flexCenter;
       padding: 2.2vh;
 
       .svg {

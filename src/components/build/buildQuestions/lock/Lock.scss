@@ -7,7 +7,7 @@
   position: absolute;
   bottom: 28vh;
   font-size: 0.9vw;
-  @extend %textCenter;
+  @include textCenter;
   font-family: $font-family-regular;
   margin-top: 16vh !important;
 

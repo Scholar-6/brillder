@@ -5,7 +5,7 @@
 .key-words-play {
   max-width: 100%;
   display: inline;
-  @extend %ellipsis;
+  @include ellipsis;
   .key-word-play {
     text-transform: capitalize;
     display: inline;

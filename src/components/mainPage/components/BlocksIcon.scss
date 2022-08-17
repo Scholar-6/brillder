@@ -74,7 +74,7 @@ $top: -29.5%;
     }
   }
   .groped-blocks {
-    @extend %transitionAll300;
+    @include transitionAll300;
     height: 100%;
     position: relative;
     overflow: hidden;

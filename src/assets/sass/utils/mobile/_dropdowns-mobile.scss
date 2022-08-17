@@ -42,7 +42,7 @@
 
         .btn {
           .svg {
-            @extend %removePosition;
+            @include removePosition;
             background: transparent;
 
             @include tabletP {

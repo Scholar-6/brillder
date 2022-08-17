@@ -16,7 +16,7 @@
 
   .first-part {
     display: flex;
-    @extend %flexCenter;
+    @include flexCenter;
   }
 
   .left-brick-circle {
@@ -32,7 +32,7 @@
 
     .horizontal-brick {
       cursor: pointer;
-      @extend %flexCenter;
+      @include flexCenter;
       svg {
         width: 68%;
         height: 68%;
@@ -50,9 +50,9 @@
     padding-left: 2vw;
     width: 30vw;
     padding-top: 0;
-    @extend %flexToXCenter;
+    @include flexToXCenter;
     flex-direction: column;
-    @extend %linkDescription;
+    @include linkDescription;
     padding-right: 0;
     .link-description {
       width: 100% !important;
@@ -98,7 +98,7 @@
     }
     cursor: pointer;
     width: calc(#{$bricks-height / 6.35 / 1.4});
-    @extend %flexCenter;
+    @include flexCenter;
     border-left: 0;
     border-right: 0;
     border-radius: 0.3vw;
@@ -166,7 +166,7 @@
     .users-complete-count {
       margin-left: 2vw;
       margin-right: 2vw;
-      @extend %flexCenter;
+      @include flexCenter;
       span {
         font-size: 1.5vw;
         margin-right: 0.5vw;
@@ -178,18 +178,18 @@
       }
     }
     .average {
-      @extend %flexCenter;
+      @include flexCenter;
       font-size: 1.5vw;
     }
     .status-text-centered {
       margin-left: 0.6vw;
-      @extend %flexCenter;
+      @include flexCenter;
       font-size: 1.5vw;
     }
   }
   .reminder-container {
     width: 4vw;
-    @extend %flexCenter;
+    @include flexCenter;
     .reminder-icon {
       color: white;
       border-radius: 50%;
@@ -209,7 +209,7 @@
     }
   }
   .teach-brick-actions-container {
-    @extend %flexCenter;
+    @include flexCenter;
     width: 3vw;
     position: relative;
     .archive-button-container {
@@ -277,7 +277,7 @@
     }
   }
   .reminder-brick-actions-container {
-    @extend %flexCenter;
+    @include flexCenter;
     width: 3vw;
     position: relative;
     .reminder-button-container {
@@ -347,7 +347,7 @@
     }
   }
   .reminder-brick-actions-container {
-    @extend %flexCenter;
+    @include flexCenter;
     width: 3vw;
     position: relative;
     .reminder-button-container {

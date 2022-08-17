@@ -5,7 +5,7 @@
 .logo-page {
   height: 100%;
   background: var(--white);
-  @extend %flexCenter;
+  @include flexCenter;
   flex-direction: column;
   .brick-logo-image {
     width: 50%;

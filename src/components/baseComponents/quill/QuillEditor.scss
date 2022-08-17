@@ -222,7 +222,7 @@ s {
       margin: 0;
       padding: 6vh 1vw 1vh 2.2vw;
       box-shadow: none !important;
-      @extend %textCenter;
+      @include textCenter;
       border: 0 !important;
       color: var(--theme-dark-blue);
       background: var(--solitude-light) !important;

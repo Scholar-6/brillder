@@ -70,7 +70,7 @@ textarea {
 }
 
 .svg {
-  @extend %noUserSelect;
+  @include noUserSelect;
   fill: currentColor;
   // stroke: currentColor;
   // @media not all and (min-resolution: 0.001dpcm) {
@@ -82,8 +82,8 @@ textarea {
 }
 
 .svgOnHover {
-  @extend %posRelative;
-  @extend %flexCenter;
+  @include posRelative;
+  @include flexCenter;
   > .svg,
   > span {
     @include transition(all 350ms cubic-bezier(0.5, 1, 0.89, 1));
@@ -93,7 +93,7 @@ textarea {
     height: 20px;
     visibility: visible;
     opacity: 1;
-    @extend %floatToCenter;
+    @include floatToCenter;
     &.svg-default,
     &.svg-blue,
     &.svg-white,
@@ -203,7 +203,7 @@ h3 {
   display: block;
   line-height: 1.75;
   color: var(--theme-dark-blue) !important;
-  @extend %textCenter;
+  @include textCenter;
   text-transform: none !important;
   width: 100%;
   border-radius: 0.6vw !important;
@@ -279,8 +279,8 @@ h3 {
 
 .zoom-item {
   cursor: pointer;
-  @extend %textCenter;
-  @extend %transitionAll300;
+  @include textCenter;
+  @include transitionAll300;
 }
 
 .mobile-hidden {
@@ -326,7 +326,7 @@ h3 {
   font: 1.2vw $font-family-bold;
   color: var(--gray);
   background: var(--tab-gray) !important;
-  @extend %themeRadius;
+  @include themeRadius;
   &.disabled {
     background: #ebebe4;
   }
@@ -362,11 +362,11 @@ h3 {
 }
 
 .flex-center {
-  @extend %flexCenter;
+  @include flexCenter;
 }
 
 .centered {
-  @extend %flexCenter;
+  @include flexCenter;
   @include phone_and_tabletP {
     height: auto;
     width: 100%;
@@ -375,7 +375,7 @@ h3 {
 
 .centered-y-start-x {
   height: 100% !important;
-  @extend %flexToYCenter;
+  @include flexToYCenter;
   align-items: flex-start !important;
 }
 

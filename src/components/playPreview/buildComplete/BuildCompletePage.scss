@@ -54,7 +54,7 @@
   }
 
   .radio-container {
-    @extend %flexToYCenter;
+    @include flexToYCenter;
     margin-top: 5vh;
 
     .MuiRadio-root {

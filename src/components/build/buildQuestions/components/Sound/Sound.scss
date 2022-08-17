@@ -3,7 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 .react-recording {
-  @extend %themeRadius;
+  @include themeRadius;
   background-color: var(--tab-gray);
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
     border-radius: $button-radius;
     border: 1px solid var(--tab-gray);
     .svg {
-      @extend %removePosition;
+      @include removePosition;
     }
   }
   .start-record,

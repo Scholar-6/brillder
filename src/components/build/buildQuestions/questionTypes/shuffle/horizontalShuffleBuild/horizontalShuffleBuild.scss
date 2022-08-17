@@ -3,7 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 .horizontal-shuffle-build {
-  @extend %textCenter;
+  @include textCenter;
   .horizontal-sound {
     width: 100%;
     flex-grow: 0;
@@ -102,9 +102,9 @@
         right: 0.7vw;
         top: 0;
         height: 100%;
-        @extend %flexCenter;
+        @include flexCenter;
         svg {
-          @extend %transitionAll300;
+          @include transitionAll300;
           height: 100%;
           width: 2vw;
           color: var(--dark-gray);

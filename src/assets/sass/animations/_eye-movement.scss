@@ -17,12 +17,12 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  @extend %textCenter;
+  @include textCenter;
   flex-direction: column;
   > .svgOnHover {
     &:first-child {
       .svg {
-        @extend %removePosition;
+        @include removePosition;
       }
     }
   }
@@ -32,7 +32,7 @@
     svg {
       width: 100%;
       height: auto;
-      @extend %removePosition;
+      @include removePosition;
     }
   }
   .glass-eyes-left,
@@ -41,7 +41,7 @@
     height: $eye-ball;
     position: absolute;
     top: 0.2vw;
-    @extend %flexCenter;
+    @include flexCenter;
     animation: blink 2.4s infinite;
     opacity: 0;
     > svg {
@@ -55,7 +55,7 @@
       height: $eye-pupil;
       opacity: 0;
       svg {
-        // @extend %floatToXCenter;
+        // @include floatToXCenter;
         position: absolute;
         left: 0;
         top: 0;

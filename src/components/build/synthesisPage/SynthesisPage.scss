@@ -3,7 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 .synthesis-page {
-  @extend %arrow-top-bottom;
+  @include arrow-top-bottom;
   .top-scroll-area,
   .bottom-scroll-area {
     justify-content: flex-start;
@@ -72,7 +72,7 @@
       color: var(--theme-dark-blue);
       letter-spacing: 0.2vw;
       font-size: 1.3vw;
-      @extend %textCenter;
+      @include textCenter;
       font-family: $font-family-bold;
     }
     .edit-proposal-button {
