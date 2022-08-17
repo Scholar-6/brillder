@@ -8,7 +8,7 @@
     border-top-right-radius: 0.8vw;
     color: var(--theme-dark-blue);
     padding: 10px 0;
-    @extend %textCenter;
+    @include textCenter;
     font-family: $font-family-bold;
     background-color: var(--tab-gray);
     font-size: 1vw;
@@ -133,7 +133,7 @@
 
 .drag-area {
   height: auto;
-  @extend %flexToYCenter;
+  @include flexToYCenter;
 
   .svg {
     $margin: 0.5vw;

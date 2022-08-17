@@ -137,7 +137,7 @@ $base-build-border: $editor-radius;
   .drag-and-drop-box {
     min-height: 6vw;
     margin: 0;
-    @extend %themeRadius;
+    @include themeRadius;
   }
 
   .button-box {
@@ -185,7 +185,7 @@ $base-build-border: $editor-radius;
     font-size: 1.2vw;
     font-family: $font-family-regular;
     letter-spacing: 0;
-    @extend %textCenter;
+    @include textCenter;
     color: white;
 
     button {
@@ -245,13 +245,13 @@ $base-build-border: $editor-radius;
     }
 
     .proposal-text {
-      @extend %transitionAll300;
+      @include transitionAll300;
       margin-top: 0vh;
       margin-left: 0.3vw;
     }
 
     &.invalid {
-      @extend %transitionAll300;
+      @include transitionAll300;
       color: var(--theme-orange);
 
       svg {
@@ -295,7 +295,7 @@ $base-build-border: $editor-radius;
     right: 7vw;
     width: 25vw;
     color: white;
-    @extend %textCenter;
+    @include textCenter;
 
     svg {
       margin-top: 0.3vw;
@@ -420,7 +420,7 @@ $base-build-border: $editor-radius;
       height: 100%;
       border-radius: 50%;
       background: #fff;
-      @extend %transitionAll300;
+      @include transitionAll300;
       opacity: 0.5 !important;
 
       &.hovered {
@@ -446,7 +446,7 @@ $base-build-border: $editor-radius;
   top: 0;
   display: flex;
   height: 5%;
-  @extend %flexCenter;
+  @include flexCenter;
   justify-content: center;
 
   br {

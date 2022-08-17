@@ -37,7 +37,7 @@
         padding-right: 0.7vw;
         margin-right: 1vw;
         font-size: 1.2vw;
-        @extend %textCenter;
+        @include textCenter;
         font-weight: bold;
         font-family: $font-family-black;
         color: white;
@@ -47,7 +47,7 @@
   }
   .exclamation-mark {
     width: 2vw;
-    @extend %textCenter;
+    @include textCenter;
     font-weight: bold;
     font-family: $font-family-black;
     color: white;

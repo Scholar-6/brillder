@@ -68,7 +68,7 @@
       .arrow {
         height: 80%;
         width: 80%;
-        @extend %posAbsolute;
+        @include posAbsolute;
         top: 55%;
         left: 50%;
         transform: translate(-50%, -50%);

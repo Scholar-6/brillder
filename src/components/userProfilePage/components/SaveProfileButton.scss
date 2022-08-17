@@ -6,7 +6,7 @@
   $image-size: 3vw;
   cursor: pointer;
   position: relative;
-  @extend %textCenter;
+  @include textCenter;
   height: $image-size;
   width: $image-size;
   background: var(--tab-gray) 0% 0% no-repeat padding-box;
@@ -42,12 +42,12 @@
   }
 
   outline: 0 !important;
-  @extend %radCircle;
-  @extend %b0;
+  @include radCircle;
+  @include b0;
   &:after {
     content: '';
-    @extend %floatToCenter;
-    @extend %radCircle;
+    @include floatToCenter;
+    @include radCircle;
   }
 
   @include phone_and_tabletP {

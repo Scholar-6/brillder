@@ -5,7 +5,7 @@
 $box-radius: 0.4vw;
 
 .subject-page {
-  @extend %height100;
+  @include height100;
   .subject-box {
     @include phone_and_tabletP {
       height: 80%;
@@ -20,14 +20,14 @@ $box-radius: 0.4vw;
   }
   .subject-container {
     margin-left: 8.4vw;
-    @extend %width100;
-    @extend %posRelative;
+    @include width100;
+    @include posRelative;
 
     .subjects-group {
       display: inline;
       overflow: hidden;
       overflow-y: auto;
-      @extend %radioBlue;
+      @include radioBlue;
       @include phone_and_tabletP {
         max-height: calc(85vh - 16vh);
       }
@@ -123,7 +123,7 @@ $box-radius: 0.4vw;
     right: 8.5%;
     width: 21.2%;
     > div {
-      @extend %textCenter;
+      @include textCenter;
       font-size: 2.1vw;
       color: var(--theme-dark-blue);
       font-family: $font-family-black;
@@ -135,7 +135,7 @@ $box-radius: 0.4vw;
   .german-preview,
   .psychology-preview {
     color: var(--white);
-    @extend %textCenter;
+    @include textCenter;
     font-size: 2.8vw;
     font-family: $font-family-black;
     > div:nth-child(1) {
@@ -147,7 +147,7 @@ $box-radius: 0.4vw;
     margin-left: 2vw;
     margin-right: 2vw;
     color: var(--white);
-    @extend %textCenter;
+    @include textCenter;
     font-size: 2.8vw;
     font-family: $font-family-black;
     > div:nth-child(1) {
@@ -189,7 +189,7 @@ $box-radius: 0.4vw;
     margin-left: 1.5vw;
     margin-right: 1.5vw;
     color: var(--white);
-    @extend %textCenter;
+    @include textCenter;
     font-size: 2.8vw;
     font-family: $font-family-black;
     > div:nth-child(1) {
@@ -201,7 +201,7 @@ $box-radius: 0.4vw;
     margin-left: 1.5vw;
     margin-right: 1.5vw;
     color: var(--white);
-    @extend %textCenter;
+    @include textCenter;
     font-size: 3.2vw;
     font-family: $font-family-black;
     > div:nth-child(1) {
@@ -214,7 +214,7 @@ $box-radius: 0.4vw;
     margin-left: 1.5vw;
     margin-right: 1.5vw;
     color: var(--white);
-    @extend %textCenter;
+    @include textCenter;
     font-size: 2.8vw;
     font-family: $font-family-black;
     > div:nth-child(1) {
@@ -226,7 +226,7 @@ $box-radius: 0.4vw;
     margin-left: 1.5vw;
     margin-right: 1.5vw;
     color: var(--white);
-    @extend %textCenter;
+    @include textCenter;
     > div:nth-child(1) {
       font-size: 3.2vw;
       margin-top: 14.5vw;
@@ -251,7 +251,7 @@ $box-radius: 0.4vw;
   .economics-preview,
   .philosophy-preview {
     color: var(--white);
-    @extend %textCenter;
+    @include textCenter;
     font-size: 2.8vw;
     font-family: $font-family-black;
     > div:nth-child(1) {
@@ -263,7 +263,7 @@ $box-radius: 0.4vw;
     margin-left: 2.18vw;
     margin-right: 2.18vw;
     color: var(--white);
-    @extend %textCenter;
+    @include textCenter;
     font-size: 2.8vw;
     font-family: $font-family-black;
     > div:nth-child(1) {
@@ -276,7 +276,7 @@ $box-radius: 0.4vw;
   .maths-preview,
   .history-preview {
     color: var(--white);
-    @extend %textCenter;
+    @include textCenter;
     font-size: 2.8vw;
     font-family: $font-family-black;
     > div:nth-child(1) {

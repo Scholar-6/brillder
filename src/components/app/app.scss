@@ -12,7 +12,7 @@
   line-height: 2vw;
   letter-spacing: 0.4vw;
   font-family: $font-family-black;
-  @extend %flexCenter;
+  @include flexCenter;
   @include phone_and_tabletP {
     min-height: 5.3vw;
   }
@@ -32,7 +32,7 @@
     writing-mode: vertical-lr;
     text-orientation: mixed;
     letter-spacing: 0.08vw;
-    @extend %flexCenter;
+    @include flexCenter;
     transform: scale(-1, -1);
     @include phone_and_tabletP {
       width: 2vw;

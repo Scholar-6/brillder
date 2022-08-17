@@ -72,7 +72,7 @@
 
       .user-header {
         position: relative;
-        @extend %flexCenter;
+        @include flexCenter;
         justify-content: space-between;
 
         .brick-row-title {
@@ -96,7 +96,7 @@
           font-size: 1vw;
           width: 6vw;
           height: max-content;
-          @extend %flexCenter;
+          @include flexCenter;
           flex-direction: column;
 
           >svg {
@@ -213,11 +213,8 @@
                 }
 
                 >div {
-                  @extend %displayFlex;
+                  @include displayFlex;
                 }
-              }
-
-              .activate-button-container {
               }
             }
 

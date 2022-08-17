@@ -5,6 +5,6 @@
 .author-row.cover-author-row {
   padding-right: 2vw;
   font-size: 6vw;
-  @extend %ellipsis;
+  @include ellipsis;
   text-transform: capitalize;
 }

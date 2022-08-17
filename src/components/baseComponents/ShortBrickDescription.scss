@@ -18,7 +18,7 @@
         display: inline-flex;
         flex-direction: column;
         justify-content: center;
-        @extend %transitionAll300;
+        @include transitionAll300;
         .left-brick-roller {
           .roller-button {
             height: 20vw;
@@ -43,7 +43,7 @@
             line-height: 1.3;
             font-family: $font-family-regular;
             margin-bottom: 0.1vh;
-            @extend %ellipsis;
+            @include ellipsis;
           }
         }
       }
@@ -52,11 +52,11 @@
 }
 
 .round-button-icon {
-  @extend %flexCenter;
+  @include flexCenter;
   height: inherit;
   width: inherit;
   stroke-width: 2;
-  @extend %flexCenter;
+  @include flexCenter;
   svg {
     color: var(--white);
     margin-left: 2%;

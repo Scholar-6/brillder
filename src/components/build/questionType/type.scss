@@ -50,7 +50,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    @extend %transitionAll300;
+    @include transitionAll300;
     @include phone_and_tabletP {
       font-size: 2.3vw !important;
       margin: 7px 7px 7px 12px;
@@ -64,7 +64,7 @@
       border-radius: 1.1vw;
       letter-spacing: 0.4vw;
     }
-    @extend %questionLinkDescription;
+    @include questionLinkDescription;
     &:hover,
     &.active {
       background: var(--theme-orange);
@@ -79,7 +79,7 @@
     bottom: 2vh;
   }
   .card-description {
-    @extend %textCenter;
+    @include textCenter;
   }
 
   .set-type-button {

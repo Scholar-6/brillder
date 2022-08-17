@@ -1,8 +1,8 @@
 .tooltip {
-  @extend %posRelative;
+  @include posRelative;
   &:after {
     content: '';
-    @extend %floatToXCenter;
+    @include floatToXCenter;
     width: 0;
     height: 0;
     border-style: solid;
@@ -13,8 +13,8 @@
     @include user-select(none);
   }
   .tooltip-inner {
-    @extend %posAbsolute;
-    @extend %fw-5;
+    @include posAbsolute;
+    @include fw-5;
     margin: 0 !important;
     padding: 0.5vw 0.7vw !important;
     font-size: 0.8vw;
@@ -22,7 +22,7 @@
     color: var(--white) !important;
     text-align: center;
     background-color: var(--theme-dark-blue);
-    @extend %themeRadius;
+    @include themeRadius;
     z-index: 99999;
     @include opacity(0);
     visibility: hidden;

@@ -73,7 +73,7 @@
   width: 80%;
 
   .button-container {
-    @extend %flexCenter;
+    @include flexCenter;
     width: 1.5vw;
 
     .svg {
@@ -86,11 +86,11 @@
   .time-text {
     width: 6vw;
     letter-spacing: -0.05vw;
-    @extend %flexCenter;
+    @include flexCenter;
   }
 
   .input-container {
-    @extend %flexCenter;
+    @include flexCenter;
     margin: 0 !important;
   }
 
@@ -137,7 +137,7 @@
   }
 
   .volume-container-main {
-    @extend %flexCenter;
+    @include flexCenter;
 
     input {
       width: 2.5vw;
@@ -148,7 +148,7 @@
   .volume-container {
     width: 2vw;
     height: 1.8vw;
-    @extend %flexCenter;
+    @include flexCenter;
     position: relative;
 
     .volume-absolute-range {
@@ -165,14 +165,14 @@
   }
 
   .more-container {
-    @extend %flexCenter;
+    @include flexCenter;
     width: 3vw;
 
     .svg {
       cursor: pointer;
       width: 2vw;
       height: 2vw;
-      @extend %transitionAll300;
+      @include transitionAll300;
 
       &:hover {
         stroke-width: 2;
@@ -250,7 +250,7 @@
   .time-text {
     width: 6vw;
     letter-spacing: -0.05vw;
-    @extend %flexCenter;
+    @include flexCenter;
   }
 
   font-size: 0.8vw;

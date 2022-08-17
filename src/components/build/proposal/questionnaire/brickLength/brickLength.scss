@@ -15,7 +15,7 @@
     margin-top: 16.7vh;
     margin-left: 13.4vw;
     > h1 {
-      @extend %textCenter;
+      @include textCenter;
       color: var(--theme-dark-blue);
       letter-spacing: 0.07vw;
       line-height: 1.35;
@@ -137,9 +137,9 @@
   }
 
   .phone-preview-component {
-    @extend %width100;
-    @extend %height100;
-    @extend %posRelative;
+    @include width100;
+    @include height100;
+    @include posRelative;
     background: var(--theme-dark-blue);
 
     svg {

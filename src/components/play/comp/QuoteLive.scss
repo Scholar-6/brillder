@@ -10,5 +10,5 @@
   margin-bottom: 10px;
   overflow-x: auto;
   white-space: nowrap;
-  @extend %themeRadius;
+  @include themeRadius;
 }
