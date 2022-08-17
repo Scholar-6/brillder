@@ -14,7 +14,7 @@
 
 .my-library-button {
   width: auto;
-  @extend %flexCenter;
+  @include flexCenter;
   @include tabletP {
     padding: 5vh 0;
   }
@@ -45,12 +45,12 @@
 
   .book-svg-icon {
     .first-line {
-      @extend %transitionAll300;
+      @include transitionAll300;
       stroke-dasharray: 42;
       stroke-dashoffset: 20;
     }
     .second-line {
-      @extend %transitionAll300;
+      @include transitionAll300;
       stroke-dasharray: 42;
       stroke-dashoffset: 0;
     }

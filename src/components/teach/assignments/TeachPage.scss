@@ -16,7 +16,7 @@
   }
 
   .index-box {
-    @extend %flexToYCenter;
+    @include flexToYCenter;
     height: 4.7vh !important;
     font-size: 1.05vw !important;
     font-family: $font-family-regular;
@@ -36,7 +36,7 @@
   .classroom-title {
     color: var(--theme-dark-blue);
     display: flex;
-    @extend %flexAlignCenter;
+    @include flexAlignCenter;
     @include tabletP {
       height: calc(#{$bricks-height / 6.35 / 2});
     }
@@ -394,7 +394,7 @@
 
       .published-count {
         font-size: 1.05vw;
-        @extend %textCenter;
+        @include textCenter;
         font-family: $font-family-light;
       }
 
@@ -437,20 +437,20 @@
   .tab-content-centered {
     width: 100%;
     height: 70%;
-    @extend %flexCenter;
+    @include flexCenter;
     color: var(--theme-light-blue);
     .glasses-icon-container {
       margin-top: 5vh;
-      @extend %transitionAll300;
+      @include transitionAll300;
       .glass-eyes-inside {
-        @extend %transitionAll300;
+        @include transitionAll300;
         opacity: 0;
         position: absolute;
-        @extend %flexCenter;
+        @include flexCenter;
       }
       .glass-left-inside,
       .glass-right-inside {
-        @extend %flexCenter;
+        @include flexCenter;
         height: 6vw;
         z-index: 1000;
 
@@ -489,7 +489,7 @@
       }
     }
     .icon-container {
-      @extend %flexToXCenter;
+      @include flexToXCenter;
       width: 100%;
       margin-bottom: 5vh;
       cursor: pointer;

@@ -45,7 +45,7 @@
 
     .step-label {
       width: 8.98vw;
-      @extend %textCenter;
+      @include textCenter;
       font-family: $font-family-bold;
       font-size: 1.3vw;
       color: var(--theme-orange);

@@ -10,18 +10,18 @@
   font-size: 2vw;
   padding: 5vh 0;
   // height: 14.5vh;
-  @extend %textCenter;
+  @include textCenter;
   > div {
     width: 100%;
     margin: auto;
-    @extend %flexCenter;
+    @include flexCenter;
     flex-direction: column;
   }
   .drag-box-name {
     font-family: $font-family-bold;
     font-size: 2.5vw;
     width: 100%;
-    @extend %flexCenter;
+    @include flexCenter;
   }
   .drag-box-hover {
     font-family: $font-family-regular;
@@ -30,7 +30,7 @@
     letter-spacing: 0.5vw;
     margin-right: -0.5vw;
     opacity: 0;
-    @extend %transitionAll300;
+    @include transitionAll300;
   }
   .graph-box {
     .drag-box-name {

@@ -26,7 +26,7 @@
 .notification-box,
 .main-notification-box {
   .scroll-buttons {
-    @extend %flexToYCenter;
+    @include flexToYCenter;
     width: 9.2vw;
     svg {
       cursor: pointer;
@@ -96,8 +96,8 @@
         padding: 0;
         padding-left: 1vw;
         padding-right: 1vw;
-        @extend %displayFlex;
-        @extend %flexAlignCenter;
+        @include displayFlex;
+        @include flexAlignCenter;
 
         min-height: 4vw;
 
@@ -125,7 +125,7 @@
           font-size: 2vw;
           width: 3vw;
           height: 3vw;
-          @extend %radCircle;
+          @include radCircle;
           margin-right: 1vw;
           .svg {
             color: var(--white);
@@ -216,11 +216,11 @@
             }
           }
           .actions {
-            @extend %flexCenter;
+            @include flexCenter;
             flex-direction: column;
             color: var(--tab-gray);
             .notification-time {
-              @extend %textCenter;
+              @include textCenter;
               white-space: nowrap;
               margin-top: 0.4vh;
               @include phone_and_tabletP {
@@ -238,7 +238,7 @@
             }
             .delete-notification {
               padding: 0;
-              @extend %width100;
+              @include width100;
               @include phone {
                 width: 7vw;
                 height: 7vw;
@@ -248,7 +248,7 @@
                 height: 2vw;
               }
               svg {
-                @extend %removePosition;
+                @include removePosition;
                 stroke-width: 2;
                 &:hover {
                   color: var(--theme-orange);
@@ -273,7 +273,7 @@
         }
         color: white;
         font-family: $font-family-light;
-        @extend %textCenter;
+        @include textCenter;
         font-size: 1vw;
         em {
           font-size: 1vw;
@@ -332,7 +332,7 @@
     }
     .delete-notification {
       padding: 0;
-      @extend %width100;
+      @include width100;
       @include phone {
         width: 7vw;
         height: 7vw;
@@ -342,7 +342,7 @@
         height: 2vw;
       }
       svg {
-        @extend %removePosition;
+        @include removePosition;
         &:hover {
           color: var(--theme-orange);
         }

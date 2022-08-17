@@ -74,7 +74,7 @@
     }
 
     .inputs-box {
-      @extend %posRelative;
+      @include posRelative;
       margin-top: 9vh;
       margin-bottom: 9vh;
       width: 100%;

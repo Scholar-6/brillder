@@ -5,7 +5,7 @@
 .phone-preview-component.user-profile-preview {
   color: var(--theme-dark-blue);
   .leonardo-image {
-    @extend %flexCenter;
+    @include flexCenter;
     img {
       margin-top: 15vh;
       margin-right: 1vh;

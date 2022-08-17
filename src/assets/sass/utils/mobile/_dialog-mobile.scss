@@ -7,7 +7,7 @@
   .MuiDialog-container {
     padding: 0 !important;
     .MuiDialog-paperScrollPaper {
-      @extend %m0;
+      @include m0;
       padding: 2.5vw;
       border-radius: 2vw;
       width: 90%;
@@ -87,7 +87,7 @@
     }
     .circle-check {
       cursor: pointer;
-      @extend %textCenter;
+      @include textCenter;
       background: var(--theme-green);
       height: 15vw;
       width: 15vw;
@@ -108,7 +108,7 @@
       .students-count-box {
         height: 1.7vw;
         display: flex;
-        @extend %flexToYCenter;
+        @include flexToYCenter;
       }
     }
     //!! only for profile page drag and drop and crop zone
@@ -174,7 +174,7 @@
         top: 0;
         width: 100%;
         color: var(--theme-dark-blue);
-        @extend %textCenter;
+        @include textCenter;
         display: block;
         content: 'Click to Select Image';
         font-family: $font-family-regular;
@@ -206,7 +206,7 @@
     .MuiFormControlLabel-root {
       color: var(--theme-dark-blue) !important;
       width: 50% !important;
-      @extend %flexCenter;
+      @include flexCenter;
 
       .MuiTypography-root {
         font-size: 1.5vw !important;
@@ -223,17 +223,17 @@
     right: 0.5vw;
     width: 1.5vw;
     height: 1.5vw;
-    @extend %flexCenter;
+    @include flexCenter;
     .svg {
       stroke-width: 3;
       color: var(--white);
-      @extend %transitionAll300;
+      @include transitionAll300;
       height: 8vw !important;
       width: 8vw !important;
     }
   }
   .social-share-row {
-    @extend %flexToXCenter;
+    @include flexToXCenter;
     margin-bottom: 1.2vh;
     svg {
       cursor: pointer;
@@ -256,7 +256,7 @@
         color: inherit;
 
         > div {
-          @extend %textCenter;
+          @include textCenter;
           width: 100%;
           margin-bottom: 1.5vh;
         }
@@ -363,7 +363,7 @@
       padding-left: 2vw;
       letter-spacing: 0.01vw !important;
       padding-right: 2vw;
-      @extend %flexCenter;
+      @include flexCenter;
 
       .send-icon {
         margin-left: 2vw;

@@ -3,7 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 .short-answer-build {
-  @extend %textCenter;
+  @include textCenter;
   margin-top: 0 !important;
 
   .component-title {
@@ -19,7 +19,7 @@
     width: 100%;
     margin-bottom: $editor-spacing;
     background-color: var(--white);
-    @extend %themeRadius;
+    @include themeRadius;
     .quill-document-editor {
       .ql-editor {
         padding: 1vw;
@@ -63,7 +63,7 @@
         padding-right: 0.7vw;
         margin-right: 1vw;
         font-size: 1.2vw;
-        @extend %textCenter;
+        @include textCenter;
         font-weight: bold;
         font-family: $font-family-black;
         color: white;
@@ -73,7 +73,7 @@
   }
   .exclamation-mark {
     width: 2vw;
-    @extend %textCenter;
+    @include textCenter;
     font-weight: bold;
     font-family: $font-family-black;
     color: white;

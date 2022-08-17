@@ -144,7 +144,7 @@
     right: 0.8vh;
     border-radius: 50%;
     cursor: pointer;
-    @extend %transitionAll300;
+    @include transitionAll300;
     @include phone_and_tabletP {
       height: 13vw;
       width: 13vw;

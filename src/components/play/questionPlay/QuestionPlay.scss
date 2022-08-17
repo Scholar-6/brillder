@@ -21,7 +21,7 @@
 .question-hint-global {
   width: 100%;
   color: var(--theme-dark-blue);
-  @extend %themeRadius;
+  @include themeRadius;
   img {
     width: auto;
   }

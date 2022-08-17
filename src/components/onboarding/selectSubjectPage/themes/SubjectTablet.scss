@@ -83,7 +83,7 @@
 
 .subjects-column-v2 {
   height: 100%;
-  @extend %flexToYCenter;
+  @include flexToYCenter;
   margin-left: 2vw;
   margin-right: 2vw;
 
@@ -111,7 +111,7 @@
         left: 0.8vw;
         position: absolute;
         height: 100%;
-        @extend %flexCenter;
+        @include flexCenter;
 
         .round-circle {
           $circle-size: 1.2vw;

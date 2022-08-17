@@ -95,7 +95,7 @@ $sidebar-font-size: 1.3vw;
         height: 9vw !important;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
-        @extend %flexToXCenter;
+        @include flexToXCenter;
       }
       .subjects-toggle {
         width: 100%;
@@ -146,7 +146,7 @@ $sidebar-font-size: 1.3vw;
             }
 
             &.text-container {
-              @extend %flexCenter;
+              @include flexCenter;
             }
 
             svg {
@@ -156,12 +156,12 @@ $sidebar-font-size: 1.3vw;
           }
         }
         .all-subjects {
-          @extend %flexCenter;
+          @include flexCenter;
         }
       }
       .scroll-buttons {
         position: relative;
-        @extend %flexCenter;
+        @include flexCenter;
         background: var(--white);
         height: 2vw;
         svg {
@@ -241,7 +241,7 @@ $sidebar-font-size: 1.3vw;
               left: 0.8vw;
               position: absolute;
               height: 100%;
-              @extend %flexCenter;
+              @include flexCenter;
               .round-circle {
                 border-radius: 50%;
                 @include tabletL {
@@ -287,7 +287,7 @@ $sidebar-font-size: 1.3vw;
     position: absolute;
   }
   .main-title {
-    @extend %transitionAll300;
+    @include transitionAll300;
     max-width: 55vw;
     padding-top: 1.2vw !important;
     margin-top: 2.1vh;
@@ -318,7 +318,7 @@ $sidebar-font-size: 1.3vw;
     color: var(--theme-dark-blue);
     font-size: 1.5vw;
     font-family: $font-family-bold;
-    @extend %flexCenter;
+    @include flexCenter;
     svg {
       color: var(--theme-orange);
       width: 4vw;
@@ -329,7 +329,7 @@ $sidebar-font-size: 1.3vw;
     cursor: pointer;
     margin-left: 8vw;
     svg {
-      @extend %transitionAll300;
+      @include transitionAll300;
       margin-top: calc(#{$bricks-height / 90});
       max-height: calc(#{$bricks-height / 12});
     }

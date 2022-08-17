@@ -4,7 +4,7 @@
 
 .comment-text-container {
   $radius: 0.25vw;
-  @extend %flexCenter;
+  @include flexCenter;
   background-color: var(--theme-green);
   flex-wrap: wrap;
   margin-left: 5%;

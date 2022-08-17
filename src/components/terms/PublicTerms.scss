@@ -17,7 +17,7 @@
       font-family: $font-family-regular;
     }
     .header-link {
-      @extend %flexToYCenter;
+      @include flexToYCenter;
       cursor: pointer;
       .white-circle {
         border-radius: 50%;
@@ -58,14 +58,14 @@
   .condition-box {
     margin-top: 20px;
     font-size: 20px;
-    @extend %flexCenter;
+    @include flexCenter;
   }
   .MuiCheckbox-colorSecondary.Mui-checked {
     color: var(--theme-light-blue) !important;
   }
   .condition-button {
     margin-top: 5px;
-    @extend %flexCenter;
+    @include flexCenter;
 
     button {
       background: var(--theme-light-blue);

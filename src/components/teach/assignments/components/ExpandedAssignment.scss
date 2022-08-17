@@ -62,7 +62,7 @@
     .student-book {
       width: 2.75vw;
       > div {
-        @extend %flexCenter;
+        @include flexCenter;
       }
       .centered {
         line-height: 0.7;
@@ -136,7 +136,7 @@
     .circle-td {
       width: 5vw;
       .teach-circle {
-        @extend %flexCenter;
+        @include flexCenter;
         height: 4.4vh;
         width: 4.4vh;
         background: var(--theme-green);
@@ -150,7 +150,7 @@
         font-family: $font-family-regular !important;
         padding: 0 !important;
         .center {
-          @extend %flexCenter;
+          @include flexCenter;
         }
         .btn-grey-circle {
           background: var(--tab-gray) !important;
@@ -249,7 +249,7 @@
         width: 2.18vw;
         height: 2.18vw;
         color: white;
-        @extend %flexCenter;
+        @include flexCenter;
       }
 
       .stats-text {
@@ -272,7 +272,7 @@
     }
   }
   .reminder-brick-actions-container {
-    @extend %flexCenter;
+    @include flexCenter;
     width: 3vw;
     position: relative;
     .reminder-button-container {

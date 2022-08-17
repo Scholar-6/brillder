@@ -270,7 +270,7 @@
         overflow-y: auto;
         .published-count {
           font-size: 1.05vw;
-          @extend %textCenter;
+          @include textCenter;
           font-family: $font-family-light;
         }
         .MuiGrid-container {
@@ -300,9 +300,9 @@
         text-align: left;
       }
 
-      @extend %floatToXCenter;
+      @include floatToXCenter;
       top: 26%;
-      @extend %flexCenter;
+      @include flexCenter;
       flex-direction: column;
       color: var(--tab-gray);
       cursor: pointer;
@@ -311,7 +311,7 @@
         margin-bottom: 1vh;
         width: 8vw;
         height: 8vw;
-        @extend %transitionAll150;
+        @include transitionAll150;
       }
 
       .create-icon-small {
@@ -391,14 +391,14 @@
       }
 
       .btn {
-        @extend %flexCenter;
+        @include flexCenter;
 
         span {
           margin: 0;
         }
 
         .svg {
-          @extend %removePosition;
+          @include removePosition;
         }
       }
     }
@@ -485,11 +485,11 @@
           }
 
           .short-brick-info {
-            @extend %ellipsis;
+            @include ellipsis;
             margin-left: 3vw;
             display: flex;
             flex-direction: column;
-            @extend %linkDescription;
+            @include linkDescription;
             .link-info {
               color: var(--theme-light-blue);
               font-family: $font-family-regular;
@@ -506,14 +506,14 @@
               > span {
                 margin: 0 0.3vw;
                 height: 1.35vw;
-                @extend %ellipsis;
+                @include ellipsis;
                 &:first-child {
                   margin-left: 0;
                 }
                 > span {
                   margin: 0 0.3vw;
                   height: 1.35vw;
-                  @extend %ellipsis;
+                  @include ellipsis;
                   &:nth-child(1) {
                     margin: 0;
                   }
@@ -689,7 +689,7 @@
             color: var(--white);
             height: 100%;
             width: 100%;
-            @extend %flexCenter;
+            @include flexCenter;
             svg {
               margin-left: 2%;
               height: 70%;
@@ -707,7 +707,7 @@
           }
 
           .edit-button {
-            @extend %textCenter;
+            @include textCenter;
             padding-bottom: 8px;
           }
 
@@ -763,7 +763,7 @@
       width: 0.15vw;
       height: 0.8vw;
       border-radius: 2px;
-      @extend %transitionAll300;
+      @include transitionAll300;
       background-color: var(--white);
     }
   }

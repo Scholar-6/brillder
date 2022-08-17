@@ -7,7 +7,7 @@
   input {
     width: 84%;
     height: 55px;
-    @extend %textCenter;
+    @include textCenter;
     border: 1px solid black;
     padding-right: 8%;
     padding-left: 8%;

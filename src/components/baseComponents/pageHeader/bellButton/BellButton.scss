@@ -16,7 +16,7 @@
   }
   &:hover {
     .bell-cup {
-      @extend %transitionAll300;
+      @include transitionAll300;
       fill: var(--theme-orange);
     }
   }

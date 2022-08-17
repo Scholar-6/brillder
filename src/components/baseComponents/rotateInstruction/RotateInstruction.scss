@@ -7,9 +7,9 @@
   width: 100%;
   background: var(--theme-orange);
   color: var(--white);
-  @extend %flexCenter;
+  @include flexCenter;
   .rotate-button-container {
-    @extend %flexCenter;
+    @include flexCenter;
 
     &.triangle {
       svg {

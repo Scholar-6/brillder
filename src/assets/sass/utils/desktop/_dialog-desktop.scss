@@ -7,7 +7,7 @@
   .MuiDialog-container {
     padding: 0 !important;
     .MuiDialog-paperScrollPaper {
-      @extend %m0;
+      @include m0;
       padding: 1.8vw;
       border-radius: 0.8vw;
     }
@@ -95,7 +95,7 @@
     .circle-check {
       $circle-size: 3.5vw;
       cursor: pointer;
-      @extend %textCenter;
+      @include textCenter;
       height: $circle-size;
       width: $circle-size;
       background: var(--theme-green);
@@ -117,7 +117,7 @@
       .students-count-box {
         height: 1.7vw;
         display: flex;
-        @extend %flexToYCenter;
+        @include flexToYCenter;
       }
     }
     //!! only for profile page drag and drop and crop zone
@@ -184,7 +184,7 @@
         font-size: 1.4vw;
         width: 100%;
         color: var(--theme-dark-blue);
-        @extend %textCenter;
+        @include textCenter;
         display: block;
         content: 'Drag Image Here | Click to Select Image';
         font-family: $font-family-regular;
@@ -217,7 +217,7 @@
     .MuiFormControlLabel-root {
       color: var(--theme-dark-blue) !important;
       width: 50% !important;
-      @extend %flexCenter;
+      @include flexCenter;
 
       .MuiTypography-root {
         font-size: 1.5vw !important;
@@ -234,11 +234,11 @@
     right: 0.5vw;
     width: 1.5vw;
     height: 1.5vw;
-    @extend %flexCenter;
+    @include flexCenter;
     .svg {
       stroke-width: 3;
       color: var(--white);
-      @extend %transitionAll300;
+      @include transitionAll300;
       @include phone_and_tabletP {
         height: 8vw !important;
         width: 8vw !important;
@@ -255,7 +255,7 @@
     }
   }
   .social-share-row {
-    @extend %flexToXCenter;
+    @include flexToXCenter;
     margin-bottom: 1.2vh;
     svg {
       cursor: pointer;
@@ -282,7 +282,7 @@
         color: inherit;
 
         > div {
-          @extend %textCenter;
+          @include textCenter;
           margin-bottom: 4.5vh;
           width: 30vw;
         }
@@ -362,7 +362,7 @@
       padding-left: 2vw;
       letter-spacing: 0.01vw !important;
       padding-right: 2vw;
-      @extend %flexCenter;
+      @include flexCenter;
 
       .send-icon {
         margin-left: 2vw;

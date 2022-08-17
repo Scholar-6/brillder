@@ -538,7 +538,7 @@
       .arrow {
         height: 80%;
         width: 80%;
-        @extend %posAbsolute;
+        @include posAbsolute;
         top: 55%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -673,7 +673,7 @@
       position: relative;
       line-height: 1.45;
       color: var(--theme-orange);
-      @extend %textCenter;
+      @include textCenter;
       font-family: $font-family-black;
       background: var(--tab-gray);
 
@@ -724,7 +724,7 @@
         .image-background-container {
           width: 40vw;
           height: 40vw;
-          @extend %flexCenter;
+          @include flexCenter;
           margin: 6.5vh auto 3vh auto;
           background: var(--white);
           border-radius: 2vw;
@@ -791,7 +791,7 @@
         font-size: 1.3vw;
 
         .percentage {
-          @extend %flexCenter;
+          @include flexCenter;
           font-size: 1.5vw;
           width: 2.5vw;
           height: 2.5vw;
@@ -835,7 +835,7 @@
             font-size: 1.2vw;
             letter-spacing: 0.1vw;
             margin-left: 6vw;
-            @extend %flexCenter;
+            @include flexCenter;
 
             svg {
               margin-left: 1vw;
@@ -885,12 +885,12 @@
   .bookmark {
     z-index: 1000;
     position: fixed;
-    height: $real-book-height + 0vh;
+    height: $real-book-height;
     left: -2vh;
     width: 4vh;
     top: 1vh;
     transform-style: preserve-3d;
-    @extend %transitionAll300;
+    @include transitionAll300;
 
     &.hidden {
       top: -3.8vh;
@@ -919,7 +919,7 @@
     bottom: 5vh;
     font-size: 1.2vw;
     font-family: $font-family-light;
-    @extend %transitionAll300;
+    @include transitionAll300;
 
     &.hidden {
       opacity: 0;
@@ -928,7 +928,7 @@
 }
 
 .last-question-cover {
-  @extend %flexCenter;
+  @include flexCenter;
 
   >div {
     position: relative;
@@ -938,7 +938,7 @@
 .green-button-container1 {
   .green-button-container2 {
     width: 100%;
-    @extend %flexCenter;
+    @include flexCenter;
 
     .green-button-container3 {
       position: relative;
@@ -958,14 +958,14 @@
         border-radius: 50%;
         opacity: 0.5 !important;
         background: var(--theme-green);
-        @extend %transitionAll300;
+        @include transitionAll300;
       }
     }
   }
 
   .play-green-button {
     position: relative;
-    @extend %flexCenter;
+    @include flexCenter;
     border-radius: 50%;
     border: none;
     outline: none;
