@@ -134,8 +134,6 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     return ''
   }
 
-  console.log(currentBrick);
-
   return (
     <div className="question-type plan-page">
       <div className="top-scroll-area">
