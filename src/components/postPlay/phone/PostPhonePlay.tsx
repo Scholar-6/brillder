@@ -21,7 +21,6 @@ import { Question } from "model/question";
 import { getAttempts } from "services/axios/attempt";
 import { PlayAttempt } from "model/attempt";
 import { Redirect } from "react-router-dom";
-import { loadSubjects } from "components/services/subject";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
@@ -39,6 +38,7 @@ import map from "components/map";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { checkTeacher } from "components/services/brickService";
 import { CashAttempt } from "localStorage/play";
+import { getSubjects } from "services/axios/subject";
 
 const MobileTheme = React.lazy(() => import('../themes/PageMobileTheme'));
 
@@ -114,7 +114,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   async loadData() {
     const { userId, brickId } = this.props.match.params;
-    const subjects = await loadSubjects();
+    const subjects = await getSubjects();
     let attempts = await getAttempts(brickId, userId);
     if (subjects && attempts && attempts.length > 0) {
       const attempt = attempts[this.state.activeAttemptIndex];

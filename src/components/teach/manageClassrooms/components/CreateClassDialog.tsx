@@ -5,10 +5,10 @@ import { InputBase, ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from
 import { connect } from 'react-redux';
 
 import './CreateClassDialog.scss';
-import { loadSubjects } from 'components/services/subject';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { User, UserType } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
+import { getSubjects } from 'services/axios/subject';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -27,14 +27,14 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     const initAllSubjects = async () => {
 
       const setAdminSubjects = async () => {
-        const subs = await loadSubjects();
+        const subs = await getSubjects();
         if (subs) {
           setSubjects(subs);
         }
       }
 
       const setUsersSubjects = async () => {
-        const subs = await loadSubjects();
+        const subs = await getSubjects();
         if (subs) {
           let sortedSubjects = [...props.user.subjects];
 
@@ -48,10 +48,12 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         }
       }
 
-      if (props.user.roles.some(role => role.roleId === UserType.Admin)) {
-        setAdminSubjects();
-      } else {
-        setUsersSubjects();
+      if (!subjects) {
+        if (props.user.roles.some(role => role.roleId === UserType.Admin)) {
+          setAdminSubjects();
+        } else {
+          setUsersSubjects();
+        }
       }
     }
 
