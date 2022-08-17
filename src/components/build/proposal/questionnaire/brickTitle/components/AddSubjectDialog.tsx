@@ -3,13 +3,13 @@ import Dialog from "@material-ui/core/Dialog";
 import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
 import { connect } from 'react-redux';
 
-import { loadSubjects } from "components/services/subject";
 import { Subject } from "model/brick";
 import { updateUser } from "services/axios/user";
 import { User } from "model/user";
 import userActions from 'redux/actions/user';
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { getSubjects } from "services/axios/subject";
   
 interface DialogProps {
   user: User;
@@ -31,7 +31,7 @@ class AddSubjectDialog extends React.Component<DialogProps, DialogState> {
   }
 
   async getSubjects() {
-    const subjects = await loadSubjects();
+    const subjects = await getSubjects();
     if (subjects) {
       this.setState({ subjects });
     }

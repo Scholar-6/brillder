@@ -28,10 +28,10 @@ import { AlternateSubjectRoutePart, BrickFieldNames, BrickLengthRoutePart, Brief
 import map from "components/map";
 
 import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
-import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { buildQuesitonType } from "../routes";
 import { Helmet } from "react-helmet";
+import { getSubjects } from "services/axios/subject";
 
 interface ProposalProps {
   history: History;
@@ -175,7 +175,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   async getSubject() {
-    const subjects = await loadSubjects();
+    const subjects = await getSubjects();
     if (subjects) {
       this.setState({subjects});
     }

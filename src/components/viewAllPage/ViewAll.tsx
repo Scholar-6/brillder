@@ -359,7 +359,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     } else if (this.props.user) {
       this.loadBricks(values);
     } else {
-      console.log('loading')
       if (this.state.subjectGroup) {
         this.loadUnauthorizedBricks(this.state.subjectGroup);
       } else {
@@ -788,8 +787,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   moveAllNext() { 
     let index = this.state.page * this.state.pageSize;
     const { pageSize, bricksCount } = this.state;
-
-    console.log('move next', index, bricksCount);
 
     if (index + pageSize <= bricksCount - 1) {
       if (this.state.isSearching) {
