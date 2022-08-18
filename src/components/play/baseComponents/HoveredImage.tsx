@@ -4,7 +4,6 @@ import { isMobile } from 'react-device-detect';
 
 import { ReduxCombinedState } from 'redux/reducers';
 import actions from 'redux/actions/play';
-import { isPhone } from 'services/phone';
 import { fileUrl } from 'components/services/uploadFile';
 import HoveredPhoneImage from './HoveredPhoneImage';
 
@@ -25,10 +24,6 @@ const HoveredImageContent: React.FC<AnswerProps> = ({ imageHovered, imageSource,
   }, []);
 
   if (imageHovered) {
-    if (isPhone()) {
-      return <HoveredPhoneImage fileName={fileName} imageSource={imageSource} />
-    }
-
     if (isMobile) {
       return (
         <div>

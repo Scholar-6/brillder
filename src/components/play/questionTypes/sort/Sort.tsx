@@ -180,8 +180,6 @@ class Sort extends CompComponent<SortProps, SortState> {
       });
     }
 
-    console.log(hadError, choices);
-
     // if error emptify results
     if (hadError) {
       if (choices) {
@@ -206,6 +204,13 @@ class Sort extends CompComponent<SortProps, SortState> {
     }
     if (this.state.status !== DragAndDropStatus.Changed) {
       this.setState({status: DragAndDropStatus.Changed});
+    }
+    if (this.props.isBookPreview) {
+      if (this.props.attempt.answer[choice] === this.state.choices[choice]) {
+        return 1;
+      } else {
+        return -1;
+      }
     }
     return 0;
   }
@@ -300,7 +305,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     return realIndex;
   }
 
-  renderChoice(choice: SortAnswer, i: number, choiceIndex: number) {
+  renderChoice(choice: SortAnswer, i: number) {
     let isCorrect = this.getState(choice.value) === 1;
     let className = "sortable-item";
     if (choice.answerType === QuestionValueType.Image) {
@@ -353,9 +358,6 @@ class Sort extends CompComponent<SortProps, SortState> {
   }
 
   render() {
-    let count = -1;
-    const incrementCount = () => count++;
-
     const unsorted = this.state.userCats[this.state.userCats.length - 1];
     let correct = false;
     if (this.props.isReview) {
@@ -363,7 +365,6 @@ class Sort extends CompComponent<SortProps, SortState> {
     }
 
     const haveImage = this.checkImages();
-
     const ReactSortableV1 = ReactSortable as any;
 
     return (
@@ -385,18 +386,12 @@ class Sort extends CompComponent<SortProps, SortState> {
               <div className="sort-category-list-container">
                 {this.props.isBookPreview ? (
                   <div className="sortable-list">
-                    {cat.choices.map((choice, i) => {
-                      incrementCount();
-                      return this.renderChoice(choice, i, count);
-                    })}
+                    {cat.choices.map(this.renderChoice.bind(this))}
                   </div>
                 ) : (
                   correct === true
                     ? <div className={`${i === this.state.userCats.length - 1 ? 'unsorted' : unsorted.choices.length === 0 ? '' : 'category'} sortable-list`}>
-                      {cat.choices.map((choice, i) => {
-                        incrementCount();
-                        return this.renderChoice(choice, i, count);
-                      })}
+                      {cat.choices.map(this.renderChoice.bind(this))}
                     </div>
                     :
                     <ReactSortableV1
@@ -406,10 +401,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                       group={{ name: "cloning-group-name" }}
                       setList={(list: any[]) => this.updateCategory(list, i)}
                     >
-                      {cat.choices.map((choice, i) => {
-                        incrementCount();
-                        return this.renderChoice(choice, i, count);
-                      })}
+                      {cat.choices.map(this.renderChoice.bind(this))}
                     </ReactSortableV1>
                 )}
               </div>
