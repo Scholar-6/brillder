@@ -1,5 +1,5 @@
 import React from "react";
-import { Dialog, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import DynamicFont from 'react-dynamic-font';
 
 import { AcademicLevelLabels, Brick } from "model/brick";
@@ -27,6 +27,7 @@ import map from "components/map";
 import CoverCreditsPlay from "./components/coverAuthorRow/CoverCreditsPlay";
 import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 import MathInHtml from "../baseComponents/MathInHtml";
+import CompetitionDialog from "./components/CompetitionDialog";
 
 
 interface Props {
@@ -160,7 +161,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     return (
       <div className={brick.alternateSubject ? "round-button-container double-subjects" : "round-button-container"}>
         <div className={brick.alternateSubject ? "round-button" : "round-button"} style={{ background: `${brick.subject?.color || '#B0B0AD'}` }} />
-        {brick.alternateSubject && <div className="round-button after-main-subject" style={{ background: brick.alternateSubject.color }} /> }
+        {brick.alternateSubject && <div className="round-button after-main-subject" style={{ background: brick.alternateSubject.color }} />}
       </div>
     );
   }
@@ -325,7 +326,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             setUnauthPopupShown(true);
           }}
           registered={() => {
-            console.log('cover');
             if (playClicked) {
               startBrick()
             } else {
@@ -339,30 +339,16 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
         }
         {props.canSeeCompetitionDialog && competitionData &&
-          <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog" onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}>
-            <div className="dialog-header phone-competition">
-              <div className="flex-center">
-                <SpriteIcon name="star-empty" className="big-star" />
-              </div>
-              <div className="bold" style={{ textAlign: 'center' }}>
-                This brick is part of a competition. <br />
-                If you do well, you could win a prize!
-              </div>
-            </div>
-            <div className="dialog-footer">
-              <button className="btn btn-md  bg-green text-white yes-button" onClick={() => {
-                props.setCompetitionId(competitionData.competition.id);
-                setCompetitionData({ ...competitionData, isOpen: false });
-                startBrick();
-              }}>
-                <span>Start Playing</span>
-              </button>
-            </div>
-            <div className="italic bottom-link flex-center" style={{ textAlign: 'center' }}>
-              <SpriteIcon name="eye-on" />
-              <a rel="noopener noreferrer" href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
-            </div>
-          </Dialog>}
+          <CompetitionDialog
+            isOpen={competitionData.isOpen}
+            onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}
+            onSubmit={() => {
+              props.setCompetitionId(competitionData.competition.id);
+              setCompetitionData({ ...competitionData, isOpen: false });
+              startBrick();
+            }}
+          />
+        }
       </React.Suspense>
     );
   }
@@ -478,30 +464,15 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         }}
       />
       {props.canSeeCompetitionDialog && competitionData &&
-        <Dialog open={competitionData.isOpen} className="dialog-box competition-dialog" onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}>
-          <div className="dialog-header">
-            <div className="flex-center">
-              <SpriteIcon name="star-empty" className="big-star" />
-            </div>
-            <div className="bold" style={{ textAlign: 'center' }}>
-              This brick is part of a competition. <br />
-              If you do well, you could win a prize!
-            </div>
-          </div>
-          <div className="dialog-footer">
-            <button className="btn btn-md bg-green text-white yes-button blue-on-hover" onClick={() => {
-              props.setCompetitionId(competitionData.competition.id);
-              setCompetitionData({ ...competitionData, isOpen: false });
-              startBrick();
-            }}>
-              <span>Start Playing</span>
-            </button>
-          </div>
-          <div className="italic bottom-link flex-center" style={{ textAlign: 'center' }}>
-            <SpriteIcon name="eye-on" />
-            <a rel="noopener noreferrer" href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
-          </div>
-        </Dialog>}
+        <CompetitionDialog
+          isOpen={competitionData.isOpen}
+          onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}
+          onSubmit={() => {
+            props.setCompetitionId(competitionData.competition.id);
+            setCompetitionData({ ...competitionData, isOpen: false });
+          }}
+        />
+      }
     </React.Suspense>
   );
 };
