@@ -58,6 +58,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     }
 
     initAllSubjects();
+    /*eslint-disable-next-line*/
   }, [props.user.roles, props.user.subjects]);
 
   React.useEffect(() => {
