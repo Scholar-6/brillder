@@ -1,3 +1,4 @@
+
 textarea,
 input {
   box-sizing: content-box !important;
@@ -32,9 +33,8 @@ input {
     }
 
     &.replace-text-with-dots {
-      font-family: text-security-disc;
-      /* Use -webkit-text-security if the browser supports it */
-      -webkit-text-security: disc;
+      font-family: text-security-disc !important;
+      -webkit-text-security: disc !important;
     }
   }
 }

@@ -93,3 +93,8 @@
 .italic {
   font-family: $font-family-regular-italic;
 }
+
+@font-face{
+  font-family: text-security-disc;
+  src: url("https://raw.githubusercontent.com/noppa/text-security/master/dist/text-security-disc.woff");
+}
