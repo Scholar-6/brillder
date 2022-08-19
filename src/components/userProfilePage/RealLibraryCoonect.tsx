@@ -199,6 +199,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
       <LibrarySuccessDialog isOpen={success}
         close={() => {
           setSuccess(false);
+          setPin('');
           successPopupClosed?.();
         }}
         submit={() => {
