@@ -403,7 +403,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
-      const pageBricks = await getPublishedBricksByPage(6, this.state.page, true, [], [], [], this.state.filterCompetition, this.state.isAllSubjects);
+      const pageBricks = await getPublishedBricksByPage(this.state.pageSize, this.state.page, true, [], [], [], this.state.filterCompetition, this.state.isAllSubjects);
       if (pageBricks) {
         let { subjects } = this.state;
 
@@ -449,7 +449,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     isAllSubjects: boolean
   ) {
     const subjectIds = this.getSubjectIds();
-    const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length, subjectIds, filterCompetition, isAllSubjects);
+    const pageBricks = await getPublishedBricksByPage(this.state.pageSize, page, isCore, levels, length, subjectIds, filterCompetition, isAllSubjects);
 
     if (pageBricks) {
       const {subjects} = this.state;
@@ -487,7 +487,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     sGroup: SubjectGroup
   ) {
     const subjectIds = this.getSubjectIds();
-    const pageBricks = await getUnauthPublishedBricksByPage(6, page, levels, length, subjectIds, filterCompetition, sGroup);
+    const pageBricks = await getUnauthPublishedBricksByPage(this.state.pageSize, page, levels, length, subjectIds, filterCompetition, sGroup);
 
     if (pageBricks) {
       this.setState({
