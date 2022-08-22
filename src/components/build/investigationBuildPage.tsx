@@ -838,6 +838,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const isPublisher = checkPublisher(props.user, props.brick);
   const isAdmin = checkAdmin(props.user.roles);
+  const { adaptedFrom } = props.brick;
+
+  const renderTitle = (adaptedFrom: Brick) => {
+    return (
+      <div className="build-brick-title">
+        <div className="inv-title-container" dangerouslySetInnerHTML={{ __html: brick.title }} />
+        {adaptedFrom && <div className="adaptation-part">
+          <SpriteIcon name="copy" />Adaptation by <span className="capitalize">{adaptedFrom.author ? `${adaptedFrom.author.firstName} ${adaptedFrom.author.lastName}` : ''}</span>
+        </div>}
+      </div>
+    );
+  }
 
   return (
     <div className="investigation-build-page">
@@ -878,12 +890,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               justify="center" alignItems="center"
               style={{ height: "100%" }}
             >
-              <div className="build-brick-title">
-                <div className="inv-title-container" dangerouslySetInnerHTML={{ __html: brick.title }}></div>
-                {props.brick.adaptedFrom && <div className="adaptation-part">
-                  <SpriteIcon name="copy" />Adaptation by Joseph Francis
-                </div>}
-              </div>
+              {renderTitle(adaptedFrom)}
               <Grid
                 container
                 item xs={9}

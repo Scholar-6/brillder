@@ -483,6 +483,11 @@ $base-build-border: $editor-radius;
       svg {
         margin-top: 0.2vw;
       }
+
+      .capitalize {
+        margin-left: 0.3vw;
+        text-transform: capitalize;
+      }
     }
   }
 
