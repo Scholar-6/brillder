@@ -442,12 +442,13 @@ $base-build-border: $editor-radius;
 
 .build-brick-title {
   position: absolute;
-  width: 75%;
+  width: 56%;
   top: 0;
   display: flex;
   height: 5%;
   @include flexCenter;
-  justify-content: center;
+  justify-content: flex-start;
+  color: var(--white);
 
   br {
     display: none;
@@ -460,23 +461,34 @@ $base-build-border: $editor-radius;
     stroke-width: 3;
     width: $size;
     height: $size;
-    color: var(--theme-light-blue);
   }
 
   >div {
     font-size: 2.5vh;
-    width: 75%;
-    color: var(--theme-light-blue);
-    font-family: $font-family-black;
-    text-transform: uppercase;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    &.inv-title-container {
+      font-family: $font-family-black;
+      text-transform: uppercase;
+      width: 60%;
+    }
+
+    &.adaptation-part {
+      width: 40%;
+      display: flex;
+      justify-content: flex-end;
+
+      svg {
+        margin-top: 0.2vw;
+      }
+    }
   }
 
   span,
   p {
-    color: var(--theme-light-blue) !important;
+    color: var(--white) !important;
     background: inherit !important;
     display: inline;
   }
