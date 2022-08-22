@@ -879,8 +879,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               style={{ height: "100%" }}
             >
               <div className="build-brick-title">
-                {props.brick.adaptedFrom && <SpriteIcon name="copy" />}
-                <div dangerouslySetInnerHTML={{ __html: brick.title }}></div>
+                <div className="inv-title-container" dangerouslySetInnerHTML={{ __html: brick.title }}></div>
+                {props.brick.adaptedFrom && <div className="adaptation-part">
+                  <SpriteIcon name="copy" />Adaptation by Joseph Francis
+                </div>}
               </div>
               <Grid
                 container
