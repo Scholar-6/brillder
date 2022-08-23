@@ -24,7 +24,6 @@ const mockComment: Comment = {
   text: "Test Comment",
   timestamp: new Date(2020, 8, 2),
   children: [ ],
-  location: CommentLocation.Brief,
   readBy:[]
 } as Comment;
 
