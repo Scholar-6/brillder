@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .flex {
 	display: flex !important;
 }
@@ -215,7 +217,7 @@
 
 @for $value from 1 through 100 {
 	.f-#{$value} {
-		flex-basis: percentage($value/100) !important;
+		flex-basis: percentage(math.div($value, 100)) !important;
 	}
 }
 
