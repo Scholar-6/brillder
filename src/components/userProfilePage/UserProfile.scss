@@ -54,6 +54,10 @@
     @include phone_and_tabletP {
       display: none;
     }
+
+    > div {
+      display: flex !important;
+    }
   }
 
   .invalid-bottom-text {
