@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import 'src/assets/sass/partials/variables';
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
@@ -55,8 +57,8 @@
   }
 
   .comments-count {
-    height: $comment-button-size / 1.7;
-    width: $comment-button-size / 1.7;
+    height: math.div($comment-button-size, 1.7);
+    width: math.div($comment-button-size, 1.7);
     margin-bottom: 0.51vw;
   }
   .comments-plus {

@@ -1,6 +1,10 @@
+@use "sass:math";
+
 @import "src/assets/sass/partials/variables";
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
+
+
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
   .MuiTypography-root {
@@ -391,14 +395,14 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       .smaller {
         color: var(--tab-gray);
         $size: 7vh;
-        left: calc(50% - 4vh - #{$size / 2});
+        left: calc(50% - 4vh - #{math.div($size, 2)});
         width: $size;
         height: $size;
       }
       .bigger {
         top: 0;
         $size: 15vh;
-        left: calc(50% - #{$size / 2});
+        left: calc(50% - #{math.div($size, 2)});
         width: $size;
         height: $size;
       }
@@ -1247,7 +1251,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         .step {
           display: inline-block !important;
           width: $step-container-width;
-          padding-left: calc((#{$step-container-width} - #{$step-height}) / 2);
+          padding-left: calc(math.div((#{$step-container-width} - #{$step-height}), 2));
           span {
             display: flex;
             align-items: center;
@@ -1419,7 +1423,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       stroke-width: 2;
       color: var(--white);
       width: calc(100% / 6.3);
-      height: $height / 1.6;
+      height: math.div($height, 1.6);
     }
     svg.rotate-90 {
       margin-right: -2.8vw;
