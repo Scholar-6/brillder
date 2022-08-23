@@ -2,7 +2,8 @@
 import Desmos from 'desmos';
 
 export const renderGraph = (el: Element) => {
-  const value = JSON.parse(el.getAttribute("data-value") as string);
+  const dataValue:any = el.getAttribute("data-value");
+  const value = JSON.parse(dataValue);
 
   const desmos = Desmos.GraphingCalculator(el, {
     fontSize: Desmos.FontSizes.VERY_SMALL,

@@ -13,6 +13,7 @@ export const getTerms = async () => {
   const r = await axios.get("/terms.md");
   if (r.data) {
     const lastModifiedDate = getFileModifiedDate(r);
-    return {lastModifiedDate, data: r.data } as TermsResult;
+    const terms:TermsResult = {lastModifiedDate, data: r.data };
+    return terms;
   }
 }
