@@ -6,6 +6,7 @@ import { HintStatus } from 'model/question';
 
 describe("Panel Work Area", () => {
   it("should create Panel Work Area", () => {
+    /* 7/23/2020 temporary
     let question: Question = {
       id: 66,
       order: 0,
@@ -27,7 +28,6 @@ describe("Panel Work Area", () => {
         checked: false,
       }],
     }
-    /* 7/23/2020 temporary
     render(
       <QuestionPanelWorkArea
         brickId={1}
