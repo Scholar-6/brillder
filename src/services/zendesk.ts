@@ -1,12 +1,8 @@
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import { isPhone } from "./phone";
 
-declare global {
-  interface Window { zESettings: any; }
-}
-
-const getZendeskIframe = () => document.getElementById("launcher") as any;
-const getWidgetIframe = () => document.getElementById("webWidget") as any;
+const getZendeskIframe = ():any => document.getElementById("launcher");
+const getWidgetIframe = ():any => document.getElementById("webWidget");
 
 const attachStyleCss = (iframe: any, path: string) => {
   try {
@@ -109,7 +105,8 @@ function addZendesk() {
 
   var head = document.getElementsByTagName('head').item(0);
   if (head) {
-    window.zESettings = {
+    const windowLink:any = window;
+    windowLink.zESettings = {
       cookies: false,
       webWidget: {
         chat: {
@@ -125,7 +122,7 @@ function addZendesk() {
           }
         }
       }
-    } as any;
+    };
     const script = document.createElement('script');
     script.setAttribute('id', 'ze-snippet');
     script.setAttribute('type', 'text/javascript');
@@ -138,7 +135,7 @@ function addZendesk() {
     head.appendChild(script);
 
     // prefill zendesk fields
-    window.zESettings = {
+    windowLink.zESettings = {
       cookies: false,
       webWidget: {
         contactForm: {

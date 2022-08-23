@@ -3,13 +3,13 @@ let _mtm:any = null;
 export function setupMatomo() {
   if (process.env.REACT_APP_MATOMO_URL) {
     try {
-      const windowLink = window as any;
+      const windowLink:any = window;
       _mtm = windowLink._mtm = windowLink._mtm || [];
       _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
       const d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
       g.type='text/javascript';
       g.async=true;
-      g.src=process.env.REACT_APP_MATOMO_URL as string;
+      g.src=process.env.REACT_APP_MATOMO_URL;
       console.log(process.env.REACT_APP_MATOMO_URL);
       if (s.parentNode) {
         s.parentNode.insertBefore(g,s);

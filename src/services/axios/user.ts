@@ -117,7 +117,8 @@ export const createUserByEmail = async(email: string) => {
     if (res.data && res.data.errors) {
       return null;
     }
-    return res.data as CreateByEmailRes;
+    const data:CreateByEmailRes = res.data;
+    return data;
   } catch (e) {
     if (e && e.response && e.response.status === 400) {
       return 400;
