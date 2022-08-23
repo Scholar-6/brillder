@@ -38,6 +38,7 @@ $tile-height: 100%;
     margin-left: $distance !important;
 
     .drag-tile {
+      display: flex !important;
       cursor: pointer;
       transition: all 200ms ease-out !important;
       height: 100%;
