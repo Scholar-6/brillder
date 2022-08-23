@@ -1,27 +1,31 @@
 import React from 'react';
 import ReplyCommentPanel from './ReplyCommentPanel';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Comment } from 'model/comments';
-import { Brick } from 'model/brick';
+import { Comment, CommentLocation } from 'model/comments';
+import { Author, Brick } from 'model/brick';
 import { Question } from 'model/question';
 
 const mockBrick: Brick = {
   id: 1
 } as Brick;
 
+const mochAuthor = {
+  id: 1,
+  email: "test@test.com",
+  firstName: "Firstname",
+  lastName: "Lastname"
+} as Author;
+
 const mockComment: Comment = {
   id: 1,
-  author: {
-    id: 1,
-    email: "test@test.com",
-    firstName: "Firstname",
-    lastName: "Lastname"
-  },
+  author: mochAuthor,
   brick: mockBrick,
   question: { id: 1 } as Question,
   text: "Test Comment",
   timestamp: new Date(2020, 8, 2),
-  children: [ ]
+  children: [ ],
+  location: CommentLocation.Brief,
+  readBy:[]
 } as Comment;
 
 describe("reply comment panel", () => {
