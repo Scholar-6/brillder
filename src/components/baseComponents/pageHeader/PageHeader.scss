@@ -212,11 +212,11 @@
           background-size: 100% 100%;
           background-repeat: no-repeat;
           background-position: center;
-          background-image: url(/images/brick-list/user.png);
+          background-image: url(../../../assets/public/images/brick-list/user.png);
           transition: all 0.2s ease-in-out;
           transform-origin: 50% 50%;
           &:hover {
-            background-image: url(/images/brick-list/user-hover.png);
+            background-image: url(../../../assets/public/images/brick-list/user-hover.png);
             transform: scale(1.4);
           }
         }
