@@ -81,7 +81,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
               <div> following subject categories.</div>
             </div>
             <div className="subject-category disabled">
-              <div onClick={() => this.setState({ invalidSubject: true })}>
+              <div onClick={() => this.moveToGroup(SubjectGroup.Arts)}>
                 <div className="flex-center">
                   <SpriteIcon name="category-canvas" />
                 </div>
@@ -156,8 +156,8 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
           <SubjectCategoriesSidebar />
           <div className="subject-categories">
             <div className="row">
-              <div className="subject-category disabled">
-                <div onClick={() => this.setState({ invalidSubject: true })}>
+              <div className="subject-category">
+                <div onClick={() => this.moveToGroup(SubjectGroup.Arts)}>
                   <div className="flex-center zoom-item">
                     <SpriteIcon name="category-canvas" />
                   </div>
