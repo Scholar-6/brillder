@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import {MuiThemeProvider} from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { History, Location } from "history";
 import queryString from 'query-string';
@@ -331,7 +331,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const { user } = this.props;
 
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider theme={{}}>
         <div>
           <Helmet>
             <title>{getBrillderTitle()}</title>
