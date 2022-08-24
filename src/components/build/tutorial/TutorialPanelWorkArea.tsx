@@ -1,5 +1,5 @@
 import React from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {MuiThemeProvider} from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
 import ProposalPanel from './ProposalPanel';
@@ -44,7 +44,7 @@ const TutorialPanelWorkArea: React.FC<TutorialProps> = ({ user, step, setStep, g
   }
 
   return (
-    <MuiThemeProvider >
+    <MuiThemeProvider theme={{}} >
       <div className="build-question-page" style={{ width: '100%', height: '94%' }}>
         {renderStepPanel()}
       </div>

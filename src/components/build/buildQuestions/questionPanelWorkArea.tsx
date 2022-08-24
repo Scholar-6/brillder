@@ -1,7 +1,6 @@
 import React from 'react'
-import { Grid, Select, FormControl } from '@material-ui/core';
-import { MenuItem } from "material-ui";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Grid, Select, FormControl, MenuItem } from '@material-ui/core';
+import {MuiThemeProvider} from "@material-ui/core/styles";
 import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
@@ -135,7 +134,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   }
 
   return (
-    <MuiThemeProvider>
+    <MuiThemeProvider theme={{}}>
       <div key={question?.id} className={showHelpArrow ? "build-question-page" : "build-question-page active"} style={{ width: '100%', height: '94%' }}>
         {showHelpArrow && <div className="help-arrow-text">Drag</div>}
         {showHelpArrow && <img alt="arrow" className="help-arrow" src="/images/investigation-arrow.png" />}
