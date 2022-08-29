@@ -30,6 +30,7 @@ export interface AttemptStats {
     annotations: Annotation[];
 }
 
+
 export interface AssignmentStudent {
     attempts: AttemptStats[];
     avg_score: number;
