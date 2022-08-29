@@ -1,7 +1,5 @@
 import React from 'react'
-import { Grid, Select, FormControl } from '@material-ui/core';
-import { MenuItem } from "material-ui";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Grid, Select, FormControl, MenuItem } from '@material-ui/core';
 import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
@@ -57,7 +55,7 @@ export interface QuestionProps {
   undo(): void;
   redo(): void;
   locked: boolean;
-  
+
   // phone preview
   componentFocus(index: number): void;
 }
@@ -116,7 +114,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
    * @returns 
    */
   const canSeeLock = () => {
-    const {currentUser} = props;
+    const { currentUser } = props;
     const adminPublisherOrEditor = isAorPorE(brick, currentUser);
     if (adminPublisherOrEditor) {
       return true;
@@ -135,35 +133,34 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   }
 
   return (
-    <MuiThemeProvider>
-      <div key={question?.id} className={showHelpArrow ? "build-question-page" : "build-question-page active"} style={{ width: '100%', height: '94%' }}>
-        {showHelpArrow && <div className="help-arrow-text">Drag</div>}
-        {showHelpArrow && <img alt="arrow" className="help-arrow" src="/images/investigation-arrow.png" />}
-        <div className="top-scroll-area">
-          <div className="top-button-container">
-            <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
-              <SpriteIcon name="arrow-up" className="active text-theme-orange" />
-            </button>
-          </div>
+    <div key={question?.id} className={showHelpArrow ? "build-question-page" : "build-question-page active"} style={{ width: '100%', height: '94%' }}>
+      {showHelpArrow && <div className="help-arrow-text">Drag</div>}
+      {showHelpArrow && <img alt="arrow" className="help-arrow" src="/images/investigation-arrow.png" />}
+      <div className="top-scroll-area">
+        <div className="top-button-container">
+          <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
+            <SpriteIcon name="arrow-up" className="active text-theme-orange" />
+          </button>
         </div>
-        <Grid container direction="row" className="build-question-column">
-          <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
-            <div className="left-sidebar">
-              <ReactSortable
-                key={question.brickQuestionId}
-                list={componentTypes}
-                group={{ name: "cloning-group-name", pull: "clone" }}
-                setList={setComponentType} sort={false}
-              >
-                <DragBox
-                  locked={locked}
-                  name="T"
-                  label="TEXT"
-                  className="text-box"
-                  hoverMarginTop="-0.85vw"
-                  value={QuestionComponentTypeEnum.Text}
-                />
-                {/* 
+      </div>
+      <Grid container direction="row" className="build-question-column">
+        <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
+          <div className="left-sidebar">
+            <ReactSortable
+              key={question.brickQuestionId}
+              list={componentTypes}
+              group={{ name: "cloning-group-name", pull: "clone" }}
+              setList={setComponentType} sort={false}
+            >
+              <DragBox
+                locked={locked}
+                name="T"
+                label="TEXT"
+                className="text-box"
+                hoverMarginTop="-0.85vw"
+                value={QuestionComponentTypeEnum.Text}
+              />
+              {/* 
                 <DragBox
                   locked={locked}
                   name="“ ”"
@@ -171,116 +168,115 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   hoverMarginTop="-1.5vw"
                   value={QuestionComponentTypeEnum.Quote}
                 />*/}
-                <DragBox
-                  locked={locked}
-                  isImage={true} src="/images/soundicon.png"
-                  label="SOUND"
-                  className="drag-box-name"
-                  value={QuestionComponentTypeEnum.Sound}
-                />
-                <DragBox
-                  locked={locked}
-                  name="f(x)"
-                  label="GRAPH"
-                  className="graph-box"
-                  value={QuestionComponentTypeEnum.Graph}
-                />
-              </ReactSortable>
-            </div>
-          </Grid>
-          <Grid container item xs={5} sm={6} md={6} className="question-components-list">
-            <QuestionComponents
-              questionIndex={index}
-              locked={locked}
-              scrollRef={workarea}
-              editOnly={!props.canEdit}
-              brickId={brick.id}
-              history={history}
-              question={question}
-              validationRequired={validationRequired}
-              componentFocus={props.componentFocus}
-              saveQuestion={props.saveQuestion}
-              updateFirstComponent={props.updateFirstComponent}
-              updateComponents={props.updateComponents}
-              setQuestionHint={setQuestionHint}
-            />
-          </Grid>
-          <div className="right-sidebar">
-            {!commentsShown &&
-              <div className="comments-sidebar-default">
-                <div className="reundo-button-container">
-                  <UndoButton
-                    undo={props.undo}
-                    canUndo={() => props.undoRedoService.canUndo()}
-                  />
-                  <RedoButton
-                    redo={props.redo}
-                    canRedo={() => props.undoRedoService.canRedo()}
-                  />
-                </div>
-                <div className="comment-button-container">
-                  <CommentButton
-                    location={CommentLocation.Question}
-                    questionId={question.id}
-                    setCommentsShown={() => setCommentsShown(true)}
-                  />
-                </div>
-                <Grid container direction="row" alignItems="center">
-                  <Grid container justify="center" item sm={12} className="select-type-container">
-                    <FormControl variant="outlined">
-                      <div className="flex-center"><SpriteIcon name="feather-refresh" /> <div>Change Answer Type</div></div>
-                      <Select
-                        className="select-question-type"
-                        disabled={locked}
-                        value={type}
-                        inputProps={{
-                          name: 'age',
-                          id: 'age-native-simple',
-                        }}
-                        onChange={(e) => {
-                          props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
-                        }}
-                      >
-                        {
-                          typeArray.map((typeName, i) => {
-                            const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-                            return (
-                              <MenuItem key={i} value={type}>
-                                {SplitByCapitalLetters(typeName)}
-                              </MenuItem>
-                            )
-                          })
-                        }
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-                {renderLock()}
-                <StatusCircle status={brick.status} isCore={brick.isCore} />
-              </div>
-            }
-            <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justify="flex-start" xs>
-              <CommentPanel
-                isHidden={!commentsShown}
-                currentLocation={CommentLocation.Question}
-                currentBrick={brick}
-                setCommentsShown={setCommentsShown}
-                haveBackButton={true}
-                currentQuestionId={question.id}
+              <DragBox
+                locked={locked}
+                isImage={true} src="/images/soundicon.png"
+                label="SOUND"
+                className="drag-box-name"
+                value={QuestionComponentTypeEnum.Sound}
               />
-            </Grid>
+              <DragBox
+                locked={locked}
+                name="f(x)"
+                label="GRAPH"
+                className="graph-box"
+                value={QuestionComponentTypeEnum.Graph}
+              />
+            </ReactSortable>
           </div>
         </Grid>
-        <div className="bottom-scroll-area">
-          <div className="bottom-button-container">
-            <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
-              <SpriteIcon name="arrow-down" className="active text-theme-orange" />
-            </button>
-          </div>
+        <Grid container item xs={5} sm={6} md={6} className="question-components-list">
+          <QuestionComponents
+            questionIndex={index}
+            locked={locked}
+            scrollRef={workarea}
+            editOnly={!props.canEdit}
+            brickId={brick.id}
+            history={history}
+            question={question}
+            validationRequired={validationRequired}
+            componentFocus={props.componentFocus}
+            saveQuestion={props.saveQuestion}
+            updateFirstComponent={props.updateFirstComponent}
+            updateComponents={props.updateComponents}
+            setQuestionHint={setQuestionHint}
+          />
+        </Grid>
+        <div className="right-sidebar">
+          {!commentsShown &&
+            <div className="comments-sidebar-default">
+              <div className="reundo-button-container">
+                <UndoButton
+                  undo={props.undo}
+                  canUndo={() => props.undoRedoService.canUndo()}
+                />
+                <RedoButton
+                  redo={props.redo}
+                  canRedo={() => props.undoRedoService.canRedo()}
+                />
+              </div>
+              <div className="comment-button-container">
+                <CommentButton
+                  location={CommentLocation.Question}
+                  questionId={question.id}
+                  setCommentsShown={() => setCommentsShown(true)}
+                />
+              </div>
+              <Grid container direction="row" alignItems="center">
+                <Grid container justify="center" item sm={12} className="select-type-container">
+                  <FormControl variant="outlined">
+                    <div className="flex-center"><SpriteIcon name="feather-refresh" /> <div>Change Answer Type</div></div>
+                    <Select
+                      className="select-question-type"
+                      disabled={locked}
+                      value={type}
+                      inputProps={{
+                        name: 'age',
+                        id: 'age-native-simple',
+                      }}
+                      onChange={(e) => {
+                        props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                      }}
+                    >
+                      {
+                        typeArray.map((typeName, i) => {
+                          const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
+                          return (
+                            <MenuItem key={i} value={type}>
+                              {SplitByCapitalLetters(typeName)}
+                            </MenuItem>
+                          )
+                        })
+                      }
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+              {renderLock()}
+              <StatusCircle status={brick.status} isCore={brick.isCore} />
+            </div>
+          }
+          <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justify="flex-start" xs>
+            <CommentPanel
+              isHidden={!commentsShown}
+              currentLocation={CommentLocation.Question}
+              currentBrick={brick}
+              setCommentsShown={setCommentsShown}
+              haveBackButton={true}
+              currentQuestionId={question.id}
+            />
+          </Grid>
         </div>
-        <CommingSoonDialog isOpen={isCommingSoonOpen} close={() => setCommingSoon(false)} />
+      </Grid>
+      <div className="bottom-scroll-area">
+        <div className="bottom-button-container">
+          <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
+            <SpriteIcon name="arrow-down" className="active text-theme-orange" />
+          </button>
+        </div>
       </div>
-    </MuiThemeProvider>
+      <CommingSoonDialog isOpen={isCommingSoonOpen} close={() => setCommingSoon(false)} />
+    </div>
   );
 }
 

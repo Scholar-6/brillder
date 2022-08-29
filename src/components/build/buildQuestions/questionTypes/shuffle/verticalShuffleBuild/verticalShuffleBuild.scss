@@ -3,7 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 .vertical-shuffle-build {
-  @extend %textCenter;
+  @include textCenter;
   .verical-sound {
     margin-bottom: 0.4vh;
     border-radius: 0.8vw;
@@ -103,6 +103,10 @@
       .ql-editor.ql-blank::before {
         left: 2vw;
       }
+
+      &.content-invalid .ql-container {
+        background: var(--theme-orange);
+      }
     }
     
     &.vertical-string {
@@ -112,9 +116,9 @@
         right: 3.5vw;
         top: 0;
         height: 100%;
-        @extend %flexCenter;
+        @include flexCenter;
         svg {
-          @extend %transitionAll300;
+          @include transitionAll300;
           height: 100%;
           width: 2vw;
           color: var(--dark-gray);

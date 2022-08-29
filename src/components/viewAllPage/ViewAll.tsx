@@ -159,6 +159,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     const values = queryString.parse(props.location.search);
+
+    if (!this.props.user) {
+      if (!values.subjectGroup) {
+        this.props.history.push(map.SubjectCategories);
+      }
+    }
+
     const searchString = (values.searchString as string) || "";
     const isSubjectCategory =
       props.location.pathname.slice(-map.SubjectCategoriesPrefix.length) ===
@@ -228,13 +235,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isNewTeacher: !!values.newTeacher,
       teachSteps: [{
         element: '.bricks-list',
-        intro: `<p>Click a brick you would like to assign</p>`,
+        intro: `<p>You can browse our catalogue here to select a brick to assign</p>`,
       }, {
         element: '.private-core-toggle',
-        intro: `<p>Click on the key icon to view your personal catalogue and assign a brick you have published yourself</p>`,
-      }, {
-        element: '.private-core-toggle',
-        intro: `<p>Click on the key icon to view your personal catalogue and assign a brick you have published yourself</p>`,
+        intro: `<p>Click on the key icon to view your personal catalogue and assign a brick you have created yourself</p>`,
       }],
       isAllCategory,
 
@@ -355,7 +359,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     } else if (this.props.user) {
       this.loadBricks(values);
     } else {
-      console.log('loading')
       if (this.state.subjectGroup) {
         this.loadUnauthorizedBricks(this.state.subjectGroup);
       } else {
@@ -400,7 +403,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
-      const pageBricks = await getPublishedBricksByPage(6, this.state.page, true, [], [], [], this.state.filterCompetition, this.state.isAllSubjects);
+      const pageBricks = await getPublishedBricksByPage(this.state.pageSize, this.state.page, true, [], [], [], this.state.filterCompetition, this.state.isAllSubjects);
       if (pageBricks) {
         let { subjects } = this.state;
 
@@ -446,7 +449,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     isAllSubjects: boolean
   ) {
     const subjectIds = this.getSubjectIds();
-    const pageBricks = await getPublishedBricksByPage(6, page, isCore, levels, length, subjectIds, filterCompetition, isAllSubjects);
+    const pageBricks = await getPublishedBricksByPage(this.state.pageSize, page, isCore, levels, length, subjectIds, filterCompetition, isAllSubjects);
 
     if (pageBricks) {
       const {subjects} = this.state;
@@ -484,7 +487,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     sGroup: SubjectGroup
   ) {
     const subjectIds = this.getSubjectIds();
-    const pageBricks = await getUnauthPublishedBricksByPage(6, page, levels, length, subjectIds, filterCompetition, sGroup);
+    const pageBricks = await getUnauthPublishedBricksByPage(this.state.pageSize, page, levels, length, subjectIds, filterCompetition, sGroup);
 
     if (pageBricks) {
       this.setState({
@@ -784,8 +787,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   moveAllNext() { 
     let index = this.state.page * this.state.pageSize;
     const { pageSize, bricksCount } = this.state;
-
-    console.log('move next', index, bricksCount);
 
     if (index + pageSize <= bricksCount - 1) {
       if (this.state.isSearching) {
@@ -1277,6 +1278,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             initialStep={0}
             onChange={this.onIntroChanged.bind(this)}
             onExit={this.onIntroExit.bind(this)}
+            options={{
+              doneLabel: 'Next'
+            }}
             onComplete={() => { }}
           />}
       </React.Suspense>

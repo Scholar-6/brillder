@@ -250,7 +250,7 @@ $base-build-font-size: 1.25vw;
     .action-buttons,
     .class-assign-button {
       .svg {
-        @extend %removePosition;
+        @include removePosition;
         width: 1.7vw;
         height: 1.7vw;
       }
@@ -303,7 +303,7 @@ $base-build-font-size: 1.25vw;
     width: 6vw;
     display: flex;
     align-items: center;
-    @extend %radioBlue;
+    @include radioBlue;
   }
 
   .users-pagination {
@@ -340,7 +340,7 @@ $base-build-font-size: 1.25vw;
     right: 0.7vw !important;
     color: white !important;
     background: inherit !important;
-    @extend %flexCenter;
+    @include flexCenter;
 
     svg {
       margin-left: 0.2vw;
@@ -496,7 +496,7 @@ $base-build-font-size: 1.25vw;
         margin-bottom: 1vh;
       }
       .svg {
-        @extend %transitionAll300;
+        @include transitionAll300;
         cursor: pointer;
         width: 28vw;
         height: 18vh;

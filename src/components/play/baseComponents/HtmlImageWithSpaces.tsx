@@ -55,7 +55,7 @@ const HtmlImageWithSpaces: React.FC<SpacesProps> = ({ index, className, value, h
       } catch {
         console.log('can`t get image. Error 14342');
       }
-    }, 450);
+    }, 0);
 
     setHoverTimeout(timeout);
   }

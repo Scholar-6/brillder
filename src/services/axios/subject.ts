@@ -6,7 +6,11 @@ import {get} from './index';
  */
 export const getSubjects = async () => {
   try {
-    return await get<Subject[]>("/subjects");
+    let subjects = await get<Subject[]>("/subjects");
+    if (subjects) {
+      subjects = subjects.sort((a, b) => a.name > b.name ? 1 : -1);
+    }
+    return subjects;
   } catch {
     return null;
   }

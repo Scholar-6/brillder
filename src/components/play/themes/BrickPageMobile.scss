@@ -1,6 +1,10 @@
+@use "sass:math";
+
 @import "src/assets/sass/partials/variables";
 @import "src/assets/sass/partials/mixins";
 @import "src/assets/sass/partials/extensions";
+
+
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
   .MuiTypography-root {
@@ -391,14 +395,14 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       .smaller {
         color: var(--tab-gray);
         $size: 7vh;
-        left: calc(50% - 4vh - #{$size / 2});
+        left: calc(50% - 4vh - #{math.div($size, 2)});
         width: $size;
         height: $size;
       }
       .bigger {
         top: 0;
         $size: 15vh;
-        left: calc(50% - #{$size / 2});
+        left: calc(50% - #{math.div($size, 2)});
         width: $size;
         height: $size;
       }
@@ -474,7 +478,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
           left: 1vw;
           margin-bottom: 0.5vh;
           > div {
-            @extend %radCircle;
+            @include radCircle;
             background-color: var(--gray);
             height: 17vw;
             width: 17vw;
@@ -505,8 +509,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             font-size: 3vh !important;
             text-align: center !important;
           }
-          .brick-counter,
-          .play-clock {
+          .brick-counter {
             position: absolute;
             top: 1vw;
             font-size: 6vw;
@@ -537,8 +540,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               }
             }
             .step {
-              @extend %posRelative;
-              @extend %flexCenter;
+              @include posRelative;
+              @include flexCenter;
               justify-content: flex-start;
               cursor: pointer;
               font-family: $font-family-black;
@@ -560,7 +563,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
                 width: 4vw;
               }
               .blue-circle-main-container {
-                @extend %floatToXCenter;
+                @include floatToXCenter;
                 left: 60%;
                 top: 50%;
                 transform: translate(0, -50%);
@@ -602,7 +605,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             max-width: 90vw !important;
           }
           .intro-header {
-            @extend %transitionAll600;
+            @include transitionAll600;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -670,9 +673,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
                   font-family: $font-family-bold;
                 }
               }
-              .play-clock {
-                display: none;
-              }
             }
           }
           .introduction-info {
@@ -692,8 +692,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               top: 0;
               left: 0;
               width: 100%;
-              .brick-counter,
-              .play-clock {
+              .brick-counter {
                 display: none;
               }
               h2 {
@@ -774,12 +773,12 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
                 display: flex;
                 justify-content: center;
                 font-family: $font-family-bold;
-                @extend %textCenter;
+                @include textCenter;
                 > h2 {
                   width: 100%;
                   margin-top: 0;
                   margin-bottom: 0;
-                  @extend %textCenter;
+                  @include textCenter;
                   font-size: 9vw;
                 }
                 > h3,
@@ -798,12 +797,12 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
                   left: 50%;
                   transform: translateX(-50%);
                   top: 80%;
-                  @extend %textCenter;
+                  @include textCenter;
                   font-size: 6vw;
                 }
               }
               .play-preview {
-                @extend %floatToCenter;
+                @include floatToCenter;
                 &:focus {
                   transform: translate(-50%, -50%) scale(0.7);
                 }
@@ -1109,7 +1108,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             top: 3.7vh !important;
           }
           p {
-            @extend %textCenter;
+            @include textCenter;
             font-size: 1.5vw !important;
             margin-top: 4.2vh;
             font-family: $font-family-bold;
@@ -1119,7 +1118,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             height: 100%;
             align-items: center;
             .button-container {
-              @extend %flexToXCenter;
+              @include flexToXCenter;
               svg {
                 cursor: pointer;
                 $icon-size: 6vw;
@@ -1135,10 +1134,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
               cursor: pointer;
               margin-top: 0vh;
               font-family: $font-family-bold;
-              @extend %textCenter;
+              @include textCenter;
               font-size: 2vw;
             }
-            @extend %questionLinkDescription;
+            @include questionLinkDescription;
           }
           .button-container {
             cursor: pointer;
@@ -1252,7 +1251,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         .step {
           display: inline-block !important;
           width: $step-container-width;
-          padding-left: calc((#{$step-container-width} - #{$step-height}) / 2);
+          padding-left: calc(math.div((#{$step-container-width} - #{$step-height}), 2));
           span {
             display: flex;
             align-items: center;
@@ -1379,7 +1378,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       .arrow {
         height: 80%;
         width: 80%;
-        @extend %posAbsolute;
+        @include posAbsolute;
         top: 55%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -1424,7 +1423,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       stroke-width: 2;
       color: var(--white);
       width: calc(100% / 6.3);
-      height: $height / 1.6;
+      height: math.div($height, 1.6);
     }
     svg.rotate-90 {
       margin-right: -2.8vw;
@@ -1481,7 +1480,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   padding-left: 0 !important;
   margin-left: 0 !important;
   font-size: 1.75vw !important;
-  @extend %flexToYCenter;
+  @include flexToYCenter;
   font-family: $font-family-black;
   text-transform: uppercase;
   max-width: 47.3vw;
@@ -1766,7 +1765,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     position: relative;
   }
   img {
-    background: var(--theme-light-blue);
+    background: white;
     max-width: 80vw;
     max-height: 80vh;
     padding-right: 4vw;

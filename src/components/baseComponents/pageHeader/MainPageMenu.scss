@@ -12,7 +12,7 @@
   right: 0;
   position: fixed;
   background: var(--theme-light-blue);
-  @extend %transitionAll300;
+  @include transitionAll300;
   border-bottom-left-radius: 2vw;
 
   &.menu-expanded {

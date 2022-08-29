@@ -83,6 +83,11 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
         reloadLibrary();
         setLinked(false);
       }
+
+      setLibrary(null);
+      setPin('');
+      setCardNumber('');
+
       setUnlinking(false);
     }
   }
@@ -184,7 +189,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
           <ProfileInput autoCompleteOff={true} value={libraryCardNumber} disabled={!!linked} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Barcode" />
         </div>
         <div>
-          <ProfileInput autoCompleteOff={true} value={pin} disabled={!!linked} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
+          <ProfileInput autoCompleteOff={true} value={pin} disabled={!!linked} validationRequired={false} className={pin.length > 0 ? "replace-text-with-dots" : ""} type="text" onChange={e => setPin(e.target.value)} placeholder="Pin" />
         </div>
       </div>
       <div className="flex-center btn-container">
@@ -194,6 +199,7 @@ const RealLibraryConnect: React.FC<Props> = ({ user, reloadLibrary, successPopup
       <LibrarySuccessDialog isOpen={success}
         close={() => {
           setSuccess(false);
+          setPin('');
           successPopupClosed?.();
         }}
         submit={() => {

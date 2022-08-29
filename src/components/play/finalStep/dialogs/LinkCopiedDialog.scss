@@ -13,13 +13,13 @@
   &.locked-dialog {
     min-width: 30vw;
     .dialog-header {
-      @extend %flexCenter;
+      @include flexCenter;
       flex-direction: column;
       .circle-orange {
         width: 3vw;
         height: 3vw;
-        @extend %flexCenter;
-        @extend %radCircle;
+        @include flexCenter;
+        @include radCircle;
         padding:0.2vw;
         .svg {
           width: 100%;

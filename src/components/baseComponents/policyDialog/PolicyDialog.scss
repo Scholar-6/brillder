@@ -30,7 +30,7 @@
       .private-policy-title {
         text-transform: capitalize;
         font-family: $font-family-black;
-        @extend %textCenter;
+        @include textCenter;
         margin-bottom: 2.5vh;
         color: var(--theme-green);
       }
@@ -49,7 +49,7 @@
       h3 {
         color: var(--theme-orange);
         font-size: 2vw;
-        @extend %textCenter;
+        @include textCenter;
         font-family: $font-family-bold;
         letter-spacing: 0;
       }

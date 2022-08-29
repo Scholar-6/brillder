@@ -140,6 +140,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
 
     // add library
     if (props.isLibrary) {
+      data.userPreference = UserPreferenceType.Student;
       data.library = {
         library: libraryId,
         barcodeNumber: libraryCardNumber,
@@ -179,7 +180,8 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
         setLibraryPart(false);
       } else {
         if (res.data === 'User Found') {
-          setLibraryLabelFailed(`These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
+          setLibraryLabelFailed(`
+          These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
         } else {
           setLibraryLabelFailed('');
         }

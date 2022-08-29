@@ -28,7 +28,7 @@
       }
     }
     .svg {
-      @extend %removePosition;
+      @include removePosition;
       width: 1.2vw;
       height: 1.2vw;
     }

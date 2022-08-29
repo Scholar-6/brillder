@@ -78,7 +78,7 @@
         position: absolute;
         left: 0;
         top: calc(1.5vh + 0.57vw);
-        @extend %flexCenter;
+        @include flexCenter;
 
         div {
           width: 1.6vw;
@@ -87,7 +87,7 @@
           border-radius: 50%;
           font-size: 1.4vw;
           font-family: $font-family-bold;
-          @extend %flexCenter;
+          @include flexCenter;
         }
       }
     }
@@ -233,7 +233,7 @@
       position: relative;
       line-height: 1.45;
       color: var(--theme-orange);
-      @extend %textCenter;
+      @include textCenter;
       font-family: $font-family-black;
       background: var(--tab-gray);
 
@@ -284,7 +284,7 @@
         .image-background-container {
           width: 10vw;
           height: 10vw;
-          @extend %flexCenter;
+          @include flexCenter;
           margin: 8vh auto;
           margin-bottom: 6vh;
           background: var(--white);
@@ -350,7 +350,7 @@
         font-size: 1.3vw;
 
         .percentage {
-          @extend %flexCenter;
+          @include flexCenter;
           padding-top: 0.2vw;
           font-size: 1.5vw;
           width: 2.5vw;
@@ -433,7 +433,7 @@
             font-size: 1.2vw;
             letter-spacing: 0.1vw;
             margin-left: 6vw;
-            @extend %flexCenter;
+            @include flexCenter;
 
             svg {
               margin-left: 1vw;
@@ -489,7 +489,7 @@
     top: 1vh;
     transform-style: preserve-3d;
     transform: translate3d(0, 0, 100px) scale($scale);
-    @extend %transitionAll300;
+    @include transitionAll300;
 
     &.hidden {
       top: -3.8vh;
@@ -839,7 +839,7 @@
     bottom: 5vh;
     font-size: 1.2vw;
     font-family: $font-family-light;
-    @extend %transitionAll300;
+    @include transitionAll300;
     &.hidden {
       opacity: 0;
     }
@@ -848,7 +848,7 @@
 
 
 .last-question-cover {
-  @extend %flexCenter;
+  @include flexCenter;
 
   >div {
     position: relative;
@@ -857,14 +857,14 @@
 
 .page3-empty {
   .flipped-page {
-    @extend %flexCenter;
+    @include flexCenter;
   }
 }
 
 .green-button-container1 {
   .green-button-container2 {
     width: 100%;
-    @extend %flexCenter;
+    @include flexCenter;
 
     .green-button-container3 {
       position: relative;
@@ -880,7 +880,7 @@
         border-radius: 50%;
         opacity: 0.5 !important;
         background: var(--theme-green);
-        @extend %transitionAll300;
+        @include transitionAll300;
         &.hovered {
           top: -10%;
           left: -10%;
@@ -893,7 +893,7 @@
 
   .play-green-button {
     position: relative;
-    @extend %flexCenter;
+    @include flexCenter;
     border-radius: 50%;
     border: none;
     outline: none;

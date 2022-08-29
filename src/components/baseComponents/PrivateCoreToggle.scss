@@ -32,7 +32,7 @@
       height: calc(#{$icon-padding * 2} + #{$icon-size});
       background-color: var(--tab-gray);
       .svg {
-        @extend %removePosition;
+        @include removePosition;
         padding: $icon-padding;
         height: $icon-size;
         width: $icon-size;

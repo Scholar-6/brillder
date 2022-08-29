@@ -16,7 +16,6 @@ import { Question } from "model/question";
 import { getAttempts } from "services/axios/attempt";
 import { Annotation, AnnotationLocation, PlayAttempt } from "model/attempt";
 import { Redirect } from "react-router-dom";
-import { loadSubjects } from "components/services/subject";
 
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
@@ -40,6 +39,7 @@ import map from "components/map";
 import { fileUrl } from "components/services/uploadFile";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { ClassroomApi, getAllClassrooms } from "components/teach/service";
+import { getSubjects } from "services/axios/subject";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -80,6 +80,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
 
+    let questionIndex = 0;
     let bookState = BookState.Front;
 
     const values = queryString.parse(props.history.location.search);
@@ -89,9 +90,14 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       bookState = BookState.Brief;
     }
 
+    if (values.questionNumber) {
+      bookState = BookState.QuestionPage;
+      questionIndex = parseInt(values.questionNumber as string, 10);
+    }
+
     this.state = {
       bookState,
-      questionIndex: 0,
+      questionIndex,
       attempt: null,
       attempts: [],
       mode: true,
@@ -114,7 +120,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
   async loadData() {
     const { userId, brickId, classId } = this.props.match.params;
-    const subjects = await loadSubjects();
+    const subjects = await getSubjects();
     let classroom = null;
     if (classId) {
       const classrooms = await getAllClassrooms();

@@ -20,7 +20,7 @@ const LibraryFailedDialog: React.FC<DialogProps> = ({ isOpen, label, close }) =>
         </div>
         <div className="text-center custom-title-d35">Authentification unsuccessful</div>
         <div className="custom-text-d35">
-          {label ? label : 'Please try again or click the help button in the bottom left to send us a ticket.'}
+          {label ? label : `These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`}
         </div>
       </div>
     </Dialog>

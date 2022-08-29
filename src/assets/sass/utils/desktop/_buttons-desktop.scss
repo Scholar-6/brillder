@@ -1,8 +1,8 @@
 .btn {
-  @extend %transitionAll300;
+  @include transitionAll300;
   text-transform: none;
-  @extend %themeRadius;
-  @extend %b0;
+  @include themeRadius;
+  @include b0;
   font-family: $font-family-bold;
   letter-spacing: 0vw;
   &.btn-block {
@@ -53,7 +53,7 @@
   color: var(--theme-dark-blue);
   .svg {
     color: var(--theme-dark-blue);
-    @extend %removePosition;
+    @include removePosition;
   }
   .synthesis-text {
     font-family: $font-family-regular;
@@ -62,7 +62,7 @@
     letter-spacing: 0.3vw;
     .svg {
       color: var(--white);
-      @extend %removePosition;
+      @include removePosition;
     }
   }
   &:hover {
@@ -90,8 +90,8 @@
   z-index: 1000;
   cursor: pointer;
   outline: 0 !important;
-  @extend %radCircle;
-  @extend %b0;
+  @include radCircle;
+  @include b0;
   @include phone_and_tabletP {
     width: 17vw;
     height: 17vw;
@@ -105,8 +105,8 @@
   }
   &:after {
     content: '';
-    @extend %floatToCenter;
-    @extend %radCircle;
+    @include floatToCenter;
+    @include radCircle;
     z-index: -1;
     @include phone_and_tabletP {
       width: calc(100% + 3vw);

@@ -1,6 +1,5 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { connect } from "react-redux";
 import { History, Location } from "history";
 import queryString from 'query-string';
@@ -28,10 +27,10 @@ import { AlternateSubjectRoutePart, BrickFieldNames, BrickLengthRoutePart, Brief
 import map from "components/map";
 
 import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
-import { loadSubjects } from "components/services/subject";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { buildQuesitonType } from "../routes";
 import { Helmet } from "react-helmet";
+import { getSubjects } from "services/axios/subject";
 
 interface ProposalProps {
   history: History;
@@ -137,8 +136,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     if (e.target.tagName === "INPUT") { return; }
     if (e.target.classList.contains("ql-editor")) { return; }
 
-    const {history} = this.props;
-    const {pathname} = this.props.location;
+    const { history } = this.props;
+    const { pathname } = this.props.location;
     const baseUrl = this.getBaseUrl();
 
     if (rightKeyPressed(e)) {
@@ -151,7 +150,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       } else if (pathname.slice(-OpenQuestionRoutePart.length) === OpenQuestionRoutePart) {
         history.push(baseUrl + BrickLengthRoutePart);
       } else if (pathname.slice(-BrickLengthRoutePart.length) === BrickLengthRoutePart) {
-        history.push(baseUrl + BriefRoutePart );
+        history.push(baseUrl + BriefRoutePart);
       } else if (pathname.slice(-BrickLengthRoutePart.length) === BrickLengthRoutePart) {
         history.push(baseUrl + BriefRoutePart);
       } else if (pathname.slice(-BriefRoutePart.length) === BriefRoutePart) {
@@ -175,9 +174,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   async getSubject() {
-    const subjects = await loadSubjects();
+    const subjects = await getSubjects();
     if (subjects) {
-      this.setState({subjects});
+      this.setState({ subjects });
     }
   }
 
@@ -185,15 +184,15 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     let newBrick = null;
     try {
       if (this.state.saving === true) { return; }
-      this.setState({saving: true});
+      this.setState({ saving: true });
       if (tempBrick.id) {
         newBrick = await this.props.saveBrick(tempBrick);
       } else {
         newBrick = await this.props.createBrick(tempBrick);
       }
-      this.setState({saving: false});
+      this.setState({ saving: false });
     } catch (e) {
-      this.setState({hasSaveError: true});
+      this.setState({ hasSaveError: true });
     }
     return newBrick;
   }
@@ -224,15 +223,15 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   setCore = (isCore: boolean) =>
-    this.saveLocalBrick({ ...this.state.brick, isCore });  
-  setCoreAndSubject = (subjectId: number, isCore: boolean) => 
+    this.saveLocalBrick({ ...this.state.brick, isCore });
+  setCoreAndSubject = (subjectId: number, isCore: boolean) =>
     this.saveLocalBrick({ ...this.state.brick, subjectId, isCore });
   setTitles = (titles: any) =>
     this.saveLocalBrick({ ...this.state.brick, ...titles });
   setKeywords = (keywords: KeyWord[]) =>
-    this.saveLocalBrick({ ...this.state.brick, keywords});
+    this.saveLocalBrick({ ...this.state.brick, keywords });
   setAcademicLevel = (academicLevel: AcademicLevel) =>
-    this.saveLocalBrick({ ...this.state.brick, academicLevel});
+    this.saveLocalBrick({ ...this.state.brick, academicLevel });
   setOpenQuestion = (openQuestion: string) =>
     this.saveLocalBrick({ ...this.state.brick, openQuestion } as Brick);
   setBrief = (brief: string) =>
@@ -273,8 +272,8 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     console.log('create brick')
     if (this.state.brick.subjectId) {
       const newBrick = await this.saveBrick(this.state.brick);
-      if(newBrick) {
-        const {isCore} = this.state.brick;
+      if (newBrick) {
+        const { isCore } = this.state.brick;
         if (this.state.brick.subjectId) {
           this.props.history.push(map.ProposalTitle(newBrick.id) + '?isCore=' + isCore);
         } else {
@@ -292,7 +291,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   };
 
   getBaseUrl() {
-    const {brickId} = this.props.match.params;
+    const { brickId } = this.props.match.params;
     if (brickId) {
       return map.ProposalBase(brickId);
     }
@@ -316,7 +315,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const canEdit = canEditBrick(this.state.brick, this.props.user);
 
     if (this.state.saved && this.state.moving === false) {
-      this.setState({moving: true});
+      this.setState({ moving: true });
 
       if (this.state.brick.id) {
         history.push(
@@ -331,101 +330,99 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const { user } = this.props;
 
     return (
-      <MuiThemeProvider>
-        <div>
-          <Helmet>
-            <title>{getBrillderTitle()}</title>
-          </Helmet>
-          <HomeButton history={this.props.history} onClick={() => this.openDialog()} />
-          <div
-            style={{ width: "100%", height: "100%" }}
-            className="proposal-router"
-          >
-            <Route path={[baseUrl + SubjectRoutePart]}>
-              <SubjectPage
-                location={history.location}
-                baseUrl={baseUrl}
-                subjects={user.subjects}
-                subjectId={this.state.brick.subjectId ? this.state.brick.subjectId : ""}
-                title="Choose Main Subject"
-                saveSubject={this.setSubject}
-              />
-            </Route>
-            <Route path={[baseUrl + AlternateSubjectRoutePart]}>
-              <SubjectPage
-                location={history.location}
-                isAlternateSubject={true}
-                baseUrl={baseUrl}
-                title="Alternate Subject?"
-                subjects={user.subjects}
-                subjectId={this.state.brick.alternateSubjectId ? this.state.brick.alternateSubjectId : ""}
-                saveSubject={this.setAlternateSubject}
-              />
-            </Route>
-            <Route path={[baseUrl + TitleRoutePart]}>
-              <BrickTitle
-                user={user}
-                brickId={brickId}
-                history={history}
-                baseUrl={baseUrl}
-                parentState={localBrick}
-                canEdit={canEdit}
-                subjects={this.state.subjects}
-                saveTitles={this.setTitles}
-                setKeywords={this.setKeywords}
-                setAcademicLevel={this.setAcademicLevel}
-                createBrick={this.createBrick}
-              />
-            </Route>
-            <Route path={[baseUrl + '/length']}>
-              <BrickLength
-                updated={localBrick.updated}
-                baseUrl={baseUrl}
-                length={localBrick.brickLength}
-                canEdit={canEdit}
-                saveLength={this.setLength}
-                saveBrick={this.setLength}
-              />
-            </Route>
-            <Route path={[baseUrl + '/open-question']}>
-              <OpenQuestion
-                updated={localBrick.updated}
-                baseUrl={baseUrl}
-                history={history}
-                selectedQuestion={localBrick.openQuestion}
-                canEdit={canEdit}
-                saveOpenQuestion={this.setOpenQuestion}
-              />
-            </Route>
-            <Route path={[baseUrl + '/brief']}>
-              <Brief
-                baseUrl={baseUrl}
-                parentBrief={localBrick.brief}
-                updated={localBrick.updated}
-                canEdit={canEdit}
-                saveBrief={this.setBrief}
-              />
-            </Route>
-            <Route path={[baseUrl + '/prep']}>
-              <Prep
-                updated={localBrick.updated}
-                parentPrep={localBrick.prep}
-                canEdit={canEdit}
-                baseUrl={baseUrl}
-                savePrep={this.setPrep}
-                brickLength={localBrick.brickLength}
-                saveBrick={this.setPrepAndSave}
-              />
-            </Route>
-            <VersionLabel />
-          </div>
-          <CloseProposalDialog
-            isOpen={this.state.isDialogOpen}
-            close={() => this.closeDialog()}
-            move={() => this.goHome()}
-          />
+      <div>
+        <Helmet>
+          <title>{getBrillderTitle()}</title>
+        </Helmet>
+        <HomeButton history={this.props.history} onClick={() => this.openDialog()} />
+        <div
+          style={{ width: "100%", height: "100%" }}
+          className="proposal-router"
+        >
+          <Route path={[baseUrl + SubjectRoutePart]}>
+            <SubjectPage
+              location={history.location}
+              baseUrl={baseUrl}
+              subjects={user.subjects}
+              subjectId={this.state.brick.subjectId ? this.state.brick.subjectId : ""}
+              title="Choose Main Subject"
+              saveSubject={this.setSubject}
+            />
+          </Route>
+          <Route path={[baseUrl + AlternateSubjectRoutePart]}>
+            <SubjectPage
+              location={history.location}
+              isAlternateSubject={true}
+              baseUrl={baseUrl}
+              title="Alternate Subject?"
+              subjects={user.subjects}
+              subjectId={this.state.brick.alternateSubjectId ? this.state.brick.alternateSubjectId : ""}
+              saveSubject={this.setAlternateSubject}
+            />
+          </Route>
+          <Route path={[baseUrl + TitleRoutePart]}>
+            <BrickTitle
+              user={user}
+              brickId={brickId}
+              history={history}
+              baseUrl={baseUrl}
+              parentState={localBrick}
+              canEdit={canEdit}
+              subjects={this.state.subjects}
+              saveTitles={this.setTitles}
+              setKeywords={this.setKeywords}
+              setAcademicLevel={this.setAcademicLevel}
+              createBrick={this.createBrick}
+            />
+          </Route>
+          <Route path={[baseUrl + '/length']}>
+            <BrickLength
+              updated={localBrick.updated}
+              baseUrl={baseUrl}
+              length={localBrick.brickLength}
+              canEdit={canEdit}
+              saveLength={this.setLength}
+              saveBrick={this.setLength}
+            />
+          </Route>
+          <Route path={[baseUrl + '/open-question']}>
+            <OpenQuestion
+              updated={localBrick.updated}
+              baseUrl={baseUrl}
+              history={history}
+              selectedQuestion={localBrick.openQuestion}
+              canEdit={canEdit}
+              saveOpenQuestion={this.setOpenQuestion}
+            />
+          </Route>
+          <Route path={[baseUrl + '/brief']}>
+            <Brief
+              baseUrl={baseUrl}
+              parentBrief={localBrick.brief}
+              updated={localBrick.updated}
+              canEdit={canEdit}
+              saveBrief={this.setBrief}
+            />
+          </Route>
+          <Route path={[baseUrl + '/prep']}>
+            <Prep
+              updated={localBrick.updated}
+              parentPrep={localBrick.prep}
+              canEdit={canEdit}
+              baseUrl={baseUrl}
+              savePrep={this.setPrep}
+              brickLength={localBrick.brickLength}
+              saveBrick={this.setPrepAndSave}
+            />
+          </Route>
+          <VersionLabel />
         </div>
-      </MuiThemeProvider>
+        <CloseProposalDialog
+          isOpen={this.state.isDialogOpen}
+          close={() => this.closeDialog()}
+          move={() => this.goHome()}
+        />
+      </div>
     );
   }
 }

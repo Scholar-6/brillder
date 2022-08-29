@@ -36,7 +36,7 @@
   .roof {
     width: 100%;
     height: inherit;
-    @extend %floatToXCenter;
+    @include floatToXCenter;
     top: -1vw;
     visibility: hidden;
     opacity: 0;

@@ -43,7 +43,7 @@
     .upload-button-container {
       margin-top: 3vw;
       height: 3vw;
-      @extend %flexToXCenter;
+      @include flexToXCenter;
     }
 
     .record-button-row button span {

@@ -96,8 +96,6 @@ class ProvisionalScore extends React.Component<
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors };
 
-      console.log('launch animation');
-
       const randomInRange = (min: number, max: number) => {
         return Math.random() * (max - min) + min;
       }
@@ -169,6 +167,18 @@ class ProvisionalScore extends React.Component<
     }
     this.props.history.push(link);
     this.props.moveNext?.();
+  }
+
+  renderScore() {
+    return (
+      <div className="score-data">
+        <div className="flex-center">
+          <div className="score-precentage bold">
+            {this.state.value}%
+          </div>
+        </div>
+      </div>
+    );
   }
 
   render() {
@@ -637,15 +647,7 @@ class ProvisionalScore extends React.Component<
                         counterClockwise={true}
                         value={this.state.value}
                       />
-                      <div className="score-data">
-                        <Grid container justify="center" alignContent="center">
-                          <div>
-                            <div className="score-precentage">
-                              {this.state.value}%
-                            </div>
-                          </div>
-                        </Grid>
-                      </div>
+                      {this.renderScore()}
                     </Grid>
                   </div>
                   <div className="bold bottom-text">You already got full marks on this brick, so you can't earn any more brills.</div>
@@ -676,15 +678,7 @@ class ProvisionalScore extends React.Component<
                       counterClockwise={true}
                       value={this.state.value}
                     />
-                    <div className="score-data">
-                      <Grid container justify="center" alignContent="center">
-                        <div>
-                          <div className="score-precentage">
-                            {this.state.value}%
-                          </div>
-                        </div>
-                      </Grid>
-                    </div>
+                    {this.renderScore()}
                   </Grid>
                 </div>
                 <div className="bold bottom-text">Claim your perfect score bonus by reading the Synthesis of this brick.</div>
@@ -716,15 +710,7 @@ class ProvisionalScore extends React.Component<
                       counterClockwise={true}
                       value={this.state.value}
                     />
-                    <div className="score-data">
-                      <Grid container justify="center" alignContent="center">
-                        <div>
-                          <div className="score-precentage">
-                            {this.state.value}%
-                          </div>
-                        </div>
-                      </Grid>
-                    </div>
+                    {this.renderScore()}
                   </Grid>
                 </div>
                 <div className="bold bottom-text">Improve your score to earn more brills.</div>
@@ -755,15 +741,7 @@ class ProvisionalScore extends React.Component<
                     counterClockwise={true}
                     value={this.state.value}
                   />
-                  <div className="score-data">
-                    <Grid container justify="center" alignContent="center">
-                      <div>
-                        <div className="score-precentage">
-                          {this.state.value}%
-                        </div>
-                      </div>
-                    </Grid>
-                  </div>
+                  {this.renderScore()}
                 </Grid>
               </div>
               <div className="bold bottom-text">Now read the synthesis and boost your Brills in the Review stages.</div>
@@ -795,15 +773,7 @@ class ProvisionalScore extends React.Component<
                   counterClockwise={true}
                   value={this.state.value}
                 />
-                <div className="score-data">
-                  <Grid container justify="center" alignContent="center">
-                    <div>
-                      <div className="score-precentage">
-                        {this.state.value}%
-                      </div>
-                    </div>
-                  </Grid>
-                </div>
+                {this.renderScore()}
               </Grid>
             </div>
             <div className="bold bottom-text">Score {100 - finalValue}% in the Review stage to start earning Brills.</div>
@@ -857,15 +827,7 @@ class ProvisionalScore extends React.Component<
                 counterClockwise={true}
                 value={this.state.value}
               />
-              <div className="score-data">
-                <Grid container justify="center" alignContent="center">
-                  <div>
-                    <div className="score-precentage">
-                      {this.state.value}%
-                    </div>
-                  </div>
-                </Grid>
-              </div>
+              {this.renderScore()}
             </Grid>
           </div>
           <div className="bold bottom-text">Read the Synthesis and sign up to see where you went wrong.</div>
@@ -883,7 +845,7 @@ class ProvisionalScore extends React.Component<
         if (this.props.user) {
           return (
             <div className="top-brill-coins">
-             
+
               <div className={`brill-coin-img ${this.props.liveBrills === 0 ? 'no-spinning' : ""}`}>
                 <img alt="brill" src="/images/Brill-B.svg" />
               </div>
@@ -905,15 +867,7 @@ class ProvisionalScore extends React.Component<
                 counterClockwise={true}
                 value={this.state.value}
               />
-              <div className="score-data">
-                <Grid container justify="center" alignContent="center">
-                  <div>
-                    <div className="score-precentage bold">
-                      {this.state.value}%
-                    </div>
-                  </div>
-                </Grid>
-              </div>
+              {this.renderScore()}
             </Grid>
           </div>
         );

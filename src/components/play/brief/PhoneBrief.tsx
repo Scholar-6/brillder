@@ -1,14 +1,14 @@
 import React from "react";
 
-import { Dialog } from "@material-ui/core";
 import { Brick } from "model/brick";
 import { PlayMode } from "../model";
+import { getCompetitionsByBrickId } from "services/axios/competitions";
+import { checkCompetitionActive } from "services/competition";
 
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BrickTitle from "components/baseComponents/BrickTitle";
-import { getCompetitionsByBrickId } from "services/axios/competitions";
-import { checkCompetitionActive } from "services/competition";
+import CompetitionDialog from "../cover/components/CompetitionDialog";
 
 interface Props {
   brick: Brick;
@@ -105,29 +105,15 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
         </div>
       </div>
       {competitionData &&
-        <Dialog open={competitionData.isOpen} className="dialog-box phone-competition-dialog" onClick={() => setCompetitionData({ ...competitionData, isOpen: false })}>
-          <div className="dialog-header">
-            <div className="flex-center">
-              <SpriteIcon name="star-empty" className="big-star" />
-            </div>
-            <div className="bold" style={{ textAlign: 'center' }}>
-              This brick is part of a competition. <br />
-              If you do well, you could win a prize!
-            </div>
-          </div>
-          <div className="dialog-footer">
-            <button className="btn btn-md bg-green text-white yes-button" onClick={() => {
-              props.setCompetitionId(competitionData.competition.id);
-              setCompetitionData({ ...competitionData, isOpen: false });
-            }}>
-              <span>Start Playing</span>
-            </button>
-          </div>
-          <div className="italic bottom-link flex-center" style={{ textAlign: 'center' }}>
-            <SpriteIcon name="eye-on" />
-            <a rel="noopener noreferrer" href="https://brillder.com/brilliant-minds-prizes/" target="_blank">Learn more</a>
-          </div>
-        </Dialog>}
+        <CompetitionDialog
+          isOpen={competitionData.isOpen}
+          onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}
+          onSubmit={() => {
+            props.setCompetitionId(competitionData.competition.id);
+            setCompetitionData({ ...competitionData, isOpen: false });
+          }}
+        />
+      }
     </div>
   );
 };

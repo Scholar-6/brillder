@@ -14,7 +14,7 @@
   }
 
   .pair-match-play-option {
-    @extend %textCenter;
+    @include textCenter;
     color: var(--theme-dark-blue);
     margin: 5px 1px;
     padding: 0;
@@ -106,7 +106,7 @@
   }
 
   .pair-match-play-choice {
-    @extend %textCenter;
+    @include textCenter;
     padding-left: 5px;
     padding-right: 5px;
     margin-top: 5px;

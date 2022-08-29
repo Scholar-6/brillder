@@ -1,3 +1,4 @@
+
 textarea,
 input {
   box-sizing: content-box !important;
@@ -30,10 +31,15 @@ input {
       }
       background: var(--theme-orange);
     }
+
+    &.replace-text-with-dots {
+      font-family: text-security-disc !important;
+      -webkit-text-security: disc !important;
+    }
   }
 }
 .input-group {
-  @extend %displayFlex;
+  @include displayFlex;
   margin-left: -0.5vw;
   margin-right: -0.5vw;
   @include phone_and_tabletP {
@@ -48,12 +54,12 @@ input {
 }
 
 .input-block {
-  @extend %displayFlex;
-  @extend %posRelative;
+  @include displayFlex;
+  @include posRelative;
   margin-bottom: 1.5vh;
   width: 100%;
   input {
-    @extend %width100;
+    @include width100;
     margin: 0;
     border: none;
     letter-spacing: 0.3vw;
@@ -71,7 +77,7 @@ input {
     color: rgb(141, 154, 180);
   }
   .hide-password-icon-container {
-    @extend %flexCenter;
+    @include flexCenter;
     position: absolute;
     right: 1.3vw;
     top: 0;
@@ -180,7 +186,7 @@ input {
 }
 
 .left-ckeckbox {
-  @extend %checkboxValidation;
+  @include checkboxValidation;
 }
 
 .unique-component.invalid-answer {

@@ -50,7 +50,7 @@
   }
 
   p {
-    @extend %textCenter;
+    @include textCenter;
     font-size: 1.5vw !important;
     margin-top: 4.2vh;
     font-family: $font-family-bold;
@@ -60,7 +60,7 @@
     margin-top: 12.5vh;
 
     .button-container {
-      @extend %flexToXCenter;
+      @include flexToXCenter;
 
       svg {
         cursor: pointer;
@@ -77,10 +77,10 @@
       cursor: pointer;
       margin-top: 2vh;
       font-family: $font-family-bold;
-      @extend %textCenter;
+      @include textCenter;
       font-size: 2vw;
     }
-    @extend %questionLinkDescription;
+    @include questionLinkDescription;
   }
   .button-container {
     cursor: pointer;

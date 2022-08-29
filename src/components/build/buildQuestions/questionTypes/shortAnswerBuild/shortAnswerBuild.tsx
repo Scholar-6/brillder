@@ -66,7 +66,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
   const renderShortAnswer = (answer: ShortAnswerItem, index: number) => {
     let className = "short-answer-box";
     if (props.validationRequired) {
-      if (!answer.value) {
+      if (!stripHtml(answer.value)) {
         className += ' invalid-answer';
       }
     }

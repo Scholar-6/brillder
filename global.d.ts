@@ -1,0 +1,1 @@
+declare interface Window { zESettings: any; }

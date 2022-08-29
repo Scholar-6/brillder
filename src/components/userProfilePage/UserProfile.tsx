@@ -10,13 +10,14 @@ import authActions from "redux/actions/auth";
 import RolesBox from './RolesBox';
 import "./UserProfile.scss";
 
-import { getGeneralSubject, loadSubjects } from 'components/services/subject';
+import { getGeneralSubject } from 'components/services/subject';
 import { UpdateUserStatus, UserProfileField, UserRoleItem } from './model';
 import { getUserById, createUser, updateUser, saveProfileImageName } from 'services/axios/user';
 import { isValid, getUserProfile } from './service';
 import { User, UserType, UserProfile, UserPreferenceType } from "model/user";
 import { Subject } from "model/brick";
 import { checkAdmin, formatTwoLastDigits } from "components/services/brickService";
+import { getSubjects } from "services/axios/subject";
 
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import SubjectDialog from "./components/SubjectDialog";
@@ -152,7 +153,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       }
     }
 
-    loadSubjects().then(subjects => {
+    getSubjects().then(subjects => {
       if (subjects) {
         let user = this.state.user;
         const general = getGeneralSubject(subjects);

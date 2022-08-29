@@ -21,12 +21,12 @@
   }
   .page-navigation {
     position: relative;
-    @extend %floatToXCenter;
+    @include floatToXCenter;
     top: 0.5vh;
     width: 100%;
     z-index: 9999;
     @include phone_and_tabletP {
-      @extend %flexCenter;
+      @include flexCenter;
     }
     @include tabletP {
       display: none;
@@ -36,7 +36,7 @@
       height: 3vh;
     }
     .breadcrumbs {
-      @extend %floatToYCenter;
+      @include floatToYCenter;
       right: 1vw;
       background-color: var(--white);
       color: var(--theme-light-blue);
@@ -212,11 +212,11 @@
           background-size: 100% 100%;
           background-repeat: no-repeat;
           background-position: center;
-          background-image: url(/images/brick-list/user.png);
+          background-image: url(../../../assets/public/images/brick-list/user.png);
           transition: all 0.2s ease-in-out;
           transform-origin: 50% 50%;
           &:hover {
-            background-image: url(/images/brick-list/user-hover.png);
+            background-image: url(../../../assets/public/images/brick-list/user-hover.png);
             transform: scale(1.4);
           }
         }
@@ -271,7 +271,7 @@
       bottom: 1vh;
       position: relative;
       color: var(--gray);
-      @extend %flexCenter;
+      @include flexCenter;
       .btn {
         height: 4.7vh;
         width: 4.7vh;

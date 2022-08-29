@@ -3,7 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 .question-component-graph-container {
-  @extend %themeRadius;
+  @include themeRadius;
 
   height: 20vw;
   display: flex;
@@ -11,7 +11,7 @@
   background-color: var(--tab-gray);
 
   .question-component-graph-header {
-    @extend %textCenter;
+    @include textCenter;
     color: #aaa;
     font-size: 1.3vw;
     color: var(--theme-dark-blue);

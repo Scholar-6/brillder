@@ -5,10 +5,10 @@ import { InputBase, ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from
 import { connect } from 'react-redux';
 
 import './CreateClassDialog.scss';
-import { loadSubjects } from 'components/services/subject';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { User, UserType } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
+import { getSubjects } from 'services/axios/subject';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -25,17 +25,40 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   const [subjects, setSubjects] = React.useState<Subject[]>();
   React.useEffect(() => {
     const initAllSubjects = async () => {
-      const subs = await loadSubjects();
-      if (subs) {
-        setSubjects(subs);
+
+      const setAdminSubjects = async () => {
+        const subs = await getSubjects();
+        if (subs) {
+          setSubjects(subs);
+        }
+      }
+
+      const setUsersSubjects = async () => {
+        const subs = await getSubjects();
+        if (subs) {
+          let sortedSubjects = [...props.user.subjects];
+
+          for (let subject of subs) {
+            let found = sortedSubjects.find(s => s.id === subject.id);
+            if (!found) {
+              sortedSubjects.push(subject);
+            }
+          }
+          setSubjects(sortedSubjects);
+        }
+      }
+
+      if (!subjects) {
+        if (props.user.roles.some(role => role.roleId === UserType.Admin)) {
+          setAdminSubjects();
+        } else {
+          setUsersSubjects();
+        }
       }
     }
 
-    if (props.user.roles.some(role => role.roleId === UserType.Admin)) {
-      initAllSubjects();
-    } else {
-      setSubjects(props.user.subjects);
-    }
+    initAllSubjects();
+    /*eslint-disable-next-line*/
   }, [props.user.roles, props.user.subjects]);
 
   React.useEffect(() => {
