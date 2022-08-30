@@ -1,9 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Dialog from "@material-ui/core/Dialog";
+
 import { Author, Editor } from "model/brick";
 import { fileUrl } from "components/services/uploadFile";
 import './CoverBioDialog.scss';
-import { useHistory } from "react-router-dom";
 import map from "components/map";
 import { isPhone } from "services/phone";
 import { User } from "model/user";
