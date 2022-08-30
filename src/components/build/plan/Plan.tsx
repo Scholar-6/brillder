@@ -228,7 +228,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                         brickLength={currentBrick.brickLength}
                         onChange={brickLength => changeBrick((brick) => ({ ...brick, brickLength }))}
                       />
-                      <CoreSelect disabled={locked} brickStatus={currentBrick.status} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({ ...brick, isCore }))} />
+                      <CoreSelect disabled={locked || currentBrick.adaptedFrom} brickStatus={currentBrick.status} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({ ...brick, isCore }))} />
                     </div>
                   </div>
                   <div className="open-question-container">
@@ -241,7 +241,6 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       isValid={!!stripHtml(currentBrick.openQuestion)}
                       onChange={data => {
                         if (data.length < 250) {
-                          console.log(data.length);
                           changeBrick((brick) => ({ ...brick, openQuestion: data }))
                         }
                       }}
