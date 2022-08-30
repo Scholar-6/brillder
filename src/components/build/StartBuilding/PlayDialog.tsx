@@ -33,8 +33,6 @@ enum PlayStatus {
 
 const PlayDialog: React.FC<DialogProps> = (props) => {
   const { brick } = props;
-  const [bioOpen, setBio] = React.useState(false);
-  const [editorBioOpen, setEditorBio] = React.useState(false);
   const [status, setStatus] = React.useState(PlayStatus.Cover);
 
   const close = () => {
@@ -61,9 +59,7 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
               This is taken from the information you provide in your profile
               page, and should reflect your academic interests and credentials.
             </HoverHelp>
-            <CoverAuthorRow
-              brick={brick} setBio={setBio} setEditorBio={setEditorBio}
-            />
+            <CoverAuthorRow brick={brick} />
           </div>
           <div className="flex-center">
             <div className="hover-orange-text">
@@ -220,10 +216,6 @@ const PlayDialog: React.FC<DialogProps> = (props) => {
       <div className="footer">
         {status === PlayStatus.Prep ? renderPrepFooter() : renderCoverFooter()}
       </div>
-      <CoverBioDialog isOpen={bioOpen} user={brick.author} close={() => setBio(false)} />
-      {brick.editors && brick.editors.length > 0 &&
-        <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
-      }
     </Dialog>
   );
 };

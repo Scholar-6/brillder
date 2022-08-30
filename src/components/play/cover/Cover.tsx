@@ -202,19 +202,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         <div className="cover-page">
           {renderFirstRow()}
           <div className="brick-title q-brick-title">
-            {brick.adaptedFrom && <div className="adapted-text">ADAPTED</div>}
-            <div>
-              {brick.adaptedFrom && <SpriteIcon name="copy" />}
-              <h1 dangerouslySetInnerHTML={{ __html: brick.title }} />
-            </div>
+            <h1 dangerouslySetInnerHTML={{ __html: brick.title }} />
           </div>
-          <div className="author-row">
-            <span onClick={() => setBio(true)}>
-              <SpriteIcon name="feather-feather" />
-              {brick.author.firstName} {brick.author.lastName}
-            </span>
-            {brick.editors && brick.editors.length > 0 && <div onClick={() => setEditorBio(true)}>, <SpriteIcon name="feather-edit-3" />{brick.editors[0].firstName} {brick.editors[0].lastName} (Editor)</div>}
-          </div>
+          <CoverAuthorRow brick={brick} />
           {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
             user={props.user}
             brick={brick}
@@ -363,10 +353,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <Grid item sm={8} xs={12}>
               <div className="introduction-page">
                 <h1 className="brick-title q-brick-title dynamic-title">
-                  {brick.adaptedFrom && !brick.isCore && <div className="adapted-text">ADAPTED</div>}
-                  {brick.adaptedFrom && !brick.isCore && <SpriteIcon name="copy" />}<DynamicFont content={stripHtml(brick.title)} />
+                  <DynamicFont content={stripHtml(brick.title)} />
                 </h1>
-                <CoverAuthorRow brick={brick} setBio={setBio} setEditorBio={setEditorBio} />
+                <CoverAuthorRow brick={brick} />
                 <div className="image-container centered">
                   <CoverImage
                     locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user?.id)}
@@ -435,10 +424,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             </Grid>
           </Grid>
         </div>
-        <CoverBioDialog isOpen={bioOpen} user={brick.author} close={() => setBio(false)} />
-        {brick.editors && brick.editors.length > 0 &&
-          <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
-        }
       </div>
       <UnauthorizedUserDialogV2
         history={props.history}
