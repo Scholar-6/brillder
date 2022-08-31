@@ -7,6 +7,7 @@ export const AttemptCash = 'AttemptCash';
 export const PreviewAttemptCash = 'PreviewAttemptCash';
 export const LoginRedirectUrl = 'LoginRedirectUrl';
 export const LoginHeartOfMercia = 'LoginHeartOfMercia';
+export const PlayFinishRedirectURL = 'PlayFinishRedirectURL'
 export const AuthBrickCash = 'AuthBrickCash';
 export const UnauthBrickCash = 'UnauthBrickCash';
 export const VolumeToggle = 'VolumeToggle';
