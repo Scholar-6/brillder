@@ -19,7 +19,7 @@ import AttemptedText from "../components/AttemptedText";
 import map from "components/map";
 import actions from "redux/actions/auth";
 import MusicAutoplay from "components/baseComponents/MusicAutoplay";
-import { GetHeartOfMerciaUser } from "localStorage/login";
+import { GetFinishRedirectUrl, GetHeartOfMerciaUser, UnsetFinishRedirectUrl } from "localStorage/login";
 import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 
@@ -374,7 +374,14 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   </div> :
                   <div className="btn-container">
                     <div className="btn btn-green orange" onClick={() => {
-                      this.state.isHeartOfMercia ? window.location.href="https://www.heartofmercia.org.uk/" : this.moveToLibrary()
+                      if (this.state.isHeartOfMercia) {
+                        const finishUrl = GetFinishRedirectUrl();
+                        console.log('finish redirect url', finishUrl)
+                        window.location.href = finishUrl ? finishUrl : "https://www.heartofmercia.org.uk/";
+                        UnsetFinishRedirectUrl();
+                      } else {
+                        this.moveToLibrary();
+                      }
                     }}>Exit</div>
                     {!this.state.isHeartOfMercia &&
                       <div className="btn btn-green" onClick={this.props.move}>More Options</div>
@@ -555,7 +562,14 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     :
                     <div className="flex-center">
                       <div className="btn btn-orange" onClick={() => {
-                        this.state.isHeartOfMercia ? window.location.href="https://www.heartofmercia.org.uk/" : this.moveToLibrary()
+                        if (this.state.isHeartOfMercia) {
+                          const finishUrl = GetFinishRedirectUrl();
+                          console.log('finish redirect url', finishUrl)
+                          window.location.href = finishUrl ? finishUrl : "https://www.heartofmercia.org.uk/";
+                          UnsetFinishRedirectUrl();
+                        } else {
+                          this.moveToLibrary();
+                        }
                       }}>Exit</div>
                       {!this.state.isHeartOfMercia &&
                         <div className="btn btn-green" onClick={this.props.move}>More Options</div>

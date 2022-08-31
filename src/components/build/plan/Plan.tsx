@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
+import queryString from 'query-string';
+// @ts-ignore
+import { Steps } from 'intro.js-react';
 
 import CommentPanel from "components/baseComponents/comments/CommentPanel";
 import { CommentLocation } from "model/comments";
@@ -36,6 +39,7 @@ export interface PlanProps {
   currentBrick: Brick;
   saveBrick(brick: Brick): Promise<Brick | null>;
   user: User;
+  history: any;
   locked: boolean;
   editOnly: boolean;
   validationRequired: boolean;
@@ -47,18 +51,20 @@ export interface PlanProps {
 
 const PlanPage: React.FC<PlanProps> = (props) => {
   const { currentBrick, validationRequired, locked } = props;
-  const [apiSubjects, setApiSubjects] = React.useState([] as Subject[]);
+  const [apiSubjects, setApiSubjects] = useState([] as Subject[]);
 
   let isAuthor = false;
   try {
     isAuthor = props.currentBrick.author.id === props.user.id;
   } catch { }
 
-  const [scrollArea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+  const [adapted, setAdapted] = useState(null as any);
+
+  const [scrollArea] = useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const [canScroll, setScroll] = React.useState(false);
 
-  const [commentsShown, setCommentsShown] = React.useState(false);
-  const editorIdState = React.useState("");
+  const [commentsShown, setCommentsShown] = useState(false);
+  const editorIdState = useState("");
 
   React.useEffect(() => {
     getSubjects().then(allSubjects => {
@@ -66,6 +72,12 @@ const PlanPage: React.FC<PlanProps> = (props) => {
         setApiSubjects(allSubjects);
       }
     });
+    const values = queryString.parse(props.history.location.search);
+    if (values.copied) {
+      setTimeout(() => {
+        setAdapted(true);
+      }, 600);
+    }
   }, []);
 
   React.useEffect(() => {
@@ -228,7 +240,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                         brickLength={currentBrick.brickLength}
                         onChange={brickLength => changeBrick((brick) => ({ ...brick, brickLength }))}
                       />
-                      <CoreSelect disabled={locked} brickStatus={currentBrick.status} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({ ...brick, isCore }))} />
+                      <CoreSelect disabled={locked || currentBrick.adaptedFrom} brickStatus={currentBrick.status} isCore={currentBrick.isCore} onChange={isCore => changeBrick((brick) => ({ ...brick, isCore }))} />
                     </div>
                   </div>
                   <div className="open-question-container">
@@ -241,7 +253,6 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       isValid={!!stripHtml(currentBrick.openQuestion)}
                       onChange={data => {
                         if (data.length < 250) {
-                          console.log(data.length);
                           changeBrick((brick) => ({ ...brick, openQuestion: data }))
                         }
                       }}
@@ -368,6 +379,23 @@ const PlanPage: React.FC<PlanProps> = (props) => {
           data={{ currentBrick: currentBrick, user: props.user }}
         />
       </div>
+      {adapted &&
+        <Steps
+          enabled={adapted}
+          steps={[{
+            element: '.build-publish-button-container',
+            intro: `<p>Once your changes are complete, click here to upload the adapted brick</p>`,
+          }]}
+          initialStep={0}
+          // Called before exiting intro
+          onExit={() => setAdapted(false)}
+          // Callback when all steps are completed
+          onComplete={() => setAdapted(false)}
+          options={{
+            nextLabel: 'Next',
+            doneLabel: 'Next'
+          }}
+        />}
     </div>
   );
 };

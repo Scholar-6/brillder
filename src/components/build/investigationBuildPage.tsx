@@ -759,6 +759,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             locked={locked}
             editOnly={!canEdit}
             user={props.user}
+            history={history}
             toggleLock={toggleLock}
             setSaveFailed={() => setSaveFailed(true)}
             validationRequired={validationRequired}
