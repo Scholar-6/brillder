@@ -1,17 +1,19 @@
 import React from "react";
 
 import { publishBrick } from "services/axios/brick";
-
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
 import { Brick } from "model/brick";
 import SendToPublisherDialog from "./dialogs/SendToPublisherDialog";
+import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
+import APublishSuccessDialog from "components/baseComponents/dialogs/APublishSuccessDialog";
 
 export interface ButtonProps {
   disabled: boolean;
   history: any;
   brick: Brick;
+  label?: string;
   onFinish(): void;
+  goToPersonal(): void;
 }
 
 enum PublishStatus {
@@ -23,7 +25,7 @@ enum PublishStatus {
 
 const PublishButton: React.FC<ButtonProps> = props => {
   const [state, setState] = React.useState(PublishStatus.None);
-  const {brick} = props;
+  const { brick } = props;
   const [hovered, setHover] = React.useState(false);
 
   let className = 'build-publish-button';
@@ -37,6 +39,37 @@ const PublishButton: React.FC<ButtonProps> = props => {
     const success = await publishBrick(brick.id);
     if (success) {
       setState(PublishStatus.Published)
+    }
+  }
+
+  const renderTooltip = () => {
+    return <div className="custom-tooltip">{brick.adaptedFrom ? 'Upload' : 'Publish'}</div>
+  }
+
+  const successPopup = () => {
+    if (brick.adaptedFrom) {
+      return (
+        <APublishSuccessDialog
+          isOpen={state === PublishStatus.Published}
+          close={() => {
+            setState(PublishStatus.Hidden);
+            props.onFinish();
+          }}
+          toPersonal={() => {
+            setState(PublishStatus.Hidden);
+            props.goToPersonal();
+          }}
+        />
+      )
+    } else {
+      return (
+        <PublishSuccessDialog
+          isOpen={state === PublishStatus.Published}
+          close={() => {
+            setState(PublishStatus.Hidden);
+            props.onFinish();
+          }}
+        />);
     }
   }
 
@@ -55,7 +88,7 @@ const PublishButton: React.FC<ButtonProps> = props => {
         }}
       >
         <SpriteIcon name="award" />
-        {hovered && <div className="custom-tooltip">Publish</div>}
+        {hovered && renderTooltip()}
       </div>
       <SendToPublisherDialog
         isOpen={state === PublishStatus.Publishing}
@@ -64,13 +97,7 @@ const PublishButton: React.FC<ButtonProps> = props => {
         close={() => setState(PublishStatus.None)}
         submit={publish}
       />
-      <PublishSuccessDialog
-        isOpen={state === PublishStatus.Published}
-        close={() => {
-          setState(PublishStatus.Hidden);
-          props.onFinish();
-        }}
-      />
+      {successPopup()}
     </div>
   );
 };
