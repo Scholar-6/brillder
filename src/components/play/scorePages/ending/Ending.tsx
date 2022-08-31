@@ -19,7 +19,7 @@ import AttemptedText from "../components/AttemptedText";
 import map from "components/map";
 import actions from "redux/actions/auth";
 import MusicAutoplay from "components/baseComponents/MusicAutoplay";
-import { GetFinishRedirectUrl, GetHeartOfMerciaUser } from "localStorage/login";
+import { GetFinishRedirectUrl, GetHeartOfMerciaUser, UnsetFinishRedirectUrl } from "localStorage/login";
 import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 
@@ -376,7 +376,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     <div className="btn btn-green orange" onClick={() => {
                       if (this.state.isHeartOfMercia) {
                         const finishUrl = GetFinishRedirectUrl();
+                        console.log('finish redirect url', finishUrl)
                         window.location.href= finishUrl ? finishUrl : "https://www.heartofmercia.org.uk/";
+                        UnsetFinishRedirectUrl();
                       } else {
                         this.moveToLibrary();
                       }
