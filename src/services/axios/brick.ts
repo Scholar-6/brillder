@@ -172,6 +172,19 @@ export const getSuggestedKeywords = async (suggestion: string) => {
   }
 }
 
+interface BrickSuggest {
+  body: Brick;
+  id: number;
+}
+
+export const getSuggestedByTitles = async (suggestion: string) => {
+  try {
+    return await get<BrickSuggest[]>("/brick/suggest/title/" + suggestion);
+  } catch {
+    return null;
+  }
+}
+
 export const searchBricks = async (searchString: string = '') => {
   try {
     return await post<Brick[]>("/bricks/search", { searchString });
