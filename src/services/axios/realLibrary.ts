@@ -43,9 +43,9 @@ export const unclaimLibraryAccount = async (libraryId: number) => {
   }
 }
 
-export const checkLibraryAccount = async (libraryId: number, barcodeNumber: string, pin: string) => {
+export const librarySignUp = async (libraryId: number, barcodeNumber: string, pin: string) => {
   try {
-    const res = await post<any>('/user/checkLibraryAccount', {libraryId, barcodeNumber, pin });
+    const res = await post<any>('/auth/library/signUp', {libraryId, patronId: barcodeNumber, pin });
     console.log(res);
     return {
       success: true
