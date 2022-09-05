@@ -10,7 +10,17 @@ export const login = async (email: string, password: string) => {
   }
 }
 
+export const libraryLogin = async (libraryId: number, patronId: string, pin: string) => {
+  try {
+    return await post<any>(`/auth/library/login`, { libraryId, patronId, pin });
+  } catch (e) {
+    e.isError = true;
+    return e;
+  }
+}
+
 
 export default {
-  login
+  login,
+  libraryLogin
 }

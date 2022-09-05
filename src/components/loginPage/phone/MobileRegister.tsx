@@ -16,7 +16,7 @@ import DesktopLoginForm from "../desktop/DesktopLoginForm";
 import { isPhone } from "services/phone";
 import { hideZendesk, showZendesk } from "services/zendesk";
 import { ReduxCombinedState } from "redux/reducers";
-import { checkLibraryAccount, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
+import { librarySignUp, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
 import ProfileInput from "components/userProfilePage/components/ProfileInput";
 import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
 import { UserPreferenceType } from "model/user";
@@ -173,9 +173,9 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
     });
   };
 
-  const verifyLibrary = async () => {
+  const signUpLibrary = async () => {
     if (pin && libraryCardNumber && libraryId) {
-      var res = await checkLibraryAccount(libraryId, libraryCardNumber, pin);
+      var res = await librarySignUp(libraryId, libraryCardNumber, pin);
       if (res.success) {
         setLibraryPart(false);
       } else {
@@ -221,7 +221,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
             </div>
             <div className="input-block library-button-box">
               <div className="button-box">
-                <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
+                <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={signUpLibrary}>Sign Up</button>
               </div>
             </div>
             {!keyboardShown &&
