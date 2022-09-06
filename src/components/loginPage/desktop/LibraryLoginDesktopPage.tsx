@@ -121,7 +121,7 @@ const LibraryLoginDesktopPage: React.FC<LoginProps> = (props) => {
         <ProfileInput autoCompleteOff={true} value={pin} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
       </div>
       <div className="button-box">
-        <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={sendLibraryLogin}>Sign Up</button>
+        <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={sendLibraryLogin}>Sign In</button>
       </div>
       <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => {
         setSuggestionFailed(false);
