@@ -9,6 +9,7 @@ import TermsLink from "components/baseComponents/TermsLink";
 import { Route, Switch } from "react-router-dom";
 import { FirstPage, EmailSignPage, RegisterPage, JoinPage, LibraryRegisterPage, LibraryLoginPage } from "../desktop/routes";
 import MobileRegisterPage from './MobileRegister';
+import MobileLibraryLoginPage from './MobileLibraryLogin';
 import MobileJoinPage from './MobileJoin';
 import MicrosoftDesktopButton from "../desktop/MicrosoftDesktopButton";
 import UKLibraryButton from "../components/UKLibraryButton";
@@ -117,6 +118,9 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
         </Route>
         <Route exact path={RegisterPage}>
           <MobileRegisterPage history={this.props.history} email="" />
+        </Route>
+        <Route exact path={LibraryLoginPage}>
+          <MobileLibraryLoginPage history={this.props.history} />
         </Route>
         <Route exact path={LibraryRegisterPage}>
           <MobileRegisterPage history={this.props.history} email="" isLibrary={true} />
