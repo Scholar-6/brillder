@@ -2,6 +2,7 @@ import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { User } from 'model/user';
 
 interface InviteProps {
   isOpen: boolean;

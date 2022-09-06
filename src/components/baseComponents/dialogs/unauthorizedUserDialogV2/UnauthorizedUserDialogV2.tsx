@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import Dialog from "@material-ui/core/Dialog";
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 import './UnauthorizedUserDialog.scss';
 import SpriteIcon from "../../SpriteIcon";
@@ -35,12 +36,53 @@ const TabletTheme = React.lazy(() => import('./themes/TabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/DesktopTheme'));
 
 const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
-  const [warningOpen, setWaringOpen] = React.useState(false);
+  const [onlyLibrary, setOnlyLibrary] = useState(false);
 
-  const [registerClicked, setRegister] = React.useState(false);
-  const [registerWithEmailClicked, setRegisterEmail] = React.useState(false);
+  const [warningOpen, setWaringOpen] = useState(false);
+
+  const [registerClicked, setRegister] = useState(false);
+  const [registerWithEmailClicked, setRegisterEmail] = useState(false);
+
+  useEffect(() => {
+    const values = queryString.parse(location.search);
+    console.log('vvv', values)
+    if (values.origin === 'library') {
+      setOnlyLibrary(true);
+    }
+  }, []);
 
   const renderDialog = () => {
+    if (onlyLibrary) {
+      return (
+        <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
+          <div className="title bigger bold">
+            <span>Wellcome to Brillder for libraries.</span>
+          </div>
+          <div className="title">
+            {props.isBeforeReview
+              ? <span>To save and improve your score, and start building your personal library, create an account.</span>
+              : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
+          </div>
+
+          <UKlibraryButton history={props.history} />
+          {!props.isBeforeReview &&
+            <button className="btn btn-md bg-blue" onClick={() => {
+              if (props.isBeforeReview) {
+                setWaringOpen(true);
+              } else {
+                props.notyet();
+              }
+            }}>
+              <SpriteIcon name="feather-search-custom" />
+              <span>Keep exploring</span>
+            </button>}
+          <div className="small-text">
+            You will be redirected to this page after making your choice
+          </div>
+        </Dialog>
+      )
+    }
+
     if (registerClicked) {
       if (registerWithEmailClicked) {
         return (
@@ -103,16 +145,16 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
           <span>Continue with Email</span>
         </button>
         {!props.isBeforeReview &&
-        <button className="btn btn-md bg-blue" onClick={() => {
-          if (props.isBeforeReview) {
-            setWaringOpen(true);
-          } else {
-            props.notyet();
-          }
-        }}>
-          <SpriteIcon name="feather-search-custom" />
-          <span>Keep exploring</span>
-        </button>}
+          <button className="btn btn-md bg-blue" onClick={() => {
+            if (props.isBeforeReview) {
+              setWaringOpen(true);
+            } else {
+              props.notyet();
+            }
+          }}>
+            <SpriteIcon name="feather-search-custom" />
+            <span>Keep exploring</span>
+          </button>}
         <div className="small-text">
           You will be redirected to this page after making your choice
         </div>
