@@ -6,6 +6,7 @@ export const EmailSignPage = map.Login + '/email';
 export const RegisterPage = map.Login + '/register';
 
 export const LibraryRegisterPage = map.Login + '/library-register';
+export const LibraryLoginPage = map.Login + '/library-login';
 export const TermsPage = map.TermsPage;
 
 export const ActivateAccount = map.ActivateAccount;
