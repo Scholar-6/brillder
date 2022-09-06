@@ -6,7 +6,7 @@ import axios from "axios";
 import { ListItemText, MenuItem, Select } from '@material-ui/core';
 
 import actions from "redux/actions/auth";
-import { libraryLogin, login } from "services/axios/auth";
+import { login } from "services/axios/auth";
 import LoginLogo from '../components/LoginLogo';
 import WrongLoginDialog from "../components/WrongLoginDialog";
 import DesktopLoginForm from "./DesktopLoginForm";
@@ -14,7 +14,7 @@ import map from "components/map";
 import { ReduxCombinedState } from "redux/reducers";
 import { GetOrigin } from "localStorage/origin";
 import { UserPreferenceType } from "model/user";
-import { librarySignUp, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
+import { checkLibraryAccount, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
 import ProfileInput from "components/userProfilePage/components/ProfileInput";
 import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
 
@@ -183,58 +183,11 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
     });
   };
 
-  const sendLibraryLogin = async (libraryId: number, patronId: string, pin: string) => {
-    let data = await libraryLogin(libraryId, patronId, pin);
-    if (!data.isError) {
-      if (data === "OK") {
-        axios.get(
-          `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
-          { withCredentials: true }
-        ).then(response => {
-          const { data } = response;
-          if (data.termsAndConditionsAcceptedVersion === null) {
-            props.history.push(map.TermsSignUp);
-            props.loginSuccess();
-          } else {
-            props.loginSuccess();
-          }
-        }).catch(error => {
-          // error
-          toggleAlertMessage(true);
-          setAlertMessage("Server error");
-        });
-        return;
-      }
-      let { msg } = data;
-      if (!msg) {
-        const { errors } = data;
-        msg = errors[0].msg;
-      }
-      toggleAlertMessage(true);
-      setAlertMessage(msg);
-    } else {
-      const { response } = data;
-      if (response) {
-        if (response.status === 500) {
-          toggleAlertMessage(true);
-          setAlertMessage("Server error");
-        } else if (response.status === 401) {
-          const { msg } = response.data;
-          if (msg === "INVALID_EMAIL_OR_PASSWORD") {
-            register(email, password);
-          }
-        }
-      } else {
-        register(email, password);
-      }
-    }
-  };
-
-  const signUp = async () => {
+  const verifyLibrary = async () => {
     if (pin && libraryCardNumber && libraryId) {
-      var res = await librarySignUp(libraryId, libraryCardNumber, pin);
+      var res = await checkLibraryAccount(libraryId, libraryCardNumber, pin);
       if (res.success) {
-        sendLibraryLogin(libraryId, libraryCardNumber, pin);
+        setLibraryPart(false);
       } else {
         setSuggestionFailed(true);
         if (res.data === 'User Found') {
@@ -278,7 +231,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
           <ProfileInput autoCompleteOff={true} value={pin} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
         </div>
         <div className="button-box">
-          <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={signUp}>Sign Up</button>
+          <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
         </div>
         <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => {
           setSuggestionFailed(false);

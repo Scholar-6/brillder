@@ -62,3 +62,22 @@ export const librarySignUp = async (libraryId: number, barcodeNumber: string, pi
     }
   }
 }
+
+export const checkLibraryAccount = async (libraryId: number, barcodeNumber: string, pin: string) => {
+  try {
+    const res = await post<any>('/user/checkLibraryAccount', {libraryId, barcodeNumber, pin });
+    return {
+      success: true
+    }
+  } catch (e) {
+    if (e.response && e.response.data) {
+      return {
+        data: e.response.data,
+        success: false
+      }
+    }
+    return {
+      success: false
+    }
+  }
+}
