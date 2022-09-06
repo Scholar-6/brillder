@@ -7,10 +7,12 @@ import GoogleButton from "../components/GoogleButton";
 import RegisterButton from "../components/RegisterButton";
 import TermsLink from "components/baseComponents/TermsLink";
 import { Route, Switch } from "react-router-dom";
-import { FirstPage, EmailSignPage, RegisterPage, JoinPage, LibraryRegisterPage } from "../desktop/routes";
+import { FirstPage, EmailSignPage, RegisterPage, JoinPage, LibraryRegisterPage, LibraryLoginPage } from "../desktop/routes";
 import MobileRegisterPage from './MobileRegister';
+import MobileLibraryLoginPage from './MobileLibraryLogin';
 import MobileJoinPage from './MobileJoin';
 import MicrosoftDesktopButton from "../desktop/MicrosoftDesktopButton";
+import UKLibraryButton from "../components/UKLibraryButton";
 
 interface MobileLoginState {
   animationFinished: boolean;
@@ -42,6 +44,12 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
       }, 2200);
     }, 700);
   }
+
+  moveToLibraryLogin() {
+    console.log('move to library')
+    this.props.history.push(LibraryLoginPage);
+  }
+
 
   renderPrivacyPolicy() {
     return (
@@ -77,6 +85,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
           <div className="mobile-button-box button-box">
             <GoogleButton />
             <MicrosoftDesktopButton />
+            <UKLibraryButton onClick={this.moveToLibraryLogin.bind(this)} />
             <RegisterButton onClick={this.props.moveToLogin} />
             <div className="button-box">
               <div className="text-box gg-text-box">
@@ -109,6 +118,9 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
         </Route>
         <Route exact path={RegisterPage}>
           <MobileRegisterPage history={this.props.history} email="" />
+        </Route>
+        <Route exact path={LibraryLoginPage}>
+          <MobileLibraryLoginPage history={this.props.history} />
         </Route>
         <Route exact path={LibraryRegisterPage}>
           <MobileRegisterPage history={this.props.history} email="" isLibrary={true} />
