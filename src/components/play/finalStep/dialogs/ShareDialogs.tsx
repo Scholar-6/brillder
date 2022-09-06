@@ -45,7 +45,10 @@ const ShareDialogs: React.FC<ShareProps> = props => {
     })()
   }, [props.user])
 
-  const link = routes.playCover(props.brick) + `?referralId=${referralId}`;
+  let link = routes.playCover(props.brick) + `?referralId=${referralId}`;
+  if (props.user && props.user.library) {
+    link += '&origin=library';
+  }
 
   let isAuthor = false;
   try {
