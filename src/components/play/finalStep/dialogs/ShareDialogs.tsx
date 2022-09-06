@@ -46,7 +46,9 @@ const ShareDialogs: React.FC<ShareProps> = props => {
   }, [props.user])
 
   let link = routes.playCover(props.brick) + `?referralId=${referralId}`;
+  let whatsappLink = link;
   if (props.user && props.user.library) {
+    whatsappLink += '%26origin=library';
     link += '&origin=library';
   }
 
@@ -59,7 +61,7 @@ const ShareDialogs: React.FC<ShareProps> = props => {
     <div>
       <ShareDialog
         isOpen={props.shareOpen}
-        realLink={link}
+        realLink={whatsappLink}
         link={() => setLink(true)}
         invite={() => setInvite(true)}
         close={props.close}
