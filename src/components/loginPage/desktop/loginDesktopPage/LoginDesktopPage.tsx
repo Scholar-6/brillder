@@ -25,6 +25,7 @@ import MicrosoftDesktopButton from "../MicrosoftDesktopButton";
 import LibraryDesktopButton from "../LibraryDesktopButton";
 import FlexLinesWithOr from "components/baseComponents/FlexLinesWithOr/FlexLinesWithOr";
 import LibraryLoginDesktopPage from "../LibraryLoginDesktopPage";
+import LibraryRegisterDesktopPage from "../LibraryRegisterDesktopPage";
 
 
 const DesktopTheme = React.lazy(() => import('./themes/LoginDesktopTheme'));
@@ -95,7 +96,7 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
           </div>}
         <Switch>
           <Route exact path={LibraryRegisterPage}>
-            <EmailRegisterDesktopPage history={history} isLibrary={true} />
+            <LibraryRegisterDesktopPage history={history} />
           </Route>
           <Route exact path={RegisterPage}>
             <EmailRegisterDesktopPage history={history} />

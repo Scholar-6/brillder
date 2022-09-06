@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
-import { ListItemText, MenuItem, Select } from '@material-ui/core';
 
 import actions from "redux/actions/auth";
-import { libraryLogin, login } from "services/axios/auth";
+import { login } from "services/axios/auth";
 import LoginLogo from '../components/LoginLogo';
 import WrongLoginDialog from "../components/WrongLoginDialog";
 import DesktopLoginForm from "./DesktopLoginForm";
@@ -14,9 +13,6 @@ import map from "components/map";
 import { ReduxCombinedState } from "redux/reducers";
 import { GetOrigin } from "localStorage/origin";
 import { UserPreferenceType } from "model/user";
-import { librarySignUp, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
-import ProfileInput from "components/userProfilePage/components/ProfileInput";
-import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
 
 const mapState = (state: ReduxCombinedState) => ({
   referralId: state.auth.referralId,
@@ -30,28 +26,18 @@ const connector = connect(mapState, mapDispatch);
 
 interface LoginProps {
   history: History;
-  isLibrary?: boolean;
   email?: string;
   referralId?: string;
   loginSuccess(): void;
 }
 
 const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
-  const [libraryCardNumber, setCardNumber] = useState('');
-  const [pin, setPin] = useState('');
-  const [libraryId, setLibrary] = useState(null as null | number);
-  const [libraries, setLibraries] = useState([] as RealLibrary[]);
-  const [suggestionFailed, setSuggestionFailed] = useState(false);
-  const [libraryLabel, setLibraryLabelFailed] = useState("");
-
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
   const [isLoginWrong, setLoginWrong] = React.useState(false);
-
-  const [libraryPart, setLibraryPart] = useState(props.isLibrary ? props.isLibrary : false);
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -72,20 +58,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
 
     sendLogin(email, password);
   }
-
-  const getLibraries = async () => {
-    const loadedLibraries = await getRealLibraries();
-    if (loadedLibraries) {
-      setLibraries(loadedLibraries);
-    }
-  }
-
-  useEffect(() => {
-    if (props.isLibrary) {
-      getLibraries();
-    }
-    /*eslint-disable-next-line*/
-  }, []);
 
   const sendLogin = async (email: string, password: string) => {
     let data = await login(email, password);
@@ -144,16 +116,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       data.userPreference = UserPreferenceType.Student;
     }
 
-    // add library
-    if (props.isLibrary) {
-      data.userPreference = UserPreferenceType.Student;
-      data.library = {
-        library: libraryId,
-        barcodeNumber: libraryCardNumber,
-        pin: pin
-      }
-    }
-
     axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`, data, { withCredentials: true }
     ).then((resp) => {
@@ -182,111 +144,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       setAlertMessage("An account with this email address already exists. Please return to the homepage and use the Login button, or use click Help to send us a message.");
     });
   };
-
-  const sendLibraryLogin = async (libraryId: number, patronId: string, pin: string) => {
-    let data = await libraryLogin(libraryId, patronId, pin);
-    if (!data.isError) {
-      if (data === "OK") {
-        axios.get(
-          `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
-          { withCredentials: true }
-        ).then(response => {
-          const { data } = response;
-          if (data.termsAndConditionsAcceptedVersion === null) {
-            props.history.push(map.TermsSignUp);
-            props.loginSuccess();
-          } else {
-            props.loginSuccess();
-          }
-        }).catch(error => {
-          // error
-          toggleAlertMessage(true);
-          setAlertMessage("Server error");
-        });
-        return;
-      }
-      let { msg } = data;
-      if (!msg) {
-        const { errors } = data;
-        msg = errors[0].msg;
-      }
-      toggleAlertMessage(true);
-      setAlertMessage(msg);
-    } else {
-      const { response } = data;
-      if (response) {
-        if (response.status === 500) {
-          toggleAlertMessage(true);
-          setAlertMessage("Server error");
-        } else if (response.status === 401) {
-          const { msg } = response.data;
-          if (msg === "INVALID_EMAIL_OR_PASSWORD") {
-            register(email, password);
-          }
-        }
-      } else {
-        register(email, password);
-      }
-    }
-  };
-
-  const signUp = async () => {
-    if (pin && libraryCardNumber && libraryId) {
-      var res = await librarySignUp(libraryId, libraryCardNumber, pin);
-      if (res.success) {
-        sendLibraryLogin(libraryId, libraryCardNumber, pin);
-      } else {
-        setSuggestionFailed(true);
-        if (res.data === 'User Found') {
-          setLibraryLabelFailed(`
-          These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
-        } else {
-          setLibraryLabelFailed('');
-        }
-      }
-    }
-  }
-
-  if (libraryPart) {
-    return (
-      <div className="left-part right library-part-d432">
-        <div className="logo">
-          <LoginLogo />
-        </div>
-        <div className="button-box">
-          <div className="relative">
-            {(libraryId === -1 || libraryId === null) && <div className="absolute-placeholder unselectable" onClick={e => e.preventDefault()}>Library Authority</div>}
-            <Select
-              className="select-library"
-              value={libraryId}
-              disabled={false}
-              onChange={e => setLibrary(e.target.value as any)}
-              MenuProps={{ classes: { paper: 'select-classes-list' } }}
-            >
-              {libraries.map((s, i) => (
-                <MenuItem value={s.id} key={i}>
-                  <ListItemText>{s.name}</ListItemText>
-                </MenuItem>
-              ))}
-            </Select>
-          </div>
-        </div>
-        <div className="button-box">
-          <ProfileInput autoCompleteOff={true} value={libraryCardNumber} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Barcode" />
-        </div>
-        <div className="button-box">
-          <ProfileInput autoCompleteOff={true} value={pin} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
-        </div>
-        <div className="button-box">
-          <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={signUp}>Sign Up</button>
-        </div>
-        <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => {
-          setSuggestionFailed(false);
-          setLibraryLabelFailed('');
-        }} />
-      </div>
-    );
-  }
 
   return (
     <div className="left-part right register-part">
