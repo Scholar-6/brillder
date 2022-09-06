@@ -527,7 +527,7 @@
   .logo-box {
     background: var(--theme-light-blue) !important;
     position: relative;
-    height: 40% !important;
+    height: 35% !important;
 
     .logo-box-inner {
       height: 65% !important;
@@ -561,7 +561,8 @@
   .mobile-button-box {
     display: block !important;
     padding-top: 9% !important;
-    margin-top: 8% !important;
+    margin-top: 4vh !important;
+    height: calc(65% - 4vh) !important;
 
     .input-block.button-box {
       margin: 0 !important;
@@ -788,8 +789,6 @@
     }
   }
 
-  .mobile-join {
-
     .google-button,
     .email-button {
       font-size: 5.5vw !important;
@@ -803,7 +802,6 @@
     .fe-sign-in {
       margin-left: 3vw;
     }
-  }
 }
 
 .mobile-button-box {
@@ -816,6 +814,16 @@
   flex-direction: column-reverse;
   justify-content: flex-end !important;
   padding: 8vh 7vw 0;
+
+  .library-button {
+    background: var(--blue) !important;
+    border-radius: 4vw;
+
+    span {
+      margin-left: 10vw;
+      color: white !important;
+    }
+  }
 }
 
 // zendesk
