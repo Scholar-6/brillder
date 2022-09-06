@@ -61,9 +61,9 @@
     background: #12326a;
     width: 45vw;
     height: 100%;
-    padding-top: 12.4vh;
+    padding-top: 5vh;
     transition: all 500ms ease-out;
-    $logo-width: 11.3vw;
+    $logo-width: 8vw;
 
     .logo {
       margin-bottom: 5.6vh;
@@ -224,6 +224,10 @@
       }
     }
 
+    .email-button-only {
+      margin-top: 0 !important;
+    }
+
     // right part now have more buttons. make upper image smaller
     &.right {
       position: absolute;
@@ -251,10 +255,6 @@
             width: $logo-width;
           }
         }
-      }
-
-      .email-button-only {
-        margin-top: 0 !important;
       }
     }
   }
