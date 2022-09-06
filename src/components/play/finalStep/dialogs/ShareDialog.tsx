@@ -42,7 +42,6 @@ const ShareDialog: React.FC<ShareProps> = props => {
               const a = document.createElement('a');
               a.target = "_blank";
               a.href = "whatsapp://send?text=https://app.brillder.com" + props.realLink;
-              console.log(props.realLink);
               a.click();
             }}>
             <SpriteIcon name='whatsapp' />
