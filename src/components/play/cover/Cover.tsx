@@ -416,7 +416,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   <div className="keywords-row">
                     <SpriteIcon name="hash" />
                     <KeyWordsPreview keywords={brick.keywords} onClick={keyword => {
-                      if (onlyLibrary) {
+                      if (onlyLibrary && !props.user) {
                         setUnauthorizedV2(true);
                       } else {
                         props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)

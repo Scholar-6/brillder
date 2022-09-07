@@ -731,7 +731,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       return <div></div>;
     }
 
-    if (onlyLibrary) {
+    if (onlyLibrary && !props.user) {
       return (
         <PageHeadWithMenu
           page={PageEnum.Play}
