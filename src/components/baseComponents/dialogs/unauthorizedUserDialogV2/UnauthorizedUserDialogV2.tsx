@@ -65,17 +65,16 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
           <div className="small-text library-small-text">
             You will be returned to this page after connecting.
           </div>
-          {!props.isBeforeReview &&
-            <div className="btn-library-continue" onClick={() => {
-              if (props.isBeforeReview) {
-                setWaringOpen(true);
-              } else {
-                props.notyet();
-              }
-            }}>
-              <SpriteIcon name="cancel-custom" />
-              <span>Stay on page</span>
-            </div>}
+          <div className="btn-library-continue" onClick={() => {
+            if (props.isBeforeReview) {
+              setWaringOpen(true);
+            } else {
+              props.notyet();
+            }
+          }}>
+            <SpriteIcon name="cancel-custom" />
+            <span>Stay on page</span>
+          </div>
         </Dialog>
       )
     }

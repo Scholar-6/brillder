@@ -67,19 +67,19 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [firstPhonePopup, setFirstPhonePopup] = useState(false);
   const [secondPhonePopup, setSecondPhonePopup] = useState(false);
 
-  const userTimeout = setTimeout(() => {
-    if (!props.user) {
-      setUnauthorizedV2(true);
-    }
-  }, 10000);
-
-
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
         startBrick();
       }
     }
+
+    const userTimeout = setTimeout(() => {
+      if (!props.user) {
+        setUnauthorizedV2(true);
+      }
+    }, 10000);
+    
 
     document.addEventListener("keydown", handleMove, false);
 

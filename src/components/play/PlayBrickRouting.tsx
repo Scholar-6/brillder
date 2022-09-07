@@ -141,6 +141,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [restoredFromCash, setRestored] = useState(false);
   const [isSkipOpen, setPlaySkip] = useState(false);
+  const [onlyLibrary, setOnlyLibrary] = useState(false);
 
   const [activeCompetition, setActiveCompetition] = useState(null as any | null); // active competition
 
@@ -432,8 +433,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
     const values = queryString.parse(location.search);
 
-    console.log(location);
-
     if (values.origin === 'heartofmercia') {
       SetLoginRedirectUrl(location.pathname);
       SetHeartOfMerciaUser();
@@ -442,6 +441,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
     }
 
+    if (values.origin === 'library') {
+      setOnlyLibrary(true);
+    }
     /*eslint-disable-next-line*/
   }, [])
 
@@ -735,6 +737,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         user={props.user}
         link={link}
         onForbiddenClick={() => {
+          setUnauthorized(true);
           console.log('forbiden click');
         }}
         suggestions={true}
@@ -1047,7 +1050,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           competitionId={competitionId}
           isOpen={unauthorizedOpen}
           notyet={() => {
-            history.push(map.ViewAllPage);
+            if (onlyLibrary) {
+              setUnauthorized(false);
+            } else {
+              history.push(map.ViewAllPage);
+            }
           }}
           registered={() => {
             history.push(routes.playReview(brick));
