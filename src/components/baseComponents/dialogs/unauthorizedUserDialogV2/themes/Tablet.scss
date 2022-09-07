@@ -77,3 +77,10 @@
     font-family: $font-family-light-italic;
   }
 }
+
+.auth-confirm-dialog .btn-library-continue {
+  padding-right: 8vw !important;
+  svg {
+    margin-right: 5vw !important;
+  }
+}

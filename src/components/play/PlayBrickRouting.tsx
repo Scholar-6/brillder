@@ -734,6 +734,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         page={PageEnum.Play}
         user={props.user}
         link={link}
+        onForbiddenClick={() => {
+          console.log('forbiden click');
+        }}
         suggestions={true}
         history={history}
         search={search}

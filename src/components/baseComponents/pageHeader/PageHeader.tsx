@@ -52,6 +52,7 @@ interface Props {
   showNotifications(event: any): void;
 
   toggleSearch?(value: boolean): void;
+  onForbiddenClick?(): void;
 
   // redux
   notifications: Notification[];
@@ -172,6 +173,33 @@ class PageHeader extends Component<Props, State> {
     );
   }
 
+  renderMiddleForbiddenButton() {
+    if (this.props.page === PageEnum.Book && isPhone()) {
+      return (
+        <div
+          className="btn btn-transparent m-footer-book-icon svgOnHover"
+          onClick={this.props.onForbiddenClick}
+        >
+          <SpriteIcon name="book-open" className="w100 h100 active text-theme-orange" />
+          <div className="gh-phone-background" />
+        </div>
+      )
+    }
+    if (this.state.searchVisible) {
+      return (
+        <div className="btn btn-transparent close-search svgOnHover" onClick={this.props.onForbiddenClick}>
+          <SpriteIcon name="arrow-right" className="w100 h100 text-tab-gray" />
+        </div>
+      );
+    }
+    return (
+      <div className="btn btn-transparent open-search svgOnHover" onClick={this.props.onForbiddenClick}>
+        <SpriteIcon name="search" className="w100 h100 active text-theme-orange" />
+        <div className="gh-phone-background" />
+      </div>
+    );
+  }
+
   render() {
     let { searchVisible } = this.state
     let notificationCount = 0;
@@ -190,6 +218,60 @@ class PageHeader extends Component<Props, State> {
 
     if (this.state.value.length >= 1) {
       className += ' no-bottom-border';
+    }
+
+    // page loaded by library shared link
+    if (this.props.onForbiddenClick) {
+      return (
+        <div className="upper-part">
+          <div className={!searchVisible ? "page-header" : "page-header active"}>
+            <HomeButton onClick={this.props.onForbiddenClick} history={this.props.history} />
+            <div className="logout-container">
+              <div className={`search-container ${this.state.value.length >= 1 ? 'no-bottom-border' : ''}`}>
+                <div className="header-btn search-button svgOnHover" onClick={this.props.onForbiddenClick}>
+                  <SpriteIcon name="search" className="active" />
+                </div>
+                <div className="search-area">
+                  <input
+                    className="search-input"
+                    value={this.state.value}
+                    onKeyUp={this.props.onForbiddenClick}
+                    onChange={this.props.onForbiddenClick}
+                    placeholder={this.props.searchPlaceholder}
+                  />
+                </div>
+              </div>
+              {this.props.isAuthenticated === isAuthenticated.True &&
+                <Grid container direction="row" className="action-container">
+                  <VolumeButton />
+                  <BrillIconAnimated />
+                  {(this.props.user.isFromInstitution || this.props.user.library) ? <div /> :
+                    <div className="header-credits-container">
+                      <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
+                    </div>}
+                  <BellButton
+                    notificationCount={notificationCount}
+                    onClick={evt => this.props.showNotifications(evt)}
+                  />
+                  <MoreButton onClick={this.props.onForbiddenClick} />
+                </Grid>
+              }
+              {this.props.isAuthenticated === isAuthenticated.False &&
+                <Grid container direction="row" className="action-container">
+                  <div className="login-button" onClick={() => this.props.history.push(map.Login)}>Login | Register</div>
+                </Grid>
+              }
+            </div>
+          </div>
+          {this.props.suggestions && this.state.value.length >= 1 && <SearchSuggestions
+            history={this.props.history} subjects={this.state.subjects}
+            searchString={this.state.value} bricks={this.state.bricks}
+            filterByAuthor={a => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + a.firstName)}
+            filterBySubject={s => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + s.name)}
+            filterByKeyword={k => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + k.name)}
+          />}
+        </div>
+      );
     }
 
     return (
@@ -266,9 +348,9 @@ class PageHeader extends Component<Props, State> {
                   <VolumeButton />
                   <BrillIconAnimated />
                   {(this.props.user.isFromInstitution || this.props.user.library) ? <div /> :
-                  <div className="header-credits-container">
-                    <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
-                  </div>}
+                    <div className="header-credits-container">
+                      <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
+                    </div>}
                   <BellButton
                     notificationCount={notificationCount}
                     onClick={evt => this.props.showNotifications(evt)}

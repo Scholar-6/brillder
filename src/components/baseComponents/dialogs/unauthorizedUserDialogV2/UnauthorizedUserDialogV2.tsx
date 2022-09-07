@@ -45,7 +45,6 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
 
   useEffect(() => {
     const values = queryString.parse(location.search);
-    console.log('vvv', values)
     if (values.origin === 'library') {
       setOnlyLibrary(true);
     }
@@ -54,31 +53,29 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
   const renderDialog = () => {
     if (onlyLibrary) {
       return (
-        <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
+        <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog auth-library-confirm-dialog">
+          {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
           <div className="title bigger bold">
             <span>Wellcome to Brillder for libraries.</span>
           </div>
           <div className="title">
-            {props.isBeforeReview
-              ? <span>To save and improve your score, and start building your personal library, create an account.</span>
-              : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
+            <span>Great that you've clicked a brick! To play for free, please connect to your library.</span>
           </div>
-
-          <UKlibraryButton history={props.history} />
+          <UKlibraryButton label="Connect" popupLabel="Requires a library card barcode and pin from a participating library" history={props.history} />
+          <div className="small-text library-small-text">
+            You will be returned to this page after connecting.
+          </div>
           {!props.isBeforeReview &&
-            <button className="btn btn-md bg-blue" onClick={() => {
+            <div className="btn-library-continue" onClick={() => {
               if (props.isBeforeReview) {
                 setWaringOpen(true);
               } else {
                 props.notyet();
               }
             }}>
-              <SpriteIcon name="feather-search-custom" />
-              <span>Keep exploring</span>
-            </button>}
-          <div className="small-text">
-            You will be redirected to this page after making your choice
-          </div>
+              <SpriteIcon name="cancel-custom" />
+              <span>Stay on page</span>
+            </div>}
         </Dialog>
       )
     }
