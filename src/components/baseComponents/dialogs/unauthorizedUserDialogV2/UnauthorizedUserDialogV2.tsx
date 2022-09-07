@@ -66,7 +66,9 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
             You will be returned to this page after connecting.
           </div>
           <div className="btn-library-continue" onClick={() => {
-            if (props.isBeforeReview) {
+            if (onlyLibrary) {
+              props.notyet()
+            } else if (props.isBeforeReview) {
               setWaringOpen(true);
             } else {
               props.notyet();
