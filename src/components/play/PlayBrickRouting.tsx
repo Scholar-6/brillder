@@ -731,15 +731,28 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       return <div></div>;
     }
 
+    if (onlyLibrary) {
+      return (
+        <PageHeadWithMenu
+          page={PageEnum.Play}
+          user={props.user}
+          link={link}
+          onForbiddenClick={() => {
+            setUnauthorized(true);
+          }}
+          suggestions={true}
+          history={history}
+          search={search}
+          searching={searching}
+        />
+      );
+    }
+
     return (
       <PageHeadWithMenu
         page={PageEnum.Play}
         user={props.user}
         link={link}
-        onForbiddenClick={() => {
-          setUnauthorized(true);
-          console.log('forbiden click');
-        }}
         suggestions={true}
         history={history}
         search={search}
