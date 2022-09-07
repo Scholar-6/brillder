@@ -415,7 +415,13 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   </div>
                   <div className="keywords-row">
                     <SpriteIcon name="hash" />
-                    <KeyWordsPreview keywords={brick.keywords} onClick={keyword => props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)} />
+                    <KeyWordsPreview keywords={brick.keywords} onClick={keyword => {
+                      if (onlyLibrary) {
+                        setUnauthorizedV2(true);
+                      } else {
+                        props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)
+                      }
+                    }} />
                     {!isMobile && props.user && checkAdmin(props.user.roles) && <div className="btn b-green text-white" onClick={() => props.history.push(map.Proposal(brick.id))}>Edit</div>}
                   </div>
                   <CoverTimer brickLength={brick.brickLength} />
