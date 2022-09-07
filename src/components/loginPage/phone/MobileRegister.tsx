@@ -36,6 +36,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
   const [libraries, setLibraries] = useState([] as RealLibrary[]);
   const [suggestionFailed, setSuggestionFailed] = useState(false);
   const [libraryLabel, setLibraryLabelFailed] = useState("");
+  const [libraryVerified, setLibraryVerified] = useState(false);
   const [libraryPart, setLibraryPart] = useState(props.isLibrary ? props.isLibrary : false);
 
   const [alertMessage, setAlertMessage] = useState("");
@@ -197,7 +198,8 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
           <div className="title">
             Brillder for Libraries
           </div>
-          <div className="mobile-button-box button-box m-register-box">
+          <div className="mobile-button-box button-box m-register-box m-library-box">
+            <div className="m-top-library-label flex-center">Select your library authority or region</div>
             <div className="mobile-library-box">
               {(libraryId === -1 || libraryId === null) && <div className="absolute-placeholder unselectable" onClick={e => e.preventDefault()}>Library Authority</div>}
               <Select
@@ -213,17 +215,20 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
                 ))}
               </Select>
             </div>
+            {libraryId && libraryId > 0 &&
+            <div className="m-top-library-label flex-center">Please verify your library barcode and pin</div>}
+            {libraryId && libraryId > 0 &&
             <div className="button-box">
               <ProfileInput autoCompleteOff={true} value={libraryCardNumber} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Barcode" />
-            </div>
-            <div className="button-box">
+            </div>}
+            {libraryId && libraryId > 0 &&
+            <div className="button-box m-pin-box">
               <ProfileInput autoCompleteOff={true} value={pin} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
-            </div>
-            <div className="input-block library-button-box">
-              <div className="button-box">
-                <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
+              <div className="m-library-check">
+                <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>OK</button>
               </div>
-            </div>
+            </div>}
+            {libraryId && libraryId > 0 && <div className="m-library-line"></div>}
             {!keyboardShown &&
               <div className="mobile-policy-text">
                 <TermsLink history={props.history} />
