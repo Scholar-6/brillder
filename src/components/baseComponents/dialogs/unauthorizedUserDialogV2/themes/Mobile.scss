@@ -235,9 +235,29 @@
   }
 }
 
-.auth-confirm-dialog .btn-library-continue {
-  padding-right: 27vw !important;
-  svg {
-    margin-right: 19vw !important;
+.auth-library-confirm-dialog {
+  .title {
+    margin-bottom: 1vw;
+  }
+  .library-small-text {
+    padding-top: 0.3vw;
+  }
+  .library-button {
+    margin-top: 3vw;
+  }
+  .btn-library-continue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4vw;
+    margin-top: 4vw;
+    cursor: pointer;
+    svg {
+      width: 5vw;
+      height: 5vw;
+      stroke-width: 2;
+      margin-right: 0.5vw;
+      transition: all 300ms ease-in-out;
+    }
   }
 }
