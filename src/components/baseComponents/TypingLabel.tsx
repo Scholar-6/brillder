@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 interface LabelState {
   label: string;
+  isTyping: boolean;
   finalLabel: string;
 }
 
@@ -18,6 +19,7 @@ class TypingLabel extends Component<LabelProps, LabelState> {
     super(props);
     this.state = {
       label: '',
+      isTyping: true,
       finalLabel: props.label
     };
   }
@@ -28,6 +30,21 @@ class TypingLabel extends Component<LabelProps, LabelState> {
 
   componentDidMount() {
     this.printLetter(0);
+  }
+
+  componentDidUpdate(prevProps: LabelProps, prevState: LabelState) {
+    console.log(prevProps, prevState);
+    if (this.props.label != prevProps.label) {
+      if (this.state.isTyping === false) {
+        this.setState({
+          label: '',
+          finalLabel: this.props.label,
+          isTyping: true
+        });
+
+        this.printLetter(0);
+      }
+    }
   }
 
   printLetter(index: number) {
@@ -50,6 +67,7 @@ class TypingLabel extends Component<LabelProps, LabelState> {
           this.printLetter(index + 1);
         } else {
           if (this.props.onEnd) {
+            this.setState({isTyping: false});
             this.props.onEnd();
           }
         }

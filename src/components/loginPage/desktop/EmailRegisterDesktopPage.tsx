@@ -283,7 +283,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
-      <TextDialog isOpen={libraryConnected} label="Great your library barcode and pin is valid, please also provide an email and password" close={() => setLibraryConnected(true)} />
+      <TextDialog isOpen={libraryConnected} label="Great your library barcode and pin is valid, please also provide an email and password" close={() => setLibraryConnected(false)} />
     </div>
   );
 };
