@@ -20,11 +20,10 @@ const CoverCreditsPlay: React.FC<Props> = ({ user, isAssignment, isCompetition, 
     // play is free if: anonymous user, premium educator, library user, 
     // author of the brick, publisher, or the Brick has been assigned to the user 
     if (!user || isPaidEducator || isLibraryUser || isAuthor || isPublisher || isAssignment || user.isFromInstitution) {
-      return (
-        <>
-          Play Free
-        </>
-      );
+      return <>
+       <SpriteIcon name="feather-play-circle" />
+       Play
+      </>
     }
     // Always charge 2 credits for a competition
     if (isCompetition) {

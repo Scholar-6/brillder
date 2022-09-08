@@ -17,7 +17,6 @@ import map from "components/map";
 import PrepHoverHelp from "../baseComponents/PrepHoverHelp";
 import BriefHoverHelp from "../baseComponents/BriefHoverHelp";
 import OpenQHoverHelp from "../baseComponents/OpenQHoverHelp";
-import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
 
 interface DialogProps {
   isOpen: boolean;
