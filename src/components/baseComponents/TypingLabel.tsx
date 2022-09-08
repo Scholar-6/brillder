@@ -33,7 +33,6 @@ class TypingLabel extends Component<LabelProps, LabelState> {
   }
 
   componentDidUpdate(prevProps: LabelProps, prevState: LabelState) {
-    console.log(prevProps, prevState);
     if (this.props.label != prevProps.label) {
       if (this.state.isTyping === false) {
         this.setState({
