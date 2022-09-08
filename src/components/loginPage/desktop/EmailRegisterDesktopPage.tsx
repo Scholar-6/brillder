@@ -18,6 +18,8 @@ import { checkLibraryAccount, getRealLibraries, RealLibrary } from "services/axi
 import ProfileInput from "components/userProfilePage/components/ProfileInput";
 import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
 import HowEmailUsedPopup from "./HowEmailUsedPopup";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import TextDialog from "components/baseComponents/dialogs/TextDialog";
 
 const mapState = (state: ReduxCombinedState) => ({
   referralId: state.auth.referralId,
@@ -44,14 +46,16 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   const [libraries, setLibraries] = useState([] as RealLibrary[]);
   const [suggestionFailed, setSuggestionFailed] = useState(false);
   const [libraryLabel, setLibraryLabelFailed] = useState("");
+  const [verifyingLibrary, setVerifyingLibrary] = useState(false);
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
-  const [isLoginWrong, setLoginWrong] = React.useState(false);
+  const [isLoginWrong, setLoginWrong] = useState(false);
 
+  const [libraryConnected, setLibraryConnected] = useState(false);
   const [libraryPart, setLibraryPart] = useState(props.isLibrary ? props.isLibrary : false);
 
   const validateForm = () => {
@@ -186,8 +190,11 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
 
   const verifyLibrary = async () => {
     if (pin && libraryCardNumber && libraryId) {
+      setVerifyingLibrary(true);
       var res = await checkLibraryAccount(libraryId, libraryCardNumber, pin);
+      setVerifyingLibrary(false);
       if (res.success) {
+        setLibraryConnected(true);
         setLibraryPart(false);
       } else {
         setSuggestionFailed(true);
@@ -231,8 +238,11 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="button-box">
           <ProfileInput autoCompleteOff={true} value={pin} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
         </div>
-        <div className="button-box">
-          <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
+        <div className="button-box button-spinning">
+          <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>
+            {verifyingLibrary && <SpriteIcon className="spinning" name="f-loader" />}
+            <span>Link Library</span>
+          </button>
         </div>
         <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => {
           setSuggestionFailed(false);
@@ -273,6 +283,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
+      <TextDialog isOpen={libraryConnected} label="Great your library barcode and pin is valid, please also provide an email and password" close={() => setLibraryConnected(true)} />
     </div>
   );
 };
