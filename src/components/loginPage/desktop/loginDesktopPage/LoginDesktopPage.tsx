@@ -49,7 +49,12 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
     var origin = GetOrigin();
     if (origin === 'library') {
       setLibraryOrigin(true);
-      history.push(LibraryRegisterPage);
+      const {pathname} = history.location;
+      if (pathname.search(LibraryRegisterPage) === 0) {
+      } if (pathname.search(LibraryLoginPage) === 0) {
+      } else {
+        history.push(LibraryRegisterPage);
+      }
     } else {
       // get it from query string
     }
