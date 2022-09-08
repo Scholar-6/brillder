@@ -61,7 +61,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
           <div className="title">
             <span>Great that you've clicked a brick! To play for free, please connect to your library.</span>
           </div>
-          <UKlibraryButton label="Connect" popupLabel="Requires a library card barcode and pin from a participating library" history={props.history} />
+          <UKlibraryButton label="Connect" brick={props.brick} competitionId={props.competitionId} popupLabel="Requires a library card barcode and pin from a participating library" history={props.history} />
           <div className="small-text library-small-text">
             You will be returned to this page after connecting.
           </div>

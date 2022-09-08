@@ -1,13 +1,17 @@
 import React from "react";
 import { History } from "history";
+import { isMobile } from "react-device-detect";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { isMobile } from "react-device-detect";
-import { LibraryRegisterPage } from "../desktop/routes";
+import { LibraryRegisterPageBack } from "../desktop/routes";
+import { Brick } from "model/brick";
+import { SetAuthBrickCash } from "localStorage/play";
 
 interface Props {
   history?: History;
   label?: string;
+  brick?: Brick;
+  competitionId?: number;
   popupLabel?: string;
   onClick?(): void;
 }
@@ -18,7 +22,10 @@ const UKlibraryButton: React.FC<Props> = (props) => {
     if (props.onClick) {
       props.onClick();
     } else if (props.history) {
-      props.history.push(LibraryRegisterPage);
+      if (props.brick) {
+        SetAuthBrickCash(props.brick, props.competitionId ? props.competitionId : -1);
+      }
+      props.history.push(LibraryRegisterPageBack);
     }
   }
 
