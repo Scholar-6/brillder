@@ -13,22 +13,28 @@ interface PopupBio {
 }
 interface Props {
   brick: Brick;
+  onlyLibrary?: boolean;
+  setLibraryLogin?(): void;
 }
 
 const MobileTheme = React.lazy(() => import("./themes/CoverMobileTheme"));
 const TabletTheme = React.lazy(() => import("./themes/CoverTabletTheme"));
 const DesktopTheme = React.lazy(() => import("./themes/CoverDesktopTheme"));
 
-const CoverAuthorRow: React.FC<Props> = ({ brick }) => {
+const CoverAuthorRow: React.FC<Props> = ({ brick, onlyLibrary, setLibraryLogin }) => {
   const [bio, setBio] = React.useState({
     isOpen: false,
     user: null
   } as PopupBio);
 
+  const setBioX = (user: User | Editor) => {
+    setBio({ isOpen: true, user });
+  }
+
   const renderEditor = () => {
     if (brick.editors && brick.editors[0]) {
       const editor = brick.editors[0];
-      return <div><div>, </div><div className="pointer bold-on-hover" onClick={() => setBio({ isOpen: true, user: editor })}>
+      return <div><div>, </div><div className="pointer bold-on-hover" onClick={() => setBioX(editor)}>
         <SpriteIcon name="feather-edit-3" />
         {editor.firstName} {editor.lastName} (Editor)</div>
       </div>
@@ -38,7 +44,7 @@ const CoverAuthorRow: React.FC<Props> = ({ brick }) => {
 
   const renderAuthor = (author: any, icon: string) => {
     return (
-      <div onClick={() => setBio({ isOpen: true, user: author })} className="pointer bold-on-hover">
+      <div onClick={() => setBioX(author)} className="pointer bold-on-hover">
         <SpriteIcon name={icon} />
         <div>
           {author.firstName} {author.lastName}
@@ -76,7 +82,7 @@ const CoverAuthorRow: React.FC<Props> = ({ brick }) => {
         </div>
       </div>
       {bio.isOpen && bio.user &&
-        <CoverBioDialog isOpen={bio.isOpen} user={bio.user} close={() => setBio({ isOpen: false, user: null })} />
+        <CoverBioDialog isOpen={bio.isOpen} onlyLibrary={onlyLibrary} setLibraryLogin={setLibraryLogin} user={bio.user} close={() => setBio({ isOpen: false, user: null })} />
       }
     </React.Suspense>
   );

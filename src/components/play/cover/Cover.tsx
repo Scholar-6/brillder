@@ -217,7 +217,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           <div className="brick-title q-brick-title">
             <h1 dangerouslySetInnerHTML={{ __html: brick.title }} />
           </div>
-          <CoverAuthorRow brick={brick} />
+          <CoverAuthorRow brick={brick} onlyLibrary={onlyLibrary} setLibraryLogin={() => setUnauthorizedV2(true)} />
           {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
             user={props.user}
             brick={brick}
@@ -339,7 +339,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         />
         <CoverBioDialog isOpen={bioOpen} user={brick.author} close={() => setBio(false)} />
         {brick.editors && brick.editors.length > 0 &&
-          <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
+          <CoverBioDialog isOpen={editorBioOpen} onlyLibrary={onlyLibrary} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
         }
         {props.canSeeCompetitionDialog && competitionData &&
           <CompetitionDialog
@@ -368,7 +368,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 <h1 className="brick-title q-brick-title dynamic-title">
                   <DynamicFont content={stripHtml(brick.title)} />
                 </h1>
-                <CoverAuthorRow brick={brick} />
+                <CoverAuthorRow brick={brick} onlyLibrary={onlyLibrary} setLibraryLogin={() => setUnauthorizedV2(true)} />
                 <div className="image-container centered">
                   <CoverImage
                     locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user?.id)}
