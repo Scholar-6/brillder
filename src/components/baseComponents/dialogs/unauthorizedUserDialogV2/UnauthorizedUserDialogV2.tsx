@@ -18,6 +18,7 @@ import { Brick } from "model/brick";
 import MicrosoftDesktopButton from "components/loginPage/desktop/MicrosoftDesktopButton";
 import UKlibraryButton from "components/loginPage/components/UKLibraryButton";
 import FlexLinesWithOr from "components/baseComponents/FlexLinesWithOr/FlexLinesWithOr";
+import { LibraryLoginPage } from "components/loginPage/desktop/routes";
 
 interface UnauthorizedProps {
   isOpen: boolean;
@@ -61,7 +62,44 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
           <div className="title">
             <span>Great that you've clicked a brick! To play for free, please connect to your library.</span>
           </div>
-          <UKlibraryButton label="Connect" brick={props.brick} competitionId={props.competitionId} popupLabel="Requires a library card barcode and pin from a participating library" history={props.history} />
+          <div className="ll-help-container">
+            <div className="hover-area-content">
+              <div className="hover-area flex-center">
+                <SpriteIcon name="library-help" />
+                <div className="hover-content bold">
+                  Available to members of participating UK libraries.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="l-label">
+            <span>New to Brillder?</span>
+          </div>
+          <UKlibraryButton
+            label="Sign Up"
+            brick={props.brick}
+            hideHelp={true}
+            competitionId={props.competitionId}
+            history={props.history}
+            popupLabel="Requires a library card barcode and pin from a participating library"
+          />
+          <div className="l-label">
+            <span>Already a user?</span>
+          </div>
+          <UKlibraryButton
+            label="Log In"
+            brick={props.brick}
+            hideHelp={true}
+            competitionId={props.competitionId}
+            history={props.history}
+            onClick={() => {
+              if (props.brick) {
+                SetAuthBrickCash(props.brick, props.competitionId ? props.competitionId : -1);
+              }
+              props.history.push(LibraryLoginPage);
+            }}
+            popupLabel="Requires a library card barcode and pin from a participating library"
+          />
           <div className="small-text library-small-text">
             You will be returned to this page after connecting.
           </div>
