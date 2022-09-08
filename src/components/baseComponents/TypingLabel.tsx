@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 interface LabelState {
   label: string;
+  finalLabel: string;
 }
 
 interface LabelProps {
@@ -16,7 +17,8 @@ class TypingLabel extends Component<LabelProps, LabelState> {
   constructor(props: LabelProps) {
     super(props);
     this.state = {
-      label: ''
+      label: '',
+      finalLabel: props.label
     };
   }
 
@@ -28,11 +30,21 @@ class TypingLabel extends Component<LabelProps, LabelState> {
     this.printLetter(0);
   }
 
-  printLetter (index: number) {
+  printLetter(index: number) {
     const {minTime, maxTime} = this.props;
     setTimeout(() => {
       const {label } = this.props;
+
       try {
+        if (label != this.state.finalLabel) {
+          this.setState({
+            label: '',
+            finalLabel: label,
+          });
+          this.printLetter(0);
+          return;
+        }
+
         this.setState({ label: this.state.label + label[index] });
         if (index < label.length - 1) {
           this.printLetter(index + 1);
