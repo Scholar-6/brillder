@@ -107,27 +107,6 @@ export interface CreateByEmailRes {
 }
 
 /**
- * This backend call is weard return different stuff
- * When invalid sometimes return status 400 sometimes 200 with errors array in body.
- * @param email string
- */
-export const createUserByEmail = async(email: string) => {
-  try {
-    const res = await postRes('/auth/createUser/', { email });
-    if (res.data && res.data.errors) {
-      return null;
-    }
-    const data:CreateByEmailRes = res.data;
-    return data;
-  } catch (e) {
-    if (e && e.response && e.response.status === 400) {
-      return 400;
-    }
-    return null;
-  }
-}
-
-/**
  * Accept terms and conditions
  */
 export const acceptTerms = async(termsAndConditionsAcceptedVersion: string) => {

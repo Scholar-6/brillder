@@ -539,6 +539,24 @@
       background: var(--theme-dark-blue);
     }
   }
+  .button-box.button-spinning {
+    button {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      svg {
+        position: absolute;
+        left: 3vw;
+        top: 1.2vw;
+        width: 2vw;
+        height: 2vw;
+        stroke-width: 2;
+      }
+      span {
+        margin-left: 0.6vw;
+      }
+    }
+  }
 }
 
 .library-e-r-label {
