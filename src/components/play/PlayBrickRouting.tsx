@@ -725,7 +725,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
     if (!isPhone() && sidebarRolledUp) {
       return <HomeButton history={history} onClick={() => {
-        setPlaySkip(true);
+        if (onlyLibrary && !props.user) {
+          setUnauthorized(true);
+        } else {
+          setPlaySkip(true);
+        }
       }} />;
     }
     if (headerHidden) {
