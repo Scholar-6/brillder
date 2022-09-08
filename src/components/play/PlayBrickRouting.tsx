@@ -443,6 +443,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
     if (values.origin === 'library') {
       setOnlyLibrary(true);
+      toggleSideBar(true);
     }
     /*eslint-disable-next-line*/
   }, [])
