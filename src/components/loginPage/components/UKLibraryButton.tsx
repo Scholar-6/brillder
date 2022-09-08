@@ -13,6 +13,7 @@ interface Props {
   brick?: Brick;
   competitionId?: number;
   popupLabel?: string;
+  hideHelp?: boolean;
   onClick?(): void;
 }
 
@@ -29,18 +30,30 @@ const UKlibraryButton: React.FC<Props> = (props) => {
     }
   }
 
-  return (
-    <div className="google-button library-button" onClick={onClick}>
-      <SpriteIcon name="library-user-icon" className="active library-user-icon" />
-      <span>{props.label ? props.label : 'UK library user'}</span>
-      {isMobile ? <SpriteIcon name="library-help" className="help-library" /> : <div className="hover-area-content">
+  const renderHelp = () => {
+    if (props.hideHelp) {
+      return "";
+    }
+    if (isMobile) {
+      return <SpriteIcon name="library-help" className="help-library" />;
+    }
+    return (
+      <div className="hover-area-content">
         <div className="hover-area flex-center">
           <SpriteIcon name="library-help" />
           <div className="hover-content bold">
             {props.popupLabel ? props.popupLabel : 'Available to members of participating UK libraries.'}
           </div>
         </div>
-      </div>}
+      </div>
+    );
+  }
+
+  return (
+    <div className="google-button library-button" onClick={onClick}>
+      <SpriteIcon name="library-user-icon" className="active library-user-icon" />
+      <span>{props.label ? props.label : 'UK library user'}</span>
+      {renderHelp()}
     </div>
   );
 };

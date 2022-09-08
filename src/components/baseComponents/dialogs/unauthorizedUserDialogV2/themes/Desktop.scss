@@ -292,8 +292,15 @@
 }
 
 .auth-library-confirm-dialog {
+  .MuiPaper-root {
+    width: 20vw !important;
+  }
   .title {
     margin-bottom: 1vw;
+  }
+  .l-label {
+    font-size: 1vw; 
+    text-align: left;
   }
   .library-small-text {
     padding-top: 0.3vw;
@@ -315,6 +322,44 @@
     &:hover {
       svg {
         color: var(--theme-orange);
+      }
+    }
+  }
+
+  .library-button {
+    span {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  .ll-help-container {
+    width: 100%;
+    padding-left: 80%;
+    .hover-area-content {
+      width: 2vw;
+      height: 2vw;
+      position: relative;
+      .hover-area {
+        height: 2vw;
+        .hover-content {
+          z-index: 100;
+          width: 12.6vw;
+          display: none;
+          position: absolute;
+          background: white;
+          color: var(--theme-dark-blue);
+          border-radius: 0.4vw;
+          padding: 0.7vw 1vw;
+          right: -0.9vw;
+          text-align: left;
+          top: 2vw;
+          font-size: 1vw;
+        }
+        &:hover {
+          .hover-content {
+            display: block;
+          }
+        }
       }
     }
   }
