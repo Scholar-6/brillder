@@ -56,64 +56,66 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
       return (
         <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog auth-library-confirm-dialog">
           {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
-          <div className="title bigger bold">
+          <div className="title bigger bold head-title">
             <span>Wellcome to Brillder for libraries.</span>
           </div>
-          <div className="title">
-            <span>Great that you've clicked a brick! To play for free, please connect to your library.</span>
-          </div>
-          <div className="ll-help-container">
-            <div className="hover-area-content">
-              <div className="hover-area flex-center">
-                <SpriteIcon name="library-help" />
-                <div className="hover-content bold">
-                  Available to members of participating UK libraries.
+          <div className="padding-1-2">
+            <div className="title text-left">
+              <span>Great that you've clicked a brick! To play for free, please connect to your library.</span>
+              <div className="ll-help-container">
+                <div className="hover-area-content">
+                  <div className="hover-area flex-center">
+                    <SpriteIcon name="library-help" />
+                    <div className="hover-content bold">
+                      Requires a library card barcode and pin from a participating library
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="l-label">
-            <span>New to Brillder?</span>
-          </div>
-          <UKlibraryButton
-            label="Sign Up"
-            brick={props.brick}
-            hideHelp={true}
-            competitionId={props.competitionId}
-            history={props.history}
-            popupLabel="Requires a library card barcode and pin from a participating library"
-          />
-          <div className="l-label">
-            <span>Already a user?</span>
-          </div>
-          <UKlibraryButton
-            label="Log In"
-            brick={props.brick}
-            hideHelp={true}
-            competitionId={props.competitionId}
-            history={props.history}
-            onClick={() => {
-              if (props.brick) {
-                SetAuthBrickCash(props.brick, props.competitionId ? props.competitionId : -1);
+            <div className="l-label">
+              <span>New to Brillder?</span>
+            </div>
+            <UKlibraryButton
+              label="Sign Up"
+              brick={props.brick}
+              hideHelp={true}
+              competitionId={props.competitionId}
+              history={props.history}
+              popupLabel="Requires a library card barcode and pin from a participating library"
+            />
+            <div className="l-label">
+              <span>Already a user?</span>
+            </div>
+            <UKlibraryButton
+              label="Log In"
+              brick={props.brick}
+              hideHelp={true}
+              competitionId={props.competitionId}
+              history={props.history}
+              onClick={() => {
+                if (props.brick) {
+                  SetAuthBrickCash(props.brick, props.competitionId ? props.competitionId : -1);
+                }
+                props.history.push(LibraryLoginPage);
+              }}
+              popupLabel="Requires a library card barcode and pin from a participating library"
+            />
+            <div className="small-text library-small-text">
+              You will be redirected to the start of the Brick after selecting an option
+            </div>
+            <div className="btn-library-continue" onClick={() => {
+              if (onlyLibrary) {
+                props.notyet()
+              } else if (props.isBeforeReview) {
+                setWaringOpen(true);
+              } else {
+                props.notyet();
               }
-              props.history.push(LibraryLoginPage);
-            }}
-            popupLabel="Requires a library card barcode and pin from a participating library"
-          />
-          <div className="small-text library-small-text">
-            You will be returned to this page after connecting.
-          </div>
-          <div className="btn-library-continue" onClick={() => {
-            if (onlyLibrary) {
-              props.notyet()
-            } else if (props.isBeforeReview) {
-              setWaringOpen(true);
-            } else {
-              props.notyet();
-            }
-          }}>
-            <SpriteIcon name="cancel-custom" />
-            <span>Stay on page</span>
+            }}>
+              <SpriteIcon name="cancel-custom" />
+              <span>Stay on page</span>
+            </div>
           </div>
         </Dialog>
       )
