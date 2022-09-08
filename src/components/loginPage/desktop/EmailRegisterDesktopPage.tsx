@@ -198,9 +198,10 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         setLibraryPart(false);
       } else {
         setSuggestionFailed(true);
-        if (res.data === 'User Found') {
-          setLibraryLabelFailed(`
-          These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
+        if (res.data === 'Error occurred while checking library details') {
+          setLibraryLabelFailed(`We were unable to verify your details. Please check you have entered the correct information, or contact us if this doesn't seem right.`);
+        } else if (res.data === 'User Found') {
+          setLibraryLabelFailed(`These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
         } else {
           setLibraryLabelFailed('');
         }
