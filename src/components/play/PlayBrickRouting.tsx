@@ -795,7 +795,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             setUser={setUser}
             moveNext={coverMoveNext}
           />
-          {isPhone() && <PhonePlayShareFooter isCover={true} brick={brick} history={history} next={coverMoveNext} />}
+          {isPhone() && <PhonePlayShareFooter onlyLibrary={onlyLibrary} setLibrary={() => {
+            setUnauthorized(true);
+          }} isCover={true} brick={brick} history={history} next={coverMoveNext} />}
         </Route>
         <Route path={routes.briefRoute}>
           <Brief brick={brick} mode={mode} user={props.user} competitionId={competitionId} setCompetitionId={id => {
