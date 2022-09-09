@@ -742,6 +742,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           page={PageEnum.Play}
           user={props.user}
           link={link}
+          brick={props.brick}
+          competitionId={competitionId}
           onForbiddenClick={() => {
             setUnauthorized(true);
           }}
