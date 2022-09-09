@@ -558,39 +558,3 @@
     }
   }
 }
-
-.library-e-r-label {
-  display: flex;
-  justify-content: center;
-  > div {
-    font-size: 1.1vw;
-    width: 20vw;
-    margin-bottom: 1vw;
-  }
-
-  .hover-area-content {
-    position: relative;
-    .hover-area {
-      position: relative;
-      .hover-content {
-        z-index: 100;
-        width: 24vw;
-        display: none;
-        position: absolute;
-        background: white;
-        color: var(--theme-dark-blue);
-        border-radius: 0.4vw;
-        padding: 0.7vw 1vw;
-        right: -0.9vw;
-        text-align: left;
-        bottom: 1.6vw;
-        font-size: 1vw;
-      }
-      &:hover {
-        .hover-content {
-          display: block;
-        }
-      }
-    }
-  }
-}

@@ -17,9 +17,8 @@ import { UserPreferenceType } from "model/user";
 import { checkLibraryAccount, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
 import ProfileInput from "components/userProfilePage/components/ProfileInput";
 import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
-import HowEmailUsedPopup from "./HowEmailUsedPopup";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import TextDialog from "components/baseComponents/dialogs/TextDialog";
+import LibraryConnectDialog from "components/baseComponents/dialogs/LibraryConnected";
 
 const mapState = (state: ReduxCombinedState) => ({
   referralId: state.auth.referralId,
@@ -258,10 +257,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       <div className="logo">
         <LoginLogo />
       </div>
-      {props.isLibrary &&
-      <div className="text-white library-e-r-label">
-        <div>Thank you, your credentials have been verified. As a new user, please register an email and password to your account.</div>
-      </div>}
       <div className="button-box">
         <DesktopLoginForm
           buttonLabel="Sign up"
@@ -274,7 +269,6 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
           handleSubmit={handleLoginSubmit}
         />
       </div>
-      {props.isLibrary && <HowEmailUsedPopup />}
       <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -284,7 +278,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
-      <TextDialog isOpen={libraryConnected} label="Great your library barcode and pin is valid, please also provide an email and password" close={() => setLibraryConnected(false)} />
+      <LibraryConnectDialog isOpen={true} close={() => setLibraryConnected(false)} />
     </div>
   );
 };
