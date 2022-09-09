@@ -57,7 +57,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
         <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog auth-library-confirm-dialog">
           {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
           <div className="title bigger bold head-title">
-            <span>Wellcome to Brillder for libraries.</span>
+            <span>Welcome to Brillder for libraries</span>
           </div>
           <div className="padding-1-2">
             <div className="title text-left">
@@ -65,7 +65,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
               <div className="ll-help-container">
                 <div className="hover-area-content">
                   <div className="hover-area flex-center">
-                    <SpriteIcon name="library-help" />
+                    <SpriteIcon name="help-circle-custom" />
                     <div className="hover-content bold">
                       Requires a library card barcode and pin from a participating library
                     </div>
