@@ -38,7 +38,7 @@ const LibraryConnectDialog: React.FC<SuccessDialogProps> = props => {
             and we will only contact you in specific circumstances, such as in case of an issue with your account.
             If you need to contact us, this also helps us verify who you are. Your email address will be securely stored,
             and will never be shared with a third party. Our full terms and conditions will be shown shortly,
-            or else see <a href="https://app.brillder.com/terms">Terms</a>  at the foot of this page.
+            or else see <a target="_blank" href="https://app.brillder.com/terms">Terms</a>  at the foot of this page.
           </div>
         </div>
         <div className="dialog-footer">
