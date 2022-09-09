@@ -16,7 +16,6 @@ const LibraryConnectDialog: React.FC<SuccessDialogProps> = props => {
   return (
     <Dialog
       open={props.isOpen}
-      onClick={props.close}
       onClose={props.close}
       className="dialog-box link-copied-dialog text-dialog library-connected-popup"
     >
