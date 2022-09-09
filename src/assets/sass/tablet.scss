@@ -1416,3 +1416,45 @@ html body #root .browser-type-container .manage-classrooms-page .sorted-row {
     height: 1.2vw;
   }
 }
+
+.library-connected-popup {
+  .MuiPaper-root {
+    max-width: 40vw !important;
+  }
+  .dialog-header {
+    margin-bottom: 0 !important;
+  }
+  .title {
+    text-align: center;
+  }
+  button {
+    margin-top: 1vw;
+  }
+  .expand-area {
+    height: auto;
+    max-height: 20vw;
+    transition: all 300ms ease-in-out;
+    overflow: hidden;
+    &.hidden {
+      max-height: 0vw;
+    }
+  }
+  svg {
+    margin: 0 !important;
+    transition: all 300ms ease-in-out;
+    &.rotated {
+      transform: rotate(90deg);
+    }
+  }
+
+  .library-e-r-label {
+    > div {
+      font-size: 1.3vw;
+    }
+
+    span {
+      font-size: 1.6vw;
+      cursor: pointer;
+    }
+  }
+}
