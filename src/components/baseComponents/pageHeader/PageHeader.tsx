@@ -23,6 +23,7 @@ import { User } from 'model/user';
 import VolumeButton from '../VolumeButton';
 import BrillIconAnimated from '../BrillIconAnimated';
 import ReactiveUserCredits from 'components/userProfilePage/ReactiveUserCredits';
+import { JoinPage, LibraryLoginPage, LibraryRegisterPage } from 'components/loginPage/desktop/routes';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -258,7 +259,9 @@ class PageHeader extends Component<Props, State> {
               }
               {this.props.isAuthenticated === isAuthenticated.False &&
                 <Grid container direction="row" className="action-container">
-                  <div className="login-button" onClick={() => this.props.history.push(map.Login)}>Login | Register</div>
+                  <div className="login-button">
+                    <span onClick={() => this.props.history.push(LibraryLoginPage)}>Login</span> | <span onClick={() => this.props.history.push(LibraryRegisterPage)}>Register</span>
+                  </div>
                 </Grid>
               }
             </div>
@@ -360,7 +363,9 @@ class PageHeader extends Component<Props, State> {
               }
               {this.props.isAuthenticated === isAuthenticated.False &&
                 <Grid container direction="row" className="action-container">
-                  <div className="login-button" onClick={() => this.props.history.push(map.Login)}>Login | Register</div>
+                  <div className="login-button">
+                    <span onClick={() => this.props.history.push(map.Login)}>Login</span> | <span onClick={() => this.props.history.push(JoinPage)}>Register</span>
+                  </div>
                 </Grid>
               }
             </div>
