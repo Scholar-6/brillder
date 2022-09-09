@@ -237,7 +237,50 @@
 
 .auth-library-confirm-dialog {
   .title {
+    position: relative;
     margin-bottom: 1vw;
+
+    .ll-help-container {
+      position: absolute;
+      top: 9vw;
+      right: 5vw;
+      svg {
+        width: 7vw;
+        height: 7vw;
+      }
+      .hover-area-content {
+        width: 2vw;
+        height: 2vw;
+        position: relative;
+        .hover-area {
+          display: none;
+          height: 2vw;
+          .hover-content {
+            z-index: 100;
+            width: 12.6vw;
+            display: none;
+            position: absolute;
+            background: white;
+            color: var(--theme-dark-blue);
+            border-radius: 0.4vw;
+            padding: 0.7vw 1vw;
+            right: -0.9vw;
+            text-align: left;
+            top: 2vw;
+            font-size: 1vw;
+          }
+          &:hover {
+            .hover-content {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+
+    &.text-left {
+      margin-bottom: 4vw;
+    }
   }
   .library-small-text {
     padding-top: 0.3vw;
