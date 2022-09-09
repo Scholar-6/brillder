@@ -278,7 +278,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
-      <LibraryConnectDialog isOpen={true} close={() => setLibraryConnected(false)} />
+      <LibraryConnectDialog isOpen={libraryConnected} close={() => setLibraryConnected(false)} />
     </div>
   );
 };
