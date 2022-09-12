@@ -38,7 +38,6 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
   const [libraries, setLibraries] = useState([] as RealLibrary[]);
   const [suggestionFailed, setSuggestionFailed] = useState(false);
   const [libraryLabel, setLibraryLabelFailed] = useState("");
-  const [libraryVerified, setLibraryVerified] = useState(false);
   const [libraryConnected, setLibraryConnected] = useState(false);
   const [libraryPart, setLibraryPart] = useState(props.isLibrary ? props.isLibrary : false);
 
@@ -102,10 +101,22 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
 
   const sendLogin = async (email: string, password: string) => {
     let data = await login(email, password);
+    console.log('logged in')
     if (!data.isError) {
       if (data === "OK") {
-        props.loginSuccess();
-        return;
+        const res = await axios.get(
+          `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
+          { withCredentials: true }
+        );
+        
+        const {data} = res;
+
+        if (data.termsAndConditionsAcceptedVersion === null) {
+          props.history.push(map.TermsSignUp);
+          props.loginSuccess();
+        } else {
+          props.loginSuccess();
+        }
       }
       let { msg } = data;
       if (!msg) {
