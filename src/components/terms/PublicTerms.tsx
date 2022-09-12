@@ -38,7 +38,7 @@ class TermsPage extends Component<BricksListProps, BricksListState> {
       parts: [],
     };
 
-    axios.get("/terms.md").then((r) => {
+    axios.get("https://raw.githubusercontent.com/Scholar-6/terms/master/terms.md").then((r) => {
       if (r.data) {
         const partContents = r.data.split(/(?=\n# )/g);
         const parts = [];
