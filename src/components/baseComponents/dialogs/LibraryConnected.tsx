@@ -12,7 +12,6 @@ interface SuccessDialogProps {
 const LibraryConnectDialog: React.FC<SuccessDialogProps> = props => {
   const [clicked, setClicked] = React.useState(false);
 
-
   return (
     <Dialog
       open={props.isOpen}

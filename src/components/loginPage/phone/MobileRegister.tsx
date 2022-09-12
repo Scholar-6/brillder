@@ -20,6 +20,8 @@ import { checkLibraryAccount, getRealLibraries, RealLibrary } from "services/axi
 import ProfileInput from "components/userProfilePage/components/ProfileInput";
 import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
 import { UserPreferenceType } from "model/user";
+import { LibraryLoginPage, RegisterPage } from "../desktop/routes";
+import LibraryConnectDialog from "components/baseComponents/dialogs/LibraryConnected";
 
 interface MobileLoginProps {
   history: History;
@@ -37,6 +39,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
   const [suggestionFailed, setSuggestionFailed] = useState(false);
   const [libraryLabel, setLibraryLabelFailed] = useState("");
   const [libraryVerified, setLibraryVerified] = useState(false);
+  const [libraryConnected, setLibraryConnected] = useState(false);
   const [libraryPart, setLibraryPart] = useState(props.isLibrary ? props.isLibrary : false);
 
   const [alertMessage, setAlertMessage] = useState("");
@@ -178,11 +181,13 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
     if (pin && libraryCardNumber && libraryId) {
       var res = await checkLibraryAccount(libraryId, libraryCardNumber, pin);
       if (res.success) {
+        setLibraryConnected(true);
         setLibraryPart(false);
       } else {
-        if (res.data === 'User Found') {
-          setLibraryLabelFailed(`
-          These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
+        if (res.data === 'Error occurred while checking library details') {
+          setLibraryLabelFailed(`Please check the information you entered was correct, unless you intended to <a href="${RegisterPage}">Sign Up</a>? Otherwise, please contact us if this doesn't seem right.`);
+        } else if (res.data === 'User Found') {
+          setLibraryLabelFailed(`These credentials have already been connected to an account. Did you mean to <a href="${LibraryLoginPage}">Sign In</a>? Please contact us if this doesn't seem right.`);
         } else {
           setLibraryLabelFailed('');
         }
@@ -283,6 +288,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
+      <LibraryConnectDialog isOpen={libraryConnected} close={() => setLibraryConnected(false)} />
     </div>
   );
 }
