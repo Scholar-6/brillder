@@ -10,7 +10,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
 import { checkAdmin } from 'components/services/brickService';
-import { getSuggestedKeywords } from 'services/axios/brick';
+import { getSuggestedByTitles, getSuggestedKeywords } from 'services/axios/brick';
 
 
 interface ResultObj {
@@ -44,14 +44,15 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
   const search = async () => {
     let res: ResultObj[] = [];
 
-    const getTitlesResult = () => {
-      const titleRes = props.bricks.filter(b => stripHtml(b.title).toLowerCase().indexOf(searchString) >= 0);
-  
-      for (let brick of titleRes) {
-        res.push({
-          isTitleRes: true,
-          brick: brick
-        });
+    const getTitlesResult = async () => {
+      const titleRes = await getSuggestedByTitles(searchString);
+      if (titleRes) {
+        for (let brick of titleRes) {
+          res.push({
+            isTitleRes: true,
+            brick: brick.body
+          });
+        }
       }
     }
 

@@ -141,6 +141,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [restoredFromCash, setRestored] = useState(false);
   const [isSkipOpen, setPlaySkip] = useState(false);
+  const [onlyLibrary, setOnlyLibrary] = useState(false);
 
   const [activeCompetition, setActiveCompetition] = useState(null as any | null); // active competition
 
@@ -432,8 +433,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
     const values = queryString.parse(location.search);
 
-    console.log(location);
-
     if (values.origin === 'heartofmercia') {
       SetLoginRedirectUrl(location.pathname);
       SetHeartOfMerciaUser();
@@ -442,6 +441,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
     }
 
+    if (values.origin === 'library') {
+      setOnlyLibrary(true);
+      toggleSideBar(true);
+    }
     /*eslint-disable-next-line*/
   }, [])
 
@@ -722,11 +725,34 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
     if (!isPhone() && sidebarRolledUp) {
       return <HomeButton history={history} onClick={() => {
-        setPlaySkip(true);
+        if (onlyLibrary && !props.user) {
+          setUnauthorized(true);
+        } else {
+          setPlaySkip(true);
+        }
       }} />;
     }
     if (headerHidden) {
       return <div></div>;
+    }
+
+    if (onlyLibrary && !props.user) {
+      return (
+        <PageHeadWithMenu
+          page={PageEnum.Play}
+          user={props.user}
+          link={link}
+          brick={props.brick}
+          competitionId={competitionId}
+          onForbiddenClick={() => {
+            setUnauthorized(true);
+          }}
+          suggestions={true}
+          history={history}
+          search={search}
+          searching={searching}
+        />
+      );
     }
 
     return (
@@ -769,7 +795,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             setUser={setUser}
             moveNext={coverMoveNext}
           />
-          {isPhone() && <PhonePlayShareFooter isCover={true} brick={brick} history={history} next={coverMoveNext} />}
+          {isPhone() && <PhonePlayShareFooter onlyLibrary={onlyLibrary} setLibrary={() => {
+            setUnauthorized(true);
+          }} isCover={true} brick={brick} history={history} next={coverMoveNext} />}
         </Route>
         <Route path={routes.briefRoute}>
           <Brief brick={brick} mode={mode} user={props.user} competitionId={competitionId} setCompetitionId={id => {
@@ -1044,7 +1072,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           competitionId={competitionId}
           isOpen={unauthorizedOpen}
           notyet={() => {
-            history.push(map.ViewAllPage);
+            if (onlyLibrary) {
+              setUnauthorized(false);
+            } else {
+              history.push(map.ViewAllPage);
+            }
           }}
           registered={() => {
             history.push(routes.playReview(brick));

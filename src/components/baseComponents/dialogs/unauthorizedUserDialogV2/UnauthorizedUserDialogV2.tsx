@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import Dialog from "@material-ui/core/Dialog";
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 import './UnauthorizedUserDialog.scss';
 import SpriteIcon from "../../SpriteIcon";
@@ -17,6 +18,7 @@ import { Brick } from "model/brick";
 import MicrosoftDesktopButton from "components/loginPage/desktop/MicrosoftDesktopButton";
 import UKlibraryButton from "components/loginPage/components/UKLibraryButton";
 import FlexLinesWithOr from "components/baseComponents/FlexLinesWithOr/FlexLinesWithOr";
+import { LibraryLoginPage } from "components/loginPage/desktop/routes";
 
 interface UnauthorizedProps {
   isOpen: boolean;
@@ -35,12 +37,90 @@ const TabletTheme = React.lazy(() => import('./themes/TabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/DesktopTheme'));
 
 const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
-  const [warningOpen, setWaringOpen] = React.useState(false);
+  const [onlyLibrary, setOnlyLibrary] = useState(false);
 
-  const [registerClicked, setRegister] = React.useState(false);
-  const [registerWithEmailClicked, setRegisterEmail] = React.useState(false);
+  const [warningOpen, setWaringOpen] = useState(false);
+
+  const [registerClicked, setRegister] = useState(false);
+  const [registerWithEmailClicked, setRegisterEmail] = useState(false);
+
+  useEffect(() => {
+    const values = queryString.parse(location.search);
+    if (values.origin === 'library') {
+      setOnlyLibrary(true);
+    }
+  }, []);
 
   const renderDialog = () => {
+    if (onlyLibrary) {
+      return (
+        <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog auth-library-confirm-dialog">
+          {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
+          <div className="title bigger bold head-title">
+            <span>Welcome to Brillder for libraries</span>
+          </div>
+          <div className="padding-1-2">
+            <div className="title text-left">
+              <span>Great that you've clicked a brick! To play for free, please connect to your library.</span>
+              <div className="ll-help-container">
+                <div className="hover-area-content">
+                  <div className="hover-area flex-center">
+                    <SpriteIcon name="help-circle-custom" />
+                    <div className="hover-content bold">
+                      Requires a library card barcode and pin from a participating library
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="l-label">
+              <span>New to Brillder?</span>
+            </div>
+            <UKlibraryButton
+              label="Sign Up"
+              brick={props.brick}
+              hideHelp={true}
+              competitionId={props.competitionId}
+              history={props.history}
+              popupLabel="Requires a library card barcode and pin from a participating library"
+            />
+            <div className="l-label">
+              <span>Already a user?</span>
+            </div>
+            <UKlibraryButton
+              label="Log In"
+              brick={props.brick}
+              hideHelp={true}
+              competitionId={props.competitionId}
+              history={props.history}
+              onClick={() => {
+                if (props.brick) {
+                  SetAuthBrickCash(props.brick, props.competitionId ? props.competitionId : -1);
+                }
+                props.history.push(LibraryLoginPage);
+              }}
+              popupLabel="Requires a library card barcode and pin from a participating library"
+            />
+            <div className="small-text library-small-text">
+              You will be redirected to the start of the Brick after selecting an option
+            </div>
+            <div className="btn-library-continue" onClick={() => {
+              if (onlyLibrary) {
+                props.notyet()
+              } else if (props.isBeforeReview) {
+                setWaringOpen(true);
+              } else {
+                props.notyet();
+              }
+            }}>
+              <SpriteIcon name="cancel-custom" />
+              <span>Stay on page</span>
+            </div>
+          </div>
+        </Dialog>
+      )
+    }
+
     if (registerClicked) {
       if (registerWithEmailClicked) {
         return (
@@ -103,16 +183,16 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
           <span>Continue with Email</span>
         </button>
         {!props.isBeforeReview &&
-        <button className="btn btn-md bg-blue" onClick={() => {
-          if (props.isBeforeReview) {
-            setWaringOpen(true);
-          } else {
-            props.notyet();
-          }
-        }}>
-          <SpriteIcon name="feather-search-custom" />
-          <span>Keep exploring</span>
-        </button>}
+          <button className="btn btn-md bg-blue" onClick={() => {
+            if (props.isBeforeReview) {
+              setWaringOpen(true);
+            } else {
+              props.notyet();
+            }
+          }}>
+            <SpriteIcon name="feather-search-custom" />
+            <span>Keep exploring</span>
+          </button>}
         <div className="small-text">
           You will be redirected to this page after making your choice
         </div>

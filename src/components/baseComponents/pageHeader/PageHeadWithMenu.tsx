@@ -9,6 +9,7 @@ import NotificationPopup from "components/baseComponents/notificationPopup/Notif
 
 import MenuDropdown from './MenuDropdown';
 import { isPhone } from "services/phone";
+import { Brick } from "model/brick";
 
 export enum PageEnum {
   None,
@@ -30,8 +31,11 @@ interface HeaderMenuProps {
   user: User;
   placeholder?: string;
   page: PageEnum;
+  brick?: Brick;
+  competitionId?: number;
   menuClass?: string;
   suggestions?: boolean;
+  onForbiddenClick?(): void;
   
   search?(): void;
   searching?(v: string): void;
@@ -104,6 +108,9 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           searchPlaceholder={placeholder}
           link={this.props.link}
           page={this.props.page}
+          brick={this.props.brick}
+          competitionId={this.props.competitionId}
+          onForbiddenClick={this.props.onForbiddenClick}
           suggestions={this.props.suggestions}
           history={this.props.history}
           search={() => this.props.search && this.props.search()}

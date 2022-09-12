@@ -36,7 +36,6 @@
     }
 
     ol {
-      margin-left: 1vw;
       overflow-x: hidden;
     }
 
@@ -110,6 +109,15 @@
         width: 10vw;
         height: 10vw;
       }
+    }
+  }
+}
+
+
+.terms-page {
+  li {
+    p {
+      display: inline;
     }
   }
 }

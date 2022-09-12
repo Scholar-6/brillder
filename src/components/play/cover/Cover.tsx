@@ -1,33 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import DynamicFont from 'react-dynamic-font';
-
-import { AcademicLevelLabels, Brick } from "model/brick";
+import queryString from 'query-string';
+import { isMobile } from "react-device-detect";
 
 import CoverImage from "./CoverImage";
 import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { useEffect } from "react";
-import { rightKeyPressed } from "components/services/key";
-import { SubscriptionState, User } from "model/user";
-import { checkAdmin, checkPublisher, isAorP } from "components/services/brickService";
-import { isPhone } from "services/phone";
-import { isMobile } from "react-device-detect";
-import { stripHtml } from "components/build/questionService/ConvertService";
 import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
-import { GENERAL_SUBJECT } from "components/services/subject";
 import SponsorImageComponent from "./SponsorImage";
 import CoverAuthorRow from "./components/coverAuthorRow/CoverAuthorRow";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
-
-import { CreateByEmailRes } from "services/axios/user";
 import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
-import map from "components/map";
-import CoverCreditsPlay from "./components/coverAuthorRow/CoverCreditsPlay";
-import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 import MathInHtml from "../baseComponents/MathInHtml";
 import CompetitionDialog from "./components/CompetitionDialog";
+import CoverCreditsPlay from "./components/coverAuthorRow/CoverCreditsPlay";
+import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
+
+import map from "components/map";
+import { isPhone } from "services/phone";
+import { stripHtml } from "components/build/questionService/ConvertService";
+import { GENERAL_SUBJECT } from "components/services/subject";
+import { AcademicLevelLabels, Brick } from "model/brick";
+import { CreateByEmailRes } from "services/axios/user";
+import { rightKeyPressed } from "components/services/key";
+import { SubscriptionState, User } from "model/user";
+import { checkAdmin, checkPublisher, isAorP } from "components/services/brickService";
 
 
 interface Props {
@@ -49,23 +48,24 @@ const TabletTheme = React.lazy(() => import('./themes/CoverTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 
 const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
-  const [competitionData, setCompetitionData] = React.useState(null as any);
-  const [bioOpen, setBio] = React.useState(false);
-  const [editorBioOpen, setEditorBio] = React.useState(false);
+  const [competitionData, setCompetitionData] = useState(null as any);
+  const [bioOpen, setBio] = useState(false);
+  const [editorBioOpen, setEditorBio] = useState(false);
+  const [onlyLibrary, setOnlyLibrary] = useState(false);
 
-  const [playClicked, setClickPlay] = React.useState(false);
-  const [unauthPopupShown, setUnauthPopupShown] = React.useState(false)
-  const [unauthorizedOpenV2, setUnauthorizedV2] = React.useState(false);
-
-  const [firstPhonePopup, setFirstPhonePopup] = React.useState(false);
-  const [secondPhonePopup, setSecondPhonePopup] = React.useState(false);
-
-  const userTimeout = setTimeout(() => {
-    if (!props.user) {
-      setUnauthorizedV2(true);
+  useEffect(() => {
+    const values = queryString.parse(location.search);
+    if (values.origin === 'library') {
+      setOnlyLibrary(true);
     }
-  }, 10000);
+  }, []);
 
+  const [playClicked, setClickPlay] = useState(false);
+  const [unauthPopupShown, setUnauthPopupShown] = useState(false)
+  const [unauthorizedOpenV2, setUnauthorizedV2] = useState(false);
+
+  const [firstPhonePopup, setFirstPhonePopup] = useState(false);
+  const [secondPhonePopup, setSecondPhonePopup] = useState(false);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -73,6 +73,13 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         startBrick();
       }
     }
+
+    const userTimeout = setTimeout(() => {
+      if (!props.user) {
+        setUnauthorizedV2(true);
+      }
+    }, 10000);
+    
 
     document.addEventListener("keydown", handleMove, false);
 
@@ -90,7 +97,11 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   }, [props.activeCompetition]);
 
   const startBrick = () => {
-    props.moveNext();
+    if (!props.user && onlyLibrary) {
+      setUnauthorizedV2(false);
+    } else {
+      props.moveNext();
+    }
   };
 
   const renderFirstRow = () => {
@@ -181,6 +192,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         onClick={() => {
           if (props.user) {
             startBrick();
+          } if (onlyLibrary) {
+            setUnauthorizedV2(true);
           } else {
             if (!unauthPopupShown) {
               setUnauthorizedV2(true);
@@ -204,7 +217,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           <div className="brick-title q-brick-title">
             <h1 dangerouslySetInnerHTML={{ __html: brick.title }} />
           </div>
-          <CoverAuthorRow brick={brick} />
+          <CoverAuthorRow brick={brick} onlyLibrary={onlyLibrary} setLibraryLogin={() => setUnauthorizedV2(true)} />
           {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
             user={props.user}
             brick={brick}
@@ -326,7 +339,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         />
         <CoverBioDialog isOpen={bioOpen} user={brick.author} close={() => setBio(false)} />
         {brick.editors && brick.editors.length > 0 &&
-          <CoverBioDialog isOpen={editorBioOpen} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
+          <CoverBioDialog isOpen={editorBioOpen} onlyLibrary={onlyLibrary} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
         }
         {props.canSeeCompetitionDialog && competitionData &&
           <CompetitionDialog
@@ -355,7 +368,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 <h1 className="brick-title q-brick-title dynamic-title">
                   <DynamicFont content={stripHtml(brick.title)} />
                 </h1>
-                <CoverAuthorRow brick={brick} />
+                <CoverAuthorRow brick={brick} onlyLibrary={onlyLibrary} setLibraryLogin={() => setUnauthorizedV2(true)} />
                 <div className="image-container centered">
                   <CoverImage
                     locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user?.id)}
@@ -402,7 +415,13 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   </div>
                   <div className="keywords-row">
                     <SpriteIcon name="hash" />
-                    <KeyWordsPreview keywords={brick.keywords} onClick={keyword => props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)} />
+                    <KeyWordsPreview keywords={brick.keywords} onClick={keyword => {
+                      if (onlyLibrary && !props.user) {
+                        setUnauthorizedV2(true);
+                      } else {
+                        props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)
+                      }
+                    }} />
                     {!isMobile && props.user && checkAdmin(props.user.roles) && <div className="btn b-green text-white" onClick={() => props.history.push(map.Proposal(brick.id))}>Edit</div>}
                   </div>
                   <CoverTimer brickLength={brick.brickLength} />

@@ -19,9 +19,10 @@ const LibraryFailedDialog: React.FC<DialogProps> = ({ isOpen, label, close }) =>
           </div>
         </div>
         <div className="text-center custom-title-d35">Authentication unsuccessful</div>
-        <div className="custom-text-d35">
-          {label ? label : `These credentials have already been connected to an account. Please check you are logged in with the same email address that you gave when connecting to your library, or contact us if this doesn't seem right.`}
-        </div>
+        <div className="custom-text-d35" dangerouslySetInnerHTML={{ 
+          __html: label ? label : `These credentials have already been connected to an account. Please check you are logged in with the same email address that you gave when connecting to your library, or contact us if this doesn't seem right.`
+        }}
+        />
       </div>
     </Dialog>
   );

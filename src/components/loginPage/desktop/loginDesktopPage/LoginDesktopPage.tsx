@@ -18,12 +18,13 @@ import PhoneIcon from "../PhoneIcon";
 import TypingLabel from "components/baseComponents/TypingLabel";
 import EmailRegisterDesktopPage from "../EmailRegisterDesktopPage";
 import Delayed from "components/services/Delayed";
-import { FirstPage, EmailSignPage, JoinPage, RegisterPage, LibraryRegisterPage } from "../routes";
+import { FirstPage, EmailSignPage, JoinPage, RegisterPage, LibraryRegisterPage, LibraryLoginPage } from "../routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
 import { GetOrigin } from "localStorage/origin";
 import MicrosoftDesktopButton from "../MicrosoftDesktopButton";
 import LibraryDesktopButton from "../LibraryDesktopButton";
 import FlexLinesWithOr from "components/baseComponents/FlexLinesWithOr/FlexLinesWithOr";
+import LibraryLoginDesktopPage from "../LibraryLoginDesktopPage";
 
 
 const DesktopTheme = React.lazy(() => import('./themes/LoginDesktopTheme'));
@@ -48,7 +49,12 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
     var origin = GetOrigin();
     if (origin === 'library') {
       setLibraryOrigin(true);
-      history.push(LibraryRegisterPage);
+      const {pathname} = history.location;
+      if (pathname.search(LibraryRegisterPage) === 0) {
+      } if (pathname.search(LibraryLoginPage) === 0) {
+      } else {
+        history.push(LibraryRegisterPage);
+      }
     } else {
       // get it from query string
     }
@@ -70,14 +76,14 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
   } else if (pathname === LibraryRegisterPage) {
     page = LoginPage.LibraryRegister;
   }
-  
+
 
   const moveToFirstPage = () => history.push(FirstPage)
   const moveToEmailLogin = () => history.push(EmailSignPage);
   const moveToJoin = () => history.push(JoinPage);
   const moveToRegister = () => history.push(RegisterPage);
   const moveToLibraryRegister = () => history.push(LibraryRegisterPage);
-
+  const moveToLibraryLogin = () => history.push(LibraryLoginPage);
 
   return (
     <React.Suspense fallback={<></>}>
@@ -98,6 +104,9 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
           </Route>
           <Route exact path={RegisterPage}>
             <EmailRegisterDesktopPage history={history} />
+          </Route>
+          <Route exact path={LibraryLoginPage}>
+            <LibraryLoginDesktopPage history={history} isLibrary={true} />
           </Route>
           <Route exact path={JoinPage}>
             <div className="left-part right">
@@ -141,6 +150,10 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
               <div className="button-box m-t-3vh">
                 <MicrosoftDesktopButton />
               </div>
+              <div className="button-box">
+                <LibraryDesktopButton onClick={moveToLibraryLogin} />
+              </div>
+              <FlexLinesWithOr />
               <div className="button-box">
                 <RegisterDesktopButton label="Sign in with email" onClick={moveToEmailLogin} />
               </div>

@@ -17,6 +17,9 @@ import { UserPreferenceType } from "model/user";
 import { checkLibraryAccount, getRealLibraries, RealLibrary } from "services/axios/realLibrary";
 import ProfileInput from "components/userProfilePage/components/ProfileInput";
 import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import LibraryConnectDialog from "components/baseComponents/dialogs/LibraryConnected";
+import { LibraryLoginPage, RegisterPage } from "./routes";
 
 const mapState = (state: ReduxCombinedState) => ({
   referralId: state.auth.referralId,
@@ -43,16 +46,16 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
   const [libraries, setLibraries] = useState([] as RealLibrary[]);
   const [suggestionFailed, setSuggestionFailed] = useState(false);
   const [libraryLabel, setLibraryLabelFailed] = useState("");
-
-  console.log(libraryId);
+  const [verifyingLibrary, setVerifyingLibrary] = useState(false);
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState(props.email || "");
   const [password, setPassword] = useState("");
-  const [isLoginWrong, setLoginWrong] = React.useState(false);
+  const [isLoginWrong, setLoginWrong] = useState(false);
 
+  const [libraryConnected, setLibraryConnected] = useState(false);
   const [libraryPart, setLibraryPart] = useState(props.isLibrary ? props.isLibrary : false);
 
   const validateForm = () => {
@@ -187,14 +190,18 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
 
   const verifyLibrary = async () => {
     if (pin && libraryCardNumber && libraryId) {
+      setVerifyingLibrary(true);
       var res = await checkLibraryAccount(libraryId, libraryCardNumber, pin);
+      setVerifyingLibrary(false);
       if (res.success) {
+        setLibraryConnected(true);
         setLibraryPart(false);
       } else {
         setSuggestionFailed(true);
-        if (res.data === 'User Found') {
-          setLibraryLabelFailed(`
-          These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
+        if (res.data === 'Error occurred while checking library details') {
+          setLibraryLabelFailed(`Please check the information you entered was correct, unless you intended to <a href="${RegisterPage}">Sign Up</a>? Otherwise, please contact us if this doesn't seem right.`);
+        } else if (res.data === 'User Found') {
+          setLibraryLabelFailed(`These credentials have already been connected to an account. Did you mean to <a href="${LibraryLoginPage}">Sign In</a>? Please contact us if this doesn't seem right.`);
         } else {
           setLibraryLabelFailed('');
         }
@@ -232,8 +239,11 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="button-box">
           <ProfileInput autoCompleteOff={true} value={pin} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
         </div>
-        <div className="button-box">
-          <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
+        <div className="button-box button-spinning">
+          <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>
+            {verifyingLibrary && <SpriteIcon className="spinning" name="f-loader" />}
+            <span>Link Library</span>
+          </button>
         </div>
         <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => {
           setSuggestionFailed(false);
@@ -269,6 +279,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
+      <LibraryConnectDialog isOpen={libraryConnected} close={() => setLibraryConnected(false)} />
     </div>
   );
 };

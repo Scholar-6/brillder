@@ -1,4 +1,4 @@
-_Last Updated: 24th March 2021_
+_Last Updated: 7th September 2022_
 
 # User Agreement
 
@@ -413,3 +413,70 @@ By signing up with a user account and accepting the terms of use, you are agreei
 If you find our conduct or response unsatisfactory in relation to an inquiry or complaint, you may  submit a formal complaint to the ICO (the Information Commissioner&#39;s Office), which is
 
 responsible for General Data Protection Regulation in the UK. It can be found here: [https://ico.org.uk/](https://ico.org.uk/)
+
+# C BRILLS & COMPETITIONS
+
+1 **Brills in Normal Play**. All users collect brills when they play bricks. These are reward points 
+  	but have no financial value or equivalence to currency. Their cash value is set and redeemed 
+  	according to the context and judgement of Brillder’s operators, and no redemption is possible    
+    without the exchange of information and permissions by the player/claimant (see 8 below). In 
+  	normal play they correspond with percentage  scores achieved of 50% or above. (A score of 
+    79% earns 79 brills; 49% zero brills.) Normal play is distinct from competition play.
+
+2 **Brills in Normal Play**. 100% bonus in Normal Play. If a user scores 100%, they get 200 brills, reflecting a high score bonus.
+
+3 **Replaying and Brills**. All users can earn extra brills if they play a brick again. Thus a score of 
+    65% at a first attempt would receive 65 brills, which, if followed by a score of 73% in a second attempt, would earn 8 additional brills (not 73 additional brills). A second attempt which achieved a lower score would not have brills deducted.
+
+4 **Brills in Competition Play**. Brillder sets competitions in four academic fields every week     
+  	(unless a technical or production problem prevents this) which can be found on the Prizes Page: 
+  	General & Topical, Humanities (e.g. History & Literature), Maths and Science (normally, one of 
+   	Biology, Chemistry and Physics). It ‘costs’ two credits per brick rather than one to enter a   
+ 	  competition, but all brill scores above 50% are doubled for all players, so a score of 81% earns 
+  	162 brills. However, the main benefit of competitions is the prize pots which can be adjusted 
+  	from week to week but may be worth thousands of brills for each brick. Usually the top three 
+  	placed players share the prize pot with 70% of the pot reserved for an outright winner. If there 
+  	are more than three players who cannot be separated (e.g. twelve on the same top score), the 
+   	pot is divided between those on level scores. If large numbers of players are competing, Brillder 
+  	may also award a smaller proportion of brills based on finishing in the top quartile / 20% etc.
+
+5 **Brills for Institution** (e.g. Sixth Form College)  and **Library Users** (e.g. within free local Public 
+  	Library digital resources) may earn brills but these cannot be exchanged for cash or any other 
+  	prize, although an Institution or Library User 
+
+6 **Complaints and Decisions**. Anyone can make a mistake and we are always receptive to an 
+  	inquiry from a player who believes their scores are wrong. We are committed to conducting all 
+  	aspects of both education and competition ethically. However, Brillder is also a new start-up and 
+  	sometimes we have to take tough or unpopular decisions. We reserve the right to ‘move the 
+  	Goalposts’ should competition circumstances become unmanageable. We do not accept that 
+  	playing a brick is, in and of itself, onerous and unedifying, or the argument that a player would 
+   	only play on the expectation of a cash reward.  Brills are intended to incentivise 
+ 	  learning and enhance the sense of reward from study.
+
+7 **Brills Valuation**. ‘Premium’, paying subscribing players can currently trade in brills for cash 
+ 	prizes. We only award cash prizes to subscribers and cannot award prizes to players who earn 
+  	brills for free (e.g. via an Institution or Library account), nor can we transfer ‘historical’ brills  
+  	from an institution or Library user’s account to a new premium account.  On occasion - such as a 
+  	promotional competition - we may give players an option to ‘purchase’ a premium subscription 
+  	with brills earned when playing for free, but only in the case of introductory or trial accounts. If 
+     	brills are earned by legitimate paying subscribers, we reserve the right to set or change the 
+  	‘exchange rate’ - for example, reducing value  in cases where an individual has won a large 
+ 	number of brills from a competition in which there were few or no other competitors.
+
+8 **Promotional Context of Prize Claims**. The ability to exchange brills for real cash prizes requires 
+  	Brillder to be able to obtain  information from winners, as well as  the permission to post such 
+  	information. This information may include full name, school, college or institution where the 
+ 	  winner studies (if in full time study), the winner’s academic year group and age, and a selfie 
+   	taken with the Brillder cash prize certificate on a screen behind the winner, as well as a sentence 
+  	or two on what you think of Brillder, bricks and the competitions. All of these factors enable us 
+  	to prove to prospective players that existing winners are real.
+
+9 **Bank Account and Age of Claimants**. Claimants must be sixteen or older (if under sixteen, they 
+ 	can keep saving brills until they are sixteen). Anyone sixteen or over can open a bank account for 
+  	free without parental permission. The name on the bank account must correspond with your 
+  	given name.
+
+10 **The Brillderverse**. Brillder’s style, content, catalogue, competitions, terminology, format and 
+   	rules are the intellectual property of the company and we reserve the right to alter any 
+element of our product and system. 
+

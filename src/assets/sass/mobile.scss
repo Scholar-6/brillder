@@ -527,7 +527,7 @@
   .logo-box {
     background: var(--theme-light-blue) !important;
     position: relative;
-    height: 40% !important;
+    height: 35% !important;
 
     .logo-box-inner {
       height: 65% !important;
@@ -561,7 +561,8 @@
   .mobile-button-box {
     display: block !important;
     padding-top: 9% !important;
-    margin-top: 8% !important;
+    margin-top: 4vh !important;
+    height: calc(65% - 4vh) !important;
 
     .input-block.button-box {
       margin: 0 !important;
@@ -607,6 +608,10 @@
         color: var(--theme-dark-blue);
       }
     }
+  }
+
+  .m-library-box {
+    padding-top: 0 !important;
   }
 
   .input-block.button-box .orange-button {
@@ -688,7 +693,7 @@
   }
 
   .mobile-register-library {
-    $box-height: 12%;
+    $box-height: 13%;
     .title {
       font-family: $font-family-bold;
       background: var(--theme-light-blue) !important;
@@ -716,10 +721,14 @@
       align-items: center;
       justify-content: center;
     }
+    .m-top-library-label {
+      height: 7%;
+      font-size: 4.9vw;
+    }
     .mobile-library-box {
       position: relative;
       height: $box-height;
-      margin-bottom: 3.5vh;
+      margin-bottom: 3%;
 
       .select-library {
         width: 100%;
@@ -755,8 +764,19 @@
       }
     }
 
+    .m-last-library-label {
+      display: flex;
+      font-size: 4.9vw;
+      margin-top: 4%;
+
+      .bold {
+        margin-right: 1.5vw;
+      }
+    }
+
     .button-box {
-      margin-bottom: 3.5vh;
+      margin-top: 1%;
+      margin-bottom: 4%;
       height: $box-height;
       input {
         color: white;
@@ -771,6 +791,31 @@
         height: 100%;
         margin: 0 !important;
       }
+
+      &.m-pin-box {
+        .input-block {
+          width: 70%;
+        }
+        .m-library-check {
+          height: 100%;
+          width: 30%;
+          margin-left: 3vw;
+          .sign-in-button {
+            background: var(--blue) !important;
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+    .m-library-line {
+      margin-top: 2%;
+      height: 1px;
+      opacity: 0.6;
+      background: white;
+      margin-left: 3vw;
+      margin-right: 3vw;
+      width: calc(100% - 6vw);
     }
     .library-button-box {
       height: $box-height !important;
@@ -788,8 +833,6 @@
     }
   }
 
-  .mobile-join {
-
     .google-button,
     .email-button {
       font-size: 5.5vw !important;
@@ -803,7 +846,6 @@
     .fe-sign-in {
       margin-left: 3vw;
     }
-  }
 }
 
 .mobile-button-box {
@@ -816,6 +858,16 @@
   flex-direction: column-reverse;
   justify-content: flex-end !important;
   padding: 8vh 7vw 0;
+
+  .library-button {
+    background: var(--blue) !important;
+    border-radius: 4vw;
+
+    span {
+      margin-left: 10vw;
+      color: white !important;
+    }
+  }
 }
 
 // zendesk
@@ -2161,5 +2213,55 @@
     padding-right: 1.3vw;
     width: 5vw;
     height: 5vw;
+  }
+}
+
+.library-connected-popup {
+  .MuiPaper-root {
+    max-width: 90vw !important;
+  }
+  .dialog-header {
+    margin-bottom: 0 !important;
+  }
+  .title {
+    margin-top: 4vw;
+    text-align: center;
+    font-size: 6vw;
+  }
+  button {
+    margin-top: 1vw;
+  }
+  .expand-area {
+    height: auto;
+    max-height: 40vw;
+    transition: all 300ms ease-in-out;
+    overflow: hidden;
+    &.hidden {
+      max-height: 0vw;
+    }
+  }
+  svg {
+    margin: 0 !important;
+    transition: all 300ms ease-in-out;
+    &.rotated {
+      transform: rotate(90deg);
+    }
+  }
+
+  .library-e-r-label {
+    margin-bottom: 3vw;
+    > div {
+      font-size: 4.5vw;
+    }
+
+    svg {
+      width: 5vw;
+      height: 5vw;
+    }
+
+    span {
+      font-size: 4.9vw;
+      cursor: pointer;
+    }
   }
 }

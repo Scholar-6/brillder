@@ -20,6 +20,8 @@ import { checkLibraryAccount, getRealLibraries, RealLibrary } from "services/axi
 import ProfileInput from "components/userProfilePage/components/ProfileInput";
 import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
 import { UserPreferenceType } from "model/user";
+import { LibraryLoginPage, RegisterPage } from "../desktop/routes";
+import LibraryConnectDialog from "components/baseComponents/dialogs/LibraryConnected";
 
 interface MobileLoginProps {
   history: History;
@@ -36,6 +38,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
   const [libraries, setLibraries] = useState([] as RealLibrary[]);
   const [suggestionFailed, setSuggestionFailed] = useState(false);
   const [libraryLabel, setLibraryLabelFailed] = useState("");
+  const [libraryConnected, setLibraryConnected] = useState(false);
   const [libraryPart, setLibraryPart] = useState(props.isLibrary ? props.isLibrary : false);
 
   const [alertMessage, setAlertMessage] = useState("");
@@ -98,10 +101,22 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
 
   const sendLogin = async (email: string, password: string) => {
     let data = await login(email, password);
+    console.log('logged in')
     if (!data.isError) {
       if (data === "OK") {
-        props.loginSuccess();
-        return;
+        const res = await axios.get(
+          `${process.env.REACT_APP_BACKEND_HOST}/user/current`,
+          { withCredentials: true }
+        );
+        
+        const {data} = res;
+
+        if (data.termsAndConditionsAcceptedVersion === null) {
+          props.history.push(map.TermsSignUp);
+          props.loginSuccess();
+        } else {
+          props.loginSuccess();
+        }
       }
       let { msg } = data;
       if (!msg) {
@@ -177,11 +192,13 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
     if (pin && libraryCardNumber && libraryId) {
       var res = await checkLibraryAccount(libraryId, libraryCardNumber, pin);
       if (res.success) {
+        setLibraryConnected(true);
         setLibraryPart(false);
       } else {
-        if (res.data === 'User Found') {
-          setLibraryLabelFailed(`
-          These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
+        if (res.data === 'Error occurred while checking library details') {
+          setLibraryLabelFailed(`Please check the information you entered was correct, unless you intended to <a href="${RegisterPage}">Sign Up</a>? Otherwise, please contact us if this doesn't seem right.`);
+        } else if (res.data === 'User Found') {
+          setLibraryLabelFailed(`These credentials have already been connected to an account. Did you mean to <a href="${LibraryLoginPage}">Sign In</a>? Please contact us if this doesn't seem right.`);
         } else {
           setLibraryLabelFailed('');
         }
@@ -197,7 +214,8 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
           <div className="title">
             Brillder for Libraries
           </div>
-          <div className="mobile-button-box button-box m-register-box">
+          <div className="mobile-button-box button-box m-register-box m-library-box">
+            <div className="m-top-library-label flex-center">Select your library authority or region</div>
             <div className="mobile-library-box">
               {(libraryId === -1 || libraryId === null) && <div className="absolute-placeholder unselectable" onClick={e => e.preventDefault()}>Library Authority</div>}
               <Select
@@ -213,17 +231,20 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
                 ))}
               </Select>
             </div>
+            {libraryId && libraryId > 0 &&
+            <div className="m-top-library-label flex-center">Please verify your library barcode and pin</div>}
+            {libraryId && libraryId > 0 &&
             <div className="button-box">
               <ProfileInput autoCompleteOff={true} value={libraryCardNumber} validationRequired={false} className="" type="text" onChange={e => setCardNumber(e.target.value)} placeholder="Library Card Barcode" />
-            </div>
-            <div className="button-box">
+            </div>}
+            {libraryId && libraryId > 0 &&
+            <div className="button-box m-pin-box">
               <ProfileInput autoCompleteOff={true} value={pin} validationRequired={false} className="" type="password" onChange={e => setPin(e.target.value)} placeholder="Pin" />
-            </div>
-            <div className="input-block library-button-box">
-              <div className="button-box">
-                <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>Link Library</button>
+              <div className="m-library-check">
+                <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={verifyLibrary}>OK</button>
               </div>
-            </div>
+            </div>}
+            {libraryId && libraryId > 0 && <div className="m-library-line"></div>}
             {!keyboardShown &&
               <div className="mobile-policy-text">
                 <TermsLink history={props.history} />
@@ -278,6 +299,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
+      <LibraryConnectDialog isOpen={libraryConnected} close={() => setLibraryConnected(false)} />
     </div>
   );
 }
