@@ -19,6 +19,7 @@ import ProfileInput from "components/userProfilePage/components/ProfileInput";
 import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import LibraryConnectDialog from "components/baseComponents/dialogs/LibraryConnected";
+import { LibraryLoginPage, RegisterPage } from "./routes";
 
 const mapState = (state: ReduxCombinedState) => ({
   referralId: state.auth.referralId,
@@ -198,9 +199,9 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
       } else {
         setSuggestionFailed(true);
         if (res.data === 'Error occurred while checking library details') {
-          setLibraryLabelFailed(`We were unable to verify your details. Please check you have entered the correct information, or contact us if this doesn't seem right.`);
+          setLibraryLabelFailed(`Please check the information you entered was correct, unless you intended to <a href="${RegisterPage}">Sign Up</a>? Otherwise, please contact us if this doesn't seem right.`);
         } else if (res.data === 'User Found') {
-          setLibraryLabelFailed(`These credentials have already been connected to an account. Please try logging in with your email, or contact us if this doesn't seem right.`);
+          setLibraryLabelFailed(`These credentials have already been connected to an account. Did you mean to <a href="${LibraryLoginPage}">Sign In</a>? Please contact us if this doesn't seem right.`);
         } else {
           setLibraryLabelFailed('');
         }
