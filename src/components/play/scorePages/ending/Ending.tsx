@@ -145,7 +145,6 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
   runFirework(currentScore: number) {
     const { liveBrills, reviewBrills, bestScore } = this.props;
     const colors = ['#0681db', '#ffd900', '#30c474'];
-    console.log('firework', currentScore, liveBrills, reviewBrills, bestScore);
 
     if (currentScore === 100 && (liveBrills > 0 || reviewBrills > 0)) {
       this.launchBigConfetti(colors);
@@ -229,6 +228,13 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     ClearAuthBrickCash();
     this.props.loginSuccess();
     this.props.history.push(map.MyLibrarySubject(this.props.brick.subjectId));
+  }
+
+  moveToHome() {
+    CashAttempt('');
+    ClearAuthBrickCash();
+    this.props.loginSuccess();
+    this.props.history.push(map.MainPage);
   }
 
   render() {
@@ -376,9 +382,10 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     <div className="btn btn-green orange" onClick={() => {
                       if (this.state.isHeartOfMercia) {
                         const finishUrl = GetFinishRedirectUrl();
-                        console.log('finish redirect url', finishUrl)
                         window.location.href = finishUrl ? finishUrl : "https://www.heartofmercia.org.uk/";
                         UnsetFinishRedirectUrl();
+                      } else if (this.props.user?.library) {
+                        this.moveToHome();
                       } else {
                         this.moveToLibrary();
                       }
@@ -564,9 +571,10 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                       <div className="btn btn-orange" onClick={() => {
                         if (this.state.isHeartOfMercia) {
                           const finishUrl = GetFinishRedirectUrl();
-                          console.log('finish redirect url', finishUrl)
                           window.location.href = finishUrl ? finishUrl : "https://www.heartofmercia.org.uk/";
                           UnsetFinishRedirectUrl();
+                        } else if (this.props.user?.library) {
+                          this.moveToHome();
                         } else {
                           this.moveToLibrary();
                         }
