@@ -31,11 +31,13 @@ export const getNewUserState = (isAdmin: boolean) => {
     isLoaded: true,
     stepsEnabled: false,
     originLibrary: false,
+    emailConfirmDialog: false,
+    emailConfirmed: false,
     librarySteps: [{ }]
   }
 }
 
-export const getExistingUserState = (user: User) => {
+export const  getExistingUserState = (user: User) => {
   const isAdmin = checkAdmin(user.roles);
   let isEditor = canEdit(user);
 
@@ -91,6 +93,8 @@ export const getExistingUserState = (user: User) => {
     editPassword: false,
     stepsEnabled: false,
     originLibrary: false,
+    emailConfirmDialog: false,
+    emailConfirmed: false,
     librarySteps: [{ }]
   };
 }

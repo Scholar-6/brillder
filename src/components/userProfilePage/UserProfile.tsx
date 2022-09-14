@@ -44,6 +44,7 @@ import ReactiveUserCredits from "./ReactiveUserCredits";
 import { GetOrigin, UnsetOrigin } from "localStorage/origin";
 import UserCredits from "./UserCredits";
 import EmailDisplay from "./components/EmailDisplay";
+import EmailConfirmDialog from "./components/EmailConfirmDialog";
 
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
@@ -95,6 +96,9 @@ interface UserProfileState {
   subscriptionState?: number;
 
   isLoaded: boolean;
+
+  emailConfirmDialog: boolean;
+  emailConfirmed: boolean;
 
   originLibrary: boolean;
   stepsEnabled: boolean;
@@ -360,7 +364,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   async changePassword() {
-    const { user } = this.state;
     this.setState({ editPassword: false });
   }
 
@@ -444,7 +447,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 onChange={e => this.onFieldChanged(e, UserProfileField.LastName)}
               />
             </div>
-            {this.props.user.library ? <EmailDisplay value={user.email} onClick={() => {}} /> :
+            {(this.props.user.library && this.state.emailConfirmed === false) ? <EmailDisplay value={user.email} onClick={() => {
+              this.setState({ emailConfirmDialog: true });
+            }} /> :
             <ProfileInput
               value={user.email} validationRequired={this.state.validationRequired}
               className="" placeholder="Email" type="email" disabled={this.state.isFromInstitution}
@@ -674,6 +679,16 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             header={this.state.emailInvalid ? "That email address doesn’t look right" : "Email is already in use"}
             label="Have you spelled it correctly?"
             close={this.onInvalidEmailClose.bind(this)}
+          />
+          <EmailConfirmDialog
+            isOpen={this.state.emailConfirmDialog}
+            email={this.state.user.email}
+            success={() => {
+              this.setState({ emailConfirmed: true });
+            }}
+            close={() => {
+              this.setState({emailConfirmDialog: false});
+            }}
           />
           <SubjectDialog
             isOpen={this.state.noSubjectDialogOpen}
