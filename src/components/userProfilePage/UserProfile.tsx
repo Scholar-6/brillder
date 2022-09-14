@@ -455,6 +455,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 value={user.password} validationRequired={this.state.validationRequired}
                 className="" placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
                 onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
+                disabled={!!this.props.user.library}
               />
             </div>
           </div>
