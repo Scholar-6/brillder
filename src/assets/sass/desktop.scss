@@ -1632,4 +1632,10 @@
     width: calc(100% - 2vw);
     background: var(--tab-gray);
   }
+
+  .MuiListItemAvatar-root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

@@ -129,11 +129,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.state = tempState;
         getUserById(userId).then(user => {
           if (user) {
-            this.setState({ 
+            this.setState({
               user: getUserProfile(user),
               library: user.library,
               isFromInstitution: user.isFromInstitution,
-              userBrills: user.brills, 
+              userBrills: user.brills,
               subscriptionState: user.subscriptionState,
               userCredits: user.freeAttemptsLeft
             });
@@ -317,7 +317,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({ user, emailInvalid, saveDisabled: false });
   }
 
-  async reloadLibrary () {
+  async reloadLibrary() {
     await this.props.getUser();
   }
 
@@ -349,7 +349,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         if (!foundUpperRole) {
           return;
         }
-      } 
+      }
       this.state.user.roles.splice(index, 1);
     } else {
       this.state.user.roles.push(roleId);
@@ -450,11 +450,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             {(this.props.user.library && this.state.emailConfirmed === false) ? <EmailDisplay value={user.email} onClick={() => {
               this.setState({ emailConfirmDialog: true });
             }} /> :
-            <ProfileInput
-              value={user.email} validationRequired={this.state.validationRequired}
-              className="" placeholder="Email" type="email" disabled={this.state.isFromInstitution}
-              onChange={e => this.onEmailChanged(e)}
-            />}
+              <ProfileInput
+                value={user.email} validationRequired={this.state.validationRequired}
+                className="" placeholder="Email" type="email" disabled={this.state.isFromInstitution}
+                onChange={e => this.onEmailChanged(e)}
+              />}
             <div className="password-container">
               <ProfileInput
                 value={user.password} validationRequired={this.state.validationRequired}
@@ -487,18 +487,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           </div>
         </div>
         {!isStudent &&
-        <Grid container direction="row" className="big-input-container bio-container-2">
-          <textarea
-            className="style2 bio-container"
-            value={user.bio}
-            onClick={this.suspendIntroJs.bind(this)}
-            placeholder="Write a short bio here..."
-            onChange={e => {
-              this.onFieldChanged(e as any, UserProfileField.Bio)
-            }}
-            onBlur={this.resumeIntroJs.bind(this)}
-          />
-        </Grid>}
+          <Grid container direction="row" className="big-input-container bio-container-2">
+            <textarea
+              className="style2 bio-container"
+              value={user.bio}
+              onClick={this.suspendIntroJs.bind(this)}
+              placeholder="Write a short bio here..."
+              onChange={e => {
+                this.onFieldChanged(e as any, UserProfileField.Bio)
+              }}
+              onBlur={this.resumeIntroJs.bind(this)}
+            />
+          </Grid>}
       </div>
     );
   }
@@ -509,7 +509,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   onIntroChanged(e: any) {
     if (e >= 2) {
-       this.setState({ stepsEnabled: false });
+      this.setState({ stepsEnabled: false });
     }
   }
 
@@ -586,15 +586,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 </div>
               </div>
               {(this.state.isFromInstitution || this.state.library) ? <div /> :
-              <div className="credits-part flex-center">
-                <div className="user-credits">
-                  <SpriteIcon name="circle-lines" />
-                  <div className="flex-center bold">{this.props.match.params.userId ? this.state.userCredits : <ReactiveUserCredits />}</div>
-                </div>
-                <div className="bold label">
-                  Credits
-                </div>
-              </div>}
+                <div className="credits-part flex-center">
+                  <div className="user-credits">
+                    <SpriteIcon name="circle-lines" />
+                    <div className="flex-center bold">{this.props.match.params.userId ? this.state.userCredits : <ReactiveUserCredits />}</div>
+                  </div>
+                  <div className="bold label">
+                    Credits
+                  </div>
+                </div>}
             </div>
           </div>
         );
@@ -631,7 +631,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     const renderLibrary = () => {
-      return <RealLibraryConnect user={this.props.user} reloadLibrary={() => {}} />
+      return <RealLibraryConnect user={this.props.user} reloadLibrary={() => { }} />
     }
 
     return (
@@ -683,11 +683,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <EmailConfirmDialog
             isOpen={this.state.emailConfirmDialog}
             email={this.state.user.email}
-            success={() => {
-              this.setState({ emailConfirmed: true });
+            setEmail={newEmail => {
+              const {user} = this.state;
+              user.email = newEmail;
+              this.setState({ user});
             }}
             close={() => {
-              this.setState({emailConfirmDialog: false});
+              this.setState({ emailConfirmDialog: false });
             }}
           />
           <SubjectDialog
