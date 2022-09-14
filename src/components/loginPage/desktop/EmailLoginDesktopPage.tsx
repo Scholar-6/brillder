@@ -231,7 +231,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="dialog-header" style={{ marginBottom: 0 }}>
           <ListItem>
             <ListItemText
-              primary="Now check your email for a password reset link"
+              primary="Please check your email for a link to reset your password"
               className="bold"
               style={{ minWidth: '30vw' }}
             />
@@ -248,7 +248,7 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="dialog-header" style={{ marginBottom: 0 }}>
           <ListItem>
             <ListItemText
-              primary="You need to enter an email before clicking this"
+              primary="Please enter your email address"
               className="bold"
               style={{ minWidth: '30vw' }}
             />
