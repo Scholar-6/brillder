@@ -37,7 +37,7 @@ const EmailConfirmDialog: React.FC<SubjectDialogProps> = ({ isOpen, close, ...pr
           </button>
         </div>
       </Dialog>
-      <Dialog open={failed} onClose={() => setFailed(false)} className="dialog-box">
+      <Dialog open={failed} onClose={() => setFailed(false)} className="dialog-box mobile-popup-v4">
         <div className="dialog-header" style={{ marginBottom: 0 }}>
           <ListItem>
             <ListItemText
@@ -58,7 +58,7 @@ const EmailConfirmDialog: React.FC<SubjectDialogProps> = ({ isOpen, close, ...pr
         setSuccess(false);
         props.success();
         close();
-      }} className="dialog-box">
+      }} className="dialog-box mobile-popup-v4">
         <div className="dialog-header" style={{ marginBottom: 0 }}>
           <ListItem>
             <ListItemText
