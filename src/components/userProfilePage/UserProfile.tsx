@@ -361,13 +361,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   async changePassword() {
     const { user } = this.state;
-    const userToSave = { password: user.password } as any;
-
-    // set current user roles
-    userToSave.roles = this.props.user.roles.map(role => role.roleId);
-    //const saved = await updateUser(userToSave);
-
-    //this.setState({ passwordChangedDialog: true });
+    this.setState({ editPassword: false });
   }
 
   suspendIntroJs() {
@@ -461,19 +455,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 value={user.password} validationRequired={this.state.validationRequired}
                 className="" placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
                 onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
-              /*disabled={!this.state.editPassword}*/
               />
-              {!this.state.editPassword &&
-                <div className="button-container">
-                  <button onClick={() => this.setState({ editPassword: true })}>Edit</button>
-                </div>}
-              {this.state.editPassword &&
-                <div className="confirm-container">
-                  <SpriteIcon name="check-icon" className="start" onClick={this.changePassword.bind(this)} />
-                  <SpriteIcon name="cancel-custom" className="end" onClick={() => {
-                    this.setState({ editPassword: false })
-                  }} />
-                </div>}
             </div>
           </div>
           <div className="profile-roles-container">
