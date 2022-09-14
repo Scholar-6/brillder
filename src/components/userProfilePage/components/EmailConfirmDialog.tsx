@@ -68,7 +68,7 @@ const EmailConfirmDialog: React.FC<SubjectDialogProps> = ({ isOpen, close, ...pr
             />
             <ListItemAvatar style={{ padding: 0 }}>
               <Avatar className="circle-green">
-                <SpriteIcon name="link" className="active text-white stroke-2 w-3 m-b-02" />
+                <SpriteIcon name="check-icon" className="active text-white stroke-2 w-3 m-b-02" />
               </Avatar>
             </ListItemAvatar>
           </ListItem>

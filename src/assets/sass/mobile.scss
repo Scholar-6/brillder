@@ -2296,9 +2296,12 @@
       height: auto !important;
       left: 32vw;
 
-      .circle-orange {
+      .MuiAvatar-root {
         width: 25vw !important;
         height: 25vw !important;
+        .circle-green {
+          background: var(--theme-green);
+        }
       }
 
       svg {
