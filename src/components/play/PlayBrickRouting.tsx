@@ -196,12 +196,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     initReviewAttempts = initAttempts;
   }
 
-  // if unauthenticated and personal brick move to login page
-  if (!props.user && parsedBrick.isCore === false) {
-    SetUnauthBrickCash(parsedBrick);
-    history.push(map.Login);
-  }
-
   const [isCreatingAttempt, setCreatingAttempt] = useState(false);
 
   const [prevAttempts, setPrevAttempts] = useState([] as any[]);
