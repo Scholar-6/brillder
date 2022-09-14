@@ -2268,6 +2268,23 @@
 
 .confirm-email .dialog-header {
   font-size: 5.5vw !important;
+  .MuiListItemAvatar-root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .MuiAvatar-root.circle-green {
+      width: 15vw;
+      height: 15vw;
+      background: var(--theme-green);
+
+      svg {
+        margin-top: 1vw;
+        width: 8vw !important;
+        height: 8vw !important;
+      }
+    }
+  }
+
   input {
     color: var(--theme-dark-blue);
     margin-top: 2vw;
@@ -2309,5 +2326,17 @@
         height: 15vw !important;
       }
     }
+  }
+}
+
+.user-profile-page {
+  .email-value {
+    width: 100%;
+    font-size: 5.5vw;
+    overflow-x: scroll;
+    color: var(--theme-dark-blue);
+    border-radius: 1.7vh;
+    background: var(--solitude-light);
+    padding: 1.8vh 3vw !important;
   }
 }
