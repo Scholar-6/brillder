@@ -1620,3 +1620,16 @@
     }
   }
 }
+
+
+.confirm-email {
+  input {
+    color: var(--theme-dark-blue);
+    margin-top: 1vw;
+    line-height: 1 !important;
+    border-radius: 1.7vh;
+    padding: 1.8vh 1vw;
+    width: calc(100% - 2vw);
+    background: var(--tab-gray);
+  }
+}

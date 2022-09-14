@@ -13,7 +13,7 @@ const ProfileInput: React.FC<InputProps> = props => {
   
   return (
     <div className="input-block">
-      <div className="email-value">{hiddenEmail}</div>
+      <div className="email-value" onClick={props.onClick}>{hiddenEmail}</div>
     </div>
   );
 }
