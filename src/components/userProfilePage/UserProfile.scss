@@ -46,6 +46,16 @@
     background: var(--off-white) !important ;
   }
 
+  .email-value {
+    width: 100%;
+    font-size: 1.5vw;
+    overflow-x: scroll;
+    color: var(--theme-dark-blue);
+    border-radius: 1.7vh;
+    background: var(--off-white);
+    padding: 1.8vh 1vw !important;
+  }
+
   .phone-question-preview-box {
     top: $page-head-height;
     height: calc(100vh - #{$page-head-height}) !important;
