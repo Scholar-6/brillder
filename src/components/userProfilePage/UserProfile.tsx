@@ -43,6 +43,7 @@ import RealLibraryConnect from "./RealLibraryCoonect";
 import ReactiveUserCredits from "./ReactiveUserCredits";
 import { GetOrigin, UnsetOrigin } from "localStorage/origin";
 import UserCredits from "./UserCredits";
+import EmailDisplay from "./components/EmailDisplay";
 
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
@@ -449,11 +450,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 onChange={e => this.onFieldChanged(e, UserProfileField.LastName)}
               />
             </div>
+            {this.props.user.library ? <EmailDisplay value={user.email} onClick={() => {}} /> :
             <ProfileInput
               value={user.email} validationRequired={this.state.validationRequired}
               className="" placeholder="Email" type="email" disabled={this.state.isFromInstitution}
               onChange={e => this.onEmailChanged(e)}
-            />
+            />}
             <div className="password-container">
               <ProfileInput
                 value={user.password} validationRequired={this.state.validationRequired}
