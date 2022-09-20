@@ -1,8 +1,9 @@
 import React from 'react';
-import {  Hidden, Grid } from '@material-ui/core';
+import { Hidden, Grid } from '@material-ui/core';
 
 import './PhonePreview.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import BasePhonePreview from 'components/baseComponents/BasePhonePreview';
 
 
 export interface PhonePreviewProps {
@@ -27,7 +28,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
       if (questionPreview.current) {
         questionPreview.current.scrollBy(0, -50);
       }
-    } catch {}
+    } catch { }
   }
 
   const scrollDown = () => {
@@ -36,11 +37,11 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
         let el = questionPreview.current;
         el.scrollBy(0, 50);
       }
-    } catch {}
+    } catch { }
   }
 
   const checkScroll = () => {
-    const {current} = questionPreview;
+    const { current } = questionPreview;
     if (current) {
       if (current.scrollHeight > current.clientHeight) {
         if (!canScroll) {
@@ -69,8 +70,8 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
   return (
     <Hidden only={['xs', 'sm']}>
       <div className="phone-question-preview-box">
-        <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
-          { props.prev &&
+        <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
+          {props.prev &&
             <div className="centered pointer">
               <SpriteIcon name="arrow-left" className="scroll-arrow" onClick={props.prev} />
             </div>
@@ -79,24 +80,16 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
             <div className="centered">
               <SpriteIcon name="arrow-up" className={`scroll-arrow ${!canScroll && 'disabled'}`} onClick={scrollUp} />
             </div>
-            <div className="phone">
-              <div className="phone-border">
-                <div className="volume volume1"></div>
-                <div className="volume volume2"></div>
-                <div className="volume volume3"></div>
-                <div className="sleep"></div>
-                <div className="screen">
-                  <div className="custom-component" ref={questionPreview}>
-                    {renderInner()}
-                  </div>
-                </div>
+            <BasePhonePreview>
+              <div className="custom-component" ref={questionPreview}>
+                {renderInner()}
               </div>
-            </div>
+            </BasePhonePreview>
             <div className="centered">
               <SpriteIcon name="arrow-down" className={`scroll-arrow ${!canScroll && 'disabled'}`} onClick={scrollDown} />
             </div>
           </div>
-          { props.next &&
+          {props.next &&
             <div className="centered pointer">
               <SpriteIcon name="arrow-right" className={`scroll-arrow ${props.nextDisabled && 'disabled'}`} onClick={props.next} />
             </div>

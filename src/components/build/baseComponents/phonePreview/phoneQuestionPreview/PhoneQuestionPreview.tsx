@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {  Hidden, Grid } from '@material-ui/core';
+import { Hidden, Grid } from '@material-ui/core';
 
 import './PhoneQuestionPreview.scss';
 import QuestionPlay from "components/play/questionPlay/QuestionPlay";
@@ -9,6 +9,7 @@ import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from 'model/que
 import { SortCategory } from 'components/interfaces/sort';
 import EmptyQP1 from './EmptyQP1';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import BasePhonePreview from 'components/baseComponents/BasePhonePreview';
 
 
 export interface PhonePreviewProps {
@@ -28,7 +29,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
   const [canScroll, setScroll] = React.useState(false);
 
   const checkScroll = () => {
-    const {current} = questionPreview;
+    const { current } = questionPreview;
     if (current) {
       if (current.scrollHeight > current.clientHeight) {
         if (!canScroll) {
@@ -47,7 +48,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
       if (questionPreview.current) {
         questionPreview.current.scrollBy(0, -50);
       }
-    } catch {}
+    } catch { }
   }
 
   const scrollDown = () => {
@@ -56,13 +57,13 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
         let el = questionPreview.current;
         el.scrollBy(0, 50);
       }
-    } catch {}
+    } catch { }
   }
   //#endregion
 
   const areComponentsEmpty = () => {
     for (const component of question.components) {
-      const {type} = component;
+      const { type } = component;
       if (
         type === QuestionComponentTypeEnum.Text ||
         type === QuestionComponentTypeEnum.Quote ||
@@ -77,7 +78,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
           return false;
         }
       }
-      
+
       // unique question component
       if (type === QuestionComponentTypeEnum.Component) {
         if (
@@ -85,13 +86,13 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
           question.type === QuestionTypeEnum.VerticalShuffle ||
           question.type === QuestionTypeEnum.HorizontalShuffle
         ) {
-          const res = component.list?.find((el:any) => el.value);
+          const res = component.list?.find((el: any) => el.value);
           if (res) { return false; }
         } else if (
           question.type === QuestionTypeEnum.ChooseOne ||
           question.type === QuestionTypeEnum.ChooseSeveral
         ) {
-          const res = component.list?.find((el:any) => el.value || el.valueFile);
+          const res = component.list?.find((el: any) => el.value || el.valueFile);
           if (res) { return false; }
         } else if (question.type === QuestionTypeEnum.MissingWord) {
           const res = component.choices?.find((el: any) => el.answers.find((a: any) => a.value))
@@ -99,7 +100,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
             return false;
           }
         } else if (question.type === QuestionTypeEnum.PairMatch) {
-          const res = component.list?.find((el:any) => el.value || el.option || el.valueFile || el.optionFile);
+          const res = component.list?.find((el: any) => el.value || el.option || el.valueFile || el.optionFile);
           if (res) { return false; }
         } else if (question.type === QuestionTypeEnum.Sort) {
           const res = component.categories?.find((cat: SortCategory) => cat.name || cat.answers.find(a => a.value || a.valueFile));
@@ -115,7 +116,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
     }
     return true;
   }
-  
+
   const renderInnerComponent = () => {
     if (!question || !question.type) {
       return <EmptyQP1 />;
@@ -123,14 +124,14 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
     if (!question.firstComponent?.value && isHintEmpty(question.hint) && areComponentsEmpty()) {
       return <EmptyQP1 />;
     }
-    setTimeout(() => {checkScroll()}, 100);
+    setTimeout(() => { checkScroll() }, 100);
     return <QuestionPlay question={question} isPreview={true} focusIndex={props.focusIndex} answers={[]} />;
   }
-  
+
   return (
     <Hidden only={['xs', 'sm']}>
       <div className="phone-question-preview-box">
-        <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
+        <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
           <div className="centered pointer phone-toolbar">
             <SpriteIcon name="arrow-left" className={`scroll-arrow ${!canGoBack && 'disabled'}`} onClick={props.prevQuestion} />
             {canGoBack && <div className="css-custom-tooltip left-tooltip">Previous</div>}
@@ -140,19 +141,11 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
               <SpriteIcon name="arrow-up" className={`scroll-arrow ${!canScroll && 'disabled'}`} onClick={scrollUp} />
               <div className="css-custom-tooltip upper-tooltip">Scroll Up</div>
             </div>
-            <div className="phone">
-              <div className="phone-border">
-                <div className="volume volume1"></div>
-                <div className="volume volume2"></div>
-                <div className="volume volume3"></div>
-                <div className="sleep"></div>
-                <div className="screen">
-                  <div className="custom-component mobile-question-component b-white" ref={questionPreview}>
-                    {renderInnerComponent()}
-                  </div>
-                </div>
+            <BasePhonePreview>
+              <div className="custom-component mobile-question-component b-white" ref={questionPreview}>
+                {renderInnerComponent()}
               </div>
-            </div>
+            </BasePhonePreview>
             <div className="centered phone-toolbar">
               <SpriteIcon name="arrow-down" className={`scroll-arrow ${!canScroll && 'disabled'}`} onClick={scrollDown} />
               <div className="css-custom-tooltip bottom-tooltip">Scroll Down</div>
