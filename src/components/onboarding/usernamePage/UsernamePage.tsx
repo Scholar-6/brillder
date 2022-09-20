@@ -6,12 +6,14 @@ import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 
 import { ReduxCombinedState } from "redux/reducers";
 import userActions from "redux/actions/user";
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { updateUser } from 'services/axios/user';
 import { User } from 'model/user';
-import LabelTyping from 'components/baseComponents/LabelTyping';
 import map from 'components/map';
 import { isPhone } from 'services/phone';
+
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import BasePhonePreview from 'components/baseComponents/BasePhonePreview';
+import LabelTyping from 'components/baseComponents/LabelTyping';
 
 
 interface InputState {
@@ -139,7 +141,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
               <div className="submit-button" >
                 <button type="button" onClick={submit} className={checkValid() ? 'valid' : 'invalid'}>
                   Save
-                  <SpriteIcon name="feather-cloud-upload" /> 
+                  <SpriteIcon name="feather-cloud-upload" />
                 </button>
               </div>
             </div>
@@ -148,21 +150,13 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
         <div className="blue-right-block"></div>
         {!isPhone() && <Hidden only={['xs', 'sm']}>
           <div className="proposal-phone-preview phone-username-preview">
-            <div className="phone">
-              <div className="phone-border">
-                <div className="volume volume1"></div>
-                <div className="volume volume2"></div>
-                <div className="volume volume3"></div>
-                <div className="sleep"></div>
-                <div className="screen">
-                  <div className="only-icon-container">
-                    <div className="icon-container">
-                      <SpriteIcon name="user" />
-                    </div>
-                  </div>
+            <BasePhonePreview>
+              <div className="only-icon-container">
+                <div className="icon-container">
+                  <SpriteIcon name="user" />
                 </div>
               </div>
-            </div>
+            </BasePhonePreview>
           </div>
         </Hidden>}
       </div>
