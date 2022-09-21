@@ -9,6 +9,7 @@ import SpriteIcon from "../SpriteIcon";
 
 interface ProfileSavedProps {
   isOpen: boolean;
+  isPersonal?: boolean;
   close(): void;
 }
 
@@ -30,7 +31,7 @@ const PublishSuccessDialog: React.FC<ProfileSavedProps> = props => {
           </ListItemAvatar>
         </ListItem>
         <ListItem>
-          <ListItemText primary="Thank you for adding to our library" className="italic" style={{ minWidth: '30vw' }} />
+          <ListItemText primary={`Thank you for adding to ${props.isPersonal ? 'your' : 'our'} library`} className="italic" style={{ minWidth: '30vw' }} />
         </ListItem>
       </div>
     </Dialog>
