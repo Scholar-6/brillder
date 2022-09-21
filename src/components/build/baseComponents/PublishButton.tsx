@@ -65,6 +65,7 @@ const PublishButton: React.FC<ButtonProps> = props => {
       return (
         <PublishSuccessDialog
           isOpen={state === PublishStatus.Published}
+          isPersonal={!brick.isCore}
           close={() => {
             setState(PublishStatus.Hidden);
             props.onFinish();
