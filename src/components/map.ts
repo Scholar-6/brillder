@@ -25,6 +25,8 @@ export const NewBrick = `${Build}/new-brick`;
 export const ProposalBase = (brickId: number) => `${Build}/brick/${brickId}`;
 
 export const BackToWorkPage = '/back-to-work';
+export const BackToWorkPagePersonal = '/back-to-work/personal';
+export const BackToWorkPagePublished = '/back-to-work/published';
 export const BackToWorkPersonal = BackToWorkPage + '?isCore=false';
 export const BackToWorkPublic = BackToWorkPage + '?isCore=true';
 export const backToWorkUserBased = (user: User) => 
@@ -185,6 +187,8 @@ export default {
   ProposalTitleLink,
 
   BackToWorkPage,
+  BackToWorkPagePersonal,
+  BackToWorkPagePublished,
   BackToWorkPublic,
   BackToWorkPersonal,
   backToWorkUserBased,

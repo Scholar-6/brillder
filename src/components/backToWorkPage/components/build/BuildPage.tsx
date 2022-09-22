@@ -648,50 +648,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
     const published = this.countPublished();
 
-    if (!this.state.filters.isCore) {
-      const publicFinalBricks = this.state.rawBricks.filter(b => b.isCore);
-
-      const draft = publicFinalBricks.filter(b => b.status === BrickStatus.Draft).length;
-      const build = publicFinalBricks.filter(b => b.status === BrickStatus.Build).length;
-      const review = publicFinalBricks.filter(b => b.status === BrickStatus.Review).length;
-
-      if (!this.state.isAdmin) {
-        finalBricks = finalBricks.filter(b => b.author.id === this.props.user.id);
-      }
-     
-      return <PersonalBuild
-        user={this.props.user}
-        finalBricks={finalBricks}
-        loaded={this.state.bricksLoaded}
-        shown={this.state.shown}
-        draft={draft}
-        build={build}
-        review={review}
-        publish={published}
-        pageSize={17}
-        sortedIndex={this.state.sortedIndex}
-        history={history}
-        isTeach={this.state.isTeach || this.state.isAdmin}
-        isSearching={this.props.isSearching}
-        searchString={this.props.searchString}
-        isFilterEmpty={isEmpty}
-
-        deleteDialogOpen={this.state.deleteDialogOpen}
-        deleteBrickId={this.state.deleteBrickId}
-        delete={this.delete.bind(this)}
-        handleDeleteClose={this.handleDeleteClose.bind(this)}
-
-        toggleCore={this.toggleCore.bind(this)}
-        setTab={() => {}}
-
-        moveAllNext={() => this.moveAllNext(17)}
-        moveAllBack={() => this.moveAllBack(17)}
-        moveToFirstPage={this.moveToFirstPage.bind(this)}
-
-        handleDeleteOpen={this.handleDeleteOpen.bind(this)}
-      />
-    }
-
     finalBricks = finalBricks.filter(b => b.isCore === true);
 
 
@@ -741,24 +697,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
             selfPublish={selfPublish}
             onCoreSwitch={this.toggleCore.bind(this)}
           />
-            {this.state.filters.publish ? <PublishedBricks
-              user={this.props.user}
-              finalBricks={finalBricks}
-              shown={this.state.shown}
-              pageSize={18}
-              sortedIndex={this.state.sortedIndex}
-              history={history}
-              filters={this.state.filters}
-              loaded={this.state.bricksLoaded}
-              searchString={searchString}
-              published={published}
-              moveNext={this.moveAllNext.bind(this)}
-              moveBack={this.moveAllBack.bind(this)}
-              switchPublish={this.switchPublish.bind(this)}
-              handleDeleteOpen={this.handleDeleteOpen.bind(this)}
-              handleMouseHover={this.handleMouseHover.bind(this)}
-              handleMouseLeave={this.handleMouseLeave.bind(this)}
-            /> :
             <div className="tab-content">
               <BuildBricks
                 user={this.props.user}
@@ -783,7 +721,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
               />
               {this.renderPagination(finalBricks, threeColumns)}
-          </div>}
+          </div>
         </Grid>
         <DeleteBrickDialog
           isOpen={this.state.deleteDialogOpen}
