@@ -273,37 +273,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   };
 
   switchPublish() {
-    const { filters, buildCheckedSubjectId } = this.state;
-
-    filters.level1 = false;
-    filters.level2 = false;
-    filters.level3 = false;
-
-    if (!filters.publish) {
-      removeAllFilters(filters);
-      filters.publish = true;
-      let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Publish);
-      bricks = bricks.filter(b => b.isCore === true);
-      const subjects = this.getBrickSubjects(this.state.rawBricks);
-      if (buildCheckedSubjectId >= 0) {
-        // if subject checked. subject should exist
-        const subject = subjects.find(s => s.id === buildCheckedSubjectId);
-        if (subject) {
-          bricks = bricks.filter(b => b.subjectId === buildCheckedSubjectId);
-        }
-      }
-      this.setState({ ...this.state, filters, subjects, sortedIndex: 0, finalBricks: bricks });
-    } else {
-      removeAllFilters(filters);
-      filters.build = true;
-      filters.review= true;
-      filters.draft = true;
-      const bricks = filterByStatus(this.state.rawBricks, BrickStatus.Draft);
-      bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Build));
-      bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Review));
-      const subjects = this.getBrickSubjects(this.state.rawBricks);
-      this.setState({ ...this.state, filters, subjects, finalBricks: bricks, sortedIndex: 0 });
-    }
+    this.props.history.push(map.BackToWorkPage);
   }
 
   filterUpdated(newFilters: Filters) {

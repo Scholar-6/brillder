@@ -496,10 +496,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
       history.push(map.backToWorkUserBased(this.props.user));
       return <PageLoader content="" />;
     }
-    let searchString = '';
-    if (this.props.isSearching) {
-      searchString = this.props.searchString;
-    }
     let finalBricks = this.state.finalBricks;
     if (this.props.isSearching) {
       finalBricks = this.state.searchBricks;

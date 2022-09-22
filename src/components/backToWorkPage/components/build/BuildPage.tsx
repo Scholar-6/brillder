@@ -11,7 +11,7 @@ import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus } from "model/brick"
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters, SortBy } from '../../model';
-import { getBricks, searchBricks, getCurrentUserBricks } from "services/axios/brick";
+import { getThreeColumnBricks, searchBricks, getCurrentUserBricks } from "services/axios/brick";
 import { Notification } from 'model/notifications';
 import {
   filterByStatus, filterBricks, removeAllFilters,
@@ -185,7 +185,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   async getBricks() {
     const {isAdmin, isEditor} = this.state;
     if (isAdmin || isEditor) {
-      const bricks = await getBricks();
+      const bricks = await getThreeColumnBricks();
       if (bricks) {
         let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
         bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === this.props.user.id)) ? -1 : 1);
@@ -305,23 +305,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     this.setState({ ...this.state, finalBricks, subjects, rawBricks, threeColumns, bricksLoaded: true });
   }
 
-  toggleCore() {
-    const { filters } = this.state;
-    filters.isCore = !filters.isCore;
-    if (filters.isCore === false) {
-      filters.publish = true;
-      filters.review = true;
-      filters.build = true;
-      filters.draft = true;
-    } else {
-      filters.publish = false;
-    }
-    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
-    const subjects = this.getBrickSubjects(finalBricks);
-    const threeColumns = prepareTreeRows(this.state.rawBricks, this.state.filters, this.props.user.id);
-    this.setState({ ...this.state, subjects, sortedIndex: 0, threeColumns, filters, finalBricks });
-  }
-
   handleSortChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let sortBy = parseInt(e.target.value) as SortBy;
     const { state } = this;
@@ -330,37 +313,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   };
 
   switchPublish() {
-    const { filters, buildCheckedSubjectId } = this.state;
-
-    filters.level1 = false;
-    filters.level2 = false;
-    filters.level3 = false;
-
-    if (!filters.publish) {
-      removeAllFilters(filters);
-      filters.publish = true;
-      let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Publish);
-      bricks = bricks.filter(b => b.isCore === true);
-      const subjects = this.getBrickSubjects(this.state.rawBricks);
-      if (buildCheckedSubjectId >= 0) {
-        // if subject checked. subject should exist
-        const subject = subjects.find(s => s.id === buildCheckedSubjectId);
-        if (subject) {
-          bricks = bricks.filter(b => b.subjectId === buildCheckedSubjectId);
-        }
-      }
-      this.setState({ ...this.state, filters, subjects, sortedIndex: 0, finalBricks: bricks });
-    } else {
-      removeAllFilters(filters);
-      filters.build = true;
-      filters.review= true;
-      filters.draft = true;
-      const bricks = filterByStatus(this.state.rawBricks, BrickStatus.Draft);
-      bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Build));
-      bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Review));
-      const subjects = this.getBrickSubjects(this.state.rawBricks);
-      this.setState({ ...this.state, filters, subjects, finalBricks: bricks, sortedIndex: 0 });
-    }
+    this.props.history.push(map.BackToWorkPagePublished);
   }
 
   filterUpdated(newFilters: Filters) {
@@ -631,10 +584,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
       history.push(map.backToWorkUserBased(this.props.user));
       return <PageLoader content="" />;
     }
-    let searchString = '';
-    if (this.props.isSearching) {
-      searchString = this.props.searchString;
-    }
     let finalBricks = this.state.finalBricks;
     let threeColumns = this.state.threeColumns;
     if (this.props.isSearching) {
@@ -649,7 +598,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const published = this.countPublished();
 
     finalBricks = finalBricks.filter(b => b.isCore === true);
-
 
     let selfPublish = 0;
     let personalDraft = 0;
@@ -695,7 +643,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
           <Tab
             draft={personalDraft}
             selfPublish={selfPublish}
-            onCoreSwitch={this.toggleCore.bind(this)}
+            onCoreSwitch={() => {
+              this.props.history.push(map.BackToWorkPagePersonal);
+            }}
           />
             <div className="tab-content">
               <BuildBricks
@@ -708,7 +658,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 history={history}
                 filters={this.state.filters}
                 loaded={this.state.bricksLoaded}
-                searchString={searchString}
+                searchString={this.props.searchString}
                 published={published}
                 isCorePage={true}
                 moveNext={this.moveNext.bind(this)}
