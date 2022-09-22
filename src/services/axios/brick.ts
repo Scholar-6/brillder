@@ -26,6 +26,14 @@ export const getBricks = async () => {
   }
 }
 
+export const getThreeColumnBricks = async () => {
+  try {
+    return await get<Brick[]>("/bricks/threeColumns");
+  } catch {
+    return null;
+  }
+}
+
 export const getPersonalBricks = async () => {
   try {
     return await get<Brick[]>("/bricks/personal");
