@@ -139,7 +139,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           }}
           goToPersonal={() => {
             this.setState({ brickStatus: BrickStatus.Publish });
-            this.props.history.push(map.BackToWorkPersonal);
+            this.props.history.push(map.BackToWorkPagePersonal);
           }}
         />
       );
@@ -160,7 +160,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         }}
         goToPersonal={() => {
           this.setState({ brickStatus: BrickStatus.Publish });
-          this.props.history.push(map.BackToWorkPersonal);
+          this.props.history.push(map.BackToWorkPagePersonal);
         }}
       />
     );
@@ -179,7 +179,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         }}
         goToPersonal={() => {
           this.setState({ brickStatus: BrickStatus.Publish });
-          this.props.history.push(map.BackToWorkPersonal);
+          this.props.history.push(map.BackToWorkPagePersonal);
         }}
       />
     );
