@@ -169,7 +169,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         size={3}
         onClick={async () => {
           await props.sendToPublisher(brick.id);
-          history.push(`${map.BackToWorkPage}?isCore=${brick.isCore}`);
+          history.push(brick.isCore ? map.BackToWorkPage : map.BackToWorkPagePersonal)
         }}
       />
     );
@@ -292,7 +292,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 <div className="intro-text-row">
                 </div>
                 <ExitButton onClick={() =>
-                  history.push(`${map.BackToWorkPage}?isCore=${brick.isCore}`)} />
+                  history.push(brick.isCore ? map.BackToWorkPage : map.BackToWorkPagePersonal)
+                } />
               </div>
             </Grid>
           </Grid>

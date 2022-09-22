@@ -25,12 +25,10 @@ export const NewBrick = `${Build}/new-brick`;
 export const ProposalBase = (brickId: number) => `${Build}/brick/${brickId}`;
 
 export const BackToWorkPage = '/back-to-work';
-export const BackToWorkPagePersonal = '/back-to-work/personal';
-export const BackToWorkPagePublished = '/back-to-work/published';
-export const BackToWorkPersonal = BackToWorkPage + '?isCore=false';
-export const BackToWorkPublic = BackToWorkPage + '?isCore=true';
+export const BackToWorkPagePersonal = BackToWorkPage + '/personal';
+export const BackToWorkPagePublished = BackToWorkPage + '/published';
 export const backToWorkUserBased = (user: User) => 
-  `${BackToWorkPage}?isCore=${user.userPreference?.preferenceId === UserPreferenceType.Builder || isAorP(user.roles) ? 'true' : 'false'}`
+  `${BackToWorkPage}/${user.userPreference?.preferenceId === UserPreferenceType.Builder || isAorP(user.roles) ? '' : '/personal'}`
 
 export const Onboarding = '/onboarding';
 export const TermsSignUp = Onboarding + '/terms';
@@ -189,8 +187,6 @@ export default {
   BackToWorkPage,
   BackToWorkPagePersonal,
   BackToWorkPagePublished,
-  BackToWorkPublic,
-  BackToWorkPersonal,
   backToWorkUserBased,
 
   AssignmentsPage,
