@@ -19,6 +19,8 @@ import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
 import Proposal from 'components/build/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';
 import BackToWorkPage from '../backToWorkPage/BackToWork';
+import BackToWorkPagePersonal from '../backToWorkPagePersonal/BackToWork';
+import BackToWorkPagePublished from '../backToWorkPagePublished/BackToWork';
 import AssignmentsPage from '../assignmentsPage/AssignmentsPage';
 import UsersListPage from '../userManagement/UsersList';
 import LoginPage from '../loginPage/loginPage';
@@ -303,6 +305,8 @@ const App: React.FC<AppProps> = props => {
               component={BuildRouter}
               location={location}
             />
+            <BuildRoute path={map.BackToWorkPagePersonal} component={BackToWorkPagePersonal} location={location} />
+            <BuildRoute path={map.BackToWorkPagePublished} component={BackToWorkPagePublished} location={location} />
             <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
             <BuildRoute path={map.AssignmentsClassPage} component={AssignmentsPage} location={location} />
             <BuildRoute path={map.AssignmentsPage} component={AssignmentsPage} location={location} />

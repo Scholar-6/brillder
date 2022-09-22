@@ -10,29 +10,21 @@ import './BuildPage.scss';
 import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
-import { ThreeColumns, Filters, SortBy } from '../../model';
-import { getBricks, searchBricks, getCurrentUserBricks } from "services/axios/brick";
+import { Filters, SortBy } from '../../model';
+import { searchBricks, getCurrentUserBricks, getPublicBricks } from "services/axios/brick";
 import { Notification } from 'model/notifications';
 import {
   filterByStatus, filterBricks, removeAllFilters,
   removeBrickFromLists, sortBricks, hideBricks, expandBrick, expandSearchBrick, removeBrickFromList
 } from '../../service';
-import {
-  getThreeColumnName, prepareTreeRows,
-  getThreeColumnBrick, expandThreeColumnBrick, getLongestColumn
-} from '../../threeColumnService';
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 import Tab from './Tab';
-import BuildBricks from './BuildBricks';
 import FilterSidebar from './FilterSidebar';
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
-import BackPagePagination from '../BackPagePagination';
-import BackPagePaginationV2 from '../BackPagePaginationV2';
-import PersonalBuild from "../personalBuild/PersonalBuild";
 import map from "components/map";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import { SubjectItem } from "../personalBuild/model";
+import { SubjectItem } from "../model";
 import { isPhone } from "services/phone";
 import PublishedBricks from "./PublishedBricks";
 
@@ -55,9 +47,7 @@ interface BuildProps {
 interface BuildState {
   finalBricks: Brick[]; // bricks to display
   rawBricks: Brick[]; // loaded bricks
-  threeColumns: ThreeColumns;
   searchBricks: Brick[]; // searching bricks
-  searchThreeColumns: ThreeColumns;
 
   isTeach: boolean;
   isAdmin: boolean;
@@ -87,29 +77,11 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const isTeach = checkTeacher(this.props.user);
     const isAdmin = checkAdmin(this.props.user.roles);
     const isEditor = checkEditor(this.props.user.roles)
-    const isCore = this.getCore(isAdmin, isEditor);
-
-    let threeColumns = {
-      red: {
-        rawBricks: [],
-        finalBricks: []
-      },
-      yellow: {
-        rawBricks: [],
-        finalBricks: []
-      },
-      green: {
-        rawBricks: [],
-        finalBricks: []
-      }
-    } as ThreeColumns;
 
     this.state = {
       finalBricks: [],
       rawBricks: [],
-      threeColumns,
       searchBricks: [],
-      searchThreeColumns: threeColumns,
 
       isAdmin,
       isTeach,
@@ -130,11 +102,11 @@ class BuildPage extends Component<BuildProps, BuildState> {
       subjects: [],
 
       filters: {
-        draft: true,
-        review: true,
-        build: true,
-        publish: false,
-        isCore,
+        draft: false,
+        review: false,
+        build: false,
+        publish: true,
+        isCore: true,
 
         level1: false,
         level2: false,
@@ -167,11 +139,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
       searchBricks(nextProps.searchString).then(bricks => {
         if (bricks) {
           setTimeout(() => {
-            const searchThreeColumns = prepareTreeRows(bricks, this.state.filters, this.props.user.id);
             this.setState({
               ...this.state, searchBricks: bricks, shown: true,
               bricksLoaded: true, sortedIndex: 0,
-              searchThreeColumns
             });
             this.props.searchFinished();
           }, 1400);
@@ -185,7 +155,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   async getBricks() {
     const {isAdmin, isEditor} = this.state;
     if (isAdmin || isEditor) {
-      const bricks = await getBricks();
+      const bricks = await getPublicBricks();
       if (bricks) {
         let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
         bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === this.props.user.id)) ? -1 : 1);
@@ -213,25 +183,12 @@ class BuildPage extends Component<BuildProps, BuildState> {
     document.removeEventListener("keydown", this.state.handleKey, false);
   }
 
-  isThreeColumns() {
-    const {filters} = this.state;
-    return filters.build && filters.review && filters.draft;
-  }
-
   moveBack() {
-    if (this.isThreeColumns()) {
-      this.moveThreeColumnsBack();
-    } else {
-      this.moveAllBack();
-    }
+    this.moveAllBack();
   }
 
   moveNext() {
-    if (this.isThreeColumns()) {
-      this.moveThreeColumnsNext();
-    } else {
-      this.moveAllNext();
-    }
+    this.moveAllNext();
   }
 
   handleKey(e: any) {
@@ -295,31 +252,17 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   setBricks(rawBricks: Brick[]) {
-    const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id);
     let finalBricks = rawBricks
     if (!this.state.filters.isCore) {
       finalBricks = rawBricks.filter(b => !b.isCore);
     }
     finalBricks = finalBricks.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
     const subjects = this.getBrickSubjects(rawBricks);
-    this.setState({ ...this.state, finalBricks, subjects, rawBricks, threeColumns, bricksLoaded: true });
+    this.setState({ ...this.state, finalBricks, subjects, rawBricks, bricksLoaded: true });
   }
 
   toggleCore() {
-    const { filters } = this.state;
-    filters.isCore = !filters.isCore;
-    if (filters.isCore === false) {
-      filters.publish = true;
-      filters.review = true;
-      filters.build = true;
-      filters.draft = true;
-    } else {
-      filters.publish = false;
-    }
-    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
-    const subjects = this.getBrickSubjects(finalBricks);
-    const threeColumns = prepareTreeRows(this.state.rawBricks, this.state.filters, this.props.user.id);
-    this.setState({ ...this.state, subjects, sortedIndex: 0, threeColumns, filters, finalBricks });
+    this.props.history.push(map.BackToWorkPagePersonal);
   }
 
   handleSortChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -457,56 +400,14 @@ class BuildPage extends Component<BuildProps, BuildState> {
     this.setState({sortedIndex: 0});
   }
 
-  onThreeColumnsMouseHover(index: number, status: BrickStatus) {
-    let key = Math.floor(index / 3);
-
-    let {threeColumns} = this.state;
-    if (this.props.isSearching) {
-      threeColumns = this.state.searchThreeColumns;
-      hideBricks(this.state.searchBricks);
-    } else {
-      hideBricks(this.state.rawBricks);
-    }
-    let name = getThreeColumnName(status);
-    let brick = getThreeColumnBrick(threeColumns, name, key);
-    if (!brick || brick.expanded) return;
-    expandThreeColumnBrick(threeColumns, name, key + this.state.sortedIndex);
-    this.setState({ ...this.state });
-  }
-
-  onThreeColumnsMouseLeave() {
-    if (this.props.isSearching) {
-      hideBricks(this.state.searchBricks);
-    } else {
-      hideBricks(this.state.rawBricks);
-    }
-    this.setState({ ...this.state });
-  }
-
   delete(brickId: number) {
-    let { rawBricks, finalBricks, threeColumns } = this.state;
-    removeBrickFromLists(rawBricks, finalBricks, threeColumns, brickId);
+    let { rawBricks, finalBricks } = this.state;
+    removeBrickFromLists(rawBricks, finalBricks, brickId);
     removeBrickFromList(this.state.searchBricks, brickId);
     this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
-  moveThreeColumnsNext() {
-    const { threeColumns } = this.state;
-    const longest = getLongestColumn(threeColumns);
-    const { pageSize } = this.state;
 
-    let index = this.state.sortedIndex;
-    if (index + pageSize / 3 <= longest) {
-      this.setState({ ...this.state, sortedIndex: index + (pageSize / 3) });
-    }
-  }
-
-  moveThreeColumnsBack() {
-    let index = this.state.sortedIndex;
-    if (index >= this.state.pageSize / 3) {
-      this.setState({ ...this.state, sortedIndex: index - (this.state.pageSize / 3) });
-    }
-  }
 
   moveAllBack(pageSizeParam?: number) {
     let pageSize = pageSizeParam ? pageSizeParam : this.state.pageSize;
@@ -524,35 +425,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     if (index + pageSize <= this.state.finalBricks.length) {
       this.setState({ ...this.state, sortedIndex: index + pageSize });
     }
-  }
-
-  renderPagination = (finalBricks: Brick[], threeColumns: ThreeColumns) => {
-    let { sortedIndex, pageSize } = this.state;
-
-    if (this.isThreeColumns()) {
-      const longestColumn = getLongestColumn(threeColumns);
-  
-      return (
-        <BackPagePaginationV2
-          sortedIndex={sortedIndex}
-          pageSize={pageSize}
-          isRed={sortedIndex === 0}
-          longestColumn={longestColumn}
-          moveNext={() => this.moveThreeColumnsNext()}
-          moveBack={() => this.moveThreeColumnsBack()}
-        />
-      )
-    }
-    return (
-      <BackPagePagination
-        sortedIndex={sortedIndex}
-        pageSize={pageSize - 1}
-        isRed={sortedIndex === 0}
-        bricksLength={finalBricks.length}
-        moveNext={() => this.moveAllNext(this.state.pageSize - 1)}
-        moveBack={() => this.moveAllBack(this.state.pageSize - 1)}
-      />
-    );
   }
 
   countPublished() {
@@ -613,13 +485,11 @@ class BuildPage extends Component<BuildProps, BuildState> {
     } else {
       if (s) {
         const bricks = this.filterInProgressBySubject(rawBricks, s, filters);
-        const threeColumns = prepareTreeRows(bricks, filters, this.props.user.id);
-        this.setState({buildCheckedSubjectId: s.id, threeColumns, finalBricks: bricks});
+        this.setState({buildCheckedSubjectId: s.id, finalBricks: bricks});
       } else {
         if (this.state.buildCheckedSubjectId !== -1) {
           const finalBricks = filterBricks(filters, rawBricks, this.props.user.id);
-          const threeColumns = prepareTreeRows(rawBricks, filters, this.props.user.id);
-          this.setState({buildCheckedSubjectId: -1, threeColumns, finalBricks});
+          this.setState({buildCheckedSubjectId: -1, finalBricks});
         }
       }
     }
@@ -636,10 +506,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
       searchString = this.props.searchString;
     }
     let finalBricks = this.state.finalBricks;
-    let threeColumns = this.state.threeColumns;
     if (this.props.isSearching) {
       finalBricks = this.state.searchBricks;
-      threeColumns = this.state.searchThreeColumns;
     }
 
     let rawPersonalBricks = this.state.rawBricks.filter(b => !b.isCore);
@@ -650,20 +518,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
     finalBricks = finalBricks.filter(b => b.isCore === true);
 
-
     let selfPublish = 0;
     let personalDraft = 0;
-    if (this.state.isAdmin) {
-      selfPublish = rawPersonalBricks.filter(b => b.status === BrickStatus.Publish).length;
-      personalDraft = rawPersonalBricks.filter(b =>
-        b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review).length;
-    } else {
-      selfPublish = rawPersonalBricks.filter(b => b.author.id === this.props.user.id && b.status === BrickStatus.Publish).length;
-      personalDraft = rawPersonalBricks.filter(b =>
-        b.author.id === this.props.user.id &&
-        (b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review)
-      ).length;
-    }
 
     // publish should have create brick button when empty
     if (this.state.filters.publish) {
@@ -682,7 +538,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
           user={this.props.user}
           history={this.props.history}
           finalBricks={finalBricks}
-          threeColumns={threeColumns}
           filters={this.state.filters}
           sortBy={this.state.sortBy}
           isEmpty={isEmpty}
@@ -697,31 +552,24 @@ class BuildPage extends Component<BuildProps, BuildState> {
             selfPublish={selfPublish}
             onCoreSwitch={this.toggleCore.bind(this)}
           />
-            <div className="tab-content">
-              <BuildBricks
-                user={this.props.user}
-                finalBricks={finalBricks}
-                threeColumns={threeColumns}
-                shown={this.state.shown}
-                pageSize={this.state.pageSize}
-                sortedIndex={this.state.sortedIndex}
-                history={history}
-                filters={this.state.filters}
-                loaded={this.state.bricksLoaded}
-                searchString={searchString}
-                published={published}
-                isCorePage={true}
-                moveNext={this.moveNext.bind(this)}
-                moveBack={this.moveBack.bind(this)}
-                switchPublish={this.switchPublish.bind(this)}
-                handleDeleteOpen={this.handleDeleteOpen.bind(this)}
-                handleMouseHover={this.handleMouseHover.bind(this)}
-                handleMouseLeave={this.handleMouseLeave.bind(this)}
-                onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
-                onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
-              />
-              {this.renderPagination(finalBricks, threeColumns)}
-          </div>
+            <PublishedBricks
+              user={this.props.user}
+              finalBricks={finalBricks}
+              shown={this.state.shown}
+              pageSize={18}
+              sortedIndex={this.state.sortedIndex}
+              history={history}
+              filters={this.state.filters}
+              loaded={this.state.bricksLoaded}
+              searchString={searchString}
+              published={published}
+              moveNext={this.moveAllNext.bind(this)}
+              moveBack={this.moveAllBack.bind(this)}
+              switchPublish={this.switchPublish.bind(this)}
+              handleDeleteOpen={this.handleDeleteOpen.bind(this)}
+              handleMouseHover={this.handleMouseHover.bind(this)}
+              handleMouseLeave={this.handleMouseLeave.bind(this)}
+            />
         </Grid>
         <DeleteBrickDialog
           isOpen={this.state.deleteDialogOpen}

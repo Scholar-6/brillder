@@ -26,6 +26,14 @@ export const getBricks = async () => {
   }
 }
 
+export const getPersonalBricks = async () => {
+  try {
+    return await get<Brick[]>("/bricks/personal");
+  } catch {
+    return null;
+  }
+}
+
 export const getPublicBricks = async () => {
   try {
     return await get<Brick[]>('/bricks/public');
