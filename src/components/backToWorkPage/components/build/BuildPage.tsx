@@ -11,10 +11,10 @@ import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus } from "model/brick"
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters, SortBy } from '../../model';
-import { getThreeColumnBricks, searchBricks, getCurrentUserBricks } from "services/axios/brick";
+import { getThreeColumnBricks, getBackToWorkStatistics, searchBricks, getCurrentUserBricks } from "services/axios/brick";
 import { Notification } from 'model/notifications';
 import {
-  filterByStatus, filterBricks, removeAllFilters,
+  filterBricks,
   removeBrickFromLists, sortBricks, hideBricks, expandBrick, expandSearchBrick, removeBrickFromList
 } from '../../service';
 import {
@@ -29,12 +29,10 @@ import FilterSidebar from './FilterSidebar';
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import BackPagePagination from '../BackPagePagination';
 import BackPagePaginationV2 from '../BackPagePaginationV2';
-import PersonalBuild from "../personalBuild/PersonalBuild";
 import map from "components/map";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { SubjectItem } from "../personalBuild/model";
 import { isPhone } from "services/phone";
-import PublishedBricks from "./PublishedBricks";
 
 
 interface BuildProps {
@@ -62,6 +60,10 @@ interface BuildState {
   isTeach: boolean;
   isAdmin: boolean;
   isEditor: boolean;
+
+  personalDraftCount: number;
+  personalPublishCount: number;
+  publishedCount: number;
 
   shown: boolean;
   sortBy: SortBy;
@@ -122,6 +124,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
       sortedIndex: 0,
       deleteDialogOpen: false,
       deleteBrickId: -1,
+
+      publishedCount: 0,
+      personalDraftCount: 0,
+      personalPublishCount: 0,
 
       bricksLoaded: false,
 
@@ -186,6 +192,16 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const {isAdmin, isEditor} = this.state;
     if (isAdmin || isEditor) {
       const bricks = await getThreeColumnBricks();
+      const bricksCount = await getBackToWorkStatistics(true, true, false);
+      if (bricksCount) {
+        if (bricksCount.publishedCount != undefined && bricksCount.personalDraftCount != undefined && bricksCount.personalPublishCount != undefined) {
+          this.setState({
+            personalDraftCount: bricksCount.personalDraftCount,
+            personalPublishCount: bricksCount.personalPublishCount,
+            publishedCount: bricksCount.publishedCount
+          });
+        }
+      }
       if (bricks) {
         let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
         bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === this.props.user.id)) ? -1 : 1);
@@ -508,24 +524,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     );
   }
 
-  countPublished() {
-    let published = 0;
-    if (this.props.isSearching) {
-      for (let b of this.state.searchBricks) {
-        if (b.status === BrickStatus.Publish && b.isCore === true) {
-          published++;
-        }
-      }
-    } else {
-      for (let b of this.state.rawBricks) {
-        if (b.status === BrickStatus.Publish && b.isCore === true) {
-          published++;
-        }
-      }
-    }
-    return published;
-  }
-
   filterInProgressBySubject(bs: Brick[], s: SubjectItem, filters: Filters) {
     return bs.filter(b => {
       if (b.subjectId === s.id && b.status !== BrickStatus.Publish) {
@@ -595,8 +593,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     
     let isEmpty = rawPersonalBricks.length === 0;
 
-    const published = this.countPublished();
-
     finalBricks = finalBricks.filter(b => b.isCore === true);
 
     let selfPublish = 0;
@@ -641,8 +637,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
         />
         <Grid item xs={9} className="brick-row-container">
           <Tab
-            draft={personalDraft}
-            selfPublish={selfPublish}
+            draft={this.state.personalDraftCount}
+            selfPublish={this.state.personalPublishCount}
             onCoreSwitch={() => {
               this.props.history.push(map.BackToWorkPagePersonal);
             }}
@@ -652,6 +648,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 user={this.props.user}
                 finalBricks={finalBricks}
                 threeColumns={threeColumns}
+                publishedCount={this.state.publishedCount}
                 shown={this.state.shown}
                 pageSize={this.state.pageSize}
                 sortedIndex={this.state.sortedIndex}
@@ -659,7 +656,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 filters={this.state.filters}
                 loaded={this.state.bricksLoaded}
                 searchString={this.props.searchString}
-                published={published}
                 isCorePage={true}
                 moveNext={this.moveNext.bind(this)}
                 moveBack={this.moveBack.bind(this)}

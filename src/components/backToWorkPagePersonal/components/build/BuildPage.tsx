@@ -1,22 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import queryString from 'query-string';
 
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
 import './BuildPage.scss';
-import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus } from "model/brick";
+import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { Filters, SortBy } from '../../model';
-import { getPersonalBricks, searchBricks, getCurrentUserBricks } from "services/axios/brick";
+import { getPersonalBricks, searchBricks, getCurrentUserBricks, getBackToWorkStatistics } from "services/axios/brick";
 import { Notification } from 'model/notifications';
 import {
-  filterByStatus, filterBricks, removeAllFilters,
-  removeBrickFromLists, sortBricks, hideBricks, expandBrick, expandSearchBrick, removeBrickFromList
+  removeBrickFromLists, removeBrickFromList
 } from '../../service';
-import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 import PersonalBuild from "../personalBuild/PersonalBuild";
 import map from "components/map";
@@ -49,6 +46,11 @@ interface BuildState {
   isAdmin: boolean;
   isEditor: boolean;
 
+  draftCount: number;
+  buildCount: number;
+  reviewCount: number;
+  publishedCount: number;
+
   shown: boolean;
   sortBy: SortBy;
   sortedIndex: number;
@@ -63,7 +65,6 @@ interface BuildState {
   buildCheckedSubjectId: number;
 
   bricksLoaded: boolean;
-  handleKey(e: any): void;
 }
 
 class BuildPage extends Component<BuildProps, BuildState> {
@@ -73,7 +74,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const isTeach = checkTeacher(this.props.user);
     const isAdmin = checkAdmin(this.props.user.roles);
     const isEditor = checkEditor(this.props.user.roles)
-    const isCore = this.getCore(isAdmin, isEditor);
 
     this.state = {
       finalBricks: [],
@@ -84,8 +84,13 @@ class BuildPage extends Component<BuildProps, BuildState> {
       isTeach,
       isEditor,
 
+      draftCount: 0,
+      buildCount: 0,
+      reviewCount: 0,
+      publishedCount: 0,
+
       shown: true,
-      pageSize: 15,
+      pageSize: 17,
 
       sortBy: SortBy.None,
       sortedIndex: 0,
@@ -103,7 +108,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         review: true,
         build: true,
         publish: false,
-        isCore,
+        isCore: false,
 
         level1: false,
         level2: false,
@@ -113,7 +118,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
         s40: false,
         s60: false
       },
-      handleKey: this.handleKey.bind(this)
     }
 
     this.getBricks();
@@ -153,6 +157,17 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const { isAdmin, isEditor } = this.state;
     if (isAdmin || isEditor) {
       const bricks = await getPersonalBricks();
+      const bricksCount = await getBackToWorkStatistics(false, true, true);
+      if (bricksCount) {
+        if (bricksCount.draftCount != undefined && bricksCount.buildCount != undefined && bricksCount.reviewCount != undefined && bricksCount.publishedCount != undefined) {
+          this.setState({
+            draftCount: bricksCount.draftCount,
+            buildCount: bricksCount.buildCount,
+            reviewCount: bricksCount.reviewCount,
+            publishedCount: bricksCount.publishedCount
+          });
+        }
+      }
       if (bricks) {
         let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
         bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === this.props.user.id)) ? -1 : 1);
@@ -172,31 +187,12 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  componentDidMount() {
-    document.addEventListener("keydown", this.state.handleKey, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.state.handleKey, false);
-  }
-
   moveBack() {
     this.moveAllBack();
   }
 
   moveNext() {
     this.moveAllNext();
-  }
-
-  handleKey(e: any) {
-    // only public page
-    if (this.state.filters.isCore) {
-      if (upKeyPressed(e)) {
-        this.moveBack();
-      } else if (downKeyPressed(e)) {
-        this.moveNext();
-      }
-    }
   }
 
   getBrickSubjects(bricks: Brick[]) {
@@ -229,25 +225,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     return subjects;
   }
 
-  getCore(isAdmin: boolean, isEditor: boolean) {
-    let isCore = false;
-    if (isAdmin || isEditor) {
-      isCore = true;
-    }
-
-    const values = queryString.parse(this.props.location.search);
-    if (values.isCore) {
-      try {
-        if (values.isCore === "true") {
-          isCore = true;
-        } else if (values.isCore === "false") {
-          isCore = false;
-        }
-      } catch { }
-    }
-    return isCore;
-  }
-
   setBricks(rawBricks: Brick[]) {
     let finalBricks = rawBricks
     if (!this.state.filters.isCore) {
@@ -262,135 +239,12 @@ class BuildPage extends Component<BuildProps, BuildState> {
     this.props.history.push(map.BackToWorkPage);
   }
 
-  handleSortChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let sortBy = parseInt(e.target.value) as SortBy;
-    const { state } = this;
-    let bricks = sortBricks(state.finalBricks, sortBy);
-    this.setState({ ...state, finalBricks: bricks, sortBy });
-  };
-
-  switchPublish() {
-    const { filters, buildCheckedSubjectId } = this.state;
-
-    filters.level1 = false;
-    filters.level2 = false;
-    filters.level3 = false;
-
-    if (!filters.publish) {
-      removeAllFilters(filters);
-      filters.publish = true;
-      let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Publish);
-      bricks = bricks.filter(b => b.isCore === true);
-      const subjects = this.getBrickSubjects(this.state.rawBricks);
-      if (buildCheckedSubjectId >= 0) {
-        // if subject checked. subject should exist
-        const subject = subjects.find(s => s.id === buildCheckedSubjectId);
-        if (subject) {
-          bricks = bricks.filter(b => b.subjectId === buildCheckedSubjectId);
-        }
-      }
-      this.setState({ ...this.state, filters, subjects, sortedIndex: 0, finalBricks: bricks });
-    } else {
-      removeAllFilters(filters);
-      filters.build = true;
-      filters.review = true;
-      filters.draft = true;
-      const bricks = filterByStatus(this.state.rawBricks, BrickStatus.Draft);
-      bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Build));
-      bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Review));
-      const subjects = this.getBrickSubjects(this.state.rawBricks);
-      this.setState({ ...this.state, filters, subjects, finalBricks: bricks, sortedIndex: 0 });
-    }
-  }
-
-  filterUpdated(newFilters: Filters) {
-    const { filters } = this.state;
-    filters.build = newFilters.build;
-    filters.publish = newFilters.publish;
-    filters.review = newFilters.review;
-    filters.draft = newFilters.draft;
-    let finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
-    const subjects = this.getBrickSubjects(finalBricks);
-
-    let totalBricks = finalBricks;
-
-    // published. filter by levels
-    if (filters.publish) {
-      let levelBricks: Brick[] = [];
-
-      if (filters.level1) {
-        levelBricks.push(...finalBricks.filter(b => b.academicLevel === AcademicLevel.First));
-      }
-      if (filters.level2) {
-        levelBricks.push(...finalBricks.filter(b => b.academicLevel === AcademicLevel.Second));
-      }
-      if (filters.level3) {
-        levelBricks.push(...finalBricks.filter(b => b.academicLevel === AcademicLevel.Third));
-      }
-
-      totalBricks = [];
-
-      if (!filters.level1 && !filters.level2 && !filters.level3) {
-        levelBricks = finalBricks;
-      }
-
-      if (filters.s20) {
-        totalBricks.push(...levelBricks.filter(b => b.brickLength === BrickLengthEnum.S20min));
-      }
-      if (filters.s40) {
-        totalBricks.push(...levelBricks.filter(b => b.brickLength === BrickLengthEnum.S40min));
-      }
-      if (filters.s60) {
-        totalBricks.push(...levelBricks.filter(b => b.brickLength === BrickLengthEnum.S60min));
-      }
-
-      if (!filters.s20 && !filters.s40 && !filters.s60) {
-        totalBricks = levelBricks;
-      }
-
-      if (!filters.level1 && !filters.level2 && !filters.level3 && !filters.s20 && !filters.s40 && !filters.s60) {
-        totalBricks = finalBricks;
-      }
-    }
-    this.setState({ ...this.state, filters, subjects, finalBricks: totalBricks, sortedIndex: 0 });
-  }
-
   handleDeleteOpen(deleteBrickId: number) {
     this.setState({ ...this.state, deleteDialogOpen: true, deleteBrickId });
   }
 
   handleDeleteClose() {
     this.setState({ ...this.state, deleteDialogOpen: false });
-  }
-
-  handleMouseHover(index: number) {
-    let bricks = this.state.finalBricks;
-    bricks = bricks.filter(b => b.isCore === true);
-    if (this.props.isSearching) {
-      bricks = this.state.searchBricks;
-      hideBricks(bricks);
-    } else {
-      hideBricks(this.state.rawBricks);
-    }
-
-    if (bricks[index] && bricks[index].expanded) return;
-
-    if (this.props.isSearching) {
-      expandSearchBrick(this.state.searchBricks, index);
-    } else {
-      let bricks2 = this.state.finalBricks.filter(b => b.isCore === true);
-      expandBrick(bricks2, this.state.rawBricks, index);
-    }
-    this.setState({ ...this.state });
-  }
-
-  handleMouseLeave() {
-    if (this.props.isSearching) {
-      hideBricks(this.state.searchBricks);
-    } else {
-      hideBricks(this.state.rawBricks);
-    }
-    this.setState({ ...this.state });
   }
 
   moveToFirstPage() {
@@ -422,74 +276,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  countPublished() {
-    let published = 0;
-    if (this.props.isSearching) {
-      for (let b of this.state.searchBricks) {
-        if (b.status === BrickStatus.Publish && b.isCore === true) {
-          published++;
-        }
-      }
-    } else {
-      for (let b of this.state.rawBricks) {
-        if (b.status === BrickStatus.Publish && b.isCore === true) {
-          published++;
-        }
-      }
-    }
-    return published;
-  }
-
-  filterInProgressBySubject(bs: Brick[], s: SubjectItem, filters: Filters) {
-    return bs.filter(b => {
-      if (b.subjectId === s.id && b.status !== BrickStatus.Publish) {
-        if (filters.draft === true && b.status === BrickStatus.Draft) {
-          return true;
-        } else if (filters.review === true && b.status === BrickStatus.Review) {
-          return true;
-        } else if (filters.build === true && b.status === BrickStatus.Build) {
-          return true;
-        }
-      }
-      return false;
-    });
-  }
-
-  filterPublishedSubject(bs: Brick[], s: SubjectItem) {
-    return bs.filter(b => b.subjectId === s.id && b.status === BrickStatus.Publish);
-  }
-
-  filterBuildPublishBySubject(s: SubjectItem | null) {
-    const { rawBricks } = this.state;
-    if (s) {
-      const bricks = this.filterPublishedSubject(rawBricks, s);
-      this.setState({ buildCheckedSubjectId: s.id, finalBricks: bricks });
-    } else {
-      if (this.state.buildCheckedSubjectId !== -1) {
-        const finalBricks = rawBricks.filter(b => b.status === BrickStatus.Publish);
-        this.setState({ buildCheckedSubjectId: -1, finalBricks });
-      }
-    }
-  }
-
-  filterBuildBySubject(s: SubjectItem | null) {
-    const { rawBricks } = this.state;
-    const { filters } = this.state;
-    if (filters.publish) {
-      this.filterBuildPublishBySubject(s);
-    } else {
-      if (s) {
-        const bricks = this.filterInProgressBySubject(rawBricks, s, filters);
-        this.setState({ buildCheckedSubjectId: s.id, finalBricks: bricks });
-      } else {
-        if (this.state.buildCheckedSubjectId !== -1) {
-          const finalBricks = filterBricks(filters, rawBricks, this.props.user.id);
-          this.setState({ buildCheckedSubjectId: -1, finalBricks });
-        }
-      }
-    }
-  }
-
   render() {
     const { history } = this.props;
     if (isPhone()) {
@@ -505,14 +291,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
     let isEmpty = rawPersonalBricks.length === 0;
 
-    const published = this.countPublished();
-
-    const publicFinalBricks = this.state.rawBricks.filter(b => b.isCore);
-
-    const draft = publicFinalBricks.filter(b => b.status === BrickStatus.Draft).length;
-    const build = publicFinalBricks.filter(b => b.status === BrickStatus.Build).length;
-    const review = publicFinalBricks.filter(b => b.status === BrickStatus.Review).length;
-
     if (!this.state.isAdmin) {
       finalBricks = finalBricks.filter(b => b.author.id === this.props.user.id);
     }
@@ -522,10 +300,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
       finalBricks={finalBricks}
       loaded={this.state.bricksLoaded}
       shown={this.state.shown}
-      draft={draft}
-      build={build}
-      review={review}
-      publish={published}
+      draft={this.state.draftCount}
+      build={this.state.buildCount}
+      review={this.state.reviewCount}
+      publish={this.state.publishedCount}
       pageSize={17}
       sortedIndex={this.state.sortedIndex}
       history={history}
