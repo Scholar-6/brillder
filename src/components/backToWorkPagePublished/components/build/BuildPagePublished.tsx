@@ -11,7 +11,7 @@ import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus } from "model/brick"
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { Filters, SortBy } from '../../model';
-import { searchBricks, getCurrentUserBricks, getPublicBricks } from "services/axios/brick";
+import { searchBricks, getCurrentUserBricks, getPublicBricks, getBackToWorkStatistics } from "services/axios/brick";
 import { Notification } from 'model/notifications';
 import {
   filterByStatus, filterBricks, removeAllFilters,
@@ -48,6 +48,9 @@ interface BuildState {
   finalBricks: Brick[]; // bricks to display
   rawBricks: Brick[]; // loaded bricks
   searchBricks: Brick[]; // searching bricks
+
+  personalDraftCount: number;
+  personalPublishCount: number;
 
   isTeach: boolean;
   isAdmin: boolean;
@@ -89,6 +92,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
       shown: true,
       pageSize: 15,
+
+      personalDraftCount: 0,
+      personalPublishCount: 0,
 
       sortBy: SortBy.None,
       sortedIndex: 0,
@@ -156,6 +162,15 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const {isAdmin, isEditor} = this.state;
     if (isAdmin || isEditor) {
       const bricks = await getPublicBricks();
+      const bricksCount = await getBackToWorkStatistics(true, false, false);
+      if (bricksCount) {
+        if (bricksCount.personalDraftCount != undefined && bricksCount.personalPublishCount != undefined) {
+          this.setState({
+            personalDraftCount: bricksCount.personalDraftCount,
+            personalPublishCount: bricksCount.personalPublishCount,
+          });
+        }
+      }
       if (bricks) {
         let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
         bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === this.props.user.id)) ? -1 : 1);
@@ -488,9 +503,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
     finalBricks = finalBricks.filter(b => b.isCore === true);
 
-    let selfPublish = 0;
-    let personalDraft = 0;
-
     // publish should have create brick button when empty
     if (this.state.filters.publish) {
       isEmpty = finalBricks.length > 0 ? false : true;
@@ -518,8 +530,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
         />
         <Grid item xs={9} className="brick-row-container">
           <Tab
-            draft={personalDraft}
-            selfPublish={selfPublish}
+            draft={this.state.personalDraftCount}
+            selfPublish={this.state.personalPublishCount}
             onCoreSwitch={this.toggleCore.bind(this)}
           />
             <PublishedBricks
