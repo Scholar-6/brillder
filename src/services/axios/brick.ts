@@ -50,6 +50,25 @@ export const getPublicBricks = async () => {
   }
 }
 
+interface BackToWorkStatistics {
+  personalDraftCount?: number;
+  personalPublishCount?: number;
+
+  draftCount?: number;
+  buildCount?: number;
+  reviewCount?: number;
+
+  publishedCount?: number;
+}
+
+export const getBackToWorkStatistics = async (getPersonal: boolean, getPublic: boolean, getThreeColumns: boolean) => {
+  try {
+    return await post<BackToWorkStatistics>('/bricks/backToWork/statistic', {getPersonal, getPublic, getThreeColumns});
+  } catch {
+    return null;
+  }
+}
+
 
 export const getLatestBrick = async () => {
   try {
