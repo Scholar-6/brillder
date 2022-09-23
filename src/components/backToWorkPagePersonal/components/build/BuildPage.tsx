@@ -153,21 +153,25 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
+  async setCount() {
+    const bricksCount = await getBackToWorkStatistics(false, true, true);
+    if (bricksCount) {
+      if (bricksCount.draftCount != undefined && bricksCount.buildCount != undefined && bricksCount.reviewCount != undefined && bricksCount.publishedCount != undefined) {
+        this.setState({
+          draftCount: bricksCount.draftCount,
+          buildCount: bricksCount.buildCount,
+          reviewCount: bricksCount.reviewCount,
+          publishedCount: bricksCount.publishedCount
+        });
+      }
+    }
+  }
+
   async getBricks() {
     const { isAdmin, isEditor } = this.state;
+    await this.setCount();
     if (isAdmin || isEditor) {
       const bricks = await getPersonalBricks();
-      const bricksCount = await getBackToWorkStatistics(false, true, true);
-      if (bricksCount) {
-        if (bricksCount.draftCount != undefined && bricksCount.buildCount != undefined && bricksCount.reviewCount != undefined && bricksCount.publishedCount != undefined) {
-          this.setState({
-            draftCount: bricksCount.draftCount,
-            buildCount: bricksCount.buildCount,
-            reviewCount: bricksCount.reviewCount,
-            publishedCount: bricksCount.publishedCount
-          });
-        }
-      }
       if (bricks) {
         let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
         bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === this.props.user.id)) ? -1 : 1);
