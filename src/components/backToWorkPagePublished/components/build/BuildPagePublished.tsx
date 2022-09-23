@@ -130,7 +130,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
   // load bricks when notification come
   componentDidUpdate(prevProps: BuildProps) {
-    const {notifications} = this.props;
+    const { notifications } = this.props;
     const oldNotifications = prevProps.notifications;
     if (notifications && oldNotifications) {
       if (notifications.length > oldNotifications.length) {
@@ -158,19 +158,23 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
+  async setCount() {
+    const bricksCount = await getBackToWorkStatistics(true, false, false);
+    if (bricksCount) {
+      if (bricksCount.personalDraftCount != undefined && bricksCount.personalPublishCount != undefined) {
+        this.setState({
+          personalDraftCount: bricksCount.personalDraftCount,
+          personalPublishCount: bricksCount.personalPublishCount,
+        });
+      }
+    }
+  }
+
   async getBricks() {
-    const {isAdmin, isEditor} = this.state;
+    const { isAdmin, isEditor } = this.state;
+    await this.setCount();
     if (isAdmin || isEditor) {
       const bricks = await getPublicBricks();
-      const bricksCount = await getBackToWorkStatistics(true, false, false);
-      if (bricksCount) {
-        if (bricksCount.personalDraftCount != undefined && bricksCount.personalPublishCount != undefined) {
-          this.setState({
-            personalDraftCount: bricksCount.personalDraftCount,
-            personalPublishCount: bricksCount.personalPublishCount,
-          });
-        }
-      }
       if (bricks) {
         let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
         bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === this.props.user.id)) ? -1 : 1);
@@ -218,7 +222,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   getBrickSubjects(bricks: Brick[]) {
-    let subjects:SubjectItem[] = [];
+    let subjects: SubjectItem[] = [];
     for (let brick of bricks) {
       if (!brick.subject) {
         continue;
@@ -261,7 +265,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         } else if (values.isCore === "false") {
           isCore = false;
         }
-      } catch {}
+      } catch { }
     }
     return isCore;
   }
@@ -301,10 +305,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const subjects = this.getBrickSubjects(finalBricks);
 
     let totalBricks = finalBricks;
-    
+
     // published. filter by levels
     if (filters.publish) {
-      let levelBricks:Brick[] = [];
+      let levelBricks: Brick[] = [];
 
       if (filters.level1) {
         levelBricks.push(...finalBricks.filter(b => b.academicLevel === AcademicLevel.First));
@@ -315,7 +319,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       if (filters.level3) {
         levelBricks.push(...finalBricks.filter(b => b.academicLevel === AcademicLevel.Third));
       }
-      
+
       totalBricks = [];
 
       if (!filters.level1 && !filters.level2 && !filters.level3) {
@@ -382,7 +386,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   moveToFirstPage() {
-    this.setState({sortedIndex: 0});
+    this.setState({ sortedIndex: 0 });
   }
 
   delete(brickId: number) {
@@ -399,7 +403,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     let index = this.state.sortedIndex;
 
     if (index >= pageSize) {
-      this.setState({ ...this.state, sortedIndex: index - pageSize});
+      this.setState({ ...this.state, sortedIndex: index - pageSize });
     }
   }
 
@@ -450,38 +454,38 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   filterBuildPublishBySubject(s: SubjectItem | null) {
-    const {rawBricks} = this.state;
+    const { rawBricks } = this.state;
     if (s) {
       const bricks = this.filterPublishedSubject(rawBricks, s);
-      this.setState({buildCheckedSubjectId: s.id, finalBricks: bricks});
+      this.setState({ buildCheckedSubjectId: s.id, finalBricks: bricks });
     } else {
       if (this.state.buildCheckedSubjectId !== -1) {
         const finalBricks = rawBricks.filter(b => b.status === BrickStatus.Publish);
-        this.setState({buildCheckedSubjectId: -1, finalBricks});
+        this.setState({ buildCheckedSubjectId: -1, finalBricks });
       }
     }
   }
 
   filterBuildBySubject(s: SubjectItem | null) {
-    const {rawBricks} = this.state;
-    const {filters} = this.state;
+    const { rawBricks } = this.state;
+    const { filters } = this.state;
     if (filters.publish) {
       this.filterBuildPublishBySubject(s);
     } else {
       if (s) {
         const bricks = this.filterInProgressBySubject(rawBricks, s, filters);
-        this.setState({buildCheckedSubjectId: s.id, finalBricks: bricks});
+        this.setState({ buildCheckedSubjectId: s.id, finalBricks: bricks });
       } else {
         if (this.state.buildCheckedSubjectId !== -1) {
           const finalBricks = filterBricks(filters, rawBricks, this.props.user.id);
-          this.setState({buildCheckedSubjectId: -1, finalBricks});
+          this.setState({ buildCheckedSubjectId: -1, finalBricks });
         }
       }
     }
   }
 
   render() {
-    const {history} = this.props;
+    const { history } = this.props;
     if (isPhone()) {
       history.push(map.backToWorkUserBased(this.props.user));
       return <PageLoader content="" />;
@@ -496,7 +500,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
 
     let rawPersonalBricks = this.state.rawBricks.filter(b => !b.isCore);
-    
+
     let isEmpty = rawPersonalBricks.length === 0;
 
     const published = this.countPublished();
@@ -508,7 +512,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       isEmpty = finalBricks.length > 0 ? false : true;
       finalBricks = finalBricks.filter(b => b.status === BrickStatus.Publish);
     } else {
-      const coreNoPublishBricks =  this.state.rawBricks
+      const coreNoPublishBricks = this.state.rawBricks
         .filter(b => b.isCore === true)
         .filter(b => b.status !== BrickStatus.Publish);
       isEmpty = coreNoPublishBricks.length > 0 ? false : true;
@@ -534,24 +538,24 @@ class BuildPage extends Component<BuildProps, BuildState> {
             selfPublish={this.state.personalPublishCount}
             onCoreSwitch={this.toggleCore.bind(this)}
           />
-            <PublishedBricks
-              user={this.props.user}
-              finalBricks={finalBricks}
-              shown={this.state.shown}
-              pageSize={18}
-              sortedIndex={this.state.sortedIndex}
-              history={history}
-              filters={this.state.filters}
-              loaded={this.state.bricksLoaded}
-              searchString={searchString}
-              published={published}
-              moveNext={this.moveAllNext.bind(this)}
-              moveBack={this.moveAllBack.bind(this)}
-              switchPublish={this.switchPublish.bind(this)}
-              handleDeleteOpen={this.handleDeleteOpen.bind(this)}
-              handleMouseHover={this.handleMouseHover.bind(this)}
-              handleMouseLeave={this.handleMouseLeave.bind(this)}
-            />
+          <PublishedBricks
+            user={this.props.user}
+            finalBricks={finalBricks}
+            shown={this.state.shown}
+            pageSize={18}
+            sortedIndex={this.state.sortedIndex}
+            history={history}
+            filters={this.state.filters}
+            loaded={this.state.bricksLoaded}
+            searchString={searchString}
+            published={published}
+            moveNext={this.moveAllNext.bind(this)}
+            moveBack={this.moveAllBack.bind(this)}
+            switchPublish={this.switchPublish.bind(this)}
+            handleDeleteOpen={this.handleDeleteOpen.bind(this)}
+            handleMouseHover={this.handleMouseHover.bind(this)}
+            handleMouseLeave={this.handleMouseLeave.bind(this)}
+          />
         </Grid>
         <DeleteBrickDialog
           isOpen={this.state.deleteDialogOpen}
