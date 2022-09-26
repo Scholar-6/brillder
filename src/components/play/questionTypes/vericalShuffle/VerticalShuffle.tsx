@@ -255,7 +255,9 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
                 {switchIndex === i ? <SpriteIcon name="feather-refresh" /> : i + 1}
               </div>
             </div>
-            {this.renderData(answer)}
+            <div>
+              {this.renderData(answer)}
+            </div>
           </Grid>
         </div>
         {this.renderEachHint(i, answer, isCorrect)}
