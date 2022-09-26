@@ -47,7 +47,7 @@ const PublishButton: React.FC<ButtonProps> = props => {
   }
 
   const renderTooltip = () => {
-    return <div className="custom-tooltip">{brick.adaptedFrom ? 'Upload' : 'Publish'}</div>
+    return <div className="custom-tooltip">{brick.isCore ? 'Publish' : 'Upload'}</div>
   }
 
   const successPopup = () => {

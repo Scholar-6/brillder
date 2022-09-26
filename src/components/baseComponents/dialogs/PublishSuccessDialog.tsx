@@ -25,10 +25,10 @@ const PublishSuccessDialog: React.FC<ProfileSavedProps> = props => {
       >
         <div className="dialog-header">
           <ListItem>
-            <ListItemText primary="Successfully Published!" className="bold" style={{ minWidth: '30vw' }} />
+            <ListItemText primary="Brick Uploaded!" className="bold" style={{ minWidth: '30vw' }} />
           </ListItem>
           <ListItem>
-            <ListItemText primary="Thank you for adding to your library" className="italic" style={{ minWidth: '30vw' }} />
+            <ListItemText primary="Your brick has been saved to your personal catalogue." className="italic" style={{ minWidth: '30vw' }} />
           </ListItem>
         </div>
         <ListItem className="bottom-personal-publish">
