@@ -63,8 +63,8 @@ const TabComponent: React.FC<TabProps> = (props) => {
 
   return (
     <div className="tab-container">
-      {getPublicTab()}
       {getPersonalTab()}
+      {getPublicTab()}
     </div>
   );
 };
