@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { publishBrick } from "services/axios/brick";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { copyBrick, publishBrick } from "services/axios/brick";
 import { Brick } from "model/brick";
+import { Question } from "model/question";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SendToPublisherDialog from "./dialogs/SendToPublisherDialog";
 import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
 import APublishSuccessDialog from "components/baseComponents/dialogs/APublishSuccessDialog";
+import CopyBrickDialog from "./dialogs/CopyBrickDialog";
 
 export interface ButtonProps {
   disabled: boolean;
   history: any;
   brick: Brick;
+  questions: Question[];
   label?: string;
   onFinish(): void;
   goToPersonal(): void;
@@ -26,6 +29,7 @@ enum PublishStatus {
 const PublishButton: React.FC<ButtonProps> = props => {
   const [state, setState] = React.useState(PublishStatus.None);
   const { brick } = props;
+  const [open, setOpen] = useState(false);
   const [hovered, setHover] = React.useState(false);
 
   let className = 'build-publish-button';
@@ -43,7 +47,7 @@ const PublishButton: React.FC<ButtonProps> = props => {
   }
 
   const renderTooltip = () => {
-    return <div className="custom-tooltip">{brick.adaptedFrom ? 'Upload' : 'Publish'}</div>
+    return <div className="custom-tooltip">{brick.isCore ? 'Publish' : 'Upload'}</div>
   }
 
   const successPopup = () => {
@@ -65,6 +69,16 @@ const PublishButton: React.FC<ButtonProps> = props => {
       return (
         <PublishSuccessDialog
           isOpen={state === PublishStatus.Published}
+          isPersonal={!brick.isCore}
+          draftCopy={async (e) => {
+            setState(PublishStatus.Hidden);
+            e.preventDefault();
+            e.stopPropagation();
+            let res = await copyBrick(props.brick, props.questions);
+            if (res) {
+              setOpen(true);
+            }
+          }}
           close={() => {
             setState(PublishStatus.Hidden);
             props.onFinish();
@@ -98,6 +112,10 @@ const PublishButton: React.FC<ButtonProps> = props => {
         submit={publish}
       />
       {successPopup()}
+      <CopyBrickDialog isOpen={open} close={() => {
+        setOpen(false);
+        props.onFinish();
+      }} />
     </div>
   );
 };

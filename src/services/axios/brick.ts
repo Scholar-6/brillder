@@ -26,9 +26,44 @@ export const getBricks = async () => {
   }
 }
 
+export const getThreeColumnBricks = async () => {
+  try {
+    return await get<Brick[]>("/bricks/threeColumns");
+  } catch {
+    return null;
+  }
+}
+
+export const getPersonalBricks = async () => {
+  try {
+    return await get<Brick[]>("/bricks/personal");
+  } catch {
+    return null;
+  }
+}
+
 export const getPublicBricks = async () => {
   try {
     return await get<Brick[]>('/bricks/public');
+  } catch {
+    return null;
+  }
+}
+
+interface BackToWorkStatistics {
+  personalDraftCount?: number;
+  personalPublishCount?: number;
+
+  draftCount?: number;
+  buildCount?: number;
+  reviewCount?: number;
+
+  publishedCount?: number;
+}
+
+export const getBackToWorkStatistics = async (getPersonal: boolean, getPublic: boolean, getThreeColumns: boolean) => {
+  try {
+    return await post<BackToWorkStatistics>('/bricks/backToWork/statistic', {getPersonal, getPublic, getThreeColumns});
   } catch {
     return null;
   }

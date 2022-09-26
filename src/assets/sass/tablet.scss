@@ -1458,3 +1458,81 @@ html body #root .browser-type-container .manage-classrooms-page .sorted-row {
     }
   }
 }
+
+.confirm-email {
+  input {
+    color: var(--theme-dark-blue);
+    margin-top: 1vw;
+    line-height: 1 !important;
+    border-radius: 1.7vh;
+    padding: 1.8vh 1vw;
+    width: calc(100% - 2vw);
+    background: var(--tab-gray);
+  }
+}
+
+
+.dialog-box.personal-publish {
+  .MuiPaper-root {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+
+    .MuiListItem-gutters {
+      padding-left: 2vw;
+    }
+
+    .MuiListItem-root {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .MuiListItemText-root {
+      margin: 0;
+    }
+
+    .dialog-header {
+      margin-bottom: 1.7vw;
+    }
+
+    .bottom-personal-publish {
+      padding-top: 1vw;
+      padding-bottom: 1vw;
+      background: var(--tab-gray);
+      position: relative;
+
+      padding-right: 8vw;
+
+      .MuiListItemText-primary {
+        font-size: 1.6vw;
+      }
+
+      .MuiListItemText-root.italic .MuiListItemText-primary {
+        font-size: 1.4vw !important;
+      }
+
+      .MuiListItemAvatar-root {
+        position: absolute;
+        height: 100%;
+        right: 0;
+        width: 8vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .circle-check {
+          cursor: pointer;
+          background: var(--theme-green);
+          width: 4vw;
+          height: 4vw;
+
+          svg {
+            width: 3vw;
+            height: 3vw;
+          }
+        }
+      }
+    }
+  }
+}
+

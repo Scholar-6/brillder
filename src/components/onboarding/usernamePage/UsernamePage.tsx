@@ -3,17 +3,18 @@ import { Hidden } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Input } from "@material-ui/core";
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
-import { Checkbox } from "@material-ui/core";
 
 import { ReduxCombinedState } from "redux/reducers";
 import userActions from "redux/actions/user";
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { updateUser } from 'services/axios/user';
 import { User } from 'model/user';
-import LabelTyping from 'components/baseComponents/LabelTyping';
 import map from 'components/map';
 import { isPhone } from 'services/phone';
-import { GetOrigin } from 'localStorage/origin';
+
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import BasePhonePreview from 'components/baseComponents/BasePhonePreview';
+import LabelTyping from 'components/baseComponents/LabelTyping';
+
 
 interface InputState {
   value: string;
@@ -40,21 +41,10 @@ const DesktopTheme = React.lazy(() => import('./themes/UsernamePageDesktopTheme'
 const UsernamePage: React.FC<UsernamePageProps> = props => {
   const { user } = props;
 
-  const checkIfSchool = () => {
-    var origin = GetOrigin();
-    if (origin === 'school') {
-      return true;
-    }
-    return false;
-  }
-
-  const [isSchool] = React.useState(checkIfSchool);
   const [animationStep, setStep] = React.useState(AnimationStep.PageLoaded);
   const [submited, setSubmited] = React.useState(null as boolean | null);
   const [firstName, setFirstName] = React.useState({ value: user.firstName ? user.firstName : '', valid: null } as InputState);
   const [lastName, setLastName] = React.useState({ value: user.lastName ? user.lastName : '', valid: null } as InputState);
-
-  const [understood, setUnderstood] = React.useState(false);
 
   const validate = () => {
     let valid = true;
@@ -110,12 +100,6 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
 
   const checkValid = () => {
     if (lastName.value && firstName.value) {
-      if (isSchool) {
-        if (understood) {
-          return true;
-        }
-        return false;
-      }
       return true;
     }
     return false;
@@ -129,7 +113,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
           <div>
             {isPhone() && <div className="wef-user-icon-container flex-center"><SpriteIcon name="user" /></div>}
             <h1>
-              <LabelTyping start={true} value={isSchool ? "Let’s set up your account." : "Please enter your full name."} onFinish={() => setStep(AnimationStep.TitleFinished)} />
+              <LabelTyping start={true} value="Please enter your full name." onFinish={() => setStep(AnimationStep.TitleFinished)} />
             </h1>
             <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
               <Input
@@ -153,17 +137,11 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
                 placeholder="Last Name" />
               {renderEditButton()}
             </div>
-            {isSchool &&
-            <div className={`grey-checkbox-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
-              <Checkbox onClick={() => setUnderstood(true)} />
-              I understand that I can play for free this summer without obligation to set up a permanent account. 
-              <div className="absolute-text">Offer ends September 5</div>
-            </div>}
             <div className={animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}>
               <div className="submit-button" >
                 <button type="button" onClick={submit} className={checkValid() ? 'valid' : 'invalid'}>
                   Save
-                  <SpriteIcon name="feather-cloud-upload" /> 
+                  <SpriteIcon name="feather-cloud-upload" />
                 </button>
               </div>
             </div>
@@ -172,21 +150,13 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
         <div className="blue-right-block"></div>
         {!isPhone() && <Hidden only={['xs', 'sm']}>
           <div className="proposal-phone-preview phone-username-preview">
-            <div className="phone">
-              <div className="phone-border">
-                <div className="volume volume1"></div>
-                <div className="volume volume2"></div>
-                <div className="volume volume3"></div>
-                <div className="sleep"></div>
-                <div className="screen">
-                  <div className="only-icon-container">
-                    <div className="icon-container">
-                      <SpriteIcon name="user" />
-                    </div>
-                  </div>
+            <BasePhonePreview>
+              <div className="only-icon-container">
+                <div className="icon-container">
+                  <SpriteIcon name="user" />
                 </div>
               </div>
-            </div>
+            </BasePhonePreview>
           </div>
         </Hidden>}
       </div>

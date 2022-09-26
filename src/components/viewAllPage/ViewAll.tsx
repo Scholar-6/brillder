@@ -357,7 +357,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (values.searchString) {
       this.search();
     } else if (this.props.user) {
-      this.loadBricks(values);
+      if (this.state.subjectGroup) {
+        this.loadUnauthorizedBricks(this.state.subjectGroup);
+      } else {
+        this.loadBricks(values);
+      }
     } else {
       if (this.state.subjectGroup) {
         this.loadUnauthorizedBricks(this.state.subjectGroup);
@@ -578,10 +582,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     toggleSubject(this.state.subjects, id);
     toggleSubject(this.state.userSubjects, id);
 
-    if (this.props.user) {
-      this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
-    } else if (this.state.subjectGroup) {
+    if (this.state.subjectGroup) {
       this.loadAndSetUnauthBricks(0, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+    } else if (this.props.user) {
+      this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
     }
 
     this.setState({ ...this.state, isViewAll: false, shown: false });
@@ -605,10 +609,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ filterLevels, shown: false });
     setTimeout(() => {
       try {
-        if (this.props.user) {
-          this.loadAndSetBricks(0, this.state.isCore, filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
-        } else if (this.state.subjectGroup) {
+        if (this.state.subjectGroup) {
           this.loadAndSetUnauthBricks(0, filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+        } else if (this.props.user) {
+          this.loadAndSetBricks(0, this.state.isCore, filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
         }
       } catch { }
     }, 1400);
@@ -619,10 +623,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ filterCompetition, shown: false });
     setTimeout(() => {
       try {
-        if (this.props.user) {
-          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, filterCompetition, this.state.isAllSubjects);
-        } else if (this.state.subjectGroup) {
+        if (this.state.subjectGroup) {
           this.loadAndSetUnauthBricks(0, this.state.filterLevels, this.state.filterLength, filterCompetition, this.state.subjectGroup);
+        } else if (this.props.user) {
+          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, filterCompetition, this.state.isAllSubjects);
         }
       } catch { }
     }, 1400);
@@ -632,10 +636,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ filterLength, shown: false });
     setTimeout(() => {
       try {
-        if (this.props.user) {
-          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, filterLength, this.state.filterCompetition, this.state.isAllSubjects);
-        } else if (this.state.subjectGroup) {
+        if (this.state.subjectGroup) {
           this.loadAndSetUnauthBricks(0, this.state.filterLevels, filterLength, this.state.filterCompetition, this.state.subjectGroup);
+        } else {
+          this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, filterLength, this.state.filterCompetition, this.state.isAllSubjects);
         }
       } catch { }
     }, 1400);
@@ -670,6 +674,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   selectAllSubjects(isViewAll: boolean) {
+    if (this.state.subjectGroup) {
+      checkAllSubjects(this.state.subjects, this.state.isCore);
+      this.loadAndSetUnauthBricks(0, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+    }
     if (this.props.user) {
       checkAllSubjects(this.state.subjects, this.state.isCore);
       this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, true);
@@ -686,6 +694,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   selectUserSubjects(isViewAll: boolean) {
+    if (this.state.subjectGroup) {
+      this.checkUserSubjects();
+      this.loadAndSetUnauthBricks(0, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+      this.setState({
+        isViewAll,
+        isClearFilter: this.isFilterClear(),
+      });
+    }
     if (this.props.user) {
       this.checkUserSubjects();
       this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
@@ -775,10 +791,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (this.state.isSearching) {
         this.loadAndSetSearchBricks(this.state.searchString, this.state.page - 1, this.state.pageSize, this.state.isCore);
       } else {
-        if (this.props.user) {
-          this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
-        } else if (this.state.subjectGroup) {
+        if (this.state.subjectGroup) {
           this.loadAndSetUnauthBricks(this.state.page - 1, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+        } else if (this.props.user) {
+          this.loadAndSetBricks(this.state.page - 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
         }
       }
     }
@@ -792,10 +808,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (this.state.isSearching) {
         this.loadAndSetSearchBricks(this.state.searchString, this.state.page + 1, this.state.pageSize, this.state.isCore);
       } else {
-        if (this.props.user) {
-          this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
-        } else if (this.state.subjectGroup) {
+        if (this.state.subjectGroup) {
           this.loadAndSetUnauthBricks(this.state.page + 1, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+        } else if (this.props.user) {
+          this.loadAndSetBricks(this.state.page + 1, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.isAllSubjects);
         }
       }
     }
@@ -932,7 +948,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       return this.state.searchString;
     }
 
+
     if (this.state.isAllSubjects) {
+      if (this.state.subjectGroup) {
+        return SubjectGroupNames[this.state.subjectGroup];
+      }
       return "All subjects";
     }
     return "My Subjects";
@@ -1108,7 +1128,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           selectAllSubjects={this.selectAllSubjects.bind(this)}
           selectUserSubjects={this.selectUserSubjects.bind(this)}
           setAllSubjects={(isAllSubjects) => {
-            this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, isAllSubjects);
+            if (this.state.subjectGroup) {
+              this.loadAndSetUnauthBricks(0, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
+            } else {
+              this.loadAndSetBricks(0, this.state.isCore, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, isAllSubjects);
+            }
           }}
           openAddSubjectPopup={() =>
             this.setState({ isSubjectPopupOpen: true })

@@ -18,6 +18,8 @@ interface BuildBricksProps {
   finalBricks: Brick[];
   threeColumns: ThreeColumns;
 
+  publishedCount: number;
+
   isCorePage: boolean;
 
   loaded: boolean;
@@ -25,7 +27,6 @@ interface BuildBricksProps {
 
   pageSize: number;
   sortedIndex: number;
-  published: number;
 
   history: any;
   filters: any;
@@ -61,14 +62,14 @@ class BuildBricks extends Component<BuildBricksProps, State> {
   }
 
   componentDidMount() {
-    const {current} = this.state.bricksRef;
+    const { current } = this.state.bricksRef;
     if (current) {
       current.addEventListener('wheel', this.state.onBricksWheel, false);
     }
   }
 
   componentWillUnmount() {
-    const {current} = this.state.bricksRef;
+    const { current } = this.state.bricksRef;
     if (current) {
       current.removeEventListener('wheel', this.state.onBricksWheel, false);
     }
@@ -78,7 +79,7 @@ class BuildBricks extends Component<BuildBricksProps, State> {
     const wheelCoef = 40;
     if (e.wheelDeltaY < -wheelCoef) {
       this.props.moveNext();
-    } else if (e.wheelDeltaY > wheelCoef){
+    } else if (e.wheelDeltaY > wheelCoef) {
       this.props.moveBack();
     }
   }
@@ -146,7 +147,7 @@ class BuildBricks extends Component<BuildBricksProps, State> {
 
   renderSortedBricks = () => {
     const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize - 1, this.props.finalBricks)
-    data.unshift({brick: {isCreateLink: true} as Brick});
+    data.unshift({ brick: { isCreateLink: true } as Brick });
 
     return data.map(item => {
       const { brick } = item;
@@ -275,10 +276,10 @@ class BuildBricks extends Component<BuildBricksProps, State> {
       <div className="brick-container color1" style={{ width: '4vw' }}>
         <div className="absolute-container" style={{ width: '4vw' }}>
           <div className="short-description no-hover" style={{ width: '4vw' }}>
-          <div className="brick-circle-container">
-            <div className="left-brick-circle">
-              <div className="round-button">{count}</div>
-            </div>
+            <div className="brick-circle-container">
+              <div className="left-brick-circle">
+                <div className="round-button">{count}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -319,11 +320,11 @@ class BuildBricks extends Component<BuildBricksProps, State> {
       <div className="brick-container color2">
         <div className="absolute-container">
           <div className="short-description no-hover">
-          <div className="brick-circle-container">
+            <div className="brick-circle-container">
 
-            <div className="left-brick-circle skip-top-right-border">
-              <div className="round-button text-theme-green">{count}</div>
-            </div>
+              <div className="left-brick-circle skip-top-right-border">
+                <div className="round-button text-theme-green">{count}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -407,14 +408,14 @@ class BuildBricks extends Component<BuildBricksProps, State> {
     }
 
     if (isEmpty && this.props.loaded) {
-      return <EmptyPage isPublish={this.props.filters.publish} published={this.props.published} switchPublish={this.props.switchPublish} />;
+      return <EmptyPage isPublish={this.props.filters.publish} published={this.props.publishedCount} switchPublish={this.props.switchPublish} />;
     }
 
     return (
       <div className="bricks-list-container">
         <PublishToggle
           isPublish={this.props.filters.publish}
-          publishedCount={this.props.published}
+          publishedCount={this.props.publishedCount}
           onSwitch={this.props.switchPublish}
         />
         <div className={`bricks-list ${this.isThreeColumns() ? 'three-columns' : 'list'}`} ref={this.state.bricksRef}>

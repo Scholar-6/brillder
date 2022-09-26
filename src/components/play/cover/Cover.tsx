@@ -320,6 +320,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           brick={brick}
           isOpen={unauthorizedOpenV2}
           competitionId={props.competitionId}
+          close={() => {
+            setUnauthorizedV2(false);
+          }}
           notyet={() => {
             if (playClicked) {
               startBrick()
@@ -449,6 +452,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         brick={brick}
         competitionId={props.competitionId}
         isOpen={unauthorizedOpenV2}
+        close={() => {
+          setUnauthorizedV2(false);
+        }}
         notyet={() => {
           if (playClicked) {
             startBrick();

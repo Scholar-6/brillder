@@ -43,6 +43,8 @@ import RealLibraryConnect from "./RealLibraryCoonect";
 import ReactiveUserCredits from "./ReactiveUserCredits";
 import { GetOrigin, UnsetOrigin } from "localStorage/origin";
 import UserCredits from "./UserCredits";
+import EmailDisplay from "./components/EmailDisplay";
+import EmailConfirmDialog from "./components/EmailConfirmDialog";
 
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
@@ -95,6 +97,9 @@ interface UserProfileState {
 
   isLoaded: boolean;
 
+  emailConfirmDialog: boolean;
+  emailConfirmed: boolean;
+
   originLibrary: boolean;
   stepsEnabled: boolean;
 }
@@ -124,11 +129,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.state = tempState;
         getUserById(userId).then(user => {
           if (user) {
-            this.setState({ 
+            this.setState({
               user: getUserProfile(user),
               library: user.library,
               isFromInstitution: user.isFromInstitution,
-              userBrills: user.brills, 
+              userBrills: user.brills,
               subscriptionState: user.subscriptionState,
               userCredits: user.freeAttemptsLeft
             });
@@ -312,7 +317,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({ user, emailInvalid, saveDisabled: false });
   }
 
-  async reloadLibrary () {
+  async reloadLibrary() {
     await this.props.getUser();
   }
 
@@ -344,7 +349,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         if (!foundUpperRole) {
           return;
         }
-      } 
+      }
       this.state.user.roles.splice(index, 1);
     } else {
       this.state.user.roles.push(roleId);
@@ -359,14 +364,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   async changePassword() {
-    const { user } = this.state;
-    const userToSave = { password: user.password } as any;
-
-    // set current user roles
-    userToSave.roles = this.props.user.roles.map(role => role.roleId);
-    //const saved = await updateUser(userToSave);
-
-    //this.setState({ passwordChangedDialog: true });
+    this.setState({ editPassword: false });
   }
 
   suspendIntroJs() {
@@ -449,29 +447,21 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 onChange={e => this.onFieldChanged(e, UserProfileField.LastName)}
               />
             </div>
-            <ProfileInput
-              value={user.email} validationRequired={this.state.validationRequired}
-              className="" placeholder="Email" type="email" disabled={this.state.isFromInstitution}
-              onChange={e => this.onEmailChanged(e)}
-            />
+            {(this.props.user.library && this.state.emailConfirmed === false) ? <EmailDisplay value={user.email} onClick={() => {
+              this.setState({ emailConfirmDialog: true });
+            }} /> :
+              <ProfileInput
+                value={user.email} validationRequired={this.state.validationRequired}
+                className="" placeholder="Email" type="email" disabled={this.state.isFromInstitution}
+                onChange={e => this.onEmailChanged(e)}
+              />}
             <div className="password-container">
               <ProfileInput
                 value={user.password} validationRequired={this.state.validationRequired}
                 className="" placeholder="●●●●●●●●●●●" type="password" shouldBeFilled={false}
                 onChange={e => this.onFieldChanged(e, UserProfileField.Password)}
-              /*disabled={!this.state.editPassword}*/
+                disabled={!!this.props.user.library}
               />
-              {!this.state.editPassword &&
-                <div className="button-container">
-                  <button onClick={() => this.setState({ editPassword: true })}>Edit</button>
-                </div>}
-              {this.state.editPassword &&
-                <div className="confirm-container">
-                  <SpriteIcon name="check-icon" className="start" onClick={this.changePassword.bind(this)} />
-                  <SpriteIcon name="cancel-custom" className="end" onClick={() => {
-                    this.setState({ editPassword: false })
-                  }} />
-                </div>}
             </div>
           </div>
           <div className="profile-roles-container">
@@ -497,18 +487,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           </div>
         </div>
         {!isStudent &&
-        <Grid container direction="row" className="big-input-container bio-container-2">
-          <textarea
-            className="style2 bio-container"
-            value={user.bio}
-            onClick={this.suspendIntroJs.bind(this)}
-            placeholder="Write a short bio here..."
-            onChange={e => {
-              this.onFieldChanged(e as any, UserProfileField.Bio)
-            }}
-            onBlur={this.resumeIntroJs.bind(this)}
-          />
-        </Grid>}
+          <Grid container direction="row" className="big-input-container bio-container-2">
+            <textarea
+              className="style2 bio-container"
+              value={user.bio}
+              onClick={this.suspendIntroJs.bind(this)}
+              placeholder="Write a short bio here..."
+              onChange={e => {
+                this.onFieldChanged(e as any, UserProfileField.Bio)
+              }}
+              onBlur={this.resumeIntroJs.bind(this)}
+            />
+          </Grid>}
       </div>
     );
   }
@@ -519,7 +509,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   onIntroChanged(e: any) {
     if (e >= 2) {
-       this.setState({ stepsEnabled: false });
+      this.setState({ stepsEnabled: false });
     }
   }
 
@@ -596,15 +586,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 </div>
               </div>
               {(this.state.isFromInstitution || this.state.library) ? <div /> :
-              <div className="credits-part flex-center">
-                <div className="user-credits">
-                  <SpriteIcon name="circle-lines" />
-                  <div className="flex-center bold">{this.props.match.params.userId ? this.state.userCredits : <ReactiveUserCredits />}</div>
-                </div>
-                <div className="bold label">
-                  Credits
-                </div>
-              </div>}
+                <div className="credits-part flex-center">
+                  <div className="user-credits">
+                    <SpriteIcon name="circle-lines" />
+                    <div className="flex-center bold">{this.props.match.params.userId ? this.state.userCredits : <ReactiveUserCredits />}</div>
+                  </div>
+                  <div className="bold label">
+                    Credits
+                  </div>
+                </div>}
             </div>
           </div>
         );
@@ -641,7 +631,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     const renderLibrary = () => {
-      return <RealLibraryConnect user={this.props.user} reloadLibrary={() => {}} />
+      return <RealLibraryConnect user={this.props.user} reloadLibrary={() => { }} />
     }
 
     return (
@@ -689,6 +679,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             header={this.state.emailInvalid ? "That email address doesn’t look right" : "Email is already in use"}
             label="Have you spelled it correctly?"
             close={this.onInvalidEmailClose.bind(this)}
+          />
+          <EmailConfirmDialog
+            isOpen={this.state.emailConfirmDialog}
+            email={this.state.user.email}
+            setEmail={newEmail => {
+              const {user} = this.state;
+              user.email = newEmail;
+              this.setState({ user});
+            }}
+            close={() => {
+              this.setState({ emailConfirmDialog: false });
+            }}
           />
           <SubjectDialog
             isOpen={this.state.noSubjectDialogOpen}

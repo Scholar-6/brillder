@@ -2,6 +2,7 @@ import React from 'react';
 
 import './ProposalPhonePreview.scss';
 import LastSave from '../../lastSave/LastSave';
+import BasePhonePreview from 'components/baseComponents/BasePhonePreview';
 
 
 export interface ProposalPhonePreviewProps {
@@ -28,7 +29,7 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, updat
         </div>
       );
     }
-    return <div className="custom-component"/>;
+    return <div className="custom-component" />;
   }
 
   return (
@@ -41,17 +42,9 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, updat
             updated={updated}
             saveError={false}
           />}
-        <div className="phone">
-          <div className="phone-border">
-            <div className="volume volume1"></div>
-            <div className="volume volume2"></div>
-            <div className="volume volume3"></div>
-            <div className="sleep"></div>
-            <div className="screen">
-              {renderInner()}
-            </div>
-          </div>
-        </div>
+        <BasePhonePreview>
+          {renderInner()}
+        </BasePhonePreview>
       </div>
     </div>
   );

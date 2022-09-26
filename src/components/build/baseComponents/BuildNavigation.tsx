@@ -131,6 +131,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         <BuildPublishButton
           disabled={publishDisabled}
           brick={this.props.brick}
+          questions={this.props.questions}
           history={this.props.history}
           onFinish={() => {
             this.setState({ brickStatus: BrickStatus.Publish });
@@ -138,7 +139,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
           }}
           goToPersonal={() => {
             this.setState({ brickStatus: BrickStatus.Publish });
-            this.props.history.push(map.BackToWorkPersonal);
+            this.props.history.push(map.BackToWorkPagePersonal);
           }}
         />
       );
@@ -152,13 +153,14 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         disabled={!this.props.isValid}
         brick={this.props.brick}
         history={this.props.history}
+        questions={this.props.questions}
         onFinish={() => {
           this.setState({ brickStatus: BrickStatus.Publish });
           this.props.history.push(routes.playCover(this.props.brick));
         }}
         goToPersonal={() => {
           this.setState({ brickStatus: BrickStatus.Publish });
-          this.props.history.push(map.BackToWorkPersonal);
+          this.props.history.push(map.BackToWorkPagePersonal);
         }}
       />
     );
@@ -169,6 +171,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
       <BuildPublishButton
         disabled={!this.props.isValid}
         brick={this.props.brick}
+        questions={this.props.questions}
         history={this.props.history}
         onFinish={() => {
           this.setState({ brickStatus: BrickStatus.Publish });
@@ -176,7 +179,7 @@ class BuildNavigation extends Component<NavigationProps, NavigationState> {
         }}
         goToPersonal={() => {
           this.setState({ brickStatus: BrickStatus.Publish });
-          this.props.history.push(map.BackToWorkPersonal);
+          this.props.history.push(map.BackToWorkPagePersonal);
         }}
       />
     );

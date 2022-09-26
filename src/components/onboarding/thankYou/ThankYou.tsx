@@ -6,6 +6,7 @@ import { isPhone } from "services/phone";
 import map from "components/map";
 import { hideZendesk } from "services/zendesk";
 import TypingLabel from "components/baseComponents/TypingLabel";
+import BasePhonePreview from "components/baseComponents/BasePhonePreview";
 
 interface Props {
   history: any;
@@ -71,9 +72,9 @@ const ThankYou: React.FC<Props> = (props) => {
               <TypingLabel label="It's great to have you on board." onEnd={() => setAnimated(true)} />
             </p>
             {isAnimated &&
-            <div className="flex-center">
-              <button className="btn theme-orange" onClick={moveNext}>Start 30 second setup</button>
-            </div>}
+              <div className="flex-center">
+                <button className="btn theme-orange" onClick={moveNext}>Start 30 second setup</button>
+              </div>}
           </div>
           {isAnimated &&
             <div className="th-arrow-container">
@@ -84,24 +85,16 @@ const ThankYou: React.FC<Props> = (props) => {
         <div className="right-part">
           <div className="blue-right-block" />
           <div className="proposal-phone-preview phone-username-preview">
-            <div className="phone">
-              <div className="phone-border">
-                <div className="volume volume1"></div>
-                <div className="volume volume2"></div>
-                <div className="volume volume3"></div>
-                <div className="sleep"></div>
-                <div className="screen">
-                  <div className="only-icon-container">
-                    <div className="icon-container">
-                      <SpriteIcon name="logo" />
-                    </div>
-                    <div className="th-phone-brillder">
-                      <SpriteIcon name="brillder-text" />
-                    </div>
-                  </div>
+            <BasePhonePreview>
+              <div className="only-icon-container">
+                <div className="icon-container">
+                  <SpriteIcon name="logo" />
+                </div>
+                <div className="th-phone-brillder">
+                  <SpriteIcon name="brillder-text" />
                 </div>
               </div>
-            </div>
+            </BasePhonePreview>
           </div>
         </div>
       </div>
