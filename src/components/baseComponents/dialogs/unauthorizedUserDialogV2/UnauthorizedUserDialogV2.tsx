@@ -28,6 +28,7 @@ interface UnauthorizedProps {
   history: any;
   notyet(): void;
   registered?(): void;
+  close?(): void;
 
   getUser(): Promise<void>;
 }
@@ -161,7 +162,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
       )
     }
     return (
-      <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
+      <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog" onClose={props.close}>
         <div className="title bigger bold">
           <span>Sign In or Create Account</span>
         </div>
