@@ -50,6 +50,15 @@ export const getPublicBricks = async () => {
   }
 }
 
+
+export const getAdminBrickStatistic = async (brickId: number) => {
+  try {
+    return await get<AssignmentBrick[]>("/admin/getAdminBrickStatistic/" + brickId);
+  } catch {
+    return null;
+  }
+}
+
 interface BackToWorkStatistics {
   personalDraftCount?: number;
   personalPublishCount?: number;
