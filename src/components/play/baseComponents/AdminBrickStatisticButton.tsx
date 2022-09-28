@@ -21,9 +21,10 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
   const renderAttempts = () => {
     if (data && data.attempts) {
       return data.attempts.map((attempt: any) => {
+        console.log(attempt);
         return <tr key={attempt.id}>
           <td>{attempt.student.firstName} {attempt.student.lastName}</td>
-          <td>{(attempt.oldScore + attempt.score) / attempt.maxScore}</td>
+          <td>{((attempt.oldScore + attempt.score) * 50) / attempt.maxScore}</td>
         </tr>
       });
     }
