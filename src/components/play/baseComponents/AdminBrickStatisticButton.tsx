@@ -18,13 +18,21 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
     }
   }
 
+  const renderScore = (attempt: any) => {
+    if (typeof attempt.oldScore === undefined) {
+      return Math.round((attempt.score * 50) / attempt.maxScore);
+    } else {
+      return Math.round(((attempt.oldScore + attempt.score) * 50) / attempt.maxScore);
+    }
+  }
+
   const renderAttempts = () => {
     if (data && data.attempts) {
       return data.attempts.map((attempt: any) => {
         console.log(attempt);
         return <tr key={attempt.id}>
           <td>{attempt.student.firstName} {attempt.student.lastName}</td>
-          <td>{((attempt.oldScore + attempt.score) * 50) / attempt.maxScore}</td>
+          <td>{renderScore(attempt)}</td>
         </tr>
       });
     }
