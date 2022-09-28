@@ -1704,10 +1704,16 @@
   }
 }
 
-.admin-attempts-table {
-  text-align: left !important;
-
-  td, th {
-    padding-left: 0.4vw;
+.admin-data {
+  .dialog-box {
+    max-height: 70vh;
+    overflow-y: scroll;
+  }
+  .admin-attempts-table {
+    text-align: left !important;
+  
+    td, th {
+      padding-right: 0.4vw;
+    }
   }
 }

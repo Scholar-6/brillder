@@ -21,7 +21,26 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
   const renderAttempts = () => {
     if (data && data.attempts) {
       return data.attempts.map((attempt: any) => {
-        return <tr key={attempt.id}><td>{attempt.student.firstName} {attempt.student.lastName}</td><td>{(attempt.oldScore + attempt.score) / attempt.maxScore}</td></tr>
+        return <tr key={attempt.id}>
+          <td>{attempt.student.firstName} {attempt.student.lastName}</td>
+          <td>{(attempt.oldScore + attempt.score) / attempt.maxScore}</td>
+        </tr>
+      });
+    }
+    return "";
+  }
+
+  const renderTeachers = () => {
+    if (data && data.assignments) {
+      return data.assignments.map((assignment: any) => {
+        try {
+          const teacher = assignment.classroom.teachers[0];
+          return <span key={assignment.id}>
+            {teacher.firstName} {teacher.lastName}
+          </span>
+        } catch {
+          return "";
+        }
       });
     }
     return "";
@@ -32,7 +51,7 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
       getData();
       setOpen(true);
     }}>Data
-      <Dialog open={isOpened} onClose={() => setOpen(false)} className="dialog-box light-blue assign-dialog assign-dialog-new">
+      <Dialog open={isOpened} onClose={() => setOpen(false)} className="dialog-box admin-data">
         <div className="dialog-header">
           <div>
             <div className="r-popup-title bold">Attempts</div>
@@ -43,6 +62,8 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
               </tr>
               {renderAttempts()}
             </table>
+            <div className="r-popup-title bold">Teachers</div>
+            {renderTeachers()}
           </div>
         </div>
       </Dialog>
