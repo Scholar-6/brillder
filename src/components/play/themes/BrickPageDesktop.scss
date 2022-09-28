@@ -432,10 +432,6 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               }
             }
 
-            &.assign-intro-button {
-              margin-top: 6vh;
-            }
-
             span {
               @include transitionAll300;
             }
