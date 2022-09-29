@@ -15,6 +15,7 @@ import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/Studen
 import { resendInvitation } from "services/axios/classroom";
 import { getClassAssignedCount } from "../service/service";
 import { User } from "model/user";
+import SortButton from "./SortButton";
 
 enum TeachFilterFields {
   Assigned = "assigned",
@@ -223,7 +224,6 @@ class TeachFilterSidebar extends Component<
       finalClass.assigned = getClassAssignedCount(cls);
       finalClasses.push(finalClass);
     }
-    console.log(finalClasses);
     if (this.state.ascending === false) {
       finalClasses = finalClasses.sort((a, b) => new Date(a.updated).getTime() - new Date(b.updated).getTime());
     } else if (this.state.ascending === true) {
@@ -280,21 +280,7 @@ class TeachFilterSidebar extends Component<
             <div className="label-34rerf">
               Current ({finalClasses.length})
             </div>
-            <div className="sort-v4y4">
-              <SpriteIcon
-                name={
-                  this.state.ascending
-                    ? "hero-sort-descending"
-                    : "hero-sort-ascending"
-                }
-                onClick={() =>
-                  this.setState({ ascending: !this.state.ascending, sortByName: null })
-                }
-              />
-              <div className="css-custom-tooltip">
-                Sort By Date
-              </div>
-            </div>
+            <SortButton asscending={true} sortByName={() => {}} sortByDate={() => {}} sortByAssignmets={() => {}} />
           </div>
         </div>
         <div className="sort-box subject-scrollable">
