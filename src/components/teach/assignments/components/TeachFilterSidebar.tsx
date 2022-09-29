@@ -275,7 +275,7 @@ class TeachFilterSidebar extends Component<
           <div className="filter-container sort-by-box">
             <div className="flex-center class-header-container">
               <div className="class-header">
-                {label} in {finalClasses.length} Classes
+                My Classes
               </div>
             </div>
           </div>
@@ -324,7 +324,7 @@ class TeachFilterSidebar extends Component<
             onClick={this.removeClassrooms.bind(this)}
           >
             <div>
-              View All Classes ({finalClasses.length})
+              Current ({finalClasses.length})
               <div className="right-index">
                 {totalCount}
                 <SpriteIcon name="users-custom" className="active" />
