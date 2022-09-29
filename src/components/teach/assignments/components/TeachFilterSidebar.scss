@@ -104,3 +104,16 @@
     background: var(--theme-yellow) !important;
   }
 }
+
+.teach-sort-box {
+  .classrooms-header {
+    padding-top: 1.2vw;
+    padding-bottom: 1.2vw;
+    display: flex;
+    .label-ew23 {
+      width: 50%;
+      padding-left: 1.4vw;
+      font-size: 1.5vw;
+    }
+  }
+}
