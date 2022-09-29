@@ -29,7 +29,6 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
   const renderAttempts = () => {
     if (data && data.attempts) {
       return data.attempts.map((attempt: any) => {
-        console.log(attempt);
         return <tr key={attempt.id}>
           <td>{attempt.student.firstName} {attempt.student.lastName}</td>
           <td>{renderScore(attempt)}</td>
@@ -56,11 +55,19 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="assign-class-button bigger-button-v3 assign-intro-button" onClick={() => {
-      getData();
-      setOpen(true);
-    }}>Data
-      <Dialog open={isOpened} onClose={() => setOpen(false)} className="dialog-box admin-data">
+    <div style={{"width": "80%"}}>
+      <div className="assign-class-button bigger-button-v3 assign-intro-button" style={{width: "100%"}} onClick={() => {
+        console.log('click')
+        getData();
+        setOpen(true);
+      }}>Data</div>
+      <Dialog open={isOpened} onClose={(e: any) => {
+        console.log('close');
+        console.log(e);
+        e.stopPropagation();
+        e.preventDefault();
+        setOpen(false)
+      }} className="dialog-box admin-data">
         <div className="dialog-header">
           <div>
             <div className="r-popup-title bold">Attempts</div>
