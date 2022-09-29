@@ -68,6 +68,36 @@
   }
 }
 
+.manage-classrooms-page .m-view-all.flex-center {
+  display: flex !important;
+  justify-content: flex-start;
+  .label-34rerf {
+    width: 88%;
+  }
+  .sort-v4y4 {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    svg {
+      width: 1.7vw;
+      height: 1.7vw;
+    }
+    .css-custom-tooltip {
+      display: none;
+      z-index: 100;
+      top: 3vw;
+      left: -3vw;
+      width: 11vw;
+    }
+
+    &:hover .css-custom-tooltip {
+      display: block;
+      opacity: 1;
+    }
+  }
+}
+
 .manage-classrooms-page .pay-info {
   background: var(--white) !important;
   font-family: $font-family-bold !important;

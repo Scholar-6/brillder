@@ -223,10 +223,11 @@ class TeachFilterSidebar extends Component<
       finalClass.assigned = getClassAssignedCount(cls);
       finalClasses.push(finalClass);
     }
+    console.log(finalClasses);
     if (this.state.ascending === false) {
-      finalClasses = finalClasses.sort((a, b) => a.assigned - b.assigned);
+      finalClasses = finalClasses.sort((a, b) => new Date(a.updated).getTime() - new Date(b.updated).getTime());
     } else if (this.state.ascending === true) {
-      finalClasses = finalClasses.sort((a, b) => b.assigned - a.assigned);
+      finalClasses = finalClasses.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
     } else if (this.state.sortByName === true) {
       finalClasses = finalClasses.sort((a, b) => {
         const al = a.name.toUpperCase();
@@ -269,23 +270,15 @@ class TeachFilterSidebar extends Component<
               <SpriteIcon name="plus-circle" /> Create Class
             </div>
           </div>
-          <div className="sort-row-v3y3">
-            <div className="sort-v3y3"
-              onClick={() => {
-                this.setState({ sortByName: !this.state.sortByName, ascending: null })
-              }}
-            >
-              <SpriteIcon
-                name={
-                  this.state.sortByName
-                    ? "f-arrow-down"
-                    : "f-arrow-up"
-                }
-              />
-              {this.state.sortByName ? 'A-Z' : 'Z-A'}
-              <div className="css-custom-tooltip">
-                {this.state.sortByName ? 'Sort Alphabetically: Z-A' : 'Sort Alphabetically: A-Z'}
-              </div>
+          <div
+            className={
+              "index-box m-view-all flex-center " +
+              (!this.props.activeClassroom ? "active" : "")
+            }
+            onClick={this.removeClassrooms.bind(this)}
+          >
+            <div className="label-34rerf">
+              Current ({finalClasses.length})
             </div>
             <div className="sort-v4y4">
               <SpriteIcon
@@ -299,19 +292,8 @@ class TeachFilterSidebar extends Component<
                 }
               />
               <div className="css-custom-tooltip">
-                {this.state.ascending ? 'Sort by ascending number of assignments' : 'Sort by descending number of assignments'}
+                Sort By Date
               </div>
-            </div>
-          </div>
-          <div
-            className={
-              "index-box m-view-all " +
-              (!this.props.activeClassroom ? "active" : "")
-            }
-            onClick={this.removeClassrooms.bind(this)}
-          >
-            <div>
-              Current ({finalClasses.length})
             </div>
           </div>
         </div>
