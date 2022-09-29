@@ -86,9 +86,9 @@
     .css-custom-tooltip {
       display: none;
       z-index: 100;
-      top: 3vw;
-      left: -3vw;
-      width: 11vw;
+      top: 2vw;
+      left: -0.5vw;
+      width: 2.8vw;
     }
 
     &:hover .css-custom-tooltip {
@@ -144,6 +144,43 @@
       width: 50%;
       padding-left: 1.4vw;
       font-size: 1.5vw;
+    }
+  }
+}
+
+.sort-dialog-ew33 {
+  .MuiBackdrop-root {
+    background-color: unset;
+  }
+  .MuiDialog-container {
+    align-items: flex-start;
+    justify-content: flex-start;
+    .MuiPaper-root {
+      margin-top: calc(5.834vw + 2vw + 2.4vw + 2vw + 2vh + 2vw); 
+      margin-left: 20vw;
+      .popup-3rfw {
+        color: var(--theme-dark-blue);
+        padding-top: 0.4vw;
+
+        .btn-sort {
+          padding-left: 0.4vw;
+          padding-right: 0.4vw;
+          transition: all 200ms ease-in-out;
+          cursor: pointer;
+
+          &:hover {
+            background: var(--tab-gray);
+          }
+
+          &.last {
+            padding-bottom: 0.2vw;
+          }
+        }
+        .no-click {
+          padding-left: 0.4vw;
+          padding-right: 0.4vw;
+        }
+      }
     }
   }
 }
