@@ -57,13 +57,10 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
   return (
     <div style={{"width": "80%"}}>
       <div className="assign-class-button bigger-button-v3 assign-intro-button" style={{width: "100%"}} onClick={() => {
-        console.log('click')
         getData();
         setOpen(true);
       }}>Data</div>
       <Dialog open={isOpened} onClose={(e: any) => {
-        console.log('close');
-        console.log(e);
         e.stopPropagation();
         e.preventDefault();
         setOpen(false)

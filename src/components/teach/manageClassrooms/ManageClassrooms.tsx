@@ -664,6 +664,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             classroom={this.state.activeClassroom}
             onChange={this.updateClassroom.bind(this)}
             onInvited={this.loadData.bind(this)}
+            onDelete={this.onDeleteClass.bind(this)}
             showPremium={() => console.log('premium 1')}
           />
         </Grid>

@@ -31,6 +31,7 @@ interface ClassroomListProps {
   reloadClasses(): void;
   onRemind?(count: number, isDeadlinePassed: boolean): void;
   showPremium(): void;
+  onDelete(classroomApi: TeachClassroom): void;
 }
 
 interface State {
@@ -124,8 +125,9 @@ class ClassroomListV2 extends Component<ClassroomListProps, State> {
               classroom={classroom}
               inviteHidden={true}
               isArchive={this.props.isArchive}
-              onAssigned={() => this.props.reloadClasses()}
+              onAssigned={this.props.reloadClasses}
               onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
+              onDelete={this.props.onDelete}
               showPremium={this.props.showPremium}
             />
           </div>
