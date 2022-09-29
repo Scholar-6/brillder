@@ -167,6 +167,14 @@
       background: var(--theme-light-blue);
       width: 12.5vw !important;
     }
+    &.delete-icon {
+      color: var(--theme-orange) !important;
+
+      .css-custom-tooltip {
+        left: -1.8vw;
+        width: 6.3vw !important;
+      }
+    }
 
     &:hover {
       background: var(--theme-orange) !important;

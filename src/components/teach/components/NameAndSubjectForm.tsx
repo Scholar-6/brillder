@@ -24,6 +24,7 @@ interface NameAndSubjectFormProps {
   onInvited?(): void;
   onAssigned?(): void;
   moveToAssignemts?(): void;
+  onDelete?(apiClass: any): void;
   inviteHidden?: boolean;
   assignHidden?: boolean;
   isArchive?: boolean;  // for assignments
@@ -31,7 +32,7 @@ interface NameAndSubjectFormProps {
 }
 
 const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
-  const {user} = props;
+  const { user } = props;
   const [edit, setEdit] = useState(false);
   const [isOpen, togglePopup] = useState(false);
   const [successResult, setSuccess] = useState({ isOpen: false, brick: null } as any);
@@ -136,35 +137,10 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
       </div>
     ) : (
       <div className="name-subject-display">
-
-        <div className="subject-icon">
-          <SpriteIcon
-            name={(props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ? "circle-empty" : "circle-filled"}
-            className="w100 h100 active"
-            style={{
-              color: (props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ?
-                "var(--theme-dark-blue)" :
-                props.classroom.subject.color
-            }}
-          />
-          <div className="subject-icon-hover"
-            style={{
-              background: (props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ?
-                "var(--theme-dark-blue)" :
-                props.classroom.subject.color
-            }}
-          />
-          <SpriteIcon name="share" className="share-icon" onClick={() => setShareTeach(true)} />
-          <div className="css-custom-tooltip bold">Share Class</div>
-        </div>
         <h1 className="name-display">{props.classroom!.name}</h1>
-        <span className="edit-icon" onClick={startEditing}>
-          <SpriteIcon
-            name="edit-outline"
-            className="w100 h100 active"
-          />
-          <div className="css-custom-tooltip bold">Edit Class Name or Subject</div>
-        </span>
+        {(checkAdmin(user.roles) && props.classroom!.teachers) &&
+          <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span>
+        }
         <div className="classroom-btns-container">
           {!props.inviteHidden &&
             <div className="assign-button-container">
@@ -189,7 +165,20 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
               </div>
             </div>}
         </div>
-        {(checkAdmin(user.roles) && props.classroom!.teachers) && <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span>}
+        <span className="edit-icon" onClick={startEditing}>
+          <SpriteIcon
+            name="edit-outline"
+            className="w100 h100 active"
+          />
+          <div className="css-custom-tooltip bold">Edit Class Name or Subject</div>
+        </span>
+        <span className="edit-icon delete-icon" onClick={() => props.onDelete?.(props.classroom)}>
+          <SpriteIcon
+            name="delete"
+            className="w100 h100 active"
+          />
+          <div className="css-custom-tooltip bold">Delete Class</div>
+        </span>
         {isOpen &&
           <AssignBrickClass
             isOpen={isOpen}

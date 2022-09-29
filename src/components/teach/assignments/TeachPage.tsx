@@ -39,6 +39,8 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ClassroomsListV2 from "./components/ClassroomsListV2";
 import { getArchivedAssignedCount } from "./service/service";
 import PremiumEducatorDialog from "components/play/baseComponents/dialogs/PremiumEducatorDialog";
+import DeleteClassDialog from "../manageClassrooms/components/DeleteClassDialog";
+import { deleteClassroom } from "services/axios/classroom";
 
 
 interface RemindersData {
@@ -82,6 +84,9 @@ interface TeachState {
   isLoaded: boolean;
   remindersData: RemindersData;
   createClassOpen: boolean;
+
+  deleteClassOpen: boolean;
+  classroomToRemove: TeachClassroom | null;
 
   isPremiumDialogOpen: boolean;
 
@@ -144,6 +149,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
         position: 'left',
         intro: `<p>Find your archived assignments here</p>`,
       }],
+
+      deleteClassOpen: false,
+      classroomToRemove: null,
 
       pageSize: 6,
       classPageSize: 5,
@@ -265,6 +273,24 @@ class TeachPage extends Component<TeachProps, TeachState> {
     } else if (downKeyPressed(e)) {
       this.moveNext(pageSize);
     }
+  }
+
+  async deleteClass() {
+    const { classroomToRemove } = this.state;
+    if (!classroomToRemove) {
+      return this.setState({ deleteClassOpen: false, activeClassroom: null, classroomToRemove: null, sortedIndex: 0 });
+    }
+    let deleted = await deleteClassroom(classroomToRemove.id);
+    if (deleted) {
+      const { classrooms } = this.state;
+      let index = classrooms.indexOf(classroomToRemove);
+      classrooms.splice(index, 1);
+      this.setState({ classrooms, activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
+    }
+  }
+
+  onDeleteClass(c: TeachClassroom) {
+    this.setState({ deleteClassOpen: true, classroomToRemove: c });
   }
 
   setActiveStudent(activeStudent: TeachStudent) {
@@ -518,6 +544,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 pageSize={this.state.classPageSize}
                 reloadClass={this.loadClass.bind(this)}
                 onRemind={this.setReminderNotification.bind(this)}
+                onDelete={this.onDeleteClass.bind(this)}
                 showPremium={() => this.setState({isPremiumDialogOpen: true})}
               />
               :
@@ -530,10 +557,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 pageSize={this.state.pageSize}
                 reloadClasses={this.loadClasses.bind(this)}
                 onRemind={this.setReminderNotification.bind(this)}
+                onDelete={this.onDeleteClass.bind(this)}
                 showPremium={() => this.setState({isPremiumDialogOpen: true})}
               />
         }
         {this.renderTeachPagination()}
+        <DeleteClassDialog
+          isOpen={this.state.deleteClassOpen}
+          submit={() => this.deleteClass()}
+          close={() => { this.setState({ deleteClassOpen: false }) }}
+        />
       </div>
     );
   }
