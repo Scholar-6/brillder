@@ -146,16 +146,6 @@ class TeachFilterSidebar extends Component<
     );
   }
 
-  renderStudents(c: TeachClassroom) {
-    return (
-      <div className="right-index">
-        {(c.students ? c.students.length : 0) + (c.studentsInvitations ? c.studentsInvitations.length : 0)}
-        <SpriteIcon name="users-custom" className="active" />
-        {this.renderAssignedCount(c)}
-      </div>
-    )
-  }
-
   renderStudentList(c: TeachClassroom) {
     if (c.active) {
       const sts = c.students.sort((a, b) => {
@@ -198,7 +188,6 @@ class TeachFilterSidebar extends Component<
               </div>
             )}
           </div>
-          {this.renderStudents(c)}
         </div>
         {this.renderStudentList(c)}
         {c.active && c.studentsInvitations && c.studentsInvitations.map(this.renderInvitation.bind(this))}
@@ -272,11 +261,12 @@ class TeachFilterSidebar extends Component<
     return (
       <div className="sort-box teach-sort-box flex-height-box">
         <div className="sort-box">
-          <div className="filter-container sort-by-box">
-            <div className="flex-center class-header-container">
-              <div className="class-header">
-                My Classes
-              </div>
+          <div className="classrooms-header">
+            <div className="label-ew23 bold">
+              My Classes
+            </div>
+            <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
+              <SpriteIcon name="plus-circle" /> Create Class
             </div>
           </div>
           <div className="sort-row-v3y3">
@@ -297,9 +287,6 @@ class TeachFilterSidebar extends Component<
                 {this.state.sortByName ? 'Sort Alphabetically: Z-A' : 'Sort Alphabetically: A-Z'}
               </div>
             </div>
-            <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
-                <SpriteIcon name="plus-circle" /> Create Class
-              </div>
             <div className="sort-v4y4">
               <SpriteIcon
                 name={
@@ -325,14 +312,6 @@ class TeachFilterSidebar extends Component<
           >
             <div>
               Current ({finalClasses.length})
-              <div className="right-index">
-                {totalCount}
-                <SpriteIcon name="users-custom" className="active" />
-                <div className="classrooms-box">
-                  {assignmentsCount}
-                  <SpriteIcon name="file-plus" />
-                </div>
-              </div>
             </div>
           </div>
         </div>
