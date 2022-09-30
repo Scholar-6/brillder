@@ -44,6 +44,13 @@ interface FilterSidebarState {
   sortByName: boolean | null;
   isInviteOpen: boolean;
   createClassOpen: boolean;
+  sort: SortClassroom;
+}
+
+export enum SortClassroom {
+  Name,
+  Date,
+  Assignment
 }
 
 class TeachFilterSidebar extends Component<
@@ -56,19 +63,15 @@ class TeachFilterSidebar extends Component<
       ascending: true,
       sortByName: null,
       isInviteOpen: false,
+
+      sort: SortClassroom.Date,
+
       filters: {
         assigned: false,
         completed: false,
       },
       createClassOpen: false,
     };
-  }
-
-  clearStatus() {
-    const { filters } = this.state;
-    filters.assigned = false;
-    filters.completed = false;
-    this.props.filterChanged(filters);
   }
 
   async resendInvitation(s: any) {
@@ -134,19 +137,6 @@ class TeachFilterSidebar extends Component<
     );
   }
 
-  renderAssignedCount(c: TeachClassroom) {
-    const count = getClassAssignedCount(c);
-    if (count <= 0) {
-      return <div />;
-    }
-    return (
-      <div className="classrooms-box">
-        {count}
-        <SpriteIcon name="file-plus" />
-      </div>
-    );
-  }
-
   renderStudentList(c: TeachClassroom) {
     if (c.active) {
       const sts = c.students.sort((a, b) => {
@@ -158,7 +148,6 @@ class TeachFilterSidebar extends Component<
         }
         return 0;
       });
-
 
       return <div>
         {sts.map(this.renderStudent.bind(this))}
@@ -224,11 +213,13 @@ class TeachFilterSidebar extends Component<
       finalClass.assigned = getClassAssignedCount(cls);
       finalClasses.push(finalClass);
     }
-    if (this.state.ascending === false) {
+    const {sort} = this.state;
+    if (sort === SortClassroom.Date) {
       finalClasses = finalClasses.sort((a, b) => new Date(a.updated).getTime() - new Date(b.updated).getTime());
-    } else if (this.state.ascending === true) {
-      finalClasses = finalClasses.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
-    } else if (this.state.sortByName === true) {
+    } else if (sort === SortClassroom.Assignment) {
+      console.log('assignment', finalClasses);
+      finalClasses = finalClasses.sort((a, b) => b.assignmentsCount - a.assignmentsCount);
+    } else if (sort === SortClassroom.Name) {
       finalClasses = finalClasses.sort((a, b) => {
         const al = a.name.toUpperCase();
         const bl = b.name.toUpperCase();
@@ -236,27 +227,6 @@ class TeachFilterSidebar extends Component<
         if (al > bl) { return 1; }
         return 0;
       });
-    } else if (this.state.sortByName === false) {
-      finalClasses = finalClasses.sort((a, b) => {
-        const al = a.name.toUpperCase();
-        const bl = b.name.toUpperCase();
-        if (al > bl) { return -1; }
-        if (al < bl) { return 1; }
-        return 0;
-      });
-    }
-
-    let totalCount = 0;
-    let assignmentsCount = 0;
-    for (let classroom of this.props.classrooms) {
-      totalCount += classroom.students.length;
-      if (classroom.assignmentsCount && parseInt(classroom.assignmentsCount) > 0) {
-        assignmentsCount += parseInt(classroom.assignmentsCount);
-      }
-    }
-    let label = '1 Assignment';
-    if (assignmentsCount > 1) {
-      label = `${assignmentsCount} Assignments`;
     }
 
     return (
@@ -280,7 +250,13 @@ class TeachFilterSidebar extends Component<
             <div className="label-34rerf">
               Current ({finalClasses.length})
             </div>
-            <SortButton asscending={true} sortByName={() => {}} sortByDate={() => {}} sortByAssignmets={() => {}} />
+            <SortButton sort={this.state.sort} sortByName={() => {
+              this.setState({ sort: SortClassroom.Name });
+            }} sortByDate={() => {
+              this.setState({ sort: SortClassroom.Date });
+            }} sortByAssignmets={() => {
+              this.setState({ sort: SortClassroom.Assignment });
+            }} />
           </div>
         </div>
         <div className="sort-box subject-scrollable">

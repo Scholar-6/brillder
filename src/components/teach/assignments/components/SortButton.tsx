@@ -1,16 +1,17 @@
 import React from 'react';
+import { Dialog, Radio } from '@material-ui/core';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { Dialog } from '@material-ui/core';
+import { SortClassroom } from './TeachFilterSidebar';
 
 interface Props {
-  asscending: boolean;
+  sort: SortClassroom;
   sortByDate(): void;
   sortByName(): void;
   sortByAssignmets(): void;
 }
 
-const SortButton: React.FC<Props> = (props) => {
+const SortButton: React.FC<Props> = ({ sort, ...props }) => {
   const [clicked, setClicked] = React.useState(false);
   const [ascending, setAscending] = React.useState(true);
   return (
@@ -32,15 +33,21 @@ const SortButton: React.FC<Props> = (props) => {
           <div className="btn-sort" onClick={() => {
             props.sortByDate();
             setClicked(false);
-          }}>Date</div>
+          }}>
+            <Radio checked={sort === SortClassroom.Date} />
+            Most Recent</div>
           <div className="btn-sort" onClick={() => {
             props.sortByName();
             setClicked(false);
-          }}>A-Z</div>
+          }}>
+            <Radio checked={sort === SortClassroom.Name} />
+            A - Z</div>
           <div className="btn-sort last" onClick={() => {
             props.sortByAssignmets();
             setClicked(false);
-          }}>Assignments</div>
+          }}>
+            <Radio checked={sort === SortClassroom.Assignment} />
+            Most Assignments</div>
         </div>
         </Dialog>}
     </div>
