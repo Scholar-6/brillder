@@ -156,29 +156,43 @@
     align-items: flex-start;
     justify-content: flex-start;
     .MuiPaper-root {
+      background: #0C2760;
       margin-top: calc(5.834vw + 2vw + 2.4vw + 2vw + 2vh + 2vw); 
       margin-left: 20vw;
+      border-radius: 0.5vw;
+      min-width: 15vw;
       .popup-3rfw {
-        color: var(--theme-dark-blue);
+        color: var(--white);
         padding-top: 0.4vw;
+        padding-bottom: 0.7vw;
 
         .btn-sort {
-          padding-left: 0.4vw;
-          padding-right: 0.4vw;
+          padding-left: 0.8vw;
+          padding-right: 0.8vw;
+          padding-top: 0.2vw;
+          padding-bottom: 0.2vw;
+          display: flex;
+          font-size: 1vw;
           transition: all 200ms ease-in-out;
           cursor: pointer;
+          font-family: $font-family-regular;
 
-          &:hover {
-            background: var(--tab-gray);
+          .MuiButtonBase-root {
+            margin-right: 0.4vw;
+            padding: 0;
+            color: white;
           }
 
-          &.last {
-            padding-bottom: 0.2vw;
+          &:hover {
+            background: var(--theme-light-blue);
           }
         }
         .no-click {
-          padding-left: 0.4vw;
-          padding-right: 0.4vw;
+          font-size: 1.2vw;
+          padding-left: 0.8vw;
+          padding-top: 0.4vw;
+          padding-right: 0.8vw;
+          padding-bottom: 0.4vw;
         }
       }
     }
