@@ -89,7 +89,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const isTeach = checkTeacher(this.props.user);
     const isAdmin = checkAdmin(this.props.user.roles);
     const isEditor = checkEditor(this.props.user.roles)
-    const isCore = this.getCore(isAdmin, isEditor);
 
     let threeColumns = {
       red: {
@@ -140,7 +139,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         review: true,
         build: true,
         publish: false,
-        isCore,
+        isCore: true,
 
         level1: false,
         level2: false,
@@ -255,13 +254,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   handleKey(e: any) {
-    // only public page
-    if (this.state.filters.isCore) {
-      if (upKeyPressed(e)) {
-        this.moveBack();
-      } else if (downKeyPressed(e)) {
-        this.moveNext();
-      }
+    if (upKeyPressed(e)) {
+      this.moveBack();
+    } else if (downKeyPressed(e)) {
+      this.moveNext();
     }
   }
 
@@ -274,14 +270,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
       if (!brick.isCore) {
         continue;
       }
-      if (this.state.filters.publish === true) {
-        if (brick.status !== BrickStatus.Publish) {
-          continue;
-        }
-      } else {
-        if (brick.status === BrickStatus.Publish) {
-          continue;
-        }
+      if (brick.status === BrickStatus.Publish) {
+        continue;
       }
       let subject = subjects.find(s => s.id === brick.subject?.id);
       if (!subject) {
@@ -295,31 +285,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
     return subjects;
   }
 
-  getCore(isAdmin: boolean, isEditor: boolean) {
-    let isCore = false;
-    if (isAdmin || isEditor) {
-      isCore = true;
-    }
-
-    const values = queryString.parse(this.props.location.search);
-    if (values.isCore) {
-      try {
-        if (values.isCore === "true") {
-          isCore = true;
-        } else if (values.isCore === "false") {
-          isCore = false;
-        }
-      } catch { }
-    }
-    return isCore;
-  }
-
   setBricks(rawBricks: Brick[]) {
     const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id);
-    let finalBricks = rawBricks
-    if (!this.state.filters.isCore) {
-      finalBricks = rawBricks.filter(b => !b.isCore);
-    }
+    let finalBricks = rawBricks;
     finalBricks = finalBricks.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
     const subjects = this.getBrickSubjects(rawBricks);
     this.setState({ ...this.state, finalBricks, subjects, rawBricks, threeColumns, bricksLoaded: true });
@@ -543,39 +511,18 @@ class BuildPage extends Component<BuildProps, BuildState> {
     });
   }
 
-  filterPublishedSubject(bs: Brick[], s: SubjectItem) {
-    return bs.filter(b => b.subjectId === s.id && b.status === BrickStatus.Publish);
-  }
-
-  filterBuildPublishBySubject(s: SubjectItem | null) {
-    const { rawBricks } = this.state;
-    if (s) {
-      const bricks = this.filterPublishedSubject(rawBricks, s);
-      this.setState({ buildCheckedSubjectId: s.id, finalBricks: bricks });
-    } else {
-      if (this.state.buildCheckedSubjectId !== -1) {
-        const finalBricks = rawBricks.filter(b => b.status === BrickStatus.Publish);
-        this.setState({ buildCheckedSubjectId: -1, finalBricks });
-      }
-    }
-  }
-
   filterBuildBySubject(s: SubjectItem | null) {
     const { rawBricks } = this.state;
     const { filters } = this.state;
-    if (filters.publish) {
-      this.filterBuildPublishBySubject(s);
+    if (s) {
+      const bricks = this.filterInProgressBySubject(rawBricks, s, filters);
+      const threeColumns = prepareTreeRows(bricks, filters, this.props.user.id);
+      this.setState({ buildCheckedSubjectId: s.id, threeColumns, finalBricks: bricks });
     } else {
-      if (s) {
-        const bricks = this.filterInProgressBySubject(rawBricks, s, filters);
-        const threeColumns = prepareTreeRows(bricks, filters, this.props.user.id);
-        this.setState({ buildCheckedSubjectId: s.id, threeColumns, finalBricks: bricks });
-      } else {
-        if (this.state.buildCheckedSubjectId !== -1) {
-          const finalBricks = filterBricks(filters, rawBricks, this.props.user.id);
-          const threeColumns = prepareTreeRows(rawBricks, filters, this.props.user.id);
-          this.setState({ buildCheckedSubjectId: -1, threeColumns, finalBricks });
-        }
+      if (this.state.buildCheckedSubjectId !== -1) {
+        const finalBricks = filterBricks(filters, rawBricks, this.props.user.id);
+        const threeColumns = prepareTreeRows(rawBricks, filters, this.props.user.id);
+        this.setState({ buildCheckedSubjectId: -1, threeColumns, finalBricks });
       }
     }
   }
@@ -593,36 +540,12 @@ class BuildPage extends Component<BuildProps, BuildState> {
       threeColumns = this.state.searchThreeColumns;
     }
 
-    let rawPersonalBricks = this.state.rawBricks.filter(b => !b.isCore);
-
-    let isEmpty = rawPersonalBricks.length === 0;
-
     finalBricks = finalBricks.filter(b => b.isCore === true);
 
-    let selfPublish = 0;
-    let personalDraft = 0;
-    if (this.state.isAdmin) {
-      selfPublish = rawPersonalBricks.filter(b => b.status === BrickStatus.Publish).length;
-      personalDraft = rawPersonalBricks.filter(b =>
-        b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review).length;
-    } else {
-      selfPublish = rawPersonalBricks.filter(b => b.author.id === this.props.user.id && b.status === BrickStatus.Publish).length;
-      personalDraft = rawPersonalBricks.filter(b =>
-        b.author.id === this.props.user.id &&
-        (b.status === BrickStatus.Draft || b.status === BrickStatus.Build || b.status === BrickStatus.Review)
-      ).length;
-    }
-
-    // publish should have create brick button when empty
-    if (this.state.filters.publish) {
-      isEmpty = finalBricks.length > 0 ? false : true;
-      finalBricks = finalBricks.filter(b => b.status === BrickStatus.Publish);
-    } else {
-      const coreNoPublishBricks = this.state.rawBricks
-        .filter(b => b.isCore === true)
-        .filter(b => b.status !== BrickStatus.Publish);
-      isEmpty = coreNoPublishBricks.length > 0 ? false : true;
-    }
+    const coreNoPublishBricks = this.state.rawBricks
+      .filter(b => b.isCore === true)
+      .filter(b => b.status !== BrickStatus.Publish);
+    const isEmpty = coreNoPublishBricks.length > 0 ? false : true;
 
     return (
       <Grid container direction="row" className="sorted-row build-page-content">
