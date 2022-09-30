@@ -215,9 +215,8 @@ class TeachFilterSidebar extends Component<
     }
     const {sort} = this.state;
     if (sort === SortClassroom.Date) {
-      finalClasses = finalClasses.sort((a, b) => new Date(a.updated).getTime() - new Date(b.updated).getTime());
+      finalClasses = finalClasses.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
     } else if (sort === SortClassroom.Assignment) {
-      console.log('assignment', finalClasses);
       finalClasses = finalClasses.sort((a, b) => b.assignmentsCount - a.assignmentsCount);
     } else if (sort === SortClassroom.Name) {
       finalClasses = finalClasses.sort((a, b) => {
