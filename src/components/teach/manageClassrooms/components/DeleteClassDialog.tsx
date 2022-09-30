@@ -18,6 +18,10 @@ const DeleteClassDialog: React.FC<DeleteProps> = (props) => {
     >
       <div className="dialog-header" style={{marginBottom: '2vh'}}>
         <div className="title">Are you sure you want to delete this class?</div>
+        <div>
+          If the class is deleted information including students’ attainment will be<br/>
+          permanently removed. Would you like to archive the class instead?
+        </div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button"
