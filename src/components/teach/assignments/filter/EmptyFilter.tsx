@@ -23,8 +23,8 @@ class EmptyFilter extends Component<any, EmptyState> {
     return (
       <div className="empty-filter-content">
         <LabelTyping
-          value="Welcome to the Assignments tab."
-          className="bold"
+          value="Welcome to the Classes tab"
+          className="bold title"
           start={this.state.firstStarted}
           onFinish={() => this.setState({secondStarted: true})}
         />
