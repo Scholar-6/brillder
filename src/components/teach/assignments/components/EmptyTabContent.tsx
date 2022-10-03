@@ -15,17 +15,14 @@ const EmptyTabContent: React.FC<Props> = (props) => {
   const { activeClassroom } = props;
   if (props.classrooms.length === 0) {
     return (
-      <div className="tab-content">
+      <div className="tab-content empty-tab">
         <div className={"tab-content-centered " + (activeClassroom ? 'empty-tab-content' : '')}>
           <div className="new-class-container" onClick={props.openClass}>
             <div className="icon-container">
-              <SpriteIcon
-                name="users-custom"
-                className="stroke-1"
-              />
+              <SpriteIcon name="create-class-icon" className="stroke-1" />
             </div>
-            <div className="bold-hover">+ Create Class</div>
-            <div className="text-center f-s-2 m-t-2vh">You can invite between 1 and 50 learners to a class</div>
+            <div className="bold-hover"><SpriteIcon name="plus-circle" /> Create Class</div>
+            <div className="text-center f-s-2 m-t-2vh">Create a class to set assignments and track your students' progress</div>
           </div>
         </div>
       </div>

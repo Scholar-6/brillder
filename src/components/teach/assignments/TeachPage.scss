@@ -425,10 +425,15 @@
     padding-left: 2vw;
     padding-right: 2vw;
 
-    font-size: 1.4vw;
+    font-size: 1.55vw;
+
+    text-align: center;
 
     .bold {
       margin-bottom: 4vh;
+    }
+    .title {
+      font-size: 1.7vw;
     }
   }
 }

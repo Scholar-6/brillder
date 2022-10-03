@@ -299,6 +299,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   let canEdit = React.useMemo(() => canEditBrick(props.brick, props.user), [props.brick, props.user]);
 
+  console.log('can edit ', canEdit);
+
   //#region Changing questions in build
   const setPreviousQuestion = React.useCallback(() => {
     if (currentQuestionIndex >= 1) {

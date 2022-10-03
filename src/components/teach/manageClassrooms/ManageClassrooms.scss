@@ -39,6 +39,15 @@ $base-build-font-size: 1.25vw;
     .bold-hover {
       font-size: 2vw;
       text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        width: 2vw;
+        height: 2vw;
+        margin-right: 0.3vw;
+      }
     }
   }
 

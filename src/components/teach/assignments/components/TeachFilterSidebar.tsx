@@ -34,7 +34,7 @@ interface FilterSidebarProps {
   filterChanged(filters: TeachFilters): void;
   hideIntro(): void;
   moveToPremium(): void;
-  createClass(name: string, subject: Subject): void;
+  createClass(name: string): void;
   isArchive: boolean;
 }
 
@@ -300,8 +300,8 @@ class TeachFilterSidebar extends Component<
         <div className="sidebar-footer" />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
-          submit={(name, subject) => {
-            this.props.createClass(name, subject);
+          submit={(name) => {
+            this.props.createClass(name);
             this.setState({ createClassOpen: false });
           }}
           close={() => {

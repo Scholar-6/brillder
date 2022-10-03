@@ -101,7 +101,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
       const subject = props.brick.subject as Subject;
       if (newClassName) {
-        const newClassroom = await createClass(newClassName, subject);
+        const newClassroom = await createClass(newClassName);
         if (newClassroom) {
           // assign students to class
           const currentUsers = users;

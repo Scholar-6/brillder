@@ -372,8 +372,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
-  async createClass(name: string, subject: Subject) {
-    const newClassroom = await createClass(name, subject);
+  async createClass(name: string) {
+    const newClassroom = await createClass(name);
     if (newClassroom) {
       this.props.history.push(map.ManageClassroomsTab + `?classroomId=` + newClassroom.id);
     }
@@ -545,7 +545,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 reloadClass={this.loadClass.bind(this)}
                 onRemind={this.setReminderNotification.bind(this)}
                 onDelete={this.onDeleteClass.bind(this)}
-                showPremium={() => this.setState({isPremiumDialogOpen: true})}
+                showPremium={() => this.setState({ isPremiumDialogOpen: true })}
               />
               :
               <ClassroomsListV2
@@ -558,7 +558,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 reloadClasses={this.loadClasses.bind(this)}
                 onRemind={this.setReminderNotification.bind(this)}
                 onDelete={this.onDeleteClass.bind(this)}
-                showPremium={() => this.setState({isPremiumDialogOpen: true})}
+                showPremium={() => this.setState({ isPremiumDialogOpen: true })}
               />
         }
         {this.renderTeachPagination()}
@@ -605,12 +605,23 @@ class TeachPage extends Component<TeachProps, TeachState> {
             setActiveStudent={this.setActiveStudent.bind(this)}
             filterChanged={this.teachFilterUpdated.bind(this)}
             createClass={this.createClass.bind(this)}
-            moveToPremium={() => this.setState({isPremiumDialogOpen: true})}
+            moveToPremium={() => this.setState({ isPremiumDialogOpen: true })}
           />
-          <Grid item xs={9} className="brick-row-container">
-            <TeachTab activeTab={TeachActiveTab.Assignments} history={history} assignmentsEnabled={true} />
-            {this.renderTabContent(showedClasses)}
-          </Grid>
+          {(this.state.isLoaded && (this.state.classrooms?.length === 0 || (this.state.activeClassroom && this.state.activeClassroom?.assignments?.length === 0)))
+            ?
+            <Grid item xs={9} className="brick-row-container">
+              <EmptyTabContent
+                history={this.props.history}
+                classrooms={this.state.classrooms}
+                activeClassroom={this.state.activeClassroom}
+                openClass={() => this.setState({ createClassOpen: true })}
+              />
+            </Grid>
+            :
+            <Grid item xs={9} className="brick-row-container">
+              <TeachTab activeTab={TeachActiveTab.Assignments} history={history} assignmentsEnabled={true} />
+              {this.renderTabContent(showedClasses)}
+            </Grid>}
         </Grid>
         <ReminderSuccessDialog
           header={`Reminder${remindersData.count > 1 ? 's' : ''} sent!`}
@@ -620,8 +631,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
         />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
-          submit={(name, subject) => {
-            this.createClass(name, subject);
+          submit={name => {
+            this.createClass(name);
             this.setState({ createClassOpen: false })
           }}
           close={() => { this.setState({ createClassOpen: false }) }}
@@ -637,7 +648,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             doneLabel: 'View'
           }}
         />
-        <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => this.setState({isPremiumDialogOpen: false})} submit={() => this.props.history.push(map.StripeEducator)} />
+        <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => this.setState({ isPremiumDialogOpen: false })} submit={() => this.props.history.push(map.StripeEducator)} />
       </div>
     );
   }

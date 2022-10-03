@@ -111,4 +111,15 @@
       }
     }
   }
+  $backwork-tab-empty-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top});
+  .empty-tab {
+    height: $backwork-tab-empty-height !important;
+    .tab-content-centered {
+      height: 100%;
+      .icon-container { 
+        height: 23vh;
+        margin-bottom: 2vh;
+      }
+    }
+  }
 }

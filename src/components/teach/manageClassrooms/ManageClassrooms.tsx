@@ -222,8 +222,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
   }
 
-  createClass(name: string, subject: Subject) {
-    createClass(name, subject).then(newClassroom => {
+  createClass(name: string) {
+    createClass(name).then(newClassroom => {
       if (newClassroom) {
         this.unselectionClasses();
         this.state.classrooms.push(newClassroom);
@@ -825,8 +825,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
-          submit={(name, subject) => {
-            this.createClass(name, subject);
+          submit={(name) => {
+            this.createClass(name);
             this.setState({ createClassOpen: false })
           }}
           close={() => { this.setState({ createClassOpen: false }) }}
