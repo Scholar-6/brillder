@@ -4,13 +4,12 @@ import { Grid } from "@material-ui/core";
 import { Steps } from 'intro.js-react';
 
 import "./TeachFilterSidebar.scss";
-import { TeachClassroom, TeachStudent } from "model/classroom";
+import { ClassroomStatus, TeachClassroom, TeachStudent } from "model/classroom";
 import { TeachFilters } from "../../model";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import EmptyFilter from "../filter/EmptyFilter";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
-import { Subject } from "model/brick";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import { resendInvitation } from "services/axios/classroom";
 import { getClassAssignedCount } from "../service/service";
@@ -216,8 +215,12 @@ class TeachFilterSidebar extends Component<
 
   renderClassesBox() {
     let finalClasses = [];
-    for (const cls of this.props.classrooms) {
-      let finalClass = Object.assign({}, cls) as any;
+    let finalArchivedClasses = [];
+    let classrooms = this.props.classrooms.filter(c => c.status == ClassroomStatus.Active);
+    let archivedClassrooms = this.props.classrooms.filter(c => c.status == ClassroomStatus.Archived);
+
+    for (const cls of classrooms) {
+      const finalClass = Object.assign({}, cls) as any;
       finalClass.assigned = getClassAssignedCount(cls);
       finalClasses.push(finalClass);
     }
@@ -228,6 +231,26 @@ class TeachFilterSidebar extends Component<
       finalClasses = finalClasses.sort((a, b) => b.assignmentsCount - a.assignmentsCount);
     } else if (sort === SortClassroom.Name) {
       finalClasses = finalClasses.sort((a, b) => {
+        const al = a.name.toUpperCase();
+        const bl = b.name.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
+        return 0;
+      });
+    }
+
+    for (const cls of archivedClassrooms) {
+      const finalClass = Object.assign({}, cls) as any;
+      finalClass.assigned = getClassAssignedCount(cls);
+      finalArchivedClasses.push(finalClass);
+    }
+
+    if (sort === SortClassroom.Date) {
+      finalArchivedClasses = finalArchivedClasses.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
+    } else if (sort === SortClassroom.Assignment) {
+      finalArchivedClasses = finalArchivedClasses.sort((a, b) => b.assignmentsCount - a.assignmentsCount);
+    } else if (sort === SortClassroom.Name) {
+      finalArchivedClasses = finalArchivedClasses.sort((a, b) => {
         const al = a.name.toUpperCase();
         const bl = b.name.toUpperCase();
         if (al < bl) { return -1; }
@@ -268,6 +291,30 @@ class TeachFilterSidebar extends Component<
         <div className="sort-box subject-scrollable">
           <div className="filter-container indexes-box classrooms-filter">
             {finalClasses.map(this.renderClassroom.bind(this))}
+          </div>
+        </div>
+        <div className="sort-box">
+          <div
+            className={
+              "index-box m-view-all flex-center " +
+              (!this.props.activeClassroom ? "active" : "")
+            }
+          >
+            <div className="label-34rerf">
+              Archived ({finalArchivedClasses.length})
+            </div>
+            <SortButton sort={this.state.sort} sortByName={() => {
+              this.setState({ sort: SortClassroom.Name });
+            }} sortByDate={() => {
+              this.setState({ sort: SortClassroom.Date });
+            }} sortByAssignmets={() => {
+              this.setState({ sort: SortClassroom.Assignment });
+            }} />
+          </div>
+        </div>
+        <div className="sort-box subject-scrollable">
+          <div className="filter-container indexes-box classrooms-filter">
+            {finalArchivedClasses.map(this.renderClassroom.bind(this))}
           </div>
         </div>
         {(this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState) && this.renderPremiumBox()}
