@@ -20,10 +20,9 @@ interface NameAndSubjectFormProps {
   onChange(name: string): void;
   user: User;
   showPremium?(): void;
-  onInvited?(): void;
-  onAssigned?(): void;
-  moveToAssignemts?(): void;
-  onDelete?(apiClass: any): void;
+  onAssigned(): void;
+  onArchive(apiClass: any): void;
+  onDelete(apiClass: any): void;
   inviteHidden?: boolean;
   assignHidden?: boolean;
   isArchive?: boolean;  // for assignments
@@ -137,13 +136,19 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
             </div>
           </div>
           <span className="edit-icon send-teacher" onClick={() => setShareTeach(true)}>
-            <SpriteIcon
-              name="send"
-              className="w100 h100 active"
-            />
+            <SpriteIcon name="send" className="w100 h100 active" />
             <div className="css-custom-tooltip bold">Share with Teachers</div>
           </span>
-          <span className="edit-icon delete-icon" onClick={() => props.onDelete?.(props.classroom)}>
+          <span className="edit-icon archive" onClick={() => {
+            props.onArchive(props.classroom)
+          }}>
+            <SpriteIcon
+              name="archive"
+              className="w100 h100 active"
+            />
+            <div className="css-custom-tooltip bold">Archive</div>
+          </span>
+          <span className="edit-icon delete-icon" onClick={() => props.onDelete(props.classroom)}>
             <SpriteIcon
               name="delete"
               className="w100 h100 active"
@@ -160,9 +165,6 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
               setSuccess({ isOpen: true, brick })
               if (props.onAssigned) {
                 props.onAssigned();
-              }
-              if (props.isStudents) {
-                props.moveToAssignemts && props.moveToAssignemts();
               }
             }}
             showPremium={() => props.showPremium && props.showPremium()}
@@ -187,9 +189,6 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
           close={(numInvited: number) => {
             setInvite(false);
             setInvitedCount(numInvited);
-            if (props && props.onInvited) {
-              props.onInvited();
-            }
           }}
         />
         <StudentInviteSuccessDialog

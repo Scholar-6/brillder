@@ -181,6 +181,12 @@
         width: 9.4vw !important;
       }
     }
+    &.archive {
+      .css-custom-tooltip {
+        left: -0.7vw;
+        width: 4.3vw !important;
+      }
+    }
 
     &:hover {
       background: var(--theme-orange) !important;
@@ -193,7 +199,7 @@
   .classroom-btns-container {
     display: flex;
     align-items: center;
-    width: 30vw;
+    width: 34vw;
     padding-right: 1.4vw;
     justify-content: flex-end;
   }

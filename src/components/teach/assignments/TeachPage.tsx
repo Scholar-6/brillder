@@ -39,7 +39,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getArchivedAssignedCount } from "./service/service";
 import PremiumEducatorDialog from "components/play/baseComponents/dialogs/PremiumEducatorDialog";
 import DeleteClassDialog from "../manageClassrooms/components/DeleteClassDialog";
-import { deleteClassroom } from "services/axios/classroom";
+import { archiveClassroom, deleteClassroom } from "services/axios/classroom";
 import EmptyClassTab from "./components/EmptyClassTab";
 
 
@@ -288,6 +288,17 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (deleted) {
       const { classrooms } = this.state;
       let index = classrooms.indexOf(classroomToRemove);
+      classrooms.splice(index, 1);
+      this.setState({ classrooms, activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
+    }
+  }
+
+  async onArchiveClass(c: TeachClassroom) {
+    let deleted = await archiveClassroom(c.id);
+    console.log(deleted);
+    if (deleted) {
+      const { classrooms } = this.state;
+      let index = classrooms.indexOf(c);
       classrooms.splice(index, 1);
       this.setState({ classrooms, activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
     }
@@ -608,6 +619,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                   pageSize={this.state.classPageSize}
                   reloadClass={this.loadClass.bind(this)}
                   onRemind={this.setReminderNotification.bind(this)}
+                  onArchive={this.onArchiveClass.bind(this)}
                   onDelete={this.onDeleteClass.bind(this)}
                   showPremium={() => this.setState({ isPremiumDialogOpen: true })}
                 />

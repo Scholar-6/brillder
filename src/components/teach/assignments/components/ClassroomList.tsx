@@ -30,6 +30,7 @@ interface ClassroomListProps {
   showPremium(): void;
   expand(classroomId: number, assignmentId: number): void;
   reloadClass(id: number): void;
+  onArchive(classroom: TeachClassroom): void;
   onDelete(classroom: TeachClassroom): void;
   onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
@@ -87,6 +88,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
           onChange={(name) => this.updateClassroom(classroom, name)}
           onAssigned={() => this.props.reloadClass(classroom.id)}
           showPremium={this.props.showPremium}
+          onArchive={this.props.onArchive}
           onDelete={this.props.onDelete}
         />
       </div>
