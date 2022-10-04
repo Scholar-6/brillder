@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
+import { SvgIcon } from '@material-ui/core';
 
 import AssignBrickClass from 'components/baseComponents/dialogs/AssignBrickClass';
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
@@ -7,7 +7,6 @@ import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccess
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import StudentInviteSuccessDialog from 'components/play/finalStep/dialogs/StudentInviteSuccessDialog';
 import { checkAdmin } from 'components/services/brickService';
-import { Subject } from 'model/brick';
 import { User } from 'model/user';
 import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -31,7 +30,7 @@ interface NameAndSubjectFormProps {
   isStudents?: boolean; // for manage classes page
 }
 
-const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
+const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
   const { user } = props;
   const [edit, setEdit] = useState(false);
   const [isOpen, togglePopup] = useState(false);
@@ -129,21 +128,20 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           <div className="css-custom-tooltip bold">Edit Class Name or Subject</div>
         </span>
         <div className="classroom-btns-container">
-          {!props.inviteHidden &&
-            <div className="assign-button-container">
-              <div className="btn" onClick={() => setInvite(true)}>
-                Add a new student
-                <SpriteIcon name="user-plus" />
-              </div>
-            </div>}
+          <div className="assign-button-container">
+            <div className="btn" onClick={() => setInvite(true)}>
+              Add a new student
+              <SpriteIcon name="user-plus" />
+            </div>
+          </div>
+          <span className="edit-icon delete-icon" onClick={() => props.onDelete?.(props.classroom)}>
+            <SpriteIcon
+              name="delete"
+              className="w100 h100 active"
+            />
+            <div className="css-custom-tooltip bold">Delete Class</div>
+          </span>
         </div>
-        <span className="edit-icon delete-icon" onClick={() => props.onDelete?.(props.classroom)}>
-          <SpriteIcon
-            name="delete"
-            className="w100 h100 active"
-          />
-          <div className="css-custom-tooltip bold">Delete Class</div>
-        </span>
         {isOpen &&
           <AssignBrickClass
             isOpen={isOpen}
@@ -197,4 +195,4 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
 
-export default connector(NameAndSubjectForm);
+export default connector(NameAndSubjectFormV2);

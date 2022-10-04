@@ -8,9 +8,11 @@ import { Subject } from "model/brick";
 import { TeachClassroom, Assignment } from "model/classroom";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
-import NameAndSubjectForm from "components/teach/components/NameAndSubjectForm";
 import { updateClassroom } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
+import TeachTab from "components/teach/TeachTab";
+import { TeachActiveTab } from "components/teach/model";
+import NameAndSubjectFormV2 from "components/teach/components/NameAndSubjectFormV2";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -19,6 +21,7 @@ export interface TeachListItem {
 
 interface ClassroomListProps {
   stats: any;
+  history: any;
   subjects: Subject[];
   startIndex: number;
   pageSize: number;
@@ -59,12 +62,10 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     }
   }
 
-  async updateClassroom(classroom: TeachClassroom, name: string, subject: Subject) {
+  async updateClassroom(classroom: TeachClassroom, name: string) {
     let classroomApi = {
       id: classroom.id,
       name: name,
-      subjectId: subject.id,
-      subject: subject,
       status: classroom.status,
       updated: classroom.updated,
     } as any;
@@ -79,11 +80,11 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     let className = 'classroom-title';
     return (
       <div className={className}>
-        <NameAndSubjectForm
+        <NameAndSubjectFormV2
           classroom={classroom}
           inviteHidden={true}
           isArchive={this.props.isArchive}
-          onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
+          onChange={(name) => this.updateClassroom(classroom, name)}
           onAssigned={() => this.props.reloadClass(classroom.id)}
           showPremium={this.props.showPremium}
           onDelete={this.props.onDelete}
@@ -133,11 +134,14 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
 
   render() {
     return (
-      <div className="classroom-list one-classroom-assignments">
-        <div className="classroom-title one-of-many first">
+      <div>
+       <div className="classroom-title one-of-many first">
           {this.renderClassname()}
         </div>
-        {this.renderContent()}
+        <TeachTab activeTab={TeachActiveTab.Assignments} history={this.props.history} assignmentsEnabled={true} />
+        <div className="classroom-list one-classroom-assignments">
+          {this.renderContent()}
+        </div>
       </div>
     );
   }

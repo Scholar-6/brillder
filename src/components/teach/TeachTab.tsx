@@ -13,6 +13,7 @@ interface TabProps {
 
 const TeachTab: React.FC<TabProps> = ({ history, activeTab, assignmentsEnabled }) => {
   const isActive = (t1: TeachActiveTab, t2: TeachActiveTab) => t1 === t2 ? 'active' : 'no-active';
+  console.log(history.location);
   const values = queryString.parse(history.location.search);
   const classroomId = values.classroomId || '';
   
