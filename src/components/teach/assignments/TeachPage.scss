@@ -560,6 +560,10 @@
 
     color: var(--white);
     background: var(--theme-orange) !important;
+
+    &.m-view-all-d31 {
+      display: flex;
+    }
   }
 }
 
@@ -600,5 +604,10 @@
   .one-classroom-assignments {
     background: white;
     height: calc(100vh - 7.834vw - 2vh - 6.6vh - 2.6vw);
+  }
+  .name-and-edit-btn {
+    display: flex;
+    align-items: center;
+    width: 42vw;
   }
 }

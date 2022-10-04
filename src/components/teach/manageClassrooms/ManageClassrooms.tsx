@@ -404,7 +404,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    let className = "m-view-all index-box hover-light";
+    let className = "m-view-all m-view-all-d31 index-box hover-light";
     if (!this.state.activeClassroom && !this.state.isPending) {
       className += " active";
     }
@@ -421,7 +421,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderPendingFilter() {
-    let className = "m-view-all index-box yellow item-box2";
+    let className = "m-view-all m-view-all-d31 index-box yellow item-box2";
     if (this.state.isPending) {
       className += " active";
     }
