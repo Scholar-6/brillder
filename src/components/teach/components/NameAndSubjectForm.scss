@@ -164,7 +164,7 @@
       bottom: -2vw;
       left: -4vw;
       color: var(--tab-gray);
-      background: var(--theme-light-blue);
+      background: var(--theme-dark-blue);
       width: 12.5vw !important;
     }
     &.delete-icon {
@@ -173,6 +173,12 @@
       .css-custom-tooltip {
         left: -1.8vw;
         width: 6.3vw !important;
+      }
+    }
+    &.send-teacher {
+      .css-custom-tooltip {
+        left: -3.3vw;
+        width: 9.4vw !important;
       }
     }
 
@@ -187,6 +193,9 @@
   .classroom-btns-container {
     display: flex;
     align-items: center;
+    width: 30vw;
+    padding-right: 1.4vw;
+    justify-content: flex-end;
   }
   .assign-button-container {
     margin-left: 1vw;

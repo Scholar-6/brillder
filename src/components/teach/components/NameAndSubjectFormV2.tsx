@@ -116,24 +116,33 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
       </div>
     ) : (
       <div className="name-subject-display">
-        <h1 className="name-display">{props.classroom!.name}</h1>
-        {(checkAdmin(user.roles) && props.classroom!.teachers) &&
-          <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span>
-        }
-        <span className="edit-icon" onClick={startEditing}>
-          <SpriteIcon
-            name="edit-outline"
-            className="w100 h100 active"
-          />
-          <div className="css-custom-tooltip bold">Edit Class Name or Subject</div>
-        </span>
+        <div className="name-and-edit-btn">
+          <h1 className="name-display">{props.classroom!.name}</h1>
+          {(checkAdmin(user.roles) && props.classroom!.teachers) &&
+            <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span>
+          }
+          <span className="edit-icon" onClick={startEditing}>
+            <SpriteIcon
+              name="edit-outline"
+              className="w100 h100 active"
+            />
+            <div className="css-custom-tooltip bold">Edit Class Name or Subject</div>
+          </span>
+        </div>
         <div className="classroom-btns-container">
           <div className="assign-button-container">
             <div className="btn" onClick={() => setInvite(true)}>
-              Add a new student
-              <SpriteIcon name="user-plus" />
+              Share class with Students
+              <SpriteIcon name="share" />
             </div>
           </div>
+          <span className="edit-icon send-teacher" onClick={() => setShareTeach(true)}>
+            <SpriteIcon
+              name="send"
+              className="w100 h100 active"
+            />
+            <div className="css-custom-tooltip bold">Share with Teachers</div>
+          </span>
           <span className="edit-icon delete-icon" onClick={() => props.onDelete?.(props.classroom)}>
             <SpriteIcon
               name="delete"
