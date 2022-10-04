@@ -87,18 +87,12 @@ class TeachFilterSidebar extends Component<
     this.props.filterChanged(filters);
   }
 
-  removeClassrooms() {
-    this.props.setActiveClassroom(null);
-  }
-
   toggleClassroom(e: any, activeClassroom: TeachClassroom) {
     e.stopPropagation();
     e.preventDefault();
     let active = !activeClassroom.active;
     if (active === true) {
       this.props.setActiveClassroom(activeClassroom.id);
-    } else {
-      this.props.setActiveClassroom(null);
     }
   }
 
@@ -156,6 +150,25 @@ class TeachFilterSidebar extends Component<
     return <div />
   }
 
+  renderClassoomSubject(c: TeachClassroom) {
+    if (c.subject) {
+      return (
+        <RadioButton
+          checked={false}
+          color={c.subject.color}
+          name={c.subject.name}
+        />
+      );
+    }
+    return (
+      <RadioButton
+        checked={false}
+        color="#4C608A"
+        name=""
+      />
+    );
+  }
+
   renderClassroom(c: TeachClassroom, i: number) {
     return (
       <div key={i} className="classes-box">
@@ -165,12 +178,7 @@ class TeachFilterSidebar extends Component<
           title={c.name}
         >
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
-            {c.subject.color &&
-              <RadioButton
-                checked={c.active}
-                color={c.subject.color}
-                name={c.subject.name}
-              />}
+            {this.renderClassoomSubject(c)}
             <span className="filter-class-name">{c.name}</span>
             {c.active && (c.students.length > 0 || (c.studentsInvitations && c.studentsInvitations.length > 0)) && (
               <div className="classroom-icon svgOnHover">
@@ -213,7 +221,7 @@ class TeachFilterSidebar extends Component<
       finalClass.assigned = getClassAssignedCount(cls);
       finalClasses.push(finalClass);
     }
-    const {sort} = this.state;
+    const { sort } = this.state;
     if (sort === SortClassroom.Date) {
       finalClasses = finalClasses.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
     } else if (sort === SortClassroom.Assignment) {
@@ -244,7 +252,6 @@ class TeachFilterSidebar extends Component<
               "index-box m-view-all flex-center " +
               (!this.props.activeClassroom ? "active" : "")
             }
-            onClick={this.removeClassrooms.bind(this)}
           >
             <div className="label-34rerf">
               Current ({finalClasses.length})

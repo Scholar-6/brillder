@@ -18,7 +18,7 @@ import ShareTeacherDialog from './ShareTeacherDialog';
 
 interface NameAndSubjectFormProps {
   classroom: any;
-  onChange(name: string, subject: Subject): void;
+  onChange(name: string): void;
   user: User;
   showPremium?(): void;
   onInvited?(): void;
@@ -54,8 +54,8 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
   }, [props.classroom, user.subjects]);
 
   const submit = React.useCallback(() => {
-    if (name && (subjectIndex !== undefined) && user.subjects[subjectIndex]) {
-      props.onChange(name, user.subjects[subjectIndex]);
+    if (name) {
+      props.onChange(name);
       setEdit(false);
     }
     /* eslint-disable-next-line */
@@ -80,43 +80,23 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
     );
   }
 
+  let color = '#4C608A';
+  if (props.classroom.subject) {
+    color = props.classroom.subject.color;
+  }
+
   return edit ?
     (
       <div className="name-subject-form">
-        <Select
-          value={subjectIndex}
-          onChange={e => setSubjectIndex(e.target.value as number)}
-          className="subject-input"
-          disableUnderline
-          IconComponent={
-            () => <SvgIcon className="arrow-icon">
-              <SpriteIcon
-                name="arrow-down"
-                className="w100 h100 active"
-                style={{
-                  color: (user.subjects[subjectIndex!]?.color ?? "#FFFFFF") === "#FFFFFF" ?
-                    "var(--theme-dark-blue)" :
-                    "var(--white)"
-                }}
-              />
-            </SvgIcon>
-          }
-        >
-          {user.subjects.map((s, i) =>
-            <MenuItem value={i} key={i}>
-              <ListItemIcon>
-                <SvgIcon>
-                  <SpriteIcon
-                    name={s.color === "#FFFFFF" ? "circle-empty" : "circle-filled"}
-                    className="w100 h100 active"
-                    style={{ color: s.color === "#FFFFFF" ? "var(--theme-dark-blue)" : s.color }}
-                  />
-                </SvgIcon>
-              </ListItemIcon>
-              <ListItemText>{s.name}</ListItemText>
-            </MenuItem>
-          )}
-        </Select>
+        <div className="subject-input">
+          <SvgIcon>
+            <SpriteIcon
+              name="circle-filled"
+              className="w100 h100 active"
+              style={{ color }}
+            />
+          </SvgIcon>
+        </div>
         <input
           value={name}
           onChange={e => setName(e.target.value)}
@@ -141,6 +121,13 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
         {(checkAdmin(user.roles) && props.classroom!.teachers) &&
           <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span>
         }
+        <span className="edit-icon" onClick={startEditing}>
+          <SpriteIcon
+            name="edit-outline"
+            className="w100 h100 active"
+          />
+          <div className="css-custom-tooltip bold">Edit Class Name or Subject</div>
+        </span>
         <div className="classroom-btns-container">
           {!props.inviteHidden &&
             <div className="assign-button-container">
@@ -149,29 +136,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
                 <SpriteIcon name="user-plus" />
               </div>
             </div>}
-          {!props.assignHidden &&
-            <div className="assign-button-container">
-              <div className="btn" onClick={() => {
-                if (user.subscriptionState && user.subscriptionState > 1) {
-                  togglePopup(true);
-                } else if (user.freeAssignmentsLeft > 0) {
-                  togglePopup(true);
-                } else if (props.showPremium) {
-                  props.showPremium();
-                }
-              }}>
-                Assign a new brick
-                <SpriteIcon name="file-plus" />
-              </div>
-            </div>}
         </div>
-        <span className="edit-icon" onClick={startEditing}>
-          <SpriteIcon
-            name="edit-outline"
-            className="w100 h100 active"
-          />
-          <div className="css-custom-tooltip bold">Edit Class Name or Subject</div>
-        </span>
         <span className="edit-icon delete-icon" onClick={() => props.onDelete?.(props.classroom)}>
           <SpriteIcon
             name="delete"

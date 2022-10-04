@@ -209,7 +209,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     let classrooms = await getAllClassrooms();
     if (classrooms) {
       this.prepareClassrooms(classrooms);
-      classrooms = classrooms.filter(c => c.subjectId);
       classrooms = classrooms.sort((a: any, b: any) => b.students.length - a.students.length);
       this.setState({
         classrooms,
@@ -643,9 +642,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.setState({ inviteOpen: true });
   }
 
-  async updateClassroom(name: string, subject: Subject) {
+  async updateClassroom(name: string) {
     if (this.state.activeClassroom) {
-      let success = await updateClassroom({ ...this.state.activeClassroom, name, subject });
+      let success = await updateClassroom({ ...this.state.activeClassroom, name });
       if (success) {
         this.getClassrooms();
       }
