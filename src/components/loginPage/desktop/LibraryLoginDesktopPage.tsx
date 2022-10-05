@@ -11,6 +11,7 @@ import map from "components/map";
 import { getRealLibraries, RealLibrary } from "services/axios/realLibrary";
 import ProfileInput from "components/userProfilePage/components/ProfileInput";
 import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailedDialog";
+import { LibraryRegisterPage } from "./routes";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -123,10 +124,14 @@ const LibraryLoginDesktopPage: React.FC<LoginProps> = (props) => {
       <div className="button-box">
         <button type="submit" className={`sign-in-button ${(pin && libraryCardNumber && libraryId) ? 'green' : ''}`} onClick={sendLibraryLogin}>Sign In</button>
       </div>
-      <LibraryFailedDialog isOpen={suggestionFailed} label={libraryLabel} close={() => {
-        setSuggestionFailed(false);
-        setLibraryLabelFailed('');
-      }} />
+      <LibraryFailedDialog
+        isOpen={suggestionFailed}
+        label={`Please check the information you entered was correct, unless you intended to <a href="${LibraryRegisterPage}">Sign Up</a>? Otherwise, please contact us if this doesn’t seem right.`}
+        close={() => {
+          setSuggestionFailed(false);
+          setLibraryLabelFailed('');
+        }}
+      />
     </div>
   );
 };
