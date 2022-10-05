@@ -522,14 +522,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const { activeClassroom } = this.state;
 
     if (this.state.isLoaded && (this.state.classrooms?.length === 0 || (activeClassroom && activeClassroom?.assignments?.length === 0))) {
-      return (
-        <EmptyClassTab
-          history={this.props.history}
-          classrooms={this.state.classrooms}
-          activeClassroom={this.state.activeClassroom}
-          openClass={() => this.setState({ createClassOpen: true })}
-        />
-      );
+      return <EmptyClassTab history={this.props.history} activeClassroom={this.state.activeClassroom} />;
     }
 
     return (
@@ -637,6 +630,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                   onAssign={() => this.setState({isAssignOpen: true})}
                   showPremium={() => this.setState({ isPremiumDialogOpen: true })}
                 />
+                {this.renderTeachPagination()}
               </Grid>
               :
               <Grid item xs={9} className="brick-row-container teach-tab-d94">

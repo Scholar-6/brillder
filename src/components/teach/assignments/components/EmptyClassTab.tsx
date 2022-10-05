@@ -4,14 +4,11 @@ import { TeachClassroom } from 'model/classroom';
 import React from 'react';
 
 interface Props {
-  classrooms: TeachClassroom[];
   activeClassroom: TeachClassroom | null;
   history: any;
-
-  openClass(): void;
 }
 
-const EmptyTabContent: React.FC<Props> = (props) => {
+const EmptyClassTab: React.FC<Props> = (props) => {
   const { activeClassroom } = props;
   return (
     <div className="tab-content">
@@ -47,4 +44,4 @@ const EmptyTabContent: React.FC<Props> = (props) => {
   );
 }
 
-export default EmptyTabContent;
+export default EmptyClassTab;

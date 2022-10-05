@@ -5,16 +5,18 @@ import queryString from 'query-string';
 
 import { TeachActiveTab } from "./model";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { ClassroomStatus } from "model/classroom";
 
 interface TabProps {
   activeTab: TeachActiveTab;
   assignmentsEnabled: boolean;
   history: any;
   hideAssignButton?: boolean;
+  classroom?: any;
   onAssign(): void;
 }
 
-const TeachTab: React.FC<TabProps> = ({ history, activeTab, assignmentsEnabled, hideAssignButton, onAssign }) => {
+const TeachTab: React.FC<TabProps> = ({ history, activeTab, classroom, assignmentsEnabled, hideAssignButton, onAssign }) => {
   const isActive = (t1: TeachActiveTab, t2: TeachActiveTab) => t1 === t2 ? 'active' : 'no-active';
   const values = queryString.parse(history.location.search);
   const classroomId = values.classroomId || '';
@@ -38,7 +40,7 @@ const TeachTab: React.FC<TabProps> = ({ history, activeTab, assignmentsEnabled, 
       <div className={className} onClick={goToAssignments}>
         <div>
           <span>Assignments</span>
-          {!hideAssignButton &&
+          {!hideAssignButton && classroom && classroom.status === ClassroomStatus.Active &&
           <div className="btn-assign" onClick={onAssign}>
             <div>Assign New Brick</div>
             <SpriteIcon name="plus-square"/>
