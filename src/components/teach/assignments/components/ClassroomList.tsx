@@ -15,6 +15,7 @@ import { TeachActiveTab } from "components/teach/model";
 import NameAndSubjectFormV2 from "components/teach/components/NameAndSubjectFormV2";
 import EmptyArchivedClassTab from "./EmptyArchivedClassTab";
 import EmptyClassTab from "./EmptyClassTab";
+import ArchiveToggle from "./ArchiveToggle";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -29,6 +30,7 @@ interface ClassroomListProps {
   pageSize: number;
   activeClassroom: TeachClassroom;
   isArchive: boolean;
+  toggleArchive(v: boolean): void;
   showPremium(): void;
   expand(classroomId: number, assignmentId: number): void;
   reloadClass(id: number): void;
@@ -138,7 +140,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       if (classroom.status === ClassroomStatus.Active) {
         return <EmptyClassTab history={this.props.history} activeClassroom={classroom} />;
       }
-      return <EmptyArchivedClassTab unarchive={() => this.props.onUnarchive(classroom)}/>;
+      return <EmptyArchivedClassTab unarchive={() => this.props.onUnarchive(classroom)} />;
     }
 
     return items.map((item, i) => this.renderTeachListItem(item, i));
@@ -147,10 +149,17 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   render() {
     return (
       <div>
-       <div className="classroom-title one-of-many first">
+        <div className="classroom-title one-of-many first">
           {this.renderClassname()}
         </div>
         <TeachTab activeTab={TeachActiveTab.Assignments} history={this.props.history} onAssign={this.props.onAssign} assignmentsEnabled={true} />
+        <ArchiveToggle
+          isArchive={this.props.isArchive}
+          history={this.props.history}
+          activeStudent=""
+          activeClassroom={this.props.activeClassroom}
+          setArchive={this.props.toggleArchive}
+        />
         <div className="classroom-list one-classroom-assignments">
           {this.renderContent()}
         </div>
