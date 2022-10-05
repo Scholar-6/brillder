@@ -132,6 +132,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     const { classroom } = this.state;
     let items = [] as TeachListItem[];
 
+    convertClassAssignments(items, classroom, this.props.isArchive);
+
     if (items.length === 0) {
       if (classroom.status === ClassroomStatus.Active) {
         return <EmptyClassTab history={this.props.history} activeClassroom={classroom} />;
@@ -139,7 +141,6 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       return <EmptyArchivedClassTab unarchive={() => this.props.onUnarchive(classroom)}/>;
     }
 
-    convertClassAssignments(items, classroom, this.props.isArchive);
     return items.map((item, i) => this.renderTeachListItem(item, i));
   }
 
