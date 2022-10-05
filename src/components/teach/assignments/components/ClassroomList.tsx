@@ -5,7 +5,7 @@ import { Grow } from "@material-ui/core";
 import './ClassroomList.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
-import { TeachClassroom, Assignment } from "model/classroom";
+import { TeachClassroom, Assignment, ClassroomStatus } from "model/classroom";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import { updateClassroom } from "services/axios/classroom";
@@ -14,6 +14,7 @@ import TeachTab from "components/teach/TeachTab";
 import { TeachActiveTab } from "components/teach/model";
 import NameAndSubjectFormV2 from "components/teach/components/NameAndSubjectFormV2";
 import EmptyArchivedClassTab from "./EmptyArchivedClassTab";
+import EmptyClassTab from "./EmptyClassTab";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -132,6 +133,9 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     let items = [] as TeachListItem[];
 
     if (items.length === 0) {
+      if (classroom.status === ClassroomStatus.Active) {
+        return <EmptyClassTab history={this.props.history} activeClassroom={classroom} />;
+      }
       return <EmptyArchivedClassTab unarchive={() => this.props.onUnarchive(classroom)}/>;
     }
 

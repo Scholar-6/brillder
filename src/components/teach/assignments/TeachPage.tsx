@@ -307,9 +307,18 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async onArchiveClass(c: TeachClassroom) {
-    let deleted = await archiveClassroom(c.id);
-    console.log(deleted);
-    if (deleted) {
+    let archived = await archiveClassroom(c.id);
+    if (archived) {
+      const { classrooms } = this.state;
+      let index = classrooms.indexOf(c);
+      classrooms.splice(index, 1);
+      this.setState({ classrooms, activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
+    }
+  }
+
+  async onUnarchiveClass(c: TeachClassroom) {
+    let unarchived = await archiveClassroom(c.id);
+    if (unarchived) {
       const { classrooms } = this.state;
       let index = classrooms.indexOf(c);
       classrooms.splice(index, 1);
@@ -626,6 +635,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                   reloadClass={this.loadClass.bind(this)}
                   onRemind={this.setReminderNotification.bind(this)}
                   onArchive={this.onArchiveClass.bind(this)}
+                  onUnarchive={this.onUnarchiveClass.bind(this)}
                   onDelete={this.onDeleteClass.bind(this)}
                   onAssign={() => this.setState({isAssignOpen: true})}
                   showPremium={() => this.setState({ isPremiumDialogOpen: true })}

@@ -11,6 +11,7 @@ import InviteStudentEmailDialog from '../manageClassrooms/components/InviteStude
 
 import "./NameAndSubjectForm.scss";
 import ShareTeacherDialog from './ShareTeacherDialog';
+import { ClassroomStatus } from 'model/classroom';
 
 interface NameAndSubjectFormProps {
   classroom: any;
@@ -128,6 +129,7 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
             <SpriteIcon name="send" className="w100 h100 active" />
             <div className="css-custom-tooltip bold">Share with Teachers</div>
           </span>
+          {props.classroom.status === ClassroomStatus.Active &&
           <span className="edit-icon archive" onClick={() => {
             props.onArchive(props.classroom)
           }}>
@@ -136,7 +138,7 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
               className="w100 h100 active"
             />
             <div className="css-custom-tooltip bold">Archive</div>
-          </span>
+          </span>}
           <span className="edit-icon delete-icon" onClick={() => props.onDelete(props.classroom)}>
             <SpriteIcon
               name="delete"
@@ -163,6 +165,4 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
 }
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
-const connector = connect(mapState);
-
-export default connector(NameAndSubjectFormV2);
+export default connect(mapState)(NameAndSubjectFormV2);
