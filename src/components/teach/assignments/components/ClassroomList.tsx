@@ -13,6 +13,7 @@ import { convertClassAssignments } from "../service/service";
 import TeachTab from "components/teach/TeachTab";
 import { TeachActiveTab } from "components/teach/model";
 import NameAndSubjectFormV2 from "components/teach/components/NameAndSubjectFormV2";
+import EmptyArchivedClassTab from "./EmptyArchivedClassTab";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -32,6 +33,7 @@ interface ClassroomListProps {
   reloadClass(id: number): void;
   onAssign(): void;
   onArchive(classroom: TeachClassroom): void;
+  onUnarchive(classroom: TeachClassroom): void;
   onDelete(classroom: TeachClassroom): void;
   onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
@@ -128,6 +130,11 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   renderContent() {
     const { classroom } = this.state;
     let items = [] as TeachListItem[];
+
+    if (items.length === 0) {
+      return <EmptyArchivedClassTab unarchive={() => this.props.onUnarchive(classroom)}/>;
+    }
+
     convertClassAssignments(items, classroom, this.props.isArchive);
     return items.map((item, i) => this.renderTeachListItem(item, i));
   }

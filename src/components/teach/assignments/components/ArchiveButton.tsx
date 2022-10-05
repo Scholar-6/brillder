@@ -13,10 +13,10 @@ const ArchiveButton: React.FC<Props> = (props) => {
         <div className="green-hover">
           <div />
         </div>
-        <SpriteIcon name="archive" className="text-gray" />
+        <SpriteIcon name="book-custom-archive" className="text-gray" />
       </div>
       <div className="css-custom-tooltip">
-        Archive brick
+        End Assignment
       </div>
     </div>
   );
