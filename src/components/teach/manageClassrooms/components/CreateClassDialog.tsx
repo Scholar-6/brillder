@@ -37,6 +37,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           onClick={() => {
             if (value) {
               props.submit(value);
+              setValue('');
             }
           }}>
           <span className="bold">Create</span>
