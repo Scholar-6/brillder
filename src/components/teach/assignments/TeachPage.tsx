@@ -39,7 +39,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getArchivedAssignedCount } from "./service/service";
 import PremiumEducatorDialog from "components/play/baseComponents/dialogs/PremiumEducatorDialog";
 import DeleteClassDialog from "../manageClassrooms/components/DeleteClassDialog";
-import { archiveClassroom, deleteClassroom } from "services/axios/classroom";
+import { archiveClassroom, deleteClassroom, unarchiveClassroom } from "services/axios/classroom";
 import EmptyClassTab from "./components/EmptyClassTab";
 import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
@@ -309,20 +309,18 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async onArchiveClass(c: TeachClassroom) {
     let archived = await archiveClassroom(c.id);
     if (archived) {
-      const { classrooms } = this.state;
-      let index = classrooms.indexOf(c);
-      classrooms.splice(index, 1);
-      this.setState({ classrooms, activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
+      const {activeClassroom} = this.state;
+      this.setState({ activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
+      await this.loadClasses(activeClassroom.id);
     }
   }
 
   async onUnarchiveClass(c: TeachClassroom) {
-    let unarchived = await archiveClassroom(c.id);
+    let unarchived = await unarchiveClassroom(c.id);
     if (unarchived) {
-      const { classrooms } = this.state;
-      let index = classrooms.indexOf(c);
-      classrooms.splice(index, 1);
-      this.setState({ classrooms, activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
+      const {activeClassroom} = this.state;
+      this.setState({ activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
+      await this.loadClasses(activeClassroom.id);
     }
   }
 
@@ -413,8 +411,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const newClassroom = await createClass(name);
     if (newClassroom) {
       await this.loadClasses(newClassroom.id);
-
-      //this.props.history.push(map.TeachAssignedTab + `?classroomId=` + newClassroom.id);
     }
   }
 
