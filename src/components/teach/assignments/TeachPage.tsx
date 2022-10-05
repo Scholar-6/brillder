@@ -160,7 +160,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       classroomToRemove: null,
       isAssignOpen: false,
       successAssignResult: {
-        isOpen: false, brick: null 
+        isOpen: false, brick: null
       },
       failAssignResult: {
         isOpen: false, brick: null
@@ -309,7 +309,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async onArchiveClass(c: TeachClassroom) {
     let archived = await archiveClassroom(c.id);
     if (archived) {
-      const {activeClassroom} = this.state;
+      const { activeClassroom } = this.state;
       this.setState({ activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
       await this.loadClasses(activeClassroom.id);
     }
@@ -318,7 +318,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async onUnarchiveClass(c: TeachClassroom) {
     let unarchived = await unarchiveClassroom(c.id);
     if (unarchived) {
-      const {activeClassroom} = this.state;
+      const { activeClassroom } = this.state;
       this.setState({ activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
       await this.loadClasses(activeClassroom.id);
     }
@@ -536,7 +536,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
           isArchive={isArchive}
           history={this.props.history}
           activeStudent={this.state.activeStudent}
-          classrooms={this.state.classrooms}
           activeClassroom={this.state.activeClassroom}
           setArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
         />
@@ -624,23 +623,24 @@ class TeachPage extends Component<TeachProps, TeachState> {
                   subjects={this.state.subjects}
                   isArchive={isArchive}
                   history={this.props.history}
-                  expand={this.moveToAssignment.bind(this)}
                   startIndex={this.state.sortedIndex}
                   activeClassroom={this.state.activeClassroom}
                   pageSize={this.state.classPageSize}
+                  toggleArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
+                  expand={this.moveToAssignment.bind(this)}
                   reloadClass={this.loadClass.bind(this)}
                   onRemind={this.setReminderNotification.bind(this)}
                   onArchive={this.onArchiveClass.bind(this)}
                   onUnarchive={this.onUnarchiveClass.bind(this)}
                   onDelete={this.onDeleteClass.bind(this)}
-                  onAssign={() => this.setState({isAssignOpen: true})}
+                  onAssign={() => this.setState({ isAssignOpen: true })}
                   showPremium={() => this.setState({ isPremiumDialogOpen: true })}
                 />
                 {this.renderTeachPagination()}
               </Grid>
               :
               <Grid item xs={9} className="brick-row-container teach-tab-d94">
-                <TeachTab activeTab={TeachActiveTab.Assignments} history={history} onAssign={() => this.setState({isAssignOpen: true})} assignmentsEnabled={true} />
+                <TeachTab activeTab={TeachActiveTab.Assignments} history={history} onAssign={() => this.setState({ isAssignOpen: true })} assignmentsEnabled={true} />
                 {this.renderTabContent()}
               </Grid>}
         </Grid>
@@ -670,32 +670,32 @@ class TeachPage extends Component<TeachProps, TeachState> {
           }}
         />
         {this.state.isAssignOpen &&
-        <AssignBrickClass
-          isOpen={this.state.isAssignOpen}
-          classroom={this.state.activeClassroom}
-          subjectId={this.state.activeClassroom.subjectId || this.state.activeClassroom.subject?.id}
-          success={(brick: any) => {
-            this.setState({ successAssignResult: { isOpen: true, brick }});
-            this.loadClass(this.state.activeClassroom.id);
-          }}
-          showPremium={() => this.setState({ isPremiumDialogOpen: true })}
-          failed={brick => this.setState({ failAssignResult: {isOpen: true, brick} })}
-          close={() => this.setState({isAssignOpen: false})}
-        />}
+          <AssignBrickClass
+            isOpen={this.state.isAssignOpen}
+            classroom={this.state.activeClassroom}
+            subjectId={this.state.activeClassroom.subjectId || this.state.activeClassroom.subject?.id}
+            success={(brick: any) => {
+              this.setState({ successAssignResult: { isOpen: true, brick } });
+              this.loadClass(this.state.activeClassroom.id);
+            }}
+            showPremium={() => this.setState({ isPremiumDialogOpen: true })}
+            failed={brick => this.setState({ failAssignResult: { isOpen: true, brick } })}
+            close={() => this.setState({ isAssignOpen: false })}
+          />}
         {this.state.successAssignResult.isOpen &&
-        <AssignSuccessDialog
-          isOpen={this.state.successAssignResult.isOpen}
-          brickTitle={this.state.successAssignResult.brick?.title}
-          selectedItems={[this.state.activeClassroom]}
-          close={() => this.setState({ successAssignResult: { isOpen: false, brick: null }})}
-        />}
+          <AssignSuccessDialog
+            isOpen={this.state.successAssignResult.isOpen}
+            brickTitle={this.state.successAssignResult.brick?.title}
+            selectedItems={[this.state.activeClassroom]}
+            close={() => this.setState({ successAssignResult: { isOpen: false, brick: null } })}
+          />}
         {this.state.failAssignResult.isOpen &&
-        <AssignFailedDialog
-          isOpen={this.state.failAssignResult.isOpen}
-          brickTitle={this.state.failAssignResult.brick?.title}
-          selectedItems={[{ classroom: this.state.activeClassroom }]}
-          close={() => this.setState({ failAssignResult: { isOpen: false, brick: null }})}
-        />}
+          <AssignFailedDialog
+            isOpen={this.state.failAssignResult.isOpen}
+            brickTitle={this.state.failAssignResult.brick?.title}
+            selectedItems={[{ classroom: this.state.activeClassroom }]}
+            close={() => this.setState({ failAssignResult: { isOpen: false, brick: null } })}
+          />}
         <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => this.setState({ isPremiumDialogOpen: false })} submit={() => this.props.history.push(map.StripeEducator)} />
       </div>
     );

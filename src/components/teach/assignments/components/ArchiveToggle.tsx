@@ -8,7 +8,6 @@ interface Props {
   isArchive: boolean;
   history: any;
   activeStudent: any;
-  classrooms: TeachClassroom[];
   activeClassroom: TeachClassroom | null;
   setArchive(v: boolean): void;
 }
@@ -22,30 +21,12 @@ const ArchiveToggle: React.FC<Props> = (props) => {
     return getArchivedAssignedCount(classroom);
   }
 
-  const getLiveClassesCount = () => {
-    let count = 0;
-    for (const classroom of props.classrooms) {
-      count += getLiveClassCount(classroom);
-    }
-    return count;
-  }
-
-  const getArchiveClassesCount = () => {
-    let count = 0;
-    for (const classroom of props.classrooms) {
-      count += getArchiveClassCount(classroom);
-    }
-    return count;
-  }
-
   const getLiveAssignmentsCount = () => {
     if (props.activeStudent) {
       return '';
     }
     if (props.activeClassroom) {
       return getLiveClassCount(props.activeClassroom);
-    } else {
-      return getLiveClassesCount();
     }
   }
 
@@ -55,8 +36,6 @@ const ArchiveToggle: React.FC<Props> = (props) => {
     }
     if (props.activeClassroom) {
       return getArchiveClassCount(props.activeClassroom);
-    } else {
-      return getArchiveClassesCount();
     }
   }
 
