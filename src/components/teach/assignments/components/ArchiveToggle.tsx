@@ -49,7 +49,7 @@ const ArchiveToggle: React.FC<Props> = (props) => {
           props.setArchive(false);
         }}
       >
-        {getLiveAssignmentsCount()} LIVE BRICKS
+        {getLiveAssignmentsCount()} ACTIVE
       </div>
     );
   }
@@ -64,7 +64,7 @@ const ArchiveToggle: React.FC<Props> = (props) => {
           props.setArchive(true);
         }}
       >
-        {getArchivedAssigmentsCount()} ARCHIVED
+        {getArchivedAssigmentsCount()} PREVIOUS
       </div>
     );
   }
