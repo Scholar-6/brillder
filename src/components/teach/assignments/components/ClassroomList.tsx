@@ -30,6 +30,7 @@ interface ClassroomListProps {
   showPremium(): void;
   expand(classroomId: number, assignmentId: number): void;
   reloadClass(id: number): void;
+  onAssign(): void;
   onArchive(classroom: TeachClassroom): void;
   onDelete(classroom: TeachClassroom): void;
   onRemind?(count: number, isDeadlinePassed: boolean): void;
@@ -83,11 +84,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       <div className={className}>
         <NameAndSubjectFormV2
           classroom={classroom}
-          inviteHidden={true}
           isArchive={this.props.isArchive}
           onChange={(name) => this.updateClassroom(classroom, name)}
-          onAssigned={() => this.props.reloadClass(classroom.id)}
-          showPremium={this.props.showPremium}
           onArchive={this.props.onArchive}
           onDelete={this.props.onDelete}
         />
@@ -140,7 +138,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
        <div className="classroom-title one-of-many first">
           {this.renderClassname()}
         </div>
-        <TeachTab activeTab={TeachActiveTab.Assignments} history={this.props.history} assignmentsEnabled={true} />
+        <TeachTab activeTab={TeachActiveTab.Assignments} history={this.props.history} onAssign={this.props.onAssign} assignmentsEnabled={true} />
         <div className="classroom-list one-classroom-assignments">
           {this.renderContent()}
         </div>
