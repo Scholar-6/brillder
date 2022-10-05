@@ -610,4 +610,33 @@
     align-items: center;
     width: 42vw;
   }
+  .teach-tab-d94 .tab-container > div > div {
+    display: flex;
+    align-items: center;
+    span {
+      width: 23vw;
+    }
+    .btn-assign {
+      padding: 0.2vw 0.4vw;
+      border-radius: 0.4vw;
+      color: white;
+      background: var(--theme-orange);
+      display: flex;
+      align-items: center;
+      font-size: 1.3vw;
+      div {
+        padding-right: 0.4vw;
+      }
+
+      svg {
+        width: 1.6vw;
+        height: 1.6vw;
+        stroke-width: 2;
+      }
+      transition: all 300ms ease-in-out;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
 }

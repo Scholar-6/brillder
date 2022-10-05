@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { SvgIcon } from '@material-ui/core';
 
-import AssignBrickClass from 'components/baseComponents/dialogs/AssignBrickClass';
-import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
-import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import StudentInviteSuccessDialog from 'components/play/finalStep/dialogs/StudentInviteSuccessDialog';
 import { checkAdmin } from 'components/services/brickService';
@@ -19,22 +16,14 @@ interface NameAndSubjectFormProps {
   classroom: any;
   onChange(name: string): void;
   user: User;
-  showPremium?(): void;
-  onAssigned(): void;
   onArchive(apiClass: any): void;
   onDelete(apiClass: any): void;
-  inviteHidden?: boolean;
-  assignHidden?: boolean;
   isArchive?: boolean;  // for assignments
-  isStudents?: boolean; // for manage classes page
 }
 
 const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
   const { user } = props;
   const [edit, setEdit] = useState(false);
-  const [isOpen, togglePopup] = useState(false);
-  const [successResult, setSuccess] = useState({ isOpen: false, brick: null } as any);
-  const [failResult, setFailed] = useState({ isOpen: false, brick: null } as any);
   const [inviteOpen, setInvite] = useState(false);
   const [numStudentsInvited, setInvitedCount] = useState(0);
   const [isShareTeachOpen, setShareTeach] = useState(false);
@@ -156,33 +145,6 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
             <div className="css-custom-tooltip bold">Delete Class</div>
           </span>
         </div>
-        {isOpen &&
-          <AssignBrickClass
-            isOpen={isOpen}
-            classroom={props.classroom}
-            subjectId={props.classroom.subjectId || props.classroom.subject.id}
-            success={brick => {
-              setSuccess({ isOpen: true, brick })
-              if (props.onAssigned) {
-                props.onAssigned();
-              }
-            }}
-            showPremium={() => props.showPremium && props.showPremium()}
-            failed={brick => setFailed({ isOpen: true, brick })}
-            close={() => togglePopup(false)}
-          />}
-        <AssignSuccessDialog
-          isOpen={successResult.isOpen}
-          brickTitle={successResult.brick?.title}
-          selectedItems={[props.classroom]}
-          close={() => setSuccess({ isOpen: false, brick: null })}
-        />
-        <AssignFailedDialog
-          isOpen={failResult.isOpen}
-          brickTitle={failResult.brick?.title}
-          selectedItems={[{ classroom: props.classroom }]}
-          close={() => setFailed({ isOpen: false, brick: null })}
-        />
         <InviteStudentEmailDialog
           isOpen={inviteOpen}
           classroom={props.classroom}

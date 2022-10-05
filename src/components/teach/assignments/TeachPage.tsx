@@ -41,6 +41,9 @@ import PremiumEducatorDialog from "components/play/baseComponents/dialogs/Premiu
 import DeleteClassDialog from "../manageClassrooms/components/DeleteClassDialog";
 import { archiveClassroom, deleteClassroom } from "services/axios/classroom";
 import EmptyClassTab from "./components/EmptyClassTab";
+import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
+import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
+import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 
 
 interface RemindersData {
@@ -84,6 +87,9 @@ interface TeachState {
   isLoaded: boolean;
   remindersData: RemindersData;
   createClassOpen: boolean;
+  isAssignOpen: boolean;
+  successAssignResult: any;
+  failAssignResult: any;
 
   deleteClassOpen: boolean;
   classroomToRemove: TeachClassroom | null;
@@ -152,6 +158,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       deleteClassOpen: false,
       classroomToRemove: null,
+      isAssignOpen: false,
+      successAssignResult: {
+        isOpen: false, brick: null 
+      },
+      failAssignResult: {
+        isOpen: false, brick: null
+      },
 
       pageSize: 6,
       classPageSize: 5,
@@ -621,12 +634,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
                   onRemind={this.setReminderNotification.bind(this)}
                   onArchive={this.onArchiveClass.bind(this)}
                   onDelete={this.onDeleteClass.bind(this)}
+                  onAssign={() => this.setState({isAssignOpen: true})}
                   showPremium={() => this.setState({ isPremiumDialogOpen: true })}
                 />
               </Grid>
               :
               <Grid item xs={9} className="brick-row-container teach-tab-d94">
-                <TeachTab activeTab={TeachActiveTab.Assignments} history={history} assignmentsEnabled={true} />
+                <TeachTab activeTab={TeachActiveTab.Assignments} history={history} onAssign={() => this.setState({isAssignOpen: true})} assignmentsEnabled={true} />
                 {this.renderTabContent()}
               </Grid>}
         </Grid>
@@ -655,6 +669,33 @@ class TeachPage extends Component<TeachProps, TeachState> {
             doneLabel: 'View'
           }}
         />
+        {this.state.isAssignOpen &&
+        <AssignBrickClass
+          isOpen={this.state.isAssignOpen}
+          classroom={this.state.activeClassroom}
+          subjectId={this.state.activeClassroom.subjectId || this.state.activeClassroom.subject?.id}
+          success={(brick: any) => {
+            this.setState({ successAssignResult: { isOpen: true, brick }});
+            this.loadClass(this.state.activeClassroom.id);
+          }}
+          showPremium={() => this.setState({ isPremiumDialogOpen: true })}
+          failed={brick => this.setState({ failAssignResult: {isOpen: true, brick} })}
+          close={() => this.setState({isAssignOpen: false})}
+        />}
+        {this.state.successAssignResult.isOpen &&
+        <AssignSuccessDialog
+          isOpen={this.state.successAssignResult.isOpen}
+          brickTitle={this.state.successAssignResult.brick?.title}
+          selectedItems={[this.state.activeClassroom]}
+          close={() => this.setState({ successAssignResult: { isOpen: false, brick: null }})}
+        />}
+        {this.state.failAssignResult.isOpen &&
+        <AssignFailedDialog
+          isOpen={this.state.failAssignResult.isOpen}
+          brickTitle={this.state.failAssignResult.brick?.title}
+          selectedItems={[{ classroom: this.state.activeClassroom }]}
+          close={() => this.setState({ failAssignResult: { isOpen: false, brick: null }})}
+        />}
         <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => this.setState({ isPremiumDialogOpen: false })} submit={() => this.props.history.push(map.StripeEducator)} />
       </div>
     );
