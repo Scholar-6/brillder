@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
 import { TeachClassroom, Assignment, StudentStatus, StudentAssignmentStatus, TeachStudent, ClassroomStatus } from "model/classroom";
-import { Subject } from "model/brick";
+import { AcademicLevelLabels, Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -14,6 +14,7 @@ import ArchiveButton from "./ArchiveButton";
 import ReminderButton from "./ReminderButton";
 import UnarchiveButton from "./UnarchiveButton";
 import DeadlinePopup from "./DeadlinePopup";
+import { fileUrl } from "components/services/uploadFile";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -36,6 +37,8 @@ interface State {
   warningOpen: boolean;
   archiveHovered: boolean;
   deadlineEditable: boolean;
+
+  coverLoaded: boolean;
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps, State> {
@@ -46,6 +49,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       warningOpen: false,
       archiveHovered: false,
       deadlineEditable: false,
+      coverLoaded: false,
     }
   }
 
@@ -259,6 +263,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     const { classroom } = this.props as any;
     let subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
+    const subject = this.props.subjects.find(s => s.id === subjectId);
 
     if (!color) {
       color = "#B0B0AD";
@@ -273,6 +278,13 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         <div className="first-part">
           {this.renderVertical(assignment.id, color)}
         </div>
+        <div>
+          <div className="assign-brick-d343">
+            <div className="assign-cover-image">
+              <img alt="" className={this.state.coverLoaded ? ' visible' : 'hidden'} onLoad={() => this.setState({ coverLoaded: true })} src={fileUrl(brick.coverImage)} />
+            </div>
+          </div>
+        </div>
         <div className="short-brick-info long">
           <div className="link-description">
             <BrickTitle title={brick.title} />
@@ -280,12 +292,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           <div className="link-info">
             {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)}
           </div>
-          {assignment.deadline ?
-          <div className="link-info deadline-editor">
-            <span> Deadline: {getFormattedDate(assignment.deadline)}</span>
-            <SpriteIcon name="edit-outline-custom" onClick={() => this.setState({deadlineEditable: true})}/>
-          </div> : ""
-          }
+          {this.props.isExpanded &&
+            <div className="subject">
+              {subject?.name}, Level {AcademicLevelLabels[brick.academicLevel]}
+            </div>}
         </div>
         <div className="reminder-container">
           {!this.props.isArchive && this.renderStatus(assignment)}
@@ -293,14 +303,21 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         <div className="assignment-second-part">
           {!this.props.isStudentAssignment &&
             <div className="users-complete-count">
+              <SpriteIcon name="users-big-and-small" className="text-theme-dark-blue" />
               <span>{this.getCompleteStudents()}/{getTotalStudentsCount(this.props.classroom)}</span>
-              <SpriteIcon name="users" className="text-theme-dark-blue" />
               {classroom && classroom.studentsInvitations && classroom.studentsInvitations.length > 0 && <span style={{ marginLeft: '1vw' }}>{classroom.studentsInvitations.length} Pending</span>}
             </div>}
           <div className="average">
             {this.getAverageScore()}
           </div>
           {this.renderStudentStatus()}
+        </div>
+        <div className="deadline-e33">
+          {assignment.deadline &&
+            <div>
+              <SpriteIcon name="deadline-icon" />
+              <span>{getFormattedDate(assignment.deadline)}</span>
+            </div>}
         </div>
         {this.renderArchiveToggle()}
         <ArchiveWarningDialog
@@ -309,10 +326,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           close={() => this.setState({ warningOpen: false })}
         />
         {this.state.deadlineEditable && <DeadlinePopup
-          isOpen={this.state.deadlineEditable} close={() => this.setState({deadlineEditable: false})}
+          isOpen={this.state.deadlineEditable} close={() => this.setState({ deadlineEditable: false })}
           update={deadline => {
             this.props.assignment.deadline = deadline;
-            this.setState({deadlineEditable: false});
+            this.setState({ deadlineEditable: false });
           }}
           assignment={this.props.assignment}
         />}

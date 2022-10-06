@@ -177,7 +177,6 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (haveDeadline && deadlineDate) {
       data.deadline = deadlineDate;
     }
-    console.log('fff')
     return await assignClasses(props.brick.id, data);
   }
 
