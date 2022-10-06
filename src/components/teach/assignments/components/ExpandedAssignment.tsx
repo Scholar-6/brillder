@@ -22,7 +22,6 @@ import BookButton from "./BookButton";
 import CommentButton from "./CommentButton";
 import { getClassroomStudents } from "services/axios/classroom";
 import LibraryButton from "./LibraryButton";
-import { fileUrl } from "components/services/uploadFile";
 
 enum SortBy {
   None,
@@ -44,8 +43,6 @@ interface AssignemntExpandedState {
   shown: boolean;
   currentCommentButton?: Element;
   currentCommentStudentId?: number;
-
-  coverLoaded: boolean;
 }
 
 interface AssignmentBrickProps {
@@ -98,7 +95,6 @@ class ExpandedAssignment extends Component<
       studentsPrepared: false,
       bookData: { open: false, student: null, assignment: null},
       students: students || [],
-      coverLoaded: false,
       shown: false
     };
 
@@ -395,12 +391,7 @@ class ExpandedAssignment extends Component<
   render() {
     const { assignment, classroom, startIndex, pageSize } = this.props;
     let { students } = this.state;
-    const {brick} = assignment;
-    const subject = this.props.subjects.find(s => s.id === brick.subjectId);
-
     students = students.slice(startIndex, startIndex + pageSize);
-
-    console.log(brick);
 
     return (
       <div className="expanded-assignment classroom-list">
@@ -418,15 +409,6 @@ class ExpandedAssignment extends Component<
           />
         </div>
         <div className="assignments-table">
-          <div className="assign-brick-d343">
-            <div className="assign-cover-image">
-              <img alt="" className={this.state.coverLoaded ? ' visible' : 'hidden'} onLoad={() => this.setState({coverLoaded: true})} src={fileUrl(brick.coverImage)} />
-            </div>
-            <div>
-              {subject?.name}, Level {AcademicLevelLabels[brick.academicLevel]}
-            </div>
-            <div></div>
-          </div>
           {students.length > 0 ? (
             <table cellSpacing="0" cellPadding="0">
               {this.renderTableHead()}

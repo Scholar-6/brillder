@@ -47,8 +47,6 @@ const ChangeClassDeadlineDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [deadlineDate, setDeadline] = useState(new Date());
   const [haveDeadline, toggleDeadline] = useState(false);
 
-  const history = useHistory();
-
   const loadBricks = async () => {
     const bricks = await getPublishedBricks();
     if (bricks) {

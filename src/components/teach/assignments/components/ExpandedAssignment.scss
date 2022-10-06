@@ -10,28 +10,56 @@
     padding-left: 1.6vw;
     color: var(--theme-dark-blue);
   }
+  .short-brick-info  {
+    padding-left: 0.5vw;
+    width: 21vw;
+
+    .subject {
+      font-size: 0.8vw;
+      color: var(--theme-dark-blue);
+    }
+  }
+  .deadline-e33 {
+    color: var(--theme-dark-blue);
+    display: flex;
+    align-items: center;
+    width: 12.5vw;
+
+    > div {
+      display: flex;
+      align-items: center;
+      font-size: 1.2vw;
+    }
+    svg {
+      margin-right: 0.7vw;
+      width: 1.6vw;
+      height: 1.6vw;
+    }
+  }
+  .assign-brick-d343 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    .assign-cover-image {
+      margin-left: 0.5vw;
+      border-radius: 0.6vw;
+      width: 7vw;
+      height: 4vw;
+      border: 1px solid var(--tab-gray);
+      overflow: hidden;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
   .assignments-table {
     color: var(--theme-dark-blue);
     $table-height: calc(64vh - 6.5vw);
     height: calc(#{$table-height} + 5vh) !important;
 
     overflow-y: auto;
-
-    .assign-brick-d343 {
-      display: flex;
-      .assign-cover-image {
-        margin-left: 2vw;
-        border-radius: 0.6vw;
-        width: 10vw;
-        height: 5vw;
-        border: 1px solid var(--tab-gray);
-        overflow: hidden;
-  
-        img {
-          width: 100%;
-        }
-      }
-    }
 
     .sort-tooltip-container {
       .css-custom-tooltip {

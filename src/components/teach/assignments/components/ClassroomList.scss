@@ -16,6 +16,25 @@
       padding-left: 2.2vw;
     }
   }
+
+  .deadline-e33 {
+    color: var(--theme-dark-blue);
+    display: flex;
+    align-items: center;
+    width: 16.5vw;
+
+    > div {
+      display: flex;
+      align-items: center;
+      font-size: 1.2vw;
+    }
+    svg {
+      margin-right: 0.7vw;
+      width: 1.6vw;
+      height: 1.6vw;
+    }
+  }
+
   .archived-bricks {
     height: calc(100vh - 7.834vw - 2vh - 6.6vh - 2.6vw - 6vh - 10vh);
     display: flex;

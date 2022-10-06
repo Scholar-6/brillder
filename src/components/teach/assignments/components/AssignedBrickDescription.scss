@@ -48,7 +48,7 @@
   .short-brick-info {
     font-size: 1.1vw;
     padding-left: 2vw;
-    width: 30vw;
+    width: 25vw;
     padding-top: 0;
     @include flexToXCenter;
     flex-direction: column;
@@ -162,7 +162,7 @@
   .assignment-second-part {
     color: var(--theme-dark-blue);
     display: flex;
-    width: 29vw;
+    width: 17vw;
     .users-complete-count {
       margin-left: 2vw;
       margin-right: 2vw;
@@ -172,7 +172,7 @@
         margin-right: 0.5vw;
       }
       svg {
-        margin-left: 0.3vw;
+        margin-right: 0.5vw;
         height: 1.4vw;
         width: 1.4vw;
       }
