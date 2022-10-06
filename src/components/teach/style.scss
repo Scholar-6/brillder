@@ -85,6 +85,33 @@
       margin-right: 0;
     }
   }
+  .teach-tab-d94 {
+    position: relative;
+    .classroom-list-buttons {
+      position: absolute;
+      z-index: 10;
+      height: 4vh;
+      top: calc(2vh + 6.6vh + 0.4vh + (100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh) / 6.35 - 2vh);
+      right: 1vw;
+      display: flex;
+
+      div {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        font-size: 0.9vw;
+        font-family: $font-family-bold;
+        letter-spacing: 0.1vw;
+        color: var(--gray);
+      }
+
+      div.active {
+        color: var(--theme-dark-blue);
+      }
+    }
+  }
   .tab-content {
     height: $backwork-tab-content-height !important;
     background: white;
@@ -108,6 +135,17 @@
 
       div.active {
         color: var(--theme-dark-blue);
+      }
+    }
+  }
+  $backwork-tab-empty-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top});
+  .empty-tab {
+    height: $backwork-tab-empty-height !important;
+    .tab-content-centered {
+      height: 100%;
+      .icon-container { 
+        height: 23vh;
+        margin-bottom: 2vh;
       }
     }
   }

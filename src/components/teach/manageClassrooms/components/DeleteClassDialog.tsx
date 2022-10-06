@@ -1,6 +1,8 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 
+import './DeleteClassDialog.scss';
+
 interface DeleteProps {
   isOpen: boolean;
   submit(): void;
@@ -12,10 +14,14 @@ const DeleteClassDialog: React.FC<DeleteProps> = (props) => {
     <Dialog
       open={props.isOpen}
       onClose={props.close}
-      className="dialog-box light-blue assign-class-dialog"
+      className="dialog-box delete-class-dialog"
     >
       <div className="dialog-header" style={{marginBottom: '2vh'}}>
-        <div className="title" style={{fontSize: '2.5vw'}}>Delete Class?</div>
+        <div className="title">Are you sure you want to delete this class?</div>
+        <div>
+          If the class is deleted information including students’ attainment will be<br/>
+          permanently removed. Would you like to archive the class instead?
+        </div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button"

@@ -68,6 +68,36 @@
   }
 }
 
+.manage-classrooms-page .m-view-all.flex-center {
+  display: flex !important;
+  justify-content: flex-start;
+  .label-34rerf {
+    width: 88%;
+  }
+  .sort-v4y4 {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    svg {
+      width: 1.7vw;
+      height: 1.7vw;
+    }
+    .css-custom-tooltip {
+      display: none;
+      z-index: 100;
+      top: 2vw;
+      left: -0.5vw;
+      width: 2.8vw;
+    }
+
+    &:hover .css-custom-tooltip {
+      display: block;
+      opacity: 1;
+    }
+  }
+}
+
 .manage-classrooms-page .pay-info {
   background: var(--white) !important;
   font-family: $font-family-bold !important;
@@ -102,5 +132,72 @@
 
   &.no-free-tries {
     background: var(--theme-yellow) !important;
+  }
+}
+
+.teach-sort-box {
+  .classrooms-header {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    display: flex;
+    height: calc((100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh) / 6.35 - 2vh);
+    .label-ew23 {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      padding-left: 1.4vw;
+      font-size: 1.5vw;
+    }
+  }
+}
+
+.sort-dialog-ew33 {
+  .MuiBackdrop-root {
+    background-color: unset;
+  }
+  .MuiDialog-container {
+    align-items: flex-start;
+    justify-content: flex-start;
+    .MuiPaper-root {
+      background: #0C2760;
+      margin-top: calc(5.834vw + 2vw + 2.4vw + 2vw + 2vh + 2vw); 
+      margin-left: 20vw;
+      border-radius: 0.5vw;
+      min-width: 15vw;
+      .popup-3rfw {
+        color: var(--white);
+        padding-top: 0.4vw;
+        padding-bottom: 0.7vw;
+
+        .btn-sort {
+          padding-left: 0.8vw;
+          padding-right: 0.8vw;
+          padding-top: 0.2vw;
+          padding-bottom: 0.2vw;
+          display: flex;
+          font-size: 1vw;
+          transition: all 200ms ease-in-out;
+          cursor: pointer;
+          font-family: $font-family-regular;
+
+          .MuiButtonBase-root {
+            margin-right: 0.4vw;
+            padding: 0;
+            color: white;
+          }
+
+          &:hover {
+            background: var(--theme-light-blue);
+          }
+        }
+        .no-click {
+          font-size: 1.2vw;
+          padding-left: 0.8vw;
+          padding-top: 0.4vw;
+          padding-right: 0.8vw;
+          padding-bottom: 0.4vw;
+        }
+      }
+    }
   }
 }

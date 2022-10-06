@@ -30,6 +30,7 @@ import { getCompetitionByUser } from "services/axios/competitions";
 import { Competition } from "model/competition";
 import { checkCompetitionActive } from "services/competition";
 import HighScore from "./baseComponents/HighScore";
+import AdminBrickStatisticButton from "./baseComponents/AdminBrickStatisticButton";
 
 interface SidebarProps {
   history: any;
@@ -303,6 +304,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       );
     }
 
+    const isAdmin = checkAdmin(this.props.user.roles);
+
     return (
       <div className="sidebar-button">
         {(this.isPrep() || this.isSynthesis()) && <HighlightTextButton
@@ -326,8 +329,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
             brick={this.props.brick}
           />
         }
-        {(isInstitutionPreference(this.props.user) || checkAdmin(this.props.user.roles)) &&
+        {(isInstitutionPreference(this.props.user) || isAdmin) &&
           <CompetitionButton competitionPresent={this.state.competition !== null} sidebarRolledUp={sidebarRolledUp} onDownload={this.onDownload.bind(this)} onClick={this.onCompetition.bind(this)} />}
+        {isAdmin && <AdminBrickStatisticButton brickId={this.props.brick.id} />}
       </div>
     );
   }

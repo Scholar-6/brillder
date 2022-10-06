@@ -67,7 +67,6 @@ const MobileLibraryLoginPage: React.FC<MobileLoginProps> = (props) => {
   const sendLibraryLogin = async () => {
     if (libraryId) {
       let data = await libraryLogin(libraryId, libraryCardNumber, pin);
-      console.log(666, data);
       if (!data.isError) {
         if (data === "OK") {
           axios.get(

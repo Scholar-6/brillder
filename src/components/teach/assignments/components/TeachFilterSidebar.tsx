@@ -4,17 +4,17 @@ import { Grid } from "@material-ui/core";
 import { Steps } from 'intro.js-react';
 
 import "./TeachFilterSidebar.scss";
-import { TeachClassroom, TeachStudent } from "model/classroom";
+import { ClassroomStatus, TeachClassroom, TeachStudent } from "model/classroom";
 import { TeachFilters } from "../../model";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import EmptyFilter from "../filter/EmptyFilter";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
-import { Subject } from "model/brick";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import { resendInvitation } from "services/axios/classroom";
 import { getClassAssignedCount } from "../service/service";
 import { User } from "model/user";
+import SortButton from "./SortButton";
 
 enum TeachFilterFields {
   Assigned = "assigned",
@@ -33,7 +33,7 @@ interface FilterSidebarProps {
   filterChanged(filters: TeachFilters): void;
   hideIntro(): void;
   moveToPremium(): void;
-  createClass(name: string, subject: Subject): void;
+  createClass(name: string): void;
   isArchive: boolean;
 }
 
@@ -43,6 +43,13 @@ interface FilterSidebarState {
   sortByName: boolean | null;
   isInviteOpen: boolean;
   createClassOpen: boolean;
+  sort: SortClassroom;
+}
+
+export enum SortClassroom {
+  Name,
+  Date,
+  Assignment
 }
 
 class TeachFilterSidebar extends Component<
@@ -55,19 +62,15 @@ class TeachFilterSidebar extends Component<
       ascending: true,
       sortByName: null,
       isInviteOpen: false,
+
+      sort: SortClassroom.Date,
+
       filters: {
         assigned: false,
         completed: false,
       },
       createClassOpen: false,
     };
-  }
-
-  clearStatus() {
-    const { filters } = this.state;
-    filters.assigned = false;
-    filters.completed = false;
-    this.props.filterChanged(filters);
   }
 
   async resendInvitation(s: any) {
@@ -83,18 +86,12 @@ class TeachFilterSidebar extends Component<
     this.props.filterChanged(filters);
   }
 
-  removeClassrooms() {
-    this.props.setActiveClassroom(null);
-  }
-
   toggleClassroom(e: any, activeClassroom: TeachClassroom) {
     e.stopPropagation();
     e.preventDefault();
     let active = !activeClassroom.active;
     if (active === true) {
       this.props.setActiveClassroom(activeClassroom.id);
-    } else {
-      this.props.setActiveClassroom(null);
     }
   }
 
@@ -133,29 +130,6 @@ class TeachFilterSidebar extends Component<
     );
   }
 
-  renderAssignedCount(c: TeachClassroom) {
-    const count = getClassAssignedCount(c);
-    if (count <= 0) {
-      return <div />;
-    }
-    return (
-      <div className="classrooms-box">
-        {count}
-        <SpriteIcon name="file-plus" />
-      </div>
-    );
-  }
-
-  renderStudents(c: TeachClassroom) {
-    return (
-      <div className="right-index">
-        {(c.students ? c.students.length : 0) + (c.studentsInvitations ? c.studentsInvitations.length : 0)}
-        <SpriteIcon name="users-custom" className="active" />
-        {this.renderAssignedCount(c)}
-      </div>
-    )
-  }
-
   renderStudentList(c: TeachClassroom) {
     if (c.active) {
       const sts = c.students.sort((a, b) => {
@@ -168,12 +142,30 @@ class TeachFilterSidebar extends Component<
         return 0;
       });
 
-
       return <div>
         {sts.map(this.renderStudent.bind(this))}
       </div>
     }
     return <div />
+  }
+
+  renderClassoomSubject(c: TeachClassroom) {
+    if (c.subject) {
+      return (
+        <RadioButton
+          checked={false}
+          color={c.subject.color}
+          name={c.subject.name}
+        />
+      );
+    }
+    return (
+      <RadioButton
+        checked={false}
+        color="#4C608A"
+        name=""
+      />
+    );
   }
 
   renderClassroom(c: TeachClassroom, i: number) {
@@ -185,12 +177,7 @@ class TeachFilterSidebar extends Component<
           title={c.name}
         >
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
-            {c.subject.color &&
-              <RadioButton
-                checked={c.active}
-                color={c.subject.color}
-                name={c.subject.name}
-              />}
+            {this.renderClassoomSubject(c)}
             <span className="filter-class-name">{c.name}</span>
             {c.active && (c.students.length > 0 || (c.studentsInvitations && c.studentsInvitations.length > 0)) && (
               <div className="classroom-icon svgOnHover">
@@ -198,7 +185,6 @@ class TeachFilterSidebar extends Component<
               </div>
             )}
           </div>
-          {this.renderStudents(c)}
         </div>
         {this.renderStudentList(c)}
         {c.active && c.studentsInvitations && c.studentsInvitations.map(this.renderInvitation.bind(this))}
@@ -229,16 +215,21 @@ class TeachFilterSidebar extends Component<
 
   renderClassesBox() {
     let finalClasses = [];
-    for (const cls of this.props.classrooms) {
-      let finalClass = Object.assign({}, cls) as any;
+    let finalArchivedClasses = [];
+    let classrooms = this.props.classrooms.filter(c => c.status == ClassroomStatus.Active);
+    let archivedClassrooms = this.props.classrooms.filter(c => c.status == ClassroomStatus.Archived);
+
+    for (const cls of classrooms) {
+      const finalClass = Object.assign({}, cls) as any;
       finalClass.assigned = getClassAssignedCount(cls);
       finalClasses.push(finalClass);
     }
-    if (this.state.ascending === false) {
-      finalClasses = finalClasses.sort((a, b) => a.assigned - b.assigned);
-    } else if (this.state.ascending === true) {
-      finalClasses = finalClasses.sort((a, b) => b.assigned - a.assigned);
-    } else if (this.state.sortByName === true) {
+    const { sort } = this.state;
+    if (sort === SortClassroom.Date) {
+      finalClasses = finalClasses.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
+    } else if (sort === SortClassroom.Assignment) {
+      finalClasses = finalClasses.sort((a, b) => b.assignmentsCount - a.assignmentsCount);
+    } else if (sort === SortClassroom.Name) {
       finalClasses = finalClasses.sort((a, b) => {
         const al = a.name.toUpperCase();
         const bl = b.name.toUpperCase();
@@ -246,99 +237,84 @@ class TeachFilterSidebar extends Component<
         if (al > bl) { return 1; }
         return 0;
       });
-    } else if (this.state.sortByName === false) {
-      finalClasses = finalClasses.sort((a, b) => {
-        const al = a.name.toUpperCase();
-        const bl = b.name.toUpperCase();
-        if (al > bl) { return -1; }
-        if (al < bl) { return 1; }
-        return 0;
-      });
     }
 
-    let totalCount = 0;
-    let assignmentsCount = 0;
-    for (let classroom of this.props.classrooms) {
-      totalCount += classroom.students.length;
-      if (classroom.assignmentsCount && parseInt(classroom.assignmentsCount) > 0) {
-        assignmentsCount += parseInt(classroom.assignmentsCount);
-      }
+    for (const cls of archivedClassrooms) {
+      const finalClass = Object.assign({}, cls) as any;
+      finalClass.assigned = getClassAssignedCount(cls);
+      finalArchivedClasses.push(finalClass);
     }
-    let label = '1 Assignment';
-    if (assignmentsCount > 1) {
-      label = `${assignmentsCount} Assignments`;
+
+    if (sort === SortClassroom.Date) {
+      finalArchivedClasses = finalArchivedClasses.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
+    } else if (sort === SortClassroom.Assignment) {
+      finalArchivedClasses = finalArchivedClasses.sort((a, b) => b.assignmentsCount - a.assignmentsCount);
+    } else if (sort === SortClassroom.Name) {
+      finalArchivedClasses = finalArchivedClasses.sort((a, b) => {
+        const al = a.name.toUpperCase();
+        const bl = b.name.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
+        return 0;
+      });
     }
 
     return (
       <div className="sort-box teach-sort-box flex-height-box">
         <div className="sort-box">
-          <div className="filter-container sort-by-box">
-            <div className="flex-center class-header-container">
-              <div className="class-header">
-                {label} in {finalClasses.length} Classes
-              </div>
-            </div>
-          </div>
-          <div className="sort-row-v3y3">
-            <div className="sort-v3y3"
-              onClick={() => {
-                this.setState({ sortByName: !this.state.sortByName, ascending: null })
-              }}
-            >
-              <SpriteIcon
-                name={
-                  this.state.sortByName
-                    ? "f-arrow-down"
-                    : "f-arrow-up"
-                }
-              />
-              {this.state.sortByName ? 'A-Z' : 'Z-A'}
-              <div className="css-custom-tooltip">
-                {this.state.sortByName ? 'Sort Alphabetically: Z-A' : 'Sort Alphabetically: A-Z'}
-              </div>
+          <div className="classrooms-header">
+            <div className="label-ew23 bold">
+              My Classes
             </div>
             <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
-                <SpriteIcon name="plus-circle" /> Create Class
-              </div>
-            <div className="sort-v4y4">
-              <SpriteIcon
-                name={
-                  this.state.ascending
-                    ? "hero-sort-descending"
-                    : "hero-sort-ascending"
-                }
-                onClick={() =>
-                  this.setState({ ascending: !this.state.ascending, sortByName: null })
-                }
-              />
-              <div className="css-custom-tooltip">
-                {this.state.ascending ? 'Sort by ascending number of assignments' : 'Sort by descending number of assignments'}
-              </div>
+              <SpriteIcon name="plus-circle" /> Create Class
             </div>
           </div>
           <div
             className={
-              "index-box m-view-all " +
+              "index-box m-view-all flex-center " +
               (!this.props.activeClassroom ? "active" : "")
             }
-            onClick={this.removeClassrooms.bind(this)}
           >
-            <div>
-              View All Classes ({finalClasses.length})
-              <div className="right-index">
-                {totalCount}
-                <SpriteIcon name="users-custom" className="active" />
-                <div className="classrooms-box">
-                  {assignmentsCount}
-                  <SpriteIcon name="file-plus" />
-                </div>
-              </div>
+            <div className="label-34rerf">
+              Current ({finalClasses.length})
             </div>
+            <SortButton sort={this.state.sort} sortByName={() => {
+              this.setState({ sort: SortClassroom.Name });
+            }} sortByDate={() => {
+              this.setState({ sort: SortClassroom.Date });
+            }} sortByAssignmets={() => {
+              this.setState({ sort: SortClassroom.Assignment });
+            }} />
           </div>
         </div>
         <div className="sort-box subject-scrollable">
           <div className="filter-container indexes-box classrooms-filter">
             {finalClasses.map(this.renderClassroom.bind(this))}
+          </div>
+        </div>
+        <div className="sort-box">
+          <div
+            className={
+              "index-box m-view-all flex-center " +
+              (!this.props.activeClassroom ? "active" : "")
+            }
+          >
+            <div className="label-34rerf">
+              Archived ({finalArchivedClasses.length})
+            </div>
+            <SortButton sort={this.state.sort} sortByName={() => {
+              this.setState({ sort: SortClassroom.Name });
+            }} sortByDate={() => {
+              this.setState({ sort: SortClassroom.Date });
+            }} sortByAssignmets={() => {
+              this.setState({ sort: SortClassroom.Assignment });
+            }} />
+          </div>
+        </div>
+        <div className="sort-box subject-scrollable">
+          <div className="filter-container indexes-box classrooms-filter">
+            {finalArchivedClasses.map(this.renderClassroom.bind(this))}
           </div>
         </div>
         {(this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState) && this.renderPremiumBox()}
@@ -378,8 +354,8 @@ class TeachFilterSidebar extends Component<
         <div className="sidebar-footer" />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
-          submit={(name, subject) => {
-            this.props.createClass(name, subject);
+          submit={(name) => {
+            this.props.createClass(name);
             this.setState({ createClassOpen: false });
           }}
           close={() => {

@@ -5,12 +5,17 @@ import { Grow } from "@material-ui/core";
 import './ClassroomList.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
-import { TeachClassroom, Assignment } from "model/classroom";
+import { TeachClassroom, Assignment, ClassroomStatus } from "model/classroom";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
-import NameAndSubjectForm from "components/teach/components/NameAndSubjectForm";
 import { updateClassroom } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
+import TeachTab from "components/teach/TeachTab";
+import { TeachActiveTab } from "components/teach/model";
+import NameAndSubjectFormV2 from "components/teach/components/NameAndSubjectFormV2";
+import EmptyArchivedClassTab from "./EmptyArchivedClassTab";
+import EmptyClassTab from "./EmptyClassTab";
+import ArchiveToggle from "./ArchiveToggle";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -19,14 +24,20 @@ export interface TeachListItem {
 
 interface ClassroomListProps {
   stats: any;
+  history: any;
   subjects: Subject[];
   startIndex: number;
   pageSize: number;
   activeClassroom: TeachClassroom;
   isArchive: boolean;
+  toggleArchive(v: boolean): void;
   showPremium(): void;
   expand(classroomId: number, assignmentId: number): void;
   reloadClass(id: number): void;
+  onAssign(): void;
+  onArchive(classroom: TeachClassroom): void;
+  onUnarchive(classroom: TeachClassroom): void;
+  onDelete(classroom: TeachClassroom): void;
   onRemind?(count: number, isDeadlinePassed: boolean): void;
 }
 
@@ -58,12 +69,10 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     }
   }
 
-  async updateClassroom(classroom: TeachClassroom, name: string, subject: Subject) {
+  async updateClassroom(classroom: TeachClassroom, name: string) {
     let classroomApi = {
       id: classroom.id,
       name: name,
-      subjectId: subject.id,
-      subject: subject,
       status: classroom.status,
       updated: classroom.updated,
     } as any;
@@ -78,13 +87,12 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     let className = 'classroom-title';
     return (
       <div className={className}>
-        <NameAndSubjectForm
+        <NameAndSubjectFormV2
           classroom={classroom}
-          inviteHidden={true}
           isArchive={this.props.isArchive}
-          onChange={(name, subject) => this.updateClassroom(classroom, name, subject)}
-          onAssigned={() => this.props.reloadClass(classroom.id)}
-          showPremium={this.props.showPremium}
+          onChange={(name) => this.updateClassroom(classroom, name)}
+          onArchive={this.props.onArchive}
+          onDelete={this.props.onDelete}
         />
       </div>
     );
@@ -125,17 +133,36 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   renderContent() {
     const { classroom } = this.state;
     let items = [] as TeachListItem[];
+
     convertClassAssignments(items, classroom, this.props.isArchive);
+
+    if (items.length === 0) {
+      if (classroom.status === ClassroomStatus.Active) {
+        return <EmptyClassTab history={this.props.history} activeClassroom={classroom} />;
+      }
+      return <EmptyArchivedClassTab unarchive={() => this.props.onUnarchive(classroom)} />;
+    }
+
     return items.map((item, i) => this.renderTeachListItem(item, i));
   }
 
   render() {
     return (
-      <div className="classroom-list one-classroom-assignments">
+      <div>
         <div className="classroom-title one-of-many first">
           {this.renderClassname()}
         </div>
-        {this.renderContent()}
+        <TeachTab activeTab={TeachActiveTab.Assignments} history={this.props.history} onAssign={this.props.onAssign} assignmentsEnabled={true} />
+        <ArchiveToggle
+          isArchive={this.props.isArchive}
+          history={this.props.history}
+          activeStudent=""
+          activeClassroom={this.props.activeClassroom}
+          setArchive={this.props.toggleArchive}
+        />
+        <div className="classroom-list one-classroom-assignments">
+          {this.renderContent()}
+        </div>
       </div>
     );
   }

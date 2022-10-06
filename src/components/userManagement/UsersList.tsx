@@ -71,6 +71,8 @@ interface UsersListState {
   isAscending: boolean;
   isClearFilter: boolean;
 
+  isStudentClassroomOpen: boolean;
+
   isDeleteDialogOpen: boolean;
   deleteUserId: number;
 }
@@ -87,6 +89,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       libraries: [],
       subjects: [],
       filterExpanded: true,
+
+      isStudentClassroomOpen: false,
 
       roles: [
         { name: "Learner", type: UserPreferenceType.Student, checked: false, isPreference: true },
@@ -126,7 +130,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   async getLibraries() {
     const libraries = await getRealLibraries();
     if (libraries) {
-      this.setState({libraries});
+      this.setState({ libraries });
     }
   }
 
@@ -138,7 +142,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     isAscending: any = null,
     search: string = ""
   ) {
-    this.setState({...this.state, loading: true});
+    this.setState({ ...this.state, loading: true });
     let searchString = "";
     let orderBy = "user.lastName";
 
@@ -291,7 +295,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     );
 
     setTimeout(() => {
-      this.setState({isSearching: true});
+      this.setState({ isSearching: true });
     })
   }
 
@@ -525,6 +529,20 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     return '';
   }
 
+  renderClassroomPopup() {
+    return (
+      <Dialog
+        open={this.state.isStudentClassroomOpen}
+        onClose={() => this.setState({ isStudentClassroomOpen: false })}
+        className="dialog-box">
+        <div className="dialog-header">
+          <div>Classrooms</div>
+          <div>wefwef</div>
+        </div>
+      </Dialog>
+    );
+  }
+
   renderUsers() {
     if (!this.state.users) {
       return "";
@@ -568,7 +586,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                         <span
                           className="btn"
                           style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-green)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-                          onClick={() => this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=student:${user.email}` })}
+                          onClick={() => {
+                            this.setState({isStudentClassroomOpen: true});
+                            //this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=student:${user.email}` })
+                          }}
                         >
                           <SpriteIcon name="student-back-to-work" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
                         </span>
@@ -580,7 +601,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                       <span
                         className="btn"
                         style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-dark-blue)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-                        onClick={() => this.props.history.push({ pathname: map.MyLibrary + '/' + user.id})}
+                        onClick={() => this.props.history.push({ pathname: map.MyLibrary + '/' + user.id })}
                       >
                         <SpriteIcon name="bar-chart-2" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
                       </span>
@@ -624,6 +645,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             </button>
           </div>
         </Dialog>
+        {this.renderClassroomPopup()}
       </div>
     );
   }

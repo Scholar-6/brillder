@@ -24,11 +24,11 @@ export interface ClassroomApi {
  * @param name name of classroom
  * return classroom object if success or null if failed
  */
-export const createClass = async (name: string, subject: Subject) => {
+export const createClass = async (name: string) => {
   try {
     const res = await axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/classroom",
-      { name, subject },
+      { name },
       { withCredentials: true }
     );
     if (res.data) {

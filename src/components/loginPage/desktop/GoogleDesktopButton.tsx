@@ -10,7 +10,7 @@ interface Props {
 }
 
 const GoogleDesktopButton: React.FC<Props> = ({label}) => {
-  const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/onboarding/terms?onlyAcceptTerms=true`;
+  const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/login`;
 
   return (
     <a className="google-button-desktop svgOnHover" href={googleLink}>

@@ -209,7 +209,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     let classrooms = await getAllClassrooms();
     if (classrooms) {
       this.prepareClassrooms(classrooms);
-      classrooms = classrooms.filter(c => c.subjectId);
       classrooms = classrooms.sort((a: any, b: any) => b.students.length - a.students.length);
       this.setState({
         classrooms,
@@ -222,8 +221,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
   }
 
-  createClass(name: string, subject: Subject) {
-    createClass(name, subject).then(newClassroom => {
+  createClass(name: string) {
+    createClass(name).then(newClassroom => {
       if (newClassroom) {
         this.unselectionClasses();
         this.state.classrooms.push(newClassroom);
@@ -405,7 +404,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderViewAllFilter() {
-    let className = "m-view-all index-box hover-light";
+    let className = "m-view-all m-view-all-d31 index-box hover-light";
     if (!this.state.activeClassroom && !this.state.isPending) {
       className += " active";
     }
@@ -422,7 +421,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderPendingFilter() {
-    let className = "m-view-all index-box yellow item-box2";
+    let className = "m-view-all m-view-all-d31 index-box yellow item-box2";
     if (this.state.isPending) {
       className += " active";
     }
@@ -643,9 +642,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.setState({ inviteOpen: true });
   }
 
-  async updateClassroom(name: string, subject: Subject) {
+  async updateClassroom(name: string) {
     if (this.state.activeClassroom) {
-      let success = await updateClassroom({ ...this.state.activeClassroom, name, subject });
+      let success = await updateClassroom({ ...this.state.activeClassroom, name });
       if (success) {
         this.getClassrooms();
       }
@@ -664,6 +663,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             classroom={this.state.activeClassroom}
             onChange={this.updateClassroom.bind(this)}
             onInvited={this.loadData.bind(this)}
+            onDelete={this.onDeleteClass.bind(this)}
             showPremium={() => console.log('premium 1')}
           />
         </Grid>
@@ -813,7 +813,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             {this.renderSortAndFilterBox()}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
-            <TeachTab history={history} activeTab={TeachActiveTab.Students} assignmentsEnabled={this.state.classrooms.length > 0} />
+            <TeachTab history={history} hideAssignButton={true} activeTab={TeachActiveTab.Students} onAssign={() => {}} assignmentsEnabled={this.state.classrooms.length > 0} />
             {this.renderTabContent()}
           </Grid>
         </Grid>
@@ -824,8 +824,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
-          submit={(name, subject) => {
-            this.createClass(name, subject);
+          submit={(name) => {
+            this.createClass(name);
             this.setState({ createClassOpen: false })
           }}
           close={() => { this.setState({ createClassOpen: false }) }}

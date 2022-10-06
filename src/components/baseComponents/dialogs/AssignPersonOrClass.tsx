@@ -99,9 +99,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         return;
       }
 
-      const subject = props.brick.subject as Subject;
       if (newClassName) {
-        const newClassroom = await createClass(newClassName, subject);
+        const newClassroom = await createClass(newClassName);
         if (newClassroom) {
           // assign students to class
           const currentUsers = users;
@@ -147,8 +146,6 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const getClasses = React.useCallback(async () => {
     let classrooms = await getClassrooms();
     if (!classrooms) { classrooms = []; }
-
-    classrooms = classrooms.filter(c => c.subjectId > 0);
 
     for (const classroom of classrooms) {
       classroom.isClass = true;
@@ -278,7 +275,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
                   <SpriteIcon
                     name="circle-filled"
                     className="w100 h100 active"
-                    style={{ color: c.subject.color }}
+                    style={{ color: c.subject?.color || '#4C608A' }}
                   />
                 </SvgIcon>
               </ListItemIcon>

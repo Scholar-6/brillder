@@ -425,10 +425,15 @@
     padding-left: 2vw;
     padding-right: 2vw;
 
-    font-size: 1.4vw;
+    font-size: 1.55vw;
+
+    text-align: center;
 
     .bold {
       margin-bottom: 4vh;
+    }
+    .title {
+      font-size: 1.7vw;
     }
   }
 }
@@ -553,79 +558,11 @@
     font-family: $font-family-regular;
     padding-left: 1.4vw;
 
-    color: var(--theme-dark-blue);
-    background: var(--tab-gray);
+    color: var(--white);
+    background: var(--theme-orange) !important;
 
-    .right-index {
-      color: var(--theme-dark-blue);
-      padding-top: calc(1vh + 0.25vw) !important;
-      transform: unset !important;
-      top: 0 !important;
-      height: 4vh !important;
-
-      .classrooms-box {
-        color: var(--theme-dark-blue) !important;
-      }
-    }
-
-    &.item-box2 {
-      height: auto !important;
-      padding-bottom: 1vh;
-      .right-index {
-        padding-top: 0.6vw !important;
-        height: auto !important;
-      }
-    }
-
-
-    &:hover {
-      background: var(--dark-gray);
-    }
-
-    &.yellow {
-      background: var(--theme-yellow);
-      color: var(--theme-dark-blue);
-
-      .right-index {
-        color: var(--theme-dark-blue) !important;
-      }
-
-      &:hover {
-        background: var(--theme-yellow);
-      }
-      &.active {
-        color: var(--white) !important;
-        .right-index {
-          color: var(--white) !important;
-        }
-      }
-    }
-    
-    &.active {
-      color: var(--white);
-      background-color: var(--theme-orange);
-      .right-index {
-        color: var(--white);
-      }
-      .classrooms-box {
-        color: var(--white) !important;
-      }
-      &:hover {
-        background: var(--theme-orange);
-      }
-    }
-    .right-index {
+    &.m-view-all-d31 {
       display: flex;
-      align-items: center;
-      right: 1.2vw !important;
-      background: inherit !important;
-      svg {
-        margin-left: 0.2vw;
-      }
-      .svg {
-        width: 1.3vw;
-        height: 1.3vw;
-      }
     }
   }
 }
@@ -637,5 +574,109 @@
   .css-custom-tooltip {
     color: var(--theme-dark-blue);
     background: var(--tab-gray);
+  }
+}
+
+.manage-classrooms-page .back-to-work-teach {
+  .brick-row-container.teach-tab-d94 {
+    background: var(--theme-light-blue) !important;
+  }
+
+  .teach-assigned {
+    .classes-box {
+      .index-box.active {
+        color: var(--theme-dark-blue);
+        background: var(--tab-gray) !important;
+      }
+    }
+  }
+  .classroom-title > div {
+    background: inherit !important;
+  }
+
+  .name-subject-display .name-display {
+    color: white !important;
+  }
+  .subject-input .MuiSvgIcon-root {
+    width: 100%;
+    height: 100%;
+  }
+  .one-classroom-assignments {
+    background: white;
+    height: calc(100vh - 7.834vw - 2vh - 6.6vh - 2.6vw);
+  }
+  .name-and-edit-btn {
+    display: flex;
+    align-items: center;
+    width: 42vw;
+  }
+  .teach-tab-d94 .tab-container > div > div {
+    display: flex;
+    align-items: center;
+    span {
+      width: 23vw;
+    }
+    .btn-assign {
+      padding: 0.2vw 0.4vw;
+      border-radius: 0.4vw;
+      color: white;
+      background: var(--theme-orange);
+      display: flex;
+      align-items: center;
+      font-size: 1.3vw;
+      div {
+        padding-right: 0.4vw;
+      }
+
+      svg {
+        width: 1.6vw;
+        height: 1.6vw;
+        stroke-width: 2;
+      }
+      transition: all 300ms ease-in-out;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .unarchive-empty-tab {
+    height: 60% !important;
+    font-size: 1.3vw;
+    .icon-container {
+      margin: 0 !important;
+      &:hover {
+        transform: unset !important;
+      }
+    }
+    .bold {
+      font-size: 1.3vw;
+      margin-top: 2vh;
+      margin-bottom: 2vh;
+    }
+    .text-center {
+      line-height: 1.1;
+    }
+    .btn {
+      cursor: pointer;
+      margin-top: 2.5vh;
+      font-size: 1.2vw;
+      padding: 0.1vw 0.5vw;
+      color: white;
+      background: var(--theme-dark-blue);
+      font-family: $font-family-regular;
+
+      transition: all 300ms ease-in-out;
+
+      svg {
+        margin-left: 1vw;
+        width: 1.4vw;
+        height: 1.4vw;
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
   }
 }

@@ -40,6 +40,22 @@ export const deleteClassroom = async (id: number) => {
   }
 }
 
+export const archiveClassroom = async (id: number) => {
+  try {
+    return await put('/classroom/archive/' + id, {});
+  } catch {
+    return false;
+  }
+}
+
+export const unarchiveClassroom = async (id: number) => {
+  try {
+    return await put('/classroom/unarchive/' + id, {});
+  } catch {
+    return false;
+  }
+}
+
 export const getStudents = async () => {
   try {
     return await get<Student[]>("/classrooms/students");

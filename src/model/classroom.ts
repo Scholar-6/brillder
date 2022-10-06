@@ -5,7 +5,8 @@ import { AssignmentStudent } from "./stats";
 export enum ClassroomStatus {
   Disabled,
   Active,
-  Deleted
+  Deleted,
+  Archived
 }
 
 export enum StudentAssignmentStatus {
