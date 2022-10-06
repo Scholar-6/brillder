@@ -143,6 +143,15 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       return <EmptyArchivedClassTab unarchive={() => this.props.onUnarchive(classroom)} />;
     }
 
+    if (classroom.status === ClassroomStatus.Archived) {
+      return <div className="archived-bricks">
+        <div className="archived-bricks-d44">
+          {items.map((item, i) => this.renderTeachListItem(item, i))}
+        </div>
+        <EmptyArchivedClassTab unarchive={() => this.props.onUnarchive(classroom)} />
+      </div>
+    }
+
     return items.map((item, i) => this.renderTeachListItem(item, i));
   }
 
