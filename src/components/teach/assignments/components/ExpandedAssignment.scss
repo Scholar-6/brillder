@@ -15,6 +15,24 @@
     $table-height: calc(64vh - 6.5vw);
     height: calc(#{$table-height} + 5vh) !important;
 
+    overflow-y: auto;
+
+    .assign-brick-d343 {
+      display: flex;
+      .assign-cover-image {
+        margin-left: 2vw;
+        border-radius: 0.6vw;
+        width: 10vw;
+        height: 5vw;
+        border: 1px solid var(--tab-gray);
+        overflow: hidden;
+  
+        img {
+          width: 100%;
+        }
+      }
+    }
+
     .sort-tooltip-container {
       .css-custom-tooltip {
         display: none;

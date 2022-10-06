@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
-import { TeachClassroom, Assignment, StudentStatus, StudentAssignmentStatus, TeachStudent } from "model/classroom";
+import { TeachClassroom, Assignment, StudentStatus, StudentAssignmentStatus, TeachStudent, ClassroomStatus } from "model/classroom";
 import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
@@ -245,6 +245,16 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     );
   }
 
+  renderArchiveToggle() {
+    if (this.props.classroom?.status === ClassroomStatus.Active) {
+      if (this.props.isArchive) {
+        return <UnarchiveButton onClick={this.unarchiveAssignment.bind(this)} />;
+      } else {
+        return <ArchiveButton isCompleted={this.isCompleted.bind(this)} checkArchive={this.checkArchive.bind(this)} />;
+      }
+    }
+  }
+
   render() {
     const { classroom } = this.props as any;
     let subjectId = this.props.assignment.brick.subjectId;
@@ -292,10 +302,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           </div>
           {this.renderStudentStatus()}
         </div>
-        {this.props.isArchive
-          ? <UnarchiveButton onClick={this.unarchiveAssignment.bind(this)} />
-          : <ArchiveButton isCompleted={this.isCompleted.bind(this)} checkArchive={this.checkArchive.bind(this)} />
-        }
+        {this.renderArchiveToggle()}
         <ArchiveWarningDialog
           isOpen={this.state.warningOpen}
           submit={this.archiveAssignment.bind(this)}

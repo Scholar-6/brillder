@@ -16,4 +16,22 @@
       padding-left: 2.2vw;
     }
   }
+  .archived-bricks {
+    height: calc(100vh - 7.834vw - 2vh - 6.6vh - 2.6vw - 6vh - 10vh);
+    display: flex;
+    .archived-bricks-d44 {
+      border-right: 2px solid var(--tab-gray);
+    }
+    .assigned-brick-description {
+      .short-brick-info {
+        width: 25vw;
+      }
+      .assignment-second-part {
+        width: 10vw;
+      }
+    }
+    .tab-content {
+      width: 30vw;
+    }
+  }
 }

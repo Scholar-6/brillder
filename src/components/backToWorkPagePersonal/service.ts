@@ -1,6 +1,6 @@
 import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus } from 'model/brick';
 import { checkCompetitionActive } from 'services/competition';
-import { SortBy, Filters, ThreeColumns } from './model';
+import { SortBy, Filters } from './model';
 
 const getBrickById = (bricks: Brick[], brickId: number) => {
   return bricks.find(b => b.id === brickId);
