@@ -152,7 +152,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <div className="classroom-title one-of-many first">
           {this.renderClassname()}
         </div>
-        <TeachTab activeTab={TeachActiveTab.Assignments} history={this.props.history} onAssign={this.props.onAssign} assignmentsEnabled={true} />
+        <TeachTab activeTab={TeachActiveTab.Assignments} classroom={this.props.activeClassroom} history={this.props.history} onAssign={this.props.onAssign} assignmentsEnabled={true} />
         <ArchiveToggle
           isArchive={this.props.isArchive}
           history={this.props.history}
