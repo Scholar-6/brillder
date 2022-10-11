@@ -14,10 +14,6 @@ export enum PDateFilter {
   AllTime
 }
 
-export enum PDateFilter {
-  
-}
-
 interface Filters {
 
 }
@@ -25,12 +21,14 @@ interface Filters {
 
 interface FilterSidebarProps {
   isLoaded: boolean;
+  sortBy: PSortBy;
+  setSort(sort: PSortBy): void;
+  dateFilter: PDateFilter;
+  setDateFilter(filter: PDateFilter): void;
   filterChanged(filters: Filters): void;
 }
 
 interface FilterSidebarState {
-  sortBy: PSortBy;
-  dateFilter: PDateFilter;
   filters: Filters;
 }
 
@@ -44,8 +42,6 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
   constructor(props: FilterSidebarProps) {
     super(props);
     this.state = {
-      sortBy: PSortBy.MostPlayed,
-      dateFilter: PDateFilter.Today,
       filters: {
         assigned: false,
         completed: false,
@@ -61,6 +57,7 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
   }
 
   render() {
+    const { sortBy, dateFilter } = this.props;
     return (
       <Grid
         container item xs={3}
@@ -70,53 +67,71 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
           <div className="bold font1-5">Sort By</div>
           <div className="sort-radio-btns">
             <FormControlLabel
-              checked={this.state.sortBy === PSortBy.MostPlayed}
-              control={<Radio onClick={() => this.setState({ sortBy: PSortBy.MostPlayed })} className={"filter-radio custom-color"} />}
+              checked={sortBy === PSortBy.MostPlayed}
+              control={<Radio onClick={() => this.props.setSort(PSortBy.MostPlayed)} className={"filter-radio custom-color"} />}
               label="Most Played" />
             <FormControlLabel
-              checked={this.state.sortBy === PSortBy.LeastPlayed}
-              control={<Radio onClick={() => this.setState({ sortBy: PSortBy.LeastPlayed })} className={"filter-radio custom-color"} />}
+              checked={sortBy === PSortBy.LeastPlayed}
+              control={<Radio onClick={() => this.props.setSort(PSortBy.LeastPlayed)} className={"filter-radio custom-color"} />}
               label="Least Played" />
           </div>
         </div>
         <div className="filter-header">Date Filter</div>
         <div className="sort-radio-btns filter-row margin-smaller top-margin-bigger">
           <FormControlLabel
-            checked={this.state.dateFilter === PDateFilter.Today}
-            control={<Radio onClick={() => this.setState({ dateFilter: PDateFilter.Today })} className={"filter-radio custom-color"} />}
+            checked={dateFilter === PDateFilter.Today}
+            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.Today)} className={"filter-radio custom-color"} />}
             label="Today" />
         </div>
         <div className="sort-radio-btns filter-row margin-smaller">
           <FormControlLabel
-            checked={this.state.dateFilter === PDateFilter.Past3Days}
-            control={<Radio onClick={() => this.setState({ dateFilter: PDateFilter.Past3Days })} className={"filter-radio custom-color"} />}
+            checked={dateFilter === PDateFilter.Past3Days}
+            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.Past3Days)} className={"filter-radio custom-color"} />}
             label="Past 3 days" />
           <FormControlLabel
-            checked={this.state.dateFilter === PDateFilter.PastWeek}
-            control={<Radio onClick={() => this.setState({ dateFilter: PDateFilter.PastWeek })} className={"filter-radio custom-color"} />}
+            checked={dateFilter === PDateFilter.PastWeek}
+            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.PastWeek)} className={"filter-radio custom-color"} />}
             label="Past week" />
         </div>
-        <div className="sort-radio-btns filter-row margin-smaller"> 
+        <div className="sort-radio-btns filter-row margin-smaller">
           <FormControlLabel
-            checked={this.state.dateFilter === PDateFilter.PastMonth}
-            control={<Radio onClick={() => this.setState({ dateFilter: PDateFilter.PastMonth })} className={"filter-radio custom-color"} />}
+            checked={dateFilter === PDateFilter.PastMonth}
+            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.PastMonth)} className={"filter-radio custom-color"} />}
             label="Past month" />
           <FormControlLabel
-            checked={this.state.dateFilter === PDateFilter.AllTime}
-            control={<Radio onClick={() => this.setState({ dateFilter: PDateFilter.AllTime })} className={"filter-radio custom-color"} />}
+            checked={dateFilter === PDateFilter.AllTime}
+            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.AllTime)} className={"filter-radio custom-color"} />}
             label="All time" />
         </div>
         <div className="filter-header">Category</div>
-        <div className="sort-radio-btns filter-row margin-smaller"> 
+        <div className="sort-radio-btns filter-row margin-smaller">
           <FormControlLabel
-            checked={this.state.sortBy === PSortBy.MostPlayed}
-            control={<Radio onClick={() => this.setState({ sortBy: PSortBy.MostPlayed })} className={"filter-radio custom-color"} />}
-            label="Past month" />
-          <FormControlLabel
-            checked={this.state.sortBy === PSortBy.LeastPlayed}
-            control={<Radio onClick={() => this.setState({ sortBy: PSortBy.LeastPlayed })} className={"filter-radio custom-color"} />}
-            label="All time" />
+            checked={sortBy === PSortBy.MostPlayed}
+            control={<Radio onClick={() => { }} className={"filter-radio custom-color"} />}
+            label="Everything" />
         </div>
+        <div className="sort-radio-btns filter-row margin-smaller">
+          <FormControlLabel
+            checked={sortBy === PSortBy.LeastPlayed}
+            control={<Radio onClick={() => { }} className={"filter-radio custom-color"} />}
+            label="STEM" />
+          <FormControlLabel
+            checked={sortBy === PSortBy.LeastPlayed}
+            control={<Radio onClick={() => { }} className={"filter-radio custom-color"} />}
+            label="Humanities" />
+        </div>
+        <div className="sort-radio-btns filter-row margin-smaller">
+          <FormControlLabel
+            checked={sortBy === PSortBy.LeastPlayed}
+            control={<Radio onClick={() => { }} className={"filter-radio custom-color"} />}
+            label="General & Topical" />
+          <FormControlLabel
+            checked={sortBy === PSortBy.LeastPlayed}
+            control={<Radio onClick={() => { }} className={"filter-radio custom-color"} />}
+            label="Other" />
+        </div>
+        <div className="filter-header">Subjects</div>
+        <div></div>
         {this.renderContent()}
         <div className="sidebar-footer" />
       </Grid>

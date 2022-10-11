@@ -57,6 +57,9 @@
     .first-column {
       padding-left: 2%;
       width: 50%;
+      p {
+        display: inline;
+      }
     }
     .second-column {
       width: 25%;
