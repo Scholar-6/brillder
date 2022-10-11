@@ -1,3 +1,4 @@
+import { PDateFilter } from 'components/admin/bricksPlayed/BricksPlayedSidebar';
 import { getApiQuestion } from 'components/build/questionService/QuestionService';
 import { AssignmentBrick } from 'model/assignment';
 import { Brick, BrickLengthEnum, BrickStatus, KeyWord, Subject } from 'model/brick';
@@ -78,9 +79,9 @@ export const getBackToWorkStatistics = async (getPersonal: boolean, getPublic: b
   }
 }
 
-export const adminGetBrickAtemptStatistic = async () => {
+export const adminGetBrickAtemptStatistic = async (dateFilter: PDateFilter) => {
   try {
-    return await get<Brick[]>(`/admin/getAdminBricksStatistic`);
+    return await get<Brick[]>(`/admin/getAdminBricksStatistic/` + dateFilter);
   } catch {
     return false;
   }

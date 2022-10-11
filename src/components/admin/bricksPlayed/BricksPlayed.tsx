@@ -8,7 +8,7 @@ import { User } from "model/user";
 import { Brick } from "model/brick";
 import actions from 'redux/actions/requestFailed';
 import { ReduxCombinedState } from "redux/reducers";
-import BricksPlayedSidebar from "./BricksPlayedSidebar";
+import BricksPlayedSidebar, { PDateFilter, PSortBy } from "./BricksPlayedSidebar";
 import BricksTab, { BricksActiveTab } from "./BricksTab";
 import { adminGetBrickAtemptStatistic } from "services/axios/brick";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
@@ -24,7 +24,10 @@ interface TeachProps {
 }
 
 interface TeachState {
+  sortBy: PSortBy;
+  dateFilter: PDateFilter;
   bricks: Brick[];
+  finalBricks: Brick[];
 }
 
 class BricksPlayedPage extends Component<TeachProps, TeachState> {
@@ -32,21 +35,55 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     super(props);
 
     this.state = {
-      bricks: []
+      sortBy: PSortBy.MostPlayed,
+      dateFilter: PDateFilter.Today,
+      bricks: [],
+      finalBricks: []
     }
-    this.loadData();
+    this.loadInitData();
   }
 
-  async loadData() {
-    const bricks = await adminGetBrickAtemptStatistic();
-    if (bricks) {
-      const sortedBricks = bricks.sort((a, b) => (a.attemptsCount > b.attemptsCount) ? -1 : 1);
-      this.setState({ bricks: sortedBricks });
+  sortBricks(sortBy: PSortBy, bricks: Brick[]) {
+    if (sortBy === PSortBy.MostPlayed) {
+      return bricks.sort((a, b) => (a.attemptsCount > b.attemptsCount) ? -1 : 1);
+    } else {
+      return bricks.sort((a, b) => (a.attemptsCount > b.attemptsCount) ? 1 : -1);
     }
+  }
+
+  async loadInitData() {
+    const bricks = await adminGetBrickAtemptStatistic(PDateFilter.Today);
+    if (bricks) {
+      const sortedBricks = this.sortBricks(PSortBy.MostPlayed, bricks);
+      this.setState({ bricks: sortedBricks, finalBricks: sortedBricks });
+    }
+  }
+
+  async loadData(dateFilter: PDateFilter) {
+    const bricks = await adminGetBrickAtemptStatistic(dateFilter);
+    if (bricks) {
+      const sortedBricks = this.sortBricks(this.state.sortBy, bricks);
+      this.setState({ bricks: sortedBricks, dateFilter, finalBricks: sortedBricks });
+    }
+  }
+
+  renderBody() {
+    const { finalBricks } = this.state;
+    if (finalBricks.length == 0) {
+      return <div>No Bricks</div>;
+    }
+    return <div className="table-body">
+      {finalBricks.map(b => {
+        return (<div className="table-row">
+          <div className="first-column" dangerouslySetInnerHTML={{ __html: b.title }} />
+          <div className="second-column">{b.attemptsCount}</div>
+          <div className="third-column">{b.isCore ? 'dd' : 'ss'}</div>
+        </div>);
+      })};
+    </div>
   }
 
   render() {
-    console.log(this.state.bricks)
     return (
       <div className="main-listing user-list-page manage-classrooms-page bricks-played-page">
         <PageHeadWithMenu
@@ -58,7 +95,17 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           searching={() => { }}
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
-          <BricksPlayedSidebar isLoaded={true} filterChanged={() => { }} />
+          <BricksPlayedSidebar
+            isLoaded={true}
+            sortBy={this.state.sortBy} setSort={sortBy => {
+              const finalBricks = this.sortBricks(sortBy, this.state.finalBricks);
+              this.setState({ sortBy, finalBricks });
+            }}
+            dateFilter={this.state.dateFilter} setDateFilter={dateFilter => {
+              this.loadData(dateFilter);
+            }}
+            filterChanged={() => { }}
+          />
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Bricks} history={this.props.history} />
             <div className="tab-content">
@@ -68,15 +115,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                   <div className="second-column">Times Played</div>
                   <div className="third-column">Visibility</div>
                 </div>
-                <div className="table-body">
-                  {this.state.bricks.map(b => {
-                    return (<div className="table-row">
-                      <div className="first-column" dangerouslySetInnerHTML={{__html: b.title}} />
-                      <div className="second-column">{b.attemptsCount}</div>
-                      <div className="third-column">{b.isCore ? 'dd' : 'ss'}</div>
-                    </div>);
-                  })}
-                </div>
+                {this.renderBody()}
               </div>
             </div>
           </Grid>
