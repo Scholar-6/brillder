@@ -1,0 +1,78 @@
+.bricks-played-page {
+  .teach-assigned {
+    .sort-box {
+      margin-top: 2vh;
+      padding: 0 1.4vw;
+    }
+    .sort-radio-btns {
+      margin-bottom: 1.3vh;
+      margin-top: 1.3vh;
+      font-size: 1.2vw;
+
+      .MuiFormControlLabel-root {
+        width: 50%;
+        margin: 0;
+      }
+      .MuiButtonBase-root {
+        padding: 0;
+      }
+
+      .MuiIconButton-label {
+        margin-right: 0.5vw;
+        svg {
+          color: white;
+        }
+      }
+    }
+    .filter-row {
+      padding: 0 1.4vw;
+
+      &.margin-smaller {
+        margin: 0.65vh 0;
+        &.top-margin-bigger {
+          margin-top: 1vh;
+        }
+      }
+    }
+    .filter-header {
+      position: relative;
+      background: var(--light-blue-alpha5);
+      padding: 0.3vw 1.4vw;
+      font-size: 1.2vw !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "Brandon Grotesque Bold";
+    }
+  }
+  .tab-content {
+    overflow-y: auto;
+    padding-bottom: 1vw;
+    color: var(--theme-dark-blue);
+
+    .table-head {
+      display: flex;
+      font-size: 1.2vw;
+    }
+    .first-column {
+      padding-left: 2%;
+      width: 50%;
+    }
+    .second-column {
+      width: 25%;
+    }
+    .third-column {
+      width: 15%;
+    }
+
+    .table-row {
+      display: flex;
+      font-size: 1vw;
+      padding: 0.4vw 0;
+
+      &:nth-child(odd) {
+        background: var(--tab-gray);
+      }
+    }
+  }
+}

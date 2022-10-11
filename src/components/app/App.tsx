@@ -73,6 +73,10 @@ import StripeCreditsPage from 'components/stripeCreditsPage/StripeCreditsPage';
 
 import { GetOrigin, SetOrigin } from 'localStorage/origin';
 import { GetLoginRedirectUrl, UnsetLoginRedirectUrl } from 'localStorage/login';
+import AdminRoute from './AdminRoute';
+import BricksPlayed from 'components/admin/bricksPlayed/BricksPlayed';
+import UsersEvents from 'components/admin/usersEvents/UsersEvents';
+import ClassesEvents from 'components/admin/classesEvents/ClassesEvents';
 
 interface AppProps {
   user: User;
@@ -331,6 +335,10 @@ const App: React.FC<AppProps> = props => {
             <AuthRoute path="/login/:privacy" component={LoginPage} />
             <AuthRoute path={map.ResetPassword} component={ResetPasswordPage} />
             <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
+            
+            <AdminRoute path={map.AdminBricksPlayed} component={BricksPlayed} />
+            <AdminRoute path={map.UsersEvents} component={UsersEvents} />
+            <AdminRoute path={map.ClassesEvents} component={ClassesEvents} />
 
             <Route path={map.TermsPage} component={PublicTerms} />
 
