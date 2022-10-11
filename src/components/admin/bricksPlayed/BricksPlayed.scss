@@ -78,4 +78,45 @@
       }
     }
   }
+
+  .MuiTypography-root {
+    font-size: 1vw;
+  }
+
+  .select-container {
+    position: relative;
+    .absolute-placeholder {
+      font-size: 1vw;
+      position: absolute;
+      left: 2vw;
+      top: calc(3vh);
+      height: 5vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      color: #7E7E7E;
+      z-index: 1;
+    }
+  }
+
+  .select-multiple-subject {
+    margin-top: 3vh;
+    display: flex;
+    justify-content: center;
+    width: 21vw;
+    .MuiSelect-select {
+      padding-top: 0;
+      padding-bottom: 0;
+      display: flex;
+      align-items: center;
+      color: var(--theme-dark-blue);
+      height: 5vh;
+      border-radius: 0.5vw;
+      background: var(--white);
+    }
+    &::after, &::before {
+      display: none !important;
+      content: null !important;
+    }
+  }
 }

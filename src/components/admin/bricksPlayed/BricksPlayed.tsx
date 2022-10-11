@@ -5,13 +5,14 @@ import { Grid } from "@material-ui/core";
 
 import './BricksPlayed.scss';
 import { User } from "model/user";
-import { Brick } from "model/brick";
+import { Brick, Subject } from "model/brick";
 import actions from 'redux/actions/requestFailed';
 import { ReduxCombinedState } from "redux/reducers";
-import BricksPlayedSidebar, { PDateFilter, PSortBy } from "./BricksPlayedSidebar";
+import BricksPlayedSidebar, { ESubjectCategory, PDateFilter, PSortBy } from "./BricksPlayedSidebar";
 import BricksTab, { BricksActiveTab } from "./BricksTab";
 import { adminGetBrickAtemptStatistic } from "services/axios/brick";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import { getSubjects } from "services/axios/subject";
 
 
 interface TeachProps {
@@ -26,7 +27,10 @@ interface TeachProps {
 interface TeachState {
   sortBy: PSortBy;
   dateFilter: PDateFilter;
+  subjectCategory: ESubjectCategory;
   bricks: Brick[];
+  selectedSubjects: Subject[];
+  subjects: Subject[];
   finalBricks: Brick[];
 }
 
@@ -37,7 +41,10 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     this.state = {
       sortBy: PSortBy.MostPlayed,
       dateFilter: PDateFilter.Today,
+      subjectCategory: ESubjectCategory.Everything,
       bricks: [],
+      subjects: [],
+      selectedSubjects: [],
       finalBricks: []
     }
     this.loadInitData();
@@ -56,6 +63,11 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     if (bricks) {
       const sortedBricks = this.sortBricks(PSortBy.MostPlayed, bricks);
       this.setState({ bricks: sortedBricks, finalBricks: sortedBricks });
+    }
+
+    const subjects = await getSubjects();
+    if (subjects) {
+      this.setState({subjects});
     }
   }
 
@@ -104,7 +116,14 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             dateFilter={this.state.dateFilter} setDateFilter={dateFilter => {
               this.loadData(dateFilter);
             }}
-            filterChanged={() => { }}
+            subjects={this.state.subjects}
+            selectedSubjects={this.state.selectedSubjects}
+            selectSubjects={selectedSubjects => {
+              this.setState({selectedSubjects});
+            }}
+            subjectCategory={this.state.subjectCategory} setSubjectCategory={subjectCategory => {
+              this.setState({subjectCategory});
+            }}
           />
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Bricks} history={this.props.history} />
