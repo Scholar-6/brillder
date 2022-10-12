@@ -87,7 +87,7 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const { params } = props.match;
   const brickId = parseInt(params.brickId);
-
+  
   const values = queryString.parse(props.location.search);
   let initSuggestionExpanded = false;
   if (values.suggestionsExpanded) {
@@ -298,8 +298,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }, [questions]);
 
   let canEdit = React.useMemo(() => canEditBrick(props.brick, props.user), [props.brick, props.user]);
-
-  console.log('can edit ', canEdit);
 
   //#region Changing questions in build
   const setPreviousQuestion = React.useCallback(() => {
