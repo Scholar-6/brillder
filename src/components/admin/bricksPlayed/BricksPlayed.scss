@@ -49,12 +49,24 @@
     overflow-y: auto;
     padding-bottom: 1vw;
     color: var(--theme-dark-blue);
+    position: relative;
+
+    .publish-toggle {
+      top: 1vh;
+      > span {
+        letter-spacing: 0;
+        margin-left: 1.5vw;
+      }
+    }
 
     .table-head {
+      margin-top: calc(2vh + 1.2vw);
       display: flex;
       font-size: 1.2vw;
     }
     .first-column {
+      display: flex;
+      align-items: center;
       padding-left: 2%;
       width: 50%;
       p {
@@ -62,10 +74,18 @@
       }
     }
     .second-column {
+      display: flex;
+      align-items: center;
       width: 25%;
     }
     .third-column {
       width: 15%;
+      display: flex;
+      align-items: center;
+      svg {
+        width: 1.5vw;
+        height: 1.5vw;
+      }
     }
 
     .table-row {
