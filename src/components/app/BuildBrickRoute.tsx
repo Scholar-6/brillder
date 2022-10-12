@@ -11,7 +11,7 @@ import { getBrillderTitle } from "components/services/titleService";
 import { ReduxCombinedState } from "redux/reducers";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
-import { checkAdmin } from "components/services/brickService";
+import { checkAdmin, isAorP } from "components/services/brickService";
 import { Helmet } from "react-helmet";
 import LoginRedirect from "components/baseComponents/LoginRedirect";
 import BaseTermsRedirect from "./BaseTermsRedirect";
@@ -58,6 +58,9 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
       if (isAdmin) { return true; }
 
       if (brick.isCore && brick.status === BrickStatus.Publish) {
+        if (isAorP(rest.user.roles)) {
+          return true;
+        }
         return false;
       }
       return true;
