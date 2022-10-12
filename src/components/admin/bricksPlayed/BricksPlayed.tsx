@@ -162,12 +162,23 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       return <div>No Bricks</div>;
     }
 
+    const renderSubject = (subject?: Subject) => {
+      if (subject) {
+        return (
+          <div className="flex-center subject-block">
+            <div className="circle" style={{ background: subject.color }} />
+            <div>{subject.name}</div>
+          </div>
+        );
+      }
+    }
+
     const renderThirdColumn = (b: Brick) => {
       let subject = this.state.subjects.find(s => s.id === b.subjectId);
       let alternative = this.state.subjects.find(s => s.id === b.alternateSubjectId);
       if (subject) {
         return (
-          <div className="third-column">{subject.name} {alternative ? alternative.name : ''}</div>
+          <div className="third-column">{renderSubject(subject)} {renderSubject(alternative)}</div>
         );
       }
       return <div className="third-column"></div>
@@ -201,7 +212,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
   }
 
   filterBricksBySubjectsAndSortP(bricks: Brick[], selectedSubjects: Subject[], sortBy: PSortBy) {
-    let finalBricks:Brick[] = [];
+    let finalBricks: Brick[] = [];
     if (selectedSubjects.length > 0) {
       for (let brick of bricks) {
         const found = selectedSubjects.find(s => s.id === brick.subjectId);
