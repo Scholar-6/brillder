@@ -12,7 +12,7 @@ import { getSubjects } from "services/axios/subject";
 import BricksTab, { BricksActiveTab } from "./BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { GENERAL_SUBJECT } from "components/services/subject";
-import { adminGetBrickAtemptStatistic } from "services/axios/brick";
+import { adminGetBrickAtemptStatistic, getAdminBricksPublished } from "services/axios/brick";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import BricksPlayedSidebar, { ESubjectCategory, PDateFilter, PSortBy } from "./BricksPlayedSidebar";
 import DPublishToggle from "./DPublishToggle";
@@ -135,8 +135,16 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
   async loadData(dateFilter: PDateFilter) {
     const bricks = await adminGetBrickAtemptStatistic(dateFilter);
     if (bricks) {
-      const finalBricks = this.filterAndSort(this.state.isPublish, bricks, this.state.selectedSubjects, this.state.sortBy);
-      this.setState({ bricks, dateFilter, finalBricks });
+      const finalBricks = this.filterAndSort(false, bricks, this.state.selectedSubjects, this.state.sortBy);
+      this.setState({ bricks, isPublish: false, dateFilter, finalBricks });
+    }
+  }
+
+  async loadPData(dateFilter: PDateFilter) {
+    const bricks = await getAdminBricksPublished(dateFilter);
+    if (bricks) {
+      const finalBricks = this.filterAndSort(true, bricks, this.state.selectedSubjects, this.state.sortBy);
+      this.setState({ bricks, isPublish: true, dateFilter, finalBricks });
     }
   }
 
@@ -281,7 +289,11 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
               this.setState({ sortBy, finalBricks });
             }}
             dateFilter={this.state.dateFilter} setDateFilter={dateFilter => {
-              this.loadData(dateFilter);
+              if (this.state.isPublish) {
+                this.loadPData(dateFilter);
+              } else {
+                this.loadData(dateFilter);
+              }
             }}
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
@@ -314,8 +326,12 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             <BricksTab activeTab={BricksActiveTab.Bricks} history={this.props.history} />
             <div className="tab-content">
               <DPublishToggle isPublish={this.state.isPublish} onSwitch={isPublish => {
-                let finalBricks = this.filterAndSort(isPublish, this.state.bricks, this.state.selectedSubjects, this.state.sortBy);
-                this.setState({ isPublish, finalBricks });
+                if (isPublish) {
+                  this.loadPData(this.state.dateFilter);
+                } else {
+                  this.loadData(this.state.dateFilter);
+                }
+                this.setState({ isPublish });
               }} />
               {this.renderTable()}
             </div>
