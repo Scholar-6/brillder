@@ -28,6 +28,7 @@ export enum ESubjectCategory {
 
 interface FilterSidebarProps {
   isLoaded: boolean;
+  isPublish: boolean;
   sortBy: PSortBy;
   setSort(sort: PSortBy): void;
   dateFilter: PDateFilter;
@@ -57,6 +58,17 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
     };
   }
 
+  componentDidUpdate(prevProps: Readonly<FilterSidebarProps>, prevState: Readonly<FilterSidebarState>, snapshot?: any): void {
+    if (prevProps.selectedSubjects !== this.props.selectedSubjects) {
+      if (this.props.selectedSubjects.length != this.state.subjectIds.length) {
+        this.setState({subjectIds: this.props.selectedSubjects.map(s => s.id)});
+      } else {
+        // if same number but different subjects rare case
+        // no solution yet
+      }
+    }
+  }
+
   renderContent() {
     if (!this.props.isLoaded) {
       return <div></div>;
@@ -69,7 +81,6 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
   }
 
   render() {
-    console.log(this.props.subjects, this.props.selectedSubjects);
     const { sortBy, dateFilter, subjectCategory, setSubjectCategory } = this.props;
     return (
       <Grid
@@ -82,11 +93,11 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
             <FormControlLabel
               checked={sortBy === PSortBy.MostPlayed}
               control={<Radio onClick={() => this.props.setSort(PSortBy.MostPlayed)} className={"filter-radio custom-color"} />}
-              label="Most Played" />
+              label={this.props.isPublish ? "Most Recent" : "Most Played"} />
             <FormControlLabel
               checked={sortBy === PSortBy.LeastPlayed}
               control={<Radio onClick={() => this.props.setSort(PSortBy.LeastPlayed)} className={"filter-radio custom-color"} />}
-              label="Least Played" />
+              label={this.props.isPublish ? "Oldest" : "Least Played"} />
           </div>
         </div>
         <div className="filter-header">Date Filter</div>
