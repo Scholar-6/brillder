@@ -87,6 +87,14 @@ export const adminGetBrickAtemptStatistic = async (dateFilter: PDateFilter) => {
   }
 }
 
+export const getAdminBricksPublished = async (dateFilter: PDateFilter) => {
+  try {
+    return await get<Brick[]>(`/admin/getAdminBricksPublished/` + dateFilter);
+  } catch {
+    return false;
+  }
+}
+
 export const getLatestBrick = async () => {
   try {
     return await get<Brick>('/brick/public/latest');
