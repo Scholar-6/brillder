@@ -427,17 +427,18 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
     const values = queryString.parse(location.search);
 
-    
+
     if (values.origin === 'heartofmercia') {
       SetLoginRedirectUrl(location.pathname);
       SetHeartOfMerciaUser();
       let redirectUrl = document.referrer;
+      console.log('wefwef');
       if (redirectUrl === 'https://brillder.com/') {
         redirectUrl = values.redirectUrl as string;
       }
       console.log("redirect url set ", document.referrer, parent.document.referrer, redirectUrl);
       SetFinishRedirectUrl(redirectUrl);
-      window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
+      //window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
     }
 
     if (values.origin === 'library') {
