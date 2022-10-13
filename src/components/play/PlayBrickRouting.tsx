@@ -434,9 +434,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       let redirectUrl = document.referrer;
       console.log('wefwef');
       if (redirectUrl === 'https://brillder.com/') {
-        redirectUrl = values.redirectUrl as string;
+        redirectUrl = values.returnUrl as string;
       }
-      console.log("redirect url set ", document.referrer, parent.document.referrer, redirectUrl);
+      console.log("redirect url set ", redirectUrl, values.returnUrl);
       SetFinishRedirectUrl(redirectUrl);
       //window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
     }
