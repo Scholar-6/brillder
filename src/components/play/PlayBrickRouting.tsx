@@ -427,12 +427,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
     const values = queryString.parse(location.search);
 
+    
     if (values.origin === 'heartofmercia') {
       SetLoginRedirectUrl(location.pathname);
       SetHeartOfMerciaUser();
       let redirectUrl = document.referrer;
       if (redirectUrl === 'https://brillder.com/') {
-        redirectUrl = values.redirectUrl;
+        redirectUrl = values.redirectUrl as string;
       }
       console.log("redirect url set ", document.referrer, parent.document.referrer, redirectUrl);
       SetFinishRedirectUrl(redirectUrl);
