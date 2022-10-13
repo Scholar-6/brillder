@@ -430,8 +430,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (values.origin === 'heartofmercia') {
       SetLoginRedirectUrl(location.pathname);
       SetHeartOfMerciaUser();
-      console.log("redirect url set ", document.referrer);
-      SetFinishRedirectUrl(document.referrer);
+      console.log("redirect url set ", document.referrer, window.parent.location.href);
+      SetFinishRedirectUrl(window.parent.location.href);
       window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
     }
 
