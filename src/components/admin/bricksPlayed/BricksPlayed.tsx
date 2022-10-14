@@ -12,10 +12,9 @@ import { getSubjects } from "services/axios/subject";
 import BricksTab, { BricksActiveTab } from "./BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { GENERAL_SUBJECT } from "components/services/subject";
-import { adminGetBrickAtemptStatistic, getAdminBricksPublished } from "services/axios/brick";
+import { adminGetBrickAtemptStatistic } from "services/axios/brick";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import BricksPlayedSidebar, { ESubjectCategory, PDateFilter, PSortBy } from "./BricksPlayedSidebar";
-import DPublishToggle from "./DPublishToggle";
 import { getDateString } from "components/services/brickService";
 
 
@@ -29,7 +28,6 @@ interface TeachProps {
 }
 
 interface TeachState {
-  isPublish: boolean;
   sortBy: PSortBy;
   dateFilter: PDateFilter;
   subjectCategory: ESubjectCategory;
@@ -37,10 +35,12 @@ interface TeachState {
   selectedSubjects: Subject[];
   subjects: Subject[];
   finalBricks: Brick[];
-  stemSubjects: Subject[];
+  artSubjects: Subject[];
+  generalSubject: Subject[];
+  mathSubjects: Subject[];
   humanitySubjects: Subject[];
-  otherSubjects: Subject[];
-  generalSubject: Subject | null;
+  languageSubjects: Subject[];
+  scienceSubjects: Subject[];
 }
 
 class BricksPlayedPage extends Component<TeachProps, TeachState> {
@@ -48,18 +48,19 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     super(props);
 
     this.state = {
-      isPublish: false,
       sortBy: PSortBy.MostPlayed,
-      dateFilter: PDateFilter.Today,
+      dateFilter: PDateFilter.Past24Hours,
       subjectCategory: ESubjectCategory.Everything,
       bricks: [],
       subjects: [],
       selectedSubjects: [],
       finalBricks: [],
-      stemSubjects: [],
+      artSubjects: [],
       humanitySubjects: [],
-      otherSubjects: [],
-      generalSubject: null
+      generalSubject: [],
+      languageSubjects: [],
+      mathSubjects: [],
+      scienceSubjects: [],
     }
     this.loadInitPlayedData();
   }
@@ -102,7 +103,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
   }
 
   async loadInitPlayedData() {
-    const bricks = await adminGetBrickAtemptStatistic(PDateFilter.Today);
+    const bricks = await adminGetBrickAtemptStatistic(PDateFilter.Past24Hours);
     if (bricks) {
       const sortedBricks = this.sortBricks(PSortBy.MostPlayed, bricks);
       this.setState({ bricks: sortedBricks, finalBricks: sortedBricks });
@@ -110,41 +111,35 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
 
     const subjects = await getSubjects();
     if (subjects) {
-      const generalSubject = subjects.find(s => s.name === GENERAL_SUBJECT) as Subject;
+      const generalSubject = this.fillSubjects(subjects, [GENERAL_SUBJECT]);
 
-      const stemSubjectNames = ['Chemistry', 'Biology', 'Physics', 'Maths']
-      const stemSubjects = this.fillSubjects(subjects, stemSubjectNames);
+      const artSubjectNames = ['History of Art', "Art & Design", 'Design & Technology', "Drama & Theatre", 'Music'];
+      const artSubjects = this.fillSubjects(subjects, artSubjectNames);
+
+      const mathSubjectNames = ['Maths', "Computer Science"]
+      const mathSubjects = this.fillSubjects(subjects, mathSubjectNames);
+
+      const scienceSubjectNames = ['Chemistry', 'Biology', 'Physics'];
+      const scienceSubjects = this.fillSubjects(subjects, scienceSubjectNames);
+
+      const languageNames = ['French', 'German', 'Chinese', 'Spanish', 'English Language', 'Classics'];
+      const languageSubjects = this.fillSubjects(subjects, languageNames);
 
       const humanitySubjectNames = [
         'English Literature', 'Religion & Philosophy', 'History & Politics',
-        'History of Art', 'Geography', 'Economics', 'Psychology', 'Sociology',
-        'French', 'German', 'Chinese', 'Spanish', 'Classics', 'English Language', 'Criminology'
+        'Geography', 'Economics', 'Psychology', 'Sociology', 'Criminology'
       ];
       const humanitySubjects = this.fillSubjects(subjects, humanitySubjectNames);
 
-      const otherSubjectNames = [
-        'Music', 'Design & Technology', "Drama & Theatre",
-        "Computer Science", "Art & Design"
-      ]
-      const otherSubjects = this.fillSubjects(subjects, otherSubjectNames);
-
-      this.setState({ subjects, stemSubjects, otherSubjects, humanitySubjects, generalSubject });
+      this.setState({ subjects, artSubjects, mathSubjects, languageSubjects, humanitySubjects, generalSubject, scienceSubjects });
     }
   }
 
   async loadData(dateFilter: PDateFilter) {
     const bricks = await adminGetBrickAtemptStatistic(dateFilter);
     if (bricks) {
-      const finalBricks = this.filterAndSort(false, bricks, this.state.selectedSubjects, this.state.sortBy);
-      this.setState({ bricks, isPublish: false, dateFilter, finalBricks });
-    }
-  }
-
-  async loadPData(dateFilter: PDateFilter) {
-    const bricks = await getAdminBricksPublished(dateFilter);
-    if (bricks) {
-      const finalBricks = this.filterAndSort(true, bricks, this.state.selectedSubjects, this.state.sortBy);
-      this.setState({ bricks, isPublish: true, dateFilter, finalBricks });
+      const finalBricks = this.filterAndSort(bricks, this.state.selectedSubjects, this.state.sortBy);
+      this.setState({ bricks, dateFilter, finalBricks });
     }
   }
 
@@ -236,27 +231,11 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     return finalBricks;
   }
 
-  filterAndSort(isPublish: boolean, bricks: Brick[], selectedSubjects: Subject[], sortBy: PSortBy) {
-    if (isPublish) {
-      return this.filterBricksBySubjectsAndSortP(bricks, selectedSubjects, sortBy);
-    } else {
-      return this.filterBricksBySubjectsAndSort(bricks, selectedSubjects, sortBy);
-    }
+  filterAndSort(bricks: Brick[], selectedSubjects: Subject[], sortBy: PSortBy) {
+    return this.filterBricksBySubjectsAndSort(bricks, selectedSubjects, sortBy);
   }
 
   renderTable() {
-    if (this.state.isPublish) {
-      return (
-        <div className="table">
-          <div className="table-head bold">
-            <div className="first-column">Date Published</div>
-            <div className="second-column">Brick</div>
-            <div className="third-column">Subjects</div>
-          </div>
-          {this.renderPublishedBody()}
-        </div>
-      );
-    }
     return (
       <div className="table">
         <div className="table-head bold">
@@ -283,41 +262,38 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <BricksPlayedSidebar
             isLoaded={true}
-            isPublish={this.state.isPublish}
             sortBy={this.state.sortBy} setSort={sortBy => {
-              let finalBricks = this.filterAndSort(this.state.isPublish, this.state.bricks, this.state.selectedSubjects, sortBy);
+              let finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, sortBy);
               this.setState({ sortBy, finalBricks });
             }}
             dateFilter={this.state.dateFilter} setDateFilter={dateFilter => {
-              if (this.state.isPublish) {
-                this.loadPData(dateFilter);
-              } else {
-                this.loadData(dateFilter);
-              }
+              this.loadData(dateFilter);
             }}
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
             selectSubjects={selectedSubjects => {
-              const finalBricks = this.filterAndSort(this.state.isPublish, this.state.bricks, selectedSubjects, this.state.sortBy);
+              const finalBricks = this.filterAndSort(this.state.bricks, selectedSubjects, this.state.sortBy);
               this.setState({ selectedSubjects, finalBricks });
             }}
             subjectCategory={this.state.subjectCategory} setSubjectCategory={subjectCategory => {
               let { selectedSubjects } = this.state;
-              if (subjectCategory === ESubjectCategory.STEM) {
-                selectedSubjects = [...this.state.stemSubjects];
+              if (subjectCategory === ESubjectCategory.Arts) {
+                selectedSubjects = [...this.state.artSubjects];
               } else if (subjectCategory === ESubjectCategory.Humanities) {
                 selectedSubjects = [...this.state.humanitySubjects];
               } else if (subjectCategory === ESubjectCategory.General) {
-                if (this.state.generalSubject) {
-                  selectedSubjects = [this.state.generalSubject];
-                }
-              } else if (subjectCategory === ESubjectCategory.Others) {
-                selectedSubjects = [...this.state.otherSubjects];
+                selectedSubjects = [...this.state.generalSubject];
+              } else if (subjectCategory === ESubjectCategory.Languages) {
+                selectedSubjects = [...this.state.languageSubjects];
+              } else if (subjectCategory === ESubjectCategory.Math) {
+                selectedSubjects = [...this.state.mathSubjects];
+              } else if (subjectCategory === ESubjectCategory.Science) {
+                selectedSubjects = [...this.state.scienceSubjects];
               } else {
                 selectedSubjects = [];
               }
 
-              let finalBricks = this.filterAndSort(this.state.isPublish, this.state.bricks, selectedSubjects, this.state.sortBy);
+              let finalBricks = this.filterAndSort(this.state.bricks, selectedSubjects, this.state.sortBy);
 
               this.setState({ subjectCategory, finalBricks, selectedSubjects });
             }}
@@ -325,14 +301,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Bricks} history={this.props.history} />
             <div className="tab-content">
-              <DPublishToggle isPublish={this.state.isPublish} onSwitch={isPublish => {
-                if (isPublish) {
-                  this.loadPData(this.state.dateFilter);
-                } else {
-                  this.loadData(this.state.dateFilter);
-                }
-                this.setState({ isPublish });
-              }} />
               {this.renderTable()}
             </div>
           </Grid>
