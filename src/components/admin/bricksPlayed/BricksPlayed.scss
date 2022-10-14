@@ -1,17 +1,23 @@
 .bricks-played-page {
   .teach-assigned {
+    overflow-y: auto;
     .sort-box {
-      margin-top: 2vh;
+      display: flex;
+      align-items: center;
+      height: 6vh;
       padding: 0 1.4vw;
     }
     .sort-radio-btns {
-      margin-bottom: 1.3vh;
-      margin-top: 1.3vh;
+      height: 4.5vh;
       font-size: 1.2vw;
 
       .MuiFormControlLabel-root {
         width: 50%;
         margin: 0;
+      }
+
+      &.full-width .MuiFormControlLabel-root {
+        width: 100%;
       }
       .MuiButtonBase-root {
         padding: 0;
@@ -28,7 +34,6 @@
       padding: 0 1.4vw;
 
       &.margin-smaller {
-        margin: 0.65vh 0;
         &.top-margin-bigger {
           margin-top: 1vh;
         }
@@ -36,8 +41,9 @@
     }
     .filter-header {
       position: relative;
+      height: 4vh;
       background: var(--light-blue-alpha5);
-      padding: 0.3vw 1.4vw;
+      padding: 0 1.4vw;
       font-size: 1.2vw !important;
       display: flex;
       align-items: center;
@@ -119,7 +125,7 @@
       font-size: 1vw;
       position: absolute;
       left: 2vw;
-      top: calc(3vh);
+      top: calc(2.5vh);
       height: 5vh;
       display: flex;
       align-items: center;
@@ -130,7 +136,7 @@
   }
 
   .select-multiple-subject {
-    margin-top: 3vh;
+    height: 10vh;
     display: flex;
     justify-content: center;
     width: 21vw;
