@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Grow } from "@material-ui/core";
+import { connect } from "react-redux";
 
 import "./ExpandedAssignment.scss";
-import { Subject } from "model/brick";
+import { AcademicLevelLabels, Subject } from "model/brick";
 import { Assignment, StudentStatus, TeachClassroom, TeachStudent } from "model/classroom";
 import { getSubjectColor } from "components/services/subject";
 
@@ -16,7 +17,6 @@ import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
 import BookDialog from "./BookDialog";
 import HolisticCommentPanel from "./HolisticCommentPanel";
 import { ReduxCombinedState } from "redux/reducers";
-import { connect } from "react-redux";
 import { User } from "model/user";
 import BookButton from "./BookButton";
 import CommentButton from "./CommentButton";
@@ -391,7 +391,6 @@ class ExpandedAssignment extends Component<
   render() {
     const { assignment, classroom, startIndex, pageSize } = this.props;
     let { students } = this.state;
-
     students = students.slice(startIndex, startIndex + pageSize);
 
     return (

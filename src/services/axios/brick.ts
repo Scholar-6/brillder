@@ -1,3 +1,4 @@
+import { PDateFilter } from 'components/admin/bricksPlayed/BricksPlayedSidebar';
 import { getApiQuestion } from 'components/build/questionService/QuestionService';
 import { AssignmentBrick } from 'model/assignment';
 import { Brick, BrickLengthEnum, BrickStatus, KeyWord, Subject } from 'model/brick';
@@ -78,6 +79,21 @@ export const getBackToWorkStatistics = async (getPersonal: boolean, getPublic: b
   }
 }
 
+export const adminGetBrickAtemptStatistic = async (dateFilter: PDateFilter) => {
+  try {
+    return await get<Brick[]>(`/admin/getAdminBricksStatistic/` + dateFilter);
+  } catch {
+    return false;
+  }
+}
+
+export const getAdminBricksPublished = async (dateFilter: PDateFilter) => {
+  try {
+    return await get<Brick[]>(`/admin/getAdminBricksPublished/` + dateFilter);
+  } catch {
+    return false;
+  }
+}
 
 export const getLatestBrick = async () => {
   try {
@@ -403,7 +419,6 @@ export const getKeywords = async () => {
     return false;
   }
 }
-
 
 export const copyBrick = async (brick: Brick, questions: Question[]) => {
   try {

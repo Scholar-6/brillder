@@ -1,6 +1,11 @@
 import { UserPreferenceType, User } from "model/user";
 import { isAorP } from "./services/brickService";
 
+export const Admin = '/admin';
+export const AdminBricksPlayed = Admin + '/bricks-played';
+export const UsersEvents = Admin + '/users-events';
+export const ClassesEvents = Admin + '/classes-events';
+
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
 export const ActivateAccountEmail = ActivateAccount + '/email';
@@ -145,6 +150,10 @@ export const postAssignmentQuestion = (brickId: number, userId: number, question
 
 
 export default {
+  AdminBricksPlayed,
+  ClassesEvents,
+  UsersEvents,
+  
   Build,
   ActivateAccount,
   ActivateAccountEmail,

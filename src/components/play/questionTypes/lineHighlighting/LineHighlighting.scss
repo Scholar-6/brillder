@@ -6,6 +6,7 @@
   color: var(--theme-dark-blue);
   .lines-container {
     width: 100%;
+    overflow-x: auto !important;
     @include phone_and_tabletP {
       font-size: 3.5vw;
     }

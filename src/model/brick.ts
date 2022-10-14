@@ -109,6 +109,7 @@ export interface Brick {
   brief: string;
   prep: string;
   synthesis: string;
+  datePublished?: string;
   brickLength: BrickLengthEnum;
   type: number;
   questions: Question[];
