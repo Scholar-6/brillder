@@ -5,11 +5,6 @@ import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material
 import { Subject } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
-export enum PSortBy {
-  MostPlayed,
-  LeastPlayed
-}
-
 export enum PDateFilter {
   Past24Hours,
   PastWeek,
@@ -30,8 +25,6 @@ export enum ESubjectCategory {
 
 interface FilterSidebarProps {
   isLoaded: boolean;
-  sortBy: PSortBy;
-  setSort(sort: PSortBy): void;
   dateFilter: PDateFilter;
   setDateFilter(filter: PDateFilter): void;
   subjects: Subject[];
@@ -82,7 +75,7 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
   }
 
   render() {
-    const { sortBy, dateFilter, subjectCategory, setSubjectCategory } = this.props;
+    const { dateFilter, subjectCategory, setSubjectCategory } = this.props;
     return (
       <Grid
         container item xs={3}

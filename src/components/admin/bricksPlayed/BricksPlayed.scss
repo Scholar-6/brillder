@@ -69,6 +69,23 @@
       margin-top: calc(2vh + 1.2vw);
       display: flex;
       font-size: 1.2vw;
+
+      .header {
+        display: flex;
+        align-items: center;
+
+        svg {
+          cursor: pointer;
+          width: 0.7vw;
+          height: 0.7vw;
+        }
+      }
+    }
+    .publish-column {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 11%;
     }
     .first-column {
       display: flex;
@@ -82,18 +99,14 @@
     .second-column {
       display: flex;
       align-items: center;
-      width: 25%;
+      width: 10%;
     }
-    .third-column {
-      width: 25%;
-      display: flex;
-      align-items: center;
-      svg {
-        width: 1.5vw;
-        height: 1.5vw;
-      }
+    .subject-column {
+      width: 15%;
 
       .subject-block {
+        display: flex;
+        align-items: center;
         margin: 0 0.2vw;
         .circle {
           margin: 0 0.2vw;
@@ -102,6 +115,18 @@
           border-radius: 50%;
         }
       }
+    }
+
+    .third-column {
+      width: 10%;
+      svg {
+        width: 1.5vw;
+        height: 1.5vw;
+      }
+    }
+
+    .author-column {
+      width: 13%;
     }
 
     .table-row {
