@@ -278,13 +278,14 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         <div className="first-part">
           {this.renderVertical(assignment.id, color)}
         </div>
+        {this.props.isExpanded &&
         <div>
           <div className="assign-brick-d343">
             <div className="assign-cover-image">
               <img alt="" className={this.state.coverLoaded ? ' visible' : 'hidden'} onLoad={() => this.setState({ coverLoaded: true })} src={fileUrl(brick.coverImage)} />
             </div>
           </div>
-        </div>
+        </div>}
         <div className="short-brick-info long">
           <div className="link-description">
             <BrickTitle title={brick.title} />
