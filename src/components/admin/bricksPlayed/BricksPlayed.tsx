@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { History } from "history";
 import { connect } from "react-redux";
-import { Grid, Radio } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
+import * as XLSX from "xlsx";
+import * as FileSaver from "file-saver";
+import { jsPDF } from "jspdf";
+import autoTable from 'jspdf-autotable';
 
 import './BricksPlayed.scss';
 import { User } from "model/user";
@@ -309,7 +313,9 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             <BricksTab activeTab={BricksActiveTab.Bricks} history={this.props.history} />
             <div className="tab-content">
               <div className="btn-container">
-                <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
+                <div className="btn btn-green flex-center" onClick={() => {
+                  this.setState({ downloadClicked: true });
+                }}>
                   <div>Export</div>
                   <SpriteIcon name="download" />
                 </div>
@@ -317,15 +323,49 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
               {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
                 <div className="popup-3rfw bold">
                   <div className="btn-sort" onClick={() => {
-                    //props.sortByDate();
-                    this.setState({downloadClicked: false});
-                    //setClicked(false);
+
+                    const exportToCSV = (apiData: any, fileName: string) => {
+                      const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+                      const fileExtension = ".xlsx";
+
+                      const ws = XLSX.utils.json_to_sheet(apiData);
+                      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+                      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+                      const data = new Blob([excelBuffer], { type: fileType });
+                      FileSaver.saveAs(data, fileName + fileExtension);
+                    };
+
+                    let data:any[] = [];
+
+                    for (const brick of this.state.finalBricks) {
+                      data.push({
+                        Published: brick.datePublished?.toString(),
+                        Subjects: "",
+                        Title: stripHtml(brick.title),
+                        Author: brick.author.firstName + ' ' + brick.author.lastName,
+                        Played: brick.attemptsCount,
+                        'Public?': brick.isCore ? "yes" : "no"
+                      });
+                    }
+
+                    exportToCSV(data, "table");
+
+                    this.setState({ downloadClicked: false });
                   }}>
                     <div>Export to Excel</div>
                     <SpriteIcon name="excel-icon" />
                   </div>
                   <div className="btn-sort" onClick={() => {
-                    this.setState({downloadClicked: false});
+                    const doc = new jsPDF();
+                    autoTable(doc, {
+                      head: [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?']],
+                      body: this.state.finalBricks.map(b => [
+                        b.datePublished ? b.datePublished : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no'
+                      ]),
+                    })
+                    console.log(doc);
+                    doc.save('table.pdf')
+                    this.setState({ downloadClicked: false });
                   }}>
                     <div>Export to PDF</div>
                     <img alt="brill" src="/images/PDF_icon.png" />
