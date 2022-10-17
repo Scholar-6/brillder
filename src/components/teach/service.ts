@@ -17,6 +17,7 @@ export interface ClassroomApi {
   assignmentsCount?: number;
   studentsInvitations?: MUser[];
   teacher?: User;
+  teachers: User[];
 }
 
 /**

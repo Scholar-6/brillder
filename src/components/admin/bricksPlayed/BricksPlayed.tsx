@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { History } from "history";
 import { connect } from "react-redux";
-import { Grid } from "@material-ui/core";
+import { Grid, Radio } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
 
 import './BricksPlayed.scss';
 import { User } from "model/user";
@@ -32,6 +33,7 @@ interface TeachProps {
 }
 
 interface TeachState {
+  downloadClicked: boolean;
   sortBy: SortBy;
   dateFilter: PDateFilter;
   subjectCategory: ESubjectCategory;
@@ -52,6 +54,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     super(props);
 
     this.state = {
+      downloadClicked: false,
       sortBy: SortBy.Played,
       dateFilter: PDateFilter.Past24Hours,
       subjectCategory: ESubjectCategory.Everything,
@@ -151,7 +154,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
   }
 
   filterBricksBySubjectsAndSort(bricks: Brick[], selectedSubjects: Subject[], sortBy: SortBy) {
-    let finalBricks:Brick[] = [];
+    let finalBricks: Brick[] = [];
     if (selectedSubjects.length > 0) {
       for (let brick of bricks) {
         const found = selectedSubjects.find(s => s.id === brick.subjectId);
@@ -215,7 +218,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     </div>
   }
 
-
   renderTable() {
     return (
       <div className="table">
@@ -229,7 +231,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           </div>
           <div className="subject-column header">
             <div>Subjects</div>
-            <div><SpriteIcon name="sort-arrows" onClick={() => this.filterAndSort(this.state.bricks, this.state.selectedSubjects, SortBy.Subjects)}  /></div>
           </div>
           <div className="first-column header">
             <div>Title</div>
@@ -307,6 +308,30 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Bricks} history={this.props.history} />
             <div className="tab-content">
+              <div className="btn-container">
+                <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
+                  <div>Export</div>
+                  <SpriteIcon name="download" />
+                </div>
+              </div>
+              {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
+                <div className="popup-3rfw bold">
+                  <div className="btn-sort" onClick={() => {
+                    //props.sortByDate();
+                    this.setState({downloadClicked: false});
+                    //setClicked(false);
+                  }}>
+                    <div>Export to Excel</div>
+                    <SpriteIcon name="excel-icon" />
+                  </div>
+                  <div className="btn-sort" onClick={() => {
+                    this.setState({downloadClicked: false});
+                  }}>
+                    <div>Export to PDF</div>
+                    <img alt="brill" src="/images/PDF_icon.png" />
+                  </div>
+                </div>
+              </Dialog>}
               {this.renderTable()}
             </div>
           </Grid>
