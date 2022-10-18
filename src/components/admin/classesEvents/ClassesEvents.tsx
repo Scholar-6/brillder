@@ -11,7 +11,7 @@ import autoTable from 'jspdf-autotable';
 import './BricksPlayed.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
-import { getAllClassrooms } from 'components/teach/service';
+import { getAllAdminClassrooms } from 'components/teach/service';
 
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
@@ -26,9 +26,9 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 enum SortBy {
   Name,
   Creator,
-  Title,
-  Author,
-  Played
+  Domain,
+  Students,
+  Assigned
 }
 
 interface TeachProps {
@@ -67,7 +67,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   }
 
   async loadInitPlayedData() {
-    const classrooms = await getAllClassrooms();
+    const classrooms = await getAllAdminClassrooms();
     if (classrooms) {
       this.setState({ classrooms, finalClassrooms: classrooms });
     }
@@ -89,9 +89,23 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       });
     } else if (sortBy === SortBy.Creator) {
       return classrooms.sort((a, b) => {
-        const aT = a.teachers[0].firstName.toLocaleLowerCase();
-        const bT = b.teachers[0].firstName.toLocaleLowerCase();
-        return aT < bT ? -1 : 1;
+        if (a.teachers.length > 0 && b.teachers.length > 0 && a.teachers[0].firstName && b.teachers[0].firstName) {
+          const aT = a.teachers[0].firstName.toLocaleLowerCase();
+          const bT = b.teachers[0].firstName.toLocaleLowerCase();
+          return aT < bT ? -1 : 1;
+        }
+        return 1;
+      });
+    } else if (sortBy === SortBy.Students) {
+      return classrooms.sort((a, b) => {
+        return a.students.length < b.students.length ? 1 : -1;
+      });
+    } else if (sortBy === SortBy.Assigned) {
+      return classrooms.sort((a, b) => {
+        if (a.assignmentsCount && b.assignmentsCount) {
+          return a.assignmentsCount < b.assignmentsCount ? 1 : -1;
+        }
+        return -1;
       });
     } else {
       return classrooms;
@@ -120,10 +134,10 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   filterBricksBySubjectsAndSort(classrooms: ClassroomApi[], selectedSubjects: Subject[], sortBy: SortBy) {
     let finalClassrooms: ClassroomApi[] = [];
     if (selectedSubjects.length > 0) {
-      for (let brick of finalClassrooms) {
-        const found = selectedSubjects.find(s => s.id === brick.subjectId);
+      for (let c of finalClassrooms) {
+        const found = selectedSubjects.find(s => s.id === c.subjectId);
         if (found) {
-          finalClassrooms.push(brick);
+          finalClassrooms.push(c);
         }
       }
     } else {
@@ -167,11 +181,40 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           </div>
           <div className="domain-column header">
             <div>Domain</div>
+            <div>
+              <SpriteIcon
+                name="sort-arrows"
+                onClick={() => {
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain)
+                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                }}
+              />
+            </div>
           </div>
           <div className="students-column header">
             <div>Students</div>
+            <div>
+              <SpriteIcon
+                name="sort-arrows"
+                onClick={() => {
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Students)
+                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                }}
+              />
+            </div>
           </div>
-          <div className="assigned-column header">Assigned</div>
+          <div className="assigned-column header">
+            <div>Assigned</div>
+            <div>
+              <SpriteIcon
+                name="sort-arrows"
+                onClick={() => {
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned)
+                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                }}
+              />
+            </div>
+          </div>
         </div>
         {this.renderBody()}
       </div>
