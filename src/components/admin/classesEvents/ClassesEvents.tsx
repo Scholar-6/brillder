@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
+import * as XLSX from "xlsx";
+import * as FileSaver from "file-saver";
+import { jsPDF } from "jspdf";
+import autoTable from 'jspdf-autotable';
 
 import './BricksPlayed.scss';
 import { ReduxCombinedState } from "redux/reducers";
@@ -16,6 +21,7 @@ import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 
 interface TeachProps {
@@ -28,6 +34,7 @@ interface TeachProps {
 }
 
 interface TeachState {
+  downloadClicked: boolean;
   subjects: Subject[];
   selectedSubjects: Subject[];
   classrooms: ClassroomApi[];
@@ -40,6 +47,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     super(props);
 
     this.state = {
+      downloadClicked: false,
       dateFilter: PDateFilter.Past24Hours,
       subjects: [],
       selectedSubjects: [],
@@ -131,12 +139,65 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
-              <div className="flex-center">
-                <div className="btn btn-green flex-center">
+              <div className="btn-container">
+                <div className="btn btn-green flex-center" onClick={() => this.setState({downloadClicked: true})}>
                   <div>Export</div>
                   <SpriteIcon name="upload" />
                 </div>
               </div>
+              {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
+                <div className="popup-3rfw bold">
+                  <div className="btn-sort" onClick={() => {
+
+                    const exportToCSV = (apiData: any, fileName: string) => {
+                      const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+                      const fileExtension = ".xlsx";
+
+                      const ws = XLSX.utils.json_to_sheet(apiData);
+                      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+                      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+                      const data = new Blob([excelBuffer], { type: fileType });
+                      FileSaver.saveAs(data, fileName + fileExtension);
+                    }
+
+                    let data: any[] = [];
+
+                    for (const c of this.state.finalClassrooms) {
+                      data.push({
+                        name: c.name,
+                        Creator: c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
+                        Domain: 'name',
+                        Played: c.assignmentsCount,
+                      });
+                    }
+
+                    exportToCSV(data, "table");
+
+                    this.setState({ downloadClicked: false });
+                  }}>
+                    <div>Export to Excel</div>
+                    <SpriteIcon name="excel-icon" />
+                  </div>
+                  <div className="btn-sort" onClick={() => {
+                    const doc = new jsPDF();
+                    autoTable(doc, {
+                      head: [['Name', 'Creator', 'Domain', 'Creator', 'Students', 'Assignments']],
+                      body: this.state.finalClassrooms.map(c => [
+                         c.name,
+                         c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
+                        'domain',
+                         c.students.length,
+                         c.assignmentsCount ? c.assignmentsCount : ''
+                      ]),
+                    });
+                    doc.save('table.pdf')
+                    this.setState({ downloadClicked: false });
+                  }}>
+                    <div>Export to PDF</div>
+                    <img alt="brill" src="/images/PDF_icon.png" />
+                  </div>
+                </div>
+              </Dialog>}
               {this.renderTable()}
             </div>
           </Grid>
