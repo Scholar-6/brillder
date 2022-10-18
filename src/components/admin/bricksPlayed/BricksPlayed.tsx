@@ -360,10 +360,9 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                     autoTable(doc, {
                       head: [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?']],
                       body: this.state.finalBricks.map(b => [
-                        b.datePublished ? b.datePublished : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no'
+                        b.datePublished ? b.datePublished : '', "", stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no'
                       ]),
-                    })
-                    console.log(doc);
+                    });
                     doc.save('table.pdf')
                     this.setState({ downloadClicked: false });
                   }}>
