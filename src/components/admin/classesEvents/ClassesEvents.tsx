@@ -21,8 +21,15 @@ import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { stripHtml } from "components/build/questionService/ConvertService";
 
+
+enum SortBy {
+  Name,
+  Creator,
+  Title,
+  Author,
+  Played
+}
 
 interface TeachProps {
   history: History;
@@ -34,6 +41,7 @@ interface TeachProps {
 }
 
 interface TeachState {
+  sortBy: SortBy;
   downloadClicked: boolean;
   subjects: Subject[];
   selectedSubjects: Subject[];
@@ -47,6 +55,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     super(props);
 
     this.state = {
+      sortBy: SortBy.Name,
       downloadClicked: false,
       dateFilter: PDateFilter.Past24Hours,
       subjects: [],
@@ -71,6 +80,24 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   search() { }
   searching() { }
 
+  sortClassrooms(sortBy: SortBy, classrooms: ClassroomApi[]) {
+    if (sortBy === SortBy.Name) {
+      return classrooms.sort((a, b) => {
+        const aT = a.name.toLocaleLowerCase();
+        const bT = b.name.toLocaleLowerCase();
+        return aT < bT ? -1 : 1;
+      });
+    } else if (sortBy === SortBy.Creator) {
+      return classrooms.sort((a, b) => {
+        const aT = a.teachers[0].firstName.toLocaleLowerCase();
+        const bT = b.teachers[0].firstName.toLocaleLowerCase();
+        return aT < bT ? -1 : 1;
+      });
+    } else {
+      return classrooms;
+    }
+  }
+
   renderBody() {
     const { finalClassrooms } = this.state;
     if (finalClassrooms.length == 0) {
@@ -90,15 +117,53 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     </div>
   }
 
+  filterBricksBySubjectsAndSort(classrooms: ClassroomApi[], selectedSubjects: Subject[], sortBy: SortBy) {
+    let finalClassrooms: ClassroomApi[] = [];
+    if (selectedSubjects.length > 0) {
+      for (let brick of finalClassrooms) {
+        const found = selectedSubjects.find(s => s.id === brick.subjectId);
+        if (found) {
+          finalClassrooms.push(brick);
+        }
+      }
+    } else {
+      finalClassrooms = [...classrooms];
+    }
+    finalClassrooms = this.sortClassrooms(sortBy, finalClassrooms);
+    return finalClassrooms;
+  }
+
+  filterAndSort(bricks: ClassroomApi[], selectedSubjects: Subject[], sortBy: SortBy) {
+    return this.filterBricksBySubjectsAndSort(bricks, selectedSubjects, sortBy);
+  }
+
   renderTable() {
     return (
       <div className="table">
         <div className="table-head bold">
           <div className="name-column header">
             <div>Name</div>
+            <div>
+              <SpriteIcon
+                name="sort-arrows"
+                onClick={() => {
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Name)
+                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                }}
+              />
+            </div>
           </div>
           <div className="creator-column header">
             <div>Creator</div>
+            <div>
+              <SpriteIcon
+                name="sort-arrows"
+                onClick={() => {
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Creator)
+                  this.setState({ sortBy: SortBy.Creator, finalClassrooms });
+                }}
+              />
+            </div>
           </div>
           <div className="domain-column header">
             <div>Domain</div>
@@ -140,7 +205,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
               <div className="btn-container">
-                <div className="btn btn-green flex-center" onClick={() => this.setState({downloadClicked: true})}>
+                <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
                   <div>Export</div>
                   <SpriteIcon name="upload" />
                 </div>
@@ -183,11 +248,11 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                     autoTable(doc, {
                       head: [['Name', 'Creator', 'Domain', 'Creator', 'Students', 'Assignments']],
                       body: this.state.finalClassrooms.map(c => [
-                         c.name,
-                         c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
+                        c.name,
+                        c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
                         'domain',
-                         c.students.length,
-                         c.assignmentsCount ? c.assignmentsCount : ''
+                        c.students.length,
+                        c.assignmentsCount ? c.assignmentsCount : ''
                       ]),
                     });
                     doc.save('table.pdf')

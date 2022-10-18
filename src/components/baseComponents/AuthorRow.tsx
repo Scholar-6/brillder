@@ -14,7 +14,21 @@ const AuthorSearchRow: React.FC<ShortDescriptionProps> = ({
   searchString,
 }) => {
   const res = [];
-  if (brick.author) {
+  if (brick.adaptedFrom) {
+    const { author } = brick.adaptedFrom;
+    if (author.firstName) {
+      res.push(
+        <SearchText key={0} searchString={searchString} text={author.firstName} />
+      );
+      res.push(' ');
+    }
+    if (author.lastName) {
+      res.push(
+        <SearchText key={1} searchString={searchString} text={author.lastName} />
+      );
+    }
+    res.push('•');
+  } else if (brick.author) {
     const { author } = brick;
     if (author.firstName) {
       res.push(
