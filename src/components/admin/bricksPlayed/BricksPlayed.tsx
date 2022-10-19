@@ -338,9 +338,11 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                     let data:any[] = [];
 
                     for (const brick of this.state.finalBricks) {
+                      const subject = this.state.subjects.find(s => s.id === brick.subjectId);
+
                       data.push({
                         Published: brick.datePublished?.toString(),
-                        Subjects: "",
+                        Subjects: subject?.name,
                         Title: stripHtml(brick.title),
                         Author: brick.author.firstName + ' ' + brick.author.lastName,
                         Played: brick.attemptsCount,
@@ -359,9 +361,10 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                     const doc = new jsPDF();
                     autoTable(doc, {
                       head: [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?']],
-                      body: this.state.finalBricks.map(b => [
-                        b.datePublished ? b.datePublished : '', "", stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no'
-                      ]),
+                      body: this.state.finalBricks.map(b => {
+                        const subject = this.state.subjects.find(s => s.id === b.subjectId);
+                        return [b.datePublished ? b.datePublished : '', subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no']
+                      })
                     });
                     doc.save('table.pdf')
                     this.setState({ downloadClicked: false });
