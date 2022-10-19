@@ -131,10 +131,18 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     </div>
   }
 
-  filterBricksBySubjectsAndSort(classrooms: ClassroomApi[], selectedSubjects: Subject[], sortBy: SortBy) {
-    let finalClassrooms: ClassroomApi[] = [];
+  filterAndSort(classrooms: ClassroomApi[], dateFilter: PDateFilter, selectedSubjects: Subject[], sortBy: SortBy) {
+    let finalClassrooms = classrooms.filter(c => {
+      if (c.updated) {
+        if (dateFilter === PDateFilter.Past24Hours) {
+        } else if (dateFilter === PDateFilter.PastWeek) {
+        }
+      }
+      return false;
+    });
+
     if (selectedSubjects.length > 0) {
-      for (let c of finalClassrooms) {
+      for (let c of classrooms) {
         const found = selectedSubjects.find(s => s.id === c.subjectId);
         if (found) {
           finalClassrooms.push(c);
@@ -143,12 +151,9 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     } else {
       finalClassrooms = [...classrooms];
     }
+
     finalClassrooms = this.sortClassrooms(sortBy, finalClassrooms);
     return finalClassrooms;
-  }
-
-  filterAndSort(bricks: ClassroomApi[], selectedSubjects: Subject[], sortBy: SortBy) {
-    return this.filterBricksBySubjectsAndSort(bricks, selectedSubjects, sortBy);
   }
 
   renderTable() {
@@ -161,7 +166,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Name)
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.dateFilter, this.state.selectedSubjects, SortBy.Name)
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -173,7 +178,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Creator)
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.dateFilter, this.state.selectedSubjects, SortBy.Creator)
                   this.setState({ sortBy: SortBy.Creator, finalClassrooms });
                 }}
               />
@@ -185,7 +190,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain)
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.dateFilter, this.state.selectedSubjects, SortBy.Domain)
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -197,7 +202,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Students)
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.dateFilter, this.state.selectedSubjects, SortBy.Students)
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -209,7 +214,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned)
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.dateFilter, this.state.selectedSubjects, SortBy.Assigned)
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -236,12 +241,15 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           <BricksPlayedSidebar
             isLoaded={true}
             dateFilter={this.state.dateFilter} setDateFilter={dateFilter => {
-
+              const finalClassrooms = this.filterAndSort(this.state.classrooms, dateFilter, this.state.selectedSubjects, SortBy.Assigned)
+              this.setState({ dateFilter, finalClassrooms });
             }}
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
             selectSubjects={selectedSubjects => {
-              this.setState({ selectedSubjects });
+              console.log(44, selectedSubjects)
+              const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.dateFilter, selectedSubjects, SortBy.Assigned)
+              this.setState({ selectedSubjects, finalClassrooms });
             }}
           />
           <Grid item xs={9} className="brick-row-container">
