@@ -54,6 +54,13 @@ export interface UserBase {
   freeAttemptsLeft?: number;
 }
 
+export interface Institution {
+  id: number;
+  name: string;
+  logo: string;
+  domains: string[];
+}
+
 export interface User extends UserBase {
   created: string;
   roles: UserRole[];
@@ -75,6 +82,8 @@ export interface User extends UserBase {
 
   teachClassroomCount?: number;
   studyClassroomCount?: number;
+
+  institution: Institution;
 }
 
 export interface UserProfile extends UserBase {
