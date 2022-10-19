@@ -5,32 +5,26 @@ import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material
 import { Subject } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
-export enum PSortBy {
-  MostPlayed,
-  LeastPlayed
-}
-
 export enum PDateFilter {
-  Today,
-  Past3Days,
+  Past24Hours,
   PastWeek,
   PastMonth,
+  PastYear,
   AllTime
 }
 
 export enum ESubjectCategory {
   Everything,
-  STEM,
-  Humanities,
+  Arts,
   General,
-  Others
+  Humanities,
+  Languages,
+  Math,
+  Science,
 }
 
 interface FilterSidebarProps {
   isLoaded: boolean;
-  isPublish: boolean;
-  sortBy: PSortBy;
-  setSort(sort: PSortBy): void;
   dateFilter: PDateFilter;
   setDateFilter(filter: PDateFilter): void;
   subjects: Subject[];
@@ -61,7 +55,7 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
   componentDidUpdate(prevProps: Readonly<FilterSidebarProps>, prevState: Readonly<FilterSidebarState>, snapshot?: any): void {
     if (prevProps.selectedSubjects !== this.props.selectedSubjects) {
       if (this.props.selectedSubjects.length != this.state.subjectIds.length) {
-        this.setState({subjectIds: this.props.selectedSubjects.map(s => s.id)});
+        this.setState({ subjectIds: this.props.selectedSubjects.map(s => s.id) });
       } else {
         // if same number but different subjects rare case
         // no solution yet
@@ -77,41 +71,25 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
   }
 
   renderSubject() {
-    
+
   }
 
   render() {
-    const { sortBy, dateFilter, subjectCategory, setSubjectCategory } = this.props;
+    const { dateFilter, subjectCategory, setSubjectCategory } = this.props;
     return (
       <Grid
         container item xs={3}
         className="sort-and-filter-container teach-assigned"
       >
         <div className="sort-box">
-          <div className="bold font1-5">Sort By</div>
-          <div className="sort-radio-btns">
-            <FormControlLabel
-              checked={sortBy === PSortBy.MostPlayed}
-              control={<Radio onClick={() => this.props.setSort(PSortBy.MostPlayed)} className={"filter-radio custom-color"} />}
-              label={this.props.isPublish ? "Most Recent" : "Most Played"} />
-            <FormControlLabel
-              checked={sortBy === PSortBy.LeastPlayed}
-              control={<Radio onClick={() => this.props.setSort(PSortBy.LeastPlayed)} className={"filter-radio custom-color"} />}
-              label={this.props.isPublish ? "Oldest" : "Least Played"} />
-          </div>
+          <div className="bold font1-5">Filter By</div>
         </div>
-        <div className="filter-header">Date Filter</div>
+        <div className="filter-header">Date</div>
         <div className="sort-radio-btns filter-row margin-smaller top-margin-bigger">
           <FormControlLabel
-            checked={dateFilter === PDateFilter.Today}
-            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.Today)} className={"filter-radio custom-color"} />}
-            label="Today" />
-        </div>
-        <div className="sort-radio-btns filter-row margin-smaller">
-          <FormControlLabel
-            checked={dateFilter === PDateFilter.Past3Days}
-            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.Past3Days)} className={"filter-radio custom-color"} />}
-            label="Past 3 days" />
+            checked={dateFilter === PDateFilter.Past24Hours}
+            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.Past24Hours)} className={"filter-radio custom-color"} />}
+            label="Past 24 hours" />
           <FormControlLabel
             checked={dateFilter === PDateFilter.PastWeek}
             control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.PastWeek)} className={"filter-radio custom-color"} />}
@@ -122,6 +100,12 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
             checked={dateFilter === PDateFilter.PastMonth}
             control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.PastMonth)} className={"filter-radio custom-color"} />}
             label="Past month" />
+          <FormControlLabel
+            checked={dateFilter === PDateFilter.PastYear}
+            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.PastYear)} className={"filter-radio custom-color"} />}
+            label="Past year" />
+        </div>
+        <div className="sort-radio-btns filter-row margin-smaller">
           <FormControlLabel
             checked={dateFilter === PDateFilter.AllTime}
             control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.AllTime)} className={"filter-radio custom-color"} />}
@@ -136,23 +120,39 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
         </div>
         <div className="sort-radio-btns filter-row margin-smaller">
           <FormControlLabel
-            checked={subjectCategory === ESubjectCategory.STEM}
-            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.STEM)} className={"filter-radio custom-color"} />}
-            label="STEM" />
-          <FormControlLabel
-            checked={subjectCategory === ESubjectCategory.Humanities}
-            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Humanities)} className={"filter-radio custom-color"} />}
-            label="Humanities" />
+            checked={subjectCategory === ESubjectCategory.Arts}
+            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Arts)} className={"filter-radio custom-color"} />}
+            label="Arts" />
         </div>
         <div className="sort-radio-btns filter-row margin-smaller">
           <FormControlLabel
             checked={subjectCategory === ESubjectCategory.General}
             control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.General)} className={"filter-radio custom-color"} />}
             label="General & Topical" />
+        </div>
+        <div className="sort-radio-btns full-width filter-row margin-smaller">
           <FormControlLabel
-            checked={subjectCategory === ESubjectCategory.Others}
-            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Others)} className={"filter-radio custom-color"} />}
-            label="Other" />
+            checked={subjectCategory === ESubjectCategory.Humanities}
+            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Humanities)} className={"filter-radio custom-color"} />}
+            label="Humanities & Social Sciences" />
+        </div>
+        <div className="sort-radio-btns full-width filter-row margin-smaller">
+          <FormControlLabel
+            checked={subjectCategory === ESubjectCategory.Languages}
+            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Languages)} className={"filter-radio custom-color"} />}
+            label="Languages" />
+        </div>
+        <div className="sort-radio-btns full-width filter-row margin-smaller">
+          <FormControlLabel
+            checked={subjectCategory === ESubjectCategory.Math}
+            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Math)} className={"filter-radio custom-color"} />}
+            label="Maths & Computing" />
+        </div>
+        <div className="sort-radio-btns filter-row margin-smaller">
+          <FormControlLabel
+            checked={subjectCategory === ESubjectCategory.Science}
+            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Science)} className={"filter-radio custom-color"} />}
+            label="Science" />
         </div>
         <div className="filter-header">Subjects</div>
         <div className="flex-center relative select-container">
@@ -179,7 +179,7 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
                   subjects.push(subject);
                 }
               }
-              this.setState({subjectIds: values});
+              this.setState({ subjectIds: values });
               this.props.selectSubjects(subjects);
             }}
           >

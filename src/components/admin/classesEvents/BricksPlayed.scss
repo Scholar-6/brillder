@@ -1,7 +1,3 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
-
 .bricks-played-page {
   .teach-assigned {
     overflow-y: auto;
@@ -70,7 +66,7 @@
     }
 
     .table-head {
-      margin-top: 0.2vh;
+      margin-top: 2vh;
       display: flex;
       font-size: 1.2vw;
 
@@ -85,6 +81,25 @@
         }
       }
     }
+    .name-column {
+      padding-left: 1.5%;
+      width: 25%;
+    }
+    .creator-column {
+      width: 25%;
+    }
+    .domain-column {
+      width: 25%;
+
+    }
+    .students-column {
+      width: 12.5%;
+    }
+
+    .assigned-column {
+      width: 12.5%;
+    }
+
     .publish-column {
       display: flex;
       align-items: center;
@@ -131,32 +146,6 @@
 
     .author-column {
       width: 13%;
-    }
-
-    .btn-container {
-      margin-right: 2vw;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
-
-    .btn {
-      cursor: pointer;
-      margin-top: 2vh;
-      font-size: 1.2vw;
-      color: white;
-      padding: 0.2vw 0.6vw;
-      border-radius: 0.5vw;
-
-      svg {
-        margin-left: 0.7vw;
-        width: 1vw;
-        height: 1vw;
-      }
-    }
-
-    .btn-green {
-      background: var(--theme-green);
     }
 
     .table-row {
@@ -208,70 +197,6 @@
     &::after, &::before {
       display: none !important;
       content: null !important;
-    }
-  }
-}
-
-.export-dialog-ew35 {
-  .MuiBackdrop-root {
-    background-color: unset;
-  }
-  .MuiDialog-container {
-    align-items: flex-start;
-    justify-content: flex-start;
-    .MuiPaper-root {
-      background: white;
-      margin-top: calc(5.834vw + 2vw + 2.4vw + 2vw + 2vh + 2vw); 
-      margin-left: 85vw;
-      border-radius: 0.5vw;
-      width: 13vw;
-      svg {
-        margin-left: 3.4vw;
-        width: 1.5vw;
-        height: 1.5vw;
-        color: white;
-      }
-
-      img {
-        margin-left: 4vw;
-        width: 1vw;
-        height: 1.3vw;
-      }
-
-      .popup-3rfw {
-        color: var(--theme-dark-blue);
-        padding-top: 0.4vw;
-        padding-bottom: 0.7vw;
-
-        .btn-sort {
-          padding-left: 0.8vw;
-          padding-right: 0.8vw;
-          padding-top: 0.2vw;
-          padding-bottom: 0.2vw;
-          display: flex;
-          font-size: 1vw;
-          transition: all 200ms ease-in-out;
-          cursor: pointer;
-          font-family: $font-family-regular;
-
-          .MuiButtonBase-root {
-            margin-right: 0.4vw;
-            padding: 0;
-            color: white;
-          }
-
-          &:hover {
-            background: var(--tab-gray);
-          }
-        }
-        .no-click {
-          font-size: 1.2vw;
-          padding-left: 0.8vw;
-          padding-top: 0.4vw;
-          padding-right: 0.8vw;
-          padding-bottom: 0.4vw;
-        }
-      }
     }
   }
 }

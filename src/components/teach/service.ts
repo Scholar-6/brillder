@@ -17,6 +17,7 @@ export interface ClassroomApi {
   assignmentsCount?: number;
   studentsInvitations?: MUser[];
   teacher?: User;
+  teachers: User[];
 }
 
 /**
@@ -67,6 +68,33 @@ export const getAllClassrooms = async () => {
     return null;
   }
 }
+
+
+/**
+ * Get all admin classrooms
+ * return list of classrooms if success or null if failed
+ */
+ export const getAllAdminClassrooms = async () => {
+  try {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/adminOrInstitution/getAllClassrooms", {
+      withCredentials: true,
+    });
+    if (res.data) {
+      let classrooms = (res.data as ClassroomApi[]);
+      for (let classroom of classrooms) {
+        for (let student of classroom.students as MUser[]) {
+          student.selected = false;
+        }
+      }
+      return res.data as ClassroomApi[];
+    }
+    return null;
+  }
+  catch (e) {
+    return null;
+  }
+}
+
 
 /**
  * Get classroom Assignments

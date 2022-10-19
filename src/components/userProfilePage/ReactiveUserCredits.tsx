@@ -34,7 +34,7 @@ const ReactiveUserCredits: React.FC<Props> = (props) => {
     getCredits();
 
     const interval = setInterval(() => {
-      getCredits();
+      //getCredits();
     }, 2000);
 
     // free resources
