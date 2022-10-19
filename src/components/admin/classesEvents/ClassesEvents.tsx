@@ -126,15 +126,31 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       return <div>No Bricks</div>;
     }
 
+    const renderDomain = (creator: User) => {
+      if (creator.institution) {
+        return (<div className="domain-column">
+          {creator.institution.domains.map(d => <div>{d}</div>)}
+        </div>);
+      }
+      return '';
+    }
+
     return <div className="table-body">
       {finalClassrooms.map(c => {
-        return (<div className="table-row">
-          <div className="name-column">{c.name}</div>
-          <div className="creator-column">{c.teachers[0].firstName} {c.teachers[0].lastName}</div>
-          <div className="domain-column">domain</div>
-          <div className="students-column">{c.students.length}</div>
-          <div className="assigned-column">{c.assignmentsCount}</div>
-        </div>);
+        if (c.creator.institution) {
+          console.log('test ', c.creator);
+        }
+        return (
+          <div className="table-row">
+            <div className="name-column">{c.name}</div>
+            <div className="creator-column">
+              {c.creator ? `${c.creator.firstName} ${c.creator.lastName}` : ''}
+            </div>
+            <div className="domain-column">{renderDomain(c.creator)}</div>
+            <div className="students-column">{c.students.length}</div>
+            <div className="assigned-column">{c.assignmentsCount}</div>
+          </div>
+        );
       })}
     </div>
   }
