@@ -1,3 +1,4 @@
+import { StripeCardNumberElement } from "@stripe/stripe-js";
 import axios from "axios";
 import { Subject } from "model/brick";
 import { User } from "model/user";
@@ -74,9 +75,9 @@ export const getAllClassrooms = async () => {
  * Get all admin classrooms
  * return list of classrooms if success or null if failed
  */
- export const getAllAdminClassrooms = async () => {
+ export const getAllAdminClassrooms = async (dateFilter: number) => {
   try {
-    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/adminOrInstitution/getAllClassrooms", {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/adminOrInstitution/getAllClassrooms/" + dateFilter, {
       withCredentials: true,
     });
     if (res.data) {
