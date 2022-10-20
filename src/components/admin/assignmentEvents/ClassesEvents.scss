@@ -1,4 +1,8 @@
-.bricks-played-page {
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.classes-events-page {
   .teach-assigned {
     overflow-y: auto;
     .sort-box {
@@ -197,6 +201,31 @@
     &::after, &::before {
       display: none !important;
       content: null !important;
+    }
+  }
+
+  .sub-tab-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    .sub-tab-container {
+      left: 0;
+      top: 0;
+    }
+    
+    > div {
+      cursor: pointer;
+      font-size: 1vw;
+      font-family: $font-family-bold;
+      color: var(--dark-gray);
+      margin: calc(2vh + 0.3vw) 0.5vw;
+      border-bottom: 2px solid rgba($color: #000, $alpha: 0);
+      &.active {
+        color: var(--theme-dark-blue);
+        border-bottom: 2px solid var(--theme-dark-blue);
+      }
     }
   }
 }

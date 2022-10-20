@@ -1,0 +1,231 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.classes-events-page {
+  .teach-assigned {
+    overflow-y: auto;
+    .sort-box {
+      display: flex;
+      align-items: center;
+      height: 6vh;
+      padding: 0 1.4vw;
+    }
+    .sort-radio-btns {
+      height: 4.5vh;
+      font-size: 1.2vw;
+
+      .MuiFormControlLabel-root {
+        width: 50%;
+        margin: 0;
+      }
+
+      &.full-width .MuiFormControlLabel-root {
+        width: 100%;
+      }
+      .MuiButtonBase-root {
+        padding: 0;
+      }
+
+      .MuiIconButton-label {
+        margin-right: 0.5vw;
+        svg {
+          color: white;
+        }
+      }
+    }
+    .filter-row {
+      padding: 0 1.4vw;
+
+      &.margin-smaller {
+        &.top-margin-bigger {
+          margin-top: 1vh;
+        }
+      }
+    }
+    .filter-header {
+      position: relative;
+      height: 4vh;
+      background: var(--light-blue-alpha5);
+      padding: 0 1.4vw;
+      font-size: 1.2vw !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "Brandon Grotesque Bold";
+    }
+  }
+  .tab-content {
+    overflow-y: auto;
+    padding-bottom: 1vw;
+    color: var(--theme-dark-blue);
+    position: relative;
+
+    .publish-toggle {
+      top: 1vh;
+      > span {
+        letter-spacing: 0;
+        margin-left: 1.5vw;
+      }
+    }
+
+    .table-head {
+      margin-top: 2vh;
+      display: flex;
+      font-size: 1.2vw;
+
+      .header {
+        display: flex;
+        align-items: center;
+
+        svg {
+          cursor: pointer;
+          width: 0.7vw;
+          height: 0.7vw;
+        }
+      }
+    }
+    .name-column {
+      padding-left: 1.5%;
+      width: 25%;
+    }
+    .creator-column {
+      width: 25%;
+    }
+    .domain-column {
+      width: 25%;
+
+    }
+    .students-column {
+      width: 12.5%;
+    }
+
+    .assigned-column {
+      width: 12.5%;
+    }
+
+    .publish-column {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 11%;
+    }
+    .first-column {
+      display: flex;
+      align-items: center;
+      padding-left: 2%;
+      width: 50%;
+      p {
+        display: inline;
+      }
+    }
+    .second-column {
+      display: flex;
+      align-items: center;
+      width: 10%;
+    }
+    .subject-column {
+      width: 15%;
+
+      .subject-block {
+        display: flex;
+        align-items: center;
+        margin: 0 0.2vw;
+        .circle {
+          margin: 0 0.2vw;
+          width: 0.7vw;
+          height: 0.7vw;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .third-column {
+      width: 10%;
+      svg {
+        width: 1.5vw;
+        height: 1.5vw;
+      }
+    }
+
+    .author-column {
+      width: 13%;
+    }
+
+    .table-row {
+      display: flex;
+      font-size: 1vw;
+      padding: 0.4vw 0;
+
+      &:nth-child(odd) {
+        background: var(--tab-gray);
+      }
+    }
+  }
+
+  .MuiTypography-root {
+    font-size: 1vw;
+  }
+
+  .select-container {
+    position: relative;
+    .absolute-placeholder {
+      font-size: 1vw;
+      position: absolute;
+      left: 2vw;
+      top: calc(2.5vh);
+      height: 5vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      color: #7E7E7E;
+      z-index: 1;
+    }
+  }
+
+  .select-multiple-subject {
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    width: 21vw;
+    .MuiSelect-select {
+      padding-top: 0;
+      padding-bottom: 0;
+      display: flex;
+      align-items: center;
+      color: var(--theme-dark-blue);
+      height: 5vh;
+      border-radius: 0.5vw;
+      background: var(--white);
+    }
+    &::after, &::before {
+      display: none !important;
+      content: null !important;
+    }
+  }
+
+  .sub-tab-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    .sub-tab-container {
+      left: 0;
+      top: 0;
+    }
+    
+    > div {
+      cursor: pointer;
+      font-size: 1vw;
+      font-family: $font-family-bold;
+      color: var(--dark-gray);
+      margin: calc(2vh + 0.3vw) 0.5vw;
+      border-bottom: 2px solid rgba($color: #000, $alpha: 0);
+      &.active {
+        color: var(--theme-dark-blue);
+        border-bottom: 2px solid var(--theme-dark-blue);
+      }
+    }
+  }
+}

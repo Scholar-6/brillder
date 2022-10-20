@@ -8,7 +8,7 @@ import * as FileSaver from "file-saver";
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable';
 
-import './BricksPlayed.scss';
+import './ClassesEvents.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 import { getAllAdminClassrooms } from 'components/teach/service';
@@ -21,6 +21,7 @@ import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import SubTab, { ClassesActiveSubTab } from "./SubTab";
 
 
 enum SortBy {
@@ -137,16 +138,13 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
 
     return <div className="table-body">
       {finalClassrooms.map(c => {
-        if (c.creator.institution) {
-          console.log('test ', c.creator);
-        }
         return (
           <div className="table-row">
             <div className="name-column">{c.name}</div>
             <div className="creator-column">
               {c.creator ? `${c.creator.firstName} ${c.creator.lastName}` : ''}
             </div>
-            <div className="domain-column">{renderDomain(c.creator)}</div>
+            {renderDomain(c.creator)}
             <div className="students-column">{c.students.length}</div>
             <div className="assigned-column">{c.assignmentsCount}</div>
           </div>
@@ -244,7 +242,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
 
   render() {
     return (
-      <div className="main-listing user-list-page manage-classrooms-page bricks-played-page">
+      <div className="main-listing user-list-page manage-classrooms-page bricks-played-page classes-events-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
           placeholder="Brick Title, Student Name, or Subject"
@@ -267,6 +265,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
+              <SubTab activeTab={ClassesActiveSubTab.Classes} history={this.props.history} />
               <div className="btn-container">
                 <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
                   <div>Export</div>
