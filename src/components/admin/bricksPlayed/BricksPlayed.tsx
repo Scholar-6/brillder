@@ -271,7 +271,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           page={PageEnum.ManageClasses}
           placeholder="Brick Title, Student Name, or Subject"
           user={this.props.user}
-          history={history}
+          history={this.props.history}
           search={() => { }}
           searching={() => { }}
         />
