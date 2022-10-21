@@ -23,6 +23,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SubTab, { ClassesActiveSubTab } from "../components/SubTab";
 import { Assignment } from "model/classroom";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import map from "components/map";
 
 
 enum SortBy {
@@ -33,7 +34,7 @@ enum SortBy {
 }
 
 interface TeachProps {
-  history: History;
+  history: any;
   searchString: string;
 
   // redux
@@ -94,7 +95,6 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
       return assignments.sort((a, b) => {
         const aT = a.classroom?.teachers[0].firstName.toLocaleLowerCase();
         const bT = b.classroom?.teachers[0].firstName.toLocaleLowerCase();
-        console.log(aT, bT);
         return aT < bT ? -1 : 1;
       });
     } else if (sortBy === SortBy.Class) {
@@ -123,17 +123,6 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
     const { finalAssignments } = this.state;
     if (finalAssignments.length == 0) {
       return <div>No Bricks</div>;
-    }
-
-    const renderDomain = (creator: User) => {
-      if (creator.institution) {
-        return (
-          <div className="domain-column">
-            {creator.institution.domains.map(d => <div>{d}</div>)}
-          </div>
-        );
-      }
-      return '';
     }
 
     return <div className="table-body">
@@ -234,7 +223,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
           page={PageEnum.ManageClasses}
           placeholder="Brick Title, Student Name, or Subject"
           user={this.props.user}
-          history={history}
+          history={this.props.history}
           search={this.search.bind(this)}
           searching={this.searching.bind(this)}
         />
@@ -278,7 +267,10 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
 
                     for (const a of this.state.finalAssignments) {
                       data.push({
+                        Teacher: `${a.classroom?.teachers[0].firstName} ${a.classroom?.teachers[0].lastName}`,
+                        Class: a.classroom?.name,
                         Domain: 'name',
+                        Brick: stripHtml(a.brick.title)
                       });
                     }
 
@@ -292,9 +284,12 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
                   <div className="btn-sort" onClick={() => {
                     const doc = new jsPDF();
                     autoTable(doc, {
-                      head: [['Name', 'Creator', 'Domain', 'Creator', 'Students', 'Assignments']],
-                      body: this.state.finalAssignments.map(c => [
-                        'domain',
+                      head: [['Teacher', 'Class', 'Domain', 'Brick']],
+                      body: this.state.finalAssignments.map(a => [
+                        `${a.classroom?.teachers[0].firstName} ${a.classroom?.teachers[0].lastName}`,
+                        a.classroom?.name,
+                        '',
+                        stripHtml(a.brick.title)
                       ]),
                     });
                     doc.save('table.pdf')
