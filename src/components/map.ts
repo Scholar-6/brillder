@@ -5,6 +5,7 @@ export const Admin = '/admin';
 export const AdminBricksPlayed = Admin + '/bricks-played';
 export const UsersEvents = Admin + '/users-events';
 export const ClassesEvents = Admin + '/classes-events';
+export const AssignmentEvents = Admin + '/assignment-events';
 
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
@@ -152,6 +153,7 @@ export const postAssignmentQuestion = (brickId: number, userId: number, question
 export default {
   AdminBricksPlayed,
   ClassesEvents,
+  AssignmentEvents,
   UsersEvents,
   
   Build,

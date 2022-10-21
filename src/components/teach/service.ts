@@ -1,6 +1,7 @@
 import { StripeCardNumberElement } from "@stripe/stripe-js";
 import axios from "axios";
 import { Subject } from "model/brick";
+import { Assignment } from "model/classroom";
 import { User } from "model/user";
 
 import { MUser } from "./model";
@@ -97,6 +98,50 @@ export const getAllClassrooms = async () => {
   }
 }
 
+
+/**
+ * Get all assignments by admin
+ * return list of classrooms if success or null if failed
+ */
+ export const getAllAssignmentsByAdmin = async (dateFilter: number) => {
+  try {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/adminOrInstitution/getAdminAssignments/" + dateFilter, {
+      withCredentials: true,
+    });
+    if (res.data) {
+      return res.data as any[];
+    }
+    return null;
+  }
+  catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Get all admin classrooms
+ * return list of classrooms if success or null if failed
+ */
+ export const getClassrooms = async (dateFilter: number) => {
+  try {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/adminOrInstitution/getAllClassrooms/" + dateFilter, {
+      withCredentials: true,
+    });
+    if (res.data) {
+      let classrooms = (res.data as ClassroomApi[]);
+      for (let classroom of classrooms) {
+        for (let student of classroom.students as MUser[]) {
+          student.selected = false;
+        }
+      }
+      return res.data as ClassroomApi[];
+    }
+    return null;
+  }
+  catch (e) {
+    return null;
+  }
+}
 
 /**
  * Get classroom Assignments

@@ -21,7 +21,7 @@ import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import SubTab, { ClassesActiveSubTab } from "./SubTab";
+import SubTab, { ClassesActiveSubTab } from "../components/SubTab";
 
 
 enum SortBy {
