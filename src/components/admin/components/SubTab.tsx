@@ -32,7 +32,7 @@ const SubTab: React.FC<TabProps> = ({ activeTab, history }) => {
       className = 'active';
     }
     return (
-      <div className={className} onClick={() => history.push(map.ClassesEvents)}>
+      <div className={className} onClick={() => history.push(map.AssignmentEvents)}>
         <div style={{display: 'flex'}}>
           <span>ASSIGNMENTS</span>
         </div>
@@ -45,7 +45,7 @@ const SubTab: React.FC<TabProps> = ({ activeTab, history }) => {
       {classesSubTab()}
       {assignmentsSubTab()}
     </div>
-  )
+  );
 }
 
 export default SubTab;

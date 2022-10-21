@@ -27,7 +27,7 @@ const SortButton: React.FC<Props> = ({ sort, ...props }) => {
       <div className="css-custom-tooltip">
         Sort
       </div>
-      {clicked && <Dialog className="export-dialog-ew35" open={clicked} onClose={()=> setClicked(false)}>
+      {clicked && <Dialog className="sort-dialog-ew33" open={clicked} onClose={()=> setClicked(false)}>
         <div className="popup-3rfw bold">
           <div className="no-click">Sort By</div>
           <div className="btn-sort" onClick={() => {
