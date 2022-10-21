@@ -69,7 +69,6 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
 
   async loadInitPlayedData() {
     const assignments = await getAllAssignmentsByAdmin(PDateFilter.Past24Hours);
-    console.log(assignments);
     if (assignments) {
       this.setState({ assignments, finalAssignments: assignments });
     }
@@ -92,9 +91,28 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
 
   sortAssignments(sortBy: SortBy, assignments: Assignment[]) {
     if (sortBy === SortBy.Teacher) {
+      return assignments.sort((a, b) => {
+        const aT = a.classroom?.teachers[0].firstName.toLocaleLowerCase();
+        const bT = b.classroom?.teachers[0].firstName.toLocaleLowerCase();
+        console.log(aT, bT);
+        return aT < bT ? -1 : 1;
+      });
     } else if (sortBy === SortBy.Class) {
+      return assignments.sort((a, b) => {
+        let aT = a.classroom.name.toLocaleLowerCase();
+        let bT = b.classroom.name.toLocaleLowerCase();
+        return aT < bT ? -1 : 1;
+      });
     } else if (sortBy === SortBy.Domain) {
+
     } else if (sortBy === SortBy.Brick) {
+      return assignments.sort((a, b) => {
+        let aT = stripHtml(a.brick.title).toLocaleLowerCase();
+        let bT = stripHtml(b.brick.title).toLocaleLowerCase();
+
+        return aT < bT ? -1 : 1;
+      });
+
     } else {
       return assignments;
     }
@@ -103,7 +121,6 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
 
   renderBody() {
     const { finalAssignments } = this.state;
-    console.log(this.state);
     if (finalAssignments.length == 0) {
       return <div>No Bricks</div>;
     }
