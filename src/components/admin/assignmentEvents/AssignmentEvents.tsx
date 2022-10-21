@@ -8,10 +8,10 @@ import * as FileSaver from "file-saver";
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable';
 
-import './ClassesEvents.scss';
+import './AssignmentEvents.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
-import { getAllAdminClassrooms } from 'components/teach/service';
+import { getAllAssignmentsByAdmin } from 'components/teach/service';
 
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
@@ -19,17 +19,17 @@ import BricksPlayedSidebar, { PDateFilter } from "./BricksPlayedSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
-import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SubTab, { ClassesActiveSubTab } from "../components/SubTab";
+import { Assignment } from "model/classroom";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 
 enum SortBy {
-  Name,
-  Creator,
+  Teacher,
+  Class,
   Domain,
-  Students,
-  Assigned
+  Brick
 }
 
 interface TeachProps {
@@ -46,31 +46,31 @@ interface TeachState {
   downloadClicked: boolean;
   subjects: Subject[];
   selectedSubjects: Subject[];
-  classrooms: ClassroomApi[];
-  finalClassrooms: ClassroomApi[];
+  assignments: Assignment[];
+  finalAssignments: Assignment[];
   dateFilter: PDateFilter;
 }
 
-class ClassesEvents extends Component<TeachProps, TeachState> {
+class AssignmentEvents extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
     this.state = {
-      sortBy: SortBy.Name,
+      sortBy: SortBy.Teacher,
       downloadClicked: false,
       dateFilter: PDateFilter.Past24Hours,
       subjects: [],
       selectedSubjects: [],
-      classrooms: [],
-      finalClassrooms: []
+      assignments: [],
+      finalAssignments: []
     }
     this.loadInitPlayedData();
   }
 
   async loadInitPlayedData() {
-    const classrooms = await getAllAdminClassrooms(PDateFilter.Past24Hours);
-    if (classrooms) {
-      this.setState({ classrooms, finalClassrooms: classrooms });
+    const assignments = await getAllAssignmentsByAdmin(PDateFilter.Past24Hours);
+    if (assignments) {
+      this.setState({ assignments, finalAssignments: assignments });
     }
     const subjects = await getSubjects();
     if (subjects) {
@@ -79,95 +79,94 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   }
 
   async loadData(dateFilter: PDateFilter) {
-    const classrooms = await getAllAdminClassrooms(dateFilter);
-    if (classrooms) {
-      const finalClassrooms = this.filterAndSort(classrooms, this.state.selectedSubjects, this.state.sortBy);
-      this.setState({ classrooms, finalClassrooms, dateFilter });
+    const assignments = await getAllAssignmentsByAdmin(dateFilter);
+    if (assignments) {
+      const finalAssignments = this.filterAndSort(assignments, this.state.selectedSubjects, this.state.sortBy);
+      this.setState({ assignments, finalAssignments, dateFilter });
     }
   }
 
   search() { }
   searching() { }
 
-  sortClassrooms(sortBy: SortBy, classrooms: ClassroomApi[]) {
-    if (sortBy === SortBy.Name) {
-      return classrooms.sort((a, b) => {
-        const aT = a.name.toLocaleLowerCase();
-        const bT = b.name.toLocaleLowerCase();
+  sortAssignments(sortBy: SortBy, assignments: Assignment[]) {
+    if (sortBy === SortBy.Teacher) {
+      return assignments.sort((a, b) => {
+        const aT = a.classroom?.teachers[0].firstName.toLocaleLowerCase();
+        const bT = b.classroom?.teachers[0].firstName.toLocaleLowerCase();
+        console.log(aT, bT);
         return aT < bT ? -1 : 1;
       });
-    } else if (sortBy === SortBy.Creator) {
-      return classrooms.sort((a, b) => {
-        if (a.teachers.length > 0 && b.teachers.length > 0 && a.teachers[0].firstName && b.teachers[0].firstName) {
-          const aT = a.teachers[0].firstName.toLocaleLowerCase();
-          const bT = b.teachers[0].firstName.toLocaleLowerCase();
-          return aT < bT ? -1 : 1;
-        }
-        return 1;
+    } else if (sortBy === SortBy.Class) {
+      return assignments.sort((a, b) => {
+        let aT = a.classroom.name.toLocaleLowerCase();
+        let bT = b.classroom.name.toLocaleLowerCase();
+        return aT < bT ? -1 : 1;
       });
-    } else if (sortBy === SortBy.Students) {
-      return classrooms.sort((a, b) => {
-        return a.students.length < b.students.length ? 1 : -1;
+    } else if (sortBy === SortBy.Domain) {
+
+    } else if (sortBy === SortBy.Brick) {
+      return assignments.sort((a, b) => {
+        let aT = stripHtml(a.brick.title).toLocaleLowerCase();
+        let bT = stripHtml(b.brick.title).toLocaleLowerCase();
+
+        return aT < bT ? -1 : 1;
       });
-    } else if (sortBy === SortBy.Assigned) {
-      return classrooms.sort((a, b) => {
-        if (a.assignmentsCount && b.assignmentsCount) {
-          return a.assignmentsCount < b.assignmentsCount ? 1 : -1;
-        }
-        return -1;
-      });
+
     } else {
-      return classrooms;
+      return assignments;
     }
+    return assignments;
   }
 
   renderBody() {
-    const { finalClassrooms } = this.state;
-    if (finalClassrooms.length == 0) {
+    const { finalAssignments } = this.state;
+    if (finalAssignments.length == 0) {
       return <div>No Bricks</div>;
     }
 
     const renderDomain = (creator: User) => {
       if (creator.institution) {
-        return (<div className="domain-column">
-          {creator.institution.domains.map(d => <div>{d}</div>)}
-        </div>);
+        return (
+          <div className="domain-column">
+            {creator.institution.domains.map(d => <div>{d}</div>)}
+          </div>
+        );
       }
       return '';
     }
 
     return <div className="table-body">
-      {finalClassrooms.map(c => {
+      {finalAssignments.map(a => {
         return (
           <div className="table-row">
-            <div className="name-column">{c.name}</div>
+            <div className="name-column">{a.classroom?.teachers[0].firstName} {a.classroom?.teachers[0].lastName}</div>
             <div className="creator-column">
-              {c.creator ? `${c.creator.firstName} ${c.creator.lastName}` : ''}
+              {a.classroom?.name}
             </div>
-            {renderDomain(c.creator)}
-            <div className="students-column">{c.students.length}</div>
-            <div className="assigned-column">{c.assignmentsCount}</div>
+            <div className="domain-column"></div>
+            <div className="assigned-column">{stripHtml(a.brick.title)}</div>
           </div>
         );
       })}
     </div>
   }
 
-  filterAndSort(classrooms: ClassroomApi[], selectedSubjects: Subject[], sortBy: SortBy) {
-    let finalClassrooms = [];
+  filterAndSort(assignments: Assignment[], selectedSubjects: Subject[], sortBy: SortBy) {
+    let finalAssignments = [];
     if (selectedSubjects.length > 0) {
-      for (let c of classrooms) {
-        const found = selectedSubjects.find(s => s.id === c.subjectId);
+      for (let a of assignments) {
+        const found = selectedSubjects.find(s => s.id === a.classroom.subjectId);
         if (found) {
-          finalClassrooms.push(c);
+          finalAssignments.push(a);
         }
       }
     } else {
-      finalClassrooms = [...classrooms];
+      finalAssignments = [...assignments];
     }
 
-    finalClassrooms = this.sortClassrooms(sortBy, finalClassrooms);
-    return finalClassrooms;
+    finalAssignments = this.sortAssignments(sortBy, finalAssignments);
+    return finalAssignments;
   }
 
   renderTable() {
@@ -175,25 +174,25 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       <div className="table">
         <div className="table-head bold">
           <div className="name-column header">
-            <div>Name</div>
+            <div>Teacher</div>
             <div>
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Name)
-                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Teacher)
+                  this.setState({ sortBy: SortBy.Teacher, finalAssignments });
                 }}
               />
             </div>
           </div>
           <div className="creator-column header">
-            <div>Creator</div>
+            <div>Class</div>
             <div>
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Creator)
-                  this.setState({ sortBy: SortBy.Creator, finalClassrooms });
+                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Class)
+                  this.setState({ sortBy: SortBy.Class, finalAssignments });
                 }}
               />
             </div>
@@ -204,32 +203,20 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain)
-                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                }}
-              />
-            </div>
-          </div>
-          <div className="students-column header">
-            <div>Students</div>
-            <div>
-              <SpriteIcon
-                name="sort-arrows"
-                onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Students)
-                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Domain)
+                  this.setState({ sortBy: SortBy.Domain, finalAssignments });
                 }}
               />
             </div>
           </div>
           <div className="assigned-column header">
-            <div>Assigned</div>
+            <div>Brick</div>
             <div>
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned)
-                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Brick)
+                  this.setState({ sortBy: SortBy.Brick, finalAssignments });
                 }}
               />
             </div>
@@ -258,14 +245,14 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
             selectSubjects={selectedSubjects => {
-              const finalClassrooms = this.filterAndSort(this.state.classrooms, selectedSubjects, SortBy.Assigned)
-              this.setState({ selectedSubjects, finalClassrooms });
+              const finalAssignments = this.filterAndSort(this.state.assignments, selectedSubjects, SortBy.Teacher)
+              this.setState({ selectedSubjects, finalAssignments });
             }}
           />
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
-              <SubTab activeTab={ClassesActiveSubTab.Classes} history={this.props.history} />
+              <SubTab activeTab={ClassesActiveSubTab.Assignments} history={this.props.history} />
               <div className="btn-container">
                 <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
                   <div>Export</div>
@@ -289,12 +276,9 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
 
                     let data: any[] = [];
 
-                    for (const c of this.state.finalClassrooms) {
+                    for (const a of this.state.finalAssignments) {
                       data.push({
-                        name: c.name,
-                        Creator: c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
                         Domain: 'name',
-                        Played: c.assignmentsCount,
                       });
                     }
 
@@ -309,12 +293,8 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                     const doc = new jsPDF();
                     autoTable(doc, {
                       head: [['Name', 'Creator', 'Domain', 'Creator', 'Students', 'Assignments']],
-                      body: this.state.finalClassrooms.map(c => [
-                        c.name,
-                        c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
+                      body: this.state.finalAssignments.map(c => [
                         'domain',
-                        c.students.length,
-                        c.assignmentsCount ? c.assignmentsCount : ''
                       ]),
                     });
                     doc.save('table.pdf')
@@ -340,4 +320,4 @@ const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
 });
 
-export default connect(mapState, mapDispatch)(ClassesEvents);
+export default connect(mapState, mapDispatch)(AssignmentEvents);
