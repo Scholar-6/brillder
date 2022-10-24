@@ -22,7 +22,6 @@ import { getSubjects } from "services/axios/subject";
 import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SubTab, { ClassesActiveSubTab } from "../components/SubTab";
-import { domainToASCII } from "url";
 
 
 enum SortBy {
@@ -87,13 +86,13 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     const classrooms = await getAllAdminClassrooms(dateFilter);
     if (classrooms) {
       const finalClassrooms = this.filterAndSort(classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains);
-      const domains:CDomain[] = [];
+      const domains: CDomain[] = [];
       for (let c of classrooms) {
         if (c.creator.institution) {
           const userEmailDomain = c.creator.email.split("@")[1];
-          var found = domains.find(d => d.name == userEmailDomain);
+          const found = domains.find(d => d.name == userEmailDomain);
           if (!found) {
-            domains.push({checked: false, name: userEmailDomain});
+            domains.push({ checked: false, name: userEmailDomain });
           }
         }
       }
@@ -185,14 +184,10 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
 
     let checkedDomains = domains.filter(d => d.checked === true);
 
-    console.log(checkedDomains, isAllDomains);
-
     // filter by domain
     if (!isAllDomains && checkedDomains) {
-      console.log('filter')
       let classroomsTemp = finalClassrooms;
       finalClassrooms = [] as ClassroomApi[];
-      console.log(finalClassrooms)
       for (let c of classroomsTemp) {
         if (c.creator && c.creator.institution) {
           const userEmailDomain = c.creator.email.split("@")[1];
@@ -295,8 +290,9 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             allDomains={this.state.allDomains}
             domains={this.state.domains}
             setAllDomains={() => {
-              this.state.domains.forEach(d => {d.checked = false});
-              this.setState({ allDomains: true });
+              this.state.domains.forEach(d => { d.checked = false });
+              const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, true, this.state.domains);
+              this.setState({ allDomains: true, finalClassrooms });
             }}
             setDomain={d => {
               this.state.domains.map(d => d.checked = false);
@@ -340,10 +336,15 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                     let data: any[] = [];
 
                     for (const c of this.state.finalClassrooms) {
+                      let domain = '';
+                      if (c.creator.institution) {
+                        domain = c.creator.email.split("@")[1];
+                      }
+
                       data.push({
                         name: c.name,
                         Creator: c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
-                        Domain: 'name',
+                        Domain: domain,
                         Played: c.assignmentsCount,
                       });
                     }
@@ -359,13 +360,20 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                     const doc = new jsPDF();
                     autoTable(doc, {
                       head: [['Name', 'Creator', 'Domain', 'Creator', 'Students', 'Assignments']],
-                      body: this.state.finalClassrooms.map(c => [
-                        c.name,
-                        c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
-                        'domain',
-                        c.students.length,
-                        c.assignmentsCount ? c.assignmentsCount : ''
-                      ]),
+                      body: this.state.finalClassrooms.map(c => {
+                        let domain = '';
+                        if (c.creator.institution) {
+                          domain = c.creator.email.split("@")[1];
+                        }
+                        
+                        return [
+                          c.name,
+                          c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
+                          domain,
+                          c.students.length,
+                          c.assignmentsCount ? c.assignmentsCount : ''
+                        ]
+                      }),
                     });
                     doc.save('table.pdf')
                     this.setState({ downloadClicked: false });
