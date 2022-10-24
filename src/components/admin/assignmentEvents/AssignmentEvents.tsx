@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
@@ -23,7 +22,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SubTab, { ClassesActiveSubTab } from "../components/SubTab";
 import { Assignment } from "model/classroom";
 import { stripHtml } from "components/build/questionService/ConvertService";
-import map from "components/map";
 
 
 enum SortBy {
