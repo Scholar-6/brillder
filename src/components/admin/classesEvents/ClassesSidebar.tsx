@@ -5,6 +5,11 @@ import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material
 import { Subject } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
+export interface CDomain {
+  checked: boolean;
+  name: string;
+}
+
 export enum PDateFilter {
   Past24Hours,
   PastWeek,
@@ -15,6 +20,10 @@ export enum PDateFilter {
 
 interface FilterSidebarProps {
   isLoaded: boolean;
+  allDomains: boolean;
+  domains: CDomain[];
+  setDomain(d: CDomain): void;
+  setAllDomains(): void;
   dateFilter: PDateFilter;
   setDateFilter(filter: PDateFilter): void;
   subjects: Subject[];
@@ -32,7 +41,7 @@ export enum SortClassroom {
   Assignment
 }
 
-class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
+class ClassesSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   constructor(props: FilterSidebarProps) {
     super(props);
     this.state = {
@@ -85,6 +94,22 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
             label="All time" />
         </div>
         <div className="filter-header">School Domain</div>
+        <div className="filter-domain">
+          <div className="sort-radio-btns filter-row margin-smaller">
+            <FormControlLabel
+              checked={this.props.allDomains === true}
+              control={<Radio onClick={() => this.props.setAllDomains()} className={"filter-radio custom-color"} />}
+              label="All" />
+          </div>
+          {this.props.domains.map(d =>
+            <div className="sort-radio-btns filter-row margin-smaller">
+              <FormControlLabel
+                checked={d.checked === true}
+                control={<Radio onClick={() => this.props.setDomain(d)} className={"filter-radio custom-color"} />}
+                label={d.name} />
+            </div>
+          )}
+        </div>
         <div className="filter-header">Subjects</div>
         <div className="flex-center relative select-container">
           <div className="absolute-placeholder">{this.props.selectedSubjects.length === 0 && 'Find a subject'}</div>
@@ -137,4 +162,4 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
   }
 }
 
-export default BricksPlayedSidebar;
+export default ClassesSidebar;

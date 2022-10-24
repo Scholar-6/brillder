@@ -40,10 +40,14 @@
     display: flex;
     .archived-bricks-d44 {
       border-right: 2px solid var(--tab-gray);
+
+      .deadline-e33 {
+        width: 10vw;
+      }
     }
     .assigned-brick-description {
       .short-brick-info {
-        width: 25vw;
+        width: 20vw;
       }
       .assignment-second-part {
         width: 10vw;
