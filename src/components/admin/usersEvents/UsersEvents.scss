@@ -85,6 +85,7 @@
         }
       }
     }
+    
     .name-column {
       padding-left: 1.5%;
       width: 25%;
@@ -124,6 +125,7 @@
       align-items: center;
       width: 10%;
     }
+    
     .subject-column {
       width: 15%;
 
@@ -228,4 +230,8 @@
       }
     }
   }
+}
+
+.user-list-page .users-table-d34 .second-column {
+  width: 25%;
 }
