@@ -146,13 +146,16 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
   renderBody() {
     const { finalAssignments } = this.state;
     if (finalAssignments.length == 0) {
-      return <div className="table-body"><div className="table-row">
-         <div className="name-column">No Assignments</div></div></div>;
+      return <div className="table-body">
+        <div className="table-row">
+          <div className="name-column">No Assignments</div>
+        </div>
+      </div>;
     }
 
     const renderDomain = (a: any) => {
       const userEmailDomain = this.getUserDomainFromAssignment(a);
-      
+
       if (userEmailDomain) {
         return (<div className="domain-column">
           {userEmailDomain}
@@ -346,7 +349,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
                       head: [['Teacher', 'Class', 'Domain', 'Brick']],
                       body: this.state.finalAssignments.map(a => {
                         const userEmailDomain = this.getUserDomainFromAssignment(a);
-                        
+
                         return [
                           `${a.classroom?.teachers[0].firstName} ${a.classroom?.teachers[0].lastName}`,
                           a.classroom?.name,
