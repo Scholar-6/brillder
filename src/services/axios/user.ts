@@ -1,11 +1,11 @@
-import {get, put, post, postRes} from './index';
+import { get, put, post, postRes } from './index';
 
 import { UserPreferenceType, User } from 'model/user';
 import { UpdateUserStatus } from 'components/userProfilePage/model';
 import { Editor } from 'model/brick';
 
 const profileErrorHandler = (e: any) => {
-  const {response} = e;
+  const { response } = e;
   if (response.status === 405) {
     if (response.data === 'User with that email already exists.') {
       return UpdateUserStatus.InvalidEmail;
@@ -77,7 +77,7 @@ export const setUserPreference = async (preferenceId: UserPreferenceType, initia
 
     var url = initial
       ? `/user/rolePreference/${preferenceId}/true`
-      :`/user/rolePreference/${preferenceId}`
+      : `/user/rolePreference/${preferenceId}`
 
     const data = await put<any>(url, {});
 
@@ -92,7 +92,7 @@ export const setUserPreferenceTypeById = async (preferenceId: UserPreferenceType
 
     var url = `/user/rolePreferenceById/${preferenceId}/${userId}`;
 
-    const data = await put<any>(url, {userId});
+    const data = await put<any>(url, { userId });
 
     return data === "OK" ? true : false;
   } catch (e) {
@@ -109,7 +109,7 @@ export interface CreateByEmailRes {
 /**
  * Accept terms and conditions
  */
-export const acceptTerms = async(termsAndConditionsAcceptedVersion: string) => {
+export const acceptTerms = async (termsAndConditionsAcceptedVersion: string) => {
   try {
     const data = await post<string>('/user/termsAndConditions', { termsAndConditionsAcceptedVersion });
     if (data === "OK") {
@@ -124,13 +124,31 @@ export const acceptTerms = async(termsAndConditionsAcceptedVersion: string) => {
 /**
  * Assign new subject to current user
  */
-export const addSubject = async(subjectId: number) => {
+export const addSubject = async (subjectId: number) => {
   try {
     const data = await put<string>('/user/addSubject/' + subjectId, {});
     if (data === "OK") {
       return true;
     }
     return false;
+  } catch (e) {
+    return null;
+  }
+}
+
+export interface UsersParams {
+  pageSize: number;
+  page: string;
+  searchString: string;
+  subjectFilters: number[];
+  roleFilters: any;
+  orderBy: any;
+  isAscending: any;
+}
+
+export const getUsers = async (params: UsersParams) => {
+  try {
+    return await post<any>('/users', params);
   } catch (e) {
     return null;
   }
