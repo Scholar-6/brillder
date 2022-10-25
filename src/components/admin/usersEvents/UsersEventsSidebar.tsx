@@ -37,21 +37,15 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
     };
   }
 
-  renderContent() {
-    if (!this.props.isLoaded) {
-      return <div></div>;
-    }
-    return <div></div>;
-  }
-
   render() {
     return (
       <Grid
         container item xs={3}
         className="sort-and-filter-container teach-assigned"
       >
-        <div>Sort By</div>
-        {this.renderContent()}
+        <div className="sort-box">
+          <div className="bold font1-5">Admin Data Dashboard</div>
+        </div>
         <div className="sidebar-footer" />
       </Grid>
     );

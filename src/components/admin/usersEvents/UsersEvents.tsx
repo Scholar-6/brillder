@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
+import './UsersEvents.scss';
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { Grid } from "@material-ui/core";
@@ -43,7 +44,7 @@ class UsersPage extends Component<TeachProps, TeachState> {
 
   render() {
     return (
-      <div className="main-listing user-list-page manage-classrooms-page">
+      <div className="main-listing bricks-played-page user-list-page manage-classrooms-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
           placeholder="Brick Title, Student Name, or Subject"

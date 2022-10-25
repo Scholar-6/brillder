@@ -180,7 +180,11 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
   renderBody() {
     const { finalBricks } = this.state;
     if (finalBricks.length == 0) {
-      return <div>No Bricks</div>;
+      return <div className="table-body">
+        <div className="table-row">
+          <div className="publish-column">No Bricks</div>
+        </div>
+      </div>;
     }
 
     const renderSubject = (subject?: Subject) => {
@@ -335,7 +339,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                       FileSaver.saveAs(data, fileName + fileExtension);
                     };
 
-                    let data:any[] = [];
+                    let data: any[] = [];
 
                     for (const brick of this.state.finalBricks) {
                       const subject = this.state.subjects.find(s => s.id === brick.subjectId);

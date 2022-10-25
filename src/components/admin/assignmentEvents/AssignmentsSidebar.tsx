@@ -45,13 +45,6 @@ class AssignmentsSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     };
   }
 
-  renderContent() {
-    if (!this.props.isLoaded) {
-      return <div></div>;
-    }
-    return <div></div>;
-  }
-
   render() {
     const { dateFilter } = this.props;
     return (
@@ -60,7 +53,7 @@ class AssignmentsSidebar extends Component<FilterSidebarProps, FilterSidebarStat
         className="sort-and-filter-container teach-assigned"
       >
         <div className="sort-box">
-          <div className="bold font1-5">Filter By</div>
+          <div className="bold font1-5">Admin Data Dashboard</div>
         </div>
         <div className="filter-header">Date</div>
         <div className="sort-radio-btns filter-row margin-smaller top-margin-bigger">
@@ -151,7 +144,6 @@ class AssignmentsSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             )}
           </Select>
         </div>
-        {this.renderContent()}
         <div className="sidebar-footer" />
       </Grid>
     );
