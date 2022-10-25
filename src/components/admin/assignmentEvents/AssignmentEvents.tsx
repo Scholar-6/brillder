@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import * as XLSX from "xlsx";
-import * as FileSaver from "file-saver";
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable';
 
@@ -14,7 +12,7 @@ import { getAllAssignmentsByAdmin } from 'components/teach/service';
 
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import BricksPlayedSidebar, { PDateFilter } from "./BricksPlayedSidebar";
+import AssignmentsSidebar, { PDateFilter } from "./AssignmentsSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
@@ -22,6 +20,8 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SubTab, { ClassesActiveSubTab } from "../components/SubTab";
 import { Assignment } from "model/classroom";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import { CDomain } from "../classesEvents/ClassesSidebar";
+import { exportToCSV } from "services/excel";
 
 
 enum SortBy {
@@ -48,6 +48,8 @@ interface TeachState {
   assignments: Assignment[];
   finalAssignments: Assignment[];
   dateFilter: PDateFilter;
+  allDomains: boolean;
+  domains: CDomain[];
 }
 
 class AssignmentEvents extends Component<TeachProps, TeachState> {
@@ -61,15 +63,29 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
       subjects: [],
       selectedSubjects: [],
       assignments: [],
-      finalAssignments: []
+      finalAssignments: [],
+      allDomains: true,
+      domains: []
     }
     this.loadInitPlayedData();
+  }
+
+  getUserDomainFromAssignment(a: any) {
+    return a.classroom?.creator?.email.split("@")[1];
   }
 
   async loadInitPlayedData() {
     const assignments = await getAllAssignmentsByAdmin(PDateFilter.Past24Hours);
     if (assignments) {
-      this.setState({ assignments, finalAssignments: assignments });
+      const domains: CDomain[] = [];
+      for (let a of assignments) {
+        const userEmailDomain = this.getUserDomainFromAssignment(a);
+        const found = domains.find(d => d.name == userEmailDomain);
+        if (!found) {
+          domains.push({ checked: false, name: userEmailDomain });
+        }
+      }
+      this.setState({ assignments, finalAssignments: assignments, domains });
     }
     const subjects = await getSubjects();
     if (subjects) {
@@ -80,8 +96,18 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
   async loadData(dateFilter: PDateFilter) {
     const assignments = await getAllAssignmentsByAdmin(dateFilter);
     if (assignments) {
-      const finalAssignments = this.filterAndSort(assignments, this.state.selectedSubjects, this.state.sortBy);
-      this.setState({ assignments, finalAssignments, dateFilter });
+      const finalAssignments = this.filterAndSort(assignments, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains);
+
+      const domains: CDomain[] = [];
+      for (let a of assignments) {
+        const userEmailDomain = this.getUserDomainFromAssignment(a);
+        const found = domains.find(d => d.name == userEmailDomain);
+        if (!found) {
+          domains.push({ checked: false, name: userEmailDomain });
+        }
+      }
+
+      this.setState({ assignments, finalAssignments, dateFilter, domains });
     }
   }
 
@@ -91,8 +117,8 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
   sortAssignments(sortBy: SortBy, assignments: Assignment[]) {
     if (sortBy === SortBy.Teacher) {
       return assignments.sort((a, b) => {
-        const aT = a.classroom?.teachers[0].firstName.toLocaleLowerCase();
-        const bT = b.classroom?.teachers[0].firstName.toLocaleLowerCase();
+        const aT = a.classroom?.teachers[0]?.firstName?.toLocaleLowerCase();
+        const bT = b.classroom?.teachers[0]?.firstName?.toLocaleLowerCase();
         return aT < bT ? -1 : 1;
       });
     } else if (sortBy === SortBy.Class) {
@@ -120,7 +146,19 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
   renderBody() {
     const { finalAssignments } = this.state;
     if (finalAssignments.length == 0) {
-      return <div>No Bricks</div>;
+      return <div className="table-body"><div className="table-row">
+         <div className="name-column">No Assignments</div></div></div>;
+    }
+
+    const renderDomain = (a: any) => {
+      const userEmailDomain = this.getUserDomainFromAssignment(a);
+      
+      if (userEmailDomain) {
+        return (<div className="domain-column">
+          {userEmailDomain}
+        </div>);
+      }
+      return <div className="domain-column"></div>;
     }
 
     return <div className="table-body">
@@ -131,7 +169,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
             <div className="creator-column">
               {a.classroom?.name}
             </div>
-            <div className="domain-column"></div>
+            {renderDomain(a)}
             <div className="assigned-column">{stripHtml(a.brick.title)}</div>
           </div>
         );
@@ -139,7 +177,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
     </div>
   }
 
-  filterAndSort(assignments: Assignment[], selectedSubjects: Subject[], sortBy: SortBy) {
+  filterAndSort(assignments: Assignment[], selectedSubjects: Subject[], sortBy: SortBy, isAllDomains: boolean, domains: CDomain[]) {
     let finalAssignments = [];
     if (selectedSubjects.length > 0) {
       for (let a of assignments) {
@@ -150,6 +188,23 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
       }
     } else {
       finalAssignments = [...assignments];
+    }
+
+    let checkedDomains = domains.filter(d => d.checked === true);
+
+    // filter by domain
+    if (!isAllDomains && checkedDomains) {
+      let assignmentsTemp = finalAssignments;
+      finalAssignments = [] as any[];
+      for (let a of assignmentsTemp) {
+        if (a.classroom && a.classroom.creator) {
+          const userEmailDomain = this.getUserDomainFromAssignment(a);
+          const found = checkedDomains.find(d => d.name === userEmailDomain);
+          if (found) {
+            finalAssignments.push(a);
+          }
+        }
+      }
     }
 
     finalAssignments = this.sortAssignments(sortBy, finalAssignments);
@@ -166,7 +221,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Teacher)
+                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Teacher, this.state.allDomains, this.state.domains)
                   this.setState({ sortBy: SortBy.Teacher, finalAssignments });
                 }}
               />
@@ -178,7 +233,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Class)
+                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Class, this.state.allDomains, this.state.domains)
                   this.setState({ sortBy: SortBy.Class, finalAssignments });
                 }}
               />
@@ -190,7 +245,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Domain)
+                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Domain, this.state.allDomains, this.state.domains)
                   this.setState({ sortBy: SortBy.Domain, finalAssignments });
                 }}
               />
@@ -202,7 +257,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Brick)
+                  const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, SortBy.Brick, this.state.allDomains, this.state.domains)
                   this.setState({ sortBy: SortBy.Brick, finalAssignments });
                 }}
               />
@@ -226,13 +281,26 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
           searching={this.searching.bind(this)}
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
-          <BricksPlayedSidebar
+          <AssignmentsSidebar
             isLoaded={true}
+            setAllDomains={() => {
+              this.state.domains.forEach(d => { d.checked = false });
+              const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, this.state.sortBy, true, this.state.domains);
+              this.setState({ allDomains: true, finalAssignments });
+            }}
+            setDomain={d => {
+              this.state.domains.forEach(d => { d.checked = false });
+              d.checked = true;
+              const finalAssignments = this.filterAndSort(this.state.assignments, this.state.selectedSubjects, this.state.sortBy, false, this.state.domains);
+              this.setState({ allDomains: false, finalAssignments });
+            }}
+            allDomains={this.state.allDomains}
+            domains={this.state.domains}
             dateFilter={this.state.dateFilter} setDateFilter={dateFilter => this.loadData(dateFilter)}
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
             selectSubjects={selectedSubjects => {
-              const finalAssignments = this.filterAndSort(this.state.assignments, selectedSubjects, SortBy.Teacher)
+              const finalAssignments = this.filterAndSort(this.state.assignments, selectedSubjects, SortBy.Teacher, this.state.allDomains, this.state.domains)
               this.setState({ selectedSubjects, finalAssignments });
             }}
           />
@@ -250,24 +318,15 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
                 <div className="popup-3rfw bold">
                   <div className="btn-sort" onClick={() => {
 
-                    const exportToCSV = (apiData: any, fileName: string) => {
-                      const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-                      const fileExtension = ".xlsx";
-
-                      const ws = XLSX.utils.json_to_sheet(apiData);
-                      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-                      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-                      const data = new Blob([excelBuffer], { type: fileType });
-                      FileSaver.saveAs(data, fileName + fileExtension);
-                    }
-
                     let data: any[] = [];
 
                     for (const a of this.state.finalAssignments) {
+                      const userEmailDomain = this.getUserDomainFromAssignment(a);
+
                       data.push({
                         Teacher: `${a.classroom?.teachers[0].firstName} ${a.classroom?.teachers[0].lastName}`,
                         Class: a.classroom?.name,
-                        Domain: 'name',
+                        Domain: userEmailDomain,
                         Brick: stripHtml(a.brick.title)
                       });
                     }
@@ -281,14 +340,20 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
                   </div>
                   <div className="btn-sort" onClick={() => {
                     const doc = new jsPDF();
+
+
                     autoTable(doc, {
                       head: [['Teacher', 'Class', 'Domain', 'Brick']],
-                      body: this.state.finalAssignments.map(a => [
-                        `${a.classroom?.teachers[0].firstName} ${a.classroom?.teachers[0].lastName}`,
-                        a.classroom?.name,
-                        '',
-                        stripHtml(a.brick.title)
-                      ]),
+                      body: this.state.finalAssignments.map(a => {
+                        const userEmailDomain = this.getUserDomainFromAssignment(a);
+                        
+                        return [
+                          `${a.classroom?.teachers[0].firstName} ${a.classroom?.teachers[0].lastName}`,
+                          a.classroom?.name,
+                          userEmailDomain,
+                          stripHtml(a.brick.title)
+                        ]
+                      }),
                     });
                     doc.save('table.pdf')
                     this.setState({ downloadClicked: false });

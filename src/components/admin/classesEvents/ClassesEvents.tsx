@@ -3,8 +3,6 @@ import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import * as XLSX from "xlsx";
-import * as FileSaver from "file-saver";
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable';
 
@@ -22,6 +20,7 @@ import { getSubjects } from "services/axios/subject";
 import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SubTab, { ClassesActiveSubTab } from "../components/SubTab";
+import { exportToCSV } from "services/excel";
 
 
 enum SortBy {
@@ -74,7 +73,15 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   async loadInitPlayedData() {
     const classrooms = await getAllAdminClassrooms(PDateFilter.Past24Hours);
     if (classrooms) {
-      this.setState({ classrooms, finalClassrooms: classrooms });
+      const domains: CDomain[] = [];
+      for (let c of classrooms) {
+        const userEmailDomain = c.creator.email.split("@")[1];
+        const found = domains.find(d => d.name == userEmailDomain);
+        if (!found) {
+          domains.push({ checked: false, name: userEmailDomain });
+        }
+      }
+      this.setState({ classrooms, finalClassrooms: classrooms, domains });
     }
     const subjects = await getSubjects();
     if (subjects) {
@@ -88,7 +95,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       const finalClassrooms = this.filterAndSort(classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains);
       const domains: CDomain[] = [];
       for (let c of classrooms) {
-        if (c.creator.institution) {
+        if (c.creator) {
           const userEmailDomain = c.creator.email.split("@")[1];
           const found = domains.find(d => d.name == userEmailDomain);
           if (!found) {
@@ -142,7 +149,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     }
 
     const renderDomain = (creator: User) => {
-      if (creator.institution) {
+      if (creator) {
         const userEmailDomain = creator.email.split("@")[1];
         return (<div className="domain-column">
           {userEmailDomain}
@@ -189,7 +196,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       let classroomsTemp = finalClassrooms;
       finalClassrooms = [] as ClassroomApi[];
       for (let c of classroomsTemp) {
-        if (c.creator && c.creator.institution) {
+        if (c.creator && c.creator) {
           const userEmailDomain = c.creator.email.split("@")[1];
           const found = checkedDomains.find(d => d.name === userEmailDomain);
           if (found) {
@@ -322,22 +329,11 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                 <div className="popup-3rfw bold">
                   <div className="btn-sort" onClick={() => {
 
-                    const exportToCSV = (apiData: any, fileName: string) => {
-                      const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-                      const fileExtension = ".xlsx";
-
-                      const ws = XLSX.utils.json_to_sheet(apiData);
-                      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-                      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-                      const data = new Blob([excelBuffer], { type: fileType });
-                      FileSaver.saveAs(data, fileName + fileExtension);
-                    }
-
                     let data: any[] = [];
 
                     for (const c of this.state.finalClassrooms) {
                       let domain = '';
-                      if (c.creator.institution) {
+                      if (c.creator) {
                         domain = c.creator.email.split("@")[1];
                       }
 
@@ -362,10 +358,10 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                       head: [['Name', 'Creator', 'Domain', 'Creator', 'Students', 'Assignments']],
                       body: this.state.finalClassrooms.map(c => {
                         let domain = '';
-                        if (c.creator.institution) {
+                        if (c.creator) {
                           domain = c.creator.email.split("@")[1];
                         }
-                        
+
                         return [
                           c.name,
                           c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
