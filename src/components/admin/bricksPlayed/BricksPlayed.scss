@@ -94,7 +94,7 @@
     .first-column {
       display: flex;
       align-items: center;
-      padding-left: 2%;
+      padding-left: 1%;
       width: 50%;
       p {
         display: inline;
@@ -106,7 +106,8 @@
       width: 10%;
     }
     .subject-column {
-      width: 15%;
+      width: 17%;
+      display: block !important;
 
       .subject-block {
         display: flex;
@@ -174,7 +175,6 @@
     .table-row {
       display: flex;
       font-size: 1vw;
-      padding: 0.4vw 0;
 
       &:nth-child(odd) {
         background: var(--tab-gray);
@@ -286,4 +286,10 @@
       }
     }
   }
+}
+
+.only-bricks-played-page .tab-content .table .table-row {
+  padding-top: 0.5vh;
+  padding-bottom: 0.5vh;
+  height: unset !important;
 }

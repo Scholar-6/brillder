@@ -44,6 +44,7 @@ export const SetUsername = Onboarding + '/set-username';
 export const SelectSubjectPage = Onboarding + '/select-subjects';
 export const UserPreferencePage = Onboarding + '/user-preference';
 export const UserProfile = Onboarding + '/profile-page';
+export const UserProfileNew = UserProfile + '/new';
 
 export const StripeCredits = '/stripe-credits';
 export const StripePage = '/stripe-subscription';
@@ -161,6 +162,7 @@ export default {
   ActivateAccountEmail,
   ResetPassword,
   UserProfile,
+  UserProfileNew,
   Login,
   MainPage,
   LeaderboardPage,

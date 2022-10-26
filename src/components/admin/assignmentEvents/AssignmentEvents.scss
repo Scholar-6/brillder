@@ -101,7 +101,13 @@
     }
 
     .assigned-column {
-      width: 12.5%;
+      width: 25%;
+
+      div {
+        overflow-y: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
 
     .publish-column {

@@ -9,7 +9,7 @@ interface AddUserButtonProps {
 
 const AddUserButton: React.FC<AddUserButtonProps> = ({history}) => {
   const moveToNewUser = () => {
-    history.push(map.UserProfile + '/new');
+    history.push(map.UserProfileNew);
   }
 
   return (
