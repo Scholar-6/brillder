@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
-import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
 
 import { Subject } from "model/brick";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SubjectsSelect from "../components/SubjectsSelect";
 
 export enum PDateFilter {

@@ -2,10 +2,15 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { UserPreferenceType } from "model/user";
+import SubjectsSelect from "../components/SubjectsSelect";
+import { Subject } from "model/brick";
 
 interface FilterSidebarProps {
   isLoaded: boolean;
   userPreference: UserPreferenceType | null;
+  subjects: Subject[];
+  selectedSubjects: Subject[];
+  selectSubjects(s: Subject[]): void;
   setUserPreference(userPreference: UserPreferenceType | null): void;
 }
 
@@ -15,7 +20,18 @@ export enum SortClassroom {
   Assignment
 }
 
-class UsersSidebar extends Component<FilterSidebarProps> {
+interface FilterSidebarState {
+  subjectIds: number[];
+}
+
+class UsersSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
+  constructor(props: FilterSidebarProps) {
+    super(props);
+    this.state = {
+      subjectIds: []
+    };
+  }
+  
   render() {
     const { userPreference } = this.props;
     return (
@@ -50,6 +66,15 @@ class UsersSidebar extends Component<FilterSidebarProps> {
             control={<Radio onClick={() => this.props.setUserPreference(UserPreferenceType.Builder)} className={"filter-radio custom-color"} />}
             label="Builder" />
         </div>
+        <SubjectsSelect
+          subjectIds={this.state.subjectIds}
+          subjects={this.props.subjects}
+          selectedSubjects={this.props.selectedSubjects}
+          selectSubjects={(subjectIds, subjects) => {
+            this.setState({ subjectIds });
+            this.props.selectSubjects(subjects);
+          }}
+        />
         <div className="sidebar-footer" />
       </Grid>
     );
