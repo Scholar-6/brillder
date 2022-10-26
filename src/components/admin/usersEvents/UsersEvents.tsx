@@ -19,6 +19,7 @@ import UsersPagination from "components/teach/manageClassrooms/components/UsersP
 import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
+import AddUserBtn from "../components/AddUserBtn";
 
 
 interface UsersProps {
@@ -190,7 +191,10 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Users} history={this.props.history} />
             <div className="tab-content">
-              <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
+              <div className="flex f-justify-end">
+                <AddUserBtn onClick={() => {}} />
+                <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
+              </div>
               {this.state.downloadClicked && <Dialog
                 className="sort-dialog-classes export-dialog-ew35"
                 open={this.state.downloadClicked}
