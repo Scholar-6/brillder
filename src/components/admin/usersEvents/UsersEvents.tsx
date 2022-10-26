@@ -13,7 +13,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import UsersSidebar from "./UsersEventsSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getUsers } from "services/axios/user";
+import { deleteUser, getUsers } from "services/axios/user";
 import { getDateString } from "components/services/brickService";
 import UsersPagination from "components/teach/manageClassrooms/components/UsersPagination";
 import ExportBtn from "../components/ExportBtn";
@@ -44,6 +44,9 @@ interface UsersState {
   selectedSubjects: Subject[];
   subjects: Subject[];
 
+  deleteUserId: number;
+  isDeleteDialogOpen: boolean;
+
   downloadClicked: boolean;
 }
 
@@ -60,6 +63,9 @@ class UsersPage extends Component<UsersProps, UsersState> {
       subjects: [],
       selectedSubjects: [],
 
+      deleteUserId: -1,
+      isDeleteDialogOpen: false,
+
       downloadClicked: false
     };
 
@@ -69,7 +75,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
   async loadInitData() {
     const subjects = await getSubjects();
     if (subjects) {
-      this.setState({subjects});
+      this.setState({ subjects });
     }
 
     this.getUsers(null, 0, []);
@@ -140,6 +146,17 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <div className="author-column">{u.firstName} {u.lastName}</div>
           <div className="second-column">{u.email}</div>
           <div className="third-column">{this.renderUserType(u)}</div>
+          <div className="second-column"></div>
+          <div className="actions-column">
+            <div className="round-btn blue flex-center" onClick={() => this.props.history.push(map.UserProfile + '/' + u.id)}>
+              <SpriteIcon name="user-edit-g" className="text-white" />
+            </div>
+            <div className="round-btn orange flex-center" onClick={() => {
+              this.setState({isDeleteDialogOpen: true, deleteUserId: u.id});
+            }}>
+              <SpriteIcon name="user-trash-g" className="text-white" />
+            </div>
+          </div>
         </div>);
       })}
     </div>
@@ -189,6 +206,22 @@ class UsersPage extends Component<UsersProps, UsersState> {
         {this.renderBody()}
       </div>
     );
+  }
+
+  async deleteUser() {
+    const { deleteUserId } = this.state;
+    if (deleteUserId === -1) { return }
+    const res = await deleteUser(deleteUserId);
+    if (res) {
+      this.getUsers(this.state.userPreference, this.state.page, this.state.selectedSubjects);
+    } else {
+      this.props.requestFailed("Can`t delete user");
+    }
+    this.closeDeleteDialog();
+  }
+
+  closeDeleteDialog() {
+    this.setState({isDeleteDialogOpen: false});
   }
 
   render() {
@@ -268,6 +301,24 @@ class UsersPage extends Component<UsersProps, UsersState> {
             </div>
           </Grid>
         </Grid>
+        <Dialog
+          open={this.state.isDeleteDialogOpen}
+          onClose={() => this.closeDeleteDialog()}
+          className="dialog-box">
+          <div className="dialog-header">
+            <div>Permanently delete<br />this user?</div>
+          </div>
+          <div className="dialog-footer">
+            <button className="btn btn-md bg-theme-orange yes-button"
+              onClick={() => this.deleteUser()}>
+              <span>Yes, delete</span>
+            </button>
+            <button className="btn btn-md bg-gray no-button"
+              onClick={() => this.closeDeleteDialog()}>
+              <span>No, keep</span>
+            </button>
+          </div>
+        </Dialog>
       </div>
     );
   }
