@@ -233,7 +233,7 @@
 }
 
 .user-list-page .users-table-d34 .second-column {
-  width: 25%;
+  width: 28%;
 }
 
 .user-list-page .tab-content {
@@ -247,6 +247,37 @@
     > div {
       display: flex;
       align-items: center;
+    }
+
+    .round-btn {
+      cursor: pointer;
+      width: 3.4vh;
+      height: 3.4vh;
+      border-radius: 50%;
+      margin-left: 0.15vw;
+      margin-right: 0.15vw;
+
+      transition: all 300ms ease-in-out;
+
+      svg {
+        width: 1.7vh;
+        height: 1.7vh;
+      }
+
+      &.blue {
+        background: #4C608A;
+      }
+
+      &.orange {
+        background: var(--theme-orange);
+        svg {
+          width: 2.2vh;
+          height: 2.2vh;
+        }
+      }
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 }

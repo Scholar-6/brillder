@@ -1,4 +1,4 @@
-import { get, put, post, postRes } from './index';
+import { get, put, post, axiosDelete } from './index';
 
 import { UserPreferenceType, User } from 'model/user';
 import { UpdateUserStatus } from 'components/userProfilePage/model';
@@ -151,5 +151,13 @@ export const getUsers = async (params: UsersParams) => {
     return await post<any>('/users', params);
   } catch (e) {
     return null;
+  }
+}
+
+export const deleteUser = async(userId: number) => {
+  try {
+    return await axiosDelete('/user/delete/' + userId);
+  } catch (e) {
+    return false;
   }
 }
