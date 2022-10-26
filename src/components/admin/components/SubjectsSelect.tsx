@@ -38,7 +38,6 @@ const SubjectsSelect: React.FC<Props> = ({ subjectIds, selectedSubjects, subject
                 selectedSubjects.push(subject);
               }
             }
-            console.log(values, selectedSubjects)
             selectSubjects(values, selectedSubjects);
           }}
         >

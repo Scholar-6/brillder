@@ -21,6 +21,8 @@ import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
 import AddUserBtn from "../components/AddUserBtn";
 import map from "components/map";
+import { getSubjects } from "services/axios/subject";
+import { Subject } from "model/brick";
 
 
 interface UsersProps {
@@ -39,6 +41,9 @@ interface UsersState {
   totalUsersCount: number;
   userPreference: UserPreferenceType | null;
 
+  selectedSubjects: Subject[];
+  subjects: Subject[];
+
   downloadClicked: boolean;
 }
 
@@ -52,14 +57,25 @@ class UsersPage extends Component<UsersProps, UsersState> {
       pageSize: 14,
       totalUsersCount: 0,
       userPreference: null,
+      subjects: [],
+      selectedSubjects: [],
 
       downloadClicked: false
     };
 
-    this.getUsers(null, 0);
+    this.loadInitData();
   }
 
-  async getUsers(userPreference: UserPreferenceType | null, page: number) {
+  async loadInitData() {
+    const subjects = await getSubjects();
+    if (subjects) {
+      this.setState({subjects});
+    }
+
+    this.getUsers(null, 0, []);
+  }
+
+  async getUsers(userPreference: UserPreferenceType | null, page: number, selectedSubjects: Subject[]) {
     let roleFilters = [];
     if (userPreference !== null) {
       roleFilters.push(userPreference);
@@ -68,7 +84,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
       pageSize: this.state.pageSize,
       page: page.toString(),
       searchString: '',
-      subjectFilters: [],
+      subjectFilters: selectedSubjects.map(s => s.id),
       roleFilters,
       orderBy: "user.created",
       isAscending: false
@@ -78,6 +94,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
         userPreference,
         page,
         users: res.pageData,
+        selectedSubjects,
         totalUsersCount: res.totalCount
       });
     }
@@ -129,7 +146,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
   }
 
   moveToPage(page: number) {
-    this.getUsers(this.state.userPreference, page);
+    this.getUsers(this.state.userPreference, page, this.state.selectedSubjects);
   }
 
   renderPagination() {
@@ -186,9 +203,17 @@ class UsersPage extends Component<UsersProps, UsersState> {
           searching={this.searching.bind(this)}
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
-          <UsersSidebar isLoaded={true} userPreference={this.state.userPreference} setUserPreference={userPreference => {
-            this.getUsers(userPreference, 0);
-          }} />
+          <UsersSidebar
+            isLoaded={true} userPreference={this.state.userPreference}
+            subjects={this.state.subjects}
+            selectedSubjects={this.state.selectedSubjects}
+            selectSubjects={selectedSubjects => {
+              this.getUsers(this.state.userPreference, 0, selectedSubjects);
+            }}
+            setUserPreference={userPreference => {
+              this.getUsers(userPreference, 0, this.state.selectedSubjects);
+            }}
+          />
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Users} history={this.props.history} />
             <div className="tab-content">
