@@ -235,3 +235,9 @@
 .user-list-page .users-table-d34 .second-column {
   width: 25%;
 }
+
+.user-list-page .tab-content {
+  .btn.prev-button, .btn.next-button {
+    color: var(--theme-dark-blue);
+  }
+}

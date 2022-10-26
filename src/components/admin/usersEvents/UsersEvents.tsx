@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import { History } from "history";
 import { connect } from "react-redux";
+import { Grid } from "@material-ui/core";
 
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
 import './UsersEvents.scss';
-import { User, UserType } from "model/user";
+import { User, UserPreferenceType, UserType } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import { Grid } from "@material-ui/core";
-import BricksPlayedSidebar from "./UsersEventsSidebar";
+import UsersSidebar from "./UsersEventsSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getUsers } from "services/axios/user";
 import { getDateString } from "components/services/brickService";
+import UsersPagination from "components/teach/manageClassrooms/components/UsersPagination";
 
 
 interface UsersProps {
@@ -27,6 +28,10 @@ interface UsersProps {
 
 interface UsersState {
   users: User[];
+  page: number,
+  pageSize: number;
+  totalUsersCount: number;
+  userPreference: UserPreferenceType | null;
 }
 
 class UsersPage extends Component<UsersProps, UsersState> {
@@ -34,38 +39,42 @@ class UsersPage extends Component<UsersProps, UsersState> {
     super(props);
 
     this.state = {
-      users: []
+      users: [],
+      page: 0,
+      pageSize: 14,
+      totalUsersCount: 0,
+      userPreference: null
     };
 
-    this.getUsers();
+    this.getUsers(null, 0);
   }
 
-  async getUsers() {
+  async getUsers(userPreference: UserPreferenceType | null, page: number) {
+    let roleFilters = [];
+    if (userPreference !== null) {
+      roleFilters.push(userPreference);
+    }
     const res = await getUsers({
-      pageSize: 20,
-      page: "0",
+      pageSize: this.state.pageSize,
+      page: page.toString(),
       searchString: '',
       subjectFilters: [],
-      roleFilters: [],
+      roleFilters,
       orderBy: "user.created",
       isAscending: false
     });
     if (res) {
       this.setState({
+        userPreference,
+        page,
         users: res.pageData,
+        totalUsersCount: res.totalCount
       });
     }
-
-    //this.props.requestFailed("Can`t get users");
   }
 
-  search() {
-
-  }
-
-  searching() {
-
-  }
+  search() { }
+  searching() { }
 
   renderBody() {
     const { users } = this.state;
@@ -87,11 +96,11 @@ class UsersPage extends Component<UsersProps, UsersState> {
       } else if (u.userPreference) {
         const {preferenceId} = u.userPreference;
         if (preferenceId === UserType.Student) {
-          return 'Student';
+          return 'Learner';
         } else if (preferenceId === UserType.Builder) {
           return 'Builder';
         } else if (preferenceId === UserType.Teacher) {
-          return 'Teacher';
+          return 'Educator';
         }
       }
       return '';
@@ -107,6 +116,22 @@ class UsersPage extends Component<UsersProps, UsersState> {
         </div>);
       })}
     </div>
+  }
+
+  moveToPage(page: number) {
+    this.getUsers(this.state.userPreference, page);
+  }
+
+  renderPagination() {
+    return (
+      <UsersPagination
+        users={this.state.users}
+        page={this.state.page}
+        totalCount={this.state.totalUsersCount}
+        pageSize={this.state.pageSize}
+        moveToPage={page => this.moveToPage(page)}
+      />
+    );
   }
 
   renderTable() {
@@ -151,11 +176,14 @@ class UsersPage extends Component<UsersProps, UsersState> {
           searching={this.searching.bind(this)}
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
-          <BricksPlayedSidebar isLoaded={true} filterChanged={() => { }} />
+          <UsersSidebar isLoaded={true} userPreference={this.state.userPreference} setUserPreference={userPreference => {
+            this.getUsers(userPreference, 0);
+          }} />
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Users} history={this.props.history} />
             <div className="tab-content">
               {this.renderTable()}
+              {this.renderPagination()}
             </div>
           </Grid>
         </Grid>
