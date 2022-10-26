@@ -20,6 +20,7 @@ import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
 import AddUserBtn from "../components/AddUserBtn";
+import map from "components/map";
 
 
 interface UsersProps {
@@ -192,7 +193,9 @@ class UsersPage extends Component<UsersProps, UsersState> {
             <BricksTab activeTab={BricksActiveTab.Users} history={this.props.history} />
             <div className="tab-content">
               <div className="flex f-justify-end">
-                <AddUserBtn onClick={() => {}} />
+                <AddUserBtn onClick={() => {
+                  this.props.history.push(map.UserProfileNew);
+                }} />
                 <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
               </div>
               {this.state.downloadClicked && <Dialog

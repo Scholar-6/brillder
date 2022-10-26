@@ -240,4 +240,13 @@
   .btn.prev-button, .btn.next-button {
     color: var(--theme-dark-blue);
   }
+  .table-row {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 4.1vh !important;
+    > div {
+      display: flex;
+      align-items: center;
+    }
+  }
 }

@@ -269,7 +269,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
 
   render() {
     return (
-      <div className="main-listing user-list-page manage-classrooms-page bricks-played-page">
+      <div className="main-listing user-list-page manage-classrooms-page bricks-played-page only-bricks-played-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
           placeholder="Brick Title, Student Name, or Subject"
