@@ -111,7 +111,7 @@ class ClassesSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             multiple
             MenuProps={{ classes: { paper: 'select-classes-list' } }}
             value={this.state.subjectIds}
-            renderValue={(selected) => {
+            renderValue={() => {
               let text = "";
               for (let s of this.props.selectedSubjects) {
                 text += ' ' + s.name;

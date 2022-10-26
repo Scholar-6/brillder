@@ -107,7 +107,7 @@ class AssignmentsSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             multiple
             MenuProps={{ classes: { paper: 'select-classes-list' } }}
             value={this.state.subjectIds}
-            renderValue={(selected) => {
+            renderValue={() => {
               let text = "";
               for (let s of this.props.selectedSubjects) {
                 text += ' ' + s.name;
@@ -116,7 +116,6 @@ class AssignmentsSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             }}
             onChange={(e) => {
               const values = e.target.value as number[];
-              console.log(values);
               let subjects = [];
               for (let id of values) {
                 let subject = this.props.subjects.find(s => s.id === id);
