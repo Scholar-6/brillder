@@ -138,6 +138,14 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
+
+      &.margin-right-small {
+        margin-right: 0.5vw;
+      }
+
+      .btn:hover {
+        opacity: 0.8;
+      }
     }
 
     .btn {
@@ -157,6 +165,10 @@
 
     .btn-green {
       background: var(--theme-green);
+    }
+
+    .btn-blue {
+      background: var(--theme-dark-blue);
     }
 
     .table-row {
