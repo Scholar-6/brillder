@@ -3,10 +3,6 @@ import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import * as XLSX from "xlsx";
-import * as FileSaver from "file-saver";
-import { jsPDF } from "jspdf";
-import autoTable from 'jspdf-autotable';
 
 import './BricksPlayed.scss';
 import { User } from "model/user";
@@ -21,6 +17,9 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import BricksPlayedSidebar, { ESubjectCategory, PDateFilter } from "./BricksPlayedSidebar";
 import { getDateString } from "components/services/brickService";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import ExportBtn from "../components/ExportBtn";
+import { exportToCSV } from "services/excel";
+import { exportToPDF } from "services/pdf";
 
 enum SortBy {
   Published,
@@ -316,29 +315,10 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Bricks} history={this.props.history} />
             <div className="tab-content">
-              <div className="btn-container">
-                <div className="btn btn-green flex-center" onClick={() => {
-                  this.setState({ downloadClicked: true });
-                }}>
-                  <div>Export</div>
-                  <SpriteIcon name="download" />
-                </div>
-              </div>
+              <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
               {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
                 <div className="popup-3rfw bold">
                   <div className="btn-sort" onClick={() => {
-
-                    const exportToCSV = (apiData: any, fileName: string) => {
-                      const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-                      const fileExtension = ".xlsx";
-
-                      const ws = XLSX.utils.json_to_sheet(apiData);
-                      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-                      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-                      const data = new Blob([excelBuffer], { type: fileType });
-                      FileSaver.saveAs(data, fileName + fileExtension);
-                    };
-
                     let data: any[] = [];
 
                     for (const brick of this.state.finalBricks) {
@@ -362,15 +342,14 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                     <SpriteIcon name="excel-icon" />
                   </div>
                   <div className="btn-sort" onClick={() => {
-                    const doc = new jsPDF();
-                    autoTable(doc, {
-                      head: [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?']],
-                      body: this.state.finalBricks.map(b => {
+                    exportToPDF(
+                      [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?']],
+                      this.state.finalBricks.map(b => {
                         const subject = this.state.subjects.find(s => s.id === b.subjectId);
                         return [b.datePublished ? b.datePublished : '', subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no']
-                      })
-                    });
-                    doc.save('table.pdf')
+                      }),
+                      'table.pdf'
+                    );
                     this.setState({ downloadClicked: false });
                   }}>
                     <div>Export to PDF</div>

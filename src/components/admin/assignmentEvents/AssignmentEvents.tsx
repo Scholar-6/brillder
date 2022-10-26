@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import { jsPDF } from "jspdf";
-import autoTable from 'jspdf-autotable';
 
 import './AssignmentEvents.scss';
 import { ReduxCombinedState } from "redux/reducers";
@@ -22,6 +20,8 @@ import { Assignment } from "model/classroom";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { CDomain } from "../classesEvents/ClassesSidebar";
 import { exportToCSV } from "services/excel";
+import ExportBtn from "../components/ExportBtn";
+import { exportToPDF } from "services/pdf";
 
 
 enum SortBy {
@@ -311,12 +311,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
               <SubTab activeTab={ClassesActiveSubTab.Assignments} history={this.props.history} />
-              <div className="btn-container">
-                <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
-                  <div>Export</div>
-                  <SpriteIcon name="upload" />
-                </div>
-              </div>
+              <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
               {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
                 <div className="popup-3rfw bold">
                   <div className="btn-sort" onClick={() => {
@@ -342,12 +337,9 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
                     <SpriteIcon name="excel-icon" />
                   </div>
                   <div className="btn-sort" onClick={() => {
-                    const doc = new jsPDF();
-
-
-                    autoTable(doc, {
-                      head: [['Teacher', 'Class', 'Domain', 'Brick']],
-                      body: this.state.finalAssignments.map(a => {
+                    exportToPDF(
+                      [['Teacher', 'Class', 'Domain', 'Brick']],
+                      this.state.finalAssignments.map(a => {
                         const userEmailDomain = this.getUserDomainFromAssignment(a);
 
                         return [
@@ -357,8 +349,8 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
                           stripHtml(a.brick.title)
                         ]
                       }),
-                    });
-                    doc.save('table.pdf')
+                      'table.pdf'
+                    );
                     this.setState({ downloadClicked: false });
                   }}>
                     <div>Export to PDF</div>

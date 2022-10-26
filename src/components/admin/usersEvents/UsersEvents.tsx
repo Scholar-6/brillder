@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
 
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
@@ -15,6 +16,9 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getUsers } from "services/axios/user";
 import { getDateString } from "components/services/brickService";
 import UsersPagination from "components/teach/manageClassrooms/components/UsersPagination";
+import ExportBtn from "../components/ExportBtn";
+import { exportToCSV } from "services/excel";
+import { exportToPDF } from "services/pdf";
 
 
 interface UsersProps {
@@ -32,6 +36,8 @@ interface UsersState {
   pageSize: number;
   totalUsersCount: number;
   userPreference: UserPreferenceType | null;
+
+  downloadClicked: boolean;
 }
 
 class UsersPage extends Component<UsersProps, UsersState> {
@@ -43,7 +49,9 @@ class UsersPage extends Component<UsersProps, UsersState> {
       page: 0,
       pageSize: 14,
       totalUsersCount: 0,
-      userPreference: null
+      userPreference: null,
+
+      downloadClicked: false
     };
 
     this.getUsers(null, 0);
@@ -76,6 +84,26 @@ class UsersPage extends Component<UsersProps, UsersState> {
   search() { }
   searching() { }
 
+  renderUserType(u: User) {
+    if (u.roles.find(r => r.roleId === UserType.Admin)) {
+      return 'Admin';
+    } else if (u.roles.find(r => r.roleId === UserType.Publisher)) {
+      return 'Publisher';
+    } else if (u.roles.find(r => r.roleId === UserType.Institution)) {
+      return 'Institution';
+    } else if (u.userPreference) {
+      const { preferenceId } = u.userPreference;
+      if (preferenceId === UserType.Student) {
+        return 'Learner';
+      } else if (preferenceId === UserType.Builder) {
+        return 'Builder';
+      } else if (preferenceId === UserType.Teacher) {
+        return 'Educator';
+      }
+    }
+    return '';
+  }
+
   renderBody() {
     const { users } = this.state;
     if (users.length == 0) {
@@ -86,33 +114,13 @@ class UsersPage extends Component<UsersProps, UsersState> {
       </div>;
     }
 
-    const renderUserType = (u: User) => {
-      if (u.roles.find(r => r.roleId === UserType.Admin)) {
-        return 'Admin';
-      } else if (u.roles.find(r => r.roleId === UserType.Publisher)) {
-        return 'Publisher';
-      } else if (u.roles.find(r => r.roleId === UserType.Institution)) {
-        return 'Institution';
-      } else if (u.userPreference) {
-        const {preferenceId} = u.userPreference;
-        if (preferenceId === UserType.Student) {
-          return 'Learner';
-        } else if (preferenceId === UserType.Builder) {
-          return 'Builder';
-        } else if (preferenceId === UserType.Teacher) {
-          return 'Educator';
-        }
-      }
-      return '';
-    }
-
     return <div className="table-body">
       {users.map(u => {
         return (<div className="table-row">
           <div className="publish-column">{u.created && getDateString(u.created)}</div>
           <div className="author-column">{u.firstName} {u.lastName}</div>
           <div className="second-column">{u.email}</div>
-          <div className="third-column">{renderUserType(u)}</div>
+          <div className="third-column">{this.renderUserType(u)}</div>
         </div>);
       })}
     </div>
@@ -182,6 +190,47 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Users} history={this.props.history} />
             <div className="tab-content">
+              <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
+              {this.state.downloadClicked && <Dialog
+                className="sort-dialog-classes export-dialog-ew35"
+                open={this.state.downloadClicked}
+                onClose={() => this.setState({ downloadClicked: false })}
+              >
+                <div className="popup-3rfw bold">
+                  <div className="btn-sort" onClick={() => {
+                    let data: any[] = [];
+
+                    for (const user of this.state.users) {
+                      data.push({
+                        Joined: user.created?.toString(),
+                        Name: user.firstName + ' ' + user.lastName,
+                        Email: user.email,
+                        UserType: this.renderUserType(user)
+                      });
+                    }
+
+                    exportToCSV(data, "table");
+
+                    this.setState({ downloadClicked: false });
+                  }}>
+                    <div>Export to Excel</div>
+                    <SpriteIcon name="excel-icon" />
+                  </div>
+                  <div className="btn-sort" onClick={() => {
+                    exportToPDF(
+                      [['Joined', 'Name', 'Email', 'User Type']],
+                      this.state.users.map(u => {
+                        return [u.created?.toString(), u.firstName + ' ' + u.lastName, u.email, this.renderUserType(u)]
+                      }),
+                      'table.pdf'
+                    );
+                    this.setState({ downloadClicked: false });
+                  }}>
+                    <div>Export to PDF</div>
+                    <img alt="brill" src="/images/PDF_icon.png" />
+                  </div>
+                </div>
+              </Dialog>}
               {this.renderTable()}
               {this.renderPagination()}
             </div>
