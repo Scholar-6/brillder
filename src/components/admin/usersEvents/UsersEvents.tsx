@@ -23,6 +23,7 @@ import AddUserBtn from "../components/AddUserBtn";
 import map from "components/map";
 import { getSubjects } from "services/axios/subject";
 import { Subject } from "model/brick";
+import { string } from "prop-types";
 
 
 interface UsersProps {
@@ -47,6 +48,12 @@ interface UsersState {
   deleteUserId: number;
   isDeleteDialogOpen: boolean;
 
+  isSearching: boolean;
+  searchString: string;
+
+  orderBy: string;
+  isAscending: boolean;
+
   downloadClicked: boolean;
 }
 
@@ -63,8 +70,14 @@ class UsersPage extends Component<UsersProps, UsersState> {
       subjects: [],
       selectedSubjects: [],
 
+      orderBy: "user.created",
+      isAscending: true,
+
       deleteUserId: -1,
       isDeleteDialogOpen: false,
+
+      isSearching: false,
+      searchString: '',
 
       downloadClicked: false
     };
@@ -78,10 +91,10 @@ class UsersPage extends Component<UsersProps, UsersState> {
       this.setState({ subjects });
     }
 
-    this.getUsers(null, 0, []);
+    this.getUsers(null, 0, [], '', 'user.created', true);
   }
 
-  async getUsers(userPreference: UserPreferenceType | null, page: number, selectedSubjects: Subject[]) {
+  async getUsers(userPreference: UserPreferenceType | null, page: number, selectedSubjects: Subject[], searchString: string, orderBy: string, isAscending: boolean) {
     let roleFilters = [];
     if (userPreference !== null) {
       roleFilters.push(userPreference);
@@ -89,11 +102,11 @@ class UsersPage extends Component<UsersProps, UsersState> {
     const res = await getUsers({
       pageSize: this.state.pageSize,
       page: page.toString(),
-      searchString: '',
+      searchString,
       subjectFilters: selectedSubjects.map(s => s.id),
       roleFilters,
-      orderBy: "user.created",
-      isAscending: false
+      orderBy,
+      isAscending
     });
     if (res) {
       this.setState({
@@ -101,13 +114,37 @@ class UsersPage extends Component<UsersProps, UsersState> {
         page,
         users: res.pageData,
         selectedSubjects,
+        orderBy,
+        isAscending,
         totalUsersCount: res.totalCount
       });
     }
   }
 
-  search() { }
-  searching() { }
+  search() {
+    const { searchString } = this.state;
+    this.getUsers(
+      this.state.userPreference,
+      0,
+      this.state.selectedSubjects,
+      searchString,
+      this.state.orderBy,
+      this.state.isAscending
+    );
+
+    setTimeout(() => {
+      this.setState({ isSearching: true });
+    })
+  }
+
+  async searching(searchString: string) {
+    if (searchString.length === 0) {
+      await this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, searchString, this.state.orderBy, this.state.isAscending);
+      this.setState({ ...this.state, searchString, isSearching: false });
+    } else {
+      this.setState({ ...this.state, searchString });
+    }
+  }
 
   renderUserType(u: User) {
     if (u.roles.find(r => r.roleId === UserType.Admin)) {
@@ -163,7 +200,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
   }
 
   moveToPage(page: number) {
-    this.getUsers(this.state.userPreference, page, this.state.selectedSubjects);
+    this.getUsers(this.state.userPreference, page, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
   }
 
   renderPagination() {
@@ -185,11 +222,21 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <div className="publish-column header">
             <div>Joined</div>
             <div><SpriteIcon name="sort-arrows" onClick={() => {
+              let isAscending = this.state.isAscending;
+              if (this.state.orderBy === "user.created") {
+                isAscending = !isAscending;
+              }
+              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.created", isAscending);
             }} /></div>
           </div>
           <div className="author-column header">
             <div>Name</div>
             <div><SpriteIcon name="sort-arrows" onClick={() => {
+              let isAscending = this.state.isAscending;
+              if (this.state.orderBy === "user.lastName") {
+                isAscending = !isAscending;
+              }
+              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.lastName", isAscending);
             }} /></div>
           </div>
           <div className="second-column header">
@@ -213,7 +260,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
     if (deleteUserId === -1) { return }
     const res = await deleteUser(deleteUserId);
     if (res) {
-      this.getUsers(this.state.userPreference, this.state.page, this.state.selectedSubjects);
+      this.getUsers(this.state.userPreference, this.state.page, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
     } else {
       this.props.requestFailed("Can`t delete user");
     }
@@ -241,10 +288,10 @@ class UsersPage extends Component<UsersProps, UsersState> {
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
             selectSubjects={selectedSubjects => {
-              this.getUsers(this.state.userPreference, 0, selectedSubjects);
+              this.getUsers(this.state.userPreference, 0, selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
             }}
             setUserPreference={userPreference => {
-              this.getUsers(userPreference, 0, this.state.selectedSubjects);
+              this.getUsers(userPreference, 0, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
             }}
           />
           <Grid item xs={9} className="brick-row-container">
