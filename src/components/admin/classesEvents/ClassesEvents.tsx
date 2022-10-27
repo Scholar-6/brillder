@@ -50,6 +50,9 @@ interface TeachState {
   classrooms: ClassroomApi[];
   finalClassrooms: ClassroomApi[];
   dateFilter: PDateFilter;
+
+  isSearching: boolean;
+  searchString: string;
 }
 
 class ClassesEvents extends Component<TeachProps, TeachState> {
@@ -65,7 +68,10 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       allDomains: true,
       domains: [],
       classrooms: [],
-      finalClassrooms: []
+      finalClassrooms: [],
+
+      isSearching: false,
+      searchString: '',
     }
     this.loadInitPlayedData();
   }
@@ -92,7 +98,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   async loadData(dateFilter: PDateFilter) {
     const classrooms = await getAllAdminClassrooms(dateFilter);
     if (classrooms) {
-      const finalClassrooms = this.filterAndSort(classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains);
+      const finalClassrooms = this.filterAndSort(classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
       const domains: CDomain[] = [];
       for (let c of classrooms) {
         if (c.creator) {
@@ -107,8 +113,20 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     }
   }
 
-  search() { }
-  searching() { }
+  search() {
+    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
+    this.setState({ sortBy: SortBy.Name, finalClassrooms });
+  }
+  
+  async searching(searchString: string) {
+    if (searchString.length === 0) {
+      const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, searchString);
+      //await this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, searchString, this.state.orderBy, this.state.isAscending);
+      this.setState({ ...this.state, finalClassrooms, searchString, isSearching: false });
+    } else {
+      this.setState({ ...this.state, searchString });
+    }
+  }
 
   sortClassrooms(sortBy: SortBy, classrooms: ClassroomApi[]) {
     if (sortBy === SortBy.Name) {
@@ -175,7 +193,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     </div>
   }
 
-  filterAndSort(classrooms: ClassroomApi[], selectedSubjects: Subject[], sortBy: SortBy, isAllDomains: boolean, domains: CDomain[]) {
+  filterAndSort(classrooms: ClassroomApi[], selectedSubjects: Subject[], sortBy: SortBy, isAllDomains: boolean, domains: CDomain[], searchString: string) {
     let finalClassrooms = [];
 
     if (selectedSubjects.length > 0) {
@@ -193,7 +211,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
 
     // filter by domain
     if (!isAllDomains && checkedDomains) {
-      let classroomsTemp = finalClassrooms;
+      let classroomsTemp = [...finalClassrooms];
       finalClassrooms = [] as ClassroomApi[];
       for (let c of classroomsTemp) {
         if (c.creator && c.creator) {
@@ -201,6 +219,36 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           const found = checkedDomains.find(d => d.name === userEmailDomain);
           if (found) {
             finalClassrooms.push(c);
+          }
+        }
+      }
+    }
+
+    // filter by search
+    if (searchString) {
+      const classroomsTemp = [...finalClassrooms];
+      finalClassrooms = [] as ClassroomApi[];
+      const searchStringLow = searchString.toLocaleLowerCase();
+      for (let c of classroomsTemp) {
+        const index = c.name.toLocaleLowerCase().search(searchStringLow);
+        if (index >= 0) {
+          finalClassrooms.push(c);
+          continue;
+        }
+        if (c.creator) {
+          if (c.creator.firstName) {
+            const index = c.creator.firstName.toLocaleLowerCase().search(searchStringLow);
+            if (index >= 0) {
+              finalClassrooms.push(c);
+              continue;
+            }
+          }
+
+          if (c.creator.lastName) {
+            const index = c.creator.lastName.toLocaleLowerCase().search(searchStringLow);
+            if (index >= 0) {
+              finalClassrooms.push(c);
+            }
           }
         }
       }
@@ -220,7 +268,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Name, this.state.allDomains, this.state.domains);
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Name, this.state.allDomains, this.state.domains, this.state.searchString);
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -232,7 +280,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Creator, this.state.allDomains, this.state.domains);
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Creator, this.state.allDomains, this.state.domains, this.state.searchString);
                   this.setState({ sortBy: SortBy.Creator, finalClassrooms });
                 }}
               />
@@ -244,7 +292,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain, this.state.allDomains, this.state.domains);
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain, this.state.allDomains, this.state.domains, this.state.searchString);
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -256,7 +304,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Students, this.state.allDomains, this.state.domains);
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Students, this.state.allDomains, this.state.domains, this.state.searchString);
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -268,7 +316,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains);
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -298,20 +346,20 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             domains={this.state.domains}
             setAllDomains={() => {
               this.state.domains.forEach(d => { d.checked = false });
-              const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, true, this.state.domains);
+              const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, true, this.state.domains, this.state.searchString);
               this.setState({ allDomains: true, finalClassrooms });
             }}
             setDomain={d => {
               this.state.domains.map(d => d.checked = false);
               d.checked = true;
-              const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, false, this.state.domains);
+              const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, false, this.state.domains, this.state.searchString);
               this.setState({ allDomains: false, finalClassrooms });
             }}
             dateFilter={this.state.dateFilter} setDateFilter={dateFilter => this.loadData(dateFilter)}
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
             selectSubjects={selectedSubjects => {
-              const finalClassrooms = this.filterAndSort(this.state.classrooms, selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains);
+              const finalClassrooms = this.filterAndSort(this.state.classrooms, selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
               this.setState({ selectedSubjects, finalClassrooms });
             }}
           />
