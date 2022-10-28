@@ -136,6 +136,10 @@ export function checkAdmin(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Admin);
 }
 
+export function checkAdminOrInstitution(roles: UserRole[]) {
+  return roles.some(role => role.roleId === UserType.Admin || role.roleId === UserType.Institution);
+}
+
 export function isAorP(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Publisher || role.roleId === UserType.Admin);
 }

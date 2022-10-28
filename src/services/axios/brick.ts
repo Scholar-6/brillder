@@ -81,7 +81,7 @@ export const getBackToWorkStatistics = async (getPersonal: boolean, getPublic: b
 
 export const adminGetBrickAtemptStatistic = async (dateFilter: PDateFilter) => {
   try {
-    return await get<Brick[]>(`/admin/getAdminBricksStatistic/` + dateFilter);
+    return await get<Brick[]>(`/institution/getAdminBricksStatistic/` + dateFilter);
   } catch {
     return false;
   }

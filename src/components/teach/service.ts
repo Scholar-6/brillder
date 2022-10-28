@@ -79,7 +79,7 @@ export const getAllClassrooms = async () => {
  */
  export const getAllAdminClassrooms = async (dateFilter: number) => {
   try {
-    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/adminOrInstitution/getAllClassrooms/" + dateFilter, {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/institution/getAllClassrooms/" + dateFilter, {
       withCredentials: true,
     });
     if (res.data) {
@@ -105,7 +105,7 @@ export const getAllClassrooms = async () => {
  */
  export const getAllAssignmentsByAdmin = async (dateFilter: number) => {
   try {
-    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/adminOrInstitution/getAdminAssignments/" + dateFilter, {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/institution/getAdminAssignments/" + dateFilter, {
       withCredentials: true,
     });
     if (res.data) {
@@ -124,7 +124,7 @@ export const getAllClassrooms = async () => {
  */
  export const getClassrooms = async (dateFilter: number) => {
   try {
-    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/adminOrInstitution/getAllClassrooms/" + dateFilter, {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/institution/getAllClassrooms/" + dateFilter, {
       withCredentials: true,
     });
     if (res.data) {

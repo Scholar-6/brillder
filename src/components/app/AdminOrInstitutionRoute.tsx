@@ -11,7 +11,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
 import LoginRedirect from "components/baseComponents/LoginRedirect";
 import BaseTermsRedirect from "./BaseTermsRedirect";
-import { checkAdmin } from "components/services/brickService";
+import { checkAdminOrInstitution } from "components/services/brickService";
 
 interface BuildRouteProps {
   path: string;
@@ -23,7 +23,7 @@ interface BuildRouteProps {
   isAuthorized(): void;
 }
 
-class BuildRoute extends React.Component<BuildRouteProps> {
+class AdminOrInstitionRoute extends React.Component<BuildRouteProps> {
   constructor(props: BuildRouteProps) {
     super(props);
     this.getUser(props);
@@ -62,7 +62,7 @@ class BuildRoute extends React.Component<BuildRouteProps> {
       }
 
       const { component: Component } = props;
-      if (checkAdmin(user.roles)) {
+      if (checkAdminOrInstitution(user.roles)) {
         return <Route {...props} render={(props) => <Component {...props} />} />;
       } else {
         return <Redirect to={'/home'} />;
@@ -95,4 +95,4 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(mapState, mapDispatch);
 
-export default connector(BuildRoute);
+export default connector(AdminOrInstitionRoute);
