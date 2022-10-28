@@ -3,8 +3,8 @@
 @import 'src/assets/sass/partials/extensions';
 
 .mainPage {
-  $welcome-col-width: 35.2vw;
-  $first-col-width: 29.6vw;
+  $welcome-col-width: 50vw;
+  $first-col-width: 39vw;
   background: var(--theme-dark-blue);
   position: fixed;
   width: 100%;
@@ -49,7 +49,7 @@
   .welcome-col {
     width: $welcome-col-width;
     @include textCenter;
-    padding-top: 20vh;
+    padding-top: calc(6vw + 1.1vw + 20vh);
 
     .welcome-box {
       color: white;
@@ -152,7 +152,8 @@
     height: 100%;
 
     .first-item {
-      padding-top: 4vh;
+      padding: 0 2vw;
+      padding-top: 3vh;
       background: var(--theme-light-blue);
       height: 85vh;
       border-bottom-left-radius: $border-radius;
@@ -224,9 +225,6 @@
     width: auto;
     @include flexCenter;
     flex-direction: column;
-    @include tabletP {
-      padding: 5vh 0;
-    }
     .btn {
       display: flex;
       align-items: center;
@@ -308,10 +306,8 @@
     }
   }
   .view-item-container {
-    padding-top: 7vh;
-    padding-bottom: 0;
-    margin-bottom: 5vh;
     width: 15vw;
+    padding-top: 5vw;
     .eye-glass-icon {
       height: 2.7vw;
     }
@@ -410,5 +406,28 @@
   }
   .second-col .my-library-button.disabled button svg {
     color: var(--theme-light-blue) !important;
+  }
+
+  .first-col {
+    margin-left: 10vw;
+    .first-item > div {
+      padding-bottom: 4vh;
+      display: flex;
+      align-items: center;
+
+      .back-item-container {
+        margin-top: 1.5vw;
+      }
+
+      > div, > a {
+        width: 17.5vw;
+      }
+
+      &.one-btn {
+        width: 100%;
+        padding-left: 0vw;
+        justify-content: flex-start;
+      }
+    }
   }
 }
