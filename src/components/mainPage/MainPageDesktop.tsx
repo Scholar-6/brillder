@@ -9,7 +9,7 @@ import DynamicFont from 'react-dynamic-font';
 
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
-import { User } from "model/user";
+import { User, UserPreferenceType } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
@@ -69,6 +69,7 @@ interface MainPageState {
   notificationExpanded: boolean;
   isTeacher: boolean;
   isAdmin: boolean;
+  isInstitution: boolean;
   isStudent: boolean;
   isBuilder: boolean;
 
@@ -146,6 +147,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       isAdmin: checkAdmin(props.user.roles),
       isStudent,
       isBuilder,
+      isInstitution: isInstitutionPreference(props.user),
 
       assignedCount: 0,
 
@@ -273,6 +275,34 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
         <button className="btn btn-transparent text-theme-orange zoom-item">
           <BlocksIcon />
           <span className="item-description">Assignments</span>
+        </button>
+      </div>
+    );
+  }
+
+  renderStatisticButton(disabled?: boolean) {
+    let isActive = true;
+    if (disabled) {
+      isActive = false;
+    }
+    if (isIPad13 || isTablet) {
+      isActive = false;
+      disabled = true;
+    }
+
+    return (
+      <div className={`create-item-container build-button-d71 ${isActive ? '' : 'disabled'}`} onClick={() => {
+        if (disabled) {
+          if (isMobile) {
+            this.setState({ isDesktopOpen: true });
+          }
+          return;
+        }
+        this.props.history.push(map.AdminBricksPlayed);
+      }}>
+        <button className="btn btn-transparent zoom-item svgOnHover">
+          <SpriteIcon name="admin-data-g" className={isActive ? 'active text-theme-orange' : 'text-theme-light-blue'} />
+          <span className="item-description">Data Dashboard</span>
         </button>
       </div>
     );
@@ -425,11 +455,96 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return <div className="second-item not-active light-blue" />
   }
 
+
+  renderAdminBtns() {
+    return (
+      <div className="first-item">
+        <div>
+          <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
+          {this.renderRightButton()}
+        </div>
+        <div>
+          {this.renderSecondButton()}
+          {this.renderAssignmentsButton()}
+        </div>
+        <div>
+          {this.renderThirdButton()}
+          {this.renderStatisticButton()}
+        </div>
+      </div>
+    );
+  }
+
+  renderLearnerBtns() {
+    return (
+      <div className="first-item">
+        <div>
+          <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
+          {this.renderRightButton()}
+        </div>
+        <div>
+          {this.renderCompetitionArena()}
+          {this.renderAssignmentsButton()}
+        </div>
+        <div className="one-btn">
+          {this.renderThirdButton()}
+        </div>
+      </div>
+    );
+  }
+
+  renderEducatorBtns() {
+    return (
+      <div className="first-item">
+        <div>
+          <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
+          {this.renderCreateButton()}
+        </div>
+        <div>
+          {this.renderSecondButton()}
+          {this.renderRightButton()}
+        </div>
+      </div>
+    );
+  }
+
+  renderBuilderBtns() {
+    return (
+      <div className="first-item">
+        <div>
+          <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
+          {this.renderCreateButton()}
+        </div>
+        <div className="one-btn">
+          {this.renderThirdButton()}
+        </div>
+      </div>
+    );
+  }
+
+  renderBtns() {
+    if (this.state.isAdmin) {
+      return this.renderAdminBtns();
+    } else if (this.state.isStudent) {
+      return this.renderLearnerBtns();
+    } else if (this.state.isTeacher || this.state.isInstitution) {
+      return this.renderEducatorBtns()
+    } else if (this.state.isBuilder) {
+      return this.renderBuilderBtns()
+    }
+    return this.renderLearnerBtns();
+  }
+
   render() {
     return (
       <React.Suspense fallback={<></>}>
         {isTablet ? <TabletTheme /> : <DesktopTheme />}
         <Grid container direction="row" className="mainPage">
+          <div className="space-before-first-col" />
+          <div className="first-col">
+            {this.renderBtns()}
+            {this.renderBottomMidle()}
+          </div>
           <div className="welcome-col">
             <WelcomeComponent
               user={this.props.user}
@@ -438,28 +553,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
               notificationClicked={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
             />
           </div>
-          <div className="first-col">
-            <div className="first-item">
-              <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
-              {this.renderSecondButton()}
-              {this.renderThirdButton()}
-            </div>
-            {this.renderBottomMidle()}
-          </div>
-          {(this.state.isTeacher || this.state.isAdmin) ?
-            <div className="second-col">
-              <div>
-                {this.renderRightButton()}
-                {this.renderRightBottomButton()}
-              </div>
-            </div>
-            : <div className="second-col">
-              <div>
-                {this.renderCompetitionArena()}
-                {this.renderRightButton()}
-              </div>
-            </div>
-          }
           <MainPageMenu
             user={this.props.user}
             history={this.props.history}
