@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
-import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
 
 import { Subject } from "model/brick";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
+import SubjectsSelect from "../components/SubjectsSelect";
 
 export enum PDateFilter {
   Past24Hours,
@@ -63,17 +62,6 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
     }
   }
 
-  renderContent() {
-    if (!this.props.isLoaded) {
-      return <div></div>;
-    }
-    return <div></div>;
-  }
-
-  renderSubject() {
-
-  }
-
   render() {
     const { dateFilter, subjectCategory, setSubjectCategory } = this.props;
     return (
@@ -82,7 +70,7 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
         className="sort-and-filter-container teach-assigned"
       >
         <div className="sort-box">
-          <div className="bold font1-5">Filter By</div>
+          <div className="bold font1-5">Admin Data Dashboard</div>
         </div>
         <div className="filter-header">Date</div>
         <div className="sort-radio-btns filter-row margin-smaller top-margin-bigger">
@@ -154,52 +142,15 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
             control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Science)} className={"filter-radio custom-color"} />}
             label="Science" />
         </div>
-        <div className="filter-header">Subjects</div>
-        <div className="flex-center relative select-container">
-          <div className="absolute-placeholder">{this.props.selectedSubjects.length === 0 && 'Find a subject'}</div>
-          <Select
-            className="select-multiple-subject"
-            multiple
-            MenuProps={{ classes: { paper: 'select-classes-list' } }}
-            value={this.state.subjectIds}
-            renderValue={(selected) => {
-              let text = "";
-              for (let s of this.props.selectedSubjects) {
-                text += ' ' + s.name;
-              }
-              return text;
-            }}
-            onChange={(e) => {
-              const values = e.target.value as number[];
-              console.log(values);
-              let subjects = [];
-              for (let id of values) {
-                let subject = this.props.subjects.find(s => s.id === id);
-                if (subject) {
-                  subjects.push(subject);
-                }
-              }
-              this.setState({ subjectIds: values });
-              this.props.selectSubjects(subjects);
-            }}
-          >
-            {this.props.subjects.map((s: Subject, i) =>
-              <MenuItem value={s.id} key={i}>
-                <ListItemIcon>
-                  <SvgIcon>
-                    <SpriteIcon
-                      name="circle-filled"
-                      className="w100 h100 active"
-                      style={{ color: s?.color || '#4C608A' }}
-                    />
-                  </SvgIcon>
-                </ListItemIcon>
-                <ListItemText>{s.name}</ListItemText>
-              </MenuItem>
-            )}
-          </Select>
-        </div>
-        {this.renderContent()}
+        <SubjectsSelect
+          subjectIds={this.state.subjectIds}
+          subjects={this.props.subjects}
+          selectedSubjects={this.props.selectedSubjects}
+          selectSubjects={(subjectIds, subjects) => {
+            this.setState({ subjectIds });
+            this.props.selectSubjects(subjects);
+          }}
+        />
         <div className="sidebar-footer" />
       </Grid>
     );

@@ -3,10 +3,6 @@ import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import * as XLSX from "xlsx";
-import * as FileSaver from "file-saver";
-import { jsPDF } from "jspdf";
-import autoTable from 'jspdf-autotable';
 
 import './ClassesEvents.scss';
 import { ReduxCombinedState } from "redux/reducers";
@@ -15,13 +11,16 @@ import { getAllAdminClassrooms } from 'components/teach/service';
 
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import BricksPlayedSidebar, { PDateFilter } from "./BricksPlayedSidebar";
+import ClassesSidebar, { CDomain, PDateFilter } from "./ClassesSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SubTab, { ClassesActiveSubTab } from "../components/SubTab";
+import { exportToCSV } from "services/excel";
+import { exportToPDF } from "services/pdf";
+import ExportBtn from "../components/ExportBtn";
 
 
 enum SortBy {
@@ -44,11 +43,16 @@ interface TeachProps {
 interface TeachState {
   sortBy: SortBy;
   downloadClicked: boolean;
+  allDomains: boolean;
+  domains: CDomain[];
   subjects: Subject[];
   selectedSubjects: Subject[];
   classrooms: ClassroomApi[];
   finalClassrooms: ClassroomApi[];
   dateFilter: PDateFilter;
+
+  isSearching: boolean;
+  searchString: string;
 }
 
 class ClassesEvents extends Component<TeachProps, TeachState> {
@@ -61,8 +65,13 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       dateFilter: PDateFilter.Past24Hours,
       subjects: [],
       selectedSubjects: [],
+      allDomains: true,
+      domains: [],
       classrooms: [],
-      finalClassrooms: []
+      finalClassrooms: [],
+
+      isSearching: false,
+      searchString: '',
     }
     this.loadInitPlayedData();
   }
@@ -70,7 +79,15 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   async loadInitPlayedData() {
     const classrooms = await getAllAdminClassrooms(PDateFilter.Past24Hours);
     if (classrooms) {
-      this.setState({ classrooms, finalClassrooms: classrooms });
+      const domains: CDomain[] = [];
+      for (let c of classrooms) {
+        const userEmailDomain = c.creator.email.split("@")[1];
+        const found = domains.find(d => d.name == userEmailDomain);
+        if (!found) {
+          domains.push({ checked: false, name: userEmailDomain });
+        }
+      }
+      this.setState({ classrooms, finalClassrooms: classrooms, domains });
     }
     const subjects = await getSubjects();
     if (subjects) {
@@ -81,13 +98,35 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   async loadData(dateFilter: PDateFilter) {
     const classrooms = await getAllAdminClassrooms(dateFilter);
     if (classrooms) {
-      const finalClassrooms = this.filterAndSort(classrooms, this.state.selectedSubjects, this.state.sortBy);
-      this.setState({ classrooms, finalClassrooms, dateFilter });
+      const finalClassrooms = this.filterAndSort(classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
+      const domains: CDomain[] = [];
+      for (let c of classrooms) {
+        if (c.creator) {
+          const userEmailDomain = c.creator.email.split("@")[1];
+          const found = domains.find(d => d.name == userEmailDomain);
+          if (!found) {
+            domains.push({ checked: false, name: userEmailDomain });
+          }
+        }
+      }
+      this.setState({ classrooms, finalClassrooms, dateFilter, domains });
     }
   }
 
-  search() { }
-  searching() { }
+  search() {
+    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
+    this.setState({ sortBy: SortBy.Name, finalClassrooms });
+  }
+  
+  async searching(searchString: string) {
+    if (searchString.length === 0) {
+      const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, searchString);
+      //await this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, searchString, this.state.orderBy, this.state.isAscending);
+      this.setState({ ...this.state, finalClassrooms, searchString, isSearching: false });
+    } else {
+      this.setState({ ...this.state, searchString });
+    }
+  }
 
   sortClassrooms(sortBy: SortBy, classrooms: ClassroomApi[]) {
     if (sortBy === SortBy.Name) {
@@ -124,13 +163,14 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   renderBody() {
     const { finalClassrooms } = this.state;
     if (finalClassrooms.length == 0) {
-      return <div>No Bricks</div>;
+      return <div>No Classes</div>;
     }
 
     const renderDomain = (creator: User) => {
-      if (creator.institution) {
+      if (creator) {
+        const userEmailDomain = creator.email.split("@")[1];
         return (<div className="domain-column">
-          {creator.institution.domains.map(d => <div>{d}</div>)}
+          {userEmailDomain}
         </div>);
       }
       return '';
@@ -153,8 +193,9 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     </div>
   }
 
-  filterAndSort(classrooms: ClassroomApi[], selectedSubjects: Subject[], sortBy: SortBy) {
+  filterAndSort(classrooms: ClassroomApi[], selectedSubjects: Subject[], sortBy: SortBy, isAllDomains: boolean, domains: CDomain[], searchString: string) {
     let finalClassrooms = [];
+
     if (selectedSubjects.length > 0) {
       for (let c of classrooms) {
         const found = selectedSubjects.find(s => s.id === c.subjectId);
@@ -164,6 +205,53 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       }
     } else {
       finalClassrooms = [...classrooms];
+    }
+
+    let checkedDomains = domains.filter(d => d.checked === true);
+
+    // filter by domain
+    if (!isAllDomains && checkedDomains) {
+      let classroomsTemp = [...finalClassrooms];
+      finalClassrooms = [] as ClassroomApi[];
+      for (let c of classroomsTemp) {
+        if (c.creator && c.creator) {
+          const userEmailDomain = c.creator.email.split("@")[1];
+          const found = checkedDomains.find(d => d.name === userEmailDomain);
+          if (found) {
+            finalClassrooms.push(c);
+          }
+        }
+      }
+    }
+
+    // filter by search
+    if (searchString) {
+      const classroomsTemp = [...finalClassrooms];
+      finalClassrooms = [] as ClassroomApi[];
+      const searchStringLow = searchString.toLocaleLowerCase();
+      for (let c of classroomsTemp) {
+        const index = c.name.toLocaleLowerCase().search(searchStringLow);
+        if (index >= 0) {
+          finalClassrooms.push(c);
+          continue;
+        }
+        if (c.creator) {
+          if (c.creator.firstName) {
+            const index = c.creator.firstName.toLocaleLowerCase().search(searchStringLow);
+            if (index >= 0) {
+              finalClassrooms.push(c);
+              continue;
+            }
+          }
+
+          if (c.creator.lastName) {
+            const index = c.creator.lastName.toLocaleLowerCase().search(searchStringLow);
+            if (index >= 0) {
+              finalClassrooms.push(c);
+            }
+          }
+        }
+      }
     }
 
     finalClassrooms = this.sortClassrooms(sortBy, finalClassrooms);
@@ -180,7 +268,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Name)
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Name, this.state.allDomains, this.state.domains, this.state.searchString);
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -192,7 +280,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Creator)
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Creator, this.state.allDomains, this.state.domains, this.state.searchString);
                   this.setState({ sortBy: SortBy.Creator, finalClassrooms });
                 }}
               />
@@ -204,7 +292,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain)
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain, this.state.allDomains, this.state.domains, this.state.searchString);
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -216,7 +304,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Students)
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Students, this.state.allDomains, this.state.domains, this.state.searchString);
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -228,7 +316,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               <SpriteIcon
                 name="sort-arrows"
                 onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned)
+                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
                   this.setState({ sortBy: SortBy.Name, finalClassrooms });
                 }}
               />
@@ -247,18 +335,31 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           page={PageEnum.ManageClasses}
           placeholder="Brick Title, Student Name, or Subject"
           user={this.props.user}
-          history={history}
+          history={this.props.history}
           search={this.search.bind(this)}
           searching={this.searching.bind(this)}
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
-          <BricksPlayedSidebar
+          <ClassesSidebar
             isLoaded={true}
+            allDomains={this.state.allDomains}
+            domains={this.state.domains}
+            setAllDomains={() => {
+              this.state.domains.forEach(d => { d.checked = false });
+              const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, true, this.state.domains, this.state.searchString);
+              this.setState({ allDomains: true, finalClassrooms });
+            }}
+            setDomain={d => {
+              this.state.domains.map(d => d.checked = false);
+              d.checked = true;
+              const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, false, this.state.domains, this.state.searchString);
+              this.setState({ allDomains: false, finalClassrooms });
+            }}
             dateFilter={this.state.dateFilter} setDateFilter={dateFilter => this.loadData(dateFilter)}
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
             selectSubjects={selectedSubjects => {
-              const finalClassrooms = this.filterAndSort(this.state.classrooms, selectedSubjects, SortBy.Assigned)
+              const finalClassrooms = this.filterAndSort(this.state.classrooms, selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
               this.setState({ selectedSubjects, finalClassrooms });
             }}
           />
@@ -266,34 +367,23 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
               <SubTab activeTab={ClassesActiveSubTab.Classes} history={this.props.history} />
-              <div className="btn-container">
-                <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
-                  <div>Export</div>
-                  <SpriteIcon name="upload" />
-                </div>
-              </div>
+              <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
               {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
                 <div className="popup-3rfw bold">
                   <div className="btn-sort" onClick={() => {
 
-                    const exportToCSV = (apiData: any, fileName: string) => {
-                      const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-                      const fileExtension = ".xlsx";
-
-                      const ws = XLSX.utils.json_to_sheet(apiData);
-                      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-                      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-                      const data = new Blob([excelBuffer], { type: fileType });
-                      FileSaver.saveAs(data, fileName + fileExtension);
-                    }
-
                     let data: any[] = [];
 
                     for (const c of this.state.finalClassrooms) {
+                      let domain = '';
+                      if (c.creator) {
+                        domain = c.creator.email.split("@")[1];
+                      }
+
                       data.push({
                         name: c.name,
                         Creator: c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
-                        Domain: 'name',
+                        Domain: domain,
                         Played: c.assignmentsCount,
                       });
                     }
@@ -306,18 +396,24 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                     <SpriteIcon name="excel-icon" />
                   </div>
                   <div className="btn-sort" onClick={() => {
-                    const doc = new jsPDF();
-                    autoTable(doc, {
-                      head: [['Name', 'Creator', 'Domain', 'Creator', 'Students', 'Assignments']],
-                      body: this.state.finalClassrooms.map(c => [
-                        c.name,
-                        c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
-                        'domain',
-                        c.students.length,
-                        c.assignmentsCount ? c.assignmentsCount : ''
-                      ]),
-                    });
-                    doc.save('table.pdf')
+                    exportToPDF(
+                      [['Name', 'Creator', 'Domain', 'Creator', 'Students', 'Assignments']],
+                      this.state.finalClassrooms.map(c => {
+                        let domain = '';
+                        if (c.creator) {
+                          domain = c.creator.email.split("@")[1];
+                        }
+
+                        return [
+                          c.name,
+                          c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
+                          domain,
+                          c.students.length,
+                          c.assignmentsCount ? c.assignmentsCount : ''
+                        ]
+                      }),
+                      'table.pdf'
+                    );
                     this.setState({ downloadClicked: false });
                   }}>
                     <div>Export to PDF</div>
@@ -341,3 +437,4 @@ const mapDispatch = (dispatch: any) => ({
 });
 
 export default connect(mapState, mapDispatch)(ClassesEvents);
+

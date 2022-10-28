@@ -6,6 +6,8 @@ export enum UserType {
   Builder,
   Admin,
   Publisher,
+  Institution,
+  InstitutionUser,
 }
 
 export enum UserPreferenceType {

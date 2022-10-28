@@ -4,6 +4,7 @@ import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material
 
 import { Subject } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { CDomain } from "../classesEvents/ClassesSidebar";
 
 export enum PDateFilter {
   Past24Hours,
@@ -16,6 +17,10 @@ export enum PDateFilter {
 interface FilterSidebarProps {
   isLoaded: boolean;
   dateFilter: PDateFilter;
+  allDomains: boolean;
+  domains: CDomain[];
+  setAllDomains(): void;
+  setDomain(d: CDomain): void;
   setDateFilter(filter: PDateFilter): void;
   subjects: Subject[];
   selectedSubjects: Subject[];
@@ -32,19 +37,12 @@ export enum SortClassroom {
   Assignment
 }
 
-class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
+class AssignmentsSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   constructor(props: FilterSidebarProps) {
     super(props);
     this.state = {
       subjectIds: []
     };
-  }
-
-  renderContent() {
-    if (!this.props.isLoaded) {
-      return <div></div>;
-    }
-    return <div></div>;
   }
 
   render() {
@@ -55,7 +53,7 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
         className="sort-and-filter-container teach-assigned"
       >
         <div className="sort-box">
-          <div className="bold font1-5">Filter By</div>
+          <div className="bold font1-5">Admin Data Dashboard</div>
         </div>
         <div className="filter-header">Date</div>
         <div className="sort-radio-btns filter-row margin-smaller top-margin-bigger">
@@ -85,6 +83,22 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
             label="All time" />
         </div>
         <div className="filter-header">School Domain</div>
+        <div className="filter-domain">
+          <div className="sort-radio-btns filter-row margin-smaller">
+            <FormControlLabel
+              checked={this.props.allDomains === true}
+              control={<Radio onClick={() => this.props.setAllDomains()} className={"filter-radio custom-color"} />}
+              label="All" />
+          </div>
+          {this.props.domains.map(d =>
+            <div className="sort-radio-btns filter-row margin-smaller">
+              <FormControlLabel
+                checked={d.checked === true}
+                control={<Radio onClick={() => this.props.setDomain(d)} className={"filter-radio custom-color"} />}
+                label={d.name} />
+            </div>
+          )}
+        </div>
         <div className="filter-header">Subjects</div>
         <div className="flex-center relative select-container">
           <div className="absolute-placeholder">{this.props.selectedSubjects.length === 0 && 'Find a subject'}</div>
@@ -93,7 +107,7 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
             multiple
             MenuProps={{ classes: { paper: 'select-classes-list' } }}
             value={this.state.subjectIds}
-            renderValue={(selected) => {
+            renderValue={() => {
               let text = "";
               for (let s of this.props.selectedSubjects) {
                 text += ' ' + s.name;
@@ -102,7 +116,6 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
             }}
             onChange={(e) => {
               const values = e.target.value as number[];
-              console.log(values);
               let subjects = [];
               for (let id of values) {
                 let subject = this.props.subjects.find(s => s.id === id);
@@ -130,11 +143,10 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
             )}
           </Select>
         </div>
-        {this.renderContent()}
         <div className="sidebar-footer" />
       </Grid>
     );
   }
 }
 
-export default BricksPlayedSidebar;
+export default AssignmentsSidebar;

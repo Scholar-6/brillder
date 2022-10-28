@@ -2,7 +2,7 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-.bricks-played-page {
+.classes-events-page {
   .teach-assigned {
     overflow-y: auto;
     .sort-box {
@@ -70,7 +70,7 @@
     }
 
     .table-head {
-      margin-top: 0.2vh;
+      margin-top: 2vh;
       display: flex;
       font-size: 1.2vw;
 
@@ -85,6 +85,26 @@
         }
       }
     }
+    
+    .name-column {
+      padding-left: 1.5%;
+      width: 25%;
+    }
+    .creator-column {
+      width: 25%;
+    }
+    .domain-column {
+      width: 25%;
+
+    }
+    .students-column {
+      width: 12.5%;
+    }
+
+    .assigned-column {
+      width: 12.5%;
+    }
+
     .publish-column {
       display: flex;
       align-items: center;
@@ -94,7 +114,7 @@
     .first-column {
       display: flex;
       align-items: center;
-      padding-left: 1%;
+      padding-left: 2%;
       width: 50%;
       p {
         display: inline;
@@ -105,9 +125,9 @@
       align-items: center;
       width: 10%;
     }
+    
     .subject-column {
-      width: 17%;
-      display: block !important;
+      width: 15%;
 
       .subject-block {
         display: flex;
@@ -134,47 +154,10 @@
       width: 13%;
     }
 
-    .btn-container {
-      margin-right: 2vw;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-
-      &.margin-right-small {
-        margin-right: 0.5vw;
-      }
-
-      .btn:hover {
-        opacity: 0.8;
-      }
-    }
-
-    .btn {
-      cursor: pointer;
-      margin-top: 2vh;
-      font-size: 1.2vw;
-      color: white;
-      padding: 0.2vw 0.6vw;
-      border-radius: 0.5vw;
-
-      svg {
-        margin-left: 0.7vw;
-        width: 1vw;
-        height: 1vw;
-      }
-    }
-
-    .btn-green {
-      background: var(--theme-green);
-    }
-
-    .btn-blue {
-      background: var(--theme-dark-blue);
-    }
-
     .table-row {
       display: flex;
       font-size: 1vw;
+      padding: 0.4vw 0;
 
       &:nth-child(odd) {
         background: var(--tab-gray);
@@ -222,74 +205,79 @@
       content: null !important;
     }
   }
-}
 
-.export-dialog-ew35 {
-  .MuiBackdrop-root {
-    background-color: unset;
-  }
-  .MuiDialog-container {
-    align-items: flex-start;
-    justify-content: flex-start;
-    .MuiPaper-root {
-      background: white;
-      margin-top: calc(5.834vw + 2vw + 2.4vw + 2vw + 2vh + 2vw); 
-      margin-left: 85vw;
-      border-radius: 0.5vw;
-      width: 13vw;
-      svg {
-        margin-left: 3.4vw;
-        width: 1.5vw;
-        height: 1.5vw;
-        color: white;
-      }
+  .sub-tab-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
 
-      img {
-        margin-left: 4vw;
-        width: 1vw;
-        height: 1.3vw;
-      }
-
-      .popup-3rfw {
+    .sub-tab-container {
+      left: 0;
+      top: 0;
+    }
+    
+    > div {
+      cursor: pointer;
+      font-size: 1vw;
+      font-family: $font-family-bold;
+      color: var(--dark-gray);
+      margin: calc(2vh + 0.3vw) 0.5vw;
+      border-bottom: 2px solid rgba($color: #000, $alpha: 0);
+      &.active {
         color: var(--theme-dark-blue);
-        padding-top: 0.4vw;
-        padding-bottom: 0.7vw;
-
-        .btn-sort {
-          padding-left: 0.8vw;
-          padding-right: 0.8vw;
-          padding-top: 0.2vw;
-          padding-bottom: 0.2vw;
-          display: flex;
-          font-size: 1vw;
-          transition: all 200ms ease-in-out;
-          cursor: pointer;
-          font-family: $font-family-regular;
-
-          .MuiButtonBase-root {
-            margin-right: 0.4vw;
-            padding: 0;
-            color: white;
-          }
-
-          &:hover {
-            background: var(--tab-gray);
-          }
-        }
-        .no-click {
-          font-size: 1.2vw;
-          padding-left: 0.8vw;
-          padding-top: 0.4vw;
-          padding-right: 0.8vw;
-          padding-bottom: 0.4vw;
-        }
+        border-bottom: 2px solid var(--theme-dark-blue);
       }
     }
   }
 }
 
-.only-bricks-played-page .tab-content .table .table-row {
-  padding-top: 0.5vh;
-  padding-bottom: 0.5vh;
-  height: unset !important;
+.user-list-page .users-table-d34 .second-column {
+  width: 28%;
+}
+
+.user-list-page .tab-content {
+  .btn.prev-button, .btn.next-button {
+    color: var(--theme-dark-blue);
+  }
+  .table-row {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 4.1vh !important;
+    > div {
+      display: flex;
+      align-items: center;
+    }
+
+    .round-btn {
+      cursor: pointer;
+      width: 3.4vh;
+      height: 3.4vh;
+      border-radius: 50%;
+      margin-left: 0.15vw;
+      margin-right: 0.15vw;
+
+      transition: all 300ms ease-in-out;
+
+      svg {
+        width: 1.7vh;
+        height: 1.7vh;
+      }
+
+      &.blue {
+        background: #4C608A;
+      }
+
+      &.orange {
+        background: var(--theme-orange);
+        svg {
+          width: 2.2vh;
+          height: 2.2vh;
+        }
+      }
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
 }

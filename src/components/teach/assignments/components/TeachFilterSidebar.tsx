@@ -179,15 +179,8 @@ class TeachFilterSidebar extends Component<
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
             {this.renderClassoomSubject(c)}
             <span className="filter-class-name">{c.name}</span>
-            {c.active && (c.students.length > 0 || (c.studentsInvitations && c.studentsInvitations.length > 0)) && (
-              <div className="classroom-icon svgOnHover">
-                <SpriteIcon name="arrow-right" className="active" />
-              </div>
-            )}
           </div>
         </div>
-        {this.renderStudentList(c)}
-        {c.active && c.studentsInvitations && c.studentsInvitations.map(this.renderInvitation.bind(this))}
       </div>
     );
   }

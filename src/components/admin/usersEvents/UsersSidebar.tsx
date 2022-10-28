@@ -32,7 +32,7 @@ export enum SortClassroom {
   Assignment
 }
 
-class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
+class UsersSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   constructor(props: FilterSidebarProps) {
     super(props);
     this.state = {
@@ -55,7 +55,7 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
         className="sort-and-filter-container teach-assigned"
       >
         <div className="sort-box">
-          <div className="bold font1-5">Filter By</div>
+          <div className="bold font1-5">Admin Data Dashboard</div>
         </div>
         <div className="filter-header">Date</div>
         <div className="sort-radio-btns filter-row margin-smaller top-margin-bigger">
@@ -137,4 +137,4 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
   }
 }
 
-export default BricksPlayedSidebar;
+export default UsersSidebar;
