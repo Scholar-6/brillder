@@ -280,6 +280,34 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     );
   }
 
+  renderStatisticButton(disabled?: boolean) {
+    let isActive = true;
+    if (disabled) {
+      isActive = false;
+    }
+    if (isIPad13 || isTablet) {
+      isActive = false;
+      disabled = true;
+    }
+
+    return (
+      <div className={`create-item-container build-button-d71 ${isActive ? '' : 'disabled'}`} onClick={() => {
+        if (disabled) {
+          if (isMobile) {
+            this.setState({ isDesktopOpen: true });
+          }
+          return;
+        }
+        this.props.history.push(map.AdminBricksPlayed);
+      }}>
+        <button className="btn btn-transparent zoom-item svgOnHover">
+          <SpriteIcon name="admin-data-g" className={isActive ? 'active text-theme-orange' : 'text-theme-light-blue'} />
+          <span className="item-description">Data Dashboard</span>
+        </button>
+      </div>
+    );
+  }
+
   renderLiveAssignmentButton(isActive: boolean) {
     let className = 'back-item-container student-back-work'
     if (!isActive) {
@@ -427,6 +455,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return <div className="second-item not-active light-blue" />
   }
 
+
   renderAdminBtns() {
     return (
       <div className="first-item">
@@ -438,8 +467,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           {this.renderSecondButton()}
           {this.renderAssignmentsButton()}
         </div>
-        <div className="one-btn">
+        <div>
           {this.renderThirdButton()}
+          {this.renderStatisticButton()}
         </div>
       </div>
     );
