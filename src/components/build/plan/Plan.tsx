@@ -146,6 +146,21 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     return ''
   }
 
+  const getAlternativeSubject = (brick: Brick, alternateSubjectId: number | null) => {
+    {
+      const subject = apiSubjects.find(sub => sub.id === alternateSubjectId);
+      if (!subject) {
+        alternateSubjectId = null;
+      }
+
+      return {
+        ...brick,
+        alternateSubjectId,
+        alternateSubject: apiSubjects.find(sub => sub.id === alternateSubjectId)
+      }
+    }
+  }
+
   return (
     <div className="question-type plan-page">
       <div className="top-scroll-area">
@@ -221,7 +236,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                         disabled={locked}
                         subjects={[{ color: 'black', name: 'none' } as Subject, ...apiSubjects]}
                         subjectId={currentBrick.alternateSubjectId}
-                        onChange={alternateSubjectId => changeBrick((brick) => ({ ...brick, alternateSubjectId, alternateSubject: apiSubjects.find(sub => sub.id === alternateSubjectId) }))}
+                        onChange={alternateSubjectId => changeBrick((brick) => getAlternativeSubject(brick, alternateSubjectId))}
                       />
                     </div>
                     <div className="three-labels-d23">
