@@ -21,6 +21,7 @@ import SubTab, { ClassesActiveSubTab } from "../components/SubTab";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
 import ExportBtn from "../components/ExportBtn";
+import map from "components/map";
 
 
 enum SortBy {
@@ -179,7 +180,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     return <div className="table-body">
       {finalClassrooms.map(c => {
         return (
-          <div className="table-row">
+          <div className="table-row clickable" onClick={() => {this.props.history.push(map.TeachAssignedClass(c.id))}}>
             <div className="name-column">{c.name}</div>
             <div className="creator-column">
               {c.creator ? `${c.creator.firstName} ${c.creator.lastName}` : ''}

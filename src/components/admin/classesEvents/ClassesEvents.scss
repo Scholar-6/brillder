@@ -160,6 +160,10 @@
       &:nth-child(odd) {
         background: var(--tab-gray);
       }
+
+      &.clickable {
+        cursor: pointer;
+      }
     }
   }
 
