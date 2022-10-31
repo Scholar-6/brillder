@@ -19,6 +19,7 @@ interface SubjectProps {
   baseUrl: string;
   location: any;
   subjectId: any;
+  mainSubjectId?: number;
   subjects: any[];
   saveSubject(subjectId: number): void;
 }
@@ -527,7 +528,7 @@ const DefaultComponent: React.FC = () => {
 
 
 const SubjectPage: React.FC<SubjectProps> = ({
-  isAlternateSubject, title, subjectId, subjects, baseUrl, location, saveSubject
+  isAlternateSubject, title, subjectId, subjects, baseUrl, location, saveSubject, mainSubjectId
 }) => {
   const getSubjectName = (subjectId: number) => {
     if (subjectId) {
@@ -619,6 +620,12 @@ const SubjectPage: React.FC<SubjectProps> = ({
   }
 
   let innerComponent = getInnerComponent();
+  
+  let selectableSubjects = [...subjects];
+
+  if (mainSubjectId) {
+    selectableSubjects = subjects.filter(s => s.id !== mainSubjectId);
+  }
 
   return (
     <div className="tutorial-page subject-page">
@@ -647,7 +654,7 @@ const SubjectPage: React.FC<SubjectProps> = ({
                   onChange={onSubjectChange}
                 >
                   {
-                    subjects.map((subject, i) => {
+                    selectableSubjects.map((subject, i) => {
                       return (
                         <FormControlLabel
                           key={i}
