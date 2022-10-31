@@ -44,6 +44,7 @@ import EmptyClassTab from "./components/EmptyClassTab";
 import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
+import TeachIcon from "components/mainPage/components/TeachIcon";
 
 
 interface RemindersData {
@@ -239,12 +240,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       let stepsEnabled = false;
 
       classrooms.sort((c1, c2) => parseInt(c2.assignmentsCount) - parseInt(c1.assignmentsCount));
-
-      if (activeClassroom === null && classrooms.length > 0) {
-        activeClassroom = classrooms[0];
-        activeClassroom.active = true;
-        activeClassroom.assignments = await getAssignmentsClassrooms(activeClassroom.id);
-      }
 
       this.setState({ classrooms, stepsEnabled, activeClassroom, isLoaded: true });
       return classrooms;
@@ -571,6 +566,59 @@ class TeachPage extends Component<TeachProps, TeachState> {
     );
   }
 
+  renderClassroom(isArchive: boolean) {
+    return (
+      <Grid item xs={9} className="brick-row-container teach-tab-d94">
+        <ClassroomList
+          subjects={this.state.subjects}
+          isArchive={isArchive}
+          history={this.props.history}
+          startIndex={this.state.sortedIndex}
+          activeClassroom={this.state.activeClassroom}
+          pageSize={this.state.classPageSize}
+          toggleArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
+          expand={this.moveToAssignment.bind(this)}
+          reloadClass={this.loadClass.bind(this)}
+          onRemind={this.setReminderNotification.bind(this)}
+          onArchive={this.onArchiveClass.bind(this)}
+          onUnarchive={this.onUnarchiveClass.bind(this)}
+          onDelete={this.onDeleteClass.bind(this)}
+          onAssign={() => this.setState({ isAssignOpen: true })}
+          showPremium={() => this.setState({ isPremiumDialogOpen: true })}
+        />
+        {this.renderTeachPagination()}
+      </Grid>
+    )
+  }
+
+  renderContainer() {
+    if (this.state.activeClassroom === null) {
+      return (
+        <Grid item xs={9} className="brick-row-container teach-tab-d94 bg-light-blue no-active-class flex-center">
+          <div>
+            <div className="icon-container">
+              <TeachIcon />
+            </div>
+            <div className="sub-title-sd32">
+              Nothing Selected
+            </div>
+            <div>
+              <div className="font-light">Select a class from the panel on the left to</div>
+              <div className="font-light">start managing classes and learners</div>
+            </div>
+          </div>
+        </Grid>
+      );
+    }
+
+    return (
+      <Grid item xs={9} className="brick-row-container teach-tab-d94">
+        <TeachTab activeTab={TeachActiveTab.Assignments} history={history} onAssign={() => this.setState({ isAssignOpen: true })} assignmentsEnabled={true} />
+        {this.renderTabContent()}
+      </Grid>
+    );
+  }
+
   render() {
     const { isArchive } = this.state;
     let showedClasses = this.state.classrooms;
@@ -617,32 +665,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 openClass={() => this.setState({ createClassOpen: true })}
               />
             </Grid>
-            : this.state.activeClassroom && !this.state.activeAssignment && !this.state.activeStudent ?
-              <Grid item xs={9} className="brick-row-container teach-tab-d94">
-                <ClassroomList
-                  subjects={this.state.subjects}
-                  isArchive={isArchive}
-                  history={this.props.history}
-                  startIndex={this.state.sortedIndex}
-                  activeClassroom={this.state.activeClassroom}
-                  pageSize={this.state.classPageSize}
-                  toggleArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
-                  expand={this.moveToAssignment.bind(this)}
-                  reloadClass={this.loadClass.bind(this)}
-                  onRemind={this.setReminderNotification.bind(this)}
-                  onArchive={this.onArchiveClass.bind(this)}
-                  onUnarchive={this.onUnarchiveClass.bind(this)}
-                  onDelete={this.onDeleteClass.bind(this)}
-                  onAssign={() => this.setState({ isAssignOpen: true })}
-                  showPremium={() => this.setState({ isPremiumDialogOpen: true })}
-                />
-                {this.renderTeachPagination()}
-              </Grid>
-              :
-              <Grid item xs={9} className="brick-row-container teach-tab-d94">
-                <TeachTab activeTab={TeachActiveTab.Assignments} history={history} onAssign={() => this.setState({ isAssignOpen: true })} assignmentsEnabled={true} />
-                {this.renderTabContent()}
-              </Grid>}
+            : this.state.activeClassroom && !this.state.activeAssignment && !this.state.activeStudent ? this.renderClassroom(isArchive) : this.renderContainer()}
         </Grid>
         <ReminderSuccessDialog
           header={`Reminder${remindersData.count > 1 ? 's' : ''} sent!`}
