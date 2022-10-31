@@ -356,6 +356,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               baseUrl={baseUrl}
               title="Alternate Subject?"
               subjects={user.subjects}
+              mainSubjectId={this.state.brick.subjectId}
               subjectId={this.state.brick.alternateSubjectId ? this.state.brick.alternateSubjectId : ""}
               saveSubject={this.setAlternateSubject}
             />
