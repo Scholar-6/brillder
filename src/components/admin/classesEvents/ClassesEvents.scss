@@ -208,6 +208,11 @@
     }
   }
 
+  .filter-domain {
+    max-height: calc(44vh - 6vw);
+    overflow-y: scroll;
+  }
+
   .sub-tab-container {
     display: flex;
     align-items: center;
