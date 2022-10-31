@@ -141,8 +141,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   }
 
   renderEachHint(index: number) {
-    const attempt = this.state.oldAttempt;
-    if (attempt && attempt.answer && attempt.answer[index]) {
+    if (this.props.isReview) {
       let isCorrect = false;
       if (this.props.isReview && this.props.attempt === this.props.liveAttempt) {
         isCorrect = this.isAnswerCorrect(index);
