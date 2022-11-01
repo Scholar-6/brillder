@@ -406,7 +406,9 @@ const LivePage: React.FC<LivePageProps> = ({
           <div className="introduction-page">
             <div className="intro-text-row">
               <div className="phone-stepper-head">
-                <BrickTitle title={brick.title} />
+                <span className="brick-inline">
+                  <span dangerouslySetInnerHTML={{ __html: brick.title }}></span>
+                </span>
               </div>
               {renderStepper()}
             </div>
