@@ -461,7 +461,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       <div className="first-item">
         <div>
           <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
-          {this.renderRightButton()}
+          {this.renderTryBuildButton(true)}
         </div>
         <div>
           {this.renderSecondButton()}
