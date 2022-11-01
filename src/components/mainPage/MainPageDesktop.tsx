@@ -468,7 +468,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           {this.renderAssignmentsButton()}
         </div>
         <div>
-          {this.renderThirdButton()}
+          {this.renderLibraryButton()}
           {this.renderStatisticButton()}
         </div>
       </div>
