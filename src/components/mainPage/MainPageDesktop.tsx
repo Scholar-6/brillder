@@ -247,7 +247,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   renderSecondButton() {
     if (this.state.isTeacher || this.state.isAdmin) {
-      return <TeachButton history={this.props.history} disabled={this.state.isNewTeacher} onMobileClick={() => this.setState({ isDesktopOpen: true })} />
+      return <TeachButton history={this.props.history} onMobileClick={() => this.setState({ isDesktopOpen: true })} />
     } else if (this.state.isStudent) {
       return this.renderStudentWorkButton();
     }
@@ -381,7 +381,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     }
     let isActive = this.props.user.hasPlayedBrick;
     if (this.state.isTeacher) {
-      return this.renderLiveAssignmentButton(true && !this.state.isNewTeacher);
+      return this.renderLiveAssignmentButton(true);
     } else if (this.state.isStudent) {
       return this.renderTryBuildButton(isActive);
     } else if (this.state.isAdmin) {
