@@ -455,7 +455,6 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return <div className="second-item not-active light-blue" />
   }
 
-
   renderAdminBtns() {
     return (
       <div className="first-item">
