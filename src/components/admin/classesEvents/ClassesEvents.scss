@@ -160,6 +160,10 @@
       &:nth-child(odd) {
         background: var(--tab-gray);
       }
+
+      &.clickable {
+        cursor: pointer;
+      }
     }
   }
 
@@ -202,6 +206,11 @@
       display: none !important;
       content: null !important;
     }
+  }
+
+  .filter-domain {
+    max-height: calc(58.5vh - 13.5vw);
+    overflow-y: scroll;
   }
 
   .sub-tab-container {

@@ -34,6 +34,7 @@ import { isAorPorE } from "components/services/brickService";
 import QuillTitleEditor from "components/baseComponents/quill/QuillTitleEditor";
 import DifficultySelectV2 from "../proposal/questionnaire/brickTitle/components/DifficultySelectV2";
 import QuillOpenQuestionEditor from "components/baseComponents/quill/QuillOpenQuestionEditor";
+import brick from "services/axios/brick";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -146,6 +147,31 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     return ''
   }
 
+  const getAlternativeSubject = (brick: Brick, alternateSubjectId: number | null) => {
+    {
+      const subject = apiSubjects.find(sub => sub.id === alternateSubjectId);
+      if (!subject) {
+        alternateSubjectId = null;
+      }
+
+      return {
+        ...brick,
+        alternateSubjectId,
+        alternateSubject: apiSubjects.find(sub => sub.id === alternateSubjectId)
+      }
+    }
+  }
+
+  // preparing subjects
+  let mainSubjects = [...apiSubjects];
+  let alternativeSubjects = [...apiSubjects];
+  if (currentBrick.subjectId) {
+    alternativeSubjects = alternativeSubjects.filter(s => s.id !== currentBrick.subjectId);
+  }
+  if (currentBrick.alternateSubjectId) {
+    mainSubjects = mainSubjects.filter(s => s.id !== currentBrick.alternateSubjectId);
+  }
+
   return (
     <div className="question-type plan-page">
       <div className="top-scroll-area">
@@ -213,15 +239,15 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <div className="subject-select-container">
                       <Subjects
                         disabled={locked}
-                        subjects={apiSubjects}
+                        subjects={mainSubjects}
                         subjectId={currentBrick.subjectId}
                         onChange={subjectId => changeBrick((brick) => ({ ...brick, subjectId, subject: apiSubjects.find(sub => sub.id === subjectId) }))}
                       />
                       <Subjects
                         disabled={locked}
-                        subjects={[{ color: 'black', name: 'none' } as Subject, ...apiSubjects]}
+                        subjects={[{ color: 'black', name: 'none' } as Subject, ...alternativeSubjects]}
                         subjectId={currentBrick.alternateSubjectId}
-                        onChange={alternateSubjectId => changeBrick((brick) => ({ ...brick, alternateSubjectId, alternateSubject: apiSubjects.find(sub => sub.id === alternateSubjectId) }))}
+                        onChange={alternateSubjectId => changeBrick((brick) => getAlternativeSubject(brick, alternateSubjectId))}
                       />
                     </div>
                     <div className="three-labels-d23">
