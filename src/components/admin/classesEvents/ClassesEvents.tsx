@@ -164,7 +164,11 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   renderBody() {
     const { finalClassrooms } = this.state;
     if (finalClassrooms.length == 0) {
-      return <div>No Classes</div>;
+      return <div>
+                <div className="table-row">
+          <div className="name-column">No Classes</div>
+        </div>
+      </div>;
     }
 
     const renderDomain = (creator: User) => {
