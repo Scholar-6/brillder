@@ -455,20 +455,19 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     return <div className="second-item not-active light-blue" />
   }
 
-
   renderAdminBtns() {
     return (
       <div className="first-item">
         <div>
           <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
-          {this.renderRightButton()}
+          {this.renderTryBuildButton(true)}
         </div>
         <div>
           {this.renderSecondButton()}
           {this.renderAssignmentsButton()}
         </div>
         <div>
-          {this.renderThirdButton()}
+          {this.renderLibraryButton()}
           {this.renderStatisticButton()}
         </div>
       </div>

@@ -315,9 +315,11 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           <div className="introduction-page">
             <div className="intro-header">
               <div className="intro-text-row">
-                <span className="phone-stepper-head">
-                  <BrickTitle title={brick.title} />
-                </span>
+                <div className="phone-stepper-head">
+                  <span className="brick-inline">
+                    <span dangerouslySetInnerHTML={{ __html: brick.title }}></span>
+                  </span>
+                </div>
                 <ReviewStepper
                   questions={questions}
                   attempts={props.liveAttempts}
