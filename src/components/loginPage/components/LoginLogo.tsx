@@ -3,10 +3,10 @@ import { Grid } from "@material-ui/core";
 
 const LoginLogo: React.FC<any> = () => {
   return (
-    <Grid container style={{ height: "100%" }} justify="center" alignItems="center">
+    <Grid container style={{ height: "100%" }} justifyContent="center" alignItems="center">
       {/* <SpriteIcon name="login" className="logo-image active" /> */}
       <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image"/>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <img
           alt="Logo" src="/images/choose-user/brillder-white-text.svg"
           className="logo-text-image"
