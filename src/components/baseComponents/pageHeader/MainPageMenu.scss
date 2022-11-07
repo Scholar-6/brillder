@@ -35,7 +35,6 @@
     display: flex;
     margin-right: 0;
     width: 100%;
-    margin-top: 3px;
     flex-wrap: wrap;
 
     .bell-button {
@@ -136,6 +135,17 @@
       background: var(--theme-green);
 
       &:hover {
+        background: var(--theme-dark-blue);
+      }
+    }
+
+    &.second-design {
+      .text-container-cd43 {
+        padding-top: 1vw;
+        margin-bottom: 0.8vw;
+      }
+
+      .btn.green {
         background: var(--theme-dark-blue);
       }
     }

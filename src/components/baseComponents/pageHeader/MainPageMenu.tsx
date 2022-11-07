@@ -35,8 +35,9 @@ interface MainPageMenuProps {
 interface HeaderMenuState {
   popupShown: number; // 0 - nothing opened
 
-  convertCreditsOpen: boolean,
-
+  convertCreditsOpen: boolean;
+  showConvertDropdown: boolean;
+  
   dropdownShown: boolean;
   logoutOpen: boolean;
   width: string;
@@ -51,6 +52,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     this.state = {
       popupShown: 0,
       convertCreditsOpen: false,
+      showConvertDropdown: false,
       dropdownShown: false,
       logoutOpen: false,
       width: '16vw'
@@ -101,6 +103,10 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
       className += " menu-without-credits";
     }
 
+    if (this.state.showConvertDropdown) {
+      className += " menu-without-credits";
+    }
+
     return (
       <div className={className} ref={this.pageHeader}>
         <div className="menu-buttons">
@@ -109,6 +115,9 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
               this.setState({popupShown: 0});
             } else {
               this.setState({popupShown: 2});
+            }
+            if (!isMobile && noCredits === false) {
+              this.setState({showConvertDropdown: !this.state.showConvertDropdown});
             }
           }} />
           {user.library ? <div /> :
@@ -133,6 +142,14 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
             </div>
           </div>
         }
+        {this.state.showConvertDropdown && <div className="no-credits-container second-design">
+            <div className="text-container-cd43">Convert your Brills for credits and other prizes</div>
+            <div className="flex-center">
+              <div className="btn green flex-center" onClick={() => this.setState({convertCreditsOpen: true})}>
+                Convert Brills
+              </div>
+            </div>
+          </div>}
         <MenuDropdown
           dropdownShown={this.state.dropdownShown}
           hideDropdown={this.hideDropdown.bind(this)}

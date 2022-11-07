@@ -248,7 +248,7 @@ class PageHeader extends Component<Props, State> {
               {this.props.isAuthenticated === isAuthenticated.True &&
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
-                  <BrillIconAnimated />
+                  <BrillIconAnimated onClick={() => console.log(444)} />
                   {(this.props.user.isFromInstitution || this.props.user.library) ? <div /> :
                     <div className="header-credits-container">
                       <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
@@ -362,7 +362,7 @@ class PageHeader extends Component<Props, State> {
               {this.props.isAuthenticated === isAuthenticated.True &&
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
-                  <BrillIconAnimated />
+                  <BrillIconAnimated onClick={() => console.log(443)} />
                   {(this.props.user.isFromInstitution || this.props.user.library) ? <div /> :
                     <div className="header-credits-container">
                       <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />

@@ -118,7 +118,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
     this.setState({ sortBy: SortBy.Name, finalClassrooms });
   }
-  
+
   async searching(searchString: string) {
     if (searchString.length === 0) {
       const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, searchString);
@@ -165,7 +165,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     const { finalClassrooms } = this.state;
     if (finalClassrooms.length == 0) {
       return <div>
-                <div className="table-row">
+        <div className="table-row">
           <div className="name-column">No Classes</div>
         </div>
       </div>;
@@ -184,7 +184,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     return <div className="table-body">
       {finalClassrooms.map(c => {
         return (
-          <div className="table-row clickable" onClick={() => {this.props.history.push(map.TeachAssignedClass(c.id))}}>
+          <div className="table-row clickable" onClick={() => { this.props.history.push(map.TeachAssignedClass(c.id)) }}>
             <div className="name-column">{c.name}</div>
             <div className="creator-column">
               {c.creator ? `${c.creator.firstName} ${c.creator.lastName}` : ''}
