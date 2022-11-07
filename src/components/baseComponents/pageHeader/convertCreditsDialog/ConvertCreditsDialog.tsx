@@ -3,17 +3,20 @@ import { connect } from 'react-redux';
 
 
 import './ConvertCreditsDialog.scss';
-import authActions from 'redux/actions/auth';
+import userActions from 'redux/actions/user';
 import BaseDialogWrapper from '../../dialogs/BaseDialogWrapper';
 import { convertBrillsToCreditsByAmount } from 'services/axios/brills';
 
 const mapDispatch = (dispatch: any) => {
-  return { logout: () => dispatch(authActions.logout()) }
+  return { 
+    getUser: () => dispatch(userActions.getUser()),
+  }
 }
 
 interface LogoutComponentProps {
   isOpen: boolean;
   close(): void;
+  getUser(): void;
 }
 
 const ConvertCreditsDialog: React.FC<LogoutComponentProps> = (props) => {
@@ -24,12 +27,18 @@ const ConvertCreditsDialog: React.FC<LogoutComponentProps> = (props) => {
   const close500 = () => set500(false);
 
   const convert200 = async () => {
-    await convertBrillsToCreditsByAmount(200);
+    let res = await convertBrillsToCreditsByAmount(200);
+    if (res) {
+      props.getUser();
+    }
     close200();
   }
 
   const convert500 = async () => {
-    await convertBrillsToCreditsByAmount(500);
+    const res = await convertBrillsToCreditsByAmount(500);
+    if (res) {
+      props.getUser();
+    }
     close500();
   }
 
