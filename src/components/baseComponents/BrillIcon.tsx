@@ -49,7 +49,7 @@ const BrillIcon: React.FC<Props> = (props) => {
     )
   }
   return (
-    <div className="brill-coin-img">
+    <div className="brill-coin-img" onClick={props.onClick}>
       <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
       <SpriteIcon name="logo" />
       <div className="css-custom-tooltip">
