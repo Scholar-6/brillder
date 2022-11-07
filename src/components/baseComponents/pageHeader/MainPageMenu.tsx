@@ -122,7 +122,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
           }} />
           {user.library ? <div /> :
           <div className="header-credits-container">
-            <ReactiveUserCredits popupShown={this.state.popupShown === 1} onClick={() => {
+            <ReactiveUserCredits user={this.props.user} popupShown={this.state.popupShown === 1} onClick={() => {
               if (this.state.popupShown === 1) {
                 this.setState({popupShown: 0});
               } else {
