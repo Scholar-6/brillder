@@ -111,3 +111,33 @@
     }
   }
 }
+
+.main-page-menu.menu-without-credits {
+  border-bottom-left-radius: 0 !important;
+
+  .no-credits-container {
+    height: 7.8vw;
+    font-size: 1.42vw;
+    color: var(--theme-dark-blue);
+    background: white;
+    border-bottom-left-radius: 2vw !important;
+    .text-container-cd43 {
+      font-family: $font-family-regular;
+      padding-left: 0.4vw;
+      padding-right: 0.4vw;
+    }
+    .btn.green {
+      cursor: pointer;
+      transition: all 300ms ease-in-out;
+      margin-top: 0.4vw;
+      color: white;
+      width: 60%;
+      padding: 0.3vw;
+      background: var(--theme-green);
+
+      &:hover {
+        background: var(--theme-dark-blue);
+      }
+    }
+  }
+}
