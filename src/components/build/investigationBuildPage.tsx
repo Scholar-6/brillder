@@ -70,6 +70,7 @@ import { createQuestion } from "services/axios/question";
 import { Helmet } from "react-helmet";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SaveFailedDialog from "./baseComponents/dialogs/SaveFailedDialog";
+import BuildMultipleDialog from "./baseComponents/dialogs/BuildMultipleDialog";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -119,6 +120,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [questions, setQuestions] = React.useState([] as Question[]);
 
   const [saveFailed, setSaveFailed] = React.useState(false);
+  const [buildMultiple, setBuildMultiple] = React.useState(false);
 
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
@@ -184,11 +186,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
     var onLocalStorageEvent = function (e: any) {
       if (e.key == "openpages") {
-        // Listen if anybody else opening the same page!
         localStorage.page_available = Date.now() + '_' + brick.id;
       }
       if (e.key == "page_available") {
-        alert("One more page already open");
+        setBuildMultiple(true);
       }
     };
 
@@ -1028,6 +1029,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <DesktopVersionDialog history={history} />
         </div>
       </div>
+      <BuildMultipleDialog open={buildMultiple} close={() => setBuildMultiple(false)} />
       <SaveFailedDialog open={saveFailed} close={() => setSaveFailed(false)} />
     </div>
   );
