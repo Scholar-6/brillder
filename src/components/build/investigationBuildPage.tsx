@@ -87,7 +87,7 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const { params } = props.match;
   const brickId = parseInt(params.brickId);
-  
+
   const values = queryString.parse(props.location.search);
   let initSuggestionExpanded = false;
   if (values.suggestionsExpanded) {
@@ -179,6 +179,20 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         activeQuestion = questionV2;
       });
     }
+
+    localStorage.openpages = Date.now() + '_' + brick.id;
+
+    var onLocalStorageEvent = function (e: any) {
+      if (e.key == "openpages") {
+        // Listen if anybody else opening the same page!
+        localStorage.page_available = Date.now() + '_' + brick.id;
+      }
+      if (e.key == "page_available") {
+        alert("One more page already open");
+      }
+    };
+
+    window.addEventListener('storage', onLocalStorageEvent, false);
   }, []);
 
   // start editing on socket on load.
