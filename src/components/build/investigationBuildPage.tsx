@@ -1029,7 +1029,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <DesktopVersionDialog history={history} />
         </div>
       </div>
-      <BuildMultipleDialog open={buildMultiple} close={() => setBuildMultiple(false)} />
+      <BuildMultipleDialog open={buildMultiple} goHome={() => history.push(map.MainPage)} close={() => setBuildMultiple(false)} />
       <SaveFailedDialog open={saveFailed} close={() => setSaveFailed(false)} />
     </div>
   );
