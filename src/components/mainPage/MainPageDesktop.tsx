@@ -14,7 +14,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
 import { Notification } from 'model/notifications';
-import { checkAdmin } from "components/services/brickService";
+import { checkAdmin, checkRealInstitution } from "components/services/brickService";
 
 import WelcomeComponent from './WelcomeComponent';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
@@ -70,6 +70,7 @@ interface MainPageState {
   isTeacher: boolean;
   isAdmin: boolean;
   isInstitution: boolean;
+  isRealInstitution: boolean;
   isStudent: boolean;
   isBuilder: boolean;
 
@@ -145,6 +146,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
       isTeacher: isTeacherPreference(props.user) || isInstitutionPreference(props.user),
       isAdmin: checkAdmin(props.user.roles),
+      isRealInstitution: checkRealInstitution(props.user.roles),
       isStudent,
       isBuilder,
       isInstitution: isInstitutionPreference(props.user),
@@ -474,6 +476,24 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     );
   }
 
+  renderInstitutionBtns() {
+    return (
+      <div className="first-item">
+        <div>
+          <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
+          {this.renderTryBuildButton(true)}
+        </div>
+        <div>
+          {this.renderSecondButton()}
+          {this.renderRightButton()}
+        </div>
+        <div className="one-btn">
+          {this.renderStatisticButton()}
+        </div>
+      </div>
+    );
+  }
+
   renderLearnerBtns() {
     return (
       <div className="first-item">
@@ -524,6 +544,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   renderBtns() {
     if (this.state.isAdmin) {
       return this.renderAdminBtns();
+    } else if (this.state.isRealInstitution) {
+      return this.renderInstitutionBtns();
     } else if (this.state.isStudent) {
       return this.renderLearnerBtns();
     } else if (this.state.isTeacher || this.state.isInstitution) {
