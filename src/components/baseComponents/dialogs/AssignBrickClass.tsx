@@ -118,6 +118,9 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   }
 
   const renderTopLabel = () => {
+    if (props.user.isFromInstitution) {
+      return '';
+    }
     if (props.user.freeAssignmentsLeft && props.user.freeAssignmentsLeft > 1) {
       return <div className="assignments-count">{props.user.freeAssignmentsLeft} free Assignments left</div>;
     }

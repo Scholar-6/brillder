@@ -184,7 +184,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
         return (<div className="table-row">
           <div className="publish-column">{u.created && getDateString(u.created)}</div>
           <div className="author-column">{u.firstName} {u.lastName}</div>
-          <div className="see-container" style={{ position: "relative", width: "2.5vw" }}>
+          <div className="see-container" style={{ position: "relative", width: "3.5%" }}>
             {(u.studyClassroomCount ?? 0) > 0 &&
               <Tooltip title="See Study Classrooms">
                 <span
@@ -192,7 +192,6 @@ class UsersPage extends Component<UsersProps, UsersState> {
                   style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-green)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
                   onClick={() => {
                     this.setState({ isStudentClassroomOpen: true });
-                    //this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=student:${user.email}` })
                   }}
                 >
                   <SpriteIcon name="student-back-to-work" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
@@ -200,7 +199,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               </Tooltip>
             }
           </div>
-          <div className="see-container" style={{ position: "relative", width: "2.5vw" }}>
+          <div className="see-container" style={{ position: "relative", width: "3.5%" }}>
             <Tooltip title="See Users Library">
               <span
                 className="btn"
@@ -269,6 +268,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.lastName", isAscending);
             }} /></div>
           </div>
+          <div style={{ width: "7%" }}></div>
           <div className="second-column header">
             <div>Email</div>
           </div>
@@ -299,6 +299,20 @@ class UsersPage extends Component<UsersProps, UsersState> {
 
   closeDeleteDialog() {
     this.setState({ isDeleteDialogOpen: false });
+  }
+
+  renderClassroomPopup() {
+    return (
+      <Dialog
+        open={this.state.isStudentClassroomOpen}
+        onClose={() => this.setState({ isStudentClassroomOpen: false })}
+        className="dialog-box">
+        <div className="dialog-header">
+          <div>Classrooms</div>
+          <div>...Comming soon...</div>
+        </div>
+      </Dialog>
+    );
   }
 
   render() {
@@ -396,6 +410,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             </button>
           </div>
         </Dialog>
+        {this.renderClassroomPopup()}
       </div>
     );
   }
