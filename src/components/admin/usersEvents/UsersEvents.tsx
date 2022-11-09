@@ -3,7 +3,8 @@ import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-
+import { Tooltip } from "@material-ui/core";
+ 
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
@@ -23,7 +24,6 @@ import AddUserBtn from "../components/AddUserBtn";
 import map from "components/map";
 import { getSubjects } from "services/axios/subject";
 import { Subject } from "model/brick";
-import { string } from "prop-types";
 
 
 interface UsersProps {
@@ -47,6 +47,8 @@ interface UsersState {
 
   deleteUserId: number;
   isDeleteDialogOpen: boolean;
+
+  isStudentClassroomOpen: boolean;
 
   isSearching: boolean;
   searchString: string;
@@ -72,6 +74,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
 
       orderBy: "user.created",
       isAscending: true,
+      isStudentClassroomOpen: false,
 
       deleteUserId: -1,
       isDeleteDialogOpen: false,
@@ -181,6 +184,33 @@ class UsersPage extends Component<UsersProps, UsersState> {
         return (<div className="table-row">
           <div className="publish-column">{u.created && getDateString(u.created)}</div>
           <div className="author-column">{u.firstName} {u.lastName}</div>
+          <div className="see-container" style={{ position: "relative", width: "2.5vw" }}>
+            {(u.studyClassroomCount ?? 0) > 0 &&
+              <Tooltip title="See Study Classrooms">
+                <span
+                  className="btn"
+                  style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-green)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                  onClick={() => {
+                    this.setState({ isStudentClassroomOpen: true });
+                    //this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=student:${user.email}` })
+                  }}
+                >
+                  <SpriteIcon name="student-back-to-work" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                </span>
+              </Tooltip>
+            }
+          </div>
+          <div className="see-container" style={{ position: "relative", width: "2.5vw" }}>
+            <Tooltip title="See Users Library">
+              <span
+                className="btn"
+                style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-dark-blue)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                onClick={() => this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })}
+              >
+                <SpriteIcon name="bar-chart-2" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+              </span>
+            </Tooltip>
+          </div>
           <div className="second-column">{u.email}</div>
           <div className="third-column">{this.renderUserType(u)}</div>
           <div className="second-column"></div>
@@ -189,7 +219,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               <SpriteIcon name="user-edit-g" className="text-white" />
             </div>
             <div className="round-btn orange flex-center" onClick={() => {
-              this.setState({isDeleteDialogOpen: true, deleteUserId: u.id});
+              this.setState({ isDeleteDialogOpen: true, deleteUserId: u.id });
             }}>
               <SpriteIcon name="user-trash-g" className="text-white" />
             </div>
@@ -268,7 +298,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
   }
 
   closeDeleteDialog() {
-    this.setState({isDeleteDialogOpen: false});
+    this.setState({ isDeleteDialogOpen: false });
   }
 
   render() {
