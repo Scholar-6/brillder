@@ -49,6 +49,7 @@ interface UsersState {
   isDeleteDialogOpen: boolean;
 
   isStudentClassroomOpen: boolean;
+  userClassrooms: any[];
 
   isSearching: boolean;
   searchString: string;
@@ -74,7 +75,9 @@ class UsersPage extends Component<UsersProps, UsersState> {
 
       orderBy: "user.created",
       isAscending: true,
+
       isStudentClassroomOpen: false,
+      userClassrooms: [],
 
       deleteUserId: -1,
       isDeleteDialogOpen: false,
@@ -190,7 +193,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
                 <span
                   className="btn"
                   style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-green)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-                  onClick={() => {
+                  onClick={async () => {
                     this.setState({ isStudentClassroomOpen: true });
                   }}
                 >
