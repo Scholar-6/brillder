@@ -104,7 +104,7 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
           <FormControlLabel
             checked={subjectCategory === ESubjectCategory.Everything}
             control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Everything)} className={"filter-radio custom-color"} />}
-            label="Everything" />
+            label="All" />
         </div>
         <div className="sort-radio-btns filter-row margin-smaller">
           <FormControlLabel

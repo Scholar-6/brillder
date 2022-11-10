@@ -36,6 +36,8 @@ interface TeachProps {
 }
 
 interface TeachState {
+  isSearching: boolean;
+  searchString: string;
   downloadClicked: boolean;
   sortBy: SortBy;
   dateFilter: PDateFilter;
@@ -57,6 +59,8 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     super(props);
 
     this.state = {
+      isSearching: false,
+      searchString: '',
       downloadClicked: false,
       sortBy: SortBy.Played,
       dateFilter: PDateFilter.Past24Hours,
@@ -181,6 +185,33 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     return this.filterBricksBySubjectsAndSort(bricks, selectedSubjects, sortBy);
   }
 
+  search() {
+    const { searchString } = this.state;
+
+    const bricks = this.filterBricksBySubjectsAndSort(this.state.bricks, this.state.selectedSubjects, this.state.sortBy);
+
+    const finalBricks = bricks.filter(b => {
+      const title = b.title.toLocaleLowerCase();
+      if (title.indexOf(searchString) >= 0) {
+        return true;
+      }
+      return false;
+    });
+
+    setTimeout(() => {
+      this.setState({ finalBricks, isSearching: true });
+    })
+  }
+
+  async searching(searchString: string) {
+    if (searchString.length === 0) {
+      //await this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, searchString, this.state.orderBy, this.state.isAscending);
+      this.setState({ ...this.state, searchString, isSearching: false });
+    } else {
+      this.setState({ ...this.state, searchString });
+    }
+  }
+
   renderBody() {
     const { finalBricks } = this.state;
     if (finalBricks.length == 0) {
@@ -290,8 +321,8 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           placeholder="Brick Title, Student Name, or Subject"
           user={this.props.user}
           history={this.props.history}
-          search={() => { }}
-          searching={() => { }}
+          search={() => this.search()}
+          searching={this.searching.bind(this)}
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <BricksPlayedSidebar
