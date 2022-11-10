@@ -5,6 +5,7 @@ import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 
 import './BricksPlayed.scss';
+import { playCover } from "components/play/routes";
 import { User } from "model/user";
 import { Brick, Subject } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
@@ -15,7 +16,7 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import { adminGetBrickAtemptStatistic } from "services/axios/brick";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import BricksPlayedSidebar, { ESubjectCategory, PDateFilter } from "./BricksPlayedSidebar";
-import { getDateString } from "components/services/brickService";
+import { getDateString, getFormattedDateSlash } from "components/services/brickService";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
@@ -259,7 +260,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
 
     return <div className="table-body">
       {finalBricks.map(b => {
-        return (<div className="table-row">
+        return (<div className="table-row clickable" onClick={() => this.props.history.push(playCover(b))}>
           <div className="publish-column">{renderDate(b)}</div>
           {renderSubjectColumn(b)}
           <div className="first-column" dangerouslySetInnerHTML={{ __html: b.title }} />
@@ -380,7 +381,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                       });
                     }
 
-                    exportToCSV(data, "table");
+                    exportToCSV(data, "Brillder data " + getFormattedDateSlash(new Date().toString()));
 
                     this.setState({ downloadClicked: false });
                   }}>
@@ -394,7 +395,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                         const subject = this.state.subjects.find(s => s.id === b.subjectId);
                         return [b.datePublished ? b.datePublished : '', subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no']
                       }),
-                      'table.pdf'
+                      `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`
                     );
                     this.setState({ downloadClicked: false });
                   }}>
