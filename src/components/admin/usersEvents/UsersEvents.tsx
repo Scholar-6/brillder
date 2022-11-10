@@ -202,20 +202,20 @@ class UsersPage extends Component<UsersProps, UsersState> {
               </Tooltip>
             }
           </div>
-          <div className="see-container" style={{ position: "relative", width: "3.5%" }}>
-            <Tooltip title="See Users Library">
-              <span
-                className="btn"
-                style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-dark-blue)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-                onClick={() => this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })}
-              >
-                <SpriteIcon name="bar-chart-2" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
-              </span>
-            </Tooltip>
-          </div>
           <div className="second-column">{u.email}</div>
           <div className="third-column">{this.renderUserType(u)}</div>
-          <div className="second-column"></div>
+          <div className="second-column">
+            <div className={`attempts-count-box ${u.attempts.length > 0 ? '' : 'whiter'}`} onClick={() => {
+              if (u.attempts.length > 0) {
+                this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
+              }
+            }}>
+              <SpriteIcon name="user-event-activity" />
+              <div className="absolute-count-d4421">
+                {u.attempts.length}
+              </div>
+            </div>
+          </div>
           <div className="actions-column">
             <div className="round-btn blue flex-center" onClick={() => this.props.history.push(map.UserProfile + '/' + u.id)}>
               <SpriteIcon name="user-edit-g" className="text-white" />

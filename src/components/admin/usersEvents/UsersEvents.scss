@@ -290,4 +290,35 @@
       }
     }
   }
+
+  .second-column {
+    display: flex;
+    align-items: center;
+  
+    .attempts-count-box {
+      height: 1.7vw;
+      position: relative;
+      cursor: pointer;
+  
+      svg {
+        color: var(--theme-light-blue);
+        width: 1.7vw;
+        height: 1.7vw;
+      }
+      .absolute-count-d4421 {
+        position: absolute;
+        color: white;
+        font-size: 0.8vw;
+        top: 0.26vw;
+        left: 0.8vw;
+      }
+
+      &.whiter {
+        cursor: initial;
+        svg {
+          color: #4C608A;
+        }
+      }
+    }
+  }
 }
