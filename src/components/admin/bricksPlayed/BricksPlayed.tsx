@@ -87,6 +87,10 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         if (b.datePublished) {
           return 1;
         }
+        if (a.created && b.created) {
+          var res = new Date(a.created).getTime() > new Date(b.created).getTime() ? -1 : 1;
+          return res;
+        }
         return -1;
       });
     } else if (sortBy === SortBy.Title) {
@@ -121,6 +125,11 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
   async loadInitPlayedData() {
     const bricks = await adminGetBrickAtemptStatistic(PDateFilter.Past24Hours);
     if (bricks) {
+      bricks.map(b => {
+        if (!b.datePublished) {
+          b.datePublished = b.created;
+        }
+      })
       const sortedBricks = this.sortBricks(SortBy.Played, bricks);
       this.setState({ bricks: sortedBricks, finalBricks: sortedBricks });
     }
@@ -219,7 +228,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         return getDateString(b.datePublished);
       }
       if (b.created) {
-        return getDateString(b.created) + 'c';
+        return getDateString(b.created);
       }
       return '';
     }
