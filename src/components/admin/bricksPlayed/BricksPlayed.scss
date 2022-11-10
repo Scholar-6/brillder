@@ -89,13 +89,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 11%;
+      width: 9%;
     }
     .first-column {
       display: flex;
       align-items: center;
       padding-left: 1%;
-      width: 50%;
+      width: 35%;
+      white-space: no-wrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
       p {
         display: inline;
       }
@@ -120,6 +123,12 @@
           border-radius: 50%;
         }
       }
+
+      &.header {
+        div {
+          padding-left: 0.5vw;
+        }
+      }
     }
 
     .third-column {
@@ -128,6 +137,10 @@
         width: 1.5vw;
         height: 1.5vw;
       }
+    }
+
+    .sponsor-column {
+      width: 10%;
     }
 
     .author-column {
