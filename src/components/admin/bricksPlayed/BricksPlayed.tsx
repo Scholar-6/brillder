@@ -84,6 +84,9 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           var res = new Date(a.datePublished).getTime() > new Date(b.datePublished).getTime() ? -1 : 1;
           return res;
         }
+        if (b.datePublished) {
+          return 1;
+        }
         return -1;
       });
     } else if (sortBy === SortBy.Title) {
@@ -211,10 +214,20 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       return <div className="subject-column"></div>
     }
 
+    const renderDate = (b: Brick) => {
+      if (b.datePublished) {
+        return getDateString(b.datePublished);
+      }
+      if (b.created) {
+        return getDateString(b.created) + 'c';
+      }
+      return '';
+    }
+
     return <div className="table-body">
       {finalBricks.map(b => {
         return (<div className="table-row">
-          <div className="publish-column">{b.datePublished && getDateString(b.datePublished)}</div>
+          <div className="publish-column">{renderDate(b)}</div>
           {renderSubjectColumn(b)}
           <div className="first-column" dangerouslySetInnerHTML={{ __html: b.title }} />
           <div className="author-column">{b.author.firstName} {b.author.lastName}</div>
