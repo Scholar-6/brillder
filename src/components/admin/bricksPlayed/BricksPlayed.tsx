@@ -21,6 +21,7 @@ import { stripHtml } from "components/build/questionService/ConvertService";
 import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
+import { fileUrl } from "components/services/uploadFile";
 
 enum SortBy {
   Published,
@@ -267,6 +268,9 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           <div className="author-column">{b.author.firstName} {b.author.lastName}</div>
           <div className="second-column">{b.attemptsCount}</div>
           <div className="third-column">{b.isCore ? <SpriteIcon name="globe" /> : <SpriteIcon name="key" />}</div>
+          <div className="sponsor-column">
+            {b.sponsorName ? b.sponsorName : 'Scholar6'}
+          </div>
         </div>);
       })}
     </div>
@@ -308,6 +312,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             }} /></div>
           </div>
           <div className="third-column header">Visibility</div>
+          <div className="sponsor-column header">Sponsor</div>
         </div>
         {this.renderBody()}
       </div>
