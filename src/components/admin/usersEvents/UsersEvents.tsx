@@ -271,7 +271,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.lastName", isAscending);
             }} /></div>
           </div>
-          <div style={{ width: "7%" }}></div>
+          <div style={{ width: "3.5%" }}></div>
           <div className="second-column header">
             <div>Email</div>
           </div>
