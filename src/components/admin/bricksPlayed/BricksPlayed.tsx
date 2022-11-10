@@ -84,13 +84,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           var res = new Date(a.datePublished).getTime() > new Date(b.datePublished).getTime() ? -1 : 1;
           return res;
         }
-        if (b.datePublished) {
-          return 1;
-        }
-        if (a.created && b.created) {
-          var res = new Date(a.created).getTime() > new Date(b.created).getTime() ? -1 : 1;
-          return res;
-        }
         return -1;
       });
     } else if (sortBy === SortBy.Title) {
