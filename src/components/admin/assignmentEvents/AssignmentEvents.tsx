@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
+import queryString from 'query-string';
 
 import './AssignmentEvents.scss';
 import { ReduxCombinedState } from "redux/reducers";
@@ -56,10 +57,17 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
+    let dateFilter = PDateFilter.Past24Hours;
+
+    const values = queryString.parse(props.history.location.search);
+    if (values.dateFilter) {
+      dateFilter = parseInt(values.dateFilter as string);
+    }
+
     this.state = {
       sortBy: SortBy.Teacher,
       downloadClicked: false,
-      dateFilter: PDateFilter.Past24Hours,
+      dateFilter: dateFilter,
       subjects: [],
       selectedSubjects: [],
       assignments: [],
@@ -67,15 +75,15 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
       allDomains: true,
       domains: []
     }
-    this.loadInitPlayedData();
+    this.loadInitPlayedData(dateFilter);
   }
 
   getUserDomainFromAssignment(a: any) {
     return a.classroom?.creator?.email.split("@")[1];
   }
 
-  async loadInitPlayedData() {
-    const assignments = await getAllAssignmentsByAdmin(PDateFilter.Past24Hours);
+  async loadInitPlayedData(dateFilter: PDateFilter) {
+    const assignments = await getAllAssignmentsByAdmin(dateFilter);
     if (assignments) {
       const domains: CDomain[] = [];
       for (let a of assignments) {
@@ -310,7 +318,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
-              <SubTab activeTab={ClassesActiveSubTab.Assignments} history={this.props.history} />
+              <SubTab activeTab={ClassesActiveSubTab.Assignments} dateFilter={this.state.dateFilter} history={this.props.history} />
               <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
               {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
                 <div className="popup-3rfw bold">

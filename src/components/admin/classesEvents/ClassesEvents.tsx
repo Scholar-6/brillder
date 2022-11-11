@@ -3,6 +3,7 @@ import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
+import queryString from 'query-string';
 
 import './ClassesEvents.scss';
 import { ReduxCombinedState } from "redux/reducers";
@@ -60,10 +61,17 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
+    let dateFilter = PDateFilter.Past24Hours;
+
+    const values = queryString.parse(props.history.location.search);
+    if (values.dateFilter) {
+      dateFilter = parseInt(values.dateFilter as string);
+    }
+
     this.state = {
       sortBy: SortBy.Name,
       downloadClicked: false,
-      dateFilter: PDateFilter.Past24Hours,
+      dateFilter,
       subjects: [],
       selectedSubjects: [],
       allDomains: true,
@@ -74,11 +82,11 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       isSearching: false,
       searchString: '',
     }
-    this.loadInitPlayedData();
+    this.loadInitPlayedData(dateFilter);
   }
 
-  async loadInitPlayedData() {
-    const classrooms = await getAllAdminClassrooms(PDateFilter.Past24Hours);
+  async loadInitPlayedData(dateFilter: PDateFilter) {
+    const classrooms = await getAllAdminClassrooms(dateFilter);
     if (classrooms) {
       const domains: CDomain[] = [];
       for (let c of classrooms) {
@@ -370,7 +378,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
-              <SubTab activeTab={ClassesActiveSubTab.Classes} history={this.props.history} />
+              <SubTab activeTab={ClassesActiveSubTab.Classes} dateFilter={this.state.dateFilter} history={this.props.history} />
               <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
               {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
                 <div className="popup-3rfw bold">
