@@ -252,7 +252,6 @@
       align-items: center;
     }
 
-    
     .see-container {
       .btn {
         margin-top: 0;
@@ -307,6 +306,7 @@
       }
       .absolute-count-d4421 {
         position: absolute;
+        font-family: $font-family-bold;
         color: white;
         font-size: 0.8vw;
         top: 0.26vw;
@@ -315,8 +315,8 @@
 
       &.whiter {
         cursor: initial;
-        svg {
-          color: #4C608A;
+        .absolute-count-d4421 {
+          color: var(--theme-dark-blue);
         }
       }
     }

@@ -238,7 +238,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
                 this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
               }
             }}>
-              <SpriteIcon name="user-event-activity" />
+              <SpriteIcon name={u.attempts.length > 0 ? "user-event-activity" : "user-event-activity-disabled"} />
               <div className="absolute-count-d4421">
                 {u.attempts.length}
               </div>

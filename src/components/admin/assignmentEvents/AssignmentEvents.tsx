@@ -181,7 +181,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
               {a.classroom?.name}
             </div>
             {renderDomain(a)}
-            <div className="assigned-column"><div>{stripHtml(a.brick.title)}</div></div>
+            <div className="assigned-column" onClick={() => {}}><div>{stripHtml(a.brick.title)}</div></div>
           </div>
         );
       })}
