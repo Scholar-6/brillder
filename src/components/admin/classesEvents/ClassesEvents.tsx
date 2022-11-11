@@ -355,8 +355,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               this.setState({ allDomains: true, finalClassrooms });
             }}
             setDomain={d => {
-              this.state.domains.map(d => d.checked = false);
-              d.checked = true;
+              d.checked = !d.checked;
               const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, false, this.state.domains, this.state.searchString);
               this.setState({ allDomains: false, finalClassrooms });
             }}
