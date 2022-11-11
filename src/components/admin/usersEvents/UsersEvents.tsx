@@ -7,6 +7,7 @@ import { Tooltip } from "@material-ui/core";
  
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
+import { getRealLibraries, RealLibrary } from "services/axios/realLibrary";
 
 import './UsersEvents.scss';
 import { User, UserPreferenceType, UserType } from "model/user";
@@ -57,6 +58,8 @@ interface UsersState {
   orderBy: string;
   isAscending: boolean;
 
+  libraries: RealLibrary[];
+
   downloadClicked: boolean;
 }
 
@@ -85,10 +88,19 @@ class UsersPage extends Component<UsersProps, UsersState> {
       isSearching: false,
       searchString: '',
 
+      libraries: [],
+
       downloadClicked: false
     };
 
     this.loadInitData();
+  }
+
+  async getLibraries() {
+    const libraries = await getRealLibraries();
+    if (libraries) {
+      this.setState({ libraries });
+    }
   }
 
   async loadInitData() {
@@ -98,6 +110,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
     }
 
     this.getUsers(null, 0, [], '', 'user.created', true);
+
+    this.getLibraries();
   }
 
   async getUsers(userPreference: UserPreferenceType | null, page: number, selectedSubjects: Subject[], searchString: string, orderBy: string, isAscending: boolean) {
@@ -152,6 +166,20 @@ class UsersPage extends Component<UsersProps, UsersState> {
     }
   }
 
+  renderLibrary(user: User) {
+    if (user.library) {
+      const libraryId = user.library.id;
+      const library = this.state.libraries.find(l => l.id === libraryId);
+
+      return <div className="library-user-icon">
+        <img alt="" src="/images/library.png" />
+        {library && <div className="css-custom-tooltip bold">{library.name}</div>}
+      </div>
+    }
+
+    return '';
+  }
+
   renderUserType(u: User) {
     if (u.roles.find(r => r.roleId === UserType.Admin)) {
       return 'Admin';
@@ -203,7 +231,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             }
           </div>
           <div className="second-column">{u.email}</div>
-          <div className="third-column">{this.renderUserType(u)}</div>
+          <div className="third-column">{this.renderUserType(u)}{this.renderLibrary(u)}</div>
           <div className="second-column">
             <div className={`attempts-count-box ${u.attempts.length > 0 ? '' : 'whiter'}`} onClick={() => {
               if (u.attempts.length > 0) {
