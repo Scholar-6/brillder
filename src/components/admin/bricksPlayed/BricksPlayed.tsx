@@ -142,7 +142,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       const mathSubjectNames = ['Maths', "Computer Science"]
       const mathSubjects = this.fillSubjects(subjects, mathSubjectNames);
 
-      const scienceSubjectNames = ['Chemistry', 'Biology', 'Physics'];
+      const scienceSubjectNames = ['Chemistry', 'Biology, Health & Care, Health & Care', 'Physics'];
       const scienceSubjects = this.fillSubjects(subjects, scienceSubjectNames);
 
       const languageNames = ['French', 'German', 'Chinese', 'Spanish', 'English Language', 'Classics'];
