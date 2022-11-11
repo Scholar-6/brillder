@@ -318,6 +318,17 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     );
   }
 
+  selectCategorySubjects(categorySubjects: Subject[]) {
+    this.state.subjects.map(s => s.checked = false);
+    for (let cs of categorySubjects) {
+      const subject = this.state.subjects.find(s => s.id === cs.id);
+      if (subject) {
+        subject.checked = true;
+      }
+    }
+    this.setState({subjects: this.state.subjects});
+  }
+
   render() {
     return (
       <div className="main-listing user-list-page manage-classrooms-page bricks-played-page only-bricks-played-page">
@@ -336,26 +347,38 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
               this.loadData(dateFilter);
             }}
             subjects={this.state.subjects}
-            selectedSubjects={this.state.selectedSubjects}
-            selectSubjects={selectedSubjects => {
-              const finalBricks = this.filterAndSort(this.state.bricks, selectedSubjects, this.state.sortBy);
-              this.setState({ selectedSubjects, finalBricks });
+            selectSubject={selectedSubject => {
+              const subject = this.state.subjects.find(s => s.id === selectedSubject.id);
+              if (subject) {
+                subject.checked = !subject?.checked;
+                const selectedSubjects = this.state.subjects.filter(s => s.checked);
+                const finalBricks = this.filterAndSort(this.state.bricks, selectedSubjects, this.state.sortBy);
+                this.setState({ selectedSubjects, finalBricks });
+              }
             }}
             subjectCategory={this.state.subjectCategory} setSubjectCategory={subjectCategory => {
               let { selectedSubjects } = this.state;
               if (subjectCategory === ESubjectCategory.Arts) {
+                this.selectCategorySubjects(this.state.artSubjects);
                 selectedSubjects = [...this.state.artSubjects];
               } else if (subjectCategory === ESubjectCategory.Humanities) {
+                this.selectCategorySubjects(this.state.humanitySubjects);
                 selectedSubjects = [...this.state.humanitySubjects];
               } else if (subjectCategory === ESubjectCategory.General) {
+                this.selectCategorySubjects(this.state.generalSubject);
                 selectedSubjects = [...this.state.generalSubject];
               } else if (subjectCategory === ESubjectCategory.Languages) {
+                this.selectCategorySubjects(this.state.generalSubject);
                 selectedSubjects = [...this.state.languageSubjects];
               } else if (subjectCategory === ESubjectCategory.Math) {
+                this.selectCategorySubjects(this.state.generalSubject);
                 selectedSubjects = [...this.state.mathSubjects];
               } else if (subjectCategory === ESubjectCategory.Science) {
+                this.selectCategorySubjects(this.state.generalSubject);
                 selectedSubjects = [...this.state.scienceSubjects];
               } else {
+                this.selectCategorySubjects(this.state.generalSubject);
+
                 selectedSubjects = [];
               }
 
