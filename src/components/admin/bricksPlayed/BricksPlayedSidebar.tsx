@@ -28,8 +28,7 @@ interface FilterSidebarProps {
   dateFilter: PDateFilter;
   setDateFilter(filter: PDateFilter): void;
   subjects: Subject[];
-  selectedSubjects: Subject[];
-  selectSubjects(selectedSubjects: Subject[]): void;
+  selectSubject(selectedSubject: Subject): void;
   subjectCategory: ESubjectCategory;
   setSubjectCategory(category: ESubjectCategory): void;
 }
@@ -50,17 +49,6 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
     this.state = {
       subjectIds: []
     };
-  }
-
-  componentDidUpdate(prevProps: Readonly<FilterSidebarProps>, prevState: Readonly<FilterSidebarState>, snapshot?: any): void {
-    if (prevProps.selectedSubjects !== this.props.selectedSubjects) {
-      if (this.props.selectedSubjects.length != this.state.subjectIds.length) {
-        this.setState({ subjectIds: this.props.selectedSubjects.map(s => s.id) });
-      } else {
-        // if same number but different subjects rare case
-        // no solution yet
-      }
-    }
   }
 
   render() {
@@ -105,7 +93,9 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
         <SubjectsList
           subjects={this.props.subjects}
           filterHeight={"auto"}
-          filterBySubject={() => {
+          filterBySubject={s => {
+            const subject = this.props.subjects[s];
+            this.props.selectSubject(subject);
           }}
           showUserCount={true}
         />
