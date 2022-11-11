@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { Subject } from "model/brick";
-import SubjectsSelect from "../components/SubjectsSelect";
+import CategorySelect from "../components/CategorySelect";
+import SubjectsList from "../components/SubjectsList";
 
 export enum PDateFilter {
   Past24Hours,
@@ -99,57 +100,14 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
             control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.AllTime)} className={"filter-radio custom-color"} />}
             label="All time" />
         </div>
-        <div className="filter-header">Category</div>
-        <div className="sort-radio-btns filter-row margin-smaller">
-          <FormControlLabel
-            checked={subjectCategory === ESubjectCategory.Everything}
-            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Everything)} className={"filter-radio custom-color"} />}
-            label="All" />
-        </div>
-        <div className="sort-radio-btns filter-row margin-smaller">
-          <FormControlLabel
-            checked={subjectCategory === ESubjectCategory.Arts}
-            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Arts)} className={"filter-radio custom-color"} />}
-            label="Arts" />
-        </div>
-        <div className="sort-radio-btns filter-row margin-smaller">
-          <FormControlLabel
-            checked={subjectCategory === ESubjectCategory.General}
-            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.General)} className={"filter-radio custom-color"} />}
-            label="General & Topical" />
-        </div>
-        <div className="sort-radio-btns full-width filter-row margin-smaller">
-          <FormControlLabel
-            checked={subjectCategory === ESubjectCategory.Humanities}
-            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Humanities)} className={"filter-radio custom-color"} />}
-            label="Humanities & Social Sciences" />
-        </div>
-        <div className="sort-radio-btns full-width filter-row margin-smaller">
-          <FormControlLabel
-            checked={subjectCategory === ESubjectCategory.Languages}
-            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Languages)} className={"filter-radio custom-color"} />}
-            label="Languages" />
-        </div>
-        <div className="sort-radio-btns full-width filter-row margin-smaller">
-          <FormControlLabel
-            checked={subjectCategory === ESubjectCategory.Math}
-            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Math)} className={"filter-radio custom-color"} />}
-            label="Maths & Computing" />
-        </div>
-        <div className="sort-radio-btns filter-row margin-smaller">
-          <FormControlLabel
-            checked={subjectCategory === ESubjectCategory.Science}
-            control={<Radio onClick={() => setSubjectCategory(ESubjectCategory.Science)} className={"filter-radio custom-color"} />}
-            label="Science" />
-        </div>
-        <SubjectsSelect
-          subjectIds={this.state.subjectIds}
+        <CategorySelect subjectCategory={subjectCategory} selectCategory={setSubjectCategory} />
+        <div className="filter-header">Subjects</div>
+        <SubjectsList
           subjects={this.props.subjects}
-          selectedSubjects={this.props.selectedSubjects}
-          selectSubjects={(subjectIds, subjects) => {
-            this.setState({ subjectIds });
-            this.props.selectSubjects(subjects);
+          filterHeight={"auto"}
+          filterBySubject={() => {
           }}
+          showUserCount={true}
         />
         <div className="sidebar-footer" />
       </Grid>
