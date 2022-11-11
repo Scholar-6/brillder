@@ -21,7 +21,6 @@ import { stripHtml } from "components/build/questionService/ConvertService";
 import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
-import { fileUrl } from "components/services/uploadFile";
 
 enum SortBy {
   Published,
