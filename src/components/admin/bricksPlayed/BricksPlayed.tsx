@@ -404,7 +404,8 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                         Title: stripHtml(brick.title),
                         Author: brick.author.firstName + ' ' + brick.author.lastName,
                         Played: brick.attemptsCount,
-                        'Public?': brick.isCore ? "yes" : "no"
+                        'Public?': brick.isCore ? "yes" : "no",
+                        Sponsor: brick.sponsorName ? brick.sponsorName : 'Scholar6'
                       });
                     }
 
@@ -417,10 +418,10 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                   </div>
                   <div className="btn-sort" onClick={() => {
                     exportToPDF(
-                      [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?']],
+                      [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?', 'Sponsor']],
                       this.state.finalBricks.map(b => {
                         const subject = this.state.subjects.find(s => s.id === b.subjectId);
-                        return [b.datePublished ? b.datePublished : '', subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no']
+                        return [b.datePublished ? b.datePublished : '', subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no',  b.sponsorName ? b.sponsorName : 'Scholar6']
                       }),
                       `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`
                     );
