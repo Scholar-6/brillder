@@ -619,6 +619,41 @@ class TeachPage extends Component<TeachProps, TeachState> {
     );
   }
 
+  renderData() {
+    const { isArchive } = this.state;
+
+    if (!this.state.isLoaded) {
+      return (
+        <Grid item xs={9} className="brick-row-container teach-tab-d94">
+          <TeachTab activeTab={TeachActiveTab.Assignments} history={this.props.history} onAssign={() => this.setState({ isAssignOpen: true })} assignmentsEnabled={true} />
+          <div className="tab-content">
+            <div className="f-top-loader">
+              <SpriteIcon name="f-loader" className="spinning" />
+            </div>
+          </div>
+        </Grid>
+      );
+    }
+    if (this.state.classrooms?.length === 0) {
+      return (
+        <Grid item xs={9} className="brick-row-container">
+          <EmptyTabContent
+            history={this.props.history}
+            classrooms={this.state.classrooms}
+            activeClassroom={this.state.activeClassroom}
+            openClass={() => this.setState({ createClassOpen: true })}
+          />
+        </Grid>
+      );
+    }
+
+    if (this.state.activeClassroom && !this.state.activeAssignment && !this.state.activeStudent) {
+      return this.renderClassroom(isArchive);
+    } else {
+      return this.renderContainer();
+    }
+  }
+
   render() {
     const { isArchive } = this.state;
     let showedClasses = this.state.classrooms;
@@ -655,17 +690,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             createClass={this.createClass.bind(this)}
             moveToPremium={() => this.setState({ isPremiumDialogOpen: true })}
           />
-          {(this.state.isLoaded && this.state.classrooms?.length === 0)
-            ?
-            <Grid item xs={9} className="brick-row-container">
-              <EmptyTabContent
-                history={this.props.history}
-                classrooms={this.state.classrooms}
-                activeClassroom={this.state.activeClassroom}
-                openClass={() => this.setState({ createClassOpen: true })}
-              />
-            </Grid>
-            : this.state.activeClassroom && !this.state.activeAssignment && !this.state.activeStudent ? this.renderClassroom(isArchive) : this.renderContainer()}
+          {this.renderData()}
         </Grid>
         <ReminderSuccessDialog
           header={`Reminder${remindersData.count > 1 ? 's' : ''} sent!`}
