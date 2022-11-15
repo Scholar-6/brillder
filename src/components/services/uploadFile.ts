@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export function fileUrl(fileName: string) {
   if (!fileName) { return '' }
-  console.log(888, process.env);
   return `${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${fileName}`;
 }
 
