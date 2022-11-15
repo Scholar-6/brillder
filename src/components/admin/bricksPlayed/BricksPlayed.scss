@@ -107,6 +107,31 @@
       display: flex;
       align-items: center;
       width: 10%;
+      position: relative;
+
+      .players-popup-d3423 {
+        position: absolute;
+        top: 0;
+        color: white;
+        background: var(--theme-light-blue);
+        border-radius: 0.5vw;
+        right: 5vw;
+        z-index: 2;
+        > div {
+          padding: 0.4vw 1.3vw 0.4vw;
+          position: relative;
+
+          .close-btn {
+            position: absolute;
+            top: 0.1vw;
+            right: 0.3vw;
+            width: 1.3vw;
+            height: 1.3vw;
+            stroke-width: 2;
+            color: var(--theme-orange);
+          }
+        }
+      }
     }
     .subject-column {
       width: 17%;

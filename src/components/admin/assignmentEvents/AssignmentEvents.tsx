@@ -23,6 +23,7 @@ import { CDomain } from "../classesEvents/ClassesSidebar";
 import { exportToCSV } from "services/excel";
 import ExportBtn from "../components/ExportBtn";
 import { exportToPDF } from "services/pdf";
+import { getFormattedDateSlash } from "components/services/brickService";
 
 
 enum SortBy {
@@ -337,7 +338,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
                       });
                     }
 
-                    exportToCSV(data, "table");
+                    exportToCSV(data, `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`);
 
                     this.setState({ downloadClicked: false });
                   }}>
@@ -357,7 +358,7 @@ class AssignmentEvents extends Component<TeachProps, TeachState> {
                           stripHtml(a.brick.title)
                         ]
                       }),
-                      'table.pdf'
+                      `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`
                     );
                     this.setState({ downloadClicked: false });
                   }}>
