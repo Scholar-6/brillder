@@ -54,7 +54,7 @@ export const getPublicBricks = async () => {
 
 export const getAdminBrickStatistic = async (brickId: number) => {
   try {
-    return await get<AssignmentBrick[]>("/admin/getAdminBrickStatistic/" + brickId);
+    return await get<any>("/admin/getAdminBrickStatistic/" + brickId);
   } catch {
     return null;
   }

@@ -13,7 +13,7 @@ import { getSubjects } from "services/axios/subject";
 import BricksTab, { BricksActiveTab } from "./BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { GENERAL_SUBJECT } from "components/services/subject";
-import { adminGetBrickAtemptStatistic } from "services/axios/brick";
+import { adminGetBrickAtemptStatistic, getAdminBrickStatistic } from "services/axios/brick";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import BricksPlayedSidebar, { ESubjectCategory, PDateFilter } from "./BricksPlayedSidebar";
 import { getDateString, getFormattedDateSlash } from "components/services/brickService";
@@ -53,6 +53,9 @@ interface TeachState {
   humanitySubjects: Subject[];
   languageSubjects: Subject[];
   scienceSubjects: Subject[];
+
+  brickIdPlayers: number;
+  brickAttempts: any[];
 }
 
 class BricksPlayedPage extends Component<TeachProps, TeachState> {
@@ -76,6 +79,9 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       languageSubjects: [],
       mathSubjects: [],
       scienceSubjects: [],
+
+      brickIdPlayers: -1,
+      brickAttempts: []
     }
     this.loadInitPlayedData();
   }
@@ -265,7 +271,33 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           {renderSubjectColumn(b)}
           <div className="first-column" dangerouslySetInnerHTML={{ __html: b.title }} />
           <div className="author-column">{b.author.firstName} {b.author.lastName}</div>
-          <div className="second-column">{b.attemptsCount}</div>
+          <div className="second-column" onClick={async (e) => {
+            e.stopPropagation();
+            console.log(b);
+            const data = await getAdminBrickStatistic(b.id);
+            if (data) {
+              this.setState({ brickIdPlayers: b.id, brickAttempts: data.attempts })
+              console.log(666, data.attempts)
+            }
+          }}>
+            {b.attemptsCount}
+            {this.state.brickIdPlayers > 0 && this.state.brickIdPlayers === b.id &&
+              <div className="players-popup-d3423">
+                <div>
+                  <SpriteIcon name="cancel-custom" className="close-btn" onClick={e => {
+                    e.stopPropagation();
+                    this.setState({ brickIdPlayers: -1, brickAttempts: [] });
+                  }} />
+                  {this.state.brickAttempts.map(a => {
+                    if (a.student) {
+                      const { student } = a;
+                      return student.firstName + ' ' + student.lastName;
+                    }
+                    return '';
+                  })}
+                </div>
+              </div>}
+          </div>
           <div className="third-column">{b.isCore ? <SpriteIcon name="globe" /> : <SpriteIcon name="key" />}</div>
           <div className="sponsor-column">
             {b.sponsorName ? b.sponsorName : 'Scholar6'}
@@ -326,7 +358,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         subject.checked = true;
       }
     }
-    this.setState({subjects: this.state.subjects});
+    this.setState({ subjects: this.state.subjects });
   }
 
   render() {
@@ -421,7 +453,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                       [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?', 'Sponsor']],
                       this.state.finalBricks.map(b => {
                         const subject = this.state.subjects.find(s => s.id === b.subjectId);
-                        return [b.datePublished ? b.datePublished : '', subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no',  b.sponsorName ? b.sponsorName : 'Scholar6']
+                        return [b.datePublished ? b.datePublished : '', subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no', b.sponsorName ? b.sponsorName : 'Scholar6']
                       }),
                       `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`
                     );
