@@ -9,7 +9,7 @@ import DynamicFont from 'react-dynamic-font';
 
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
-import { User, UserPreferenceType } from "model/user";
+import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
@@ -405,23 +405,18 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   renderCompetitionArena() {
-    if (this.props.user.library) {
-      return <div />;
-    }
-    if (this.state.isStudent) {
-      return (
-        <div className="create-item-container competition-arena-d54n">
-          <button className="btn btn-transparent zoom-item text-theme-orange active"
-            onClick={() => {
-              window.location.href = "https://brillder.com/brilliant-minds-prizes/";
-            }}
-          >
-            <SpriteIcon name="star" />
-            <span className="item-description ">Competition Arena</span>
-          </button>
-        </div>
-      )
-    }
+    return (
+      <div className="create-item-container competition-arena-d54n">
+        <button className="btn btn-transparent zoom-item text-theme-orange active"
+          onClick={() => {
+            window.location.href = "https://brillder.com/brilliant-minds-prizes/";
+          }}
+        >
+          <SpriteIcon name="star" />
+          <span className="item-description ">Competition Arena</span>
+        </button>
+      </div>
+    )
   }
 
   onIntroExit() {

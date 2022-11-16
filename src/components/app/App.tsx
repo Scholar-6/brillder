@@ -1,6 +1,6 @@
 import React, { Profiler, useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { createTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -192,7 +192,7 @@ const App: React.FC<AppProps> = props => {
   }
 
   const theme = React.useMemo(() =>
-    createMuiTheme({
+    createTheme({
       palette: {
         secondary: { main: "#001c58" },
         primary: { main: "#0B3A7E" }
