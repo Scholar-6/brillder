@@ -613,7 +613,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     return (
       <Grid item xs={9} className="brick-row-container teach-tab-d94">
-        <TeachTab activeTab={TeachActiveTab.Assignments} history={history} onAssign={() => this.setState({ isAssignOpen: true })} assignmentsEnabled={true} />
+        <TeachTab activeTab={TeachActiveTab.Assignments} history={this.props.history} onAssign={() => this.setState({ isAssignOpen: true })} assignmentsEnabled={true} />
         {this.renderTabContent()}
       </Grid>
     );
