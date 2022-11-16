@@ -507,6 +507,21 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     );
   }
 
+  renderLibraryLearnerBtns() {
+    return (
+      <div className="first-item">
+        <div>
+          <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
+          {this.renderRightButton()}
+        </div>
+        <div>
+          {this.renderAssignmentsButton()}
+          {this.renderThirdButton()}
+        </div>
+      </div>
+    );
+  }
+
   renderEducatorBtns() {
     return (
       <div className="first-item">
@@ -542,7 +557,11 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     } else if (this.state.isRealInstitution) {
       return this.renderInstitutionBtns();
     } else if (this.state.isStudent) {
-      return this.renderLearnerBtns();
+      if (this.props.user.library) {
+        return this.renderLibraryLearnerBtns();
+      } else {
+        return this.renderLearnerBtns();
+      }
     } else if (this.state.isTeacher || this.state.isInstitution) {
       return this.renderEducatorBtns()
     } else if (this.state.isBuilder) {
