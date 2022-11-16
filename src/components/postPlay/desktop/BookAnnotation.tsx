@@ -60,7 +60,7 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
             <div style={{ position: 'absolute' }} className="profile-image-container">
               <div className="profile-image">
                 {annotation.user.profileImage
-                  ? <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${annotation.user.profileImage}`} alt="" />
+                  ? <img src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${annotation.user.profileImage}`} alt="" />
                   : <SpriteIcon name="user" />}
               </div>
             </div>
