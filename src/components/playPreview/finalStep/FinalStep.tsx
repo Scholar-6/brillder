@@ -244,7 +244,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
               {brick.editors.map((e, i) =>
                 <Chip
                   key={i}
-                  avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${e.profileImage}`} />}
+                  avatar={<Avatar src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${e.profileImage}`} />}
                   label={`${e.firstName} ${e.lastName}`}
                   onDelete={brick.editors?.length === 1 && brick.status !== BrickStatus.Draft ? undefined : () => removeEditor(e)}
                 />

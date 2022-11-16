@@ -29,7 +29,7 @@ export function uploadFile(inputFile: File, callback: Function, onError: Functio
 
 export async function getFile(fileName: string) {
   const res = await axios.get(
-    process.env.REACT_APP_BACKEND_HOST + '/files/' + fileName,
+    process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME + '/files/' + fileName,
     {
       responseType: 'blob',
       withCredentials: true
