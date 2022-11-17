@@ -15,7 +15,7 @@ import map from 'components/map';
 import UnauthorizedMenu from 'components/app/unauthorized/UnauthorizedMenu';
 import { PageEnum } from './PageHeadWithMenu';
 import { isPhone } from 'services/phone';
-import { getPublishedBricks } from 'services/axios/brick';
+import { getKeywords } from "services/axios/brick";
 import { Brick, KeyWord, Subject } from 'model/brick';
 import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestions';
 import { getSubjects } from 'services/axios/subject';
@@ -111,16 +111,9 @@ class PageHeader extends Component<Props, State> {
   }
 
   async prepareSuggestions() {
-    let subjects: Subject[] = [];
-    const bricks = await getPublishedBricks();
-    if (bricks) {
-      let keywords = this.collectKeywords(bricks);
-      const subjects2 = await getSubjects();
-      if (subjects2) {
-        subjects = subjects2;
-      }
-      this.setState({ bricks, subjects, keywords });
-    }
+    const keywords = await getKeywords() || [];
+    const subjects = await getSubjects() || [];
+    this.setState({bricks: [], subjects, keywords });
   }
 
   keySearch(e: any) {
