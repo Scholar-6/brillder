@@ -27,7 +27,7 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
         <div className={`profile-image ${mineComment ? 'yellow-border' : 'red-border'}`}>
           {
             props.comment.author?.profileImage
-              ? <img alt="profile" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
+              ? <img alt="profile" src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${props.comment.author.profileImage}`} />
               : <SpriteIcon name="user" />
           }
         </div>

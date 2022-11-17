@@ -18,7 +18,7 @@ const subjects = [
   },
   {
     id: 2,
-    name: "Biology",
+    name: "Biology, Health & Care",
     color: "#65C44C",
     checked: false,
     publishedBricksCount: 3,

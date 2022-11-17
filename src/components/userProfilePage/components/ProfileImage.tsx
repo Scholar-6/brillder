@@ -97,7 +97,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     if (profileImage) {
       return (
         <img
-          src={`${process.env.REACT_APP_BACKEND_HOST}/files/${profileImage}`}
+          src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${profileImage}`}
           className="real-profile-image" alt=""
         />
       );

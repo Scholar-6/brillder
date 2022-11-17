@@ -90,10 +90,10 @@ const ClassInvitationDialog: React.FC<Props> = props => {
         </Grid>
         <CardHeader
           className="sent-by"
-          avatar={<Avatar src={`${process.env.REACT_APP_BACKEND_HOST}/files/${currentInvitation.sentBy.profileImage}`} />}
+          avatar={<Avatar src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${currentInvitation.sentBy.profileImage}`} />}
           title={`sent by ${currentInvitation.sentBy.firstName} ${currentInvitation.sentBy.lastName}`}
         />
-        <MobileStepper
+        <MobileStepper 
           variant="dots"
           steps={invitations!.length}
           activeStep={activeStep}

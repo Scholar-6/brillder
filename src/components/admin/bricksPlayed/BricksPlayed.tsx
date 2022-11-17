@@ -5,6 +5,7 @@ import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 
 import './BricksPlayed.scss';
+import { playCover } from "components/play/routes";
 import { User } from "model/user";
 import { Brick, Subject } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
@@ -12,10 +13,10 @@ import { getSubjects } from "services/axios/subject";
 import BricksTab, { BricksActiveTab } from "./BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { GENERAL_SUBJECT } from "components/services/subject";
-import { adminGetBrickAtemptStatistic } from "services/axios/brick";
+import { adminGetBrickAtemptStatistic, getAdminBrickStatistic } from "services/axios/brick";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import BricksPlayedSidebar, { ESubjectCategory, PDateFilter } from "./BricksPlayedSidebar";
-import { getDateString } from "components/services/brickService";
+import { getDateString, getFormattedDateSlash } from "components/services/brickService";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
@@ -36,6 +37,8 @@ interface TeachProps {
 }
 
 interface TeachState {
+  isSearching: boolean;
+  searchString: string;
   downloadClicked: boolean;
   sortBy: SortBy;
   dateFilter: PDateFilter;
@@ -50,6 +53,9 @@ interface TeachState {
   humanitySubjects: Subject[];
   languageSubjects: Subject[];
   scienceSubjects: Subject[];
+
+  brickIdPlayers: number;
+  brickAttempts: any[];
 }
 
 class BricksPlayedPage extends Component<TeachProps, TeachState> {
@@ -57,6 +63,8 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     super(props);
 
     this.state = {
+      isSearching: false,
+      searchString: '',
       downloadClicked: false,
       sortBy: SortBy.Played,
       dateFilter: PDateFilter.Past24Hours,
@@ -71,6 +79,9 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       languageSubjects: [],
       mathSubjects: [],
       scienceSubjects: [],
+
+      brickIdPlayers: -1,
+      brickAttempts: []
     }
     this.loadInitPlayedData();
   }
@@ -118,6 +129,11 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
   async loadInitPlayedData() {
     const bricks = await adminGetBrickAtemptStatistic(PDateFilter.Past24Hours);
     if (bricks) {
+      bricks.map(b => {
+        if (!b.datePublished) {
+          b.datePublished = b.created;
+        }
+      })
       const sortedBricks = this.sortBricks(SortBy.Played, bricks);
       this.setState({ bricks: sortedBricks, finalBricks: sortedBricks });
     }
@@ -132,7 +148,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       const mathSubjectNames = ['Maths', "Computer Science"]
       const mathSubjects = this.fillSubjects(subjects, mathSubjectNames);
 
-      const scienceSubjectNames = ['Chemistry', 'Biology', 'Physics'];
+      const scienceSubjectNames = ['Chemistry', 'Biology, Health & Care, Health & Care', 'Physics'];
       const scienceSubjects = this.fillSubjects(subjects, scienceSubjectNames);
 
       const languageNames = ['French', 'German', 'Chinese', 'Spanish', 'English Language', 'Classics'];
@@ -176,6 +192,33 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     return this.filterBricksBySubjectsAndSort(bricks, selectedSubjects, sortBy);
   }
 
+  search() {
+    const { searchString } = this.state;
+
+    const bricks = this.filterBricksBySubjectsAndSort(this.state.bricks, this.state.selectedSubjects, this.state.sortBy);
+
+    const finalBricks = bricks.filter(b => {
+      const title = b.title.toLocaleLowerCase();
+      if (title.indexOf(searchString) >= 0) {
+        return true;
+      }
+      return false;
+    });
+
+    setTimeout(() => {
+      this.setState({ finalBricks, isSearching: true });
+    })
+  }
+
+  async searching(searchString: string) {
+    if (searchString.length === 0) {
+      //await this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, searchString, this.state.orderBy, this.state.isAscending);
+      this.setState({ ...this.state, searchString, isSearching: false });
+    } else {
+      this.setState({ ...this.state, searchString });
+    }
+  }
+
   renderBody() {
     const { finalBricks } = this.state;
     if (finalBricks.length == 0) {
@@ -211,15 +254,54 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       return <div className="subject-column"></div>
     }
 
+    const renderDate = (b: Brick) => {
+      if (b.datePublished) {
+        return getDateString(b.datePublished);
+      }
+      if (b.created) {
+        return getDateString(b.created);
+      }
+      return '';
+    }
+
     return <div className="table-body">
       {finalBricks.map(b => {
-        return (<div className="table-row">
-          <div className="publish-column">{b.datePublished && getDateString(b.datePublished)}</div>
+        return (<div className="table-row clickable" onClick={() => this.props.history.push(playCover(b))}>
+          <div className="publish-column">{renderDate(b)}</div>
           {renderSubjectColumn(b)}
           <div className="first-column" dangerouslySetInnerHTML={{ __html: b.title }} />
           <div className="author-column">{b.author.firstName} {b.author.lastName}</div>
-          <div className="second-column">{b.attemptsCount}</div>
+          <div className="second-column" onClick={async (e) => {
+            e.stopPropagation();
+            console.log(b);
+            const data = await getAdminBrickStatistic(b.id);
+            if (data) {
+              this.setState({ brickIdPlayers: b.id, brickAttempts: data.attempts })
+              console.log(666, data.attempts)
+            }
+          }}>
+            {b.attemptsCount}
+            {this.state.brickIdPlayers > 0 && this.state.brickIdPlayers === b.id &&
+              <div className="players-popup-d3423">
+                <div>
+                  <SpriteIcon name="cancel-custom" className="close-btn" onClick={e => {
+                    e.stopPropagation();
+                    this.setState({ brickIdPlayers: -1, brickAttempts: [] });
+                  }} />
+                  {this.state.brickAttempts.map(a => {
+                    if (a.student) {
+                      const { student } = a;
+                      return student.firstName + ' ' + student.lastName;
+                    }
+                    return '';
+                  })}
+                </div>
+              </div>}
+          </div>
           <div className="third-column">{b.isCore ? <SpriteIcon name="globe" /> : <SpriteIcon name="key" />}</div>
+          <div className="sponsor-column">
+            {b.sponsorName ? b.sponsorName : 'Scholar6'}
+          </div>
         </div>);
       })}
     </div>
@@ -261,10 +343,22 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             }} /></div>
           </div>
           <div className="third-column header">Visibility</div>
+          <div className="sponsor-column header">Sponsor</div>
         </div>
         {this.renderBody()}
       </div>
     );
+  }
+
+  selectCategorySubjects(categorySubjects: Subject[]) {
+    this.state.subjects.map(s => s.checked = false);
+    for (let cs of categorySubjects) {
+      const subject = this.state.subjects.find(s => s.id === cs.id);
+      if (subject) {
+        subject.checked = true;
+      }
+    }
+    this.setState({ subjects: this.state.subjects });
   }
 
   render() {
@@ -275,8 +369,8 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           placeholder="Brick Title, Student Name, or Subject"
           user={this.props.user}
           history={this.props.history}
-          search={() => { }}
-          searching={() => { }}
+          search={() => this.search()}
+          searching={this.searching.bind(this)}
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <BricksPlayedSidebar
@@ -285,26 +379,38 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
               this.loadData(dateFilter);
             }}
             subjects={this.state.subjects}
-            selectedSubjects={this.state.selectedSubjects}
-            selectSubjects={selectedSubjects => {
-              const finalBricks = this.filterAndSort(this.state.bricks, selectedSubjects, this.state.sortBy);
-              this.setState({ selectedSubjects, finalBricks });
+            selectSubject={selectedSubject => {
+              const subject = this.state.subjects.find(s => s.id === selectedSubject.id);
+              if (subject) {
+                subject.checked = !subject?.checked;
+                const selectedSubjects = this.state.subjects.filter(s => s.checked);
+                const finalBricks = this.filterAndSort(this.state.bricks, selectedSubjects, this.state.sortBy);
+                this.setState({ selectedSubjects, finalBricks });
+              }
             }}
             subjectCategory={this.state.subjectCategory} setSubjectCategory={subjectCategory => {
               let { selectedSubjects } = this.state;
               if (subjectCategory === ESubjectCategory.Arts) {
+                this.selectCategorySubjects(this.state.artSubjects);
                 selectedSubjects = [...this.state.artSubjects];
               } else if (subjectCategory === ESubjectCategory.Humanities) {
+                this.selectCategorySubjects(this.state.humanitySubjects);
                 selectedSubjects = [...this.state.humanitySubjects];
               } else if (subjectCategory === ESubjectCategory.General) {
+                this.selectCategorySubjects(this.state.generalSubject);
                 selectedSubjects = [...this.state.generalSubject];
               } else if (subjectCategory === ESubjectCategory.Languages) {
+                this.selectCategorySubjects(this.state.generalSubject);
                 selectedSubjects = [...this.state.languageSubjects];
               } else if (subjectCategory === ESubjectCategory.Math) {
+                this.selectCategorySubjects(this.state.generalSubject);
                 selectedSubjects = [...this.state.mathSubjects];
               } else if (subjectCategory === ESubjectCategory.Science) {
+                this.selectCategorySubjects(this.state.generalSubject);
                 selectedSubjects = [...this.state.scienceSubjects];
               } else {
+                this.selectCategorySubjects(this.state.generalSubject);
+
                 selectedSubjects = [];
               }
 
@@ -330,11 +436,12 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                         Title: stripHtml(brick.title),
                         Author: brick.author.firstName + ' ' + brick.author.lastName,
                         Played: brick.attemptsCount,
-                        'Public?': brick.isCore ? "yes" : "no"
+                        'Public?': brick.isCore ? "yes" : "no",
+                        Sponsor: brick.sponsorName ? brick.sponsorName : 'Scholar6'
                       });
                     }
 
-                    exportToCSV(data, "table");
+                    exportToCSV(data, "Brillder data " + getFormattedDateSlash(new Date().toString()));
 
                     this.setState({ downloadClicked: false });
                   }}>
@@ -343,12 +450,12 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                   </div>
                   <div className="btn-sort" onClick={() => {
                     exportToPDF(
-                      [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?']],
+                      [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?', 'Sponsor']],
                       this.state.finalBricks.map(b => {
                         const subject = this.state.subjects.find(s => s.id === b.subjectId);
-                        return [b.datePublished ? b.datePublished : '', subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no']
+                        return [b.datePublished ? b.datePublished : '', subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no', b.sponsorName ? b.sponsorName : 'Scholar6']
                       }),
-                      'table.pdf'
+                      `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`
                     );
                     this.setState({ downloadClicked: false });
                   }}>

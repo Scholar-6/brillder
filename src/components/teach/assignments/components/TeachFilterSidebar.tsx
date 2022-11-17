@@ -205,6 +205,12 @@ class TeachFilterSidebar extends Component<
       </div>
     );
   }
+  renderPremiumBoxCondition() {
+    if (this.props.user.isFromInstitution) {
+      return '';
+    }
+    return this.renderPremiumBox();
+  }
 
   renderClassesBox() {
     let finalClasses = [];
@@ -310,7 +316,7 @@ class TeachFilterSidebar extends Component<
             {finalArchivedClasses.map(this.renderClassroom.bind(this))}
           </div>
         </div>
-        {(this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState) && this.renderPremiumBox()}
+        {(this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState) && this.renderPremiumBoxCondition()}
       </div>
     );
   }

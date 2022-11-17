@@ -233,12 +233,15 @@
 }
 
 .user-list-page .users-table-d34 .second-column {
-  width: 28%;
+  width: 26%;
 }
 
 .user-list-page .tab-content {
   .btn.prev-button, .btn.next-button {
     color: var(--theme-dark-blue);
+  }
+  .author-column {
+    width: 13%;
   }
   .table-row {
     padding-top: 0;
@@ -247,6 +250,12 @@
     > div {
       display: flex;
       align-items: center;
+    }
+
+    .see-container {
+      .btn {
+        margin-top: 0;
+      }
     }
 
     .round-btn {
@@ -277,6 +286,38 @@
       }
       &:hover {
         opacity: 0.8;
+      }
+    }
+  }
+
+  .second-column {
+    display: flex;
+    align-items: center;
+  
+    .attempts-count-box {
+      height: 1.7vw;
+      position: relative;
+      cursor: pointer;
+  
+      svg {
+        color: var(--theme-light-blue);
+        width: 1.7vw;
+        height: 1.7vw;
+      }
+      .absolute-count-d4421 {
+        position: absolute;
+        font-family: $font-family-bold;
+        color: white;
+        font-size: 0.8vw;
+        top: 0.26vw;
+        left: 0.8vw;
+      }
+
+      &.whiter {
+        cursor: initial;
+        .absolute-count-d4421 {
+          color: var(--theme-dark-blue);
+        }
       }
     }
   }

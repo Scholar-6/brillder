@@ -47,7 +47,7 @@ const BookAnnotationReply: React.FC<CommentChildProps> = ({ annotation, ...props
         <div className={`profile-image ${mineComment ? 'yellow-border' : 'red-border'}`}>
           {
             annotation.user?.profileImage
-              ? <img alt="profile" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${annotation.user.profileImage}`} />
+              ? <img alt="profile" src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${annotation.user.profileImage}`} />
               : <SpriteIcon name="user" />
           }
         </div>
