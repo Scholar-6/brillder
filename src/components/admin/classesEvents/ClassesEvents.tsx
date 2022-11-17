@@ -198,6 +198,9 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <div className="creator-column">
               {c.creator ? `${c.creator.firstName} ${c.creator.lastName}` : ''}
             </div>
+            <div className="creator-column">
+              {c.teachers.map(t => <div>{t.firstName} {c.creator.lastName}</div>)}
+            </div>
             {renderDomain(c.creator)}
             <div className="students-column">{c.students.length}</div>
             <div className="assigned-column">{c.assignmentsCount}</div>
@@ -299,6 +302,9 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                 }}
               />
             </div>
+          </div>
+          <div className="creator-column header">
+            <div>Teacher</div>
           </div>
           <div className="domain-column header">
             <div>Domain</div>
