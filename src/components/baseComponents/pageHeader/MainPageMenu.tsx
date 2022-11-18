@@ -37,6 +37,8 @@ interface HeaderMenuState {
 
   convertCreditsOpen: boolean;
   showConvertDropdown: boolean;
+
+  notificationsCount: number;
   
   dropdownShown: boolean;
   logoutOpen: boolean;
@@ -54,11 +56,14 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
       convertCreditsOpen: false,
       showConvertDropdown: false,
       dropdownShown: false,
+      notificationsCount: 0,
       logoutOpen: false,
       width: '16vw'
     };
 
     this.pageHeader = React.createRef();
+
+    this.props.getNotifications();
   }
 
   showDropdown() {
@@ -83,12 +88,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
   render() {
     const {user} = this.props;
     let noCredits = false;
-    let notificationCount = 0;
-    if (!this.props.notifications) {
-      this.props.getNotifications();
-    } else {
-      notificationCount = this.props.notifications.length;
-    }
+    let notificationCount = this.props.notifications ? this.props.notifications.length : 0;
 
     let className = "main-page-menu";
     if (this.state.dropdownShown) {
@@ -96,7 +96,6 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     } else if (this.props.notificationExpanded) {
       className += " notification-expanded"
     }
-
 
     if (user.freeAttemptsLeft === 0) {
       noCredits = true;
