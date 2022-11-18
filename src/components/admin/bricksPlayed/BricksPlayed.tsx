@@ -277,7 +277,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             const data = await getAdminBrickStatistic(b.id);
             if (data) {
               this.setState({ brickIdPlayers: b.id, brickAttempts: data.attempts })
-              console.log(666, data.attempts)
             }
           }}>
             {b.attemptsCount}
