@@ -216,6 +216,18 @@ export const getLibraryBricks = async <T>(userId: number, classroomId?: number) 
   }
 }
 
+export const getNumberOfAttempts = async () => {
+  try {
+    const nubmerOfAttempts = await get<number>("/user/playCount/");
+    if (nubmerOfAttempts) {
+      return nubmerOfAttempts;
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
 export const getStudentAssignments = async (studentId: number) => {
   try {
     return await get<AssignmentBrick[]>("/bricks/assignedTo/" + studentId);
