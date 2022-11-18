@@ -17,7 +17,7 @@ import FullScreenButton from "./fullScreenButton/FullScreen";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import PlaySkipDialog from "../dialogs/PlaySkipDialog";
 import { isPhone } from "services/phone";
-import { getAssignedBricks, getLibraryBricks } from "services/axios/brick";
+import { getAssignedBricks, getNumberOfAttempts } from "services/axios/brick";
 import LockedDialog from "../dialogs/LockedDialog";
 import { isBuilderPreference, isStudentPreference } from "components/services/preferenceService";
 
@@ -45,7 +45,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const [assignedCount, setAssignedCount] = React.useState(0);
   const [noAassignmentsOpen, setNoAssignments] = React.useState(false);
 
-  const [libraryCount, setLibraryCount] = React.useState(0);
   const [noBooksOpen, setNoBooks] = React.useState(false);
 
   const [playSkip, setPlaySkip] = React.useState({
@@ -58,10 +57,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     const bricks = await getAssignedBricks();
     if (bricks && bricks.length > 0) {
       setAssignedCount(bricks.length);
-    }
-    const lbricks = await getLibraryBricks(props.user.id);
-    if (lbricks && lbricks.length > 0) {
-      setLibraryCount(lbricks.length);
     }
   }
 
@@ -249,15 +244,15 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     if (page !== PageEnum.MyLibrary) {
       return (
         <MenuItem className="view-profile menu-item" onClick={() => {
-          if (libraryCount > 0) {
+          if (props.user.hasPlayedBrick) {
             move("/my-library", 'My Library')
           } else {
             setNoBooks(true);
           }
         }}>
-          <span className={`menu-text ${libraryCount > 0 ? '' : 'text-theme-dark-blue'}`}>My Library</span>
+          <span className={`menu-text ${props.user.hasPlayedBrick ? '' : 'text-theme-dark-blue'}`}>My Library</span>
           <div className="btn btn-transparent svgOnHover">
-            <SpriteIcon name="book-open" className={`active stroke-2 ${libraryCount > 0 ? 'text-white' : 'text-theme-dark-blue'}`} />
+            <SpriteIcon name="book-open" className={`active stroke-2 ${props.user.hasPlayedBrick ? 'text-white' : 'text-theme-dark-blue'}`} />
           </div>
         </MenuItem>
       );
