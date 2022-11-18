@@ -39,8 +39,10 @@ const ShareDialogs: React.FC<ShareProps> = props => {
   React.useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/user/current/referral`, { withCredentials: true });
-        setReferralId(data.referralId);
+        if (!referralId) {
+          const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/user/current/referral`, { withCredentials: true });
+          setReferralId(data.referralId);
+        }
       } catch(e) {}
     })()
   }, [props.user])
