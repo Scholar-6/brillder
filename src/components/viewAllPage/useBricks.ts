@@ -14,11 +14,10 @@ const useBricks = (pageNum = 1, subjectId: number) => {
     setIsError(false);
     setError({});
     
-    getPublishedBricksByPage(6, pageNum, true, [], [], [subjectId], false, false).then(data => {
+    getPublishedBricksByPage(6, pageNum, true, [], [], [subjectId], false, true).then(data => {
       if (data) {
         setResults(prev => [...prev, ...data.bricks]);
         setHasNextPage(data.pageCount > pageNum);
-        console.log(data.pageCount, pageNum, data.pageCount > pageNum);
         setIsLoading(false)
       } else {
         // error

@@ -28,7 +28,7 @@ const InfinityScrollCustom = (props: Props) => {
       if (bricks[0].isIntersecting && hasNextPage) {
         setPageNum(prev => prev + 1);
       }
-    })
+    });
 
     if (brick) intObserver.current.observe(brick);
 
@@ -53,7 +53,7 @@ const InfinityScrollCustom = (props: Props) => {
         {/*isLoading && <div>...Loading</div>*/}
       </div>
     </div>
-  )
+  );
 }
 
 export default InfinityScrollCustom;
