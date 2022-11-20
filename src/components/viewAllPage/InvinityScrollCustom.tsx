@@ -1,12 +1,15 @@
 import React, { useRef, useState, useCallback } from 'react';
+
 import useBricks from './useBricks';
 import { User } from 'model/user';
 import PhoneTopBrickScroll16x9 from 'components/baseComponents/PhoneTopBrickScroll16x9';
+import { Brick } from 'model/brick';
 
 interface Props {
   user: User;
   subjectId: number;
   subjectGroup: number | null;
+  setBrick(b: Brick): void;
 }
 
 const InfinityScrollCustom = (props: Props) => {
@@ -42,9 +45,9 @@ const InfinityScrollCustom = (props: Props) => {
 
   const content = results.map((brick, i) => {
     if (results.length === i + 1) {
-      return <PhoneTopBrickScroll16x9 ref={lastBrickRef} brick={brick} user={props.user} />
+      return <PhoneTopBrickScroll16x9 ref={lastBrickRef} brick={brick} user={props.user} onClick={() => props.setBrick(brick)} />
     }
-    return <PhoneTopBrickScroll16x9 brick={brick} user={props.user} />
+    return <PhoneTopBrickScroll16x9 brick={brick} user={props.user} onClick={() => props.setBrick(brick)} />
   });
 
   return (

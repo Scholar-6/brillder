@@ -312,14 +312,19 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderBricks(s: SubjectWithBricks) {
-    return <InfinityScrollCustom user={this.props.user} subjectId={s.id} subjectGroup={this.state.subjectGroup} />
+    return <InfinityScrollCustom user={this.props.user} subjectId={s.id} subjectGroup={this.state.subjectGroup} setBrick={b => {
+      if (this.state.expandedBrick && this.state.expandedBrick.id === b.id) {
+        this.setState({ expandedBrick: null });
+      } else {
+        this.setState({ expandedBrick: b });
+      }
+    }} />
   }
 
   renderSubjects(subjects: SubjectWithBricks[]) {
     return (
       <div>
         {subjects.map((s, n) => {
-          const expandedBrick = s.bricks.find((b) => b.expanded);
           return (
             <div key={n}>
               <div className="gg-subject-name">
@@ -334,17 +339,17 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 )}
               </div>
               {this.renderBricks(s)}
-              {expandedBrick && expandedBrick.title && (
-                <PhoneExpandedBrick
-                  brick={expandedBrick}
-                  history={this.props.history}
-                  user={this.props.user}
-                  hide={() => this.setState({ expandedBrick: null })}
-                />
-              )}
             </div>
           );
         })}
+        {this.state.expandedBrick && this.state.expandedBrick.title && (
+          <PhoneExpandedBrick
+            brick={this.state.expandedBrick}
+            history={this.props.history}
+            user={this.props.user}
+            hide={() => this.setState({ expandedBrick: null })}
+          />
+        )}
       </div>
     );
   }
@@ -400,7 +405,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
     return <div />;
   }
- 
+
   renderAcademicLevel(level: AcademicLevel) {
     const isActive = !!this.state.filterLevels.find((l) => l === level);
     return (
