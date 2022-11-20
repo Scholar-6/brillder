@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import queryString from "query-string";
 import "swiper/swiper.scss";
 
+
 import {
   AcademicLevel,
   AcademicLevelLabels,
@@ -23,7 +24,6 @@ import { getAssignmentIcon } from "components/services/brickService";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
-import { getPublicBricks, getPublishedBricks } from "services/axios/brick";
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
@@ -34,6 +34,7 @@ import { isLevelVisible, toggleElement } from "./service/viewAll";
 import routes from "components/play/routes";
 import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
+import InfinityScrollCustom from "./InvinityScrollCustom";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -141,14 +142,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   async loadData(subjectGroup: SubjectGroup | null) {
-    let bricks = null;
-    if (this.props.user) {
-      bricks = await getPublishedBricks();
-    } else {
-      bricks = await getPublicBricks();
-    }
     const subjects = (await getSubjects()) as SubjectWithBricks[] | null;
-    if (bricks && subjects) {
+    if (subjects) {
       const mySubjects: SubjectWithBricks[] = [];
       const categorySubjects: SubjectWithBricks[] = [];
 
@@ -166,21 +161,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
       this.clearBricks(subjects);
 
-      if (this.props.user) {
-        for (let brick of bricks) {
-          this.addBrickBySubject(subjects, brick, this.state.isCore);
-          this.addBrickBySubject(mySubjects, brick, this.state.isCore);
-        }
-      } else {
-        for (let brick of bricks) {
-          this.addBrickBySubject(categorySubjects, brick, true);
-        }
-      }
-
       this.setState({
         ...this.state,
-        bricks,
-        finalBricks: bricks,
         subjects: subjects.sort((a, b) => b.bricks.length - a.bricks.length),
         mySubjects: mySubjects.sort((a, b) => b.bricks.length - a.bricks.length),
         categorySubjects: categorySubjects.sort((a, b) => b.bricks.length - a.bricks.length),
@@ -264,9 +246,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   hideSubject() {
     this.setState({ expandedSubject: null });
   }
-  
+
   toggleCore() {
-    const {mySubjects, subjects } = this.state;
+    const { mySubjects, subjects } = this.state;
     const newCore = !this.state.isCore;
     this.clearBricks(mySubjects);
     this.clearBricks(subjects);
@@ -276,7 +258,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       this.addBrickBySubject(mySubjects, brick, newCore);
     }
 
-    this.setState({isCore: newCore});
+    this.setState({ isCore: newCore });
   }
 
   renderMobileBricks() {
@@ -329,45 +311,20 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  renderBricks(bricks: Brick[]) {
-    return (
-      <div className="bricks-scroll-row">
-        <div
-          className="bricks-flex-row"
-          style={{ width: bricks.length * 60 + 2 + "vw" }}
-        >
-          {bricks.map((b: any, i: number) => {
-            const color = getBrickColor(b as Brick);
-            const isAssignment = this.checkAssignment(b);
-
-            return (
-              <PhoneTopBrick16x9
-                key={i}
-                circleIcon=""
-                brick={b}
-                user={this.props.user}
-                color={color}
-                isViewAllAssignment={isAssignment}
-                onClick={() => {
-                  if (this.state.expandedBrick === b) {
-                    this.setState({ expandedBrick: null });
-                  } else {
-                    this.setState({ expandedBrick: b });
-                  }
-                }}
-              />
-            );
-          })}
-        </div>
-      </div>
-    );
+  renderBricks(s: SubjectWithBricks) {
+    return <InfinityScrollCustom user={this.props.user} subjectId={s.id} subjectGroup={this.state.subjectGroup} setBrick={b => {
+      if (this.state.expandedBrick && this.state.expandedBrick.id === b.id) {
+        this.setState({ expandedBrick: null });
+      } else {
+        this.setState({ expandedBrick: b });
+      }
+    }} />
   }
 
   renderSubjects(subjects: SubjectWithBricks[]) {
     return (
       <div>
         {subjects.map((s, n) => {
-          const expandedBrick = s.bricks.find((b) => b.expanded);
           return (
             <div key={n}>
               <div className="gg-subject-name">
@@ -381,20 +338,18 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                   </div>
                 )}
               </div>
-              {s.bricks.length > 0
-                ? this.renderBricks(s.bricks)
-                : this.renderEmptySubject()}
-              {expandedBrick && expandedBrick.title && (
-                <PhoneExpandedBrick
-                  brick={expandedBrick}
-                  history={this.props.history}
-                  user={this.props.user}
-                  hide={() => this.setState({ expandedBrick: null })}
-                />
-              )}
+              {this.renderBricks(s)}
             </div>
           );
         })}
+        {this.state.expandedBrick && this.state.expandedBrick.title && (
+          <PhoneExpandedBrick
+            brick={this.state.expandedBrick}
+            history={this.props.history}
+            user={this.props.user}
+            hide={() => this.setState({ expandedBrick: null })}
+          />
+        )}
       </div>
     );
   }
@@ -442,7 +397,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                   <div className="va-level-count">{bs.length}</div>
                 </div>
               )}
-              {this.renderBricks(bs)}
+              {/*this.renderBricks(bs)*/}
             </div>
           ))}
         </div>
