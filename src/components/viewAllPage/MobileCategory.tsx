@@ -24,7 +24,6 @@ import { getAssignmentIcon } from "components/services/brickService";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getBrickColor } from "services/brick";
-import { getPublicBricks, getPublishedBricks } from "services/axios/brick";
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
@@ -143,14 +142,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   async loadData(subjectGroup: SubjectGroup | null) {
-    let bricks = null;
-    if (this.props.user) {
-      bricks = await getPublishedBricks();
-    } else {
-      bricks = await getPublicBricks();
-    }
     const subjects = (await getSubjects()) as SubjectWithBricks[] | null;
-    if (bricks && subjects) {
+    if (subjects) {
       const mySubjects: SubjectWithBricks[] = [];
       const categorySubjects: SubjectWithBricks[] = [];
 
@@ -168,21 +161,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
       this.clearBricks(subjects);
 
-      if (this.props.user) {
-        for (let brick of bricks) {
-          this.addBrickBySubject(subjects, brick, this.state.isCore);
-          this.addBrickBySubject(mySubjects, brick, this.state.isCore);
-        }
-      } else {
-        for (let brick of bricks) {
-          this.addBrickBySubject(categorySubjects, brick, true);
-        }
-      }
-
       this.setState({
         ...this.state,
-        bricks,
-        finalBricks: bricks,
         subjects: subjects.sort((a, b) => b.bricks.length - a.bricks.length),
         mySubjects: mySubjects.sort((a, b) => b.bricks.length - a.bricks.length),
         categorySubjects: categorySubjects.sort((a, b) => b.bricks.length - a.bricks.length),
@@ -332,11 +312,10 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderBricks(s: SubjectWithBricks) {
-    return <InfinityScrollCustom user={this.props.user} subjectId={s.id} />
+    return <InfinityScrollCustom user={this.props.user} subjectId={s.id} subjectGroup={this.state.subjectGroup} />
   }
 
   renderSubjects(subjects: SubjectWithBricks[]) {
-    console.log(subjects);
     return (
       <div>
         {subjects.map((s, n) => {
@@ -354,9 +333,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                   </div>
                 )}
               </div>
-              {s.bricks.length > 0
-                ? this.renderBricks(s)
-                : this.renderEmptySubject()}
+              {this.renderBricks(s)}
               {expandedBrick && expandedBrick.title && (
                 <PhoneExpandedBrick
                   brick={expandedBrick}
