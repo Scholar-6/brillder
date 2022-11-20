@@ -14,7 +14,7 @@ import actions from 'redux/actions/requestFailed';
 import { Brick } from 'model/brick';
 import SpriteIcon from '../SpriteIcon';
 import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
-import { getPublishedBricks } from 'services/axios/brick';
+import { getSuggestedByTitles } from 'services/axios/brick';
 import map from 'components/map';
 import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
 import BrickTitle from '../BrickTitle';
@@ -43,6 +43,7 @@ const PopperCustom = function (props: any) {
 
 const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [alreadyAssigned, setAssigned] = useState(false);
+  const [searchText, setSearchText] = useState('');
   const [bricks, setBricks] = useState([] as any[]);
   const [brick, setBrick] = useState(null as any);
 
@@ -51,30 +52,6 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [haveDeadline, toggleDeadline] = useState(false);
 
   const history = useHistory();
-
-  const loadBricks = async () => {
-    const bricks = await getPublishedBricks();
-    if (bricks) {
-      /*eslint-disable-next-line*/
-      const filteredBricks = bricks.filter(b => b.isCore === true || b.author.id == props.user.id);
-
-      // remove assigned bricks
-      const assignments = props.classroom.assignments.filter((a: any) => a.isArchived === false);
-      const bricksWithoutAssignments = filteredBricks.filter(b => {
-        /*eslint-disable-next-line*/
-        var found = assignments.find(a => a.brick.id == b.id);
-        if (found) {
-          return false;
-        }
-        return true;
-      });
-
-      setBricks(bricksWithoutAssignments);
-    }
-  }
-
-  /*eslint-disable-next-line*/
-  useEffect(() => { loadBricks() }, []);
 
   const assignToClasses = async (classesIds: Number[]) => {
     if (!brick || !brick.id) {
@@ -118,6 +95,9 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   }
 
   const renderTopLabel = () => {
+    if (props.user.isFromInstitution) {
+      return '';
+    }
     if (props.user.freeAssignmentsLeft && props.user.freeAssignmentsLeft > 1) {
       return <div className="assignments-count">{props.user.freeAssignmentsLeft} free Assignments left</div>;
     }
@@ -157,14 +137,27 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
                 </MenuItem>
               </React.Fragment>
             )}
-            renderInput={(params: any) => (
-              <TextField
-                {...params}
-                variant="standard"
-                label=""
-                placeholder="Search for a brick you know, or try your luck!"
-              />
-            )}
+            renderInput={(params: any) => {
+              params.inputProps.value = searchText;
+
+              return (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label=""
+                  onChange={async (e) => {
+                    setSearchText(e.target.value);
+                    if (e.target.value.length >= 3) {
+                      const searchBricks = await getSuggestedByTitles(e.target.value);
+                      if (searchBricks) {
+                        setBricks(searchBricks.map(s => s.body));
+                      }
+                    }
+                  }}
+                  placeholder="Search for a brick you know, or try your luck!"
+                />
+              )
+            }}
           />
           {brick ?
             <div>

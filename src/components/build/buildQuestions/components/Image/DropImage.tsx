@@ -82,7 +82,7 @@ const DropImage: React.FC<ImageProps> = props => {
     );
   } else {
     if (props.initFileName) {
-      return <img alt="uploaded-file" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.initFileName}`} />
+      return <img alt="uploaded-file" src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${props.initFileName}`} />
     } else {
       return <img alt="init-file" className="scholar-6-logo" src="/images/Scholar-6-Logo.svg" />;
     }

@@ -592,7 +592,7 @@ const SubjectPage: React.FC<SubjectProps> = ({
       return SociologyComponent;
     } else if (subjectName === 'Music') {
       return MusicComponent;
-    } else if (subjectName === 'Biology') {
+    } else if (subjectName === 'Biology, Health & Care') {
       return BiologyComponent;
     } else if (subjectName === 'Chinese') {
       return ChineseComponent;

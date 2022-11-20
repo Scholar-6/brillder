@@ -86,6 +86,8 @@ export interface User extends UserBase {
   studyClassroomCount?: number;
 
   institution: Institution;
+
+  attempts: any[];
 }
 
 export interface UserProfile extends UserBase {

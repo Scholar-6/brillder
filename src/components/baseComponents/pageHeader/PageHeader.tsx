@@ -15,7 +15,7 @@ import map from 'components/map';
 import UnauthorizedMenu from 'components/app/unauthorized/UnauthorizedMenu';
 import { PageEnum } from './PageHeadWithMenu';
 import { isPhone } from 'services/phone';
-import { getPublishedBricks } from 'services/axios/brick';
+import { getKeywords } from "services/axios/brick";
 import { Brick, KeyWord, Subject } from 'model/brick';
 import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestions';
 import { getSubjects } from 'services/axios/subject';
@@ -92,6 +92,10 @@ class PageHeader extends Component<Props, State> {
     if (props.suggestions) {
       this.prepareSuggestions();
     }
+
+    if (this.props.isAuthenticated === isAuthenticated.True && !this.props.notifications) {
+      this.props.getNotifications();
+    }
   }
 
   collectKeywords(bricks: Brick[]) {
@@ -111,16 +115,9 @@ class PageHeader extends Component<Props, State> {
   }
 
   async prepareSuggestions() {
-    let subjects: Subject[] = [];
-    const bricks = await getPublishedBricks();
-    if (bricks) {
-      let keywords = this.collectKeywords(bricks);
-      const subjects2 = await getSubjects();
-      if (subjects2) {
-        subjects = subjects2;
-      }
-      this.setState({ bricks, subjects, keywords });
-    }
+    const keywords = await getKeywords() || [];
+    const subjects = await getSubjects() || [];
+    this.setState({bricks: [], subjects, keywords });
   }
 
   keySearch(e: any) {
@@ -206,13 +203,7 @@ class PageHeader extends Component<Props, State> {
 
   render() {
     let { searchVisible } = this.state
-    let notificationCount = 0;
-    if (this.props.isAuthenticated === isAuthenticated.True && !this.props.notifications) {
-      this.props.getNotifications();
-    } else if (this.props.notifications) {
-      notificationCount = this.props.notifications.length;
-    }
-
+    let notificationCount = this.props.notifications ? this.props.notifications.length : 0;
     let link = this.props.link ? this.props.link : map.MainPage;
 
     let className = 'search-container 44';
@@ -248,7 +239,7 @@ class PageHeader extends Component<Props, State> {
               {this.props.isAuthenticated === isAuthenticated.True &&
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
-                  <BrillIconAnimated />
+                  <BrillIconAnimated onClick={() => console.log(444)} />
                   {(this.props.user.isFromInstitution || this.props.user.library) ? <div /> :
                     <div className="header-credits-container">
                       <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
@@ -362,7 +353,7 @@ class PageHeader extends Component<Props, State> {
               {this.props.isAuthenticated === isAuthenticated.True &&
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
-                  <BrillIconAnimated />
+                  <BrillIconAnimated onClick={() => console.log(443)} />
                   {(this.props.user.isFromInstitution || this.props.user.library) ? <div /> :
                     <div className="header-credits-container">
                       <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />

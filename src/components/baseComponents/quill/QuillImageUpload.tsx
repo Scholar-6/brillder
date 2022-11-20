@@ -103,7 +103,7 @@ export class CustomImageBlot extends Embed {
 CustomImageBlot.tagName="div";
 GlobalQuill.register(CustomImageBlot);
 
-const imageUrlRegex = new RegExp(`${process.env.REACT_APP_BACKEND_HOST}/files/(.*)`);
+const imageUrlRegex = new RegExp(`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/(.*)`);
 
 export default class ImageUpload {
     quill: Quill;

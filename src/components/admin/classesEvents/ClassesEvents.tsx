@@ -3,6 +3,7 @@ import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
+import queryString from 'query-string';
 
 import './ClassesEvents.scss';
 import { ReduxCombinedState } from "redux/reducers";
@@ -22,6 +23,7 @@ import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
 import ExportBtn from "../components/ExportBtn";
 import map from "components/map";
+import { getFormattedDateSlash } from "components/services/brickService";
 
 
 enum SortBy {
@@ -60,10 +62,17 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
+    let dateFilter = PDateFilter.Past24Hours;
+
+    const values = queryString.parse(props.history.location.search);
+    if (values.dateFilter) {
+      dateFilter = parseInt(values.dateFilter as string);
+    }
+
     this.state = {
       sortBy: SortBy.Name,
       downloadClicked: false,
-      dateFilter: PDateFilter.Past24Hours,
+      dateFilter,
       subjects: [],
       selectedSubjects: [],
       allDomains: true,
@@ -74,11 +83,11 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       isSearching: false,
       searchString: '',
     }
-    this.loadInitPlayedData();
+    this.loadInitPlayedData(dateFilter);
   }
 
-  async loadInitPlayedData() {
-    const classrooms = await getAllAdminClassrooms(PDateFilter.Past24Hours);
+  async loadInitPlayedData(dateFilter: PDateFilter) {
+    const classrooms = await getAllAdminClassrooms(dateFilter);
     if (classrooms) {
       const domains: CDomain[] = [];
       for (let c of classrooms) {
@@ -118,7 +127,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
     this.setState({ sortBy: SortBy.Name, finalClassrooms });
   }
-  
+
   async searching(searchString: string) {
     if (searchString.length === 0) {
       const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, searchString);
@@ -164,7 +173,11 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   renderBody() {
     const { finalClassrooms } = this.state;
     if (finalClassrooms.length == 0) {
-      return <div>No Classes</div>;
+      return <div>
+        <div className="table-row">
+          <div className="name-column">No Classes</div>
+        </div>
+      </div>;
     }
 
     const renderDomain = (creator: User) => {
@@ -180,10 +193,13 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     return <div className="table-body">
       {finalClassrooms.map(c => {
         return (
-          <div className="table-row clickable" onClick={() => {this.props.history.push(map.TeachAssignedClass(c.id))}}>
+          <div className="table-row clickable" onClick={() => { this.props.history.push(map.TeachAssignedClass(c.id)) }}>
             <div className="name-column">{c.name}</div>
             <div className="creator-column">
               {c.creator ? `${c.creator.firstName} ${c.creator.lastName}` : ''}
+            </div>
+            <div className="creator-column">
+              {c.teachers.map(t => <div>{t.firstName} {c.creator.lastName}</div>)}
             </div>
             {renderDomain(c.creator)}
             <div className="students-column">{c.students.length}</div>
@@ -287,6 +303,9 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               />
             </div>
           </div>
+          <div className="creator-column header">
+            <div>Teacher</div>
+          </div>
           <div className="domain-column header">
             <div>Domain</div>
             <div>
@@ -351,8 +370,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               this.setState({ allDomains: true, finalClassrooms });
             }}
             setDomain={d => {
-              this.state.domains.map(d => d.checked = false);
-              d.checked = true;
+              d.checked = !d.checked;
               const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, false, this.state.domains, this.state.searchString);
               this.setState({ allDomains: false, finalClassrooms });
             }}
@@ -367,7 +385,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
-              <SubTab activeTab={ClassesActiveSubTab.Classes} history={this.props.history} />
+              <SubTab activeTab={ClassesActiveSubTab.Classes} dateFilter={this.state.dateFilter} history={this.props.history} />
               <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
               {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
                 <div className="popup-3rfw bold">
@@ -389,7 +407,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                       });
                     }
 
-                    exportToCSV(data, "table");
+                    exportToCSV(data, `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`);
 
                     this.setState({ downloadClicked: false });
                   }}>
@@ -413,7 +431,8 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                           c.assignmentsCount ? c.assignmentsCount : ''
                         ]
                       }),
-                      'table.pdf'
+
+                      `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`
                     );
                     this.setState({ downloadClicked: false });
                   }}>

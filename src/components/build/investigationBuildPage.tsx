@@ -70,6 +70,7 @@ import { createQuestion } from "services/axios/question";
 import { Helmet } from "react-helmet";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SaveFailedDialog from "./baseComponents/dialogs/SaveFailedDialog";
+import BuildMultipleDialog from "./baseComponents/dialogs/BuildMultipleDialog";
 
 
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -87,7 +88,7 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const { params } = props.match;
   const brickId = parseInt(params.brickId);
-  
+
   const values = queryString.parse(props.location.search);
   let initSuggestionExpanded = false;
   if (values.suggestionsExpanded) {
@@ -119,6 +120,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [questions, setQuestions] = React.useState([] as Question[]);
 
   const [saveFailed, setSaveFailed] = React.useState(false);
+  const [buildMultiple, setBuildMultiple] = React.useState(false);
 
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
@@ -179,6 +181,19 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         activeQuestion = questionV2;
       });
     }
+
+    localStorage.openpages = Date.now() + '_' + brick.id;
+
+    var onLocalStorageEvent = function (e: any) {
+      if (e.key == "openpages") {
+        localStorage.page_available = Date.now() + '_' + brick.id;
+      }
+      if (e.key == "page_available") {
+        setBuildMultiple(true);
+      }
+    };
+
+    window.addEventListener('storage', onLocalStorageEvent, false);
   }, []);
 
   // start editing on socket on load.
@@ -1014,6 +1029,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <DesktopVersionDialog history={history} />
         </div>
       </div>
+      <BuildMultipleDialog open={buildMultiple} goHome={() => history.push(map.MainPage)} close={() => setBuildMultiple(false)} />
       <SaveFailedDialog open={saveFailed} close={() => setSaveFailed(false)} />
     </div>
   );
