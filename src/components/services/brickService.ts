@@ -50,6 +50,14 @@ export function getFormattedDate(date: string) {
   return `${dateNum}.${month}.${year}`;
 }
 
+export function getFormattedDateSlash(date: string) {
+  const dateObj = new Date(date);
+  const year = getYear(dateObj);
+  const month = getMonth(dateObj);
+  const dateNum = getDate(dateObj);
+  return `${dateNum}_${month}_${year}`;
+}
+
 export function getAuthorRow(brick: Brick) {
   let row = "";
   const created = new Date(brick.created);
@@ -134,6 +142,10 @@ export function checkBuilder(user: User) {
 
 export function checkAdmin(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Admin);
+}
+
+export function checkRealInstitution(roles: UserRole[]) {
+  return roles.some(role => role.roleId === UserType.Institution);
 }
 
 export function checkAdminOrInstitution(roles: UserRole[]) {

@@ -3,3 +3,16 @@
 @import 'src/assets/sass/partials/extensions';
 
 @import 'src/assets/sass/utils/utils';
+
+
+.f-regular {
+  font-family: $font-family-regular;
+}
+
+.f-bold {
+  font-family: $font-family-bold;
+}
+
+.f-black {
+  font-family: $font-family-black;
+}

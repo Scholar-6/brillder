@@ -81,7 +81,7 @@ const DropCoverImage: React.FC<ImageProps> = props => {
       />
     );
   } else {
-    return <img alt="uploaded-file" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.initFileName}`} />
+    return <img alt="uploaded-file" src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${props.initFileName}`} />
   }
 }
 

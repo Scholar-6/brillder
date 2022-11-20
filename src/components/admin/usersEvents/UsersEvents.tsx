@@ -3,9 +3,11 @@ import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-
+import { Tooltip } from "@material-ui/core";
+ 
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
+import { getRealLibraries, RealLibrary } from "services/axios/realLibrary";
 
 import './UsersEvents.scss';
 import { User, UserPreferenceType, UserType } from "model/user";
@@ -14,7 +16,7 @@ import UsersSidebar from "./UsersEventsSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { deleteUser, getUsers } from "services/axios/user";
-import { getDateString } from "components/services/brickService";
+import { getDateString, getFormattedDateSlash } from "components/services/brickService";
 import UsersPagination from "components/teach/manageClassrooms/components/UsersPagination";
 import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
@@ -23,7 +25,6 @@ import AddUserBtn from "../components/AddUserBtn";
 import map from "components/map";
 import { getSubjects } from "services/axios/subject";
 import { Subject } from "model/brick";
-import { string } from "prop-types";
 
 
 interface UsersProps {
@@ -48,11 +49,16 @@ interface UsersState {
   deleteUserId: number;
   isDeleteDialogOpen: boolean;
 
+  isStudentClassroomOpen: boolean;
+  userClassrooms: any[];
+
   isSearching: boolean;
   searchString: string;
 
   orderBy: string;
   isAscending: boolean;
+
+  libraries: RealLibrary[];
 
   downloadClicked: boolean;
 }
@@ -73,16 +79,28 @@ class UsersPage extends Component<UsersProps, UsersState> {
       orderBy: "user.created",
       isAscending: true,
 
+      isStudentClassroomOpen: false,
+      userClassrooms: [],
+
       deleteUserId: -1,
       isDeleteDialogOpen: false,
 
       isSearching: false,
       searchString: '',
 
+      libraries: [],
+
       downloadClicked: false
     };
 
     this.loadInitData();
+  }
+
+  async getLibraries() {
+    const libraries = await getRealLibraries();
+    if (libraries) {
+      this.setState({ libraries });
+    }
   }
 
   async loadInitData() {
@@ -92,6 +110,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
     }
 
     this.getUsers(null, 0, [], '', 'user.created', true);
+
+    this.getLibraries();
   }
 
   async getUsers(userPreference: UserPreferenceType | null, page: number, selectedSubjects: Subject[], searchString: string, orderBy: string, isAscending: boolean) {
@@ -146,6 +166,20 @@ class UsersPage extends Component<UsersProps, UsersState> {
     }
   }
 
+  renderLibrary(user: User) {
+    if (user.library) {
+      const libraryId = user.library.id;
+      const library = this.state.libraries.find(l => l.id === libraryId);
+
+      return <div className="library-user-icon">
+        <img alt="" src="/images/library.png" />
+        {library && <div className="css-custom-tooltip bold">{library.name}</div>}
+      </div>
+    }
+
+    return '';
+  }
+
   renderUserType(u: User) {
     if (u.roles.find(r => r.roleId === UserType.Admin)) {
       return 'Admin';
@@ -181,15 +215,41 @@ class UsersPage extends Component<UsersProps, UsersState> {
         return (<div className="table-row">
           <div className="publish-column">{u.created && getDateString(u.created)}</div>
           <div className="author-column">{u.firstName} {u.lastName}</div>
+          <div className="see-container" style={{ position: "relative", width: "3.5%" }}>
+            {(u.studyClassroomCount ?? 0) > 0 &&
+              <Tooltip title="See Study Classrooms">
+                <span
+                  className="btn"
+                  style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-green)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                  onClick={async () => {
+                    this.setState({ isStudentClassroomOpen: true });
+                  }}
+                >
+                  <SpriteIcon name="student-back-to-work" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                </span>
+              </Tooltip>
+            }
+          </div>
           <div className="second-column">{u.email}</div>
-          <div className="third-column">{this.renderUserType(u)}</div>
-          <div className="second-column"></div>
+          <div className="third-column">{this.renderUserType(u)}{this.renderLibrary(u)}</div>
+          <div className="second-column">
+            <div className={`attempts-count-box ${u.attempts.length > 0 ? '' : 'whiter'}`} onClick={() => {
+              if (u.attempts.length > 0) {
+                this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
+              }
+            }}>
+              <SpriteIcon name={u.attempts.length > 0 ? "user-event-activity" : "user-event-activity-disabled"} />
+              <div className="absolute-count-d4421">
+                {u.attempts.length}
+              </div>
+            </div>
+          </div>
           <div className="actions-column">
             <div className="round-btn blue flex-center" onClick={() => this.props.history.push(map.UserProfile + '/' + u.id)}>
               <SpriteIcon name="user-edit-g" className="text-white" />
             </div>
             <div className="round-btn orange flex-center" onClick={() => {
-              this.setState({isDeleteDialogOpen: true, deleteUserId: u.id});
+              this.setState({ isDeleteDialogOpen: true, deleteUserId: u.id });
             }}>
               <SpriteIcon name="user-trash-g" className="text-white" />
             </div>
@@ -239,6 +299,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.lastName", isAscending);
             }} /></div>
           </div>
+          <div style={{ width: "3.5%" }}></div>
           <div className="second-column header">
             <div>Email</div>
           </div>
@@ -268,7 +329,21 @@ class UsersPage extends Component<UsersProps, UsersState> {
   }
 
   closeDeleteDialog() {
-    this.setState({isDeleteDialogOpen: false});
+    this.setState({ isDeleteDialogOpen: false });
+  }
+
+  renderClassroomPopup() {
+    return (
+      <Dialog
+        open={this.state.isStudentClassroomOpen}
+        onClose={() => this.setState({ isStudentClassroomOpen: false })}
+        className="dialog-box">
+        <div className="dialog-header">
+          <div>Classrooms</div>
+          <div>...Comming soon...</div>
+        </div>
+      </Dialog>
+    );
   }
 
   render() {
@@ -321,7 +396,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
                       });
                     }
 
-                    exportToCSV(data, "table");
+                    exportToCSV(data, `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`);
 
                     this.setState({ downloadClicked: false });
                   }}>
@@ -334,7 +409,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
                       this.state.users.map(u => {
                         return [u.created?.toString(), u.firstName + ' ' + u.lastName, u.email, this.renderUserType(u)]
                       }),
-                      'table.pdf'
+                      `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`
                     );
                     this.setState({ downloadClicked: false });
                   }}>
@@ -366,6 +441,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             </button>
           </div>
         </Dialog>
+        {this.renderClassroomPopup()}
       </div>
     );
   }

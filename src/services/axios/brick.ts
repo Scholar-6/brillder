@@ -54,7 +54,7 @@ export const getPublicBricks = async () => {
 
 export const getAdminBrickStatistic = async (brickId: number) => {
   try {
-    return await get<AssignmentBrick[]>("/admin/getAdminBrickStatistic/" + brickId);
+    return await get<any>("/admin/getAdminBrickStatistic/" + brickId);
   } catch {
     return null;
   }
@@ -211,6 +211,18 @@ export const getLibraryBricks = async <T>(userId: number, classroomId?: number) 
     }
     console.log(obj)
     return await post<T[]>("/play/library", obj);
+  } catch (e) {
+    return null;
+  }
+}
+
+export const getNumberOfAttempts = async () => {
+  try {
+    const nubmerOfAttempts = await get<number>("/user/playCount/");
+    if (nubmerOfAttempts) {
+      return nubmerOfAttempts;
+    }
+    return null;
   } catch (e) {
     return null;
   }

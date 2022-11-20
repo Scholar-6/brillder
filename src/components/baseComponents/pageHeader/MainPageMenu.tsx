@@ -19,6 +19,7 @@ import { isMobile } from "react-device-detect";
 import NotificationPanel from "../notificationPanel/NotificationPanel";
 import BrillIconAnimated from "../BrillIconAnimated";
 import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
+import ConvertCreditsDialog from "./convertCreditsDialog/ConvertCreditsDialog";
 
 interface MainPageMenuProps {
   history: any;
@@ -34,6 +35,11 @@ interface MainPageMenuProps {
 interface HeaderMenuState {
   popupShown: number; // 0 - nothing opened
 
+  convertCreditsOpen: boolean;
+  showConvertDropdown: boolean;
+
+  notificationsCount: number;
+  
   dropdownShown: boolean;
   logoutOpen: boolean;
   width: string;
@@ -47,12 +53,17 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
 
     this.state = {
       popupShown: 0,
+      convertCreditsOpen: false,
+      showConvertDropdown: false,
       dropdownShown: false,
+      notificationsCount: 0,
       logoutOpen: false,
       width: '16vw'
     };
 
     this.pageHeader = React.createRef();
+
+    this.props.getNotifications();
   }
 
   showDropdown() {
@@ -75,18 +86,24 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
   }
 
   render() {
-    let notificationCount = 0;
-    if (!this.props.notifications) {
-      this.props.getNotifications();
-    } else {
-      notificationCount = this.props.notifications.length;
-    }
+    const {user} = this.props;
+    let noCredits = false;
+    let notificationCount = this.props.notifications ? this.props.notifications.length : 0;
 
     let className = "main-page-menu";
     if (this.state.dropdownShown) {
       className += " menu-expanded";
     } else if (this.props.notificationExpanded) {
       className += " notification-expanded"
+    }
+
+    if (user.freeAttemptsLeft === 0) {
+      noCredits = true;
+      className += " menu-without-credits";
+    }
+
+    if (this.state.showConvertDropdown) {
+      className += " menu-without-credits";
     }
 
     return (
@@ -98,10 +115,13 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
             } else {
               this.setState({popupShown: 2});
             }
+            if (!isMobile && noCredits === false) {
+              this.setState({showConvertDropdown: !this.state.showConvertDropdown});
+            }
           }} />
-          {this.props.user.library ? <div /> :
+          {user.library ? <div /> :
           <div className="header-credits-container">
-            <ReactiveUserCredits popupShown={this.state.popupShown === 1} onClick={() => {
+            <ReactiveUserCredits user={this.props.user} popupShown={this.state.popupShown === 1} onClick={() => {
               if (this.state.popupShown === 1) {
                 this.setState({popupShown: 0});
               } else {
@@ -112,10 +132,27 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
         </div>
+        {noCredits && <div className="no-credits-container">
+            <div className="text-container-cd43">Uh-oh! Looks like you’re our of credits. To keep playing, convert some of your brills.</div>
+            <div className="flex-center">
+              <div className="btn green flex-center" onClick={() => this.setState({convertCreditsOpen: true})}>
+                Convert Brills
+              </div>
+            </div>
+          </div>
+        }
+        {this.state.showConvertDropdown && <div className="no-credits-container second-design">
+            <div className="text-container-cd43">Convert your Brills for credits and other prizes</div>
+            <div className="flex-center">
+              <div className="btn green flex-center" onClick={() => this.setState({convertCreditsOpen: true})}>
+                Convert Brills
+              </div>
+            </div>
+          </div>}
         <MenuDropdown
           dropdownShown={this.state.dropdownShown}
           hideDropdown={this.hideDropdown.bind(this)}
-          user={this.props.user}
+          user={user}
           page={PageEnum.MainPage}
           history={this.props.history}
           onLogout={this.handleLogoutOpen.bind(this)}
@@ -140,6 +177,10 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
           close={() => this.handleLogoutClose()}
           history={this.props.history}
         />
+        <ConvertCreditsDialog
+          isOpen={this.state.convertCreditsOpen}
+          close={() => this.setState({convertCreditsOpen: false})}
+         />
       </div>
     );
   }

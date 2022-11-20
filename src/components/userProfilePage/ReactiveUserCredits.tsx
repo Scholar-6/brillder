@@ -1,5 +1,6 @@
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { StripeCredits } from 'components/map';
+import { User } from 'model/user';
 import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 
@@ -7,6 +8,7 @@ import userActions from "redux/actions/user";
 
 interface Props {
   className?: string;
+  user?: User;
   getUser(): any;
   history?: any;
   popupShown?: boolean;
@@ -16,6 +18,12 @@ interface Props {
 const ReactiveUserCredits: React.FC<Props> = (props) => {
   const [credits, setCredits] = useState(0);
   const [isLibraryUser, setLibraryUser] = useState(false);
+
+  useEffect(() => {
+    if (props.user && props.user.freeAttemptsLeft !== credits) {
+      setCredits(props.user.freeAttemptsLeft);
+    }
+  }, [props.user]);
 
   const getCredits = async () => {
     try {
@@ -30,17 +38,7 @@ const ReactiveUserCredits: React.FC<Props> = (props) => {
     } catch { }
   }
 
-  useEffect(() => {
-    getCredits();
-
-    const interval = setInterval(() => {
-      //getCredits();
-    }, 2000);
-
-    // free resources
-    return () => { clearInterval(interval); }
-    /*eslint-disable-next-line*/
-  }, []);
+  useEffect(() => { getCredits(); }, []);
 
   const renderBoldTitle = () => {
     if (credits === 0) {
@@ -79,8 +77,4 @@ const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
 });
 
-
-/**
- *  Credits will reload every 2seconds. Works only for current logged in user.
- */
 export default connect(null, mapDispatch)(ReactiveUserCredits);

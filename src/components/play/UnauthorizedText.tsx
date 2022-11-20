@@ -14,6 +14,10 @@ interface UnauthorizedTextState {
   third2Started: boolean;
   third3Started: boolean;
   third4Started: boolean;
+  fourth1Started: boolean;
+  fourth2Started: boolean;
+  fifth1Started: boolean;
+  fifth2Started: boolean;
 }
 
 class UnauthorizedText extends Component<UnauthorizedTextProps, UnauthorizedTextState> {
@@ -28,7 +32,11 @@ class UnauthorizedText extends Component<UnauthorizedTextProps, UnauthorizedText
       third1Started: false,
       third2Started: false,
       third3Started: false,
-      third4Started: false
+      third4Started: false,
+      fourth1Started: false,
+      fourth2Started: false,
+      fifth1Started: false,
+      fifth2Started: false
     }
   }
 
@@ -46,45 +54,66 @@ class UnauthorizedText extends Component<UnauthorizedTextProps, UnauthorizedText
           onFinish={() => this.setState({second1Started: true})}
         />
         <LabelTyping
-          className="text-left margin-top"
+          className="text-left margin-top f-regular"
           start={this.state.second1Started}
-          value="You are looking at a Brick -"
+          value="You are looking at a Brick - our"
           onFinish={() => this.setState({second2Started: true})}
         />
         <LabelTyping
-          className="text-left"
+          className="text-left f-regular"
           start={this.state.second2Started}
-          value="our revolutionary"
+          value=" revolutionary interactive learning"
           onFinish={() => this.setState({second3Started: true})}
         />
         <LabelTyping
-          className="text-left"
+          className="text-left f-regular"
           start={this.state.second3Started}
-          value="interactive learning unit."
+          value="unit."
           onFinish={() => this.setState({third1Started: true})}
         />
+
         <LabelTyping
-          className="text-left margin-top"
+          className="text-left margin-top f-regular"
           start={this.state.third1Started}
-          value="Do the prep, play the"
+          value="Do the prep, play the investigation,"
           onFinish={() => this.setState({third2Started: true})}
         />
         <LabelTyping
-          className="text-left"
+          className="text-left f-regular"
           start={this.state.third2Started}
-          value="investigation, study the"
+          value="study the synthesis and then review"
           onFinish={() => this.setState({third3Started: true})}
         />
         <LabelTyping
-          className="text-left"
+          className="text-left f-regular"
           start={this.state.third3Started}
-          value="synthesis and then review"
-          onFinish={() => this.setState({third4Started: true})}
+          value="to score maximum points."
+          onFinish={() => this.setState({fourth1Started: true})}
+        />
+
+        <LabelTyping
+          className="text-left margin-top f-regular"
+          start={this.state.fourth1Started}
+          value="Teachers - register on the pop up to"
+          onFinish={() => this.setState({fourth2Started: true})}
         />
         <LabelTyping
-          className="text-left"
-          start={this.state.third4Started}
-          value="to score maximum points."
+          className="text-left f-regular"
+          start={this.state.fourth2Started}
+          value="set bricks."
+          onFinish={() => this.setState({fifth1Started: true})}
+        />
+
+        <LabelTyping
+          className="text-left margin-top f-regular"
+          start={this.state.fifth1Started}
+          value="Learners - register on the pop up to"
+          onFinish={() => this.setState({fifth2Started: true})}
+        />
+        <LabelTyping
+          className="text-left f-regular"
+          start={this.state.fifth2Started}
+          value="play bricks."
         />
       </div>
     );

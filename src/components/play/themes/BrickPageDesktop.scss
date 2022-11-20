@@ -507,7 +507,8 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
           &.unauthorized {
             .first {
-              margin-top: 12vh;
+              font-size: 1.4vw;
+              margin-top: 6vh;
             }
             .margin-top {
               margin-top: 3vh;
@@ -516,7 +517,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               width: 76%;
               margin-left: 2vw;
               margin-right: 2vw;
-              font-size: 1.1vw;
+              font-size: 1vw;
             }
           }
         }
@@ -633,16 +634,18 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
           }
           &.unauthorized {
             .first {
-              margin-top: 12vh;
+              text-align: left;
+              width: 85%;
+              margin-top: 6vh;
             }
             .margin-top {
               margin-top: 3vh;
             }
             .text-left {
-              width: 76%;
-              margin-left: 2vw;
-              margin-right: 2vw;
-              font-size: 1.1vw;
+              width: 85%;
+              margin-left: 0vw;
+              margin-right: 0vw;
+              font-size: 0.95vw;
             }
           }
         }

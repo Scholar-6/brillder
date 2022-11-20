@@ -31,7 +31,7 @@ const SortImage: React.FC<SortImageProps> = ({valueFile, imageSource, ...props})
     return (
       <img
         alt="" className="sort-image-choice"
-        src={`${process.env.REACT_APP_BACKEND_HOST}/files/${valueFile}`}
+        src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${valueFile}`}
         onClick={e => {
           if (lastClick && e.timeStamp - lastClick < 250) {
             setLastClick(0);
@@ -47,7 +47,7 @@ const SortImage: React.FC<SortImageProps> = ({valueFile, imageSource, ...props})
   return (
     <img
       alt="" className="sort-image-choice"
-      src={`${process.env.REACT_APP_BACKEND_HOST}/files/${valueFile}`}
+      src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${valueFile}`}
       onMouseEnter={() => props.hover(valueFile, imageSource)}
       onMouseLeave={props.blur}
     />

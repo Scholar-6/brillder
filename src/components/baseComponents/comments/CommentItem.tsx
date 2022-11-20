@@ -59,7 +59,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
             <div className={`profile-image ${props.isAuthor ? 'yellow-border' : 'red-border'}`}>
               {
                 props.comment.author?.profileImage
-                  ? <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
+                  ? <img alt="" src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${props.comment.author.profileImage}`} />
                   : <SpriteIcon name="user" />
                 }
             </div>
