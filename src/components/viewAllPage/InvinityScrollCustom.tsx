@@ -6,21 +6,22 @@ import PhoneTopBrickScroll16x9 from 'components/baseComponents/PhoneTopBrickScro
 interface Props {
   user: User;
   subjectId: number;
+  subjectGroup: number | null;
 }
 
 const InfinityScrollCustom = (props: Props) => {
-  const [pageNum, setPageNum] = useState(1);
+  const [pageNum, setPageNum] = useState(0);
   const {
     isLoading,
     isError,
     results,
     hasNextPage
-  } = useBricks(pageNum, props.subjectId);
+  } = useBricks(pageNum, props.user, props.subjectId, props.subjectGroup);
 
   const intObserver = useRef() as any;
 
   const lastBrickRef = useCallback(brick => {
-    if (isLoading) return
+    if (isLoading) return;
 
     if (intObserver.current) intObserver.current.disconnect();
 
