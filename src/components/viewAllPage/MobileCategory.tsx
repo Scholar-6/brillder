@@ -338,7 +338,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               <SpriteIcon name="arrow-left" className="back-arrow-d33" />
               <div>Subject</div>
             </div>
-            <div className="subjects-title-d33">{subject.name}</div>
+            <div className="subjects-title-d33 subject-custom-d33">{subject.name}</div>
             <InfinityScrollCustom
               user={this.props.user}
               subject={subject}
