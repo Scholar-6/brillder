@@ -217,24 +217,12 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   filterByLevel(level: AcademicLevel) {
     const { filterLevels } = this.state;
     const levels = toggleElement(filterLevels, level);
+    
+    // way to rerender infinity loaders with new data
+    
     if (this.props.user) {
-      const { subjects, mySubjects } = this.state;
-      this.clearBricks(subjects);
-      this.clearBricks(mySubjects);
-      for (let brick of this.state.bricks) {
-        if (isLevelVisible(brick, levels)) {
-          this.addBrickBySubject(subjects, brick, this.state.isCore);
-          this.addBrickBySubject(mySubjects, brick, this.state.isCore);
-        }
-      }
+      
     } else {
-      const { categorySubjects } = this.state;
-      this.clearBricks(categorySubjects);
-      for (let brick of this.state.bricks) {
-        if (isLevelVisible(brick, levels)) {
-          this.addBrickBySubject(categorySubjects, brick, true);
-        }
-      }
     }
     this.setState({ filterLevels: levels });
   }

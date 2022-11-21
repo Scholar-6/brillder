@@ -19,7 +19,7 @@ const InfinityScrollCustom = (props: Props) => {
     isError,
     results,
     hasNextPage
-  } = useBricks(pageNum, props.user, props.subjectId, props.subjectGroup);
+  } = useBricks(pageNum, props.user, props.subjectId, props.subjectGroup, true, [], []);
 
   const intObserver = useRef() as any;
 
@@ -54,7 +54,7 @@ const InfinityScrollCustom = (props: Props) => {
     <div className="bricks-scroll-row">
       <div className="bricks-flex-row" style={{ width: results.length * 60 + 2 + "vw" }}>
         {content}
-        {/*isLoading && <div>...Loading</div>*/}
+        {isLoading && <div>...Loading</div>}
       </div>
     </div>
   );
