@@ -227,44 +227,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.setState({ isCore: newCore });
   }
 
-  renderMobileBricks() {
-    if (this.state.isLoading) {
-      return <div className="f-top-loader">
-        <PageLoaderBlue content="" />
-      </div>
-    }
-    if (this.state.finalBricks.length === 0) {
-      return <div className="bricks-no-found bold">Sorry, no bricks found</div>;
-    }
-
-    const sorted = this.state.finalBricks.sort(
-      (a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime()
-    );
-
-    return (
-      <Swiper slidesPerView={1}>
-        {sorted.map((brick, i) => {
-          const color = getBrickColor(brick);
-          const circleIcon = getAssignmentIcon(brick);
-          const isAssignment = this.checkAssignment(brick);
-
-          return (
-            <SwiperSlide key={i} onClick={() => this.handleClick(brick, isAssignment)}>
-              {i === 0 && <div className="week-brick">Brick of the week</div>}
-              <PhoneTopBrick16x9
-                circleIcon={circleIcon}
-                brick={brick}
-                color={color}
-                isViewAllAssignment={isAssignment}
-                user={this.props.user}
-              />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-    );
-  }
-
   renderEmptySubject() {
     return (
       <div className="subject-no-bricks">
@@ -281,11 +243,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     return <InfinityScrollCustom
       user={this.props.user}
       subject={s}
-      setBrick={b => {
-        if (this.state.expandedBrick && this.state.expandedBrick.id === b.id) {
-          this.setState({ expandedBrick: null });
+      setBrick={(b: Brick) => {
+        if (this.props.user && this.checkAssignment(b)) {
+          this.props.history.push(map.postAssignment(b.id, this.props.user.id));
         } else {
-          this.setState({ expandedBrick: b });
+          this.props.history.push(routes.playBrief(b));
         }
       }}
     />
@@ -334,7 +296,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             searching={() => { }}
           />
           <div className="select-subject-dashboard-d33">
-            <div className="back-arrow-container" onClick={() => this.setState({expandedSubject: null})}>
+            <div className="back-arrow-container" onClick={() => this.setState({ expandedSubject: null })}>
               <SpriteIcon name="arrow-left" className="back-arrow-d33" />
               <div>Subject</div>
             </div>
@@ -342,11 +304,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             <InfinityScrollCustom
               user={this.props.user}
               subject={subject}
-              setBrick={b => {
-                if (this.state.expandedBrick && this.state.expandedBrick.id === b.id) {
-                  this.setState({ expandedBrick: null });
+              setBrick={(b: Brick) => {
+                if (this.props.user && this.checkAssignment(b)) {
+                  this.props.history.push(map.postAssignment(b.id, this.props.user.id));
                 } else {
-                  this.setState({ expandedBrick: b });
+                  this.props.history.push(routes.playBrief(b));
                 }
               }}
             />
