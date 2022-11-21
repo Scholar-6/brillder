@@ -335,7 +335,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             searching={() => { }}
           />
           <div className="select-subject-dashboard-d33">
-            <div className="back-arrow-container">
+            <div className="back-arrow-container" onClick={() => this.setState({expandedSubject: null})}>
               <SpriteIcon name="arrow-left" className="back-arrow-d33" />
               <div>Subject</div>
             </div>
@@ -391,7 +391,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             {this.props.user && <div>
               <div className="subjects-title-d33">My Subjects</div>
               <Grid container direction="row" className="subjects-d33">
-                {this.state.mySubjects.map(subject => <Grid xs={6} className="subject-d33">
+                {this.state.mySubjects.map(subject => <Grid xs={6} className="subject-d33" onClick={() => this.expandSubject(subject)}>
                   <div>{subject.name}</div>
                 </Grid>)}
               </Grid>
