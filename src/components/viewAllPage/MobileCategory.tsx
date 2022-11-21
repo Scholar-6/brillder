@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Grid } from "@material-ui/core";
+import queryString from "query-string";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import { Swiper, SwiperSlide } from "swiper/react";
-import queryString from "query-string";
 import "swiper/swiper.scss";
 
 
@@ -35,6 +37,7 @@ import routes from "components/play/routes";
 import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import InfinityScrollCustom from "./InvinityScrollCustom";
+import subject from "redux/actions/subject";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -45,7 +48,6 @@ enum Tab {
 }
 
 interface SubjectWithBricks extends Subject {
-  canLoad: boolean;
 }
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -89,12 +91,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     super(props);
 
     const values = queryString.parse(props.location.search);
-
-    if (!this.props.user) {
-      if (!values.subjectGroup) {
-        this.props.history.push(map.SubjectCategories);
-      }
-    }
 
     let isViewAll = false;
     if (values.isViewAll) {
@@ -148,24 +144,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
       if (this.props.user) {
         for (let ss of this.props.user.subjects) {
-          mySubjects.push({ ...ss, canLoad: false });
+          mySubjects.push({ ...ss });
         }
       } else {
         for (let s of subjects) {
           if (s.group === subjectGroup) {
-            categorySubjects.push({ ...s, canLoad: false });
+            categorySubjects.push({ ...s });
           }
         }
-      }
-      subjects.map(s => s.canLoad = false);
-
-      subjects[0].canLoad = true;
-      if (mySubjects && mySubjects.length > 0) {
-        mySubjects[0].canLoad = true;
-      }
-
-      if (categorySubjects && categorySubjects.length > 0) {
-        categorySubjects[0].canLoad = true;
       }
 
       this.setState({
@@ -221,9 +207,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     // way to rerender infinity loaders with new data
     if (this.props.user) {
-      
+
     } else {
-      
+
     }
     this.setState({ filterLevels: levels });
   }
@@ -296,7 +282,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       user={this.props.user}
       subjectId={s.id}
       subjectGroup={this.state.subjectGroup}
-      canLoad={s.canLoad}
       setBrick={b => {
         if (this.state.expandedBrick && this.state.expandedBrick.id === b.id) {
           this.setState({ expandedBrick: null });
@@ -315,10 +300,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             <div key={n}>
               <div className="gg-subject-name">
                 {s.name}
-                <div
-                  className="va-expand"
-                  onClick={() => this.expandSubject(s)}
-                >
+                <div className="va-expand" onClick={() => this.expandSubject(s)}>
                   <SpriteIcon name="arrow-down" />
                 </div>
               </div>
@@ -338,41 +320,42 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  renderExpandedSubject() {
-    const { expandedSubject } = this.state;
-
-    if (expandedSubject) {
-      return (
-        <div>
-          {/*
-          <div className="gg-subject-name">
-            {expandedSubject.name}
-            <div className="va-level-container smaller">
-              {this.renderAcademicLevel(brickGroups[0][0].academicLevel)}
-              <div className="va-level-count">{brickGroups[0].length}</div>
+  renderExpandedSubject(subject: SubjectWithBricks) {
+    return (
+      <React.Suspense fallback={<></>}>
+        <MobileTheme />
+        <div className="main-listing dashboard-page mobile-category phone-view-all select-subject-dashboard-d3">
+          <PageHeadWithMenu
+            page={PageEnum.ViewAll}
+            user={this.props.user}
+            toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
+            placeholder="Search Ongoing Projects & Published Bricks…"
+            history={this.props.history}
+            search={() => { }}
+            searching={() => { }}
+          />
+          <div className="select-subject-dashboard-d33">
+            <div className="back-arrow-container">
+              <SpriteIcon name="arrow-left" className="back-arrow-d33" />
+              <div>Subject</div>
             </div>
-            <div
-              className="va-expand va-hide"
-              onClick={this.hideSubject.bind(this)}
-            >
-              <SpriteIcon name="arrow-up" />
-            </div>
+            <div className="subjects-title-d33">{subject.name}</div>
+            <InfinityScrollCustom
+              user={this.props.user}
+              subjectId={subject.id}
+              subjectGroup={this.state.subjectGroup}
+              setBrick={b => {
+                if (this.state.expandedBrick && this.state.expandedBrick.id === b.id) {
+                  this.setState({ expandedBrick: null });
+                } else {
+                  this.setState({ expandedBrick: b });
+                }
+              }}
+            />
           </div>
-          {brickGroups.map((bs, i) => (
-            <div className="va-s-subject-bricks" key={i}>
-              {i > 0 && (
-                <div className="va-level-container smaller">
-                  {this.renderAcademicLevel(bs[0].academicLevel)}
-                  <div className="va-level-count">{bs.length}</div>
-                </div>
-              )}
-              {this.renderBricks(bs)}
-            </div>
-          ))}*/}
         </div>
-      );
-    }
-    return <div />;
+      </React.Suspense>
+    );
   }
 
   renderAcademicLevel(level: AcademicLevel) {
@@ -388,20 +371,13 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   render() {
-    let subjects = this.state.mySubjects;
-
-    if (this.state.activeTab === Tab.AllSubjects) {
-      subjects = this.state.subjects;
+    if (this.state.expandedSubject) {
+      return this.renderExpandedSubject(this.state.expandedSubject);
     }
-
-    if (!this.props.user) {
-      subjects = this.state.categorySubjects;
-    }
-
     return (
       <React.Suspense fallback={<></>}>
         <MobileTheme />
-        <div className="main-listing dashboard-page mobile-category phone-view-all">
+        <div className="main-listing dashboard-page mobile-category phone-view-all select-subject-dashboard-d3">
           <PageHeadWithMenu
             page={PageEnum.ViewAll}
             user={this.props.user}
@@ -411,68 +387,24 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             search={() => { }}
             searching={() => { }}
           />
-          <div className="mobile-scroll-bricks phone-top-bricks16x9">
-            {this.renderMobileBricks()}
-          </div>
-          {this.props.user ? (
-            <div className="ss-tabs-container">
-              <div
-                className={`ss-tab-1 ${this.state.activeTab === Tab.MySubjects ? "active" : ""
-                  }`}
-                onClick={this.setMySubjectsTab.bind(this)}
-              >
-                <SpriteIcon name="user-custom" />
-                My Subjects
-              </div>
-              <div
-                className={`ss-tab-2 ${this.state.activeTab === Tab.AllSubjects ? "active" : ""
-                  }`}
-                onClick={this.setAllSubjectsTab.bind(this)}
-              >
-                All Subjects
-              </div>
+          <div className="select-subject-dashboard-d33">
+            {this.props.user && <div>
+              <div className="subjects-title-d33">My Subjects</div>
+              <Grid container direction="row" className="subjects-d33">
+                {this.state.mySubjects.map(subject => <Grid xs={6} className="subject-d33">
+                  <div>{subject.name}</div>
+                </Grid>)}
+              </Grid>
             </div>
-          ) : (
-            <div className="ss-tabs-container">
-              <div className="ss-tab-1 full active">
-                <SpriteIcon
-                  name="arrow-left"
-                  onClick={() => this.props.history.push(map.SubjectCategories)}
-                />
-                {this.state.subjectGroup
-                  ? SubjectGroupNames[this.state.subjectGroup]
-                  : "Subject Category"}
-              </div>
+            }
+            <div>
+              <div className="subjects-title-d33">All Subjects</div>
+              <Grid container direction="row" className="subjects-d33">
+                {this.state.subjects.map(subject => <Grid xs={6} className="subject-d33" onClick={() => this.expandSubject(subject)}>
+                  <div>{subject.name}</div>
+                </Grid>)}
+              </Grid>
             </div>
-          )}
-          <div className="va-level-container">
-            {this.renderAcademicLevel(AcademicLevel.First)}
-            {this.renderAcademicLevel(AcademicLevel.Second)}
-            {this.renderAcademicLevel(AcademicLevel.Third)}
-            <div className="va-difficult-help">
-              <MobileHelp>
-                <LevelHelpContent />
-              </MobileHelp>
-            </div>
-            {this.props.user &&
-              <PrivateCoreToggle
-                isViewAll={true}
-                isCore={this.state.isCore}
-                onSwitch={this.toggleCore.bind(this)}
-              />}
-          </div>
-          <div className="va-bricks-container">
-            {this.state.expandedSubject
-              ? this.renderExpandedSubject()
-              : this.renderSubjects(subjects)}
-            {this.state.expandedBrick && (
-              <PhoneExpandedBrick
-                brick={this.state.expandedBrick}
-                history={this.props.history}
-                user={this.props.user}
-                hide={() => this.setState({ expandedBrick: null })}
-              />
-            )}
           </div>
         </div>
       </React.Suspense>

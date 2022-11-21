@@ -1109,3 +1109,110 @@
     }
   }
 }
+
+.select-subject-dashboard-d3 {
+  padding-top: 4vh;
+  font-size: 6.5vw;
+  color: var(--theme-dark-blue);
+  background: color(--white);
+
+  .select-subject-dashboard-d33 {
+    height: calc(100% - 17.5vw);
+    overflow-y: auto;
+
+    .subjects-title-d33 {
+      margin-left: 4%;
+      font-family: $font-family-bold;
+    }
+
+    .back-arrow-container {
+      margin-left: 2vw;
+      display: flex;
+      font-size: 4vw;
+      margin-bottom: 2vw;
+      align-items: center;
+
+      .back-arrow-d33 {
+        width: 7vw;
+        height: 7vw;
+      }
+    }
+
+    .subjects-d33 {
+      margin-left: 1vw;
+      margin-right: 1vw;
+      display: flex;
+    }
+    .subject-d33 {
+      > div {
+        display: flex;
+        margin: 1vw;
+        align-items: center;
+        border-radius:1vw;
+        padding-left: 1vw;
+        min-height: 5vh;
+        font-size: 4.5vw;
+        background: var(--tab-gray);
+      }
+    }
+    .phone-top-brick-16x9 {
+      border-radius: 3.5vw;
+      overflow: hidden;
+      margin-left: 4vw;
+      margin-top: 4vw;
+      position: relative;
+      width: 92vw;
+      height: 50vw;
+      padding: 0 !important;
+
+      .p-cover-image {
+        width: 115%;
+      }
+
+      .left-brick-circle {
+        top: 2vw;
+        right: 2vw;
+        position: absolute;
+
+        .round-button {
+          border-radius: 50%;
+          $size: 8vw;
+          width: $size !important;
+          height: $size !important;
+        }
+      }
+
+      .bottom-description-color,
+      .bottom-description {
+        position: absolute;
+        bottom: -0.2vw;
+        height: 9vw;
+        width: 100%;
+      }
+
+      .bottom-description-color {
+        opacity: 0.8;
+        background: var(--tab-gray);
+        z-index: 10;
+      }
+
+      .bottom-description {
+        color: var(--theme-dark-blue);
+        font-family: $font-family-bold;
+        display: flex;
+        font-size: 4vw;
+        align-items: center;
+        justify-content: center;
+        z-index: 13;
+
+        .brick-inline {
+          padding-left: 1vw;
+          padding-right: 1vw;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}

@@ -7,7 +7,6 @@ import { Brick } from 'model/brick';
 
 interface Props {
   user: User;
-  canLoad: boolean;
   subjectId: number;
   subjectGroup: number | null;
   setBrick(b: Brick): void;
