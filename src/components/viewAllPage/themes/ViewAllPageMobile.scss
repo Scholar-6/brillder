@@ -1116,18 +1116,19 @@
   background: color(--white);
 
   .select-subject-dashboard-d33 {
-    padding-top: 4vh;
     height: calc(100% - 17.5vw);
     overflow-y: auto;
 
     .subjects-title-d33 {
-      margin-left: 4%;
-      margin-bottom: 4vw;
+      margin-left: 3vw;
+      margin-top: 4.5vw;
+      margin-bottom: 2vw;
       font-family: $font-family-bold;
     }
 
     .back-arrow-container {
-      margin-left: 2vw;
+      margin-left: 3vw;
+      width: 94vw;
       display: flex;
       font-size: 4vw;
       margin-bottom: 2vw;
@@ -1140,8 +1141,8 @@
     }
 
     .subjects-d33 {
-      margin-left: 1vw;
-      margin-right: 1vw;
+      margin-left: 2vw;
+      margin-right: 2vw;
       display: flex;
     }
     .subject-d33 {
@@ -1149,8 +1150,8 @@
         display: flex;
         margin: 1vw;
         align-items: center;
-        border-radius:1vw;
-        padding-left: 1vw;
+        border-radius:1.4vw;
+        padding-left: 2vw;
         min-height: 5vh;
         font-size: 4.5vw;
         background: var(--tab-gray);
