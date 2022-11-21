@@ -280,8 +280,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   renderBricks(s: SubjectWithBricks) {
     return <InfinityScrollCustom
       user={this.props.user}
-      subjectId={s.id}
-      subjectGroup={this.state.subjectGroup}
+      subject={s}
       setBrick={b => {
         if (this.state.expandedBrick && this.state.expandedBrick.id === b.id) {
           this.setState({ expandedBrick: null });
@@ -342,8 +341,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             <div className="subjects-title-d33">{subject.name}</div>
             <InfinityScrollCustom
               user={this.props.user}
-              subjectId={subject.id}
-              subjectGroup={this.state.subjectGroup}
+              subject={subject}
               setBrick={b => {
                 if (this.state.expandedBrick && this.state.expandedBrick.id === b.id) {
                   this.setState({ expandedBrick: null });

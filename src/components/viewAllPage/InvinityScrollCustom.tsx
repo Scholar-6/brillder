@@ -3,12 +3,11 @@ import React, { useRef, useState, useCallback } from 'react';
 import useBricks from './useBricks';
 import { User } from 'model/user';
 import PhoneTopBrickScroll16x9 from 'components/baseComponents/PhoneTopBrickScroll16x9';
-import { Brick } from 'model/brick';
+import { Brick, Subject } from 'model/brick';
 
 interface Props {
   user: User;
-  subjectId: number;
-  subjectGroup: number | null;
+  subject: Subject;
   setBrick(b: Brick): void;
 }
 
@@ -19,7 +18,7 @@ const InfinityScrollCustom = (props: Props) => {
     isError,
     results,
     hasNextPage
-  } = useBricks(pageNum, props.user, props.subjectId, props.subjectGroup, true, [], []);
+  } = useBricks(pageNum, props.user, props.subject, true, [], []);
 
   const intObserver = useRef() as any;
 
