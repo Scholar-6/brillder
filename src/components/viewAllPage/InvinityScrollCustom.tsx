@@ -52,7 +52,7 @@ const InfinityScrollCustom = (props: Props) => {
 
   return (
     <div className="bricks-scroll-row">
-      <div className="bricks-flex-row" style={{ width: results.length * 60 + 2 + "vw" }}>
+      <div className="bricks-flex-row">
         {content}
         {isLoading && <div>...Loading</div>}
       </div>
