@@ -1111,12 +1111,12 @@
 }
 
 .select-subject-dashboard-d3 {
-  padding-top: 4vh;
   font-size: 6.5vw;
   color: var(--theme-dark-blue);
   background: color(--white);
 
   .select-subject-dashboard-d33 {
+    padding-top: 4vh;
     height: calc(100% - 17.5vw);
     overflow-y: auto;
 
