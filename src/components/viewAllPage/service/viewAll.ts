@@ -325,3 +325,17 @@ export const checkAllSubjects = (subjects: SubjectItem[], isCore: boolean) => {
     });
   }
 }
+
+export const checkAssignment = (brick: Brick, user: User | undefined) => {
+  if (brick.assignments) {
+    for (let assignmen of brick.assignments) {
+      let assignment = assignmen as any;
+      for (let student of assignment.stats.byStudent) {
+        if (student.studentId === user?.id) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}

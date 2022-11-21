@@ -76,6 +76,7 @@ const saveBrick = (brick:any) => {
       const savedBrick = response.data as Brick;
       // response brick don`t have author object
       savedBrick.author = brick.author;
+      savedBrick.questions.sort((q1, q2) => q1.order - q2.order);
       dispatch(saveBrickSuccess(savedBrick));
       return savedBrick;
     }).catch(error => {

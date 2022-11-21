@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -429,16 +429,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
     const values = queryString.parse(location.search);
 
-
-    if (values.origin === 'heartofmercia') {
+    if (values.origin === 'heartofmercia' || values.origin === "ms-sso") {
       SetLoginRedirectUrl(location.pathname);
       SetHeartOfMerciaUser();
       let redirectUrl = document.referrer;
-      console.log('wefwef');
       if (redirectUrl === 'https://brillder.com/') {
         redirectUrl = values.returnUrl as string;
       }
-      console.log("redirect url set ", redirectUrl, values.returnUrl);
       SetFinishRedirectUrl(redirectUrl);
       window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
     }

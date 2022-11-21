@@ -92,6 +92,10 @@ class PageHeader extends Component<Props, State> {
     if (props.suggestions) {
       this.prepareSuggestions();
     }
+
+    if (this.props.isAuthenticated === isAuthenticated.True && !this.props.notifications) {
+      this.props.getNotifications();
+    }
   }
 
   collectKeywords(bricks: Brick[]) {
@@ -199,13 +203,7 @@ class PageHeader extends Component<Props, State> {
 
   render() {
     let { searchVisible } = this.state
-    let notificationCount = 0;
-    if (this.props.isAuthenticated === isAuthenticated.True && !this.props.notifications) {
-      this.props.getNotifications();
-    } else if (this.props.notifications) {
-      notificationCount = this.props.notifications.length;
-    }
-
+    let notificationCount = this.props.notifications ? this.props.notifications.length : 0;
     let link = this.props.link ? this.props.link : map.MainPage;
 
     let className = 'search-container 44';

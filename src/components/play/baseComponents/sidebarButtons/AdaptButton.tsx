@@ -34,8 +34,6 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
 
   let canSee = false;
 
-
-
   if (props.user) {
     const isPublisher = checkEditor(props.user.roles);
     if (isPublisher) {

@@ -69,7 +69,6 @@ import {
   filterByCompetitions
 } from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
-import MobileCategory from "./MobileCategory";
 import { playCover } from "components/play/routes";
 import { isPhone } from "services/phone";
 import AddSubjectDialog from "components/baseComponents/dialogs/AddSubjectDialog";
@@ -79,6 +78,7 @@ import PhoneSearchPage from "./PhoneSearchPage";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import SearchSuggestions from "./components/SearchSuggestions";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
+import MobileCategory from "./MobileCategory";
 
 interface ViewAllProps {
   user: User;
