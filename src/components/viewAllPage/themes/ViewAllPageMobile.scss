@@ -1124,10 +1124,16 @@
       margin-top: 4.5vw;
       margin-bottom: 2vw;
       font-family: $font-family-bold;
+
+      &.subject-custom-d33 {
+        margin-top: 2vw;
+        margin-bottom: 3.5vw;
+      }
     }
 
     .back-arrow-container {
-      margin-left: 3vw;
+      margin-top: 5vw;
+      margin-left: 1.7vw;
       width: 94vw;
       display: flex;
       font-size: 4vw;
