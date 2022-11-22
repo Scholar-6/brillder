@@ -67,7 +67,7 @@ const ConvertCreditsDialog: React.FC<LogoutComponentProps> = (props) => {
           <div className="f-regular">convert your brills for other awards</div>
           <div className="flex-center">
             <div className="btn btn-gray-de3 flex-center disabled">
-              Comming Soon
+              Coming Soon
             </div>
           </div>
         </div>
