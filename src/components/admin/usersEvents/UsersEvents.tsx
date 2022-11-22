@@ -340,7 +340,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
         className="dialog-box">
         <div className="dialog-header">
           <div>Classrooms</div>
-          <div>...Comming soon...</div>
+          <div>...Coming soon...</div>
         </div>
       </Dialog>
     );
