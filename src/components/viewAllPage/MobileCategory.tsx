@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import queryString from "query-string";
-import { Swiper, SwiperSlide } from "swiper/react";
 
 import PageHeadWithMenu, {
   PageEnum,
@@ -15,29 +14,19 @@ import {
   AcademicLevelLabels,
   Brick,
   Subject,
-  SubjectGroup,
-  SubjectGroupNames,
 } from "model/brick";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
 import actions from "redux/actions/requestFailed";
-import { getAssignmentIcon } from "components/services/brickService";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getBrickColor } from "services/brick";
-import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import { getSubjects } from "services/axios/subject";
 import map from "components/map";
-import MobileHelp from "components/baseComponents/hoverHelp/MobileHelp";
-import LevelHelpContent from "components/baseComponents/hoverHelp/LevelHelpContent";
 import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
-import { isLevelVisible, toggleElement } from "./service/viewAll";
+import { toggleElement } from "./service/viewAll";
 import routes from "components/play/routes";
-import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
-import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import InfinityScrollCustom from "./InvinityScrollCustom";
-import subject from "redux/actions/subject";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -73,15 +62,11 @@ interface BricksListState {
   expandedBrick: Brick | null;
   bricks: Array<Brick>;
   isCore: boolean;
-  finalBricks: Brick[];
-  isViewAll: boolean;
   mySubjects: SubjectWithBricks[];
   subjects: SubjectWithBricks[];
-  categorySubjects: SubjectWithBricks[];
   shown: boolean;
   activeTab: Tab;
   isLoading: boolean;
-  subjectGroup: SubjectGroup | null;
   expandedSubject: SubjectWithBricks | null;
   filterLevels: AcademicLevel[];
 }
@@ -92,14 +77,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     const values = queryString.parse(props.location.search);
 
-    let isViewAll = false;
-    if (values.isViewAll) {
-      isViewAll = true;
-    }
-
-    let subjectGroup = null;
-    if (values.subjectGroup) {
-      subjectGroup = parseInt(values.subjectGroup as string) as SubjectGroup;
+    let subjectId = null;
+    if (values.subjectId) {
+      subjectId = parseInt(values.subjectId as string);
     }
 
     let initTab = Tab.MySubjects;
@@ -111,20 +91,16 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       expandedBrick: null,
       bricks: [],
       isLoading: true,
-      finalBricks: [],
       expandedSubject: null,
-      isViewAll,
       isCore: true,
       mySubjects: [],
       subjects: [],
-      categorySubjects: [],
       filterLevels: [],
       activeTab: initTab,
-      subjectGroup,
       shown: false,
     };
 
-    this.loadData(subjectGroup);
+    this.loadData(subjectId);
   }
 
   addBrickBySubject(subjects: SubjectWithBricks[], brick: Brick, isCore: boolean) {
@@ -136,29 +112,30 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  async loadData(subjectGroup: SubjectGroup | null) {
+  async loadData(subjectId: number | null) {
     const subjects = (await getSubjects()) as SubjectWithBricks[] | null;
     if (subjects) {
       const mySubjects: SubjectWithBricks[] = [];
-      const categorySubjects: SubjectWithBricks[] = [];
 
       if (this.props.user) {
         for (let ss of this.props.user.subjects) {
           mySubjects.push({ ...ss });
         }
-      } else {
-        for (let s of subjects) {
-          if (s.group === subjectGroup) {
-            categorySubjects.push({ ...s });
-          }
+      }
+
+      let expandedSubject = null;
+      if (subjectId) {
+        const s = subjects.find(s => s.id === subjectId);
+        if (s) {
+          expandedSubject = s;
         }
       }
 
       this.setState({
         ...this.state,
-        subjects: subjects,
-        mySubjects: mySubjects,
-        categorySubjects: categorySubjects,
+        subjects,
+        mySubjects,
+        expandedSubject,
         shown: true,
         isLoading: false,
       });
@@ -216,15 +193,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   expandSubject(s: SubjectWithBricks) {
     this.setState({ expandedSubject: s });
-  }
-
-  hideSubject() {
-    this.setState({ expandedSubject: null });
-  }
-
-  toggleCore() {
-    const newCore = !this.state.isCore;
-    this.setState({ isCore: newCore });
   }
 
   renderEmptySubject() {
