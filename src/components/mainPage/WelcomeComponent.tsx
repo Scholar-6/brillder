@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { User } from "model/user";
+
 import { Notification } from 'model/notifications';
 import { checkTeacherEditorOrAdmin } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -53,6 +54,9 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
 
   shouldComponentUpdate(props: WelcomeProps) {
     if (props.notifications && props.notifications !== this.props.notifications && !this.state.animationStarted) {
+      if (this.state.interval) {
+        clearInterval(this.state.interval);
+      }
       this.runAnimation(props, true);
     }
     return true;
@@ -108,6 +112,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       });
       if (count >= maxCount) {
         clearInterval(setNameInterval);
+        console.log('run animation')
         setTimeout(() => this.runNotificationAnimation(props), 500);
       }
       count++;
