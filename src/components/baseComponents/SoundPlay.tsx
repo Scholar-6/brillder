@@ -23,7 +23,8 @@ class SoundPlay extends React.Component<Props, State> {
     div.innerHTML = props.element;
     const fileUrl = div.children[0].getAttribute('data-value');
     const fileСaption = div.children[0].getAttribute('data-caption');
-    console.log(props.element, fileUrl);
+
+    console.log(fileUrl);
 
     this.state = {
       playing: false,
