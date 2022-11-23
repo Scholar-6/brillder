@@ -193,6 +193,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   expandSubject(s: SubjectWithBricks) {
     this.setState({ expandedSubject: s });
+    this.props.history.push('/play/dashboard?subjectId=' + s.id);
   }
 
   renderEmptySubject() {

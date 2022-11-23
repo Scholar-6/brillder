@@ -135,7 +135,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
     return (
       <div className="search-suggestions">
         <div className="upper-line" />
-        <div>Sorry, we couldn't find anything this time.</div>
+        <div>Click enter to search</div>
       </div>
     );
   }
