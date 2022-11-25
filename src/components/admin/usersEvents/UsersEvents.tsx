@@ -123,21 +123,11 @@ class UsersPage extends Component<UsersProps, UsersState> {
     let roleFilters = [];
     const res = await getUsersActivity(dateFilter);
 
-    let res2 = [];
+    console.log(res);
 
-    for (let a of res) {
-      const found = res2.find(b => b.student.id === a.student.id);
-      if (found) {
-        found.attempts += 1;
-      } else {
-        a.attempts = 1;
-        res2.push(a);
-      }
-    }
-
-    if (res2) {
+    if (res) {
       this.setState({
-        users: res2,
+        users: res,
         dateFilter,
         totalUsersCount: res.totalCount
       });
@@ -264,23 +254,6 @@ class UsersPage extends Component<UsersProps, UsersState> {
         </div>);
       })}
     </div>
-  }
-
-  moveToPage(page: number) {
-    //this.getUsers(this.state.userPreference, page, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
-  }
-
-  renderPagination() {
-    /*
-    return (
-      <UsersPagination
-        users={this.state.users}
-        page={this.state.page}
-        totalCount={this.state.totalUsersCount}
-        pageSize={this.state.pageSize}
-        moveToPage={page => this.moveToPage(page)}
-      />
-    );*/
   }
 
   renderTable() {
@@ -433,7 +406,6 @@ class UsersPage extends Component<UsersProps, UsersState> {
                 </div>
               </Dialog>}
               {this.renderTable()}
-              {this.renderPagination()}
             </div>
           </Grid>
         </Grid>
