@@ -114,21 +114,20 @@ class UsersPage extends Component<UsersProps, UsersState> {
       this.setState({ subjects });
     }
 
-    this.getUsers(PDateFilter.Past24Hours);
+    this.getUsers(this.state.page, this.state.pageSize, PDateFilter.Past24Hours);
 
     this.getLibraries();
   }
 
-  async getUsers(dateFilter: PDateFilter) {
-    let roleFilters = [];
-    const res = await getUsersActivity(dateFilter);
-
-    console.log(res);
+  async getUsers(page: number, pageSize: number, dateFilter: PDateFilter) {
+    const res = await getUsersActivity(page, pageSize, dateFilter);
 
     if (res) {
       this.setState({
         users: res,
         dateFilter,
+        page,
+        pageSize,
         totalUsersCount: res.totalCount
       });
     }
@@ -345,7 +344,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             subjects={this.state.subjects}
             dateFilter={this.state.dateFilter}
             setDateFilter={dateFilter => {
-              this.getUsers(dateFilter);
+              this.getUsers(0, this.state.pageSize, dateFilter);
             }}
             selectedSubjects={this.state.selectedSubjects}
             selectSubjects={selectedSubjects => {

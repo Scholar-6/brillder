@@ -57,7 +57,7 @@ class UsersSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
         <div className="sort-box">
           <div className="bold font1-5">Admin Data Dashboard</div>
         </div>
-        <div className="filter-header">Date</div>
+        <div className="filter-header">Date Filter</div>
         <div className="sort-radio-btns filter-row margin-smaller top-margin-bigger">
           <FormControlLabel
             checked={dateFilter === PDateFilter.Past24Hours}
