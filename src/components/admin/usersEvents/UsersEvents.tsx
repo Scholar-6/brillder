@@ -16,7 +16,7 @@ import UsersSidebar from "./UsersEventsSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { deleteUser, getUsers } from "services/axios/user";
-import { getDateString, getFormattedDateSlash } from "components/services/brickService";
+import { fileFormattedDate, getDateString } from "components/services/brickService";
 import UsersPagination from "components/teach/manageClassrooms/components/UsersPagination";
 import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
@@ -396,7 +396,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
                       });
                     }
 
-                    exportToCSV(data, `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`);
+                    exportToCSV(data, `Brillder data ${fileFormattedDate(new Date().toString())}.pdf`);
 
                     this.setState({ downloadClicked: false });
                   }}>
@@ -409,7 +409,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
                       this.state.users.map(u => {
                         return [u.created?.toString(), u.firstName + ' ' + u.lastName, u.email, this.renderUserType(u)]
                       }),
-                      `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`
+                      `Brillder data ${fileFormattedDate(new Date().toString())}.pdf`
                     );
                     this.setState({ downloadClicked: false });
                   }}>

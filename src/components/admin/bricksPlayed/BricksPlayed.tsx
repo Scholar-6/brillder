@@ -16,7 +16,7 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import { adminGetBrickAtemptStatistic, getAdminBrickStatistic } from "services/axios/brick";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import BricksPlayedSidebar, { ESubjectCategory, PDateFilter } from "./BricksPlayedSidebar";
-import { getDateString, getFormattedDateSlash } from "components/services/brickService";
+import { fileFormattedDate, getDateString } from "components/services/brickService";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
@@ -440,7 +440,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                       });
                     }
 
-                    exportToCSV(data, "Brillder data " + getFormattedDateSlash(new Date().toString()));
+                    exportToCSV(data, "Brillder data " + fileFormattedDate(new Date().toString()));
 
                     this.setState({ downloadClicked: false });
                   }}>
@@ -454,7 +454,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                         const subject = this.state.subjects.find(s => s.id === b.subjectId);
                         return [b.datePublished ? b.datePublished : '', subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no', b.sponsorName ? b.sponsorName : 'Scholar6']
                       }),
-                      `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`
+                      `Brillder data ${fileFormattedDate(new Date().toString())}.pdf`
                     );
                     this.setState({ downloadClicked: false });
                   }}>
