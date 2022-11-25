@@ -42,6 +42,10 @@ export function getMinutes(date: string) {
   return formatTwoLastDigits(minutes);
 }
 
+export function fileFormattedDate(date: string) {
+  return getFormattedDate(date) + ' ' + getHours(date) + "-" + getMinutes(date);  
+}
+
 export function getFormattedDate(date: string) {
   const dateObj = new Date(date);
   const year = getYear(dateObj);

@@ -23,7 +23,7 @@ import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
 import ExportBtn from "../components/ExportBtn";
 import map from "components/map";
-import { getFormattedDateSlash } from "components/services/brickService";
+import { fileFormattedDate } from "components/services/brickService";
 
 
 enum SortBy {
@@ -407,7 +407,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                       });
                     }
 
-                    exportToCSV(data, `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`);
+                    exportToCSV(data, `Brillder data ${fileFormattedDate(new Date().toString())}.pdf`);
 
                     this.setState({ downloadClicked: false });
                   }}>
@@ -432,7 +432,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                         ]
                       }),
 
-                      `Brillder data${getFormattedDateSlash(new Date().toString())}.pdf`
+                      `Brillder data ${fileFormattedDate(new Date().toString())}.pdf`
                     );
                     this.setState({ downloadClicked: false });
                   }}>
