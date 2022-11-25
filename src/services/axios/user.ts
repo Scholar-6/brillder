@@ -3,6 +3,7 @@ import { get, put, post, axiosDelete } from './index';
 import { UserPreferenceType, User } from 'model/user';
 import { UpdateUserStatus } from 'components/userProfilePage/model';
 import { Editor } from 'model/brick';
+import { PDateFilter } from 'components/admin/bricksPlayed/BricksPlayedSidebar';
 
 const profileErrorHandler = (e: any) => {
   const { response } = e;
@@ -149,6 +150,14 @@ export interface UsersParams {
 export const getUsers = async (params: UsersParams) => {
   try {
     return await post<any>('/users', params);
+  } catch (e) {
+    return null;
+  }
+}
+
+export const getUsersActivity = async (dateFilter: PDateFilter) => {
+  try {
+    return await post<any>('/users/activity', {dateFilter});
   } catch (e) {
     return null;
   }
