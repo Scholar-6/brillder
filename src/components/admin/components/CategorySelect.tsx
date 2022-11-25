@@ -8,6 +8,7 @@ interface CategoryItem {
   type: ESubjectCategory;
 }
 
+
 interface Props {
   subjectCategory: ESubjectCategory;
   selectCategory(sg: ESubjectCategory): void;
