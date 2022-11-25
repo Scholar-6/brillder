@@ -308,8 +308,8 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     }
 
     return <div className="table-body">
-      {finalBricks.map(b => {
-        return (<div className="table-row clickable" onClick={() => this.props.history.push(playCover(b))}>
+      {finalBricks.map((b, i) => {
+        return (<div className="table-row clickable" key={i} onClick={() => this.props.history.push(playCover(b))}>
           <div className="publish-column">{renderDate(b)}</div>
           {renderSubjectColumn(b)}
           <div className="first-column" dangerouslySetInnerHTML={{ __html: b.title }} />
@@ -435,6 +435,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
               }
             }}
             subjectCategory={this.state.subjectCategory} setSubjectCategory={subjectCategory => {
+              console.log(55, subjectCategory);
               let { selectedSubjects } = this.state;
               if (subjectCategory === ESubjectCategory.Arts) {
                 this.selectCategorySubjects(this.state.artSubjects);
@@ -454,9 +455,11 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
               } else if (subjectCategory === ESubjectCategory.Science) {
                 this.selectCategorySubjects(this.state.generalSubject);
                 selectedSubjects = [...this.state.scienceSubjects];
+              } else if (subjectCategory === ESubjectCategory.Everything) {
+                this.selectCategorySubjects([]);
+                selectedSubjects = [];
               } else {
                 this.selectCategorySubjects(this.state.generalSubject);
-
                 selectedSubjects = [];
               }
 
