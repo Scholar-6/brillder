@@ -112,6 +112,14 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         return -1;
       });
     } else if (sortBy === SortBy.Title) {
+      if (isAscending) {
+        return bricks.sort((a, b) => {
+          let aT = stripHtml(a.title).toLocaleLowerCase();
+          let bT = stripHtml(b.title).toLocaleLowerCase();
+  
+          return aT > bT ? -1 : 1;
+        });
+      }
       return bricks.sort((a, b) => {
         let aT = stripHtml(a.title).toLocaleLowerCase();
         let bT = stripHtml(b.title).toLocaleLowerCase();
@@ -119,9 +127,30 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         return aT < bT ? -1 : 1;
       });
     } else if (sortBy === SortBy.Author) {
+      if (isAscending) {
+        return bricks.sort((a, b) => {
+          let aT = '';
+          let bT = '';
+
+          if (a.author && a.author.firstName) {
+            aT = a.author.firstName.toLocaleLowerCase();
+          }
+          if (b.author && b.author.firstName) {
+            bT = b.author.firstName.toLocaleLowerCase();
+          }
+          return aT > bT ? -1 : 1;
+        });
+      }
       return bricks.sort((a, b) => {
-        let aT = a.author.firstName.toLocaleLowerCase();
-        let bT = b.author.firstName.toLocaleLowerCase();
+        let aT = '';
+        let bT = '';
+
+        if (a.author && a.author.firstName) {
+          aT = a.author.firstName.toLocaleLowerCase();
+        }
+        if (b.author && b.author.firstName) {
+          bT = b.author.firstName.toLocaleLowerCase();
+        }
         return aT < bT ? -1 : 1;
       });
     } else {
