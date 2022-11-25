@@ -155,9 +155,9 @@ export const getUsers = async (params: UsersParams) => {
   }
 }
 
-export const getUsersActivity = async (dateFilter: PDateFilter) => {
+export const getUsersActivity = async (page: number, pageSize: number, dateFilter: PDateFilter) => {
   try {
-    return await post<any>('/users/activity', {dateFilter});
+    return await post<any>('/users/activity', {page, pageSize, dateFilter});
   } catch (e) {
     return null;
   }
