@@ -116,7 +116,9 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
               this.setState({popupShown: 2});
             }
             if (!isMobile && noCredits === false) {
-              this.setState({showConvertDropdown: !this.state.showConvertDropdown});
+              if (!user.library) {
+                this.setState({showConvertDropdown: !this.state.showConvertDropdown});
+              }
             }
           }} />
           {user.library ? <div /> :
