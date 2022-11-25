@@ -15,7 +15,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import UsersSidebar from "./UsersEventsSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { deleteUser, getUsers } from "services/axios/user";
+import { deleteUser, getUsersActivity } from "services/axios/user";
 import { fileFormattedDate, getDateString } from "components/services/brickService";
 import UsersPagination from "components/teach/manageClassrooms/components/UsersPagination";
 import ExportBtn from "../components/ExportBtn";
@@ -25,6 +25,7 @@ import AddUserBtn from "../components/AddUserBtn";
 import map from "components/map";
 import { getSubjects } from "services/axios/subject";
 import { Subject } from "model/brick";
+import { PDateFilter } from "../bricksPlayed/BricksPlayedSidebar";
 
 
 interface UsersProps {
@@ -37,11 +38,13 @@ interface UsersProps {
 }
 
 interface UsersState {
-  users: User[];
+  users: any[];
   page: number,
   pageSize: number;
   totalUsersCount: number;
   userPreference: UserPreferenceType | null;
+
+  dateFilter: PDateFilter;
 
   selectedSubjects: Subject[];
   subjects: Subject[];
@@ -76,6 +79,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
       subjects: [],
       selectedSubjects: [],
 
+      dateFilter: PDateFilter.Past24Hours,
+
       orderBy: "user.created",
       isAscending: true,
 
@@ -109,39 +114,38 @@ class UsersPage extends Component<UsersProps, UsersState> {
       this.setState({ subjects });
     }
 
-    this.getUsers(null, 0, [], '', 'user.created', true);
+    this.getUsers(PDateFilter.Past24Hours);
 
     this.getLibraries();
   }
 
-  async getUsers(userPreference: UserPreferenceType | null, page: number, selectedSubjects: Subject[], searchString: string, orderBy: string, isAscending: boolean) {
+  async getUsers(dateFilter: PDateFilter) {
     let roleFilters = [];
-    if (userPreference !== null) {
-      roleFilters.push(userPreference);
+    const res = await getUsersActivity(dateFilter);
+
+    let res2 = [];
+
+    for (let a of res) {
+      const found = res2.find(b => b.student.id === a.student.id);
+      if (found) {
+        found.attempts += 1;
+      } else {
+        a.attempts = 1;
+        res2.push(a);
+      }
     }
-    const res = await getUsers({
-      pageSize: this.state.pageSize,
-      page: page.toString(),
-      searchString,
-      subjectFilters: selectedSubjects.map(s => s.id),
-      roleFilters,
-      orderBy,
-      isAscending
-    });
-    if (res) {
+
+    if (res2) {
       this.setState({
-        userPreference,
-        page,
-        users: res.pageData,
-        selectedSubjects,
-        orderBy,
-        isAscending,
+        users: res2,
+        dateFilter,
         totalUsersCount: res.totalCount
       });
     }
   }
 
   search() {
+    /*
     const { searchString } = this.state;
     this.getUsers(
       this.state.userPreference,
@@ -155,15 +159,17 @@ class UsersPage extends Component<UsersProps, UsersState> {
     setTimeout(() => {
       this.setState({ isSearching: true });
     })
+    */
   }
 
   async searching(searchString: string) {
+    /*
     if (searchString.length === 0) {
       await this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, searchString, this.state.orderBy, this.state.isAscending);
       this.setState({ ...this.state, searchString, isSearching: false });
     } else {
       this.setState({ ...this.state, searchString });
-    }
+    }*/
   }
 
   renderLibrary(user: User) {
@@ -211,8 +217,9 @@ class UsersPage extends Component<UsersProps, UsersState> {
     }
 
     return <div className="table-body">
-      {users.map(u => {
-        return (<div className="table-row">
+      {users.map((u1, i) => {
+        let u = u1.student;
+        return (<div className="table-row" key={i}>
           <div className="publish-column">{u.created && getDateString(u.created)}</div>
           <div className="author-column">{u.firstName} {u.lastName}</div>
           <div className="see-container" style={{ position: "relative", width: "3.5%" }}>
@@ -233,16 +240,16 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <div className="second-column">{u.email}</div>
           <div className="third-column">{this.renderUserType(u)}{this.renderLibrary(u)}</div>
           <div className="second-column">
-            <div className={`attempts-count-box ${u.attempts.length > 0 ? '' : 'whiter'}`} onClick={() => {
-              if (u.attempts.length > 0) {
+            <div className={`attempts-count-box ${u1.attempts > 0 ? '' : 'whiter'}`} onClick={() => {
+              if (u.attempts > 0) {
                 this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
               }
             }}>
-              <SpriteIcon name={u.attempts.length > 0 ? "user-event-activity" : "user-event-activity-disabled"} />
+              <SpriteIcon name={u1.attempts > 0 ? "user-event-activity" : "user-event-activity-disabled"} />
               <div className="absolute-count-d4421">
-                {u.attempts.length}
+                {u1.attempts}
               </div>
-            </div>
+          </div>
           </div>
           <div className="actions-column">
             <div className="round-btn blue flex-center" onClick={() => this.props.history.push(map.UserProfile + '/' + u.id)}>
@@ -260,10 +267,11 @@ class UsersPage extends Component<UsersProps, UsersState> {
   }
 
   moveToPage(page: number) {
-    this.getUsers(this.state.userPreference, page, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
+    //this.getUsers(this.state.userPreference, page, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
   }
 
   renderPagination() {
+    /*
     return (
       <UsersPagination
         users={this.state.users}
@@ -272,7 +280,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
         pageSize={this.state.pageSize}
         moveToPage={page => this.moveToPage(page)}
       />
-    );
+    );*/
   }
 
   renderTable() {
@@ -286,7 +294,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               if (this.state.orderBy === "user.created") {
                 isAscending = !isAscending;
               }
-              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.created", isAscending);
+              //this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.created", isAscending);
             }} /></div>
           </div>
           <div className="author-column header">
@@ -296,7 +304,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               if (this.state.orderBy === "user.lastName") {
                 isAscending = !isAscending;
               }
-              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.lastName", isAscending);
+              //this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.lastName", isAscending);
             }} /></div>
           </div>
           <div style={{ width: "3.5%" }}></div>
@@ -321,7 +329,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
     if (deleteUserId === -1) { return }
     const res = await deleteUser(deleteUserId);
     if (res) {
-      this.getUsers(this.state.userPreference, this.state.page, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
+      //this.getUsers(this.state.userPreference, this.state.page, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
     } else {
       this.props.requestFailed("Can`t delete user");
     }
@@ -333,6 +341,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
   }
 
   renderClassroomPopup() {
+    /*
     return (
       <Dialog
         open={this.state.isStudentClassroomOpen}
@@ -343,7 +352,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <div>...Coming soon...</div>
         </div>
       </Dialog>
-    );
+    );*/
   }
 
   render() {
@@ -361,12 +370,16 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <UsersSidebar
             isLoaded={true} userPreference={this.state.userPreference}
             subjects={this.state.subjects}
+            dateFilter={this.state.dateFilter}
+            setDateFilter={dateFilter => {
+              this.getUsers(dateFilter);
+            }}
             selectedSubjects={this.state.selectedSubjects}
             selectSubjects={selectedSubjects => {
-              this.getUsers(this.state.userPreference, 0, selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
+              //this.getUsers(this.state.userPreference, 0, selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
             }}
             setUserPreference={userPreference => {
-              this.getUsers(userPreference, 0, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
+              //this.getUsers(userPreference, 0, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
             }}
           />
           <Grid item xs={9} className="brick-row-container">
@@ -387,7 +400,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
                   <div className="btn-sort" onClick={() => {
                     let data: any[] = [];
 
-                    for (const user of this.state.users) {
+                    for (const user2 of this.state.users) {
+                      let user = user2.student;
                       data.push({
                         Joined: user.created?.toString(),
                         Name: user.firstName + ' ' + user.lastName,
