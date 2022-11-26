@@ -10,12 +10,11 @@ import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters } from '../../model';
-import { getBackToWorkStatistics, searchBricks, getCurrentUserBricks, getBricksByStatusPerPage } from "services/axios/brick";
+import { getBackToWorkStatistics, getBricksByStatusPerPage, searchCoreBricksByStatus } from "services/axios/brick";
 import { Notification } from 'model/notifications';
 import { hideBricks } from '../../service';
 import {
-  getThreeColumnName, prepareTreeRows,
-  getThreeColumnBrick, expandThreeColumnBrick, getLongestColumn
+  getThreeColumnName, getThreeColumnBrick, expandThreeColumnBrick, getLongestColumn
 } from '../../threeColumnService';
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 
@@ -52,7 +51,7 @@ interface BuildState {
   rawBricks: Brick[]; // loaded bricks
   threeColumns: any;
   searchBricks: Brick[]; // searching bricks
-  searchThreeColumns: ThreeColumns;
+  searchThreeColumns: any;
 
   page: number;
 
@@ -156,24 +155,36 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
     await this.getBricks(0, -1);
   }
 
+  async searchBricksV2(page: number, brickStatus: BrickStatus, searchString: string) {
+    return searchCoreBricksByStatus({
+      searchString,
+      page,
+      pageSize: this.state.pageSize,
+      isCore: true,
+      brickStatuses: [brickStatus]
+    });
+  }
+
+  async getSearchBricks(page: number, searchString: string) {
+    const draftData = await this.searchBricksV2(page, BrickStatus.Draft, searchString);
+    const buildData = await this.searchBricksV2(page, BrickStatus.Build, searchString);
+    const reviewData = await this.searchBricksV2(page, BrickStatus.Review, searchString);
+
+    let threeColumns = {
+      red: { finalBricks: draftData?.bricks, count: draftData?.count || 0 },
+      yellow: { finalBricks: buildData?.bricks, count: buildData?.count || 0 },
+      green: { finalBricks: reviewData?.bricks, count: reviewData?.count || 0 }
+    } as any;
+
+    this.setState({
+      ...this.state, page, searchThreeColumns: threeColumns,
+      bricksLoaded: true, buildCheckedSubjectId: -1
+    });
+  }
+
   componentWillReceiveProps(nextProps: BuildProps) {
     if (nextProps.isSearching && nextProps.searchDataLoaded === false) {
-      this.setState({ searchBricks: [], shown: false, bricksLoaded: false, sortedIndex: 0 });
-      searchBricks(nextProps.searchString).then(bricks => {
-        if (bricks) {
-          setTimeout(() => {
-            const searchThreeColumns = prepareTreeRows(bricks, this.props.filters, this.props.user.id);
-            this.setState({
-              ...this.state, searchBricks: bricks, shown: true,
-              bricksLoaded: true, sortedIndex: 0,
-              searchThreeColumns
-            });
-            this.props.searchFinished();
-          }, 1400);
-        } else {
-          this.props.requestFailed('Can`t get bricks by search');
-        }
-      });
+      this.getSearchBricks(0, nextProps.searchString);
     }
   }
 
@@ -195,17 +206,21 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
     if (subjectId && subjectId >= 0) {
       subjectIds = [subjectId];
     }
-    const data = await getBricksByStatusPerPage({
+    return await getBricksByStatusPerPage({
       page,
       pageSize: this.state.pageSize,
       isCore: true,
       subjectIds,
       brickStatuses: [brickStatus]
     });
-    return data;
   }
 
   async getBricks(page: number, subjectId: number) {
+    if (this.props.isSearching) {
+      this.getSearchBricks(page, this.props.searchString);
+      return;
+    }
+    
     await this.setCount();
     const draftData = await this.getBrickByStatus(page, BrickStatus.Draft, subjectId);
     const buildData = await this.getBrickByStatus(page, BrickStatus.Build, subjectId);
@@ -336,6 +351,8 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
 
     const longestColumn = getLongestColumn(threeColumns);
 
+    console.log(page, pageSize, longestColumn);
+
     return (
       <BackPagePaginationV2
         sortedIndex={page * pageSize}
@@ -382,8 +399,10 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
 
     let { threeColumns } = this.state;
     if (this.props.isSearching) {
-      //threeColumns = this.state.searchThreeColumns;
+      threeColumns = this.state.searchThreeColumns;
     }
+
+    console.log(threeColumns);
 
     let isEmpty = false;
 

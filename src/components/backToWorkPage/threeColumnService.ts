@@ -22,6 +22,7 @@ const setColumnBricksByStatus = (
 }
 
 export const getLongestColumn = (threeColumns: any) => {
+  console.log(threeColumns)
   const draftLength = threeColumns.red.count;
   const reviewLength = threeColumns.yellow.count;
   const publishLenght = threeColumns.green.count;
