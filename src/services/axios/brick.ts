@@ -35,6 +35,29 @@ export const getThreeColumnBricks = async () => {
   }
 }
 
+export interface BrickStatusPerPage {
+  isCore: boolean;
+  subjectIds: number[];
+  brickStatuses: BrickStatus[];
+  page: number;
+  pageSize: number;
+}
+
+export interface BricksDataBW {
+  bricks: Brick[];
+  count: number;
+  firstStatusCount: number;
+}
+
+export const getBricksByStatusPerPage = async (data: BrickStatusPerPage) => {
+  try {
+    return await post<BricksDataBW>("/bricks/byStatus/page", data);
+  } catch {
+    return null;
+  }
+}
+
+
 export const getPersonalBricks = async () => {
   try {
     return await get<Brick[]>("/bricks/personal");

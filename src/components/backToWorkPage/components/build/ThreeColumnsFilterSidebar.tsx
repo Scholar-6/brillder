@@ -3,8 +3,8 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
 import './FilterSidebar.scss';
-import { Brick } from "model/brick";
 import { Filters } from '../../model';
+import { clearStatusFilters } from '../../service';
 import EmptyFilterSidebar from "../EmptyFilter";
 import { SubjectItem } from "../personalBuild/model";
 import { User } from "model/user";
@@ -26,10 +26,7 @@ enum FilterFields {
 interface FilterSidebarProps {
   history: any;
   user: User;
-  draftCount: number;
-  buildCount: number;
-  reviewCount: number;
-
+  threeColumns: any;
   filters: Filters;
   isEmpty: boolean;
   subjects: SubjectItem[];
@@ -91,7 +88,13 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     filters[filter] = !filters[filter];
     this.filterClear();
     this.props.filterChanged(filters);
-    console.log('filter changed')
+  }
+
+  clearStatus() {
+    const { filters } = this.props;
+    clearStatusFilters(filters);
+    this.filterClear();
+    this.props.filterChanged(filters);
   }
 
   filterClear() {
@@ -103,7 +106,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     }
   }
 
-  renderInbox = () => {
+  renderInbox = (draft: number, build: number, review: number) => {
     return (
       <div>
         <div className="filter-container sort-by-box">
@@ -115,21 +118,21 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
               checked={this.props.filters.draft}
               control={<Radio onClick={() => this.toggleFilter(FilterFields.Draft)} className={"filter-radio custom-color"} />}
               label="Draft" />
-            <div className="right-index">{this.props.draftCount}</div>
+            <div className="right-index">{draft}</div>
           </div>
           <div className="index-box color2">
             <FormControlLabel
               checked={this.props.filters.build}
               control={<Radio onClick={() => this.toggleFilter(FilterFields.Build)} className={"filter-radio custom-color"} />}
               label="Submitted for Review" />
-            <div className="right-index">{this.props.buildCount}</div>
+            <div className="right-index">{build}</div>
           </div>
           <div className="index-box color5">
             <FormControlLabel
               checked={this.props.filters.review}
               control={<Radio onClick={e => this.toggleFilter(FilterFields.Review)} className={"filter-radio custom-color"} />}
               label="Pending Publication" />
-            <div className="right-index">{this.props.reviewCount}</div>
+            <div className="right-index">{review}</div>
           </div>
         </div>
       </div>
@@ -175,12 +178,24 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
       return <EmptyFilterSidebar history={this.props.history} isCore={true} />;
     }
 
+    let draft = 0;
+    let build = 0;
+    let publication = 0;
+
+    const { threeColumns, filters } = this.props;
+
+    if (filters.draft && filters.review && filters.build) {
+      draft = threeColumns.red.count;
+      build = threeColumns.yellow.count;
+      publication = threeColumns.green.count;
+    }
+
     return (
       <Grid container item xs={3} className="sort-and-filter-container build-filter">
         <div className="flex-height-box">
           <div className="sort-box">
             <div>
-              {this.renderInbox()}
+              {this.renderInbox(draft, build, publication)}
               <div className="filter-header">
                 <span>Subjects</span>
               </div>

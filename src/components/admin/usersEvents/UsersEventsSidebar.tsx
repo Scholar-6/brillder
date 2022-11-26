@@ -4,7 +4,6 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import { UserPreferenceType } from "model/user";
 import SubjectsSelect from "../components/SubjectsSelect";
 import { Subject } from "model/brick";
-import { PDateFilter } from "./UsersSidebar";
 
 interface FilterSidebarProps {
   isLoaded: boolean;
@@ -13,9 +12,6 @@ interface FilterSidebarProps {
   selectedSubjects: Subject[];
   selectSubjects(s: Subject[]): void;
   setUserPreference(userPreference: UserPreferenceType | null): void;
-
-  dateFilter: PDateFilter;
-  setDateFilter(dateFilter: PDateFilter): void;
 }
 
 export enum SortClassroom {
@@ -37,38 +33,11 @@ class UsersSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   }
   
   render() {
-    const { userPreference, dateFilter } = this.props;
+    const { userPreference } = this.props;
     return (
       <Grid container item xs={3} className="sort-and-filter-container teach-assigned">
         <div className="sort-box">
           <div className="bold font1-5">Admin Data Dashboard</div>
-        </div>
-        <div className="filter-header">Date</div>
-        <div className="sort-radio-btns filter-row margin-smaller top-margin-bigger">
-          <FormControlLabel
-            checked={dateFilter === PDateFilter.Past24Hours}
-            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.Past24Hours)} className={"filter-radio custom-color"} />}
-            label="Past 24 hours" />
-          <FormControlLabel
-            checked={dateFilter === PDateFilter.PastWeek}
-            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.PastWeek)} className={"filter-radio custom-color"} />}
-            label="Past week" />
-        </div>
-        <div className="sort-radio-btns filter-row margin-smaller">
-          <FormControlLabel
-            checked={dateFilter === PDateFilter.PastMonth}
-            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.PastMonth)} className={"filter-radio custom-color"} />}
-            label="Past month" />
-          <FormControlLabel
-            checked={dateFilter === PDateFilter.PastYear}
-            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.PastYear)} className={"filter-radio custom-color"} />}
-            label="Past year" />
-        </div>
-        <div className="sort-radio-btns filter-row margin-smaller">
-          <FormControlLabel
-            checked={dateFilter === PDateFilter.AllTime}
-            control={<Radio onClick={() => this.props.setDateFilter(PDateFilter.AllTime)} className={"filter-radio custom-color"} />}
-            label="All time" />
         </div>
         <div className="filter-header">User Type</div>
         <div className="sort-radio-btns filter-row margin-smaller top-margin-bigger">
