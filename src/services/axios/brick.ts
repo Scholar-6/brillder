@@ -288,6 +288,22 @@ export const searchBricks = async (searchString: string = '') => {
   }
 }
 
+interface SearchCoreBrickStatuses {
+  searchString: string;
+  brickStatuses: BrickStatus[];
+  isCore: boolean;
+  page: number;
+  pageSize: number;
+}
+
+export const searchCoreBricksByStatus = async (data: SearchCoreBrickStatuses) => {
+  try {
+    return await post<BricksDataBW>("/bricks/byStatus/search/page", data);
+  } catch {
+    return null;
+  }
+}
+
 export const searchPaginateBricks = async (searchString: string = '', page: number, pageSize: number, isCore: boolean) => {
   try {
     return await post<PageBricks>(`/bricks/search/public/page/${page}`, { searchString, pageSize, isCore, });
