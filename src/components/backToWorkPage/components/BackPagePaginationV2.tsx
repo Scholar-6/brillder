@@ -16,7 +16,6 @@ interface BackPageTitleProps {
 const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
   sortedIndex, longestColumn, pageSize, isRed, moveNext, moveBack
 }) => {
-  pageSize = pageSize / 3;
   const showPrev = sortedIndex >= pageSize;
   const showNext = sortedIndex + pageSize < longestColumn;
 
