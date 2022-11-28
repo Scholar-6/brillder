@@ -8,6 +8,7 @@ interface CategoryItem {
   type: ESubjectCategory;
 }
 
+
 interface Props {
   subjectCategory: ESubjectCategory;
   selectCategory(sg: ESubjectCategory): void;
@@ -46,6 +47,7 @@ const CategorySelect: React.FC<Props> = (props) => {
           MenuProps={{ classes: { paper: 'select-classes-list' } }}
           value={props.subjectCategory}
           onChange={(e) => {
+            console.log('select category', e.target.value);
             props.selectCategory(e.target.value as ESubjectCategory);
           }}
         >

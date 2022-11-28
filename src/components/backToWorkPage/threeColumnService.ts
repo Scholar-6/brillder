@@ -1,30 +1,14 @@
 import { Brick, BrickStatus } from 'model/brick';
-import { ThreeColumns, Filters, ThreeColumnNames } from './model';
-import {filterByStatus, filterByPrivate, filterByCore } from './service';
+import { ThreeColumns, ThreeColumnNames } from './model';
 
 const prepareBrickData = (data: any[], brick: Brick, index: number, key: number, row: number) => {
   data.push({ brick: brick, key, index, row });
 }
 
-const setColumnBricksByStatus = (
-  res: ThreeColumns, filters: Filters, userId: number,
-  name: ThreeColumnNames, bricks: Brick[], status: BrickStatus
-) => {
-  let bs = filterByStatus(bricks, status);
-  let finalBs = [];
-  if (!filters.isCore) {
-    finalBs = filterByPrivate(bs);
-  } else {
-    finalBs = filterByCore(bs);
-  }
-  finalBs = finalBs.sort(b => (b.editors && b.editors.find(e => e.id === userId)) ? -1 : 1);
-  res[name] = { rawBricks: bs, finalBricks: finalBs };
-}
-
-export const getLongestColumn = (threeColumns: ThreeColumns) => {
-  const draftLength = threeColumns.red.finalBricks.length;
-  const reviewLength = threeColumns.yellow.finalBricks.length;
-  const publishLenght = threeColumns.green.finalBricks.length;
+export const getLongestColumn = (threeColumns: any) => {
+  const draftLength = threeColumns.red.count;
+  const reviewLength = threeColumns.yellow.count;
+  const publishLenght = threeColumns.green.count;
   return Math.max(draftLength, reviewLength, publishLenght);
 }
 
@@ -49,24 +33,13 @@ export const expandThreeColumnBrick = (threeColumns: ThreeColumns, name: ThreeCo
   }
 }
 
-export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: number) => {
-  let threeColumns = {} as ThreeColumns;
-  if (filters) {
-    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Red, bricks, BrickStatus.Draft);
-    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Yellow, bricks, BrickStatus.Build);
-    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Green, bricks, BrickStatus.Review);
-    threeColumns.red.finalBricks.unshift({isCreateLink: true} as Brick);
-  }
-  return threeColumns;
-}
-
-export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: number, threeColumns: ThreeColumns, loaded: boolean) => {
+export const prepareVisibleThreeColumnBricks = (threeColumns: any, loaded: boolean) => {
   let data: any[] = [];
   let count = 0;
 
-  const isFirstEmpty = threeColumns.red.finalBricks.length === 0;
-  const isSecondEmpty = threeColumns.yellow.finalBricks.length === 0;
-  const isThirdEmpty = threeColumns.green.finalBricks.length === 0;
+  const isFirstEmpty = threeColumns.red.count === 0;
+  const isSecondEmpty = threeColumns.yellow.count === 0;
+  const isThirdEmpty = threeColumns.green.count === 0;
 
   if (loaded) {
     if (isFirstEmpty) {
@@ -88,28 +61,27 @@ export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: n
     }
   }
 
-  for (let i = 0 + sortedIndex; i < (pageSize / 3) + sortedIndex; i++) {
+  for (let i = 0; i < 5; i++) {
     let brick = threeColumns.red.finalBricks[i];
-    let row = i - sortedIndex + 1;
     
     if (brick) {
-      prepareBrickData(data, brick, i, count, row);
+      prepareBrickData(data, brick, i, count, 1);
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
+      prepareBrickData(data, {} as Brick, i, count, 1);
     }
     count++;
     brick = threeColumns.yellow.finalBricks[i];
     if (brick) {
-      prepareBrickData(data, brick, i, count, row);
+      prepareBrickData(data, brick, i, count, 1);
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
+      prepareBrickData(data, {} as Brick, i, count, 1);
     }
     count++;
     brick = threeColumns.green.finalBricks[i];
     if (brick) {
-      prepareBrickData(data, brick, i, count, row);
+      prepareBrickData(data, brick, i, count, 1);
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
+      prepareBrickData(data, {} as Brick, i, count, 1);
     }
     count++;
   }

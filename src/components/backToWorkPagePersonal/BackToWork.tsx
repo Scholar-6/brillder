@@ -6,7 +6,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { User } from "model/user";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import BuildPage from './components/build/BuildPage';
+import BuildPage from './components/personalBuild/BuildPage';
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
