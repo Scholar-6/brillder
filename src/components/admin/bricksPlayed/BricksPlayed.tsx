@@ -169,6 +169,23 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     return subjects;
   }
 
+  sortSubjectsBasedonBricks(subjects: Subject[], bricks: Brick[]) {
+    subjects.sort((a, b) => {
+      if(a.name < b.name) { return -1; }
+      if(a.name > b.name) { return 1; }
+      return 0;
+    });
+    subjects.map(s => s.count = 0);
+    for (let brick of bricks) {
+      const subject = subjects.find(s => s.id === brick.subjectId);
+      if (subject) {
+        subject.count += 1;
+      }
+    }
+    
+    return subjects.sort((a, b) => b.count - a.count);
+  }
+
   async loadInitPlayedData() {
     const bricks = await adminGetBrickAtemptStatistic(PDateFilter.Past24Hours);
     if (bricks) {
@@ -176,9 +193,10 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         if (!b.datePublished) {
           b.datePublished = b.created;
         }
-      })
+      });
       const sortedBricks = this.sortBricks(SortBy.Played, bricks, false);
-      this.setState({ bricks: sortedBricks, finalBricks: sortedBricks });
+      const subjects = this.sortSubjectsBasedonBricks(this.state.subjects, sortedBricks);
+      this.setState({ bricks: sortedBricks, subjects, finalBricks: sortedBricks });
     }
 
     const subjects = await getSubjects();
@@ -211,7 +229,8 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     const bricks = await adminGetBrickAtemptStatistic(dateFilter);
     if (bricks) {
       const finalBricks = this.filterAndSort(bricks, this.state.selectedSubjects, this.state.sortBy, false);
-      this.setState({ bricks, dateFilter, finalBricks });
+      const subjects = this.sortSubjectsBasedonBricks(this.state.subjects, finalBricks);
+      this.setState({ bricks, subjects, dateFilter, finalBricks });
     }
   }
 
@@ -316,7 +335,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           <div className="author-column">{b.author.firstName} {b.author.lastName}</div>
           <div className="second-column" onClick={async (e) => {
             e.stopPropagation();
-            console.log(b);
             const data = await getAdminBrickStatistic(b.id);
             if (data) {
               this.setState({ brickIdPlayers: b.id, brickAttempts: data.attempts })
@@ -435,7 +453,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
               }
             }}
             subjectCategory={this.state.subjectCategory} setSubjectCategory={subjectCategory => {
-              console.log(55, subjectCategory);
               let { selectedSubjects } = this.state;
               if (subjectCategory === ESubjectCategory.Arts) {
                 this.selectCategorySubjects(this.state.artSubjects);
@@ -447,19 +464,16 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                 this.selectCategorySubjects(this.state.generalSubject);
                 selectedSubjects = [...this.state.generalSubject];
               } else if (subjectCategory === ESubjectCategory.Languages) {
-                this.selectCategorySubjects(this.state.generalSubject);
+                this.selectCategorySubjects(this.state.languageSubjects);
                 selectedSubjects = [...this.state.languageSubjects];
               } else if (subjectCategory === ESubjectCategory.Math) {
-                this.selectCategorySubjects(this.state.generalSubject);
+                this.selectCategorySubjects(this.state.mathSubjects);
                 selectedSubjects = [...this.state.mathSubjects];
               } else if (subjectCategory === ESubjectCategory.Science) {
-                this.selectCategorySubjects(this.state.generalSubject);
+                this.selectCategorySubjects(this.state.scienceSubjects);
                 selectedSubjects = [...this.state.scienceSubjects];
               } else if (subjectCategory === ESubjectCategory.Everything) {
                 this.selectCategorySubjects([]);
-                selectedSubjects = [];
-              } else {
-                this.selectCategorySubjects(this.state.generalSubject);
                 selectedSubjects = [];
               }
 
