@@ -13,3 +13,5 @@ export const UnauthBrickCash = 'UnauthBrickCash';
 export const VolumeToggle = 'VolumeToggle';
 export const UserBrills = 'UserBrills';
 export const Origin = 'Origin';
+
+export const AdminDashboardBricksFilters = 'AdminDashboardBricksFilters';

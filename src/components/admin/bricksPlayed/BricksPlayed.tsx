@@ -21,6 +21,7 @@ import { stripHtml } from "components/build/questionService/ConvertService";
 import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
+import { AdminBricksFilters, GetAdminBricksFilters, SetAdminBricksFilters } from "localStorage/admin";
 
 enum SortBy {
   Published,
@@ -63,17 +64,26 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
+    let dateFilter = PDateFilter.Past24Hours;
+    let subjectCategory = ESubjectCategory.Everything;
+
+    const filters = GetAdminBricksFilters();
+    if (filters) {
+      dateFilter = filters.dateFilter;
+      subjectCategory = filters.subjectCategory;
+    }
+
     this.state = {
       isSearching: false,
       searchString: '',
       downloadClicked: false,
       sortBy: SortBy.Played,
       isAscending: false,
-      dateFilter: PDateFilter.Past24Hours,
-      subjectCategory: ESubjectCategory.Everything,
+      dateFilter,
+      subjectCategory,
+      selectedSubjects: [],
       bricks: [],
       subjects: [],
-      selectedSubjects: [],
       finalBricks: [],
       artSubjects: [],
       humanitySubjects: [],
@@ -85,7 +95,11 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       brickIdPlayers: -1,
       brickAttempts: []
     }
-    this.loadInitPlayedData();
+    this.loadInitPlayedData(filters || {
+      dateFilter,
+      subjectCategory,
+      selectedSubjectIds: []
+    });
   }
 
   sortBricks(sortBy: SortBy, bricks: Brick[], isAscending: boolean) {
@@ -116,7 +130,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         return bricks.sort((a, b) => {
           let aT = stripHtml(a.title).toLocaleLowerCase();
           let bT = stripHtml(b.title).toLocaleLowerCase();
-  
+
           return aT > bT ? -1 : 1;
         });
       }
@@ -171,8 +185,8 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
 
   sortSubjectsBasedonBricks(subjects: Subject[], bricks: Brick[]) {
     subjects.sort((a, b) => {
-      if(a.name < b.name) { return -1; }
-      if(a.name > b.name) { return 1; }
+      if (a.name < b.name) { return -1; }
+      if (a.name > b.name) { return 1; }
       return 0;
     });
     subjects.map(s => s.count = 0);
@@ -182,12 +196,12 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         subject.count += 1;
       }
     }
-    
+
     return subjects.sort((a, b) => b.count - a.count);
   }
 
-  async loadInitPlayedData() {
-    const bricks = await adminGetBrickAtemptStatistic(PDateFilter.Past24Hours);
+  async loadInitPlayedData(filters: AdminBricksFilters) {
+    const bricks = await adminGetBrickAtemptStatistic(filters.dateFilter);
     if (bricks) {
       bricks.map(b => {
         if (!b.datePublished) {
@@ -195,33 +209,46 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         }
       });
       const sortedBricks = this.sortBricks(SortBy.Played, bricks, false);
-      const subjects = this.sortSubjectsBasedonBricks(this.state.subjects, sortedBricks);
-      this.setState({ bricks: sortedBricks, subjects, finalBricks: sortedBricks });
-    }
 
-    const subjects = await getSubjects();
-    if (subjects) {
-      const generalSubject = this.fillSubjects(subjects, [GENERAL_SUBJECT]);
 
-      const artSubjectNames = ['History of Art', "Art & Design", 'Design & Technology', "Drama & Theatre", 'Music'];
-      const artSubjects = this.fillSubjects(subjects, artSubjectNames);
+      this.setState({ bricks: sortedBricks, finalBricks: sortedBricks });
 
-      const mathSubjectNames = ['Maths', "Computer Science"]
-      const mathSubjects = this.fillSubjects(subjects, mathSubjectNames);
+      const subjects = await getSubjects();
+      if (subjects) {
+        const generalSubject = this.fillSubjects(subjects, [GENERAL_SUBJECT]);
 
-      const scienceSubjectNames = ['Chemistry', 'Biology, Health & Care, Health & Care', 'Physics'];
-      const scienceSubjects = this.fillSubjects(subjects, scienceSubjectNames);
+        const artSubjectNames = ['History of Art', "Art & Design", 'Design & Technology', "Drama & Theatre", 'Music'];
+        const artSubjects = this.fillSubjects(subjects, artSubjectNames);
 
-      const languageNames = ['French', 'German', 'Chinese', 'Spanish', 'English Language', 'Classics'];
-      const languageSubjects = this.fillSubjects(subjects, languageNames);
+        const mathSubjectNames = ['Maths', "Computer Science"]
+        const mathSubjects = this.fillSubjects(subjects, mathSubjectNames);
 
-      const humanitySubjectNames = [
-        'English Literature', 'Religion & Philosophy', 'History & Politics',
-        'Geography', 'Economics', 'Psychology', 'Sociology', 'Criminology'
-      ];
-      const humanitySubjects = this.fillSubjects(subjects, humanitySubjectNames);
+        const scienceSubjectNames = ['Chemistry', 'Biology, Health & Care, Health & Care', 'Physics'];
+        const scienceSubjects = this.fillSubjects(subjects, scienceSubjectNames);
 
-      this.setState({ subjects, artSubjects, mathSubjects, languageSubjects, humanitySubjects, generalSubject, scienceSubjects });
+        const languageNames = ['French', 'German', 'Chinese', 'Spanish', 'English Language', 'Classics'];
+        const languageSubjects = this.fillSubjects(subjects, languageNames);
+
+        const humanitySubjectNames = [
+          'English Literature', 'Religion & Philosophy', 'History & Politics',
+          'Geography', 'Economics', 'Psychology', 'Sociology', 'Criminology'
+        ];
+        const humanitySubjects = this.fillSubjects(subjects, humanitySubjectNames);
+
+        const finalSubjects = this.sortSubjectsBasedonBricks(subjects, sortedBricks);
+
+        this.setState({
+          subjects: finalSubjects, artSubjects, mathSubjects,
+          languageSubjects, humanitySubjects, generalSubject, scienceSubjects
+        });
+
+
+        if (filters.subjectCategory) {
+          this.setSubjectCategory(filters.subjectCategory);
+        } else if (filters.selectedSubjectIds && filters.selectedSubjectIds.length > 0) {
+          this.checkSubjects(finalSubjects, filters.selectedSubjectIds);
+        }
+      }
     }
   }
 
@@ -328,7 +355,14 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
 
     return <div className="table-body">
       {finalBricks.map((b, i) => {
-        return (<div className="table-row clickable" key={i} onClick={() => this.props.history.push(playCover(b))}>
+        return (<div className="table-row clickable" key={i} onClick={() => {
+          SetAdminBricksFilters({
+            dateFilter: this.state.dateFilter,
+            subjectCategory: this.state.subjectCategory,
+            selectedSubjectIds: this.state.selectedSubjects.map(s => s.id)
+          });
+          this.props.history.push(playCover(b));
+        }}>
           <div className="publish-column">{renderDate(b)}</div>
           {renderSubjectColumn(b)}
           <div className="first-column" dangerouslySetInnerHTML={{ __html: b.title }} />
@@ -425,6 +459,48 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     this.setState({ subjects: this.state.subjects });
   }
 
+  checkSubjects(subjects: Subject[], subjectIds: number[]) {
+    for (let subjectId of subjectIds) {
+      const subject = subjects.find(s => s.id === subjectId);
+      if (subject) {
+        subject.checked = true;
+      }
+    }
+    console.log(subjects);
+    const selectedSubjects = subjects.filter(s => s.checked);
+    const finalBricks = this.filterAndSort(this.state.bricks, selectedSubjects, this.state.sortBy, this.state.isAscending);
+    this.setState({ selectedSubjects, finalBricks });
+  }
+
+  setSubjectCategory(subjectCategory: ESubjectCategory) {
+    let { selectedSubjects } = this.state;
+    if (subjectCategory === ESubjectCategory.Arts) {
+      this.selectCategorySubjects(this.state.artSubjects);
+      selectedSubjects = [...this.state.artSubjects];
+    } else if (subjectCategory === ESubjectCategory.Humanities) {
+      this.selectCategorySubjects(this.state.humanitySubjects);
+      selectedSubjects = [...this.state.humanitySubjects];
+    } else if (subjectCategory === ESubjectCategory.General) {
+      this.selectCategorySubjects(this.state.generalSubject);
+      selectedSubjects = [...this.state.generalSubject];
+    } else if (subjectCategory === ESubjectCategory.Languages) {
+      this.selectCategorySubjects(this.state.languageSubjects);
+      selectedSubjects = [...this.state.languageSubjects];
+    } else if (subjectCategory === ESubjectCategory.Math) {
+      this.selectCategorySubjects(this.state.mathSubjects);
+      selectedSubjects = [...this.state.mathSubjects];
+    } else if (subjectCategory === ESubjectCategory.Science) {
+      this.selectCategorySubjects(this.state.scienceSubjects);
+      selectedSubjects = [...this.state.scienceSubjects];
+    } else if (subjectCategory === ESubjectCategory.Everything) {
+      this.selectCategorySubjects([]);
+      selectedSubjects = [];
+    }
+
+    const finalBricks = this.filterAndSort(this.state.bricks, selectedSubjects, this.state.sortBy, this.state.isAscending);
+    this.setState({ subjectCategory, finalBricks, selectedSubjects });
+  }
+
   render() {
     return (
       <div className="main-listing user-list-page manage-classrooms-page bricks-played-page only-bricks-played-page">
@@ -452,34 +528,8 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                 this.setState({ selectedSubjects, finalBricks });
               }
             }}
-            subjectCategory={this.state.subjectCategory} setSubjectCategory={subjectCategory => {
-              let { selectedSubjects } = this.state;
-              if (subjectCategory === ESubjectCategory.Arts) {
-                this.selectCategorySubjects(this.state.artSubjects);
-                selectedSubjects = [...this.state.artSubjects];
-              } else if (subjectCategory === ESubjectCategory.Humanities) {
-                this.selectCategorySubjects(this.state.humanitySubjects);
-                selectedSubjects = [...this.state.humanitySubjects];
-              } else if (subjectCategory === ESubjectCategory.General) {
-                this.selectCategorySubjects(this.state.generalSubject);
-                selectedSubjects = [...this.state.generalSubject];
-              } else if (subjectCategory === ESubjectCategory.Languages) {
-                this.selectCategorySubjects(this.state.languageSubjects);
-                selectedSubjects = [...this.state.languageSubjects];
-              } else if (subjectCategory === ESubjectCategory.Math) {
-                this.selectCategorySubjects(this.state.mathSubjects);
-                selectedSubjects = [...this.state.mathSubjects];
-              } else if (subjectCategory === ESubjectCategory.Science) {
-                this.selectCategorySubjects(this.state.scienceSubjects);
-                selectedSubjects = [...this.state.scienceSubjects];
-              } else if (subjectCategory === ESubjectCategory.Everything) {
-                this.selectCategorySubjects([]);
-                selectedSubjects = [];
-              }
-
-              const finalBricks = this.filterAndSort(this.state.bricks, selectedSubjects, this.state.sortBy, this.state.isAscending);
-              this.setState({ subjectCategory, finalBricks, selectedSubjects });
-            }}
+            subjectCategory={this.state.subjectCategory}
+            setSubjectCategory={this.setSubjectCategory.bind(this)}
           />
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Bricks} history={this.props.history} />
