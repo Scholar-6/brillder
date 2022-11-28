@@ -2,7 +2,7 @@ import React from "react";
 import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapper";
 
 import './BuildMultipleDialog.scss';
-
+ 
 interface SkipTutorialDialogProps {
   open: boolean;
   goHome(): void;
@@ -16,10 +16,7 @@ const BuildMultipleDialog: React.FC<SkipTutorialDialogProps> = ({
     <BaseDialogWrapper open={open} className="build-multiple-dialog" close={close} submit={close}>
       <div className="dialog-header bold">
         <div className="flex-center bigger-text">
-          This brick is currently being worked on in another location. 
-        </div>
-        <div>
-          To ensure compatibility, please close this tab and return to the earlier-opened version
+          Warning: either you have another build window open, or this brick is being worked on by another user.
         </div>
       </div>
       <div className="dialog-footer">
