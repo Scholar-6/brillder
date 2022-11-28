@@ -291,6 +291,20 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       if (title.indexOf(searchString) >= 0) {
         return true;
       }
+      if (b.author) {
+        const {author} = b;
+        if (author.firstName) {
+          if (author.firstName.indexOf(searchString) >= 0) {
+            return true;
+          }
+        }
+
+        if (author.lastName) {
+          if (author.firstName.indexOf(searchString) >= 0) {
+            return true;
+          }
+        }
+      }
       return false;
     });
 
@@ -301,8 +315,8 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
 
   async searching(searchString: string) {
     if (searchString.length === 0) {
-      //await this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, searchString, this.state.orderBy, this.state.isAscending);
-      this.setState({ ...this.state, searchString, isSearching: false });
+      const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending);
+      this.setState({ ...this.state, searchString, isSearching: false, finalBricks });
     } else {
       this.setState({ ...this.state, searchString });
     }
