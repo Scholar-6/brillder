@@ -1,6 +1,6 @@
 {
   "name": "brillder",
-  "version": "16.0.3",
+  "version": "16.0.5",
   "private": false,
   "dependencies": {
     "@datadog/datadog-ci": "^1.13.1",
