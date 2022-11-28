@@ -120,7 +120,6 @@ class ClassesSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             }}
             onChange={(e) => {
               const values = e.target.value as number[];
-              console.log(values);
               let subjects = [];
               for (let id of values) {
                 let subject = this.props.subjects.find(s => s.id === id);
