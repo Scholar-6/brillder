@@ -9,7 +9,7 @@ import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus } from "model/brick"
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { Filters, SortBy } from '../../model';
-import {  searchBricks } from "services/axios/brick";
+import { getBackToWorkStatistics, searchBricks } from "services/axios/brick";
 import { Notification } from 'model/notifications';
 
 import map from "components/map";
@@ -36,57 +36,21 @@ interface BuildProps {
 }
 
 interface BuildState {
-  isTeach: boolean;
-  isAdmin: boolean;
-  isEditor: boolean;
-
   personalDraftCount: number;
   personalPublishCount: number;
   publishedCount: number;
 
-  shown: boolean;
-  sortBy: SortBy;
-  sortedIndex: number;
   filters: Filters;
-  pageSize: number;
-
-  deleteDialogOpen: boolean;
-  deleteBrickId: number;
-
-
-  buildCheckedSubjectId: number;
-
-  bricksLoaded: boolean;
 }
 
 class BuildPage extends Component<BuildProps, BuildState> {
   constructor(props: BuildProps) {
     super(props);
 
-    const isTeach = checkTeacher(this.props.user);
-    const isAdmin = checkAdmin(this.props.user.roles);
-    const isEditor = checkEditor(this.props.user.roles)
-
     this.state = {
-      isAdmin,
-      isTeach,
-      isEditor,
-
-      shown: true,
-      pageSize: 15,
-
-      sortBy: SortBy.None,
-      sortedIndex: 0,
-      deleteDialogOpen: false,
-      deleteBrickId: -1,
-
       publishedCount: 0,
       personalDraftCount: 0,
       personalPublishCount: 0,
-
-      bricksLoaded: false,
-
-      buildCheckedSubjectId: -1,
 
       filters: {
         draft: true,
@@ -104,7 +68,23 @@ class BuildPage extends Component<BuildProps, BuildState> {
         s60: false
       },
     }
+
+    this.setCount();
   }
+
+  async setCount() {
+    const bricksCount = await getBackToWorkStatistics(true, true, false);
+    if (bricksCount) {
+      if (bricksCount.publishedCount != undefined && bricksCount.personalDraftCount != undefined && bricksCount.personalPublishCount != undefined) {
+        this.setState({
+          personalDraftCount: bricksCount.personalDraftCount,
+          personalPublishCount: bricksCount.personalPublishCount,
+          publishedCount: bricksCount.publishedCount
+        });
+      }
+    }
+  }
+
 
   isThreeColumns() {
     const { filters } = this.state;
@@ -125,31 +105,43 @@ class BuildPage extends Component<BuildProps, BuildState> {
   render() {
     const { history } = this.props;
     if (isPhone()) {
-      history.push(map.backToWorkUserBased(this.props.user));
+      history.push(map.MainPage);
       return <PageLoader content="" />;
     }
 
     if (this.isThreeColumns()) {
       return <ThreeColumnsPage
+        personalDraftCount={this.state.personalDraftCount}
+        personalPublishCount={this.state.personalPublishCount}
+        publishedCount={this.state.publishedCount}
+
         filters={this.state.filters}
         filterUpdated={this.filterUpdated.bind(this)}
+
         isSearching={this.props.isSearching}
         searchString={this.props.searchString}
         searchDataLoaded={this.props.searchDataLoaded}
+        searchFinished={() => this.props.searchFinished()}
+
         location={this.props.location}
         history={this.props.history}
-        searchFinished={() => this.props.searchFinished()}
       />;
     }
     return <BuildPageV2
+      personalDraftCount={this.state.personalDraftCount}
+      personalPublishCount={this.state.personalPublishCount}
+      publishedCount={this.state.publishedCount}
+
       filters={this.state.filters}
       filterUpdated={this.filterUpdated.bind(this)}
+
       isSearching={this.props.isSearching}
       searchString={this.props.searchString}
       searchDataLoaded={this.props.searchDataLoaded}
+      searchFinished={() => this.props.searchFinished()}
+
       location={this.props.location}
       history={this.props.history}
-      searchFinished={() => this.props.searchFinished()}
     />
   }
 }

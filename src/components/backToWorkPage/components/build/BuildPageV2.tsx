@@ -10,10 +10,10 @@ import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { Filters, SortBy } from '../../model';
-import { getBackToWorkStatistics, searchBricks, getBricksByStatusPerPage } from "services/axios/brick";
+import { searchBricks, getBricksByStatusPerPage } from "services/axios/brick";
 import { Notification } from 'model/notifications';
 import {
-  filterBricks, hideBricks, expandBrick, expandSearchBrick, removeBrickFromList
+  hideBricks, expandBrick, expandSearchBrick, removeBrickFromList
 } from '../../service';
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 
@@ -33,6 +33,10 @@ interface BuildProps {
   searchString: string;
   isSearching: boolean;
   searchDataLoaded: boolean;
+
+  personalDraftCount: number;
+  personalPublishCount: number;
+  publishedCount: number;
 
   user: User;
   history: any;
@@ -56,11 +60,6 @@ interface BuildState {
   isTeach: boolean;
   isAdmin: boolean;
   isEditor: boolean;
-
-
-  personalDraftCount: number;
-  personalPublishCount: number;
-  publishedCount: number;
 
   shown: boolean;
   sortBy: SortBy;
@@ -115,10 +114,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
       deleteDialogOpen: false,
       deleteBrickId: -1,
 
-      publishedCount: 0,
-      personalDraftCount: 0,
-      personalPublishCount: 0,
-
       bricksLoaded: false,
 
       buildCheckedSubjectId: - 1,
@@ -131,7 +126,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   async getInitData() {
-    await this.setCount();
     const subjects = await getSubjects();
     if (subjects) {
       this.setState({subjects});
@@ -167,19 +161,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
           this.props.requestFailed('Can`t get bricks by search');
         }
       });
-    }
-  }
-
-  async setCount() {
-    const bricksCount = await getBackToWorkStatistics(true, true, false);
-    if (bricksCount) {
-      if (bricksCount.publishedCount != undefined && bricksCount.personalDraftCount != undefined && bricksCount.personalPublishCount != undefined) {
-        this.setState({
-          personalDraftCount: bricksCount.personalDraftCount,
-          personalPublishCount: bricksCount.personalPublishCount,
-          publishedCount: bricksCount.publishedCount
-        });
-      }
     }
   }
 
@@ -413,8 +394,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
         />
         <Grid item xs={9} className="brick-row-container">
           <Tab
-            draft={this.state.personalDraftCount}
-            selfPublish={this.state.personalPublishCount}
+            draft={this.props.personalDraftCount}
+            selfPublish={this.props.personalPublishCount}
             onCoreSwitch={() => {
               this.props.history.push(map.BackToWorkPagePersonal);
             }}
@@ -424,7 +405,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
               user={this.props.user}
               selectedSubjectId={this.state.buildCheckedSubjectId}
               finalBricks={finalBricks}
-              publishedCount={this.state.publishedCount}
+              publishedCount={this.props.publishedCount}
               draftCount={this.state.draftCount}
               buildCount={this.state.buildCount}
               reviewCount={this.state.reviewCount}
