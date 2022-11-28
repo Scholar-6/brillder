@@ -520,7 +520,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       <div className="main-listing user-list-page manage-classrooms-page bricks-played-page only-bricks-played-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
-          placeholder="Brick Title, Student Name, or Subject"
+          placeholder="Brick Title or Author Name"
           user={this.props.user}
           history={this.props.history}
           search={() => this.search()}
