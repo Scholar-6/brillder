@@ -294,13 +294,13 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       if (b.author) {
         const {author} = b;
         if (author.firstName) {
-          if (author.firstName.indexOf(searchString) >= 0) {
+          if (author.firstName.toLocaleLowerCase().indexOf(searchString) >= 0) {
             return true;
           }
         }
 
         if (author.lastName) {
-          if (author.firstName.indexOf(searchString) >= 0) {
+          if (author.lastName.toLocaleLowerCase().indexOf(searchString) >= 0) {
             return true;
           }
         }
