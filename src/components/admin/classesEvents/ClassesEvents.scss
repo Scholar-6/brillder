@@ -69,8 +69,17 @@
       }
     }
 
+    .table {
+      overflow-x: auto;
+
+      .table-container {
+        width: 133vw;
+      }
+    }
+
     .table-head {
       margin-top: 2vh;
+      margin-bottom: 1.6vh;
       display: flex;
       font-size: 1.2vw;
 
@@ -86,18 +95,49 @@
       }
     }
     .name-column {
-      padding-left: 1.5%;
-      width: 25%;
+      padding-left: 1% !important;
+      width: 18% !important;
     }
-    .creator-column {
-      width: 25%;
-    }
-    .domain-column {
-      width: 25%;
-
+    .created-at-column {
+      width: 10%;
     }
     .students-column {
-      width: 12.5%;
+      width: 8%;
+
+      svg {
+        width: 2.3vw;
+        height: 2.3vw;
+        margin-right: 0.5vw;
+      }
+
+      .bigger {
+        font-size: 1.4vw;
+        margin-bottom: 0.26vw;
+      }
+    }
+    .bricks-column {
+      width: 8%;
+      .bricks-book-icon {
+        margin-right: 0.3vw;
+        width: 2.3vw;
+        height: 2.3vw;
+        border-radius: 50%;
+        background: var(--theme-dark-blue);
+
+        svg {
+          width: 2.7vw;
+          height: 2.7vw;
+        }
+      }
+    }
+    .activity-column {
+      width: 7%;
+    }
+    .creator-column {
+      width: 18% !important;
+    }
+    .domain-column {
+      width: 15%;
     }
 
     .assigned-column {
