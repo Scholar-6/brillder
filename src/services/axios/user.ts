@@ -155,6 +155,14 @@ export const getUsers = async (params: UsersParams) => {
   }
 }
 
+export const getUsersV2 = async (params: UsersParams) => {
+  try {
+    return await post<any>('/usersV2', params);
+  } catch (e) {
+    return null;
+  }
+}
+
 export const getUsersActivity = async (page: number, pageSize: number, dateFilter: PDateFilter) => {
   try {
     return await post<any>('/users/activity', {page, pageSize, dateFilter});

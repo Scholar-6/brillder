@@ -15,7 +15,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import UsersSidebar from "./UsersEventsSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { deleteUser, getUsers } from "services/axios/user";
+import { deleteUser, getUsersV2 } from "services/axios/user";
 import { getDateString, getFormattedDateSlash } from "components/services/brickService";
 import UsersPagination from "components/teach/manageClassrooms/components/UsersPagination";
 import ExportBtn from "../components/ExportBtn";
@@ -119,7 +119,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
     if (userPreference !== null) {
       roleFilters.push(userPreference);
     }
-    const res = await getUsers({
+    const res = await getUsersV2({
       pageSize: this.state.pageSize,
       page: page.toString(),
       searchString,

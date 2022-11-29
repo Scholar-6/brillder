@@ -23,7 +23,7 @@ import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
 import ExportBtn from "../components/ExportBtn";
 import map from "components/map";
-import { fileFormattedDate } from "components/services/brickService";
+import { fileFormattedDate, getDateString } from "components/services/brickService";
 
 
 enum SortBy {
@@ -170,6 +170,17 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     }
   }
 
+  renderStudentsColumn(c: ClassroomApi) {
+    let total = c.students.length;
+    if (c.studentsInvitations) {
+      total += c.studentsInvitations.length;
+    }
+    return <div className="students-column">
+      <SpriteIcon name={`students-${total === 0 ? 3 : total === c.students.length ? 1 : 2}`} />
+      {c.students.length}/<span className="bigger">{total}</span>
+    </div>
+  }
+
   renderBody() {
     const { finalClassrooms } = this.state;
     if (finalClassrooms.length == 0) {
@@ -195,15 +206,25 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
         return (
           <div className="table-row clickable" onClick={() => { this.props.history.push(map.TeachAssignedClass(c.id)) }}>
             <div className="name-column">{c.name}</div>
-            <div className="creator-column">
-              {c.creator ? `${c.creator.firstName} ${c.creator.lastName}` : ''}
+            <div className="created-at-column">
+              {getDateString(c.created)}
             </div>
             <div className="creator-column">
               {c.teachers.map(t => <div>{t.firstName} {c.creator.lastName}</div>)}
             </div>
+            {this.renderStudentsColumn(c)}
+            <div className="bricks-column">
+              <div className="bricks-book-icon flex-center">
+                <SpriteIcon name="circle-progress-admin-1" />
+              </div>
+              {c.assignmentsCount}
+            </div>
+            <div className="activity-column">90</div>
             {renderDomain(c.creator)}
-            <div className="students-column">{c.students.length}</div>
-            <div className="assigned-column">{c.assignmentsCount}</div>
+            <div className="assigned-column"></div>
+            <div className="creator-column">
+              {c.creator ? `${c.creator.firstName} ${c.creator.lastName}` : ''}
+            </div>
           </div>
         );
       })}
@@ -277,73 +298,111 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
 
   renderTable() {
     return (
-      <div className="table">
-        <div className="table-head bold">
-          <div className="name-column header">
-            <div>Name</div>
-            <div>
-              <SpriteIcon
-                name="sort-arrows"
-                onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Name, this.state.allDomains, this.state.domains, this.state.searchString);
-                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                }}
-              />
+      <div className="table scroll">
+        <div className="table-container">
+          <div className="table-head bold">
+            <div className="name-column header">
+              <div>Name</div>
+              <div>
+                <SpriteIcon
+                  name="sort-arrows"
+                  onClick={() => {
+                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Name, this.state.allDomains, this.state.domains, this.state.searchString);
+                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="created-at-column header">
+              <div>Created At</div>
+              <div>
+                <SpriteIcon
+                  name="sort-arrows"
+                  onClick={() => {
+                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Creator, this.state.allDomains, this.state.domains, this.state.searchString);
+                    this.setState({ sortBy: SortBy.Creator, finalClassrooms });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="creator-column header">
+              <div>Teacher</div>
+              <div>
+                <SpriteIcon
+                  name="sort-arrows"
+                  onClick={() => {
+                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain, this.state.allDomains, this.state.domains, this.state.searchString);
+                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="students-column header">
+              <div>Students</div>
+              <div>
+                <SpriteIcon
+                  name="sort-arrows"
+                  onClick={() => {
+                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain, this.state.allDomains, this.state.domains, this.state.searchString);
+                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="bricks-column header">
+              <div>Bricks</div>
+              <div>
+                <SpriteIcon
+                  name="sort-arrows"
+                  onClick={() => {
+                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Students, this.state.allDomains, this.state.domains, this.state.searchString);
+                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="activity-column header">
+              <div>Activity</div>
+            </div>
+            <div className="domain-column header">
+              <div>Domain</div>
+              <div>
+                <SpriteIcon
+                  name="sort-arrows"
+                  onClick={() => {
+                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
+                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="assigned-column header">
+              <div>Recent Brick</div>
+              <div>
+                <SpriteIcon
+                  name="sort-arrows"
+                  onClick={() => {
+                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
+                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="creator-column header">
+              <div>Creator</div>
+              <div>
+                <SpriteIcon
+                  name="sort-arrows"
+                  onClick={() => {
+                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
+                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
+                  }}
+                />
+              </div>
             </div>
           </div>
-          <div className="creator-column header">
-            <div>Creator</div>
-            <div>
-              <SpriteIcon
-                name="sort-arrows"
-                onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Creator, this.state.allDomains, this.state.domains, this.state.searchString);
-                  this.setState({ sortBy: SortBy.Creator, finalClassrooms });
-                }}
-              />
-            </div>
-          </div>
-          <div className="creator-column header">
-            <div>Teacher</div>
-          </div>
-          <div className="domain-column header">
-            <div>Domain</div>
-            <div>
-              <SpriteIcon
-                name="sort-arrows"
-                onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain, this.state.allDomains, this.state.domains, this.state.searchString);
-                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                }}
-              />
-            </div>
-          </div>
-          <div className="students-column header">
-            <div>Students</div>
-            <div>
-              <SpriteIcon
-                name="sort-arrows"
-                onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Students, this.state.allDomains, this.state.domains, this.state.searchString);
-                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                }}
-              />
-            </div>
-          </div>
-          <div className="assigned-column header">
-            <div>Assigned</div>
-            <div>
-              <SpriteIcon
-                name="sort-arrows"
-                onClick={() => {
-                  const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
-                  this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                }}
-              />
-            </div>
-          </div>
+          {this.renderBody()}
         </div>
-        {this.renderBody()}
       </div>
     );
   }
