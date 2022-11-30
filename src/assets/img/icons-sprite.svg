@@ -1423,11 +1423,30 @@
     <path d="M16.5 19C18.4335 19 20 17.4335 20 15.5C20 13.5665 18.4335 12 16.5 12C14.5665 12 13 13.5665 13 15.5C13 17.4335 14.5665 19 16.5 19ZM27.5 17.25C27.5 18.7695 26.2695 20 24.75 20C24.3888 20.0001 24.0312 19.929 23.6975 19.7908C23.3639 19.6526 23.0607 19.4501 22.8053 19.1947C22.5499 18.9393 22.3474 18.6361 22.2092 18.3025C22.071 17.9688 21.9999 17.6112 22 17.25C22 15.7305 23.2305 14.5 24.75 14.5C26.2695 14.5 27.5 15.7305 27.5 17.25ZM16.5 20C17.867 20 20.0915 20.4255 21.5505 21.2725C22.1465 21.879 22.5 22.5405 22.5 23.2V26H10V23.2C10 21.072 14.3305 20 16.5 20ZM30 26H23.5V23.2C23.5 22.492 23.2445 21.84 22.838 21.2585C23.6085 21.086 24.367 21 24.9465 21C26.81 21 30 21.8935 30 23.6665V26Z" fill="#B8B8B8"/>
   </svg>
   <svg id="circle-progress-admin-1" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0.7875" y="0.7875" width="40.425" height="40.435" rx="20.2125" fill="#193266" stroke="#193266" stroke-width="1.5"/>
     <rect x="15" y="9" width="5.13" height="21.9857" rx="1" fill="white"/>
     <rect x="15" y="11.9316" width="5.13" height="0.666234" fill="#193266"/>
     <rect x="15" y="27.3223" width="5.13" height="0.666234" fill="#193266"/>
     <rect x="21.1738" y="16.3867" width="6" height="14.9857" rx="1" transform="rotate(-6.47779 21.1738 16.3867)" fill="white"/>
     <rect x="21.3994" y="18.373" width="6" height="0.785478" transform="rotate(-6.47779 21.3994 18.373)" fill="#193266"/>
     <rect x="22.5518" y="28.5254" width="6" height="0.726332" transform="rotate(-6.47779 22.5518 28.5254)" fill="#193266"/>
+  </svg>
+    <svg id="circle-progress-admin-2" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0.7875" y="0.7875" width="40.425" height="40.435" rx="20.2125" fill="white" stroke="#B8B8B8" stroke-width="1.5"/>
+    <rect x="15" y="9" width="5.13" height="21.9857" rx="1" fill="white"/>
+    <rect x="15" y="11.9316" width="5.13" height="0.666234" fill="#193266"/>
+    <rect x="15" y="27.3223" width="5.13" height="0.666234" fill="#193266"/>
+    <rect x="21.1738" y="16.3867" width="6" height="14.9857" rx="1" transform="rotate(-6.47779 21.1738 16.3867)" fill="white"/>
+    <rect x="21.3994" y="18.373" width="6" height="0.785478" transform="rotate(-6.47779 21.3994 18.373)" fill="#193266"/>
+    <rect x="22.5518" y="28.5254" width="6" height="0.726332" transform="rotate(-6.47779 22.5518 28.5254)" fill="#193266"/>
+  </svg>
+  <svg id="circle-progress-admin-3" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0.7875" y="0.7875" width="40.425" height="40.435" rx="20.2125" fill="white" stroke="#B8B8B8" stroke-width="1.5"/>
+    <rect x="15" y="9" width="5.13" height="21.9857" rx="1" fill="#B8B8B8"/>
+    <rect x="15" y="11.9316" width="5.13" height="0.666234" fill="white"/>
+    <rect x="15" y="27.3223" width="5.13" height="0.666234" fill="white"/>
+    <rect x="21.1738" y="16.3867" width="6" height="14.9857" rx="1" transform="rotate(-6.47779 21.1738 16.3867)" fill="#B8B8B8"/>
+    <rect x="21.3994" y="18.373" width="6" height="0.785478" transform="rotate(-6.47779 21.3994 18.373)" fill="white"/>
+    <rect x="22.5518" y="28.5254" width="6" height="0.726332" transform="rotate(-6.47779 22.5518 28.5254)" fill="white"/>
   </svg>
 </svg>

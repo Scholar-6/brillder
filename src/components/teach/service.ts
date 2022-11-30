@@ -21,6 +21,7 @@ export interface ClassroomApi {
   studentsInvitations?: MUser[];
   teacher?: User;
   teachers: User[];
+  assignments?: any[];
 }
 
 /**
@@ -85,10 +86,17 @@ export const getAllClassrooms = async () => {
     if (res.data) {
       let classrooms = (res.data as ClassroomApi[]);
       for (let classroom of classrooms) {
-        for (let student of classroom.students as MUser[]) {
-          student.selected = false;
+        if (classroom.assignments) {
+          classroom.assignments.sort((a, b) => {
+            if (a.created && b.created) {
+              var res = new Date(a.created).getTime() > new Date(b.created).getTime() ? -1 : 1;
+              return res;
+            }
+            return -1;
+          })
         }
       }
+      
       return res.data as ClassroomApi[];
     }
     return null;
