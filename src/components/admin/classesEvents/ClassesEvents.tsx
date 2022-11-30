@@ -29,6 +29,7 @@ import { stripHtml } from "components/build/questionService/ConvertService";
 
 enum SortBy {
   Name,
+  CreatedOn,
   Creator,
   Domain,
   Students,
@@ -63,7 +64,8 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
-    let dateFilter = PDateFilter.Past24Hours;
+    let sortBy = SortBy.CreatedOn;
+    let dateFilter = PDateFilter.PastWeek;
 
     const values = queryString.parse(props.history.location.search);
     if (values.dateFilter) {
@@ -71,7 +73,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     }
 
     this.state = {
-      sortBy: SortBy.Name,
+      sortBy,
       downloadClicked: false,
       dateFilter,
       subjects: [],
@@ -84,11 +86,11 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       isSearching: false,
       searchString: '',
     }
-    this.loadInitPlayedData(dateFilter);
+    this.loadInitPlayedData(dateFilter, sortBy);
   }
 
-  async loadInitPlayedData(dateFilter: PDateFilter) {
-    const classrooms = await getAllAdminClassrooms(dateFilter);
+  async loadInitPlayedData(dateFilter: PDateFilter, sortBy: SortBy) {
+    let classrooms = await getAllAdminClassrooms(dateFilter);
     if (classrooms) {
       const domains: CDomain[] = [];
       for (let c of classrooms) {
@@ -98,6 +100,13 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           domains.push({ checked: false, name: userEmailDomain });
         }
       }
+      classrooms.sort((a, b) => {
+        if (a.created && b.created) {
+          return new Date(a.created).getTime() > new Date(b.created).getTime() ? -1 : 1;
+        }
+        return -1;
+      });
+
       this.setState({ classrooms, finalClassrooms: classrooms, domains });
     }
     const subjects = await getSubjects();
@@ -145,6 +154,13 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
         const aT = a.name.toLocaleLowerCase();
         const bT = b.name.toLocaleLowerCase();
         return aT < bT ? -1 : 1;
+      });
+    } else if (sortBy === SortBy.CreatedOn) {
+      return classrooms.sort((a, b) => {
+        if (a.created && b.created) {
+          return new Date(a.created).getTime() > new Date(b.created).getTime() ? -1 : 1;
+        }
+        return -1;
       });
     } else if (sortBy === SortBy.Creator) {
       return classrooms.sort((a, b) => {
@@ -210,6 +226,18 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     )
   }
 
+  renderActivityColumn(c: ClassroomApi) {
+    let total = 0;
+    if (c.assignments && c.assignments.length > 0 && c.students.length > 0) {
+      total = c.assignments.length * c.students.length;
+    }
+    return (
+      <div className="activity-column">
+        {total}
+      </div>
+    );
+  }
+
   renderBody() {
     const { finalClassrooms } = this.state;
     if (finalClassrooms.length == 0) {
@@ -243,7 +271,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             </div>
             {this.renderStudentsColumn(c)}
             {this.renderBricksColumns(c)}
-            <div className="activity-column">90</div>
+            {this.renderActivityColumn(c)}
             {renderDomain(c.creator)}
             {this.renderRecentAssignmentColumn(c)}
             <div className="creator-column">
@@ -338,7 +366,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               </div>
             </div>
             <div className="created-at-column header">
-              <div>Created At</div>
+              <div>Created On</div>
               <div>
                 <SpriteIcon
                   name="sort-arrows"
