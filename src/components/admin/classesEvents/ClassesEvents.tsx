@@ -248,7 +248,11 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   renderActivityColumn(c: ClassroomApi) {
     let total = 0;
     if (c.assignments && c.assignments.length > 0 && c.students.length > 0) {
-      total = c.assignments.length * c.students.length;
+      for (let a of c.assignments) {
+        if (a.attempts && a.attempts.length > 0) {
+          total = a.attempts.length;
+        }
+      }
     }
     return (
       <div className="activity-column">
@@ -286,7 +290,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               {getDateString(c.created)}
             </div>
             <div className="creator-column">
-              {c.teachers.map(t => <div>{t.firstName} {c.creator.lastName}</div>)}
+              {c.teachers.map((t, i) => <div key={i}>{t.firstName} {c.creator.lastName}</div>)}
             </div>
             {this.renderStudentsColumn(c)}
             {this.renderBricksColumns(c)}
