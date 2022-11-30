@@ -107,6 +107,15 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
         return -1;
       });
 
+      domains.sort((a, b) => {
+        if (a.name && b.name) {
+          const aT = a.name.toLocaleLowerCase();
+          const bT = b.name.toLocaleLowerCase();
+          return aT < bT ? -1 : 1;
+        }
+        return 1;
+      });
+
       this.setState({ classrooms, finalClassrooms: classrooms, domains });
     }
     const subjects = await getSubjects();
@@ -129,6 +138,16 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           }
         }
       }
+      
+      domains.sort((a, b) => {
+        if (a.name && b.name) {
+          const aT = a.name.toLocaleLowerCase();
+          const bT = b.name.toLocaleLowerCase();
+          return aT < bT ? -1 : 1;
+        }
+        return 1;
+      });
+      
       this.setState({ classrooms, finalClassrooms, dateFilter, domains });
     }
   }
