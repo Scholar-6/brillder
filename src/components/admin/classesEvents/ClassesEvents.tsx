@@ -23,7 +23,8 @@ import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
 import ExportBtn from "../components/ExportBtn";
 import map from "components/map";
-import { fileFormattedDate, getDateString } from "components/services/brickService";
+import { fileFormattedDate, getDateString, getFormattedDate } from "components/services/brickService";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 
 enum SortBy {
@@ -196,6 +197,19 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     );
   }
 
+  renderRecentAssignmentColumn(c: ClassroomApi) {
+    let data = '';
+    if (c.assignments && c.assignments.length > 0) {
+      const latest = c.assignments[0];
+      data = getFormattedDate(latest.assignedDate) + ' ' + stripHtml(latest.brick.title);
+    }
+    return (
+      <div className="assigned-column">
+        {data}
+      </div>
+    )
+  }
+
   renderBody() {
     const { finalClassrooms } = this.state;
     if (finalClassrooms.length == 0) {
@@ -231,7 +245,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             {this.renderBricksColumns(c)}
             <div className="activity-column">90</div>
             {renderDomain(c.creator)}
-            <div className="assigned-column"></div>
+            {this.renderRecentAssignmentColumn(c)}
             <div className="creator-column">
               {c.creator ? `${c.creator.firstName} ${c.creator.lastName}` : ''}
             </div>

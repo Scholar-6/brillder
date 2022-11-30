@@ -88,8 +88,8 @@ export const getAllClassrooms = async () => {
       for (let classroom of classrooms) {
         if (classroom.assignments) {
           classroom.assignments.sort((a, b) => {
-            if (a.created && b.created) {
-              var res = new Date(a.created).getTime() > new Date(b.created).getTime() ? -1 : 1;
+            if (a.assignedDate && b.assignedDate) {
+              var res = new Date(a.assignedDate).getTime() > new Date(b.assignedDate).getTime() ? -1 : 1;
               return res;
             }
             return -1;
