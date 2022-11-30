@@ -117,17 +117,10 @@
     }
     .bricks-column {
       width: 8%;
-      .bricks-book-icon {
+      svg {
         margin-right: 0.3vw;
-        width: 2.3vw;
-        height: 2.3vw;
-        border-radius: 50%;
-        background: var(--theme-dark-blue);
-
-        svg {
-          width: 2.7vw;
-          height: 2.7vw;
-        }
+        width: 2.7vw;
+        height: 2.7vw;
       }
     }
     .activity-column {

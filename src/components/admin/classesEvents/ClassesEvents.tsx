@@ -176,9 +176,24 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       total += c.studentsInvitations.length;
     }
     return <div className="students-column">
-      <SpriteIcon name={`students-${total === 0 ? 3 : total === c.students.length ? 1 : 2}`} />
+      <SpriteIcon name={`students-${total === 0 ? 3 : (total === c.students.length ? 1 : 2)}`} />
       {c.students.length}/<span className="bigger">{total}</span>
     </div>
+  }
+
+  renderBricksColumns(c: ClassroomApi) {
+    let count = 0;
+    if (c.assignments) {
+      count = c.assignments.length;
+    }
+    return (
+      <div className="bricks-column">
+        <div className="bricks-book-icon">
+          <SpriteIcon name={`circle-progress-admin-${count == 0 ? 3 : 1}`} />
+        </div>
+        {count}
+      </div>
+    );
   }
 
   renderBody() {
@@ -213,12 +228,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               {c.teachers.map(t => <div>{t.firstName} {c.creator.lastName}</div>)}
             </div>
             {this.renderStudentsColumn(c)}
-            <div className="bricks-column">
-              <div className="bricks-book-icon flex-center">
-                <SpriteIcon name="circle-progress-admin-1" />
-              </div>
-              {c.assignmentsCount}
-            </div>
+            {this.renderBricksColumns(c)}
             <div className="activity-column">90</div>
             {renderDomain(c.creator)}
             <div className="assigned-column"></div>
