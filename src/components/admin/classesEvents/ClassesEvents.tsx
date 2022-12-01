@@ -28,13 +28,15 @@ import { getAllAdminClassrooms } from "services/axios/admin";
 import BackPagePagination from "components/backToWorkPage/components/BackPagePagination";
 
 
-enum SortBy {
+export enum ACSortBy {
   Name,
   CreatedOn,
-  Creator,
-  Domain,
+  Teacher,
   Students,
-  Assigned
+  Bricks,
+  Domain,
+  RecentBrick,
+  Creator,
 }
 
 interface TeachProps {
@@ -51,7 +53,9 @@ interface TeachState {
   pageSize: number;
   count: number;
 
-  sortBy: SortBy;
+  sortBy: ACSortBy;
+  isAscending: boolean;
+
   downloadClicked: boolean;
   allDomains: boolean;
   domains: CDomain[];
@@ -69,7 +73,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
-    let sortBy = SortBy.CreatedOn;
+    let sortBy = ACSortBy.CreatedOn;
     let dateFilter = PDateFilter.PastWeek;
 
     const values = queryString.parse(props.history.location.search);
@@ -79,6 +83,8 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
 
     this.state = {
       sortBy,
+      isAscending: false,
+
       downloadClicked: false,
       dateFilter,
       subjects: [],
@@ -98,8 +104,15 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     this.loadInitPlayedData(dateFilter, sortBy);
   }
 
-  async loadInitPlayedData(dateFilter: PDateFilter, sortBy: SortBy) {
-    let classroomPage = await getAllAdminClassrooms(dateFilter, this.state.page, this.state.pageSize);
+  async loadInitPlayedData(dateFilter: PDateFilter, sortBy: ACSortBy) {
+    const classroomPage = await getAllAdminClassrooms(dateFilter, { 
+      page: this.state.page,
+      pageSize: this.state.pageSize,
+      subjectIds: [],
+      sortBy,
+      isAscending: this.state.isAscending
+    });
+
     if (classroomPage) {
       const { classrooms } = classroomPage;
       const domains: CDomain[] = [];
@@ -135,18 +148,25 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   }
 
   moveNext() {
-    this.loadData(this.state.dateFilter, this.state.page + 1)
+    this.loadData(this.state.dateFilter, this.state.page + 1, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending);
   }
 
   moveBack() {
-    this.loadData(this.state.dateFilter, this.state.page - 1)
+    this.loadData(this.state.dateFilter, this.state.page - 1, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending);
   }
 
-  async loadData(dateFilter: PDateFilter, page: number) {
-    const classroomPage = await getAllAdminClassrooms(dateFilter, page, this.state.pageSize);
+  async loadData(dateFilter: PDateFilter, page: number, selectedSubjects: Subject[], sortBy: ACSortBy, isAscending: boolean) {
+    const classroomPage = await getAllAdminClassrooms(dateFilter, {
+      page,
+      pageSize: this.state.pageSize,
+      subjectIds: selectedSubjects.map(s => s.id),
+      sortBy,
+      isAscending
+    });
+
     if (classroomPage) {
       const { classrooms } = classroomPage;
-      const finalClassrooms = this.filterAndSort(classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
+      const finalClassrooms = this.filterAndSort(classrooms, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
       const domains: CDomain[] = [];
       for (let c of classrooms) {
         if (c.creator) {
@@ -167,33 +187,37 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
         return 1;
       });
 
-      this.setState({ classrooms, finalClassrooms, dateFilter, domains, page, count: classroomPage.count });
+      this.setState({
+        classrooms, finalClassrooms,
+        dateFilter, domains, page, selectedSubjects, count: classroomPage.count,
+        sortBy, isAscending
+      });
     }
   }
 
   search() {
-    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
-    this.setState({ sortBy: SortBy.Name, finalClassrooms });
+    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
+    this.setState({ sortBy: ACSortBy.Name, finalClassrooms });
   }
 
   async searching(searchString: string) {
     if (searchString.length === 0) {
-      const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, searchString);
-      //await this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, searchString, this.state.orderBy, this.state.isAscending);
+      const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.sortBy, this.state.allDomains, this.state.domains, searchString);
       this.setState({ ...this.state, finalClassrooms, searchString, isSearching: false });
     } else {
       this.setState({ ...this.state, searchString });
     }
   }
 
-  sortClassrooms(sortBy: SortBy, classrooms: ClassroomApi[]) {
-    if (sortBy === SortBy.Name) {
+  sortClassrooms(sortBy: ACSortBy, classrooms: ClassroomApi[]) {
+    /*
+    if (sortBy === ACSortBy.Name) {
       return classrooms.sort((a, b) => {
         const aT = a.name.toLocaleLowerCase();
         const bT = b.name.toLocaleLowerCase();
         return aT < bT ? -1 : 1;
       });
-    } else if (sortBy === SortBy.CreatedOn) {
+    } else if (sortBy === ACSortBy.CreatedOn) {
       return classrooms.sort((a, b) => {
         if (a.created && b.created) {
           return new Date(a.created).getTime() > new Date(b.created).getTime() ? -1 : 1;
@@ -222,7 +246,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       });
     } else {
       return classrooms;
-    }
+    }*/
   }
 
   renderStudentsColumn(c: ClassroomApi) {
@@ -301,9 +325,9 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     }
 
     return <div className="table-body">
-      {finalClassrooms.map(c => {
+      {finalClassrooms.map((c, key) => {
         return (
-          <div className="table-row clickable" onClick={() => { this.props.history.push(map.TeachAssignedClass(c.id)) }}>
+          <div key={key} className="table-row clickable" onClick={() => { this.props.history.push(map.TeachAssignedClass(c.id)) }}>
             <div className="name-column">{c.name}</div>
             <div className="created-at-column">
               {getDateString(c.created)}
@@ -325,25 +349,14 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     </div>
   }
 
-  filterAndSort(classrooms: ClassroomApi[], selectedSubjects: Subject[], sortBy: SortBy, isAllDomains: boolean, domains: CDomain[], searchString: string) {
-    let finalClassrooms = [];
+  filterAndSort(classrooms: ClassroomApi[], sortBy: ACSortBy, isAllDomains: boolean, domains: CDomain[], searchString: string) {
+    let finalClassrooms: ClassroomApi[] = classrooms;
 
-    if (selectedSubjects.length > 0) {
-      for (let c of classrooms) {
-        const found = selectedSubjects.find(s => s.id === c.subjectId);
-        if (found) {
-          finalClassrooms.push(c);
-        }
-      }
-    } else {
-      finalClassrooms = [...classrooms];
-    }
-
-    let checkedDomains = domains.filter(d => d.checked === true);
+    const checkedDomains = domains.filter(d => d.checked === true);
 
     // filter by domain
     if (!isAllDomains && checkedDomains) {
-      let classroomsTemp = [...finalClassrooms];
+      let classroomsTemp = [...classrooms];
       finalClassrooms = [] as ClassroomApi[];
       for (let c of classroomsTemp) {
         if (c.creator && c.creator) {
@@ -386,8 +399,18 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       }
     }
 
-    finalClassrooms = this.sortClassrooms(sortBy, finalClassrooms);
     return finalClassrooms;
+  }
+
+  renderSortArrow(sortBy: ACSortBy) {
+    return (
+      <SpriteIcon
+        name="sort-arrows"
+        onClick={() => {
+          this.loadData(this.state.dateFilter, 0, this.state.selectedSubjects, sortBy, !this.state.isAscending);
+        }}
+      />
+    )
   }
 
   renderTable() {
@@ -398,61 +421,31 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <div className="name-column header">
               <div>Name</div>
               <div>
-                <SpriteIcon
-                  name="sort-arrows"
-                  onClick={() => {
-                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Name, this.state.allDomains, this.state.domains, this.state.searchString);
-                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                  }}
-                />
+                {this.renderSortArrow(ACSortBy.Name)}
               </div>
             </div>
             <div className="created-at-column header">
               <div>Created On</div>
               <div>
-                <SpriteIcon
-                  name="sort-arrows"
-                  onClick={() => {
-                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Creator, this.state.allDomains, this.state.domains, this.state.searchString);
-                    this.setState({ sortBy: SortBy.Creator, finalClassrooms });
-                  }}
-                />
+                {this.renderSortArrow(ACSortBy.CreatedOn)}
               </div>
             </div>
             <div className="creator-column header">
               <div>Teacher</div>
               <div>
-                <SpriteIcon
-                  name="sort-arrows"
-                  onClick={() => {
-                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain, this.state.allDomains, this.state.domains, this.state.searchString);
-                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                  }}
-                />
+                {this.renderSortArrow(ACSortBy.Teacher)}
               </div>
             </div>
             <div className="students-column header">
               <div>Students</div>
               <div>
-                <SpriteIcon
-                  name="sort-arrows"
-                  onClick={() => {
-                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Domain, this.state.allDomains, this.state.domains, this.state.searchString);
-                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                  }}
-                />
+                {this.renderSortArrow(ACSortBy.Students)}
               </div>
             </div>
             <div className="bricks-column header">
               <div>Bricks</div>
               <div>
-                <SpriteIcon
-                  name="sort-arrows"
-                  onClick={() => {
-                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Students, this.state.allDomains, this.state.domains, this.state.searchString);
-                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                  }}
-                />
+                {this.renderSortArrow(ACSortBy.Bricks)}
               </div>
             </div>
             <div className="activity-column header">
@@ -461,37 +454,19 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <div className="domain-column header">
               <div>Domain</div>
               <div>
-                <SpriteIcon
-                  name="sort-arrows"
-                  onClick={() => {
-                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
-                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                  }}
-                />
+                {this.renderSortArrow(ACSortBy.Domain)}
               </div>
             </div>
             <div className="assigned-column header">
               <div>Recent Brick</div>
               <div>
-                <SpriteIcon
-                  name="sort-arrows"
-                  onClick={() => {
-                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
-                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                  }}
-                />
+                {this.renderSortArrow(ACSortBy.RecentBrick)}
               </div>
             </div>
             <div className="creator-column header">
               <div>Creator</div>
               <div>
-                <SpriteIcon
-                  name="sort-arrows"
-                  onClick={() => {
-                    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
-                    this.setState({ sortBy: SortBy.Name, finalClassrooms });
-                  }}
-                />
+                {this.renderSortArrow(ACSortBy.Creator)}
               </div>
             </div>
           </div>
@@ -518,22 +493,26 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             allDomains={this.state.allDomains}
             domains={this.state.domains}
             setAllDomains={() => {
+              /*
               this.state.domains.forEach(d => { d.checked = false });
-              const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, true, this.state.domains, this.state.searchString);
+              const finalClassrooms = this.filterAndSort(this.state.classrooms, ACSortBy.Assigned, true, this.state.domains, this.state.searchString);
               this.setState({ allDomains: true, finalClassrooms });
+              */
             }}
             setDomain={d => {
+              /*
               d.checked = !d.checked;
-              const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, false, this.state.domains, this.state.searchString);
+              const finalClassrooms = this.filterAndSort(this.state.classrooms, SortBy.Assigned, false, this.state.domains, this.state.searchString);
               this.setState({ allDomains: false, finalClassrooms });
+              */
             }}
-            dateFilter={this.state.dateFilter} setDateFilter={dateFilter => this.loadData(dateFilter, 0)}
+
+            dateFilter={this.state.dateFilter}
+            setDateFilter={dateFilter => this.loadData(dateFilter, 0, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending)}
+
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
-            selectSubjects={selectedSubjects => {
-              const finalClassrooms = this.filterAndSort(this.state.classrooms, selectedSubjects, SortBy.Assigned, this.state.allDomains, this.state.domains, this.state.searchString);
-              this.setState({ selectedSubjects, finalClassrooms });
-            }}
+            selectSubjects={selectedSubjects => this.loadData(this.state.dateFilter, 0, selectedSubjects, this.state.sortBy, this.state.isAscending)}
           />
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
