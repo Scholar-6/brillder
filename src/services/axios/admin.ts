@@ -1,3 +1,5 @@
+import { PDateFilter } from "components/admin/bricksPlayed/BricksPlayedSidebar";
+import { ACSortBy } from "components/admin/classesEvents/ClassesEvents";
 import { ClassroomApi } from "components/teach/service";
 import { post } from ".";
 
@@ -6,16 +8,21 @@ interface ClassroomsPage {
   count: number;
 }
 
+export interface CACLassroomParams {
+  page: number;
+  pageSize: number;
+  subjectIds: number[];
+  sortBy: ACSortBy;
+  isAscending: boolean;
+}
+
 /**
  * Get all admin classrooms
  * return list of classrooms if success or null if failed
  */
- export const getAllAdminClassrooms = async (dateFilter: number, page: number, pageSize: number) => {
+ export const getAllAdminClassrooms = async (dateFilter: PDateFilter, data: CACLassroomParams) => {
   try {
-    const classroomPage = await post<ClassroomsPage>("/institution/getAllClassrooms/" + dateFilter, {
-      page,
-      pageSize,
-    });
+    const classroomPage = await post<ClassroomsPage>("/institution/getAllClassrooms/" + dateFilter, data);
     if (classroomPage) {
       for (let classroom of classroomPage.classrooms) {
         if (classroom.assignments) {
