@@ -56,7 +56,6 @@
     }
   }
   .tab-content {
-    overflow-y: auto;
     padding-bottom: 1vw;
     color: var(--theme-dark-blue);
     position: relative;
@@ -274,4 +273,13 @@
 
 .classes-events-page .tab-content .table .table-row {
   height: unset !important;
+}
+
+.classes-events-page .tab-content {
+  height: calc(100vh - 5.834vw - 2vw - 6.6vh) !important;
+  .table-body {
+    height: calc(100vh - 5.834vw - 2vw - 6.6vh - 7vh - 3.6vh - 2vw - 4vh - 0.5vw) !important;
+    overflow-y: auto;
+  }
+  background: white;
 }

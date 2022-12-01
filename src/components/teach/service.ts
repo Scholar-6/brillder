@@ -1,7 +1,5 @@
-import { StripeCardNumberElement } from "@stripe/stripe-js";
 import axios from "axios";
 import { Subject } from "model/brick";
-import { Assignment } from "model/classroom";
 import { User } from "model/user";
 
 import { MUser } from "./model";
@@ -73,39 +71,6 @@ export const getAllClassrooms = async () => {
   }
 }
 
-
-/**
- * Get all admin classrooms
- * return list of classrooms if success or null if failed
- */
- export const getAllAdminClassrooms = async (dateFilter: number) => {
-  try {
-    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/institution/getAllClassrooms/" + dateFilter, {
-      withCredentials: true,
-    });
-    if (res.data) {
-      let classrooms = (res.data as ClassroomApi[]);
-      for (let classroom of classrooms) {
-        if (classroom.assignments) {
-          classroom.assignments.sort((a, b) => {
-            if (a.assignedDate && b.assignedDate) {
-              return new Date(a.assignedDate).getTime() > new Date(b.assignedDate).getTime() ? -1 : 1;
-            }
-            return -1;
-          })
-        }
-      }
-      
-      return res.data as ClassroomApi[];
-    }
-    return null;
-  }
-  catch (e) {
-    return null;
-  }
-}
-
-
 /**
  * Get all assignments by admin
  * return list of classrooms if success or null if failed
@@ -125,30 +90,7 @@ export const getAllClassrooms = async () => {
   }
 }
 
-/**
- * Get all admin classrooms
- * return list of classrooms if success or null if failed
- */
- export const getClassrooms = async (dateFilter: number) => {
-  try {
-    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/institution/getAllClassrooms/" + dateFilter, {
-      withCredentials: true,
-    });
-    if (res.data) {
-      let classrooms = (res.data as ClassroomApi[]);
-      for (let classroom of classrooms) {
-        for (let student of classroom.students as MUser[]) {
-          student.selected = false;
-        }
-      }
-      return res.data as ClassroomApi[];
-    }
-    return null;
-  }
-  catch (e) {
-    return null;
-  }
-}
+
 
 /**
  * Get classroom Assignments
