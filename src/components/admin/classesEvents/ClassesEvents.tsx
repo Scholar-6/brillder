@@ -8,7 +8,6 @@ import queryString from 'query-string';
 import './ClassesEvents.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
-import { getAllAdminClassrooms } from 'components/teach/service';
 
 import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
@@ -25,6 +24,8 @@ import ExportBtn from "../components/ExportBtn";
 import map from "components/map";
 import { fileFormattedDate, getDateString, getFormattedDate } from "components/services/brickService";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import { getAllAdminClassrooms } from "services/axios/admin";
+import BackPagePagination from "components/backToWorkPage/components/BackPagePagination";
 
 
 enum SortBy {
@@ -46,6 +47,10 @@ interface TeachProps {
 }
 
 interface TeachState {
+  page: number;
+  pageSize: number;
+  count: number;
+
   sortBy: SortBy;
   downloadClicked: boolean;
   allDomains: boolean;
@@ -83,6 +88,10 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       classrooms: [],
       finalClassrooms: [],
 
+      page: 0,
+      pageSize: 20,
+      count: 0,
+
       isSearching: false,
       searchString: '',
     }
@@ -90,17 +99,18 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   }
 
   async loadInitPlayedData(dateFilter: PDateFilter, sortBy: SortBy) {
-    let classrooms = await getAllAdminClassrooms(dateFilter);
-    if (classrooms) {
+    let classroomPage = await getAllAdminClassrooms(dateFilter, this.state.page, this.state.pageSize);
+    if (classroomPage) {
+      const { classrooms } = classroomPage;
       const domains: CDomain[] = [];
-      for (let c of classrooms) {
+      for (let c of classroomPage.classrooms) {
         const userEmailDomain = c.creator.email.split("@")[1];
         const found = domains.find(d => d.name == userEmailDomain);
         if (!found) {
           domains.push({ checked: false, name: userEmailDomain });
         }
       }
-      classrooms.sort((a, b) => {
+      classroomPage.classrooms.sort((a, b) => {
         if (a.created && b.created) {
           return new Date(a.created).getTime() > new Date(b.created).getTime() ? -1 : 1;
         }
@@ -116,7 +126,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
         return 1;
       });
 
-      this.setState({ classrooms, finalClassrooms: classrooms, domains });
+      this.setState({ classrooms, finalClassrooms: classrooms, domains, count: classroomPage.count });
     }
     const subjects = await getSubjects();
     if (subjects) {
@@ -124,9 +134,18 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     }
   }
 
-  async loadData(dateFilter: PDateFilter) {
-    const classrooms = await getAllAdminClassrooms(dateFilter);
-    if (classrooms) {
+  moveNext() {
+    this.loadData(this.state.dateFilter, this.state.page + 1)
+  }
+
+  moveBack() {
+    this.loadData(this.state.dateFilter, this.state.page - 1)
+  }
+
+  async loadData(dateFilter: PDateFilter, page: number) {
+    const classroomPage = await getAllAdminClassrooms(dateFilter, page, this.state.pageSize);
+    if (classroomPage) {
+      const { classrooms } = classroomPage;
       const finalClassrooms = this.filterAndSort(classrooms, this.state.selectedSubjects, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
       const domains: CDomain[] = [];
       for (let c of classrooms) {
@@ -138,7 +157,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           }
         }
       }
-      
+
       domains.sort((a, b) => {
         if (a.name && b.name) {
           const aT = a.name.toLocaleLowerCase();
@@ -147,8 +166,8 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
         }
         return 1;
       });
-      
-      this.setState({ classrooms, finalClassrooms, dateFilter, domains });
+
+      this.setState({ classrooms, finalClassrooms, dateFilter, domains, page, count: classroomPage.count });
     }
   }
 
@@ -278,7 +297,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           {userEmailDomain}
         </div>);
       }
-      return '';
+      return <div />;
     }
 
     return <div className="table-body">
@@ -508,7 +527,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.selectedSubjects, SortBy.Assigned, false, this.state.domains, this.state.searchString);
               this.setState({ allDomains: false, finalClassrooms });
             }}
-            dateFilter={this.state.dateFilter} setDateFilter={dateFilter => this.loadData(dateFilter)}
+            dateFilter={this.state.dateFilter} setDateFilter={dateFilter => this.loadData(dateFilter, 0)}
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
             selectSubjects={selectedSubjects => {
@@ -519,64 +538,74 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
-              <SubTab activeTab={ClassesActiveSubTab.Classes} dateFilter={this.state.dateFilter} history={this.props.history} />
-              <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
-              {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
-                <div className="popup-3rfw bold">
-                  <div className="btn-sort" onClick={() => {
+              <div>
+                <SubTab activeTab={ClassesActiveSubTab.Classes} dateFilter={this.state.dateFilter} history={this.props.history} />
+                <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
+                {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
+                  <div className="popup-3rfw bold">
+                    <div className="btn-sort" onClick={() => {
 
-                    let data: any[] = [];
+                      let data: any[] = [];
 
-                    for (const c of this.state.finalClassrooms) {
-                      let domain = '';
-                      if (c.creator) {
-                        domain = c.creator.email.split("@")[1];
-                      }
-
-                      data.push({
-                        name: c.name,
-                        Creator: c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
-                        Domain: domain,
-                        Played: c.assignmentsCount,
-                      });
-                    }
-
-                    exportToCSV(data, `Brillder data ${fileFormattedDate(new Date().toString())}.pdf`);
-
-                    this.setState({ downloadClicked: false });
-                  }}>
-                    <div>Export to Excel</div>
-                    <SpriteIcon name="excel-icon" />
-                  </div>
-                  <div className="btn-sort" onClick={() => {
-                    exportToPDF(
-                      [['Name', 'Creator', 'Domain', 'Creator', 'Students', 'Assignments']],
-                      this.state.finalClassrooms.map(c => {
+                      for (const c of this.state.finalClassrooms) {
                         let domain = '';
                         if (c.creator) {
                           domain = c.creator.email.split("@")[1];
                         }
 
-                        return [
-                          c.name,
-                          c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
-                          domain,
-                          c.students.length,
-                          c.assignmentsCount ? c.assignmentsCount : ''
-                        ]
-                      }),
+                        data.push({
+                          name: c.name,
+                          Creator: c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
+                          Domain: domain,
+                          Played: c.assignmentsCount,
+                        });
+                      }
 
-                      `Brillder data ${fileFormattedDate(new Date().toString())}.pdf`
-                    );
-                    this.setState({ downloadClicked: false });
-                  }}>
-                    <div>Export to PDF</div>
-                    <img alt="brill" src="/images/PDF_icon.png" />
+                      exportToCSV(data, `Brillder data ${fileFormattedDate(new Date().toString())}.pdf`);
+
+                      this.setState({ downloadClicked: false });
+                    }}>
+                      <div>Export to Excel</div>
+                      <SpriteIcon name="excel-icon" />
+                    </div>
+                    <div className="btn-sort" onClick={() => {
+                      exportToPDF(
+                        [['Name', 'Creator', 'Domain', 'Creator', 'Students', 'Assignments']],
+                        this.state.finalClassrooms.map(c => {
+                          let domain = '';
+                          if (c.creator) {
+                            domain = c.creator.email.split("@")[1];
+                          }
+
+                          return [
+                            c.name,
+                            c.teachers[0].firstName + ' ' + c.teachers[0].lastName,
+                            domain,
+                            c.students.length,
+                            c.assignmentsCount ? c.assignmentsCount : ''
+                          ]
+                        }),
+
+                        `Brillder data ${fileFormattedDate(new Date().toString())}.pdf`
+                      );
+                      this.setState({ downloadClicked: false });
+                    }}>
+                      <div>Export to PDF</div>
+                      <img alt="brill" src="/images/PDF_icon.png" />
+                    </div>
                   </div>
-                </div>
-              </Dialog>}
-              {this.renderTable()}
+                </Dialog>}
+                {this.renderTable()}
+              </div>
             </div>
+            <BackPagePagination
+              sortedIndex={this.state.page * this.state.pageSize}
+              pageSize={this.state.pageSize}
+              isRed={this.state.page === 0}
+              bricksLength={this.state.count}
+              moveNext={() => this.moveNext()}
+              moveBack={() => this.moveBack()}
+            />
           </Grid>
         </Grid>
       </div>
