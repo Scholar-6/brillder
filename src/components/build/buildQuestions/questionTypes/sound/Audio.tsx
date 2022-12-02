@@ -104,7 +104,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
 
   onLoadedMetadata = () => {
     if (this.state.trackRef.current) {
-      this.setState({duration: this.getTime(this.state.trackRef.current.duration)});
+      this.setState({ duration: this.getTime(this.state.trackRef.current.duration) });
     }
   }
 
