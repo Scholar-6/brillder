@@ -16,6 +16,9 @@
 
     .react-waves {
       width: 100% !important;
+      > div {
+        width: 100% !important;
+      }
     }
   }
 
