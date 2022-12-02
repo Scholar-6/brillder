@@ -128,6 +128,12 @@
     .creator-column {
       width: 18% !important;
     }
+    .teacher-column {
+      width: 18% !important;
+      .teacher-row {
+        display: block;
+      }
+    }
     .domain-column {
       width: 15%;
     }

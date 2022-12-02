@@ -276,8 +276,10 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <div className="created-at-column">
               {getDateString(c.created)}
             </div>
-            <div className="creator-column">
-              {c.teachers.map((t, i) => <div key={i}>{t.firstName} {c.creator.lastName}</div>)}
+            <div className="teacher-column">
+              <div>
+                {c.teachers.map((t, i) => <div className="teacher-row" key={i}>{t.firstName} {c.creator.lastName}</div>)}
+              </div>
             </div>
             {this.renderStudentsColumn(c)}
             {this.renderBricksColumns(c)}
@@ -377,7 +379,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                 {this.renderSortArrow(ACSortBy.CreatedOn)}
               </div>
             </div>
-            <div className="creator-column header">
+            <div className="teacher-column header">
               <div>Teacher</div>
               <div>
                 {this.renderSortArrow(ACSortBy.Teacher)}
