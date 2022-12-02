@@ -111,7 +111,8 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       subjectIds: [],
       sortBy,
       isAscending: this.state.isAscending,
-      domains: []
+      domains: [],
+      searchString: ''
     });
 
     const domains = await getAllUniqueEmails(dateFilter, []);
@@ -150,7 +151,8 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       subjectIds: selectedSubjects.map(s => s.id),
       sortBy,
       isAscending,
-      domains: this.state.domains.filter(d => d.checked).map(d => d.name)
+      domains: this.state.domains.filter(d => d.checked).map(d => d.name),
+      searchString: ''
     });
 
     let domains:CDomain[] = [];
@@ -180,14 +182,14 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   }
 
   search() {
-    const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
+    /*
     this.setState({ sortBy: ACSortBy.Name, finalClassrooms });
+    */
   }
 
   async searching(searchString: string) {
     if (searchString.length === 0) {
-      const finalClassrooms = this.filterAndSort(this.state.classrooms, this.state.sortBy, this.state.allDomains, this.state.domains, searchString);
-      this.setState({ ...this.state, finalClassrooms, searchString, isSearching: false });
+      this.setState({ ...this.state, searchString, isSearching: false });
     } else {
       this.setState({ ...this.state, searchString });
     }
@@ -297,23 +299,6 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
 
   filterAndSort(classrooms: ClassroomApi[], sortBy: ACSortBy, isAllDomains: boolean, domains: CDomain[], searchString: string) {
     let finalClassrooms: ClassroomApi[] = classrooms;
-
-    const checkedDomains = domains.filter(d => d.checked === true);
-
-    // filter by domain
-    if (!isAllDomains && checkedDomains) {
-      let classroomsTemp = [...classrooms];
-      finalClassrooms = [] as ClassroomApi[];
-      for (let c of classroomsTemp) {
-        if (c.creator && c.creator) {
-          const userEmailDomain = c.creator.email.split("@")[1];
-          const found = checkedDomains.find(d => d.name === userEmailDomain);
-          if (found) {
-            finalClassrooms.push(c);
-          }
-        }
-      }
-    }
 
     // filter by search
     if (searchString) {

@@ -16,6 +16,7 @@ export interface CACLassroomParams {
   sortBy: ACSortBy;
   isAscending: boolean;
   domains: string[];
+  searchString: string;
 }
 
 /**
