@@ -1,10 +1,9 @@
 import React from "react";
+import WaveSurfer from "wavesurfer.js";
 
 import './Audio.scss';
 import { fileUrl } from "components/services/uploadFile";
-
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import ReactWaves from "@dschoon/react-waves";
 
 interface SoundProps {
   src?: string;
@@ -23,39 +22,73 @@ interface SoundState {
   currentTime: string;
   duration: string;
   audioState: AudioState;
-  audio: any;
   playing: boolean;
+
+  trackRef: React.RefObject<any>;
+  waveformRef: React.RefObject<any>;
+  waveSurfer: any;
 }
 
 class AudioComponent extends React.Component<SoundProps, SoundState> {
   constructor(props: SoundProps) {
     super(props);
 
-    const { src } = this.props;
-    const audio = new Audio(fileUrl(src ? src : ""));
-    audio.addEventListener("canplaythrough", this.onLoad.bind(this), false);
-
     this.state = {
       audioState: AudioState.Init,
       currentTime: "00:00",
       duration: "00:00",
-      audio,
       playing: false,
-      volume: 0,
+      volume: 1,
       volumeHovered: false,
       rangeValue: 0,
+
+      trackRef: React.createRef<any>(),
+      waveformRef: React.createRef<any>(),
+      waveSurfer: null
     };
   }
 
-  onLoad() {
-    const { duration } = this.state.audio;
-    this.setState({
-      duration: this.getTime(duration),
-      volume: this.state.audio.volume,
-    });
+  componentDidMount(): void {
+    const waveStyles = {
+      barGap: 4,
+      barWidth: 4,
+      barHeight: 4,
+      barRadius: 4,
+      cursorWidth: 0,
+      height: 100,
+      hideScrollbar: true,
+      progressColor: '#c43c30',
+      cursorColor: 'red',
+      normalize: true,
+      responsive: true,
+      waveColor: '#001c58',
+    };
+
+    if (this.state.waveformRef.current && this.state.trackRef.current) {
+      const waveSurfer = WaveSurfer.create({
+        ...waveStyles,
+        container: "#waveform",
+        responsive: true,
+        backend: "MediaElement"
+      });
+      // Load the waveForm json if provided
+      waveSurfer.load(this.state.trackRef.current)
+
+      waveSurfer.on("ready", () => {
+        this.setState({ waveSurfer })
+        waveSurfer.zoom(1);
+      });
+    }
+  }
+
+  getTime(t: any) {
+    let m = ~~(t / 60),
+      s = ~~(t % 60);
+    return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
   }
 
   setVolume(volume: number) {
+    this.state.waveSurfer.setVolume(volume);
     this.setState({ volume });
   }
 
@@ -69,52 +102,37 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
     }
   }
 
-  getTime(t: any) {
-    let m = ~~(t / 60),
-      s = ~~(t % 60);
-    return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
-  }
-
-  /*eslint-disable-next-line*/
-  onChange(a: any, b: any) {
-    var time = this.getTime(a);
-    this.setState({currentTime: time});
+  onLoadedMetadata = () => {
+    if (this.state.trackRef.current) {
+      this.setState({duration: this.getTime(this.state.trackRef.current.duration)});
+    }
   }
 
   render() {
-    var Waves = ReactWaves as any;
     return (
       <div>
         <div className="play-wave-container">
           <div className="play-icon-container-d1">
-            <SpriteIcon className="play-icon-d1" name={this.state.playing ? 'feather-pause-circle' : "feather-play-circle"} onClick={() => this.setState({ playing: !this.state.playing })} />
+            <SpriteIcon className="play-icon-d1" name={this.state.playing ? 'feather-pause-circle' : "feather-play-circle"} onClick={() => {
+              let playing = !this.state.playing;
+              if (playing) {
+                this.state.waveSurfer.play();
+              } else {
+                this.state.waveSurfer.pause();
+              }
+              this.setState({ playing });
+            }} />
           </div>
           {this.props.src &&
             <div className="relative-waves-container">
-              <Waves
-                audioFile={fileUrl(this.props.src)}
-                className={"react-waves"}
-                pos={0}
-                options={{
-                  barGap: 4,
-                  barWidth: 4,
-                  barHeight: 4,
-                  barRadius: 4,
-                  cursorWidth: 0,
-                  height: 150,
-                  hideScrollbar: true,
-                  progressColor: '#c43c30',
-                  cursorColor: 'red',
-                  normalize: true,
-                  responsive: true,
-                  waveColor: '#001c58',
-                }}
-                /*eslint-disable-next-line*/
-                onPosChange={this.onChange.bind(this)}
-                volume={this.state.volume}
-                zoom={1}
-                playing={this.state.playing}
-              />
+              <div className="react-waves">
+                <div ref={this.state.waveformRef} id="waveform" />
+                <audio
+                  src={fileUrl(this.props.src ? this.props.src : "")}
+                  ref={this.state.trackRef}
+                  onLoadedMetadata={this.onLoadedMetadata.bind(this)}
+                />
+              </div>
               <div className="absolute-start-time">
                 {this.state.currentTime}
               </div>
