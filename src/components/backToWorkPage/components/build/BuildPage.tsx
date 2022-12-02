@@ -5,16 +5,13 @@ import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
 import './BuildPage.scss';
-import { AcademicLevel, Brick, BrickLengthEnum, BrickStatus } from "model/brick";
 import { User } from "model/user";
-import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
-import { Filters, SortBy } from '../../model';
-import { getBackToWorkStatistics, searchBricks } from "services/axios/brick";
+import { Filters } from '../../model';
+import { getBackToWorkStatistics } from "services/axios/brick";
 import { Notification } from 'model/notifications';
 
 import map from "components/map";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import { SubjectItem } from "../personalBuild/model";
 import { isPhone } from "services/phone";
 import ThreeColumnsPage from "./ThreeColumnsPage";
 import BuildPageV2 from "./BuildPageV2";

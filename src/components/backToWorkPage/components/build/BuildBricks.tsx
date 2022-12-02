@@ -28,6 +28,7 @@ interface BuildBricksProps {
   buildCount: number;
   reviewCount: number;
 
+  page: number;
   pageSize: number;
   sortedIndex: number;
 
@@ -41,8 +42,6 @@ interface BuildBricksProps {
 
   // brick events
   handleDeleteOpen(brickId: number): void;
-  handleMouseHover(brickId: number): void;
-  handleMouseLeave(brickId: number): void;
 }
 
 interface State {
@@ -90,6 +89,10 @@ class BuildBricks extends Component<BuildBricksProps, State> {
   renderBricks = () => {
     const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, this.props.finalBricks)
 
+    if (this.props.page === 0) {
+      data.unshift({ brick: { isCreateLink: true } as Brick });
+    }
+
     return data.map(item => {
       const { brick } = item;
       let circleIcon = '';
@@ -114,8 +117,8 @@ class BuildBricks extends Component<BuildBricksProps, State> {
         iconColor={iconColor}
         searchString={this.props.searchString}
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
-        handleMouseHover={() => this.props.handleMouseHover(item.key)}
-        handleMouseLeave={() => this.props.handleMouseLeave(item.key)}
+        handleMouseHover={() => {}}
+        handleMouseLeave={() => {}}
       />
     });
   }
