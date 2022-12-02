@@ -41,6 +41,7 @@ export interface BrickStatusPerPage {
   brickStatuses: BrickStatus[];
   page: number;
   pageSize: number;
+  skipOne: boolean;
 }
 
 export interface BricksDataBW {

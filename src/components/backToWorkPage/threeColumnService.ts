@@ -33,7 +33,7 @@ export const expandThreeColumnBrick = (threeColumns: ThreeColumns, name: ThreeCo
   }
 }
 
-export const prepareVisibleThreeColumnBricks = (threeColumns: any, loaded: boolean) => {
+export const prepareVisibleThreeColumnBricks = (page: number, threeColumns: any, loaded: boolean) => {
   let data: any[] = [];
   let count = 0;
 
@@ -61,8 +61,14 @@ export const prepareVisibleThreeColumnBricks = (threeColumns: any, loaded: boole
     }
   }
 
+  let redBricks = [...threeColumns.red.finalBricks]
+
+  if (page === 0) {
+    redBricks.unshift({isCreateLink: true} as Brick);
+  }
+
   for (let i = 0; i < 5; i++) {
-    let brick = threeColumns.red.finalBricks[i];
+    let brick = redBricks[i];
     
     if (brick) {
       prepareBrickData(data, brick, i, count, 1);

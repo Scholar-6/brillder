@@ -184,7 +184,7 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  async getBrickByStatus(page: number, brickStatus: BrickStatus, subjectId?: number) {
+  async getBrickByStatus(page: number, brickStatus: BrickStatus, subjectId: number, skipOne: boolean) {
     let subjectIds: number[] = [];
     if (subjectId && subjectId >= 0) {
       subjectIds = [subjectId];
@@ -194,7 +194,8 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
       pageSize: this.state.pageSize,
       isCore: true,
       subjectIds,
-      brickStatuses: [brickStatus]
+      brickStatuses: [brickStatus],
+      skipOne
     });
   }
 
@@ -204,9 +205,9 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
       return;
     }
     
-    const draftData = await this.getBrickByStatus(page, BrickStatus.Draft, subjectId);
-    const buildData = await this.getBrickByStatus(page, BrickStatus.Build, subjectId);
-    const reviewData = await this.getBrickByStatus(page, BrickStatus.Review, subjectId);
+    const draftData = await this.getBrickByStatus(page, BrickStatus.Draft, subjectId, true);
+    const buildData = await this.getBrickByStatus(page, BrickStatus.Build, subjectId, false);
+    const reviewData = await this.getBrickByStatus(page, BrickStatus.Review, subjectId, false);
 
     let threeColumns = {
       red: { finalBricks: draftData?.bricks, count: draftData?.count },
@@ -238,7 +239,9 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
   }
 
   moveBack() {
-    this.getBricks(this.state.page - 1, this.state.buildCheckedSubjectId)
+    if (this.state.page > 0) {
+      this.getBricks(this.state.page - 1, this.state.buildCheckedSubjectId)
+    }
   }
 
   moveNext() {
@@ -291,36 +294,6 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
 
   handleDeleteClose() {
     this.setState({ ...this.state, deleteDialogOpen: false });
-  }
-
-  moveToFirstPage() {
-    this.setState({ sortedIndex: 0 });
-  }
-
-  onThreeColumnsMouseHover(index: number, status: BrickStatus) {
-    let key = Math.floor(index / 3);
-
-    let { threeColumns } = this.state;
-    if (this.props.isSearching) {
-      threeColumns = this.state.searchThreeColumns;
-      hideBricks(this.state.searchBricks);
-    } else {
-      hideBricks(this.state.rawBricks);
-    }
-    let name = getThreeColumnName(status);
-    let brick = getThreeColumnBrick(threeColumns, name, key);
-    if (!brick || brick.expanded) return;
-    expandThreeColumnBrick(threeColumns, name, key + this.state.sortedIndex);
-    this.setState({ ...this.state });
-  }
-
-  onThreeColumnsMouseLeave() {
-    if (this.props.isSearching) {
-      hideBricks(this.state.searchBricks);
-    } else {
-      hideBricks(this.state.rawBricks);
-    }
-    this.setState({ ...this.state });
   }
 
   async delete() {
@@ -418,8 +391,8 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
               threeColumns={threeColumns}
               publishedCount={this.props.publishedCount}
               shown={this.state.shown}
+              page={this.state.page}
               pageSize={this.state.pageSize}
-              sortedIndex={this.state.sortedIndex}
               history={history}
               filters={this.props.filters}
               loaded={this.state.bricksLoaded}
@@ -429,8 +402,6 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
               moveBack={this.moveBack.bind(this)}
               switchPublish={this.switchPublish.bind(this)}
               handleDeleteOpen={this.handleDeleteOpen.bind(this)}
-              onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
-              onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
             />
             {this.renderPagination(threeColumns)}
           </div>
