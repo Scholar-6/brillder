@@ -1,5 +1,6 @@
 import { PDateFilter } from "components/admin/bricksPlayed/BricksPlayedSidebar";
 import { ACSortBy } from "components/admin/classesEvents/ClassesEvents";
+import { CDomain } from "components/admin/classesEvents/ClassesSidebar";
 import { ClassroomApi } from "components/teach/service";
 import { post } from ".";
 
@@ -14,6 +15,7 @@ export interface CACLassroomParams {
   subjectIds: number[];
   sortBy: ACSortBy;
   isAscending: boolean;
+  domains: string[];
 }
 
 /**
@@ -41,5 +43,36 @@ export interface CACLassroomParams {
   }
   catch (e) {
     return null;
+  }
+}
+
+interface UEmail {
+  domains: string[];
+}
+
+/**
+ * Get all creator emails by filters
+ * return list of emails if success or null if failed
+ */
+ export const getAllUniqueEmails = async (dateFilter: PDateFilter, subjectIds: number[]) => {
+  try {
+    const data = await post<UEmail>("/institution/getUniqueCreatorEmails/" + dateFilter, { subjectIds });
+    if (data) {
+      const cdomains = data.domains.map(d => { return { name: d, checked: false } as CDomain });
+      cdomains.sort((a, b) => {
+        if (a.name && b.name) {
+          const aT = a.name.toLocaleLowerCase();
+          const bT = b.name.toLocaleLowerCase();
+          return aT < bT ? -1 : 1;
+        }
+        return 1;
+      });
+
+      return cdomains;
+    }
+    return [] as CDomain[];
+  }
+  catch (e) {
+    return [] as CDomain[];
   }
 }
