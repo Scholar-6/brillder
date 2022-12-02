@@ -171,7 +171,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       isCore: true,
       subjectIds,
       brickStatuses,
-      skipOne: false
+      skipOne: true
     });
   }
 
@@ -268,36 +268,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
   handleDeleteClose() {
     this.setState({ ...this.state, deleteDialogOpen: false });
-  }
-
-  handleMouseHover(index: number) {
-    let bricks = this.state.finalBricks;
-    bricks = bricks.filter(b => b.isCore === true);
-    if (this.props.isSearching) {
-      bricks = this.state.searchBricks;
-      hideBricks(bricks);
-    } else {
-      hideBricks(this.state.rawBricks);
-    }
-
-    if (bricks[index] && bricks[index].expanded) return;
-
-    if (this.props.isSearching) {
-      expandSearchBrick(this.state.searchBricks, index);
-    } else {
-      let bricks2 = this.state.finalBricks.filter(b => b.isCore === true);
-      expandBrick(bricks2, this.state.rawBricks, index);
-    }
-    this.setState({ ...this.state });
-  }
-
-  handleMouseLeave() {
-    if (this.props.isSearching) {
-      hideBricks(this.state.searchBricks);
-    } else {
-      hideBricks(this.state.rawBricks);
-    }
-    this.setState({ ...this.state });
   }
 
   delete(brickId: number) {
@@ -411,6 +381,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
               buildCount={this.state.buildCount}
               reviewCount={this.state.reviewCount}
               shown={this.state.shown}
+              page={this.state.page}
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}
               history={history}
@@ -421,8 +392,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
               moveNext={this.moveNext.bind(this)}
               moveBack={this.moveBack.bind(this)}
               handleDeleteOpen={this.handleDeleteOpen.bind(this)}
-              handleMouseHover={this.handleMouseHover.bind(this)}
-              handleMouseLeave={this.handleMouseLeave.bind(this)}
             />
             {this.renderPagination()}
           </div>
