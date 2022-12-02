@@ -274,3 +274,16 @@
     }
   }
 }
+
+
+// build
+.unique-component-wrapper {
+  #waveform {
+    height: 2.7vw !important;
+    overflow-y: hidden;
+  }
+
+  wave {
+    height: 2.7vw !important;
+  }
+}
