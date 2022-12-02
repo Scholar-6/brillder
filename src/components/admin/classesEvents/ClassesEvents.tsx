@@ -24,7 +24,7 @@ import ExportBtn from "../components/ExportBtn";
 import map from "components/map";
 import { fileFormattedDate, getDateString, getFormattedDate } from "components/services/brickService";
 import { stripHtml } from "components/build/questionService/ConvertService";
-import { getAllAdminClassrooms } from "services/axios/admin";
+import { getAllAdminClassrooms, getAllUniqueEmails } from "services/axios/admin";
 import BackPagePagination from "components/backToWorkPage/components/BackPagePagination";
 
 
@@ -110,35 +110,14 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       pageSize: this.state.pageSize,
       subjectIds: [],
       sortBy,
-      isAscending: this.state.isAscending
+      isAscending: this.state.isAscending,
+      domains: []
     });
+
+    const domains = await getAllUniqueEmails(dateFilter, []);
 
     if (classroomPage) {
       const { classrooms } = classroomPage;
-      const domains: CDomain[] = [];
-      for (let c of classroomPage.classrooms) {
-        const userEmailDomain = c.creator.email.split("@")[1];
-        const found = domains.find(d => d.name == userEmailDomain);
-        if (!found) {
-          domains.push({ checked: false, name: userEmailDomain });
-        }
-      }
-      classroomPage.classrooms.sort((a, b) => {
-        if (a.created && b.created) {
-          return new Date(a.created).getTime() > new Date(b.created).getTime() ? -1 : 1;
-        }
-        return -1;
-      });
-
-      domains.sort((a, b) => {
-        if (a.name && b.name) {
-          const aT = a.name.toLocaleLowerCase();
-          const bT = b.name.toLocaleLowerCase();
-          return aT < bT ? -1 : 1;
-        }
-        return 1;
-      });
-
       this.setState({ classrooms, finalClassrooms: classrooms, domains, count: classroomPage.count });
     }
     const subjects = await getSubjects();
@@ -148,47 +127,52 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   }
 
   moveNext() {
-    this.loadData(this.state.dateFilter, this.state.page + 1, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending);
+    this.loadData(
+      this.state.dateFilter, this.state.page + 1, this.state.selectedSubjects,
+      this.state.sortBy, this.state.isAscending, true
+    );
   }
 
   moveBack() {
-    this.loadData(this.state.dateFilter, this.state.page - 1, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending);
+    this.loadData(
+      this.state.dateFilter, this.state.page - 1, this.state.selectedSubjects,
+      this.state.sortBy, this.state.isAscending, true
+    );
   }
 
-  async loadData(dateFilter: PDateFilter, page: number, selectedSubjects: Subject[], sortBy: ACSortBy, isAscending: boolean) {
+  async loadData(
+    dateFilter: PDateFilter, page: number, selectedSubjects: Subject[],
+    sortBy: ACSortBy, isAscending: boolean, notLoadDomains?: boolean
+  ) {
     const classroomPage = await getAllAdminClassrooms(dateFilter, {
       page,
       pageSize: this.state.pageSize,
       subjectIds: selectedSubjects.map(s => s.id),
       sortBy,
-      isAscending
+      isAscending,
+      domains: this.state.domains.filter(d => d.checked).map(d => d.name)
     });
 
-    if (classroomPage) {
-      const { classrooms } = classroomPage;
-      const finalClassrooms = this.filterAndSort(classrooms, this.state.sortBy, this.state.allDomains, this.state.domains, this.state.searchString);
-      const domains: CDomain[] = [];
-      for (let c of classrooms) {
-        if (c.creator) {
-          const userEmailDomain = c.creator.email.split("@")[1];
-          const found = domains.find(d => d.name == userEmailDomain);
-          if (!found) {
-            domains.push({ checked: false, name: userEmailDomain });
+    let domains:CDomain[] = [];
+
+    if (notLoadDomains === true) {
+      domains = this.state.domains;
+    } else {
+      domains = await getAllUniqueEmails(dateFilter, []);
+      this.state.domains.map(d => {
+        if (d.checked) {
+          const domain = domains.find(d2 => d2.name === d.name);
+          if (domain) {
+            domain.checked = true;
           }
         }
-      }
+      })
+    }
 
-      domains.sort((a, b) => {
-        if (a.name && b.name) {
-          const aT = a.name.toLocaleLowerCase();
-          const bT = b.name.toLocaleLowerCase();
-          return aT < bT ? -1 : 1;
-        }
-        return 1;
-      });
-
+    if (classroomPage) {
+      const {classrooms} = classroomPage;
       this.setState({
-        classrooms, finalClassrooms,
+        classrooms, finalClassrooms: classrooms,
         dateFilter, domains, page, selectedSubjects, count: classroomPage.count,
         sortBy, isAscending
       });
@@ -207,46 +191,6 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     } else {
       this.setState({ ...this.state, searchString });
     }
-  }
-
-  sortClassrooms(sortBy: ACSortBy, classrooms: ClassroomApi[]) {
-    /*
-    if (sortBy === ACSortBy.Name) {
-      return classrooms.sort((a, b) => {
-        const aT = a.name.toLocaleLowerCase();
-        const bT = b.name.toLocaleLowerCase();
-        return aT < bT ? -1 : 1;
-      });
-    } else if (sortBy === ACSortBy.CreatedOn) {
-      return classrooms.sort((a, b) => {
-        if (a.created && b.created) {
-          return new Date(a.created).getTime() > new Date(b.created).getTime() ? -1 : 1;
-        }
-        return -1;
-      });
-    } else if (sortBy === SortBy.Creator) {
-      return classrooms.sort((a, b) => {
-        if (a.teachers.length > 0 && b.teachers.length > 0 && a.teachers[0].firstName && b.teachers[0].firstName) {
-          const aT = a.teachers[0].firstName.toLocaleLowerCase();
-          const bT = b.teachers[0].firstName.toLocaleLowerCase();
-          return aT < bT ? -1 : 1;
-        }
-        return 1;
-      });
-    } else if (sortBy === SortBy.Students) {
-      return classrooms.sort((a, b) => {
-        return a.students.length < b.students.length ? 1 : -1;
-      });
-    } else if (sortBy === SortBy.Assigned) {
-      return classrooms.sort((a, b) => {
-        if (a.assignmentsCount && b.assignmentsCount) {
-          return a.assignmentsCount < b.assignmentsCount ? 1 : -1;
-        }
-        return -1;
-      });
-    } else {
-      return classrooms;
-    }*/
   }
 
   renderStudentsColumn(c: ClassroomApi) {
@@ -407,7 +351,10 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       <SpriteIcon
         name="sort-arrows"
         onClick={() => {
-          this.loadData(this.state.dateFilter, 0, this.state.selectedSubjects, sortBy, !this.state.isAscending);
+          this.loadData(
+            this.state.dateFilter, 0, this.state.selectedSubjects,
+            sortBy, !this.state.isAscending, true
+          );
         }}
       />
     )
@@ -493,22 +440,21 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             allDomains={this.state.allDomains}
             domains={this.state.domains}
             setAllDomains={() => {
-              /*
               this.state.domains.forEach(d => { d.checked = false });
-              const finalClassrooms = this.filterAndSort(this.state.classrooms, ACSortBy.Assigned, true, this.state.domains, this.state.searchString);
-              this.setState({ allDomains: true, finalClassrooms });
-              */
+              this.loadData(this.state.dateFilter, 0, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending, true)
+              this.setState({ allDomains: true });
             }}
             setDomain={d => {
-              /*
               d.checked = !d.checked;
-              const finalClassrooms = this.filterAndSort(this.state.classrooms, SortBy.Assigned, false, this.state.domains, this.state.searchString);
-              this.setState({ allDomains: false, finalClassrooms });
-              */
+              this.loadData(this.state.dateFilter, 0, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending, true);
+              this.setState({ allDomains: false });
             }}
 
             dateFilter={this.state.dateFilter}
-            setDateFilter={dateFilter => this.loadData(dateFilter, 0, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending)}
+            setDateFilter={dateFilter => this.loadData(
+              dateFilter, 0, this.state.selectedSubjects,
+              this.state.sortBy, this.state.isAscending
+            )}
 
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
