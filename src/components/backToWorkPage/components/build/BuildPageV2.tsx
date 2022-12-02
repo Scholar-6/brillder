@@ -171,6 +171,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       isCore: true,
       subjectIds,
       brickStatuses,
+      skipOne: false
     });
   }
 

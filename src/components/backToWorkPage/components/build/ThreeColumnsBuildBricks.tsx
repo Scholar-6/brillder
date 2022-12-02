@@ -22,8 +22,8 @@ interface BuildBricksProps {
   loaded: boolean;
   shown: boolean;
 
+  page: number;
   pageSize: number;
-  sortedIndex: number;
 
   history: any;
   filters: any;
@@ -37,8 +37,6 @@ interface BuildBricksProps {
 
   // brick events
   handleDeleteOpen(brickId: number): void;
-  onThreeColumnsMouseHover(brickId: number, status: BrickStatus): void;
-  onThreeColumnsMouseLeave(brickId: number, status: BrickStatus): void;
 }
 
 interface State {
@@ -132,30 +130,14 @@ class BuildBricks extends Component<BuildBricksProps, State> {
         history={this.props.history}
         searchString={this.props.searchString}
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
-        handleMouseHover={() => {
-          this.props.onThreeColumnsMouseHover(item.key, brick.status)
-        }}
-        handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, brick.status)}
+        handleMouseHover={() => {}}
+        handleMouseLeave={() => {}}
       />
     });
   }
 
-  isThreeColumnsEmpty = () => {
-    const { threeColumns } = this.props;
-    if (threeColumns.green.finalBricks.length > 0) {
-      return false;
-    } else if (threeColumns.red.finalBricks.length > 0) {
-      return false;
-    } else if (threeColumns.yellow.finalBricks.length > 0) {
-      return false;
-    }
-    return true;
-  }
-
   renderBricks = () => {
-    const data = prepareVisibleThreeColumnBricks(
-      this.props.threeColumns, this.props.loaded
-    );
+    const data = prepareVisibleThreeColumnBricks(this.props.page, this.props.threeColumns, this.props.loaded);
     return this.renderGroupedBricks(data);
   }
 
@@ -219,7 +201,7 @@ class BuildBricks extends Component<BuildBricksProps, State> {
   render() {
     let isEmpty = false;
 
-    const {threeColumns} = this.props;
+    const { threeColumns } = this.props;
 
     if (threeColumns.red.count === 0 && threeColumns.green.count === 0 && threeColumns.yellow.count === 0) {
       isEmpty = true;
