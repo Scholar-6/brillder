@@ -169,7 +169,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (values.newTeacher) {
       setNewTeacher(true);
     }
-  /*eslint-disable-next-line*/
+    /*eslint-disable-next-line*/
   }, []);
 
   const assignToExistingBrick = async (classroom: any) => {
@@ -288,13 +288,20 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   const renderAssignLeftLabel = () => {
-    if (props.user?.freeAssignmentsLeft && props.user?.freeAssignmentsLeft > 1) {
+    const { user } = props;
+
+    if (user?.subscriptionState === 0 || user?.isFromInstitution || user?.library) {
+      return <div />;
+    }
+
+    if (user?.freeAssignmentsLeft && user?.freeAssignmentsLeft > 1) {
       return (
         <div className="left-label">
-          {props.user.freeAssignmentsLeft} free Assignments Left
+          {user.freeAssignmentsLeft} free Assignments Left
         </div>
-      )
+      );
     }
+
     return (
       <div className="left-label">
         No Free Assignments Left
@@ -302,9 +309,23 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     )
   }
 
+  const renderPremiumButton = () => {
+    const { user } = props;
+
+    if (user?.subscriptionState === 0 || user?.isFromInstitution || user?.library) {
+      return <div />
+    }
+    
+    return (
+      <div className="premium-btn flex-center" onClick={() => props.history.push(map.StripeEducator)}>
+        Go Premium <SpriteIcon name="hero-sparkle" />
+      </div>
+    )
+  }
+
   const renderFooter = () => (
     <div className="action-row custom-action-row" style={{ justifyContent: 'center' }}>
-      {props.user?.subscriptionState === 0 && renderAssignLeftLabel()}
+      {renderAssignLeftLabel()}
       <button
         className="btn btn-md bg-theme-orange yes-button icon-button r-long"
         onClick={assign} style={{ width: 'auto' }}
@@ -314,10 +335,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           <SpriteIcon name="file-plus" />
         </div>
       </button>
-      {props.user?.subscriptionState === 0 &&
-      <div className="premium-btn flex-center" onClick={() => props.history.push(map.StripeEducator)}>
-        Go Premium <SpriteIcon name="hero-sparkle" />
-      </div>}
+      {renderPremiumButton()}
     </div>
   );
 
