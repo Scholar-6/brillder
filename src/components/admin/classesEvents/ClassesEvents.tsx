@@ -17,7 +17,6 @@ import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
 import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import SubTab, { ClassesActiveSubTab } from "../components/SubTab";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
 import ExportBtn from "../components/ExportBtn";
@@ -476,7 +475,6 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
               <div>
-                <SubTab activeTab={ClassesActiveSubTab.Classes} dateFilter={this.state.dateFilter} history={this.props.history} />
                 <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
                 {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
                   <div className="popup-3rfw bold">
