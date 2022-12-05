@@ -130,20 +130,24 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   moveNext() {
     this.loadData(
       this.state.dateFilter, this.state.page + 1, this.state.selectedSubjects,
-      this.state.sortBy, this.state.isAscending, true
+      this.state.sortBy, this.state.isAscending,
+      this.state.isSearching ? this.state.searchString : '',
+      true
     );
   }
 
   moveBack() {
     this.loadData(
       this.state.dateFilter, this.state.page - 1, this.state.selectedSubjects,
-      this.state.sortBy, this.state.isAscending, true
+      this.state.sortBy, this.state.isAscending,
+      this.state.isSearching ? this.state.searchString : '',
+      true
     );
   }
 
   async loadData(
     dateFilter: PDateFilter, page: number, selectedSubjects: Subject[],
-    sortBy: ACSortBy, isAscending: boolean, notLoadDomains?: boolean
+    sortBy: ACSortBy, isAscending: boolean, searchString: string, notLoadDomains?: boolean
   ) {
     const classroomPage = await getAllAdminClassrooms(dateFilter, {
       page,
@@ -152,7 +156,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       sortBy,
       isAscending,
       domains: this.state.domains.filter(d => d.checked).map(d => d.name),
-      searchString: ''
+      searchString
     });
 
     let domains:CDomain[] = [];
@@ -182,13 +186,24 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   }
 
   search() {
-    /*
-    this.setState({ sortBy: ACSortBy.Name, finalClassrooms });
-    */
+    this.loadData(
+      this.state.dateFilter, 0, this.state.selectedSubjects,
+      this.state.sortBy, this.state.isAscending,
+      this.state.searchString,
+      true
+    );
+
+    this.setState({ isSearching: true });
   }
 
   async searching(searchString: string) {
-    if (searchString.length === 0) {
+    if (searchString.length <= 2) {
+      this.loadData(
+        this.state.dateFilter, 0, this.state.selectedSubjects,
+        this.state.sortBy, this.state.isAscending,
+        '',
+        true
+      );
       this.setState({ ...this.state, searchString, isSearching: false });
     } else {
       this.setState({ ...this.state, searchString });
@@ -340,7 +355,9 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
         onClick={() => {
           this.loadData(
             this.state.dateFilter, 0, this.state.selectedSubjects,
-            sortBy, !this.state.isAscending, true
+            sortBy, !this.state.isAscending,
+            this.state.isSearching ? this.state.searchString : '',
+            true
           );
         }}
       />
@@ -415,7 +432,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       <div className="main-listing user-list-page manage-classrooms-page bricks-played-page classes-events-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
-          placeholder="Brick Title, Student Name, or Subject"
+          placeholder="Class Name, Teacher Name or Creator Name"
           user={this.props.user}
           history={this.props.history}
           search={this.search.bind(this)}
@@ -428,24 +445,35 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             domains={this.state.domains}
             setAllDomains={() => {
               this.state.domains.forEach(d => { d.checked = false });
-              this.loadData(this.state.dateFilter, 0, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending, true)
+              this.loadData(
+                this.state.dateFilter, 0, this.state.selectedSubjects,
+                this.state.sortBy, this.state.isAscending,
+                this.state.isSearching ? this.state.searchString : '',
+                true)
               this.setState({ allDomains: true });
             }}
             setDomain={d => {
               d.checked = !d.checked;
-              this.loadData(this.state.dateFilter, 0, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending, true);
+              this.loadData(
+                this.state.dateFilter, 0, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending,
+                this.state.isSearching ? this.state.searchString : '',
+                true);
               this.setState({ allDomains: false });
             }}
 
             dateFilter={this.state.dateFilter}
             setDateFilter={dateFilter => this.loadData(
               dateFilter, 0, this.state.selectedSubjects,
-              this.state.sortBy, this.state.isAscending
+              this.state.sortBy, this.state.isAscending,
+              this.state.isSearching ? this.state.searchString : '',
             )}
 
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
-            selectSubjects={selectedSubjects => this.loadData(this.state.dateFilter, 0, selectedSubjects, this.state.sortBy, this.state.isAscending)}
+            selectSubjects={selectedSubjects => this.loadData(
+              this.state.dateFilter, 0, selectedSubjects, this.state.sortBy, this.state.isAscending,
+              this.state.isSearching ? this.state.searchString : '',
+            )}
           />
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
