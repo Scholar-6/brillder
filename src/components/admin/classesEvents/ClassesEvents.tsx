@@ -410,9 +410,6 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             </div>
             <div className="assigned-column header">
               <div>Recent Brick</div>
-              <div>
-                {this.renderSortArrow(ACSortBy.RecentBrick)}
-              </div>
             </div>
             <div className="creator-column header">
               <div>Creator</div>
@@ -432,7 +429,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       <div className="main-listing user-list-page manage-classrooms-page bricks-played-page classes-events-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
-          placeholder="Class Name, Teacher Name or Creator Name"
+          placeholder="Class Name, Teacher or Creator"
           user={this.props.user}
           history={this.props.history}
           search={this.search.bind(this)}
