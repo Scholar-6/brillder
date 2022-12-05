@@ -228,9 +228,6 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     }
     return (
       <div className="bricks-column">
-        <div className="bricks-book-icon">
-          <SpriteIcon name={`circle-progress-admin-${count == 0 ? 3 : 1}`} />
-        </div>
         {count}
       </div>
     );
@@ -260,6 +257,9 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     }
     return (
       <div className="activity-column">
+        <div className="bricks-book-icon">
+          <SpriteIcon name={`circle-progress-admin-${total == 0 ? 3 : 1}`} />
+        </div>
         {total}
       </div>
     );
