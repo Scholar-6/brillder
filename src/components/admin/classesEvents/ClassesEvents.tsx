@@ -25,6 +25,7 @@ import { fileFormattedDate, getDateString, getFormattedDate } from "components/s
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { getAllAdminClassrooms, getAllUniqueEmails } from "services/axios/admin";
 import BackPagePagination from "components/backToWorkPage/components/BackPagePagination";
+import { playCover } from "components/play/routes";
 
 
 export enum ACSortBy {
@@ -247,16 +248,20 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   }
 
   renderRecentAssignmentColumn(c: ClassroomApi) {
-    let data = '';
+    let latest: any = null;
     if (c.assignments && c.assignments.length > 0) {
-      const latest = c.assignments[0];
-      data = getFormattedDate(latest.assignedDate) + ' ' + stripHtml(latest.brick.title);
+      latest = c.assignments[0];
     }
     return (
       <div className="assigned-column">
-        {data}
+        {latest ? <span>
+          {getFormattedDate(latest.assignedDate)}
+          <span className="underline" onClick={() => {this.props.history.push(playCover(latest.brick))}}>
+            {stripHtml(latest.brick.title)}
+          </span>
+        </span> : ''}
       </div>
-    )
+    );
   }
 
   renderActivityIcon(c: ClassroomApi, total: number) {
