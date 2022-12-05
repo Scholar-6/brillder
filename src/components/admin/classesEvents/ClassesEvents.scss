@@ -123,10 +123,14 @@
     }
     .activity-column {
       width: 7%;
+      .bricks-book-icon {
+        display: flex;
+        align-items: center;
+      }
       svg {
         margin-right: 0.5vw;
-        width: 2.7vw;
-        height: 2.7vw;
+        width: 2.3vw;
+        height: 2.3vw;
       }
     }
     .creator-column {
