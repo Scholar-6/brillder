@@ -217,7 +217,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   async getClassrooms() {
     let classrooms = await getAllClassrooms();
     if (classrooms) {
-      if (this.state.teacherId) {
+      if (this.state.teacherId > 0) {
         classrooms = classrooms.filter(c => {
           const found = c.teachers.find(t => t.id === this.state.teacherId);
           if (found) {
