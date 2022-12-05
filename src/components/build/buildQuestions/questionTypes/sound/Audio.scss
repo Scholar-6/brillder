@@ -16,6 +16,9 @@
 
     .react-waves {
       width: 100% !important;
+      > div {
+        width: 100% !important;
+      }
     }
   }
 
@@ -269,5 +272,18 @@
     input {
       display: none;
     }
+  }
+}
+
+
+// build
+.unique-component-wrapper {
+  #waveform {
+    height: 2.7vw !important;
+    overflow-y: hidden;
+  }
+
+  wave {
+    height: 2.7vw !important;
   }
 }

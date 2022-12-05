@@ -20,10 +20,11 @@ const TeachTab: React.FC<TabProps> = ({ history, activeTab, classroom, assignmen
   const isActive = (t1: TeachActiveTab, t2: TeachActiveTab) => t1 === t2 ? 'active' : 'no-active';
   const values = queryString.parse(history.location.search);
   const classroomId = values.classroomId || '';
+  const teacherId = values.teacherId || '';
   
   const [errorOpen, setErrorOpen] = React.useState(false);
 
-  const prepareLink = (link: string) => classroomId ? (link + '?classroomId=' + classroomId) : link;
+  const prepareLink = (link: string) => classroomId ? (link + '?classroomId=' + classroomId) + '&teacherId=' + teacherId : link;
 
   const goToAssignments = React.useCallback(() => {
     if (assignmentsEnabled) {

@@ -56,7 +56,6 @@
     }
   }
   .tab-content {
-    overflow-y: auto;
     padding-bottom: 1vw;
     color: var(--theme-dark-blue);
     position: relative;
@@ -69,8 +68,17 @@
       }
     }
 
+    .table {
+      overflow-x: auto;
+
+      .table-container {
+        width: 118vw;
+      }
+    }
+
     .table-head {
       margin-top: 2vh;
+      margin-bottom: 1.6vh;
       display: flex;
       font-size: 1.2vw;
 
@@ -86,18 +94,56 @@
       }
     }
     .name-column {
-      padding-left: 1.5%;
-      width: 25%;
+      padding-left: 1% !important;
+      width: 18% !important;
     }
-    .creator-column {
-      width: 25%;
-    }
-    .domain-column {
-      width: 25%;
-
+    .created-at-column {
+      width: 10%;
     }
     .students-column {
-      width: 12.5%;
+      width: 8%;
+
+      svg {
+        width: 2.3vw;
+        height: 2.3vw;
+        margin-right: 0.5vw;
+      }
+
+      .bigger {
+        font-size: 1.4vw;
+        margin-bottom: 0.26vw;
+      }
+    }
+    .active {
+      cursor: pointer;
+    }
+
+    .bricks-column {
+      width: 5%;
+    }
+    .activity-column {
+      width: 7%;
+      .bricks-book-icon {
+        display: flex;
+        align-items: center;
+      }
+      svg {
+        margin-right: 0.5vw;
+        width: 2.3vw;
+        height: 2.3vw;
+      }
+    }
+    .creator-column {
+      width: 18% !important;
+    }
+    .teacher-column {
+      width: 18% !important;
+      .teacher-row {
+        display: block;
+      }
+    }
+    .domain-column {
+      width: 15%;
     }
 
     .assigned-column {
@@ -109,6 +155,10 @@
       align-items: center;
       justify-content: center;
       width: 11%;
+    }
+    .underline {
+      cursor: pointer;
+      text-decoration: underline;
     }
     .first-column {
       display: flex;
@@ -159,10 +209,6 @@
 
       &:nth-child(odd) {
         background: var(--tab-gray);
-      }
-
-      &.clickable {
-        cursor: pointer;
       }
     }
   }
@@ -241,4 +287,13 @@
 
 .classes-events-page .tab-content .table .table-row {
   height: unset !important;
+}
+
+.classes-events-page .tab-content {
+  height: calc(100vh - 5.834vw - 2vw - 6.6vh) !important;
+  .table-body {
+    height: calc(100vh - 5.834vw - 2vw - 6.6vh - 7vh - 3.6vh - 2vw - 4vh - 0.5vw) !important;
+    overflow-y: auto;
+  }
+  background: white;
 }

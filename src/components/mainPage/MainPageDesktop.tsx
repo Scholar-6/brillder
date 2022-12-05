@@ -434,12 +434,17 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   renderBottomMidle() {
+    const {user} = this.props;
     let renderPremiumButton = false;
-    if (this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState) {
+    if (user.subscriptionState === 0 || !user.subscriptionState) {
       renderPremiumButton = true;
-      if (this.props.user.library) {
+      if (user.library) {
         renderPremiumButton = false;
       }
+    }
+
+    if (user.isFromInstitution) {
+      renderPremiumButton = false;
     }
 
     if (renderPremiumButton === true) {

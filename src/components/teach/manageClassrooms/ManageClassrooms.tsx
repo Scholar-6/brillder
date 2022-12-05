@@ -29,7 +29,6 @@ import EmptyFilter from "./components/EmptyFilter";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import NameAndSubjectForm from "../components/NameAndSubjectForm";
-import { Subject } from "model/brick";
 import ClassroomFilterItem from "./components/ClassroomFilterItem";
 import { socket } from "socket/socket";
 import map from "components/map";
@@ -87,6 +86,8 @@ interface UsersListState {
   isPending: boolean;
   pendingUsers: MUser[];
 
+  teacherId: number;
+
   pageStudentsSelected: boolean;
 }
 
@@ -95,6 +96,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     super(props);
 
     const pageSize = 14;
+
+    let teacherId = -1;
+
+    const values = queryString.parse(this.props.history.location.search);
+    if (values.teacherId) {
+      teacherId = parseInt(values.teacherId as string);
+    }
 
     this.state = {
       isLoaded: false,
@@ -109,6 +117,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
       filterSortAscending: true,
       filterSortByName: null,
+
+      teacherId,
 
       searchString: "",
       isSearching: false,
@@ -143,7 +153,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   componentDidMount() {
     socket.on("invitation_accepted", () => {
       this.loadData();
-      console.log("inv update")
     });
   }
 
@@ -208,6 +217,18 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   async getClassrooms() {
     let classrooms = await getAllClassrooms();
     if (classrooms) {
+      if (this.state.teacherId > 0) {
+        classrooms = classrooms.filter(c => {
+          const found = c.teachers.find(t => t.id === this.state.teacherId);
+          if (found) {
+            return true;
+          }
+          return false;
+        })
+      }
+
+      console.log('get classrooms', classrooms)
+
       this.prepareClassrooms(classrooms);
       classrooms = classrooms.sort((a: any, b: any) => b.students.length - a.students.length);
       this.setState({
@@ -340,7 +361,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   setActiveClassroom(activeClassroom: ClassroomApi) {
     this.unselectAllStudents();
     activeClassroom.isActive = true;
-    this.props.history.push(map.ManageClassroomsTab + '?classroomId=' + activeClassroom.id);
+    this.props.history.push({ search: queryString.stringify({ classroomId: activeClassroom.id, teacherId: this.state.teacherId }) });
     this.setState({ activeClassroom, page: 0, isPending: false, pageStudentsSelected: false, pageSize: this.state.classPageSize, selectedUsers: [], isSearching: false });
   }
 

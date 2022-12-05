@@ -94,8 +94,8 @@ class ClassesSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
               control={<Radio onClick={() => this.props.setAllDomains()} className={"filter-radio custom-color"} />}
               label="All" />
           </div>
-          {this.props.domains.map(d =>
-            <div className="sort-radio-btns filter-row margin-smaller">
+          {this.props.domains.map((d, k) =>
+            <div className="sort-radio-btns filter-row margin-smaller" key={k}>
               <FormControlLabel
                 checked={d.checked === true}
                 control={<Radio onClick={() => this.props.setDomain(d)} className={"filter-radio custom-color"} />}

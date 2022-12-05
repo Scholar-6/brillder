@@ -15,7 +15,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import UsersSidebar from "./UsersEventsSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { deleteUser, getUsers } from "services/axios/user";
+import { deleteUser, getUsersV2 } from "services/axios/user";
 import { getDateString, getFormattedDateSlash } from "components/services/brickService";
 import UsersPagination from "components/teach/manageClassrooms/components/UsersPagination";
 import ExportBtn from "../components/ExportBtn";
@@ -119,7 +119,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
     if (userPreference !== null) {
       roleFilters.push(userPreference);
     }
-    const res = await getUsers({
+    const res = await getUsersV2({
       pageSize: this.state.pageSize,
       page: page.toString(),
       searchString,
@@ -238,8 +238,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
                 this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
               }
             }}>
-              <SpriteIcon name={u.attempts.length > 0 ? "user-event-activity" : "user-event-activity-disabled"} />
-              <div className="absolute-count-d4421">
+              <SpriteIcon name={u.attempts.length > 0 ? "circle-progress-admin-1" : "circle-progress-admin-3"} />
+              <div className="count-d4421">
                 {u.attempts.length}
               </div>
             </div>

@@ -87,3 +87,17 @@
     max-width: 100%;
   }
 }
+
+// phone sound
+.vertical-shuffle-choice .vertical-content.sound-type-d34 {
+  .ver-data-d34 {
+    width: 100%;
+  }
+  .relative-waves-container {
+    padding-bottom: 2vw;
+  }
+  .absolute-end-time,
+  .absolute-start-time {
+    top: calc(100px);
+  }
+}

@@ -248,14 +248,14 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
           }
         }
       }}>
-        <div className={`vertical-content ${hasHint ? '' : 'full-height'}`}>
+        <div className={`vertical-content ${hasHint ? '' : 'full-height'} ${answer.answerType === QuestionValueType.Sound ? 'sound-type-d34' : ''}`}>
           <Grid container direction="row" justify="center">
             <div className="circle-index">
               <div>
                 {switchIndex === i ? <SpriteIcon name="feather-refresh" /> : i + 1}
               </div>
             </div>
-            <div>
+            <div className="ver-data-d34">
               {this.renderData(answer)}
             </div>
           </Grid>

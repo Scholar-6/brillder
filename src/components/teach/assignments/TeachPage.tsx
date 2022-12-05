@@ -99,6 +99,8 @@ interface TeachState {
 
   isNewTeacher: boolean;
 
+  teacherId: number;
+
   haveArchivedBrick: boolean;
   stepsEnabled: boolean;
   steps: any[];
@@ -116,6 +118,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     const pathname = props.history.location.pathname as string;
     const isArchive = pathname.search('/archive') >= 0;
+
+    let teacherId = -1;
+
+    const values = queryString.parse(this.props.history.location.search);
+    if (values.teacherId) {
+      teacherId = parseInt(values.teacherId as string);
+    }
 
     this.state = {
       isAdmin,
@@ -143,6 +152,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
       },
       createClassOpen: false,
       isPremiumDialogOpen: false,
+
+      teacherId,
 
       totalCount: 0,
       searchString: '',
@@ -225,6 +236,17 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async loadClasses(activeClassId?: number) {
     let classrooms = await getAllClassrooms() as TeachClassroom[] | null;
     if (classrooms) {
+
+      if (this.state.teacherId > 0) {
+        classrooms = classrooms.filter(c => {
+          const found = c.teachers.find(t => t.id === this.state.teacherId);
+          if (found) {
+            return true;
+          }
+          return false;
+        });
+      }
+
       let { activeClassroom } = this.state;
 
       if (activeClassId) {
@@ -336,10 +358,22 @@ class TeachPage extends Component<TeachProps, TeachState> {
         classroom.assignments = await getAssignmentsClassrooms(classroom.id);
       }
       classroom.active = true;
-      this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom, activeAssignment: null, activeStudent: null, assignmentStats: null });
-      this.props.history.push({ search: queryString.stringify({ classroomId: id }) });
+      this.setState({
+        sortedIndex: 0, classrooms,
+        activeClassroom: classroom,
+        activeAssignment: null,
+        activeStudent: null,
+        assignmentStats: null
+      });
+      this.props.history.push({ search: queryString.stringify({ classroomId: id, teacherId: this.state.teacherId }) });
     } else {
-      this.setState({ sortedIndex: 0, activeClassroom: null, activeStudent: null, activeAssignment: null, assignmentStats: null });
+      this.setState({
+        sortedIndex: 0,
+        activeClassroom: null,
+        activeStudent: null,
+        activeAssignment: null,
+        assignmentStats: null
+      });
       this.props.history.push({ search: "" });
     }
   }
@@ -359,7 +393,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   moveToAssignment(classroomId: number, assignmentId: number) {
     this.setActiveAssignment(classroomId, assignmentId);
-    this.props.history.push({ search: queryString.stringify({ classroomId, assignmentId }) });
+    this.props.history.push({ search: queryString.stringify({ classroomId, assignmentId, teacherId: this.state.teacherId }) });
   }
 
   collapseClasses() {
@@ -374,7 +408,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   moveToNoAssignment() {
     this.unselectAssignment();
-    this.props.history.push({ search: queryString.stringify({ classroomId: this.state.activeClassroom?.id }) });
+    this.props.history.push({ search: queryString.stringify({ classroomId: this.state.activeClassroom?.id, teacherId: this.state.teacherId }) });
   }
 
   teachFilterUpdated(filters: TeachFilters) {
@@ -584,7 +618,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
           onUnarchive={this.onUnarchiveClass.bind(this)}
           onDelete={this.onDeleteClass.bind(this)}
           onAssign={() => this.setState({ isAssignOpen: true })}
-          showPremium={() => this.setState({ isPremiumDialogOpen: true })}
         />
         {this.renderTeachPagination()}
       </Grid>
