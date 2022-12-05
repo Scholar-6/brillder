@@ -148,6 +148,10 @@
       justify-content: center;
       width: 11%;
     }
+    .underline {
+      cursor: pointer;
+      text-decoration: underline;
+    }
     .first-column {
       display: flex;
       align-items: center;
@@ -197,10 +201,6 @@
 
       &:nth-child(odd) {
         background: var(--tab-gray);
-      }
-
-      &.clickable {
-        cursor: pointer;
       }
     }
   }
