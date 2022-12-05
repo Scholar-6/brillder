@@ -188,6 +188,7 @@ class TeachFilterSidebar extends Component<
   renderPremiumBox() {
     let className = 'pay-info ';
     let noFreeTries = false;
+
     if (this.props.user && this.props.user.freeAssignmentsLeft < 1) {
       className += " no-free-tries";
       noFreeTries = true;
@@ -206,7 +207,7 @@ class TeachFilterSidebar extends Component<
     );
   }
   renderPremiumBoxCondition() {
-    if (this.props.user.isFromInstitution) {
+    if (this.props.user.isFromInstitution || this.props.user.library) {
       return '';
     }
     return this.renderPremiumBox();

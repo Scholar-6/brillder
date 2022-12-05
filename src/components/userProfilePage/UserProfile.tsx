@@ -559,14 +559,24 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         );
       }
 
+      const renderPremiumButton = () => {
+        if (this.props.user.isFromInstitution) {
+          return <div />;
+        }
+
+        return (
+          <div className="price btn" onClick={() => this.props.history.push(map.StripeEducator)}>
+            <div>Go Premium <SpriteIcon name="hero-sparkle" /></div>
+          </div>
+        )
+      }
+
       return (
         <div className="current-plan">
           <span>
             {renderLabel()} Free Trial
           </span>
-          <div className="price btn" onClick={() => this.props.history.push(map.StripeEducator)}>
-            <div>Go Premium <SpriteIcon name="hero-sparkle" /></div>
-          </div>
+          {renderPremiumButton()}
         </div>
       );
     }
@@ -631,6 +641,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     const renderLibrary = () => {
+      if (this.props.user.isFromInstitution) {
+        return <div />;
+      }
       return <RealLibraryConnect user={this.props.user} reloadLibrary={() => { }} />
     }
 
