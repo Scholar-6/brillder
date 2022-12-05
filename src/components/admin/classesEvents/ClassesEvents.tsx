@@ -104,7 +104,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   }
 
   async loadInitPlayedData(dateFilter: PDateFilter, sortBy: ACSortBy) {
-    const classroomPage = await getAllAdminClassrooms(dateFilter, { 
+    const classroomPage = await getAllAdminClassrooms(dateFilter, {
       page: this.state.page,
       pageSize: this.state.pageSize,
       subjectIds: [],
@@ -158,7 +158,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       searchString
     });
 
-    let domains:CDomain[] = [];
+    let domains: CDomain[] = [];
 
     if (notLoadDomains === true) {
       domains = this.state.domains;
@@ -175,7 +175,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     }
 
     if (classroomPage) {
-      const {classrooms} = classroomPage;
+      const { classrooms } = classroomPage;
       this.setState({
         classrooms, finalClassrooms: classrooms,
         dateFilter, domains, page, selectedSubjects, count: classroomPage.count,
@@ -209,13 +209,27 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     }
   }
 
+  renderStudentsIcon(c: ClassroomApi, total: number) {
+    if (total === 0) {
+      return <SpriteIcon name="students-3" className="active" />
+    }
+
+    return (
+      <SpriteIcon
+        name={`students-${total === c.students.length ? 1 : 2}`}
+        className="active"
+        onClick={() => this.props.history.push(map.ManageClassroomsTab + '?classroomId=' + c.id)}
+      />
+    );
+  }
+
   renderStudentsColumn(c: ClassroomApi) {
     let total = c.students.length;
     if (c.studentsInvitations) {
       total += c.studentsInvitations.length;
     }
     return <div className="students-column">
-      <SpriteIcon name={`students-${total === 0 ? 3 : (total === c.students.length ? 1 : 2)}`} />
+      {this.renderStudentsIcon(c, total)}
       {c.students.length}/<span className="bigger">{total}</span>
     </div>
   }
@@ -245,6 +259,37 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     )
   }
 
+  renderActivityIcon(c: ClassroomApi, total: number) {
+    let goodActivity = false;
+    if (c.assignments && c.assignments.length > 0 && c.students.length > 0) {
+      for (let student of c.students) {
+        let activity = 0;
+        for (let a of c.assignments) {
+          let found = a.attempts.find((at: any) => at.studentId === student.id);
+          if (found) {
+            activity += 1;
+          }
+        }
+        let tasksCount = c.assignments.length;
+        if (activity / tasksCount >= 0.75) {
+          goodActivity = true;
+          break;
+        }
+      }
+    }
+
+    if (total === 0) {
+      return <SpriteIcon name="circle-progress-admin-3" />;
+    }
+    return (
+      <SpriteIcon
+        name={`circle-progress-admin-${goodActivity ? 1 : 2}`}
+        className="active"
+        onClick={() => { this.props.history.push(map.TeachAssignedClass(c.id)) }}
+      />
+    )
+  }
+
   renderActivityColumn(c: ClassroomApi) {
     let total = 0;
     if (c.assignments && c.assignments.length > 0 && c.students.length > 0) {
@@ -257,7 +302,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     return (
       <div className="activity-column">
         <div className="bricks-book-icon">
-          <SpriteIcon name={`circle-progress-admin-${total == 0 ? 3 : 1}`} />
+          {this.renderActivityIcon(c, total)}
         </div>
         {total}
       </div>
@@ -297,7 +342,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             </div>
             <div className="teacher-column">
               <div>
-                {c.teachers.map((t, i) => 
+                {c.teachers.map((t, i) =>
                   <div
                     className="teacher-row underline"
                     onClick={() => { this.props.history.push(map.TeachAssignedTab + '?teacherId=' + t.id) }}

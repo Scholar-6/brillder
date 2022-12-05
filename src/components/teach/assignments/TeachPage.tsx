@@ -358,10 +358,22 @@ class TeachPage extends Component<TeachProps, TeachState> {
         classroom.assignments = await getAssignmentsClassrooms(classroom.id);
       }
       classroom.active = true;
-      this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom, activeAssignment: null, activeStudent: null, assignmentStats: null });
+      this.setState({
+        sortedIndex: 0, classrooms,
+        activeClassroom: classroom,
+        activeAssignment: null,
+        activeStudent: null,
+        assignmentStats: null
+      });
       this.props.history.push({ search: queryString.stringify({ classroomId: id, teacherId: this.state.teacherId }) });
     } else {
-      this.setState({ sortedIndex: 0, activeClassroom: null, activeStudent: null, activeAssignment: null, assignmentStats: null });
+      this.setState({
+        sortedIndex: 0,
+        activeClassroom: null,
+        activeStudent: null,
+        activeAssignment: null,
+        assignmentStats: null
+      });
       this.props.history.push({ search: "" });
     }
   }
