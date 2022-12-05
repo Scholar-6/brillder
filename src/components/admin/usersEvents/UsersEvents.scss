@@ -296,7 +296,7 @@
   
     .attempts-count-box {
       height: 1.7vw;
-      position: relative;
+      display: flex;
       cursor: pointer;
   
       svg {
@@ -304,13 +304,12 @@
         width: 1.7vw;
         height: 1.7vw;
       }
-      .absolute-count-d4421 {
-        position: absolute;
-        font-family: $font-family-bold;
-        color: white;
-        font-size: 0.8vw;
-        top: 0.26vw;
-        left: 0.8vw;
+      .count-d4421 {
+        display: flex;
+        align-items: center;
+        font-family: $font-family-regular;
+        font-size: 1vw;
+        margin-left: 0.4vw;
       }
 
       &.whiter {
