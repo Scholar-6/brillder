@@ -77,7 +77,6 @@ import AdminOrInstitutionRoute from './AdminOrInstitutionRoute';
 import BricksPlayed from 'components/admin/bricksPlayed/BricksPlayed';
 import UsersEvents from 'components/admin/usersEvents/UsersEvents';
 import ClassesEvents from 'components/admin/classesEvents/ClassesEvents';
-import AssignmentEvents from 'components/admin/assignmentEvents/AssignmentEvents';
 
 
 interface AppProps {
@@ -341,7 +340,6 @@ const App: React.FC<AppProps> = props => {
             <AdminOrInstitutionRoute path={map.AdminBricksPlayed} component={BricksPlayed} />
             <AdminOrInstitutionRoute path={map.UsersEvents} component={UsersEvents} />
             <AdminOrInstitutionRoute path={map.ClassesEvents} component={ClassesEvents} />
-            <AdminOrInstitutionRoute path={map.AssignmentEvents} component={AssignmentEvents} />
 
             <Route path={map.TermsPage} component={PublicTerms} />
             <Route component={AuthRedirectRoute} />
