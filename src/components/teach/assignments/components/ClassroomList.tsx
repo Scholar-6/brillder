@@ -31,7 +31,6 @@ interface ClassroomListProps {
   activeClassroom: TeachClassroom;
   isArchive: boolean;
   toggleArchive(v: boolean): void;
-  showPremium(): void;
   expand(classroomId: number, assignmentId: number): void;
   reloadClass(id: number): void;
   onAssign(): void;

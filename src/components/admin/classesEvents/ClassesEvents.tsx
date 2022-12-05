@@ -287,14 +287,25 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     return <div className="table-body">
       {finalClassrooms.map((c, key) => {
         return (
-          <div key={key} className="table-row clickable" onClick={() => { this.props.history.push(map.TeachAssignedClass(c.id)) }}>
-            <div className="name-column">{c.name}</div>
+          <div key={key} className="table-row">
+            <div
+              className="name-column underline"
+              onClick={() => { this.props.history.push(map.TeachAssignedClass(c.id)) }}
+            >{c.name}</div>
             <div className="created-at-column">
               {getDateString(c.created)}
             </div>
             <div className="teacher-column">
               <div>
-                {c.teachers.map((t, i) => <div className="teacher-row" key={i}>{t.firstName} {c.creator.lastName}</div>)}
+                {c.teachers.map((t, i) => 
+                  <div
+                    className="teacher-row underline"
+                    onClick={() => { this.props.history.push(map.TeachAssignedTab + '?teacherId=' + t.id) }}
+                    key={i}
+                  >
+                    {t.firstName} {t.lastName}
+                  </div>)
+                }
               </div>
             </div>
             {this.renderStudentsColumn(c)}
