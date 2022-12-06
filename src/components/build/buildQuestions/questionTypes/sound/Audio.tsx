@@ -4,6 +4,7 @@ import WaveSurfer from "wavesurfer.js";
 import './Audio.scss';
 import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { generateId } from "../service/questionBuild";
 
 interface SoundProps {
   src?: string;
@@ -23,6 +24,7 @@ interface SoundState {
   duration: string;
   audioState: AudioState;
   playing: boolean;
+  waveId: string;
 
   trackRef: React.RefObject<any>;
   waveformRef: React.RefObject<any>;
@@ -41,6 +43,8 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
       volume: 1,
       volumeHovered: false,
       rangeValue: 0,
+
+      waveId: "waveform-" + generateId(),
 
       trackRef: React.createRef<any>(),
       waveformRef: React.createRef<any>(),
@@ -67,7 +71,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
     if (this.state.waveformRef.current && this.state.trackRef.current) {
       const waveSurfer = WaveSurfer.create({
         ...waveStyles,
-        container: "#waveform",
+        container: "#" + this.state.waveId,
         responsive: true,
         backend: "MediaElement"
       });
@@ -126,7 +130,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
           {this.props.src &&
             <div className="relative-waves-container">
               <div className="react-waves">
-                <div ref={this.state.waveformRef} id="waveform" />
+                <div ref={this.state.waveformRef} id={this.state.waveId} />
                 <audio
                   src={fileUrl(this.props.src ? this.props.src : "")}
                   ref={this.state.trackRef}
