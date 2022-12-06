@@ -102,6 +102,7 @@
     }
     .students-column {
       width: 8%;
+      position: relative;
 
       svg {
         width: 2.3vw;
@@ -113,6 +114,28 @@
         font-size: 1.4vw;
         margin-bottom: 0.26vw;
       }
+
+      .absolute-students-hover {
+        top: 2.1vw;
+        left: 2.7vw;
+        width: 17vw;
+        padding-top: 0.3vw;
+        padding-bottom: 0.3vw;
+        text-align: center;
+        display: none;
+        position: absolute;
+        z-index: 10;
+        background: white;
+        box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        border-radius: 0.3vw;
+      }
+
+      &:hover {
+        .absolute-students-hover {
+          display: block;
+        }
+      }
+
     }
     .active {
       cursor: pointer;
@@ -120,9 +143,36 @@
 
     .bricks-column {
       width: 5%;
+      position: relative;
+
+      .absolute-bricks-hover {
+        top: 2.1vw;
+        left: 2.7vw;
+        width: 27vw;
+        padding: 0.3vw 0 0.3vw 1vw;
+        text-align: left;
+        display: none;
+        position: absolute;
+        z-index: 10;
+        background: white;
+        box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        border-radius: 0.3vw;
+
+        .bold {
+          margin-bottom: 0.4vw;
+        }
+      }
+
+      &:hover {
+        .absolute-bricks-hover {
+          display: block;
+        }
+      }
     }
     .activity-column {
       width: 7%;
+      position: relative;
+
       .bricks-book-icon {
         display: flex;
         align-items: center;
@@ -131,6 +181,30 @@
         margin-right: 0.5vw;
         width: 2.3vw;
         height: 2.3vw;
+      }
+
+      .absolute-activity-hover {
+        top: -1vw;
+        left: 2.7vw;
+        width: 27vw;
+        padding: 0.3vw 0 0.3vw 1vw;
+        text-align: left;
+        display: none;
+        position: absolute;
+        z-index: 10;
+        background: white;
+        box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        border-radius: 0.3vw;
+
+        .bold {
+          margin-bottom: 0.4vw;
+        }
+      }
+
+      &:hover {
+        .absolute-activity-hover {
+          display: block;
+        }
       }
     }
     .creator-column {
