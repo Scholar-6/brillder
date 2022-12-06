@@ -144,6 +144,7 @@ export interface UsersParams {
   subjectFilters: number[];
   roleFilters: any;
   orderBy: any;
+  dateFilter: PDateFilter;
   isAscending: any;
 }
 
