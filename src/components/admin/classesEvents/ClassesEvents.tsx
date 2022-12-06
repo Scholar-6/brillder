@@ -232,6 +232,10 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     return <div className="students-column">
       {this.renderStudentsIcon(c, total)}
       {c.students.length}/<span className="bigger">{total}</span>
+      {total > 0 &&
+        <div className="absolute-students-hover">
+          <span className="bold">{c.students.length}</span> Students Registered out of <span className="bold">{total}</span> Invited
+        </div>}
     </div>
   }
 
@@ -240,9 +244,18 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     if (c.assignments) {
       count = c.assignments.length;
     }
+
     return (
       <div className="bricks-column">
         {count}
+        {count > 0 && <div className="absolute-bricks-hover">
+          <div className="bold">Asigned Bricks</div>
+          <ul>
+            {c.assignments?.map((a, key) =>
+              <li key={key}>{stripHtml(a.brick.title)}</li>
+            )}
+          </ul>
+        </div>}
       </div>
     );
   }
@@ -256,7 +269,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       <div className="assigned-column">
         {latest ? <span>
           {getFormattedDate(latest.assignedDate)}
-          <span className="underline" onClick={() => {this.props.history.push(playCover(latest.brick))}}>
+          <span className="underline" onClick={() => { this.props.history.push(playCover(latest.brick)) }}>
             {stripHtml(latest.brick.title)}
           </span>
         </span> : ''}
@@ -306,12 +319,19 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
         }
       }
     }
+
     return (
       <div className="activity-column">
         <div className="bricks-book-icon">
           {this.renderActivityIcon(c, total)}
         </div>
         {total}
+        {total > 0 && <div className="absolute-activity-hover">
+          <div className="bold">Activity</div>
+          <ul>
+            {c.assignments?.map((a, key) => <li>{stripHtml(a.brick.title)} {a.attempts?.length}</li>)}
+          </ul>
+        </div>}
       </div>
     );
   }
