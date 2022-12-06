@@ -270,9 +270,11 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       for (let student of c.students) {
         let activity = 0;
         for (let a of c.assignments) {
-          let found = a.attempts.find((at: any) => at.studentId === student.id);
-          if (found) {
-            activity += 1;
+          if (a.attempts) {
+            let found = a.attempts.find((at: any) => at.studentId === student.id);
+            if (found) {
+              activity += 1;
+            }
           }
         }
         let tasksCount = c.assignments.length;
