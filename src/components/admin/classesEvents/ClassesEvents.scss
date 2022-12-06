@@ -199,6 +199,27 @@
         .bold {
           margin-bottom: 0.4vw;
         }
+        li {
+          position: relative;
+        }
+        li > span{
+          position: absolute;
+          top: 0;
+          left: 1vw;
+          display: flex;
+          span {
+            display: block;
+          }
+          .title-de234 {
+            width: 22vw;
+            text-overflow: ellipsis;
+            overflow-x:hidden;
+            white-space: nowrap;
+          }
+          .bold {
+            padding-left: 1vw;
+          }
+        }
       }
 
       &:hover {
