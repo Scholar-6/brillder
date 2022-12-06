@@ -329,7 +329,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
         {total > 0 && <div className="absolute-activity-hover">
           <div className="bold">Activity</div>
           <ul>
-            {c.assignments?.map((a, key) => <li>{stripHtml(a.brick.title)} {a.attempts?.length}</li>)}
+            {c.assignments?.map((a, key) => <li><span><span className="title-de234">{stripHtml(a.brick.title)}</span> <span className="bold">{a.attempts?.length}</span></span></li>)}
           </ul>
         </div>}
       </div>
