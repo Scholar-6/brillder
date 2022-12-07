@@ -84,7 +84,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
       });
 
       waveSurfer.on('pause', () => {
-        this.setState({ audioState: AudioState.Paused });
+        this.setState({ audioState: AudioState.Init });
         waveSurfer.seekTo(0);
       });
     }
