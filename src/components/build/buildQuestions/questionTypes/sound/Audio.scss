@@ -27,7 +27,7 @@
     font-size: 1vw;
     color: var(--theme-dark-blue);
     position: absolute;
-    top: 2.7vw;
+    top: 100px;
   }
 
   .absolute-start-time {
@@ -285,5 +285,11 @@
 
   wave {
     height: 2.7vw !important;
+  }
+  .react-waves {
+    .absolute-end-time,
+    .absolute-start-time {
+      top: 2.7vw;
+    }
   }
 }
