@@ -261,11 +261,10 @@
       }
 
       .sortable-item.wrong {
-        
         background: #FFE8BB !important;
         .MuiListItemText-root .MuiTypography-root > div {
           color: white;
-          background: #FF6E1D;
+          background: var(--theme-orange);
           p {
             color: white;
           }
@@ -277,6 +276,11 @@
           }
         }
       }
+    }
+  }
+  .sort-image-container {
+    .sort-image-choice {
+      max-width: 100%;
     }
   }
 }

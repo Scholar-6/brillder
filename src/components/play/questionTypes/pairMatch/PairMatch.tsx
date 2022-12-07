@@ -188,7 +188,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return (
       <p>
         <span className="help-text">
-          <DragIcon /><span>Drag to rearrange.</span> {
+          <SpriteIcon name="pair-match-phone-d3" /><span>Drag vertically to rearrange.</span> {
             haveImage && (isMobile
               ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
               : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)

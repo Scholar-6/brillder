@@ -677,6 +677,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <PageHeadWithMenu
             page={PageEnum.Profile}
             user={this.props.user}
+            searchHidden={true}
             history={canMove ? this.props.history : mockHistory}
             search={() => { }}
             searching={() => { }}

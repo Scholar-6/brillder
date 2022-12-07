@@ -116,7 +116,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       catIndex++;
     }
 
-    userCats.push({ choices, name: Sort.unsortedTitle });
+    userCats.push({ choices, name: Sort.unsortedTitle, isUnsorted: true });
 
     return userCats;
   }
@@ -138,7 +138,7 @@ class Sort extends CompComponent<SortProps, SortState> {
           userCats.push({ choices: [], name: cat.name });
         }
 
-        userCats.push({ choices: [], name: Sort.unsortedTitle });
+        userCats.push({ choices: [], name: Sort.unsortedTitle, isUnsorted: true });
         this.prepareChoices(userCats);
         this.setState({ userCats, choices: this.getChoices() });
       }
@@ -375,6 +375,8 @@ class Sort extends CompComponent<SortProps, SortState> {
       categories = this.state.userCats.slice(0, -1)
       unsortedCategory = tempCategory;
     }
+
+    console.log(categories);
 
     return (
       <div className="question-unique-play sort-play phone-sort">
