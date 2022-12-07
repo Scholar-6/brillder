@@ -68,4 +68,8 @@
   .ver-data-d34 {
     width: 100%;
   }
+  .absolute-end-time,
+  .absolute-start-time {
+    top: calc(100px);
+  }
 }
