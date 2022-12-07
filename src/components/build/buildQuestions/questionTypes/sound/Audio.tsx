@@ -78,6 +78,8 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
       // Load the waveForm json if provided
       waveSurfer.load(this.state.trackRef.current)
 
+      console.log('surfer loaded');
+
       waveSurfer.on("ready", () => {
         this.setState({ waveSurfer })
         waveSurfer.zoom(1);
