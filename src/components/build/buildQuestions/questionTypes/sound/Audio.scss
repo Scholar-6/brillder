@@ -279,6 +279,13 @@
 
 // build
 .unique-component-wrapper {
+  .relative-waves-container {
+    .absolute-end-time,
+    .absolute-start-time {
+      top: 2.7vw !important;
+    }
+  }
+
   #waveform {
     height: 2.7vw !important;
     overflow-y: hidden;
@@ -286,11 +293,5 @@
 
   wave {
     height: 2.7vw !important;
-  }
-  .react-waves {
-    .absolute-end-time,
-    .absolute-start-time {
-      top: 2.7vw;
-    }
   }
 }
