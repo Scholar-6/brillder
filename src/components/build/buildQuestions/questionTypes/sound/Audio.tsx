@@ -129,7 +129,8 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
       <div>
         <div className="play-wave-container">
           <div className="play-icon-container-d1">
-            <SpriteIcon className="play-icon-d1" name={this.state.playing ? 'feather-pause-circle' : "feather-play-circle"} onClick={() => {
+            <SpriteIcon className="play-icon-d1" name={this.state.playing ? 'feather-pause-circle' : "feather-play-circle"} onClick={e => {
+              e.stopPropagation();
               let playing = !this.state.playing;
               if (playing) {
                 this.state.waveSurfer.play();
