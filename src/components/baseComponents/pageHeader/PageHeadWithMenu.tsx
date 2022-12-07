@@ -36,6 +36,7 @@ interface HeaderMenuProps {
   menuClass?: string;
   suggestions?: boolean;
   onForbiddenClick?(): void;
+  searchHidden?: boolean;
   
   search?(): void;
   searching?(v: string): void;
@@ -109,6 +110,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           link={this.props.link}
           page={this.props.page}
           brick={this.props.brick}
+          searchHidden={this.props.searchHidden}
           competitionId={this.props.competitionId}
           onForbiddenClick={this.props.onForbiddenClick}
           suggestions={this.props.suggestions}
