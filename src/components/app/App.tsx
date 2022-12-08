@@ -77,6 +77,7 @@ import AdminOrInstitutionRoute from './AdminOrInstitutionRoute';
 import BricksPlayed from 'components/admin/bricksPlayed/BricksPlayed';
 import UsersEvents from 'components/admin/usersEvents/UsersEvents';
 import ClassesEvents from 'components/admin/classesEvents/ClassesEvents';
+import AdminOverviewPage from 'components/admin/adminOverview/AdminOverviewPage';
 
 
 interface AppProps {
@@ -336,7 +337,8 @@ const App: React.FC<AppProps> = props => {
             <AuthRoute path="/login/:privacy" component={LoginPage} />
             <AuthRoute path={map.ResetPassword} component={ResetPasswordPage} />
             <AuthRoute path={map.ActivateAccount} component={ActivateAccountPage} />
-            
+
+            <AdminOrInstitutionRoute path={map.AdminOverview} component={AdminOverviewPage} />
             <AdminOrInstitutionRoute path={map.AdminBricksPlayed} component={BricksPlayed} />
             <AdminOrInstitutionRoute path={map.UsersEvents} component={UsersEvents} />
             <AdminOrInstitutionRoute path={map.ClassesEvents} component={ClassesEvents} />
