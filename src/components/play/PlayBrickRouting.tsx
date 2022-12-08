@@ -768,6 +768,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const renderRouter = () => {
+    console.log('cover image meta', brick.coverImage);
     return <>
       <Helmet>
         <title>{getBrillderTitle(brick.title)}</title>
