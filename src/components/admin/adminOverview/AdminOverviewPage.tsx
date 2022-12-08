@@ -25,6 +25,7 @@ export interface OverviewData {
   newClasses: number;
   assignedBricks: number;
   newSignups: number;
+  individualSubscriptions: number;
 }
 
 interface OverviewState {
@@ -48,7 +49,8 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
         competitionPlays: 0,
         newClasses: 0,
         assignedBricks: 0,
-        newSignups: 0
+        newSignups: 0,
+        individualSubscriptions: 0
       }
     }
 
@@ -107,7 +109,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
                 {this.renderBox(this.state.data.assignedBricks, 'Assigned Bricks', false)}
                 {this.renderBox(this.state.data.newSignups, 'New Signups', true)}
                 {/*this.renderBox(12, 'Institutional Subscribers', false)*/}
-                {/*this.renderBox(6, 'Individual Subscribers', false)*/}
+                {this.renderBox(this.state.data.individualSubscriptions, 'Individual Subscribers', false)}
               </div>
             </div>
           </Grid>
