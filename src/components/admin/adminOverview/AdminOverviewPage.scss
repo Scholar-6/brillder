@@ -5,6 +5,8 @@
 .only-overview-page {
   .boxes-d103 {
     display: flex;
+    margin-left: 1.3vw;
+    margin-right: 1.3vw;
 
     &.margin-top-1 {
       margin-top: 1vw;
@@ -12,8 +14,8 @@
 
     > div {
       height: 15vh;
-      width: 17vw;
-      margin: 1vw;
+      width: 16.5vw;
+      margin: 1.5vh 0.7vw;
       border-radius: 1vw;
       background: #E5E8ED80;
       display: flex;
