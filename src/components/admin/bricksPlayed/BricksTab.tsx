@@ -4,7 +4,8 @@ import map from "components/map";
 export enum BricksActiveTab {
   Bricks,
   Classes,
-  Users
+  Users,
+  Overview
 }
 
 interface TabProps {
@@ -13,6 +14,20 @@ interface TabProps {
 }
 
 const TeachTab: React.FC<TabProps> = ({ activeTab, history }) => {
+  const overviewTab = () => {
+    let className = 'no-active';
+    if (activeTab === BricksActiveTab.Overview) {
+      className = 'active';
+    }
+    return (
+      <div className={className} onClick={() => history.push(map.AdminOverview)}>
+        <div>
+          <span>Overview</span>
+        </div>
+      </div>
+    );
+  }
+
   const bricksTab = () => {
     let className = 'no-active';
     if (activeTab === BricksActiveTab.Bricks) {
@@ -34,7 +49,7 @@ const TeachTab: React.FC<TabProps> = ({ activeTab, history }) => {
     }
     return (
       <div className={className} onClick={() => history.push(map.ClassesEvents)}>
-        <div style={{display: 'flex'}}>
+        <div style={{ display: 'flex' }}>
           <span>Classes</span>
         </div>
       </div>
@@ -48,7 +63,7 @@ const TeachTab: React.FC<TabProps> = ({ activeTab, history }) => {
     }
     return (
       <div className={className} onClick={() => history.push(map.UsersEvents)}>
-        <div style={{display: 'flex'}}>
+        <div style={{ display: 'flex' }}>
           <span>Users</span>
         </div>
       </div>
@@ -57,6 +72,7 @@ const TeachTab: React.FC<TabProps> = ({ activeTab, history }) => {
 
   return (
     <div className="tab-container">
+      {overviewTab()}
       {bricksTab()}
       {classesTab()}
       {usersTab()}
