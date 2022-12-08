@@ -145,6 +145,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [activeCompetition, setActiveCompetition] = useState(null as any | null); // active competition
 
+  console.log('active competition', activeCompetition);
+
   const [bestScore, setBestScore] = useState(-1);
   const [totalBrills, setTotalBrills] = useState(-1);
 
@@ -792,6 +794,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             activeCompetition={activeCompetition}
             competitionId={competitionId}
             setCompetitionId={id => {
+              console.log('set competition', id)
               setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
             }}
@@ -1048,6 +1051,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               competition={activeCompetition}
               competitionCreated={competition => {
                 brick.competitionId = competition.id;
+                console.log('competition created')
                 history.push(props.history.location.pathname + '?competitionId=' + competition.id);
                 setCanSeeCompetitionDialog(true);
                 setActiveCompetition(competition);

@@ -98,9 +98,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   async getCompetition() {
+    console.log('get competition')
     const c = await getCompetitionByUser(this.props.user.id, this.props.brick.id);
     if (c) {
       const isActive = checkCompetitionActive(c);
+      console.log('is active')
       if (isActive) {
         this.props.competitionCreated(c);
       }
