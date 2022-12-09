@@ -239,7 +239,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       }
     }
 
-    return subjects.sort((a, b) => b.count - a.count);
+    return subjects;
   }
 
   async loadInitPlayedData(filters: AdminBricksFilters) {
