@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
+import queryString from 'query-string';
 import Dialog from "@material-ui/core/Dialog";
 
 import './BricksPlayed.scss';
@@ -73,11 +74,30 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       subjectCategory = filters.subjectCategory;
     }
 
+    const values = queryString.parse(props.history.location.search);
+    if (values.dateFilter) {
+      dateFilter = parseInt(values.dateFilter as string);
+    }
+
+    let sortBy = SortBy.Played;
+    if (values.sortBy) {
+      sortBy = parseInt(values.sortBy as string);
+    }
+
+    if (values.sortBy && values.dateFilter) {
+      subjectCategory = ESubjectCategory.Everything;
+      SetAdminBricksFilters({
+        dateFilter: dateFilter,
+        subjectCategory: subjectCategory,
+        selectedSubjectIds: []
+      });
+    }
+
     this.state = {
       isSearching: false,
       searchString: '',
       downloadClicked: false,
-      sortBy: SortBy.Played,
+      sortBy,
       isAscending: false,
       dateFilter,
       subjectCategory,

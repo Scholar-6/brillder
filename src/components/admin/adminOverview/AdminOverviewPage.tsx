@@ -10,6 +10,7 @@ import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import OverviewPlayedSidebar, { PDateFilter } from "./OverviewSidebar";
 import { getOverviewData } from "services/axios/brick";
+import map from "components/map";
 
 
 interface Props {
@@ -64,7 +65,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
     }
   }
 
-  renderBox(number: number, text: string, isUnderline?: boolean) {
+  renderBox(number: number, text: string, isUnderline?: boolean, onClick?: Function) {
     let className = "second-text-d103";
     if (isUnderline) {
       className += ' underline';
@@ -74,20 +75,21 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
       <div className="">
         <div>
           <div className="bold">{number}</div>
-          <div className={className}>{text}</div>
+          <div className={className} onClick={() => onClick?.()}>{text}</div>
         </div>
       </div>
     );
   }
 
   render() {
+    const {history} = this.props;
     return (
       <div className="main-listing user-list-page manage-classrooms-page bricks-played-page only-overview-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
           placeholder="Brick Title or Author Name"
           user={this.props.user}
-          history={this.props.history}
+          history={history}
           search={() => {}}
           searching={() => {}}
         />
@@ -100,14 +102,22 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
             <BricksTab activeTab={BricksActiveTab.Overview} history={this.props.history} />
             <div className="tab-content">
               <div className="boxes-d103 margin-top-1">
-                {this.renderBox(this.state.data.published, 'Published', true)}
-                {this.renderBox(this.state.data.played, 'Played', true)}
+                {this.renderBox(this.state.data.published, 'Published', true, () => {
+                  history.push(map.AdminBricksPlayed + '?sortBy=' + 0 + '&dateFilter=' + this.state.dateFilter);
+                })}
+                {this.renderBox(this.state.data.played, 'Played', true, () => {
+                  history.push(map.AdminBricksPlayed + '?sortBy=' + 4 + '&dateFilter=' + this.state.dateFilter);
+                })}
                 {this.renderBox(this.state.data.competitionPlays, 'Competition Plays', false)}
-                {this.renderBox(this.state.data.newClasses, 'New Classes', true)}
+                {this.renderBox(this.state.data.newClasses, 'New Classes', true, () => {
+                  history.push(map.ClassesEvents + '?dateFilter=' + this.state.dateFilter);
+                })}
               </div>
               <div className="boxes-d103">
                 {this.renderBox(this.state.data.assignedBricks, 'Assigned Bricks', false)}
-                {this.renderBox(this.state.data.newSignups, 'New Signups', true)}
+                {this.renderBox(this.state.data.newSignups, 'New Signups', true, () => {
+                  history.push(map.UsersEvents + '?dateFilter=' + this.state.dateFilter);
+                })}
                 {/*this.renderBox(12, 'Institutional Subscribers', false)*/}
                 {this.renderBox(this.state.data.individualSubscriptions, 'Individual Subscribers', false)}
               </div>

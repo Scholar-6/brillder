@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import { Tooltip } from "@material-ui/core";
- 
+import queryString from 'query-string';
+
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 import { getRealLibraries, RealLibrary } from "services/axios/realLibrary";
@@ -69,6 +70,13 @@ class UsersPage extends Component<UsersProps, UsersState> {
   constructor(props: UsersProps) {
     super(props);
 
+    let dateFilter = PDateFilter.Past24Hours;
+
+    const values = queryString.parse(props.history.location.search);
+    if (values.dateFilter) {
+      dateFilter = parseInt(values.dateFilter as string);
+    }
+
     this.state = {
       users: [],
       page: 0,
@@ -81,7 +89,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
       orderBy: "user.created",
       isAscending: true,
 
-      dateFilter: PDateFilter.Past24Hours,
+      dateFilter,
 
       isStudentClassroomOpen: false,
       userClassrooms: [],
