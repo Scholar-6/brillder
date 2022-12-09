@@ -416,6 +416,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             allDomains={this.state.allDomains}
             domains={this.state.domains}
             setAllDomains={() => {
+              this.state.domains.map(d => d.checked = false);
               this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending, this.state.dateFilter);
               this.setState({ allDomains: true });
             }}
