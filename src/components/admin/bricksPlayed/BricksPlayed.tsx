@@ -329,8 +329,12 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     return this.filterBricksBySubjectsAndSort(bricks, selectedSubjects, sortBy, isAscending);
   }
 
-  search() {
-    const { searchString } = this.state;
+  search(searchRString?: string) {
+    let { searchString } = this.state;
+
+    if (searchRString) {
+      searchString = searchRString;
+    }
 
     const bricks = this.filterBricksBySubjectsAndSort(
       this.state.bricks, this.state.selectedSubjects, this.state.sortBy, false
@@ -439,7 +443,10 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           <div className="publish-column">{this.renderDate(b)}</div>
           {renderSubjectColumn(b)}
           <div className="first-column" dangerouslySetInnerHTML={{ __html: b.title }} />
-          <div className="author-column">{b.author.firstName} {b.author.lastName}</div>
+          <div className="author-column" onClick={e => {
+            e.stopPropagation();
+            this.search(b.author.firstName.toLocaleLowerCase());
+          }}>{b.author.firstName} {b.author.lastName}</div>
           <div className="second-column" onClick={async (e) => {
             e.stopPropagation();
             const data = await getAdminBrickStatistic(b.id);
