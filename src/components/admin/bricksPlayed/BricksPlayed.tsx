@@ -29,7 +29,8 @@ enum SortBy {
   Subjects,
   Title,
   Author,
-  Played
+  Played,
+  Modified
 }
 
 interface TeachProps {
@@ -141,6 +142,23 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       return bricks.sort((a, b) => {
         if (a.datePublished && b.datePublished) {
           var res = new Date(a.datePublished).getTime() > new Date(b.datePublished).getTime() ? -1 : 1;
+          return res;
+        }
+        return -1;
+      });
+    } else if (sortBy === SortBy.Modified) {
+      if (isAscending) {
+        return bricks.sort((a, b) => {
+          if (a.updated && b.updated) {
+            var res = new Date(a.updated).getTime() < new Date(b.updated).getTime() ? -1 : 1;
+            return res;
+          }
+          return 1;
+        });
+      }
+      return bricks.sort((a, b) => {
+        if (a.updated && b.updated) {
+          var res = new Date(a.updated).getTime() > new Date(b.updated).getTime() ? -1 : 1;
           return res;
         }
         return -1;
@@ -281,7 +299,9 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     }
   }
 
-  filterBricksBySubjectsAndSort(bricks: Brick[], selectedSubjects: Subject[], sortBy: SortBy, isAscending: boolean) {
+  filterBricksBySubjectsAndSort(
+    bricks: Brick[], selectedSubjects: Subject[], sortBy: SortBy, isAscending: boolean
+  ) {
     let finalBricks: Brick[] = [];
     if (selectedSubjects.length > 0) {
       for (let brick of bricks) {
@@ -304,7 +324,9 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
   search() {
     const { searchString } = this.state;
 
-    const bricks = this.filterBricksBySubjectsAndSort(this.state.bricks, this.state.selectedSubjects, this.state.sortBy, false);
+    const bricks = this.filterBricksBySubjectsAndSort(
+      this.state.bricks, this.state.selectedSubjects, this.state.sortBy, false
+    );
 
     const finalBricks = bricks.filter(b => {
       const title = b.title.toLocaleLowerCase();
@@ -335,7 +357,9 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
 
   async searching(searchString: string) {
     if (searchString.length === 0) {
-      const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending);
+      const finalBricks = this.filterAndSort(
+        this.state.bricks, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending
+      );
       this.setState({ ...this.state, searchString, isSearching: false, finalBricks });
     } else {
       this.setState({ ...this.state, searchString });
@@ -394,7 +418,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       return <div className="subject-column"></div>
     }
 
-return <div className="table-body">
+    return <div className="table-body">
       {finalBricks.map((b, i) => {
         return (<div className="table-row clickable" key={i} onClick={() => {
           SetAdminBricksFilters({
@@ -485,7 +509,14 @@ return <div className="table-body">
             </div>
             <div className="third-column header">Visibility</div>
             <div className="sponsor-column header">Sponsor</div>
-            <div className="publish-column header">Modified At</div>
+            <div className="publish-column header">
+              <div>Updated</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                let isAscending = !this.state.isAscending;
+                const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, SortBy.Modified, isAscending)
+                this.setState({ sortBy: SortBy.Modified, finalBricks, isAscending });
+              }} /></div>
+            </div>
           </div>
           {this.renderBody()}
         </div>
