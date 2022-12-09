@@ -25,6 +25,7 @@ import AddUserBtn from "../components/AddUserBtn";
 import map from "components/map";
 import { getSubjects } from "services/axios/subject";
 import { Subject } from "model/brick";
+import { PDateFilter } from "../classesEvents/ClassesSidebar";
 
 
 interface UsersProps {
@@ -59,6 +60,7 @@ interface UsersState {
   isAscending: boolean;
 
   libraries: RealLibrary[];
+  dateFilter: PDateFilter;
 
   downloadClicked: boolean;
 }
@@ -78,6 +80,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
 
       orderBy: "user.created",
       isAscending: true,
+
+      dateFilter: PDateFilter.Past24Hours,
 
       isStudentClassroomOpen: false,
       userClassrooms: [],
@@ -109,12 +113,20 @@ class UsersPage extends Component<UsersProps, UsersState> {
       this.setState({ subjects });
     }
 
-    this.getUsers(null, 0, [], '', 'user.created', true);
+    this.getUsers(null, 0, [], '', 'user.created', true, this.state.dateFilter);
 
     this.getLibraries();
   }
 
-  async getUsers(userPreference: UserPreferenceType | null, page: number, selectedSubjects: Subject[], searchString: string, orderBy: string, isAscending: boolean) {
+  async getUsers(
+    userPreference: UserPreferenceType | null,
+    page: number,
+    selectedSubjects: Subject[],
+    searchString: string,
+    orderBy: string,
+    isAscending: boolean,
+    dateFilter: PDateFilter
+  ) {
     let roleFilters = [];
     if (userPreference !== null) {
       roleFilters.push(userPreference);
@@ -126,6 +138,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
       subjectFilters: selectedSubjects.map(s => s.id),
       roleFilters,
       orderBy,
+      dateFilter,
       isAscending
     });
     if (res) {
@@ -136,6 +149,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
         selectedSubjects,
         orderBy,
         isAscending,
+        dateFilter,
         totalUsersCount: res.totalCount
       });
     }
@@ -149,7 +163,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
       this.state.selectedSubjects,
       searchString,
       this.state.orderBy,
-      this.state.isAscending
+      this.state.isAscending,
+      this.state.dateFilter
     );
 
     setTimeout(() => {
@@ -159,7 +174,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
 
   async searching(searchString: string) {
     if (searchString.length === 0) {
-      await this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, searchString, this.state.orderBy, this.state.isAscending);
+      await this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, searchString, this.state.orderBy, this.state.isAscending, this.state.dateFilter);
       this.setState({ ...this.state, searchString, isSearching: false });
     } else {
       this.setState({ ...this.state, searchString });
@@ -260,7 +275,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
   }
 
   moveToPage(page: number) {
-    this.getUsers(this.state.userPreference, page, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
+    this.getUsers(this.state.userPreference, page, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending, this.state.dateFilter);
   }
 
   renderPagination() {
@@ -286,7 +301,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               if (this.state.orderBy === "user.created") {
                 isAscending = !isAscending;
               }
-              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.created", isAscending);
+              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.created", isAscending, this.state.dateFilter);
             }} /></div>
           </div>
           <div className="author-column header">
@@ -296,7 +311,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               if (this.state.orderBy === "user.lastName") {
                 isAscending = !isAscending;
               }
-              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.lastName", isAscending);
+              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.lastName", isAscending, this.state.dateFilter);
             }} /></div>
           </div>
           <div style={{ width: "3.5%" }}></div>
@@ -321,7 +336,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
     if (deleteUserId === -1) { return }
     const res = await deleteUser(deleteUserId);
     if (res) {
-      this.getUsers(this.state.userPreference, this.state.page, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
+      this.getUsers(this.state.userPreference, this.state.page, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending, this.state.dateFilter);
     } else {
       this.props.requestFailed("Can`t delete user");
     }
@@ -362,11 +377,15 @@ class UsersPage extends Component<UsersProps, UsersState> {
             isLoaded={true} userPreference={this.state.userPreference}
             subjects={this.state.subjects}
             selectedSubjects={this.state.selectedSubjects}
+            dateFilter={this.state.dateFilter}
+            setDateFilter={dateFilter => {
+              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending, dateFilter);
+            }}
             selectSubjects={selectedSubjects => {
-              this.getUsers(this.state.userPreference, 0, selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
+              this.getUsers(this.state.userPreference, 0, selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending, this.state.dateFilter);
             }}
             setUserPreference={userPreference => {
-              this.getUsers(userPreference, 0, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending);
+              this.getUsers(userPreference, 0, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending, this.state.dateFilter);
             }}
           />
           <Grid item xs={9} className="brick-row-container">
