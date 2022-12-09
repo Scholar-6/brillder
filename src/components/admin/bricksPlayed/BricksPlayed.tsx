@@ -233,6 +233,10 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       if (subject) {
         subject.count += 1;
       }
+      const alternativeSubject = subjects.find(s => s.id === brick.alternateSubjectId);
+      if (alternativeSubject) {
+        alternativeSubject.count += 1;
+      }
     }
 
     return subjects.sort((a, b) => b.count - a.count);
@@ -307,6 +311,10 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       for (let brick of bricks) {
         const found = selectedSubjects.find(s => s.id === brick.subjectId);
         if (found) {
+          finalBricks.push(brick);
+        }
+        const foundAlternative = selectedSubjects.find(s => s.id === brick.alternateSubjectId);
+        if (foundAlternative) {
           finalBricks.push(brick);
         }
       }
