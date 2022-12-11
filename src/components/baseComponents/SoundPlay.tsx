@@ -1,6 +1,5 @@
-import ReactWaves from '@dschoon/react-waves';
 import React from 'react';
-import WaveSurfer from 'wavesurfer.js/src/wavesurfer';
+import WaveSurfer from 'wavesurfer.js';
 
 import './SoundPlay.scss';
 import SpriteIcon from './SpriteIcon';
