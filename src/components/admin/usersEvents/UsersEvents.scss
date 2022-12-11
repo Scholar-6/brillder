@@ -321,3 +321,10 @@
     }
   }
 }
+
+.only-user-events {
+  .filter-domain {
+    max-height: calc(34vh - 10vw);
+    overflow-y: auto;
+  }
+}

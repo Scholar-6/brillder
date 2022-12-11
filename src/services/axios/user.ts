@@ -146,6 +146,7 @@ export interface UsersParams {
   orderBy: any;
   dateFilter: PDateFilter;
   isAscending: any;
+  domains: string[];
 }
 
 export const getUsers = async (params: UsersParams) => {
@@ -159,6 +160,14 @@ export const getUsers = async (params: UsersParams) => {
 export const getUsersV2 = async (params: UsersParams) => {
   try {
     return await post<any>('/usersV2', params);
+  } catch (e) {
+    return null;
+  }
+}
+
+export const getUserDomains = async () => {
+  try {
+    return await post<string[]>('/userDomains', {});
   } catch (e) {
     return null;
   }
