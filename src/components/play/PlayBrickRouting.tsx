@@ -145,6 +145,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [activeCompetition, setActiveCompetition] = useState(null as any | null); // active competition
 
+  console.log('active competition', activeCompetition);
+
   const [bestScore, setBestScore] = useState(-1);
   const [totalBrills, setTotalBrills] = useState(-1);
 
@@ -369,6 +371,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       try {
         const isActive = checkCompetitionActive(comp);
         if (isActive) {
+          console.log('active competition', comp);
           competition = comp;
         }
       } catch {
@@ -380,8 +383,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const getCompetition = async () => {
     const res = await getCompetitionsByBrickId(brick.id);
+    console.log('competition', res);
     if (res && res.length > 0) {
       const competition = getNewestCompetition(res);
+      console.log('competition passed test', competition)
       if (competition) {
         setActiveCompetition(competition);
       }
@@ -768,6 +773,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const renderRouter = () => {
+    console.log('cover image meta', brick.coverImage);
     return <>
       <Helmet>
         <title>{getBrillderTitle(brick.title)}</title>
@@ -775,6 +781,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <meta property="og:type" content="article" />
         <meta property="og:description" content={brick.openQuestion} />
         <meta property="og:image" content={brick.coverImage} />
+        <meta data-n-head="ssr" data-hid="og:image:type" property="og:image:type" content="image/png" />
       </Helmet>
       <Switch>
         <Route path={routes.coverRoute}>
@@ -787,6 +794,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             activeCompetition={activeCompetition}
             competitionId={competitionId}
             setCompetitionId={id => {
+              console.log('set competition', id)
               setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
             }}
@@ -1043,6 +1051,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               competition={activeCompetition}
               competitionCreated={competition => {
                 brick.competitionId = competition.id;
+                console.log('competition created')
                 history.push(props.history.location.pathname + '?competitionId=' + competition.id);
                 setCanSeeCompetitionDialog(true);
                 setActiveCompetition(competition);

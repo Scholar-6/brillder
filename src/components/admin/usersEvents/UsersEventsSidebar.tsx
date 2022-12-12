@@ -5,6 +5,7 @@ import { UserPreferenceType } from "model/user";
 import SubjectsSelect from "../components/SubjectsSelect";
 import { Subject } from "model/brick";
 import { PDateFilter } from "../bricksPlayed/BricksPlayedSidebar";
+import { CDomain } from "../classesEvents/ClassesSidebar";
 
 interface FilterSidebarProps {
   isLoaded: boolean;
@@ -18,6 +19,11 @@ interface FilterSidebarProps {
 
   dateFilter: PDateFilter;
   setDateFilter(dateFilter: PDateFilter): void;
+
+  domains: CDomain[];
+  setDomain(d: CDomain): void;
+  allDomains: boolean;
+  setAllDomains(): void;
 }
 
 export enum SortClassroom {
@@ -98,6 +104,23 @@ class UsersSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
             checked={userPreference === UserPreferenceType.Builder}
             control={<Radio onClick={() => this.props.setUserPreference(UserPreferenceType.Builder)} className={"filter-radio custom-color"} />}
             label="Builder" />
+        </div>
+        <div className="filter-header">School Domain</div>
+        <div className="filter-domain">
+          <div className="sort-radio-btns filter-row margin-smaller">
+            <FormControlLabel
+              checked={this.props.allDomains === true}
+              control={<Radio onClick={() => this.props.setAllDomains()} className={"filter-radio custom-color"} />}
+              label="All" />
+          </div>
+          {this.props.domains.map((d, k) =>
+            <div className="sort-radio-btns filter-row margin-smaller" key={k}>
+              <FormControlLabel
+                checked={d.checked === true}
+                control={<Radio onClick={() => this.props.setDomain(d)} className={"filter-radio custom-color"} />}
+                label={d.name} />
+            </div>
+          )}
         </div>
         <SubjectsSelect
           subjectIds={this.state.subjectIds}

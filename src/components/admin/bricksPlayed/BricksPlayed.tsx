@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
+import queryString from 'query-string';
 import Dialog from "@material-ui/core/Dialog";
 
 import './BricksPlayed.scss';
@@ -28,7 +29,8 @@ enum SortBy {
   Subjects,
   Title,
   Author,
-  Played
+  Played,
+  Modified
 }
 
 interface TeachProps {
@@ -73,11 +75,30 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       subjectCategory = filters.subjectCategory;
     }
 
+    const values = queryString.parse(props.history.location.search);
+    if (values.dateFilter) {
+      dateFilter = parseInt(values.dateFilter as string);
+    }
+
+    let sortBy = SortBy.Played;
+    if (values.sortBy) {
+      sortBy = parseInt(values.sortBy as string);
+    }
+
+    if (values.sortBy && values.dateFilter) {
+      subjectCategory = ESubjectCategory.Everything;
+      SetAdminBricksFilters({
+        dateFilter: dateFilter,
+        subjectCategory: subjectCategory,
+        selectedSubjectIds: []
+      });
+    }
+
     this.state = {
       isSearching: false,
       searchString: '',
       downloadClicked: false,
-      sortBy: SortBy.Played,
+      sortBy,
       isAscending: false,
       dateFilter,
       subjectCategory,
@@ -121,6 +142,23 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       return bricks.sort((a, b) => {
         if (a.datePublished && b.datePublished) {
           var res = new Date(a.datePublished).getTime() > new Date(b.datePublished).getTime() ? -1 : 1;
+          return res;
+        }
+        return -1;
+      });
+    } else if (sortBy === SortBy.Modified) {
+      if (isAscending) {
+        return bricks.sort((a, b) => {
+          if (a.updated && b.updated) {
+            var res = new Date(a.updated).getTime() < new Date(b.updated).getTime() ? -1 : 1;
+            return res;
+          }
+          return 1;
+        });
+      }
+      return bricks.sort((a, b) => {
+        if (a.updated && b.updated) {
+          var res = new Date(a.updated).getTime() > new Date(b.updated).getTime() ? -1 : 1;
           return res;
         }
         return -1;
@@ -195,9 +233,13 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       if (subject) {
         subject.count += 1;
       }
+      const alternativeSubject = subjects.find(s => s.id === brick.alternateSubjectId);
+      if (alternativeSubject) {
+        alternativeSubject.count += 1;
+      }
     }
 
-    return subjects.sort((a, b) => b.count - a.count);
+    return subjects;
   }
 
   async loadInitPlayedData(filters: AdminBricksFilters) {
@@ -261,12 +303,18 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     }
   }
 
-  filterBricksBySubjectsAndSort(bricks: Brick[], selectedSubjects: Subject[], sortBy: SortBy, isAscending: boolean) {
+  filterBricksBySubjectsAndSort(
+    bricks: Brick[], selectedSubjects: Subject[], sortBy: SortBy, isAscending: boolean
+  ) {
     let finalBricks: Brick[] = [];
     if (selectedSubjects.length > 0) {
       for (let brick of bricks) {
         const found = selectedSubjects.find(s => s.id === brick.subjectId);
         if (found) {
+          finalBricks.push(brick);
+        }
+        const foundAlternative = selectedSubjects.find(s => s.id === brick.alternateSubjectId);
+        if (foundAlternative) {
           finalBricks.push(brick);
         }
       }
@@ -281,10 +329,16 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     return this.filterBricksBySubjectsAndSort(bricks, selectedSubjects, sortBy, isAscending);
   }
 
-  search() {
-    const { searchString } = this.state;
+  search(searchRString?: string) {
+    let { searchString } = this.state;
 
-    const bricks = this.filterBricksBySubjectsAndSort(this.state.bricks, this.state.selectedSubjects, this.state.sortBy, false);
+    if (searchRString) {
+      searchString = searchRString;
+    }
+
+    const bricks = this.filterBricksBySubjectsAndSort(
+      this.state.bricks, this.state.selectedSubjects, this.state.sortBy, false
+    );
 
     const finalBricks = bricks.filter(b => {
       const title = b.title.toLocaleLowerCase();
@@ -292,7 +346,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         return true;
       }
       if (b.author) {
-        const {author} = b;
+        const { author } = b;
         if (author.firstName) {
           if (author.firstName.toLocaleLowerCase().indexOf(searchString) >= 0) {
             return true;
@@ -315,11 +369,30 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
 
   async searching(searchString: string) {
     if (searchString.length === 0) {
-      const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending);
+      const finalBricks = this.filterAndSort(
+        this.state.bricks, this.state.selectedSubjects, this.state.sortBy, this.state.isAscending
+      );
       this.setState({ ...this.state, searchString, isSearching: false, finalBricks });
     } else {
       this.setState({ ...this.state, searchString });
     }
+  }
+
+  renderDate(b: Brick) {
+    if (b.datePublished) {
+      return getDateString(b.datePublished);
+    }
+    if (b.created) {
+      return getDateString(b.created);
+    }
+    return '';
+  }
+
+  renderUpdatedDate(b: Brick) {
+    if (b.updated) {
+      return getDateString(b.updated);
+    }
+    return '';
   }
 
   renderBody() {
@@ -357,16 +430,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       return <div className="subject-column"></div>
     }
 
-    const renderDate = (b: Brick) => {
-      if (b.datePublished) {
-        return getDateString(b.datePublished);
-      }
-      if (b.created) {
-        return getDateString(b.created);
-      }
-      return '';
-    }
-
     return <div className="table-body">
       {finalBricks.map((b, i) => {
         return (<div className="table-row clickable" key={i} onClick={() => {
@@ -377,10 +440,13 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           });
           this.props.history.push(playCover(b));
         }}>
-          <div className="publish-column">{renderDate(b)}</div>
+          <div className="publish-column">{this.renderDate(b)}</div>
           {renderSubjectColumn(b)}
           <div className="first-column" dangerouslySetInnerHTML={{ __html: b.title }} />
-          <div className="author-column">{b.author.firstName} {b.author.lastName}</div>
+          <div className="author-column" onClick={e => {
+            e.stopPropagation();
+            this.search(b.author.firstName.toLocaleLowerCase());
+          }}>{b.author.firstName} {b.author.lastName}</div>
           <div className="second-column" onClick={async (e) => {
             e.stopPropagation();
             const data = await getAdminBrickStatistic(b.id);
@@ -410,6 +476,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           <div className="sponsor-column">
             {b.sponsorName ? b.sponsorName : 'Scholar6'}
           </div>
+          <div className="publish-column">{this.renderUpdatedDate(b)}</div>
         </div>);
       })}
     </div>
@@ -418,46 +485,56 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
   renderTable() {
     return (
       <div className="table">
-        <div className="table-head bold">
-          <div className="publish-column header">
-            <div>Published</div>
-            <div><SpriteIcon name="sort-arrows" onClick={() => {
-              let isAscending = !this.state.isAscending;
-              const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, SortBy.Published, isAscending)
-              this.setState({ sortBy: SortBy.Published, finalBricks, isAscending });
-            }} /></div>
+        <div className="table-scroll">
+          <div className="table-head bold">
+            <div className="publish-column header">
+              <div>Published</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                let isAscending = !this.state.isAscending;
+                const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, SortBy.Published, isAscending)
+                this.setState({ sortBy: SortBy.Published, finalBricks, isAscending });
+              }} /></div>
+            </div>
+            <div className="subject-column header">
+              <div>Subjects</div>
+            </div>
+            <div className="first-column header">
+              <div>Title</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                let isAscending = !this.state.isAscending;
+                const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, SortBy.Title, isAscending)
+                this.setState({ sortBy: SortBy.Title, finalBricks, isAscending });
+              }} /></div>
+            </div>
+            <div className="author-column header">
+              <div>Author</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                let isAscending = !this.state.isAscending;
+                const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, SortBy.Author, isAscending)
+                this.setState({ sortBy: SortBy.Author, finalBricks, isAscending });
+              }} /></div>
+            </div>
+            <div className="second-column header">
+              <div>Played</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                let isAscending = !this.state.isAscending;
+                const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, SortBy.Played, isAscending)
+                this.setState({ sortBy: SortBy.Played, finalBricks, isAscending });
+              }} /></div>
+            </div>
+            <div className="third-column header">Visibility</div>
+            <div className="sponsor-column header">Sponsor</div>
+            <div className="publish-column header">
+              <div>Updated</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                let isAscending = !this.state.isAscending;
+                const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, SortBy.Modified, isAscending)
+                this.setState({ sortBy: SortBy.Modified, finalBricks, isAscending });
+              }} /></div>
+            </div>
           </div>
-          <div className="subject-column header">
-            <div>Subjects</div>
-          </div>
-          <div className="first-column header">
-            <div>Title</div>
-            <div><SpriteIcon name="sort-arrows" onClick={() => {
-              let isAscending = !this.state.isAscending;
-              const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, SortBy.Title, isAscending)
-              this.setState({ sortBy: SortBy.Title, finalBricks, isAscending });
-            }} /></div>
-          </div>
-          <div className="author-column header">
-            <div>Author</div>
-            <div><SpriteIcon name="sort-arrows" onClick={() => {
-              let isAscending = !this.state.isAscending;
-              const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, SortBy.Author, isAscending)
-              this.setState({ sortBy: SortBy.Author, finalBricks, isAscending });
-            }} /></div>
-          </div>
-          <div className="second-column header">
-            <div>Played</div>
-            <div><SpriteIcon name="sort-arrows" onClick={() => {
-              let isAscending = !this.state.isAscending;
-              const finalBricks = this.filterAndSort(this.state.bricks, this.state.selectedSubjects, SortBy.Played, isAscending)
-              this.setState({ sortBy: SortBy.Played, finalBricks, isAscending });
-            }} /></div>
-          </div>
-          <div className="third-column header">Visibility</div>
-          <div className="sponsor-column header">Sponsor</div>
+          {this.renderBody()}
         </div>
-        {this.renderBody()}
       </div>
     );
   }
@@ -480,7 +557,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         subject.checked = true;
       }
     }
-    console.log(subjects);
     const selectedSubjects = subjects.filter(s => s.checked);
     const finalBricks = this.filterAndSort(this.state.bricks, selectedSubjects, this.state.sortBy, this.state.isAscending);
     this.setState({ selectedSubjects, finalBricks });
@@ -558,13 +634,14 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                       const subject = this.state.subjects.find(s => s.id === brick.subjectId);
 
                       data.push({
-                        Published: brick.datePublished?.toString(),
+                        Published: this.renderDate(brick),
                         Subjects: subject?.name,
                         Title: stripHtml(brick.title),
                         Author: brick.author.firstName + ' ' + brick.author.lastName,
                         Played: brick.attemptsCount,
                         'Public?': brick.isCore ? "yes" : "no",
-                        Sponsor: brick.sponsorName ? brick.sponsorName : 'Scholar6'
+                        Sponsor: brick.sponsorName ? brick.sponsorName : 'Scholar6',
+                        'Modified At': this.renderUpdatedDate(brick)
                       });
                     }
 
@@ -577,10 +654,10 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                   </div>
                   <div className="btn-sort" onClick={() => {
                     exportToPDF(
-                      [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?', 'Sponsor']],
+                      [['Published', 'Subjects', 'Title', 'Author', 'Played', 'Public?', 'Sponsor', 'Modified At']],
                       this.state.finalBricks.map(b => {
                         const subject = this.state.subjects.find(s => s.id === b.subjectId);
-                        return [b.datePublished ? b.datePublished : '', subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no', b.sponsorName ? b.sponsorName : 'Scholar6']
+                        return [this.renderDate(b), subject ? subject.name : '', stripHtml(b.title), b.author.firstName + ' ' + b.author.lastName, b.attemptsCount, b.isCore ? 'yes' : 'no', b.sponsorName ? b.sponsorName : 'Scholar6', this.renderUpdatedDate(b)]
                       }),
                       `Brillder data ${fileFormattedDate(new Date().toString())}.pdf`
                     );

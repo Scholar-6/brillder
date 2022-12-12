@@ -78,9 +78,21 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
       // Load the waveForm json if provided
       waveSurfer.load(this.state.trackRef.current)
 
+      console.log('surfer loaded');
+
       waveSurfer.on("ready", () => {
         this.setState({ waveSurfer })
         waveSurfer.zoom(1);
+      });
+
+      waveSurfer.on('pause', () => {
+        console.log('sound finished paused')
+      });
+
+      waveSurfer.on('finish', () => {
+        console.log('sound finished finish')
+        this.setState({ playing: false });
+        waveSurfer.seekTo(0);
       });
     }
   }
@@ -117,7 +129,8 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
       <div>
         <div className="play-wave-container">
           <div className="play-icon-container-d1">
-            <SpriteIcon className="play-icon-d1" name={this.state.playing ? 'feather-pause-circle' : "feather-play-circle"} onClick={() => {
+            <SpriteIcon className="play-icon-d1" name={this.state.playing ? 'feather-pause-circle' : "feather-play-circle"} onClick={e => {
+              e.stopPropagation();
               let playing = !this.state.playing;
               if (playing) {
                 this.state.waveSurfer.play();
