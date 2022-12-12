@@ -78,6 +78,7 @@ import BricksPlayed from 'components/admin/bricksPlayed/BricksPlayed';
 import UsersEvents from 'components/admin/usersEvents/UsersEvents';
 import ClassesEvents from 'components/admin/classesEvents/ClassesEvents';
 import AdminOverviewPage from 'components/admin/adminOverview/AdminOverviewPage';
+import LandingSubscribePage from 'components/landingSubscribePage/LandingSubscribePage';
 
 
 interface AppProps {
@@ -292,6 +293,7 @@ const App: React.FC<AppProps> = props => {
             <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 
             <StudentRoute path={map.ChoosePlan} component={ChoosePlan} />
+            <StudentRoute path={map.Subscribe} component={LandingSubscribePage} />
 
             <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
             <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
