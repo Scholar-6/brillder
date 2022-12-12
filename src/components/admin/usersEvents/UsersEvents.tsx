@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import { Tooltip } from "@material-ui/core";
- 
+import queryString from 'query-string';
+
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 import { getRealLibraries, RealLibrary } from "services/axios/realLibrary";
@@ -15,7 +16,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import UsersSidebar from "./UsersEventsSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { deleteUser, getUsersV2 } from "services/axios/user";
+import { deleteUser, getUserDomains, getUsersV2 } from "services/axios/user";
 import { getDateString, getFormattedDateSlash } from "components/services/brickService";
 import UsersPagination from "components/teach/manageClassrooms/components/UsersPagination";
 import ExportBtn from "../components/ExportBtn";
@@ -25,7 +26,7 @@ import AddUserBtn from "../components/AddUserBtn";
 import map from "components/map";
 import { getSubjects } from "services/axios/subject";
 import { Subject } from "model/brick";
-import { PDateFilter } from "../classesEvents/ClassesSidebar";
+import { CDomain, PDateFilter } from "../classesEvents/ClassesSidebar";
 
 
 interface UsersProps {
@@ -53,6 +54,9 @@ interface UsersState {
   isStudentClassroomOpen: boolean;
   userClassrooms: any[];
 
+  allDomains: boolean;
+  domains: CDomain[];
+
   isSearching: boolean;
   searchString: string;
 
@@ -69,6 +73,13 @@ class UsersPage extends Component<UsersProps, UsersState> {
   constructor(props: UsersProps) {
     super(props);
 
+    let dateFilter = PDateFilter.Past24Hours;
+
+    const values = queryString.parse(props.history.location.search);
+    if (values.dateFilter) {
+      dateFilter = parseInt(values.dateFilter as string);
+    }
+
     this.state = {
       users: [],
       page: 0,
@@ -81,7 +92,10 @@ class UsersPage extends Component<UsersProps, UsersState> {
       orderBy: "user.created",
       isAscending: true,
 
-      dateFilter: PDateFilter.Past24Hours,
+      dateFilter,
+
+      allDomains: true,
+      domains: [],
 
       isStudentClassroomOpen: false,
       userClassrooms: [],
@@ -112,6 +126,13 @@ class UsersPage extends Component<UsersProps, UsersState> {
     if (subjects) {
       this.setState({ subjects });
     }
+    const domains = await getUserDomains();
+    if (domains) {
+      let cdomains = domains.map(name => {
+        return { name, checked: false }
+      });
+      this.setState({domains: cdomains});
+    }
 
     this.getUsers(null, 0, [], '', 'user.created', true, this.state.dateFilter);
 
@@ -125,12 +146,15 @@ class UsersPage extends Component<UsersProps, UsersState> {
     searchString: string,
     orderBy: string,
     isAscending: boolean,
-    dateFilter: PDateFilter
+    dateFilter: PDateFilter,
   ) {
     let roleFilters = [];
     if (userPreference !== null) {
       roleFilters.push(userPreference);
     }
+
+    const domains = this.state.domains.filter(d => d.checked === true).map(d => d.name);
+
     const res = await getUsersV2({
       pageSize: this.state.pageSize,
       page: page.toString(),
@@ -139,7 +163,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
       roleFilters,
       orderBy,
       dateFilter,
-      isAscending
+      isAscending,
+      domains
     });
     if (res) {
       this.setState({
@@ -164,7 +189,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
       searchString,
       this.state.orderBy,
       this.state.isAscending,
-      this.state.dateFilter
+      this.state.dateFilter,
     );
 
     setTimeout(() => {
@@ -363,7 +388,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
 
   render() {
     return (
-      <div className="main-listing bricks-played-page user-list-page manage-classrooms-page">
+      <div className="main-listing bricks-played-page user-list-page manage-classrooms-page only-user-events">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
           placeholder="Brick Title, Student Name, or Subject"
@@ -386,6 +411,19 @@ class UsersPage extends Component<UsersProps, UsersState> {
             }}
             setUserPreference={userPreference => {
               this.getUsers(userPreference, 0, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending, this.state.dateFilter);
+            }}
+
+            allDomains={this.state.allDomains}
+            domains={this.state.domains}
+            setAllDomains={() => {
+              this.state.domains.map(d => d.checked = false);
+              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending, this.state.dateFilter);
+              this.setState({ allDomains: true });
+            }}
+            setDomain={d => {
+              d.checked = !d.checked;
+              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, this.state.orderBy, this.state.isAscending, this.state.dateFilter);
+              this.setState({ allDomains: false });
             }}
           />
           <Grid item xs={9} className="brick-row-container">

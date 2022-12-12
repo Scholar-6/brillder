@@ -11,6 +11,7 @@
   }
 
   .relative-waves-container {
+    padding-bottom: 2vw;
     position: relative;
     width: 85%;
 
@@ -27,7 +28,7 @@
     font-size: 1vw;
     color: var(--theme-dark-blue);
     position: absolute;
-    top: 2.7vw;
+    top: 100px;
   }
 
   .absolute-start-time {
@@ -278,6 +279,13 @@
 
 // build
 .unique-component-wrapper {
+  .relative-waves-container {
+    .absolute-end-time,
+    .absolute-start-time {
+      top: 2.7vw !important;
+    }
+  }
+
   #waveform {
     height: 2.7vw !important;
     overflow-y: hidden;

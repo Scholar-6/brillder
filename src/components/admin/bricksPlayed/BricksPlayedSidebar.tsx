@@ -52,6 +52,7 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
   }
 
   render() {
+    let subjectsWithBricks = this.props.subjects.filter(s => s.count > 0);
     const { dateFilter, subjectCategory, setSubjectCategory } = this.props;
     return (
       <Grid
@@ -91,10 +92,10 @@ class BricksPlayedSidebar extends Component<FilterSidebarProps, FilterSidebarSta
         <CategorySelect subjectCategory={subjectCategory} selectCategory={setSubjectCategory} />
         <div className="filter-header">Subjects</div>
         <SubjectsList
-          subjects={this.props.subjects}
+          subjects={subjectsWithBricks}
           filterHeight={"auto"}
           filterBySubject={s => {
-            const subject = this.props.subjects[s];
+            const subject = subjectsWithBricks[s];
             this.props.selectSubject(subject);
           }}
           showUserCount={true}

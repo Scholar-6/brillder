@@ -338,3 +338,11 @@
   padding-bottom: 0.5vh;
   height: unset !important;
 }
+
+.only-bricks-played-page .tab-content .table {
+  width: 100%;
+  overflow-y: scroll;
+  .table-scroll {
+    width: 102vw;
+  }
+}

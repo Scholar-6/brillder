@@ -39,7 +39,7 @@ interface HeaderMenuState {
   showConvertDropdown: boolean;
 
   notificationsCount: number;
-  
+
   dropdownShown: boolean;
   logoutOpen: boolean;
   width: string;
@@ -86,7 +86,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
   }
 
   render() {
-    const {user} = this.props;
+    const { user } = this.props;
     let noCredits = false;
     let notificationCount = this.props.notifications ? this.props.notifications.length : 0;
 
@@ -106,51 +106,77 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
       className += " menu-without-credits";
     }
 
+    const renderNoCreditsPopup = () => {
+      if (this.props.user.isFromInstitution || this.props.user.library) {
+        return '';
+      }
+
+      if (noCredits) {
+        return (
+          <div className="no-credits-container">
+            <div className="text-container-cd43">
+              Uh-oh! Looks like you’re our of credits. To keep playing, convert some of your brills.
+            </div>
+            <div className="flex-center">
+              <div className="btn green flex-center" onClick={() => this.setState({ convertCreditsOpen: true })}>
+                Convert Brills
+              </div>
+            </div>
+          </div>
+        );
+      }
+      return '';
+    }
+
+    const convertCreditsPopup = () => {
+      if (this.props.user.isFromInstitution || this.props.user.library) {
+        return '';
+      }
+
+      if (this.state.showConvertDropdown) {
+        return (
+          <div className="no-credits-container second-design">
+            <div className="text-container-cd43">Convert your Brills for credits and other prizes</div>
+            <div className="flex-center">
+              <div className="btn green flex-center" onClick={() => this.setState({ convertCreditsOpen: true })}>
+                Convert Brills
+              </div>
+            </div>
+          </div>
+        );
+      }
+    }
+
     return (
       <div className={className} ref={this.pageHeader}>
         <div className="menu-buttons">
           <BrillIconAnimated popupShown={this.state.popupShown === 2} onClick={() => {
             if (this.state.popupShown === 2) {
-              this.setState({popupShown: 0});
+              this.setState({ popupShown: 0 });
             } else {
-              this.setState({popupShown: 2});
+              this.setState({ popupShown: 2 });
             }
             if (!isMobile && noCredits === false) {
               if (!user.library) {
-                this.setState({showConvertDropdown: !this.state.showConvertDropdown});
+                this.setState({ showConvertDropdown: !this.state.showConvertDropdown });
               }
             }
           }} />
-          {user.library ? <div /> :
-          <div className="header-credits-container">
-            <ReactiveUserCredits user={this.props.user} popupShown={this.state.popupShown === 1} onClick={() => {
-              if (this.state.popupShown === 1) {
-                this.setState({popupShown: 0});
-              } else {
-                this.setState({popupShown: 1});
-              }
-            }} className="desktop-credit-coins" history={this.props.history} />
-          </div>}
+          {(user.library || user.isFromInstitution) ? <div /> :
+            <div className="header-credits-container">
+              <ReactiveUserCredits user={this.props.user} popupShown={this.state.popupShown === 1} onClick={() => {
+                if (this.state.popupShown === 1) {
+                  this.setState({ popupShown: 0 });
+                } else {
+                  this.setState({ popupShown: 1 });
+                }
+              }} className="desktop-credit-coins" history={this.props.history} />
+            </div>}
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
         </div>
-        {noCredits && <div className="no-credits-container">
-            <div className="text-container-cd43">Uh-oh! Looks like you’re our of credits. To keep playing, convert some of your brills.</div>
-            <div className="flex-center">
-              <div className="btn green flex-center" onClick={() => this.setState({convertCreditsOpen: true})}>
-                Convert Brills
-              </div>
-            </div>
-          </div>
-        }
-        {this.state.showConvertDropdown && <div className="no-credits-container second-design">
-            <div className="text-container-cd43">Convert your Brills for credits and other prizes</div>
-            <div className="flex-center">
-              <div className="btn green flex-center" onClick={() => this.setState({convertCreditsOpen: true})}>
-                Convert Brills
-              </div>
-            </div>
-          </div>}
+        {renderNoCreditsPopup()}
+        {convertCreditsPopup()}
         <MenuDropdown
           dropdownShown={this.state.dropdownShown}
           hideDropdown={this.hideDropdown.bind(this)}
@@ -181,8 +207,8 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
         />
         <ConvertCreditsDialog
           isOpen={this.state.convertCreditsOpen}
-          close={() => this.setState({convertCreditsOpen: false})}
-         />
+          close={() => this.setState({ convertCreditsOpen: false })}
+        />
       </div>
     );
   }
