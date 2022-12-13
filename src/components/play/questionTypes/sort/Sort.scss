@@ -244,7 +244,7 @@
       }
 
       .sortable-item.correct {
-        background: #C1EDD5 !important;
+        background: var(--correct-hint) !important;
         .MuiListItemText-root .MuiTypography-root > div {
           color: white;
           background: var(--theme-green);

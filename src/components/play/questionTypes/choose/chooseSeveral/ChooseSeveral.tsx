@@ -15,6 +15,7 @@ import CompComponent from '../../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
 import ZoomHelpText from '../../components/ZoomHelpText';
+import { isPhone } from 'services/phone';
 
 export type ChooseSeveralAnswer = ActiveItem[];
 export interface ChooseSeveralComponent {
@@ -238,7 +239,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         {
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }
-        {this.renderGlobalHint()}
+        {!isPhone() && this.renderGlobalHint()}
       </div>
     );
   }

@@ -6,6 +6,7 @@ import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/model";
 import { PlayWord, IPlayWordComponent } from 'components/interfaces/word';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
 
 interface WordHighlightingProps extends CompQuestionProps {
   component: IPlayWordComponent;
@@ -203,7 +204,7 @@ class WordHighlighting extends CompComponent<
           {this.getWords()}
         </div>
         <br/>
-        {this.renderGlobalHint()}
+        {!isPhone() && this.renderGlobalHint()}
       </div>
     );
   }
