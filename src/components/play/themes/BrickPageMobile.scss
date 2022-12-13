@@ -2461,6 +2461,9 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   }
 
   .word-highlighting-play {
+    .words-container {
+      line-height: 1.5!important;
+    }
     .word-container {
       margin-top: 2vw;
       margin-bottom: 2vw;
