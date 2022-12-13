@@ -21,6 +21,7 @@ import { generateId } from 'components/build/buildQuestions/questionTypes/servic
 import SortImage from './SortImage';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isMobile } from 'react-device-detect';
+import { isPhone } from 'services/phone';
 
 interface UserCategory {
   name: string;
@@ -92,9 +93,9 @@ class Sort extends CompComponent<SortProps, SortState> {
       const unsorted = userCats.find(c => c.isUnsorted === true);
       if (unsorted?.choices.length === 0) {
         userCats.pop();
-      } 
-    } catch {}
-    
+      }
+    } catch { }
+
     this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };
   }
 
@@ -115,7 +116,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       catIndex++;
     }
 
-    userCats.push({ choices, name: Sort.unsortedTitle });
+    userCats.push({ choices, name: Sort.unsortedTitle, isUnsorted: true });
 
     return userCats;
   }
@@ -137,7 +138,7 @@ class Sort extends CompComponent<SortProps, SortState> {
           userCats.push({ choices: [], name: cat.name });
         }
 
-        userCats.push({ choices: [], name: Sort.unsortedTitle });
+        userCats.push({ choices: [], name: Sort.unsortedTitle, isUnsorted: true });
         this.prepareChoices(userCats);
         this.setState({ userCats, choices: this.getChoices() });
       }
@@ -203,7 +204,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       }
     }
     if (this.state.status !== DragAndDropStatus.Changed) {
-      this.setState({status: DragAndDropStatus.Changed});
+      this.setState({ status: DragAndDropStatus.Changed });
     }
     if (this.props.isBookPreview) {
       if (this.props.attempt.answer[choice] === this.state.choices[choice]) {
@@ -261,7 +262,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     const unsorted = userCats.find(c => c.isUnsorted === true);
     if (unsorted?.choices.length === 0) {
       userCats.pop();
-    } 
+    }
 
     this.setState({ status, userCats });
   }
@@ -357,7 +358,90 @@ class Sort extends CompComponent<SortProps, SortState> {
     return false;
   }
 
+  renderPhoneVersion() {
+    let correct = false;
+    if (this.props.isReview) {
+      correct = !!this.props.liveAttempt?.correct;
+    }
+
+    const haveImage = this.checkImages();
+    const ReactSortableV1 = ReactSortable as any;
+
+    let categories = this.state.userCats;
+    let unsortedCategory: UserCategory | null = null;
+
+    const tempCategory = this.state.userCats[this.state.userCats.length - 1];
+    if (tempCategory.isUnsorted === true) {
+      categories = this.state.userCats.slice(0, -1)
+      unsortedCategory = tempCategory;
+    }
+
+    return (
+      <div className="question-unique-play sort-play phone-sort">
+        <p>
+          <span className="help-text"><SpriteIcon name="categorize-phone-d3" /> Drag vertically to rearrange. {
+            haveImage && (isMobile
+              ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
+              : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
+          }</span>
+        </p>
+        <div className={`sort-two-columns ${this.props.isReview ? 'review-one-column' : ''}`}>
+          <div className="categories-column">
+            {
+              categories.map((cat, i) => (
+                <div key={i}>
+                  <div className={`sort-category ${cat.isUnsorted === true && 'bg-theme-orange text-white'}`}>
+                    <MathInHtml value={cat.name} />
+                  </div>
+                  <div className="sort-category-list-container">
+                    {this.props.isBookPreview ? (
+                      <div className="sortable-list">
+                        {cat.choices.map(this.renderChoice.bind(this))}
+                      </div>
+                    ) : (
+                      correct === true
+                        ? <div className={`${unsortedCategory ? 'category' : ''} sortable-list`}>
+                          {cat.choices.map(this.renderChoice.bind(this))}
+                        </div>
+                        :
+                        <ReactSortableV1
+                          list={cat.choices as any[]}
+                          animation={150}
+                          delay={100}
+                          className={`${unsortedCategory ? 'category' : ''} sortable-list`}
+                          group={{ name: "cloning-group-name" }}
+                          setList={(list: any[]) => this.updateCategory(list, i)}
+                        >
+                          {cat.choices.map(this.renderChoice.bind(this))}
+                        </ReactSortableV1>
+                    )}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+          {unsortedCategory &&
+            <div className="unsorted-column phone-unsorted-category">
+              <ReactSortableV1
+                list={unsortedCategory.choices as any[]}
+                animation={150}
+                delay={100}
+                className="unsorted sortable-list"
+                group={{ name: "cloning-group-name" }}
+                setList={(list: any[]) => this.updateCategory(list, this.state.userCats.length - 1)}
+              >
+                {unsortedCategory.choices.map(this.renderChoice.bind(this))}
+              </ReactSortableV1>
+            </div>}
+        </div>
+      </div>
+    );
+  }
+
   render() {
+    if (isPhone()) {
+      return this.renderPhoneVersion();
+    }
     const unsorted = this.state.userCats[this.state.userCats.length - 1];
     let correct = false;
     if (this.props.isReview) {
@@ -376,7 +460,7 @@ class Sort extends CompComponent<SortProps, SortState> {
               : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
           }</span>
         </p>
-        {isMobile ?  <p className="flex-center"><span className="help-text"><SpriteIcon name="flaticon-swipe" style={{paddingBottom: '2vw'}} className="rotate-90"/> Scroll on the right-hand side.</span></p> : ''}
+        {isMobile ? <p className="flex-center"><span className="help-text"><SpriteIcon name="flaticon-swipe" style={{ paddingBottom: '2vw' }} className="rotate-90" /> Scroll on the right-hand side.</span></p> : ''}
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>
