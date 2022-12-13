@@ -2396,6 +2396,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 // mobile global hint
 .play-preview-pages .brick-container.play-preview-panel.review-page .question-live-play {
   .question-hint-global {
+    $hint-font-e3: 3.7vw;
     padding-top: 1.8vw;
     padding-bottom: 1.8vw;
     margin-top: 5vw;
@@ -2404,8 +2405,13 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     border-radius: 0 !important;
     width: 98.5vw !important;
     background: var(--tab-gray);
+    font-size: $hint-font-e3 !important;
     .base-hint-container {
       display: inline;
+      font-size: $hint-font-e3 !important;
+      p {
+        font-size: $hint-font-e3 !important;
+      }
     }
   }
 }
