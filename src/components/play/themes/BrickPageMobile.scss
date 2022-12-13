@@ -2414,9 +2414,24 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       }
     }
   }
+  .wrong-hint-icon {
+    display: inline;
+    align-items: center;
+    justify-content: center;
+    width: 4.6vw;
+    height: 4.6vw;
+    margin-right: 2vw;
+  }
 }
 
 .play-preview-pages .brick-container.play-preview-panel .question-live-play {
+  .sort-play.phone-sort {
+    font-size: 3.5vw !important;
+    p {
+      font-size: 3.5vw !important;
+    }
+  }
+
   .choose-one-live {
     .choose-choice {
       padding-left: 0;
@@ -2429,17 +2444,40 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       }
 
       .question-hint {
-        background: var(--dark-gray);
+        background: var(--default-hint);
       }
       .base-hint-container {
         display: inline;
       }
 
+      &.correct {
+        color: white;
+        background: var(--theme-green) !important;
+        p {
+          color: white;
+        }
+        .question-hint {
+          background: var(--correct-hint) !important;
+          color: var(--theme-dark-blue);
+          p {
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
+
       &.wrong {
         background: var(--theme-orange) !important;
-        
+        color: white;
+       
+        p {
+          color: white;
+        }
         .question-hint {
-          background-color: #FFE8BB !important;
+          background-color: var(--wrong-hint) !important;
+          color: var(--theme-dark-blue);
+          p {
+            color: var(--theme-dark-blue);
+          }
         }
       }
     }

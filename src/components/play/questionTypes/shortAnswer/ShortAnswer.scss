@@ -18,6 +18,14 @@
     }
 
     &.correct .quill-document-editor .ql-editor{
+      &::before {
+        color: var(--white) !important;
+      }
+      color: var(--white) !important;
+      p, span {
+        color: var(--white) !important;
+      }
+
       background: var(--theme-green-alpha5) !important;
     }
     &.wrong .quill-document-editor .ql-editor{

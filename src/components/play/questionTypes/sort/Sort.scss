@@ -50,7 +50,7 @@
       justify-content: center;
       background: var(--solitude-light);
       min-height: 2vw;
-      height: 5vh;
+      height: 4vh;
       margin-top: 0.8vh;
       width: calc(100% - 0.4vw);
       border: 0.2vw dashed #acacac;
@@ -163,7 +163,7 @@
     display: flex;
     width: 104%;
     .categories-column {
-      width: 54%;
+      width: 51%;
       > div {
         background: var(--tab-gray);
         margin-bottom: 1vh;
@@ -184,17 +184,17 @@
       }
 
       .sortable-list.category {
-        padding-bottom: 6vh !important;
+        padding-bottom: 5vh !important;
       }
 
       
       .sortable-item {
         background: unset !important;
         .MuiListItemText-root .MuiTypography-root > div {
-          margin-left: 2.5vw;
-          margin-right: 2.5vw;
+          margin-left: 1.5vw;
+          margin-right: 1.5vw;
           background: var(--highlight-blue);
-          border-radius: 1vw;
+          border-radius: 1.3vw;
           p {
             text-align: left !important;
           }
@@ -202,8 +202,9 @@
       }
     }
     .unsorted-column.phone-unsorted-category {
-      width: 46%;
+      width: 49%;
       .sortable-item {
+        background: unset !important;
         margin-top: 0 !important;
         margin-bottom: 0.8vh;
         .MuiListItemText-root {
@@ -211,13 +212,15 @@
         }
       }
       .MuiListItemText-root .MuiTypography-root > div {
-        margin-left: 2.5vw;
+        margin-left: 2vw;
         margin-right: 0;
-        padding-left: 2.5vw !important;
-        padding-right: 2.5vw !important;
+        padding-top: 1vw;
+        padding-bottom: 1vw;
+        padding-left: 1.5vw !important;
+        padding-right: 1.5vw !important;
         text-align: left !important;
         background: var(--highlight-blue);
-        border-radius: 1vw;
+        border-radius: 1.3vw;
 
         p {
           text-align: left !important;

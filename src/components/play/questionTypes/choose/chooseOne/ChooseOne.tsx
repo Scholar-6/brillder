@@ -204,11 +204,12 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       }
     }
 
-    isCorrect = false;
 
-    if (this.props.isReview && this.props.liveAttempt?.correct === true) {
+    if (this.props.isReview && this.props.liveAttempt?.correct === true && isCorrect == true) {
       className += ' correct';
       isCorrect = true;
+    } else {
+      isCorrect = false;
     }
 
     return (

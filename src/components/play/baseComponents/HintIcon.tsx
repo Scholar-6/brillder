@@ -1,5 +1,6 @@
 import React from 'react';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { isPhone } from 'services/phone';
 
 
 interface ReviewHintProps {
