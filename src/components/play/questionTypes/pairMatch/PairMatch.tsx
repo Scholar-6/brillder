@@ -2,6 +2,7 @@ import React from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 import List from '@material-ui/core/List';
+import { isMobile } from 'react-device-detect';
 
 import './PairMatch.scss';
 import CompComponent from '../Comp';
@@ -13,9 +14,7 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import PairMatchOption from './PairMatchOption';
 import PairMatchImageContent from './PairMatchImageContent';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
-import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { isMobile } from 'react-device-detect';
 import { isPhone } from 'services/phone';
 
 
@@ -188,7 +187,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return (
       <p>
         <span className="help-text">
-          <DragIcon /><span>Drag to rearrange.</span> {
+          <SpriteIcon name="pair-match-phone-d3" /><span>Drag vertically to rearrange.</span> {
             haveImage && (isMobile
               ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
               : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
@@ -255,7 +254,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
           {this.renderOptions()}
           {this.renderAnswers()}
         </Grid>
-        {this.renderGlobalHint()}
+        {!isPhone() && this.renderGlobalHint()}
       </div>
     );
   }

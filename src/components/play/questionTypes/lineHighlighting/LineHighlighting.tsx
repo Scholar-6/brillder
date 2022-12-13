@@ -2,9 +2,10 @@ import React from "react";
 
 import "./LineHighlighting.scss";
 import CompComponent from "../Comp";
-import {CompQuestionProps} from '../types';
+import { CompQuestionProps } from '../types';
 import { ComponentAttempt } from "components/play/model";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
 
 
 interface LineHighlightingProps extends CompQuestionProps {
@@ -36,7 +37,7 @@ class LineHighlighting extends CompComponent<
   componentDidUpdate(prevProp: LineHighlightingProps) {
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProp.answers) {
-        const lines = this.props.component.lines.map((l: any, i:number) => {
+        const lines = this.props.component.lines.map((l: any, i: number) => {
           this.props.answers.forEach(a => {
             if (a === i) {
               l.selected = true;
@@ -44,7 +45,7 @@ class LineHighlighting extends CompComponent<
           });
           return l;
         })
-        this.setState({lines});
+        this.setState({ lines });
       }
     } else {
       if (this.state.lines !== this.props.component.lines) {
@@ -74,7 +75,7 @@ class LineHighlighting extends CompComponent<
   renderLinePreview(line: any, index: number) {
     return (
       <div key={index}>
-        <span className={line.checked ? "correct line" : "line"} dangerouslySetInnerHTML={{__html: line.text}} />
+        <span className={line.checked ? "correct line" : "line"} dangerouslySetInnerHTML={{ __html: line.text }} />
       </div>
     );
   }
@@ -84,7 +85,7 @@ class LineHighlighting extends CompComponent<
       return this.renderLinePreview(line, index);
     }
     let className = "line";
-    
+
     if (this.props.isDefaultBook) {
       return (
         <div key={index} className="line-container">
@@ -92,7 +93,7 @@ class LineHighlighting extends CompComponent<
         </div>
       );
     }
-    
+
     if (line.selected) {
       className += " active";
     }
@@ -109,7 +110,7 @@ class LineHighlighting extends CompComponent<
         }
       }
 
-      
+
       if (this.props.liveAttempt?.correct) {
         if (line.checked === true) {
           className += ' correct';
@@ -127,7 +128,7 @@ class LineHighlighting extends CompComponent<
 
     return (
       <div key={index} className="line-container">
-        <span className={className} onClick={() => this.highlighting(index)} dangerouslySetInnerHTML={{__html: line.text}} />
+        <span className={className} onClick={() => this.highlighting(index)} dangerouslySetInnerHTML={{ __html: line.text }} />
       </div>
     );
   }
@@ -151,14 +152,23 @@ class LineHighlighting extends CompComponent<
 
     return (
       <div className={className}>
-        <p><span className="help-text"><SpriteIcon name="highlighter" /> Click to highlight.</span></p>
+        <p>
+          {isPhone()
+            ? <span className="help-text">
+              <SpriteIcon name="phone-highlight-icon" /> Tap to highlight
+            </span>
+            : <span className="help-text">
+              <SpriteIcon name="highlighter" /> Click to highlight
+            </span>
+          }
+        </p>
         <div className="lines-container">
           {component.lines.map((line: any, index: number) => (
             this.renderLine(line, index)
           ))}
         </div>
-        <br/>
-        {this.renderGlobalHint()}
+        <br />
+        {!isPhone() && this.renderGlobalHint()}
       </div>
     );
   }

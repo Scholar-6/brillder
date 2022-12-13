@@ -240,7 +240,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
               {this.renderAnswers()}
             </ReactSortable>
         )}
-        {this.renderGlobalHint()}
+        {!isPhone() && this.renderGlobalHint()}
       </div>
     );
   }

@@ -15,6 +15,7 @@ import { getValidationClassName } from "../service";
 import { HintStatus } from "model/question";
 import QuillShortAnswerPreview from "components/baseComponents/quill/QuillShortAnswerPreview";
 import QuillShortAnswer from "components/baseComponents/quill/QuillShortAnswer";
+import { isPhone } from "services/phone";
 
 export type ShortAnswerAnswer = string[];
 
@@ -182,7 +183,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         {component.list.map((answer, index) => {
           return this.renderAnswer(answer, index);
         })}
-        {this.renderGlobalHint()}
+        {!isPhone() && this.renderGlobalHint()}
       </div>
     );
   }
