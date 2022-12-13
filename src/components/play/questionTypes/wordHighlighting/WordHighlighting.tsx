@@ -2,7 +2,7 @@ import React from "react";
 
 import "./WordHighlighting.scss";
 import CompComponent from "../Comp";
-import {CompQuestionProps} from '../types';
+import { CompQuestionProps } from '../types';
 import { ComponentAttempt } from "components/play/model";
 import { PlayWord, IPlayWordComponent } from 'components/interfaces/word';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -92,7 +92,7 @@ class WordHighlighting extends CompComponent<
     if (word.checked) {
       className += ' correct';
     }
-  
+
     return (
       <span key={index} className={className}>
         {word.text}
@@ -108,9 +108,9 @@ class WordHighlighting extends CompComponent<
     if (this.props.isPreview) {
       return this.renderWordPreview(word, index);
     }
-    
+
     let className = "word";
-    
+
     if (word.selected) {
       className += " active";
     }
@@ -157,7 +157,7 @@ class WordHighlighting extends CompComponent<
       return (
         <span key={index} className={className}>
           {word.text}
-          {word.isBreakLine ? <br/> : ""}
+          {word.isBreakLine ? <br /> : ""}
         </span>
       );
     }
@@ -169,20 +169,20 @@ class WordHighlighting extends CompComponent<
         onClick={() => this.highlighting(index)}
       >
         {word.text}
-        {word.isBreakLine ? <br/> : ""}
+        {word.isBreakLine ? <br /> : ""}
       </span>
     );
   }
 
   getWords() {
-    const {words} = this.props.component;
+    const { words } = this.props.component;
     let i = 0;
     let i2 = words.length + 2;
     let html = [];
     for (let word of words) {
       html.push(this.renderWord(word, i));
       if (word.isBreakLine) {
-        html.push(<br key={i2} style={{width: '100%'}} />);
+        html.push(<br key={i2} style={{ width: '100%' }} />);
         i2++;
       }
       i++;
@@ -199,11 +199,20 @@ class WordHighlighting extends CompComponent<
 
     return (
       <div className="question-unique-play word-highlighting-play">
-        <p><span className="help-text"><SpriteIcon name="highlighter" />Click to highlight.</span></p>
+        <p>
+          {isPhone()
+            ? <span className="help-text">
+              <SpriteIcon name="phone-highlight-icon" /> Tap to highlight
+            </span>
+            : <span className="help-text">
+              <SpriteIcon name="highlighter" /> Click to highlight.
+            </span>
+          }
+        </p>
         <div className={`words-container ${this.props.isPreview && 'preview'} ${!component.isPoem ? 'break-lines' : 'lines-inline'}`}>
           {this.getWords()}
         </div>
-        <br/>
+        <br />
         {!isPhone() && this.renderGlobalHint()}
       </div>
     );
