@@ -2459,4 +2459,19 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       }
     }
   }
+
+  .word-highlighting-play {
+    .word-container {
+      margin-top: 2vw;
+      margin-bottom: 2vw;
+    }
+    .word {
+      border-radius: 2vw;
+      padding: 0.5vw 1.2vw;
+
+      &.wrong, &.correct {
+        color: white;
+      }
+    }
+  }
 }
