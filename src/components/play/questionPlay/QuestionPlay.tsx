@@ -22,6 +22,8 @@ import MissingWord from '../questionTypes/missingWord/MissingWord';
 import LineHighlighting from '../questionTypes/lineHighlighting/LineHighlighting';
 import WordHighlightingComponent from '../questionTypes/wordHighlighting/WordHighlighting';
 import { PlayMode } from '../model';
+import { isPhone } from 'services/phone';
+import ReviewGlobalHint from '../baseComponents/ReviewGlobalHint';
 
 
 interface QuestionProps {
@@ -101,6 +103,18 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     return true;
   }
 
+  renderGlobalHint() {
+    const correct = this.props.liveAttempt ? this.props.liveAttempt.correct : false;
+
+    return (
+      <ReviewGlobalHint
+        isReview={this.props.isReview}
+        correct={correct}
+        isPhonePreview={this.props.isPreview}
+        hint={this.props.question.hint}
+      />
+    );
+  }
 
   render() {
     const { question } = this.props;
@@ -172,6 +186,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     try {
       return (
         <div>
+          {isPhone() && this.renderGlobalHint()}
           {
             question.firstComponent?.value &&
               <TextLive mode={this.props.mode} component={question.firstComponent} />

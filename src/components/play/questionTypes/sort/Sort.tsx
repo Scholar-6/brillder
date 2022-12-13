@@ -376,8 +376,6 @@ class Sort extends CompComponent<SortProps, SortState> {
       unsortedCategory = tempCategory;
     }
 
-    console.log(categories);
-
     return (
       <div className="question-unique-play sort-play phone-sort">
         <p>
@@ -436,7 +434,6 @@ class Sort extends CompComponent<SortProps, SortState> {
               </ReactSortableV1>
             </div>}
         </div>
-        {this.renderGlobalHint()}
       </div>
     );
   }
