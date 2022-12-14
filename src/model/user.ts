@@ -83,7 +83,7 @@ export interface User extends UserBase {
   freeAttemptsLeft: number;
   freeCompetitionLeft: number;
   subscriptionState?: SubscriptionState;
-  subscriptionInverval?: SubscriptionInterval;
+  subscriptionInterval?: SubscriptionInterval;
 
   library?: RealLibrary;
   libraryCardNumber?: string;
