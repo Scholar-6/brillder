@@ -32,16 +32,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   const isLearner = props.match.params.type === 'learner';
 
-  let isMonthlyS = true;
   const values = queryString.parse(props.history.location.search);
-  if (values.isAnnual) {
-    try {
-      isMonthlyS = parseInt(values.isAnnual as string) === 0 ? true : false;
-    } catch {
-      // can`t be parsed
-    }
-  }
-
 
   const [originalPrice, setOriginalPrice] = useState(0);
   const [originalAnnualPrice, setOriginalAnnualPrice] = useState(0);
@@ -58,7 +49,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   const [expireValid, setExpireValid] = useState(false);
   const [cvcValid, setCvcValid] = useState(false);
 
-  const [isMonthly, setMonthly] = useState(isMonthlyS);
+  const [isMonthly, setMonthly] = useState(false);
   const [card, setCard] = useState(null as null | StripeCardElement);
 
   const loadPrices = async () => {
@@ -308,13 +299,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   const renderGreenPricingBox = () => {
     if (!isOtherCoupon) {
       return (
-        <div className={`radio-row ${(isFree || isOtherCoupon) ? 'one-button' : ''}`}>
-          <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
-            {!(isFree || isOtherCoupon) && <Radio checked={isMonthly} />}
-            <div className="absoulte-price">£{originalPrice}</div>
-            £{renderPriceValue()} <span className="label">Monthly</span>
-            <div className="absolute-label" >{renderPercentage()}</div>
-          </div>
+        <div className="radio-row one-button">
           {!isFree && !isOtherCoupon &&
             <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
               <Radio checked={!isMonthly} />

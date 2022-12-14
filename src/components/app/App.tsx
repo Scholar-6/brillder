@@ -292,8 +292,7 @@ const App: React.FC<AppProps> = props => {
             <StudentRoute path="/post-play/brick/:brickId/:userId/:classId" component={PostPlay} />
             <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 
-            <StudentRoute path={map.ChoosePlan} component={ChoosePlan} />
-            <StudentRoute path={map.Subscribe} component={LandingSubscribePage} />
+            <StudentRoute path={map.ChoosePlan} component={LandingSubscribePage} />
 
             <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
             <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />

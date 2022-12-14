@@ -20,27 +20,6 @@ interface StripePageProps {
 
 const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
   const { history } = props;
-  const [isAnnual, setAnnual] = useState(true);
-
-  const onSwitch = () => {
-    setAnnual(!isAnnual);
-  }
-
-  const renderCoreIcon = () => {
-    let className = "svg active";
-    if (isAnnual) {
-      className += " selected";
-    }
-    return <div className={className} />;
-  }
-
-  const renderPrivateIcon = () => {
-    let className = "svg active";
-    if (!isAnnual) {
-      className += " selected";
-    }
-    return <div className={className} />;
-  }
 
   return (
     <React.Suspense fallback={<></>}>
@@ -53,34 +32,25 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
             <div>Trial Brillder for free - 6 complimentary credits for learners, 10 for teachers.</div>
             <div>When you run out of credits, you’re obviously hooked. It’s time to subscribe!</div>
           </div>
-          <div className="subc-help-text bold flex-center">
-            <div>Tell me about credits, brills and books</div>
-            <SpriteIcon name="help-circle-custom" />
-            <div className="absolute-subscription-hover">
-              <div className="bold">Credits, brills and books</div>
-              <div>
-                Each brick costs 1 credit to play (as a learner) or assign (as a teacher). Competition bricks cost 2 credits to play. With every brick played, you earn brills, our reward points, by scoring 50% or more (65% = 65 brills). You can earn loads more brills by playing competition bricks (4 are set every week).  Brills can be collected, exchanged for more credits, or even cashed in if you earn loads through competitions. Your progress will  also be reflected in your Library - with each brick on which you score 50% or more you collect a personalised virtual book.
+          <div className="flex-center">
+            <div className="subc-help-text bold flex-center">
+              <div>Tell me about credits, brills and books</div>
+              <SpriteIcon name="help-circle-custom" />
+              <div className="absolute-subscription-hover">
+                <div className="bold">Credits, brills and books</div>
+                <div>
+                  Each brick costs 1 credit to play (as a learner) or assign (as a teacher). Competition bricks cost 2 credits to play. With every brick played, you earn brills, our reward points, by scoring 50% or more (65% = 65 brills). You can earn loads more brills by playing competition bricks (4 are set every week).  Brills can be collected, exchanged for more credits, or even cashed in if you earn loads through competitions. Your progress will  also be reflected in your Library - with each brick on which you score 50% or more you collect a personalised virtual book.
+                </div>
               </div>
             </div>
           </div>
-          <div className='private-core-toggle subscribe-type-toggle'>
-            <button className="btn btn-transparent " onClick={onSwitch}>
-              <span className={isAnnual ? 'bold' : 'regular'}>Monthly</span>
-              <div className="svgOnHover">
-                {renderCoreIcon()}
-                {renderPrivateIcon()}
-              </div>
-              <span className={!isAnnual ? 'bold' : 'regular'}>Anually</span>
-            </button>
-          </div>
-
           <div className="subscribe-type-boxes">
             <div>
               <div className="subc-type dd-learner bold">Learner</div>
-              <div className="price-before">{isAnnual ? '£9.99' : '£99'}</div>
-              <div className="bold price-now">{isAnnual ? '£4.99' : '£49.99'}</div>
+              <div className="price-before">£99</div>
+              <div className="bold price-now">£49.99</div>
               <div className="price-description">
-                {isAnnual ? 'Billed Montly ' : 'Billed Annually'}
+                Billed Annually
               </div>
 
               <div className="subsc-list">
@@ -93,7 +63,7 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
               </div>
 
               <div className="btn learner" onClick={() => {
-                history.push('/stripe-subscription/learner?isAnnual=' + (isAnnual ? 0 : 1));
+                history.push('/stripe-subscription/learner');
               }}>Get Brillder for Learners</div>
 
               <div className="subsc-small">
@@ -102,10 +72,10 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
             </div>
             <div>
               <div className="subc-type dd-learner bold">Teacher</div>
-              <div className="price-before">{isAnnual ? '£12.99' : '£129.99'}</div>
-              <div className="bold price-now">{isAnnual ? '£6.49' : '£64.99'}</div>
+              <div className="price-before">£129.99</div>
+              <div className="bold price-now">£64.99</div>
               <div className="price-description">
-                {isAnnual ? 'Billed Montly ' : 'Billed Annually'}
+                Billed Annually
               </div>
 
               <div className="subsc-list">
@@ -118,7 +88,7 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
               </div>
 
               <button className="btn teacher" onClick={() => {
-                history.push('/stripe-subscription/educator?isAnnual=' + (isAnnual ? 0 : 1));
+                history.push('/stripe-subscription/educator');
               }}>Get Brillder for Teachers</button>
 
               <div className="subsc-small">
