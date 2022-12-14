@@ -18,6 +18,7 @@ export const LeaderboardPage = '/leaderboard';
 export const MyLibrary = '/my-library';
 export const TermsPage = '/terms';
 export const ChoosePlan = '/choose-plan';
+export const Subscribe = '/subscribe';
 
 export const MyLibrarySubject = (subjectId: number) => {
   return MyLibrary + '?subjectId=' + subjectId;
@@ -171,6 +172,7 @@ export default {
   Login,
   MainPage,
   LeaderboardPage,
+  Subscribe,
   ChoosePlan,
   StripeCredits,
   StripeLearner,
