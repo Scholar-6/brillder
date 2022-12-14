@@ -2,7 +2,10 @@
   font-size: 1vw;
   color: var(--theme-dark-blue);
   .page1-1 {
-    margin-bottom: 8vh;
+    padding-top: 5vh;
+    color: white;
+    background: var(--theme-dark-blue);
+    padding-bottom: 8vh;
     .subc-title {
       text-align: center;
       font-size: 2.7vw;
@@ -27,6 +30,9 @@
       justify-content: center;
       .btn {
         letter-spacing: 0;
+        span {
+          color: white !important;
+        }
       }
       .btn .svgOnHover {
         border-radius: 0.9vw;
@@ -36,9 +42,9 @@
         }
         .svg.selected {
           transform: scale(1) !important;
-          width: 1.2vw !important;
-          height: 1.2vw !important;
-          background-color: #0C2760;
+          width: 1.6vw !important;
+          height: 1.6vw !important;
+          background-color: var(--theme-green);
         }
       }
     }
@@ -51,8 +57,15 @@
       margin-top: 4vh;
 
       > div {
-        margin-left: 4vw;
-        margin-right: 4vw;
+        border-radius: 0.7vw;
+        color: var(--theme-dark-blue);
+        background: white;
+        margin-left: 2vw;
+        margin-right: 2vw;
+        padding-left: 2vw;
+        padding-right: 2vw;
+        padding-top: 1vw;
+        padding-bottom: 1vw;
       }
 
       .subc-type {
@@ -98,6 +111,9 @@
 
         &.learner {
           background: var(--theme-green);
+        }
+        &.teacher {
+          background: #0681DB;
         }
       }
       .subsc-small {
