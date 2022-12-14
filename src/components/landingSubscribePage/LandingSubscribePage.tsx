@@ -28,10 +28,17 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
         <div className="page1-1">
           <HomeButton link="/home" history={history} />
           <div className="subc-title bold">Choose your Subscription. <span className="text-orange">Save 50%!</span></div>
-          <div className="subc-description">
-            <div>Trial Brillder for free - 6 complimentary credits for learners, 10 for teachers.</div>
-            <div>When you run out of credits, you’re obviously hooked. It’s time to subscribe!</div>
-          </div>
+          {isPhone() ?
+            <div className="subc-description">
+              <div>Trial Brillder for free - 6 complimentary credits for learners,</div>
+              <div>10 for teachers. When you run out of credits, you’re obviously</div>
+              <div>  hooked. It’s time to subscribe!</div>
+            </div>
+            :
+            <div className="subc-description">
+              <div>Trial Brillder for free - 6 complimentary credits for learners, 10 for teachers.</div>
+              <div>When you run out of credits, you’re obviously hooked. It’s time to subscribe!</div>
+            </div>}
           <div className="flex-center">
             <div className="subc-help-text bold flex-center">
               <div>Tell me about credits, brills and books</div>
@@ -71,7 +78,7 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
               </div>
             </div>
             <div>
-              <div className="subc-type dd-learner bold">Teacher</div>
+              <div className="subc-type dd-teacher bold">Teacher</div>
               <div className="price-before">£129.99</div>
               <div className="bold price-now">£64.99</div>
               <div className="price-description">
@@ -132,7 +139,7 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
             <div className="bold">Are you a Builder?</div>
             <div>If you want to create content for your own students, you are best off with a Teacher Subscription. If you want to create content professionally for us, please contact us at hello@brillder.com.</div>
           </div>
-          <div>
+          <div className="img-34">
             <img src="/images/subscribe-builder.png"></img>
           </div>
         </div>
