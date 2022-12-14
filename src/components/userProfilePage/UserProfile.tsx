@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
+import { isMobile } from "react-device-detect";
 
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
@@ -33,7 +34,6 @@ import PasswordChangedDialog from "components/baseComponents/dialogs/PasswordCha
 import ProfilePhonePreview from "./components/ProfilePhonePreview";
 import { getExistingUserState, getNewUserState } from "./stateService";
 import { isPhone } from "services/phone";
-import { isMobile } from "react-device-detect";
 import { maximizeZendeskButton, minimizeZendeskButton } from "services/zendesk";
 import SaveIntroJs from "./components/SaveIntroJs";
 import ProfileTab from "./ProfileTab";
@@ -515,6 +515,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   renderManageAccount() {
     const { subscriptionState } = this.props.user;
+    const { subscriptionInterval } = this.props.user;
 
     const renderNextBillingDate = (nextBillingDate?: number | null) => {
       if (nextBillingDate && subscriptionState && subscriptionState > 1) {
@@ -535,7 +536,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <span>
               {renderLabel()} Premium Learner <SpriteIcon name="hero-sparkle" />
             </span>
-            <div className="price">£4.99 monthly</div>
+            <div className="price">{subscriptionInterval == 0 ? '£4.99 monthly' : '£49.99 annually'} </div>
           </div>
         );
       } else if (subscriptionState === 3) {
@@ -544,7 +545,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <span>
               {renderLabel()} Premium Educator <SpriteIcon name="hero-sparkle" />
             </span>
-            <div className="price">£6.49 monthly</div>
+            <div className="price">{subscriptionInterval == 0 ? '£6.49 monthly' : '£64.99 annually'} </div>
           </div>
         );
       }
