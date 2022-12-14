@@ -642,6 +642,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     const renderLibrary = () => {
+      const {subscriptionState} = this.props.user;
+      if (subscriptionState && (subscriptionState === 2 || subscriptionState === 3)) {
+        return <div />;
+      }
       if (this.props.user.isFromInstitution) {
         return <div />;
       }
