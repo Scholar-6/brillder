@@ -26,6 +26,11 @@ export enum SubscriptionState {
   FreePass
 }
 
+export enum SubscriptionInterval {
+  Montly,
+  Yearly
+}
+
 export enum UserStatus {
   Pending,
   Active,
@@ -78,6 +83,7 @@ export interface User extends UserBase {
   freeAttemptsLeft: number;
   freeCompetitionLeft: number;
   subscriptionState?: SubscriptionState;
+  subscriptionInterval?: SubscriptionInterval;
 
   library?: RealLibrary;
   libraryCardNumber?: string;

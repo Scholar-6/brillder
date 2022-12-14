@@ -13,6 +13,7 @@ import { QuestionValueType } from 'components/build/buildQuestions/questionTypes
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
 import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
 import ZoomHelpText from '../../components/ZoomHelpText';
+import { isPhone } from 'services/phone';
 
 export interface ChooseOneComponent {
   type: number;
@@ -193,9 +194,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       if (this.props.isReview && this.props.attempt === this.props.liveAttempt) {
         if (answer.shuffleIndex >= 0 && answer.shuffleIndex === index) {
           if (this.props.isReview) {
-            if (isCorrect) {
-              className += " correct";
-            } else if (isCorrect === false) {
+            if (isCorrect === false) {
               className += " wrong";
             }
           }
@@ -205,14 +204,23 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       }
     }
 
+
+    if (this.props.isReview && this.props.liveAttempt?.correct === true && isCorrect == true) {
+      className += ' correct';
+      isCorrect = true;
+    } else {
+      isCorrect = false;
+    }
+
     return (
       <div
         className={className}
         key={index}
         onClick={() => {
-          if (this.state.isLiveCorrect === false) {
-            this.setActiveItem(choice.index, index);
+          if (this.props.liveAttempt?.correct === true) {
+            return;
           }
+          this.setActiveItem(choice.index, index);
         }}
       >
         {this.renderData(choice)}
@@ -248,7 +256,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       <div className="question-unique-play choose-one-live">
         {haveImage && <ZoomHelpText />}
         {list.map((choice, index) => this.renderChoice(choice, index))}
-        {this.renderGlobalHint()}
+        {!isPhone() && this.renderGlobalHint()}
       </div>
     );
   }

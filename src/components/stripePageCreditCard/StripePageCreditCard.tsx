@@ -4,6 +4,7 @@ import { Radio } from '@material-ui/core';
 import { StripeCardElement } from "@stripe/stripe-js"
 import axios from "axios";
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 import userActions from 'redux/actions/user';
 import './StripePageCreditCard.scss';
@@ -31,6 +32,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   const isLearner = props.match.params.type === 'learner';
 
+  const values = queryString.parse(props.history.location.search);
+
   const [originalPrice, setOriginalPrice] = useState(0);
   const [originalAnnualPrice, setOriginalAnnualPrice] = useState(0);
 
@@ -46,7 +49,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   const [expireValid, setExpireValid] = useState(false);
   const [cvcValid, setCvcValid] = useState(false);
 
-  const [isMonthly, setMonthly] = useState(true);
+  const [isMonthly, setMonthly] = useState(false);
   const [card, setCard] = useState(null as null | StripeCardElement);
 
   const loadPrices = async () => {
@@ -296,13 +299,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
   const renderGreenPricingBox = () => {
     if (!isOtherCoupon) {
       return (
-        <div className={`radio-row ${(isFree || isOtherCoupon) ? 'one-button' : ''}`}>
-          <div className={isMonthly ? "active" : ''} onClick={() => setMonthly(true)}>
-            {!(isFree || isOtherCoupon) && <Radio checked={isMonthly} />}
-            <div className="absoulte-price">£{originalPrice}</div>
-            £{renderPriceValue()} <span className="label">Monthly</span>
-            <div className="absolute-label" >{renderPercentage()}</div>
-          </div>
+        <div className="radio-row one-button">
           {!isFree && !isOtherCoupon &&
             <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
               <Radio checked={!isMonthly} />

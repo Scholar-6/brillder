@@ -23,7 +23,7 @@ const CoverBioDialog: React.FC<SubjectDialogProps> = ({ isOpen, setLibraryLogin,
 
   const renderName = () => {
     const name = user.firstName;
-    if (name[name.length - 1] === 's') {
+    if (name && name[name.length - 1] === 's') {
       return `${name}'`;
     }
     return `${name}'s`;

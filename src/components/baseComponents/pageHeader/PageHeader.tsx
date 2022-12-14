@@ -55,6 +55,8 @@ interface Props {
   showDropdown(): void;
   showNotifications(event: any): void;
 
+  searchHidden?: boolean;
+
   toggleSearch?(value: boolean): void;
   onForbiddenClick?(): void;
 
@@ -334,10 +336,12 @@ class PageHeader extends Component<Props, State> {
             <HomeButton link={link} history={this.props.history} />
             <div className="logout-container">
               <div className={`search-container ${this.state.value.length >= 1 ? 'no-bottom-border' : ''}`}>
+                {!this.props.searchHidden &&
                 <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>
                   <SpriteIcon name="search" className="active" />
-                </div>
+                </div>}
                 <div className="search-area">
+                  {!this.props.searchHidden &&
                   <input
                     className="search-input"
                     value={this.state.value}
@@ -347,7 +351,7 @@ class PageHeader extends Component<Props, State> {
                       this.props.searching(e.target.value);
                     }}
                     placeholder={this.props.searchPlaceholder}
-                  />
+                  />}
                 </div>
               </div>
               {this.props.isAuthenticated === isAuthenticated.True &&

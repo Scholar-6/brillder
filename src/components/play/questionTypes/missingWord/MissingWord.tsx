@@ -10,6 +10,7 @@ import { ComponentAttempt } from "components/play/model";
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
+import { isPhone } from "services/phone";
 
 interface MissingComponent {
   choices: any[];
@@ -187,7 +188,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
             </span>
           </div>
         ))}
-        {this.renderGlobalHint()}
+        {!isPhone() && this.renderGlobalHint()}
       </div>
     );
   }

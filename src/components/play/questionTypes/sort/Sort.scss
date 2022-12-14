@@ -50,7 +50,7 @@
       justify-content: center;
       background: var(--solitude-light);
       min-height: 2vw;
-      height: 5vh;
+      height: 4vh;
       margin-top: 0.8vh;
       width: calc(100% - 0.4vw);
       border: 0.2vw dashed #acacac;
@@ -150,6 +150,140 @@
     .svg {
       height: 3.5vw;
       width: 3.5vw;
+    }
+  }
+}
+
+.sort-play.phone-sort {
+  > div {
+    margin-left: -2vw !important;
+    margin-right: 0 !important;
+  }
+  .sort-two-columns {
+    display: flex;
+    width: 104%;
+    .categories-column {
+      width: 51%;
+      > div {
+        background: var(--tab-gray);
+        margin-bottom: 1vh;
+      }
+      .sort-category {
+        padding-left: 2.5vw;
+        background: unset !important;
+        p {
+          text-transform: uppercase;
+          text-align: left !important;
+        }
+      }
+
+      .sortable-list.category::after {
+        margin-left: 2.5vw;
+        margin-right: 2.5vw;
+        width: calc(100% - 5vw);
+      }
+
+      .sortable-list.category {
+        padding-bottom: 5vh !important;
+      }
+
+      
+      .sortable-item {
+        background: unset !important;
+        .MuiListItemText-root .MuiTypography-root > div {
+          margin-left: 1.5vw;
+          margin-right: 1.5vw;
+          background: var(--highlight-blue);
+          border-radius: 1.3vw;
+          p {
+            text-align: left !important;
+          }
+        }
+      }
+    }
+    .unsorted-column.phone-unsorted-category {
+      width: 49%;
+      .sortable-item {
+        background: unset !important;
+        margin-top: 0 !important;
+        margin-bottom: 0.8vh;
+        .MuiListItemText-root {
+          margin-top: 0 !important;
+        }
+      }
+      .MuiListItemText-root .MuiTypography-root > div {
+        margin-left: 2vw;
+        margin-right: 0;
+        padding-top: 1vw;
+        padding-bottom: 1vw;
+        padding-left: 1.5vw !important;
+        padding-right: 1.5vw !important;
+        text-align: left !important;
+        background: var(--highlight-blue);
+        border-radius: 1.3vw;
+
+        p {
+          text-align: left !important;
+        }
+      }
+    }
+  }
+  .review-one-column {
+    .categories-column {
+      width: 100%;
+
+      .sortable-item {
+        .question-hint {
+          background: unset !important;
+          width: calc(100% - 5vw);
+          .base-hint-container {
+            display: inline !important;
+            background: unset !important;
+          }
+          p {
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
+
+      .sortable-item.correct {
+        background: var(--correct-hint) !important;
+        .MuiListItemText-root .MuiTypography-root > div {
+          color: white;
+          background: var(--theme-green);
+          p {
+            color: white;
+          }
+        }
+        .MuiListItemText-root .MuiTypography-root > div.question-hint {
+          color: var(--theme-dark-blue);
+          p {
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
+
+      .sortable-item.wrong {
+        background: #FFE8BB !important;
+        .MuiListItemText-root .MuiTypography-root > div {
+          color: white;
+          background: var(--theme-orange);
+          p {
+            color: white;
+          }
+        }
+        .MuiListItemText-root .MuiTypography-root > div.question-hint {
+          color: var(--theme-dark-blue);
+          p {
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
+    }
+  }
+  .sort-image-container {
+    .sort-image-choice {
+      max-width: 100%;
     }
   }
 }

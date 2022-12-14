@@ -856,6 +856,41 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             .short-answer-input {
               border-radius: 0 !important;
               background: transparent !important;
+              p {
+                text-align: center;
+              }
+
+              .ql-editor {
+                padding-top: 1.5vh;
+                padding-bottom: 1.5vh;
+              }
+
+              .ql-editor.ql-blank::before {
+                text-align: center;
+              }
+
+              &.correct {
+                .quill-document-editor .ql-editor {
+                  background: var(--theme-green) !important;
+                }
+                .question-hint.correct {
+                  background-color: var(--correct-hint) !important;
+                }
+              }
+
+              .question-hint {
+                padding-top: 1vh;
+                padding-bottom: 1vh;
+                .base-hint-container {
+                  display: inline;
+                }
+              }
+
+              &.wrong {
+                .question-hint {
+                  background-color: #FFE8BB !important;
+                }
+              }
             }
             .short-answer-live {
               .document-editor {
@@ -2353,6 +2388,130 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       td {
         border: 3px solid var(--white) !important;
         padding: 4px 8px !important;
+      }
+    }
+  }
+}
+
+// mobile global hint
+.play-preview-pages .brick-container.play-preview-panel.review-page .question-live-play {
+  .question-hint-global {
+    $hint-font-e3: 3.7vw;
+    padding-top: 1.8vw;
+    padding-bottom: 1.8vw;
+    margin-top: 5vw;
+    margin-left: -4vw;
+    margin-right: -4vw;
+    border-radius: 0 !important;
+    width: 98.5vw !important;
+    background: var(--tab-gray);
+    font-size: $hint-font-e3 !important;
+    .base-hint-container {
+      display: inline;
+      font-size: $hint-font-e3 !important;
+      p {
+        font-size: $hint-font-e3 !important;
+      }
+    }
+  }
+  .wrong-hint-icon {
+    display: inline;
+    align-items: center;
+    justify-content: center;
+    width: 4.6vw;
+    height: 4.6vw;
+    margin-right: 2vw;
+  }
+}
+
+.play-preview-pages .brick-container.play-preview-panel .question-live-play {
+  .sort-play.phone-sort {
+    font-size: 3.5vw !important;
+    p {
+      font-size: 3.5vw !important;
+    }
+  }
+
+  .choose-one-live {
+    .choose-choice {
+      padding-left: 0;
+      padding-right: 0;
+      padding-bottom: 0;
+
+      > div {
+        padding-top: 1.5vh;
+        padding-bottom: 1.5vh;
+      }
+
+      .question-hint {
+        background: var(--default-hint);
+      }
+      .base-hint-container {
+        display: inline;
+      }
+
+      &.correct {
+        color: white;
+        background: var(--theme-green) !important;
+        p {
+          color: white;
+        }
+        .question-hint {
+          background: var(--correct-hint) !important;
+          color: var(--theme-dark-blue);
+          p {
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
+
+      &.wrong {
+        background: var(--theme-orange) !important;
+        color: white;
+       
+        p {
+          color: white;
+        }
+        .question-hint {
+          background-color: var(--wrong-hint) !important;
+          color: var(--theme-dark-blue);
+          p {
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
+    }
+  }
+
+  .line-highlighting-play {
+    .line-container {
+      margin-top: 2vw;
+      margin-bottom: 2vw;
+    }
+    .line {
+      border-radius: 2vw;
+      padding: 0.5vw 1.2vw;
+
+      &.wrong, &.correct {
+        color: white;
+      }
+    }
+  }
+
+  .word-highlighting-play {
+    .words-container {
+      line-height: 1.5!important;
+    }
+    .word-container {
+      margin-top: 2vw;
+      margin-bottom: 2vw;
+    }
+    .word {
+      border-radius: 2vw;
+      padding: 0.5vw 1.2vw;
+
+      &.wrong, &.correct {
+        color: white;
       }
     }
   }

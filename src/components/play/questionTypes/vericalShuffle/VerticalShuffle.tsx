@@ -283,7 +283,6 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
             {this.renderAnswers()}
           </div>
         )}
-        {this.renderGlobalHint()}
       </div>
     );
   }
