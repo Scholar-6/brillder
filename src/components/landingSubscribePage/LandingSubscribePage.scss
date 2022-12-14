@@ -1,4 +1,11 @@
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
 .LandingSubscribePage {
+  height: 100%;
+  overflow-y: scroll;
+
   font-size: 1vw;
   color: var(--theme-dark-blue);
   .page1-1 {
@@ -17,12 +24,43 @@
       text-align: center;
     }
     .subc-help-text {
+      position: relative;
       font-size: 1.2vw;
 
       svg {
         margin-left: 0.5vw;
         width: 1.8vw;
         height: 1.8vw;
+      }
+
+      .absolute-subscription-hover {
+        top: 2.1vw;
+        left: 57vw;
+        width: 30vw;
+        font-size: 1.1vw;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        padding-top: 1vw;
+        padding-bottom: 1vw;
+        display: none;
+        font-family: $font-family-regular;
+        position: absolute;
+        z-index: 10;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+        color: var(--theme-dark-blue);
+        background: white;
+        box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        border-radius: 1vw;
+
+        .bold {
+          margin-bottom: 1vw;
+        }
+      }
+
+      &:hover {
+        .absolute-subscription-hover {
+          display: block;
+        }
       }
     }
     .subscribe-type-toggle {
