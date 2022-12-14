@@ -6,7 +6,7 @@ import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import userActions from "../../redux/actions/user";
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import LandingSubscribeDialog from './LandingSubscribeDialog';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 
 interface StripePageProps {
   history: any;
@@ -16,9 +16,8 @@ interface StripePageProps {
 }
 
 const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
+  const {history} = props;
   const [isAnnual, setAnnual] = useState(true);
-  const [isOpen, setOpen] = useState(false);
-  const [isLearner, setLearner] = useState(true);
 
   const onSwitch = () => {
     setAnnual(!isAnnual);
@@ -42,6 +41,7 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
 
   return <div className="LandingSubscribePage">
     <div className="page1-1">
+      <HomeButton link="/home" history={history} />
       <div className="subc-title bold">Choose your Subscription. <span className="text-orange">Save 50%!</span></div>
       <div className="subc-description">
         <div>Trial Brillder for free - 6 complimentary credits for learners, 10 for teachers.</div>
@@ -53,22 +53,22 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
       </div>
       <div className='private-core-toggle subscribe-type-toggle'>
         <button className="btn btn-transparent " onClick={onSwitch}>
-          <span className={isAnnual ? 'bold' : 'regular'}>Annually</span>
+          <span className={isAnnual ? 'bold' : 'regular'}>Monthly</span>
           <div className="svgOnHover">
             {renderCoreIcon()}
             {renderPrivateIcon()}
           </div>
-          <span className={!isAnnual ? 'bold' : 'regular'}>Lifetime</span>
+          <span className={!isAnnual ? 'bold' : 'regular'}>Anually</span>
         </button>
       </div>
 
       <div className="subscribe-type-boxes">
         <div>
           <div className="subc-type dd-learner bold">Learner</div>
-          <div className="price-before">{isAnnual ? '£79.99' : '£199.99'}</div>
-          <div className="bold price-now">{isAnnual ? '£39.99' : '£99.99'}</div>
+          <div className="price-before">{isAnnual ? '£9.99' : '£99'}</div>
+          <div className="bold price-now">{isAnnual ? '£4.99' : '£49.99'}</div>
           <div className="price-description">
-            {isAnnual ? 'Billed Annually' : 'A one-off payment'}
+            {isAnnual ? 'Billed Montly ' : 'Billed Annually'}
           </div>
 
           <div className="subsc-list">
@@ -80,9 +80,8 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
             <div><SpriteIcon name="check-icon" /> Unlimited replays of bricks in your library</div>
           </div>
 
-          <div className="btn" onClick={() => {
-            setLearner(true);
-            setOpen(true);
+          <div className="btn learner" onClick={() => {
+            history.push('/stripe-subscription/learner?isAnnual=' + (isAnnual ? 0 : 1));
           }}>Get Brillder for Learners</div>
 
           <div className="subsc-small">
@@ -91,10 +90,10 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
         </div>
         <div>
           <div className="subc-type dd-learner bold">Teacher</div>
-          <div className="price-before">{isAnnual ? '£119.99' : '£399.99'}</div>
-          <div className="bold price-now">{isAnnual ? '£59.99' : '£199.99'}</div>
+          <div className="price-before">{isAnnual ? '£12.99' : '£129.99'}</div>
+          <div className="bold price-now">{isAnnual ? '£6.49' : '£64.99'}</div>
           <div className="price-description">
-            {isAnnual ? 'Billed Annually' : 'A one-off payment'}
+            {isAnnual ? 'Billed Montly ' : 'Billed Annually'}
           </div>
 
           <div className="subsc-list">
@@ -106,9 +105,8 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
             <div><SpriteIcon name="check-icon" /> Sell your best personal bricks to us</div>
           </div>
 
-          <button className="btn learner" onClick={() => {
-            setLearner(false);
-            setOpen(true);
+          <button className="btn teacher" onClick={() => {
+            history.push('/stripe-subscription/educator?isAnnual=' + (isAnnual ? 0 : 1));
           }}>Get Brillder for Teachers</button>
 
           <div className="subsc-small">
