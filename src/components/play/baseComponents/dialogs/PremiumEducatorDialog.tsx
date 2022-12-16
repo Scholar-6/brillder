@@ -18,7 +18,7 @@ const PremiumEducatorDialog: React.FC<InvitationProps> = props => {
       className="dialog-box premium-educator-dialog bold"
     >
       <div className="flex-center premium-label">
-        Go Premium <SpriteIcon name="hero-sparkle" />
+        Subscribe <SpriteIcon name="hero-sparkle" />
         <div className="absolute-label">
           Educators
         </div>

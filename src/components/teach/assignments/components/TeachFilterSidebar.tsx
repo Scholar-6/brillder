@@ -200,7 +200,7 @@ class TeachFilterSidebar extends Component<
             {noFreeTries ? 'No Free Assignments Left!' : <span>{this.props.user && this.props.user.freeAssignmentsLeft} Free Assignment{this.props.user.freeAssignmentsLeft > 1 ? 's' : ''} Left</span>}
           </div>
           <div className="premium-btn" onClick={this.props.moveToPremium}>
-            Go Premium <SpriteIcon name="hero-sparkle" />
+            Subscribe <SpriteIcon name="hero-sparkle" />
           </div>
         </div>
       </div>

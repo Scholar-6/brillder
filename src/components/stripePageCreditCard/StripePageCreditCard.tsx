@@ -32,10 +32,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   const isLearner = props.match.params.type === 'learner';
 
-  const values = queryString.parse(props.history.location.search);
-
   const [originalPrice, setOriginalPrice] = useState(0);
-  const [originalAnnualPrice, setOriginalAnnualPrice] = useState(0);
 
   const [discount] = useState('WELCOME50');
 
@@ -56,11 +53,9 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     const stripePrices = await getPrices();
     if (stripePrices) {
       if (isLearner) {
-        setOriginalPrice(stripePrices.studentMonth / 100);
-        setOriginalAnnualPrice(stripePrices.studentYearly / 100);
+        setOriginalPrice(stripePrices.studentYearly / 100);
       } else {
-        setOriginalPrice(stripePrices.teacherMonth / 100);
-        setOriginalAnnualPrice(stripePrices.teacherYearly / 100);
+        setOriginalPrice(stripePrices.teacherYearly / 100);
       }
     }
   }
@@ -213,15 +208,6 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     return false;
   };
 
-  const renderPercentage = () => {
-    if (coupon) {
-      if (coupon.percentOff) {
-        return 'Save ' + coupon.percentOff + '%';
-      }
-    }
-    return 'Save 50%';
-  }
-
   const renderAnnualPercentage = () => {
     if (coupon && coupon.percentOff) {
       // if forever
@@ -236,26 +222,19 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       }
       return '';
     }
-    return 'Save 58%';
-  }
-
-  const renderPriceValue = () => {
-    if (coupon && coupon.percentOff) {
-      return Math.round(originalPrice * (100 - coupon.percentOff)) / 100;
-    }
-    return Math.round(originalPrice * 0.4999 * 100) / 100;
+    return 'Save 50%';
   }
 
   const renderAnnualPriceValue = () => {
     if (coupon && coupon.percentOff) {
       if (coupon.duration === "forever") {
-        return Math.round(originalAnnualPrice * Math.round(100 - coupon.percentOff)) / 100;
+        return Math.round(originalPrice * Math.round(100 - coupon.percentOff)) / 100;
       } else if (coupon.duration === "repeating" && coupon.durationInMounths && coupon.durationInMounths > 0) {
         // forumula adding percentages depands on duration (need to test)
         const percentage = 100 - coupon.percentOff;
         const finalPercentage = ((100 * (12 - coupon.durationInMounths)) + (percentage * coupon.durationInMounths)) / 12;
 
-        return Math.round(originalAnnualPrice * finalPercentage) / 100;
+        return Math.round(originalPrice * finalPercentage) / 100;
       }
     }
     if (isLearner) {

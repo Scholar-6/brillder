@@ -30,7 +30,7 @@ const LastAttemptDialog: React.FC<InvitationProps> = props => {
       </div>
       <div className="flex-center">
         <div className="premium-btn" onClick={() => props.history.push(map.ChoosePlan)}>
-          Go Premium <SpriteIcon name="hero-sparkle" />
+          Subscribe <SpriteIcon name="hero-sparkle" />
         </div>
       </div>
     </Dialog>
