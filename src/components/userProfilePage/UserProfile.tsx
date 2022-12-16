@@ -567,7 +567,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
         return (
           <div className="price btn" onClick={() => this.props.history.push(map.StripeEducator)}>
-            <div>Go Premium <SpriteIcon name="hero-sparkle" /></div>
+            <div>Subscribe <SpriteIcon name="hero-sparkle" /></div>
           </div>
         )
       }

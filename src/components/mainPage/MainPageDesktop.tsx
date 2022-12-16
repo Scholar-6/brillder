@@ -450,7 +450,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     if (renderPremiumButton === true) {
       return (
         <div className="second-item" onClick={() => this.props.history.push(map.ChoosePlan)}>
-          Go Premium <SpriteIcon name="hero-sparkle" />
+          Subscribe <SpriteIcon name="hero-sparkle" />
         </div>
       );
     }
