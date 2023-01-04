@@ -45,6 +45,7 @@ import { GetOrigin, UnsetOrigin } from "localStorage/origin";
 import UserCredits from "./UserCredits";
 import EmailDisplay from "./components/EmailDisplay";
 import EmailConfirmDialog from "./components/EmailConfirmDialog";
+import CancelSubscriptionDialog from "components/baseComponents/dialogs/CancelSubscriptionDialog";
 
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
@@ -66,6 +67,8 @@ interface UserProfileState {
   savedDialogOpen: boolean;
   emailInvalidOpen: boolean;
   passwordChangedDialog: boolean;
+
+  cancelSubscriptionDialog: boolean;
 
   previewAnimationFinished: boolean;
 
@@ -199,6 +202,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   async cancelSubscription() {
     const res = await cancelSubscription(this.state.user.id);
     if (res === true) {
+      this.setState({cancelSubscriptionDialog: false});
       this.props.getUser();
     }
   }
@@ -534,7 +538,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         return (
           <div className="current-plan">
             <span>
-              {renderLabel()} Premium Learner <SpriteIcon name="hero-sparkle" />
+              {renderLabel()} Learner Subscription <SpriteIcon name="hero-sparkle" />
             </span>
             <div className="price">{subscriptionInterval == 0 ? '£4.99 monthly' : '£49.99 annually'} </div>
           </div>
@@ -543,7 +547,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         return (
           <div className="current-plan">
             <span>
-              {renderLabel()} Premium Educator <SpriteIcon name="hero-sparkle" />
+              {renderLabel()} Educator Subscription <SpriteIcon name="hero-sparkle" />
             </span>
             <div className="price">{subscriptionInterval == 0 ? '£6.49 monthly' : '£64.99 annually'} </div>
           </div>
@@ -566,7 +570,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         }
 
         return (
-          <div className="price btn" onClick={() => this.props.history.push(map.StripeEducator)}>
+          <div className="price btn" onClick={() => this.props.history.push(map.ChoosePlan)}>
             <div>Subscribe <SpriteIcon name="hero-sparkle" /></div>
           </div>
         )
@@ -618,8 +622,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         return (
           <div className="leave-container">
             <div className="label">Thinking of leaving us?</div>
-            <a className="btn first-btn" href="mailto: support@scholar6.org"><SpriteIcon name="email" /> Tell us what would make you stay</a>
-            <div className="btn" onClick={() => this.cancelSubscription()}>Cancel Subscription</div>
+            <a className="btn first-btn" href="mailto: support@scholar6.org">
+              <SpriteIcon name="email" /> Tell us what would make you stay
+            </a>
+            <div className="btn" onClick={() => this.setState({cancelSubscriptionDialog: true})}>
+              Cancel Subscription
+            </div>
           </div>
         )
       }
@@ -726,6 +734,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             close={() => this.setState({ passwordChangedDialog: false })} />
           <ProfileIntroJs user={this.props.user} suspended={this.state.introJsSuspended} history={this.props.history} location={this.props.location} />
           {!this.state.saveDisabled && <SaveIntroJs />}
+          <CancelSubscriptionDialog
+            isOpen={this.state.cancelSubscriptionDialog}
+            submit={() => this.cancelSubscription()}
+            close={() => this.setState({cancelSubscriptionDialog: false})}
+          />
         </div>
       </React.Suspense>
     );
