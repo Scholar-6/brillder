@@ -466,7 +466,9 @@ class Library extends Component<BricksListProps, BricksListState> {
       }
     } else {
       for (let assign of this.state.finalAssignments) {
-        number += assign.numberOfAttempts;
+        if (assign.numberOfAttempts) {
+          number += assign.numberOfAttempts;
+        }
       }
     }
 
