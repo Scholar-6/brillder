@@ -74,6 +74,7 @@
     align-items: center;
     justify-content: center;
     font-size: 2.2vw;
+    margin-bottom: 1.5vh;
     svg {
       margin-left: 1vw;
       width: 3vw;
@@ -90,7 +91,7 @@
   }
 
   .bigger {
-    margin-top: 1vh;
+    text-align: center;
   }
 
   .normal {
@@ -100,6 +101,7 @@
 
   .radio-row {
     display: flex;
+    margin-top: 2.1vh;
     margin-bottom: 2vh;
     > div {
       cursor: pointer;
@@ -162,9 +164,10 @@
     }
 
     &.one-button {
-      margin-bottom: 1vh;
+      margin-bottom: 2vh;
       > div {
-        padding-left: 2.9vw;
+        background: var(--theme-dark-blue);
+        justify-content: center;
         width: 100%;
         margin-right: 0 !important;
       }
@@ -189,14 +192,14 @@
     padding: 3vh 2vw 4.5vh 2vw;
     background: var(--white);
     color: var(--theme-dark-blue);
-    font-size: 1vw;
+    font-size: 1.2vw;
 
     .field {
       display: flex;
       align-items: center;
       height: $block-height;
       padding-right: 0.4vw;
-      padding-left: 0.4vw;
+      padding-left: 1vw;
       padding-top: 0.3vw;
       padding-bottom: 0.3vw;
       border-radius: 0.4vw;
@@ -208,8 +211,8 @@
     }
 
     button {
-      border-radius: 0.3vw;
-      margin-top: 4vh;
+      border-radius: 0.8vw;
+      margin-top: 3vh;
       color: var(--white);
       outline: none;
       border: none;
@@ -223,6 +226,11 @@
       justify-content: center;
       transition: all 300ms ease-in-out;
       padding-right: 2vw;
+
+      &.teacher-button {
+        background: var(--blue);
+      }
+
       &:hover {
         background: var(--theme-dark-blue);
       }
@@ -261,6 +269,15 @@
   .small {
     margin-top: 3vh;
     font-size: 0.8vw;
+  }
+  .terms-text {
+    margin-top: 4vh;
+    font-size: 0.95vw;
+    .link-to-terms {
+      cursor: pointer;
+      font-family: $font-family-bold;
+      text-decoration: underline;
+    }
   }
 }
 
