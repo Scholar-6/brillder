@@ -9,12 +9,13 @@ import queryString from 'query-string';
 import userActions from 'redux/actions/user';
 import './StripePageCreditCard.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { User } from 'model/user';
+import { User, UserPreferenceType } from 'model/user';
 import map from 'components/map';
 import { isIPad13, isTablet } from 'react-device-detect';
 import { checkCoupon, Coupon, getPrices } from 'services/axios/stripe';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import { isPhone } from 'services/phone';
+import { setUserPreference } from 'services/axios/user';
 
 
 const TabletTheme = React.lazy(() => import('./themes/StripeTabletTheme'));
@@ -150,6 +151,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       { withCredentials: true });
 
     if (intent) {
+      const type = isLearner ? UserPreferenceType.Student : UserPreferenceType.Teacher;
+      await setUserPreference(type);
       await props.getUser();
       props.history.push(map.MainPage + '?subscribedPopup=true');
       setClicked(false);
@@ -201,6 +204,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       }
 
       if (result.paymentIntent?.status === 'succeeded') {
+        const type = isLearner ? UserPreferenceType.Student : UserPreferenceType.Teacher;
+        await setUserPreference(type);
         await props.getUser();
         props.history.push(map.MainPage + '?subscribedPopup=true');
         setClicked(false);
