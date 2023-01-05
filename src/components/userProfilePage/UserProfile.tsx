@@ -736,6 +736,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           {!this.state.saveDisabled && <SaveIntroJs />}
           <CancelSubscriptionDialog
             isOpen={this.state.cancelSubscriptionDialog}
+            history={this.props.history}
             submit={() => this.cancelSubscription()}
             close={() => this.setState({cancelSubscriptionDialog: false})}
           />

@@ -68,7 +68,6 @@ import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';
 import { GetYoutubeClick } from 'localStorage/play';
 import StripePage from 'components/stripePage/StripePage';
 import LeaderboardPage from 'components/competitions/LeaderboardPage';
-import ChoosePlan from 'components/choosePlan/ChoosePlan';
 import StripeCreditsPage from 'components/stripeCreditsPage/StripeCreditsPage';
 
 import { GetOrigin, SetOrigin } from 'localStorage/origin';

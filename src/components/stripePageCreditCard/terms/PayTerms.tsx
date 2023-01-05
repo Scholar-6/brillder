@@ -6,6 +6,8 @@ import { isIPad13, isMobile, isTablet } from 'react-device-detect';
 import userActions from 'redux/actions/user';
 import { isPhone } from "services/phone";
 import { hideZendesk } from "services/zendesk";
+import HomeButton from "components/baseComponents/homeButton/HomeButton";
+import map from "components/map";
 
 
 interface BricksListProps {
@@ -35,6 +37,7 @@ class PayTerms extends Component<BricksListProps> {
           container direction="column"
           justify="center" alignItems="center"
         >
+          <HomeButton link={map.MainPage} history={this.props.history} />
           <Grid className="user-preference-container subscribe-terms-page-container onboarding-terms" item>
             <div className="subscribe-terms-page">
               <div>
