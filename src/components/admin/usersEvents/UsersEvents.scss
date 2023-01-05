@@ -236,6 +236,45 @@
   width: 26%;
 }
 
+.user-list-page .users-table-d34 .credits-column {
+  width: 16%;
+
+  .brill-coin-img-v2 {
+    position: relative;
+    margin-left: 0.4vw;
+    margin-right: 1vw;
+    width: 2vw;
+    height: 2vw;
+    img {
+      margin: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    svg {
+      color: var(--theme-orange);
+      position: absolute;
+      top: 22.5%;
+      left: 22.5%;
+      width: 55%;
+      height: 55%;
+    }
+  }
+
+  .desktop-credit-coins {
+    width: 2vw;
+    height: 2vw;
+    svg {
+      width: 2vw;
+      height: 2vw;
+    }
+    span {
+      width: 2vw !important;
+      height: 2vw !important;
+      font-size: 1vw;
+    }
+  }
+}
+
 .user-list-page .tab-content {
   .btn.prev-button, .btn.next-button {
     color: var(--theme-dark-blue);
@@ -290,9 +329,10 @@
     }
   }
 
-  .second-column {
+  .activity-column {
     display: flex;
     align-items: center;
+    width: 10%;
   
     .attempts-count-box {
       height: 1.7vw;
