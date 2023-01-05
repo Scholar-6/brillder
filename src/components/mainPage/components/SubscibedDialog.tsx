@@ -21,13 +21,10 @@ const SubscribedDialog: React.FC<AddSubjectProps> = (props) => {
         </div>
       </div>
       <div className="dialog-header">
-        Welcome to Brillder Premium!
+        Thank you for subscribing!
       </div>
       <div className="message">
-        Thank you for supporting Brillder.
-      </div>
-      <div className="message">
-      Your contribution is a big deal to our small company.
+        Your support means a lot to our small company.
       </div>
     </Dialog>
   );

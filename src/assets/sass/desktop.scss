@@ -1721,3 +1721,35 @@
 .font1-5 {
   font-size: 1.5vw;
 }
+
+.cancel-subscription-dialog {
+  .MuiDialog-paper {
+    width: 41vw;
+
+    .close-button {
+      width: 2vw;
+      height: 2vw;
+    }
+
+    .dialog-header {
+      > div {
+        width: 100% !important;
+      }
+      .bold {
+        font-size: 2vw;
+      }
+      .light {
+        font-size: 1.35vw;
+        font-family: $font-family-light;
+      }
+      .sub-terms-link {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+    .dialog-footer {
+      padding-left: 2vw;
+      padding-right: 2vw;
+    }
+  }
+}
