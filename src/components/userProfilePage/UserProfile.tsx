@@ -15,7 +15,7 @@ import { getGeneralSubject } from 'components/services/subject';
 import { UpdateUserStatus, UserProfileField, UserRoleItem } from './model';
 import { getUserById, createUser, updateUser, saveProfileImageName } from 'services/axios/user';
 import { isValid, getUserProfile } from './service';
-import { User, UserType, UserProfile, UserPreferenceType } from "model/user";
+import { User, UserType, UserProfile, UserPreferenceType, SubscriptionState } from "model/user";
 import { Subject } from "model/brick";
 import { checkAdmin, formatTwoLastDigits } from "components/services/brickService";
 import { getSubjects } from "services/axios/subject";
@@ -524,6 +524,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const renderNextBillingDate = (nextBillingDate?: number | null) => {
       if (nextBillingDate && subscriptionState && subscriptionState > 1) {
         const date = new Date(nextBillingDate);
+
+        console.log(subscriptionState);
+
+        if (subscriptionState === SubscriptionState.Cancelled) {
+          return <span className="next-billing-date">Access until: {formatTwoLastDigits(date.getMonth() + 1)}.{formatTwoLastDigits(date.getDate())}.{date.getFullYear()}</span>
+        }
+
         return <span className="next-billing-date">Your next billing date is {formatTwoLastDigits(date.getMonth() + 1)}.{formatTwoLastDigits(date.getDate())}.{date.getFullYear()}</span>
       }
       return <span className="next-billing-date" />;
@@ -576,6 +583,16 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         )
       }
 
+      if (subscriptionState === SubscriptionState.Cancelled) {
+        return (
+          <div className="current-plan">
+            <span>
+              {renderLabel()} Subscription Cancelled
+            </span>
+          </div>
+        );
+      }
+
       return (
         <div className="current-plan">
           <span>
@@ -618,7 +635,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     const renderLeaveContainer = () => {
-      if (this.props.user.subscriptionState && this.props.user.subscriptionState >= 2) {
+      if (this.props.user.subscriptionState && this.props.user.subscriptionState >= 2 && this.state.subscriptionState !== SubscriptionState.Cancelled) {
         return (
           <div className="leave-container">
             <div className="label">Thinking of leaving us?</div>
@@ -651,7 +668,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
     const renderLibrary = () => {
       const {subscriptionState} = this.props.user;
-      if (subscriptionState && (subscriptionState === 2 || subscriptionState === 3)) {
+      if (subscriptionState && (subscriptionState === 2 || subscriptionState === 3 || subscriptionState === SubscriptionState.Cancelled)) {
         return <div />;
       }
       if (this.props.user.isFromInstitution) {
