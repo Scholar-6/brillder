@@ -27,6 +27,7 @@ import map from "components/map";
 import { getSubjects } from "services/axios/subject";
 import { Subject } from "model/brick";
 import { CDomain, PDateFilter } from "../classesEvents/ClassesSidebar";
+import BrillIcon from "components/baseComponents/BrillIcon";
 
 
 interface UsersProps {
@@ -131,7 +132,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
       let cdomains = domains.map(name => {
         return { name, checked: false }
       });
-      this.setState({domains: cdomains});
+      this.setState({ domains: cdomains });
     }
 
     this.getUsers(null, 0, [], '', 'user.created', true, this.state.dateFilter);
@@ -240,6 +241,15 @@ class UsersPage extends Component<UsersProps, UsersState> {
     return '';
   }
 
+  renderBrillCoinIcon() {
+    return (
+      <div className="brill-coin-img-v2">
+        <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
+        <SpriteIcon name="logo" />
+      </div>
+    );
+  }
+
   renderBody() {
     const { users } = this.state;
     if (users.length == 0) {
@@ -272,7 +282,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
           </div>
           <div className="second-column">{u.email}</div>
           <div className="third-column">{this.renderUserType(u)}{this.renderLibrary(u)}</div>
-          <div className="second-column">
+          <div className="activity-column">
             <div className={`attempts-count-box ${u.attempts.length > 0 ? '' : 'whiter'}`} onClick={() => {
               if (u.attempts.length > 0) {
                 this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
@@ -282,6 +292,13 @@ class UsersPage extends Component<UsersProps, UsersState> {
               <div className="count-d4421">
                 {u.attempts.length}
               </div>
+            </div>
+          </div>
+          <div className="credits-column header">
+            {u.brills} {this.renderBrillCoinIcon()}
+            <div className="desktop-credit-coins">
+              <SpriteIcon name="circle-lines" />
+              <span>{u.freeAttemptsLeft}</span>
             </div>
           </div>
           <div className="actions-column">
@@ -346,8 +363,11 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <div className="third-column header">
             <div>User Type</div>
           </div>
-          <div className="second-column header">
+          <div className="activity-column header">
             <div>Activity</div>
+          </div>
+          <div className="credits-column header">
+            <div>Brills & Credits</div>
           </div>
           <div className="actions-column header"></div>
         </div>

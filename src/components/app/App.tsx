@@ -294,7 +294,7 @@ const App: React.FC<AppProps> = props => {
 
             <StudentRoute path={map.ChoosePlan} component={LandingSubscribePage} />
             <StudentRoute path={map.ChoosePlan} component={LandingSubscribePage} />
-            <StudentRoute path={map.SubscriptionTerms} component={PayTerms} />
+            <AllUsersRoute path={map.SubscriptionTerms} component={PayTerms} />
             
             <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
             <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
