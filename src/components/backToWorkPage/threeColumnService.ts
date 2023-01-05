@@ -6,9 +6,9 @@ const prepareBrickData = (data: any[], brick: Brick, index: number, key: number,
 }
 
 export const getLongestColumn = (threeColumns: any) => {
-  const draftLength = threeColumns.red.count;
-  const reviewLength = threeColumns.yellow.count;
-  const publishLenght = threeColumns.green.count;
+  const draftLength = threeColumns.red.count || 0;
+  const reviewLength = threeColumns.yellow.count || 0;
+  const publishLenght = threeColumns.green.count || 0;
   return Math.max(draftLength, reviewLength, publishLenght);
 }
 

@@ -12,10 +12,7 @@ import { checkAdmin, checkTeacher, checkEditor } from "components/services/brick
 import { ThreeColumns, Filters } from '../../model';
 import { getBricksByStatusPerPage, searchCoreBricksByStatus } from "services/axios/brick";
 import { Notification } from 'model/notifications';
-import { hideBricks } from '../../service';
-import {
-  getThreeColumnName, getThreeColumnBrick, expandThreeColumnBrick, getLongestColumn
-} from '../../threeColumnService';
+import { getLongestColumn } from '../../threeColumnService';
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 import Tab from './Tab';

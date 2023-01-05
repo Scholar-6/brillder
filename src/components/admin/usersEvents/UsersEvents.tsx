@@ -27,7 +27,7 @@ import map from "components/map";
 import { getSubjects } from "services/axios/subject";
 import { Subject } from "model/brick";
 import { CDomain, PDateFilter } from "../classesEvents/ClassesSidebar";
-import BrillIcon from "components/baseComponents/BrillIcon";
+import AddingCreditsDialog from "./AddingCreditsDialog";
 
 
 interface UsersProps {
@@ -39,6 +39,11 @@ interface UsersProps {
   requestFailed(e: string): void;
 }
 
+interface CreditDetails {
+  isOpen: boolean;
+  userId: number;
+}
+
 interface UsersState {
   users: User[];
   page: number,
@@ -48,6 +53,8 @@ interface UsersState {
 
   selectedSubjects: Subject[];
   subjects: Subject[];
+
+  creditDetails: CreditDetails;
 
   deleteUserId: number;
   isDeleteDialogOpen: boolean;
@@ -94,6 +101,11 @@ class UsersPage extends Component<UsersProps, UsersState> {
       isAscending: true,
 
       dateFilter,
+
+      creditDetails: {
+        isOpen: false,
+        userId: -1
+      },
 
       allDomains: true,
       domains: [],
@@ -299,6 +311,16 @@ class UsersPage extends Component<UsersProps, UsersState> {
             <div className="desktop-credit-coins">
               <SpriteIcon name="circle-lines" />
               <span>{u.freeAttemptsLeft}</span>
+            </div>
+            <div className="add-credits-popup" onClick={() => {
+              this.setState({
+                creditDetails: {
+                  isOpen: true,
+                  userId: u.id
+                }
+              })
+            }}>
+              Add
             </div>
           </div>
           <div className="actions-column">
@@ -518,6 +540,20 @@ class UsersPage extends Component<UsersProps, UsersState> {
             </button>
           </div>
         </Dialog>
+        <AddingCreditsDialog isOpen={this.state.creditDetails.isOpen} userId={this.state.creditDetails.userId}
+          onClose={credits => {
+            if (credits) {
+              let user = this.state.users.find(u => u.id === this.state.creditDetails.userId);
+              if (user) {
+                user.freeAttemptsLeft += credits;
+              }
+            }
+            let creditDetails = {
+              isOpen: false,
+              userId: -1
+            } as CreditDetails;
+            this.setState({creditDetails, users: this.state.users});
+          }} />
         {this.renderClassroomPopup()}
       </div>
     );

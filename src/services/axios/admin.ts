@@ -77,3 +77,20 @@ interface UEmail {
     return [] as CDomain[];
   }
 }
+
+export interface AdminAddCredits {
+  credits: number;
+  userIds: number[];
+}
+
+export const adminAddCredits = async (data: AdminAddCredits) => {
+  try {
+    return await post<any>(`/institution/addCredits`, data);
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
+
+
+
