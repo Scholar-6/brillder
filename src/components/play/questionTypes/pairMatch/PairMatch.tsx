@@ -153,7 +153,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
     if (this.props.liveAttempt && this.props.isReview && this.props.liveAttempt.correct === true) {
       className += " correct";
+    } else {
+      className += " wrong";
     }
+
     if (this.props.isBookPreview) {
       try {
         let state = this.getBookState(answer.index);
@@ -235,6 +238,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       <ReactSortable
         list={this.state.userAnswers}
         animation={150}
+        delay={isPhone() ? 100 : 0}
         group={{ name: "cloning-group-name" }}
         className="answers-list"
         setList={(choices) => this.setUserAnswers(choices)}

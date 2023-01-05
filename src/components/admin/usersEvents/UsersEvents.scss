@@ -236,6 +236,64 @@
   width: 26%;
 }
 
+.user-list-page .users-table-d34 .credits-column {
+  width: 20%;
+
+  .brill-coin-img-v2 {
+    position: relative;
+    margin-left: 0.4vw;
+    margin-right: 0.4vw;
+    width: 2vw;
+    height: 2vw;
+    img {
+      margin: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    svg {
+      color: var(--theme-orange);
+      position: absolute;
+      top: 22.5%;
+      left: 22.5%;
+      width: 55%;
+      height: 55%;
+    }
+  }
+
+  .desktop-credit-coins {
+    width: 2vw;
+    height: 2vw;
+    cursor: pointer;
+    svg {
+      width: 2vw;
+      height: 2vw;
+    }
+    span {
+      width: 2vw !important;
+      height: 2vw !important;
+      font-size: 1vw;
+    }
+  }
+
+  .add-credits-popup {
+    padding: 0 1vw;
+    margin-right: 0.4vw;
+    margin-left: 0.4vw;
+    font-size: 1.1vw;
+    border-radius: 4vw;
+    color: white;
+    font-family: $font-family-bold;
+    background: var(--theme-green);
+    cursor: pointer;
+
+    transition: all 300ms ease-in-out;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
 .user-list-page .tab-content {
   .btn.prev-button, .btn.next-button {
     color: var(--theme-dark-blue);
@@ -290,9 +348,10 @@
     }
   }
 
-  .second-column {
+  .activity-column {
     display: flex;
     align-items: center;
+    width: 10%;
   
     .attempts-count-box {
       height: 1.7vw;
@@ -326,5 +385,13 @@
   .filter-domain {
     max-height: calc(34vh - 10vw);
     overflow-y: auto;
+  }
+}
+
+.adding-credits-dialog {
+  .input-block {
+    border-radius: 0.5vw;
+    color: var(--theme-dark-blue);
+    background: var(--tab-gray);
   }
 }

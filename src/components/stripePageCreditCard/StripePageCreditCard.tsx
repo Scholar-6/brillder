@@ -9,12 +9,13 @@ import queryString from 'query-string';
 import userActions from 'redux/actions/user';
 import './StripePageCreditCard.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { User } from 'model/user';
+import { User, UserPreferenceType } from 'model/user';
 import map from 'components/map';
 import { isIPad13, isTablet } from 'react-device-detect';
 import { checkCoupon, Coupon, getPrices } from 'services/axios/stripe';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import { isPhone } from 'services/phone';
+import { setUserPreference } from 'services/axios/user';
 
 
 const TabletTheme = React.lazy(() => import('./themes/StripeTabletTheme'));
@@ -32,10 +33,7 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
   const isLearner = props.match.params.type === 'learner';
 
-  const values = queryString.parse(props.history.location.search);
-
   const [originalPrice, setOriginalPrice] = useState(0);
-  const [originalAnnualPrice, setOriginalAnnualPrice] = useState(0);
 
   const [discount] = useState('WELCOME50');
 
@@ -56,11 +54,9 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     const stripePrices = await getPrices();
     if (stripePrices) {
       if (isLearner) {
-        setOriginalPrice(stripePrices.studentMonth / 100);
-        setOriginalAnnualPrice(stripePrices.studentYearly / 100);
+        setOriginalPrice(stripePrices.studentYearly / 100);
       } else {
-        setOriginalPrice(stripePrices.teacherMonth / 100);
-        setOriginalAnnualPrice(stripePrices.teacherYearly / 100);
+        setOriginalPrice(stripePrices.teacherYearly / 100);
       }
     }
   }
@@ -72,14 +68,13 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
 
 
   useEffect(() => {
-    var style = {
-      base: {
-        fontFamily: 'Brandon Grotesque Regular',
-        fontSize: '18px',
-      },
-    };
-
     if (elements) {
+      var style = {
+        base: {
+          fontSize: '4.5vw',
+        },
+      };
+
       const cardNumberElement = elements.create('cardNumber', {
         style,
       });
@@ -94,6 +89,11 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
         }
       });
 
+      style = {
+        base: {
+          fontSize: '10vw',
+        },
+      };
 
       const cardExpiryElement = elements.create('cardExpiry', {
         style,
@@ -151,6 +151,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       { withCredentials: true });
 
     if (intent) {
+      const type = isLearner ? UserPreferenceType.Student : UserPreferenceType.Teacher;
+      await setUserPreference(type);
       await props.getUser();
       props.history.push(map.MainPage + '?subscribedPopup=true');
       setClicked(false);
@@ -202,6 +204,8 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       }
 
       if (result.paymentIntent?.status === 'succeeded') {
+        const type = isLearner ? UserPreferenceType.Student : UserPreferenceType.Teacher;
+        await setUserPreference(type);
         await props.getUser();
         props.history.push(map.MainPage + '?subscribedPopup=true');
         setClicked(false);
@@ -212,15 +216,6 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     setClicked(false);
     return false;
   };
-
-  const renderPercentage = () => {
-    if (coupon) {
-      if (coupon.percentOff) {
-        return 'Save ' + coupon.percentOff + '%';
-      }
-    }
-    return 'Save 50%';
-  }
 
   const renderAnnualPercentage = () => {
     if (coupon && coupon.percentOff) {
@@ -236,26 +231,19 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       }
       return '';
     }
-    return 'Save 58%';
-  }
-
-  const renderPriceValue = () => {
-    if (coupon && coupon.percentOff) {
-      return Math.round(originalPrice * (100 - coupon.percentOff)) / 100;
-    }
-    return Math.round(originalPrice * 0.4999 * 100) / 100;
+    return 'Save 50%';
   }
 
   const renderAnnualPriceValue = () => {
     if (coupon && coupon.percentOff) {
       if (coupon.duration === "forever") {
-        return Math.round(originalAnnualPrice * Math.round(100 - coupon.percentOff)) / 100;
+        return Math.round(originalPrice * Math.round(100 - coupon.percentOff)) / 100;
       } else if (coupon.duration === "repeating" && coupon.durationInMounths && coupon.durationInMounths > 0) {
         // forumula adding percentages depands on duration (need to test)
         const percentage = 100 - coupon.percentOff;
         const finalPercentage = ((100 * (12 - coupon.durationInMounths)) + (percentage * coupon.durationInMounths)) / 12;
 
-        return Math.round(originalAnnualPrice * finalPercentage) / 100;
+        return Math.round(originalPrice * finalPercentage) / 100;
       }
     }
     if (isLearner) {
@@ -289,8 +277,17 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
         </button>
       );
     }
+
+    if (isLearner) {
+      return (
+        <button type="submit" disabled={!cardValid || !expireValid || !cvcValid || !stripe || clicked}>
+          Agree & Subscribe
+        </button>
+      );
+    } 
+
     return (
-      <button type="submit" disabled={!cardValid || !expireValid || !cvcValid || !stripe || clicked}>
+      <button className="teacher-button" type="submit" disabled={!cardValid || !expireValid || !cvcValid || !stripe || clicked}>
         Agree & Subscribe
       </button>
     );
@@ -301,10 +298,9 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
       return (
         <div className="radio-row one-button">
           {!isFree && !isOtherCoupon &&
-            <div className={!isMonthly ? 'active' : ''} onClick={() => setMonthly(false)}>
-              <Radio checked={!isMonthly} />
+            <div className="active">
               <span>£{renderAnnualPriceValue()}</span> <span className="label">Annually</span>
-              <div className="absolute-label" >{renderAnnualPercentage()}</div>
+              {/* <div className="absolute-label" >{renderAnnualPercentage()}</div> */}
             </div>}
         </div>
       )
@@ -338,14 +334,14 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
               handlePayment(e);
             }
           }}>
-            <div className="logo bold">Go Premium today</div>
+            <div className="logo bold">Subscribe to Brillder</div>
             {isPhone() ? <div className="bigger">
-              Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'} From just £{originalPrice}/month. Cancel anytime.
+              Join an incredible platform and {isLearner ? ' build a brilliant mind' : ' start building brilliant minds'}. For just £{renderAnnualPriceValue()}/year. Cancel anytime.
             </div> : <div>
               <div className="bigger">
-                Join an incredible platform and {isLearner ? ' build a brilliant mind.' : ' start building brilliant minds.'}
+                Join an incredible platform and {isLearner ? ' build a brilliant mind' : ' start building brilliant minds'}.
               </div>
-              {!isOtherCoupon && <div className="normal">From just £{originalPrice}/month. Cancel anytime.</div>}
+              {!isOtherCoupon && <div className="bigger">For just £{renderAnnualPriceValue()}/year. Cancel anytime.</div>}
             </div>}
             {renderGreenPricingBox()}
             {isOtherCoupon &&
@@ -354,19 +350,26 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
                 <div className="smaller"> Please check your original email offer.</div>
               </div>}
 
-            <div className={`label light ${isFree ? 'hidden' : ''}`}>Card Number</div>
+            <div className={`label ${isFree ? 'hidden' : ''}`}>Card Number</div>
             <div id="card-number-element" className={`field ${isFree ? 'hidden' : ''}`}></div>
             <div className={`two-columns ${isFree ? 'hidden' : ''}`}>
               <div>
-                <div className="label light">Expiry Date</div>
+                <div className="label">Expiry Date</div>
                 <div id="card-expiry-element" className="field" />
               </div>
               <div>
-                <div className="label light">CVC</div>
+                <div className="label">CVC</div>
                 <div id="card-cvc-element" className="field"></div>
               </div>
             </div>
-            <div className="small light">By clicking “Agree & Subscribe”, you are agreeing to start your subscription immediately, and you can withdraw from the contract and receive a refund within the first 14 days unless you have accessed Brillder content in that time. We will charge the monthly or annual fee to your stored payment method on a recurring basis. You can cancel at any time, effective at the end of the payment period.</div>
+            <div className="terms-text">
+              By clicking “Agree & Subscribe” your are agreeing to our <span className="link-to-terms" onClick={() => {
+                const a = document.createElement('a');
+                a.target = "_blank";
+                a.href = map.SubscriptionTerms;
+                a.click();
+              }}>Terms and Conditions</span>
+            </div>
             {renderSubmitButton()}
           </form>
         </div>

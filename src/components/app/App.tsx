@@ -68,7 +68,6 @@ import StartBuildingPage from 'components/build/StartBuilding/StartBuilding';
 import { GetYoutubeClick } from 'localStorage/play';
 import StripePage from 'components/stripePage/StripePage';
 import LeaderboardPage from 'components/competitions/LeaderboardPage';
-import ChoosePlan from 'components/choosePlan/ChoosePlan';
 import StripeCreditsPage from 'components/stripeCreditsPage/StripeCreditsPage';
 
 import { GetOrigin, SetOrigin } from 'localStorage/origin';
@@ -79,6 +78,7 @@ import UsersEvents from 'components/admin/usersEvents/UsersEvents';
 import ClassesEvents from 'components/admin/classesEvents/ClassesEvents';
 import AdminOverviewPage from 'components/admin/adminOverview/AdminOverviewPage';
 import LandingSubscribePage from 'components/landingSubscribePage/LandingSubscribePage';
+import PayTerms from 'components/stripePageCreditCard/terms/PayTerms';
 
 
 interface AppProps {
@@ -293,7 +293,9 @@ const App: React.FC<AppProps> = props => {
             <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 
             <StudentRoute path={map.ChoosePlan} component={LandingSubscribePage} />
-
+            <StudentRoute path={map.ChoosePlan} component={LandingSubscribePage} />
+            <AllUsersRoute path={map.SubscriptionTerms} component={PayTerms} />
+            
             <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
             <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
             <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
