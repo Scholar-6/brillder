@@ -239,6 +239,15 @@
 .user-list-page .users-table-d34 .credits-column {
   width: 20%;
 
+  &.header {
+    padding-left: 4vw;
+  }
+
+  .brills-count {
+    width: 20%;
+    text-align: right;
+  }
+
   .brill-coin-img-v2 {
     position: relative;
     margin-left: 0.4vw;
@@ -389,6 +398,9 @@
 }
 
 .adding-credits-dialog {
+  .close-button svg {
+    color: var(--theme-orange) !important;
+  }
   .input-block {
     border-radius: 0.5vw;
     color: var(--theme-dark-blue);
