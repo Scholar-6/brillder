@@ -591,11 +591,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
           />
         }
         {this.renderTeachPagination()}
-        <DeleteClassDialog
-          isOpen={this.state.deleteClassOpen}
-          submit={() => this.deleteClass()}
-          close={() => { this.setState({ deleteClassOpen: false }) }}
-        />
       </div>
     );
   }
@@ -778,6 +773,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
             close={() => this.setState({ failAssignResult: { isOpen: false, brick: null } })}
           />}
         <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => this.setState({ isPremiumDialogOpen: false })} submit={() => this.props.history.push(map.StripeEducator)} />
+        <DeleteClassDialog
+          isOpen={this.state.deleteClassOpen}
+          submit={() => this.deleteClass()}
+          close={() => { this.setState({ deleteClassOpen: false }) }}
+        />
       </div>
     );
   }

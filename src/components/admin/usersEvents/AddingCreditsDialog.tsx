@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dialog } from '@material-ui/core';
 import { adminAddCredits } from 'services/axios/admin';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface Props {
   isOpen: boolean;
@@ -12,7 +13,7 @@ const AddingCreditsDialog: React.FC<Props> = props => {
   const [credits, setCredits] = React.useState(1);
 
   const assignCredits = async () => {
-    let res = await adminAddCredits({credits, userIds: [props.userId]}); 
+    let res = await adminAddCredits({ credits, userIds: [props.userId] });
     if (res) {
       props.onClose(credits);
     } else {
@@ -24,9 +25,13 @@ const AddingCreditsDialog: React.FC<Props> = props => {
     <Dialog
       open={props.isOpen}
       onClose={() => props.onClose()}
-      className="dialog-box adding-credits-dialog">
+      className="dialog-box adding-credits-dialog"
+    >
+      <div className="close-button svgOnHover" onClick={() => props.onClose()}>
+        <SpriteIcon name="cancel-thick" className="active" />
+      </div>
       <div className="dialog-header">
-        <div>Adding credits</div>
+        <div>Add credits</div>
       </div>
       <div className="input-block">
         <input
@@ -38,12 +43,9 @@ const AddingCreditsDialog: React.FC<Props> = props => {
         />
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button"
+        <button className="btn btn-md bg-theme-green yes-button"
           onClick={() => assignCredits()}>
-          <span>Confirm</span>
-        </button>
-        <button className="btn btn-md bg-gray no-button" onClick={() => props.onClose()}>
-          <span>Cancel</span>
+          <span>Add Credits</span>
         </button>
       </div>
     </Dialog>
