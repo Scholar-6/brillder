@@ -54,10 +54,12 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
 
   shouldComponentUpdate(props: WelcomeProps) {
     if (props.notifications && props.notifications !== this.props.notifications && !this.state.animationStarted) {
+      /* not working sometimes better hide
       if (this.state.interval) {
         clearInterval(this.state.interval);
       }
       this.runAnimation(props, true);
+      */
     }
     return true;
   }
