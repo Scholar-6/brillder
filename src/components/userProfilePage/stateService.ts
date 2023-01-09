@@ -18,6 +18,7 @@ export const getNewUserState = (isAdmin: boolean) => {
     ],
     noSubjectDialogOpen: false,
     cancelSubscriptionDialog: false,
+    subscriptionExpired: false,
     savedDialogOpen: false,
     emailInvalidOpen: false,
     passwordChangedDialog: false,
@@ -85,6 +86,7 @@ export const  getExistingUserState = (user: User) => {
     passwordChangedDialog: false,
     saveDisabled: true,
 
+    subscriptionExpired: false,
     subscriptionState: user.subscriptionState,
     isFromInstitution: user.isFromInstitution,
     library: user.library,

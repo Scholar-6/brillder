@@ -74,6 +74,7 @@ interface UserProfileState {
 
   last4?: string | null; // credit card last 4 digits
   nextPaymentDate?: number | null; // dateTime() number
+  subscriptionExpired: boolean;
 
   userBrills?: number;
   userCredits?: number;
@@ -185,11 +186,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     let nextPaymentDate: number | null = null;
     let last4: string | null = null;
     const cardDetails = await getCardDetails();
+    let subscriptionExpired = false;
     if (cardDetails) {
       last4 = cardDetails.last4;
       nextPaymentDate = cardDetails.nextPaymentDate;
+      if (this.state.subscriptionState === SubscriptionState.Cancelled && nextPaymentDate === 1673082515000) {
+        subscriptionExpired = true;
+      }
     }
-    this.setState({ minimizeTimeout, nextPaymentDate, last4 });
+    this.setState({ minimizeTimeout, nextPaymentDate, last4, subscriptionExpired });
   }
 
   componentWillUnmount() {
@@ -522,10 +527,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const { subscriptionInterval } = this.props.user;
 
     const renderNextBillingDate = (nextBillingDate?: number | null) => {
+      if (this.state.subscriptionExpired && this.state.subscriptionState === SubscriptionState.Cancelled) {
+        return <div className="next-billing-date" />;
+      }
       if (nextBillingDate && subscriptionState && subscriptionState > 1) {
         const date = new Date(nextBillingDate);
-
-        console.log(subscriptionState);
 
         if (subscriptionState === SubscriptionState.Cancelled) {
           return <span className="next-billing-date">Access until: {formatTwoLastDigits(date.getMonth() + 1)}.{formatTwoLastDigits(date.getDate())}.{date.getFullYear()}</span>
@@ -584,6 +590,16 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       }
 
       if (subscriptionState === SubscriptionState.Cancelled) {
+        if (this.state.subscriptionExpired) {
+          return (
+            <div className="current-plan">
+              <span>
+                {renderLabel()} Subscription Expired
+              </span>
+              {renderPremiumButton()}
+            </div>
+          );
+        }
         return (
           <div className="current-plan">
             <span>
