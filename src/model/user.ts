@@ -24,7 +24,8 @@ export enum SubscriptionState {
   PaidTeacher,
   PaidInstitution,
   FreePass,
-  Cancelled
+  Cancelled,
+  StudentViaBrills,
 }
 
 export enum SubscriptionInterval {
