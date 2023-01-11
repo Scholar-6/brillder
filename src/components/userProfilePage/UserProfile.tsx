@@ -530,6 +530,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       if (this.state.subscriptionExpired && this.state.subscriptionState === SubscriptionState.Cancelled) {
         return <div className="next-billing-date" />;
       }
+      if (this.state.subscriptionState === SubscriptionState.StudentViaBrills) {
+        return <div className="next-billing-date" />;
+      }
+
       if (nextBillingDate && subscriptionState && subscriptionState > 1) {
         const date = new Date(nextBillingDate);
 
@@ -563,6 +567,14 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               {renderLabel()} Educator Subscription <SpriteIcon name="hero-sparkle" />
             </span>
             <div className="price">{subscriptionInterval == 0 ? '£6.49 monthly' : '£64.99 annually'} </div>
+          </div>
+        );
+      } else if (subscriptionState === SubscriptionState.StudentViaBrills) {
+        return (
+          <div className="current-plan">
+            <span>
+              {renderLabel()} Learner Subscription <SpriteIcon name="hero-sparkle" />
+            </span>
           </div>
         );
       }
@@ -685,6 +697,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const renderLibrary = () => {
       const {subscriptionState} = this.props.user;
       if (subscriptionState && (subscriptionState === 2 || subscriptionState === 3 || subscriptionState === SubscriptionState.Cancelled)) {
+        return <div />;
+      }
+      if (subscriptionState === SubscriptionState.StudentViaBrills) {
         return <div />;
       }
       if (this.props.user.isFromInstitution) {
