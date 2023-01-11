@@ -151,10 +151,12 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         }
       }
     }
-    if (this.props.liveAttempt && this.props.isReview && this.props.liveAttempt.correct === true) {
-      className += " correct";
-    } else {
-      className += " wrong";
+    if (this.props.isReview) {
+      if (this.props.liveAttempt && this.props.liveAttempt.correct === true) {
+        className += " correct";
+      } else {
+        className += " wrong";
+      }
     }
 
     if (this.props.isBookPreview) {
