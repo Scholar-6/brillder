@@ -18,12 +18,14 @@ export enum UserPreferenceType {
 }
 
 export enum SubscriptionState {
-  Free,
+  Free = 0,
   Pending,
   PaidStudent,
   PaidTeacher,
   PaidInstitution,
-  FreePass
+  FreePass,
+  Cancelled,
+  StudentViaBrills,
 }
 
 export enum SubscriptionInterval {

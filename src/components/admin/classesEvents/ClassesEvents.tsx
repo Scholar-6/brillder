@@ -249,7 +249,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       <div className="bricks-column">
         {count}
         {count > 0 && <div className="absolute-bricks-hover">
-          <div className="bold">Asigned Bricks</div>
+          <div className="bold">Assigned Bricks</div>
           <ul>
             {c.assignments?.map((a, key) =>
               <li key={key}>{stripHtml(a.brick.title)}</li>
@@ -268,8 +268,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     return (
       <div className="assigned-column">
         {latest ? <span>
-          {getFormattedDate(latest.assignedDate)}
-          <span className="underline" onClick={() => { this.props.history.push(playCover(latest.brick)) }}>
+          {getFormattedDate(latest.assignedDate)} <span className="underline" onClick={() => { this.props.history.push(playCover(latest.brick)) }}>
             {stripHtml(latest.brick.title)}
           </span>
         </span> : ''}

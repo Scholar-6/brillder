@@ -306,8 +306,9 @@ class UsersPage extends Component<UsersProps, UsersState> {
               </div>
             </div>
           </div>
-          <div className="credits-column header">
-            {u.brills} {this.renderBrillCoinIcon()}
+          <div className="credits-column">
+            <span className="brills-count">{u.brills}</span>
+            {this.renderBrillCoinIcon()}
             <div className="desktop-credit-coins">
               <SpriteIcon name="circle-lines" />
               <span>{u.freeAttemptsLeft}</span>

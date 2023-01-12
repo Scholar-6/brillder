@@ -15,7 +15,7 @@ import { getGeneralSubject } from 'components/services/subject';
 import { UpdateUserStatus, UserProfileField, UserRoleItem } from './model';
 import { getUserById, createUser, updateUser, saveProfileImageName } from 'services/axios/user';
 import { isValid, getUserProfile } from './service';
-import { User, UserType, UserProfile, UserPreferenceType } from "model/user";
+import { User, UserType, UserProfile, UserPreferenceType, SubscriptionState } from "model/user";
 import { Subject } from "model/brick";
 import { checkAdmin, formatTwoLastDigits } from "components/services/brickService";
 import { getSubjects } from "services/axios/subject";
@@ -74,6 +74,7 @@ interface UserProfileState {
 
   last4?: string | null; // credit card last 4 digits
   nextPaymentDate?: number | null; // dateTime() number
+  subscriptionExpired: boolean;
 
   userBrills?: number;
   userCredits?: number;
@@ -185,11 +186,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     let nextPaymentDate: number | null = null;
     let last4: string | null = null;
     const cardDetails = await getCardDetails();
+    let subscriptionExpired = false;
     if (cardDetails) {
       last4 = cardDetails.last4;
       nextPaymentDate = cardDetails.nextPaymentDate;
+      if (this.state.subscriptionState === SubscriptionState.Cancelled && nextPaymentDate === 1673082515000) {
+        subscriptionExpired = true;
+      }
     }
-    this.setState({ minimizeTimeout, nextPaymentDate, last4 });
+    this.setState({ minimizeTimeout, nextPaymentDate, last4, subscriptionExpired });
   }
 
   componentWillUnmount() {
@@ -522,8 +527,20 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const { subscriptionInterval } = this.props.user;
 
     const renderNextBillingDate = (nextBillingDate?: number | null) => {
+      if (this.state.subscriptionExpired && this.state.subscriptionState === SubscriptionState.Cancelled) {
+        return <div className="next-billing-date" />;
+      }
+      if (this.state.subscriptionState === SubscriptionState.StudentViaBrills) {
+        return <div className="next-billing-date" />;
+      }
+
       if (nextBillingDate && subscriptionState && subscriptionState > 1) {
         const date = new Date(nextBillingDate);
+
+        if (subscriptionState === SubscriptionState.Cancelled) {
+          return <span className="next-billing-date">Access until: {formatTwoLastDigits(date.getMonth() + 1)}.{formatTwoLastDigits(date.getDate())}.{date.getFullYear()}</span>
+        }
+
         return <span className="next-billing-date">Your next billing date is {formatTwoLastDigits(date.getMonth() + 1)}.{formatTwoLastDigits(date.getDate())}.{date.getFullYear()}</span>
       }
       return <span className="next-billing-date" />;
@@ -552,6 +569,14 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <div className="price">{subscriptionInterval == 0 ? '£6.49 monthly' : '£64.99 annually'} </div>
           </div>
         );
+      } else if (subscriptionState === SubscriptionState.StudentViaBrills) {
+        return (
+          <div className="current-plan">
+            <span>
+              {renderLabel()} Learner Subscription <SpriteIcon name="hero-sparkle" />
+            </span>
+          </div>
+        );
       }
 
       if (this.props.user.library) {
@@ -574,6 +599,26 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <div>Subscribe <SpriteIcon name="hero-sparkle" /></div>
           </div>
         )
+      }
+
+      if (subscriptionState === SubscriptionState.Cancelled) {
+        if (this.state.subscriptionExpired) {
+          return (
+            <div className="current-plan">
+              <span>
+                {renderLabel()} Subscription Expired
+              </span>
+              {renderPremiumButton()}
+            </div>
+          );
+        }
+        return (
+          <div className="current-plan">
+            <span>
+              {renderLabel()} Subscription Cancelled
+            </span>
+          </div>
+        );
       }
 
       return (
@@ -618,7 +663,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     const renderLeaveContainer = () => {
-      if (this.props.user.subscriptionState && this.props.user.subscriptionState >= 2) {
+      if (this.props.user.subscriptionState && this.props.user.subscriptionState >= 2 && this.state.subscriptionState !== SubscriptionState.Cancelled) {
         return (
           <div className="leave-container">
             <div className="label">Thinking of leaving us?</div>
@@ -651,7 +696,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
     const renderLibrary = () => {
       const {subscriptionState} = this.props.user;
-      if (subscriptionState && (subscriptionState === 2 || subscriptionState === 3)) {
+      if (subscriptionState && (subscriptionState === 2 || subscriptionState === 3 || subscriptionState === SubscriptionState.Cancelled)) {
+        return <div />;
+      }
+      if (subscriptionState === SubscriptionState.StudentViaBrills) {
         return <div />;
       }
       if (this.props.user.isFromInstitution) {
