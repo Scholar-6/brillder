@@ -464,9 +464,6 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             </div>
             <div className="teacher-column header">
               <div>Teacher</div>
-              <div>
-                {this.renderSortArrow(ACSortBy.Teacher)}
-              </div>
             </div>
             <div className="students-column header">
               <div>Students</div>
@@ -485,9 +482,6 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             </div>
             <div className="domain-column header">
               <div>Domain</div>
-              <div>
-                {this.renderSortArrow(ACSortBy.Domain)}
-              </div>
             </div>
             <div className="assigned-column header">
               <div>Recent Brick</div>
