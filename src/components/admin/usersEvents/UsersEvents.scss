@@ -360,13 +360,17 @@
   .activity-column {
     display: flex;
     align-items: center;
-    width: 10%;
+    width: 12%;
   
     .attempts-count-box {
       height: 1.7vw;
       display: flex;
       cursor: pointer;
-  
+ 
+      &.margin-left {
+        margin-left: 0.5vw;
+      }
+      
       svg {
         color: var(--theme-light-blue);
         width: 1.7vw;

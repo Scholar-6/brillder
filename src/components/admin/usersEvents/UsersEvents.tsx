@@ -272,26 +272,41 @@ class UsersPage extends Component<UsersProps, UsersState> {
       </div>;
     }
 
+    const renderteachClassroom = (u: User) => {
+      if (u.teachClassroomCount && u.teachClassroomCount > 0) {
+        return (
+          <div className="attempts-count-box margin-left" onClick={() => {
+            //this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
+          }}>
+            <SpriteIcon name="circle-teacher" />
+            <div className="count-d4421">
+              {u.teachClassroomCount}
+            </div>
+          </div>
+        );
+      }
+      return <div />;
+    }
+
+    const renderCreateBricksCount = (u: User) => {
+      if (u.createBricksCount && u.createBricksCount > 0) {
+        <div className="attempts-count-box margin-left" onClick={() => {
+          //this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
+        }}>
+          <SpriteIcon name="circle-build" />
+          <div className="count-d4421">
+            {u.createBricksCount}
+          </div>
+        </div>
+      }
+      return <div />;
+    }
+
     return <div className="table-body">
       {users.map(u => {
         return (<div className="table-row">
           <div className="publish-column">{u.created && getDateString(u.created)}</div>
           <div className="author-column">{u.firstName} {u.lastName}</div>
-          <div className="see-container" style={{ position: "relative", width: "3.5%" }}>
-            {(u.studyClassroomCount ?? 0) > 0 &&
-              <Tooltip title="See Study Classrooms">
-                <span
-                  className="btn"
-                  style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "var(--theme-green)", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-                  onClick={async () => {
-                    this.setState({ isStudentClassroomOpen: true });
-                  }}
-                >
-                  <SpriteIcon name="student-back-to-work" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
-                </span>
-              </Tooltip>
-            }
-          </div>
           <div className="second-column">{u.email}</div>
           <div className="third-column">{this.renderUserType(u)}{this.renderLibrary(u)}</div>
           <div className="activity-column">
@@ -305,6 +320,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
                 {u.attempts.length}
               </div>
             </div>
+            {renderteachClassroom(u)}
+            {renderCreateBricksCount(u)}
           </div>
           <div className="credits-column">
             <span className="brills-count">{u.brills}</span>
@@ -379,7 +396,6 @@ class UsersPage extends Component<UsersProps, UsersState> {
               this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.lastName", isAscending, this.state.dateFilter);
             }} /></div>
           </div>
-          <div style={{ width: "3.5%" }}></div>
           <div className="second-column header">
             <div>Email</div>
           </div>
@@ -553,7 +569,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               isOpen: false,
               userId: -1
             } as CreditDetails;
-            this.setState({creditDetails, users: this.state.users});
+            this.setState({ creditDetails, users: this.state.users });
           }} />
         {this.renderClassroomPopup()}
       </div>
