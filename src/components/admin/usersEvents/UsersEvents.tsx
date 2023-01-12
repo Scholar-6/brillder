@@ -290,14 +290,16 @@ class UsersPage extends Component<UsersProps, UsersState> {
 
     const renderCreateBricksCount = (u: User) => {
       if (u.createBricksCount && u.createBricksCount > 0) {
-        <div className="attempts-count-box margin-left" onClick={() => {
-          //this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
-        }}>
-          <SpriteIcon name="circle-build" />
-          <div className="count-d4421">
-            {u.createBricksCount}
+        return (
+          <div className="attempts-count-box margin-left" onClick={() => {
+            //this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
+          }}>
+            <SpriteIcon name="circle-build" />
+            <div className="count-d4421">
+              {u.createBricksCount}
+            </div>
           </div>
-        </div>
+        );
       }
       return <div />;
     }
