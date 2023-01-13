@@ -190,6 +190,27 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           if (b.author && b.author.lastName) {
             bT = b.author.lastName.toLocaleLowerCase();
           }
+
+          if (aT === bT) {
+            let aFT = '';
+            let bFT = '';
+  
+            if (a.author && a.author.firstName) {
+              aFT = a.author.firstName.toLocaleLowerCase();
+            }
+            if (b.author && b.author.firstName) {
+              bFT = b.author.firstName.toLocaleLowerCase();
+            }
+
+            if (aFT === bFT) {
+              if (a.datePublished && b.datePublished) { 
+                return a.datePublished < b.datePublished ? -1 : 1;
+              }
+            }
+
+            return aFT > bFT ? -1 : 1;
+          }
+
           return aT > bT ? -1 : 1;
         });
       }
@@ -203,6 +224,27 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         if (b.author && b.author.lastName) {
           bT = b.author.lastName.toLocaleLowerCase();
         }
+
+        if (aT === bT) {
+          let aFT = '';
+          let bFT = '';
+
+          if (a.author && a.author.firstName) {
+            aFT = a.author.firstName.toLocaleLowerCase();
+          }
+          if (b.author && b.author.firstName) {
+            bFT = b.author.firstName.toLocaleLowerCase();
+          }
+
+          if (aFT === bFT) {
+            if (a.datePublished && b.datePublished) { 
+              return a.datePublished > b.datePublished ? -1 : 1;
+            }
+          }
+
+          return aFT < bFT ? -1 : 1;
+        }
+
         return aT < bT ? -1 : 1;
       });
     } else {

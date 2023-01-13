@@ -276,7 +276,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
       if (u.teachClassroomCount && u.teachClassroomCount > 0) {
         return (
           <div className="attempts-count-box margin-left" onClick={() => {
-            //this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
+            this.props.history.push(map.TeachAssignedTab + '?teacherId=' + u.id);
           }}>
             <SpriteIcon name="circle-teacher" />
             <div className="count-d4421">
@@ -291,8 +291,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
     const renderCreateBricksCount = (u: User) => {
       if (u.createBricksCount && u.createBricksCount > 0) {
         return (
-          <div className="attempts-count-box margin-left" onClick={() => {
-            //this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
+          <div className="attempts-count-box no-hover margin-left" onClick={() => {
           }}>
             <SpriteIcon name="circle-build" />
             <div className="count-d4421">

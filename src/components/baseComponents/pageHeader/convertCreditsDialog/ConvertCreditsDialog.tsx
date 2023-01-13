@@ -64,7 +64,6 @@ const ConvertCreditsDialog: React.FC<LogoutComponentProps> = (props) => {
           </div>
           <div className="m-top-d33">Premium subscription (1 year)</div>
           <div className="f-regular">Upgrade to a premium subscription for 5,000 brills - just drop a note to hello@brillder.com</div>
-          <div className="f-regular">convert your brills for other awards</div>
           <div className="flex-center">
             <div className="btn btn-gray-de3 flex-center disabled">
               Coming Soon
