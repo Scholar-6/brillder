@@ -184,11 +184,11 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           let aT = '';
           let bT = '';
 
-          if (a.author && a.author.firstName) {
-            aT = a.author.firstName.toLocaleLowerCase();
+          if (a.author && a.author.lastName) {
+            aT = a.author.lastName.toLocaleLowerCase();
           }
-          if (b.author && b.author.firstName) {
-            bT = b.author.firstName.toLocaleLowerCase();
+          if (b.author && b.author.lastName) {
+            bT = b.author.lastName.toLocaleLowerCase();
           }
           return aT > bT ? -1 : 1;
         });
@@ -197,11 +197,11 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         let aT = '';
         let bT = '';
 
-        if (a.author && a.author.firstName) {
-          aT = a.author.firstName.toLocaleLowerCase();
+        if (a.author && a.author.lastName) {
+          aT = a.author.lastName.toLocaleLowerCase();
         }
-        if (b.author && b.author.firstName) {
-          bT = b.author.firstName.toLocaleLowerCase();
+        if (b.author && b.author.lastName) {
+          bT = b.author.lastName.toLocaleLowerCase();
         }
         return aT < bT ? -1 : 1;
       });

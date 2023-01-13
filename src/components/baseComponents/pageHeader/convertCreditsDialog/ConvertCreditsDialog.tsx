@@ -63,7 +63,7 @@ const ConvertCreditsDialog: React.FC<LogoutComponentProps> = (props) => {
             }}>6 credits for 500 brills</div>
           </div>
           <div className="m-top-d33">Premium subscription (1 year)</div>
-          <div className="f-regular">Upgrading to a premium subscription will give you 6 credits monthly, and let you</div>
+          <div className="f-regular">Upgrade to a premium subscription for 5,000 brills - just drop a note to hello@brillder.com</div>
           <div className="f-regular">convert your brills for other awards</div>
           <div className="flex-center">
             <div className="btn btn-gray-de3 flex-center disabled">
