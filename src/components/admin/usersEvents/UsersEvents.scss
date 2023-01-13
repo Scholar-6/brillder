@@ -370,6 +370,10 @@
       height: 1.7vw;
       display: flex;
       cursor: pointer;
+
+      &.no-hover {
+        cursor: initial;
+      }
  
       &.margin-left {
         margin-left: 0.5vw;
