@@ -325,9 +325,11 @@ class UsersPage extends Component<UsersProps, UsersState> {
             {renderteachClassroom(u)}
             {renderCreateBricksCount(u)}
           </div>
-          <div className="credits-column">
+          <div className="brills-column">
             <span className="brills-count">{u.brills}</span>
             {this.renderBrillCoinIcon()}
+          </div>
+          <div className="credits-column">
             <div className="desktop-credit-coins">
               <SpriteIcon name="circle-lines" />
               <span>{u.freeAttemptsLeft}</span>
@@ -407,8 +409,25 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <div className="activity-column header">
             <div>Activity</div>
           </div>
+          <div className="brills-column header">
+            <div>Brills</div>
+            <div><SpriteIcon name="sort-arrows" onClick={() => {
+              let isAscending = this.state.isAscending;
+              if (this.state.orderBy === "brillCoin.credits") {
+                isAscending = !isAscending;
+              }
+              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "brillCoin.credits", isAscending, this.state.dateFilter);
+            }} /></div>
+          </div>
           <div className="credits-column header">
-            <div>Brills & Credits</div>
+            <div>Credits</div>
+            <div><SpriteIcon name="sort-arrows" onClick={() => {
+              let isAscending = this.state.isAscending;
+              if (this.state.orderBy === "subscription.brickCredits") {
+                isAscending = !isAscending;
+              }
+              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "subscription.brickCredits", isAscending, this.state.dateFilter);
+            }} /></div>
           </div>
           <div className="actions-column header"></div>
         </div>
