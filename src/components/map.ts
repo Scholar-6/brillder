@@ -37,7 +37,7 @@ export const BackToWorkPage = '/back-to-work';
 export const BackToWorkPagePersonal = BackToWorkPage + '/personal';
 export const BackToWorkPagePublished = BackToWorkPage + '/published';
 export const backToWorkUserBased = (user: User) => 
-  `${BackToWorkPage}/${user.userPreference?.preferenceId === UserPreferenceType.Builder || isAorP(user.roles) ? '' : '/personal'}`
+  `${BackToWorkPage}${user.userPreference?.preferenceId === UserPreferenceType.Builder || isAorP(user.roles) ? '' : '/personal'}`
 
 export const Onboarding = '/onboarding';
 export const TermsSignUp = Onboarding + '/terms';

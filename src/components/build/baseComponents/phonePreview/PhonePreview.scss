@@ -250,3 +250,15 @@
     }
   }
 }
+
+
+// sound global
+.investigation-build-page .phone-question-preview .phone .mobile-question-component > div > .audio-play-component {
+  .play-wave-container {
+    height: 4vw !important;
+  }
+  .absolute-end-time,
+  .absolute-start-time {
+    top: 3vw !important;
+  }
+}
