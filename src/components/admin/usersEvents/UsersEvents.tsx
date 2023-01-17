@@ -375,6 +375,14 @@ class UsersPage extends Component<UsersProps, UsersState> {
     );
   }
 
+  orderBy(orderBy: string) {
+    let isAscending = this.state.isAscending;
+    if (this.state.orderBy === orderBy) {
+      isAscending = !isAscending;
+    }
+    this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, orderBy, isAscending, this.state.dateFilter);
+  }
+
   renderTable() {
     return (
       <div className="table users-table-d34">
@@ -382,21 +390,13 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <div className="publish-column header">
             <div>Joined</div>
             <div><SpriteIcon name="sort-arrows" onClick={() => {
-              let isAscending = this.state.isAscending;
-              if (this.state.orderBy === "user.created") {
-                isAscending = !isAscending;
-              }
-              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.created", isAscending, this.state.dateFilter);
+              this.orderBy("user.created");
             }} /></div>
           </div>
           <div className="author-column header">
             <div>Name</div>
             <div><SpriteIcon name="sort-arrows" onClick={() => {
-              let isAscending = this.state.isAscending;
-              if (this.state.orderBy === "user.lastName") {
-                isAscending = !isAscending;
-              }
-              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "user.lastName", isAscending, this.state.dateFilter);
+              this.orderBy("user.lastName");
             }} /></div>
           </div>
           <div className="second-column header">
@@ -407,25 +407,20 @@ class UsersPage extends Component<UsersProps, UsersState> {
           </div>
           <div className="activity-column header">
             <div>Activity</div>
+            <div><SpriteIcon name="sort-arrows" onClick={() => {
+              this.orderBy("activity");
+            }} /></div>
           </div>
           <div className="brills-column header">
             <div>Brills</div>
             <div><SpriteIcon name="sort-arrows" onClick={() => {
-              let isAscending = this.state.isAscending;
-              if (this.state.orderBy === "brillCoin.credits") {
-                isAscending = !isAscending;
-              }
-              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "brillCoin.credits", isAscending, this.state.dateFilter);
+              this.orderBy("brillCoin.credits");
             }} /></div>
           </div>
           <div className="credits-column header">
             <div>Credits</div>
             <div><SpriteIcon name="sort-arrows" onClick={() => {
-              let isAscending = this.state.isAscending;
-              if (this.state.orderBy === "subscription.brickCredits") {
-                isAscending = !isAscending;
-              }
-              this.getUsers(this.state.userPreference, 0, this.state.selectedSubjects, this.state.searchString, "subscription.brickCredits", isAscending, this.state.dateFilter);
+              this.orderBy("subscription.brickCredits");
             }} /></div>
           </div>
           <div className="actions-column header"></div>
