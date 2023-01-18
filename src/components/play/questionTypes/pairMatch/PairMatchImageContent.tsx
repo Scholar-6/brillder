@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { isMobile } from 'react-device-detect';
 
@@ -19,7 +19,22 @@ interface AnswerProps {
 }
 
 const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, imageSource, ...props }) => {
+  const ref = React.useRef<HTMLDivElement>(null);
   const [lastClick, setLastClick] = React.useState(0);
+
+  useEffect(() => {
+    const element = ref.current;
+
+    const preventDefaultR1 = (event: any) => {
+      event.preventDefault();
+    }
+
+    element?.addEventListener('contextmenu', preventDefaultR1);
+
+    return () => {
+      element?.removeEventListener('contextmenu', event => preventDefaultR1);
+    }
+  }, []);
 
   const onDoubleClick = () => {
     if (props.hovered) {
@@ -51,10 +66,9 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
     return (
       <div className="image-container">
         <div>
-          <div className="flex-align">
+          <div className="flex-align" ref={ref}>
             <img
               alt="" src={fileUrl(fileName)} width="100%"
-              className="unselectable"
               onClick={e => {
                 if (lastClick && e.timeStamp - lastClick < 250) {
                   setLastClick(0);
