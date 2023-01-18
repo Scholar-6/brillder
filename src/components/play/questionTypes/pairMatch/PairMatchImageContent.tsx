@@ -54,6 +54,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
           <div className="flex-align">
             <img
               alt="" src={fileUrl(fileName)} width="100%"
+              className="unselectable"
               onClick={e => {
                 if (lastClick && e.timeStamp - lastClick < 250) {
                   setLastClick(0);
@@ -75,7 +76,6 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
         <div className="flex-align">
           <img
             alt="" src={fileUrl(fileName)} width="100%"
-            className="unselectable"
             onMouseEnter={() => props.hover(fileName, imageSource)}
             onMouseLeave={props.blur}
           />
