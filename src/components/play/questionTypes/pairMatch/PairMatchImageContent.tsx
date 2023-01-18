@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { isMobile } from 'react-device-detect';
 
@@ -19,22 +19,7 @@ interface AnswerProps {
 }
 
 const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, imageSource, ...props }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
   const [lastClick, setLastClick] = React.useState(0);
-
-  useEffect(() => {
-    const element = ref.current;
-
-    const preventDefaultR1 = (event: any) => {
-      event.preventDefault();
-    }
-
-    element?.addEventListener('contextmenu', preventDefaultR1);
-
-    return () => {
-      element?.removeEventListener('contextmenu', event => preventDefaultR1);
-    }
-  }, []);
 
   const onDoubleClick = () => {
     if (props.hovered) {
@@ -47,8 +32,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
   if (isPhone()) {
     return (
       <div className="image-container">
-        <img
-          alt="" src={fileUrl(fileName)} width="100%"
+        <div className="absolute-image-hider-p3"
           onClick={e => {
             if (lastClick && e.timeStamp - lastClick < 250) {
               setLastClick(0);
@@ -58,7 +42,8 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             }
           }}
         />
-        {imageCaption && <div dangerouslySetInnerHTML={{__html: imageCaption}} />}
+        <img alt="" src={fileUrl(fileName)} width="100%" />
+        {imageCaption && <div dangerouslySetInnerHTML={{ __html: imageCaption }} />}
       </div>
     );
   }
@@ -79,7 +64,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
               }}
             />
           </div>
-          {imageCaption && <div dangerouslySetInnerHTML={{__html: imageCaption}}/>}
+          {imageCaption && <div dangerouslySetInnerHTML={{ __html: imageCaption }} />}
         </div>
       </div>
     );
@@ -94,7 +79,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             onMouseLeave={props.blur}
           />
         </div>
-        {imageCaption && <MathInHtml value={imageCaption} /> }
+        {imageCaption && <MathInHtml value={imageCaption} />}
       </div>
     </div>
   );
