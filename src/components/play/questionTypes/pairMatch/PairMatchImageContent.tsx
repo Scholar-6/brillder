@@ -75,6 +75,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
         <div className="flex-align">
           <img
             alt="" src={fileUrl(fileName)} width="100%"
+            className="unselectable"
             onMouseEnter={() => props.hover(fileName, imageSource)}
             onMouseLeave={props.blur}
           />
