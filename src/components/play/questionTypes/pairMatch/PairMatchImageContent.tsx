@@ -42,7 +42,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             }
           }}
         />
-        <img alt="" src={fileUrl(fileName)} width="100%" />
+        <img alt="" className="no-pointer-events" src={fileUrl(fileName)} width="100%" />
         {imageCaption && <div dangerouslySetInnerHTML={{ __html: imageCaption }} />}
       </div>
     );
