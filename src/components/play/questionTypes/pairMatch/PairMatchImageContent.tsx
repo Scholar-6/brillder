@@ -51,7 +51,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
     return (
       <div className="image-container">
         <div>
-          <div className="flex-align" ref={ref}>
+          <div className="flex-align">
             <img
               alt="" src={fileUrl(fileName)} width="100%"
               onClick={e => {
