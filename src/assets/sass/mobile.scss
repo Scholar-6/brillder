@@ -2348,3 +2348,7 @@
   height: 100%;
   z-index: 4;
 }
+
+.no-pointer-events {
+  pointer-events: none;
+}
