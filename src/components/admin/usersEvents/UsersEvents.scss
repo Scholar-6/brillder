@@ -105,12 +105,6 @@
       width: 12.5%;
     }
 
-    .publish-column {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 11%;
-    }
     .first-column {
       display: flex;
       align-items: center;
@@ -148,10 +142,6 @@
         width: 1.5vw;
         height: 1.5vw;
       }
-    }
-
-    .author-column {
-      width: 13%;
     }
 
     .table-row {
@@ -232,8 +222,30 @@
   }
 }
 
-.user-list-page .users-table-d34 .second-column {
-  width: 26%;
+.user-list-page .table-container {
+  width: 100%;
+  overflow-x: scroll;
+  .users-table-d34 {
+    width: 100vw;
+  }
+}
+
+.user-list-page .tab-content .users-table-d34 {
+
+  .publish-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 9%;
+    padding-right: 3% !important;
+  }
+
+  .author-column {
+    width: 13%;
+  }
+  .second-column {
+    width: 18%;
+  }
 }
 
 .user-list-page .users-table-d34 .brills-column {
@@ -310,9 +322,6 @@
 .user-list-page .tab-content {
   .btn.prev-button, .btn.next-button {
     color: var(--theme-dark-blue);
-  }
-  .author-column {
-    width: 13%;
   }
   .table-row {
     padding-top: 0;
