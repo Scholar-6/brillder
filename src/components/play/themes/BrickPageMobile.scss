@@ -2557,6 +2557,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
     .pair-match-play-choice {
       margin-left: 0.7vw;
+      max-width: 48vw !important;
       width: calc(100% - 0.7vw) !important;
       background: var(--tab-gray);
       padding-top: 2vw;
