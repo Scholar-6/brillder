@@ -93,6 +93,8 @@ export interface User extends UserBase {
   teachClassroomCount?: number;
   studyClassroomCount?: number;
   createBricksCount?: number;
+  classroomAssignmentCount?: number;
+  assignments?: any[];
 
   institution: Institution;
 
