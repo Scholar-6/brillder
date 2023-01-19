@@ -332,6 +332,32 @@ class UsersPage extends Component<UsersProps, UsersState> {
       return <div />;
     }
 
+    const renderAssignmentsCount = (u: User) => {
+      if (
+        u.userPreference && u.userPreference && u.userPreference.preferenceId === UserPreferenceType.Teacher &&
+        u.classroomAssignmentCount && u.classroomAssignmentCount > 0
+      ) {
+        return (
+          <div className="attempts-count-box no-hover margin-left" onClick={() => {}}>
+            <SpriteIcon name="circle-assignments" />
+            <div className="count-d4421">
+              {u.classroomAssignmentCount}
+            </div>
+          </div>
+        );
+      } else if (u.assignments && u.assignments.length > 0) {
+        return (
+          <div className="attempts-count-box no-hover margin-left" onClick={() => {}}>
+            <SpriteIcon name="circle-assignments" />
+            <div className="count-d4421">
+              {u.assignments.length}
+            </div>
+          </div>
+        );
+      }
+      return <div />;
+    }
+
     return <div className="table-body">
       {users.map(u => {
         return (<div className="table-row">
@@ -354,7 +380,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               })
             }}>
               <SpriteIcon name="circle-lines" />
-              <span>{u.freeAttemptsLeft > 99 ? '99+' : u.freeAssignmentsLeft}</span>
+              <span>{u.freeAttemptsLeft > 99 ? '99+' : u.freeAttemptsLeft}</span>
             </div>
           </div>
           <div className="activity-column">
@@ -370,6 +396,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             </div>
             {renderteachClassroom(u)}
             {renderCreateBricksCount(u)}
+            {renderAssignmentsCount(u)}
           </div>
           <div className="actions-column">
             <div className="round-btn blue flex-center" onClick={() => this.props.history.push(map.UserProfile + '/' + u.id)}>
