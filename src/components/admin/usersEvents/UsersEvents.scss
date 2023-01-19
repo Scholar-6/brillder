@@ -136,14 +136,6 @@
       }
     }
 
-    .third-column {
-      width: 10%;
-      svg {
-        width: 1.5vw;
-        height: 1.5vw;
-      }
-    }
-
     .table-row {
       display: flex;
       font-size: 1vw;
@@ -226,7 +218,7 @@
   width: 100%;
   overflow-x: scroll;
   .users-table-d34 {
-    width: 100vw;
+    width: 90vw;
   }
 }
 
@@ -237,20 +229,26 @@
     align-items: center;
     justify-content: center;
     width: 9%;
-    padding-right: 3% !important;
+    padding-right: 1% !important;
   }
 
   .author-column {
     width: 13%;
   }
   .second-column {
-    width: 18%;
+    width: 24%;
+  }
+  .third-column {
+    width: 8%;
+  }
+  .credits-column {
+    width: 7%;
   }
 }
 
 .user-list-page .users-table-d34 .brills-column {
   width: 9%;
-  padding-right: 3%;
+  padding-right: 1%;
 
   &.header {
     padding-left: 2.4vw;
@@ -284,12 +282,17 @@
 }
 
 .user-list-page .users-table-d34 .credits-column {
-  width: 10%;
 
   .desktop-credit-coins {
     width: 2vw;
     height: 2vw;
     cursor: pointer;
+
+    transition: all 300ms ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
+    }
     svg {
       width: 2vw;
       height: 2vw;
@@ -327,7 +330,7 @@
   .table-row {
     padding-top: 0;
     padding-bottom: 0;
-    height: 4.1vh !important;
+    height: calc(5vh - 0.2vw) !important;
     > div {
       display: flex;
       align-items: center;
@@ -344,8 +347,8 @@
       width: 3.4vh;
       height: 3.4vh;
       border-radius: 50%;
-      margin-left: 0.15vw;
-      margin-right: 0.15vw;
+      margin-left: 0.3vw;
+      margin-right: 0.3vw;
 
       transition: all 300ms ease-in-out;
 
