@@ -2525,11 +2525,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
     .pair-match-play-option {
       margin-right: 0.8vw;
-      align-items: flex-start;
       width: calc(100% - 0.7vw) !important;
       background: var(--default-hint) !important;
-
-      text-align: left !important;
       font-size: $font-size-45;
 
       .option-container > div:first-child {
@@ -2540,7 +2537,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
       p {
         font-size: $font-size-45;
-        text-align: left !important;
       }
 
       .question-hint {
@@ -2564,19 +2560,16 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       padding-bottom: 2vw;
 
       font-size: $font-size-45 !important;
-      text-align: left !important;
 
       > div {
         height: auto !important;
         padding-left: 2vw;
         padding-right: 2vw;
         border-radius: 2vw;
-        background: var(--highlight-blue);
       }
 
       p {
         font-size: $font-size-45 !important;
-        text-align: left !important;
       }
 
       &.correct {
