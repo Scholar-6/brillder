@@ -179,18 +179,31 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return !!this.props.component.list.find((a: any) => a.valueFile || a.optionFile);
   }
 
+  renderPhoneTip(haveImage: boolean) {
+    return (
+      <span className="help-text">
+        {
+          haveImage && (isMobile
+            ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
+            : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
+        } <SpriteIcon name="pair-match-phone-d3" /> <span>Drag vertically to rearrange.</span>
+      </span>
+    )
+  }
+
   renderHelpers() {
     const haveImage = this.checkImages();
 
     return (
       <p>
+        {isPhone() ? this.renderPhoneTip(haveImage) :
         <span className="help-text">
           <SpriteIcon name="pair-match-phone-d3" /><span>Drag vertically to rearrange.</span> {
             haveImage && (isMobile
               ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
               : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
           }
-        </span>
+        </span>}
         {!isPhone() && isMobile &&
           <span className="help-text">
             <SpriteIcon name="hero-cursor-click" />
