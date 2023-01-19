@@ -340,20 +340,6 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <div className="second-column">{u.email}</div>
           <div className="third-column">{this.renderUserType(u)}{this.renderLibrary(u)}</div>
           <div className="third-column">{this.renderSubscription(u)}</div>
-          <div className="activity-column">
-            <div className={`attempts-count-box ${u.attempts.length > 0 ? '' : 'whiter'}`} onClick={() => {
-              if (u.attempts.length > 0) {
-                this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
-              }
-            }}>
-              <SpriteIcon name={u.attempts.length > 0 ? "circle-progress-admin-1" : "circle-progress-admin-3"} />
-              <div className="count-d4421">
-                {u.attempts.length}
-              </div>
-            </div>
-            {renderteachClassroom(u)}
-            {renderCreateBricksCount(u)}
-          </div>
           <div className="brills-column">
             <span className="brills-count">{u.brills}</span>
             {this.renderBrillCoinIcon()}
@@ -373,6 +359,20 @@ class UsersPage extends Component<UsersProps, UsersState> {
             }}>
               Add
             </div>
+          </div>
+          <div className="activity-column">
+            <div className={`attempts-count-box ${u.attempts.length > 0 ? '' : 'whiter'}`} onClick={() => {
+              if (u.attempts.length > 0) {
+                this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
+              }
+            }}>
+              <SpriteIcon name={u.attempts.length > 0 ? "circle-progress-admin-1" : "circle-progress-admin-3"} />
+              <div className="count-d4421">
+                {u.attempts.length}
+              </div>
+            </div>
+            {renderteachClassroom(u)}
+            {renderCreateBricksCount(u)}
           </div>
           <div className="actions-column">
             <div className="round-btn blue flex-center" onClick={() => this.props.history.push(map.UserProfile + '/' + u.id)}>
@@ -439,12 +439,6 @@ class UsersPage extends Component<UsersProps, UsersState> {
             <div className="third-column header">
               <div>Subscription</div>
             </div>
-            <div className="activity-column header">
-              <div>Activity</div>
-              <div><SpriteIcon name="sort-arrows" onClick={() => {
-                this.orderBy("activity");
-              }} /></div>
-            </div>
             <div className="brills-column header">
               <div>Brills</div>
               <div><SpriteIcon name="sort-arrows" onClick={() => {
@@ -455,6 +449,12 @@ class UsersPage extends Component<UsersProps, UsersState> {
               <div>Credits</div>
               <div><SpriteIcon name="sort-arrows" onClick={() => {
                 this.orderBy("subscription.brickCredits");
+              }} /></div>
+            </div>
+            <div className="activity-column header">
+              <div>Activity</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                this.orderBy("activity");
               }} /></div>
             </div>
             <div className="actions-column header"></div>
