@@ -91,7 +91,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
     this.state = {
       users: [],
       page: 0,
-      pageSize: 14,
+      pageSize: 12,
       totalUsersCount: 0,
       userPreference: null,
       subjects: [],
@@ -345,11 +345,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             {this.renderBrillCoinIcon()}
           </div>
           <div className="credits-column">
-            <div className="desktop-credit-coins">
-              <SpriteIcon name="circle-lines" />
-              <span>{u.freeAttemptsLeft}</span>
-            </div>
-            <div className="add-credits-popup" onClick={() => {
+            <div className="desktop-credit-coins" onClick={() => {
               this.setState({
                 creditDetails: {
                   isOpen: true,
@@ -357,7 +353,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
                 }
               })
             }}>
-              Add
+              <SpriteIcon name="circle-lines" />
+              <span>{u.freeAttemptsLeft > 99 ? '99+' : u.freeAssignmentsLeft}</span>
             </div>
           </div>
           <div className="activity-column">
