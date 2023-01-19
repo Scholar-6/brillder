@@ -11,7 +11,7 @@ import actions from 'redux/actions/requestFailed';
 import { getRealLibraries, RealLibrary } from "services/axios/realLibrary";
 
 import './UsersEvents.scss';
-import { User, UserPreferenceType, UserType } from "model/user";
+import { SubscriptionState, User, UserPreferenceType, UserType } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import UsersSidebar from "./UsersEventsSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
@@ -253,6 +253,35 @@ class UsersPage extends Component<UsersProps, UsersState> {
     return '';
   }
 
+  renderSubscription(u: User) {
+    const institutionUser = u.roles.find(r => r.roleId === UserType.InstitutionUser);
+
+    if (institutionUser) {
+      return 'School';
+    }
+
+    if (u.isFromInstitution === true) {
+      return 'School Admin';
+    } else if (u.library) {
+      return 'Library';
+    } else if (u.subscriptionState === SubscriptionState.Free) {
+      return 'Free';
+    } else if (u.subscriptionState === SubscriptionState.PaidTeacher) {
+      return 'Educator';
+    } else if (u.subscriptionState === SubscriptionState.PaidStudent) {
+      return 'Learnder';
+    } else if (u.subscriptionState === SubscriptionState.Cancelled) {
+      return 'Cancelled';
+    } else if (u.subscriptionState === SubscriptionState.StudentViaBrills) {
+      return 'Brills';
+    } else if (u.subscriptionState === SubscriptionState.FreePass) {
+      return 'FreePass';
+    } else if (u.subscriptionState === SubscriptionState.Pending) {
+      return 'Pending';
+    }
+    return u.subscriptionState;
+  }
+
   renderBrillCoinIcon() {
     return (
       <div className="brill-coin-img-v2">
@@ -310,6 +339,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <div className="author-column">{u.firstName} {u.lastName}</div>
           <div className="second-column">{u.email}</div>
           <div className="third-column">{this.renderUserType(u)}{this.renderLibrary(u)}</div>
+          <div className="third-column">{this.renderSubscription(u)}</div>
           <div className="activity-column">
             <div className={`attempts-count-box ${u.attempts.length > 0 ? '' : 'whiter'}`} onClick={() => {
               if (u.attempts.length > 0) {
@@ -385,47 +415,52 @@ class UsersPage extends Component<UsersProps, UsersState> {
 
   renderTable() {
     return (
-      <div className="table users-table-d34">
-        <div className="table-head bold">
-          <div className="publish-column header">
-            <div>Joined</div>
-            <div><SpriteIcon name="sort-arrows" onClick={() => {
-              this.orderBy("user.created");
-            }} /></div>
+      <div className="table-container">
+        <div className="table users-table-d34">
+          <div className="table-head bold">
+            <div className="publish-column header">
+              <div>Joined</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                this.orderBy("user.created");
+              }} /></div>
+            </div>
+            <div className="author-column header">
+              <div>Name</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                this.orderBy("user.lastName");
+              }} /></div>
+            </div>
+            <div className="second-column header">
+              <div>Email</div>
+            </div>
+            <div className="third-column header">
+              <div>User Type</div>
+            </div>
+            <div className="third-column header">
+              <div>Subscription</div>
+            </div>
+            <div className="activity-column header">
+              <div>Activity</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                this.orderBy("activity");
+              }} /></div>
+            </div>
+            <div className="brills-column header">
+              <div>Brills</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                this.orderBy("brillCoin.credits");
+              }} /></div>
+            </div>
+            <div className="credits-column header">
+              <div>Credits</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                this.orderBy("subscription.brickCredits");
+              }} /></div>
+            </div>
+            <div className="actions-column header"></div>
           </div>
-          <div className="author-column header">
-            <div>Name</div>
-            <div><SpriteIcon name="sort-arrows" onClick={() => {
-              this.orderBy("user.lastName");
-            }} /></div>
-          </div>
-          <div className="second-column header">
-            <div>Email</div>
-          </div>
-          <div className="third-column header">
-            <div>User Type</div>
-          </div>
-          <div className="activity-column header">
-            <div>Activity</div>
-            <div><SpriteIcon name="sort-arrows" onClick={() => {
-              this.orderBy("activity");
-            }} /></div>
-          </div>
-          <div className="brills-column header">
-            <div>Brills</div>
-            <div><SpriteIcon name="sort-arrows" onClick={() => {
-              this.orderBy("brillCoin.credits");
-            }} /></div>
-          </div>
-          <div className="credits-column header">
-            <div>Credits</div>
-            <div><SpriteIcon name="sort-arrows" onClick={() => {
-              this.orderBy("subscription.brickCredits");
-            }} /></div>
-          </div>
-          <div className="actions-column header"></div>
+          {this.renderBody()}
         </div>
-        {this.renderBody()}
       </div>
     );
   }
