@@ -478,18 +478,35 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       let students = this.state.brickAttempts.map(a => a.student);
       let classrooms = this.state.assignments.map(a => a.classroom);
 
-      let max = Math.max(students.length, classrooms.length);
+      let uniqueStudents:any[] = [];
+      let uniqueClassrooms:any[] = [];
+
+      students.forEach(s => {
+        let found = uniqueStudents.find(sr => sr.id === s.id);
+        if (!found) {
+          uniqueStudents.push(s);
+        }
+      });
+
+      classrooms.forEach(s => {
+        let found = uniqueClassrooms.find(sr => sr.id === s.id);
+        if (!found) {
+          uniqueClassrooms.push(s);
+        }
+      });
+
+      let max = Math.max(uniqueStudents.length, uniqueClassrooms.length);
       
       let data = [];
 
       for (let i = 0; i < max; i++) {
         let student: any = null;
-        if (students.length > i) {
-          student = students[i];
+        if (uniqueStudents.length > i) {
+          student = uniqueStudents[i];
         }
         let classroom: any = null;
-        if (classrooms.length > i) {
-          classroom = classrooms[i];
+        if (uniqueClassrooms.length > i) {
+          classroom = uniqueClassrooms[i];
         }
 
         const renderStudent = () => {
