@@ -60,6 +60,7 @@ interface TeachState {
 
   brickIdPlayers: number;
   brickAttempts: any[];
+  assignments: any[];
 }
 
 class BricksPlayedPage extends Component<TeachProps, TeachState> {
@@ -114,7 +115,8 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       scienceSubjects: [],
 
       brickIdPlayers: -1,
-      brickAttempts: []
+      brickAttempts: [],
+      assignments: []
     }
     this.loadInitPlayedData(filters || {
       dateFilter,
@@ -194,7 +196,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           if (aT === bT) {
             let aFT = '';
             let bFT = '';
-  
+
             if (a.author && a.author.firstName) {
               aFT = a.author.firstName.toLocaleLowerCase();
             }
@@ -203,7 +205,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             }
 
             if (aFT === bFT) {
-              if (a.datePublished && b.datePublished) { 
+              if (a.datePublished && b.datePublished) {
                 return a.datePublished < b.datePublished ? -1 : 1;
               }
             }
@@ -237,7 +239,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           }
 
           if (aFT === bFT) {
-            if (a.datePublished && b.datePublished) { 
+            if (a.datePublished && b.datePublished) {
               return a.datePublished > b.datePublished ? -1 : 1;
             }
           }
@@ -472,6 +474,52 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       return <div className="subject-column"></div>
     }
 
+    const renderAttempts = () => {
+      let students = this.state.brickAttempts.map(a => a.student);
+      let classrooms = this.state.assignments.map(a => a.classroom);
+
+      let max = Math.max(students.length, classrooms.length);
+      
+      let data = [];
+
+      for (let i = 0; i < max; i++) {
+        let student: any = null;
+        if (students.length > i) {
+          student = students[i];
+        }
+        let classroom: any = null;
+        if (classrooms.length > i) {
+          classroom = classrooms[i];
+        }
+
+        const renderStudent = () => {
+          if (student) {
+            return student.firstName + ' ' + student.lastName;
+          }
+          return '';
+        }
+
+        const renderAssignment = () => {
+          if (classroom) {
+            return classroom.name;
+          }
+          return '';
+        }
+
+        data.push(<div className="userRow">
+          <div className="usernames-r431">
+            {renderStudent()}
+          </div>
+          <div className="assignment-class-321">
+            {renderAssignment()}
+          </div>
+        </div>
+        );
+      }
+
+      return data;
+    }
+
     return <div className="table-body">
       {finalBricks.map((b, i) => {
         return (<div className="table-row clickable" key={i} onClick={() => {
@@ -493,25 +541,22 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             e.stopPropagation();
             const data = await getAdminBrickStatistic(b.id);
             if (data) {
-              this.setState({ brickIdPlayers: b.id, brickAttempts: data.attempts })
+              this.setState({ brickIdPlayers: b.id, brickAttempts: data.attempts, assignments: data.assignments })
             }
           }}>
             {b.attemptsCount}
             {this.state.brickIdPlayers > 0 && this.state.brickIdPlayers === b.id &&
               <div className="players-popup-d3423">
-                <div>
-                  <SpriteIcon name="cancel-custom" className="close-btn" onClick={e => {
-                    e.stopPropagation();
-                    this.setState({ brickIdPlayers: -1, brickAttempts: [] });
-                  }} />
-                  {this.state.brickAttempts.map(a => {
-                    if (a.student) {
-                      const { student } = a;
-                      return student.firstName + ' ' + student.lastName;
-                    }
-                    return '';
-                  })}
+                <SpriteIcon name="cancel-custom" className="close-btn" onClick={e => {
+                  console.log('444');
+                  e.stopPropagation();
+                  this.setState({ brickIdPlayers: -1, brickAttempts: [] });
+                }} />
+                <div className="userRow bold">
+                  <div className="usernames-r431">User</div>
+                  <div className="assignment-class-321">Assignment</div>
                 </div>
+                {renderAttempts()}
               </div>}
           </div>
           <div className="third-column">{b.isCore ? <SpriteIcon name="globe" /> : <SpriteIcon name="key" />}</div>

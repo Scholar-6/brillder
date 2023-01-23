@@ -110,25 +110,43 @@
       position: relative;
 
       .players-popup-d3423 {
+        overflow-y: scroll;
+        max-height: 20vh;
         position: absolute;
         top: 0;
-        color: white;
-        background: var(--theme-light-blue);
+        color: var(--theme-dark-blue);
+        box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+        background: white;
         border-radius: 0.5vw;
         right: 5vw;
         z-index: 2;
-        > div {
-          padding: 0.4vw 1.3vw 0.4vw;
-          position: relative;
+        .close-btn {
+          position: absolute;
+          z-index: 5;
+          top: 0.1vw;
+          right: 0.3vw;
+          width: 1.3vw;
+          height: 1.3vw;
+          stroke-width: 3;
+          color: var(--theme-orange);
+        }
 
-          .close-btn {
-            position: absolute;
-            top: 0.1vw;
-            right: 0.3vw;
-            width: 1.3vw;
-            height: 1.3vw;
-            stroke-width: 2;
-            color: var(--theme-orange);
+        > div {
+          padding: 0.2vw 1.3vw 0.2vw;
+          position: relative;
+        }
+
+        .userRow {
+          display: flex;
+          .usernames-r431 {
+            min-width: 10vw;
+          }
+          .assignment-class-321 {
+            min-width: 12vw;
+          }
+
+          &:nth-child(odd) {
+            background: var(--tab-gray);
           }
         }
       }
