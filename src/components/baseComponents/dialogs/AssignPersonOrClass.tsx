@@ -241,7 +241,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         <div className="r-regular-center">Invite between 1 and 50 learners to your class</div>
         <div className={`r-student-emails ${(validationRequired && users.length === 0) ? 'invalid' : ''}`}>
           <AutocompleteUsernameButEmail
-            placeholder="Type or paste learner emails"
+            placeholder="Type or paste learner emails, then press Enter"
             currentEmail={currentEmail}
             users={users}
             onAddEmail={onAddUser}

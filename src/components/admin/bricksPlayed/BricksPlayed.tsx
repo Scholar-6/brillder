@@ -565,7 +565,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             {this.state.brickIdPlayers > 0 && this.state.brickIdPlayers === b.id &&
               <div className="players-popup-d3423">
                 <SpriteIcon name="cancel-custom" className="close-btn" onClick={e => {
-                  console.log('444');
                   e.stopPropagation();
                   this.setState({ brickIdPlayers: -1, brickAttempts: [] });
                 }} />

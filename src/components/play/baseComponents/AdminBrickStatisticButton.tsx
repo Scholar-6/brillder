@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Dialog } from '@material-ui/core';
 import { getAdminBrickStatistic } from 'services/axios/brick';
+import { PDateFilter } from 'components/admin/bricksPlayed/BricksPlayedSidebar';
 
 interface Props {
   brickId: number;
@@ -12,9 +13,9 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
   const [data, setData] = React.useState({} as any);
 
   const getData = async () => {
-    const data = await getAdminBrickStatistic(props.brickId);
-    if (data) {
-      setData(data);
+    const newData = await getAdminBrickStatistic(props.brickId);
+    if (newData) {
+      setData(newData);
     }
   }
 
