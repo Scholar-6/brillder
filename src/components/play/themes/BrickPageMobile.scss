@@ -409,7 +409,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     }
   }
   .f-fixed-arrow-button {
-    height: 64px;
+    height: 17.5vw;
     position: fixed;
     bottom: 0;
     right: 0;
@@ -856,7 +856,9 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             .short-answer-input {
               border-radius: 0 !important;
               background: transparent !important;
+              font-size: 10vw !important;
               p {
+                font-size: 7.5vw !important;
                 text-align: center;
               }
 
@@ -867,6 +869,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
               .ql-editor.ql-blank::before {
                 text-align: center;
+                font-size: 7.5vw !important;
               }
 
               &.correct {
