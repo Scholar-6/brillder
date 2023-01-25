@@ -416,8 +416,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           <div className="r-popup-title bold">Which class would you like to assign this brick to?</div>
           {isCreating &&
             <div className="psevdo-radio-class">
-              <div className="switch-mode">
-                <Radio checked={false} onClick={() => setCreating(false)} />
+              <div className="switch-mode" onClick={() => setCreating(false)}>
+                <Radio checked={false} />
                 An existing class
               </div>
               <div className="switch-mode">
