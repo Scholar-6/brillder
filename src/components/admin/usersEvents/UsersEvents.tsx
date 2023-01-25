@@ -389,7 +389,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
                 this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
               }
             }}>
-              <SpriteIcon name={u.attempts.length > 0 ? "circle-progress-admin-1" : "circle-progress-admin-3"} />
+              <SpriteIcon name={u.attempts.length > 0 ? "circle-progress-admin-2" : "circle-progress-admin-3"} />
               <div className="count-d4421">
                 {u.attempts.length}
               </div>
