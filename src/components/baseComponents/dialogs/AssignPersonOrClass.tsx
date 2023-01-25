@@ -64,6 +64,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (!emailRegex.test(email)) { return; }
     setCurrentEmail('');
     setUsers(users => [...users, { email } as User]);
+    setSubmit(true);
   }
 
   const success = (items: any[], failed: any[]) => {

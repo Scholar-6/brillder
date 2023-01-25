@@ -32,13 +32,6 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
       onChange={(e: any, value: UserBase[]) => {
         if (value) {
           setUsers(value);
-          if (props.isEmpty === true) {
-            props.setEmpty?.(false);
-          }
-        } else {
-          if (props.isEmpty === false) {
-            props.setEmpty?.(true);
-          }
         }
       }}
       // noOptionsText="User not found. Try to type the name of person"
@@ -67,7 +60,7 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
               props.onChange(value);
             }}
             onInput={(e: any) => {
-              if (e.target.value) {
+              if (e.target.value && e.target.value != ' ') {
                 props.setEmpty?.(false);
               } else {
                 props.setEmpty?.(true);
