@@ -7,12 +7,30 @@
 }
 
 .assign-dialog {
+  .dialog-header .spinning {
+    width: 4vw !important;
+    height: 4vw !important;
+  }
   .psevdo-radio-class {
     display: flex;
     margin-bottom: 1vh !important;
 
     svg {
       color: var(--white) !important;
+    }
+  }
+  .dialog-header .help-text-r423 {
+    font-size: 1.4vw;
+
+    .absolute-difficult-help svg {
+      width: 2vw;
+      height: 2vw;
+    }
+
+    .hover-area.custom:hover .hover-content {
+      background: white;
+      color: var(--theme-dark-blue);
+      left: -25vw;
     }
   }
   .dialog-header>div {
@@ -43,7 +61,14 @@
       margin-left: 3vw;
       margin-right: 3vw;
     }
+
+    .invalid {
+      background: rgba(196, 60, 48, 0.3) !important;
+    }
   }
+}
+.invalid {
+  background: rgba(196, 60, 48, 0.3);
 }
 
 
@@ -184,6 +209,10 @@ span.bold {
           &:hover {
             color: var(--white) !important;
             background: var(--theme-dark-blue) !important;
+
+            &.invalid {
+              background: rgba(196, 60, 48, 0.3) !important;
+            }
           }
         }
       }

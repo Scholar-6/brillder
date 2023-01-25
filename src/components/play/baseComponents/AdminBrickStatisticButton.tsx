@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Dialog } from '@material-ui/core';
 import { getAdminBrickStatistic } from 'services/axios/brick';
-import { PDateFilter } from 'components/admin/bricksPlayed/BricksPlayedSidebar';
 
 interface Props {
   brickId: number;
