@@ -30,7 +30,10 @@
     .hover-area.custom:hover .hover-content {
       background: white;
       color: var(--theme-dark-blue);
-      left: -25vw;
+      width: 22vw;
+      left: -18vw;
+      font-size: 1.3vw;
+      font-family: $font-family-regular;
     }
   }
   .dialog-header>div {

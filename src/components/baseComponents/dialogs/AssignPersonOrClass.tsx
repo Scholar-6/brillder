@@ -85,7 +85,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
   }
 
-  const validate = () => (!newClassName || users.length === 0 || canSubmit === false) ? false : true;
+  const validate = () => (!newClassName || canSubmit === false) ? false : true;
 
   const onAddUser = React.useCallback(() => {
     if (!emailRegex.test(currentEmail)) { return; }
@@ -195,6 +195,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (isSaving) { return; }
     setSaving(true);
 
+    if (isCreating && (canSubmit === false || newClassName === '')) {
+      return;
+    }
+
     if (isCreating === false) {
       const res = await assignToExistingBrick(existingClass);
 
@@ -241,7 +245,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     return (
       <div className="r-new-class">
         <div className="r-class-inputs">
-          <input value={newClassName} className={(validationRequired && !newClassName) ? 'invalid' : ''} placeholder="Class Name" onChange={e => setNewClassName(e.target.value)} />
+          <input value={newClassName} placeholder="Class Name" onChange={e => setNewClassName(e.target.value)} />
           {renderBrickLevel()}
         </div>
         <div className="r-regular-center help-text-r423 flex-center">
@@ -251,12 +255,13 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           <div className="absolute-difficult-help">
             <HoverHelp>
               <div>
-                You can visit the Manage Classes page if you want to add students later.
+                <div>You can add students later by</div>
+                <div>visiting the Manage Classes page.</div>
               </div>
             </HoverHelp>
           </div>
         </div>
-        <div className={`r-student-emails ${(validationRequired && (users.length === 0 || canSubmit === false)) ? 'invalid' : ''}`}>
+        <div className="r-student-emails">
           <AutocompleteUsernameButEmail
             placeholder="Type or paste up to 50 learner emails, then press Enter ⏎"
             currentEmail={currentEmail}
@@ -271,7 +276,6 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             setEmpty={setSubmit}
           />
         </div>
-        <InvalidDialog isOpen={isInvalidOpen} label="Please fill in the fields in red" close={() => showInvalid(false)} />
       </div>
     )
   }
@@ -346,7 +350,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     <div className="action-row custom-action-row" style={{ justifyContent: 'center' }}>
       {renderAssignLeftLabel()}
       <button
-        className={`btn btn-md bg-theme-orange yes-button icon-button r-long ${(isCreating && !canSubmit) ? 'invalid' : ''}`}
+        className={`btn btn-md bg-theme-orange yes-button icon-button r-long ${(isCreating && (newClassName === '' || !canSubmit)) ? 'invalid' : ''}`}
         onClick={assign} style={{ width: 'auto' }}
       >
         <div className="centered">
@@ -381,7 +385,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     return (
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-student-popup assign-dialog create-first-class">
         <div className="dialog-header">
-          <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
+          <div className="r-popup-title bold">Which class would you like to assign this brick to?</div>
           <div className="flex-center">
             <SpriteIcon name="f-loader" className="spinning" />
           </div>
@@ -409,7 +413,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     <div>
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box assign-student-popup light-blue assign-dialog">
         <div className="dialog-header">
-          <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
+          <div className="r-popup-title bold">Which class would you like to assign this brick to?</div>
           {isCreating &&
             <div className="psevdo-radio-class">
               <div className="switch-mode">
