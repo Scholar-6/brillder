@@ -2611,3 +2611,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 .play-preview-pages .relative-waves-container wave {
   height: 14vw;
 }
+
+.premium-educator-dialog .premium-label.smaller {
+  font-size: 5.7vw;
+}
