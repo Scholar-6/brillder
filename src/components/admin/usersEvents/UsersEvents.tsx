@@ -586,7 +586,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
                     let data: any[] = [];
 
                     const res = await getUsersV2({
-                      pageSize: 1000,
+                      pageSize: 10000,
                       page: '0',
                       searchString: this.state.searchString,
                       subjectFilters: this.state.selectedSubjects.map(s => s.id),
