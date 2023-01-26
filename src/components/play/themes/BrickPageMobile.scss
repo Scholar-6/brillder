@@ -2168,7 +2168,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       }
     }
     .introduction-content {
-      height: calc(100% - 17.5vw - 26px) !important;
+      position: fixed;
+      top: 25vw;
+      width: 100vw;
+      height: calc(100% - 17.5vw - 25vw - 26px) !important;
       .question-live-play {
         padding-bottom: 3vh;
       }
@@ -2602,4 +2605,9 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       }
     }
   }
+}
+
+// play sound waves height fix
+.play-preview-pages .relative-waves-container wave {
+  height: 14vw;
 }
