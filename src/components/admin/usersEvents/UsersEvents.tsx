@@ -582,15 +582,28 @@ class UsersPage extends Component<UsersProps, UsersState> {
                 onClose={() => this.setState({ downloadClicked: false })}
               >
                 <div className="popup-3rfw bold">
-                  <div className="btn-sort" onClick={() => {
+                  <div className="btn-sort" onClick={async () => {
                     let data: any[] = [];
 
-                    for (const user of this.state.users) {
+                    const res = await getUsersV2({
+                      pageSize: 1000,
+                      page: '0',
+                      searchString: this.state.searchString,
+                      subjectFilters: this.state.selectedSubjects.map(s => s.id),
+                      roleFilters: [],
+                      orderBy: this.state.orderBy,
+                      dateFilter: this.state.dateFilter,
+                      isAscending: false,
+                      domains: this.state.domains.filter(d => d.checked === true).map(d => d.name)
+                    });
+
+                    for (const user of res.pageData) {
                       data.push({
                         Joined: user.created?.toString(),
                         Name: user.firstName + ' ' + user.lastName,
                         Email: user.email,
-                        UserType: this.renderUserType(user)
+                        UserType: this.renderUserType(user),
+                        Activity: user.attempts.length
                       });
                     }
 
