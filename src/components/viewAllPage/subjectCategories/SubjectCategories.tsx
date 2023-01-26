@@ -3,6 +3,7 @@ import { Grid } from "@material-ui/core";
 import queryString from 'query-string';
 import "swiper/swiper.scss";
 import { isMobile } from 'react-device-detect';
+
 import { User } from "model/user";
 import { Subject, SubjectGroup } from "model/brick";
 import map from "components/map";
@@ -10,7 +11,6 @@ import SubjectCategoriesSidebar from "./SubjectCategoriesSidebar";
 import { isPhone } from "services/phone";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
-import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import MobileCategory from "../MobileCategory";
 
 interface AllSubjectsProps {
@@ -32,7 +32,6 @@ interface AllSubjectsState {
   invalidSubject: boolean;
 }
 
-const MobileTheme = React.lazy(() => import('./themes/SCategorisMobileTheme'));
 const TabletTheme = React.lazy(() => import('./themes/SCategorisTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/SCategorisDesktopTheme'));
 
