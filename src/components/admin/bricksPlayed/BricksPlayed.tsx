@@ -740,7 +740,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                         Published: this.renderDate(brick),
                         Subjects: subject?.name,
                         Title: stripHtml(brick.title),
-                        Author: brick.author.firstName + ' ' + brick.author.lastName,
+                        Author: brick.author.firstName + ' ' + brick.author.lastName + ' ' + brick.author.email,
                         Played: brick.attemptsCount,
                         'Public?': brick.isCore ? "yes" : "no",
                         Sponsor: brick.sponsorName ? brick.sponsorName : 'Scholar6',
