@@ -3,7 +3,6 @@ import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import { Tooltip } from "@material-ui/core";
 import queryString from 'query-string';
 
 import { ReduxCombinedState } from "redux/reducers";
@@ -143,6 +142,15 @@ class UsersPage extends Component<UsersProps, UsersState> {
     if (domains) {
       let cdomains = domains.map(name => {
         return { name, checked: false }
+      });
+      cdomains.sort((a, b) => {
+        if (a.name && b.name) {
+          const al = a.name.toUpperCase();
+          const bl = b.name.toUpperCase();
+          if (al < bl) { return -1; }
+          if (al > bl) { return 1; }
+        }
+        return 0;
       });
       this.setState({ domains: cdomains });
     }
