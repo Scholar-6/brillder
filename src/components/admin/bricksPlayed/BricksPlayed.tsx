@@ -553,7 +553,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           <div className="author-column" onClick={e => {
             e.stopPropagation();
             this.search(b.author.firstName.toLocaleLowerCase());
-          }}>{b.author.firstName} {b.author.lastName}</div>
+          }}>{b.author.firstName} {b.author.lastName} {b.author.email}</div>
           <div className="second-column" onClick={async (e) => {
             e.stopPropagation();
             const data = await getAdminBrickStatistic(b.id);
