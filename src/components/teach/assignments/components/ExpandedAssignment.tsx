@@ -3,7 +3,7 @@ import { Grow } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import "./ExpandedAssignment.scss";
-import { AcademicLevelLabels, Subject } from "model/brick";
+import { Subject } from "model/brick";
 import { Assignment, StudentStatus, TeachClassroom, TeachStudent } from "model/classroom";
 import { getSubjectColor } from "components/services/subject";
 

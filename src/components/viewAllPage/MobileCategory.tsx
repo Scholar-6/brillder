@@ -156,9 +156,12 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (brick.assignments) {
       for (let assignmen of brick.assignments) {
         let assignment = assignmen as any;
-        for (let student of assignment?.stats?.byStudent) {
-          if (student.studentId === this.props.user?.id) {
-            return true;
+        console.log(22, assignment);
+        if (assignment && assignment.stats) {
+          for (let student of assignment?.stats?.byStudent) {
+            if (student.studentId === this.props.user?.id) {
+              return true;
+            }
           }
         }
       }
