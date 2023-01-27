@@ -14,6 +14,9 @@ interface AutocompleteProps {
   onChange(email: string): void;
   onAddEmail(): void;
   setUsers(users: UserBase[]): void;
+
+  isEmpty?: boolean;
+  setEmpty?(empty: boolean): void;
 }
 
 const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
@@ -47,6 +50,7 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
                 if (user) {
                   return;
                 } else {
+                  props.setEmpty?.(true);
                   props.onAddEmail();
                 }
               }
@@ -54,6 +58,13 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
             onChange={(evt) => {
               const { value } = evt.target;
               props.onChange(value);
+            }}
+            onInput={(e: any) => {
+              if (e.target.value && e.target.value != ' ') {
+                props.setEmpty?.(false);
+              } else {
+                props.setEmpty?.(true);
+              }
             }}
             placeholder={props.placeholder ? props.placeholder : "Enter or Paste up to 50 emails here."}
             variant="outlined"

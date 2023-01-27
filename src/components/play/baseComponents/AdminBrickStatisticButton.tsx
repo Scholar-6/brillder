@@ -12,9 +12,9 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
   const [data, setData] = React.useState({} as any);
 
   const getData = async () => {
-    const data = await getAdminBrickStatistic(props.brickId);
-    if (data) {
-      setData(data);
+    const newData = await getAdminBrickStatistic(props.brickId);
+    if (newData) {
+      setData(newData);
     }
   }
 

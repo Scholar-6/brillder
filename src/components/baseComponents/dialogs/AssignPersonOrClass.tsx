@@ -11,7 +11,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import actions from 'redux/actions/requestFailed';
 import { User } from 'model/user';
 import { Classroom } from 'model/classroom';
-import { AcademicLevelLabels, Brick, Subject } from 'model/brick';
+import { AcademicLevelLabels, Brick } from 'model/brick';
 import { assignToClassByEmails, getClassrooms } from 'services/axios/classroom';
 import SpriteIcon from '../SpriteIcon';
 import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
@@ -21,6 +21,7 @@ import { createClass } from 'components/teach/service';
 import map from 'components/map';
 import InvalidDialog from 'components/build/baseComponents/dialogs/InvalidDialog';
 import ValidationFailedDialog from './ValidationFailedDialog';
+import HoverHelp from '../hoverHelp/HoverHelp';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
@@ -35,6 +36,7 @@ interface AssignPersonOrClassProps {
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [alreadyAssigned, setAssigned] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(true);
   const [isSaving, setSaving] = React.useState(false);
   const [value] = React.useState("");
   const [existingClass, setExistingClass] = React.useState(null as any);
@@ -44,6 +46,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [haveDeadline, toggleDeadline] = React.useState(false);
   const [newClassName, setNewClassName] = React.useState('');
   const [isNewTeacher, setNewTeacher] = React.useState(false);
+
+  const [canSubmit, setSubmit] = React.useState(true);
 
   // validation
   const [validationRequired, setValidation] = React.useState(false);
@@ -60,6 +64,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (!emailRegex.test(email)) { return; }
     setCurrentEmail('');
     setUsers(users => [...users, { email } as User]);
+    setSubmit(true);
   }
 
   const success = (items: any[], failed: any[]) => {
@@ -80,7 +85,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
   }
 
-  const validate = () => (!newClassName || users.length === 0) ? false : true;
+  const validate = () => (!newClassName || canSubmit === false) ? false : true;
 
   const onAddUser = React.useCallback(() => {
     if (!emailRegex.test(currentEmail)) { return; }
@@ -158,6 +163,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
 
     setClasses(classrooms);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -188,6 +194,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     // prevent from double click
     if (isSaving) { return; }
     setSaving(true);
+
+    if (isCreating && (canSubmit === false || newClassName === '')) {
+      return;
+    }
 
     if (isCreating === false) {
       const res = await assignToExistingBrick(existingClass);
@@ -235,13 +245,25 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     return (
       <div className="r-new-class">
         <div className="r-class-inputs">
-          <input value={newClassName} className={(validationRequired && !newClassName) ? 'invalid' : ''} placeholder="Class Name" onChange={e => setNewClassName(e.target.value)} />
+          <input value={newClassName} placeholder="Class Name" onChange={e => setNewClassName(e.target.value)} />
           {renderBrickLevel()}
         </div>
-        <div className="r-regular-center">Invite between 1 and 50 learners to your class</div>
-        <div className={`r-student-emails ${(validationRequired && users.length === 0) ? 'invalid' : ''}`}>
+        <div className="r-regular-center help-text-r423 flex-center">
+          <div>
+            Invite your students below. Or, leave blank to add the brick and invite students later
+          </div>
+          <div className="absolute-difficult-help">
+            <HoverHelp>
+              <div>
+                <div>You can add students later by</div>
+                <div>visiting the Manage Classes page.</div>
+              </div>
+            </HoverHelp>
+          </div>
+        </div>
+        <div className="r-student-emails">
           <AutocompleteUsernameButEmail
-            placeholder="Type or paste learner emails"
+            placeholder="Type or paste up to 50 learner emails, then press Enter ⏎"
             currentEmail={currentEmail}
             users={users}
             onAddEmail={onAddUser}
@@ -250,9 +272,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
               setCurrentEmail('');
               setUsers(users as User[]);
             }}
+            isEmpty={canSubmit}
+            setEmpty={setSubmit}
           />
         </div>
-        <InvalidDialog isOpen={isInvalidOpen} label="Please fill in the fields in red" close={() => showInvalid(false)} />
       </div>
     )
   }
@@ -315,7 +338,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     if (user?.subscriptionState === 0 || user?.isFromInstitution || user?.library) {
       return <div />
     }
-    
+
     return (
       <div className="premium-btn flex-center" onClick={() => props.history.push(map.StripeEducator)}>
         Subscribe <SpriteIcon name="hero-sparkle" />
@@ -327,7 +350,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     <div className="action-row custom-action-row" style={{ justifyContent: 'center' }}>
       {renderAssignLeftLabel()}
       <button
-        className="btn btn-md bg-theme-orange yes-button icon-button r-long"
+        className={`btn btn-md bg-theme-orange yes-button icon-button r-long ${(isCreating && (newClassName === '' || !canSubmit)) ? 'invalid' : ''}`}
         onClick={assign} style={{ width: 'auto' }}
       >
         <div className="centered">
@@ -358,6 +381,19 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     </div>
   );
 
+  if (isLoading) {
+    return (
+      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-student-popup assign-dialog create-first-class">
+        <div className="dialog-header">
+          <div className="r-popup-title bold">Which class would you like to assign this brick to?</div>
+          <div className="flex-center">
+            <SpriteIcon name="f-loader" className="spinning" />
+          </div>
+        </div>
+      </Dialog>
+    );
+  }
+
   if (classes.length === 0) {
     return (
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-student-popup assign-dialog create-first-class">
@@ -377,11 +413,11 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     <div>
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box assign-student-popup light-blue assign-dialog">
         <div className="dialog-header">
-          <div className="r-popup-title bold">Who would you like to assign this brick to?</div>
+          <div className="r-popup-title bold">Which class would you like to assign this brick to?</div>
           {isCreating &&
             <div className="psevdo-radio-class">
-              <div className="switch-mode">
-                <Radio checked={false} onClick={() => setCreating(false)} />
+              <div className="switch-mode" onClick={() => setCreating(false)}>
+                <Radio checked={false} />
                 An existing class
               </div>
               <div className="switch-mode">

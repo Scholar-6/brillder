@@ -553,7 +553,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           <div className="author-column" onClick={e => {
             e.stopPropagation();
             this.search(b.author.firstName.toLocaleLowerCase());
-          }}>{b.author.firstName} {b.author.lastName}</div>
+          }}>{b.author.firstName} {b.author.lastName} {b.author.email}</div>
           <div className="second-column" onClick={async (e) => {
             e.stopPropagation();
             const data = await getAdminBrickStatistic(b.id);
@@ -565,7 +565,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             {this.state.brickIdPlayers > 0 && this.state.brickIdPlayers === b.id &&
               <div className="players-popup-d3423">
                 <SpriteIcon name="cancel-custom" className="close-btn" onClick={e => {
-                  console.log('444');
                   e.stopPropagation();
                   this.setState({ brickIdPlayers: -1, brickAttempts: [] });
                 }} />
@@ -741,7 +740,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
                         Published: this.renderDate(brick),
                         Subjects: subject?.name,
                         Title: stripHtml(brick.title),
-                        Author: brick.author.firstName + ' ' + brick.author.lastName,
+                        Author: brick.author.firstName + ' ' + brick.author.lastName + ' ' + brick.author.email,
                         Played: brick.attemptsCount,
                         'Public?': brick.isCore ? "yes" : "no",
                         Sponsor: brick.sponsorName ? brick.sponsorName : 'Scholar6',

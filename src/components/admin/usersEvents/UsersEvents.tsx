@@ -3,7 +3,6 @@ import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import { Tooltip } from "@material-ui/core";
 import queryString from 'query-string';
 
 import { ReduxCombinedState } from "redux/reducers";
@@ -143,6 +142,15 @@ class UsersPage extends Component<UsersProps, UsersState> {
     if (domains) {
       let cdomains = domains.map(name => {
         return { name, checked: false }
+      });
+      cdomains.sort((a, b) => {
+        if (a.name && b.name) {
+          const al = a.name.toUpperCase();
+          const bl = b.name.toUpperCase();
+          if (al < bl) { return -1; }
+          if (al > bl) { return 1; }
+        }
+        return 0;
       });
       this.setState({ domains: cdomains });
     }
@@ -389,7 +397,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
                 this.props.history.push({ pathname: map.MyLibrary + '/' + u.id })
               }
             }}>
-              <SpriteIcon name={u.attempts.length > 0 ? "circle-progress-admin-1" : "circle-progress-admin-3"} />
+              <SpriteIcon name={u.attempts.length > 0 ? "circle-progress-admin-2" : "circle-progress-admin-3"} />
               <div className="count-d4421">
                 {u.attempts.length}
               </div>
@@ -574,15 +582,28 @@ class UsersPage extends Component<UsersProps, UsersState> {
                 onClose={() => this.setState({ downloadClicked: false })}
               >
                 <div className="popup-3rfw bold">
-                  <div className="btn-sort" onClick={() => {
+                  <div className="btn-sort" onClick={async () => {
                     let data: any[] = [];
 
-                    for (const user of this.state.users) {
+                    const res = await getUsersV2({
+                      pageSize: 10000,
+                      page: '0',
+                      searchString: this.state.searchString,
+                      subjectFilters: this.state.selectedSubjects.map(s => s.id),
+                      roleFilters: [],
+                      orderBy: this.state.orderBy,
+                      dateFilter: this.state.dateFilter,
+                      isAscending: false,
+                      domains: this.state.domains.filter(d => d.checked === true).map(d => d.name)
+                    });
+
+                    for (const user of res.pageData) {
                       data.push({
                         Joined: user.created?.toString(),
                         Name: user.firstName + ' ' + user.lastName,
                         Email: user.email,
-                        UserType: this.renderUserType(user)
+                        UserType: this.renderUserType(user),
+                        Activity: user.attempts.length
                       });
                     }
 

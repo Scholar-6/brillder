@@ -128,7 +128,17 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
             : <SpriteIcon name="f-more-vertical" className="gt-smaller" onClick={() => setMenu(true)} />
           : <SpriteIcon name="" />
         }
-        {props.isCover ? canSee ? <GenerateCoverButton brick={brick} isSvg={true} /> : <svg /> : <SpriteIcon name="arrow-right" onClick={props.next} />}
+        <svg/>
+        <svg/>
+        {props.isCover ? canSee ? <GenerateCoverButton brick={brick} isSvg={true} /> : <svg /> :
+          <div
+            className="f-fixed-arrow-button"
+            onClick={props.next}
+          >
+            Next
+            <SpriteIcon name="arrow-right" className="text-white" />
+          </div>
+        }
       </div>
     );
   }
