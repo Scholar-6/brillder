@@ -66,7 +66,7 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
                 props.setEmpty?.(true);
               }
             }}
-            placeholder={props.placeholder ? props.placeholder : "Enter or Paste up to 50 emails here."}
+            placeholder={props.placeholder ? props.placeholder : "Type or paste up to 50 learner emails, then press Enter ⏎"}
             variant="outlined"
           />
         );
