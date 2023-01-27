@@ -414,7 +414,6 @@ const LivePage: React.FC<LivePageProps> = ({
             </div>
             <div className="introduction-content" ref={questionScrollRef}>
               {questions.map(renderQuestionContainer)}
-              {renderMobileButtons()}
               <div className="time-container">
                 <TimeProgressbar
                   isLive={true}
@@ -425,6 +424,7 @@ const LivePage: React.FC<LivePageProps> = ({
                 />
               </div>
             </div>
+            {renderMobileButtons()}
           </div>
         </div>
         {renderDialogs()}
