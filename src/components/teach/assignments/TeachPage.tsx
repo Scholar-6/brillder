@@ -39,7 +39,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getArchivedAssignedCount } from "./service/service";
 import PremiumEducatorDialog from "components/play/baseComponents/dialogs/PremiumEducatorDialog";
 import DeleteClassDialog from "../manageClassrooms/components/DeleteClassDialog";
-import { archiveClassroom, deleteClassroom, unarchiveClassroom } from "services/axios/classroom";
+import { archiveClassroom, assignToClassByEmails, deleteClassroom, unarchiveClassroom } from "services/axios/classroom";
 import EmptyClassTab from "./components/EmptyClassTab";
 import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
@@ -436,9 +436,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
-  async createClass(name: string) {
+  async createClass(name: string, users: User[]) {
     const newClassroom = await createClass(name);
     if (newClassroom) {
+      if (users && users.length > 0) {
+        await assignToClassByEmails(newClassroom, users.map(u => u.email));
+      }
       await this.loadClasses(newClassroom.id);
     }
   }
@@ -728,8 +731,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
         />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
-          submit={name => {
-            this.createClass(name);
+          submit={(name, users) => {
+            this.createClass(name, users);
             this.setState({ createClassOpen: false })
           }}
           close={() => { this.setState({ createClassOpen: false }) }}
