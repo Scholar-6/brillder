@@ -43,6 +43,46 @@
 
 // only create class popup
 .create-classroom-dialog {
+  .MuiPaper-root {
+    padding: 0 !important;
+  }
+  .dialog-header {
+    padding: 3vh 3vw 4vh 3vw;
+    width: 55vw;
+
+    font-size: 1.4vw !important;
+
+    .r-class-inputs input {
+      border-radius: 1vw !important;
+      width: 100% !important;
+    }
+
+    > div {
+      width: 100% !important;
+      margin-bottom: 0 !important;
+    }
+
+    .r-regular-center {
+      margin-top: 2vh !important;
+      margin-bottom: 2vh !important;
+    }
+  }
+
+  .dialog-footer {
+    background: white;
+    padding: 2vh 17vw 2vh 17vw;
+    
+
+    .invalid {
+      opacity: 0.7 !important;
+    }
+  }
+
+  .regular {
+    margin-bottom: 0 !important;
+    padding-bottom: 1vw;
+  }
+
   .dialog-select-container {
     .MuiInputBase-root {
       border-radius: 0.5vw;

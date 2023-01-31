@@ -140,6 +140,12 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const handleStep = (step: number) => () => {
     setActiveAnswer();
+
+    const { current } = questionScrollRef;
+    if (current) {
+      current.scrollTo({ top: 0 });
+    }
+
     setTimeout(() => {
       setPrevStep(activeStep);
       setActiveStep(step);

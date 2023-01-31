@@ -19,7 +19,6 @@ import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
 import { createClass } from 'components/teach/service';
 import map from 'components/map';
-import InvalidDialog from 'components/build/baseComponents/dialogs/InvalidDialog';
 import ValidationFailedDialog from './ValidationFailedDialog';
 import HoverHelp from '../hoverHelp/HoverHelp';
 
@@ -48,10 +47,6 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [isNewTeacher, setNewTeacher] = React.useState(false);
 
   const [canSubmit, setSubmit] = React.useState(true);
-
-  // validation
-  const [validationRequired, setValidation] = React.useState(false);
-  const [isInvalidOpen, showInvalid] = React.useState(false);
 
   //#region New Class
   const [currentEmail, setCurrentEmail] = React.useState("");
@@ -99,8 +94,6 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       // validation
       const isValid = validate();
       if (isValid === false) {
-        setValidation(true);
-        showInvalid(true);
         return;
       }
 

@@ -8,7 +8,7 @@ import '../style.scss';
 
 import { User } from "model/user";
 import { MUser, TeachActiveTab } from "../model";
-import { deleteClassroom, getClassInvitations, getStudents, resendInvitation, updateClassroom } from 'services/axios/classroom';
+import { assignToClassByEmails, deleteClassroom, getClassInvitations, getStudents, resendInvitation, updateClassroom } from 'services/axios/classroom';
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import {
@@ -227,14 +227,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         })
       }
 
-      console.log('get classrooms', classrooms)
-
       this.prepareClassrooms(classrooms);
       classrooms = classrooms.sort((a: any, b: any) => b.students.length - a.students.length);
-      this.setState({
-        classrooms,
-        activeClassroom: this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null
-      });
+      let activeClassroom = this.state.activeClassroom ? classrooms.find(c => c.id === this.state.activeClassroom!.id) ?? null : null;
+      if (activeClassroom) {
+        activeClassroom.isActive = true;
+      }
+      this.setState({ classrooms, activeClassroom });
       return classrooms;
     } else {
       console.log('geting classrooms failed');
@@ -242,13 +241,20 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
   }
 
-  createClass(name: string) {
-    createClass(name).then(newClassroom => {
+  createClass(name: string, users: User[]) {
+    createClass(name).then(async (newClassroom) => {
       if (newClassroom) {
         this.unselectionClasses();
         this.state.classrooms.push(newClassroom);
         newClassroom.isActive = true;
         this.setState({ ...this.state, activeClassroom: newClassroom });
+
+        // getting classrooms with students.
+        // need to make request to get one classroom with students by id
+        if (users && users.length > 0) {
+          await assignToClassByEmails(newClassroom, users.map(u => u.email));
+          this.getClassrooms();
+        }
       } else {
         // creation failed
       }
@@ -845,8 +851,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         />
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
-          submit={(name) => {
-            this.createClass(name);
+          submit={(name, users) => {
+            this.createClass(name, users);
             this.setState({ createClassOpen: false })
           }}
           close={() => { this.setState({ createClassOpen: false }) }}

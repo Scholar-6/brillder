@@ -2609,7 +2609,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
 // play sound waves height fix
 .play-preview-pages .relative-waves-container wave {
-  height: 14vw;
+  height: 12vw !important;
 }
 
 .premium-educator-dialog .premium-label.smaller {
