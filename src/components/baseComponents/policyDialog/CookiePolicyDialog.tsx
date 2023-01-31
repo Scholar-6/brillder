@@ -21,7 +21,7 @@ const CookiePolicyDialog: React.FC<PolicyDialogProps> = (props) => {
       <div className="private-policy-content">
         <h1 className="private-policy-title">Cookies will be enabled</h1>
         <p>
-          If we had a market stall we would ask you where you are from and where you are going. We don’t have a market stall, so we are asking if we can put some cookies in your browser that track how you found us and if you decide to come back. If you accept, then change your mind, you can disable cookies using the options menu at the bottom of the screen. If you want all records of your visit to be deleted, you can send us a message at <a href = "mailto: support@scholar6.org">support@scholar6.org</a> or click the question mark also in the bottom left.
+          Brillder uses cookies only to facilitate your user experience, primarily to keep track of your account settings and progress, and to help us understand how people use brillder.com. Please click Keep Exploring to consent to storing cookies from Brillder. If you change your mind in the future, you can remove cookies using the options menu at the bottom of the screen, or send us a message us a message at <a href = "mailto: hello@scholar6.org">hello@scholar6.org</a> and we will remove all records of your visit.
         </p>
       </div>
       <div className="dialog-footer">
@@ -35,9 +35,9 @@ const CookiePolicyDialog: React.FC<PolicyDialogProps> = (props) => {
     return (
       <Dialog open={props.isOpen} className="dialog-box privacy-policy-dialog cookie-policy-dialog">
       <div className="private-policy-content">
-        <h1 className="private-policy-title">Cookies have been disabled</h1>
+        <h1 className="private-policy-title">Cookies Have Been Deleted</h1>
         <p>
-          Your cookies have been incinerated. We will no longer remember you. If you want all records of your previous visits to be deleted, you can send us a message at <a href = "mailto: support@scholar6.org">support@scholar6.org</a>. If you want to keep exploring we will need to give you some more cookies ...
+          Your activity will no longer be tracked, though if you want to keep exploring you will need to consent to storing cookies again.
         </p>
       </div>
       <div className="dialog-footer">
