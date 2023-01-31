@@ -426,10 +426,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     if (b.datePublished) {
       return getDateString(b.datePublished);
     }
-    if (b.created) {
-      return getDateString(b.created);
-    }
-    return '';
+    return getDateString("2022-01-01");
   }
 
   renderUpdatedDate(b: Brick) {
