@@ -78,7 +78,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       if (!props.user) {
         setUnauthorizedV2(true);
       }
-    }, 10000);
+    }, 20000);
     
 
     document.addEventListener("keydown", handleMove, false);
