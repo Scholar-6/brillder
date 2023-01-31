@@ -216,15 +216,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                     </HoverHelp>
                   </div>
                 </div>
-                {/*
-                <div className="audience-inputs">
-                  <KeyWordsComponent disabled={!canEdit} keyWords={parentState.keywords} onChange={this.props.setKeywords.bind(this)} />
-                  <div className="absolute-keyword-help">
-                    <HoverHelp>
-                      Keywords are best thought of as likely search terms, and are ultimately curated by Publishers for each subject. For multi-word keywords, separate words with a hyphen, eg. ‘19th-Century’.
-                    </HoverHelp>
-                  </div>
-                </div> */}
                 <div className="audience-inputs">
                   <DifficultySelect disabled={!canEdit} level={parentState.academicLevel} onChange={this.props.setAcademicLevel.bind(this)} />
                   <div className="absolute-difficult-help">
