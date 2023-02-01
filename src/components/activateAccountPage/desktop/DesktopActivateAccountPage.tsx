@@ -7,9 +7,8 @@ import 'components/loginPage/desktop/loginDesktopPage/LoginDesktopPage.scss';
 import TermsLink from "components/baseComponents/TermsLink"
 import TypingLabel from "components/baseComponents/TypingLabel";
 import EmailActivateDesktopPage from "./EmailActivateDesktopPage";
-import { ActivateAccount, ActivateAccountEmail } from "components/loginPage/desktop/routes";
+import { ActivateAccount } from "components/loginPage/desktop/routes";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog"; // TODO: Reuse this for the cookie Popup
-import ActivateDesktopPage from "./ActivateDesktopPage";
 
 export enum LoginPage {
   Default,
