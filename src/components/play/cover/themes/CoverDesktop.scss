@@ -180,16 +180,19 @@
               border-radius: 50%;
             }
             &.double-subjects {
-              width: 3vw;
+              width: 2vw;
               .round-button {
                 z-index: 5;
                 left: 0;
                 position: absolute;
               }
               .after-main-subject {
-                z-index: 2;
+                z-index: 6;
                 position: absolute;
-                left: 1vw;
+                left: 0.3vw;
+                top: 0.3vw;
+                width: 1.4vw;
+                height: 1.4vw;
               }
             }
           }
