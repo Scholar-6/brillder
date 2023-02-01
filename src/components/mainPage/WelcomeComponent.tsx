@@ -35,10 +35,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
   constructor(props: any) {
     super(props);
 
-    let interval = null;
-    if (this.props.notifications) {
-      interval = this.runAnimation(this.props);
-    }
+    let interval = this.runAnimation(this.props);
 
     this.state = {
       interval,

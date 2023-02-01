@@ -396,6 +396,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         </div>
         <div className="dialog-footer-white">
           {renderDeadline()}
+          {(isCreating && (newClassName === '' || !canSubmit)) && <div className="help-footer-text">
+            Please ensure the email addresses you have entered are correctly formatted
+          </div>}
           {renderFooter()}
         </div>
       </Dialog>
@@ -429,6 +432,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         </div>
         <div className="dialog-footer-white">
           {renderDeadline()}
+          {(isCreating && (newClassName === '' || !canSubmit)) && <div className="help-footer-text">
+            Please ensure the email addresses you have entered are correctly formatted
+          </div>}
           {renderFooter()}
         </div>
       </Dialog>

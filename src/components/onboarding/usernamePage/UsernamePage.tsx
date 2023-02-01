@@ -77,12 +77,15 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
 
     const saved = await updateUser(userToSave);
 
-    if (saved) {
-      await props.getUser();
-      props.history.push(map.SelectSubjectPage);
-    } else {
-      //this.props.requestFailed("Can`t save user profile");
-    }
+    // after saving user and getting user added some delay to prevent bugs
+    setTimeout(async () => {
+      if (saved) {
+        await props.getUser();
+        props.history.push(map.SelectSubjectPage);
+      } else {
+        //this.props.requestFailed("Can`t save user profile");
+      }
+    }, 50)
   }
 
   const renderEditButton = () => {
