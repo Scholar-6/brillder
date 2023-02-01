@@ -201,6 +201,30 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     return '';
   }
 
+  const renderLevelCircles = () => {
+    if (alternateColor) {
+      return (
+        <div className="level before-alternative">
+          <div style={{ background: alternateColor }}>
+            <div className="level">
+              <div style={{ background: color }}>
+                {(isAssignment || brick.currentUserAttempted) ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="level only-one-circle">
+        <div style={{ background: color }}>
+          {(isAssignment || brick.currentUserAttempted) ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="animated-brick-container">
       <Grow
@@ -213,15 +237,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
           <div className="publish-brick-container">
             {renderDeadline()}
             <div className="level-and-length">
-              <div className="level before-alternative">
-                <div style={{ background: color }}>
-                  <div className="level">
-                    <div style={{ background: alternateColor ? alternateColor : color }}>
-                      {(isAssignment || brick.currentUserAttempted) ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {renderLevelCircles()}
               <div className="length-text-r3">{brick.brickLength} min</div>
             </div>
             {renderScore()}
