@@ -90,8 +90,8 @@
       }
 
       .level>div {
-        height: 4.5vh;
-        width: 4.5vh;
+        height: 4.2vh;
+        width: 4.2vh;
         border-radius: 50%;
         font-size: 3vh;
         color: white;
@@ -144,6 +144,16 @@
           color: var(--theme-dark-blue);
           font-size: 2.1vh;
           margin-left: 0.5vh;
+        }
+        .only-one-circle {
+          position: relative;
+          z-index: unset;
+          top: unset;
+          right: unset;
+
+          > div {
+            font-size: 2.1vh;
+          }
         }
       }
 
