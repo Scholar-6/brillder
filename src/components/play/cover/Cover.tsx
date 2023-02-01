@@ -169,10 +169,21 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   }
 
   const renderBrickCircle = () => {
+    if (brick.alternateSubject) {
+      return (
+        <div className="round-button-container double-subjects">
+          <div className="round-button" style={{ background: `${brick.alternateSubject?.color || '#B0B0AD'}` }} />
+          <div
+            className="round-button after-main-subject"
+            style={{ background: brick.subject?.color }}
+          />
+        </div>
+      );
+    }
+
     return (
-      <div className={brick.alternateSubject ? "round-button-container double-subjects" : "round-button-container"}>
-        <div className={brick.alternateSubject ? "round-button" : "round-button"} style={{ background: `${brick.subject?.color || '#B0B0AD'}` }} />
-        {brick.alternateSubject && <div className="round-button after-main-subject" style={{ background: brick.alternateSubject.color }} />}
+      <div className="round-button-container">
+        <div className="round-button" style={{ background: `${brick.subject?.color || '#B0B0AD'}` }} />
       </div>
     );
   }
