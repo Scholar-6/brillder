@@ -132,6 +132,13 @@ span.bold {
     .dialog-footer-white {
       background: var(--white);
 
+      .help-footer-text {
+        margin-top: 3vh;
+        text-align: center;
+        font-size: 1.3vw;
+        color: var(--theme-dark-blue);
+      }
+
       .r-radio-buttons {
         color: var(--theme-dark-blue);
         display: flex;

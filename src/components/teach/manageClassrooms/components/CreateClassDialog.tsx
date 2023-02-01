@@ -82,7 +82,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           <input placeholder="Class Name" value={value} onChange={e => setValue(e.target.value)} />
         </div>
         <div className="r-regular-center help-text-r423 flex-center">
-          Invite your students below. Or, leave blank to add the brick and invite students later
+          Invite your students below. Or, leave blank to set bricks before inviting students.
         </div>
         <div className="r-student-emails">
           <AutocompleteUsernameButEmail
