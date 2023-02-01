@@ -13,6 +13,7 @@ import { checkCompetitionActive } from "services/competition";
 import SpriteIcon from "./SpriteIcon";
 import { getBrickColor } from "services/brick";
 import { checkAssignment } from "components/viewAllPage/service/viewAll";
+import { ReactComponent as CircleCheck } from 'assets/img/circle-check.svg';
 
 interface Props {
   brick: Brick;
@@ -76,12 +77,29 @@ const PhoneTopBrickScroll16x9 = React.forwardRef<HTMLDivElement, Props>(({ brick
     return '';
   }
 
+  const renderCircles = () => {
+    let alternateColor = brick.alternateSubject ? brick.alternateSubject.color : color;
+    return (
+      <div className="level-and-length">
+        <div className="level before-alternative">
+          <div style={{ background: color }}>
+            <div className="level">
+              <div style={{ background: alternateColor }}>
+                {(isAssignment || brick.currentUserAttempted) ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="length-text-r3">{brick.brickLength} min</div>
+      </div>
+    );
+  }
+
   if (ref) {
     return (
       <div ref={ref} className={brick.alternateSubject ? "phone-top-brick-16x9 alternative-subject-container" : "phone-top-brick-16x9"} onClick={() => onClick ? onClick() : {}}>
         {renderCompetitionBanner()}
-        {renderFirstCircle()}
-        {renderSecondCircle()}
+        {renderCircles()}
         <div className="p-blue-background" />
         <img alt="" className={`p-cover-image ${imgLoaded ? 'visible' : 'hidden'}`} onLoad={() => setLoaded(true)} src={fileUrl(brick.coverImage)} />
         <div className="bottom-description-color" />
@@ -95,8 +113,7 @@ const PhoneTopBrickScroll16x9 = React.forwardRef<HTMLDivElement, Props>(({ brick
   return (
     <div className={brick.alternateSubject ? "phone-top-brick-16x9 alternative-subject-container" : "phone-top-brick-16x9"} onClick={() => onClick ? onClick() : {}}>
       {renderCompetitionBanner()}
-      {renderFirstCircle()}
-      {renderSecondCircle()}
+      {renderCircles()}
       <div className="p-blue-background" />
       <img alt="" className={`p-cover-image ${imgLoaded ? 'visible' : 'hidden'}`} onLoad={() => setLoaded(true)} src={fileUrl(brick.coverImage)} />
       <div className="bottom-description-color" />
