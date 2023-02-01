@@ -44,9 +44,6 @@ const DesktopActivateAccountPage: React.FC<LoginProps> = (props) => {
       </div>
       <Switch>
         <Route exact path={ActivateAccount}>
-          <ActivateDesktopPage token={props.token} history={history} />
-        </Route>
-        <Route exact path={ActivateAccountEmail}>
           <EmailActivateDesktopPage history={history} email={props.email} token={props.token || ''} />
         </Route>
       </Switch>
