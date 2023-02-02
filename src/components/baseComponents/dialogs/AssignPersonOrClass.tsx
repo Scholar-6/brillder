@@ -228,18 +228,11 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     setSaving(false);
   }
 
-  const renderBrickLevel = () => (
-    <div className="r-brick-level">
-      Level {AcademicLevelLabels[props.brick.academicLevel]}
-    </div>
-  );
-
   const renderNew = () => {
     return (
       <div className="r-new-class">
         <div className="r-class-inputs">
           <input value={newClassName} placeholder="Class Name" onChange={e => setNewClassName(e.target.value)} />
-          {renderBrickLevel()}
         </div>
         <div className="r-regular-center help-text-r423 flex-center">
           <div>
@@ -298,7 +291,6 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             </MenuItem>
           )}
         </Select>
-        {renderBrickLevel()}
       </div>
     );
   }

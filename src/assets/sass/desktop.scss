@@ -171,44 +171,21 @@
     margin-bottom: 2vh !important;
   }
 
-  .r-brick-level {
-    font-family: $font-family-regular;
-    display: flex;
-    align-items: center;
-    height: 4.185vw;
-    width: 15vw;
-    font-size: 2vw;
-    padding-left: 2vw;
-    border-top-right-radius: 1vw;
-    border-bottom-right-radius: 1vw;
-    margin-left: 0.2vw;
-    background: var(--theme-dark-blue);
-    color: var(--white);
-  }
-
   .r-class-inputs {
     display: flex;
     margin-bottom: 0.4vw;
 
     input {
-      border-top-left-radius: 1vw !important;
-      border-bottom-left-radius: 1vw !important;
+      border-radius: 1vw !important;
       padding-top: 0.4vw !important;
       padding-bottom: 0.4vw !important;
       color: var(--white) !important;
-      width: 35vw !important;
-      border-top-right-radius: 0 !important;
-      border-bottom-right-radius: 0 !important;
+      width: 100% !important;
       background: var(--theme-dark-blue) !important;
 
       &::placeholder {
         color: #69799d !important;
       }
-    }
-
-    .r-brick-level {
-      background: var(--theme-dark-blue);
-      color: var(--white);
     }
   }
 
@@ -279,10 +256,8 @@
     margin-bottom: 1.3vw !important;
 
     .select-existed-class.MuiInputBase-root {
-      width: 35vw;
-      border-radius: 0;
-      border-top-left-radius: 1vw;
-      border-bottom-left-radius: 1vw;
+      width: 100%;
+      border-radius: 1vw;
       color: var(--theme-dark-blue);
       text-align: left;
       font-size: 1.4vw !important;

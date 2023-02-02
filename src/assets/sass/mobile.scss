@@ -944,18 +944,6 @@
         min-width: unset !important;
       }
     }
-
-    .r-brick-level {
-      display: flex;
-      background: var(--tab-gray);
-      color: var(--theme-dark-blue);
-      align-items: center;
-      justify-content: center;
-      border-top-right-radius: $radius;
-      border-bottom-right-radius: $radius;
-      width: 20vw !important;
-      font-size: $mbase-font-size;
-    }
   }
 
   .r-regular-center {
