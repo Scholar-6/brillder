@@ -148,7 +148,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     for (const classroom of classrooms) {
       classroom.isClass = true;
     }
-
+    classrooms.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
     if (classrooms.length > 0) {
       setExistingClass(classrooms[0]);
     } else {
