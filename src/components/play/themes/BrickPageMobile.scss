@@ -1289,7 +1289,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         .step {
           display: inline-block !important;
           width: $step-container-width;
-          padding-left: calc(math.div((#{$step-container-width} - #{$step-height}), 2));
           span {
             display: flex;
             align-items: center;
