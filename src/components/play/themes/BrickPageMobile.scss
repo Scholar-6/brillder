@@ -2530,10 +2530,9 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     $font-size-45: 3.6vw;
 
     .pair-match-play-option {
-      margin-right: 0.8vw;
-      width: calc(100% - 0.7vw) !important;
-      background: var(--default-hint) !important;
+      width: 100%;
       font-size: $font-size-45;
+      border-radius: 4vw;
 
       .option-container > div:first-child {
         padding-top: 2vw;
@@ -2558,10 +2557,10 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       }
     }
     .pair-match-play-choice {
-      margin-left: 0.7vw;
       max-width: 48vw !important;
-      width: calc(100% - 0.7vw) !important;
-      background: var(--tab-gray);
+      width: 100%;
+      border-radius: 4vw;
+      margin-right: 0;
       padding-top: 2vw;
       padding-bottom: 2vw;
 
