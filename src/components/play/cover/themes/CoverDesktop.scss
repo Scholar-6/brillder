@@ -58,7 +58,6 @@
         padding-left: 0.5vw;
         padding-right: 0.5vw;
         margin-top: 1.5vw;
-        font-size: 2.7vw;
         @include ellipsis;
         font-family: $font-family-black;
         &.dynamic-title {
@@ -369,5 +368,12 @@
     height: $size !important;
     stroke-width: 2.5;
     margin-right: 0.5vw;
+  }
+}
+
+.play-preview-pages .sorted-row .brick-row-container.cover-page .brick-container .introduction-page .brick-title {
+  font-size: 2.7vw !important;
+  p {
+    font-size: 2.7vw !important;
   }
 }
