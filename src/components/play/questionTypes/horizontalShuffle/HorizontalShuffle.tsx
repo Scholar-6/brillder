@@ -224,16 +224,17 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
         </span>
         </p>
         {this.props.isBookPreview ? (
-          <div>{this.renderAnswers()}</div>
+          <div className="h-shuffle-container-r4">{this.renderAnswers()}</div>
         ) : (
           cantDrag === true
-            ? <div>
+            ? <div className="h-shuffle-container-r4">
               {this.renderAnswers()}
             </div>
             :
             <ReactSortable
               list={this.state.userAnswers}
               animation={150}
+              className="h-shuffle-container-r4"
               direction="horizontal"
               setList={(choices) => this.setUserAnswers(choices)}
             >
