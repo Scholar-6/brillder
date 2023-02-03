@@ -379,9 +379,10 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           <Grid container direction="row">
             <Grid item sm={8} xs={12}>
               <div className="introduction-page">
-                <h1 className="brick-title q-brick-title dynamic-title">
-                  <DynamicFont content={stripHtml(brick.title)} />
-                </h1>
+                <h1
+                  className="brick-title q-brick-title dynamic-title"
+                  dangerouslySetInnerHTML={{ __html: brick.title }}
+                />
                 <CoverAuthorRow brick={brick} onlyLibrary={onlyLibrary} setLibraryLogin={() => setUnauthorizedV2(true)} />
                 <div className="image-container centered">
                   <CoverImage
