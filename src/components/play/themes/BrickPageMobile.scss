@@ -2532,7 +2532,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .pair-match-play-option {
       width: 100%;
       font-size: $font-size-45;
-      border-radius: 4vw;
+      border-top-left-radius: 3vw;
+      border-bottom-left-radius: 3vw;
 
       .option-container > div:first-child {
         padding-top: 2vw;
@@ -2559,7 +2560,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     .pair-match-play-choice {
       max-width: 48vw !important;
       width: 100%;
-      border-radius: 4vw;
+      border-top-right-radius: 3vw;
+      border-bottom-right-radius: 3vw;
       margin-right: 0;
       padding-top: 2vw;
       padding-bottom: 2vw;
@@ -2567,10 +2569,17 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       font-size: $font-size-45 !important;
 
       > div {
-        height: auto !important;
+        height: 100% !important;
         padding-left: 2vw;
         padding-right: 2vw;
         border-radius: 2vw;
+      }
+
+      .mobile-img-caption {
+        display: inline;
+        p {
+          display: inline;
+        }
       }
 
       p {
