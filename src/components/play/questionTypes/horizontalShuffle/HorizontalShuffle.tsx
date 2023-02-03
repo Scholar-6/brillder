@@ -212,6 +212,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     if (this.props.isReview) {
       cantDrag = !!this.props.attempt?.correct;
     }
+
     return (
       <div className="question-unique-play horizontal-shuffle-play">
         <p><span className="help-text">
