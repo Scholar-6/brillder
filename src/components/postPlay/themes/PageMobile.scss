@@ -1175,6 +1175,11 @@
         font-size:  $mbase-font-size !important;
       }
 
+      .words-container {
+        padding-left: 5vw;
+        padding-right: 5vw;
+      }
+
       .words-container,
       .lines-container {
         font-size: inherit !important;
