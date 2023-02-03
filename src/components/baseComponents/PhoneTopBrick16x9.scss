@@ -10,6 +10,61 @@
   .visible {
     animation: fadein 0.5s 0s forwards;
   }
+  .level-and-length {
+    position: absolute;
+    border-radius: 12vh;
+    z-index: 10;
+    top: 1vh;
+    right: 1vh;
+    width: 12.6vh;
+    height: 5.5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba($color: #FFF, $alpha: 0.8);
+    color: var(--theme-dark-blue);
+    font-size: 2.1vh;
+
+    .before-alternative {
+      position: relative;
+      z-index: unset;
+      top: unset;
+      right: unset;
+      > div {
+        border-radius: 50%;
+        height: 4.2vh;
+        width: 4.2vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .level {
+          right: 0.6vh;
+          top: 0.6vh;
+          > div {
+            color: white;
+            border-radius: 50%;
+            width: 3vh;
+            height: 3vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 2.1vh;
+
+            svg {
+              width: 2.4vh;
+              height: 2.4vh;
+            }
+          }
+        }
+      }
+    }
+    .length-text-r3 {
+      color: var(--theme-dark-blue);
+      font-size: 2.1vh;
+      margin-left: 0.5vh;
+    }
+  }
   .left-brick-circle {
     z-index: 10;
     &.score-circle {

@@ -407,7 +407,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
-      const pageBricks = await getPublishedBricksByPage(this.state.pageSize, this.state.page, true, [], [], [], this.state.filterCompetition, this.state.isAllSubjects);
+      let subjectIds:number[] = [];
+      if (this.state.isAllSubjects == false) {
+        subjectIds = this.props.user.subjects.map(s => s.id);
+      }
+      const pageBricks = await getPublishedBricksByPage(
+        this.state.pageSize, this.state.page, true,
+        [], [], subjectIds,
+        this.state.filterCompetition, this.state.isAllSubjects
+      );
       if (pageBricks) {
         let { subjects } = this.state;
 
@@ -452,11 +460,32 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     filterCompetition: boolean,
     isAllSubjects: boolean
   ) {
-    const subjectIds = this.getSubjectIds();
+    let subjectIds = this.getSubjectIds();
+
+    if (isAllSubjects === false) {
+      if (subjectIds.length === 0) {
+        subjectIds = this.props.user.subjects.map(s => s.id);
+      } else {
+        // get only user subject ids
+        let tempSubjectIds:number[] = [];
+        for (let sId of subjectIds) {
+          const found = this.props.user.subjects.find(s => s.id == sId);
+          if (found) {
+            tempSubjectIds.push(sId);
+          }
+        }
+        if (tempSubjectIds.length === 0) {
+          subjectIds = this.props.user.subjects.map(s => s.id);
+        } else {
+          subjectIds = tempSubjectIds;
+        }
+      }
+    }
+
     const pageBricks = await getPublishedBricksByPage(this.state.pageSize, page, isCore, levels, length, subjectIds, filterCompetition, isAllSubjects);
 
     if (pageBricks) {
-      const {subjects} = this.state;
+      const { subjects } = this.state;
       for (let subject of pageBricks.subjects) {
         const filterSubject = subjects.find(s => s.id === subject.id);
         if (filterSubject) {
@@ -493,9 +522,22 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const subjectIds = this.getSubjectIds();
     const pageBricks = await getUnauthPublishedBricksByPage(this.state.pageSize, page, levels, length, subjectIds, filterCompetition, sGroup);
 
+    let { subjects } = this.state;
+
+    if (pageBricks) {
+      for (let subject of pageBricks.subjects) {
+        const filterSubject = subjects.find(s => s.id === subject.id);
+        if (filterSubject) {
+          filterSubject.personalCount = subject.count;
+          filterSubject.publicCount = subject.count;
+        }
+      }
+    }
+
     if (pageBricks) {
       this.setState({
         ...this.state,
+        subjects,
         page,
         bricksCount: pageBricks.pageCount,
         bricks: pageBricks.bricks,
@@ -800,7 +842,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  moveAllNext() { 
+  moveAllNext() {
     let index = this.state.page * this.state.pageSize;
     const { pageSize, bricksCount } = this.state;
 

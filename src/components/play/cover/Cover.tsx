@@ -78,7 +78,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       if (!props.user) {
         setUnauthorizedV2(true);
       }
-    }, 10000);
+    }, 20000);
     
 
     document.addEventListener("keydown", handleMove, false);
@@ -169,10 +169,21 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   }
 
   const renderBrickCircle = () => {
+    if (brick.alternateSubject) {
+      return (
+        <div className="round-button-container double-subjects">
+          <div className="round-button" style={{ background: `${brick.alternateSubject?.color || '#B0B0AD'}` }} />
+          <div
+            className="round-button after-main-subject"
+            style={{ background: brick.subject?.color }}
+          />
+        </div>
+      );
+    }
+
     return (
-      <div className={brick.alternateSubject ? "round-button-container double-subjects" : "round-button-container"}>
-        <div className={brick.alternateSubject ? "round-button" : "round-button"} style={{ background: `${brick.subject?.color || '#B0B0AD'}` }} />
-        {brick.alternateSubject && <div className="round-button after-main-subject" style={{ background: brick.alternateSubject.color }} />}
+      <div className="round-button-container">
+        <div className="round-button" style={{ background: `${brick.subject?.color || '#B0B0AD'}` }} />
       </div>
     );
   }
@@ -368,9 +379,10 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           <Grid container direction="row">
             <Grid item sm={8} xs={12}>
               <div className="introduction-page">
-                <h1 className="brick-title q-brick-title dynamic-title">
-                  <DynamicFont content={stripHtml(brick.title)} />
-                </h1>
+                <h1
+                  className="brick-title q-brick-title dynamic-title"
+                  dangerouslySetInnerHTML={{ __html: brick.title }}
+                />
                 <CoverAuthorRow brick={brick} onlyLibrary={onlyLibrary} setLibraryLogin={() => setUnauthorizedV2(true)} />
                 <div className="image-container centered">
                   <CoverImage

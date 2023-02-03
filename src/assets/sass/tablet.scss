@@ -548,44 +548,21 @@ html {
     margin-bottom: 2vh !important;
   }
 
-  .r-brick-level {
-    font-family: $font-family-regular;
-    display: flex;
-    align-items: center;
-    height: 4.185vw;
-    width: 15vw;
-    font-size: 2vw;
-    padding-left: 2vw;
-    border-top-right-radius: 1vw;
-    border-bottom-right-radius: 1vw;
-    margin-left: 0.2vw;
-    background: var(--white);
-    color: var(--theme-dark-blue);
-  }
-
   .r-class-inputs {
     display: flex;
     margin-bottom: 0.4vw;
 
     input {
-      border-top-left-radius: 1vw !important;
-      border-bottom-left-radius: 1vw !important;
+      border-radius: 1vw !important;
       padding-top: 0.4vw !important;
       padding-bottom: 0.4vw !important;
       color: var(--white) !important;
-      width: 35vw !important;
-      border-top-right-radius: 0 !important;
-      border-bottom-right-radius: 0 !important;
+      width: 100% !important;
       background: var(--theme-dark-blue) !important;
 
       &::placeholder {
         color: #69799d !important;
       }
-    }
-
-    .r-brick-level {
-      background: var(--theme-dark-blue);
-      color: var(--white);
     }
   }
 
@@ -656,10 +633,8 @@ html {
     margin-bottom: 1.3vw !important;
 
     .select-existed-class.MuiInputBase-root {
-      width: 35vw;
-      border-radius: 0;
-      border-top-left-radius: 1vw;
-      border-bottom-left-radius: 1vw;
+      width: 100%;
+      border-radius: 1vw;
       color: var(--theme-dark-blue);
       text-align: left;
       font-size: 1.4vw !important;
@@ -1536,3 +1511,42 @@ html body #root .browser-type-container .manage-classrooms-page .sorted-row {
   }
 }
 
+.competition-filter-box {
+  padding-top: 1.3vh;
+  padding-left: 1vw;
+  padding-right: 3.7vw;
+  display: flex;
+  .MuiTypography-body1 {
+    font-family: $font-family-light !important;
+    font-size: 1.05vw !important;
+  }
+  .MuiButtonBase-root {
+    padding: 0;
+    padding-top: 0.81vh;
+    padding-bottom: 0.8vh;
+  }
+  .MuiFormControlLabel-root {
+    margin: 0;
+  }
+  .MuiFormControlLabel-label {
+    min-width: 3.8vw;
+  }
+  .MuiButtonBase-root {
+    margin-right: 0.5vw;
+  }
+  svg {
+    height: 1.25vw;
+    width: 1.25vw;
+    color: var(--white) !important;
+  }
+}
+
+// fix for manage classes page
+html body #root .browser-type-container .sorted-row .brick-row-container.teach-tab-d94 > div {
+  height: auto !important;
+}
+
+.katex {
+  font-size: 1em !important;
+  font-family: KaTeX_Main !important;
+}

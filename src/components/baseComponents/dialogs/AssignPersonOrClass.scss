@@ -101,7 +101,7 @@ span.bold {
 
       .r-class-selection {
         margin-bottom: 0.9vw !important;
-        width: 40vw !important;
+        width: 100% !important;
       }
 
       .switch-mode {
@@ -131,6 +131,13 @@ span.bold {
 
     .dialog-footer-white {
       background: var(--white);
+
+      .help-footer-text {
+        margin-top: 3vh;
+        text-align: center;
+        font-size: 1.3vw;
+        color: var(--theme-dark-blue);
+      }
 
       .r-radio-buttons {
         color: var(--theme-dark-blue);

@@ -15,6 +15,7 @@ import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
 import { isPhone } from 'services/phone';
 import { isMobile } from 'react-device-detect';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 
 enum DragAndDropStatus {
@@ -26,6 +27,7 @@ enum DragAndDropStatus {
 interface HorizontalShuffleChoice {
   value: string;
   index: number;
+  answerType?: QuestionValueType;
 }
 
 export interface HorizontalShuffleComponent {
@@ -42,6 +44,7 @@ interface VerticalShuffleProps extends CompQuestionProps {
 interface HorizontalShuffleState {
   status: DragAndDropStatus;
   userAnswers: any[];
+  fontBigger: boolean;
   reviewCorrectAnswers: number[];
 }
 
@@ -68,9 +71,32 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
       }
     }
 
+    // if its small then make font bigger
+    let fontBigger = false;
+    if (userAnswers.length < 6) {
+      let textLength = 0;
+      let isText = true;
+      // check answers
+      for (let answer of userAnswers) {
+        if (answer.answerType !== QuestionValueType.String) {
+          isText = false;
+          break;
+        }
+        const text = stripHtml(answer.value);
+        console.log('text', text, answer.value)
+        if (text && text.length) {
+          textLength += text.length;
+        }
+      }
+      if (isText === true && textLength < 8) {
+        fontBigger = true;
+      }
+    }
+
     this.state = {
       status: DragAndDropStatus.None,
       userAnswers,
+      fontBigger,
       reviewCorrectAnswers
     };
   }
@@ -212,8 +238,9 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     if (this.props.isReview) {
       cantDrag = !!this.props.attempt?.correct;
     }
+
     return (
-      <div className="question-unique-play horizontal-shuffle-play">
+      <div className={`question-unique-play horizontal-shuffle-play ${this.state.fontBigger ? 'horizontal-a-font-big' : ''}`}>
         <p><span className="help-text">
           <DragIcon />Drag to rearrange.
           {!isPhone() && isMobile &&
@@ -224,16 +251,17 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
         </span>
         </p>
         {this.props.isBookPreview ? (
-          <div>{this.renderAnswers()}</div>
+          <div className="h-shuffle-container-r4">{this.renderAnswers()}</div>
         ) : (
           cantDrag === true
-            ? <div>
+            ? <div className="h-shuffle-container-r4">
               {this.renderAnswers()}
             </div>
             :
             <ReactSortable
               list={this.state.userAnswers}
               animation={150}
+              className="h-shuffle-container-r4"
               direction="horizontal"
               setList={(choices) => this.setUserAnswers(choices)}
             >

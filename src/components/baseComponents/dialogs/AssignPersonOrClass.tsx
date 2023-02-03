@@ -148,7 +148,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     for (const classroom of classrooms) {
       classroom.isClass = true;
     }
-
+    classrooms.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
     if (classrooms.length > 0) {
       setExistingClass(classrooms[0]);
     } else {
@@ -228,18 +228,11 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     setSaving(false);
   }
 
-  const renderBrickLevel = () => (
-    <div className="r-brick-level">
-      Level {AcademicLevelLabels[props.brick.academicLevel]}
-    </div>
-  );
-
   const renderNew = () => {
     return (
       <div className="r-new-class">
         <div className="r-class-inputs">
           <input value={newClassName} placeholder="Class Name" onChange={e => setNewClassName(e.target.value)} />
-          {renderBrickLevel()}
         </div>
         <div className="r-regular-center help-text-r423 flex-center">
           <div>
@@ -298,7 +291,6 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             </MenuItem>
           )}
         </Select>
-        {renderBrickLevel()}
       </div>
     );
   }
@@ -396,6 +388,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         </div>
         <div className="dialog-footer-white">
           {renderDeadline()}
+          {(isCreating && (newClassName === '' || !canSubmit)) && <div className="help-footer-text">
+            Please ensure the email addresses you have entered are correctly formatted
+          </div>}
           {renderFooter()}
         </div>
       </Dialog>
@@ -407,28 +402,23 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box assign-student-popup light-blue assign-dialog">
         <div className="dialog-header">
           <div className="r-popup-title bold">Which class would you like to assign this brick to?</div>
-          {isCreating &&
-            <div className="psevdo-radio-class">
-              <div className="switch-mode" onClick={() => setCreating(false)}>
-                <Radio checked={false} />
-                An existing class
-              </div>
-              <div className="switch-mode">
-                <Radio checked={true} />
-                Create a new class
-              </div>
+          <div className="psevdo-radio-class">
+            <div className="switch-mode" onClick={() => setCreating(false)}>
+              <Radio checked={!isCreating} />
+              An existing class
             </div>
-          }
-          {isCreating ? renderNew() : renderExisting()}
-          {!isCreating &&
             <div className="switch-mode" onClick={() => setCreating(true)}>
-              <SpriteIcon name="plus-circle-custom" />
+              <Radio checked={isCreating} />
               Create a new class
             </div>
-          }
+          </div>
+          {isCreating ? renderNew() : renderExisting()}
         </div>
         <div className="dialog-footer-white">
           {renderDeadline()}
+          {(isCreating && (newClassName === '' || !canSubmit)) && <div className="help-footer-text">
+            Please ensure the email addresses you have entered are correctly formatted
+          </div>}
           {renderFooter()}
         </div>
       </Dialog>

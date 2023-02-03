@@ -226,6 +226,7 @@
           border-radius: 50%;
         }
         &.double-subjects {
+          position: relative;
           width: 11vw;
           .round-button {
             z-index: 5;
@@ -233,9 +234,12 @@
             position: absolute;
           }
           .after-main-subject {
-            z-index: 2;
+            z-index: 6;
             position: absolute;
-            left: 3vw;
+            left: 1vw;
+            top: -2vw;
+            width: 4vw;
+            height: 4vw;
           }
         }
       }

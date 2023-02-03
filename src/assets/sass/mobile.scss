@@ -944,18 +944,6 @@
         min-width: unset !important;
       }
     }
-
-    .r-brick-level {
-      display: flex;
-      background: var(--tab-gray);
-      color: var(--theme-dark-blue);
-      align-items: center;
-      justify-content: center;
-      border-top-right-radius: $radius;
-      border-bottom-right-radius: $radius;
-      width: 20vw !important;
-      font-size: $mbase-font-size;
-    }
   }
 
   .r-regular-center {
@@ -2359,4 +2347,29 @@
 
 .question-unique-play .image-container {
   position: relative;
+}
+
+.h-shuffle-container-r4 {
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+
+.words-margin-container {
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+
+.words-container {
+  display: inline;
+}
+
+.katex {
+  font-size: 1em !important;
+  font-family: KaTeX_Main !important;
+}
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .horizontal-shuffle-play.horizontal-a-font-big .horizontal-shuffle-answer .answer p {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  font-size: 8vw !important;
 }
