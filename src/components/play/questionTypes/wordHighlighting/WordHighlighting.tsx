@@ -209,8 +209,10 @@ class WordHighlighting extends CompComponent<
             </span>
           }
         </p>
-        <div className={`words-container ${this.props.isPreview && 'preview'} ${!component.isPoem ? 'break-lines' : 'lines-inline'}`}>
-          {this.getWords()}
+        <div className="words-margin-container">
+          <div className={`words-container ${this.props.isPreview && 'preview'} ${!component.isPoem ? 'break-lines' : 'lines-inline'}`}>
+            {this.getWords()}
+          </div>
         </div>
         <br />
         {!isPhone() && this.renderGlobalHint()}
