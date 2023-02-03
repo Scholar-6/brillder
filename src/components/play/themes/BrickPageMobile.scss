@@ -2563,10 +2563,15 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       border-top-right-radius: 3vw;
       border-bottom-right-radius: 3vw;
       margin-right: 0;
-      padding-top: 2vw;
-      padding-bottom: 2vw;
+      padding-top: 0;
+      padding-bottom: 0;
 
       font-size: $font-size-45 !important;
+
+      .MuiListItem-root {
+        padding-top: 0 !important;
+        padding-top: 0 !important;
+      }
 
       > div {
         height: 100% !important;
