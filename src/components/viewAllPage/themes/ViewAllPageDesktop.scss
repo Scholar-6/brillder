@@ -435,6 +435,7 @@
     width: 30vw;
     display: flex;
     color: white;
+    font-size: 1vw;
 
     .category {
       cursor: pointer;
@@ -442,8 +443,9 @@
     }
 
     svg {
-      width: 1.5vw;
-      height: 1.5vw;
+      margin-top: 0.1vw;
+      width: 1.4vw;
+      height: 1.4vw;
       color: white;
     }
   }
