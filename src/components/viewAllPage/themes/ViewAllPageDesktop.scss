@@ -440,6 +440,10 @@
     .category {
       cursor: pointer;
       color: var(--theme-yellow);
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     svg {
