@@ -262,6 +262,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             setEmpty={setSubmit}
           />
         </div>
+        {renderDeadline()}
       </div>
     )
   }
@@ -269,28 +270,31 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const renderExisting = () => {
     if (classes.length <= 0) { return <div />; }
     return (
-      <div className="r-class-selection">
-        <Select
-          className="select-existed-class"
-          MenuProps={{ classes: { paper: 'select-classes-list' } }}
-          value={existingClass.id}
-          onChange={e => setExistingClass(classes.find(c => c.id === parseInt(e.target.value as string)))}
-        >
-          {classes.map((c: any, i) =>
-            <MenuItem value={c.id} key={i}>
-              <ListItemIcon>
-                <SvgIcon>
-                  <SpriteIcon
-                    name="circle-filled"
-                    className="w100 h100 active"
-                    style={{ color: c.subject?.color || '#4C608A' }}
-                  />
-                </SvgIcon>
-              </ListItemIcon>
-              <ListItemText>{c.name}</ListItemText>
-            </MenuItem>
-          )}
-        </Select>
+      <div className="existing">
+        <div className="r-class-selection">
+          <Select
+            className="select-existed-class"
+            MenuProps={{ classes: { paper: 'select-classes-list' } }}
+            value={existingClass.id}
+            onChange={e => setExistingClass(classes.find(c => c.id === parseInt(e.target.value as string)))}
+          >
+            {classes.map((c: any, i) =>
+              <MenuItem value={c.id} key={i}>
+                <ListItemIcon>
+                  <SvgIcon>
+                    <SpriteIcon
+                      name="circle-filled"
+                      className="w100 h100 active"
+                      style={{ color: c.subject?.color || '#4C608A' }}
+                    />
+                  </SvgIcon>
+                </ListItemIcon>
+                <ListItemText>{c.name}</ListItemText>
+              </MenuItem>
+            )}
+          </Select>
+        </div>
+        {renderDeadline()}
       </div>
     );
   }
@@ -348,21 +352,25 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   );
 
   const renderDeadline = () => (
-    <div className="r-radio-buttons">
+    <div className="deadline-v2">
       <div className="label">
         When is it due?
       </div>
-      <FormControlLabel
-        checked={haveDeadline === false}
-        control={<Radio onClick={() => toggleDeadline(false)} />}
-        label="No deadline"
-      />
-      <FormControlLabel
-        checked={haveDeadline === true}
-        control={<Radio onClick={() => toggleDeadline(true)} />}
-        label="Set date"
-      />
-      {haveDeadline && <TimeDropdowns date={deadlineDate} onChange={setDeadline} />}
+      <div className="r-radio-buttons">
+        <div>
+          <FormControlLabel
+            checked={haveDeadline === false}
+            control={<Radio onClick={() => toggleDeadline(false)} />}
+            label="No deadline"
+          />
+          <FormControlLabel
+            checked={haveDeadline === true}
+            control={<Radio onClick={() => toggleDeadline(true)} />}
+            label="Set date"
+          />
+          {haveDeadline && <TimeDropdowns date={deadlineDate} onChange={setDeadline} />}
+        </div>
+      </div>
     </div>
   );
 
@@ -387,10 +395,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           {renderNew()}
         </div>
         <div className="dialog-footer-white">
-          {renderDeadline()}
-          {(isCreating && (newClassName === '' || !canSubmit)) && <div className="help-footer-text">
-            Please ensure the email addresses you have entered are correctly formatted
-          </div>}
+          <div className="help-footer-text">
+            {(isCreating && (newClassName === '' || !canSubmit)) &&
+              'Please ensure that you have entered the correct email addresses and pressed enter.'
+            }</div>
           {renderFooter()}
         </div>
       </Dialog>
@@ -415,10 +423,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           {isCreating ? renderNew() : renderExisting()}
         </div>
         <div className="dialog-footer-white">
-          {renderDeadline()}
-          {(isCreating && (newClassName === '' || !canSubmit)) && <div className="help-footer-text">
-            Please ensure the email addresses you have entered are correctly formatted
-          </div>}
+          <div className="help-footer-text">
+            {(isCreating && (newClassName === '' || !canSubmit)) &&
+              'Please ensure that you have entered the correct email addresses and pressed enter.'
+            }</div>
           {renderFooter()}
         </div>
       </Dialog>
