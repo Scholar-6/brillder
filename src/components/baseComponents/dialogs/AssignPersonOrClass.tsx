@@ -102,21 +102,15 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
       if (newClassName) {
         const newClassroom = await createClass(newClassName);
-        console.log('class created');
         if (newClassroom) {
-          console.log('next')
           // assign students to class
           const currentUsers = users;
           if (!emailRegex.test(currentEmail)) {
-            if (users.length <= 0) {
-              return;
-            }
           } else {
             setUsers(users => [...users, { email: currentEmail } as User]);
             currentUsers.push({ email: currentEmail } as User);
             setCurrentEmail("");
           }
-          console.log('assign')
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res && res.length > 0) {
             await assignToExistingBrick(newClassroom);
@@ -132,6 +126,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             }
           }
           await getClasses();
+          props.close();
         } else {
           console.log('failed to create class');
         }
