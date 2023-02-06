@@ -7,6 +7,21 @@
 }
 
 .assign-dialog {
+  .deadline-v2 {
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+    .label {
+      text-align: left !important;
+    }
+
+    .r-radio-buttons .MuiFormControlLabel-root {
+      margin-left: 0 !important;
+
+      .MuiIconButton-root {
+        padding-left: 0 !important;
+      }
+    }
+  }
   .dialog-header .spinning {
     width: 4vw !important;
     height: 4vw !important;
@@ -61,8 +76,10 @@
     display: flex;
     align-items: center;
     .btn {
-      margin-left: 3vw;
-      margin-right: 3vw;
+      width: 100%;
+      margin-left: 6vw;
+      width: 11vw !important;
+      margin-right: 0;
     }
 
     .invalid {
@@ -97,7 +114,11 @@ span.bold {
     padding: 0 !important;
 
     .dialog-header {
-      padding: 2vw 3vw 1.4vw 3vw;
+      padding: 2vw 3vw 0 3vw;
+
+      .existing-class-selection {
+        margin-bottom: 0;
+      }
 
       .r-class-selection {
         margin-bottom: 0.9vw !important;
@@ -130,13 +151,19 @@ span.bold {
     }
 
     .dialog-footer-white {
+      padding-left: 3vw;
+      padding-right: 3vw;
       background: var(--white);
 
+      display: flex;
+
       .help-footer-text {
-        margin-top: 3vh;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        width: 33vw;
+        text-align: left;
         font-size: 1.3vw;
-        color: var(--theme-dark-blue);
+        color: var(--theme-orange);
       }
 
       .r-radio-buttons {
@@ -176,8 +203,8 @@ span.bold {
       }
 
       .action-row {
-        padding-top: 2vh;
-        padding-bottom: 4vh;
+        padding-top: 3vh;
+        padding-bottom: 3vh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -207,11 +234,8 @@ span.bold {
 
         button {
           font-size: 1.6vw;
-          margin-right: 4.7vw;
-          margin-left: 4.7vw;
-          padding: 0;
-          padding-left: 1vw;
-          padding-right: 1vw;
+          padding: 0.5vw 1vw;
+          width: 100%;
 
           svg {
             stroke-width: 1.5 !important;

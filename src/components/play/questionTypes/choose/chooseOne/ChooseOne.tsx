@@ -105,7 +105,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
         </div>
       );
     } else {
-      return <MathInHtml value={answer.value} />;
+      return <MathInHtml className="unselectable" value={answer.value} />;
     }
   }
 

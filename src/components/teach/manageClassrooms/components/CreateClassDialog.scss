@@ -50,6 +50,15 @@
     padding: 3vh 3vw 4vh 3vw;
     width: 55vw;
 
+    .text-r324 {
+      margin-bottom: 2vh !important;
+      text-align: left !important;
+    }
+
+    .help-text-r423 {
+      text-align: left !important;
+    }
+
     font-size: 1.4vw !important;
 
     .r-class-inputs input {
@@ -70,11 +79,19 @@
 
   .dialog-footer {
     background: white;
-    padding: 2vh 17vw 2vh 17vw;
+    padding: 2vh 3vw 2vh 3vw;
     
+    .message-box-r5 {
+      font-size: 1.3vw;
+      width: 33vw;
+      color: var(--theme-orange);
+    }
 
     .invalid {
       opacity: 0.7 !important;
+    }
+    .btn {
+      width: 11vw !important;
     }
   }
 

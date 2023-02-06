@@ -77,11 +77,11 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       </div>
       <div className="dialog-header">
         <div className="title">Create New Class</div>
-        <div className="regular">Enter the name of your class</div>
+        <div className="text-r324 bold">Enter the name of your class</div>
         <div className="r-class-inputs">
           <input placeholder="Class Name" value={value} onChange={e => setValue(e.target.value)} />
         </div>
-        <div className="r-regular-center help-text-r423 flex-center">
+        <div className="r-regular-center help-text-r423">
           Invite your students below. Or, leave blank to set bricks before inviting students.
         </div>
         <div className="r-student-emails">
@@ -101,6 +101,11 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         </div>
       </div>
       <div className="dialog-footer">
+        <div className="message-box-r5">
+          {(value === '' || !canSubmit) && 
+            'Please ensure that you have entered the correct email addresses and pressed enter.'
+          }
+        </div>
         <button
           className={`btn btn-md bg-theme-orange yes-button r-long ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
           onClick={create}
