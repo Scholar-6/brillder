@@ -426,6 +426,29 @@
   }
 }
 
+.categories-absolute {
+  position: relative;
+  > div {
+    position: absolute;
+    top: -1.5vw;
+    left: 1vw;
+    width: 30vw;
+    display: flex;
+    color: white;
+
+    .category {
+      cursor: pointer;
+      color: var(--theme-yellow);
+    }
+
+    svg {
+      width: 1.5vw;
+      height: 1.5vw;
+      color: white;
+    }
+  }
+}
+
 
 // two-columns catalogue
 .sorted-row .brick-row-container .bricks-list-container .bricks-list.two-columns-t34 {
