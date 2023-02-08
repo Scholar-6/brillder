@@ -102,8 +102,8 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       </div>
       <div className="dialog-footer">
         <div className="message-box-r5">
-          {(value === '' || !canSubmit) && 
-            'Please ensure that you have entered the correct email addresses and pressed enter.'
+          {!canSubmit && 
+            'Please ensure that you have entered all email addresses correctly and pressed enter.'
           }
         </div>
         <button

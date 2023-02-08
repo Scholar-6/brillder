@@ -358,8 +358,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         </div>
         <div className="dialog-footer-white">
           <div className="help-footer-text">
-            {(isCreating && (newClassName === '' || !canSubmit)) &&
-              'Please ensure that you have entered the correct email addresses and pressed enter.'
+            {(isCreating && !canSubmit) &&
+              'Please ensure that you have entered all email addresses correctly and pressed enter.'
             }</div>
           {renderFooter()}
         </div>
@@ -386,8 +386,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         </div>
         <div className="dialog-footer-white">
           <div className="help-footer-text">
-            {(isCreating && (newClassName === '' || !canSubmit)) &&
-              'Please ensure that you have entered the correct email addresses and pressed enter.'
+            {(isCreating && !canSubmit) &&
+              'Please ensure that you have entered all email addresses correctly and pressed enter.'
             }</div>
           {renderFooter()}
         </div>
