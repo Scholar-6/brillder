@@ -83,7 +83,10 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps, State> {
             </div>
           </div>
           <form
-            onSubmit={this.props.handleLoginSubmit}
+            onSubmit={(e) => {
+              alert('submit is good');
+              this.props.handleLoginSubmit(e)
+            }}
             className="mobile-button-box content-box"
           >
             <div className="input-block">
