@@ -2365,6 +2365,13 @@
 .katex {
   font-size: 1em !important;
   font-family: 'Brandon Grotesque Regular' !important;
+
+  .textrm,
+  .mathit,
+  .mainrm,
+  .mathbf {
+    font-family: 'Brandon Grotesque Regular' !important;
+  }
 }
 
 .play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .horizontal-shuffle-play.horizontal-a-font-big .horizontal-shuffle-answer .answer p {
