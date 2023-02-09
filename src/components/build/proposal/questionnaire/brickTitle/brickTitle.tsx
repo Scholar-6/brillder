@@ -108,7 +108,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
   }
 
   onTitleChange(value: string) {
-    console.log(value);
     this.props.saveTitles({ ...this.props.parentState, title: value });
   }
 
@@ -201,7 +200,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                 <div className={`title-validation-text ${textLength > 50 ? 'invalid-text' : 'valid'}`}>
                   <div>Titles can be a maximum of 50 characters</div>
                   <div>{textLength}/50</div>
-                </div> v
+                </div>
                 <div className="audience-inputs">
                   <DifficultySelect disabled={!canEdit} level={parentState.academicLevel} onChange={this.props.setAcademicLevel.bind(this)} />
                   <div className="absolute-difficult-help">
