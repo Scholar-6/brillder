@@ -164,6 +164,7 @@
     width: 104%;
     .categories-column {
       width: 51%;
+      transition: all 300ms ease-in-out;
       > div {
         background: var(--tab-gray);
         margin-bottom: 1vh;
@@ -210,7 +211,7 @@
           margin-top: 0 !important;
         }
       }
-      .MuiListItemText-root .MuiTypography-root > div {
+      .MuiListItemText-root .MuiTypography-root > div:first-child {
         margin-left: 2vw;
         margin-right: 0;
         padding-top: 1vw;
@@ -227,6 +228,13 @@
       }
     }
   }
+
+  .one-live-column {
+    .categories-column {
+      width: 100% !important;
+    }
+  }
+
   .review-one-column {
     .categories-column {
       width: 100%;

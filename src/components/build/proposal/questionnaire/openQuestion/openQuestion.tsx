@@ -35,12 +35,21 @@ const HeadComponent: React.FC<any> = ({ data }) => {
 const OpenQuestion: React.FC<OpenQuestionProps> = ({
   selectedQuestion, saveOpenQuestion, ...props
 }) => {
+  const saveOpenQuestionLocal = (v: string) => {
+    const value = v.substr(0, 250);
+    saveOpenQuestion(value);
+  }
+
+  console.log(selectedQuestion.length);
+
+  var openQuestion = selectedQuestion.slice()
+
   return (
     <div className="tutorial-page open-question-page">
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.OpenQuestion}
-        onMove={() => saveOpenQuestion(selectedQuestion)}
+        onMove={() => saveOpenQuestionLocal(selectedQuestion)}
       />
       <Grid container direction="row">
         <Grid item className="left-block">
@@ -54,17 +63,18 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           <OpenQHoverHelp />
           <QuillEditor
             disabled={!props.canEdit}
-            data={selectedQuestion}
+            data={openQuestion}
+            tabIndex={-1}
             placeholder="Open Question"
             toolbar={['bold', 'italic', 'latex']}
             showToolbar={true}
-            onChange={saveOpenQuestion}
+            onChange={saveOpenQuestionLocal}
           />
           <NavigationButtons
             baseUrl={props.baseUrl}
             step={ProposalStep.OpenQuestion}
             canSubmit={true}
-            onSubmit={saveOpenQuestion}
+            onSubmit={saveOpenQuestionLocal}
             data={selectedQuestion}
             backLink={props.baseUrl + TitleRoutePart}
           />
