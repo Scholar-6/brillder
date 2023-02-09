@@ -135,6 +135,8 @@
       .audience-inputs {
         @include buildInputs;
 
+        margin-bottom: 0.5vw;
+
         .ql-custom-toolbar {
           display: none;
         }
@@ -219,5 +221,25 @@
   .MuiSnackbar-root {
     position: absolute;
     top: 40% !important;
+  }
+}
+
+.brick-title-page .title-validation-text {
+  color: var(--theme-dark-blue);
+  display: flex;
+  margin-bottom: 3vh;
+
+  > div:first-child {
+    width: 30vw;
+    text-align: left;
+  }
+
+  > div:nth-child(2) {
+    width: 10vw;
+    text-align: right;
+  }
+
+  &.invalid-text {
+    color: var(--theme-orange);
   }
 }

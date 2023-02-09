@@ -23,7 +23,7 @@ import DifficultySelect from "./components/DifficultySelect";
 import KeyWordsPlay from "./components/KeywordsPlay";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
-import QuillTitleEditor from "components/baseComponents/quill/QuillTitleEditor";
+
 
 interface BrickTitleProps {
   user: User;
@@ -107,9 +107,10 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
   }
 
   onTitleChange(value: string) {
-    const title = value.substr(0, 49);
-    this.props.saveTitles({ ...this.props.parentState, title });
+    console.log(value);
+    this.props.saveTitles({ ...this.props.parentState, title: value });
   }
+
 
   renderSubjectTitle(subjectName: string) {
     return (
@@ -133,6 +134,8 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
   render() {
     const { parentState, canEdit, baseUrl, saveTitles } = this.props;
+
+    let isValid = (parentState.title && parentState.title.length > 0 && parentState.title.length < 50) ? true : false;
 
     let subjectName = '';
     try {
@@ -164,28 +167,37 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <form>
               <Grid item className="input-container">
                 <div className="audience-inputs">
-                  {/*
-                <QuillTitleEditor
-                      data={currentBrick.title}
-                      onChange={title => changeBrick((brick) => ({ ...brick, title }))}
-                      placeholder="What is your brick about?"
-                      disabled={locked}
-                      validate={validationRequired}
-                      isValid={!!stripHtml(currentBrick.title)}
-                      toolbar={['italic']}
-    /> */}
-                  <QuillTitleEditor
+                  <QuillEditor
                     data={parentState.title}
                     onChange={title => this.onTitleChange(title)}
-                    placeholder="What is your brick about?"
+                    placeholder="Proposed Title"
+                    tabIndex={-1}
                     disabled={!canEdit}
-                    toolbar={['italic']}
+                    showToolbar={true}
+                    toolbar={[
+                      "bold",
+                      "italic",
+                      "fontColor",
+                      "superscript",
+                      "subscript",
+                      "strikethrough",
+                      "latex",
+                      "bulletedList",
+                      "numberedList",
+                      "blockQuote",
+                      "image",
+                    ]}
+                    enabledToolbarOptions={['italic']}
                   />
                   <div className="absolute-title-help">
                     <HoverHelp>
                       Be punchy and succinct. This ought to be written in Camel or Sentence Case, and give a reasonable indication of the content of the brick. If you would like to use a more playful title, remember to add relevant keywords in the section below, so that your brick is more likely to appear to interested learners.
                     </HoverHelp>
                   </div>
+                </div>
+                <div className={`title-validation-text ${parentState.title.length > 50 ? 'invalid-text' : 'valid'}`}>
+                  <div>Titles can be a maximum of 50 characters</div>
+                  <div>{parentState.title.length}/50</div>
                 </div>
                 <div className="audience-inputs">
                   <DifficultySelect disabled={!canEdit} level={parentState.academicLevel} onChange={this.props.setAcademicLevel.bind(this)} />
@@ -230,7 +242,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                 <div className="centered">
                   <PrevButton
                     to={baseUrl + "/subject"}
-                    isActive={true}
+                    isActive={false}
                     onHover={() => { }}
                     onOut={() => { }}
                   />
@@ -243,11 +255,11 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   Next
                 </div>
               }
-              <div className="centered">
+              <div className={`centered `}>
                 <NextButton
-                  isActive={true}
+                  isActive={isValid}
                   step={ProposalStep.BrickTitle}
-                  canSubmit={true}
+                  canSubmit={isValid}
                   onSubmit={saveTitles}
                   data={parentState}
                   baseUrl={baseUrl}
