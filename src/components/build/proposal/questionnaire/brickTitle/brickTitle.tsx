@@ -23,6 +23,7 @@ import DifficultySelect from "./components/DifficultySelect";
 import KeyWordsPlay from "./components/KeywordsPlay";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 
 interface BrickTitleProps {
@@ -135,7 +136,9 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
   render() {
     const { parentState, canEdit, baseUrl, saveTitles } = this.props;
 
-    let isValid = (parentState.title && parentState.title.length > 0 && parentState.title.length < 50) ? true : false;
+    let textLength = stripHtml(parentState.title).length;
+
+    let isValid = (parentState.title && parentState.title.length > 0 && textLength < 50) ? true : false;
 
     let subjectName = '';
     try {
@@ -195,10 +198,10 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                     </HoverHelp>
                   </div>
                 </div>
-                <div className={`title-validation-text ${parentState.title.length > 50 ? 'invalid-text' : 'valid'}`}>
+                <div className={`title-validation-text ${textLength > 50 ? 'invalid-text' : 'valid'}`}>
                   <div>Titles can be a maximum of 50 characters</div>
-                  <div>{parentState.title.length}/50</div>
-                </div>
+                  <div>{textLength}/50</div>
+                </div> v
                 <div className="audience-inputs">
                   <DifficultySelect disabled={!canEdit} level={parentState.academicLevel} onChange={this.props.setAcademicLevel.bind(this)} />
                   <div className="absolute-difficult-help">
@@ -241,7 +244,6 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                 ?
                 <div className="centered">
                   <PrevButton
-                    to={baseUrl + "/subject"}
                     isActive={false}
                     onHover={() => { }}
                     onOut={() => { }}
