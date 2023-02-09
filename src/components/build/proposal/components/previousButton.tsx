@@ -5,7 +5,7 @@ import "./previousButton.scss";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface PrevButtonProps {
-  to: string;
+  to?: string;
   isActive: boolean;
   onHover(): void;
   onOut(): void;
@@ -19,7 +19,11 @@ const PreviousButton: React.FC<PrevButtonProps> = ({
 }) => {
   const history = useHistory();
 
-  const prev = () => history.push(to);
+  const prev = () => {
+    if (to) {
+      history.push(to);
+    }
+  }
 
   return (
     <button
