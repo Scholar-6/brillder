@@ -7,7 +7,6 @@ import { ProposalStep, OpenQuestionRoutePart } from "../../model";
 import { AcademicLevel, Brick, KeyWord, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { getBrillderTitle } from "components/services/titleService";
-import { enterPressed } from "components/services/key";
 
 import NextButton from '../../components/nextButton';
 import PrevButton from "../../components/previousButton";
@@ -24,11 +23,7 @@ import DifficultySelect from "./components/DifficultySelect";
 import KeyWordsPlay from "./components/KeywordsPlay";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
-
-enum RefName {
-  subTitleRef = 'subTitleRef',
-  altTitleRef = 'altTitleRef'
-}
+import QuillTitleEditor from "components/baseComponents/quill/QuillTitleEditor";
 
 interface BrickTitleProps {
   user: User;
@@ -46,8 +41,6 @@ interface BrickTitleProps {
 
 interface BrickTitleState {
   subjectSelectOpen: boolean;
-  subTitleRef: React.RefObject<HTMLDivElement>;
-  altTitleRef: React.RefObject<HTMLDivElement>;
 }
 
 interface PreviewProps {
@@ -107,32 +100,15 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
     this.state = {
       subjectSelectOpen: false,
-      subTitleRef: React.createRef<HTMLDivElement>(),
-      altTitleRef: React.createRef<HTMLDivElement>(),
     }
     if (!props.brickId) {
       props.createBrick();
     }
   }
 
-  onChange(event: React.ChangeEvent<{ value: string }>, value: string) {
-    event.stopPropagation();
-    const title = event.target.value.substr(0, 49);
-    this.props.saveTitles({ ...this.props.parentState, [value]: title });
-  };
-
   onTitleChange(value: string) {
     const title = value.substr(0, 49);
     this.props.saveTitles({ ...this.props.parentState, title });
-  }
-
-  moveToRef(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, refName: RefName) {
-    if (enterPressed(e)) {
-      let ref = this.state[refName];
-      if (ref && ref.current) {
-        ref.current.getElementsByTagName("input")[0].focus();
-      }
-    }
   }
 
   renderSubjectTitle(subjectName: string) {
@@ -188,27 +164,22 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <form>
               <Grid item className="input-container">
                 <div className="audience-inputs">
-                  <QuillEditor
+                  {/*
+                <QuillTitleEditor
+                      data={currentBrick.title}
+                      onChange={title => changeBrick((brick) => ({ ...brick, title }))}
+                      placeholder="What is your brick about?"
+                      disabled={locked}
+                      validate={validationRequired}
+                      isValid={!!stripHtml(currentBrick.title)}
+                      toolbar={['italic']}
+    /> */}
+                  <QuillTitleEditor
                     data={parentState.title}
                     onChange={title => this.onTitleChange(title)}
-                    placeholder="Proposed Title"
-                    tabIndex={-1}
+                    placeholder="What is your brick about?"
                     disabled={!canEdit}
-                    showToolbar={true}
-                    toolbar={[
-                      "bold",
-                      "italic",
-                      "fontColor",
-                      "superscript",
-                      "subscript",
-                      "strikethrough",
-                      "latex",
-                      "bulletedList",
-                      "numberedList",
-                      "blockQuote",
-                      "image",
-                    ]}
-                    enabledToolbarOptions={['italic']}
+                    toolbar={['italic']}
                   />
                   <div className="absolute-title-help">
                     <HoverHelp>
