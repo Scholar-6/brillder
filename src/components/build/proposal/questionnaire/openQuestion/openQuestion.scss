@@ -78,11 +78,12 @@
 
   .quill-document-editor {
     height: auto;
+    margin-bottom: 2vh !important;
   }
 
   .open-question-validate {
     width: 42.7vw;
-    margin: 1vh auto 1vh auto;
+    margin: 0 auto 1vh auto;
     display: flex;
 
     > div:first-child {
