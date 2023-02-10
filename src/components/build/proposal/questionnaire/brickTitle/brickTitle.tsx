@@ -137,7 +137,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
     let textLength = stripHtml(parentState.title).length;
 
-    let isValid = (parentState.title && parentState.title.length > 0 && textLength < 50) ? true : false;
+    let isValid = (parentState.title && parentState.title.length > 0 && textLength <= 50 && parentState.title.length < 255) ? true : false;
 
     let subjectName = '';
     try {

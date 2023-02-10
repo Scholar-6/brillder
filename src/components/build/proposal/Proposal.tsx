@@ -264,12 +264,16 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   setPrepAndSave = async (prep: string) => {
     const brick = { ...this.state.brick, prep } as Brick;
     this.saveLocalBrick(brick);
-    await this.saveBrick(brick);
-    this.props.history.push(buildQuesitonType(this.state.brick.id));
+    const res = await this.saveBrick(brick);
+    if (res) {
+      this.props.history.push(buildQuesitonType(this.state.brick.id));
+    } else {
+      // error
+      alert('error')
+    }
   };
 
   createBrick = async () => {
-    console.log('create brick')
     if (this.state.brick.subjectId) {
       const newBrick = await this.saveBrick(this.state.brick);
       if (newBrick) {

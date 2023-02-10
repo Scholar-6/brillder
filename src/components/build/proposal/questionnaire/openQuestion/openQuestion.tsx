@@ -36,13 +36,10 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
   selectedQuestion, saveOpenQuestion, ...props
 }) => {
   const saveOpenQuestionLocal = (v: string) => {
-    const value = v.substr(0, 250);
-    saveOpenQuestion(value);
+    saveOpenQuestion(v);
   }
 
-  console.log(selectedQuestion.length);
-
-  var openQuestion = selectedQuestion.slice()
+  let isValid = selectedQuestion.length <= 255 ? true : false;
 
   return (
     <div className="tutorial-page open-question-page">
@@ -63,17 +60,21 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           <OpenQHoverHelp />
           <QuillEditor
             disabled={!props.canEdit}
-            data={openQuestion}
+            data={selectedQuestion}
             tabIndex={-1}
             placeholder="Open Question"
             toolbar={['bold', 'italic', 'latex']}
             showToolbar={true}
             onChange={saveOpenQuestionLocal}
           />
+          <div className={`open-question-validate ${isValid ? 'valid' : 'invalid-text'}`}>
+            <div>Open question can be a maximum of 255 characters</div>
+            <div>{selectedQuestion.length}/255</div>
+          </div>
           <NavigationButtons
             baseUrl={props.baseUrl}
             step={ProposalStep.OpenQuestion}
-            canSubmit={true}
+            canSubmit={isValid}
             onSubmit={saveOpenQuestionLocal}
             data={selectedQuestion}
             backLink={props.baseUrl + TitleRoutePart}
