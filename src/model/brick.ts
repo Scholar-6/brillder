@@ -145,6 +145,8 @@ export interface Brick {
   isDescription?: boolean;
   isCreateLink?: boolean;
   adaptedFrom?: any;
+
+  selected?: boolean;
 }
 
 export enum isAuthenticated {

@@ -34,7 +34,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
           </div>
           <div className="share-box-r1">
             <div className="text-r1">{this.props.selectedCount} Bricks Selected</div>
-            <div className="share-btn-r1" onClick={this.props.share}>
+            <div className={`share-btn-r1 ${this.props.selectedCount == 0 ? 'invalid' : 'valid'}`} onClick={this.props.share}>
               <SpriteIcon name="share-white-filled" />
               Share
             </div>

@@ -602,10 +602,15 @@
         width: auto;
         padding: 0.6vw 0.8vw;
         background: var(--theme-orange);
+        cursor: pointer;
         svg {
           width: 1.3vw;
           height: 1.3vw;
           margin-right: 0.5vw;
+        }
+
+        &.invalid { 
+          background: #e19d97;
         }
       }
     }

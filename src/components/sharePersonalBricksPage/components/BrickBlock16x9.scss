@@ -53,6 +53,16 @@
       overflow: hidden;
       height: calc(#{$bricks-height / 3});
 
+      .checkbox-container-r1 {
+        position: absolute;
+        top: 0.2vw;
+        left: 0.9vw + 0.2vw;
+
+        .MuiButtonBase-root {
+          padding: 0.5vw;
+        }
+      }
+
       .level {
         position: absolute;
         z-index: 3;
