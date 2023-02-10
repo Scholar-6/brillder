@@ -8,7 +8,7 @@ import { User } from "model/user";
 import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BrickTitle from "components/baseComponents/BrickTitle";
-import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { Checkbox, FormControlLabel, Radio } from "@material-ui/core";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -79,12 +79,12 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
         style={{ transformOrigin: "0 0 0" }}
         timeout={index * 150}
       >
-        <div className="flex-brick-container" onClick={evt => { evt.preventDefault(); props.toggle(brick); }}>
+        <div className="flex-brick-container">
           <div className="publish-brick-container">
             <FormControlLabel
               className="checkbox-container-r1"
               checked={brick.selected}
-              control={<Checkbox />}
+              control={<Checkbox onClick={() => props.toggle(brick)} />}
               label=""
             />
             <div className="level-and-length">

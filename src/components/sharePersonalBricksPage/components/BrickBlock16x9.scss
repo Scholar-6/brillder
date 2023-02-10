@@ -61,6 +61,12 @@
         .MuiButtonBase-root {
           padding: 0.5vw;
         }
+        .MuiCheckbox-colorSecondary.Mui-checked {
+          color: var(--white) !important;
+        }
+        .MuiCheckbox-colorSecondary.Mui-checked {
+          color: var(--theme-green) !important;
+        }
       }
 
       .level {
