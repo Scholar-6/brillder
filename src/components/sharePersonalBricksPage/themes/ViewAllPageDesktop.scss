@@ -347,17 +347,6 @@
       max-height: calc(#{$bricks-height / 15});
     }
   }
-  .unauthorized-sidebar {
-    margin-top: 18vh;
-    margin-left: 7%;
-    width: 86%;
-    font-family: $font-family-regular;
-    font-size: 1.9vw;
-
-    .text {
-      font-size: 1.5vw;
-    }
-  }
   // #2776 zoom brick on hover
   .brick-container {
     display: flex;
@@ -571,5 +560,54 @@
 
   .bricks-pagination {
     font-size: 1.6vw;
+  }
+}
+
+
+.share-personal-bricks .sort-and-filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .flex-height-box {
+    height: auto !important;
+    padding-left: 1.6vw;
+    padding-right: 1.6vw;
+
+    .title-box-r1 {
+      font-size: 1.9vw;
+      margin-bottom: 3vh;
+    }
+
+    .text-box-r1 {
+      font-size: 1.45vw;
+    }
+
+    .share-box-r1 {
+      margin-top: 5vh;
+      display: flex;
+      flex-direction: unset !important;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4vw;
+      .text-r1 {
+        text-align: left;
+        width: 13vw;
+      }
+      .share-btn-r1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.5vw;
+        width: auto;
+        padding: 0.6vw 0.8vw;
+        background: var(--theme-orange);
+        svg {
+          width: 1.3vw;
+          height: 1.3vw;
+          margin-right: 0.5vw;
+        }
+      }
+    }
   }
 }
