@@ -79,6 +79,7 @@ import ClassesEvents from 'components/admin/classesEvents/ClassesEvents';
 import AdminOverviewPage from 'components/admin/adminOverview/AdminOverviewPage';
 import LandingSubscribePage from 'components/landingSubscribePage/LandingSubscribePage';
 import PayTerms from 'components/stripePageCreditCard/terms/PayTerms';
+import SharePersonalBricks from 'components/sharePersonalBricksPage/SharePersonalBricks';
 
 
 interface AppProps {
@@ -286,6 +287,7 @@ const App: React.FC<AppProps> = props => {
             <UnauthorizedRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
             <UnauthorizedRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
             <UnauthorizedRoute path={map.ViewAllPage} component={ViewAll} />
+            <UnauthorizedRoute path={map.ShareBricksPage} component={SharePersonalBricks} />
 
             <StudentRoute path="/my-library/:userId" component={Library} />
             <StudentRoute path="/my-library" component={Library} />
