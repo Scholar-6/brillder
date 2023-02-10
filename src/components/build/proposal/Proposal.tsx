@@ -31,6 +31,7 @@ import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { buildQuesitonType } from "../routes";
 import { Helmet } from "react-helmet";
 import { getSubjects } from "services/axios/subject";
+import FailedToSaveBrickDialog from "components/baseComponents/failedRequestDialog/FailedToSaveBrickDialog";
 
 interface ProposalProps {
   history: History;
@@ -268,8 +269,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     if (res) {
       this.props.history.push(buildQuesitonType(this.state.brick.id));
     } else {
-      // error
-      alert('error')
+      this.setState({hasSaveError: true});
     }
   };
 
@@ -427,6 +427,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
           close={() => this.closeDialog()}
           move={() => this.goHome()}
         />
+        <FailedToSaveBrickDialog isOpen={this.state.hasSaveError} close={() => this.setState({hasSaveError: false})} />
       </div>
     );
   }
