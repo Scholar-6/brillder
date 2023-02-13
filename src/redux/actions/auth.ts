@@ -38,7 +38,6 @@ const login = (model:LoginModel) => {
         const {errors} = data;
         msg = errors[0].msg
       }
-      alert(msg);
       dispatch(loginFailure(msg))
     })
     .catch(error => {
@@ -96,7 +95,6 @@ const logout = () => {
         const {errors} = data;
         msg = errors[0].msg
       }
-      alert(msg);
       dispatch(logoutFailure(msg))
     })
     .catch(error => {
