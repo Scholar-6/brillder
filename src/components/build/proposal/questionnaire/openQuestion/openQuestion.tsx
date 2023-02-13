@@ -35,12 +35,18 @@ const HeadComponent: React.FC<any> = ({ data }) => {
 const OpenQuestion: React.FC<OpenQuestionProps> = ({
   selectedQuestion, saveOpenQuestion, ...props
 }) => {
+  const saveOpenQuestionLocal = (v: string) => {
+    saveOpenQuestion(v);
+  }
+
+  let isValid = selectedQuestion.length <= 255 ? true : false;
+
   return (
     <div className="tutorial-page open-question-page">
       <Navigation
         baseUrl={props.baseUrl}
         step={ProposalStep.OpenQuestion}
-        onMove={() => saveOpenQuestion(selectedQuestion)}
+        onMove={() => saveOpenQuestionLocal(selectedQuestion)}
       />
       <Grid container direction="row">
         <Grid item className="left-block">
@@ -55,16 +61,21 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           <QuillEditor
             disabled={!props.canEdit}
             data={selectedQuestion}
+            tabIndex={-1}
             placeholder="Open Question"
             toolbar={['bold', 'italic', 'latex']}
             showToolbar={true}
-            onChange={saveOpenQuestion}
+            onChange={saveOpenQuestionLocal}
           />
+          <div className={`open-question-validate ${isValid ? 'valid' : 'invalid-text'}`}>
+            <div>Open question can be a maximum of 255 characters</div>
+            <div>{selectedQuestion.length}/255</div>
+          </div>
           <NavigationButtons
             baseUrl={props.baseUrl}
             step={ProposalStep.OpenQuestion}
-            canSubmit={true}
-            onSubmit={saveOpenQuestion}
+            canSubmit={isValid}
+            onSubmit={saveOpenQuestionLocal}
             data={selectedQuestion}
             backLink={props.baseUrl + TitleRoutePart}
           />

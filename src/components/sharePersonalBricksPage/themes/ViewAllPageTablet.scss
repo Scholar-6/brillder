@@ -2,43 +2,73 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+$sidebar-font-size: 1.3vw;
+
 .dashboard-page {
   overflow: hidden;
   background: var(--theme-dark-blue);
   height: 100%;
   width: 100%;
-  .create-subject-button {
-    font-size: 1.05vw;
-    font-family: $font-family-light;
+  .radio-container {
+    font-size: $sidebar-font-size;
   }
-  .ffef-loader-container {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 75%;
-    color: var(--theme-dark-blue);
-    .page-loader {
-      position: relative;
-      left: unset;
-      top: unset;
-      transform: unset;
-      height: 100%;
-      background: inherit !important;
+  .level-filter-box {
+    padding-right: 1vw !important;
+    .MuiTypography-root {
+      font-size: 1.3vw !important;
     }
+    .MuiFormControlLabel-root {
+      width: 100% !important;
+    }
+  }
+  .sorted-row .sort-and-filter-container .sort-box .sort-by-box .sort-header,
+  .sorted-row .sort-and-filter-container .subjects-toggle .toggle-button,
+  .sorted-row .sort-and-filter-container .sort-box .filter-container .MuiFormControlLabel-label {
+    font-size: $sidebar-font-size !important;
+  }
+  .sorted-row .sort-and-filter-container .sort-box .sort-by-box {
+    .sort-header {
+      font-size: 1.8vw !important;
+    }
+  }
+  .sorted-row .sort-and-filter-container .sort-box .filter-header {
+    text-transform: capitalize;
+    letter-spacing: 0 !important;
+    font-size: 1.8vw !important;
+  }
+  .published-count div {
+    font-size: $sidebar-font-size !important;
+  }
+
+  .brick-row-title.main-title {
+    letter-spacing: 0 !important;
+  }
+
+  .create-button,
+  .recomend-button,
+  .sorted-row .brick-row-container .bricks-list-container .main-brick-container .title {
+    font-size: 1.8vw !important;
+  }
+
+  .private-core-toggle {
+    font-size: 1.5vw;
+  }
+
+  .create-subject-button {
+    font-size: $sidebar-font-size;
+    font-family: $font-family-light;
   }
   .level-filter-box {
     position: relative;
     .MuiTypography-root {
       font-family: $font-family-light !important;
-      font-size: 1.05vw;
+      font-size: $sidebar-font-size;
     }
     .absolute-difficult-help {
       width: 4vw !important;
       position: absolute;
       right: 0;
-      top: calc(1.3vh - 0.2vw);
+      top: calc(1.3vh + 0.7vw);
       > div {
         font-family: $font-family-bold;
       }
@@ -55,12 +85,6 @@
       .l-text.smaller {
         width: calc(100% - 4vw);
       }
-      .hover-area.custom {
-        &:hover .hover-content {
-          top: -8vw;
-          left: 3vw;
-        }
-      }
     }
   }
   .sorted-row {
@@ -68,6 +92,7 @@
     .sort-and-filter-container {
       margin-top: 0.5vh;
       .view-all-sort-box {
+        height: 9vw !important;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
         @include flexToXCenter;
@@ -100,10 +125,6 @@
             background: var(--white);
           }
 
-          &.not-active:hover {
-            background: var(--off-white) !important;
-          }
-
           &:nth-child(odd) {
             margin-right: 0.4%;
           }
@@ -119,8 +140,8 @@
             flex-direction: column;
 
             &.icon-container {
-              margin-left: 1.3vw;
-              margin-right: 0.7vw;
+              margin-left: 1.1vw;
+              margin-right: 0.1vw;
               width: 20%;
             }
 
@@ -142,17 +163,12 @@
         position: relative;
         @include flexCenter;
         background: var(--white);
-        font-size: 1.05vw;
         height: 2vw;
         svg {
           cursor: pointer;
           width: 1.7vw;
           height: 1.7vw;
           color: var(--theme-dark-blue);
-
-          &:hover {
-            color: var(--theme-orange);
-          }
 
           &.disabled {
             color: var(--tab-gray);
@@ -168,7 +184,7 @@
             color: var(--theme-dark-blue);
           }
           .MuiFormControlLabel-label {
-            font-size: 1.05vw;
+            font-size: $sidebar-font-size;
             font-family: $font-family-light !important;
           }
         }
@@ -178,16 +194,11 @@
           &::after, &::before {
             background: var(--theme-dark-blue);
           }
-          
-          &:hover {
-            &::after, &::before {
-              background: var(--theme-orange);
-            }
-          }
         }
       }
     }
     .brick-row-container {
+      width: calc(100vw - 23vw - 2.4vw) !important;
       .subjects-column {
         display: flex;
         align-items: center;
@@ -246,18 +257,6 @@
                 }
               }
             }
-            &:hover {
-              background: var(--theme-dark-blue);
-              .subject-name {
-                color: var(--white);
-              }
-              .round-circle-container.icon .svg {
-                color: var(--white);
-              }
-              .icon {
-                color: var(--theme-dark-blue);
-              }
-            }
           }
         }
       }
@@ -279,7 +278,7 @@
       .subject-list-v2 {
         .subjects-indexes-box {
           font-family: $font-family-light;
-          font-size: 1.05vw;
+          font-size: $sidebar-font-size;
         }
       }
     }
@@ -288,18 +287,18 @@
     position: absolute;
   }
   .main-title {
-    padding-top: calc(2.1vh + 0.9vw) !important;
-    letter-spacing: 0 !important;
-    font-family: $font-family-bold !important;
     @include transitionAll300;
     max-width: 55vw;
+    padding-top: 1.2vw !important;
+    margin-top: 2.1vh;
     font-size: 3vw !important;
-    line-height: 1.2 !important;
-    min-height: 10vh;
+    line-height: 0;
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
     &.subject-title {
+      letter-spacing: 0vw;
+      margin-top: 1.2vw;
       font-size: 2.9vw;
     }
   }
@@ -323,20 +322,16 @@
     svg {
       color: var(--theme-orange);
       width: 4vw;
+      margin-right: 0.4vw;
     }
   }
   .create-button {
     cursor: pointer;
-    margin-left: 14.4vw;
+    margin-left: 8vw;
     svg {
       @include transitionAll300;
       margin-top: calc(#{$bricks-height / 90});
       max-height: calc(#{$bricks-height / 12});
-    }
-    &:hover {
-      svg {
-        transform: rotate(10deg);
-      }
     }
   }
   .recomend-button {
@@ -368,10 +363,12 @@
       height: 4.8vw;
       transition: all 300ms ease-out;
     }
-    .absolute-container:hover {
-      width: 100% !important;
-      height: 4.8vw !important;
-    }
+  }
+  .flex-brick-container {
+    max-height: 17vw !important;
+  }
+  .publish-brick-container {
+    max-height: 13vw !important;
   }
 }
 
@@ -386,13 +383,43 @@
   }
 }
 
+
+.level-filter-box {
+  padding-top: 1.3vh;
+  padding-bottom: 1.8vh;
+  padding-left: 1.2vw;
+  font-size: $sidebar-font-size;
+  .MuiButtonBase-root {
+    padding: 0;
+    padding-top: 0.81vh;
+    padding-bottom: 0.8vh;
+  }
+  .MuiFormControlLabel-root {
+    margin: 0;
+  }
+  .MuiButtonBase-root {
+    margin-right: 0.5vw;
+  }
+  svg {
+    height: 1.25vw;
+    width: 1.25vw;
+    color: var(--white) !important;
+  }
+}
+
+.sorted-row .sort-and-filter-container .sort-box .filter-header {
+  font-size: $sidebar-font-size;
+}
+
 .sorted-row .sort-and-filter-container .sort-box .filter-header.subject-category-name {
   color: gray;
   background: var(--white);
   text-align: center;
   text-transform: none;
+  letter-spacing: 0 !important;
   span {
-    letter-spacing: 0;
+    font-size: $sidebar-font-size;
+    letter-spacing: 0 !important;
     width: 100%;
     text-align: inherit;
   }
@@ -406,170 +433,14 @@
   }
 }
 
+html body #root .browser-type-container .dashboard-page .sorted-row {
+  position: absolute;
+}
+
 .learn-more-btn-d3 {
-  cursor: pointer;
   margin-left: 1vw;
   padding: 0.2vw 0.9vw;
   color: var(--white);
   border-radius: 0.7vw;
   background: var(--theme-green);
-
-  &:hover {
-    background: var(--theme-dark-blue);
-  }
-}
-
-.competition-filter-d32 {
-  .star-d32 {
-    margin-top: 0.3vw;
-    margin-left: 0.6vw;
-  }
-}
-
-.categories-absolute {
-  position: relative;
-  > div {
-    position: absolute;
-    top: -1.5vw;
-    left: 1vw;
-    width: 30vw;
-    display: flex;
-    color: white;
-    font-size: 1vw;
-
-    .category {
-      cursor: pointer;
-      color: var(--theme-yellow);
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    svg {
-      margin-top: 0.1vw;
-      width: 1.4vw;
-      height: 1.4vw;
-      color: white;
-    }
-  }
-}
-
-
-// two-columns catalogue
-.sorted-row .brick-row-container .bricks-list-container .bricks-list.two-columns-t34 {
-  grid-template-columns: repeat(auto-fill, minmax(50%, 1fr)) !important;
-
-  .animated-brick-container .flex-brick-container .publish-brick-container {
-    border-radius: 1.5vw;
-  }
-}
-
-// one column catalogue
-.main-listing.dashboard-page.one-column-inside .sorted-row {
-  .sort-and-filter-container {
-    width: 36vw;
-    .sort-box {
-      .sort-by-box {
-        height: 9vw !important;
-        .sort-group {
-          padding-top: 0.2vh;
-        }
-
-        .sort-header {
-          font-size: 2.4vw;
-        }
-      }
-      .filter-container {
-        .sortBy svg {
-          width: 2vw;
-          height: 2vw;
-        }
-        .MuiFormControlLabel-label {
-          font-size: 1.6vw !important;
-        }
-      }
-    }
-  }
-  .sort-box .filter-container .sortBy svg,
-  .level-filter-box svg,
-  .competition-filter-box svg {
-    width: 1.7vw;
-    height: 1.7vw;
-  }
-
-  .competition-filter-box .MuiTypography-body1 {
-    font-size: 1.6vw !important;
-  }
-
-  .sort-and-filter-container .sort-box .filter-header {
-    font-size: 2.4vw !important;
-  }
-
-  .sort-box .subjects-filter .published-count {
-    font-size: 1.6vw;
-  }
-
-  .sort-and-filter-container .subjects-toggle .my-subjects div svg {
-    width: 2.4vw;
-    height: 2.4vw;
-  }
-
-  .sort-and-filter-container .subjects-toggle .toggle-button {
-    font-size: 1.6vw;
-  }
-
-  .sort-and-filter-container .scroll-buttons {
-    font-size: 1.6vw;
-  }
-
-  .create-subject-button {
-    font-size: 1.6vw;
-  }
-
-  .level-filter-box .MuiTypography-root {
-    font-size: 1.6vw;
-  }
-  .level-filter-box .MuiFormControlLabel-root {
-    width: 100% !important;
-  }
-  .brick-row-container .bricks-list-container .bricks-list.one-column-t34 {
-    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)) !important;
-
-    .animated-brick-container .flex-brick-container .publish-brick-container {
-      border-radius: 2vw;
-      min-width: 62vw;
-
-      .bottom-description-color,
-      .bottom-description {
-        height: 5vw;
-        font-size: 1.8vw;
-      }
-    }
-  }
-
-  .main-brick-container {
-    height: auto !important;
-    font-size: 2vw !important;
-    .title {
-      font-size: inherit !important;
-    }
-    .create-button {
-      font-size: inherit !important;
-      svg {
-        height: 5vw;
-        width: 7vw;
-      }
-    }
-  }
-  .main-title {
-    min-height: unset !important;
-  }
-  .private-core-toggle {
-    font-size: 1.6vw;
-  }
-
-  .bricks-pagination {
-    font-size: 1.6vw;
-  }
 }

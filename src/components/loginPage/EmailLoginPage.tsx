@@ -63,6 +63,8 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
     event.preventDefault();
 
     let res = validateForm();
+
+    alert ('form validated ' + res);
     if (res !== true) {
       toggleAlertMessage(true);
       setAlertMessage(res);
@@ -74,6 +76,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
 
   const sendLogin = async (email: string, password: string) => {
     let data = await login(email, password);
+    console.log('login success');
     if (!data.isError) {
       if (data === "OK") {
         axios.get(

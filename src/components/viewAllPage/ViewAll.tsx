@@ -79,6 +79,7 @@ import ClassInvitationDialog from "components/baseComponents/classInvitationDial
 import SearchSuggestions from "./components/SearchSuggestions";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import MobileCategory from "./MobileCategory";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ViewAllProps {
   user: User;
@@ -407,7 +408,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
-      let subjectIds:number[] = [];
+      let subjectIds: number[] = [];
       if (this.state.isAllSubjects == false) {
         subjectIds = this.props.user.subjects.map(s => s.id);
       }
@@ -467,7 +468,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         subjectIds = this.props.user.subjects.map(s => s.id);
       } else {
         // get only user subject ids
-        let tempSubjectIds:number[] = [];
+        let tempSubjectIds: number[] = [];
         for (let sId of subjectIds) {
           const found = this.props.user.subjects.find(s => s.id == sId);
           if (found) {
@@ -1156,6 +1157,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   renderDesktopViewAllPage() {
     return (
       <Grid container direction="row" className="sorted-row no-mobile-css">
+        {!this.props.user && this.state.subjectGroup && <div className="categories-absolute">
+          <div>
+            <div className="category" onClick={() => {
+              this.props.history.push(map.SubjectCategories);
+            }}>Categories</div>
+            <div>
+              <SpriteIcon name="arrow-right" />
+            </div>
+            <div>{SubjectGroupNames[this.state.subjectGroup]}</div>
+          </div>
+        </div>}
         <ViewAllFilter
           user={this.props.user}
           sortBy={this.state.sortBy}

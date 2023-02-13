@@ -11,7 +11,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import actions from 'redux/actions/requestFailed';
 import { User } from 'model/user';
 import { Classroom } from 'model/classroom';
-import { AcademicLevelLabels, Brick } from 'model/brick';
+import { Brick } from 'model/brick';
 import { assignToClassByEmails, getClassrooms } from 'services/axios/classroom';
 import SpriteIcon from '../SpriteIcon';
 import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
@@ -21,6 +21,7 @@ import { createClass } from 'components/teach/service';
 import map from 'components/map';
 import ValidationFailedDialog from './ValidationFailedDialog';
 import HoverHelp from '../hoverHelp/HoverHelp';
+import PremiumEducatorDialog from 'components/play/baseComponents/dialogs/PremiumEducatorDialog';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
@@ -45,6 +46,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [haveDeadline, toggleDeadline] = React.useState(false);
   const [newClassName, setNewClassName] = React.useState('');
   const [isNewTeacher, setNewTeacher] = React.useState(false);
+
+  const [isPremiumDialogOpen, setPremium] = React.useState(false);
 
   const [canSubmit, setSubmit] = React.useState(true);
 
@@ -103,29 +106,24 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           // assign students to class
           const currentUsers = users;
           if (!emailRegex.test(currentEmail)) {
-            if (users.length <= 0) {
-              return;
-            }
           } else {
             setUsers(users => [...users, { email: currentEmail } as User]);
             currentUsers.push({ email: currentEmail } as User);
             setCurrentEmail("");
           }
+          
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
-          if (res && res.length > 0) {
+          if (res) {
             await assignToExistingBrick(newClassroom);
 
             if (props.user && props.user.freeAssignmentsLeft) {
               props.user.freeAssignmentsLeft = props.user.freeAssignmentsLeft - 1;
             }
             success([newClassroom], []);
-
-            // only for new classes
-            if (classes.length === 0) {
-              props.history.push(`${map.TeachAssignedTab}?classroomId=${newClassroom.id}&${map.NewTeachQuery}&assignmentExpanded=true`);
-            }
+            props.history.push(`${map.TeachAssignedTab}?classroomId=${newClassroom.id}&${map.NewTeachQuery}&assignmentExpanded=true`);
           }
           await getClasses();
+          props.close();
         } else {
           console.log('failed to create class');
         }
@@ -216,10 +214,12 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         }
 
         success([existingClass], []);
+        props.close();
       } else {
-        if (res.error === 'Subscription is not valid.' && props.showPremium) {
+        if (res.error === 'Subscription is not valid.') {
+          console.log('show premium popup')
           props.close();
-          props.showPremium();
+          setPremium(true);
         }
       }
     } else {
@@ -262,6 +262,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             setEmpty={setSubmit}
           />
         </div>
+        {renderDeadline()}
       </div>
     )
   }
@@ -269,71 +270,37 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const renderExisting = () => {
     if (classes.length <= 0) { return <div />; }
     return (
-      <div className="r-class-selection">
-        <Select
-          className="select-existed-class"
-          MenuProps={{ classes: { paper: 'select-classes-list' } }}
-          value={existingClass.id}
-          onChange={e => setExistingClass(classes.find(c => c.id === parseInt(e.target.value as string)))}
-        >
-          {classes.map((c: any, i) =>
-            <MenuItem value={c.id} key={i}>
-              <ListItemIcon>
-                <SvgIcon>
-                  <SpriteIcon
-                    name="circle-filled"
-                    className="w100 h100 active"
-                    style={{ color: c.subject?.color || '#4C608A' }}
-                  />
-                </SvgIcon>
-              </ListItemIcon>
-              <ListItemText>{c.name}</ListItemText>
-            </MenuItem>
-          )}
-        </Select>
+      <div className="existing">
+        <div className="r-class-selection">
+          <Select
+            className="select-existed-class"
+            MenuProps={{ classes: { paper: 'select-classes-list' } }}
+            value={existingClass.id}
+            onChange={e => setExistingClass(classes.find(c => c.id === parseInt(e.target.value as string)))}
+          >
+            {classes.map((c: any, i) =>
+              <MenuItem value={c.id} key={i}>
+                <ListItemIcon>
+                  <SvgIcon>
+                    <SpriteIcon
+                      name="circle-filled"
+                      className="w100 h100 active"
+                      style={{ color: c.subject?.color || '#4C608A' }}
+                    />
+                  </SvgIcon>
+                </ListItemIcon>
+                <ListItemText>{c.name}</ListItemText>
+              </MenuItem>
+            )}
+          </Select>
+        </div>
+        {renderDeadline()}
       </div>
     );
   }
 
-  const renderAssignLeftLabel = () => {
-    const { user } = props;
-
-    if (user?.subscriptionState === 0 || user?.isFromInstitution || user?.library) {
-      return <div />;
-    }
-
-    if (user?.freeAssignmentsLeft && user?.freeAssignmentsLeft > 1) {
-      return (
-        <div className="left-label">
-          {user.freeAssignmentsLeft} free Assignments Left
-        </div>
-      );
-    }
-
-    return (
-      <div className="left-label">
-        No Free Assignments Left
-      </div>
-    )
-  }
-
-  const renderPremiumButton = () => {
-    const { user } = props;
-
-    if (user?.subscriptionState === 0 || user?.isFromInstitution || user?.library) {
-      return <div />
-    }
-
-    return (
-      <div className="premium-btn flex-center" onClick={() => props.history.push(map.StripeEducator)}>
-        Subscribe <SpriteIcon name="hero-sparkle" />
-      </div>
-    )
-  }
-
   const renderFooter = () => (
     <div className="action-row custom-action-row" style={{ justifyContent: 'center' }}>
-      {renderAssignLeftLabel()}
       <button
         className={`btn btn-md bg-theme-orange yes-button icon-button r-long ${(isCreating && (newClassName === '' || !canSubmit)) ? 'invalid' : ''}`}
         onClick={assign} style={{ width: 'auto' }}
@@ -343,26 +310,29 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           <SpriteIcon name="file-plus" />
         </div>
       </button>
-      {renderPremiumButton()}
     </div>
   );
 
   const renderDeadline = () => (
-    <div className="r-radio-buttons">
+    <div className="deadline-v2">
       <div className="label">
         When is it due?
       </div>
-      <FormControlLabel
-        checked={haveDeadline === false}
-        control={<Radio onClick={() => toggleDeadline(false)} />}
-        label="No deadline"
-      />
-      <FormControlLabel
-        checked={haveDeadline === true}
-        control={<Radio onClick={() => toggleDeadline(true)} />}
-        label="Set date"
-      />
-      {haveDeadline && <TimeDropdowns date={deadlineDate} onChange={setDeadline} />}
+      <div className="r-radio-buttons">
+        <div>
+          <FormControlLabel
+            checked={haveDeadline === false}
+            control={<Radio onClick={() => toggleDeadline(false)} />}
+            label="No deadline"
+          />
+          <FormControlLabel
+            checked={haveDeadline === true}
+            control={<Radio onClick={() => toggleDeadline(true)} />}
+            label="Set date"
+          />
+          {haveDeadline && <TimeDropdowns date={deadlineDate} onChange={setDeadline} />}
+        </div>
+      </div>
     </div>
   );
 
@@ -387,10 +357,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           {renderNew()}
         </div>
         <div className="dialog-footer-white">
-          {renderDeadline()}
-          {(isCreating && (newClassName === '' || !canSubmit)) && <div className="help-footer-text">
-            Please ensure the email addresses you have entered are correctly formatted
-          </div>}
+          <div className="help-footer-text">
+            {(isCreating && !canSubmit) &&
+              'Please ensure that you have entered all email addresses correctly and pressed enter.'
+            }</div>
           {renderFooter()}
         </div>
       </Dialog>
@@ -415,13 +385,14 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           {isCreating ? renderNew() : renderExisting()}
         </div>
         <div className="dialog-footer-white">
-          {renderDeadline()}
-          {(isCreating && (newClassName === '' || !canSubmit)) && <div className="help-footer-text">
-            Please ensure the email addresses you have entered are correctly formatted
-          </div>}
+          <div className="help-footer-text">
+            {(isCreating && !canSubmit) &&
+              'Please ensure that you have entered all email addresses correctly and pressed enter.'
+            }</div>
           {renderFooter()}
         </div>
       </Dialog>
+      <PremiumEducatorDialog isOpen={isPremiumDialogOpen} close={() => setPremium(false)} submit={() => props.history.push(map.StripeEducator)} />
       <ValidationFailedDialog isOpen={alreadyAssigned} close={() => setAssigned(false)} header="This brick has already been assigned to this class." />
     </div>
   );

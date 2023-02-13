@@ -78,5 +78,26 @@
 
   .quill-document-editor {
     height: auto;
+    margin-bottom: 2vh !important;
+  }
+
+  .open-question-validate {
+    width: 42.7vw;
+    margin: 0 auto 1vh auto;
+    display: flex;
+
+    > div:first-child {
+      text-align: left;
+      width: 30vw;
+    }
+
+    > div:nth-child(2) {
+      text-align: right;
+      width: 12.7vw;
+    }
+
+    &.invalid-text {
+      color: var(--theme-orange);
+    }
   }
 }

@@ -225,7 +225,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
     return (
       <div key={i} className={className}>
-        <div className={`vertical-content ${hasHint ? '' : 'full-height'} ${answer.answerType === QuestionValueType.Sound ? 'sound-type-d34' : ''}`}>
+        <div className={`vertical-content unselectable ${hasHint ? '' : 'full-height'} ${answer.answerType === QuestionValueType.Sound ? 'sound-type-d34' : ''}`}>
           <Grid container direction="row" justify="center">
             <div className="circle-index">
               <div>

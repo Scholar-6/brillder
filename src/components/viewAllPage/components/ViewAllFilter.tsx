@@ -357,6 +357,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               ? this.renderSubjectLabelBox()
               : this.renderCategoryLabelBox()}
             {this.renderSubjectsToggle()}
+            {this.props.user &&
             <div className="scroll-buttons">
               {this.props.user && (
                 <div className="radio-container flex-center" onClick={() => this.props.selectUserSubjects(!this.props.isViewAll)}>
@@ -382,7 +383,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
                   }
                 ></button>
               )}
-            </div>
+            </div>}
           </div>
           <div
             className="sort-box subject-scrollable"

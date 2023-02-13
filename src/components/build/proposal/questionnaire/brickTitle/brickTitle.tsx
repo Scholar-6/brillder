@@ -7,7 +7,6 @@ import { ProposalStep, OpenQuestionRoutePart } from "../../model";
 import { AcademicLevel, Brick, KeyWord, Subject } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { getBrillderTitle } from "components/services/titleService";
-import { enterPressed } from "components/services/key";
 
 import NextButton from '../../components/nextButton';
 import PrevButton from "../../components/previousButton";
@@ -24,11 +23,8 @@ import DifficultySelect from "./components/DifficultySelect";
 import KeyWordsPlay from "./components/KeywordsPlay";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import HoverHelp from "components/baseComponents/hoverHelp/HoverHelp";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
-enum RefName {
-  subTitleRef = 'subTitleRef',
-  altTitleRef = 'altTitleRef'
-}
 
 interface BrickTitleProps {
   user: User;
@@ -46,8 +42,6 @@ interface BrickTitleProps {
 
 interface BrickTitleState {
   subjectSelectOpen: boolean;
-  subTitleRef: React.RefObject<HTMLDivElement>;
-  altTitleRef: React.RefObject<HTMLDivElement>;
 }
 
 interface PreviewProps {
@@ -107,33 +101,16 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
     this.state = {
       subjectSelectOpen: false,
-      subTitleRef: React.createRef<HTMLDivElement>(),
-      altTitleRef: React.createRef<HTMLDivElement>(),
     }
     if (!props.brickId) {
       props.createBrick();
     }
   }
 
-  onChange(event: React.ChangeEvent<{ value: string }>, value: string) {
-    event.stopPropagation();
-    const title = event.target.value.substr(0, 49);
-    this.props.saveTitles({ ...this.props.parentState, [value]: title });
-  };
-
   onTitleChange(value: string) {
-    const title = value.substr(0, 49);
-    this.props.saveTitles({ ...this.props.parentState, title });
+    this.props.saveTitles({ ...this.props.parentState, title: value });
   }
 
-  moveToRef(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, refName: RefName) {
-    if (enterPressed(e)) {
-      let ref = this.state[refName];
-      if (ref && ref.current) {
-        ref.current.getElementsByTagName("input")[0].focus();
-      }
-    }
-  }
 
   renderSubjectTitle(subjectName: string) {
     return (
@@ -157,6 +134,10 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
 
   render() {
     const { parentState, canEdit, baseUrl, saveTitles } = this.props;
+
+    let textLength = stripHtml(parentState.title).length;
+
+    let isValid = (parentState.title && parentState.title.length > 0 && textLength <= 50 && parentState.title.length < 255) ? true : false;
 
     let subjectName = '';
     try {
@@ -216,6 +197,10 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                     </HoverHelp>
                   </div>
                 </div>
+                <div className={`title-validation-text ${textLength > 50 ? 'invalid-text' : 'valid'}`}>
+                  <div>Titles can be a maximum of 50 characters</div>
+                  <div>{textLength}/50</div>
+                </div>
                 <div className="audience-inputs">
                   <DifficultySelect disabled={!canEdit} level={parentState.academicLevel} onChange={this.props.setAcademicLevel.bind(this)} />
                   <div className="absolute-difficult-help">
@@ -258,8 +243,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                 ?
                 <div className="centered">
                   <PrevButton
-                    to={baseUrl + "/subject"}
-                    isActive={true}
+                    isActive={false}
                     onHover={() => { }}
                     onOut={() => { }}
                   />
@@ -272,11 +256,11 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   Next
                 </div>
               }
-              <div className="centered">
+              <div className={`centered `}>
                 <NextButton
-                  isActive={true}
+                  isActive={isValid}
                   step={ProposalStep.BrickTitle}
-                  canSubmit={true}
+                  canSubmit={isValid}
                   onSubmit={saveTitles}
                   data={parentState}
                   baseUrl={baseUrl}
