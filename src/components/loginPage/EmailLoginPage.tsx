@@ -62,8 +62,6 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
   function handleLoginSubmit(event: any) {
     event.preventDefault();
 
-    alert('validating form');
-
     let res = validateForm();
 
     alert ('form validated ' + res);
@@ -72,8 +70,6 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       setAlertMessage(res);
       return;
     }
-
-    alert('start login');
 
     sendLogin(email, password);
   }
