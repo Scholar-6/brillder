@@ -64,6 +64,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       props.submit(value, users);
       setValue('');
     }
+    setSaving(false);
   }
 
   return (

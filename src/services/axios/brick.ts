@@ -238,6 +238,14 @@ export const getAssignedBricks = async () => {
   }
 }
 
+export const sharedPersonalBricks = async (brickIds: number[], emails: string[]) => {
+  try {
+    return await post<any>("/brick/personal/share", {brickIds, emails});
+  } catch (e) {
+    return null;
+  }
+}
+
 export const getLibraryBricks = async <T>(userId: number, classroomId?: number) => {
   try {
     let obj:any = {userId};

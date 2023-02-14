@@ -4,9 +4,12 @@ import Dialog from '@material-ui/core/Dialog';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
 import { User } from 'model/user';
+import { Brick } from 'model/brick';
+import { sharedPersonalBricks } from 'services/axios/brick';
 
 interface InviteStudentEmailProps {
   isOpen: boolean;
+  selectedBricks: Brick[];
   close(numInvited: number): void;
 }
 
@@ -68,6 +71,10 @@ const ShareWithTeachersDialog: React.FC<InviteStudentEmailProps> = (props) => {
       setUsers(users => [...users, { email: currentEmail } as User]);
       setCurrentEmail("");
     }
+
+    console.log('shared users', currentUsers);
+
+    const res = await sharedPersonalBricks(props.selectedBricks.map(b => b.id), currentUsers.map(u => u.email));
 
     setUsers([]);
     setSubmitting(false);
