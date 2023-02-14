@@ -127,7 +127,7 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
           </div>
           <span className="edit-icon send-teacher" onClick={() => setShareTeach(true)}>
             <SpriteIcon name="send" className="w100 h100 active" />
-            <div className="css-custom-tooltip bold">Share with Teachers</div>
+            <div className="css-custom-tooltip bold">Add joint teacher</div>
           </span>
           {props.classroom.status === ClassroomStatus.Active &&
           <span className="edit-icon archive" onClick={() => {
