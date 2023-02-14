@@ -352,6 +352,7 @@ class TeachFilterSidebar extends Component<
       >
         {this.renderContent()}
         <div className="sidebar-footer" />
+        {this.state.createClassOpen &&
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
           submit={(name, users) => {
@@ -361,7 +362,7 @@ class TeachFilterSidebar extends Component<
           close={() => {
             this.setState({ createClassOpen: false });
           }}
-        />
+        />}
         {this.props.isNewTeacher &&
           <Steps
             enabled={this.props.isNewTeacher}
