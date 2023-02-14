@@ -14,9 +14,6 @@ import {
 } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import {
-  getAssignmentIcon,
-} from "components/services/brickService";
-import {
   getPublishedBricksByPage,
   searchPaginateBricks,
 } from "services/axios/brick";
@@ -42,6 +39,7 @@ import PageLoaderBlue from "components/baseComponents/loaders/pageLoaderBlue";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ShareWithTeachersDialog from "./components/ShareWithTeachersDialog";
 
 interface ViewAllProps {
   user: User;
@@ -60,6 +58,7 @@ interface ViewAllState {
   searchString: string;
   searchTyping: boolean;
   isSearching: boolean;
+  isSharing: boolean;
 
   isLoading: boolean;
 
@@ -100,6 +99,8 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
       bricks: [],
       bricksCount: 0,
       page: 0,
+
+      isSharing: false,
 
       selectedBricks: [],
 
@@ -328,6 +329,10 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
     }, 1400);
   }
 
+  share() {
+    this.setState({isSharing: true});
+  }
+
   renderSortedBricks() {
     const data = prepareVisibleBricks2(this.state.bricks);
     return data.map((item) => {
@@ -436,7 +441,6 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
-
   renderDesktopViewAllPage() {
     return (
       <Grid container direction="row" className="sorted-row no-mobile-css">
@@ -448,10 +452,13 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
             <div className="category">Back to Catalogue</div>
           </div>
         </div>
-        <ViewAllFilter selectedCount={this.state.selectedBricks.length} share={() => {}} />
+        <ViewAllFilter selectedCount={this.state.selectedBricks.length} share={this.share.bind(this)} />
         <Grid item xs={9} className="brick-row-container">
           {this.renderDesktopBricks()}
         </Grid>
+        <ShareWithTeachersDialog isOpen={this.state.isSharing} close={() => {
+          this.setState({isSharing: false});
+        }} />
       </Grid>
     );
   }

@@ -64,7 +64,6 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
 
     let res = validateForm();
 
-    alert ('form validated ' + res);
     if (res !== true) {
       toggleAlertMessage(true);
       setAlertMessage(res);
