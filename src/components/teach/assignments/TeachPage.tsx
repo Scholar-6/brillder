@@ -729,6 +729,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           isDeadlinePassed={remindersData.isDeadlinePassed}
           close={() => this.setState(state => ({ ...state, remindersData: { ...remindersData, isOpen: false } }))}
         />
+        {this.state.createClassOpen &&
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
           submit={(name, users) => {
@@ -736,7 +737,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             this.setState({ createClassOpen: false })
           }}
           close={() => { this.setState({ createClassOpen: false }) }}
-        />
+        />}
         <Steps
           enabled={this.state.stepsEnabled}
           steps={this.state.steps}
