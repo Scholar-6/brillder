@@ -456,9 +456,13 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
         <Grid item xs={9} className="brick-row-container">
           {this.renderDesktopBricks()}
         </Grid>
-        <ShareWithTeachersDialog isOpen={this.state.isSharing} close={() => {
-          this.setState({isSharing: false});
-        }} />
+        <ShareWithTeachersDialog
+          isOpen={this.state.isSharing}
+          selectedBricks={this.state.selectedBricks}
+          close={() => {
+            this.setState({isSharing: false});
+          }}
+        />
       </Grid>
     );
   }
