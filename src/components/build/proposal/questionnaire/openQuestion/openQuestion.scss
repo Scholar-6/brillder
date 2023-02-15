@@ -115,6 +115,12 @@
       .MuiLinearProgress-bar {
         border-radius: 0.5vw;
       }
+
+      &.invalid-progress {
+        .MuiLinearProgress-bar {
+          background: var(--theme-orange);
+        }
+      }
     }
   }
 }

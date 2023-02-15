@@ -90,7 +90,7 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
             */}
             <div className="open-question-r2-container">
               <LinearProgress
-                className="open-question-progressbar"
+                className={`open-question-progressbar ${isValid ? 'valid-progress' : 'invalid-progress'}`}
                 variant="determinate"
                 value={progressValue}
               />
