@@ -12,11 +12,12 @@ interface NavigationButtonsProps {
   canSubmit: boolean;
   onSubmit(data?:any): void;
   data: any;
+  disabled?: boolean;
   backLink: string;
 }
 
 const NavigationButtons:React.FC<NavigationButtonsProps> = (
-  { step, canSubmit, data, backLink, baseUrl, onSubmit }
+  { step, canSubmit, data, backLink, baseUrl, disabled, onSubmit }
 ) => {
   let [active, toggleActive] = React.useState(true);
   const onPrevHover = () => {
@@ -37,7 +38,7 @@ const NavigationButtons:React.FC<NavigationButtonsProps> = (
       />
       <NextButton
         baseUrl={baseUrl}
-        isActive={active}
+        isActive={active && !disabled}
         step={step}
         canSubmit={canSubmit}
         onSubmit={onSubmit}
