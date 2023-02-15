@@ -85,9 +85,6 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
           />
           <div className={`open-question-validate ${isValid ? 'valid' : 'invalid-text'}`}>
             <div>Open question can be a maximum of 255 characters</div>
-            {/* 
-            <div>{selectedQuestion.length}/255</div>
-            */}
             <div className="open-question-r2-container">
               <LinearProgress
                 className={`open-question-progressbar ${isValid ? 'valid-progress' : 'invalid-progress'}`}
@@ -105,7 +102,7 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
             />
             <NextButton
               baseUrl={props.baseUrl}
-              isActive={active}
+              isActive={active && isValid}
               step={ProposalStep.OpenQuestion}
               canSubmit={isValid}
               onSubmit={saveOpenQuestionLocal}
