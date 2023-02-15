@@ -28,6 +28,7 @@ const ClassInvitationDialog: React.FC<Props> = props => {
 
       return invitations.data as ClassroomInvitation[];
     } catch (e) { }
+    console.log(444);
   }
 
   useEffect(() => {

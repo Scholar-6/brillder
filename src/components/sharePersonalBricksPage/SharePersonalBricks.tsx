@@ -40,6 +40,7 @@ import ClassInvitationDialog from "components/baseComponents/classInvitationDial
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ShareWithTeachersDialog from "./components/ShareWithTeachersDialog";
+import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
 
 interface ViewAllProps {
   user: User;
@@ -506,6 +507,7 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
           />
         </div>
         <ClassInvitationDialog />
+        <PersonalBrickInvitationDialog />
         <ClassTInvitationDialog />
       </React.Suspense>
     );

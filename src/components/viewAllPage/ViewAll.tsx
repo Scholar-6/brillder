@@ -80,6 +80,7 @@ import SearchSuggestions from "./components/SearchSuggestions";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import MobileCategory from "./MobileCategory";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
 
 interface ViewAllProps {
   user: User;
@@ -1348,6 +1349,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           )}
         </div>
         <ClassInvitationDialog />
+        <PersonalBrickInvitationDialog />
         <ClassTInvitationDialog />
         {this.state.isNewTeacher &&
           <Steps

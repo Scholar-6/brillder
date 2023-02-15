@@ -36,6 +36,7 @@ import ClassTInvitationDialog from "components/baseComponents/classInvitationDia
 import SubscribedDialog from "./components/SubscibedDialog";
 import getMainPageSteps from "./MainPageSteps";
 import { GetOrigin } from "localStorage/origin";
+import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
 
 
 
@@ -635,6 +636,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
             close={() => this.setState({ isDesktopOpen: false })} />
           {this.state.allLoaded && !this.state.stepsEnabled && <ClassInvitationDialog />}
           {this.state.allLoaded && !this.state.stepsEnabled && <ClassTInvitationDialog />}
+          {this.state.allLoaded && !this.state.stepsEnabled && <PersonalBrickInvitationDialog />}
           <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({ subscribedPopup: false })} />
         </Grid>
       </React.Suspense>

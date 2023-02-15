@@ -63,6 +63,11 @@ export interface ClassroomInvitation {
   sentBy: UserBase;
 }
 
+export interface BrickInvitation {
+  brick: Brick;
+  sentBy: UserBase;
+}
+
 export interface StudentStatus {
   studentId: number;
   status: StudentAssignmentStatus;

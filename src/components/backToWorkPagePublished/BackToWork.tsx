@@ -9,6 +9,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import BuildPagePublished from './components/build/BuildPagePublished';
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
+import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
 
 interface BackToWorkState {
   searchString: string;
@@ -77,6 +78,7 @@ class BackToWorkPagePublished extends Component<BackToWorkProps, BackToWorkState
           }}
         />
         <ClassInvitationDialog />
+        <PersonalBrickInvitationDialog />
         <ClassTInvitationDialog />
       </div>
     );

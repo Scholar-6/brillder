@@ -20,6 +20,7 @@ import { getSubjects } from "services/axios/subject";
 import map from "components/map";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
+import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
 
 enum Tab {
   Assignemnts,
@@ -461,6 +462,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
           />
         )}
         <ClassInvitationDialog onFinish={() => this.getAssignments()} />
+        <PersonalBrickInvitationDialog />
         <ClassTInvitationDialog />
       </div>
     );
