@@ -249,10 +249,14 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   />
                 </div>
                 :
-                <div className="centered text-theme-dark-blue bold" style={{ fontSize: '2vw', marginRight: '2vw' }} onClick={() => {
-                  saveTitles(parentState);
-                  this.props.history.push(baseUrl + OpenQuestionRoutePart);
-                }}>
+                <div
+                  className="centered text-theme-dark-blue bold"
+                  style={{ fontSize: '2vw', marginRight: '2vw' }}
+                  onClick={() => {
+                    saveTitles(parentState);
+                    this.props.history.push(baseUrl + OpenQuestionRoutePart);
+                  }}
+                >
                   Next
                 </div>
               }
