@@ -1,34 +1,37 @@
 import React, { useEffect } from 'react';
-import { Dialog, MobileStepper, Avatar, CardHeader, Grid } from '@material-ui/core';
-import { ClassroomInvitation } from 'model/classroom';
-import './ClassInvitationDialog.scss';
 import axios from "axios";
-import map from 'components/map';
 import { useHistory } from 'react-router-dom';
+import { Dialog, MobileStepper, Avatar, CardHeader, Grid } from '@material-ui/core';
+import { BrickInvitation } from 'model/classroom';
+
+import './ClassInvitationDialog.scss';
+import map from 'components/map';
 import SpriteIcon from '../SpriteIcon';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 interface Props {
   onFinish?(): void;
 }
 
-const ClassInvitationDialog: React.FC<Props> = props => {
-  const [invitations, setInvitations] = React.useState<ClassroomInvitation[] | undefined>(undefined);
+const PersonalBrickInvitationDialog: React.FC<Props> = props => {
+  const [invitations, setInvitations] = React.useState<BrickInvitation[] | undefined>(undefined);
   const [activeStep, setActiveStep] = React.useState(0);
 
   const history = useHistory();
 
   const getInvitations = async () => {
+    /*
     try {
-      const invitations = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/invitations`, {
+      const invitations = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/brick/personal/invitations`, {
         withCredentials: true
       });
 
-      setInvitations(invitations.data as ClassroomInvitation[]);
+      setInvitations(invitations.data as BrickInvitation[]);
       setActiveStep(0);
 
-      return invitations.data as ClassroomInvitation[];
+      return invitations.data as BrickInvitation[];
     } catch (e) { }
-    console.log(444);
+    */
   }
 
   useEffect(() => {
@@ -40,16 +43,17 @@ const ClassInvitationDialog: React.FC<Props> = props => {
   const handleAccept = async () => {
     try {
       if (invitations && invitations[activeStep]) {
-        const classId = invitations[activeStep].classroom.id;
-        const res = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].classroom.id}/accept`, {}, { withCredentials: true });
+        const classId = invitations[activeStep].brick.id;
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].brick.id}/accept`, {}, { withCredentials: true });
         if (res.data && res.data === 'OK') {
           setActiveStep(activeStep => activeStep + 1);
           if (activeStep + 1 >= invitations.length) {
+            /*
             const newInvitations = await getInvitations();
             if (newInvitations && newInvitations.length <= 0) {
               history.push(map.AssignmentsPage + '/' + classId);
               props.onFinish?.();
-            }
+            }*/
           }
         }
       }
@@ -60,7 +64,7 @@ const ClassInvitationDialog: React.FC<Props> = props => {
 
   const handleReject = async () => {
     if (invitations && invitations[activeStep]) {
-      await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].classroom.id}/reject`, {}, { withCredentials: true });
+      await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].brick.id}/reject`, {}, { withCredentials: true });
       setActiveStep(activeStep => activeStep + 1);
       if (activeStep + 1 >= invitations.length) {
         getInvitations();
@@ -69,15 +73,18 @@ const ClassInvitationDialog: React.FC<Props> = props => {
   }
 
   const currentInvitation = invitations?.[activeStep];
+
+  console.log(currentInvitation);
+
   return (
     <Dialog
       open={invitations !== undefined && invitations.length > 0}
       className="dialog-box link-copied-dialog"
     >
       {currentInvitation && <Grid className="classroom-invitation" container direction="column" alignItems="center">
-        <h1><strong>You have been invited to a class.</strong></h1>
+        <h1><strong>You have been invited to a brick.</strong></h1>
         <div className="classroom-name">
-          <h2>{currentInvitation.classroom.name}</h2>
+          <h2>{stripHtml(currentInvitation.brick.title)}</h2>
         </div>
         <Grid item container direction="row" justify="center">
           <button className="btn btn-md b-green text-white" onClick={handleAccept}>
@@ -107,4 +114,4 @@ const ClassInvitationDialog: React.FC<Props> = props => {
   );
 };
 
-export default ClassInvitationDialog;
+export default PersonalBrickInvitationDialog;
