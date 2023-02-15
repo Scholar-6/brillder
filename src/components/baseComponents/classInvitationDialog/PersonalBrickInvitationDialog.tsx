@@ -14,13 +14,13 @@ interface Props {
 }
 
 const PersonalBrickInvitationDialog: React.FC<Props> = props => {
+  /*
   const [invitations, setInvitations] = React.useState<BrickInvitation[] | undefined>(undefined);
   const [activeStep, setActiveStep] = React.useState(0);
 
   const history = useHistory();
 
   const getInvitations = async () => {
-    /*
     try {
       const invitations = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/brick/personal/invitations`, {
         withCredentials: true
@@ -31,7 +31,6 @@ const PersonalBrickInvitationDialog: React.FC<Props> = props => {
 
       return invitations.data as BrickInvitation[];
     } catch (e) { }
-    */
   }
 
   useEffect(() => {
@@ -48,12 +47,11 @@ const PersonalBrickInvitationDialog: React.FC<Props> = props => {
         if (res.data && res.data === 'OK') {
           setActiveStep(activeStep => activeStep + 1);
           if (activeStep + 1 >= invitations.length) {
-            /*
             const newInvitations = await getInvitations();
             if (newInvitations && newInvitations.length <= 0) {
               history.push(map.AssignmentsPage + '/' + classId);
               props.onFinish?.();
-            }*/
+            }
           }
         }
       }
@@ -73,8 +71,6 @@ const PersonalBrickInvitationDialog: React.FC<Props> = props => {
   }
 
   const currentInvitation = invitations?.[activeStep];
-
-  console.log(currentInvitation);
 
   return (
     <Dialog
@@ -112,6 +108,9 @@ const PersonalBrickInvitationDialog: React.FC<Props> = props => {
       </Grid>}
     </Dialog>
   );
+  */
+
+  return <div />;
 };
 
 export default PersonalBrickInvitationDialog;
