@@ -11,6 +11,8 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
 import QuillEditor from "components/baseComponents/quill/QuillEditor";
 import OpenQHoverHelp from "components/build/baseComponents/OpenQHoverHelp";
+import PreviousButton from "../../components/previousButton";
+import NextButton from "../../components/nextButton";
 
 interface OpenQuestionProps {
   baseUrl: string;
@@ -35,11 +37,25 @@ const HeadComponent: React.FC<any> = ({ data }) => {
 const OpenQuestion: React.FC<OpenQuestionProps> = ({
   selectedQuestion, saveOpenQuestion, ...props
 }) => {
+  let [active, toggleActive] = React.useState(true);
+  const onPrevHover = () => {
+    toggleActive(false);
+  }
+
+  const onPrevOut = () => {
+    toggleActive(true);
+  }
+
   const saveOpenQuestionLocal = (v: string) => {
     saveOpenQuestion(v);
   }
 
   let isValid = selectedQuestion.length <= 255 ? true : false;
+
+  let progressValue = (selectedQuestion.length / 255) * 100;
+  if (progressValue > 100) {
+    progressValue = 100;
+  }
 
   return (
     <div className="tutorial-page open-question-page">
@@ -76,18 +92,26 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
               <LinearProgress
                 className="open-question-progressbar"
                 variant="determinate"
-                value={(selectedQuestion.length / 255) * 100}
+                value={progressValue}
               />
             </div>
           </div>
-          <NavigationButtons
-            baseUrl={props.baseUrl}
-            step={ProposalStep.OpenQuestion}
-            canSubmit={isValid}
-            onSubmit={saveOpenQuestionLocal}
-            data={selectedQuestion}
-            backLink={props.baseUrl + TitleRoutePart}
-          />
+          <div className="tutorial-pagination">
+            <PreviousButton
+              isActive={!active}
+              onHover={onPrevHover}
+              onOut={onPrevOut}
+              to={props.baseUrl + TitleRoutePart}
+            />
+            <NextButton
+              baseUrl={props.baseUrl}
+              isActive={active}
+              step={ProposalStep.OpenQuestion}
+              canSubmit={isValid}
+              onSubmit={saveOpenQuestionLocal}
+              data={selectedQuestion}
+            />
+          </div>
           <h2 className="pagination-text">2 of 4</h2>
         </Grid>
         <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" updated={props.updated} />
