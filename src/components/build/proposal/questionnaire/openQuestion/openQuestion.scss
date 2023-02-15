@@ -84,20 +84,43 @@
   .open-question-validate {
     width: 42.7vw;
     margin: 0 auto 1vh auto;
+    padding: 0 1.5vw;
     display: flex;
+
+    font-size: 1.2vw;
 
     > div:first-child {
       text-align: left;
-      width: 30vw;
+      width: 35vw;
     }
 
     > div:nth-child(2) {
       text-align: right;
-      width: 12.7vw;
+      width: 8vw;
     }
 
     &.invalid-text {
       color: var(--theme-orange);
+    }
+
+    .open-question-r2-container {
+      padding-top: 0.4vw;
+    }
+
+    .open-question-progressbar {
+      height: 1vw;
+      border-radius: 0.5vw;
+      background: #E5E8ED;
+
+      .MuiLinearProgress-bar {
+        border-radius: 0.5vw;
+      }
+
+      &.invalid-progress {
+        .MuiLinearProgress-bar {
+          background: var(--theme-orange);
+        }
+      }
     }
   }
 }

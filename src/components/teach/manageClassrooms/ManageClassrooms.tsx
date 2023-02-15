@@ -840,7 +840,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             {this.renderSortAndFilterBox()}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
-            <TeachTab history={history} hideAssignButton={true} activeTab={TeachActiveTab.Students} onAssign={() => {}} assignmentsEnabled={this.state.classrooms.length > 0} />
+            <TeachTab history={history} hideAssignButton={true} activeTab={TeachActiveTab.Students} onAssign={() => { }} assignmentsEnabled={this.state.classrooms.length > 0} />
             {this.renderTabContent()}
           </Grid>
         </Grid>
@@ -849,14 +849,16 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           submit={() => this.deleteClass()}
           close={() => { this.setState({ deleteClassOpen: false }) }}
         />
-        <CreateClassDialog
-          isOpen={this.state.createClassOpen}
-          submit={(name, users) => {
-            this.createClass(name, users);
-            this.setState({ createClassOpen: false })
-          }}
-          close={() => { this.setState({ createClassOpen: false }) }}
-        />
+        {this.state.createClassOpen &&
+          <CreateClassDialog
+            isOpen={this.state.createClassOpen}
+            submit={(name, users) => {
+              this.createClass(name, users);
+              this.setState({ createClassOpen: false })
+            }}
+            close={() => { this.setState({ createClassOpen: false }) }}
+          />
+        }
         <UnassignStudentDialog
           isOpen={this.state.unassignOpen}
           student={this.state.unassignStudent}
