@@ -35,6 +35,7 @@ interface AssignPersonOrClassProps {
 }
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
+  const [helpTextExpanded, setHelpText] = React.useState(false);
   const [alreadyAssigned, setAssigned] = React.useState(false);
   const [isLoading, setLoading] = React.useState(true);
   const [isSaving, setSaving] = React.useState(false);
@@ -367,14 +368,30 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
                 <div className="help-text">
                   <div>Students might not receive invites if your institution</div>
                   <div className="text-with-icon">
-                    filters emails. <span className="underline bold">How to avoid this</span>
-                    <SpriteIcon name="arrow-down" />
+                    filters emails. <span className="underline bold" onClick={() => {
+                      setHelpText(!helpTextExpanded);
+                    }}>How to avoid this</span>
+                    <SpriteIcon name="arrow-down" className={helpTextExpanded ? 'expanded' : ''} onClick={() => {
+                      setHelpText(!helpTextExpanded);
+                    }} />
                   </div>
                 </div>
               </div>
             }</div>
           {renderFooter()}
         </div>
+        {canSubmit && helpTextExpanded &&
+        <div className="expanded-text-v3">
+          <div className="spacing-bigger">
+            To ensure invites are received, please ask your network administrator to whitelist <span className="text-underline">notifications@brillder.com</span>. They may want the following information:
+          </div>
+          <div className="light">
+            Brillder is the trading name of Scholar 6 Ltd, which is on the UK Register of Learning
+          </div>
+          <div className="text-center light">
+            Providers (UK Provider Reference Number 10090571)
+          </div>
+        </div>}
       </Dialog>
     );
   }

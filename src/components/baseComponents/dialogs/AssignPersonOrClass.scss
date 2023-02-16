@@ -173,6 +173,11 @@ span.bold {
             display: flex;
             align-items: center;
             margin-right: 0.6vw;
+
+            svg {
+              width: 1.6vw;
+              height: 1.6vw;
+            }
           }
 
 
@@ -184,11 +189,18 @@ span.bold {
 
           .text-with-icon {
             display: flex;
-          }
+            align-items: center;
 
-          svg {
-            width: 1.6vw;
-            height: 1.6vw;
+            svg {
+              transition: all 300ms ease-in-out;
+              cursor: pointer;
+              width: 1.6vw;
+              height: 1.6vw;
+            }
+
+            .expanded {
+              transform: rotate(-180deg);
+            }
           }
         }
       }
@@ -275,6 +287,24 @@ span.bold {
               background: rgba(196, 60, 48, 0.3) !important;
             }
           }
+        }
+      }
+    }
+
+    .expanded-text-v3 {
+      padding-bottom: 2vh;
+      padding-left: 5vw;
+      padding-right: 3vw;
+      width: 56vw;
+      font-size: 1.4vw;
+      color: var(--theme-dark-blue);
+      background: var(--white);
+
+      .spacing-bigger {
+        letter-spacing: 0.05vw;
+
+        .text-underline {
+          text-decoration: underline;
         }
       }
     }
