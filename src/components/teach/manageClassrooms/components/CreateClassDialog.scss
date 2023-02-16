@@ -121,4 +121,62 @@
   .dialog-footer .btn {
     font-size: 1.6vw;
   }
+
+  .help-expandable {
+    display: flex;
+    color: var(--theme-dark-blue);
+
+    .help-icon-v3 {
+      display: flex;
+      align-items: center;
+      margin-right: 0.6vw;
+
+      svg {
+        width: 1.6vw;
+        height: 1.6vw;
+      }
+    }
+
+
+    .underline {
+      cursor: pointer;
+      margin-left: 0.3vw;
+      text-decoration: underline;
+    }
+
+    .text-with-icon {
+      display: flex;
+      align-items: center;
+
+      svg {
+        transition: all 300ms ease-in-out;
+        cursor: pointer;
+        width: 1.6vw;
+        height: 1.6vw;
+      }
+
+      .expanded {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+  .expanded-text-v3 {
+    padding-bottom: 2vh;
+    padding-left: 5vw;
+    padding-right: 3vw;
+    width: 56vw;
+    font-size: 1.4vw;
+    color: var(--theme-dark-blue);
+    background: var(--white);
+
+    .spacing-bigger {
+      letter-spacing: 0.05vw;
+
+      .text-underline {
+        color: var(--theme-dark-blue);
+        text-decoration: underline;
+      }
+    }
+  }
 }
