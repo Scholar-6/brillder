@@ -106,7 +106,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         <div className="message-box-r5">
           {!canSubmit
             ? 'Please ensure that you have entered all email addresses correctly and pressed enter.'
-            : <div className="help-expandable">
+            : (users.length > 0) && <div className="help-expandable">
               <div className="help-icon-v3">
                 <SpriteIcon name="help-icon-v3" />
               </div>
@@ -131,7 +131,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           <span className="bold">Create</span>
         </button>
       </div>
-      {canSubmit && helpTextExpanded &&
+      {canSubmit && helpTextExpanded && users.length > 0 &&
         <div className="expanded-text-v3">
           <div className="spacing-bigger">
             To ensure invites are received, please ask your network administrator to whitelist <a href="mailto: notifications@brillder.com" className="text-underline">notifications@brillder.com</a>. They may want the following information:
