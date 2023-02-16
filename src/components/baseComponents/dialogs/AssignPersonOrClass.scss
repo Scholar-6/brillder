@@ -304,6 +304,7 @@ span.bold {
         letter-spacing: 0.05vw;
 
         .text-underline {
+          color: var(--theme-dark-blue);
           text-decoration: underline;
         }
       }

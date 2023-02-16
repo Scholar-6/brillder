@@ -383,7 +383,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         {canSubmit && helpTextExpanded &&
           <div className="expanded-text-v3">
             <div className="spacing-bigger">
-              To ensure invites are received, please ask your network administrator to whitelist <span className="text-underline">notifications@brillder.com</span>. They may want the following information:
+              To ensure invites are received, please ask your network administrator to whitelist <a href="mailto: notifications@brillder.com" className="text-underline">notifications@brillder.com</a>. They may want the following information:
             </div>
             <div className="light">
               Brillder is the trading name of Scholar 6 Ltd, which is on the UK Register of Learning
@@ -439,7 +439,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         {canSubmit && helpTextExpanded &&
           <div className="expanded-text-v3">
             <div className="spacing-bigger">
-              To ensure invites are received, please ask your network administrator to whitelist <span className="text-underline">notifications@brillder.com</span>. They may want the following information:
+              To ensure invites are received, please ask your network administrator to whitelist <a href="mailto: notifications@brillder.com" className="text-underline">notifications@brillder.com</a>. They may want the following information:
             </div>
             <div className="light">
               Brillder is the trading name of Scholar 6 Ltd, which is on the UK Register of Learning
