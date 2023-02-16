@@ -438,10 +438,10 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         </div>
         {canSubmit && helpTextExpanded && isCreating && users.length > 0 &&
           <div className="expanded-text-v3">
-            <div className="spacing-bigger">
+            <div className="justify">
               To ensure invites are received, please ask your network administrator to whitelist <a href="mailto: notifications@brillder.com" className="text-underline">notifications@brillder.com</a>. They may want the following information:
             </div>
-            <div className="light">
+            <div className="light text-center upper-margin">
               Brillder is the trading name of Scholar 6 Ltd, which is on the UK Register of Learning
             </div>
             <div className="text-center light">

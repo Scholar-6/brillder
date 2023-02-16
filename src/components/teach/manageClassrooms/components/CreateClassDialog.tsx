@@ -133,7 +133,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       </div>
       {canSubmit && helpTextExpanded && users.length > 0 &&
         <div className="expanded-text-v3">
-          <div className="spacing-bigger">
+          <div className="justify">
             To ensure invites are received, please ask your network administrator to whitelist <a href="mailto: notifications@brillder.com" className="text-underline">notifications@brillder.com</a>. They may want the following information:
           </div>
           <div className="light">
