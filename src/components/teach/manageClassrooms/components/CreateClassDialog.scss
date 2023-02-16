@@ -125,7 +125,7 @@
   .help-expandable {
     display: flex;
     color: var(--theme-dark-blue);
-    font-size: 1.4vw;
+    font-size: 1.47vw;
 
     .help-icon-v3 {
       display: flex;
@@ -167,12 +167,14 @@
     padding-left: 5vw;
     padding-right: 3vw;
     width: 56vw;
-    font-size: 1.4vw;
+    font-size: 1.47vw;
     color: var(--theme-dark-blue);
     background: var(--white);
 
-    .spacing-bigger {
-      letter-spacing: 0.05vw;
+    .justify {
+      text-align: justify;
+      margin-bottom: 1vh;
+      line-height: 1.2;
 
       .text-underline {
         color: var(--theme-dark-blue);
