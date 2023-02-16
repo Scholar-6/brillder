@@ -111,7 +111,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             currentUsers.push({ email: currentEmail } as User);
             setCurrentEmail("");
           }
-          
+
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res) {
             await assignToExistingBrick(newClassroom);
@@ -358,8 +358,20 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         </div>
         <div className="dialog-footer-white">
           <div className="help-footer-text">
-            {(isCreating && !canSubmit) &&
-              'Please ensure that you have entered all email addresses correctly and pressed enter.'
+            {(isCreating && !canSubmit)
+              ? 'Please ensure that you have entered all email addresses correctly and pressed enter.'
+              : <div className="help-expandable">
+                <div className="help-icon-v3">
+                  <SpriteIcon name="help-icon-v3" />
+                </div>
+                <div className="help-text">
+                  <div>Students might not receive invites if your institution</div>
+                  <div className="text-with-icon">
+                    filters emails. <span className="underline bold">How to avoid this</span>
+                    <SpriteIcon name="arrow-down" />
+                  </div>
+                </div>
+              </div>
             }</div>
           {renderFooter()}
         </div>
