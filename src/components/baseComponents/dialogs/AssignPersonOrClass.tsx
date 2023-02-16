@@ -417,7 +417,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
           <div className="help-footer-text">
             {(isCreating && !canSubmit)
               ? 'Please ensure that you have entered all email addresses correctly and pressed enter.'
-              : (users.length > 0) && <div className="help-expandable">
+              : (users.length > 0 && isCreating) && <div className="help-expandable">
                 <div className="help-icon-v3">
                   <SpriteIcon name="help-icon-v3" />
                 </div>
@@ -436,7 +436,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             }</div>
           {renderFooter()}
         </div>
-        {canSubmit && helpTextExpanded && users.length > 0 &&
+        {canSubmit && helpTextExpanded && isCreating && users.length > 0 &&
           <div className="expanded-text-v3">
             <div className="spacing-bigger">
               To ensure invites are received, please ask your network administrator to whitelist <a href="mailto: notifications@brillder.com" className="text-underline">notifications@brillder.com</a>. They may want the following information:
