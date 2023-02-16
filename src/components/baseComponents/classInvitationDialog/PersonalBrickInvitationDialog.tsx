@@ -61,7 +61,8 @@ const PersonalBrickInvitationDialog: React.FC<Props> = props => {
 
   const handleReject = async () => {
     if (invitations && invitations[activeStep]) {
-      await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].brick.id}/reject`, {}, { withCredentials: true });
+      const brickId = invitations[activeStep].brick.id;
+      await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/brick/${brickId}/reject`, {}, { withCredentials: true });
       setActiveStep(activeStep => activeStep + 1);
       if (activeStep + 1 >= invitations.length) {
         getInvitations();
