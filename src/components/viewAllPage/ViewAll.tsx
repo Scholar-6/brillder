@@ -81,6 +81,7 @@ import ClassTInvitationDialog from "components/baseComponents/classInvitationDia
 import MobileCategory from "./MobileCategory";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
+import SharePersonalBrickButton from "./components/SharePersonalBrickButton";
 
 interface ViewAllProps {
   user: User;
@@ -1077,7 +1078,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           <div className="centered text-theme-dark-blue title found">
             {renderTitle(this.state.bricksCount)}
             <CreateOneButton onClick={this.moveToCreateOne.bind(this)} />
-            {/*<RecommendButton />*/}
+            {this.state.isCore === false && <SharePersonalBrickButton history={this.props.history} /> }
           </div>
         </div>
       );
