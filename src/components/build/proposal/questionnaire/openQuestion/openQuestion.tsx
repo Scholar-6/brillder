@@ -84,7 +84,9 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
             onChange={saveOpenQuestionLocal}
           />
           <div className={`open-question-validate ${isValid ? 'valid' : 'invalid-text'}`}>
-            <div>Open question can be a maximum of 255 characters</div>
+            <div>
+              The Open Question can be a maximum of 220 characters, or less depending on formatting.
+            </div>
             <div className="open-question-r2-container">
               <LinearProgress
                 className={`open-question-progressbar ${isValid ? 'valid-progress' : 'invalid-progress'}`}

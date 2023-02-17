@@ -35,6 +35,7 @@ interface AssignPersonOrClassProps {
 }
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
+  const [helpTextExpanded, setHelpText] = React.useState(false);
   const [alreadyAssigned, setAssigned] = React.useState(false);
   const [isLoading, setLoading] = React.useState(true);
   const [isSaving, setSaving] = React.useState(false);
@@ -111,7 +112,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
             currentUsers.push({ email: currentEmail } as User);
             setCurrentEmail("");
           }
-          
+
           const res = await assignToClassByEmails(newClassroom, currentUsers.map(u => u.email));
           if (res) {
             await assignToExistingBrick(newClassroom);
@@ -358,11 +359,39 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         </div>
         <div className="dialog-footer-white">
           <div className="help-footer-text">
-            {(isCreating && !canSubmit) &&
-              'Please ensure that you have entered all email addresses correctly and pressed enter.'
+            {(isCreating && !canSubmit)
+              ? 'Please ensure that you have entered all email addresses correctly and pressed enter.'
+              : <div className="help-expandable">
+                <div className="help-icon-v3">
+                  <SpriteIcon name="help-icon-v3" />
+                </div>
+                <div className="help-text">
+                  <div>Students might not receive invites if your institution</div>
+                  <div className="text-with-icon">
+                    filters emails. <span className="underline bold" onClick={() => {
+                      setHelpText(!helpTextExpanded);
+                    }}>How to avoid this</span>
+                    <SpriteIcon name="arrow-down" className={helpTextExpanded ? 'expanded' : ''} onClick={() => {
+                      setHelpText(!helpTextExpanded);
+                    }} />
+                  </div>
+                </div>
+              </div>
             }</div>
           {renderFooter()}
         </div>
+        {canSubmit && helpTextExpanded && users.length > 0 &&
+          <div className="expanded-text-v3">
+            <div className="spacing-bigger">
+              To ensure invites are received, please ask your network administrator to whitelist <a href="mailto: notifications@brillder.com" className="text-underline">notifications@brillder.com</a>. They may want the following information:
+            </div>
+            <div className="light">
+              Brillder is the trading name of Scholar 6 Ltd, which is on the UK Register of Learning
+            </div>
+            <div className="text-center light">
+              Providers (UK Provider Reference Number 10090571)
+            </div>
+          </div>}
       </Dialog>
     );
   }
@@ -386,11 +415,39 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         </div>
         <div className="dialog-footer-white">
           <div className="help-footer-text">
-            {(isCreating && !canSubmit) &&
-              'Please ensure that you have entered all email addresses correctly and pressed enter.'
+            {(isCreating && !canSubmit)
+              ? 'Please ensure that you have entered all email addresses correctly and pressed enter.'
+              : (users.length > 0 && isCreating) && <div className="help-expandable">
+                <div className="help-icon-v3">
+                  <SpriteIcon name="help-icon-v3" />
+                </div>
+                <div className="help-text">
+                  <div>Students might not receive invites if your institution</div>
+                  <div className="text-with-icon">
+                    filters emails. <span className="underline bold" onClick={() => {
+                      setHelpText(!helpTextExpanded);
+                    }}>How to avoid this</span>
+                    <SpriteIcon name="arrow-down" className={helpTextExpanded ? 'expanded' : ''} onClick={() => {
+                      setHelpText(!helpTextExpanded);
+                    }} />
+                  </div>
+                </div>
+              </div>
             }</div>
           {renderFooter()}
         </div>
+        {canSubmit && helpTextExpanded && isCreating && users.length > 0 &&
+          <div className="expanded-text-v3">
+            <div className="justify">
+              To ensure invites are received, please ask your network administrator to whitelist <a href="mailto: notifications@brillder.com" className="text-underline">notifications@brillder.com</a>. They may want the following information:
+            </div>
+            <div className="light text-center upper-margin">
+              Brillder is the trading name of Scholar 6 Ltd, which is on the UK Register of Learning
+            </div>
+            <div className="text-center light">
+              Providers (UK Provider Reference Number 10090571)
+            </div>
+          </div>}
       </Dialog>
       <PremiumEducatorDialog isOpen={isPremiumDialogOpen} close={() => setPremium(false)} submit={() => props.history.push(map.StripeEducator)} />
       <ValidationFailedDialog isOpen={alreadyAssigned} close={() => setAssigned(false)} header="This brick has already been assigned to this class." />

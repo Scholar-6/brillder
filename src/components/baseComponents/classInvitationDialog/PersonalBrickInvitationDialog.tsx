@@ -14,7 +14,6 @@ interface Props {
 }
 
 const PersonalBrickInvitationDialog: React.FC<Props> = props => {
-  /*
   const [invitations, setInvitations] = React.useState<BrickInvitation[] | undefined>(undefined);
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -42,15 +41,15 @@ const PersonalBrickInvitationDialog: React.FC<Props> = props => {
   const handleAccept = async () => {
     try {
       if (invitations && invitations[activeStep]) {
-        const classId = invitations[activeStep].brick.id;
-        const res = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].brick.id}/accept`, {}, { withCredentials: true });
+        const brickId = invitations[activeStep].brick.id;
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/brick/${brickId}/accept`, {}, { withCredentials: true });
         if (res.data && res.data === 'OK') {
           setActiveStep(activeStep => activeStep + 1);
           if (activeStep + 1 >= invitations.length) {
             const newInvitations = await getInvitations();
             if (newInvitations && newInvitations.length <= 0) {
-              history.push(map.AssignmentsPage + '/' + classId);
-              props.onFinish?.();
+              //history.push(map.AssignmentsPage + '/' + classId);
+              //props.onFinish?.();
             }
           }
         }
@@ -62,7 +61,8 @@ const PersonalBrickInvitationDialog: React.FC<Props> = props => {
 
   const handleReject = async () => {
     if (invitations && invitations[activeStep]) {
-      await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].brick.id}/reject`, {}, { withCredentials: true });
+      const brickId = invitations[activeStep].brick.id;
+      await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/brick/${brickId}/reject`, {}, { withCredentials: true });
       setActiveStep(activeStep => activeStep + 1);
       if (activeStep + 1 >= invitations.length) {
         getInvitations();
@@ -108,9 +108,6 @@ const PersonalBrickInvitationDialog: React.FC<Props> = props => {
       </Grid>}
     </Dialog>
   );
-  */
-
-  return <div />;
 };
 
 export default PersonalBrickInvitationDialog;

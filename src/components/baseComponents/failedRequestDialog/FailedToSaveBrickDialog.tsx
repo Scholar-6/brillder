@@ -22,7 +22,7 @@ const FailedToSaveBrickDialog: React.FC<FailedRequestProps> = props => {
     >
       <div className="dialog-header">
         <ListItem>
-          <ListItemText primary="Sorry, we've run into a brick wall" className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="Cannot save brick" className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="alert-icon">
               <svg className="svg active stroke-2" style={{marginBottom: '0.3vw'}}>
@@ -33,7 +33,7 @@ const FailedToSaveBrickDialog: React.FC<FailedRequestProps> = props => {
           </ListItemAvatar>
         </ListItem>
         <ListItem>
-          <ListItemText primary="Can`t save brick. Please check if text is not over limit." className="italic" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="Please check that the brick's Title and Open Question are within the character limits." className="italic" style={{ minWidth: '30vw' }} />
         </ListItem>
       </div>
     </Dialog>
