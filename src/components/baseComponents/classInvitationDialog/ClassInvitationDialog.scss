@@ -35,3 +35,22 @@
         }
     }
 }
+
+.personal-brick-invitation {
+    .brick-title-re2 {
+        margin-bottom: 1.5vh;
+        white-space: nowrap;
+
+        p {
+            display: inline;
+        }
+    }
+
+    .btn {
+        margin-top: 2vh;
+        width: 10vw;
+    }
+    .MuiMobileStepper-root {
+        margin-top: 2vh;
+    }
+}
