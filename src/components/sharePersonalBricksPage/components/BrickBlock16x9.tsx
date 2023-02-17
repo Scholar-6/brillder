@@ -8,7 +8,6 @@ import { User } from "model/user";
 import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BrickTitle from "components/baseComponents/BrickTitle";
-import { Checkbox, FormControlLabel, Radio } from "@material-ui/core";
 
 interface BrickBlockProps {
   brick: Brick;
@@ -39,10 +38,6 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
 
   if (brick.alternateSubject) {
     alternateColor = brick.alternateSubject.color;
-  }
-
-  const move = () => {
-    // not moving
   }
 
   if (!brick.id) {
@@ -79,14 +74,20 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
         style={{ transformOrigin: "0 0 0" }}
         timeout={index * 150}
       >
-        <div className="flex-brick-container">
+        <div className="flex-brick-container" onClick={() => props.toggle(brick)}>
           <div className="publish-brick-container">
-            <FormControlLabel
-              className="checkbox-container-r1"
-              checked={brick.selected}
-              control={<Checkbox onClick={() => props.toggle(brick)} />}
-              label=""
-            />
+            <div className="checkbox-container-r1">
+              {brick.selected
+                ?
+                <div className="checkbox-container-r2 checked">
+                  <SpriteIcon name="checkbox-filled" />
+                </div>
+                :
+                <div className="checkbox-container-r2">
+                  <SpriteIcon name="checkbox-empty" />
+                </div>
+              }
+            </div>
             <div className="level-and-length">
               {renderLevelCircles()}
               <div className="length-text-r3">{brick.brickLength} min</div>
