@@ -83,6 +83,8 @@ import { getAssignedBricks } from "services/axios/brick";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
 import { getUserBrillsForBrick } from "services/axios/brills";
 import { SetFinishRedirectUrl, SetHeartOfMerciaUser, SetLoginRedirectUrl } from "localStorage/login";
+import AdaptedBrickAssignedDialog from "./baseComponents/dialogs/AdaptedBrickAssignedDialog";
+import { AssignmentBrickStatus } from "model/assignment";
 
 
 export enum PlayPage {
@@ -142,6 +144,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [restoredFromCash, setRestored] = useState(false);
   const [isSkipOpen, setPlaySkip] = useState(false);
   const [onlyLibrary, setOnlyLibrary] = useState(false);
+
+  const [adaptedBrickAssignment, setAdaptedBrickAssignment] = useState(null as any);
 
   const [activeCompetition, setActiveCompetition] = useState(null as any | null); // active competition
 
@@ -400,6 +404,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         if (assignment && assignment.brick.id && assignment.brick.id === brick.id) {
           setAssignmentId(assignment.id);
           return assignment.id;
+        }
+
+        // check if brick is not adapted
+        if (assignment && assignment.brick && assignment.brick.adaptedFrom && assignment.brick.adaptedFrom.id === brick.id) {
+          if (assignment.status != AssignmentBrickStatus.CheckedByTeacher) {
+            setAdaptedBrickAssignment(assignment);
+          }
         }
       }
     }
@@ -1098,6 +1109,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       </div>
       {renderCreditPopup()}
       {renderConvertBrills()}
+      <AdaptedBrickAssignedDialog assignment={adaptedBrickAssignment} history={history} close={() => setAdaptedBrickAssignment(null)} />
     </React.Suspense>
   );
 };
