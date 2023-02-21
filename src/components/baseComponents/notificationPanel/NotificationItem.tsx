@@ -71,6 +71,11 @@ const NotificationItem: React.FC<Props> = ({
               <use href={sprite + "#play-thick"} />
             </svg>
           )}
+          {notification.type === NotificationType.ClassroomInvited && <SpriteIcon
+              name="message-square-thick"
+              className="w60 h60 active text-theme-dark-blue"
+            />
+          }
           {notification.type === NotificationType.BrickAttemptSaved && (
             <svg
               className="svg w60 h60 active text-theme-dark-blue stroke-2"
@@ -115,21 +120,6 @@ const NotificationItem: React.FC<Props> = ({
           {notification.type === NotificationType.BrillsEarned && <div className="brill-icon-ff">
             <img alt="brills" src="/images/Brill.svg" />
             <SpriteIcon name="logo" />
-            </div>
-          }
-          {notification.type === NotificationType.CompetitionTop5Rewarded && <div className="brill-icon-ff">
-            <img alt="brills" src="/images/Brill.svg" />
-            <span>Top 5%</span>
-            </div>
-          }
-          {notification.type === NotificationType.CompetitionTop15Rewarded && <div className="brill-icon-ff">
-            <img alt="brills" src="/images/Brill.svg" />
-            <span>Top 15%</span>
-            </div>
-          }
-          {notification.type === NotificationType.CompetitionTop25Rewarded && <div className="brill-icon-ff">
-            <img alt="brills" src="/images/Brill.svg" />
-            <span>Top 25%</span>
             </div>
           }
         </div>

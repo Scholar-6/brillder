@@ -118,7 +118,7 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
         <Grid
           className={`user-preference-page terms-page-container ${this.state.accepted ? 'terms-accepted' : ''}`}
           container direction="column"
-          justify="center" alignItems="center"
+          justifyContent="center" alignItems="center"
         >
           <Grid className="user-preference-container terms-page-container onboarding-terms" item>
             <div className="terms-page">
