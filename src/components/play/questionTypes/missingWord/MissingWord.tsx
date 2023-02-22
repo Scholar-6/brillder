@@ -19,6 +19,7 @@ interface MissingComponent {
 
 interface MissingAttemptAnswer {
   value: number | string;
+  updated?: boolean;
 }
 
 interface MissingWordProps extends CompQuestionProps {
@@ -49,7 +50,10 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     if (props.answers && props.answers.length > 0) {
       userAnswers = props.answers;
     } else if (props.attempt?.answer?.length > 0) {
-      props.attempt.answer.forEach(a => userAnswers.push(a));
+      props.attempt.answer.forEach(a => {
+        a.updated = false;
+        userAnswers.push(a);
+      });
     } else {
       props.component.choices.forEach(() => userAnswers.push({ value: -1 }));
     }
@@ -80,8 +84,11 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
 
   setUserAnswer(e: any, index: number) {
     let userAnswers = this.state.userAnswers;
-    userAnswers[index].value = e.target.value as number;
+    let userAnswer = userAnswers[index];
+    userAnswer.value = e.target.value as number;
+    userAnswer.updated = true;
     this.setState({ userAnswers });
+
     if (this.props.onAttempted) {
       this.props.onAttempted();
     }
@@ -115,7 +122,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     if (!this.state.userAnswers[index]) {
       return <PageLoader content="...Loading..." />;
     }
-    let { value } = this.state.userAnswers[index];
+    let { value, updated } = this.state.userAnswers[index];
     if (value === -1) value = '';
 
 
@@ -124,10 +131,18 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       disabled = this.isAnswerCorrect(index);
     }
 
+    const isCorrect = disabled;
+    let isWrong = false;
+    if (this.props.isReview && (this.props.attempt === this.props.liveAttempt || (this.props.liveAttempt && this.props.liveAttempt.correct === true))) {
+      if (!updated) {
+        isWrong = !isCorrect;
+      }
+    }
+
     return (
       <Select
         disabled={disabled}
-        className="missing-select"
+        className={`missing-select ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''}`}
         value={value}
         IconComponent={ExpandMoreIcon}
         onChange={e => this.setUserAnswer(e, index)}
