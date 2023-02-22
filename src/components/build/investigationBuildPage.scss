@@ -1337,7 +1337,7 @@ $base-build-border: $editor-radius;
 .fixed-build-phone {
   .play-wave-container {
     display: flex;
-    height: 3vw;
+    height: 4.5vw;
     .react-waves {
       height: 3vw;
       width: 90%;
@@ -1347,6 +1347,12 @@ $base-build-border: $editor-radius;
       wave {
         height: 3vw !important;
       }
+    }
+    .absolute-start-time {
+      left: -20%;
+    }
+    .absolute-end-time {
+      right: -20%;
     }
   }
 
