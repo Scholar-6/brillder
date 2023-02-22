@@ -42,8 +42,15 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             }
           }}
         />
-        <img alt="" className="no-pointer-events" src={fileUrl(fileName)} width="100%" />
-        {imageCaption && <div className="mobile-img-caption" dangerouslySetInnerHTML={{ __html: imageCaption }} />}
+        <div className="image-container-v5">
+          <img alt="" className="no-pointer-events" src={fileUrl(fileName)} width="100%" />
+        </div>
+        {imageCaption && <div className="image-caption-v4">
+          <div>
+            <MathInHtml value={imageCaption} />
+          </div>
+        </div>
+        }
       </div>
     );
   }
@@ -69,17 +76,22 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
       </div>
     );
   }
+
   return (
     <div className="image-container">
       <div>
-        <div className="flex-align">
+        <div className="flex-align image-container-v4">
           <img
             alt="" src={fileUrl(fileName)} width="100%"
             onMouseEnter={() => props.hover(fileName, imageSource)}
             onMouseLeave={props.blur}
           />
         </div>
-        {imageCaption && <MathInHtml value={imageCaption} />}
+        {imageCaption && <div className='image-caption-v4'>
+          <div>
+            <MathInHtml value={imageCaption} />
+          </div>
+        </div>}
       </div>
     </div>
   );

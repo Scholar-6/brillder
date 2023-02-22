@@ -2579,13 +2579,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         border-radius: 2vw;
       }
 
-      .mobile-img-caption {
-        display: inline;
-        p {
-          display: inline;
-        }
-      }
-
       p {
         font-size: $font-size-45 !important;
       }

@@ -101,3 +101,48 @@
     top: calc(100px);
   }
 }
+
+.image-container-v4 {
+  line-height: 0 !important;
+}
+
+.play-preview-pages {
+  .image-caption-v4 {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    width: 55vw;
+  
+    > div {
+      display: inline;
+      white-space: nowrap;
+    }
+  
+    br {
+      display: none;
+    }
+  
+    div {
+      display: inline;
+    }
+  
+    p {
+      margin: 0 !important;
+      display: inline;
+    }
+  }
+
+  .pair-match-play .image-caption-v4 {
+    width: 30vw;
+  }
+}
+
+.phone-question-preview .image-caption-v4 {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.phone-question-preview .vertical-shuffle-choice .image-caption-v4 {
+  padding-left: 3vw;
+  padding-right: 0.5vw;
+  width: 16vw;
+}
