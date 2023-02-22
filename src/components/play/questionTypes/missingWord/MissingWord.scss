@@ -17,6 +17,10 @@
     color: var(--theme-dark-blue);
     font-size: 1.25vw;
 
+    > div {
+      font-size: 0;
+    }
+
     div {
       display: inline;
     }
@@ -38,10 +42,6 @@
       font-family: $font-family-regular;
       font-size: 1.25vw;
       color: var(--theme-dark-blue);
-
-      .MuiSelect-root {
-        line-height: 1;
-      }
     }
 
     .question-hint.correct {
@@ -91,4 +91,66 @@
 .MuiListItem-root {
   color: var(--theme-dark-blue) !important;
   font-family: $font-family-regular !important;
+}
+
+.play-preview-pages .sorted-row .brick-row-container
+.brick-container .introduction-page .missing-word-choice {
+  .MuiSelect-icon {
+    top: unset !important;
+    right: -0.4vw;
+    bottom: -0.3vw;
+  }
+  
+  .MuiSelect-selectMenu {
+    padding-left: 0;
+    padding-right: 0;
+    height: 1.8vw;
+  }
+
+  .MuiInput-underline:before,
+  .MuiInput-underline:after {
+    bottom: -0.5vw;
+  }
+
+  .MuiSelect-root {
+    position: absolute;
+    bottom: -0.5vw;
+  }
+
+  .missing-select {
+    &.correct {
+      .MuiSelect-root {
+        padding-left: 0.5vw !important;
+        background: var(--theme-green);
+      }
+
+      svg {
+        display: none;
+      }
+      &.Mui-disabled:before {
+        border-bottom-style: none !important;
+      }
+    }
+
+    &.wrong {
+      .MuiSelect-root {
+        padding-left: 0.2vw;
+        padding-right: 0.2vw;
+        background: var(--theme-orange);
+      }
+      svg {
+        color: var(--white);
+      }
+      &.MuiInput-underline:before {
+        content: none;
+        border-bottom: none !important;
+      }
+
+      color: var(--white);
+
+      p {
+        color: var(--white);
+      }
+    }
+  }
 }
