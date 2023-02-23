@@ -266,6 +266,14 @@
     }
   }
 
+  .zendesk-position {
+    position: fixed;
+    bottom: 2.5vw;
+    left: 2.5vw;
+    height: 12.5vw;
+    width: 12.5vw;
+  }
+
   .subscribe-btn {
     position: absolute;
     bottom: $bottom-menu-height;
@@ -420,64 +428,11 @@
 }
 
 
-// only case for new students
-.mobile-main-page.new-student {
-  padding-top: 28%;
-  padding-bottom: 20%;
-  height: calc(100% - 17.5vw);
-
-  .view-item-container {
-    height: 33vw;
-  }
-
-  >div {
-    display: flex;
-    align-items: center;
-    height: 37%;
-  }
-
-  .eye-glass-frame {
-    width: 70vw;
-    height: 33vw;
-    position: relative;
-
-    >svg {
-      position: absolute;
-      top: 4vw;
-      width: 50vw;
-      height: 25vw;
-    }
-  }
-
-  .back-item-container {
-    width: 230px !important;
-  }
-
-  .blocks-icon {
-    width: 230px !important;
-  }
-
-  .zendesk-position {
-    position: fixed;
-    bottom: 2.5vw;
-    left: 2.5vw;
-    height: 12.5vw;
-    width: 12.5vw;
-  }
-}
-
 .ggf-new-student-popup {
+  $fontss: 4vw;
   p {
-    $fontss: 4.8vw;
-    font-size: $fontss !important;
-
-    span {
-      font-size: $fontss !important;
-    }
-
     &.bold {
       font-family: $font-family-bold;
-      font-size: 6.7vw !important;
     }
   }
 }

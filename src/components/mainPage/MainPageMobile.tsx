@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import queryString from "query-string";
 import { Grid } from "@material-ui/core";
+// @ts-ignore
+import { Steps } from 'intro.js-react';
 
 import "./themes/MainPageMobile.scss";
 import actions from "redux/actions/auth";
@@ -141,7 +143,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     let steps = [] as any[];
 
     steps.push({
-      element: '.view-item-container',
+      element: '.rrr-b1',
       intro: `<div class="ggf-new-student-popup">
         <p class="bold">Welcome to brillder!</p>
         <p>Explore our catalogue of ‘bricks’ by clicking <span class="bold">View & Play</span></p>
@@ -150,16 +152,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     });
 
     steps.push({
-      element: '.back-item-container',
+      element: '.rrr-b2',
       intro: `<p>Find and Play your assigned ‘bricks’ here</p>`,
     });
-
-    if (!this.props.user.library) {
-      steps.push({
-        element: '.competition-item-container',
-        intro: `<p>Discover our daily competitions here - play to win brills, which can be converted to real cash over time!</p>`,
-      });
-    }
 
     steps.push({
       element: '.zendesk-position',
@@ -168,7 +163,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
     if (!this.props.user.library) {
       steps.push({
-        element: '.desktop-credit-coins',
+        element: '.coins-container',
         intro: `
         <p>
           You need to spend credits to play bricks. Spend 1 credit to play a brick from the catalogue or 2 credits to enter a competition.
@@ -179,7 +174,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     }
 
     steps.push({
-      element: '.brill-coin-img',
+      element: '.brill-coin-container',
       intro: `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. As a library user, if you earn enough you'll become one of our Brilliant Minds! We've given you 200 as a welcome gift!</p>`
     });
 
@@ -280,7 +275,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderAssignmentsButton() {
-    console.log(this.state);
     return (
       <div
         className="assignments-btn"
@@ -331,13 +325,13 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           justifyContent="center"
           alignItems="center"
         >
-          <Grid item xs={6} className="btn-center-v4">
+          <Grid item xs={6} className="btn-center-v4 rrr-b1">
             {this.firstButton()}
           </Grid>
-          <Grid item xs={6} className="btn-center-v4">
+          <Grid item xs={6} className="btn-center-v4 rrr-b2">
             {this.renderAssignmentsButton()}
           </Grid>
-          <Grid item xs={12} className="btn-center-v4">
+          <Grid item xs={12} className="btn-center-v4 rrr-b3">
             {this.renderLibraryButton()}
           </Grid>
         </Grid>
@@ -396,13 +390,13 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item xs={6} className="btn-center-v4">
+        <Grid item xs={6} className="btn-center-v4 rrr-b1">
           {this.firstButton()}
         </Grid>
-        <Grid item xs={6} className="btn-center-v4">
+        <Grid item xs={6} className="btn-center-v4 rrr-b2">
           {this.renderAssignmentsButton()}
         </Grid>
-        <Grid item xs={12} className="btn-center-v4">
+        <Grid item xs={12} className="btn-center-v4 rrr-b3">
           {this.renderLibraryButton()}
         </Grid>
       </Grid>
@@ -446,6 +440,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return (
       <Grid container direction="row" className="mainPageMobile">
         <div className="mobile-main-page">
+          {this.state.isNewStudent && <div className="zendesk-position" />}
           <div className="absolute-brills-and-coins">
             <div className="brill-coin-container">
               <div className="brills-count">
@@ -535,6 +530,18 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         {!this.state.isNewStudent && <ClassTInvitationDialog />}
         {!this.state.isNewStudent && <PersonalBrickInvitationDialog />}
         <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({ subscribedPopup: false })} />
+        {this.state.isNewStudent &&
+        <Steps
+          enabled={this.state.isNewStudent}
+          steps={this.state.steps}
+          initialStep={0}
+          onExit={this.onIntroExit.bind(this)}
+          onComplete={() => this.props.history.push(map.ViewAllPage)}
+          options={{
+            nextLabel: 'Next',
+            doneLabel: 'Explore Brillder'
+          }}
+        />}
       </Grid>
     );
   }
