@@ -20,6 +20,7 @@ import NotificationPanel from "../notificationPanel/NotificationPanel";
 import BrillIconAnimated from "../BrillIconAnimated";
 import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 import ConvertCreditsDialog from "./convertCreditsDialog/ConvertCreditsDialog";
+import { isPhone } from "services/phone";
 
 interface MainPageMenuProps {
   history: any;
@@ -150,7 +151,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     return (
       <div className={className} ref={this.pageHeader}>
         <div className="menu-buttons">
-          <BrillIconAnimated popupShown={this.state.popupShown === 2} onClick={() => {
+          {!isPhone() && <BrillIconAnimated popupShown={this.state.popupShown === 2} onClick={() => {
             if (this.state.popupShown === 2) {
               this.setState({ popupShown: 0 });
             } else {
@@ -161,8 +162,9 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
                 this.setState({ showConvertDropdown: !this.state.showConvertDropdown });
               }
             }
-          }} />
+          }} />}
           {(user.library || user.isFromInstitution) ? <div /> :
+            !isPhone() &&
             <div className="header-credits-container">
               <ReactiveUserCredits user={this.props.user} popupShown={this.state.popupShown === 1} onClick={() => {
                 if (this.state.popupShown === 1) {
