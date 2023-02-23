@@ -62,7 +62,7 @@ interface MainPageState {
 
   isStudent: boolean;
   isAdmin: boolean;
-  isEducator: boolean;
+  isTeacher: boolean;
   isInstitution: boolean;
   isBuilder: boolean;
 
@@ -126,7 +126,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       secondaryLabel: "",
       secondPart: " not yet been optimised for mobile devices.",
       steps: this.prepareSteps()
-    } as any;
+    } as MainPageState;
 
     this.preparationForStudent();
   }
@@ -246,7 +246,48 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     );
   }
 
+  renderManageClassesButton() {
+    return (
+      <div className="manage-classes-btn">
+        <div className="flex-center">
+          <SpriteIcon name="manage-classes-v3" />
+        </div>
+        <div className="flex-center">
+          <span className="item-description">
+            Manage Classes
+          </span>
+        </div>
+        <div className="flex-center">
+          <span className="item-description-v2">
+            Currently only on desktop
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  renderBuildButton() {
+    return (
+      <div className="build-btn">
+        <div className="flex-center">
+          <SpriteIcon name="trowel-home" />
+        </div>
+        <div className="flex-center">
+          <span className="item-description">
+            Build Bricks
+          </span>
+        </div>
+        <div className="flex-center">
+          <span className="item-description-v2">
+            Currently only on desktop
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   renderAssignmentsButton() {
+    console.log(this.state);
     return (
       <div
         className="assignments-btn"
@@ -263,7 +304,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         </div>
         <div className="flex-center">
           <span className="item-description">
-            {this.state.isAdmin ? "Assignments" : this.state.isEducator ? "Shared with Me" : "My Assignments"}
+            {this.state.isAdmin ? "Assignments" : this.state.isTeacher ? "Shared with Me" : "My Assignments"}
           </span>
         </div>
       </div>
@@ -288,6 +329,53 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderMobilePage() {
+    if (this.state.isAdmin) {
+      return (
+        <Grid
+          container
+          item
+          className="mobile-main-buttons"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid item xs={6} className="btn-center-v4">
+            {this.firstButton()}
+          </Grid>
+          <Grid item xs={6} className="btn-center-v4">
+            {this.renderAssignmentsButton()}
+          </Grid>
+          <Grid item xs={12} className="btn-center-v4">
+            {this.renderLibraryButton()}
+          </Grid>
+        </Grid>
+      );
+    }
+
+    if (this.state.isTeacher) {
+      return (
+        <Grid
+          container
+          item
+          className="mobile-main-buttons"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid item xs={6} className="btn-center-v4">
+            {this.firstButton()}
+          </Grid>
+          <Grid item xs={6} className="btn-center-v4">
+            {this.renderAssignmentsButton()}
+          </Grid>
+          <Grid item xs={6} className="btn-center-v4">
+            {this.renderManageClassesButton()}
+          </Grid>
+          <Grid item xs={6} className="btn-center-v4">
+            {this.renderBuildButton()}
+          </Grid>
+        </Grid>
+      );
+    }
+
     if (this.state.isBuilder || this.state.isInstitution) {
       return (
         <Grid
