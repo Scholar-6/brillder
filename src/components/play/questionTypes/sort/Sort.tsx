@@ -387,6 +387,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         </p>
         <div className={`sort-two-columns ${this.props.isReview ? 'review-one-column' : ''} ${!unsortedCategory ? 'one-live-column' : ''} `}>
           <div className="categories-column">
+            <div className="category-head text-center">Categories</div>
             {
               categories.map((cat, i) => (
                 <div key={i}>
@@ -422,6 +423,7 @@ class Sort extends CompComponent<SortProps, SortState> {
           </div>
           {unsortedCategory &&
             <div className="unsorted-column phone-unsorted-category">
+              <div className="answers-head text-center">Answers</div>
               <ReactSortableV1
                 list={unsortedCategory.choices as any[]}
                 animation={150}
