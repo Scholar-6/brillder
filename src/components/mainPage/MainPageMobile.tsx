@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import queryString from "query-string";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid } from "@material-ui/core";
-import "swiper/swiper.scss";
 import DynamicFont from "react-dynamic-font";
 // @ts-ignore
 import { Steps } from 'intro.js-react';
@@ -24,12 +22,15 @@ import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/Desk
 import MobileButtonWrap from "./MobileButtonWrap";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import LibraryButton from "./components/LibraryButton";
-import BlocksIcon from "./components/BlocksIcon";
 import { getAssignedBricks } from "services/axios/brick";
 import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import SubscribedDialog from "./components/SubscibedDialog";
 import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
+import { checkAdmin } from "components/services/brickService";
+import FirstPhoneButton from "./components/FirstPhoneButton";
+import { fileUrl } from "components/services/uploadFile";
+import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -50,7 +51,6 @@ interface MainPageProps {
 }
 
 interface MainPageState {
-  swiper: any;
   notificationExpanded: boolean;
 
   isNewStudent: boolean;
@@ -62,14 +62,14 @@ interface MainPageState {
   isBackToWorkOpen: boolean;
   isTryBuildOpen: boolean;
 
-  isSwiping: boolean;
-
   assignedCount: number;
 
   // for mobile popopup
   isDesktopOpen: boolean;
   secondaryLabel: string;
   secondPart: string;
+
+  notificationText: string;
 
   subscribedPopup: boolean;
   steps: any[];
@@ -94,14 +94,16 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       subscribedPopup = true;
     }
 
+    const notificationText = this.getNotificationsText(props.notifications);
+
     this.state = {
-      swiper: null,
       notificationExpanded: false,
       isMyLibraryOpen: false,
       isBackToWorkOpen: false,
       isTryBuildOpen: false,
-      isSwiping: false,
       isNewStudent,
+
+      notificationText,
 
       subscribedPopup,
 
@@ -117,6 +119,19 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     } as any;
 
     this.preparationForStudent();
+  }
+
+  getNotificationsText(notifications: Notification[] | null) {
+    if (notifications && notifications.length >= 1) {
+      let welcomeText = `You have <span class="bold">${notifications.length}</span>`;
+      if (notifications.length === 1) {
+        welcomeText += ' new notification';
+      } else {
+        welcomeText += ' new notifications';
+      }
+      return welcomeText;
+    }
+    return 'You have no new notifications';
   }
 
   prepareSteps() {
@@ -180,12 +195,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <div
         className="create-item-container"
         onClick={() => {
-          if (!this.state.isSwiping) {
-            this.setState({
-              isDesktopOpen: true,
-              secondaryLabel: "",
-            });
-          }
+          this.setState({
+            isDesktopOpen: true,
+            secondaryLabel: "",
+          });
         }}
       >
         <button className="btn btn-transparent zoom-item">
@@ -226,207 +239,185 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderAssignmentsButton() {
     return (
       <div
-        className="back-item-container"
+        className="assignments-btn"
         onClick={() => {
-          if (!this.state.isSwiping) {
-            if (this.state.assignedCount > 0) {
-              this.props.history.push(map.AssignmentsPage);
-            } else {
-              this.setState({ isBackToWorkOpen: true });
-            }
+          if (this.state.assignedCount > 0) {
+            this.props.history.push(map.AssignmentsPage);
+          } else {
+            this.setState({ isBackToWorkOpen: true });
           }
         }}
       >
-        <button className="btn btn-transparent zoom-item">
-          <BlocksIcon disabled={this.state.assignedCount === 0} />
-          <span className="item-description flex-number">
-            {(isTeacherPreference(this.props.user) || isInstitutionPreference(this.props.user))
-              ? "Shared with Me"
-              : "My Assignments"}
-            {this.state.assignedCount > 0 && (
-              <div className="m-red-circle bold">
-                <DynamicFont content={this.state.assignedCount.toString()} />
-              </div>
-            )}
-          </span>
-        </button>
+          <div className="flex-center">
+            <SpriteIcon name="assignments-icon" className={`${this.state.assignedCount === 0 ? 'disabled' : ''}`} />
+          </div>
+          <div className="flex-center">
+            <span className="item-description">
+              {(isTeacherPreference(this.props.user) || isInstitutionPreference(this.props.user))
+                ? "Assignments"
+                : "My Assignments"}
+            </span>
+          </div>
       </div>
     );
-  }
-
-  swipeNext() {
-    if (this.state.swiper) {
-      this.state.swiper.slideNext();
-    }
-  }
-
-  swipePrev() {
-    if (this.state.swiper) {
-      this.state.swiper.slidePrev();
-    }
-  }
-
-  handleMobileClick(e: any) {
-    if (this.state.isSwiping === false) {
-      const { height } = window.screen;
-      const minY = height / 3;
-      const maxY = (height / 3) * 2;
-
-      const finished = () => {
-        this.setState({ isSwiping: true });
-        setTimeout(() => this.setState({ isSwiping: false }), 200);
-      };
-
-      if (e.touches.currentY < minY) {
-        this.state.swiper.slidePrev();
-        finished();
-      } else if (e.touches.currentY > maxY) {
-        this.state.swiper.slideNext();
-        finished();
-      }
-    }
   }
 
   onIntroExit() {
     this.setState({ isNewStudent: false });
   }
 
-  renderNewStudentPage() {
-    return (
-      <div className="mobile-main-page new-student">
-        <MobileButtonWrap>
-          <FirstButton
-            user={this.props.user}
-            history={this.props.history}
-            disabled={this.state.isSwiping}
-          />
-          <div className="zendesk-position" />
-        </MobileButtonWrap>
-        {this.renderAssignmentsButton()}
-        {!this.props.user.library && this.renderCompetitionButton()}
-        <Steps
-          enabled={this.state.isNewStudent}
-          steps={this.state.steps}
-          initialStep={0}
-          onExit={this.onIntroExit.bind(this)}
-          onComplete={() => this.props.history.push(map.ViewAllPage)}
-          options={{
-            nextLabel: 'Next',
-            doneLabel: 'Explore Brillder'
-          }}
-        />
-      </div>
-    );
-  }
-
   renderMobilePage() {
     const { user } = this.props;
 
-    const firstButton = (index: number) => {
+    const firstButton = () => {
       return (
-        <SwiperSlide key={index}>
-          <MobileButtonWrap>
-            <FirstButton
-              user={user}
-              history={this.props.history}
-              disabled={this.state.isSwiping}
-            />
-          </MobileButtonWrap>
-        </SwiperSlide>
+        <div className="view-and-play-btn">
+          <div className="icon-container-v4">
+            <SpriteIcon name="glasses-v2" className="active text-theme-orange" />
+          </div>
+          <div className="flex-center">
+            <span className="item-description">View & Play</span>
+          </div>
+        </div>
       );
     };
 
     const renderStudentButtons = () => {
       const buttons = [];
-      buttons.push(firstButton(1));
-      buttons.push(<SwiperSlide key={2}>{this.renderAssignmentsButton()}</SwiperSlide>);
+      buttons.push(firstButton());
+      buttons.push(this.renderAssignmentsButton());
       if (!this.props.user.library) {
-        buttons.push(<SwiperSlide key={3}>{this.renderCompetitionButton()}</SwiperSlide>);
+        buttons.push(this.renderCompetitionButton());
       }
-      buttons.push(<SwiperSlide key={4}>{this.renderLibraryButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide key={5}>{this.renderCreateButton()}</SwiperSlide>);
+      buttons.push(this.renderLibraryButton());
+      buttons.push(this.renderCreateButton());
       return buttons;
     };
 
     const renderBuildButtons = () => {
       const buttons = [];
-      buttons.push(firstButton(1));
-      buttons.push(<SwiperSlide key={2}>{this.renderCreateButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide key={3}>{this.renderCompetitionButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide key={4}>{this.renderAssignmentsButton()}</SwiperSlide>);
+      buttons.push(firstButton());
+      buttons.push(this.renderCreateButton());
+      buttons.push(this.renderCompetitionButton());
+      buttons.push(this.renderAssignmentsButton());
       return buttons;
     };
 
     const renderTeachButtons = () => {
       const buttons = [];
-      buttons.push(firstButton(1));
+      buttons.push(firstButton());
       buttons.push(
-        <SwiperSlide key={2}>
-          <TeachButton
-            history={this.props.history}
-            disabled={true}
-            onMobileClick={() => {
-              if (!this.state.isSwiping) {
-                this.setState({
-                  isDesktopOpen: true,
-                  secondaryLabel: "",
-                });
-              }
-            }}
-          />
-        </SwiperSlide>
+        <TeachButton
+          history={this.props.history}
+          disabled={true}
+          onMobileClick={() => {
+            this.setState({
+              isDesktopOpen: true,
+              secondaryLabel: "",
+            });
+          }}
+        />
       );
-      buttons.push(<SwiperSlide key={3}>{this.renderCompetitionButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide key={4}>{this.renderCreateButton()}</SwiperSlide>);
-      buttons.push(<SwiperSlide key={5}>{this.renderAssignmentsButton()}</SwiperSlide>);
+      buttons.push(this.renderCompetitionButton());
+      buttons.push(this.renderCreateButton());
+      buttons.push(this.renderAssignmentsButton());
       return buttons;
     };
 
-    if (this.state.isNewStudent) {
-      return this.renderNewStudentPage();
-    }
+    let isAdmin = checkAdmin(user.roles);
+
+    if (isAdmin) {
+      return (
+        <Grid
+          container
+          item
+          className="mobile-main-buttons"
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item xs={6} className="btn-center-v4">
+            {firstButton()}
+          </Grid>
+          <Grid item xs={6} className="btn-center-v4">
+            {this.renderAssignmentsButton()}
+          </Grid>
+          <Grid item xs={12} className="btn-center-v4">
+            {this.renderLibraryButton()}
+          </Grid>
+        </Grid>
+      );
+      }
 
     return (
       <div className="mobile-main-page">
-        <button
-          className="btn btn-transparent prev-image"
-          onClick={() => this.swipePrev()}
-        >
-          <SpriteIcon name="arrow-up" className="w100 h100 active text-white" />
-        </button>
-        <Swiper
-          slidesPerView={3}
-          loop={true}
-          loopedSlides={20}
-          direction="vertical"
-          pagination={{ clickable: true }}
-          onClick={(e) => this.handleMobileClick(e)}
-          onSwiper={(swiper) => {
-            this.setState({ ...this.state, swiper });
-          }}
-        >
-          {isStudentPreference(user) && renderStudentButtons()}
-          {isBuilderPreference(user) && renderBuildButtons()}
-          {(isTeacherPreference(user) || isInstitutionPreference(user)) &&
-            renderTeachButtons()}
-        </Swiper>
-        <button
-          className="btn btn-transparent next-image"
-          onClick={() => this.swipeNext()}
-        >
-          <SpriteIcon
-            name="arrow-down"
-            className="w100 h100 active text-white"
-          />
-        </button>
+        {isStudentPreference(user) && renderStudentButtons()}
+        {isBuilderPreference(user) && renderBuildButtons()}
+        {(isTeacherPreference(user) || isInstitutionPreference(user)) &&
+          renderTeachButtons()}
       </div>
     );
+  }
+
+  renderSparkle() {
+    const { user } = this.props;
+    if (user && user.subscriptionState && user.subscriptionState > 0) {
+      return <SpriteIcon className="sparkle-s6" name="hero-sparkle" />;
+    }
+    return '';
   }
 
   render() {
     return (
       <Grid container direction="row" className="mainPageMobile">
-        {this.renderMobilePage()}
+        <div className="mobile-main-page">
+          <div className="absolute-brills-and-coins">
+            <div className="brill-coin-container">
+              <div className="brills-count">
+                {this.props.user.brills}
+              </div>
+              <div className="brill-coin-img">
+                <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
+                <SpriteIcon name="logo" />
+                <div className="css-custom-tooltip ">
+                  <div className="bold">What are brills?</div>
+                  <div className="regular">If you score over 50% on your first attempt or improve an earlier score while scoring over 50%, your percentage converts into bonus points, called brills. We're giving 200 brills to all new and existing users as a thank you for using our platform.</div>
+                  <div className="regular">Collect enough brills and you can even win cash prizes!</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="coins-container">
+            <ReactiveUserCredits className="phone-credit-coins" history={this.props.history} />
+          </div>
+          <div className="welcome-container">
+            <div>
+              <div className="bold welcome-title">Welcome to Brillder,</div>
+              <div
+                className="welcome-name"
+                onClick={() => this.props.history.push(map.UserProfile)}
+              >
+                <div className="centered">
+                  {this.props.user.profileImage
+                    ?
+                    <div className="profile-image-border">
+                      <img alt="user-profile" src={fileUrl(this.props.user.profileImage)} />
+                    </div>
+                    : <SpriteIcon name="user-custom" />
+                  }
+                </div>
+                <span>{this.props.user.firstName}</span>
+                {this.renderSparkle()}
+              </div>
+              <div dangerouslySetInnerHTML={{ __html: this.state.notificationText }} />
+            </div>
+          </div>
+
+          {this.renderMobilePage()}
+        </div>
+        <div className="subscribe-btn" onClick={() => this.props.history.push(map.ChoosePlan)}>
+          <div className="bold">Subscribe</div>
+          <SpriteIcon name="hero-sparkle" />
+        </div>
         <MainPageMenu
           user={this.props.user}
           history={this.props.history}
