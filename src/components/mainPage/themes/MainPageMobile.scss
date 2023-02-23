@@ -107,7 +107,7 @@
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      height: 31%;
+      height: 35%;
       font-size: $font-18;
       padding-bottom: 3vh;
 
@@ -120,6 +120,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 2vh;
 
         .centered {
           width: 9vw;
@@ -155,7 +156,7 @@
   
       .view-and-play-btn {
         svg {
-          width: 31vw;
+          width: 30vw;
           height: 17vw;
           padding-bottom: 2vw;
         }
@@ -163,7 +164,7 @@
   
       .assignments-btn {
         svg {
-          width: 30vw;
+          width: 34vw;
           height: 17vw;
           padding-bottom: 2vw;
         }

@@ -54,13 +54,17 @@ interface MainPageState {
   notificationExpanded: boolean;
 
   isNewStudent: boolean;
-  isStudent: boolean;
-  isBuilder: boolean;
 
   // for students
   isMyLibraryOpen: boolean;
   isBackToWorkOpen: boolean;
   isTryBuildOpen: boolean;
+
+  isStudent: boolean;
+  isAdmin: boolean;
+  isEducator: boolean;
+  isInstitution: boolean;
+  isBuilder: boolean;
 
   assignedCount: number;
 
@@ -78,9 +82,6 @@ interface MainPageState {
 class MainPage extends Component<MainPageProps, MainPageState> {
   constructor(props: MainPageProps) {
     super(props);
-
-    const isStudent = isStudentPreference(props.user);
-    const isBuilder = isBuilderPreference(props.user);
 
     // onboarding users logic
     let isNewStudent = false;
@@ -107,8 +108,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
       subscribedPopup,
 
-      isStudent,
-      isBuilder,
+      isAdmin: checkAdmin(props.user.roles),
+      isTeacher: isTeacherPreference(props.user),
+      isStudent: isStudentPreference(props.user),
+      isBuilder: isBuilderPreference(props.user),
+      isInstitution: isInstitutionPreference(props.user),
 
       assignedCount: 0,
 
@@ -248,16 +252,27 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           }
         }}
       >
-          <div className="flex-center">
-            <SpriteIcon name="assignments-icon" className={`${this.state.assignedCount === 0 ? 'disabled' : ''}`} />
-          </div>
-          <div className="flex-center">
-            <span className="item-description">
-              {(isTeacherPreference(this.props.user) || isInstitutionPreference(this.props.user))
-                ? "Assignments"
-                : "My Assignments"}
-            </span>
-          </div>
+        <div className="flex-center">
+          <SpriteIcon name="assignments-icon" className={`${this.state.assignedCount === 0 ? 'disabled' : ''}`} />
+        </div>
+        <div className="flex-center">
+          <span className="item-description">
+            {this.state.isAdmin ? "Assignments" : this.state.isEducator ? "Shared with Me" : "My Assignments"}
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  firstButton() {
+    return (
+      <div className="view-and-play-btn">
+        <div className="flex-center">
+          <SpriteIcon name="glasses-v2" className="active text-theme-orange" />
+        </div>
+        <div className="flex-center">
+          <span className="item-description">View & Play</span>
+        </div>
       </div>
     );
   }
@@ -267,94 +282,43 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderMobilePage() {
-    const { user } = this.props;
-
-    const firstButton = () => {
-      return (
-        <div className="view-and-play-btn">
-          <div className="icon-container-v4">
-            <SpriteIcon name="glasses-v2" className="active text-theme-orange" />
-          </div>
-          <div className="flex-center">
-            <span className="item-description">View & Play</span>
-          </div>
-        </div>
-      );
-    };
-
-    const renderStudentButtons = () => {
-      const buttons = [];
-      buttons.push(firstButton());
-      buttons.push(this.renderAssignmentsButton());
-      if (!this.props.user.library) {
-        buttons.push(this.renderCompetitionButton());
-      }
-      buttons.push(this.renderLibraryButton());
-      buttons.push(this.renderCreateButton());
-      return buttons;
-    };
-
-    const renderBuildButtons = () => {
-      const buttons = [];
-      buttons.push(firstButton());
-      buttons.push(this.renderCreateButton());
-      buttons.push(this.renderCompetitionButton());
-      buttons.push(this.renderAssignmentsButton());
-      return buttons;
-    };
-
-    const renderTeachButtons = () => {
-      const buttons = [];
-      buttons.push(firstButton());
-      buttons.push(
-        <TeachButton
-          history={this.props.history}
-          disabled={true}
-          onMobileClick={() => {
-            this.setState({
-              isDesktopOpen: true,
-              secondaryLabel: "",
-            });
-          }}
-        />
-      );
-      buttons.push(this.renderCompetitionButton());
-      buttons.push(this.renderCreateButton());
-      buttons.push(this.renderAssignmentsButton());
-      return buttons;
-    };
-
-    let isAdmin = checkAdmin(user.roles);
-
-    if (isAdmin) {
+    if (this.state.isBuilder || this.state.isInstitution) {
       return (
         <Grid
           container
           item
           className="mobile-main-buttons"
-          justify="center"
+          justifyContent="center"
           alignItems="center"
         >
           <Grid item xs={6} className="btn-center-v4">
-            {firstButton()}
+            {this.firstButton()}
           </Grid>
           <Grid item xs={6} className="btn-center-v4">
-            {this.renderAssignmentsButton()}
-          </Grid>
-          <Grid item xs={12} className="btn-center-v4">
             {this.renderLibraryButton()}
           </Grid>
         </Grid>
       );
-      }
+    }
 
     return (
-      <div className="mobile-main-page">
-        {isStudentPreference(user) && renderStudentButtons()}
-        {isBuilderPreference(user) && renderBuildButtons()}
-        {(isTeacherPreference(user) || isInstitutionPreference(user)) &&
-          renderTeachButtons()}
-      </div>
+      <Grid
+        container
+        item
+        className="mobile-main-buttons"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item xs={6} className="btn-center-v4">
+          {this.firstButton()}
+        </Grid>
+        <Grid item xs={6} className="btn-center-v4">
+          {this.renderAssignmentsButton()}
+        </Grid>
+        <Grid item xs={12} className="btn-center-v4">
+          {this.renderLibraryButton()}
+        </Grid>
+      </Grid>
     );
   }
 
@@ -411,7 +375,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               <div dangerouslySetInnerHTML={{ __html: this.state.notificationText }} />
             </div>
           </div>
-
           {this.renderMobilePage()}
         </div>
         <div className="subscribe-btn" onClick={() => this.props.history.push(map.ChoosePlan)}>
