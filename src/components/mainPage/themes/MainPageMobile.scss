@@ -216,6 +216,12 @@
           width: 34vw;
           height: 17vw;
           padding-bottom: 2vw;
+
+          color: var(--theme-orange);
+
+          &.disabled {
+            color: var(--theme-light-blue);
+          }
         }
       }
   
@@ -224,6 +230,10 @@
           width: 30vw;
           height: 17vw;
           padding-bottom: 2vw;
+        }
+
+        &.disabled svg {
+          color: var(--theme-light-blue);
         }
       }
     }
