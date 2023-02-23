@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import queryString from "query-string";
 import { Grid } from "@material-ui/core";
-import DynamicFont from "react-dynamic-font";
-// @ts-ignore
-import { Steps } from 'intro.js-react';
 
 import "./themes/MainPageMobile.scss";
 import actions from "redux/actions/auth";
@@ -16,10 +13,7 @@ import { Notification } from "model/notifications";
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
-import TeachButton from "./components/TeachButton";
-import FirstButton from "./components/FirstButton";
 import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/DesktopVersionDialogV2";
-import MobileButtonWrap from "./MobileButtonWrap";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import LibraryButton from "./components/LibraryButton";
 import { getAssignedBricks } from "services/axios/brick";
@@ -28,7 +22,6 @@ import ClassTInvitationDialog from "components/baseComponents/classInvitationDia
 import SubscribedDialog from "./components/SubscibedDialog";
 import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
 import { checkAdmin } from "components/services/brickService";
-import FirstPhoneButton from "./components/FirstPhoneButton";
 import { fileUrl } from "components/services/uploadFile";
 import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 
@@ -424,6 +417,31 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return '';
   }
 
+  renderSubscribeButton() {
+    const {user} = this.props;
+    let renderPremiumButton = false;
+    if (user.subscriptionState === 0 || !user.subscriptionState) {
+      renderPremiumButton = true;
+      if (user.library) {
+        renderPremiumButton = false;
+      }
+    }
+
+    if (user.isFromInstitution) {
+      renderPremiumButton = false;
+    }
+
+    if (renderPremiumButton === true) {
+      return (
+        <div className="subscribe-btn" onClick={() => this.props.history.push(map.ChoosePlan)}>
+        <div className="bold">Subscribe</div>
+        <SpriteIcon name="hero-sparkle" />
+      </div>
+      );
+    }
+    return <div />;
+  }
+
   render() {
     return (
       <Grid container direction="row" className="mainPageMobile">
@@ -482,10 +500,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           </div>
           {this.renderMobilePage()}
         </div>
-        <div className="subscribe-btn" onClick={() => this.props.history.push(map.ChoosePlan)}>
-          <div className="bold">Subscribe</div>
-          <SpriteIcon name="hero-sparkle" />
-        </div>
+        {this.renderSubscribeButton()}
         <MainPageMenu
           user={this.props.user}
           history={this.props.history}
