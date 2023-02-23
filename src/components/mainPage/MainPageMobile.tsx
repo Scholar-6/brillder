@@ -75,6 +75,9 @@ interface MainPageState {
 
   notificationText: string;
 
+  brillsPopup: boolean;
+  coinsPopup: boolean;
+
   subscribedPopup: boolean;
   steps: any[];
 }
@@ -115,6 +118,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       isInstitution: isInstitutionPreference(props.user),
 
       assignedCount: 0,
+
+      brillsPopup: false,
+      coinsPopup: false,
 
       isDesktopOpen: false,
       secondaryLabel: "",
@@ -339,10 +345,13 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               <div className="brills-count">
                 {this.props.user.brills}
               </div>
-              <div className="brill-coin-img">
+              <div className="brill-coin-img" onClick={() => this.setState({
+                coinsPopup: false,
+                brillsPopup: !this.state.brillsPopup}
+              )}>
                 <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
                 <SpriteIcon name="logo" />
-                <div className="css-custom-tooltip ">
+                <div className={`css-custom-tooltip ${this.state.brillsPopup ? 'visible': ''}`}>
                   <div className="bold">What are brills?</div>
                   <div className="regular">If you score over 50% on your first attempt or improve an earlier score while scoring over 50%, your percentage converts into bonus points, called brills. We're giving 200 brills to all new and existing users as a thank you for using our platform.</div>
                   <div className="regular">Collect enough brills and you can even win cash prizes!</div>
@@ -351,7 +360,15 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             </div>
           </div>
           <div className="coins-container">
-            <ReactiveUserCredits className="phone-credit-coins" history={this.props.history} />
+            <ReactiveUserCredits
+              className="phone-credit-coins"
+              popupShown={this.state.coinsPopup}
+              history={this.props.history}
+              onClick={() => this.setState({
+                brillsPopup: false,
+                coinsPopup: !this.state.coinsPopup})
+              }
+            />
           </div>
           <div className="welcome-container">
             <div>
