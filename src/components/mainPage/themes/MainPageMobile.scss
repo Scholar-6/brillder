@@ -60,11 +60,35 @@
             width: 55%;
             height: 55%;
           }
-        }
-      }
 
-      .css-custom-tooltip {
-        display: none !important;
+          .css-custom-tooltip {
+            z-index: 100;
+            position: absolute;
+            border-radius: 2vw;
+            right: -5vw;
+            top: 14vw;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            display: none;
+            color: var(--theme-dark-blue);
+            width: 80vw;
+            background: var(--white);
+            padding: 3vw 5vw;
+        
+            .bold {
+              font-size: 7vw;
+              margin-bottom: 0.7vw;
+            }
+        
+            .regular {
+              font-family: $font-family-regular;
+            }
+          }
+        
+          .visible.css-custom-tooltip {
+            display: block;
+            opacity: 1;
+          }
+        }
       }
     }
 
@@ -99,7 +123,32 @@
       }
 
       .css-custom-tooltip {
-        display: none !important;
+        display: none;
+        position: absolute;
+        border-radius: 2vw;
+        top: 14vw;
+        right: 1vw;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        color: var(--theme-dark-blue);
+        width: 82vw;
+        background: var(--white);
+        padding: 3vw 5vw;
+  
+        &.visible {
+          display: block;
+        }
+  
+        .bold {
+          font-size: $font-22;
+        }
+  
+        .green-btn {
+          margin-top: 3vw;
+          border-radius: 9vw;
+          padding: 0.7vw 3vw;
+          color: white;
+          background: var(--theme-green);
+        }
       }
     }
 
