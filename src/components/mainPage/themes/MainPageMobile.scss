@@ -197,6 +197,10 @@
         text-align: center;
       }
 
+      .item-description-v2 {
+        font-size: 4vw;
+      }
+
       .view-and-play-btn,
       .assignments-btn,
       .my-library-button {
@@ -222,6 +226,29 @@
           &.disabled {
             color: var(--theme-light-blue);
           }
+        }
+      }
+
+      .manage-classes-btn {
+        svg {
+          width: 30vw;
+          height: 17vw;
+          padding-bottom: 2vw;
+        }
+        span {
+          opacity: 0.5;
+        }
+      }
+
+      .build-btn {
+        svg {
+          opacity: 0.5;
+          width: 30vw;
+          height: 17vw;
+          padding-bottom: 2vw;
+        }
+        span {
+          opacity: 0.5;
         }
       }
   
