@@ -162,25 +162,46 @@
   .sort-two-columns {
     display: flex;
     width: 104%;
+
+    .category-head,
+    .answers-head {
+      border-top-left-radius: 2vw;
+      border-top-right-radius: 2vw;
+      color: var(--white);
+      padding-top: 1vw;
+      padding-bottom: 1vw;
+    }
+
+    .answers-head {
+      margin-left: 2vw;
+      background: var(--theme-orange);
+      margin-bottom: 1vh;
+    }
+
     .categories-column {
       width: 51%;
       transition: all 300ms ease-in-out;
+
+      .category-head {
+        background: var(--theme-dark-blue);
+      }
+
       > div {
-        background: var(--tab-gray);
         margin-bottom: 1vh;
       }
       .sort-category {
         padding-left: 2.5vw;
-        background: unset !important;
+        border-radius: 1.6vw;
+        background: var(--tab-gray) !important;
         p {
           text-align: center !important;
         }
       }
 
       .sortable-list.category::after {
-        margin-left: 2.5vw;
-        margin-right: 2.5vw;
-        width: calc(100% - 5vw);
+        margin-left: 1.5vw;
+        margin-right: 1.5vw;
+        width: calc(100% - 3vw);
       }
 
       .sortable-list.category {
@@ -191,10 +212,10 @@
       .sortable-item {
         background: unset !important;
         .MuiListItemText-root .MuiTypography-root > div {
-          margin-left: 1.5vw;
-          margin-right: 1.5vw;
-          background: var(--highlight-blue);
-          border-radius: 1.3vw;
+          margin-left: 1vw;
+          margin-right: 1vw;
+          background: var(--solitude-light);
+          border-radius: 0;
           p {
             text-align: center !important;
           }
@@ -219,8 +240,8 @@
         padding-left: 1.5vw !important;
         padding-right: 1.5vw !important;
         text-align: center !important;
-        background: var(--highlight-blue);
-        border-radius: 1.3vw;
+        background: var(--solitude-light);
+        border-radius: 0;
 
         p {
           text-align: center !important;
