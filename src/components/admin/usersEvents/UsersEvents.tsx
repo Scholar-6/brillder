@@ -28,6 +28,7 @@ import { Subject } from "model/brick";
 import { CDomain, PDateFilter } from "../classesEvents/ClassesSidebar";
 import AddingCreditsDialog from "./AddingCreditsDialog";
 import { resendInvitation } from "services/axios/classroom";
+import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 
 
 interface UsersProps {
@@ -74,6 +75,8 @@ interface UsersState {
   libraries: RealLibrary[];
   dateFilter: PDateFilter;
 
+  resentClassroomInvite: boolean;
+
   downloadClicked: boolean;
 }
 
@@ -101,6 +104,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
       isAscending: true,
 
       dateFilter,
+
+      resentClassroomInvite: false,
 
       creditDetails: {
         isOpen: false,
@@ -230,10 +235,9 @@ class UsersPage extends Component<UsersProps, UsersState> {
 
   async resendInvitation(u: User) {
     if (u.classroomInvitations) {
-      const res = await resendInvitation({id: u.classroomInvitations[0].id} as any, u.email);
-      console.log('res', res);
+      const res = await resendInvitation({ id: u.classroomInvitations[0].classroomId } as any, u.email);
       if (res) {
-
+        this.setState({resentClassroomInvite: true});
       } else {
         this.props.requestFailed("Can`t delete user");
       }
@@ -359,7 +363,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
         u.classroomAssignmentCount && u.classroomAssignmentCount > 0
       ) {
         return (
-          <div className="attempts-count-box no-hover margin-left" onClick={() => {}}>
+          <div className="attempts-count-box no-hover margin-left" onClick={() => { }}>
             <SpriteIcon name="circle-assignments" />
             <div className="count-d4421">
               {u.classroomAssignmentCount}
@@ -368,7 +372,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
         );
       } else if (u.assignments && u.assignments.length > 0) {
         return (
-          <div className="attempts-count-box no-hover margin-left" onClick={() => {}}>
+          <div className="attempts-count-box no-hover margin-left" onClick={() => { }}>
             <SpriteIcon name="circle-assignments" />
             <div className="count-d4421">
               {u.assignments.length}
@@ -382,13 +386,13 @@ class UsersPage extends Component<UsersProps, UsersState> {
     const renderResendButton = (u: User) => {
       if (u.classroomInvitations && u.classroomInvitations.length) {
         return (
-        <div className="resend-button" onClick={() => this.resendInvitation(u)}>
-          <div className="button-v3">resend</div>
-          <div className="absolute-students-hover">
-            <span className="bold">Resend to student acivation email</span>
+          <div className="resend-button" onClick={() => this.resendInvitation(u)}>
+            <div className="button-v3">resend</div>
+            <div className="absolute-students-hover">
+              <span className="bold">Resend to student acivation email</span>
+            </div>
           </div>
-        </div>
-      );
+        );
       }
       return <div />;
     }
@@ -695,6 +699,10 @@ class UsersPage extends Component<UsersProps, UsersState> {
             this.setState({ creditDetails, users: this.state.users });
           }} />
         {this.renderClassroomPopup()}
+        <StudentInviteSuccessDialog
+          numStudentsInvited={this.state.resentClassroomInvite ? 1 : 0}
+          close={() => this.setState({resentClassroomInvite: false})}
+        />
       </div>
     );
   }
