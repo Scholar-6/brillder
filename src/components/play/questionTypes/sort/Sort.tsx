@@ -379,10 +379,8 @@ class Sort extends CompComponent<SortProps, SortState> {
     return (
       <div className="question-unique-play sort-play phone-sort">
         <p>
-          <span className="help-text"><SpriteIcon name="categorize-phone-d3" /> Drag vertically to rearrange. {
-            haveImage && (isMobile
-              ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
-              : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
+          <span className="help-text"><SpriteIcon name="categorize-phone-d3" /> Hold and drag to categorise. {
+            haveImage && <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
           }</span>
         </p>
         <div className={`sort-two-columns ${this.props.isReview ? 'review-one-column' : ''} ${!unsortedCategory ? 'one-live-column' : ''} `}>
