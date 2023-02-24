@@ -389,7 +389,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <div className="resend-button" onClick={() => this.resendInvitation(u)}>
             <div className="button-v3">resend</div>
             <div className="absolute-students-hover">
-              <span className="bold">Resend to student acivation email</span>
+              <span className="bold">Resend to student activation email</span>
             </div>
           </div>
         );
