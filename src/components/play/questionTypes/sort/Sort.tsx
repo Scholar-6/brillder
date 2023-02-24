@@ -427,6 +427,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                 list={unsortedCategory.choices as any[]}
                 animation={150}
                 delay={100}
+                dragClass="draggable-categorize"
                 className="unsorted sortable-list"
                 group={{ name: "cloning-group-name" }}
                 setList={(list: any[]) => this.updateCategory(list, this.state.userCats.length - 1)}
