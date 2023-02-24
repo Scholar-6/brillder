@@ -27,6 +27,7 @@ import { getSubjects } from "services/axios/subject";
 import { Subject } from "model/brick";
 import { CDomain, PDateFilter } from "../classesEvents/ClassesSidebar";
 import AddingCreditsDialog from "./AddingCreditsDialog";
+import { resendInvitation } from "services/axios/classroom";
 
 
 interface UsersProps {
@@ -227,6 +228,18 @@ class UsersPage extends Component<UsersProps, UsersState> {
     }
   }
 
+  async resendInvitation(u: User) {
+    if (u.classroomInvitations) {
+      const res = await resendInvitation({id: u.classroomInvitations[0].id} as any, u.email);
+      console.log('res', res);
+      if (res) {
+
+      } else {
+        this.props.requestFailed("Can`t delete user");
+      }
+    }
+  }
+
   renderLibrary(user: User) {
     if (user.library) {
       const libraryId = user.library.id;
@@ -366,6 +379,20 @@ class UsersPage extends Component<UsersProps, UsersState> {
       return <div />;
     }
 
+    const renderResendButton = (u: User) => {
+      if (u.classroomInvitations && u.classroomInvitations.length) {
+        return (
+        <div className="resend-button" onClick={() => this.resendInvitation(u)}>
+          <div className="button-v3">resend</div>
+          <div className="absolute-students-hover">
+            <span className="bold">Resend to student acivation email</span>
+          </div>
+        </div>
+      );
+      }
+      return <div />;
+    }
+
     return <div className="table-body">
       {users.map(u => {
         return (<div className="table-row">
@@ -405,6 +432,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             {renderteachClassroom(u)}
             {renderCreateBricksCount(u)}
             {renderAssignmentsCount(u)}
+            {renderResendButton(u)}
           </div>
           <div className="actions-column">
             <div className="round-btn blue flex-center" onClick={() => this.props.history.push(map.UserProfile + '/' + u.id)}>

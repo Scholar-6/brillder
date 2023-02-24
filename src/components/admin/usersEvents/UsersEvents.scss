@@ -223,6 +223,52 @@
 }
 
 .user-list-page .tab-content .users-table-d34 {
+  .resend-button {
+    margin-left: 0.5vw;
+    position: relative;
+
+    .button-v3 {
+      cursor: pointer;
+      width: 4vw;
+      border-radius: 2vw;
+      color: white;
+      text-align: center;
+      background: var(--theme-yellow);
+    }
+
+    svg {
+      width: 2.3vw;
+      height: 2.3vw;
+      margin-right: 0.5vw;
+    }
+
+    .bigger {
+      font-size: 1.4vw;
+      margin-bottom: 0.26vw;
+    }
+
+    .absolute-students-hover {
+      top: 1.6vw;
+      left: -5vw;
+      width: 17vw;
+      padding-top: 0.3vw;
+      padding-bottom: 0.3vw;
+      text-align: center;
+      display: none;
+      position: absolute;
+      z-index: 10;
+      background: white;
+      box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.1);
+      border-radius: 0.3vw;
+    }
+
+    &:hover {
+      .absolute-students-hover {
+        display: block;
+      }
+    }
+
+  }
 
   .publish-column {
     display: flex;
