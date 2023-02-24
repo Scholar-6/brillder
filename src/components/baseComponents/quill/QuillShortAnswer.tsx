@@ -8,7 +8,6 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 import "./QuillKeyboard";
 import QuillBetterTable from "./QuillBetterTable";
-import { QuillEditorContext } from "./QuillEditorContext";
 import QuillCustomClipboard from "./QuillCustomClipboard";
 import { stripHtml } from "components/build/questionService/ConvertService";
 
@@ -27,8 +26,6 @@ interface QuillEditorProps {
 }
 
 const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, forwardRef) => {
-  /*eslint-disable-next-line*/
-  const [currentQuillId, setCurrentQuillId] = React.useContext(QuillEditorContext);
   const [limitOverflow, setLimitOverflow] = React.useState(false);
 
   const callOnChange = React.useCallback(
@@ -57,10 +54,6 @@ const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
   const [quill, setQuill] = React.useState<Quill | null>(null);
 
   const [clipboardModule, setClipboardModule] = React.useState<QuillCustomClipboard>();
-
-  const onFocus = React.useCallback(() => {
-    setCurrentQuillId(uniqueId);
-  }, [setCurrentQuillId, uniqueId]);
 
   const modules = React.useMemo(() => ({
     toolbar: false,
@@ -115,7 +108,6 @@ const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
           }
         }}
         onChange={onChange}
-        onFocus={onFocus}
         readOnly={props.disabled}
         placeholder={props.placeholder}
         tabIndex={props.tabIndex}

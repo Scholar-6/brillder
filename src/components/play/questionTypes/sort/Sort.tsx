@@ -412,6 +412,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                           className={`${unsortedCategory ? 'category' : ''} sortable-list`}
                           group={{ name: "cloning-group-name" }}
                           setList={(list: any[]) => this.updateCategory(list, i)}
+                          
                         >
                           {cat.choices.map(this.renderChoice.bind(this))}
                         </ReactSortableV1>
@@ -431,6 +432,13 @@ class Sort extends CompComponent<SortProps, SortState> {
                 className="unsorted sortable-list"
                 group={{ name: "cloning-group-name" }}
                 setList={(list: any[]) => this.updateCategory(list, this.state.userCats.length - 1)}
+                onStart={(e: any) => {
+                  e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = 'white';
+                }}
+                onEnd={(e: any) => {
+                  e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = '';
+                }}
+                forceFallback={true}
               >
                 {unsortedCategory.choices.map(this.renderChoice.bind(this))}
               </ReactSortableV1>
