@@ -300,7 +300,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   firstButton() {
     return (
-      <div className="view-and-play-btn">
+      <div className="view-and-play-btn" onClick={() => this.props.history.push(map.ViewAllPage)}>
         <div className="flex-center">
           <SpriteIcon name="glasses-v2" className="active text-theme-orange" />
         </div>
