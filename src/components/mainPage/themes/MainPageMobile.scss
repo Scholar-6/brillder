@@ -20,6 +20,17 @@
 
   font-size: $font-18;
 
+  .profile-image-border {
+    @include flexCenter;
+    border: 0.25vw solid var(--white);
+    border-radius: 50%;
+    img {
+      width: 105%;
+      height: 105%;
+      border-radius: 50%;
+    }
+  }
+
   .mobile-main-page {
     color: var(--white);
     width: 100vw;
