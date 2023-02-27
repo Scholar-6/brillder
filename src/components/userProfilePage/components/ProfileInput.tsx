@@ -10,7 +10,7 @@ interface InputProps {
   disabled?: boolean;
   autoCompleteOff?: boolean;
   onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
-  onInput?(event: React.ChangeEvent<HTMLInputElement>): void;
+  onInput?(event: any): void;
 }
 
 const ProfileInput: React.FC<InputProps> = props => {
@@ -32,6 +32,7 @@ const ProfileInput: React.FC<InputProps> = props => {
         <input
           autoComplete='none' type={props.type} disabled={props.disabled} className={className} value={value}
           onChange={e => props.onChange && props.onChange(e)}
+          onInput={(e:any) => props.onInput && props.onInput(e)}
           placeholder={props.placeholder}
         />
       </form>
@@ -43,7 +44,7 @@ const ProfileInput: React.FC<InputProps> = props => {
       <input
         type={props.type} disabled={props.disabled} className={className} value={value}
         onChange={e => props.onChange && props.onChange(e)}
-        onInput={e => props.onInput && props.onInput(e)}
+        onInput={(e:any) => props.onInput && props.onInput(e)}
         placeholder={props.placeholder} />
     </div>
   );
