@@ -155,7 +155,7 @@ class SignUpComponent extends React.Component<LoginFormProps, LoginsState> {
             className="login-field"
             placeholder="Email"
             value={this.state.email}
-            onChange={email => this.setState({ email })}
+            onInput={email => this.setState({ email })}
           />
         </div>
         <div className="input-block">
@@ -165,7 +165,7 @@ class SignUpComponent extends React.Component<LoginFormProps, LoginsState> {
             className="login-field password"
             value={this.state.password}
             placeholder="Password"
-            onChange={password => this.setState({ password })}
+            onInput={password => this.setState({ password })}
           />
           <div className="hide-password-icon-container">
             <VisibilityIcon
