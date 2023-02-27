@@ -383,7 +383,7 @@ class Sort extends CompComponent<SortProps, SortState> {
             haveImage && <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
           }</span>
         </p>
-        <div className={`sort-two-columns ${this.props.isReview ? 'review-one-column' : ''} ${!unsortedCategory ? 'one-live-column' : ''} `}>
+        <div className={`sort-two-columns ${(this.props.isReview && !unsortedCategory) ? 'review-one-column' : ''} ${!unsortedCategory ? 'one-live-column' : ''} `}>
           <div className="categories-column">
             <div className="category-head text-center">Categories</div>
             {
