@@ -92,7 +92,7 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps, State> {
               <input
                 type="email" name="email"
                 value={this.props.email}
-                onChange={(e) => this.props.setEmail(e.target.value)}
+                onInput={(e: any) => this.props.setEmail(e.target.value)}
                 className="login-field"
                 required
                 placeholder="Email"
@@ -124,7 +124,7 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps, State> {
                 type={this.props.passwordHidden ? "password" : "text"}
                 value={this.props.password}
                 className="login-field password"
-                onChange={(e) => this.props.setPassword(e.target.value)}
+                onInput={(e: any) => this.props.setPassword(e.target.value)}
                 required
                 placeholder="Password"
               />
