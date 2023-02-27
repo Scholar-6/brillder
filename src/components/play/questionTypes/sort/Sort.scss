@@ -232,7 +232,7 @@
           margin-top: 0 !important;
         }
       }
-      .MuiListItemText-root .MuiTypography-root > div:first-child {
+      .MuiListItemText-root .MuiTypography-root {
         margin-left: 2vw;
         margin-right: 0;
         padding-top: 1vw;
@@ -245,6 +245,10 @@
 
         p {
           text-align: center !important;
+        }
+
+        .question-hint {
+          font-size: 3.5vw;
         }
       }
     }
