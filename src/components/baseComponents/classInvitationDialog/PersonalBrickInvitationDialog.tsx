@@ -75,28 +75,22 @@ const PersonalBrickInvitationDialog: React.FC<Props> = props => {
   return (
     <Dialog
       open={invitations !== undefined && invitations.length > 0}
-      className="dialog-box link-copied-dialog"
+      className="dialog-box link-copied-dialog personal-brick-invitation"
     >
       {currentInvitation && <Grid className="classroom-invitation" container direction="column" alignItems="center">
-        <h1><strong>You have been invited to a brick.</strong></h1>
-        <div className="classroom-name">
-          <h2>{stripHtml(currentInvitation.brick.title)}</h2>
+        <h1 className="brick-title-re2"><strong>“<span dangerouslySetInnerHTML={{ __html: currentInvitation.brick.title}} />”</strong></h1>
+        <div className="text-center">
+          {currentInvitation.sentBy.firstName} {currentInvitation.sentBy.lastName} would like to share their personal bricks with you.<br/>
+          Accepting will add their brick to your personal catalogue.
         </div>
         <Grid item container direction="row" justify="center">
-          <button className="btn btn-md b-green text-white" onClick={handleAccept}>
-            <SpriteIcon name="check-custom" />
-            Accept
-          </button>
           <button className="btn btn-md b-red text-white" onClick={handleReject}>
-            <SpriteIcon name="cancel-custom" />
             Reject
           </button>
+          <button className="btn btn-md b-green text-white" onClick={handleAccept}>
+            Accept
+          </button>
         </Grid>
-        <CardHeader
-          className="sent-by"
-          avatar={<Avatar src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${currentInvitation.sentBy.profileImage}`} />}
-          title={`sent by ${currentInvitation.sentBy.firstName} ${currentInvitation.sentBy.lastName}`}
-        />
         <MobileStepper 
           variant="dots"
           steps={invitations!.length}

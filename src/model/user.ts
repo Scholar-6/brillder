@@ -97,6 +97,7 @@ export interface User extends UserBase {
   assignments?: any[];
 
   institution: Institution;
+  classroomInvitations?: any[];
 
   attempts: any[];
 }

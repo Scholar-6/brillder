@@ -259,8 +259,10 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
     if (index >= this.state.pageSize) {
       if (this.state.isSearching) {
         this.loadAndSetSearchBricks(this.state.searchString, this.state.page - 1, this.state.pageSize);
+        this.setState({selectedBricks: []});
       } else {
         this.loadAndSetBricks(this.state.page - 1);
+        this.setState({selectedBricks: []});
       }
     }
   }
@@ -272,8 +274,10 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
     if (index + pageSize <= bricksCount - 1) {
       if (this.state.isSearching) {
         this.loadAndSetSearchBricks(this.state.searchString, this.state.page + 1, this.state.pageSize);
+        this.setState({selectedBricks: []});
       } else {
         this.loadAndSetBricks(this.state.page + 1);
+        this.setState({selectedBricks: []});
       }
     }
   }
@@ -446,7 +450,7 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
     return (
       <Grid container direction="row" className="sorted-row no-mobile-css">
         <div className="categories-absolute">
-          <div onClick={() => this.props.history.push(map.ViewAllPage + 'mySubject=true')}>
+          <div onClick={() => this.props.history.push(map.ViewAllPage + '?mySubject=true')}>
             <div>
               <SpriteIcon name="arrow-left" />
             </div>
@@ -460,6 +464,10 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
         <ShareWithTeachersDialog
           isOpen={this.state.isSharing}
           selectedBricks={this.state.selectedBricks}
+          submit={() => {
+            this.state.selectedBricks.forEach(b => b.selected = false);
+            this.setState({selectedBricks: [], isSharing: false});
+          }}
           close={() => {
             this.setState({isSharing: false});
           }}

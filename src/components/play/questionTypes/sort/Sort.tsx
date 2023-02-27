@@ -379,14 +379,13 @@ class Sort extends CompComponent<SortProps, SortState> {
     return (
       <div className="question-unique-play sort-play phone-sort">
         <p>
-          <span className="help-text"><SpriteIcon name="categorize-phone-d3" /> Drag vertically to rearrange. {
-            haveImage && (isMobile
-              ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
-              : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
+          <span className="help-text"><SpriteIcon name="categorize-phone-d3" /> Hold and drag to categorise. {
+            haveImage && <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
           }</span>
         </p>
         <div className={`sort-two-columns ${this.props.isReview ? 'review-one-column' : ''} ${!unsortedCategory ? 'one-live-column' : ''} `}>
           <div className="categories-column">
+            <div className="category-head text-center">Categories</div>
             {
               categories.map((cat, i) => (
                 <div key={i}>
@@ -411,6 +410,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                           className={`${unsortedCategory ? 'category' : ''} sortable-list`}
                           group={{ name: "cloning-group-name" }}
                           setList={(list: any[]) => this.updateCategory(list, i)}
+                          
                         >
                           {cat.choices.map(this.renderChoice.bind(this))}
                         </ReactSortableV1>
@@ -422,13 +422,22 @@ class Sort extends CompComponent<SortProps, SortState> {
           </div>
           {unsortedCategory &&
             <div className="unsorted-column phone-unsorted-category">
+              <div className="answers-head text-center">Answers</div>
               <ReactSortableV1
                 list={unsortedCategory.choices as any[]}
                 animation={150}
                 delay={100}
+                dragClass="draggable-categorize"
                 className="unsorted sortable-list"
                 group={{ name: "cloning-group-name" }}
                 setList={(list: any[]) => this.updateCategory(list, this.state.userCats.length - 1)}
+                onStart={(e: any) => {
+                  e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = 'white';
+                }}
+                onEnd={(e: any) => {
+                  e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = '';
+                }}
+                forceFallback={true}
               >
                 {unsortedCategory.choices.map(this.renderChoice.bind(this))}
               </ReactSortableV1>

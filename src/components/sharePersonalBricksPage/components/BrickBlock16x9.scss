@@ -55,17 +55,27 @@
 
       .checkbox-container-r1 {
         position: absolute;
-        top: 0.2vw;
-        left: 0.9vw + 0.2vw;
+        z-index: 20;
+        top: 0.6vw;
+        left: 0.6vw;
 
-        .MuiButtonBase-root {
-          padding: 0.5vw;
-        }
-        .MuiCheckbox-colorSecondary.Mui-checked {
-          color: var(--white) !important;
-        }
-        .MuiCheckbox-colorSecondary.Mui-checked {
-          color: var(--theme-green) !important;
+        .checkbox-container-r2 {
+          position: relative;
+
+          svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1.6vw;
+            height: 1.6vw;
+          }
+
+          &.checked {
+            svg {
+              border-radius: 0.15vw;
+              background: var(--theme-green);
+            }
+          }
         }
       }
 

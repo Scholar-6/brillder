@@ -18,7 +18,8 @@ interface InviteStudentEmailProps {
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
-
+  const [helpTextExpanded, setHelpText] = React.useState(false);
+  const [canSubmit, setSubmit] = React.useState(true);
   const [submiting, setSubmitting] = React.useState(false);
   const [currentEmail, setCurrentEmail] = React.useState("");
   const [users, setUsers] = React.useState<User[]>([]);
@@ -61,7 +62,13 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
   }, [currentEmail]);
 
   const onSubmit = React.useCallback(async () => {
+    if (submiting) { return; }
     setSubmitting(true);
+
+    if (canSubmit === false) {
+      return;
+    }
+
     const currentUsers = users;
     if (!emailRegex.test(currentEmail)) {
       if (users.length <= 0) {
@@ -111,18 +118,50 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
             setCurrentEmail('');
             setUsers(users as User[]);
           }}
+          setEmpty={setSubmit}
         />
-        <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>
-          <button className={`btn btn-md yes-button icon-button ${submiting ? 'b-dark-blue' : 'bg-theme-orange'}`} style={{ width: 'auto' }} onClick={onSubmit}>
-            <div className="centered">
-              <span className="label">Send Invites</span>
-              {submiting ? <div className="loader-container ">
-                <SpriteIcon name="f-loader" className="spinning" />
-              </div> : <SpriteIcon name="send" />}
-            </div>
-          </button>
-        </div>
       </div>
+      <div className="dialog-footer">
+        <div className="message-box-r5">
+          {!canSubmit
+            ? 'Please ensure that you have entered all email addresses correctly and pressed enter.'
+            : (users.length > 0) && <div className="help-expandable">
+              <div className="help-icon-v3">
+                <SpriteIcon name="help-icon-v3" />
+              </div>
+              <div className="help-text">
+                <div>Students might not receive invites if your institution</div>
+                <div className="text-with-icon">
+                  filters emails. <span className="underline bold" onClick={() => {
+                    setHelpText(!helpTextExpanded);
+                  }}>How to avoid this</span>
+                  <SpriteIcon name="arrow-down" className={helpTextExpanded ? 'expanded' : ''} onClick={() => {
+                    setHelpText(!helpTextExpanded);
+                  }} />
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        <button
+          className={`btn btn-md bg-theme-orange yes-button r-long ${!canSubmit ? 'invalid' : ''}`}
+          onClick={onSubmit}
+        >
+          <span className="bold">Invite students</span>
+        </button>
+      </div>
+      {canSubmit && helpTextExpanded && users.length > 0 &&
+        <div className="expanded-text-v3">
+          <div className="justify">
+            To ensure invites are received, please ask your network administrator to whitelist <a href="mailto: notifications@brillder.com" className="text-underline">notifications@brillder.com</a>. They may want the following information:
+          </div>
+          <div className="light">
+            Brillder is the trading name of Scholar 6 Ltd, which is on the UK Register of Learning
+          </div>
+          <div className="text-center light">
+            Providers (UK Provider Reference Number 10090571)
+          </div>
+        </div>}
     </Dialog>
   );
 }

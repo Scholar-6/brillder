@@ -10,6 +10,7 @@ import { sharedPersonalBricks } from 'services/axios/brick';
 interface InviteStudentEmailProps {
   isOpen: boolean;
   selectedBricks: Brick[];
+  submit(): void;
   close(numInvited: number): void;
 }
 
@@ -72,13 +73,16 @@ const ShareWithTeachersDialog: React.FC<InviteStudentEmailProps> = (props) => {
       setCurrentEmail("");
     }
 
-    console.log('shared users', currentUsers);
-
     const res = await sharedPersonalBricks(props.selectedBricks.map(b => b.id), currentUsers.map(u => u.email));
-
-    setUsers([]);
+    if (res === "OK") {
+      props.submit();
+      setUsers([]);
+      props.close(currentUsers.length);
+    } else {
+      
+    }
     setSubmitting(false);
-    props.close(currentUsers.length);
+
   }, [users, props, currentEmail])
 
   const checkSpaces = (email: string) => {
