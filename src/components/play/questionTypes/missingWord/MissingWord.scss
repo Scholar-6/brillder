@@ -98,7 +98,7 @@
   .MuiSelect-icon {
     top: unset !important;
     right: -0.4vw;
-    bottom: -0.3vw;
+    bottom: 0.2vw;
   }
   
   .MuiSelect-selectMenu {
@@ -109,12 +109,11 @@
 
   .MuiInput-underline:before,
   .MuiInput-underline:after {
-    bottom: -0.5vw;
+    bottom: 0vw;
   }
 
   .MuiSelect-root {
-    position: absolute;
-    bottom: -0.5vw;
+    overflow: visible !important;
   }
 
   .missing-select {
