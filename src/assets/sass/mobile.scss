@@ -1411,6 +1411,9 @@
     white-space: nowrap;
     overflow: scroll;
   }
+  .MuiGrid-root {
+    display: inline !important;
+  }
   .MuiInputBase-root {
     min-width: 20vw;
     display: inline-block !important; 

@@ -156,8 +156,15 @@ const HintComponent: React.FC<HintProps> = ({
 
     return Array.from(Array(props.count)).map((_, i) => {
       let prefixWord = 'Answer';
+      let toolbar = [
+        'bold', 'italic', 'fontColor', 'superscript', 'subscript',
+        'latex', 'imageUploadCustom', 'image', 'blockQuote'
+      ];
       if (props.questionType === QuestionTypeEnum.PairMatch) {
         prefixWord = 'Option';
+      }
+      if (props.questionType === QuestionTypeEnum.MissingWord) {
+        toolbar = ['bold', 'italic', 'fontColor', 'superscript', 'subscript', 'latex'];
       }
       return (
         <div className="hint-container" key={`${listLength}-${i}`}>
@@ -165,10 +172,7 @@ const HintComponent: React.FC<HintProps> = ({
             disabled={locked}
             data={state.list[i]}
             placeholder={`${prefixWord} ${i + 1} Hint`}
-            toolbar={[
-              'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'latex', 'imageUploadCustom', 'image', 'blockQuote'
-            ]}
+            toolbar={toolbar}
             imageDialog={true}
             validate={validationRequired}
             isValid={!!stripHtml(state.list[i])}
