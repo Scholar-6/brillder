@@ -3,7 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 .synthesis-page {
-  @include arrow-top-bottom;
+  @include arrow-top-bottom;  
   .top-scroll-area,
   .bottom-scroll-area {
     justify-content: flex-start;

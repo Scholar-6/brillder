@@ -1429,3 +1429,13 @@ $base-build-border: $editor-radius;
     }
   }
 }
+
+.investigation-build-page .synthesis-page {
+  .quill-wave {
+    display: none;
+  }
+
+  .sound-caption {
+    top: 50px;
+  }
+}
