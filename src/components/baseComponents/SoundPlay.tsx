@@ -79,10 +79,9 @@ class SoundPlay extends React.Component<Props, State> {
 
       console.log('surfer loaded');
 
-      /*
       waveSurfer.on("ready", () => {
         this.setState({ waveSurfer })
-        waveSurfer.zoom(1);
+        // waveSurfer.zoom(1); zoom is not working for big files and do infinity loop
       });
 
       waveSurfer.on('pause', () => {
@@ -93,7 +92,7 @@ class SoundPlay extends React.Component<Props, State> {
         console.log('sound finished finish')
         this.setState({ playing: false });
         waveSurfer.seekTo(0);
-      });*/
+      });
     }
   }
 
