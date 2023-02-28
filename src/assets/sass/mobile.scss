@@ -1415,15 +1415,25 @@
     min-width: 20vw;
     display: inline-block !important; 
     position: relative;
+    line-height: 1 !important;
+    padding-right: 2vw !important;
+
     &::before, &::after {
       bottom: 0vw !important;
     }
     .MuiSelect-root {
-      padding-left: 4vw !important;
-      padding-right: 25px !important;
+      display: inline-block;
+      height: 6vw !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      padding-left: 1vw !important;
+      padding-right: 2vw !important;
       min-width: 18vw !important;
     }
     p {
+    }
+    svg {
+      bottom: 0.5vw;
     }
     input {
       position: absolute;
