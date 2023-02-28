@@ -900,13 +900,13 @@
   .MuiInputBase-root {
     position: relative;
     min-width: 5vw;
-    padding-right: 18px;
+    padding-right: 0.8vw;
     display: inline-block !important;
     .MuiSelect-select {
       display: inline-block !important;
       padding: 0;
+      padding-right: 0.8vw !important;
       min-width: 3vw !important;
-      padding-right: 18px;
     }
   }
   &.poem {
