@@ -47,7 +47,7 @@
         padding-top: 1.2vw !important;
         margin-right: 1vw;
         text-align: center;
-        white-space: nowrap;
+        // white-space: nowrap; bugging in firefox
         overflow-x: scroll;
       }
 
