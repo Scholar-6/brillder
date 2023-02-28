@@ -79,6 +79,7 @@ class SoundPlay extends React.Component<Props, State> {
 
       console.log('surfer loaded');
 
+      /*
       waveSurfer.on("ready", () => {
         this.setState({ waveSurfer })
         waveSurfer.zoom(1);
@@ -92,7 +93,7 @@ class SoundPlay extends React.Component<Props, State> {
         console.log('sound finished finish')
         this.setState({ playing: false });
         waveSurfer.seekTo(0);
-      });
+      });*/
     }
   }
 
