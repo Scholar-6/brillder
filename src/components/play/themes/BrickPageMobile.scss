@@ -2535,7 +2535,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       border-bottom-left-radius: 3vw;
 
       .option-container > div:first-child {
-        padding-top: 2vw;
         padding-right: 2vw;
         padding-left: 2vw;
       }
@@ -2569,7 +2568,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
 
       .MuiListItem-root {
         padding-top: 0 !important;
-        padding-top: 0 !important;
+        padding-bottom: 0 !important;
       }
 
       > div {
