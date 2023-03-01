@@ -7,6 +7,7 @@ import { isPhone } from 'services/phone';
 import actions from 'redux/actions/play';
 import { ReduxCombinedState } from 'redux/reducers';
 import MathInHtml from 'components/play/baseComponents/MathInHtml';
+import { stripHtml } from 'components/build/questionService/ConvertService';
 
 interface AnswerProps {
   fileName: string;
@@ -30,6 +31,10 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
   }
 
   if (isPhone()) {
+    let imageCaptionS = '';
+    if (imageCaption) {
+      imageCaptionS = stripHtml(imageCaption);
+    }
     return (
       <div className="image-container">
         <div className="absolute-image-hider-p3"
@@ -45,7 +50,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
         <div className="image-container-v5">
           <img alt="" className="no-pointer-events" src={fileUrl(fileName)} width="100%" />
         </div>
-        {imageCaption && <div className="image-caption-v4">
+        {imageCaptionS && imageCaption && <div className="image-caption-v4">
           <div>
             <MathInHtml value={imageCaption} />
           </div>
