@@ -330,6 +330,7 @@ class Sort extends CompComponent<SortProps, SortState> {
 
     return (
       <div className={className} key={choice.id ? choice.id : i}>
+        <div className="sort-choice-absolute" />
         <ListItem className="sort-choice-custom">
           <ListItemText>
             {this.renderChoiceContent(choice)}
