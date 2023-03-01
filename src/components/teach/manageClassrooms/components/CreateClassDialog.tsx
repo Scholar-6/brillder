@@ -39,6 +39,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     if (!emailRegex.test(currentEmail)) { return; }
     setCurrentEmail('');
     setUsers(users => [...users, { email: currentEmail } as User]);
+    setSubmit(true);
     //eslint-disable-next-line
   }, [currentEmail]);
 

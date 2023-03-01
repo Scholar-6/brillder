@@ -210,6 +210,20 @@
       margin-bottom: 0 !important;
     }
 
+    .MuiInputBase-root {
+      overflow-y: auto !important;
+    }
+
+    .fieldset {
+      border-style: none !important;
+      border: none !important;
+      border-color: none !important;
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+      border: none !important;
+    }
+
     .MuiFormControl-root {
       .MuiOutlinedInput-root {
         display: flex !important;
