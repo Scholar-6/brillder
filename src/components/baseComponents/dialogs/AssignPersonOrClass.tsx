@@ -91,6 +91,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     setCurrentEmail('');
     setUsers(users => [...users, { email: currentEmail } as User]);
     //eslint-disable-next-line
+    setSubmit(true);
   }, [currentEmail]);
 
   const createClassAndAssign = async () => {

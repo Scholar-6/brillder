@@ -51,6 +51,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
     }
     setCurrentEmail('');
     setUsers(users => [...users, { email } as User]);
+    setSubmit(true);
   }
 
   const onAddUser = React.useCallback(() => {
@@ -59,6 +60,7 @@ const InviteStudentEmailDialog: React.FC<InviteStudentEmailProps> = (props) => {
     }
     setCurrentEmail('');
     setUsers(users => [...users, { email: currentEmail } as User]);
+    setSubmit(true);
   }, [currentEmail]);
 
   const onSubmit = React.useCallback(async () => {

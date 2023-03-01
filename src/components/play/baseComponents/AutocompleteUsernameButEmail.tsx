@@ -50,7 +50,6 @@ const AutocompleteUsernameButEmail: React.FC<AutocompleteProps> = ({
                 if (user) {
                   return;
                 } else {
-                  props.setEmpty?.(true);
                   props.onAddEmail();
                 }
               }
