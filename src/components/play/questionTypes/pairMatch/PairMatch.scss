@@ -76,8 +76,6 @@
     .pair-match-play-choice {
       cursor: pointer;
       .MuiListItem-root {
-        padding-top:4px !important;
-        padding-bottom:4px !important;
         p {
           font-size: 1.25vw !important;
           @include phone_and_tabletP {
