@@ -265,6 +265,9 @@ h3 {
 .pair-match-play .pair-match-play-choice {
   border: none !important;
   background: var(--solitude-light) !important;
+  .MuiListItem-root {
+    border-radius: 0;
+  }
 }
 
 .short-answer-input.correct {
