@@ -13,7 +13,7 @@ import { playCover } from "components/play/routes";
 import { PDateFilter } from "./BricksPlayedSidebar";
 
 enum CopyOptions {
-  CopyAll,
+  CopyAll = 1,
   CopyLearners,
   CopyEducators
 }
@@ -123,11 +123,6 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
     return '';
   }
 
-  copyToClipboard() {
-    this.props.assignments
-    navigator.clipboard.writeText('DDD');
-  }
-
   renderAttempts() {
     const brickAttempts = this.props.brickAttempts;
     const uniqueAttempts: any[] = [];
@@ -171,7 +166,7 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
     const assignments = this.props.assignments;
 
     for (let assignment of assignments) {
-      const {classroom} = assignment;
+      const { classroom } = assignment;
       data.push(<div className="userRow classes-column">
         <div className="student-name">{classroom.name}</div>
         <div className="assign">1</div>
@@ -183,6 +178,38 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
     }
 
     return data;
+  }
+
+  getAssignmentEmails(assignments: any[]) {
+    const teachers2 = [];
+    for (let a of assignments) {
+      teachers2.push(...a.classroom.teachers)
+    }
+
+    const teacherEmails = teachers2.map(t => t.email);
+
+    const uniqueEmails: any[] = [];
+
+    for (let email of teacherEmails) {
+      let found = uniqueEmails.find(loopEmail => loopEmail === email);
+      if (!found) {
+        uniqueEmails.push(email);
+      }
+    }
+    return uniqueEmails;
+  }
+
+  getAttemptEmails(attempts: any[]) {
+    const teacherEmails = attempts.map(a => a.student.email);
+    const uniqueEmails: any[] = [];
+
+    for (let email of teacherEmails) {
+      let found = uniqueEmails.find(loopEmail => loopEmail === email);
+      if (!found) {
+        uniqueEmails.push(email);
+      }
+    }
+    return uniqueEmails;
   }
 
   render() {
@@ -275,7 +302,22 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
                 MenuProps={{ classes: { paper: 'select-time-list' } }}
               >
                 {this.state.emailCopyOptions.map((c, i) => <MenuItem value={c.value} key={i} onClick={() => {
-                  console.log(44, c.value);
+                  console.log(666);
+                  if (c.value === CopyOptions.CopyAll) {
+                    const uniqueEmails: any[] = this.getAttemptEmails(this.props.brickAttempts);
+                    const uniqueEmailsV2: any[] = this.getAssignmentEmails(this.props.assignments);
+                    uniqueEmails.push(...uniqueEmailsV2);
+                    const emailsString = uniqueEmails.join(' ');
+                    navigator.clipboard.writeText(emailsString);
+                  } else if (c.value === CopyOptions.CopyLearners) {
+                    const uniqueEmails: any[] = this.getAttemptEmails(this.props.brickAttempts);
+                    const emailsString = uniqueEmails.join(' ');
+                    navigator.clipboard.writeText(emailsString);
+                  } else if (c.value === CopyOptions.CopyEducators) {
+                    const uniqueEmails: any[] = this.getAssignmentEmails(this.props.assignments);
+                    let emailsString = uniqueEmails.join(' ');
+                    navigator.clipboard.writeText(emailsString);
+                  }
                 }}>
                   {c.text}
                 </MenuItem>
@@ -301,7 +343,9 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
               <div className="version">Version</div>
               <div className="teacher-email">Edu. Email</div>
               <div className="get-emails-btn" onClick={() => {
-                this.copyToClipboard();
+                const uniqueEmails: any[] = this.getAssignmentEmails(this.props.assignments);
+                const emailsString = uniqueEmails.join(' ');
+                navigator.clipboard.writeText(emailsString);
               }}>
                 Copy emails
               </div>
