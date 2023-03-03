@@ -262,6 +262,11 @@ h3 {
   max-width: 100%;
 }
 
+.pair-match-play .pair-match-play-choice {
+  border: none !important;
+  background: var(--solitude-light) !important;
+}
+
 .short-answer-input.correct {
   .question-hint {
     border-bottom-left-radius: $border-radius;
