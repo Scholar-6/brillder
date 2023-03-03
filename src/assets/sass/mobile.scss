@@ -359,6 +359,22 @@
   font-size: $mbase-font-size;
 }
 
+.post-play-page {
+  .scroll-sideways-hint {
+    display: flex;
+    align-items: center;
+    font-family: $font-family-regular-italic;
+    font-size: 4vw !important;
+
+    svg {
+      $size: 4vw;
+      width: $size;
+      height: $size;
+      margin-right: 1vw;
+    }
+  }
+}
+
 .post-play-page .post-book-swiper .mobile-attempts .scroll-content .help-text,
 .question-live-play .question-unique-play .help-text {
   display: flex;
