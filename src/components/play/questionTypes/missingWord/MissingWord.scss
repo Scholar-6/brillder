@@ -122,6 +122,14 @@
         padding-left: 0.5vw !important;
         color: var(--white);
         background: var(--theme-green);
+
+        div {
+          color: white;
+        }
+
+        p {
+          color: white;
+        }
       }
 
       svg {
