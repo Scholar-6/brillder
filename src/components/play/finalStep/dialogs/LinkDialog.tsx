@@ -33,7 +33,11 @@ const LinkDialog: React.FC<InviteProps> = props => {
       </div>
       <input id="invite-link" style={{ opacity: 0, height: 0 }} value={props.link} />
       <div className="dialog-footer" style={{ justifyContent: 'center' }}>
-        <button className="btn btn-md bg-theme-orange yes-button" style={{ width: 'auto' }} onClick={copyToClipboard}>
+        <button
+          className="btn btn-md bg-theme-orange yes-button"
+          style={{ width: 'auto' }}
+          onClick={copyToClipboard}
+        >
           <span className="bold">Copy Link</span>
         </button>
       </div>
