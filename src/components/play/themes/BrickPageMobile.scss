@@ -2563,6 +2563,8 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       margin-right: 0;
       padding-top: 0;
       padding-bottom: 0;
+      padding-right: 0;
+      padding-left: 0;
 
       font-size: $font-size-45 !important;
 
@@ -2575,7 +2577,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
         height: 100% !important;
         padding-left: 2vw;
         padding-right: 2vw;
-        border-radius: 2vw;
       }
 
       p {
