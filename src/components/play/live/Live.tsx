@@ -139,6 +139,10 @@ const LivePage: React.FC<LivePageProps> = ({
   questions.forEach(() => questionRefs.push(React.createRef()));
 
   const handleStep = (step: number) => () => {
+    try {
+      document.getElementsByClassName("introduction-content")[0].scrollTo({ top: 0 });
+    } catch {}
+
     setActiveAnswer();
 
     setTimeout(() => {
