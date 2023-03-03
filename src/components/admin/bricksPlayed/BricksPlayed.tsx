@@ -701,6 +701,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         </Grid>
         {this.state.selectedBrick && <BrickPlayedPopup
           history={this.props.history}
+          dateFilter={this.state.dateFilter}
           brick={this.state.selectedBrick}
           subjects={this.state.subjects}
           assignments={this.state.assignments}

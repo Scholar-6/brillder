@@ -31,6 +31,7 @@ interface CopyEmailObj {
 interface TeachProps {
   brick: Brick;
   history: any;
+  dateFilter: PDateFilter;
   brickAttempts: any[];
   assignments: any[];
   subjects: Subject[];
@@ -62,8 +63,8 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
         value: PDateFilter.PastMonth,
         text: 'Past Month'
       }, {
-        value: PDateFilter.PastMonth,
-        text: 'Past Month'
+        value: PDateFilter.PastYear,
+        text: 'Past Year'
       }, {
         value: PDateFilter.AllTime,
         text: 'All Time'
@@ -82,18 +83,51 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
         value: CopyOptions.CopyEducators,
         text: 'Copy educators'
       }
-    ]
+    ];
 
-    var selectedDate = dateArray[0];
+    let selectedDate = dateArray.find(d => d.value === this.props.dateFilter);
+    if (!selectedDate) {
+      selectedDate = dateArray[0];
+    }
+
+    const attempts = this.filterByDate(this.props.brickAttempts, selectedDate.value);
 
     this.state = {
       coverLoaded: false,
       selectedDate,
       emailCopyOptions,
       dateArray,
-      attempts: this.props.brickAttempts,
+      attempts,
       assignments: this.props.assignments
     }
+  }
+
+  filterByDate(brickAttempts: any[], dateFilter: PDateFilter) {
+    if (dateFilter === PDateFilter.AllTime) {
+      return brickAttempts;
+    }
+
+    // timestamp
+
+    const date = new Date();
+    let dateNumber = date.getTime();
+
+    if (dateFilter === PDateFilter.Past24Hours) {
+      dateNumber = date.setDate(date.getDate() - 1);
+    } else if (dateFilter === PDateFilter.PastWeek) {
+      dateNumber = date.setDate(date.getDate() - 7);
+    } else if (dateFilter === PDateFilter.PastMonth) {
+      dateNumber = date.setMonth(date.getMonth() - 1);
+    } else if (dateFilter === PDateFilter.PastYear) {
+      dateNumber = date.setFullYear(date.getFullYear() - 1);
+    }
+
+    var attempts = brickAttempts.filter(b => {
+      const date = new Date(b.timestamp).getTime();
+      return (dateNumber > date) ? false : true;
+    });
+
+    return attempts;
   }
 
   renderUserType(u: User) {
@@ -124,7 +158,7 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
   }
 
   renderAttempts() {
-    const brickAttempts = this.props.brickAttempts;
+    const brickAttempts = this.state.attempts;
     const uniqueAttempts: any[] = [];
 
     for (let attempt of brickAttempts) {
@@ -163,7 +197,7 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
 
   renderAssignments() {
     const data = [];
-    const assignments = this.props.assignments;
+    const assignments = this.state.assignments;
 
     for (let assignment of assignments) {
       const { classroom } = assignment;
@@ -174,7 +208,8 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
         <div className="teacher">{classroom.teachers.map((t: any) => t.firstName + ' ' + t.lastName)}</div>
         <div className="version">Public</div>
         <div className="teacher-email">{classroom.teachers.map((t: any) => t.email)}</div>
-      </div>)
+      </div>
+      );
     }
 
     return data;
@@ -236,7 +271,7 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
                     src={fileUrl(brick.coverImage)}
                   />
                 </div>
-                <div className="plays-count">Plays: {this.props.brickAttempts.length}</div>
+                <div className="plays-count">Plays: {this.state.attempts.length}</div>
               </div>
               <div className="short-brick-info long">
                 <div className="link-description">
@@ -266,7 +301,9 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
                   value={this.state.selectedDate}
                   MenuProps={{ classes: { paper: 'select-time-list' } }}
                   onChange={e => {
-                    this.setState({ selectedDate: e.target.value as any });
+                    const selectedDate = e.target.value as any;
+                    const attempts = this.filterByDate(this.props.brickAttempts, selectedDate.value);
+                    this.setState({ selectedDate, attempts });
                   }}
                 >
                   {this.state.dateArray.map((c, i) => <MenuItem value={c as any} key={i}>{c.text}</MenuItem>)}
@@ -302,19 +339,18 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
                 MenuProps={{ classes: { paper: 'select-time-list' } }}
               >
                 {this.state.emailCopyOptions.map((c, i) => <MenuItem value={c.value} key={i} onClick={() => {
-                  console.log(666);
                   if (c.value === CopyOptions.CopyAll) {
-                    const uniqueEmails: any[] = this.getAttemptEmails(this.props.brickAttempts);
-                    const uniqueEmailsV2: any[] = this.getAssignmentEmails(this.props.assignments);
+                    const uniqueEmails: any[] = this.getAttemptEmails(this.state.attempts);
+                    const uniqueEmailsV2: any[] = this.getAssignmentEmails(this.state.assignments);
                     uniqueEmails.push(...uniqueEmailsV2);
                     const emailsString = uniqueEmails.join(' ');
                     navigator.clipboard.writeText(emailsString);
                   } else if (c.value === CopyOptions.CopyLearners) {
-                    const uniqueEmails: any[] = this.getAttemptEmails(this.props.brickAttempts);
+                    const uniqueEmails: any[] = this.getAttemptEmails(this.state.attempts);
                     const emailsString = uniqueEmails.join(' ');
                     navigator.clipboard.writeText(emailsString);
                   } else if (c.value === CopyOptions.CopyEducators) {
-                    const uniqueEmails: any[] = this.getAssignmentEmails(this.props.assignments);
+                    const uniqueEmails: any[] = this.getAssignmentEmails(this.state.assignments);
                     let emailsString = uniqueEmails.join(' ');
                     navigator.clipboard.writeText(emailsString);
                   }
@@ -332,7 +368,7 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
             <div className="player-header">
               <div className="user-title bold">
                 <SpriteIcon name="plus-minus" />
-                Classes data ({this.props.assignments.length})
+                Classes data ({this.state.assignments.length})
               </div>
             </div>
             <div className="userRow classes-column header-relative">
@@ -343,7 +379,7 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
               <div className="version">Version</div>
               <div className="teacher-email">Edu. Email</div>
               <div className="get-emails-btn" onClick={() => {
-                const uniqueEmails: any[] = this.getAssignmentEmails(this.props.assignments);
+                const uniqueEmails: any[] = this.getAssignmentEmails(this.state.assignments);
                 const emailsString = uniqueEmails.join(' ');
                 navigator.clipboard.writeText(emailsString);
               }}>
