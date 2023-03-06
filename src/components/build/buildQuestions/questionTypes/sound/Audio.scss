@@ -3,6 +3,7 @@
 @import "src/assets/sass/partials/extensions";
 
 .play-wave-container {
+  position: relative;
   display: flex;
   padding-top: 0.4vw;
 
@@ -11,7 +12,7 @@
   }
 
   .relative-waves-container {
-    padding-bottom: 2vw;
+    padding-bottom: 4vw;
     position: relative;
     width: 85%;
 
@@ -41,6 +42,7 @@
 
   .play-icon-container-d1 {
     display: flex;
+    height: 100px;
     align-items: center;
     padding-left: 0.8vw;
 
@@ -50,6 +52,21 @@
       width: 3vw;
       height: 3vw;
     }
+  }
+
+  .relative-waves-container wave {
+    height: 100px;
+  }
+
+  .sound-caption {
+    position: absolute;
+    top: calc(100px + 1.6vw);
+    width: 100%;
+    text-align: center;
+  }
+
+  .custom-audio-controls {
+    height: 100px;
   }
 
   .volume-container {
