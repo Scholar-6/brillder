@@ -69,14 +69,18 @@
           display: flex;
           align-items: center;
           .brick-inline {
+            width: 13.5vw;
             font-size: $font-22;
             font-family: $font-family-bold;
+            overflow-x: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
 
           .core-buble {
             height: 1.6vw;
             line-height: 1;
-            margin-left: 1.5vw;
+            margin-left: 0;
             display: flex;
             align-items: center;
             justify-content: center;

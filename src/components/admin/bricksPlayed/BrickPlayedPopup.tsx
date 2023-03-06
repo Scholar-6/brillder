@@ -286,14 +286,19 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
               <div className="short-brick-info long">
                 <div className="link-description">
                   <BrickTitle title={brick ? brick.title : ''} />
-                  {brick.isCore ?
+                  {brick.adaptedFrom ?
                     <div className="core-buble">
-                      <SpriteIcon name="globe" />
-                      Public
-                    </div> : <div className="core-buble">
-                      <SpriteIcon name="key" />
-                      Private
-                    </div>}
+                      <SpriteIcon name="copy-sw2" />
+                      Adapted
+                    </div> :
+                    brick.isCore ?
+                      <div className="core-buble">
+                        <SpriteIcon name="globe" />
+                        Public
+                      </div> : <div className="core-buble">
+                        <SpriteIcon name="key" />
+                        Private
+                      </div>}
                 </div>
                 <div className="link-info">
                   {brick.author.firstName} {brick.author.lastName}, {brick.author.email}
@@ -382,7 +387,7 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
                   )}
                 </Select>
               </div>
-              <div className={"scrollable-user-table" + (this.state.playersExpanded && this.state.classesExpanded === false) ? " expanded" : ""}>
+              <div className={`scrollable-user-table ${(this.state.playersExpanded && this.state.classesExpanded === false) ? " expanded" : ""}`}>
                 {this.renderAttempts()}
               </div>
             </div>}
@@ -423,7 +428,7 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
                   Copy emails
                 </div>
               </div>
-              <div className={"scrollable-user-table" + this.state.classesExpanded ? " expanded" : ""}>
+              <div className={`scrollable-user-table ${(this.state.classesExpanded && this.state.playersExpanded === false) ? " expanded" : ""}`}>
                 {this.renderAssignments()}
               </div>
             </div>}
