@@ -1340,11 +1340,14 @@ $base-build-border: $editor-radius;
     display: flex;
     height: 8vw;
     padding-bottom: 5vw;
+    .play-icon-container-d1 {
+      height: 3vw;
+    }
     .relative-waves-container {
       height: 3vw;
     }
     .react-waves {
-      height: 2.8vw;
+      height: 3vw;
       width: 90%;
       padding: 0 !important;
       margin-left: 5%;
