@@ -43,6 +43,8 @@ interface TeachState {
   selectedDate: DateObj;
   dateArray: DateObj[];
   emailCopyOptions: CopyEmailObj[];
+  classesExpanded: boolean,
+  playersExpanded: boolean,
 
   assignments: any[];
   attempts: any[];
@@ -51,6 +53,8 @@ interface TeachState {
 class BrickPlayedPopup extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
+
+    console.log(66, props.brick);
 
     const dateArray = [
       {
@@ -96,6 +100,8 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
       coverLoaded: false,
       selectedDate,
       emailCopyOptions,
+      classesExpanded: true,
+      playersExpanded: true,
       dateArray,
       attempts,
       assignments: this.props.assignments
@@ -201,15 +207,19 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
 
     for (let assignment of assignments) {
       const { classroom } = assignment;
-      data.push(<div className="userRow classes-column">
-        <div className="student-name">{classroom.name}</div>
-        <div className="assign">1</div>
-        <div className="students"></div>
-        <div className="teacher">{classroom.teachers.map((t: any) => t.firstName + ' ' + t.lastName)}</div>
-        <div className="version">Public</div>
-        <div className="teacher-email">{classroom.teachers.map((t: any) => t.email)}</div>
-      </div>
-      );
+      if (classroom) {
+        data.push(<div className="userRow classes-column">
+          <div className="student-name">{classroom.name}</div>
+          <div className="assign">1</div>
+          <div className="students"></div>
+          <div className="teacher">{classroom.teachers.map((t: any) => t.firstName + ' ' + t.lastName)}</div>
+          <div className="version">Public</div>
+          <div className="teacher-email">{classroom.teachers.map((t: any) => t.email)}</div>
+        </div>
+        );
+      } else {
+        console.log('assignment without classroom', assignment);
+      }
     }
 
     return data;
@@ -320,75 +330,103 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
           <div className="table">
             <div className="player-header">
               <div className="user-title bold">
-                <SpriteIcon name="plus-minus" />
+                <SpriteIcon
+                  name={this.state.classesExpanded && this.state.playersExpanded ? "plus-minus" : "arrow-down"}
+                  onClick={() => {
+                    if (this.state.classesExpanded && this.state.playersExpanded) {
+                      this.setState({ classesExpanded: false });
+                    } else if (this.state.playersExpanded) {
+                      this.setState({ classesExpanded: true });
+                    } else {
+                      this.setState({ playersExpanded: true });
+                    }
+                  }}
+                />
                 Player data
               </div>
             </div>
-            <div className="userRow header-relative">
-              <div className="student-name">Player Name</div>
-              <div>Score</div>
-              <div className="type-column">
-                Account Type
-                <SpriteIcon name="arrow-down-s" />
+            {this.state.playersExpanded && <div>
+              <div className="userRow header-relative">
+                <div className="student-name">Player Name</div>
+                <div>Score</div>
+                <div className="type-column">
+                  Account Type
+                  <SpriteIcon name="arrow-down-s" />
+                </div>
+                <div>Version</div>
+                <div className="email-column">Email Address</div>
+                <Select
+                  className="get-emails-btn"
+                  value="Copy emails"
+                  MenuProps={{ classes: { paper: 'select-time-list' } }}
+                >
+                  {this.state.emailCopyOptions.map((c, i) => <MenuItem value={c.value} key={i} onClick={() => {
+                    if (c.value === CopyOptions.CopyAll) {
+                      const uniqueEmails: any[] = this.getAttemptEmails(this.state.attempts);
+                      const uniqueEmailsV2: any[] = this.getAssignmentEmails(this.state.assignments);
+                      uniqueEmails.push(...uniqueEmailsV2);
+                      const emailsString = uniqueEmails.join(' ');
+                      navigator.clipboard.writeText(emailsString);
+                    } else if (c.value === CopyOptions.CopyLearners) {
+                      const uniqueEmails: any[] = this.getAttemptEmails(this.state.attempts);
+                      const emailsString = uniqueEmails.join(' ');
+                      navigator.clipboard.writeText(emailsString);
+                    } else if (c.value === CopyOptions.CopyEducators) {
+                      const uniqueEmails: any[] = this.getAssignmentEmails(this.state.assignments);
+                      let emailsString = uniqueEmails.join(' ');
+                      navigator.clipboard.writeText(emailsString);
+                    }
+                  }}>
+                    {c.text}
+                  </MenuItem>
+                  )}
+                </Select>
               </div>
-              <div>Version</div>
-              <div className="email-column">Email Address</div>
-              <Select
-                className="get-emails-btn"
-                value="Copy emails"
-                MenuProps={{ classes: { paper: 'select-time-list' } }}
-              >
-                {this.state.emailCopyOptions.map((c, i) => <MenuItem value={c.value} key={i} onClick={() => {
-                  if (c.value === CopyOptions.CopyAll) {
-                    const uniqueEmails: any[] = this.getAttemptEmails(this.state.attempts);
-                    const uniqueEmailsV2: any[] = this.getAssignmentEmails(this.state.assignments);
-                    uniqueEmails.push(...uniqueEmailsV2);
-                    const emailsString = uniqueEmails.join(' ');
-                    navigator.clipboard.writeText(emailsString);
-                  } else if (c.value === CopyOptions.CopyLearners) {
-                    const uniqueEmails: any[] = this.getAttemptEmails(this.state.attempts);
-                    const emailsString = uniqueEmails.join(' ');
-                    navigator.clipboard.writeText(emailsString);
-                  } else if (c.value === CopyOptions.CopyEducators) {
-                    const uniqueEmails: any[] = this.getAssignmentEmails(this.state.assignments);
-                    let emailsString = uniqueEmails.join(' ');
-                    navigator.clipboard.writeText(emailsString);
-                  }
-                }}>
-                  {c.text}
-                </MenuItem>
-                )}
-              </Select>
-            </div>
-            <div className="scrollable-user-table">
-              {this.renderAttempts()}
-            </div>
+              <div className={"scrollable-user-table" + (this.state.playersExpanded && this.state.classesExpanded === false) ? " expanded" : ""}>
+                {this.renderAttempts()}
+              </div>
+            </div>}
           </div>
           <div className="table">
             <div className="player-header">
               <div className="user-title bold">
-                <SpriteIcon name="plus-minus" />
+                <SpriteIcon
+                  name={
+                    this.state.classesExpanded && this.state.playersExpanded ? "plus-minus" : "arrow-down"
+                  }
+                  onClick={() => {
+                    if (this.state.classesExpanded && this.state.playersExpanded) {
+                      this.setState({ playersExpanded: false });
+                    } else if (this.state.classesExpanded) {
+                      this.setState({ playersExpanded: true });
+                    } else {
+                      this.setState({ classesExpanded: true });
+                    }
+                  }}
+                />
                 Classes data ({this.state.assignments.length})
               </div>
             </div>
-            <div className="userRow classes-column header-relative">
-              <div className="student-name">Classes Name</div>
-              <div className="assign">Assig.</div>
-              <div className="students">Students</div>
-              <div className="teacher">Teacher Name</div>
-              <div className="version">Version</div>
-              <div className="teacher-email">Edu. Email</div>
-              <div className="get-emails-btn" onClick={() => {
-                const uniqueEmails: any[] = this.getAssignmentEmails(this.state.assignments);
-                const emailsString = uniqueEmails.join(' ');
-                navigator.clipboard.writeText(emailsString);
-              }}>
-                Copy emails
+            {this.state.classesExpanded && <div>
+              <div className="userRow classes-column header-relative">
+                <div className="student-name">Classes Name</div>
+                <div className="assign">Assig.</div>
+                <div className="students">Students</div>
+                <div className="teacher">Teacher Name</div>
+                <div className="version">Version</div>
+                <div className="teacher-email">Edu. Email</div>
+                <div className="get-emails-btn" onClick={() => {
+                  const uniqueEmails: any[] = this.getAssignmentEmails(this.state.assignments);
+                  const emailsString = uniqueEmails.join(' ');
+                  navigator.clipboard.writeText(emailsString);
+                }}>
+                  Copy emails
+                </div>
               </div>
-            </div>
-            <div className="scrollable-user-table">
-              {this.renderAssignments()}
-            </div>
+              <div className={"scrollable-user-table" + this.state.classesExpanded ? " expanded" : ""}>
+                {this.renderAssignments()}
+              </div>
+            </div>}
           </div>
         </div>
       </Dialog>

@@ -21,13 +21,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 4vw;
+      height: 8vh;
       font-size: $font-32;
 
       svg.close-btn {
         cursor: pointer;
         position: absolute;
-        top: 1vw;
+        top: calc(4vh - 1vw);
         right: 0.5vw;
         padding: 0.5vw;
         width: 1vw;
@@ -85,6 +85,7 @@
             padding-left: 0.5vw;
             padding-right: 0.5vw;
             svg {
+              margin-right: 0.2vw;
               width: 1vw;
               height: 1vw;
             }
@@ -135,9 +136,11 @@
 
         .MuiSelect-select {
           padding-left: 0;
+          font-size: $font-18;
         }
 
         svg {
+          top: 0.2vw !important;
           color: var(--theme-dark-blue);
           width: 1.7vw;
           height: 1.7vw;
@@ -159,20 +162,32 @@
     margin: 1vh;
     margin-left: 1.3vw;
     font-size: $font-24;
-    svg {
-      width: 1.2vw;
-      height: 1.2vw;
-      stroke-width: 3;
+    .user-title {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      svg {
+        cursor: pointer;
+        width: 1.2vw;
+        height: 1.2vw;
+        stroke-width: 3;
+      }
     }
   }
 
   .header-relative {
     position: relative;
+    background: unset !important;
   }
 
   .scrollable-user-table {
-    height: 10vh;
+    max-height: 15vh;
     overflow-y: auto;
+
+    &.expanded {
+      max-height: 30vh;
+    }
   }
 
   .userRow {
@@ -181,12 +196,6 @@
 
     &:nth-child(odd) {
       background: var(--tab-gray);
-    }
-
-    .user-title {
-      font-size: $font-24;
-      padding-left: 1.3vw;
-      width: 20vw !important;
     }
 
     .get-emails-btn {
