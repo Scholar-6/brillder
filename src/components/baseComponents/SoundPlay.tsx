@@ -1,7 +1,6 @@
 import React from "react";
 import WaveSurfer from "wavesurfer.js";
 
-import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { generateId } from "components/build/buildQuestions/questionTypes/service/questionBuild";
 
@@ -155,7 +154,7 @@ class AudioComponent extends React.Component<SoundProps, SoundState> {
               <div className="react-waves">
                 <div ref={this.state.waveformRef} id={this.state.waveId} />
                 <audio
-                  src={fileUrl(this.state.fileUrl ? this.state.fileUrl : "")}
+                  src={this.state.fileUrl ? this.state.fileUrl : ""}
                   ref={this.state.trackRef}
                   onLoadedMetadata={this.onLoadedMetadata.bind(this)}
                 />
