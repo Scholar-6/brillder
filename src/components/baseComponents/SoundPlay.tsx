@@ -1,10 +1,9 @@
 import React from "react";
 import WaveSurfer from "wavesurfer.js";
 
-import './Audio.scss';
 import { fileUrl } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { generateId } from "../service/questionBuild";
+import { generateId } from "components/build/buildQuestions/questionTypes/service/questionBuild";
 
 interface SoundProps {
   element: string;
