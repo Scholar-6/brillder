@@ -1336,10 +1336,15 @@ $base-build-border: $editor-radius;
 //audio preview
 .fixed-build-phone {
   .play-wave-container {
+    position: relative;
     display: flex;
-    height: 4.5vw;
-    .react-waves {
+    height: 8vw;
+    padding-bottom: 5vw;
+    .relative-waves-container {
       height: 3vw;
+    }
+    .react-waves {
+      height: 2.8vw;
       width: 90%;
       padding: 0 !important;
       margin-left: 5%;
@@ -1348,11 +1353,30 @@ $base-build-border: $editor-radius;
         height: 3vw !important;
       }
     }
+
+    .custom-audio-controls {
+      height: 3vw;
+    }
+
+    .play-icon-d1 {
+      width: 2vw;
+      height: 2vw;
+    }
+
     .absolute-start-time {
+      top: 3vw;
       left: -20%;
     }
     .absolute-end-time {
+      top: 3vw;
       right: -20%;
+    }
+
+    .sound-caption {
+      position: absolute;
+      top: 4.4vw;
+      width: 100%;
+      text-align: center;
     }
   }
 
