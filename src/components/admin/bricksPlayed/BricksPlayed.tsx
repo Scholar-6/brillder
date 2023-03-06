@@ -475,9 +475,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
 
     return <div className="table-body">
       {finalBricks.map((b, i) => {
-        if (b.adaptedFrom) {
-          console.log('adapted', b);
-        }
         return (<div className="table-row clickable" key={i} onClick={() => {
           SetAdminBricksFilters({
             dateFilter: this.state.dateFilter,

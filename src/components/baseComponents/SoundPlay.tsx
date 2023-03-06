@@ -80,16 +80,16 @@ class SoundPlay extends React.Component<Props, State> {
       console.log('surfer loaded');
 
       waveSurfer.on("ready", () => {
-        this.setState({ waveSurfer })
+        this.setState({ waveSurfer });
         // waveSurfer.zoom(1); zoom is not working for big files and do infinity loop
       });
 
       waveSurfer.on('pause', () => {
-        console.log('sound finished paused')
+        console.log('sound finished paused');
       });
 
       waveSurfer.on('finish', () => {
-        console.log('sound finished finish')
+        console.log('sound finished finish');
         this.setState({ playing: false });
         waveSurfer.seekTo(0);
       });
@@ -97,6 +97,7 @@ class SoundPlay extends React.Component<Props, State> {
   }
 
   play() {
+    console.log('set play')
     this.setState({ playing: true });
   }
 
@@ -115,20 +116,8 @@ class SoundPlay extends React.Component<Props, State> {
     }
   }
 
-  getTime(t: any) {
-    let m = ~~(t / 60),
-      s = ~~(t % 60);
-    return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
-  }
-
   pause() {
     this.setState({ playing: false });
-  }
-
-  onLoadedMetadata = () => {
-    if (this.state.trackRef.current) {
-      this.setState({ duration: this.getTime(this.state.trackRef.current.duration) });
-    }
   }
 
   render() {
@@ -156,24 +145,6 @@ class SoundPlay extends React.Component<Props, State> {
             <audio
               src={this.state.fileUrl}
               ref={this.state.trackRef}
-              onLoadedMetadata={this.onLoadedMetadata.bind(this)}
-            />
-          </div>
-          <div className="volume-container-main">
-            <div className="volume-container">
-              <SpriteIcon
-                name={this.state.volume > 0.5 ? "volume-2" : this.state.volume > 0 ? "volume-1" : "volume-x"}
-                onClick={this.toggleVolume.bind(this)}
-              />
-            </div>
-            <input
-              type="range" min={0} max={100}
-              value={this.state.volume * 100}
-              draggable="true"
-              onDragStart={e => e.preventDefault()}
-              onChange={e => {
-                this.setVolume(Number(e.target.value) / 100);
-              }}
             />
           </div>
         </div>

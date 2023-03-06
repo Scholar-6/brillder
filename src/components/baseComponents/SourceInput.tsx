@@ -18,7 +18,7 @@ const SourceInput: React.FC<SourceInputProps> = ({ source, validationRequired, s
     return '';
   }
   return (
-    <div className="source-input">
+    <div className="source-input source-sound-33">
       <div className="fixed-icon">
         <SpriteIcon name="link" />
       </div>
