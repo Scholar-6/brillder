@@ -1039,6 +1039,24 @@
   }
 }
 
+.source-sound-33 {
+  margin-bottom: 1vh;
+  .fixed-icon {
+    height: 1.8vw;
+    width: 1.8vw;
+
+    svg {
+      margin-top: 0.8vw;
+      height: 2vw;
+      width: 2vw;
+    }
+  }
+  input {
+    margin-left: 2.3vw;
+    width: calc(100% - 3.1vw) !important;
+  }
+}
+
 .phone-question-preview {
   .choose-choice .image-container .flex-align img {
     max-width: 100%;

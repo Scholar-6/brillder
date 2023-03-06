@@ -244,6 +244,8 @@
 
       &.type-column {
         width: 12vw;
+        display: flex;
+        align-items: center;
       }
 
       &.email-column {
