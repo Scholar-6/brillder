@@ -1336,8 +1336,16 @@ $base-build-border: $editor-radius;
 //audio preview
 .fixed-build-phone {
   .play-wave-container {
+    position: relative;
     display: flex;
-    height: 4.5vw;
+    height: 6vw;
+    padding-bottom: 3vw;
+    .play-icon-container-d1 {
+      height: 3vw;
+    }
+    .relative-waves-container {
+      height: 3vw;
+    }
     .react-waves {
       height: 3vw;
       width: 90%;
@@ -1348,11 +1356,30 @@ $base-build-border: $editor-radius;
         height: 3vw !important;
       }
     }
+
+    .custom-audio-controls {
+      height: 3vw;
+    }
+
+    .play-icon-d1 {
+      width: 2vw;
+      height: 2vw;
+    }
+
     .absolute-start-time {
+      top: 3vw;
       left: -20%;
     }
     .absolute-end-time {
+      top: 3vw;
       right: -20%;
+    }
+
+    .sound-caption {
+      position: absolute;
+      top: 4.4vw;
+      width: 100%;
+      text-align: center;
     }
   }
 
@@ -1427,5 +1454,15 @@ $base-build-border: $editor-radius;
     .play-preview {
       display: none !important;
     }
+  }
+}
+
+.investigation-build-page .synthesis-page {
+  .quill-wave {
+    display: none;
+  }
+
+  .sound-caption {
+    top: 50px;
   }
 }

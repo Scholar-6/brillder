@@ -330,6 +330,7 @@ class Sort extends CompComponent<SortProps, SortState> {
 
     return (
       <div className={className} key={choice.id ? choice.id : i}>
+        <div className="sort-choice-absolute" />
         <ListItem className="sort-choice-custom">
           <ListItemText>
             {this.renderChoiceContent(choice)}
@@ -428,14 +429,22 @@ class Sort extends CompComponent<SortProps, SortState> {
                 animation={150}
                 delay={100}
                 dragClass="draggable-categorize"
-                className="unsorted sortable-list"
+                className="unsorted sortable-list sortable-mobile-list"
                 group={{ name: "cloning-group-name" }}
                 setList={(list: any[]) => this.updateCategory(list, this.state.userCats.length - 1)}
                 onStart={(e: any) => {
-                  e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = 'white';
+                  try {
+                    e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = 'white';
+                  } catch {
+                    console.log('error', e)
+                  }
                 }}
                 onEnd={(e: any) => {
-                  e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = '';
+                  try {
+                    e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = '';
+                  } catch {
+                    console.log('error', e)
+                  }
                 }}
                 forceFallback={true}
               >

@@ -1,0 +1,288 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.brick-played-popup {
+  $font-32: 1.8vw;
+  $font-24: 1.35vw;
+  $font-22: 1.23vw;
+  $font-18: 1vw;
+  .MuiPaper-root {
+    border-radius: 1vw;
+  }
+  .brick-played-popup-inner {
+    width: 45vw;
+    font-size: $font-18;
+    color: var(--theme-dark-blue);
+    position: relative;
+    .header {
+      color: var(--white);
+      background: var(--theme-dark-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 8vh;
+      font-size: $font-32;
+
+      svg.close-btn {
+        cursor: pointer;
+        position: absolute;
+        top: calc(4vh - 1vw);
+        right: 0.5vw;
+        padding: 0.5vw;
+        width: 1vw;
+        height: 1vw;
+        stroke-width: 5;
+      }
+    }
+
+    .assign-brick-d343 {
+      position: relative;
+      margin-top: 2vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      height: 100%;
+      .assign-cover-image {
+        margin-top: 1vw;
+        margin-left: 0.5vw;
+        margin-right: 1vw;
+        border-radius: 0.6vw;
+        width: 7vw;
+        height: 4vw;
+        border: 1px solid var(--tab-gray);
+        overflow: hidden;
+  
+        img {
+          width: 100%;
+        }
+      }
+
+      .plays-count {
+        text-align: center;
+        font-family: $font-family-bold;
+      }
+
+      .short-brick-info {
+        width: 30vw;
+        .link-description {
+          display: flex;
+          align-items: center;
+          .brick-inline {
+            width: 13.5vw;
+            font-size: $font-22;
+            font-family: $font-family-bold;
+            overflow-x: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          .core-buble {
+            height: 1.6vw;
+            line-height: 1;
+            margin-left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4vw;
+            background: var(--tab-gray);
+            padding-left: 0.5vw;
+            padding-right: 0.5vw;
+            svg {
+              margin-right: 0.2vw;
+              width: 1vw;
+              height: 1vw;
+            }
+          }
+        }
+    
+        .link-info {
+          font-size: $font-18;
+        }
+      }
+    }
+
+    .top-right-btns {
+      display: flex;
+      position: absolute;
+      top: 0;
+      right: 0vw;
+
+      div {
+        padding: 0.2vw 0.8vw;
+        margin-left: 0.4vw;
+        margin-right: 0.4vw;
+        cursor: pointer;
+        border-radius: 0.4vw;
+        background: var(--tab-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          margin-left: 0.2vw;
+          width: 1.3vw;
+          height: 1.3vw;
+          stroke-width: 3;
+        }
+      }
+
+      .selected-date {
+        &::after,
+        &::before {
+          display: none;
+        }
+        width: 8.5vw;
+        font-family: $font-family-regular;
+        color: var(--theme-dark-blue);
+        padding-left: 0.15vw;
+        padding-right: 0.15vw;
+
+        .MuiSelect-select {
+          padding-left: 0;
+          font-size: $font-18;
+        }
+
+        svg {
+          top: 0.2vw !important;
+          color: var(--theme-dark-blue);
+          width: 1.7vw;
+          height: 1.7vw;
+        }
+      }
+
+      .btn-green {
+        color: var(--white);
+        background: var(--theme-green);
+      }
+    }
+
+    .table {
+      position: relative;
+    }
+
+  }
+  .player-header {
+    margin: 1vh;
+    margin-left: 1.3vw;
+    font-size: $font-24;
+    .user-title {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      svg {
+        cursor: pointer;
+        width: 1.2vw;
+        height: 1.2vw;
+        stroke-width: 3;
+      }
+    }
+  }
+
+  .header-relative {
+    position: relative;
+    background: unset !important;
+  }
+
+  .scrollable-user-table {
+    max-height: 15vh;
+    overflow-y: auto;
+
+    &.expanded {
+      max-height: 30vh;
+    }
+  }
+
+  .userRow {
+    line-height: 1.6;
+    display: flex;
+
+    &:nth-child(odd) {
+      background: var(--tab-gray);
+    }
+
+    .get-emails-btn {
+      cursor: pointer;
+      position: absolute;
+      border-radius: 0.3vw;
+      font-size: $font-18;
+      top: -0.5vw;
+      right: 1vw;
+      padding: 0.1vw 0.5vw;
+      color: var(--white);
+      font-family: $font-family-regular;
+      background: var(--theme-dark-blue);
+  
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding-top: 0;
+      padding-bottom: 0;
+
+      .MuiSelect-nativeInput {
+        opacity: 1;
+        text-align: center;
+        color: white;
+        height: 100%;
+        width: 85%;
+      }
+
+      svg {
+        color: white;
+        width: 1.6vw;
+        height: 1.6vw;
+        stroke-width: 3;
+      }
+    }
+  
+    > div {
+      width: 8vw;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+
+      &.type-column {
+        width: 12vw;
+        display: flex;
+        align-items: center;
+      }
+
+      &.email-column {
+        width: 25vw;
+      }
+
+      &.student-name {
+        padding-left: 1.3vw;
+        width: 15vw;
+      }
+
+      svg {
+        width: 1vw;
+        height: 1vw;
+        stroke-width: 3;
+      }
+    }
+  }
+
+  .classes-column {
+    .student-name {
+      width: 10vw !important;
+    }
+    .assign {
+      width: 3vw !important;
+    }
+    .students {
+      width: 4vw !important;
+    }
+    .teacher {
+      width: 10vw !important;
+    }
+    .version {
+      width: 5vw !important;
+    }
+    .teacher-email {
+      width: 15vw;
+    }
+  }
+}

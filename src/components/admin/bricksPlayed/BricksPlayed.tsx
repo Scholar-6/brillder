@@ -23,6 +23,7 @@ import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
 import { AdminBricksFilters, GetAdminBricksFilters, SetAdminBricksFilters } from "localStorage/admin";
+import BrickPlayedPopup from "./BrickPlayedPopup";
 
 enum SortBy {
   Published,
@@ -58,7 +59,8 @@ interface TeachState {
   languageSubjects: Subject[];
   scienceSubjects: Subject[];
 
-  brickIdPlayers: number;
+  selectedBrick: Brick | null;
+
   brickAttempts: any[];
   assignments: any[];
 }
@@ -114,7 +116,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       mathSubjects: [],
       scienceSubjects: [],
 
-      brickIdPlayers: -1,
+      selectedBrick: null,
       brickAttempts: [],
       assignments: []
     }
@@ -471,69 +473,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
       return <div className="subject-column"></div>
     }
 
-    const renderAttempts = () => {
-      let students = this.state.brickAttempts.map(a => a.student);
-      let classrooms = this.state.assignments.map(a => a.classroom);
-
-      let uniqueStudents:any[] = [];
-      let uniqueClassrooms:any[] = [];
-
-      students.forEach(s => {
-        let found = uniqueStudents.find(sr => sr.id === s.id);
-        if (!found) {
-          uniqueStudents.push(s);
-        }
-      });
-
-      classrooms.forEach(s => {
-        let found = uniqueClassrooms.find(sr => sr.id === s.id);
-        if (!found) {
-          uniqueClassrooms.push(s);
-        }
-      });
-
-      let max = Math.max(uniqueStudents.length, uniqueClassrooms.length);
-      
-      let data = [];
-
-      for (let i = 0; i < max; i++) {
-        let student: any = null;
-        if (uniqueStudents.length > i) {
-          student = uniqueStudents[i];
-        }
-        let classroom: any = null;
-        if (uniqueClassrooms.length > i) {
-          classroom = uniqueClassrooms[i];
-        }
-
-        const renderStudent = () => {
-          if (student) {
-            return student.firstName + ' ' + student.lastName;
-          }
-          return '';
-        }
-
-        const renderAssignment = () => {
-          if (classroom) {
-            return classroom.name;
-          }
-          return '';
-        }
-
-        data.push(<div className="userRow">
-          <div className="usernames-r431">
-            {renderStudent()}
-          </div>
-          <div className="assignment-class-321">
-            {renderAssignment()}
-          </div>
-        </div>
-        );
-      }
-
-      return data;
-    }
-
     return <div className="table-body">
       {finalBricks.map((b, i) => {
         return (<div className="table-row clickable" key={i} onClick={() => {
@@ -555,22 +494,10 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             e.stopPropagation();
             const data = await getAdminBrickStatistic(b.id);
             if (data) {
-              this.setState({ brickIdPlayers: b.id, brickAttempts: data.attempts, assignments: data.assignments })
+              this.setState({ selectedBrick: b, brickAttempts: data.attempts, assignments: data.assignments })
             }
           }}>
             {b.attemptsCount}
-            {this.state.brickIdPlayers > 0 && this.state.brickIdPlayers === b.id &&
-              <div className="players-popup-d3423">
-                <SpriteIcon name="cancel-custom" className="close-btn" onClick={e => {
-                  e.stopPropagation();
-                  this.setState({ brickIdPlayers: -1, brickAttempts: [] });
-                }} />
-                <div className="userRow bold">
-                  <div className="usernames-r431">User</div>
-                  <div className="assignment-class-321">Assignment</div>
-                </div>
-                {renderAttempts()}
-              </div>}
           </div>
           <div className="third-column">{b.isCore ? <SpriteIcon name="globe" /> : <SpriteIcon name="key" />}</div>
           <div className="sponsor-column">
@@ -772,6 +699,17 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             </div>
           </Grid>
         </Grid>
+        {this.state.selectedBrick && <BrickPlayedPopup
+          history={this.props.history}
+          dateFilter={this.state.dateFilter}
+          brick={this.state.selectedBrick}
+          subjects={this.state.subjects}
+          assignments={this.state.assignments}
+          brickAttempts={this.state.brickAttempts}
+          close={() => {
+            this.setState({ selectedBrick: null });
+          }}
+        />}
       </div>
     );
   }

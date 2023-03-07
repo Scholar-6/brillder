@@ -1,30 +1,39 @@
-import React from 'react';
-import WaveSurfer from 'wavesurfer.js';
+import React from "react";
+import WaveSurfer from "wavesurfer.js";
 
-import './SoundPlay.scss';
-import SpriteIcon from './SpriteIcon';
-import { generateId } from 'components/build/buildQuestions/questionTypes/service/questionBuild';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { generateId } from "components/build/buildQuestions/questionTypes/service/questionBuild";
 
-interface Props {
+interface SoundProps {
   element: string;
 }
 
-interface State {
-  playing: boolean;
+enum AudioState {
+  Init,
+  Play,
+  Paused,
+}
+
+interface SoundState {
   volume: number;
-  fileСaption: string | null;
-  fileUrl: string | null;
+  volumeHovered: boolean;
+  rangeValue: number;
+  currentTime: string;
+  duration: string;
+  audioState: AudioState;
+  playing: boolean;
+  waveId: string;
 
   trackRef: React.RefObject<any>;
   waveformRef: React.RefObject<any>;
   waveSurfer: any;
-  waveId: string;
-  currentTime: string;
-  duration: string;
+
+  fileUrl: string | null;
+  fileСaption: string | null;
 }
 
-class SoundPlay extends React.Component<Props, State> {
-  constructor(props: Props) {
+class AudioComponent extends React.Component<SoundProps, SoundState> {
+  constructor(props: SoundProps) {
     super(props);
 
     const div = document.createElement('div');
@@ -32,23 +41,24 @@ class SoundPlay extends React.Component<Props, State> {
     const fileUrl = div.children[0].getAttribute('data-value');
     const fileСaption = div.children[0].getAttribute('data-caption');
 
-    console.log(fileUrl);
-
     this.state = {
-      playing: false,
-      volume: 1,
-      fileСaption,
-      fileUrl,
-
-      waveId: "waveform-l-" + generateId(),
-
+      audioState: AudioState.Init,
       currentTime: "00:00",
       duration: "00:00",
+      playing: false,
+      volume: 1,
+      volumeHovered: false,
+      rangeValue: 0,
+
+      fileUrl,
+      fileСaption,
+
+      waveId: "waveform-1-" + generateId(),
 
       trackRef: React.createRef<any>(),
       waveformRef: React.createRef<any>(),
       waveSurfer: null
-    }
+    };
   }
 
   componentDidMount(): void {
@@ -58,7 +68,7 @@ class SoundPlay extends React.Component<Props, State> {
       barHeight: 4,
       barRadius: 4,
       cursorWidth: 0,
-      height: 150,
+      height: 100,
       hideScrollbar: true,
       progressColor: '#c43c30',
       cursorColor: 'red',
@@ -81,7 +91,7 @@ class SoundPlay extends React.Component<Props, State> {
 
       waveSurfer.on("ready", () => {
         this.setState({ waveSurfer })
-        waveSurfer.zoom(1);
+        //waveSurfer.zoom(1); remove zooming
       });
 
       waveSurfer.on('pause', () => {
@@ -96,8 +106,10 @@ class SoundPlay extends React.Component<Props, State> {
     }
   }
 
-  play() {
-    this.setState({ playing: true });
+  getTime(t: any) {
+    let m = ~~(t / 60),
+      s = ~~(t % 60);
+    return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
   }
 
   setVolume(volume: number) {
@@ -115,16 +127,6 @@ class SoundPlay extends React.Component<Props, State> {
     }
   }
 
-  getTime(t: any) {
-    let m = ~~(t / 60),
-      s = ~~(t % 60);
-    return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
-  }
-
-  pause() {
-    this.setState({ playing: false });
-  }
-
   onLoadedMetadata = () => {
     if (this.state.trackRef.current) {
       this.setState({ duration: this.getTime(this.state.trackRef.current.duration) });
@@ -132,56 +134,67 @@ class SoundPlay extends React.Component<Props, State> {
   }
 
   render() {
-    if (this.state.fileUrl) {
-      return <div className="custom-sound-with-waves">
-        <div className="custom-audio-controls">
-          <div className="button-container">
-            <SpriteIcon
-              className={this.state.playing ? "pause-filled" : "play-thick"}
-              name={this.state.playing ? 'pause-filled' : "play-thick"}
-              onClick={e => {
-                e.stopPropagation();
-                let playing = !this.state.playing;
-                if (playing) {
-                  this.state.waveSurfer.play();
-                } else {
-                  this.state.waveSurfer.pause();
-                }
-                this.setState({ playing });
-              }}
-            />
+    return (
+      <div>
+        <div className="play-wave-container">
+          <div className="play-icon-container-d1">
+            <SpriteIcon className="play-icon-d1" name={this.state.playing ? 'feather-pause-circle' : "feather-play-circle"} onClick={e => {
+              e.stopPropagation();
+              let playing = !this.state.playing;
+              if (playing) {
+                this.state.waveSurfer.play();
+              } else {
+                this.state.waveSurfer.pause();
+              }
+              this.setState({ playing });
+            }} />
           </div>
-          <div className="react-waves">
-            <div ref={this.state.waveformRef} id={this.state.waveId} />
-            <audio
-              src={this.state.fileUrl}
-              ref={this.state.trackRef}
-              onLoadedMetadata={this.onLoadedMetadata.bind(this)}
-            />
-          </div>
-          <div className="volume-container-main">
-            <div className="volume-container">
-              <SpriteIcon
-                name={this.state.volume > 0.5 ? "volume-2" : this.state.volume > 0 ? "volume-1" : "volume-x"}
-                onClick={this.toggleVolume.bind(this)}
+          {this.state.fileUrl &&
+            <div className="relative-waves-container">
+              <div className="react-waves">
+                <div ref={this.state.waveformRef} id={this.state.waveId} />
+                <audio
+                  src={this.state.fileUrl ? this.state.fileUrl : ""}
+                  ref={this.state.trackRef}
+                  onLoadedMetadata={this.onLoadedMetadata.bind(this)}
+                />
+              </div>
+              <div className="absolute-start-time">
+                {this.state.currentTime}
+              </div>
+              <div className="absolute-end-time">
+                {this.state.duration}
+              </div>
+            </div>
+          }
+          <div className="custom-audio-controls">
+            <div className="volume-container-main">
+              <div
+                className={`volume-container ${this.state.volumeHovered ? 'hovered' : ''}`}
+                onMouseEnter={() => this.setState({ volumeHovered: true })}
+                onMouseLeave={() => this.setState({ volumeHovered: false })}
+              >
+                <SpriteIcon
+                  name={this.state.volume > 0.5 ? "volume-2" : this.state.volume > 0 ? "volume-1" : "volume-x"}
+                  onClick={this.toggleVolume.bind(this)}
+                />
+              </div>
+              <input
+                type="range" min={0} max={100}
+                value={this.state.volume * 100}
+                draggable="true"
+                onDragStart={e => e.preventDefault()}
+                onChange={e => {
+                  this.setVolume(Number(e.target.value) / 100);
+                }}
               />
             </div>
-            <input
-              type="range" min={0} max={100}
-              value={this.state.volume * 100}
-              draggable="true"
-              onDragStart={e => e.preventDefault()}
-              onChange={e => {
-                this.setVolume(Number(e.target.value) / 100);
-              }}
-            />
           </div>
+          {this.state.fileСaption && <div className="sound-caption">{this.state.fileСaption}</div>}
         </div>
-        <div className="sound-caption">{this.state.fileСaption}</div>
       </div>
-    }
-    return (<div />);
+    );
   }
 }
 
-export default SoundPlay;
+export default AudioComponent;

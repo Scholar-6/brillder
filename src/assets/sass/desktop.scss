@@ -210,6 +210,20 @@
       margin-bottom: 0 !important;
     }
 
+    .MuiInputBase-root {
+      overflow-y: auto !important;
+    }
+
+    .fieldset {
+      border-style: none !important;
+      border: none !important;
+      border-color: none !important;
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+      border: none !important;
+    }
+
     .MuiFormControl-root {
       .MuiOutlinedInput-root {
         display: flex !important;
@@ -900,13 +914,13 @@
   .MuiInputBase-root {
     position: relative;
     min-width: 5vw;
-    padding-right: 18px;
+    padding-right: 0.8vw;
     display: inline-block !important;
     .MuiSelect-select {
       display: inline-block !important;
       padding: 0;
+      padding-right: 0.8vw !important;
       min-width: 3vw !important;
-      padding-right: 18px;
     }
   }
   &.poem {
@@ -923,9 +937,6 @@
     top: 0;
     width: 300px;
   }
-  audio {
-    margin-top: 90px;
-  }
   .sound-caption {
     position: absolute;
     top: 145px;
@@ -933,6 +944,11 @@
     text-align: center;
     font-size: 1vw;
   }
+}
+
+.investigation-build-background .ql-sound-custom .sound-caption {
+  position: relative;
+  top: unset;
 }
 
 .generate-cover-label {
@@ -1025,6 +1041,24 @@
     margin-left: 2.8vw;
     width: calc(100% - 4.7vw) !important;
     overflow: hidden;
+  }
+}
+
+.source-sound-33 {
+  margin-bottom: 1vh;
+  .fixed-icon {
+    height: 1.8vw;
+    width: 1.8vw;
+
+    svg {
+      margin-top: 0.8vw;
+      height: 2vw;
+      width: 2vw;
+    }
+  }
+  input {
+    margin-left: 2.3vw;
+    width: calc(100% - 3.1vw) !important;
   }
 }
 

@@ -13,6 +13,16 @@
     margin-top: 5px;
   }
 
+  .image-caption-v4 {
+    display: inline;
+    div {
+      display: inline;
+      p {
+        display: inline;
+      }
+    }
+  }
+
   .pair-match-play-option {
     @include textCenter;
     color: var(--theme-dark-blue);

@@ -359,9 +359,19 @@
   font-size: $mbase-font-size;
 }
 
-.question-live-play .question-unique-play .sortable-list {
-  .MuiTypography-root>div {
-    padding: 1vw 1.5vw;
+.post-play-page {
+  .scroll-sideways-hint {
+    display: flex;
+    align-items: center;
+    font-family: $font-family-regular-italic;
+    font-size: 4vw !important;
+
+    svg {
+      $size: 4vw;
+      width: $size;
+      height: $size;
+      margin-right: 1vw;
+    }
   }
 }
 
@@ -1417,19 +1427,32 @@
     white-space: nowrap;
     overflow: scroll;
   }
+  .MuiGrid-root {
+    display: inline !important;
+  }
   .MuiInputBase-root {
     min-width: 20vw;
     display: inline-block !important; 
     position: relative;
+    line-height: 1 !important;
+    padding-right: 2vw !important;
+
     &::before, &::after {
       bottom: 0vw !important;
     }
     .MuiSelect-root {
-      padding-left: 4vw !important;
-      padding-right: 25px !important;
+      display: inline-block;
+      height: 6vw !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      padding-left: 1vw !important;
+      padding-right: 2vw !important;
       min-width: 18vw !important;
     }
     p {
+    }
+    svg {
+      bottom: 0.5vw;
     }
     input {
       position: absolute;

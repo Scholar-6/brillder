@@ -12,6 +12,7 @@ interface InputProps {
   className: string;
   placeholder: string;
   onChange?(value: string): void;
+  onInput?(value: string): void;
   disabled?: boolean;
 }
 
@@ -47,13 +48,15 @@ class TypingInput extends Component<InputProps, InputState> {
     const {props} = this;
     return (
       <input
-        type={props.type} name={props.name}
+        type={props.type}
+        name={props.name}
         value={props.value}
-        onChange={(e) => props.onChange!(e.target.value)}
         className={props.className}
-        placeholder={this.state.placeholder}
         required={props.required}
         disabled={props.disabled}
+        placeholder={this.state.placeholder}
+        onChange={(e) => props.onChange!(e.target.value)}
+        onInput={(e:any) => props.onChange && props.onChange!(e.target.value)}
       />
     );
   }
