@@ -171,14 +171,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     if (isTeacher) {
       return (
         <div className="green-button-container2">
-          <div className="play-text">Add comment</div>
-          <div className="green-button-container3"
-            onClick={() => {/* commenting logic */ }}
-          >
-            <button type="button" className="play-green-button bg-white">
-              <SpriteIcon name="pen-tool" className="colored w60 h60 text-white" />
-            </button>
-          </div>
+          <div className="play-text">Attempts</div>
         </div>
       );
     }
@@ -337,7 +330,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       <div onClick={() => this.moveToBrief()}><SpriteIcon name="crosshair" /><span className="bold">Brief</span> <span className="ellipsis">{stripHtml(brick.brief)}</span></div>
                       <div onClick={() => this.moveToPrep()}><SpriteIcon name="file-text" /><span className="bold">Prep</span> <span className="ellipsis">{stripHtml(brick.prep)}</span></div>
                       {questions.map((q, i) => 
-                        <div className="question-link" onClick={() => this.moveToQuestion(i)}>
+                        <div className="question-link" key={i} onClick={() => this.moveToQuestion(i)}>
                           <span className="bold">{i + 1}</span><span className="ellipsis">
                             {stripHtmlWithSpaces(q.firstComponent.value)}
                           </span>
