@@ -126,13 +126,19 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           }
         }
 
+        let isCore = true;
         let groupSubjects = [] as SubjectWithBricks[];
         if (expandedGroup) {
           groupSubjects = this.getGroupSubjects(subjects, expandedGroup);
+          if (expandedGroup == SubjectGroup.Personal) {
+            groupSubjects = data.subjects;
+            isCore = false;
+          }
         }
 
         this.setState({
           ...this.state,
+          isCore,
           subjects,
           totalSubjects: data.subjects,
           mySubjects,
