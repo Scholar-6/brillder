@@ -1,13 +1,16 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 
 import useBricks from './useBricks';
 import { User } from 'model/user';
 import PhoneTopBrickScroll16x9 from 'components/baseComponents/PhoneTopBrickScroll16x9';
-import { Brick, Subject } from 'model/brick';
+import { Brick, Subject, SubjectGroup } from 'model/brick';
 
 interface Props {
   user: User;
-  subject: Subject;
+  isCore: boolean;
+  subjects: Subject[];
+  subjectGroup?: SubjectGroup,
+  onLoad(data: any): void;
   setBrick(b: Brick): void;
 }
 
@@ -17,8 +20,13 @@ const InfinityScrollCustom = (props: Props) => {
     isLoading,
     isError,
     results,
-    hasNextPage
-  } = useBricks(pageNum, props.user, props.subject, true, [], []);
+    hasNextPage,
+    data
+  } = useBricks(pageNum, props.user, props.subjects, props.isCore, [], [], props.subjectGroup);
+
+  useEffect(() => {
+    props.onLoad(data);
+  }, [data])
 
   const intObserver = useRef() as any;
 
@@ -44,10 +52,14 @@ const InfinityScrollCustom = (props: Props) => {
 
   const content = results.map((brick, i) => {
     if (results.length === i + 1) {
-      return <PhoneTopBrickScroll16x9 ref={lastBrickRef} brick={brick} user={props.user} onClick={() => props.setBrick(brick)} />
+      return <PhoneTopBrickScroll16x9 key={i} ref={lastBrickRef} brick={brick} user={props.user} onClick={() => props.setBrick(brick)} />
     }
-    return <PhoneTopBrickScroll16x9 brick={brick} user={props.user} onClick={() => props.setBrick(brick)} />
+    return <PhoneTopBrickScroll16x9 key={i} brick={brick} user={props.user} onClick={() => props.setBrick(brick)} />
   });
+
+  if (content.length == 0) {
+    return <div />;
+  }
 
   return (
     <div className="bricks-scroll-row">

@@ -3,6 +3,9 @@ import { Subject } from "../../model/brick";
 export const GENERAL_SUBJECT = "General & Topical";
 export const CURRENT_AFFAIRS_SUBJECT = "Current Affairs";
 
+export const ENGLISH_LANGUAGE_SUBJECT = "English Language";
+export const ENGLISH_LITERATURE_SUBJECT = "English Literature";
+
 export interface SubjectsResult {
   data: Subject[];
 }
