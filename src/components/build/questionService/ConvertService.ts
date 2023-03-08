@@ -15,9 +15,7 @@ export function stripHtml(html: string) {
 
 export function stripHtmlWithSpaces(html: string) {
   const div = document.createElement("div");
-  var dd = html.replace('>', '> ');
-  console.log(html, dd);
-  div.innerHTML = dd;
+  div.innerHTML = (html as any).replaceAll('>', '> ');
   div.querySelectorAll(".quill-desmos").forEach(el => div.removeChild(el));
   return div.textContent || div.innerText || "";
 }
