@@ -220,7 +220,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   expandSubject(s: SubjectWithBricks) {
-    this.setState({ expandedSubject: s });
+    let isCore = true;
+    if (this.state.expandedGroup === SubjectGroup.Personal) {
+      isCore = false;
+    }
+    this.setState({ expandedSubject: s, isCore });
     let path = this.props.location.pathname;
     let link = path + '?subjectId=' + s.id;
     if (this.state.expandedGroup) {

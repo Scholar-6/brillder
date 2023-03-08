@@ -9,7 +9,7 @@ import HighlightHtml from '../baseComponents/HighlightHtml';
 import Katex from 'components/baseComponents/katex/Katex';
 import HtmlWithSpaces from '../baseComponents/HtmlWithSpaces';
 import { isPhone } from 'services/phone';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import QuotePlayCustom from './QuotePlayCustom';
 
 
 interface TextProps {
@@ -44,12 +44,40 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component, refs }) => 
     return /<blockquote (.*)class="bq no-break"(.*)>/.test(el);
   }
 
+  const isBlockqouteNoBreaksV2 = (el: string) => {
+    return /<div class='quote-no-break-group-f43g'>/.test(el);
+  }
+
   let classN = 'text-play';
   if (className) {
     classN += ' ' + className;
   }
 
-  let prev:any = null;
+  if (isPhone()) {
+    const groupQuates = (arrR: string[]) => {
+      let finalArr = [];
+      let tempQuote = "<div class='quote-no-break-group-f43g'>";
+      let isPrevQuote = false;
+      for (let el of arrR) {
+        let isQuote = isBlockqouteNoBreaks(el);
+        if (isQuote) {
+          tempQuote += el;
+          isPrevQuote = true;
+        } else {
+          if (isPrevQuote == true) {
+            tempQuote += "</div>";
+            finalArr.push(tempQuote);
+            tempQuote = "<div class='quote-no-break-group-f43g'>";
+          }
+          finalArr.push(el);
+          isPrevQuote = false;
+        }
+      }
+      return finalArr;
+    }
+    
+    arr = groupQuates(arr);
+  }
 
   return (
     <div className={classN} ref={refs}>
@@ -58,33 +86,15 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component, refs }) => 
           const res = isMathJax(el);
           const latex = isLatex(el);
           if (res) {
-            prev = el;
             return renderMath(el, i);
           } else if (latex) {
-            prev = el;
             return renderLatex(el, i);
           }
 
-          if (isPhone() && isBlockqouteNoBreaks(el)) {
-            if (prev && isBlockqouteNoBreaks(prev)) {
-              prev = el;
-              return <div dangerouslySetInnerHTML={{__html: el }} />
-            }
-  
-            prev = el;
-  
-            return (
-              <div key={i}>
-                <div className="scroll-sideways-hint">
-                  <SpriteIcon name="flaticon-swipe" />
-                  <div>Scroll sideways on each line that overflows</div>
-                </div>
-                <div dangerouslySetInnerHTML={{ __html: el }} />
-              </div>
-            );
+          if (isPhone() && isBlockqouteNoBreaksV2(el)) {
+            return <QuotePlayCustom key={i} quoteHtml={el} />;
           }
 
-          prev = el;
           return <HtmlWithSpaces key={i} index={i} value={el} />;
         })
       }
