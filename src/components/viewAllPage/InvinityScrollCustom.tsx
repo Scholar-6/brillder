@@ -16,6 +16,8 @@ interface Props {
 
 const InfinityScrollCustom = (props: Props) => {
   const [pageNum, setPageNum] = useState(0);
+  const [subjectsB, setSubjects] = useState([] as Subject[]);
+
   const {
     isLoading,
     isError,
@@ -27,6 +29,28 @@ const InfinityScrollCustom = (props: Props) => {
   useEffect(() => {
     props.onLoad(data);
   }, [data])
+
+  useEffect(() => {
+    const subjectIds = props.subjects.map(s => s.id);
+    const subject2Ids = subjectsB.map(s => s.id);
+
+    let isModified = subjectIds.length !== subject2Ids.length;
+
+    if(!isModified){
+      for (let index = 0; index < subjectIds.length; index++) {
+        let same = subject2Ids[index] == subjectIds[index];
+        if (!same) {
+          isModified = true;
+          break;
+        }
+      }
+    }
+
+    if (isModified) {
+      setPageNum(0);
+      setSubjects(props.subjects);
+    }
+  }, [props.subjects]);
 
   const intObserver = useRef() as any;
 

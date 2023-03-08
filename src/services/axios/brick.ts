@@ -193,7 +193,7 @@ export const getPublishedBricksByPage = async (
  */
  export const getUnauthPublishedBricksByPage = async (
   pageSize: number, page: number, level: number[], length: BrickLengthEnum[],
-  subjectIds: number[], onlyCompetitions: boolean, subjectGroup: number
+  subjectIds: number[], onlyCompetitions: boolean, subjectGroup?: number
 ) => {
   try {
 
@@ -202,9 +202,12 @@ export const getPublishedBricksByPage = async (
       level,
       length,
       subjectIds,
-      subjectGroup,
       onlyCompetitions,
     } as any;
+
+    if (subjectGroup) {
+      data.subjectGroup = subjectGroup;
+    }
 
     return await post<PageBricks>(`/bricks/byStatusUnauth/${BrickStatus.Publish}/page/${page}`, data);
   } catch {
