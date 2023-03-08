@@ -944,10 +944,16 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             //#1684 bug fix - overflow: auto;
             margin-top: 1.5vh;
             margin-bottom: 1.5vh;
+
+            .quote-no-break-group-f43g {
+              overflow-x: auto;
+            }
+
             blockquote {
               border-left: 0.3vw solid var(--tab-gray);
               padding-left: 1.8vw;
               &.no-break {
+                overflow: visible !important;
                 white-space: nowrap;
               }
             }
