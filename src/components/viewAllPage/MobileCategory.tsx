@@ -437,7 +437,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           </div>
           :
           <div className="text-center header">
-            <SpriteIcon className="absolute-arrow" name="arrow-left-stroke" onClick={() => this.props.history.push(map.MainPage)} />
             <div>
               <div>Click to explore one of the subject categories</div>
             </div>
