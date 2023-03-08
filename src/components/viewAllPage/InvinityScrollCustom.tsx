@@ -3,13 +3,13 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import useBricks from './useBricks';
 import { User } from 'model/user';
 import PhoneTopBrickScroll16x9 from 'components/baseComponents/PhoneTopBrickScroll16x9';
-import { Brick, Subject, SubjectGroup } from 'model/brick';
+import { Brick, Subject } from 'model/brick';
 
 interface Props {
   user: User;
   isCore: boolean;
   subjects: Subject[];
-  subjectGroup?: SubjectGroup,
+  searchString?: string;
   onLoad(data: any): void;
   setBrick(b: Brick): void;
 }
@@ -17,6 +17,7 @@ interface Props {
 const InfinityScrollCustom = (props: Props) => {
   const [pageNum, setPageNum] = useState(0);
   const [subjectsB, setSubjects] = useState([] as Subject[]);
+  const [oldSearch, setOldSearchStr] = useState('');
 
   const {
     isLoading,
@@ -24,17 +25,32 @@ const InfinityScrollCustom = (props: Props) => {
     results,
     hasNextPage,
     data
-  } = useBricks(pageNum, props.user, props.subjects, props.isCore, [], [], props.subjectGroup);
+  } = useBricks(pageNum, props.user, props.subjects, props.isCore, [], [], props.searchString);
 
   useEffect(() => {
     props.onLoad(data);
   }, [data])
 
   useEffect(() => {
+    const {searchString} = props;
     const subjectIds = props.subjects.map(s => s.id);
     const subject2Ids = subjectsB.map(s => s.id);
 
     let isModified = subjectIds.length !== subject2Ids.length;
+
+    if (searchString && searchString.length >= 3) {
+      if (searchString != oldSearch) {
+        isModified = true;
+        setOldSearchStr(searchString);
+      }
+    } else {
+      if (searchString && searchString.length < 3) {
+        if (oldSearch.length >= 3) {
+          isModified = true;
+          setOldSearchStr('');
+        }
+      }
+    }
 
     if(!isModified){
       for (let index = 0; index < subjectIds.length; index++) {

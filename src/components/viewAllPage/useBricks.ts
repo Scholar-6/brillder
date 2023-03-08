@@ -1,9 +1,9 @@
-import { Brick, Subject, SubjectGroup } from 'model/brick';
+import { Brick, Subject } from 'model/brick';
 import { User } from 'model/user';
 import { useState, useEffect } from 'react';
-import { getPublishedBricksByPage, getUnauthPublishedBricksByPage, PageBricks } from 'services/axios/brick';
+import { getPublishedBricksByPage, getUnauthPublishedBricksByPage, PageBricks, searchPaginateBricks } from 'services/axios/brick';
 
-const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean, levels: number[], lengths: number[], subjectGroup?: SubjectGroup) => {
+const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean, levels: number[], lengths: number[], searchString?: string) => {
   const [results, setResults] = useState([] as Brick[]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -12,6 +12,7 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
   const [data, setData] = useState({} as PageBricks);
   const [subjectsB, setSubjects] = useState([] as Subject[]);
   const [pageNumB, setPageNum] = useState(-1);
+  const [oldSearch, setOldSearchStr] = useState("");
 
   const bricksPerPage = 6;
 
@@ -32,10 +33,6 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
         }
       });
     } else {
-      let sGroup = subjectGroup;
-      if (!sGroup) {
-        sGroup = subjects[0].group;
-      }
       getUnauthPublishedBricksByPage(bricksPerPage, pageNum, [], [], sIds, false).then(data => {
         if (data) {
           setResults(prev => [...prev, ...data.bricks]);
@@ -52,11 +49,44 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
     }
   }
 
+  const search = (subjectIdsV3: number[]) => {
+    searchPaginateBricks(searchString, pageNum, bricksPerPage, isCore).then(data => {
+      if (data) {
+        console.log(data);
+        setResults(prev => [...prev, ...data.bricks]);
+        setHasNextPage(data.pageCount - ((pageNum + 1) * bricksPerPage) >= 0);
+        setData(data);
+        setIsLoading(false)
+      } else {
+        setIsLoading(false);
+        setHasNextPage(false);
+        setIsError(true);
+      }
+    });
+  }
+
   useEffect(() => {
+    // if not searching
     const subjectIds = subjects.map(s => s.id);
     const subject2Ids = subjectsB.map(s => s.id);
 
     let isModified = subjectIds.length !== subject2Ids.length;
+    let isSearching = false;
+    if (searchString && searchString.length >= 3) {
+      isSearching = true;
+      if (searchString != oldSearch) {
+        console.log('modified');
+        isModified = true;
+        setOldSearchStr(searchString);
+      }
+    } else {
+      if (searchString && searchString.length < 3) {
+        if (oldSearch.length >= 3) {
+          isModified = true;
+          setOldSearchStr('');
+        }
+      }
+    }
 
     if (!isModified) {
       for (let index = 0; index < subjectIds.length; index++) {
@@ -77,7 +107,11 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
       setResults([]);
       setData({} as PageBricks);
       setHasNextPage(false);
-      getAndSetBricks(subjectIds);
+      if (isSearching) {
+        search(subjectIds);
+      } else {
+        getAndSetBricks(subjectIds);
+      }
       setPageNum(pageNum);
     } else {
       if (pageNumB != pageNum) {
@@ -87,11 +121,18 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
 
         const sIds = subjects.map(s => s.id);
 
-        getAndSetBricks(sIds);
+        if (isSearching) {
+          search(sIds);
+        } else {
+          getAndSetBricks(sIds);
+        }
         setPageNum(pageNum);
       }
     }
-  }, [pageNum, subjects])
+  }, [pageNum, subjects, searchString])
+
+  useEffect(() => {
+  }, [searchString])
 
   return { isLoading, isError, error, results, hasNextPage, data }
 }
