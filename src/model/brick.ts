@@ -44,7 +44,11 @@ export enum SubjectGroup {
   Science,
   MathsAndComputing,
   SchoolClient,
-  Corporate
+  Corporate,
+
+  // only mobile
+  English,
+  Personal
 }
 
 export const SubjectGroupNames = [

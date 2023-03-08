@@ -13,13 +13,23 @@
   }
 
   //#4190
-  .main-listing.mobile-category.phone-view-all .upper-part .page-header .logout-container {
-    .home-button-container {
-      margin-right: 24vw;
-    }
-    .search-container {
-      top: 2.6vw;
-      left: 44vw;
+  .main-listing.mobile-category.phone-view-all .upper-part {
+    .page-header {
+      position: relative;
+  
+      .home-button-container {
+        margin-right: 24vw !important;
+      }
+    
+      .logout-container .search-container {
+        top: 3.1vw !important;
+        left: 44vw !important;
+    
+        .open-search {
+          height: 11vw !important;
+          width: 11vw !important;
+        }
+      }
     }
   }
 
@@ -1111,19 +1121,35 @@
 }
 
 .select-subject-dashboard-d3 {
-  font-size: 6.5vw;
+  $font13: 3.8vw;
+  $font17: 5vw;
+  $font18: 5vw;
+  font-size: $font18;
   color: var(--theme-dark-blue);
-  background: color(--white);
+  background: var(--white);
 
   .select-subject-dashboard-d33 {
     height: calc(100% - 17.5vw);
     overflow-y: auto;
 
     .subjects-title-d33 {
+      display: flex;
       margin-left: 3vw;
       margin-top: 4.5vw;
       margin-bottom: 2vw;
-      font-family: $font-family-bold;
+
+      .subject-title {
+        font-family: $font-family-bold;
+        width: 60vw;
+      }
+
+      .bricks-count {
+        width: 32vw;
+        font-size: $font13;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
 
       &.subject-custom-d33 {
         margin-top: 2vw;
@@ -1222,6 +1248,142 @@
           white-space: nowrap;
         }
       }
+    }
+  }
+}
+
+
+.mobile-categorise {
+  color: var(--theme-dark-blue);
+  height: calc(100% - 17.5vw);
+  overflow-y: scroll;
+  $font14: 4vw;
+  $font17: 5vw;
+  $font18: 5vw;
+  background: var(--white);
+  font-size: $font14;
+
+  .page-header {
+    position: relative;
+
+    .home-button-container {
+      margin-right: 24vw !important;
+    }
+  
+    .logout-container .search-container {
+      top: 3.1vw !important;
+      left: 44vw !important;
+  
+      .open-search {
+        height: 11vw !important;
+        width: 11vw !important;
+      }
+    }
+  }
+
+  .header {
+    line-height: 1.2;
+    height: 9%;
+    font-size: $font14;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+
+    .absolute-arrow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 9vw;
+      stroke-width: 1.5 !important;
+    }
+  }
+
+  .category-label {
+    margin-top: 2vw;
+    padding-left: 5vw;
+    font-size: $font18;
+  }
+
+  .subject-categories {
+    .row {
+      display: flex;
+      > :nth-child(1) {
+        margin-left: 3vw;
+        margin-right: 1.5vw;
+      }
+      > :nth-child(2) {
+        margin-left: 1.5vw;
+        margin-right: 3vw;
+      }
+    }
+
+    .subject-category {
+      border-radius: 2vw;
+      border: 1px solid #D7D7D7;
+      margin-top: 1.5vw;
+      margin-bottom: 1.5vw;
+      width: 48vw;
+      svg {
+        margin-top: 3vw;
+        margin-bottom: 2.5vw;
+        width: 25vw;
+        height: 18vw;
+
+        &.key-icon {
+          margin-top: 5vw;
+          margin-bottom: 5vw;
+          height: 14vw;
+        }
+      }
+      .cat-name {
+        text-align: center;
+        margin-bottom: 2vw;
+      }
+
+      &.disabled {
+        background: #F5F5F5;
+        color: #B0B0B0;
+        svg {
+          color: #B0B0B0;
+        }
+      } 
+    }
+  }
+}
+
+.subjects-custom-v6 {
+  margin-top: 2vw;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-bottom: 3vw;
+  display: flex;
+  overflow-x: scroll;
+  .subject-button {
+    margin-left: 1vw;
+    margin-right: 1vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    border: 1px solid #D7D7D7;
+    border-radius: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+
+    &.active {
+      color: var(--white);
+      background: var(--theme-dark-blue);
+    }
+
+    svg {
+      width: 3vw;
+      height: 3vw;
+      margin-right: 1vw;
     }
   }
 }
