@@ -54,18 +54,21 @@ interface BricksListProps {
 }
 
 interface BricksListState {
-  expandedBrick: Brick | null;
-  bricks: Array<Brick>;
+  searchString: string;
+  typingTimeout: number;
   mySubjects: SubjectWithBricks[];
   totalSubjects: SubjectWithBricks[];
   subjects: SubjectWithBricks[];
+
   shown: boolean;
   isCore: boolean;
   isLoading: boolean;
   bricksCount: number;
+
   expandedSubject: SubjectWithBricks | null;
   expandedGroup: SubjectGroup | null;
   groupSubjects: Subject[];
+
   filterLevels: AcademicLevel[];
 }
 
@@ -86,9 +89,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
 
     this.state = {
+      typingTimeout: -1,
+      searchString: '',
       isCore: true,
-      expandedBrick: null,
-      bricks: [],
       isLoading: true,
       expandedSubject: null,
       expandedGroup,
@@ -233,6 +236,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.props.history.push(link);
   }
 
+  async search(searchString: string) {
+    if (searchString && searchString.length < 3) {
+      return '';
+    }
+    if (this.state.typingTimeout) {
+      clearTimeout(this.state.typingTimeout);
+    }
+  }
+
   renderExpandedSubject(subject: SubjectWithBricks) {
     return (
       <React.Suspense fallback={<></>}>
@@ -248,13 +260,25 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             searching={() => { }}
           />
           <div className="select-subject-dashboard-d33">
-            <div className="back-arrow-container" onClick={() => {
-              this.setState({ expandedSubject: null, bricksCount: 0 });
-              const path = this.pathSubjectGroup(this.state.expandedGroup);
-              this.props.history.push(path);
-            }}>
-              <SpriteIcon name="arrow-left" className="back-arrow-d33" />
-              <div>Subject</div>
+            <div className="back-arrow-container">
+              <SpriteIcon
+                name="arrow-left-bigger" className="back-arrow-d33"
+                onClick={() => {
+                  this.setState({ expandedSubject: null, bricksCount: 0 });
+                  const path = this.pathSubjectGroup(this.state.expandedGroup);
+                  this.props.history.push(path);
+                }}
+              />
+              <div className="ba-search-input-container">
+                <SpriteIcon name="search" /> 
+                <input
+                  value={this.state.searchString}
+                  onChange={(e) => {
+                    this.setState({ searchString: e.target.value });
+                  }}
+                  placeholder="Search in subject"
+                />
+              </div>
             </div>
             <div className="subjects-title-d33 subject-custom-d33">
               <div className="subject-title">{subject.name}</div>
@@ -262,6 +286,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             </div>
             {this.state.groupSubjects.length > 0 ? this.renderJustSubjects(this.state.groupSubjects, this.state.expandedSubject) : <div />}
             <InfinityScrollCustom
+              searchString={this.state.searchString}
               user={this.props.user}
               isCore={this.state.isCore}
               subjects={[subject]}
@@ -325,7 +350,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               this.setState({ expandedGroup: null, groupSubjects: [] })
               this.props.history.push(this.props.location.pathname);
             }}>
-              <SpriteIcon name="arrow-left" className="back-arrow-d33" />
+              <SpriteIcon name="arrow-left-bigger" className="back-arrow-d33" />
             </div>
             <div className="subjects-title-d33 subject-custom-d33">
               <div className="subject-title">{this.renderGroupName(subjectGroup)}</div>
@@ -333,6 +358,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             </div>
             {this.state.groupSubjects.length > 0 ? this.renderJustSubjects(this.state.groupSubjects, this.state.expandedSubject) : <div />}
             <InfinityScrollCustom
+              searchString={this.state.searchString}
               user={this.props.user}
               isCore={this.state.isCore}
               subjects={this.state.groupSubjects}
