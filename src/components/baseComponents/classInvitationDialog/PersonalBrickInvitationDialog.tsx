@@ -83,7 +83,7 @@ const PersonalBrickInvitationDialog: React.FC<Props> = props => {
           {currentInvitation.sentBy.firstName} {currentInvitation.sentBy.lastName} would like to share their personal bricks with you.<br/>
           Accepting will add their brick to your personal catalogue.
         </div>
-        <Grid item container direction="row" justify="center">
+        <Grid item container direction="row" justifyContent="center">
           <button className="btn btn-md b-red text-white" onClick={handleReject}>
             Reject
           </button>

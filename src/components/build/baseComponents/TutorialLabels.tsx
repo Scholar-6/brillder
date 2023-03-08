@@ -16,7 +16,7 @@ const TutorialLabels: React.FC<LabelProps> = (props) => {
           <img alt="" src="/images/exit-arrow.png" />
         </div>
         <Grid container direction="row" style={{ height: '100%' }}>
-          <Grid container item xs={9} justify="center" style={{ height: '100%' }}>
+          <Grid container item xs={9} justifyContent="center" style={{ height: '100%' }}>
             <Grid container item xs={9} style={{ height: '100%' }}>
               <div className="tutorial-exit-label" style={{ height: '100%' }}>
                 <Grid container alignContent="center" style={{ height: '100%' }}>

@@ -60,11 +60,11 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
 
   return (
     <div className="saved-info">
-      <Grid container alignContent="center" justify="center">
+      <Grid container alignContent="center" justifyContent="center">
         <div className={className}>
           <Grid container direction="row" className={`saved-info-row ${props.saveError ? "save-error" : ""}`}>
             <Grid item xs={2}>
-              <Grid container alignContent="center" justify="center">
+              <Grid container alignContent="center" justifyContent="center">
                 <SpriteIcon name={ props.saveError ? "alert-triangle": "save-icon" } className="active"/>
               </Grid>
             </Grid>

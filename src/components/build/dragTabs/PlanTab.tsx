@@ -21,7 +21,7 @@ const PlanTab: React.FC<PlanTabProps> = (props) => {
   return (
     <Grid
       className={"drag-tile " + (props.isValid ? "" : " invalid")}
-      container alignContent="center" justify="center"
+      container alignContent="center" justifyContent="center"
       onClick={() => props.history.push(routes.buildPlan(props.brickId))}
     >
       <CommentIndicator replyType={replyType} />

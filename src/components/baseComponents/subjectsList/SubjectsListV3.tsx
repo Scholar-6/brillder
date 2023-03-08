@@ -58,7 +58,7 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
           <Grid
             container
             alignContent="center"
-            justify="center"
+            justifyContent="center"
             style={{ height: "100%", margin: "0 0" }}
           >
             {count && count > 0 ? count : ""}

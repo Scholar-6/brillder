@@ -102,7 +102,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       );
     }
     return (
-      <Grid className="share-row" container direction="row" justify="center">
+      <Grid className="share-row" container direction="row" justifyContent="center">
         <ShareColumn size={3} onClick={() => setShare(true)} />
         {canSee && <AssignBrickColumn size={3} onClick={() => setAssign(true)} />}
         {canSee && <AdaptBrickColumn size={3} onClick={() => setIsAdaptBrickOpen(true)} />}

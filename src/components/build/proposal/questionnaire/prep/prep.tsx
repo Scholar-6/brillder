@@ -26,7 +26,7 @@ interface PrepProps {
 
 const PrepPreviewComponent: React.FC<any> = ({ data }) => {
   return (
-    <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
+    <Grid container justifyContent="center" alignContent="flex-start" className="phone-preview-component">
       <SpriteIcon name="file-text" className={data ? "" : "big"} />
       <div className="typing-text">
         <YoutubeAndMathQuote value={data} isSynthesisParser={true} />

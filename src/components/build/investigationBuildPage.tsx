@@ -902,7 +902,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           >
             <Grid
               container direction="row"
-              justify="center" alignItems="center"
+              justifyContent="center" alignItems="center"
               style={{ height: "100%" }}
             >
               {renderTitle(props.brick.adaptedFrom, props.brick.author)}

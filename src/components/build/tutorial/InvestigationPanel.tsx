@@ -14,7 +14,7 @@ const InvestigationPanel: React.FC<TutorialProps> = (props) => {
   return (
     <div className="tutorial-panel tutorial-investigation-panel">
       <div className="tutorial-step-1">
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <div className="editor-border ">
             <SpriteIcon name="dashed-circle" className="circle-border" />
             <SpriteIcon name="plus" className="w100 h100 active text-theme-dark-blue" />
@@ -34,15 +34,15 @@ const InvestigationPanel: React.FC<TutorialProps> = (props) => {
         </div>
       </div>
       <Grid container direction="row" className="button-row">
-        <Grid container justify="flex-start" className="hover-move-right" item xs={4}>
+        <Grid container justifyContent="flex-start" className="hover-move-right" item xs={4}>
           <div className="left-arrow" onClick={() => props.next(TutorialStep.Proposal)} />
           <span className="button-label bold">1. The Plan</span>
         </Grid>
-        <Grid container justify="center" item xs={4}>
+        <Grid container justifyContent="center" item xs={4}>
           <Button onClick={props.skip}>SKIP</Button>
         </Grid>
         <Grid
-          container justify="flex-end" item xs={4}
+          container justifyContent="flex-end" item xs={4}
           className="hover-move-left"
           onClick={() => props.next(TutorialStep.Synthesis)}
         >

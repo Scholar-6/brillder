@@ -223,7 +223,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 />
               </div>
               <Grid container direction="row" alignItems="center">
-                <Grid container justify="center" item sm={12} className="select-type-container">
+                <Grid container justifyContent="center" item sm={12} className="select-type-container">
                   <FormControl variant="outlined">
                     <div className="flex-center"><SpriteIcon name="feather-refresh" /> <div>Change Answer Type</div></div>
                     <Select
@@ -256,7 +256,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               <StatusCircle status={brick.status} isCore={brick.isCore} />
             </div>
           }
-          <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justify="flex-start" xs>
+          <Grid className={`question-comments-panel ${!commentsShown && 'hidden'}`} item container direction="row" justifyContent="flex-start" xs>
             <CommentPanel
               isHidden={!commentsShown}
               currentLocation={CommentLocation.Question}

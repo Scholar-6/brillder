@@ -420,7 +420,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   />
                   <Grid
                     container
-                    justify="center"
+                    justifyContent="center"
                     alignContent="center"
                     className="score-circle"
                   >
@@ -433,7 +433,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   </Grid>
                   <Grid
                     container
-                    justify="center"
+                    justifyContent="center"
                     alignContent="center"
                     className="score-circle"
                   >
@@ -499,7 +499,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                   <div className="percentage-container">
                     <Grid
                       container
-                      justify="center"
+                      justifyContent="center"
                       alignContent="center"
                       className="circle-progress-container"
                     >
@@ -511,7 +511,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                       />
                       <Grid
                         container
-                        justify="center"
+                        justifyContent="center"
                         alignContent="center"
                         className="score-circle"
                       >
@@ -524,7 +524,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                       </Grid>
                       <Grid
                         container
-                        justify="center"
+                        justifyContent="center"
                         alignContent="center"
                         className="score-circle"
                       >
@@ -537,7 +537,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                       </Grid>
                       <Grid
                         container
-                        justify="center"
+                        justifyContent="center"
                         alignContent="center"
                         className="score-circle"
                       >

@@ -9,7 +9,7 @@ interface PublishProps {
 
 const SelfPublishColumn: React.FC<PublishProps> = props => {
   return (
-    <Grid container item xs={3} justify="center">
+    <Grid container item xs={3} justifyContent="center">
       <div>
         <div className="button-container self-publish-button" onClick={props.onClick}>
           <SpriteIcon name="award" />

@@ -35,7 +35,7 @@ class PayTerms extends Component<BricksListProps> {
         <Grid
           className="user-preference-page terms-page-container"
           container direction="column"
-          justify="center" alignItems="center"
+          justifyContent="center" alignItems="center"
         >
           <HomeButton link={map.MainPage} history={this.props.history} />
           <Grid className="user-preference-container subscribe-terms-page-container onboarding-terms" item>
