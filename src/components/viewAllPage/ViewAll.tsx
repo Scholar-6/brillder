@@ -417,7 +417,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       const pageBricks = await getPublishedBricksByPage(
         this.state.pageSize, this.state.page, true,
         [], [], subjectIds,
-        this.state.filterCompetition, this.state.isAllSubjects
+        this.state.filterCompetition
       );
       if (pageBricks) {
         let { subjects } = this.state;
@@ -485,7 +485,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       }
     }
 
-    const pageBricks = await getPublishedBricksByPage(this.state.pageSize, page, isCore, levels, length, subjectIds, filterCompetition, isAllSubjects);
+    const pageBricks = await getPublishedBricksByPage(this.state.pageSize, page, isCore, levels, length, subjectIds, filterCompetition);
 
     if (pageBricks) {
       const { subjects } = this.state;
