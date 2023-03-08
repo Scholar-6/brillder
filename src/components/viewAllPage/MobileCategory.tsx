@@ -25,7 +25,7 @@ import map from "components/map";
 import { toggleElement } from "./service/viewAll";
 import routes from "components/play/routes";
 import InfinityScrollCustom from "./InvinityScrollCustom";
-import { getPublishedBricksByPage, getUnauthPublishedBricksByPage } from "services/axios/brick";
+import { getPublishedBricksByPage } from "services/axios/brick";
 import { ENGLISH_LANGUAGE_SUBJECT, ENGLISH_LITERATURE_SUBJECT, GENERAL_SUBJECT } from "components/services/subject";
 import { getSubjects } from "services/axios/subject";
 
@@ -57,6 +57,7 @@ interface BricksListState {
   expandedBrick: Brick | null;
   bricks: Array<Brick>;
   mySubjects: SubjectWithBricks[];
+  totalSubjects: SubjectWithBricks[];
   subjects: SubjectWithBricks[];
   shown: boolean;
   isCore: boolean;
@@ -94,6 +95,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       filterLevels: [],
       mySubjects: [],
       subjects: [],
+      totalSubjects: [],
       groupSubjects: [],
       bricksCount: 0,
       shown: false,
@@ -124,11 +126,18 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           }
         }
 
+        let groupSubjects = [] as SubjectWithBricks[];
+        if (expandedGroup) {
+          groupSubjects = this.getGroupSubjects(subjects, expandedGroup);
+        }
+
         this.setState({
           ...this.state,
           subjects,
+          totalSubjects: data.subjects,
           mySubjects,
           expandedSubject,
+          groupSubjects,
           shown: true,
           isLoading: false,
         });
@@ -209,7 +218,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     let path = this.props.location.pathname;
     let link = path + '?subjectId=' + s.id;
     if (this.state.expandedGroup) {
-      link += '&subjectGroup=' + this.state.expandedGroup;
+      link += '&' + this.justSubjectGroup(this.state.expandedGroup);
     }
     this.props.history.push(link);
   }
@@ -229,7 +238,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             searching={() => { }}
           />
           <div className="select-subject-dashboard-d33">
-            <div className="back-arrow-container" onClick={() => this.setState({ expandedSubject: null, bricksCount: 0 })}>
+            <div className="back-arrow-container" onClick={() => {
+              this.setState({ expandedSubject: null, bricksCount: 0 });
+              const path = this.pathSubjectGroup(this.state.expandedGroup);
+              this.props.history.push(path);
+            }}>
               <SpriteIcon name="arrow-left" className="back-arrow-d33" />
               <div>Subject</div>
             </div>
@@ -283,7 +296,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (this.state.groupSubjects.length === 0) {
       return <div />;
     }
-    
+
     return (
       <React.Suspense fallback={<></>}>
         <MobileTheme />
@@ -298,7 +311,10 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             searching={() => { }}
           />
           <div className="select-subject-dashboard-d33">
-            <div className="back-arrow-container" onClick={() => this.setState({ expandedGroup: null })}>
+            <div className="back-arrow-container" onClick={() => {
+              this.setState({ expandedGroup: null, groupSubjects: [] })
+              this.props.history.push(this.props.location.pathname);
+            }}>
               <SpriteIcon name="arrow-left" className="back-arrow-d33" />
             </div>
             <div className="subjects-title-d33 subject-custom-d33">
@@ -353,8 +369,18 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     return groupSubjects;
   }
 
+  justSubjectGroup(subjectGroup?: SubjectGroup | null) {
+    if (subjectGroup) {
+      return 'subjectGroup=' + subjectGroup;
+    }
+    return '';
+  }
+
+  pathSubjectGroup(subjectGroup?: SubjectGroup | null) {
+    return this.props.location.pathname + '?' + this.justSubjectGroup(subjectGroup);
+  }
+
   moveToGroup(expandedGroup: SubjectGroup) {
-    let path = this.props.location.pathname;
     if (expandedGroup === SubjectGroup.GeneralTopical) {
       const subject = this.state.subjects.find(s => s.name === GENERAL_SUBJECT);
       if (subject) {
@@ -365,14 +391,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       const s2 = this.state.subjects.find(s => s.name == ENGLISH_LITERATURE_SUBJECT);
       if (s1 && s2) {
         this.setState({ expandedGroup, groupSubjects: [s1, s2], isCore: true });
-        this.props.history.push(path + '?subjectGroup=' + expandedGroup);
+        this.props.history.push(this.pathSubjectGroup(expandedGroup));
       }
     } else if (expandedGroup === SubjectGroup.Personal) {
-      this.setState({ expandedGroup, isCore: false });
-      this.props.history.push(path + '?subjectGroup=' + expandedGroup);
+      this.setState({ expandedGroup, groupSubjects: this.state.totalSubjects, isCore: false });
+      this.props.history.push(this.pathSubjectGroup(expandedGroup));
     } else {
       this.setState({ expandedGroup, isCore: true, groupSubjects: this.getGroupSubjects(this.state.subjects, expandedGroup) });
-      this.props.history.push(path + '?subjectGroup=' + expandedGroup);
+      this.props.history.push(this.pathSubjectGroup(expandedGroup));
     }
   }
 

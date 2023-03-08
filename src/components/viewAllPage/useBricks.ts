@@ -11,10 +11,12 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
   const [hasNextPage, setHasNextPage] = useState(false);
   const [data, setData] = useState({} as PageBricks);
   const [subjectsB, setSubjects] = useState([] as Subject[]);
+  const [pageNumB, setPageNum] = useState(-1);
 
   const bricksPerPage = 6;
 
   const getAndSetBricks = (sIds: number[]) => {
+    console.log('get and set bricks', sIds, pageNum);
     if (user) {
       getPublishedBricksByPage(bricksPerPage, pageNum, isCore, levels, lengths, sIds, false).then(data => {
         if (data) {
@@ -30,23 +32,23 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
         }
       });
     } else {
-        let sGroup = subjectGroup;
-        if (!sGroup) {
-          sGroup = subjects[0].group;
+      let sGroup = subjectGroup;
+      if (!sGroup) {
+        sGroup = subjects[0].group;
+      }
+      getUnauthPublishedBricksByPage(bricksPerPage, pageNum, [], [], sIds, false).then(data => {
+        if (data) {
+          setResults(prev => [...prev, ...data.bricks]);
+          setHasNextPage(data.pageCount - ((pageNum + 1) * bricksPerPage) >= 0);
+          setData(data);
+          setIsLoading(false)
+        } else {
+          // error
+          setIsLoading(false);
+          setHasNextPage(false);
+          setIsError(true);
         }
-        getUnauthPublishedBricksByPage(bricksPerPage, pageNum, [], [], sIds, false).then(data => {
-          if (data) {
-            setResults(prev => [...prev, ...data.bricks]);
-            setHasNextPage(data.pageCount - ((pageNum + 1) * bricksPerPage) >= 0);
-            setData(data);
-            setIsLoading(false)
-          } else {
-            // error
-            setIsLoading(false);
-            setHasNextPage(false);
-            setIsError(true);
-          }
-        });
+      });
     }
   }
 
@@ -56,7 +58,7 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
 
     let isModified = subjectIds.length !== subject2Ids.length;
 
-    if(!isModified){
+    if (!isModified) {
       for (let index = 0; index < subjectIds.length; index++) {
         let same = subject2Ids[index] == subjectIds[index];
         if (!same) {
@@ -76,18 +78,20 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
       setData({} as PageBricks);
       setHasNextPage(false);
       getAndSetBricks(subjectIds);
+      setPageNum(pageNum);
+    } else {
+      if (pageNumB != pageNum) {
+        setIsLoading(true);
+        setIsError(false);
+        setError({});
+
+        const sIds = subjects.map(s => s.id);
+
+        getAndSetBricks(sIds);
+        setPageNum(pageNum);
+      }
     }
-  }, [subjects]);
-
-  useEffect(() => {
-    setIsLoading(true);
-    setIsError(false);
-    setError({});
-
-    const sIds = subjects.map(s => s.id);
-
-    getAndSetBricks(sIds);
-  }, [pageNum])
+  }, [pageNum, subjects])
 
   return { isLoading, isError, error, results, hasNextPage, data }
 }
