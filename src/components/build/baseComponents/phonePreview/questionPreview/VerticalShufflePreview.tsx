@@ -41,7 +41,7 @@ class VerticalShufflePreview extends Component<any, any> {
     return (
       <button className={className} style={{ position: 'absolute', top: `${btnContent.top}vh` }} key={i}>
         <div>
-          <Grid container justify="center" alignContent="center" className="circle-number">
+          <Grid container justifyContent="center" alignContent="center" className="circle-number">
             <Avatar>{btnContent.correctIndex + 1}</Avatar>
           </Grid>
         </div>
@@ -101,7 +101,7 @@ class VerticalShufflePreview extends Component<any, any> {
   render() {
     return (
       <div className="phone-preview-component vertical-shuffle-preview">
-        <Grid container justify="center" className="small-text">
+        <Grid container justifyContent="center" className="small-text">
           Place the following events
           in chronological order
         </Grid>

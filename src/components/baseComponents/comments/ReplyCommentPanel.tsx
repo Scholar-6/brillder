@@ -40,7 +40,7 @@ const ReplyCommentPanel: React.FC<ReplyCommentPanelProps> = props => {
 						onChange={(evt) => setText(evt.target.value)} />
 				</form>
 			</Grid>
-			<Grid item container direction="row" justify="center">
+			<Grid item container direction="row" justifyContent="center">
 				<Button className="comment-action-button in-child post" onClick={() => handlePostComment()} disabled={text === ""}>POST</Button>
 				<Button className="comment-action-button in-child cancel" onClick={() => props.collapsePanel()} disabled={text === ""}>CANCEL</Button>
 			</Grid>

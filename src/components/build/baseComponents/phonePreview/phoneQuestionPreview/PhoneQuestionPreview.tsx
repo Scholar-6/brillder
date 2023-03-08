@@ -131,7 +131,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question, ...props }) => {
   return (
     <Hidden only={['xs', 'sm']}>
       <div className="phone-question-preview-box">
-        <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
+        <Grid container alignContent="center" justifyContent="center" style={{ height: '100%' }}>
           <div className="centered pointer phone-toolbar">
             <SpriteIcon name="arrow-left" className={`scroll-arrow ${!canGoBack && 'disabled'}`} onClick={props.prevQuestion} />
             {canGoBack && <div className="css-custom-tooltip left-tooltip">Previous</div>}

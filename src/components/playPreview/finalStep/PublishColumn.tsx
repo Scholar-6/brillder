@@ -8,7 +8,7 @@ interface PublishProps {
 
 const PublishColumn: React.FC<PublishProps> = (props) => {
   return (
-    <Grid container item xs={3} justify="center">
+    <Grid container item xs={3} justifyContent="center">
       <div>
         <div className="button-container" onClick={props.onClick}>
           <SpriteIcon name="award" />

@@ -13,7 +13,7 @@ const PlusTab: React.FC<PlusTabProps> = ({ tutorialStep }) => {
     className += " editor-border border-animation";
   }
   return (
-    <Grid className={"drag-tile"} container alignContent="center" justify="center">
+    <Grid className={"drag-tile"} container alignContent="center" justifyContent="center">
       <div className={`add-tab last-tab ${className}`}>
         {tutorialStep === TutorialStep.Investigation && <SpriteIcon name="dashed-circle" className="circle-border" />}
         <SpriteIcon name="plus-line-custom" className="w100 h100 active text-theme-dark-blue"/>

@@ -637,7 +637,7 @@ class ProvisionalScore extends React.Component<
                   <div className="percentage-container">
                     <Grid
                       container
-                      justify="center"
+                      justifyContent="center"
                       alignContent="center"
                       className="circle-progress-container"
                     >
@@ -668,7 +668,7 @@ class ProvisionalScore extends React.Component<
                 <div className="percentage-container">
                   <Grid
                     container
-                    justify="center"
+                    justifyContent="center"
                     alignContent="center"
                     className="circle-progress-container"
                   >
@@ -700,7 +700,7 @@ class ProvisionalScore extends React.Component<
                 <div className="percentage-container">
                   <Grid
                     container
-                    justify="center"
+                    justifyContent="center"
                     alignContent="center"
                     className="circle-progress-container"
                   >
@@ -731,7 +731,7 @@ class ProvisionalScore extends React.Component<
               <div className="percentage-container">
                 <Grid
                   container
-                  justify="center"
+                  justifyContent="center"
                   alignContent="center"
                   className="circle-progress-container"
                 >
@@ -763,7 +763,7 @@ class ProvisionalScore extends React.Component<
             <div className="percentage-container">
               <Grid
                 container
-                justify="center"
+                justifyContent="center"
                 alignContent="center"
                 className="circle-progress-container"
               >
@@ -817,7 +817,7 @@ class ProvisionalScore extends React.Component<
           <div className="percentage-container">
             <Grid
               container
-              justify="center"
+              justifyContent="center"
               alignContent="center"
               className="circle-progress-container"
             >
@@ -857,7 +857,7 @@ class ProvisionalScore extends React.Component<
           <div className="percentage-container">
             <Grid
               container
-              justify="center"
+              justifyContent="center"
               alignContent="center"
               className="circle-progress-container"
             >

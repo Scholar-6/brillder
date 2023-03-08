@@ -177,7 +177,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   const renderPersonalColumns = () => {
     return (
-      <Grid className="share-row" container direction="row" justify="center">
+      <Grid className="share-row" container direction="row" justifyContent="center">
         <ShareColumn size={3} onClick={() => setShare(true)} />
         <SelfPublishColumn onClick={() => publish(brick.id)} />
       </Grid>
@@ -194,14 +194,14 @@ const FinalStep: React.FC<FinalStepProps> = ({
     if (isAuthor && brick.status === BrickStatus.Draft) {
       if (brick.editors && brick.editors.length > 0) {
         return (
-          <Grid className="share-row" container direction="row" justify="center">
+          <Grid className="share-row" container direction="row" justifyContent="center">
             {renderInviteColumn()}
             {renderReturnToEditorsColumn()}
           </Grid>
         );
       } else {
         return (
-          <Grid className="share-row" container direction="row" justify="center">
+          <Grid className="share-row" container direction="row" justifyContent="center">
             {renderInviteColumn()}
           </Grid>
         );
@@ -210,7 +210,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
     if (canPublish) {
       return (
-        <Grid className="share-row" container direction="row" justify="center">
+        <Grid className="share-row" container direction="row" justifyContent="center">
           {isAdmin && renderInviteColumn()}
           {canPublish && brick.status === BrickStatus.Review && renderReturnToEditorColumn()}
           {canPublish && <PublishColumn onClick={() => publish(brick.id)} />}
@@ -220,7 +220,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
     if ((isCurrentEditor || isAdmin) && brick.status === BrickStatus.Build) {
       return (
-        <Grid className="share-row" container direction="row" justify="center">
+        <Grid className="share-row" container direction="row" justifyContent="center">
           {renderReturnToAuthorColumn()}
           {renderSendToPublisherColumn()}
         </Grid>
@@ -228,7 +228,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     }
 
     return (
-      <Grid className="share-row" container direction="row" justify="center">
+      <Grid className="share-row" container direction="row" justifyContent="center">
         {renderInviteColumn()}
         {canPublish && brick.status === BrickStatus.Review && renderReturnToEditorColumn()}
       </Grid>

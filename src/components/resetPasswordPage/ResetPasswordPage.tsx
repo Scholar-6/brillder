@@ -66,7 +66,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
         className="auth-page login-page"
         container
         item
-        justify="center"
+        justifyContent="center"
         alignItems="center"
       >
         {token ? <>
@@ -135,7 +135,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
   }
 
   return (
-    <Grid className="auth-page login-page" container item justify="center" alignItems="center">
+    <Grid className="auth-page login-page" container item justifyContent="center" alignItems="center">
       {valid ?
         <div className="choose-login-desktop">
           <Grid container direction="row" className="first-row">

@@ -163,7 +163,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
       className="auth-page login-page"
       container
       item
-      justify="center"
+      justifyContent="center"
       alignItems="center"
     >
       <MobileEmailLogin

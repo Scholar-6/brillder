@@ -102,7 +102,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
             ? <img alt="" style={{width: '100%'}} src={fileUrl(fileName)} />
             : <Grid
                 container
-                justify="center"
+                justifyContent="center"
                 alignContent="center"
                 direction="row"
                 style={{height: '10vh'}}

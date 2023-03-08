@@ -15,7 +15,7 @@ const ProposalPanel: React.FC<TutorialProps> = (props) => {
     <div className="tutorial-panel tutorial-proposal-panel">
       <div className="tutorial-step-1">
         <h1>There are 4 steps to the build process.</h1>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <div className="editor-border border-animation">
             <SpriteIcon name="dashed-circle" className="circle-border" />
             <SpriteIcon name="feather-map" className="w80 h80 active text-theme-dark-blue" />
@@ -37,11 +37,11 @@ const ProposalPanel: React.FC<TutorialProps> = (props) => {
       </div>
       <Grid container direction="row" className="button-row">
         <Grid item xs={4} />
-        <Grid container justify="center" item xs={4}>
+        <Grid container justifyContent="center" item xs={4}>
           <Button onClick={props.skip}>SKIP</Button>
         </Grid>
         <Grid
-          container justify="flex-end" item xs={4}
+          container justifyContent="flex-end" item xs={4}
           className="hover-move-left"
           onClick={() => props.next(TutorialStep.Investigation)}
         >

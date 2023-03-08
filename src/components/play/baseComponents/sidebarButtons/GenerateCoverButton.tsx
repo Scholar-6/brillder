@@ -55,7 +55,7 @@ const GenerateCoverButton: React.FC<GenerateCoverButtonProps> = props => {
 
     if (props.isFinal) {
         return (
-            <Grid className="share-column final-assign-brick-column" onClick={generateCover} container item xs={props.size ? props.size : 6} justify="center">
+            <Grid className="share-column final-assign-brick-column" onClick={generateCover} container item xs={props.size ? props.size : 6} justifyContent="center">
                 <div>
                     <div className="button-container">
                         <SpriteIcon name="heroicons-qrcode" className="active" />

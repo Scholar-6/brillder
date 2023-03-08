@@ -8,7 +8,7 @@ class ChooseSeveralPreview extends Component<any, any> {
   render() {
     return (
       <div className="phone-preview-component choose-several-preview">
-        <Grid container justify="center" className="small-text">
+        <Grid container justifyContent="center" className="small-text">
           Select the two terms that could be used to describe the geometry of transition metal complexes.
         </Grid>
         <button className="green-button animated">Octahedral</button>

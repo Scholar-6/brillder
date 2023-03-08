@@ -9,7 +9,7 @@ const AddImageBtnContent: React.FC = () => {
     <Grid
       container
       direction="row"
-      justify="center"
+      justifyContent="center"
       className="answer-image-drop-content drop-placeholder"
     >
       <div className="answer-image-drop-button svgOnHover">

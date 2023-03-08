@@ -12,7 +12,7 @@ interface CustomColumnProps {
 
 const CustomColumn: React.FC<CustomColumnProps> = (props) => {
   return (
-    <Grid container item xs={props.size} justify="center">
+    <Grid container item xs={props.size} justifyContent="center">
       <div>
         <div className="button-container" onClick={props.onClick}>
           <SpriteIcon name={props.icon} />

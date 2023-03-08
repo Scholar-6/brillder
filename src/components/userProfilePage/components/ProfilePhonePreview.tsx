@@ -14,7 +14,7 @@ const ProfilePhonePreview: React.FC<Props> = props => {
     <div className="profile-phone-preview">
       <Grid
         container
-        justify="center"
+        justifyContent="center"
         alignContent="center"
         style={{ height: "100%" }}
       >

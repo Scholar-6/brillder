@@ -25,7 +25,7 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, baseUrl, 
 
   const renderButtons = () => {
     return (
-      <Grid container item justify="center">
+      <Grid container item justifyContent="center">
         <div className={`step-container ${step === ProposalStep.BrickTitle ? 'active' : ''}`}>
           <div className="step-label">Title</div>
           <SpriteIcon

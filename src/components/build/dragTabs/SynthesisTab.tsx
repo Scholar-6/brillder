@@ -29,7 +29,7 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
       className={`drag-tile ${props.validationRequired && !stripHtml(props.synthesis) ? "invalid" : ""}`}
       container
       alignContent="center"
-      justify="center"
+      justifyContent="center"
     >
       <CommentIndicator replyType={replyType} />
       <div className={`last-tab ${className}`}>

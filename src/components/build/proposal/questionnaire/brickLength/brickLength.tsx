@@ -35,7 +35,7 @@ const BrickLengthPreviewComponent: React.FC<Props> = ({ data }) => {
   }
 
   return (
-    <Grid container justify="center" className="phone-preview-component">
+    <Grid container justifyContent="center" className="phone-preview-component">
       <SpriteIcon name="clock" className={data === 0 ? "big" : ""} />
       <div className="">{data === 0 ? "" : data + ' minutes'}</div>
       {data !== 0 ?

@@ -35,7 +35,7 @@ import PhoneQuestionHead from "./PhoneQuestionHead";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PhoneQuestionPage from "./PhoneQuestionPage";
 import map from "components/map";
-import { stripHtml } from "components/build/questionService/ConvertService";
+import { stripHtml, stripHtmlWithSpaces } from "components/build/questionService/ConvertService";
 import { checkTeacher } from "components/services/brickService";
 import { CashAttempt } from "localStorage/play";
 import { getSubjects } from "services/axios/subject";
@@ -336,7 +336,13 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     <div className="scroll-content pages-list">
                       <div onClick={() => this.moveToBrief()}><SpriteIcon name="crosshair" /><span className="bold">Brief</span> <span className="ellipsis">{stripHtml(brick.brief)}</span></div>
                       <div onClick={() => this.moveToPrep()}><SpriteIcon name="file-text" /><span className="bold">Prep</span> <span className="ellipsis">{stripHtml(brick.prep)}</span></div>
-                      {questions.map((q, i) => <div className="question-link" onClick={() => this.moveToQuestion(i)}><span className="bold">{i + 1}</span><span className="ellipsis">{stripHtml(q.firstComponent.value)}</span></div>)}
+                      {questions.map((q, i) => 
+                        <div className="question-link" onClick={() => this.moveToQuestion(i)}>
+                          <span className="bold">{i + 1}</span><span className="ellipsis">
+                            {stripHtmlWithSpaces(q.firstComponent.value)}
+                          </span>
+                        </div>
+                        )}
                     </div>
                     <div className="footer">
                       Swipe to view Questions <SpriteIcon name="flaticon-swipe" />

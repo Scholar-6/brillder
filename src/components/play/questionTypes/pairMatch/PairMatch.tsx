@@ -262,7 +262,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return (
       <div className="question-unique-play pair-match-play">
         {this.renderHelpers()}
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           {this.renderOptions()}
           {this.renderAnswers()}
         </Grid>

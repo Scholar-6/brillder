@@ -32,7 +32,7 @@ const DashboardPagination: React.FC<any> = props => {
           <span className="gray"> | {Math.ceil(bricksLength / pageSize)}</span>
         </div>
       </Grid>
-      <Grid container item xs={4} justify="center">
+      <Grid container item xs={4} justifyContent="center">
         <div className="bottom-next-button">
           <PrevButton isShown={showPrev} onClick={props.moveAllBack} />
           <NextButton isShown={showNext} onClick={props.moveAllNext} isRed={sortedIndex === 0} />

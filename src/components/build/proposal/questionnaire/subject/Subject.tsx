@@ -630,8 +630,8 @@ const SubjectPage: React.FC<SubjectProps> = ({
   return (
     <div className="tutorial-page subject-page">
       <Grid container direction="row" style={{ height: '100%' }}>
-        <Grid container justify="flex-start" className="subject-box" item md={10} xs={12}>
-          <Grid justify="flex-start" container item md={8} xs={12}>
+        <Grid container justifyContent="flex-start" className="subject-box" item md={10} xs={12}>
+          <Grid justifyContent="flex-start" container item md={8} xs={12}>
             <div className="subject-container">
               <h1 className="only-tutorial-header">{title}</h1>
               {isAlternateSubject && <div>
@@ -647,7 +647,7 @@ const SubjectPage: React.FC<SubjectProps> = ({
                   />
                 </RadioGroup>
               </div>}
-              <Grid container justify="flex-start" item xs={12}>
+              <Grid container justifyContent="flex-start" item xs={12}>
                 <RadioGroup
                   className="subjects-group"
                   value={subject}

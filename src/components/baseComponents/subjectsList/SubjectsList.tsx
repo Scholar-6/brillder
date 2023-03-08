@@ -37,7 +37,7 @@ class SubjectsList extends Component<PublishedSubjectsProps, any> {
                 <Grid
                   container
                   alignContent="center"
-                  justify="center"
+                  justifyContent="center"
                   style={{ height: "100%",margin:"0 0" }}
                 >
                   {this.props.showUserCount ? subject.userCount : subject.publishedBricksCount}

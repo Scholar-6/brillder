@@ -35,7 +35,7 @@ class SubjectsListLibrary extends Component<PublishedSubjectsProps> {
           <Grid
             container
             alignContent="center"
-            justify="center"
+            justifyContent="center"
             style={{ height: "100%", margin: "0 0" }}
           >
             {subject.playedCount} / {subject.assignedCount}

@@ -51,7 +51,7 @@ function MainMenu(props: any) {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon /> <span style={{marginLeft: '7px', fontSize: '15px'}}>Menu</span>
           </IconButton>
-          <Grid container justify="center" alignContent="center">
+          <Grid container justifyContent="center" alignContent="center">
             <img alt="" src="/images/lflogo-White.png" style={{height: '51px'}}/>
           </Grid>
           <Button color="inherit" onClick={logout}>Logout</Button>
