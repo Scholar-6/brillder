@@ -237,7 +237,7 @@ class PhoneSearchPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="mobile-search-page">
         <div className="ba-top-navigation">
-          <SpriteIcon name="arrow-left" onClick={() => this.moveBack()} />
+          <SpriteIcon name="arrow-left-bigger" onClick={() => this.moveBack()} />
           <div onClick={() => this.moveBack()}>Go Back</div>
         </div>
         <div className="ba-search-input-container">
