@@ -17,7 +17,6 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
   const bricksPerPage = 6;
 
   const getAndSetBricks = (sIds: number[]) => {
-    console.log('get and set bricks', sIds, pageNum);
     if (user) {
       getPublishedBricksByPage(bricksPerPage, pageNum, isCore, levels, lengths, sIds, false).then(data => {
         if (data) {
@@ -50,7 +49,7 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
   }
 
   const search = (subjectIdsV3: number[]) => {
-    searchPaginateBricks(searchString, pageNum, bricksPerPage, isCore).then(data => {
+    searchPaginateBricks(searchString, pageNum, bricksPerPage, isCore, subjectIdsV3).then(data => {
       if (data) {
         console.log(data);
         setResults(prev => [...prev, ...data.bricks]);
@@ -80,7 +79,7 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
         setOldSearchStr(searchString);
       }
     } else {
-      if (searchString && searchString.length < 3) {
+      if ((searchString || searchString === '') && searchString.length < 3) {
         if (oldSearch.length >= 3) {
           isModified = true;
           setOldSearchStr('');
