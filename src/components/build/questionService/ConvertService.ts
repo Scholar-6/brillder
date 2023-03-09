@@ -18,8 +18,6 @@ export function stripHtmlWithSpaces(html: string) {
   div.innerHTML = html;
 
   try {
-    console.log(html);
-    console.log(8888, div, div.children, div.children[0]);
     return div.children[0].textContent || div.innerText || "";
   } catch {
     div.querySelectorAll(".quill-desmos").forEach(el => div.removeChild(el));

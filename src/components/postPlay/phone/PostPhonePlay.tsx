@@ -141,6 +141,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   moveToQuestion(questionIndex: number) {
     if (this.state.swiper) {
+      console.log('swipe', this.state.swiper, questionIndex);
       this.state.swiper.slideTo(questionIndex + 4, 200);
     }
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true, questionIndex });
@@ -330,7 +331,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       <div onClick={() => this.moveToBrief()}><SpriteIcon name="crosshair" /><span className="bold">Brief</span> <span className="ellipsis">{stripHtml(brick.brief)}</span></div>
                       <div onClick={() => this.moveToPrep()}><SpriteIcon name="file-text" /><span className="bold">Prep</span> <span className="ellipsis">{stripHtml(brick.prep)}</span></div>
                       {questions.map((q, i) => 
-                        <div className="question-link" key={i} onClick={() => this.moveToQuestion(i)}>
+                        <div className="question-link" key={i} onClick={() => {
+                          console.log('move to question');
+                          this.moveToQuestion(i);
+                        }}>
                           <span className="bold">{i + 1}</span><span className="ellipsis">
                             {stripHtmlWithSpaces(q.firstComponent.value)}
                           </span>

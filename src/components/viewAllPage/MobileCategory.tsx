@@ -54,6 +54,7 @@ interface BricksListProps {
 }
 
 interface BricksListState {
+  typingString: string;
   searchString: string;
   typingTimeout: number;
   mySubjects: SubjectWithBricks[];
@@ -90,6 +91,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     this.state = {
       typingTimeout: -1,
+      typingString: '',
       searchString: '',
       isCore: true,
       isLoading: true,
@@ -237,12 +239,18 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   async search(searchString: string) {
-    if (searchString && searchString.length < 3) {
-      return '';
-    }
+    console.log('search')
     if (this.state.typingTimeout) {
       clearTimeout(this.state.typingTimeout);
     }
+    const typingTimeout = setTimeout(() => {
+      console.log('timeout');
+      this.setState({ searchString});
+      clearTimeout(typingTimeout);
+    }, 500);
+
+    this.setState({typingString: searchString});
+    this.setState({typingTimeout});
   }
 
   renderSubjectSearch() {
@@ -251,7 +259,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         <SpriteIcon
           name="arrow-left-bigger" className="back-arrow-d33"
           onClick={() => {
-            this.setState({ expandedSubject: null, bricksCount: 0 });
+            this.setState({ expandedSubject: null, searchString: '', typingString: '', bricksCount: 0 });
             const path = this.pathSubjectGroup(this.state.expandedGroup);
             this.props.history.push(path);
           }}
@@ -259,10 +267,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         <div className="ba-search-input-container">
           <SpriteIcon name="search" />
           <input
-            value={this.state.searchString}
-            onChange={(e) => {
-              this.setState({ searchString: e.target.value });
-            }}
+            value={this.state.typingString}
+            onChange={e => this.search(e.target.value)}
             placeholder="Search in subject"
           />
         </div>
@@ -279,10 +285,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             page={PageEnum.ViewAll}
             user={this.props.user}
             toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
-            placeholder="Search Ongoing Projects & Published Bricks…"
             history={this.props.history}
-            search={() => { }}
-            searching={() => { }}
           />
           <div className="select-subject-dashboard-d33">
             {this.renderSubjectSearch()}
@@ -339,17 +342,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         <SpriteIcon
           name="arrow-left-bigger" className="back-arrow-d33"
           onClick={() => {
-            this.setState({ expandedGroup: null, groupSubjects: [] })
+            this.setState({ expandedGroup: null, typingString: '', searchString: '', groupSubjects: [] })
             this.props.history.push(this.props.location.pathname);
           }}
         />
         <div className="ba-search-input-container">
           <SpriteIcon name="search" />
           <input
-            value={this.state.searchString}
-            onChange={(e) => {
-              this.setState({ searchString: e.target.value });
-            }}
+            value={this.state.typingString}
+            onChange={e => this.search(e.target.value)}
             placeholder="Search bricks"
           />
         </div>
@@ -370,10 +371,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             page={PageEnum.ViewAll}
             user={this.props.user}
             toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
-            placeholder="Search bricks"
             history={this.props.history}
-            search={() => { }}
-            searching={() => { }}
           />
           <div className="select-subject-dashboard-d33">
             {this.renderGroupSearch()}
@@ -509,10 +507,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           page={PageEnum.ViewAll}
           user={this.props.user}
           toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
-          placeholder="Search bricks"
           history={this.props.history}
-          search={() => { }}
-          searching={() => { }}
         />
         {this.props.user ?
           <div className="text-center header">
