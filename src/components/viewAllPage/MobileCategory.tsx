@@ -25,7 +25,7 @@ import map from "components/map";
 import { toggleElement } from "./service/viewAll";
 import routes from "components/play/routes";
 import InfinityScrollCustom from "./InvinityScrollCustom";
-import { getPublishedBricksByPage } from "services/axios/brick";
+import { getPublishedBricksByPage, getUnauthPublishedBricksByPage } from "services/axios/brick";
 import { ENGLISH_LANGUAGE_SUBJECT, ENGLISH_LITERATURE_SUBJECT, GENERAL_SUBJECT } from "components/services/subject";
 import { getSubjects } from "services/axios/subject";
 
@@ -83,8 +83,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       } catch { }
     }
 
-    console.log('subjectIds', subjectIds);
-
     let expandedGroup = null;
     if (values.subjectGroup) {
       expandedGroup = parseInt(values.subjectGroup as string);
@@ -110,6 +108,19 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.loadData(subjectIds, expandedGroup);
   }
 
+  prepareExpandedSubjects(subjects: Subject[], subjectIds: number[]) {
+    const expandedSubjects = [];
+    if (subjectIds.length > 0) {
+      for (let subjectId of subjectIds) {
+        const s = subjects.find(s => s.id === subjectId);
+        if (s) {
+          expandedSubjects.push(s);
+        }
+      }
+    }
+    return expandedSubjects;
+  }
+
   async loadData(subjectIds: number[], expandedGroup: SubjectGroup | null) {
     if (this.props.user) {
       const data = await getPublishedBricksByPage(1, 0, true, [], [], [], false);
@@ -124,15 +135,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           }
         }
 
-        let expandedSubjects = [];
-        if (subjectIds.length > 0) {
-          for (let subjectId of subjectIds) {
-            const s = subjects.find(s => s.id === subjectId);
-            if (s) {
-              expandedSubjects.push(s);
-            }
-          }
-        }
+        const expandedSubjects = this.prepareExpandedSubjects(subjects, subjectIds);
 
         let isCore = true;
         let groupSubjects = [] as Subject[];
@@ -156,22 +159,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           isLoading: false,
         });
       } else {
-        this.props.requestFailed("Can`t get bricks");
+        this.props.requestFailed("Can`t get subjects");
       }
     } else {
-      let subjects = await getSubjects();
+      const data = await getUnauthPublishedBricksByPage(1, 0, [], [], [], false);
 
-      if (subjects) {
-
-        let expandedSubjects = [];
-        if (subjectIds.length > 0) {
-          for (let subjectId of subjectIds) {
-            const s = subjects.find(s => s.id === subjectId);
-            if (s) {
-              expandedSubjects.push(s);
-            }
-          }
-        }
+      if (data) {
+        const subjects = data.subjects.filter(s => s.count > 0);
+        const expandedSubjects = this.prepareExpandedSubjects(subjects, subjectIds);
 
         let groupSubjects = [] as Subject[];
         if (expandedGroup) {
@@ -188,6 +183,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             isLoading: false,
           })
         }
+      } else {
+        this.props.requestFailed("Can`t get subjects");
       }
     }
   }
