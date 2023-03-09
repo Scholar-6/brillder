@@ -239,15 +239,13 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   async search(searchString: string) {
-    console.log('search')
     if (this.state.typingTimeout) {
       clearTimeout(this.state.typingTimeout);
     }
     const typingTimeout = setTimeout(() => {
-      console.log('timeout');
       this.setState({ searchString});
       clearTimeout(typingTimeout);
-    }, 500);
+    }, 200);
 
     this.setState({typingString: searchString});
     this.setState({typingTimeout});
