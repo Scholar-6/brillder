@@ -51,7 +51,6 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
   const search = (subjectIdsV3: number[]) => {
     searchPaginateBricks(searchString, pageNum, bricksPerPage, isCore, subjectIdsV3).then(data => {
       if (data) {
-        console.log(data);
         setResults(prev => [...prev, ...data.bricks]);
         setHasNextPage(data.pageCount - ((pageNum + 1) * bricksPerPage) >= 0);
         setData(data);
@@ -74,7 +73,6 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
     if (searchString && searchString.length >= 3) {
       isSearching = true;
       if (searchString != oldSearch) {
-        console.log('modified');
         isModified = true;
         setOldSearchStr(searchString);
       }
@@ -129,9 +127,6 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
       }
     }
   }, [pageNum, subjects, searchString])
-
-  useEffect(() => {
-  }, [searchString])
 
   return { isLoading, isError, error, results, hasNextPage, data }
 }
