@@ -40,7 +40,7 @@ const PreSynthesis: React.FC<Props> = ({ brick, ...props }) => {
         <div className="introduction-page">
           <div className="after-cover-main-content static-top-part-inner">
             <div className="title s-fade1">
-              Deepen your understanding.
+              Now read the Synthesis carefully to improve your score.
             </div>
             <div className="like-buttons-container s-fade2">
               <div className="x-center">
