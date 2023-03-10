@@ -22,6 +22,15 @@ export default (state = BrickInitialState, action: any) => {
         brick: action.payload,
         error: ''
       }
+    case types.SAVE_BRICK_FIELD_SUCCESS:
+      const brickCopy = Object.assign({}, newBrick) as any;
+      const {payload} = action;
+      brickCopy[payload.fieldName] = payload.value;
+      console.log('brick saved', brickCopy, payload);
+      return {
+        brick: brickCopy,
+        error: ''
+      }
     case types.SAVE_BRICK_SUCCESS:
       return {
         brick: action.payload,

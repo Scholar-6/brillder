@@ -50,7 +50,7 @@ class YoutubeAndMathInHtmlQuote extends Component<MathHtmlProps> {
             if (res) {
               return <YoutubeLink key={i} value={el} />;
             }
-            return <HtmlWithSpaces index={i} value={el} />;
+            return <HtmlWithSpaces key={i} index={i} value={el} />;
           })
         }
       </div>
