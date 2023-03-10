@@ -8,8 +8,6 @@ import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import Katex from 'components/baseComponents/katex/Katex';
 import HtmlWithSpaces from '../baseComponents/HtmlWithSpaces';
-import { isPhone } from 'services/phone';
-import QuotePlayCustom from './QuotePlayCustom';
 
 
 interface TextProps {
@@ -40,43 +38,9 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component, refs }) => 
     return <Katex latex={latex} key={i} />
   }
 
-  const isBlockqouteNoBreaks = (el: string) => {
-    return /<blockquote (.*)class="bq no-break"(.*)>/.test(el);
-  }
-
-  const isBlockqouteNoBreaksV2 = (el: string) => {
-    return /<div class='quote-no-break-group-f43g'>/.test(el);
-  }
-
   let classN = 'text-play';
   if (className) {
     classN += ' ' + className;
-  }
-
-  if (isPhone()) {
-    const groupQuates = (arrR: string[]) => {
-      let finalArr = [];
-      let tempQuote = "<div class='quote-no-break-group-f43g'>";
-      let isPrevQuote = false;
-      for (let el of arrR) {
-        let isQuote = isBlockqouteNoBreaks(el);
-        if (isQuote) {
-          tempQuote += el;
-          isPrevQuote = true;
-        } else {
-          if (isPrevQuote == true) {
-            tempQuote += "</div>";
-            finalArr.push(tempQuote);
-            tempQuote = "<div class='quote-no-break-group-f43g'>";
-          }
-          finalArr.push(el);
-          isPrevQuote = false;
-        }
-      }
-      return finalArr;
-    }
-    
-    arr = groupQuates(arr);
   }
 
   return (
@@ -89,10 +53,6 @@ const TextLive: React.FC<TextProps> = ({ mode, className, component, refs }) => 
             return renderMath(el, i);
           } else if (latex) {
             return renderLatex(el, i);
-          }
-
-          if (isPhone() && isBlockqouteNoBreaksV2(el)) {
-            return <QuotePlayCustom key={i} quoteHtml={el} />;
           }
 
           return <HtmlWithSpaces key={i} index={i} value={el} />;

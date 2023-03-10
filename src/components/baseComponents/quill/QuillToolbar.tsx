@@ -25,8 +25,6 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
     const update = React.useCallback(() => setId(id => id + 1), [setId]);
     const toolbarNode = React.createRef<HTMLDivElement>();
 
-    const [lineStyleDialogOpen, setLineStyleDialogOpen] = React.useState(false);
-
     React.useEffect(() => {
         const onSelectChange = (range: RangeStatic) => {
             if(range) {
@@ -56,7 +54,6 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         } else if(format === "table") {
             const betterTable = props.quill.getModule("better-table");
             betterTable.insertTable(2, 2);
-            console.log(props.quill.getContents());
             return true;
         } else if(format === "caps") {
             const capitalization = props.quill.getModule("capitalization") as QuillCapitalization;
@@ -67,29 +64,13 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             props.quill.format(format, false, "user");
             return false;
         } else {
-            if(format === "blockquote") {
-                if(props.quill.getFormat()[format]) {
-                    props.quill.format(format, false, "user");
-                } else {
-                    setLineStyleDialogOpen(true);
-                }
-            } else {
-                props.quill.format(format, value ?? true, "user");
-            }
+            props.quill.format(format, value ?? true, "user");
             return true;
         }
     }, [props.quill, toolbarNode]);
 
-    const blockQuoteFormat = React.useCallback((noBreakLines: boolean) => {
-        if(!props.quill) return;
-
-        props.quill.format("blockquote", { noBreakLines }, "user");
-        setLineStyleDialogOpen(false);
-    }, [props.quill, setLineStyleDialogOpen]);
-
     const format = React.useMemo(() => {
         const selection = props.quill?.getSelection(false);
-        console.log(selection);
         if(selection) {
             return props.quill?.getFormat(selection ?? undefined);
         } else {
@@ -141,12 +122,6 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
                     />
                 })}
             </div>
-            {props.toolbar.includes("blockQuote") && (
-                <LineStyleDialog
-                    isOpen={lineStyleDialogOpen}
-                    submit={blockQuoteFormat}
-                />
-            )}
         </div>
     );
 };
