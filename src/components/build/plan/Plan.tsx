@@ -39,6 +39,7 @@ import brick from "services/axios/brick";
 export interface PlanProps {
   currentBrick: Brick;
   saveBrick(brick: Brick): Promise<Brick | null>;
+  saveBrickField(brickId: number, fieldName: string, value: string): Promise<any>;
   user: User;
   history: any;
   locked: boolean;
@@ -431,6 +432,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
+  saveBrickField: (brickId: number, fieldName: string, value: string) => dispatch(brickActions.saveBrickField(brickId, fieldName, value)),
   saveBrick: (brick: Brick) => dispatch(brickActions.saveBrick(brick)),
 });
 
