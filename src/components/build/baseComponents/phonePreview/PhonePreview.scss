@@ -236,9 +236,6 @@
       border-radius: 1.6vw;
       blockquote {
         color: var(--theme-dark-blue);
-        &.no-break {
-          white-space: nowrap;
-        }
       }
       &.mobile-question-component {
         div {

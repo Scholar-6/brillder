@@ -945,17 +945,9 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             margin-top: 1.5vh;
             margin-bottom: 1.5vh;
 
-            .quote-no-break-group-f43g {
-              overflow-x: auto;
-            }
-
             blockquote {
               border-left: 0.3vw solid var(--tab-gray);
               padding-left: 1.8vw;
-              &.no-break {
-                overflow: visible !important;
-                white-space: nowrap;
-              }
             }
             li {
               font-size: $mbase-font-size;
@@ -2366,10 +2358,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
   blockquote {
     padding-left: 1.8vw;
     border-left: 3px solid var(--tab-gray) !important;
-  }
-  blockquote.no-break {
-    overflow-x: auto;
-    white-space: nowrap;
   }
   .question-hint, .question-hint-global {
     blockquote {
