@@ -1,6 +1,5 @@
 import React from "react";
-import GridListTile from "@material-ui/core/GridListTile";
-import GridList from "@material-ui/core/GridList";
+import { ImageList, ImageListItem } from '@material-ui/core';
 import { ReactSortable } from "react-sortablejs";
 
 import "./DragableTabs.scss";
@@ -200,7 +199,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       }
 
       return (
-        <GridListTile
+        <ImageListItem
           className={titleClassNames}
           key={index}
           cols={cols}
@@ -216,7 +215,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             selectQuestion={props.selectQuestion}
             removeQuestion={props.removeQuestion}
           />
-        </GridListTile>
+        </ImageListItem>
       );
     };
 
@@ -247,7 +246,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
       }
 
       return (
-        <GridListTile
+        <ImageListItem
           onClick={() => {
             if (props.tutorialSkipped) {
               moveToSynthesis(this.props.history, this.props.brickId);
@@ -265,7 +264,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             synthesis={synthesis}
             getHasReplied={getHasSynthesisReplied}
           />
-        </GridListTile>
+        </ImageListItem>
       );
     }
 
@@ -279,8 +278,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
           justifyContent: "space-around",
         }}
       >
-        <GridList
-          cellHeight={40}
+        <ImageList
           cols={columns}
           style={{
             width: "100%",
@@ -289,7 +287,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
             transform: "translateZ(0)",
           }}
         >
-          <GridListTile
+          <ImageListItem
             className={`drag-tile-container plan-tab ${isPlanPage ? 'active' : ''}`}
             cols={isPlanPage ? 1.5555 : 2}
           >
@@ -298,7 +296,7 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
               tutorialStep={props.tutorialStep} isActive={isPlanPage} history={this.props.history}
               getHasReplied={getHasPlanReplied}
             />
-          </GridListTile>
+          </ImageListItem>
           <ReactSortable
             list={questions}
             className="drag-container"
@@ -309,17 +307,17 @@ class DragableTabs extends React.Component<DragTabsProps, TabsState> {
               renderQuestionTab(questions, question, i, columns)
             )}
           </ReactSortable>
-          <GridListTile
+          <ImageListItem
             onClick={props.createNewQuestion}
             className="drag-tile-container add-tile-container"
             cols={isSynthesisPresent || isSynthesisPage ? 1.5555 : 2}
           >
             <PlusTab tutorialStep={props.tutorialStep} />
-          </GridListTile>
+          </ImageListItem>
           {(isSynthesisPresent || isSynthesisPage) && (
             renderSynthesisTab()
           )}
-        </GridList>
+        </ImageList>
       </div>
     );
   }
