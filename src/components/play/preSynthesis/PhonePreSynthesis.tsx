@@ -21,7 +21,7 @@ const PhonePreSynthesisPage: React.FC<Props> = ({ brick, moveNext }) => {
         </div>
         <div className="ss-phone-before-title" />
         <div className="title s-fade1">
-          Deepen your understanding.
+          Now read the Synthesis carefully to improve your score.
         </div>
         <div className="ss-phone-after-title" />
         <div className="like-button green animate-v1">
