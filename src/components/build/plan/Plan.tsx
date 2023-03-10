@@ -34,11 +34,11 @@ import { isAorPorE } from "components/services/brickService";
 import QuillTitleEditor from "components/baseComponents/quill/QuillTitleEditor";
 import DifficultySelectV2 from "../proposal/questionnaire/brickTitle/components/DifficultySelectV2";
 import QuillOpenQuestionEditor from "components/baseComponents/quill/QuillOpenQuestionEditor";
-import brick from "services/axios/brick";
 
 export interface PlanProps {
   currentBrick: Brick;
   saveBrick(brick: Brick): Promise<Brick | null>;
+  saveBrickField(brickId: number, fieldName: string, value: string): Promise<any>;
   user: User;
   history: any;
   locked: boolean;
@@ -123,6 +123,14 @@ const PlanPage: React.FC<PlanProps> = (props) => {
     };
     /*eslint-disable-next-line*/
   }, [currentBrick, props.saveBrick]);
+
+  const changeBrickField = (brickId: number, fieldName: string, value: string) => {
+    props.saveBrickField(brickId, fieldName, value).then(res => {
+      if (res === null) {
+        props.setSaveFailed();
+      }
+    });
+  }
 
   /**
   * if Admin, Publisher or Editor than true
@@ -216,7 +224,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     <div className="header">Title</div>
                     <QuillTitleEditor
                       data={currentBrick.title}
-                      onChange={title => changeBrick((brick) => ({ ...brick, title }))}
+                      onChange={title => changeBrickField(currentBrick.id, 'title', title)}
                       placeholder="What is your brick about?"
                       disabled={locked}
                       validate={validationRequired}
@@ -279,7 +287,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       isValid={!!stripHtml(currentBrick.openQuestion)}
                       onChange={data => {
                         if (data.length < 250) {
-                          changeBrick((brick) => ({ ...brick, openQuestion: data }))
+                          changeBrickField(currentBrick.id, 'openQuestion', data);
                         }
                       }}
                       toolbar={["bold", "italic", "latex"]}
@@ -292,7 +300,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       data={currentBrick.brief}
                       allowTables={true}
                       allowLinks={true}
-                      onChange={data => changeBrick((brick) => ({ ...brick, brief: data }))}
+                      onChange={data => changeBrickField(currentBrick.id, 'brief', data)}
                       placeholder="Outline the purpose of this brick."
                       validate={validationRequired}
                       isValid={!!stripHtml(currentBrick.brief)}
@@ -314,7 +322,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       placeholder="Add engaging and relevant preparatory material."
                       disabled={locked}
                       data={currentBrick.prep}
-                      onChange={data => changeBrick((brick) => ({ ...brick, prep: data }))}
+                      onChange={data => changeBrickField(currentBrick.id, 'prep', data)}
                       validate={validationRequired}
                       allowDesmos={true}
                       isValid={!!stripHtml(currentBrick.prep)}
@@ -431,6 +439,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
+  saveBrickField: (brickId: number, fieldName: string, value: string) => dispatch(brickActions.saveBrickField(brickId, fieldName, value)),
   saveBrick: (brick: Brick) => dispatch(brickActions.saveBrick(brick)),
 });
 

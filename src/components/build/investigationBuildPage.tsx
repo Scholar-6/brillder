@@ -79,6 +79,7 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
   startEditing(brickId: number): void;
   changeQuestion(questionId?: number): void;
   saveBrick(brick: any): Promise<Brick | null>;
+  saveBrickField(brickId: number, fieldName: string, value: string): Promise<any>;
   saveQuestion(question: any): Promise<Question | null>;
   saveBrickQuestions(questions: any): Promise<any | null>;
   createQuestion(brickId: number, question: any): any;
@@ -363,8 +364,32 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const saveSynthesis = (text: string) => {
     synthesis = text;
     setSynthesis(synthesis);
-    saveBrick();
-  }
+    setSavingStatus(true);
+
+    if (canEdit === true) {
+      brick.synthesis = synthesis;
+      pushDiff(brick);
+      setCurrentBrick(brick);
+
+      props.saveBrickField(brick.id, 'synthesis', brick.synthesis).then(res => {
+        if (res === null) {
+          setSaveFailed(true);
+          return;
+        }
+        const time = Date.now();
+        const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
+        if (timeDifference > 10000) {
+          setSaveError(true);
+        } else {
+          setSavingStatus(false);
+          setSaveError(false);
+        }
+      }).catch((err: any) => {
+        console.log("Error saving synthesis.");
+        setSaveError(true);
+      });
+    }
+  };
 
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
     if (locked) { return; }
@@ -1044,6 +1069,7 @@ const mapDispatch = (dispatch: any) => ({
   startEditing: (brickId: number) => dispatch(socketStartEditing(brickId)),
   changeQuestion: (questionId?: number) => dispatch(socketNavigateToQuestion(questionId)),
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
+  saveBrickField: (brickId: number, fieldName: string, value: string) => dispatch(actions.saveBrickField(brickId, fieldName, value)),
   saveQuestion: (question: any) => dispatch(actions.saveQuestion(question)),
   saveBrickQuestions: (questions: any) => dispatch(actions.saveBrickQuestions(questions)),
   createQuestion: (brickId: number, question: any) => dispatch(actions.createQuestion(brickId, question)),

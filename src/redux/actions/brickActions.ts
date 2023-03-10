@@ -57,6 +57,17 @@ const saveBrickSuccess = (brick: Brick) => {
   } as Action
 }
 
+const saveBrickFieldSuccess = (brickId: number, fieldName: string, value: string) => {
+  return {
+    type: types.SAVE_BRICK_FIELD_SUCCESS,
+    payload: {
+      brickId,
+      fieldName,
+      value
+    },
+  } as Action
+}
+
 const saveBrickFailure = (errorMessage:string) => {
   return {
     type: types.SAVE_BRICK_FAILURE,
@@ -78,6 +89,22 @@ const saveBrick = (brick:any) => {
       savedBrick.author = brick.author;
       savedBrick.questions.sort((q1, q2) => q1.order - q2.order);
       dispatch(saveBrickSuccess(savedBrick));
+      return savedBrick;
+    }).catch(error => {
+      dispatch(saveBrickFailure(error.message))
+      return null;
+    });
+  }
+}
+
+
+const saveBrickField = (brickId: number, fieldName: string, value: string) => {
+  return function (dispatch: Dispatch) {
+    return axios.put(
+      process.env.REACT_APP_BACKEND_HOST + '/brick/fieldName/' + fieldName, {id: brickId, value }, {withCredentials: true, timeout: 10000}
+    ).then(response => {
+      const savedBrick = response.data as Brick;
+      dispatch(saveBrickFieldSuccess(brickId, fieldName, value));
       return savedBrick;
     }).catch(error => {
       dispatch(saveBrickFailure(error.message))
@@ -239,7 +266,7 @@ const sendToPublisherConfirmed = () => {
 }
 
 export default {
-  fetchBrick, fetchPublicBrick, forgetBrick,
+  fetchBrick, fetchPublicBrick, forgetBrick, saveBrickField,
   createBrick, saveBrick, createQuestion, saveQuestion, saveBrickQuestions,
   assignEditor, sendToPublisher, sendToPublisherConfirmed
 }
