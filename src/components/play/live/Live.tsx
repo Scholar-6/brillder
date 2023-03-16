@@ -140,7 +140,9 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const handleStep = (step: number) => () => {
     try {
-      document.getElementsByClassName("introduction-content")[0].scrollTo({ top: 0 });
+      if (step != activeStep) {
+        document.getElementsByClassName("introduction-content")[0].scrollTo({ top: 0 });
+      }
     } catch {}
 
     setActiveAnswer();
