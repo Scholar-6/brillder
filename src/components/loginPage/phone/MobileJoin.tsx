@@ -32,7 +32,8 @@ const MobileJoinPage: React.FC<MobileLoginProps> = (props) => {
             <p className="bold g-big">Join the revolution.</p>
           </div>
         </div>
-        <div className="mobile-button-box button-box m-register-box">
+        <div className="space-between-r5"></div>
+        <div className="mobile-button-box button-box m-register-box four-buttons">
           <GoogleButton label="Continue with Google" />
           <MicrosoftDesktopButton />
           <UKLibraryButton onClick={() => props.history.push(LibraryRegisterPage)} />
