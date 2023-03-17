@@ -640,7 +640,7 @@
       align-items: flex-start;
 
       .h-images-container {
-        padding-bottom: 15%;
+        padding-bottom: 11%;
 
         svg {
           max-height: 12vh;
@@ -869,26 +869,6 @@
 
 .space-between-r5 {
   height: 4% !important;
-}
-
-.mobile-button-box.four-buttons {
-  margin-top: 0 !important;
-  height: 61% !important;
-
-  
-  .google-button,
-  .email-button {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    height: 14.5% !important
-  }
-
-  .microsoft-btn {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    margin-bottom: 4% !important;
-    height: 14.5% !important
-  }
 }
 
 // zendesk
@@ -2416,4 +2396,25 @@
   padding-left: 2vw;
   padding-right: 2vw;
   font-size: 8vw !important;
+}
+
+.auth-page .mobile-register .m-register-box.four-buttons,
+.mobile-button-box.four-buttons {
+  margin-top: 0 !important;
+  height: 61% !important;
+  padding-top: 9% !important;
+
+  .google-button,
+  .email-button {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 14.5% !important
+  }
+
+  .microsoft-btn {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 4% !important;
+    height: 14.5% !important
+  }
 }
