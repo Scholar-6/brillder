@@ -438,6 +438,14 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
     return '';
   }
 
+  async openBrickStatisticPopup(e: any, b: Brick) {
+    e.stopPropagation();
+    const data = await getAdminBrickStatistic(b.id);
+    if (data) {
+      this.setState({ selectedBrick: b, brickAttempts: data.attempts, assignments: data.assignments })
+    }
+  }
+
   renderBody() {
     const { finalBricks } = this.state;
     if (finalBricks.length == 0) {
@@ -485,18 +493,12 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
         }}>
           <div className="publish-column">{this.renderDate(b)}</div>
           {renderSubjectColumn(b)}
-          <div className="first-column" dangerouslySetInnerHTML={{ __html: b.title }} />
+          <div className="first-column" onClick={(e) => this.openBrickStatisticPopup(e, b)} dangerouslySetInnerHTML={{ __html: b.title }} />
           <div className="author-column" onClick={e => {
             e.stopPropagation();
             this.search(b.author.firstName.toLocaleLowerCase());
           }}>{b.author.firstName} {b.author.lastName} {b.author.email}</div>
-          <div className="second-column" onClick={async (e) => {
-            e.stopPropagation();
-            const data = await getAdminBrickStatistic(b.id);
-            if (data) {
-              this.setState({ selectedBrick: b, brickAttempts: data.attempts, assignments: data.assignments })
-            }
-          }}>
+          <div className="second-column" onClick={(e) => this.openBrickStatisticPopup(e, b)}>
             {b.attemptsCount}
           </div>
           <div className="third-column">{b.isCore ? <SpriteIcon name="globe" /> : <SpriteIcon name="key" />}</div>

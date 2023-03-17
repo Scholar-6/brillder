@@ -1,85 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Dialog } from '@material-ui/core';
 import { getAdminBrickStatistic } from 'services/axios/brick';
+import BrickPlayedPopup from 'components/admin/bricksPlayed/BrickPlayedPopup';
+import { PDateFilter } from 'components/admin/adminOverview/OverviewSidebar';
+import { Brick } from 'model/brick';
+import { getSubjects } from 'services/axios/subject';
 
 interface Props {
-  brickId: number;
+  brick: Brick;
+  history: any;
 }
 
 const AdminBrickStatisticButton: React.FC<Props> = (props) => {
-  const [isOpened, setOpen] = React.useState(false);
-  const [data, setData] = React.useState({} as any);
+  const [data, setData] = useState({} as any);
+  const [subjects, setSubjects] = useState([] as any[]);
 
-  const getData = async () => {
-    const newData = await getAdminBrickStatistic(props.brickId);
-    if (newData) {
-      setData(newData);
+  const getData = async (e: any, b: Brick) => {
+    e.stopPropagation();
+    const data = await getAdminBrickStatistic(b.id);
+    if (data) {
+      setData({ selectedBrick: b, brickAttempts: data.attempts, assignments: data.assignments })
     }
   }
 
-  const renderScore = (attempt: any) => {
-    if (typeof attempt.oldScore === undefined) {
-      return Math.round((attempt.score * 50) / attempt.maxScore);
-    } else {
-      return Math.round(((attempt.oldScore + attempt.score) * 50) / attempt.maxScore);
+  const loadSubjects = async () => {
+    const subjects = await getSubjects();
+    if (subjects) {
+      setSubjects(subjects);
     }
   }
 
-  const renderAttempts = () => {
-    if (data && data.attempts) {
-      return data.attempts.map((attempt: any) => {
-        return <tr key={attempt.id}>
-          <td>{attempt.student.firstName} {attempt.student.lastName}</td>
-          <td>{renderScore(attempt)}</td>
-        </tr>
-      });
-    }
-    return "";
-  }
-
-  const renderTeachers = () => {
-    if (data && data.assignments) {
-      return data.assignments.map((assignment: any) => {
-        try {
-          const teacher = assignment.classroom.teachers[0];
-          return <span key={assignment.id}>
-            {teacher.firstName} {teacher.lastName}
-          </span>
-        } catch {
-          return "";
-        }
-      });
-    }
-    return "";
-  }
+  useEffect(() => {
+    loadSubjects();
+  }, []);
 
   return (
-    <div style={{"width": "80%"}}>
-      <div className="assign-class-button bigger-button-v3 assign-intro-button" style={{width: "100%"}} onClick={() => {
-        getData();
-        setOpen(true);
-      }}>Data</div>
-      <Dialog open={isOpened} onClose={(e: any) => {
-        e.stopPropagation();
-        e.preventDefault();
-        setOpen(false)
-      }} className="dialog-box admin-data">
-        <div className="dialog-header">
-          <div>
-            <div className="r-popup-title bold">Attempts</div>
-            <table className="admin-attempts-table">
-              <tr>
-                <th>Name</th>
-                <th>Score</th>
-              </tr>
-              {renderAttempts()}
-            </table>
-            <div className="r-popup-title bold">Teachers</div>
-            {renderTeachers()}
-          </div>
-        </div>
-      </Dialog>
+    <div style={{ "width": "80%" }}>
+      <div
+        className="assign-class-button bigger-button-v3 assign-intro-button" style={{ width: "100%" }}
+        onClick={(e) => getData(e, props.brick)}
+      >Data</div>
+      {data.selectedBrick && <BrickPlayedPopup
+        history={props.history}
+        dateFilter={PDateFilter.AllTime}
+        brick={data.selectedBrick}
+        subjects={subjects}
+        assignments={data.assignments}
+        brickAttempts={data.brickAttempts}
+        close={() => {
+          setData({ selectedBrick: null });
+        }}
+      />}
     </div>
   );
 }
