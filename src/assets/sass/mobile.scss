@@ -562,7 +562,6 @@
 
   .mobile-button-box {
     display: block !important;
-    padding-top: 9% !important;
     margin-top: 4vh !important;
     height: calc(65% - 4vh) !important;
 
@@ -588,10 +587,6 @@
       }
     }
 
-    .email-button {
-      padding: 2vh 5vw !important;
-    }
-    
     .microsoft-btn {
       background: white;
       min-height: 6.663vh;
@@ -878,7 +873,22 @@
 
 .mobile-button-box.four-buttons {
   margin-top: 0 !important;
-  height: 61% !important
+  height: 61% !important;
+
+  
+  .google-button,
+  .email-button {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 14.5% !important
+  }
+
+  .microsoft-btn {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 4% !important;
+    height: 14.5% !important
+  }
 }
 
 // zendesk
