@@ -182,11 +182,22 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
     for (let attempt of uniqueAttempts) {
       i += 1;
       const { student } = attempt;
+
+      let score = 0;
+
+      try {
+        if (attempt.oldScore) {
+          score = Math.round(((attempt.score + attempt.oldScore) / attempt.maxScore) * 50);
+        } else {
+          score = Math.round((attempt.score / attempt.maxScore) * 100);
+        }
+      } catch {}
+
       data.push(<div className="userRow" key={i}>
         <div className="student-name">
           {this.renderStudent(attempt.student)}
         </div>
-        <div></div>
+        <div>{score}</div>
         <div className="type-column">
           {this.renderUserType(student)}
         </div>
@@ -205,13 +216,15 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
     const data = [];
     const assignments = this.state.assignments;
 
+
     for (let assignment of assignments) {
       const { classroom } = assignment;
+
       if (classroom) {
         data.push(<div className="userRow classes-column">
           <div className="student-name">{classroom.name}</div>
           <div className="assign">1</div>
-          <div className="students"></div>
+          <div className="students">{assignment.classroom.students.length}</div>
           <div className="teacher">{classroom.teachers.map((t: any) => t.firstName + ' ' + t.lastName)}</div>
           <div className="version">Public</div>
           <div className="teacher-email">{classroom.teachers.map((t: any) => t.email)}</div>

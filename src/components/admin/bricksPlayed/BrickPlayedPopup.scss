@@ -11,7 +11,7 @@
     border-radius: 1vw;
   }
   .brick-played-popup-inner {
-    width: 45vw;
+    width: 58vw;
     font-size: $font-18;
     color: var(--theme-dark-blue);
     position: relative;
@@ -186,11 +186,11 @@
   }
 
   .scrollable-user-table {
-    max-height: 15vh;
+    max-height: 20vh;
     overflow-y: auto;
 
     &.expanded {
-      max-height: 30vh;
+      max-height: 50vh;
     }
   }
 
@@ -220,6 +220,16 @@
 
       padding-top: 0;
       padding-bottom: 0;
+
+      .MuiInputBase-input {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        line-height: 1.6;
+      }
+
+      .MuiSelect-icon {
+        top: 0 !important;
+      }
 
       .MuiSelect-nativeInput {
         opacity: 1;
@@ -267,7 +277,7 @@
 
   .classes-column {
     .student-name {
-      width: 10vw !important;
+      width: 17vw !important;
     }
     .assign {
       width: 3vw !important;
@@ -276,13 +286,13 @@
       width: 4vw !important;
     }
     .teacher {
-      width: 10vw !important;
+      width: 12vw !important;
     }
     .version {
-      width: 5vw !important;
+      width: 7vw !important;
     }
     .teacher-email {
-      width: 15vw;
+      width: 20vw;
     }
   }
 }
