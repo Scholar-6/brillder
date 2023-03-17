@@ -102,6 +102,9 @@
       p {
         display: inline;
       }
+      &:hover {
+        text-decoration: underline;
+      }
     }
     .second-column {
       display: flex;
