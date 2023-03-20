@@ -565,7 +565,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                       link.click();
                     }
                   }}>
-                    <div>Get Emails</div>
+                    <div>Mail to Students</div>
                   </div>
                   <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
                     <div>Export</div>
