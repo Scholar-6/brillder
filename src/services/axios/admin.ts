@@ -19,6 +19,17 @@ export interface CACLassroomParams {
   searchString: string;
 }
 
+interface ClassroomStudents {
+  emails: string[];
+  count: number;
+}
+
+export interface CACLassroomSParams {
+  subjectIds: number[];
+  domains: string[];
+  searchString: string;
+}
+
 /**
  * Get all admin classrooms
  * return list of classrooms if success or null if failed
@@ -41,6 +52,19 @@ export interface CACLassroomParams {
       return classroomPage;
     }
     return null;
+  }
+  catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Get all admin classrooms students emails
+ * return list of classrooms if success or null if failed
+ */
+export const getAllAdminClassroomsStudents = async (dateFilter: PDateFilter, data: CACLassroomSParams) => {
+  try {
+    return await post<ClassroomStudents>("/institution/getAllStudentsClassrooms/" + dateFilter, data);
   }
   catch (e) {
     return null;
