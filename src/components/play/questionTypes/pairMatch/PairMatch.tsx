@@ -205,7 +205,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
           haveImage && (isMobile
             ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
             : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
-        } <SpriteIcon name="pair-match-phone-d3" /> <span>Drag vertically to rearrange.</span>
+        } <SpriteIcon name="pair-match-phone-d3" /> <span>Select an answer to rearrange.</span>
       </span>
     )
   }
@@ -217,7 +217,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       <p>
         {isPhone() ? this.renderPhoneTip(haveImage) :
         <span className="help-text">
-          <SpriteIcon name="pair-match-phone-d3" /><span>Drag vertically to rearrange.</span> {
+          <SpriteIcon name="pair-match-phone-d3" /><span>Select an answer to rearrange.</span> {
             haveImage && (isMobile
               ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
               : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
