@@ -1,5 +1,4 @@
 import React from 'react';
-import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import { isMobile } from 'react-device-detect';
@@ -138,7 +137,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     );
   }
 
-  renderAnswer(answer: any, i: number) {
+  prepareClassName(answer: any) {
     let className = "pair-match-play-choice";
     if (answer.answerType === QuestionValueType.Image) {
       className += " image-choice";
@@ -164,8 +163,28 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         console.log('can`t find pair match answer');
       }
     }
+    return className;
+  }
+
+  swapQuestions(answer: any, index: number) {
+    const index2 = this.state.userAnswers.findIndex(a => a.swapping === true);
+    if (index2 >= 0) {
+      const ulist = [...this.state.userAnswers];
+      [ulist[index], ulist[index2]] = [ulist[index2], ulist[index]];
+      ulist[index].swapping = false;
+      ulist[index2].swapping = false;
+      this.setState({userAnswers: ulist});
+      console.log('swap', ulist);
+    } else {
+      answer.swapping = true;
+    }
+  }
+
+  renderAnswer(answer: any, i: number) {
+    const className = this.prepareClassName(answer);
+
     return (
-      <div key={i} className={className}>
+      <div key={i} className={className} onClick={() => this.swapQuestions(answer, i)}>
         <div className="MuiListItem-root" style={{ height: '100%', textAlign: 'center' }}>
           <div style={{ width: '100%' }}>
             {this.renderAnswerContent(answer)}
@@ -243,18 +262,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       )
     }
     return (
-      <ReactSortable
-        list={this.state.userAnswers}
-        animation={150}
-        delay={isPhone() ? 100 : 0}
-        group={{ name: "cloning-group-name" }}
-        className="answers-list"
-        setList={(choices) => this.setUserAnswers(choices)}
-      >
+      <div className="answers-list">
         {
           this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
         }
-      </ReactSortable>
+      </div>
     );
   }
 

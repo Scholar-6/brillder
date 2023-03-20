@@ -6,6 +6,7 @@ export interface PairMatchChoice {
   index: number;
   hint: string;
   option: string;
+  swapping?: boolean;
 }
 
 export type PairMatchAnswer = { index: number; }[]
