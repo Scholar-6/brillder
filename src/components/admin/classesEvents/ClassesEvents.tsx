@@ -19,11 +19,10 @@ import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
-import ExportBtn from "../components/ExportBtn";
 import map from "components/map";
 import { fileFormattedDate, getDateString, getFormattedDate } from "components/services/brickService";
 import { stripHtml } from "components/build/questionService/ConvertService";
-import { getAllAdminClassrooms, getAllUniqueEmails } from "services/axios/admin";
+import { getAllAdminClassrooms, getAllAdminClassroomsStudents, getAllUniqueEmails } from "services/axios/admin";
 import BackPagePagination from "components/backToWorkPage/components/BackPagePagination";
 import { playCover } from "components/play/routes";
 
@@ -551,7 +550,28 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
               <div>
-                <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
+                <div className="btn-container">
+                  <div className="btn btn-green flex-center" onClick={async () =>  {
+                    const res = await getAllAdminClassroomsStudents(this.state.dateFilter, {
+                      subjectIds: [],
+                      domains: [],
+                      searchString: ''
+                    });
+
+                    if (res && res.emails && res.emails.length > 0) {
+                      const link = document.createElement('a');
+                      link.href = "mailto: " + res.emails.join(' ');
+                      document.body.appendChild(link);
+                      link.click();
+                    }
+                  }}>
+                    <div>Get Emails</div>
+                  </div>
+                  <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
+                    <div>Export</div>
+                    <SpriteIcon name="download" />
+                  </div>
+                </div>
                 {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
                   <div className="popup-3rfw bold">
                     <div className="btn-sort" onClick={() => {
