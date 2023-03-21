@@ -33,8 +33,17 @@ export function getHours(date: string) {
   return formatTwoLastDigits(hours);
 }
 
+export function getSeconds(date: string) {
+  const hours = new Date(date).getSeconds();
+  return formatTwoLastDigits(hours);
+}
+
 export function getTime(date: string) {
   return `${getHours(date)}:${getMinutes(date)}`;
+}
+
+export function getTimeV2(date: string) {
+  return `${getHours(date)}:${getMinutes(date)}:${getSeconds(date)}`;
 }
 
 export function getMinutes(date: string) {
