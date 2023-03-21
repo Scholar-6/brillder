@@ -20,11 +20,12 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
 import map from "components/map";
-import { fileFormattedDate, getDateString, getFormattedDate } from "components/services/brickService";
+import { fileFormattedDate, getDateString, getDateStringV2, getFormattedDate } from "components/services/brickService";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { getAllAdminClassrooms, getAllAdminClassroomsStudents, getAllUniqueEmails } from "services/axios/admin";
 import BackPagePagination from "components/backToWorkPage/components/BackPagePagination";
 import { playCover } from "components/play/routes";
+import FileSaver from "file-saver";
 
 
 export enum ACSortBy {
@@ -559,13 +560,18 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                     });
 
                     if (res && res.emails && res.emails.length > 0) {
-                      const link = document.createElement('a');
-                      link.href = "mailto: " + res.emails.join(' ');
-                      document.body.appendChild(link);
-                      link.click();
+                      let data = 'EMAIL USERS BY CLASS\n';
+                      let date = new Date();
+                      data += date.getDate() + 'st ' + date.toLocaleString('default', { month: 'long' }) + ' ' + date.getFullYear() + ', ' + getDateStringV2(date.toString(), ':') + '\n\n';
+                      data += 'FILTERS\n';
+                      data += 'domain: ' + this.state.domains.filter(d => d.checked).map(d => d.name) + '\n\n';
+                      data += 'EDUCATOR\n\nLEARNER\n';
+                      data += res.emails.join('\n');
+                      var blob = new Blob([data], {type: "text/plain"});
+                      FileSaver.saveAs(blob, 'Emails_by_class.txt');
                     }
                   }}>
-                    <div>Mail to Students</div>
+                    <div>Copy emails</div>
                   </div>
                   <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
                     <div>Export</div>
