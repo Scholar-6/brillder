@@ -86,6 +86,14 @@ export function getDateString(inputDateString: string) {
   return `${date}.${month}.${year}`;
 }
 
+export function getDateStringV2(inputDateString: string, separator: string) {
+  const dateObj = new Date(inputDateString);
+  const year = getYear(dateObj);
+  const month = getMonth(dateObj);
+  const date = getDate(dateObj);
+  return `${date}${separator}${month}${separator}${year}`;
+}
+
 export function getAttemptDateString(inputDateString: string) {
   const dateObj = new Date(inputDateString);
   const year = dateObj.getFullYear();
