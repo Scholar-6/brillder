@@ -49,7 +49,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (this.props.isReview) {
       canDrag = this.props.attempt?.correct ? false : true;
     }
-    this.state = { status, userAnswers, canDrag };
+    this.state = {
+      status, userAnswers, canDrag, animation: false,
+      answersRef: React.createRef<any>(),
+    };
   }
 
   UNSAFE_componentWillUpdate(props: PairMatchProps) {
@@ -167,14 +170,43 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   }
 
   swapQuestions(answer: any, index: number) {
+    if (this.state.animation === true || !this.state.canDrag) { return; }
     const index2 = this.state.userAnswers.findIndex(a => a.swapping === true);
     if (index2 >= 0) {
       const ulist = [...this.state.userAnswers];
       [ulist[index], ulist[index2]] = [ulist[index2], ulist[index]];
       ulist[index].swapping = false;
       ulist[index2].swapping = false;
-      this.setState({userAnswers: ulist});
-      console.log('swap', ulist);
+
+      this.setState({ animation: true });
+
+      const parent = this.state.answersRef.current;
+
+      const el1 = parent.children[index];
+      const el2 = parent.children[index2];
+
+      var endPt = Math.round(el2.offsetTop - el1.offsetTop);
+
+      let aprop = [] as any[];
+      let bprop = [] as any[];
+
+      if (endPt < 0) {
+        endPt = -endPt;
+        aprop = [{ transform: 'translateY(-' + endPt + 'px)' }];
+        bprop = [{ transform: 'translateY(' + endPt + 'px)' }];
+      } else {
+        aprop = [{ transform: 'translateY(' + endPt + 'px)' }];
+        bprop = [{ transform: 'translateY(-' + endPt + 'px)' }];
+      }
+
+      const duration = 800;
+
+      el1.animate(aprop, { duration });
+      el2.animate(bprop, { duration });
+
+      setTimeout(() => {
+        this.setState({ userAnswers: ulist, animation: false });
+      }, duration);
     } else {
       answer.swapping = true;
     }
@@ -216,13 +248,13 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return (
       <p>
         {isPhone() ? this.renderPhoneTip(haveImage) :
-        <span className="help-text">
-          <SpriteIcon name="pair-match-phone-d3" /><span>Select an answer to rearrange.</span> {
-            haveImage && (isMobile
-              ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
-              : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
-          }
-        </span>}
+          <span className="help-text">
+            <SpriteIcon name="pair-match-phone-d3" /><span>Select an answer to rearrange.</span> {
+              haveImage && (isMobile
+                ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
+                : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
+            }
+          </span>}
         {!isPhone() && isMobile &&
           <span className="help-text">
             <SpriteIcon name="hero-cursor-click" />
@@ -262,7 +294,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       )
     }
     return (
-      <div className="answers-list">
+      <div className="answers-list" ref={this.state.answersRef}>
         {
           this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
         }

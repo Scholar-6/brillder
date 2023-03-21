@@ -3,6 +3,12 @@
 @import 'src/assets/sass/partials/extensions';
 
 .classes-events-page {
+  .btn-container {
+    .btn-green {
+      margin-left: 0.5vw;
+    }
+  }
+
   .teach-assigned {
     overflow-y: auto;
     .sort-box {
