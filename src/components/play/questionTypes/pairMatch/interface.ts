@@ -33,4 +33,6 @@ export interface PairMatchState {
   status: DragAndDropStatus;
   userAnswers: any[];
   canDrag: boolean;
+  animation: boolean;
+  answersRef: React.RefObject<any>;
 }
