@@ -21,6 +21,7 @@ export interface CACLassroomParams {
 
 interface ClassroomStudents {
   emails: string[];
+  teacherEmails: string[];
   count: number;
 }
 
