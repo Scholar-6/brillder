@@ -544,11 +544,14 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
 
                       data += date.getDate() + 'st ' + date.toLocaleString('default', { month: 'long' }) + ' ' + date.getFullYear() + ', ' + time + '\n\n';
                       data += 'FILTERS\n';
-                      data += 'DOMAIN: ' + this.state.domains.filter(d => d.checked).map(d => d.name) + '\n\n';
+                      data += 'DOMAIN: ' + this.state.domains.filter(d => d.checked).map(d => d.name) + '\n';
                       data += 'DATE RANGE: ' + this.getDateRangeLabel(this.state.dateFilter) + '\n';
                       data += 'SUBJECT: ' + this.state.selectedSubjects.map(s => s.name)  + '\n';
                       data += '\n';
-                      data += 'EDUCATOR\n\nLEARNER\n';
+                      data += 'EDUCATOR\n';
+                      data += res.teacherEmails.join('\n');
+                      data += '\n\n';
+                      data += 'LEARNER\n';
                       data += res.emails.join('\n');
 
                       const dateString = getDateStringV2(date.toString(), '_');
