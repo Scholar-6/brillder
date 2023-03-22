@@ -151,7 +151,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
 
   swapQuestions(answer: any, index: number) {
     // if answer is correct do nothing
-    if (this.props.attempt && this.props.isReview && this.props.attempt === this.props.liveAttempt) {
+    if (this.props.attempt && this.props.isReview) {
       let state = this.getState(answer.index);
       if (state === 1) {
         return;
