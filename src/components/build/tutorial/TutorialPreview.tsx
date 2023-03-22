@@ -14,7 +14,7 @@ const ProposalPreview: React.FC = () => {
   return (
     <div className="tutorial-preview tutorial-proposal-preview">
       <div className="tutorial-number">1.</div>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <div className="tutorial-icon-container">
           <SpriteIcon name="dashed-circle" className="circle-border" />
           <SpriteIcon name="feather-map" className="w60 h60 active text-theme-dark-blue" />
@@ -28,7 +28,7 @@ const InvestigationPreview: React.FC = () => {
   return (
     <div className="tutorial-preview tutorial-investigation-preview">
       <div className="tutorial-number">2.</div>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <div className="tutorial-icon-container">
           <SpriteIcon name="dashed-circle" className="circle-border" />
           <SpriteIcon name="plus" className="w80 h80 active text-theme-dark-blue" />
@@ -42,7 +42,7 @@ const SynthesisPreview: React.FC = () => {
   return (
     <div className="tutorial-preview tutorial-synthesis-preview">
       <div className="tutorial-number">3.</div>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <div className="tutorial-icon-container">
           <SpriteIcon name="dashed-circle" className="circle-border" />
           <SpriteIcon name="feather-menu" className="w60 h60 active text-theme-dark-blue" />
@@ -56,7 +56,7 @@ const PlayPreview: React.FC = () => {
   return (
     <div className="tutorial-preview tutorial-play-preview">
       <div className="tutorial-number">4.</div>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <div className="tutorial-icon-container">
           <SpriteIcon name="dashed-circle" className="circle-border" />
           <SpriteIcon name="play-thick" className="w80 h80 active m-l-1 text-theme-dark-blue" />

@@ -42,17 +42,6 @@ const BuildRouter: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   const renderInvestigationPage = () => {
-    /*
-    const values = queryString.parse(props.location.search);
-    let initSuggestionExpanded = false;
-    if (values.suggestionsExpanded) {
-      initSuggestionExpanded = true;
-    }
-  
-    const isCurrentEditor = (props.brick.editors?.findIndex((e: any) => e.id === props.user.id) ?? -1) >= 0;
-    if (isCurrentEditor) {
-      initSuggestionExpanded = true;
-    }*/
     return <InvestigationBuildPage {...props} />;
   }
 

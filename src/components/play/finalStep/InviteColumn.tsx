@@ -11,7 +11,7 @@ interface InviteProps {
 
 const InviteColumn: React.FC<InviteProps> = (props) => {
   return (
-    <Grid container item xs={props.size ? props.size : 5} justify="center">
+    <Grid container item xs={props.size ? props.size : 5} justifyContent="center">
       <div>
         <div className="button-container" onClick={props.onClick}>
           <SpriteIcon name="user-plus" className="active inline-button" />

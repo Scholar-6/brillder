@@ -7,7 +7,7 @@ import { Grid } from "@material-ui/core";
 const PairMatchPreview: React.FC<any> = () => {
   return (
     <div className="phone-preview-component pairmatch-preview">
-      <Grid container justify="center" className="small-text">
+      <Grid container justifyContent="center" className="small-text">
         A small number of words in the
         scene are no longer in current
         use. See if you can match each to

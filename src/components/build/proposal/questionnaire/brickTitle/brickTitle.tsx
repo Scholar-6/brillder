@@ -74,7 +74,7 @@ const BrickTitlePreviewComponent: React.FC<PreviewProps> = (props) => {
 
   return (
     <Grid container alignContent="flex-start" className="phone-preview-component title">
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <SpriteIcon name="search-flip" className="active titles-image" />
       </Grid>
       <div className="brick-preview-container">

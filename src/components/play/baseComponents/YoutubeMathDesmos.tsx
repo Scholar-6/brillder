@@ -98,10 +98,10 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
 
             const image = isImage(el);
             if (image) {
-              return <HtmlImageWithSpaces index={i} value={el} />;
+              return <HtmlImageWithSpaces key={i} index={i} value={el} />;
             }
 
-            return <HtmlWithSpaces index={i} value={el} />;
+            return <HtmlWithSpaces key={i} index={i} value={el} />;
           })
         }
       </div>

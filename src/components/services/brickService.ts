@@ -33,8 +33,17 @@ export function getHours(date: string) {
   return formatTwoLastDigits(hours);
 }
 
+export function getSeconds(date: string) {
+  const hours = new Date(date).getSeconds();
+  return formatTwoLastDigits(hours);
+}
+
 export function getTime(date: string) {
   return `${getHours(date)}:${getMinutes(date)}`;
+}
+
+export function getTimeV2(date: string) {
+  return `${getHours(date)}:${getMinutes(date)}:${getSeconds(date)}`;
 }
 
 export function getMinutes(date: string) {
@@ -84,6 +93,14 @@ export function getDateString(inputDateString: string) {
   const month = getMonth(dateObj);
   const date = getDate(dateObj);
   return `${date}.${month}.${year}`;
+}
+
+export function getDateStringV2(inputDateString: string, separator: string) {
+  const dateObj = new Date(inputDateString);
+  const year = getYear(dateObj);
+  const month = getMonth(dateObj);
+  const date = getDate(dateObj);
+  return `${date}${separator}${month}${separator}${year}`;
 }
 
 export function getAttemptDateString(inputDateString: string) {

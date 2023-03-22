@@ -58,7 +58,7 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
       </div>
       <Grid container direction="row" className="button-row">
         <Grid
-          container justify="flex-start" item xs={6}
+          container justifyContent="flex-start" item xs={6}
           className="hover-move-right"
           onClick={() => props.next(TutorialStep.Synthesis)}
         >
@@ -66,7 +66,7 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
           <span className="button-label bold">3. The Synthesis</span>
         </Grid>
         <Grid
-          container justify="flex-end" item xs={6}
+          container justifyContent="flex-end" item xs={6}
           className="hover-move-left"
           onClick={() => props.skip()}
         >

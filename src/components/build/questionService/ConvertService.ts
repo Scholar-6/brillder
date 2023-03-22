@@ -13,6 +13,18 @@ export function stripHtml(html: string) {
   return div.textContent || div.innerText || "";
 }
 
+export function stripHtmlWithSpaces(html: string) {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+
+  try {
+    return div.children[0].textContent || div.innerText || "";
+  } catch {
+    div.querySelectorAll(".quill-desmos").forEach(el => div.removeChild(el));
+    return div.textContent || div.innerText || "";
+  }
+}
+
 export function htmlChildren(html: string) {
   const div = document.createElement("div");
   div.innerHTML = html;

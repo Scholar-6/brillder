@@ -216,7 +216,7 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
     if (this.props.user) {
       const pageBricks = await getPublishedBricksByPage(
         this.state.pageSize, this.state.page, false,
-        [], [], [], false, true
+        [], [], [], false
       );
       if (pageBricks) {
         this.setState({
@@ -237,7 +237,7 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
   async loadAndSetBricks(
     page: number,
   ) {
-    const pageBricks = await getPublishedBricksByPage(this.state.pageSize, page, false, [], [], [], false, true);
+    const pageBricks = await getPublishedBricksByPage(this.state.pageSize, page, false, [], [], [], false);
 
     if (pageBricks) {
 

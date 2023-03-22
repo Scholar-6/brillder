@@ -6,6 +6,7 @@ export interface PairMatchChoice {
   index: number;
   hint: string;
   option: string;
+  swapping?: boolean;
 }
 
 export type PairMatchAnswer = { index: number; }[]
@@ -32,4 +33,6 @@ export interface PairMatchState {
   status: DragAndDropStatus;
   userAnswers: any[];
   canDrag: boolean;
+  animation: boolean;
+  answersRef: React.RefObject<any>;
 }

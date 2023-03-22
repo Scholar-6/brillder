@@ -333,7 +333,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         }
         {(isInstitutionPreference(this.props.user) || isAdmin) &&
           <CompetitionButton competitionPresent={this.state.competition !== null} sidebarRolledUp={sidebarRolledUp} onDownload={this.onDownload.bind(this)} onClick={this.onCompetition.bind(this)} />}
-        {isAdmin && <AdminBrickStatisticButton brickId={this.props.brick.id} />}
+        {isAdmin && <AdminBrickStatisticButton brick={this.props.brick} history={this.props.history} />}
       </div>
     );
   }

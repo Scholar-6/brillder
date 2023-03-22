@@ -79,7 +79,7 @@ const ClassInvitationDialog: React.FC<Props> = props => {
         <div className="classroom-name">
           <h2>{currentInvitation.classroom.name}</h2>
         </div>
-        <Grid item container direction="row" justify="center">
+        <Grid item container direction="row" justifyContent="center">
           <button className="btn btn-md b-green text-white" onClick={handleAccept}>
             <SpriteIcon name="check-custom" />
             Accept

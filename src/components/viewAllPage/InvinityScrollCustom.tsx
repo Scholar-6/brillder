@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 
 import useBricks from './useBricks';
 import { User } from 'model/user';
@@ -7,18 +7,66 @@ import { Brick, Subject } from 'model/brick';
 
 interface Props {
   user: User;
-  subject: Subject;
+  isCore: boolean;
+  subjects: Subject[];
+  searchString?: string;
+  onLoad(data: any): void;
   setBrick(b: Brick): void;
 }
 
 const InfinityScrollCustom = (props: Props) => {
   const [pageNum, setPageNum] = useState(0);
+  const [subjectsB, setSubjects] = useState([] as Subject[]);
+  const [oldSearch, setOldSearchStr] = useState('');
+
   const {
     isLoading,
     isError,
     results,
-    hasNextPage
-  } = useBricks(pageNum, props.user, props.subject, true, [], []);
+    hasNextPage,
+    data
+  } = useBricks(pageNum, props.user, props.subjects, props.isCore, [], [], props.searchString);
+
+  useEffect(() => {
+    props.onLoad(data);
+  }, [data])
+
+  useEffect(() => {
+    const {searchString} = props;
+    const subjectIds = props.subjects.map(s => s.id);
+    const subject2Ids = subjectsB.map(s => s.id);
+
+    let isModified = subjectIds.length !== subject2Ids.length;
+
+    if (searchString && searchString.length >= 3) {
+      if (searchString != oldSearch) {
+        isModified = true;
+        setOldSearchStr(searchString);
+      }
+    } else {
+      if (searchString && searchString.length < 3) {
+        if (oldSearch.length >= 3) {
+          isModified = true;
+          setOldSearchStr('');
+        }
+      }
+    }
+
+    if(!isModified){
+      for (let index = 0; index < subjectIds.length; index++) {
+        let same = subject2Ids[index] == subjectIds[index];
+        if (!same) {
+          isModified = true;
+          break;
+        }
+      }
+    }
+
+    if (isModified) {
+      setPageNum(0);
+      setSubjects(props.subjects);
+    }
+  }, [props.subjects]);
 
   const intObserver = useRef() as any;
 
@@ -44,10 +92,14 @@ const InfinityScrollCustom = (props: Props) => {
 
   const content = results.map((brick, i) => {
     if (results.length === i + 1) {
-      return <PhoneTopBrickScroll16x9 ref={lastBrickRef} brick={brick} user={props.user} onClick={() => props.setBrick(brick)} />
+      return <PhoneTopBrickScroll16x9 key={i} ref={lastBrickRef} brick={brick} user={props.user} onClick={() => props.setBrick(brick)} />
     }
-    return <PhoneTopBrickScroll16x9 brick={brick} user={props.user} onClick={() => props.setBrick(brick)} />
+    return <PhoneTopBrickScroll16x9 key={i} brick={brick} user={props.user} onClick={() => props.setBrick(brick)} />
   });
+
+  if (content.length == 0) {
+    return <div />;
+  }
 
   return (
     <div className="bricks-scroll-row">

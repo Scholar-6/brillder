@@ -44,7 +44,7 @@ const YoutubeLink: React.FC<YoutubeLinkProps> = (props) => {
   } else if (videoId) {
     let link = `https://www.youtube.com/watch?v=${videoId}`;
     return (
-      <Grid container justify="center" className="youtube-link">
+      <Grid container justifyContent="center" className="youtube-link">
         <a href={link} rel="noopener noreferrer" target="_blank">Play on YouTube</a>
       </Grid>
     );

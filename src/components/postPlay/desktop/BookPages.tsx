@@ -135,7 +135,7 @@ class BookPages extends React.Component<BookProps, BookState> {
             container
             direction="row"
             style={{ height: "100% !important" }}
-            justify="center"
+            justifyContent="center"
           >
             <Grid className="main-text-container">
               <h1>{isOwner ? 'This book is yours.' : <span>This is <span className="capitalize">{student.firstName}{student.firstName[student.firstName.length - 1] === 's' ? '' : "'s"}</span> book</span>}</h1>

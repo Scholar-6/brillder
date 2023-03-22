@@ -34,7 +34,7 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
       className="auth-page login-page"
       container
       item
-      justify="center"
+      justifyContent="center"
       alignItems="center"
     >
       {props.token ? <>

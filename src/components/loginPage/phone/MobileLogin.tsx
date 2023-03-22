@@ -82,7 +82,8 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
               </div>
             </div>
           </div>
-          <div className="mobile-button-box button-box">
+          <div className="space-between-r5"></div>
+          <div className="mobile-button-box button-box four-buttons">
             <GoogleButton />
             <MicrosoftDesktopButton />
             <UKLibraryButton onClick={this.moveToLibraryLogin.bind(this)} />

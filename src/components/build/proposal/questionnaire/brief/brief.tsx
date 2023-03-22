@@ -23,7 +23,7 @@ interface BriefProps {
 
 const BriefPreviewComponent: React.FC<any> = ({ data }) => {
   return (
-    <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
+    <Grid container justifyContent="center" alignContent="flex-start" className="phone-preview-component">
       <SpriteIcon name="crosshair" className={data ? "" : "big"} />
       <div className="typing-text">
         <MathInHtml value={data} />

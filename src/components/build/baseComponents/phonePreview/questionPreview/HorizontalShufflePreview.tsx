@@ -14,10 +14,10 @@ const HorizontalShufflePreview: React.FC<any> = () => {
 
   return (
     <div className="phone-preview-component horizontal-shuffle-preview">
-      <Grid container justify="center" className="small-text">
+      <Grid container justifyContent="center" className="small-text">
         Reorder the following symbols to express a formula used in Statistics.
       </Grid>
-      <Grid container justify="center" className={isGreen ? 'inside-green' : ''}>
+      <Grid container justifyContent="center" className={isGreen ? 'inside-green' : ''}>
         <button>E</button>
         <button>(<span>X</span>)</button>
         <button>=</button>

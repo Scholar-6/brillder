@@ -4,7 +4,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 import { Question } from 'model/question';
 import { Brick } from 'model/brick';
-import { stripHtml } from 'components/build/questionService/ConvertService';
+import { stripHtml, stripHtmlWithSpaces } from 'components/build/questionService/ConvertService';
 import { BookState } from './PostDesktopPlay';
 import {ReactComponent as CircleCheck} from'assets/img/circle-check.svg';
 import { Annotation, AnnotationLocation, PlayAttempt } from 'model/attempt';
@@ -78,6 +78,7 @@ const BookSidebar: React.FC<Props> = ({ bookState, user, brick, questions, attem
       </div>
     );
   }
+
   return (
     <div className="sidebar">
       <div className="header">
@@ -99,7 +100,7 @@ const BookSidebar: React.FC<Props> = ({ bookState, user, brick, questions, attem
           <CommentIndicator replyType={getHasReplied(AnnotationLocation.Prep)} />
         </div>
         {questions.map((q, i) => <div key={i} className={`question-link relative ${bookState === BookState.QuestionPage && i === activeQuestionIndex ? 'active' : ''}`} onClick={() => moveToQuestion(i)}>
-          <span className="bold">{i + 1}</span><span className="ellipsis italic">{stripHtml(q.firstComponent.value)}</span>
+          <span className="bold">{i + 1}</span><span className="ellipsis italic">{stripHtmlWithSpaces(q.firstComponent.value)}</span>
           {renderIcon(i)}
           <CommentIndicator replyType={getHasReplied(AnnotationLocation.Question, i)} />
         </div>)}

@@ -63,10 +63,6 @@ $base-build-border: $editor-radius;
         border-left: 5px solid var(--tab-gray);
         font-size: 1vw;
         padding-left: 1.8vh;
-
-        &.no-break {
-          white-space: nowrap;
-        }
       }
 
       table {
@@ -1152,6 +1148,7 @@ $base-build-border: $editor-radius;
 .investigation-build-page {
   .ql-custom-toolbar .formats .q-tooltip-hover {
     .css-custom-tooltip {
+      display: none;
       top: -1.7vw;
       z-index: 100;
       margin-left: -1vw;
@@ -1166,6 +1163,7 @@ $base-build-border: $editor-radius;
     }
     &:hover {
       .css-custom-tooltip {
+        display: block;
         opacity: 1;
       }
     }

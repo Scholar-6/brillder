@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Grid } from "@material-ui/core";
 import queryString from "query-string";
 
 import PageHeadWithMenu, {
@@ -14,6 +13,7 @@ import {
   AcademicLevelLabels,
   Brick,
   Subject,
+  SubjectGroup,
 } from "model/brick";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
@@ -21,23 +21,15 @@ import brickActions from "redux/actions/brickActions";
 import actions from "redux/actions/requestFailed";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getSubjects } from "services/axios/subject";
 import map from "components/map";
-import PhoneExpandedBrick from "./components/PhoneExpandedBrick";
 import { toggleElement } from "./service/viewAll";
 import routes from "components/play/routes";
 import InfinityScrollCustom from "./InvinityScrollCustom";
+import { getPublishedBricksByPage, getUnauthPublishedBricksByPage } from "services/axios/brick";
+import { ENGLISH_LANGUAGE_SUBJECT, ENGLISH_LITERATURE_SUBJECT, GENERAL_SUBJECT } from "components/services/subject";
+import { getSubjects } from "services/axios/subject";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
-
-enum Tab {
-  MySubjects,
-  AllSubjects,
-  SubjectCategory,
-}
-
-interface SubjectWithBricks extends Subject {
-}
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -59,15 +51,22 @@ interface BricksListProps {
 }
 
 interface BricksListState {
-  expandedBrick: Brick | null;
-  bricks: Array<Brick>;
-  isCore: boolean;
-  mySubjects: SubjectWithBricks[];
-  subjects: SubjectWithBricks[];
+  typingString: string;
+  searchString: string;
+  typingTimeout: number;
+  mySubjects: Subject[];
+  totalSubjects: Subject[];
+  subjects: Subject[];
+
   shown: boolean;
-  activeTab: Tab;
+  isCore: boolean;
   isLoading: boolean;
-  expandedSubject: SubjectWithBricks | null;
+  bricksCount: number;
+
+  expandedSubjects: Subject[];
+  expandedGroup: SubjectGroup | null;
+  groupSubjects: Subject[];
+
   filterLevels: AcademicLevel[];
 }
 
@@ -77,70 +76,116 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     const values = queryString.parse(props.location.search);
 
-    let subjectId = null;
-    if (values.subjectId) {
-      subjectId = parseInt(values.subjectId as string);
+    let subjectIds = [];
+    if (values.subjectIds) {
+      try {
+        subjectIds = JSON.parse(values.subjectIds as string);
+      } catch { }
     }
 
-    let initTab = Tab.MySubjects;
-    if (!this.props.user) {
-      initTab = Tab.SubjectCategory;
+    let expandedGroup = null;
+    if (values.subjectGroup) {
+      expandedGroup = parseInt(values.subjectGroup as string);
     }
 
     this.state = {
-      expandedBrick: null,
-      bricks: [],
-      isLoading: true,
-      expandedSubject: null,
+      typingTimeout: -1,
+      typingString: '',
+      searchString: '',
       isCore: true,
+      isLoading: true,
+      expandedSubjects: [],
+      expandedGroup,
+      filterLevels: [],
       mySubjects: [],
       subjects: [],
-      filterLevels: [],
-      activeTab: initTab,
+      totalSubjects: [],
+      groupSubjects: [],
+      bricksCount: 0,
       shown: false,
     };
 
-    this.loadData(subjectId);
+    this.loadData(subjectIds, expandedGroup);
   }
 
-  addBrickBySubject(subjects: SubjectWithBricks[], brick: Brick, isCore: boolean) {
-    if (brick.isCore !== isCore) {
-      return;
-    }
-    const subject = subjects.find((s) => s.id === brick.subjectId);
-    if (subject) {
-    }
-  }
-
-  async loadData(subjectId: number | null) {
-    const subjects = (await getSubjects()) as SubjectWithBricks[] | null;
-    if (subjects) {
-      const mySubjects: SubjectWithBricks[] = [];
-
-      if (this.props.user) {
-        for (let ss of this.props.user.subjects) {
-          mySubjects.push({ ...ss });
-        }
-      }
-
-      let expandedSubject = null;
-      if (subjectId) {
+  prepareExpandedSubjects(subjects: Subject[], subjectIds: number[]) {
+    const expandedSubjects = [];
+    if (subjectIds.length > 0) {
+      for (let subjectId of subjectIds) {
         const s = subjects.find(s => s.id === subjectId);
         if (s) {
-          expandedSubject = s;
+          expandedSubjects.push(s);
         }
       }
+    }
+    return expandedSubjects;
+  }
 
-      this.setState({
-        ...this.state,
-        subjects,
-        mySubjects,
-        expandedSubject,
-        shown: true,
-        isLoading: false,
-      });
+  async loadData(subjectIds: number[], expandedGroup: SubjectGroup | null) {
+    if (this.props.user) {
+      const data = await getPublishedBricksByPage(1, 0, true, [], [], [], false);
+      if (data) {
+        const mySubjects: Subject[] = [];
+        const subjects = data.subjects.filter(s => s.count > 0);
+
+        for (let s of this.props.user.subjects) {
+          const s3 = subjects.find(s2 => s2.id == s.id);
+          if (s3) {
+            mySubjects.push(s3);
+          }
+        }
+
+        const expandedSubjects = this.prepareExpandedSubjects(subjects, subjectIds);
+
+        let isCore = true;
+        let groupSubjects = [] as Subject[];
+        if (expandedGroup) {
+          groupSubjects = this.getGroupSubjects(subjects, expandedGroup);
+          if (expandedGroup == SubjectGroup.Personal) {
+            groupSubjects = data.subjects;
+            isCore = false;
+          }
+        }
+
+        this.setState({
+          ...this.state,
+          isCore,
+          subjects,
+          totalSubjects: data.subjects,
+          mySubjects,
+          expandedSubjects,
+          groupSubjects,
+          shown: true,
+          isLoading: false,
+        });
+      } else {
+        this.props.requestFailed("Can`t get subjects");
+      }
     } else {
-      this.props.requestFailed("Can`t get bricks");
+      const data = await getUnauthPublishedBricksByPage(1, 0, [], [], [], false);
+
+      if (data) {
+        const subjects = data.subjects.filter(s => s.count > 0);
+        const expandedSubjects = this.prepareExpandedSubjects(subjects, subjectIds);
+
+        let groupSubjects = [] as Subject[];
+        if (expandedGroup) {
+          groupSubjects = this.getGroupSubjects(subjects, expandedGroup);
+        }
+
+        if (subjects) {
+          this.setState({
+            ...this.state,
+            subjects,
+            expandedSubjects,
+            groupSubjects,
+            shown: true,
+            isLoading: false,
+          })
+        }
+      } else {
+        this.props.requestFailed("Can`t get subjects");
+      }
     }
   }
 
@@ -156,7 +201,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (brick.assignments) {
       for (let assignmen of brick.assignments) {
         let assignment = assignmen as any;
-        console.log(22, assignment);
         if (assignment && assignment.stats) {
           for (let student of assignment?.stats?.byStudent) {
             if (student.studentId === this.props.user?.id) {
@@ -167,18 +211,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       }
     }
     return false;
-  }
-
-  setMySubjectsTab() {
-    if (this.state.activeTab !== Tab.MySubjects) {
-      this.setState({ activeTab: Tab.MySubjects });
-    }
-  }
-
-  setAllSubjectsTab() {
-    if (this.state.activeTab !== Tab.AllSubjects) {
-      this.setState({ activeTab: Tab.AllSubjects });
-    }
   }
 
   filterByLevel(level: AcademicLevel) {
@@ -194,66 +226,78 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.setState({ filterLevels: levels });
   }
 
-  expandSubject(s: SubjectWithBricks) {
-    this.setState({ expandedSubject: s });
-    this.props.history.push('/play/dashboard?subjectId=' + s.id);
+  toggleSubject(s: Subject) {
+    // toggle subject
+    const expandedSubjects = [...this.state.expandedSubjects];
+    const foundIndex = expandedSubjects.findIndex(sub => sub.id === s.id);
+    if (foundIndex >= 0) {
+      expandedSubjects.splice(foundIndex, 1);
+    } else {
+      expandedSubjects.push(s);
+    }
+
+    let isCore = true;
+    if (this.state.expandedGroup === SubjectGroup.Personal) {
+      isCore = false;
+    }
+    this.setState({ expandedSubjects, isCore });
+
+    // prepare link
+    let link = this.props.location.pathname + '?subjectId=' + JSON.stringify(expandedSubjects.map(s => s.id));
+    if (this.state.expandedGroup) {
+      link += '&' + this.justSubjectGroup(this.state.expandedGroup);
+    }
+    this.props.history.push(link);
   }
 
-  renderEmptySubject() {
+  async search(searchString: string) {
+    if (this.state.typingTimeout) {
+      clearTimeout(this.state.typingTimeout);
+    }
+    const typingTimeout = setTimeout(() => {
+      this.setState({ searchString });
+      clearTimeout(typingTimeout);
+    }, 200);
+
+    this.setState({ typingString: searchString });
+    this.setState({ typingTimeout });
+  }
+
+  renderSubjectSearch() {
     return (
-      <div className="subject-no-bricks">
-        <div>
-          <p>Sorry, no bricks found.</p>
-          <p>Try adjusting the filters or</p>
-          <p>selecting another subject.</p>
+      <div className="back-arrow-container">
+        <SpriteIcon
+          name="arrow-left-bigger" className="back-arrow-d33"
+          onClick={() => {
+            this.setState({ expandedSubjects: [], searchString: '', typingString: '', bricksCount: 0 });
+            const path = this.pathSubjectGroup(this.state.expandedGroup);
+            this.props.history.push(path);
+          }}
+        />
+        <div className="ba-search-input-container">
+          <SpriteIcon name="search" />
+          <input
+            value={this.state.typingString}
+            onChange={e => this.search(e.target.value)}
+            placeholder="Search in subject"
+          />
         </div>
       </div>
     );
   }
 
-  renderBricks(s: SubjectWithBricks) {
-    return <InfinityScrollCustom
-      user={this.props.user}
-      subject={s}
-      setBrick={(b: Brick) => {
-        if (this.props.user && this.checkAssignment(b)) {
-          this.props.history.push(map.postAssignment(b.id, this.props.user.id));
-        } else {
-          this.props.history.push(routes.playBrief(b));
-        }
-      }}
-    />
-  }
-
-  renderSubjects(subjects: SubjectWithBricks[]) {
+  renderSubjectTitle(subjects: Subject[]) {
+    if (subjects.length === 1) {
     return (
-      <div>
-        {subjects.map((s, n) => {
-          return (
-            <div key={n}>
-              <div className="gg-subject-name">
-                {s.name}
-                <div className="va-expand" onClick={() => this.expandSubject(s)}>
-                  <SpriteIcon name="arrow-down" />
-                </div>
-              </div>
-              {this.renderBricks(s)}
-            </div>
-          );
-        })}
-        {this.state.expandedBrick && this.state.expandedBrick.title && (
-          <PhoneExpandedBrick
-            brick={this.state.expandedBrick}
-            history={this.props.history}
-            user={this.props.user}
-            hide={() => this.setState({ expandedBrick: null })}
-          />
-        )}
-      </div>
+      <div className="subject-title">{subjects[0].name}</div>
+    );
+    }
+    return (
+      <div className="subject-title">Search Results</div>
     );
   }
 
-  renderExpandedSubject(subject: SubjectWithBricks) {
+  renderExpandedSubjects(subjects: Subject[]) {
     return (
       <React.Suspense fallback={<></>}>
         <MobileTheme />
@@ -262,26 +306,115 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             page={PageEnum.ViewAll}
             user={this.props.user}
             toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
-            placeholder="Search Ongoing Projects & Published Bricks…"
             history={this.props.history}
-            search={() => { }}
-            searching={() => { }}
           />
           <div className="select-subject-dashboard-d33">
-            <div className="back-arrow-container" onClick={() => this.setState({ expandedSubject: null })}>
-              <SpriteIcon name="arrow-left" className="back-arrow-d33" />
-              <div>Subject</div>
+            {this.renderSubjectSearch()}
+            <div className="subjects-title-d33 subject-custom-d33">
+              {this.renderSubjectTitle(subjects)}
+              {this.state.bricksCount ? <div className="bricks-count">{this.state.bricksCount} Brick{this.state.bricksCount > 1 ? 's' : ''} found</div> : ''}
             </div>
-            <div className="subjects-title-d33 subject-custom-d33">{subject.name}</div>
+            {this.state.groupSubjects.length > 0 ? this.renderJustSubjects(this.state.groupSubjects, this.state.expandedSubjects) : <div />}
             <InfinityScrollCustom
+              searchString={this.state.searchString}
               user={this.props.user}
-              subject={subject}
+              isCore={this.state.isCore}
+              subjects={subjects}
               setBrick={(b: Brick) => {
                 if (this.props.user && this.checkAssignment(b)) {
                   this.props.history.push(map.postAssignment(b.id, this.props.user.id));
                 } else {
                   this.props.history.push(routes.playBrief(b));
                 }
+              }}
+              onLoad={data => {
+                this.setState({ bricksCount: data.pageCount });
+              }}
+            />
+          </div>
+        </div>
+      </React.Suspense>
+    );
+  }
+
+  renderGroupName(sGroup: SubjectGroup) {
+    if (sGroup === SubjectGroup.Arts) {
+      return 'Arts'
+    } else if (sGroup === SubjectGroup.English) {
+      return 'English';
+    } else if (sGroup === SubjectGroup.GeneralTopical) {
+      return 'General & Topical';
+    } else if (sGroup === SubjectGroup.HumanitiesAndSocialSciences) {
+      return 'Humanities';
+    } else if (sGroup === SubjectGroup.MathsAndComputing) {
+      return 'Maths & Computing';
+    } else if (sGroup === SubjectGroup.Science) {
+      return 'Science';
+    } else if (sGroup === SubjectGroup.Languages) {
+      return 'Languages';
+    } else if (sGroup === SubjectGroup.Personal) {
+      return 'Personal Bricks';
+    }
+  }
+
+  renderGroupSearch() {
+    return (
+      <div className="back-arrow-container">
+        <SpriteIcon
+          name="arrow-left-bigger" className="back-arrow-d33"
+          onClick={() => {
+            this.setState({ expandedGroup: null, typingString: '', searchString: '', groupSubjects: [] })
+            this.props.history.push(this.props.location.pathname);
+          }}
+        />
+        <div className="ba-search-input-container">
+          <SpriteIcon name="search" />
+          <input
+            value={this.state.typingString}
+            onChange={e => this.search(e.target.value)}
+            placeholder="Search in subject"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  renderExpandedSubjectGroup(subjectGroup: SubjectGroup) {
+    if (this.state.groupSubjects.length === 0) {
+      return <div />;
+    }
+
+    return (
+      <React.Suspense fallback={<></>}>
+        <MobileTheme />
+        <div className="main-listing dashboard-page mobile-category phone-view-all select-subject-dashboard-d3">
+          <PageHeadWithMenu
+            page={PageEnum.ViewAll}
+            user={this.props.user}
+            toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
+            history={this.props.history}
+          />
+          <div className="select-subject-dashboard-d33">
+            {this.renderGroupSearch()}
+            <div className="subjects-title-d33 subject-custom-d33">
+              <div className="subject-title">{this.renderGroupName(subjectGroup)}</div>
+              {this.state.bricksCount ? <div className="bricks-count">{this.state.bricksCount} Brick{this.state.bricksCount > 1 ? 's' : ''} found</div> : ''}
+            </div>
+            {this.state.groupSubjects.length > 0 ? this.renderJustSubjects(this.state.groupSubjects, this.state.expandedSubjects) : <div />}
+            <InfinityScrollCustom
+              searchString={this.state.searchString}
+              user={this.props.user}
+              isCore={this.state.isCore}
+              subjects={this.state.groupSubjects}
+              setBrick={(b: Brick) => {
+                if (this.props.user && this.checkAssignment(b)) {
+                  this.props.history.push(map.postAssignment(b.id, this.props.user.id));
+                } else {
+                  this.props.history.push(routes.playBrief(b));
+                }
+              }}
+              onLoad={data => {
+                this.setState({ bricksCount: data.pageCount });
               }}
             />
           </div>
@@ -302,45 +435,205 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  getGroupSubjects(subjects: Subject[], subjectGroup: SubjectGroup) {
+    let groupSubjects = subjects.filter(s => s.group === subjectGroup);
+    if (subjectGroup === SubjectGroup.English) {
+      const s1 = subjects.find(s => s.name == ENGLISH_LANGUAGE_SUBJECT);
+      const s2 = subjects.find(s => s.name == ENGLISH_LITERATURE_SUBJECT);
+      if (s1 && s2) {
+        groupSubjects = [s1, s2];
+      }
+    } else if (subjectGroup === SubjectGroup.HumanitiesAndSocialSciences) {
+      groupSubjects = groupSubjects.filter(s => s.name != ENGLISH_LITERATURE_SUBJECT);
+    }
+    return groupSubjects;
+  }
+
+  justSubjectGroup(subjectGroup?: SubjectGroup | null) {
+    if (subjectGroup) {
+      return 'subjectGroup=' + subjectGroup;
+    }
+    return '';
+  }
+
+  pathSubjectGroup(subjectGroup?: SubjectGroup | null) {
+    return this.props.location.pathname + '?' + this.justSubjectGroup(subjectGroup);
+  }
+
+  moveToGroup(expandedGroup: SubjectGroup) {
+    if (expandedGroup === SubjectGroup.GeneralTopical) {
+      const subject = this.state.subjects.find(s => s.name === GENERAL_SUBJECT);
+      if (subject) {
+        this.toggleSubject(subject);
+      }
+    } else if (expandedGroup === SubjectGroup.English) {
+      const s1 = this.state.subjects.find(s => s.name == ENGLISH_LANGUAGE_SUBJECT);
+      const s2 = this.state.subjects.find(s => s.name == ENGLISH_LITERATURE_SUBJECT);
+      if (s1 && s2) {
+        this.setState({ expandedGroup, groupSubjects: [s1, s2], isCore: true });
+        this.props.history.push(this.pathSubjectGroup(expandedGroup));
+      }
+    } else if (expandedGroup === SubjectGroup.Personal) {
+      this.setState({ expandedGroup, groupSubjects: this.state.totalSubjects, isCore: false });
+      this.props.history.push(this.pathSubjectGroup(expandedGroup));
+    } else {
+      this.setState({ expandedGroup, isCore: true, groupSubjects: this.getGroupSubjects(this.state.subjects, expandedGroup) });
+      this.props.history.push(this.pathSubjectGroup(expandedGroup));
+    }
+  }
+
+  renderJustSubjects(subjects: Subject[], expandedSubjects?: Subject[]) {
+    return (
+      <div className="subjects-custom-v6">
+        {subjects.map(s => {
+          let selected = false;
+          if (expandedSubjects) {
+            const found = expandedSubjects.find(sub => s.id === sub.id);
+            if (found) {
+              selected = true;
+            }
+          }
+          return (
+            <div key={s.id} className={`subject-button ${selected ? 'active' : ''}`} onClick={() => this.toggleSubject(s)}>
+              <SpriteIcon name="circle-filled" style={{ color: s.color }} />
+              <div>
+                {s.name}
+              </div>
+            </div>
+          );
+        }
+        )}
+      </div>
+    );
+  }
+
+  renderSubjectsV2(subjects: Subject[]) {
+    return (
+      <div>
+        <div className="bold category-label">
+          My Subjects
+        </div>
+        {this.renderJustSubjects(subjects)}
+      </div>
+    )
+  }
+
   render() {
-    if (this.state.expandedSubject) {
-      return this.renderExpandedSubject(this.state.expandedSubject);
+    if (this.state.expandedSubjects && this.state.expandedSubjects.length > 0) {
+      return this.renderExpandedSubjects(this.state.expandedSubjects);
+    }
+    if (this.state.expandedGroup) {
+      return this.renderExpandedSubjectGroup(this.state.expandedGroup);
     }
     return (
-      <React.Suspense fallback={<></>}>
-        <MobileTheme />
-        <div className="main-listing dashboard-page mobile-category phone-view-all select-subject-dashboard-d3">
-          <PageHeadWithMenu
-            page={PageEnum.ViewAll}
-            user={this.props.user}
-            toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
-            placeholder="Search Ongoing Projects & Published Bricks…"
-            history={this.props.history}
-            search={() => { }}
-            searching={() => { }}
-          />
-          <div className="select-subject-dashboard-d33">
-            {this.props.user && <div>
-              <div className="subjects-title-d33">My Subjects</div>
-              <Grid container direction="row" className="subjects-d33">
-                {this.state.mySubjects.map(subject => <Grid xs={6} className="subject-d33" onClick={() => this.expandSubject(subject)}>
-                  <div>{subject.name}</div>
-                </Grid>)}
-              </Grid>
-            </div>
-            }
+      <div className="mobile-categorise">
+        <PageHeadWithMenu
+          page={PageEnum.ViewAll}
+          user={this.props.user}
+          toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
+          history={this.props.history}
+        />
+        {this.props.user ?
+          <div className="text-center header">
+            <SpriteIcon className="absolute-arrow" name="arrow-left-stroke" onClick={() => this.props.history.push(map.MainPage)} />
             <div>
-              <div className="subjects-title-d33">All Subjects</div>
-              <Grid container direction="row" className="subjects-d33">
-                {this.state.subjects.map(subject => <Grid xs={6} className="subject-d33" onClick={() => this.expandSubject(subject)}>
-                  <div>{subject.name}</div>
-                </Grid>)}
-              </Grid>
+              <div>Click to explore one of the following subject</div>
+              <div>categories</div>
+            </div>
+          </div>
+          :
+          <div className="text-center header">
+            <div>
+              <div>Click to explore one of the subject categories</div>
+            </div>
+          </div>
+        }
+        {this.state.mySubjects.length > 0 ? this.renderSubjectsV2(this.state.mySubjects) : <div />}
+        <div className="bold category-label">
+          Subject Categories
+        </div>
+        <div className="">
+        </div>
+        <div className="subject-categories">
+          <div className="row">
+            <div className="subject-category">
+              <div onClick={() => this.moveToGroup(SubjectGroup.English)}>
+                <div className="flex-center zoom-item">
+                  <SpriteIcon name="english-literature" />
+                </div>
+                <div className="cat-name">{this.renderGroupName(SubjectGroup.English)}</div>
+              </div>
+            </div>
+            <div className="subject-category">
+              <div onClick={() => this.moveToGroup(SubjectGroup.GeneralTopical)}>
+                <div className="flex-center zoom-item">
+                  <SpriteIcon name="category-internet" />
+                </div>
+                <div className="cat-name">{this.renderGroupName(SubjectGroup.GeneralTopical)}</div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="subject-category">
+              <div onClick={() => this.moveToGroup(SubjectGroup.HumanitiesAndSocialSciences)}>
+                <div className="flex-center zoom-item">
+                  <SpriteIcon name="category-book" />
+                </div>
+                <div className="cat-name">{this.renderGroupName(SubjectGroup.HumanitiesAndSocialSciences)}</div>
+              </div>
+            </div>
+            <div className="subject-category">
+              <div onClick={() => this.moveToGroup(SubjectGroup.MathsAndComputing)}>
+                <div className="flex-center zoom-item">
+                  <SpriteIcon name="binary-code" />
+                </div>
+                <div className="cat-name">{this.renderGroupName(SubjectGroup.MathsAndComputing)}</div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="subject-category">
+              <div onClick={() => this.moveToGroup(SubjectGroup.Languages)}>
+                <div className="flex-center zoom-item">
+                  <SpriteIcon name="category-translation" />
+                </div>
+                <div className="cat-name">{this.renderGroupName(SubjectGroup.Languages)}</div>
+              </div>
+            </div>
+            <div className="subject-category">
+              <div onClick={() => this.moveToGroup(SubjectGroup.Science)}>
+                <div className="flex-center zoom-item">
+                  <SpriteIcon name="category-chemistry" />
+                </div>
+                <div className="cat-name">{this.renderGroupName(SubjectGroup.Science)}</div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="subject-category">
+              <div onClick={() => this.moveToGroup(SubjectGroup.Arts)}>
+                <div className="flex-center zoom-item">
+                  <SpriteIcon name="category-canvas" />
+                </div>
+                <div className="cat-name">{this.renderGroupName(SubjectGroup.Arts)}</div>
+              </div>
+            </div>
+            <div className={`subject-category ${this.props.user ? '' : 'disabled'}`}>
+              <div onClick={() => {
+                if (this.props.user) {
+                  this.moveToGroup(SubjectGroup.Personal)
+                }
+              }}>
+                <div className="flex-center zoom-item">
+                  <SpriteIcon className="key-icon" name="category-personal" />
+                </div>
+                <div className="cat-name">{this.renderGroupName(SubjectGroup.Personal)}</div>
+              </div>
             </div>
           </div>
         </div>
-      </React.Suspense>
-    );
+      </div>
+    )
   }
 }
 

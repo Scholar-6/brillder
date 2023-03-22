@@ -154,7 +154,7 @@ export const getPublishedBricks = async () => {
 }
 
 
-interface PageBricks {
+export interface PageBricks {
   pageCount: number;
   bricks: Brick[];
   subjects: Subject[];
@@ -167,7 +167,7 @@ interface PageBricks {
 export const getPublishedBricksByPage = async (
   pageSize: number, page: number, isCore: boolean,
   level: number[], length: BrickLengthEnum[], subjectIds: number[],
-  onlyCompetitions: boolean, isAllSubjects: boolean, subjectGroup?: number
+  onlyCompetitions: boolean
 ) => {
   try {
 
@@ -177,13 +177,8 @@ export const getPublishedBricksByPage = async (
       level,
       length,
       subjectIds,
-      isAllSubjects,
       onlyCompetitions,
     } as any;
-
-    if (subjectGroup) {
-      data.subjectGroup = subjectGroup;
-    }
 
     return await post<PageBricks>(`/bricks/byStatus/${BrickStatus.Publish}/page/${page}`, data);
   } catch {
@@ -198,7 +193,7 @@ export const getPublishedBricksByPage = async (
  */
  export const getUnauthPublishedBricksByPage = async (
   pageSize: number, page: number, level: number[], length: BrickLengthEnum[],
-  subjectIds: number[], onlyCompetitions: boolean, subjectGroup: number
+  subjectIds: number[], onlyCompetitions: boolean, subjectGroup?: number
 ) => {
   try {
 
@@ -207,9 +202,12 @@ export const getPublishedBricksByPage = async (
       level,
       length,
       subjectIds,
-      subjectGroup,
       onlyCompetitions,
     } as any;
+
+    if (subjectGroup) {
+      data.subjectGroup = subjectGroup;
+    }
 
     return await post<PageBricks>(`/bricks/byStatusUnauth/${BrickStatus.Publish}/page/${page}`, data);
   } catch {
@@ -324,9 +322,9 @@ export const searchCoreBricksByStatus = async (data: SearchCoreBrickStatuses) =>
   }
 }
 
-export const searchPaginateBricks = async (searchString: string = '', page: number, pageSize: number, isCore: boolean) => {
+export const searchPaginateBricks = async (searchString: string = '', page: number, pageSize: number, isCore: boolean, subjectIds?: number[]) => {
   try {
-    return await post<PageBricks>(`/bricks/search/public/page/${page}`, { searchString, pageSize, isCore, });
+    return await post<PageBricks>(`/bricks/search/public/page/${page}`, { searchString, pageSize, isCore, subjectIds: subjectIds ? subjectIds : [] });
   } catch {
     return null;
   }

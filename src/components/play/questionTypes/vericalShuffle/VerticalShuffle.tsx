@@ -164,7 +164,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   renderEachHint(i: number, answer: any, isCorrect: boolean) {
     if (this.props.isPreview) {
       return (
-        <Grid container direction="row" justify="center">
+        <Grid container direction="row" justifyContent="center">
           <ReviewEachHint
             isPhonePreview={this.props.isPreview}
             isReview={this.props.isReview}
@@ -176,7 +176,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
       )
     } else if (this.props.isReview) {
       return (
-        <Grid container direction="row" justify="center">
+        <Grid container direction="row" justifyContent="center">
           <ReviewEachHint
             isPhonePreview={this.props.isPreview}
             isReview={this.props.isReview}
@@ -226,7 +226,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return (
       <div key={i} className={className}>
         <div className={`vertical-content unselectable ${hasHint ? '' : 'full-height'} ${answer.answerType === QuestionValueType.Sound ? 'sound-type-d34' : ''}`}>
-          <Grid container direction="row" justify="center">
+          <Grid container direction="row" justifyContent="center">
             <div className="circle-index">
               <div>
                 {i + 1}

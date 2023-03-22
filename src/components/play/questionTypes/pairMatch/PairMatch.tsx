@@ -1,5 +1,4 @@
 import React from 'react';
-import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import { isMobile } from 'react-device-detect';
@@ -50,7 +49,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (this.props.isReview) {
       canDrag = this.props.attempt?.correct ? false : true;
     }
-    this.state = { status, userAnswers, canDrag };
+    this.state = {
+      status, userAnswers, canDrag, animation: false,
+      answersRef: React.createRef<any>(),
+    };
   }
 
   UNSAFE_componentWillUpdate(props: PairMatchProps) {
@@ -138,7 +140,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     );
   }
 
-  renderAnswer(answer: any, i: number) {
+  prepareClassName(answer: any) {
     let className = "pair-match-play-choice";
     if (answer.answerType === QuestionValueType.Image) {
       className += " image-choice";
@@ -164,8 +166,57 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         console.log('can`t find pair match answer');
       }
     }
+    return className;
+  }
+
+  swapQuestions(answer: any, index: number) {
+    if (this.state.animation === true || !this.state.canDrag) { return; }
+    const index2 = this.state.userAnswers.findIndex(a => a.swapping === true);
+    if (index2 >= 0) {
+      const ulist = [...this.state.userAnswers];
+      [ulist[index], ulist[index2]] = [ulist[index2], ulist[index]];
+      ulist[index].swapping = false;
+      ulist[index2].swapping = false;
+
+      this.setState({ animation: true });
+
+      const parent = this.state.answersRef.current;
+
+      const el1 = parent.children[index];
+      const el2 = parent.children[index2];
+
+      var endPt = Math.round(el2.offsetTop - el1.offsetTop);
+
+      let aprop = [] as any[];
+      let bprop = [] as any[];
+
+      if (endPt < 0) {
+        endPt = -endPt;
+        aprop = [{ transform: 'translateY(-' + endPt + 'px)' }];
+        bprop = [{ transform: 'translateY(' + endPt + 'px)' }];
+      } else {
+        aprop = [{ transform: 'translateY(' + endPt + 'px)' }];
+        bprop = [{ transform: 'translateY(-' + endPt + 'px)' }];
+      }
+
+      const duration = 800;
+
+      el1.animate(aprop, { duration });
+      el2.animate(bprop, { duration });
+
+      setTimeout(() => {
+        this.setState({ userAnswers: ulist, animation: false });
+      }, duration);
+    } else {
+      answer.swapping = true;
+    }
+  }
+
+  renderAnswer(answer: any, i: number) {
+    const className = this.prepareClassName(answer);
+
     return (
-      <div key={i} className={className}>
+      <div key={i} className={className} onClick={() => this.swapQuestions(answer, i)}>
         <div className="MuiListItem-root" style={{ height: '100%', textAlign: 'center' }}>
           <div style={{ width: '100%' }}>
             {this.renderAnswerContent(answer)}
@@ -186,7 +237,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
           haveImage && (isMobile
             ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
             : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
-        } <SpriteIcon name="pair-match-phone-d3" /> <span>Drag vertically to rearrange.</span>
+        } <SpriteIcon name="pair-match-phone-d3" /> <span>Drag on left to scroll. Tap an answer to swap it for another.</span>
       </span>
     )
   }
@@ -197,13 +248,13 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return (
       <p>
         {isPhone() ? this.renderPhoneTip(haveImage) :
-        <span className="help-text">
-          <SpriteIcon name="pair-match-phone-d3" /><span>Drag vertically to rearrange.</span> {
-            haveImage && (isMobile
-              ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
-              : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
-          }
-        </span>}
+          <span className="help-text">
+            <SpriteIcon name="pair-match-phone-d3" /><span>Select an answer to rearrange.</span> {
+              haveImage && (isMobile
+                ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
+                : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
+            }
+          </span>}
         {!isPhone() && isMobile &&
           <span className="help-text">
             <SpriteIcon name="hero-cursor-click" />
@@ -243,18 +294,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       )
     }
     return (
-      <ReactSortable
-        list={this.state.userAnswers}
-        animation={150}
-        delay={isPhone() ? 100 : 0}
-        group={{ name: "cloning-group-name" }}
-        className="answers-list"
-        setList={(choices) => this.setUserAnswers(choices)}
-      >
+      <div className="answers-list" ref={this.state.answersRef}>
         {
           this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
         }
-      </ReactSortable>
+      </div>
     );
   }
 
@@ -262,7 +306,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return (
       <div className="question-unique-play pair-match-play">
         {this.renderHelpers()}
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           {this.renderOptions()}
           {this.renderAnswers()}
         </Grid>

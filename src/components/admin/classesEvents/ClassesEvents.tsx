@@ -19,13 +19,13 @@ import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
-import ExportBtn from "../components/ExportBtn";
 import map from "components/map";
-import { fileFormattedDate, getDateString, getFormattedDate } from "components/services/brickService";
+import { fileFormattedDate, getDateString, getDateStringV2, getFormattedDate, getTimeV2 } from "components/services/brickService";
 import { stripHtml } from "components/build/questionService/ConvertService";
-import { getAllAdminClassrooms, getAllUniqueEmails } from "services/axios/admin";
+import { getAllAdminClassrooms, getAllAdminClassroomsStudents, getAllUniqueEmails } from "services/axios/admin";
 import BackPagePagination from "components/backToWorkPage/components/BackPagePagination";
 import { playCover } from "components/play/routes";
+import FileSaver from "file-saver";
 
 
 export enum ACSortBy {
@@ -393,42 +393,6 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     </div>
   }
 
-  filterAndSort(classrooms: ClassroomApi[], sortBy: ACSortBy, isAllDomains: boolean, domains: CDomain[], searchString: string) {
-    let finalClassrooms: ClassroomApi[] = classrooms;
-
-    // filter by search
-    if (searchString) {
-      const classroomsTemp = [...finalClassrooms];
-      finalClassrooms = [] as ClassroomApi[];
-      const searchStringLow = searchString.toLocaleLowerCase();
-      for (let c of classroomsTemp) {
-        const index = c.name.toLocaleLowerCase().search(searchStringLow);
-        if (index >= 0) {
-          finalClassrooms.push(c);
-          continue;
-        }
-        if (c.creator) {
-          if (c.creator.firstName) {
-            const index = c.creator.firstName.toLocaleLowerCase().search(searchStringLow);
-            if (index >= 0) {
-              finalClassrooms.push(c);
-              continue;
-            }
-          }
-
-          if (c.creator.lastName) {
-            const index = c.creator.lastName.toLocaleLowerCase().search(searchStringLow);
-            if (index >= 0) {
-              finalClassrooms.push(c);
-            }
-          }
-        }
-      }
-    }
-
-    return finalClassrooms;
-  }
-
   renderSortArrow(sortBy: ACSortBy) {
     return (
       <SpriteIcon
@@ -499,6 +463,20 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
     );
   }
 
+  getDateRangeLabel(dateFilter: PDateFilter) {
+    if (dateFilter === PDateFilter.Past24Hours) {
+      return "Past 24 hours";
+    } else if (dateFilter === PDateFilter.PastWeek) {
+      return "Past week";
+    } else if (dateFilter === PDateFilter.PastMonth) {
+      return "Past month";
+    } else if (dateFilter === PDateFilter.PastYear) {
+      return "Past year";
+    } else if (dateFilter === PDateFilter.AllTime) {
+      return "All time";
+    }
+  }
+
   render() {
     return (
       <div className="main-listing user-list-page manage-classrooms-page bricks-played-page classes-events-page">
@@ -551,7 +529,40 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <BricksTab activeTab={BricksActiveTab.Classes} history={this.props.history} />
             <div className="tab-content">
               <div>
-                <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
+                <div className="btn-container">
+                  <div className="btn btn-green flex-center" onClick={async () =>  {
+                    const res = await getAllAdminClassroomsStudents(this.state.dateFilter, {
+                      subjectIds: [],
+                      domains: [],
+                      searchString: ''
+                    });
+
+                    if (res && res.emails && res.emails.length > 0) {
+                      let data = 'EMAIL USERS BY CLASS\n';
+                      const date = new Date();
+                      const time = getTimeV2(date.toString());
+
+                      data += date.getDate() + 'st ' + date.toLocaleString('default', { month: 'long' }) + ' ' + date.getFullYear() + ', ' + time + '\n\n';
+                      data += 'FILTERS\n';
+                      data += 'DOMAIN: ' + this.state.domains.filter(d => d.checked).map(d => d.name) + '\n\n';
+                      data += 'DATE RANGE: ' + this.getDateRangeLabel(this.state.dateFilter) + '\n';
+                      data += 'SUBJECT: ' + this.state.selectedSubjects.map(s => s.name)  + '\n';
+                      data += '\n';
+                      data += 'EDUCATOR\n\nLEARNER\n';
+                      data += res.emails.join('\n');
+
+                      const dateString = getDateStringV2(date.toString(), '_');
+                      var blob = new Blob([data], {type: "text/plain"});
+                      FileSaver.saveAs(blob, 'Emails_by_class ' + dateString + '.txt');
+                    }
+                  }}>
+                    <div>Copy emails</div>
+                  </div>
+                  <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
+                    <div>Export</div>
+                    <SpriteIcon name="download" />
+                  </div>
+                </div>
                 {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
                   <div className="popup-3rfw bold">
                     <div className="btn-sort" onClick={() => {

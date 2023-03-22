@@ -70,7 +70,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, acti
   return (
     <Hidden only={['xs', 'sm']}>
       <div className="phone-question-preview-box">
-        <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
+        <Grid container alignContent="center" justifyContent="center" style={{ height: '100%' }}>
           {props.prev &&
             <div className="centered pointer">
               <SpriteIcon name="arrow-left" className="scroll-arrow" onClick={props.prev} />

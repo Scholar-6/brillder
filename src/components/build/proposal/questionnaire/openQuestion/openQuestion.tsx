@@ -25,7 +25,7 @@ interface OpenQuestionProps {
 
 const HeadComponent: React.FC<any> = ({ data }) => {
   return (
-    <Grid container justify="center" className="phone-preview-component">
+    <Grid container justifyContent="center" className="phone-preview-component">
       <SpriteIcon name="help-circle" className={data ? "" : "big"} />
       <div className="typing-text">
         <MathInHtml value={data} />

@@ -41,7 +41,7 @@ const SingleSubjectPagination: React.FC<PaginationProps> = props => {
           {page} <span className="gray"> | {pages.length}</span>
         </div>
       </Grid>
-      <Grid container item xs={4} justify="center">
+      <Grid container item xs={4} justifyContent="center">
         <div className="bottom-next-button">
           <PrevButton isShown={page > 0 ? true : false} onClick={props.previous} />
           <NextButton isShown={page < pages.length ? true : false} onClick={props.next} isRed={page === 1} />

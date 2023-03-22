@@ -20,7 +20,7 @@ const LockComponent: React.FC<LockComponentProps> = ({ locked, disabled, onChang
   }
   return (
     <Grid container direction="row" className="lock-relative-container">
-      <Grid container justify="center" className="lock-container" item sm={12}>
+      <Grid container justifyContent="center" className="lock-container" item sm={12}>
         <div className="container">
           <div className="lock-second-container">
             {
