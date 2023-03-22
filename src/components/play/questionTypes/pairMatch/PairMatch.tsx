@@ -43,12 +43,8 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       userAnswers = component.list;
     }
 
-    let canDrag = true;
-    if (this.props.isReview) {
-      canDrag = this.props.attempt?.correct ? false : true;
-    }
     this.state = {
-      userAnswers, canDrag, animation: false,
+      userAnswers, animation: false,
       answersRef: React.createRef<any>(),
     };
   }
@@ -70,9 +66,12 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
 
   getState(entry: number): number {
     try {
-      if (this.props.isReview && this.props.attempt === this.props.liveAttempt) {
-        if (this.props.attempt?.answer[entry]) {
-          if (this.props.attempt.answer[entry].index === this.props.component.list[entry].index) {
+      if (this.props.isReview) {
+        if (this.props.attempt?.answer[entry] && this.props.liveAttempt?.answer[entry]) {
+          if (
+            this.props.liveAttempt.answer[entry].index === this.props.attempt.answer[entry].index &&
+            this.props.attempt.answer[entry].index === this.props.component.list[entry].index
+          ) {
             return 1;
           } else { return -1; }
         } else { return 0; }
@@ -158,7 +157,8 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       }
     }
 
-    if (this.state.animation === true || !this.state.canDrag) { return; }
+    if (this.state.animation === true) { return; }
+
     const index2 = this.state.userAnswers.findIndex(a => a.swapping === true);
     if (index2 >= 0) {
       const ulist = [...this.state.userAnswers];
@@ -275,7 +275,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   }
 
   renderAnswers() {
-    if (this.props.isBookPreview || this.props.isPreview || !this.state.canDrag) {
+    if (this.props.isBookPreview || this.props.isPreview) {
       return (
         <div className="answers-list">
           {this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))}

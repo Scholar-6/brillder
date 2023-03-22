@@ -31,7 +31,6 @@ export interface PairMatchProps extends CompQuestionProps {
   
 export interface PairMatchState {
   userAnswers: any[];
-  canDrag: boolean;
   animation: boolean;
   answersRef: React.RefObject<any>;
 }
