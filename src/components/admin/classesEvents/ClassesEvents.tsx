@@ -556,10 +556,10 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                       }
                       data += 'SUBJECT: ' + this.state.selectedSubjects.map(s => s.name) + '\n';
                       data += '\n';
-                      data += 'EDUCATOR[' + res.teacherEmails.length + ']\n';
+                      data += 'EDUCATOR [' + res.teacherEmails.length + ']\n';
                       data += res.teacherEmails.join('\n');
                       data += '\n\n';
-                      data += 'LEARNER[' + res.emails.length + ']\n';
+                      data += 'LEARNER [' + res.emails.length + ']\n';
                       data += res.emails.join('\n');
 
                       const dateString = getDateStringV2(date.toString(), '_');
