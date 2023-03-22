@@ -369,14 +369,19 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <div className="teacher-column">
               <div>
                 {c.teachers.map((t, i) =>
-                  <div
-                    className="teacher-row underline"
-                    onClick={() => { this.props.history.push(map.TeachAssignedTab + '?teacherId=' + t.id) }}
-                    key={i}
-                  >
-                    {t.firstName} {t.lastName}
-                  </div>)
-                }
+                  <div>
+                    <div
+                      className="teacher-row underline"
+                      onClick={() => { this.props.history.push(map.TeachAssignedTab + '?teacherId=' + t.id) }}
+                      key={i}
+                    >
+                      {t.firstName} {t.lastName}
+                    </div>
+                    <div>
+                      {t.email}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             {this.renderStudentsColumn(c)}
@@ -530,11 +535,11 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <div className="tab-content">
               <div>
                 <div className="btn-container">
-                  <div className="btn btn-green flex-center" onClick={async () =>  {
+                  <div className="btn btn-green flex-center" onClick={async () => {
                     const res = await getAllAdminClassroomsStudents(this.state.dateFilter, {
-                      subjectIds: [],
-                      domains: [],
-                      searchString: ''
+                      subjectIds: this.state.selectedSubjects.map(s => s.id),
+                      domains: this.state.domains.filter(d => d.checked).map(d => d.name),
+                      searchString: this.state.searchString
                     });
 
                     if (res && res.emails && res.emails.length > 0) {
@@ -546,7 +551,10 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                       data += 'FILTERS\n';
                       data += 'DOMAIN: ' + this.state.domains.filter(d => d.checked).map(d => d.name) + '\n';
                       data += 'DATE RANGE: ' + this.getDateRangeLabel(this.state.dateFilter) + '\n';
-                      data += 'SUBJECT: ' + this.state.selectedSubjects.map(s => s.name)  + '\n';
+                      if (this.state.searchString) {
+                        data += 'SEARCHSTRING: ' + this.state.searchString + '\n';
+                      }
+                      data += 'SUBJECT: ' + this.state.selectedSubjects.map(s => s.name) + '\n';
                       data += '\n';
                       data += 'EDUCATOR\n';
                       data += res.teacherEmails.join('\n');
@@ -555,7 +563,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                       data += res.emails.join('\n');
 
                       const dateString = getDateStringV2(date.toString(), '_');
-                      var blob = new Blob([data], {type: "text/plain"});
+                      var blob = new Blob([data], { type: "text/plain" });
                       FileSaver.saveAs(blob, 'Emails_by_class ' + dateString + '.txt');
                     }
                   }}>
