@@ -5,10 +5,9 @@ import { isMobile } from 'react-device-detect';
 
 import './PairMatch.scss';
 import CompComponent from '../Comp';
-import { ComponentAttempt } from 'components/play/model';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { Answer } from 'components/build/buildQuestions/questionTypes/pairMatchBuild/types';
-import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, PairMatchComponent } from './interface';
+import { PairMatchProps, PairMatchState } from './interface';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import PairMatchOption from './PairMatchOption';
 import PairMatchImageContent from './PairMatchImageContent';
@@ -20,7 +19,6 @@ import { isPhone } from 'services/phone';
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   constructor(props: PairMatchProps) {
     super(props);
-    let status = DragAndDropStatus.None;
     let userAnswers = [];
 
     const { component } = props;
@@ -50,7 +48,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       canDrag = this.props.attempt?.correct ? false : true;
     }
     this.state = {
-      status, userAnswers, canDrag, animation: false,
+      userAnswers, canDrag, animation: false,
       answersRef: React.createRef<any>(),
     };
   }
@@ -66,17 +64,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         this.setState({ userAnswers: this.props.answers as any });
       }
     }
-  }
-
-  setUserAnswers(userAnswers: any[]) {
-    let status = DragAndDropStatus.Changed;
-    if (this.state.status === DragAndDropStatus.None) {
-      status = DragAndDropStatus.Init;
-    }
-    if (status === DragAndDropStatus.Changed && this.props.onAttempted) {
-      this.props.onAttempted();
-    }
-    this.setState({ status, userAnswers });
   }
 
   getAnswer(): any[] { return this.state.userAnswers; }
@@ -103,14 +90,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     ) {
       return 1;
     } else { return -1; }
-  }
-
-  prepareAttempt(component: PairMatchComponent, attempt: ComponentAttempt<PairMatchAnswer>) {
-    if (this.state.status === DragAndDropStatus.Changed) {
-      attempt.dragged = true;
-    }
-
-    return attempt;
   }
 
   renderAnswerContent(answer: Answer) {
@@ -145,12 +124,13 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (answer.answerType === QuestionValueType.Image) {
       className += " image-choice";
     }
-    if (this.props.attempt && this.props.isReview && this.props.attempt === this.props.liveAttempt) {
-      if (this.state.status !== DragAndDropStatus.Changed) {
-        let state = this.getState(answer.index);
-        if (state === 1) {
-          className += " correct";
-        }
+    if (answer.swapping === true) {
+      className += " active";
+    }
+    if (this.props.attempt && this.props.isReview) {
+      let state = this.getState(answer.index);
+      if (state === 1) {
+        className += " correct";
       }
     }
 
@@ -170,6 +150,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   }
 
   swapQuestions(answer: any, index: number) {
+    // if answer is correct do nothing
+    if (this.props.attempt && this.props.isReview && this.props.attempt === this.props.liveAttempt) {
+      let state = this.getState(answer.index);
+      if (state === 1) {
+        return;
+      }
+    }
+
     if (this.state.animation === true || !this.state.canDrag) { return; }
     const index2 = this.state.userAnswers.findIndex(a => a.swapping === true);
     if (index2 >= 0) {
@@ -199,7 +187,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         bprop = [{ transform: 'translateY(-' + endPt + 'px)' }];
       }
 
-      const duration = 800;
+      const duration = 300;
 
       el1.animate(aprop, { duration });
       el2.animate(bprop, { duration });
@@ -209,6 +197,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       }, duration);
     } else {
       answer.swapping = true;
+      this.setState({ userAnswers: this.state.userAnswers });
     }
   }
 
