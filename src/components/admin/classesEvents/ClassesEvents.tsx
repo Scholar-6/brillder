@@ -535,7 +535,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
             <div className="tab-content">
               <div>
                 <div className="btn-container">
-                  <div className="btn btn-green flex-center" onClick={async () => {
+                  <div className="btn btn-blue flex-center" onClick={async () => {
                     const res = await getAllAdminClassroomsStudents(this.state.dateFilter, {
                       subjectIds: this.state.selectedSubjects.map(s => s.id),
                       domains: this.state.domains.filter(d => d.checked).map(d => d.name),
