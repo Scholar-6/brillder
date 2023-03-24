@@ -265,6 +265,10 @@ h3 {
 .pair-match-play .pair-match-play-choice {
   border: none !important;
   background: var(--solitude-light) !important;
+
+  &.active {
+    background: var(--highlight-blue) !important;
+  }
 }
 
 .short-answer-input.correct {

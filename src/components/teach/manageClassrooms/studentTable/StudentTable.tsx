@@ -128,12 +128,13 @@ const StudentTable: React.FC<StudentTableProps> = props => {
               </div>
               {!user.hasInvitation && renderLibraryLink(user)}
             </div>
-            <div className="student-name">
+            <div className={"student-name"}>
               {user.hasInvitation
                 ? <div className="user-email">{user.email}</div>
                 : <div>
                   <span className="user-first-name">{user.firstName} </span>
                   <span className="user-last-name">{user.lastName}</span>
+                  {props.isClassroom && <span>{user.email}</span>}
                 </div>}
             </div>
             <div className="classroom-names">
@@ -178,6 +179,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
         selectedUsers={props.selectedUsers}
         sortBy={sortBy}
         isAscending={isAscending}
+        isClassroom={props.isClassroom}
         pageStudentsSelected={props.pageStudentsSelected}
         sort={props.sort}
         togglePageStudents={props.togglePageStudents}

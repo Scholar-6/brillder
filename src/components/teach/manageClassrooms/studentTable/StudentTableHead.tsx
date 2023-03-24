@@ -8,6 +8,7 @@ interface StudentTableProps {
   sortBy: UserSortBy;
   isAscending: boolean;
   pageStudentsSelected: boolean;
+  isClassroom?: boolean;
 
   sort(sortBy: UserSortBy): void;
   togglePageStudents(): void;
@@ -51,15 +52,16 @@ const StudentTableHead: React.FC<StudentTableProps> = props => {
         <Checkbox onMouseOver={onHover} onMouseLeave={onBlur} checked={props.pageStudentsSelected} onClick={props.togglePageStudents} />
         {allHovered && <div className="custom-tooltip">Select All</div>}
       </div>
-      <div className="user-full-name">
+      <div className={`user-full-name ${props.isClassroom ? " bigger" : ""}`}>
         <Grid container>
           Name
           {renderSortArrow(UserSortBy.Name)}
         </Grid>
       </div>
+      {!props.isClassroom &&
       <div className="classes-names">
         <Grid container>Classes</Grid>
-      </div>
+      </div>}
       <div className="selected-column">
       </div>
     </div>
