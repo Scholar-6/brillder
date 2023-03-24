@@ -63,6 +63,10 @@
   }
 }
 
+.user-list-page.manage-classrooms-page .sorted-row .brick-row-container .users-table {
+  height: calc(100vh - 7.834vw - 6.6vh - 8vh - 2vh - 2.6vw) !important;
+}
+
 .manage-classrooms-page .users-table {
   .user-row:hover {
     .overflow-fade-end {
