@@ -1,4 +1,9 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Brillder
+
+## Introduction
+This is the frontend repository for the Brillder application [https://brillder.com](https://brillder.com). It is public and open source on purpose as we are happy for people to fork and experiment, it also makes on boarding of new developers to our project. However it is important for investors, potential investors and other stakeholders to understand that the Apache 2.0 license on this repository does not allow others to use the Brillder brand and colours, also note that the backend is closed-source and the code is not accessible to the public. This frontend is only really useful when accessing content from the Brillder api [https://api.brillder.com](https://api.brillder.com) and all the content accessed from that API is copyrighted and under license with certain restrictions on how it can be accessed (i.e. you can only submit play attempts so many times before paying a subscription). 
+
+For more information please see [https://brillder.com](https://brillder.com) or contact us on [hello@brillder.com](mailto:hello@brillder.com)
 
 ## Development Version
 All changes to development branch are automatically deployed to http://dev-brillder.scholar6.org
