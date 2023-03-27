@@ -21,6 +21,10 @@
   }
   .user-full-name {
     width: $user-name-width !important;
+
+    &.bigger {
+      width: 30vw;
+    }
   }
   .user-radio-column {
     display: flex;

@@ -58,6 +58,9 @@ $tile-height: 100%;
     }
 
     &.active {
+      .MuiImageListItem-item {
+        overflow: unset !important;
+      }
       .drag-tile {
         background: var(--white);
 
@@ -330,6 +333,9 @@ $tile-height: 100%;
 }
 
 .drag-tabs {
+  .MuiImageList-root {
+    overflow: unset !important;
+  }
   .drag-tile-container .drag-tile.invalid {
     .synthesis-tab-icon {
       .svg {
