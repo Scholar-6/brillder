@@ -88,6 +88,7 @@ interface AppProps {
   setReferralId(referralId: string): void;
 }
 
+
 const App: React.FC<AppProps> = props => {
   const history = useHistory();
   const location = useLocation();
