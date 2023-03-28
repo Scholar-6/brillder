@@ -412,7 +412,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   renderSubscribeButton() {
-    const {user} = this.props;
+    const { user } = this.props;
     let renderPremiumButton = false;
     if (user.subscriptionState === 0 || !user.subscriptionState) {
       renderPremiumButton = true;
@@ -428,15 +428,16 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     if (renderPremiumButton === true) {
       return (
         <div className="subscribe-btn" onClick={() => this.props.history.push(map.ChoosePlan)}>
-        <div className="bold">Subscribe</div>
-        <SpriteIcon name="hero-sparkle" />
-      </div>
+          <div className="bold">Subscribe</div>
+          <SpriteIcon name="hero-sparkle" />
+        </div>
       );
     }
     return <div />;
   }
 
   render() {
+    const { user } = this.props;
     return (
       <Grid container direction="row" className="mainPageMobile">
         <div className="mobile-main-page">
@@ -444,33 +445,37 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <div className="absolute-brills-and-coins">
             <div className="brill-coin-container">
               <div className="brills-count">
-                {this.props.user.brills}
+                {user.brills}
               </div>
               <div className="brill-coin-img" onClick={() => this.setState({
                 coinsPopup: false,
-                brillsPopup: !this.state.brillsPopup}
+                brillsPopup: !this.state.brillsPopup
+              }
               )}>
                 <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
                 <SpriteIcon name="logo" />
-                <div className={`css-custom-tooltip ${this.state.brillsPopup ? 'visible': ''}`}>
-                  <div className="bold">What are brills?</div>
-                  <div className="regular">If you score over 50% on your first attempt or improve an earlier score while scoring over 50%, your percentage converts into bonus points, called brills. We're giving 200 brills to all new and existing users as a thank you for using our platform.</div>
-                  <div className="regular">Collect enough brills and you can even win cash prizes!</div>
-                </div>
+                {!user.isFromInstitution &&
+                  <div className={`css-custom-tooltip ${this.state.brillsPopup ? 'visible' : ''}`}>
+                    <div className="bold">What are brills?</div>
+                    <div className="regular">If you score over 50% on your first attempt or improve an earlier score while scoring over 50%, your percentage converts into bonus points, called brills. We're giving 200 brills to all new and existing users as a thank you for using our platform.</div>
+                    <div className="regular">Collect enough brills and you can even win cash prizes!</div>
+                  </div>}
               </div>
             </div>
           </div>
-          <div className="coins-container">
-            <ReactiveUserCredits
-              className="phone-credit-coins"
-              popupShown={this.state.coinsPopup}
-              history={this.props.history}
-              onClick={() => this.setState({
-                brillsPopup: false,
-                coinsPopup: !this.state.coinsPopup})
-              }
-            />
-          </div>
+          {!user.isFromInstitution &&
+            <div className="coins-container">
+              <ReactiveUserCredits
+                className="phone-credit-coins"
+                popupShown={this.state.coinsPopup}
+                history={this.props.history}
+                onClick={() => this.setState({
+                  brillsPopup: false,
+                  coinsPopup: !this.state.coinsPopup
+                })
+                }
+              />
+            </div>}
           <div className="welcome-container">
             <div>
               <div className="bold welcome-title">Welcome to Brillder,</div>
@@ -479,15 +484,15 @@ class MainPage extends Component<MainPageProps, MainPageState> {
                 onClick={() => this.props.history.push(map.UserProfile)}
               >
                 <div className="centered">
-                  {this.props.user.profileImage
+                  {user.profileImage
                     ?
                     <div className="profile-image-border">
-                      <img alt="user-profile" src={fileUrl(this.props.user.profileImage)} />
+                      <img alt="user-profile" src={fileUrl(user.profileImage)} />
                     </div>
                     : <SpriteIcon name="user-custom" />
                   }
                 </div>
-                <span>{this.props.user.firstName}</span>
+                <span>{user.firstName}</span>
                 {this.renderSparkle()}
               </div>
               <div dangerouslySetInnerHTML={{ __html: this.state.notificationText }} />
@@ -497,7 +502,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         </div>
         {this.renderSubscribeButton()}
         <MainPageMenu
-          user={this.props.user}
+          user={user}
           history={this.props.history}
           notificationExpanded={this.state.notificationExpanded}
           toggleNotification={() =>
@@ -531,17 +536,17 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         {!this.state.isNewStudent && <PersonalBrickInvitationDialog />}
         <SubscribedDialog isOpen={this.state.subscribedPopup} close={() => this.setState({ subscribedPopup: false })} />
         {this.state.isNewStudent &&
-        <Steps
-          enabled={this.state.isNewStudent}
-          steps={this.state.steps}
-          initialStep={0}
-          onExit={this.onIntroExit.bind(this)}
-          onComplete={() => this.props.history.push(map.ViewAllPage)}
-          options={{
-            nextLabel: 'Next',
-            doneLabel: 'Explore Brillder'
-          }}
-        />}
+          <Steps
+            enabled={this.state.isNewStudent}
+            steps={this.state.steps}
+            initialStep={0}
+            onExit={this.onIntroExit.bind(this)}
+            onComplete={() => this.props.history.push(map.ViewAllPage)}
+            options={{
+              nextLabel: 'Next',
+              doneLabel: 'Explore Brillder'
+            }}
+          />}
       </Grid>
     );
   }
