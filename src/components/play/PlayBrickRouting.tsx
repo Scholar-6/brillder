@@ -441,8 +441,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
     const values = queryString.parse(location.search);
 
-    console.log('6667', values)
-
     if (values.origin === 'heartofmercia' || values.origin === "ms-sso") {
       SetLoginRedirectUrl(location.pathname);
       SetHeartOfMerciaUser();
@@ -458,7 +456,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       if (!props.user) {
         setTimeout(() => {
           window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
-        }, 100);
+        }, 1000);
       }
     }
 
