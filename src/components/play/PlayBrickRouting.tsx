@@ -449,6 +449,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       let redirectUrl = document.referrer;
       if (redirectUrl === 'https://brillder.com/') {
         redirectUrl = values.returnUrl as string;
+      } else if (redirectUrl === '') {
+        // redirect without iframe
+        redirectUrl = values.returnUrl as string;
       }
       SetFinishRedirectUrl(redirectUrl);
       console.log('66 set redirect url', redirectUrl);
