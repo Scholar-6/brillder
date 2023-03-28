@@ -382,7 +382,9 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                     <div className="btn btn-green orange" onClick={() => {
                       if (this.state.isHeartOfMercia) {
                         const finishUrl = GetFinishRedirectUrl();
-                        window.location.href = finishUrl ? finishUrl : "https://www.heartofmercia.org.uk/";
+                        if (finishUrl) {
+                          window.location.href = finishUrl;
+                        }
                         UnsetFinishRedirectUrl();
                       } else if (this.props.user?.library) {
                         this.moveToHome();
