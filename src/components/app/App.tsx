@@ -172,21 +172,23 @@ const App: React.FC<AppProps> = props => {
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    let { url } = error.response?.config;
+    if (error && error.response) {
+      let { url } = error.response?.config;
 
-    // exception for login, play and view all pages
-    if (error.response.status === 401) {
-      if (
-        url.search('/auth/login/') === -1
-        && location.pathname.search('/play/brick/') === -1
-        && location.pathname.search('/play/dashboard') === - 1
-      ) {
-        props.setLogoutSuccess();
+      // exception for login, play and view all pages
+      if (error.response.status === 401) {
+        if (
+          url.search('/auth/login/') === -1
+          && location.pathname.search('/play/brick/') === -1
+          && location.pathname.search('/play/dashboard') === - 1
+        ) {
+          props.setLogoutSuccess();
+        }
       }
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
   });
-  
+
 
   if (!GetOrigin()) {
     const values = queryString.parse(location.search);
@@ -297,7 +299,7 @@ const App: React.FC<AppProps> = props => {
             <StudentRoute path={map.ChoosePlan} component={LandingSubscribePage} />
             <StudentRoute path={map.ChoosePlan} component={LandingSubscribePage} />
             <AllUsersRoute path={map.SubscriptionTerms} component={PayTerms} />
-            
+
             <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
             <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
             <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />

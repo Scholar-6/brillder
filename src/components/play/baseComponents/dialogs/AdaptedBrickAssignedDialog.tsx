@@ -3,7 +3,6 @@ import Dialog from "@material-ui/core/Dialog";
 
 import './PremiumEducatorDialog.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import map from "components/map";
 import routes from "components/play/routes";
 
 interface InvitationProps {
@@ -13,7 +12,6 @@ interface InvitationProps {
 }
 
 const AdaptedBrickAssignedDialog: React.FC<InvitationProps> = props => {
-  console.log(props.assignment)
   return (
     <Dialog
       open={!!props.assignment}

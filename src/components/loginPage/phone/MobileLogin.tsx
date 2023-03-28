@@ -88,7 +88,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
             <MicrosoftDesktopButton />
             <UKLibraryButton onClick={this.moveToLibraryLogin.bind(this)} />
             <RegisterButton onClick={this.props.moveToLogin} />
-            <div className="button-box">
+            <div className="button-box button-box-custom">
               <div className="text-box gg-text-box">
                 <span>New to Brillder?</span>
                 <div className="join-button" onClick={() => this.props.history.push(JoinPage)}>

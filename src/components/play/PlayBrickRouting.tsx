@@ -149,8 +149,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [activeCompetition, setActiveCompetition] = useState(null as any | null); // active competition
 
-  console.log('active competition', activeCompetition);
-
   const [bestScore, setBestScore] = useState(-1);
   const [totalBrills, setTotalBrills] = useState(-1);
 
@@ -375,7 +373,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       try {
         const isActive = checkCompetitionActive(comp);
         if (isActive) {
-          console.log('active competition', comp);
           competition = comp;
         }
       } catch {
@@ -387,7 +384,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const getCompetition = async () => {
     const res = await getCompetitionsByBrickId(brick.id);
-    console.log('competition', res);
     if (res && res.length > 0) {
       const competition = getNewestCompetition(res);
       console.log('competition passed test', competition)
@@ -451,9 +447,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       let redirectUrl = document.referrer;
       if (redirectUrl === 'https://brillder.com/') {
         redirectUrl = values.returnUrl as string;
+      } else if (redirectUrl === '') {
+        // redirect without iframe
+        redirectUrl = values.returnUrl as string;
       }
       SetFinishRedirectUrl(redirectUrl);
-      window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
+      console.log('66 set redirect url', redirectUrl);
+      if (!props.user) {
+        setTimeout(() => {
+          window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
+        }, 1000);
+      }
     }
 
     if (values.origin === 'library') {
@@ -461,7 +465,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       toggleSideBar(true);
     }
     /*eslint-disable-next-line*/
-  }, [])
+  }, [])    
 
   const updateAttempts = (attempt: any, index: number) => {
     if (attempt) {
@@ -784,7 +788,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const renderRouter = () => {
-    console.log('cover image meta', brick.coverImage);
     return <>
       <Helmet>
         <title>{getBrillderTitle(brick.title)}</title>
