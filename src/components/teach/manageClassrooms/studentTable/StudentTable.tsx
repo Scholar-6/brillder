@@ -133,7 +133,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 ? <div className="user-email">{user.email}</div>
                 : <div>
                   <span className="user-first-name">{user.firstName} </span>
-                  <span className="user-last-name">{user.lastName}</span>
+                  <span className="user-last-name">{user.lastName}</span><br/>
                   {props.isClassroom && <span>{user.email}</span>}
                 </div>}
             </div>
