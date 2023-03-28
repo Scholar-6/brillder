@@ -26,13 +26,16 @@ export function UnsetHeartOfMerciaUser() {
 
 
 export function SetFinishRedirectUrl(url: string) {
+  console.log('set redirect url', url);
   localStorage.setItem(PlayFinishRedirectURL, url);
 }
 
 export function GetFinishRedirectUrl() {
+  console.log('get redirect url');
   return localStorage.getItem(PlayFinishRedirectURL);
 }
 
 export function UnsetFinishRedirectUrl() {
+  console.log('remove redirect url');
   localStorage.removeItem(PlayFinishRedirectURL);
 }
