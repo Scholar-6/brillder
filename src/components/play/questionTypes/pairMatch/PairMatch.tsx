@@ -238,11 +238,12 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       <p>
         {isPhone() ? this.renderPhoneTip(haveImage) :
           <span className="help-text">
-            <SpriteIcon name="pair-match-phone-d3" /><span>Select an answer to rearrange.</span> {
+           {
               haveImage && (isMobile
                 ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
                 : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
             }
+             <SpriteIcon name="pair-match-phone-d3" /><span>Click answer options to swap.</span> 
           </span>}
         {!isPhone() && isMobile &&
           <span className="help-text">
