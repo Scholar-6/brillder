@@ -1765,3 +1765,26 @@
     }
   }
 }
+
+// missing words hint
+.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .missing-word-choice  .question-hint {
+  font-size: 0.9vw !important;
+  p {
+    font-size: 0.9vw !important;
+  }
+  
+  .hint-icon-block {
+    width: 1.7vw;
+    position: relative;
+
+    .ged-phone-circle {
+      position: absolute;
+      top: -0.9vw;
+      left: 0vw;
+    }
+  }
+}
+
+.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .missing-word-choice  .missing-select p {
+  font-size: 1vw !important;
+}
