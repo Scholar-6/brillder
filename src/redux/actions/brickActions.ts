@@ -57,13 +57,14 @@ const saveBrickSuccess = (brick: Brick) => {
   } as Action
 }
 
-const saveBrickFieldSuccess = (brickId: number, fieldName: string, value: string) => {
+const saveBrickFieldSuccess = (brickId: number, fieldName: string, value: string, updated: string) => {
   return {
     type: types.SAVE_BRICK_FIELD_SUCCESS,
     payload: {
       brickId,
       fieldName,
-      value
+      value,
+      updated
     },
   } as Action
 }
@@ -104,7 +105,7 @@ const saveBrickField = (brickId: number, fieldName: string, value: string) => {
       process.env.REACT_APP_BACKEND_HOST + '/brick/fieldName/' + fieldName, {id: brickId, value }, {withCredentials: true, timeout: 10000}
     ).then(response => {
       const savedBrick = response.data as Brick;
-      dispatch(saveBrickFieldSuccess(brickId, fieldName, value));
+      dispatch(saveBrickFieldSuccess(brickId, fieldName, value, savedBrick.updated));
       return savedBrick;
     }).catch(error => {
       dispatch(saveBrickFailure(error.message))

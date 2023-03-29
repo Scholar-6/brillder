@@ -26,7 +26,7 @@ export default (state = BrickInitialState, action: any) => {
       const brickCopy = Object.assign({}, newBrick) as any;
       const {payload} = action;
       brickCopy[payload.fieldName] = payload.value;
-      console.log('brick saved', brickCopy, payload);
+      brickCopy.updated = payload.updated;
       return {
         brick: brickCopy,
         error: ''
