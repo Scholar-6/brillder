@@ -25,7 +25,8 @@ export enum NotificationType {
   BrillsEarned,
   PurchaseCredits,
   CompetitionClosed,
-  ClassroomInvited
+  ClassroomInvited,
+  CreditsAdded
 }
 
 export interface Notification {
@@ -60,4 +61,5 @@ export const notificationTypeColors = {
   [NotificationType.PurchaseCredits]: "white",
   [NotificationType.CompetitionClosed]: "white",
   [NotificationType.ClassroomInvited]: "white",
+  [NotificationType.CreditsAdded]: "white",
 };
