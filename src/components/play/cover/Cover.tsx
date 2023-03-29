@@ -434,7 +434,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                       if (onlyLibrary && !props.user) {
                         setUnauthorizedV2(true);
                       } else {
-                        props.history.push('/play/dashboard?mySubject=true&searchString=' + keyword.name)
+                        props.history.push(map.ViewAllPageB + '&searchString=' + keyword.name);
                       }
                     }} />
                     {!isMobile && props.user && checkAdmin(props.user.roles) && <div className="btn b-green text-white" onClick={() => props.history.push(map.Proposal(brick.id))}>Edit</div>}

@@ -115,7 +115,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
             if (isPhone()) {
               move("/play/dashboard/1", 'View All Bricks');
             } else {
-              move(map.ViewAllPage + '?mySubject=true', 'View All Bricks');
+              move(map.ViewAllPageB, 'View All Bricks');
             }
           }}
         >

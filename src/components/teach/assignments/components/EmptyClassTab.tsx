@@ -14,7 +14,7 @@ const EmptyClassTab: React.FC<Props> = (props) => {
     <div className="tab-content">
       <div className={"tab-content-centered " + (activeClassroom ? 'empty-tab-content' : '')}>
         <div>
-          <div className="icon-container glasses-icon-container" onClick={() => props.history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true')}>
+          <div className="icon-container glasses-icon-container" onClick={() => props.history.push(map.ViewAllPageB + '&newTeacher=true')}>
             <SpriteIcon name="glasses-home-blue" className="glasses-icon" />
             <div className="glass-eyes-inside">
               <div className="glass-eyes-left svgOnHover">

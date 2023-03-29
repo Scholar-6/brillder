@@ -202,7 +202,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
 
     let isAllSubjects = true;
-    if (values.mySubject) {
+    if (values.mySubject === 'true') {
       isAllSubjects = false;
     }
 
