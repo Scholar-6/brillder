@@ -398,9 +398,9 @@ class UsersPage extends Component<UsersProps, UsersState> {
     }
 
     return <div className="table-body">
-      {users.map(u => {
-        return (<div className="table-row">
-          <div className="publish-column">{u.created && getDateString(u.created)}</div>
+      {users.map((u, i) => {
+        return (<div className="table-row" key={i}>
+          <div className="publish-column">{ u.created && getDateString(u.created)}</div>
           <div className="author-column">{u.firstName} {u.lastName}</div>
           <div className="second-column">{u.email}</div>
           <div className="third-column">{this.renderUserType(u)}{this.renderLibrary(u)}</div>

@@ -76,6 +76,11 @@ const NotificationItem: React.FC<Props> = ({
               className="w60 h60 active text-theme-dark-blue"
             />
           }
+          {notification.type === NotificationType.CreditsAdded && <SpriteIcon
+              name="circle-lines"
+              className="w60 h60 active text-theme-dark-blue"
+            />
+          }
           {notification.type === NotificationType.BrickAttemptSaved && (
             <svg
               className="svg w60 h60 active text-theme-dark-blue stroke-2"

@@ -137,6 +137,11 @@ const NotificationPopup: React.FC<NotificationPopupProps> = props => {
             {notification.type === NotificationType.NewCommentOnBrick &&
               <SpriteIcon name="message-square-thick" className="w60 h60 active text-theme-dark-blue" />
             }
+            {notification.type === NotificationType.CreditsAdded && <SpriteIcon
+              name="circle-lines"
+              className="w60 h60 active text-theme-dark-blue"
+            />
+            }
             {notification.type === NotificationType.InvitedToPlayBrick &&
               <svg className="svg w60 h60 active text-theme-dark-blue" style={{ marginLeft: '0.2vw' }}>
                 {/*eslint-disable-next-line*/}
