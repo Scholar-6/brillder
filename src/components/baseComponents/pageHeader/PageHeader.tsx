@@ -275,9 +275,9 @@ class PageHeader extends Component<Props, State> {
           {this.props.suggestions && this.state.value.length >= 1 && <SearchSuggestions
             history={this.props.history} subjects={this.state.subjects}
             searchString={this.state.value} bricks={this.state.bricks}
-            filterByAuthor={a => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + a.firstName)}
-            filterBySubject={s => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + s.name)}
-            filterByKeyword={k => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + k.name)}
+            filterByAuthor={a => this.props.history.push(map.ViewAllPageB + '&searchString=' + a.firstName)}
+            filterBySubject={s => this.props.history.push(map.ViewAllPageB + '&searchString=' + s.name)}
+            filterByKeyword={k => this.props.history.push(map.ViewAllPageB + '&searchString=' + k.name)}
           />}
         </div>
       );
@@ -382,9 +382,9 @@ class PageHeader extends Component<Props, State> {
         {this.props.suggestions && this.state.value.length >= 1 && <SearchSuggestions
           history={this.props.history} subjects={this.state.subjects}
           searchString={this.state.value} bricks={this.state.bricks}
-          filterByAuthor={a => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + a.firstName)}
-          filterBySubject={s => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + s.name)}
-          filterByKeyword={k => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=' + k.name)}
+          filterByAuthor={a => this.props.history.push(map.ViewAllPageB + '&searchString=' + a.firstName)}
+          filterBySubject={s => this.props.history.push(map.ViewAllPageB + '&searchString=' + s.name)}
+          filterByKeyword={k => this.props.history.push(map.ViewAllPageB + '&searchString=' + k.name)}
         />}
       </div>
     );
