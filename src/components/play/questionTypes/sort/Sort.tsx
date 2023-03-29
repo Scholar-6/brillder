@@ -285,7 +285,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         </div>
       );
     }
-    return <MathInHtml value={choice.text} />;
+    return <MathInHtml className="text-container" value={choice.text} />;
   }
 
   getHintIndex(choice: SortAnswer) {
@@ -434,14 +434,14 @@ class Sort extends CompComponent<SortProps, SortState> {
                 setList={(list: any[]) => this.updateCategory(list, this.state.userCats.length - 1)}
                 onStart={(e: any) => {
                   try {
-                    e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = 'white';
+                    //e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = 'white';
                   } catch {
                     console.log('error', e)
                   }
                 }}
                 onEnd={(e: any) => {
                   try {
-                    e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = '';
+                    //e.item.firstChild.firstChild.firstChild.firstChild.style.backgroundColor = '';
                   } catch {
                     console.log('error', e)
                   }
