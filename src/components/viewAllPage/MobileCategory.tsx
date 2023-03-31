@@ -27,7 +27,6 @@ import routes from "components/play/routes";
 import InfinityScrollCustom from "./InvinityScrollCustom";
 import { getPublishedBricksByPage, getUnauthPublishedBricksByPage } from "services/axios/brick";
 import { ENGLISH_LANGUAGE_SUBJECT, ENGLISH_LITERATURE_SUBJECT, GENERAL_SUBJECT } from "components/services/subject";
-import { getSubjects } from "services/axios/subject";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -75,6 +74,8 @@ interface BricksListState {
   groupSubjects: Subject[];
 
   filterLevels: AcademicLevel[];
+
+  searchExpanded: boolean;
 }
 
 class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
@@ -113,6 +114,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       bricksCount: 0,
       shown: false,
       activeTab,
+      searchExpanded: false
     }
 
     this.loadData(subjectIds, expandedGroup);
@@ -284,7 +286,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             this.props.history.push(path);
           }}
         />
-        <div className="ba-search-input-container">
+        <div className="ba-search-input-container" onClick={() => {
+          this.setState({searchExpanded: true});
+        }}>
           <SpriteIcon name="search" />
           <input
             value={this.state.typingString}
@@ -367,6 +371,31 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderGroupSearch() {
+    if (this.state.searchExpanded) {
+      return (
+        <div className="search-container expanded">
+          <div className="back-arrow-container">
+            <SpriteIcon
+              name="arrow-left-stroke" className="absolute-arrow"
+              onClick={() => {
+                this.setState({ expandedGroup: null, typingString: '', searchString: '', groupSubjects: [] })
+                this.props.history.push(this.props.location.pathname);
+              }}
+            />
+            <div className="ba-search-input-container" onClick={() => {
+              this.setState({searchExpanded: true});
+            }}>
+              <SpriteIcon name="search" />
+              <input
+                value={this.state.typingString}
+                onChange={e => this.search(e.target.value)}
+                placeholder="Search in subject"
+              />
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="search-container">
         <div className="back-arrow-container">
@@ -492,31 +521,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  renderJustSubjects(subjects: Subject[], expandedSubjects?: Subject[]) {
-    return (
-      <div className="subjects-custom-v6">
-        {subjects.map(s => {
-          let selected = false;
-          if (expandedSubjects) {
-            const found = expandedSubjects.find(sub => s.id === sub.id);
-            if (found) {
-              selected = true;
-            }
-          }
-          return (
-            <div key={s.id} className={`subject-button ${selected ? 'active' : ''}`} onClick={() => this.toggleSubject(s)}>
-              <SpriteIcon name="circle-filled" style={{ color: s.color }} />
-              <div>
-                {s.name}
-              </div>
-            </div>
-          );
-        }
-        )}
-      </div>
-    );
-  }
-
   renderTabs() {
     return (
       <div className="tabs">
@@ -534,9 +538,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   render() {
-    if (this.state.expandedSubjects && this.state.expandedSubjects.length > 0) {
-      return this.renderExpandedSubjects(this.state.expandedSubjects);
-    }
     if (this.state.expandedGroup) {
       return this.renderExpandedSubjectGroup(this.state.expandedGroup);
     }
