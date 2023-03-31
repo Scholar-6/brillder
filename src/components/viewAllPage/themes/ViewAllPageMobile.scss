@@ -1215,13 +1215,13 @@
 
     .subjects-title-d33 {
       display: flex;
-      margin-left: 3vw;
+      margin-left: 4vw;
       margin-top: 4.5vw;
       margin-bottom: 2vw;
 
       .subject-title {
         font-family: $font-family-bold;
-        width: 60vw;
+        width: 59vw;
       }
 
       .bricks-count {
@@ -1484,40 +1484,6 @@
           color: #B0B0B0;
         }
       } 
-    }
-  }
-}
-
-.subjects-custom-v6 {
-  margin-top: 2vw;
-  padding-left: 2vw;
-  padding-right: 2vw;
-  padding-bottom: 3vw;
-  display: flex;
-  overflow-x: scroll;
-  .subject-button {
-    margin-left: 1vw;
-    margin-right: 1vw;
-    padding-top: 1vw;
-    padding-bottom: 1vw;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    border: 1px solid #D7D7D7;
-    border-radius: 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-
-    &.active {
-      color: var(--white);
-      background: var(--theme-dark-blue);
-    }
-
-    svg {
-      width: 3vw;
-      height: 3vw;
-      margin-right: 1vw;
     }
   }
 }

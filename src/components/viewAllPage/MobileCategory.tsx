@@ -324,7 +324,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               {this.renderSubjectTitle(subjects)}
               {this.state.bricksCount ? <div className="bricks-count">{this.state.bricksCount} Brick{this.state.bricksCount > 1 ? 's' : ''} found</div> : ''}
             </div>
-            {this.state.groupSubjects.length > 0 ? this.renderJustSubjects(this.state.groupSubjects, this.state.expandedSubjects) : <div />}
             <InfinityScrollCustom
               searchString={this.state.searchString}
               user={this.props.user}
@@ -412,7 +411,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               <div className="subject-title">{this.renderGroupName(subjectGroup)}</div>
               {this.state.bricksCount ? <div className="bricks-count">{this.state.bricksCount} Brick{this.state.bricksCount > 1 ? 's' : ''} found</div> : ''}
             </div>
-            {this.state.groupSubjects.length > 0 ? this.renderJustSubjects(this.state.groupSubjects, this.state.expandedSubjects) : <div />}
             <InfinityScrollCustom
               searchString={this.state.searchString}
               user={this.props.user}
