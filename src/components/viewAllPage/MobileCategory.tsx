@@ -50,6 +50,12 @@ interface BricksListProps {
   requestFailed(e: string): void;
 }
 
+enum ActiveTab {
+  Categories,
+  MySubjects,
+  AllBricks
+}
+
 interface BricksListState {
   typingString: string;
   searchString: string;
@@ -62,6 +68,7 @@ interface BricksListState {
   isCore: boolean;
   isLoading: boolean;
   bricksCount: number;
+  activeTab: ActiveTab;
 
   expandedSubjects: Subject[];
   expandedGroup: SubjectGroup | null;
@@ -88,6 +95,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       expandedGroup = parseInt(values.subjectGroup as string);
     }
 
+    const activeTab = ActiveTab.Categories;
+
     this.state = {
       typingTimeout: -1,
       typingString: '',
@@ -103,7 +112,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       groupSubjects: [],
       bricksCount: 0,
       shown: false,
-    };
+      activeTab,
+    }
 
     this.loadData(subjectIds, expandedGroup);
   }
@@ -267,7 +277,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="back-arrow-container">
         <SpriteIcon
-          name="arrow-left-bigger" className="back-arrow-d33"
+          name="arrow-left-stroke" className="absolute-arrow"
           onClick={() => {
             this.setState({ expandedSubjects: [], searchString: '', typingString: '', bricksCount: 0 });
             const path = this.pathSubjectGroup(this.state.expandedGroup);
@@ -288,9 +298,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   renderSubjectTitle(subjects: Subject[]) {
     if (subjects.length === 1) {
-    return (
-      <div className="subject-title">{subjects[0].name}</div>
-    );
+      return (
+        <div className="subject-title">{subjects[0].name}</div>
+      );
     }
     return (
       <div className="subject-title">Search Results</div>
@@ -314,7 +324,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               {this.renderSubjectTitle(subjects)}
               {this.state.bricksCount ? <div className="bricks-count">{this.state.bricksCount} Brick{this.state.bricksCount > 1 ? 's' : ''} found</div> : ''}
             </div>
-            {this.state.groupSubjects.length > 0 ? this.renderJustSubjects(this.state.groupSubjects, this.state.expandedSubjects) : <div />}
             <InfinityScrollCustom
               searchString={this.state.searchString}
               user={this.props.user}
@@ -359,21 +368,23 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   renderGroupSearch() {
     return (
-      <div className="back-arrow-container">
-        <SpriteIcon
-          name="arrow-left-bigger" className="back-arrow-d33"
-          onClick={() => {
-            this.setState({ expandedGroup: null, typingString: '', searchString: '', groupSubjects: [] })
-            this.props.history.push(this.props.location.pathname);
-          }}
-        />
-        <div className="ba-search-input-container">
-          <SpriteIcon name="search" />
-          <input
-            value={this.state.typingString}
-            onChange={e => this.search(e.target.value)}
-            placeholder="Search in subject"
+      <div className="search-container">
+        <div className="back-arrow-container">
+          <SpriteIcon
+            name="arrow-left-stroke" className="absolute-arrow"
+            onClick={() => {
+              this.setState({ expandedGroup: null, typingString: '', searchString: '', groupSubjects: [] })
+              this.props.history.push(this.props.location.pathname);
+            }}
           />
+          <div className="ba-search-input-container">
+            <SpriteIcon name="search" />
+            <input
+              value={this.state.typingString}
+              onChange={e => this.search(e.target.value)}
+              placeholder="Search in subject"
+            />
+          </div>
         </div>
       </div>
     );
@@ -400,7 +411,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               <div className="subject-title">{this.renderGroupName(subjectGroup)}</div>
               {this.state.bricksCount ? <div className="bricks-count">{this.state.bricksCount} Brick{this.state.bricksCount > 1 ? 's' : ''} found</div> : ''}
             </div>
-            {this.state.groupSubjects.length > 0 ? this.renderJustSubjects(this.state.groupSubjects, this.state.expandedSubjects) : <div />}
             <InfinityScrollCustom
               searchString={this.state.searchString}
               user={this.props.user}
@@ -507,15 +517,20 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  renderSubjectsV2(subjects: Subject[]) {
+  renderTabs() {
     return (
-      <div>
-        <div className="bold category-label">
-          My Subjects
-        </div>
-        {this.renderJustSubjects(subjects)}
+      <div className="tabs">
+        <div className={`first ${this.state.activeTab === ActiveTab.Categories ? 'active' : ''}`} onClick={() => {
+          this.setState({ activeTab: ActiveTab.Categories });
+        }}>Categories</div>
+        <div className={`middle ${this.state.activeTab === ActiveTab.MySubjects ? 'active' : ''}`} onClick={() => {
+          this.setState({ activeTab: ActiveTab.MySubjects });
+        }}>My Subjects</div>
+        <div className={`last ${this.state.activeTab === ActiveTab.AllBricks ? 'active' : ''}`} onClick={() => {
+          this.setState({ activeTab: ActiveTab.AllBricks });
+        }}>All Bricks</div>
       </div>
-    )
+    );
   }
 
   render() {
@@ -525,6 +540,76 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (this.state.expandedGroup) {
       return this.renderExpandedSubjectGroup(this.state.expandedGroup);
     }
+    if (this.state.activeTab === ActiveTab.MySubjects) {
+      return (
+        <React.Suspense fallback={<></>}>
+          <MobileTheme />
+          <div className="main-listing dashboard-page mobile-category phone-view-all select-subject-dashboard-d3">
+            <PageHeadWithMenu
+              page={PageEnum.ViewAll}
+              user={this.props.user}
+              toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
+              history={this.props.history}
+            />
+            <div className="select-subject-dashboard-d33">
+              {this.renderGroupSearch()}
+              {this.renderTabs()}
+              <InfinityScrollCustom
+                searchString={this.state.searchString}
+                user={this.props.user}
+                isCore={this.state.isCore}
+                subjects={this.state.mySubjects}
+                setBrick={(b: Brick) => {
+                  if (this.props.user && this.checkAssignment(b)) {
+                    this.props.history.push(map.postAssignment(b.id, this.props.user.id));
+                  } else {
+                    this.props.history.push(routes.playBrief(b));
+                  }
+                }}
+                onLoad={data => {
+                  this.setState({ bricksCount: data.pageCount });
+                }}
+              />
+            </div>
+          </div>
+        </React.Suspense>
+      );
+    }
+    if (this.state.activeTab === ActiveTab.AllBricks) {
+      return (
+        <React.Suspense fallback={<></>}>
+          <MobileTheme />
+          <div className="main-listing dashboard-page mobile-category phone-view-all select-subject-dashboard-d3">
+            <PageHeadWithMenu
+              page={PageEnum.ViewAll}
+              user={this.props.user}
+              toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
+              history={this.props.history}
+            />
+            <div className="select-subject-dashboard-d33">
+              {this.renderGroupSearch()}
+              {this.renderTabs()}
+              <InfinityScrollCustom
+                searchString={this.state.searchString}
+                user={this.props.user}
+                isCore={this.state.isCore}
+                subjects={this.state.subjects}
+                setBrick={(b: Brick) => {
+                  if (this.props.user && this.checkAssignment(b)) {
+                    this.props.history.push(map.postAssignment(b.id, this.props.user.id));
+                  } else {
+                    this.props.history.push(routes.playBrief(b));
+                  }
+                }}
+                onLoad={data => {
+                  this.setState({ bricksCount: data.pageCount });
+                }}
+              />
+            </div>
+          </div>
+        </React.Suspense>
+      );
+    }
     return (
       <div className="mobile-categorise">
         <PageHeadWithMenu
@@ -533,27 +618,13 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
           history={this.props.history}
         />
-        {this.props.user ?
-          <div className="text-center header">
-            <SpriteIcon className="absolute-arrow" name="arrow-left-stroke" onClick={() => this.props.history.push(map.MainPage)} />
-            <div>
-              <div>Click to explore one of the following subject</div>
-              <div>categories</div>
-            </div>
+        <div className="text-center header header-mobile">
+          <SpriteIcon className="absolute-arrow" name="arrow-left-stroke" onClick={() => this.props.history.push(map.MainPage)} />
+          <div>
+            <div>Click to explore one of the subject categories</div>
           </div>
-          :
-          <div className="text-center header">
-            <div>
-              <div>Click to explore one of the subject categories</div>
-            </div>
-          </div>
-        }
-        {this.state.mySubjects.length > 0 ? this.renderSubjectsV2(this.state.mySubjects) : <div />}
-        <div className="bold category-label">
-          Subject Categories
         </div>
-        <div className="">
-        </div>
+        {this.renderTabs()}
         <div className="subject-categories">
           <div className="row">
             <div className="subject-category">
