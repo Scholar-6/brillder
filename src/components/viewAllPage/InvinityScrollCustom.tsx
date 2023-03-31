@@ -66,7 +66,7 @@ const InfinityScrollCustom = (props: Props) => {
       setPageNum(0);
       setSubjects(props.subjects);
     }
-  }, [props.subjects]);
+  }, [props.subjects, props.searchString]); // need to update when searchString changed.
 
   const intObserver = useRef() as any;
 
