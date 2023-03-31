@@ -503,7 +503,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (expandedGroup === SubjectGroup.GeneralTopical) {
       const subject = this.state.subjects.find(s => s.name === GENERAL_SUBJECT);
       if (subject) {
-        this.toggleSubject(subject);
+        this.setState({ expandedGroup, groupSubjects: [subject], isCore: true });
+        this.props.history.push(this.pathSubjectGroup(expandedGroup));
       }
     } else if (expandedGroup === SubjectGroup.English) {
       const s1 = this.state.subjects.find(s => s.name == ENGLISH_LANGUAGE_SUBJECT);
@@ -522,14 +523,26 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderTabs() {
+    if (this.props.user) {
+      return (
+        <div className="tabs">
+          <div className={`first ${this.state.activeTab === ActiveTab.Categories ? 'active' : ''}`} onClick={() => {
+            this.setState({ activeTab: ActiveTab.Categories });
+          }}>Categories</div>
+          <div className={`middle ${this.state.activeTab === ActiveTab.MySubjects ? 'active' : ''}`} onClick={() => {
+            this.setState({ activeTab: ActiveTab.MySubjects });
+          }}>My Subjects</div>
+          <div className={`last ${this.state.activeTab === ActiveTab.AllBricks ? 'active' : ''}`} onClick={() => {
+            this.setState({ activeTab: ActiveTab.AllBricks });
+          }}>All Bricks</div>
+        </div>
+      );
+    }
     return (
-      <div className="tabs">
+      <div className="tabs unauth-tabs">
         <div className={`first ${this.state.activeTab === ActiveTab.Categories ? 'active' : ''}`} onClick={() => {
           this.setState({ activeTab: ActiveTab.Categories });
         }}>Categories</div>
-        <div className={`middle ${this.state.activeTab === ActiveTab.MySubjects ? 'active' : ''}`} onClick={() => {
-          this.setState({ activeTab: ActiveTab.MySubjects });
-        }}>My Subjects</div>
         <div className={`last ${this.state.activeTab === ActiveTab.AllBricks ? 'active' : ''}`} onClick={() => {
           this.setState({ activeTab: ActiveTab.AllBricks });
         }}>All Bricks</div>
