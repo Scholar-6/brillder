@@ -96,7 +96,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       expandedGroup = parseInt(values.subjectGroup as string);
     }
 
-    const activeTab = ActiveTab.Categories;
+    let activeTab = ActiveTab.Categories;
+
+    if (values.mySubject) {
+      if (values.mySubject === 'false') {
+        activeTab = ActiveTab.AllBricks;
+      } else {
+        activeTab = ActiveTab.MySubjects;
+      }
+    }
 
     this.state = {
       typingTimeout: -1,
@@ -499,7 +507,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     return this.props.location.pathname + '?' + this.justSubjectGroup(subjectGroup);
   }
 
-  
+
   moveToGroup(expandedGroup: SubjectGroup) {
     if (expandedGroup === SubjectGroup.GeneralTopical) {
       const subject = this.state.subjects.find(s => s.name === GENERAL_SUBJECT);
@@ -529,12 +537,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         <div className="tabs">
           <div className={`first ${this.state.activeTab === ActiveTab.Categories ? 'active' : ''}`} onClick={() => {
             this.setState({ activeTab: ActiveTab.Categories });
+            this.props.history.push(map.SubjectCategories);
           }}>Categories</div>
           <div className={`middle ${this.state.activeTab === ActiveTab.MySubjects ? 'active' : ''}`} onClick={() => {
             this.setState({ activeTab: ActiveTab.MySubjects });
+            this.props.history.push(map.ViewAllPageA);
           }}>My Subjects</div>
           <div className={`last ${this.state.activeTab === ActiveTab.AllBricks ? 'active' : ''}`} onClick={() => {
             this.setState({ activeTab: ActiveTab.AllBricks });
+            this.props.history.push(map.ViewAllPageB);
           }}>All Bricks</div>
         </div>
       );
