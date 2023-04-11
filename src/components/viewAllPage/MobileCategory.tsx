@@ -499,6 +499,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     return this.props.location.pathname + '?' + this.justSubjectGroup(subjectGroup);
   }
 
+  
   moveToGroup(expandedGroup: SubjectGroup) {
     if (expandedGroup === SubjectGroup.GeneralTopical) {
       const subject = this.state.subjects.find(s => s.name === GENERAL_SUBJECT);
