@@ -88,7 +88,10 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
       const data = await getOverviewData(dateFilter);
       if (data) {
         data.newSignupsData = data.newSignupsData.reverse();
+        data.playedData = data.playedData.reverse();
         this.setState({ data, dateFilter, isLoading: false });
+      } else if (data === false) {
+        this.setState({ isLoading: false });
       }
     }
   }
@@ -210,7 +213,6 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
                 {this.renderBox(this.state.data.newSignups, 'New Signups', true, () => {
                   history.push(map.UsersEvents + '?dateFilter=' + this.state.dateFilter);
                 })}
-                {/*this.renderBox(12, 'Institutional Subscribers', false)*/}
                 {this.renderBox(this.state.data.individualSubscriptions, 'Individual Subscribers', false)}
               </div>
               <div className="schart-row">
