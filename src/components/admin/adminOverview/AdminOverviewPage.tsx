@@ -45,6 +45,7 @@ export interface OverviewData {
   assignedBricks: number;
   newSignups: number;
   individualSubscriptions: number;
+  playedData: any[];
   newSignupsData: any[];
 }
 
@@ -71,6 +72,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
         assignedBricks: 0,
         newSignups: 0,
         individualSubscriptions: 0,
+        playedData: [],
         newSignupsData: []
       }
     }
@@ -101,22 +103,31 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
       </div>
     );
   }
+  
+  getData(datasetName: string, dataName: string) {
+    console.log(this.state.data, dataName)
+    const data = (this.state.data as any)[dataName];
+    const labels = data.map((d: any) => d.label);
+
+    return {
+      labels,
+      datasets: [
+        {
+          label: datasetName,
+          data: data.map((d: any) => d.count),
+          backgroundColor: '#193266',
+        }]
+    }
+  }
 
   render() {
     const { history } = this.props;
 
-    const labels = this.state.data.newSignupsData.map(d => d.label);
+    const data = this.getData('New Signups', 'newSignupsData');
+    const data2 = this.getData('Played Bricks', 'playedData');
 
-    const data = {
-      labels,
-      datasets: [
-        {
-          label: 'New Signups',
-          data: this.state.data.newSignupsData.map(d => d.count),
-          backgroundColor: '#193266',
-        }]
-    }
-
+    console.log('data2', data2);
+    
     let options = {
       responsive: true,
       plugins: {},
@@ -200,7 +211,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
                   <Bar options={options} data={data} />
                 </div>
                 <div className="schart-column">
-                  <Bar options={options} data={data} />
+                  <Bar options={options} data={data2} />
                 </div>
               </div>
             </div>
