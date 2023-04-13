@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
+import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import './AdminOverviewPage.scss';
 import { User } from "model/user";
@@ -27,6 +28,7 @@ export interface OverviewData {
   assignedBricks: number;
   newSignups: number;
   individualSubscriptions: number;
+  newSignupsData: any[];
 }
 
 interface OverviewState {
@@ -43,7 +45,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
     this.state = {
       dateFilter,
-      
+
       data: {
         published: 0,
         played: 0,
@@ -51,7 +53,8 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
         newClasses: 0,
         assignedBricks: 0,
         newSignups: 0,
-        individualSubscriptions: 0
+        individualSubscriptions: 0,
+        newSignupsData: []
       }
     }
 
@@ -61,7 +64,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
   async loadData(dateFilter: PDateFilter) {
     const data = await getOverviewData(dateFilter);
     if (data) {
-      this.setState({data, dateFilter});
+      this.setState({ data, dateFilter });
     }
   }
 
@@ -82,7 +85,15 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
   }
 
   render() {
-    const {history} = this.props;
+    const { history } = this.props;
+
+    let angle = 0;
+    if (this.state.dateFilter === PDateFilter.Past24Hours) {
+      angle = 40;
+    } else if (this.state.dateFilter === PDateFilter.PastMonth) {
+      angle = 40;
+    }
+
     return (
       <div className="main-listing user-list-page manage-classrooms-page bricks-played-page only-overview-page">
         <PageHeadWithMenu
@@ -90,8 +101,8 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
           placeholder="Brick Title or Author Name"
           user={this.props.user}
           history={history}
-          search={() => {}}
-          searching={() => {}}
+          search={() => { }}
+          searching={() => { }}
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <OverviewPlayedSidebar
@@ -120,6 +131,28 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
                 })}
                 {/*this.renderBox(12, 'Institutional Subscribers', false)*/}
                 {this.renderBox(this.state.data.individualSubscriptions, 'Individual Subscribers', false)}
+              </div>
+              <div className="schart-row">
+                <div className="schart-column">
+                  <div className="bold">New Signups</div>
+                  <ResponsiveContainer width="50%" aspect={1.2} className={(this.state.dateFilter === PDateFilter.Past24Hours || this.state.dateFilter === PDateFilter.PastMonth) ? 'font-small' : 'font-big'}>
+                    <BarChart data={this.state.data.newSignupsData}
+                    >
+                      <Bar dataKey="count" fill="#193266" />
+                      <CartesianGrid stroke="#E5E8ED" />
+                      <XAxis
+                        dataKey="label"
+                        angle={angle}
+                        height={angle === 0 ? undefined : 200}
+                        interval={0}
+
+                      />
+                      <YAxis />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="schart-column">
+                </div>
               </div>
             </div>
           </Grid>
