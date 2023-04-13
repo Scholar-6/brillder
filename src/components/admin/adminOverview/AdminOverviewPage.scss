@@ -27,6 +27,11 @@
         text-align: center;
         font-family: $font-family-bold;
       }
+
+      svg {
+        width: 2vw;
+        height: 2vw;
+      }
       .underline {
         cursor: pointer;
         text-decoration: underline;
@@ -49,6 +54,10 @@
     tspan {
       font-size: 16px !important;
     }
+  }
+
+  .tab-content {
+    padding-bottom: calc(2.4vh + 2vw);
   }
 
   .schart-row {
