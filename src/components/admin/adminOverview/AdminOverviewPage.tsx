@@ -21,6 +21,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import OverviewPlayedSidebar, { PDateFilter } from "./OverviewSidebar";
 import { getOverviewData } from "services/axios/brick";
 import map from "components/map";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 ChartJS.register(
   CategoryScale,
@@ -51,7 +52,7 @@ export interface OverviewData {
 
 interface OverviewState {
   dateFilter: PDateFilter;
-
+  isLoading: boolean;
   data: OverviewData;
 }
 
@@ -63,6 +64,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
     this.state = {
       dateFilter,
+      isLoading: false,
 
       data: {
         published: 0,
@@ -81,10 +83,13 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
   }
 
   async loadData(dateFilter: PDateFilter) {
-    const data = await getOverviewData(dateFilter);
-    if (data) {
-      data.newSignupsData = data.newSignupsData.reverse(),
-      this.setState({ data, dateFilter });
+    if (!this.state.isLoading) {
+      this.setState({isLoading: true});
+      const data = await getOverviewData(dateFilter);
+      if (data) {
+        data.newSignupsData = data.newSignupsData.reverse();
+        this.setState({ data, dateFilter, isLoading: false });
+      }
     }
   }
 
@@ -97,13 +102,15 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
     return (
       <div className="">
         <div>
-          <div className="bold">{number}</div>
+          <div className="bold">
+            {this.state.isLoading ? <SpriteIcon name="f-loader" className="spinning" /> : number}
+          </div>
           <div className={className} onClick={() => onClick?.()}>{text}</div>
         </div>
       </div>
     );
   }
-  
+
   getData(datasetName: string, dataName: string) {
     console.log(this.state.data, dataName)
     const data = (this.state.data as any)[dataName];
@@ -127,7 +134,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
     const data2 = this.getData('Played Bricks', 'playedData');
 
     console.log('data2', data2);
-    
+
     let options = {
       responsive: true,
       plugins: {},
