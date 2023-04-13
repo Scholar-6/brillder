@@ -36,4 +36,18 @@
       }
     }
   }
+
+  .recharts-cartesian-axis-tick {
+    text {
+      fill: var(--theme-dark-blue) !important;
+    }
+    tspan {
+      font-size: 12px !important;
+    }
+  }
+  .font-big .recharts-cartesian-axis-tick {
+    tspan {
+      font-size: 16px !important;
+    }
+  }
 }
