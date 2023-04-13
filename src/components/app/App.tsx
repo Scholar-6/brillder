@@ -27,7 +27,6 @@ import LoginPage from '../loginPage/loginPage';
 import ResetPasswordPage from '../resetPasswordPage/ResetPasswordPage';
 import ActivateAccountPage from '../activateAccountPage/activateAccountPage';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
-import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
 import PostPlay from 'components/postPlay/PostPlay';
 import Library from 'components/library/Library';
 
@@ -302,7 +301,6 @@ const App: React.FC<AppProps> = props => {
 
             <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
             <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
-            <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
             <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
             {/* Creating new bricks */}
