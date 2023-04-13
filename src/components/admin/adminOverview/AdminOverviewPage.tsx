@@ -2,7 +2,16 @@ import React, { Component } from "react";
 import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
-import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from "chart.js";
 
 import './AdminOverviewPage.scss';
 import { User } from "model/user";
@@ -13,6 +22,14 @@ import OverviewPlayedSidebar, { PDateFilter } from "./OverviewSidebar";
 import { getOverviewData } from "services/axios/brick";
 import map from "components/map";
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface Props {
   history: History;
@@ -64,6 +81,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
   async loadData(dateFilter: PDateFilter) {
     const data = await getOverviewData(dateFilter);
     if (data) {
+      data.newSignupsData = data.newSignupsData.reverse(),
       this.setState({ data, dateFilter });
     }
   }
@@ -87,11 +105,50 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
   render() {
     const { history } = this.props;
 
-    let angle = 0;
-    if (this.state.dateFilter === PDateFilter.Past24Hours) {
-      angle = 40;
-    } else if (this.state.dateFilter === PDateFilter.PastMonth) {
-      angle = 40;
+    const labels = this.state.data.newSignupsData.map(d => d.label);
+
+    const data = {
+      labels,
+      datasets: [
+        {
+          label: 'New Signups',
+          data: this.state.data.newSignupsData.map(d => d.count),
+          backgroundColor: '#193266',
+        }]
+    }
+
+    let options = {
+      responsive: true,
+      plugins: {},
+      scales: {
+        y: {
+          ticks: {
+            color: '#001c58',
+          }
+        },
+        x: {
+          ticks: {
+            color: '#001c58',
+          }
+        }
+      }
+    } as any;
+
+    if (this.state.dateFilter === PDateFilter.Past24Hours || this.state.dateFilter === PDateFilter.PastMonth || this.state.dateFilter === PDateFilter.AllTime) {
+      options.scales = {
+        y: {
+          ticks: {
+            color: '#001c58',
+          }
+        },
+        x: {
+          ticks: {
+            color: '#001c58',
+            maxRotation: 90,
+            minRotation: 90
+          }
+        }
+      }
     }
 
     return (
@@ -134,24 +191,10 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
               </div>
               <div className="schart-row">
                 <div className="schart-column">
-                  <div className="bold">New Signups</div>
-                  <ResponsiveContainer width="50%" aspect={1.2} className={(this.state.dateFilter === PDateFilter.Past24Hours || this.state.dateFilter === PDateFilter.PastMonth) ? 'font-small' : 'font-big'}>
-                    <BarChart data={this.state.data.newSignupsData}
-                    >
-                      <Bar dataKey="count" fill="#193266" />
-                      <CartesianGrid stroke="#E5E8ED" />
-                      <XAxis
-                        dataKey="label"
-                        angle={angle}
-                        height={angle === 0 ? undefined : 200}
-                        interval={0}
-
-                      />
-                      <YAxis />
-                    </BarChart>
-                  </ResponsiveContainer>
+                  <Bar options={options} data={data} />
                 </div>
                 <div className="schart-column">
+                  <Bar options={options} data={data} />
                 </div>
               </div>
             </div>
