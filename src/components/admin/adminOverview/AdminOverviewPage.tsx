@@ -127,6 +127,9 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
           }
         },
         x: {
+          grid: {
+            display: false
+          },
           ticks: {
             color: '#001c58',
           }
@@ -142,6 +145,9 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
           }
         },
         x: {
+          grid: {
+            display: false
+          },
           ticks: {
             color: '#001c58',
             maxRotation: 90,
