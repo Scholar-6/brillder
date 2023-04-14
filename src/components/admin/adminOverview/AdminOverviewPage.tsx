@@ -99,12 +99,14 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
             data.competitionData[i].label = label;
             data.newSignupsData[i].label = label;
             data.playedData[i].label = label;
+            data.assignedData[i].label = label;
           }
         }
 
         data.newSignupsData = data.newSignupsData.reverse();
         data.playedData = data.playedData.reverse();
         data.competitionData = data.competitionData.reverse();
+        data.assignedData = data.assignedData.reverse();
 
         this.setState({ data, dateFilter, isLoading: false });
       } else if (data === false) {
