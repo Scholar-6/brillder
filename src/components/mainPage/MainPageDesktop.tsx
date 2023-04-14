@@ -426,10 +426,10 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
 
   onCompleted() {
     if (this.state.isNewTeacher) {
-      this.props.history.push(map.ViewAllPage + '?mySubject=true&newTeacher=true');
+      this.props.history.push(map.ViewAllPageB + '&newTeacher=true');
       this.setState({ stepsEnabled: false });
     } else {
-      this.props.history.push(map.ViewAllPage + '?mySubject=true');
+      this.props.history.push(map.ViewAllPageB);
       this.setState({ stepsEnabled: false });
     }
   }

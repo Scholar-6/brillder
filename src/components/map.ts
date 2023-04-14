@@ -67,6 +67,8 @@ export const NewTeachQuery = 'newTeacher=true';
 
 
 export const ViewAllPage = '/play/dashboard';
+export const ViewAllPageA = ViewAllPage + '?mySubject=true';
+export const ViewAllPageB = ViewAllPage + '?mySubject=false';
 export const ShareBricksPage = '/play/share-personal-bricks';
 export const AllSubjects = ViewAllPage + '/all-subjects';
 export const SubjectCategoriesPrefix = '/subject-categories';
@@ -223,6 +225,8 @@ export default {
   NewTeachQuery,
 
   ViewAllPage,
+  ViewAllPageA,
+  ViewAllPageB,
   ShareBricksPage,
   AllSubjects,
   SubjectCategoriesPrefix,

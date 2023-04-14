@@ -2,6 +2,16 @@ import React, { Component } from "react";
 import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from "chart.js";
 
 import './AdminOverviewPage.scss';
 import { User } from "model/user";
@@ -11,7 +21,16 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import OverviewPlayedSidebar, { PDateFilter } from "./OverviewSidebar";
 import { getOverviewData } from "services/axios/brick";
 import map from "components/map";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface Props {
   history: History;
@@ -27,11 +46,13 @@ export interface OverviewData {
   assignedBricks: number;
   newSignups: number;
   individualSubscriptions: number;
+  playedData: any[];
+  newSignupsData: any[];
 }
 
 interface OverviewState {
   dateFilter: PDateFilter;
-
+  isLoading: boolean;
   data: OverviewData;
 }
 
@@ -43,7 +64,8 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
     this.state = {
       dateFilter,
-      
+      isLoading: false,
+
       data: {
         published: 0,
         played: 0,
@@ -51,7 +73,9 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
         newClasses: 0,
         assignedBricks: 0,
         newSignups: 0,
-        individualSubscriptions: 0
+        individualSubscriptions: 0,
+        playedData: [],
+        newSignupsData: []
       }
     }
 
@@ -59,9 +83,16 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
   }
 
   async loadData(dateFilter: PDateFilter) {
-    const data = await getOverviewData(dateFilter);
-    if (data) {
-      this.setState({data, dateFilter});
+    if (!this.state.isLoading) {
+      this.setState({isLoading: true});
+      const data = await getOverviewData(dateFilter);
+      if (data) {
+        data.newSignupsData = data.newSignupsData.reverse();
+        data.playedData = data.playedData.reverse();
+        this.setState({ data, dateFilter, isLoading: false });
+      } else if (data === false) {
+        this.setState({ isLoading: false });
+      }
     }
   }
 
@@ -74,15 +105,79 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
     return (
       <div className="">
         <div>
-          <div className="bold">{number}</div>
+          <div className="bold">
+            {this.state.isLoading ? <SpriteIcon name="f-loader" className="spinning" /> : number}
+          </div>
           <div className={className} onClick={() => onClick?.()}>{text}</div>
         </div>
       </div>
     );
   }
 
+  getData(datasetName: string, dataName: string) {
+    console.log(this.state.data, dataName)
+    const data = (this.state.data as any)[dataName];
+    const labels = data.map((d: any) => d.label);
+
+    return {
+      labels,
+      datasets: [
+        {
+          label: datasetName,
+          data: data.map((d: any) => d.count),
+          backgroundColor: '#193266',
+        }]
+    }
+  }
+
   render() {
-    const {history} = this.props;
+    const { history } = this.props;
+
+    const data = this.getData('New Signups', 'newSignupsData');
+    const data2 = this.getData('Played Bricks', 'playedData');
+
+    console.log('data2', data2);
+
+    let options = {
+      responsive: true,
+      plugins: {},
+      scales: {
+        y: {
+          ticks: {
+            color: '#001c58',
+          }
+        },
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            color: '#001c58',
+          }
+        }
+      }
+    } as any;
+
+    if (this.state.dateFilter === PDateFilter.Past24Hours || this.state.dateFilter === PDateFilter.PastMonth || this.state.dateFilter === PDateFilter.AllTime) {
+      options.scales = {
+        y: {
+          ticks: {
+            color: '#001c58',
+          }
+        },
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            color: '#001c58',
+            maxRotation: 90,
+            minRotation: 90
+          }
+        }
+      }
+    }
+
     return (
       <div className="main-listing user-list-page manage-classrooms-page bricks-played-page only-overview-page">
         <PageHeadWithMenu
@@ -90,8 +185,8 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
           placeholder="Brick Title or Author Name"
           user={this.props.user}
           history={history}
-          search={() => {}}
-          searching={() => {}}
+          search={() => { }}
+          searching={() => { }}
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <OverviewPlayedSidebar
@@ -118,8 +213,15 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
                 {this.renderBox(this.state.data.newSignups, 'New Signups', true, () => {
                   history.push(map.UsersEvents + '?dateFilter=' + this.state.dateFilter);
                 })}
-                {/*this.renderBox(12, 'Institutional Subscribers', false)*/}
                 {this.renderBox(this.state.data.individualSubscriptions, 'Individual Subscribers', false)}
+              </div>
+              <div className="schart-row">
+                <div className="schart-column">
+                  <Bar options={options} data={data} />
+                </div>
+                <div className="schart-column">
+                  <Bar options={options} data={data2} />
+                </div>
               </div>
             </div>
           </Grid>

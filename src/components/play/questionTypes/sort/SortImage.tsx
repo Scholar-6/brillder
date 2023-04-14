@@ -16,7 +16,7 @@ interface SortImageProps {
 }
 
 
-const SortImage: React.FC<SortImageProps> = ({valueFile, imageSource, ...props}) => {
+const SortImage: React.FC<SortImageProps> = ({ valueFile, imageSource, ...props }) => {
   const [lastClick, setLastClick] = React.useState(0);
 
   const onDoubleClick = () => {
@@ -29,18 +29,30 @@ const SortImage: React.FC<SortImageProps> = ({valueFile, imageSource, ...props})
 
   if (isMobile) {
     return (
-      <img
-        alt="" className="sort-image-choice"
-        src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${valueFile}`}
-        onClick={e => {
-          if (lastClick && e.timeStamp - lastClick < 250) {
-            setLastClick(0);
-            onDoubleClick();
-          } else {
-            setLastClick(e.timeStamp);
-          }
-        }}
-      />
+      <div>
+        <div className="absolute-image-hider-p3"
+          onClick={e => {
+            if (lastClick && e.timeStamp - lastClick < 250) {
+              setLastClick(0);
+              onDoubleClick();
+            } else {
+              setLastClick(e.timeStamp);
+            }
+          }}
+        />
+        <img
+          alt="" className="sort-image-choice no-pointer-events"
+          src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${valueFile}`}
+          onClick={e => {
+            if (lastClick && e.timeStamp - lastClick < 250) {
+              setLastClick(0);
+              onDoubleClick();
+            } else {
+              setLastClick(e.timeStamp);
+            }
+          }}
+        />
+      </div>
     );
   }
 

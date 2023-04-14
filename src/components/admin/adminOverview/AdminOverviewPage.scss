@@ -27,6 +27,11 @@
         text-align: center;
         font-family: $font-family-bold;
       }
+
+      svg {
+        width: 2vw;
+        height: 2vw;
+      }
       .underline {
         cursor: pointer;
         text-decoration: underline;
@@ -34,6 +39,33 @@
       .second-text-d103 {
         font-size: 1.2vw;
       }
+    }
+  }
+
+  .recharts-cartesian-axis-tick {
+    text {
+      fill: var(--theme-dark-blue) !important;
+    }
+    tspan {
+      font-size: 12px !important;
+    }
+  }
+  .font-big .recharts-cartesian-axis-tick {
+    tspan {
+      font-size: 16px !important;
+    }
+  }
+
+  .tab-content {
+    padding-bottom: calc(2.4vh + 2vw);
+  }
+
+  .schart-row {
+    display: flex;
+
+    .schart-column {
+      width: 50%;
+      padding: 1vw 1vh;
     }
   }
 }

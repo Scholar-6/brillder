@@ -450,7 +450,7 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
     return (
       <Grid container direction="row" className="sorted-row no-mobile-css">
         <div className="categories-absolute">
-          <div onClick={() => this.props.history.push(map.ViewAllPage + '?mySubject=true')}>
+          <div onClick={() => this.props.history.push(map.ViewAllPageB)}>
             <div>
               <SpriteIcon name="arrow-left" />
             </div>

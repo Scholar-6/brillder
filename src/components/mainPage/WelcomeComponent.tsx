@@ -222,17 +222,6 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
               }
             }} />
           </div> : <div />}
-            
-        {/*(this.state.animatedNotificationText3 || (this.props.notifications && this.props.notifications.length >= 1 && this.state.animatedNotificationText)) &&
-          <div className="link-to-landing" onClick={() => window.location.href = "https://brillder.com/brilliant-minds-prizes/"}>
-            <SpriteIcon name="star" />
-            Competition Arena
-          </div>*/}
-        {/*(this.state.animatedNotificationText3 || (this.props.notifications && this.props.notifications.length> 1 && this.state.animatedNotificationText)) &&
-        <div className="link-to-landing" onClick={() => this.props.history.push(map.ViewAllPage + '?mySubject=true&searchString=Christmas12')}>
-          <SpriteIcon name="star" />
-          Play the 12 bricks of Christmas
-        </div>*/}
       </div>
     );
   }

@@ -39,7 +39,7 @@ const FirstPhoneButton: React.FC<FirstButtonProps> = props => {
     if (props.isNewTeacher) {
       link += '?' + map.NewTeachQuery;
     } if (props.user) {
-      link = map.ViewAllPage + '?mySubject=true';
+      link = map.ViewAllPageB;
     }
     if (isPhone()) {
       return map.ViewAllPage;

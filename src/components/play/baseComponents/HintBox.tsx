@@ -10,7 +10,7 @@ interface ReviewHintProps {
 const HintBox: React.FC<ReviewHintProps> = ({ correct, value }) => {
   return (
     <div>
-      <HintIcon correct={correct} />
+      {correct && <HintIcon correct={correct} />}
       <span className="bold">{correct ? 'NB' : 'Hint'}: </span>
       <div className="global-hint-container">
         <MathInHtml className="base-hint-container" value={value} />
