@@ -19,7 +19,7 @@ import AttemptedText from "../components/AttemptedText";
 import map from "components/map";
 import actions from "redux/actions/auth";
 import MusicAutoplay from "components/baseComponents/MusicAutoplay";
-import { GetFinishRedirectUrl, GetHeartOfMerciaUser, UnsetFinishRedirectUrl } from "localStorage/login";
+import { GetFinishRedirectUrl, GetHeartOfMerciaUser, UnsetFinishRedirectUrl, UnsetHeartOfMerciaUser } from "localStorage/login";
 import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 
@@ -386,6 +386,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                           window.location.href = finishUrl;
                         }
                         UnsetFinishRedirectUrl();
+                        UnsetHeartOfMerciaUser();
                       } else if (this.props.user?.library) {
                         this.moveToHome();
                       } else {

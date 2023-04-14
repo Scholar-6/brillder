@@ -42,6 +42,7 @@ export interface OverviewData {
   published: number;
   played: number;
   competitionPlays: number;
+  competitionData: any[];
   newClasses: number;
   assignedBricks: number;
   newSignups: number;
@@ -75,7 +76,8 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
         newSignups: 0,
         individualSubscriptions: 0,
         playedData: [],
-        newSignupsData: []
+        newSignupsData: [],
+        competitionData: []
       }
     }
 
@@ -89,6 +91,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
       if (data) {
         data.newSignupsData = data.newSignupsData.reverse();
         data.playedData = data.playedData.reverse();
+        data.competitionData = data.competitionData.reverse();
         this.setState({ data, dateFilter, isLoading: false });
       } else if (data === false) {
         this.setState({ isLoading: false });
@@ -135,6 +138,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
     const data = this.getData('New Signups', 'newSignupsData');
     const data2 = this.getData('Played Bricks', 'playedData');
+    const data3 = this.getData('Competition Plays', 'competitionData');
 
     console.log('data2', data2);
 
@@ -221,6 +225,11 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
                 </div>
                 <div className="schart-column">
                   <Bar options={options} data={data2} />
+                </div>
+              </div>
+              <div className="schart-row">
+                <div className="schart-column">
+                  <Bar options={options} data={data3} />
                 </div>
               </div>
             </div>
