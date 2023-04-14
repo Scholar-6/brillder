@@ -49,6 +49,7 @@ export interface OverviewData {
   individualSubscriptions: number;
   playedData: any[];
   newSignupsData: any[];
+  assignedData: any[];
 }
 
 interface OverviewState {
@@ -77,7 +78,8 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
         individualSubscriptions: 0,
         playedData: [],
         newSignupsData: [],
-        competitionData: []
+        competitionData: [],
+        assignedData: []
       }
     }
 
@@ -86,12 +88,24 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
   async loadData(dateFilter: PDateFilter) {
     if (!this.state.isLoading) {
-      this.setState({isLoading: true});
+      this.setState({ isLoading: true });
       const data = await getOverviewData(dateFilter);
       if (data) {
+        if (dateFilter === PDateFilter.Past24Hours) {
+          let dateR = new Date();
+          for (let i = 0; i < 24; i++) {
+            const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
+            dateR.setHours(dateR.getHours() - 1);
+            data.competitionData[i].label = label;
+            data.newSignupsData[i].label = label;
+            data.playedData[i].label = label;
+          }
+        }
+
         data.newSignupsData = data.newSignupsData.reverse();
         data.playedData = data.playedData.reverse();
         data.competitionData = data.competitionData.reverse();
+
         this.setState({ data, dateFilter, isLoading: false });
       } else if (data === false) {
         this.setState({ isLoading: false });
@@ -118,7 +132,6 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
   }
 
   getData(datasetName: string, dataName: string) {
-    console.log(this.state.data, dataName)
     const data = (this.state.data as any)[dataName];
     const labels = data.map((d: any) => d.label);
 
@@ -139,8 +152,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
     const data = this.getData('New Signups', 'newSignupsData');
     const data2 = this.getData('Played Bricks', 'playedData');
     const data3 = this.getData('Competition Plays', 'competitionData');
-
-    console.log('data2', data2);
+    const data4 = this.getData('Assigned Bricks', 'assignedData');
 
     let options = {
       responsive: true,
@@ -230,6 +242,9 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
               <div className="schart-row">
                 <div className="schart-column">
                   <Bar options={options} data={data3} />
+                </div>
+                <div className="schart-column">
+                  <Bar options={options} data={data4} />
                 </div>
               </div>
             </div>
