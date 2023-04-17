@@ -91,10 +91,10 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
       this.setState({ isLoading: true });
       const data = await getOverviewData(dateFilter);
       if (data) {
-        data.newSignupsData = []; // data.newSignupsData.reverse();
-        data.playedData = []; // data.playedData.reverse();
-        data.competitionData = [];// data.competitionData.reverse();
-        data.assignedData = []; // data.assignedData.reverse();
+        data.newSignupsData = [];
+        data.playedData = [];
+        data.competitionData = [];
+        data.assignedData = [];
 
         this.setState({ data, dateFilter, isLoading: false });
 
@@ -111,7 +111,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
           }
 
           const dataN = { ...this.state.data };
-          dataN.newSignupsData = data2.newSignupsData;
+          dataN.newSignupsData = data2.newSignupsData.reverse();
           this.setState({ data: dataN });
 
           const data3 = await getOverviewPlayedData(dateFilter);
@@ -126,7 +126,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
             }
 
             const dataP = { ...this.state.data };
-            dataP.playedData = data3.playedData;
+            dataP.playedData = data3.playedData.reverse();
             this.setState({ data: dataP });
 
             const data4 = await getOverviewCompetitionData(dateFilter);
@@ -141,7 +141,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
               }
 
               const dataC = { ...this.state.data };
-              dataC.competitionData = data4.competitionData;
+              dataC.competitionData = data4.competitionData.reverse();
               this.setState({ data: dataC });
 
               const data5 = await getOverviewAssignedData(dateFilter);
@@ -156,7 +156,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
                 }
 
                 const dataA = { ...this.state.data };
-                dataA.assignedData = data5.assignedData;
+                dataA.assignedData = data5.assignedData.reverse();
                 this.setState({ data: dataA });
               }
             }
