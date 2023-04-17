@@ -106,7 +106,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
             for (let i = 0; i < 24; i++) {
               const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
               dateR.setHours(dateR.getHours() - 1);
-              data.newSignupsData[i].label = label;
+              data2.newSignupsData[i].label = label;
             }
           }
 
@@ -151,7 +151,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
                   for (let i = 0; i < 24; i++) {
                     const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
                     dateR.setHours(dateR.getHours() - 1);
-                    data4.assignedData[i].label = label;
+                    data5.assignedData[i].label = label;
                   }
                 }
 
