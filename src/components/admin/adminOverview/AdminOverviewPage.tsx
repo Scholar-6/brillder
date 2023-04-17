@@ -40,6 +40,7 @@ interface Props {
 
 export interface OverviewData {
   published: number;
+  publishedPrivate: number;
   played: number;
   competitionPlays: number;
   competitionData: any[];
@@ -80,6 +81,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
       data: {
         published: 0,
+        publishedPrivate: 0,
         played: 0,
         competitionPlays: 0,
         newClasses: 0,
@@ -195,6 +197,24 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
     );
   }
 
+  renderPublishedBox(number: number, number2: number, text: string, isUnderline?: boolean, onClick?: Function) {
+    let className = "second-text-d103";
+    if (isUnderline) {
+      className += ' underline';
+    }
+
+    return (
+      <div className="">
+        <div>
+          <div className="bold">
+            {this.state.isLoading ? <SpriteIcon name="f-loader" className="spinning" /> : (number + number2)}
+          </div>
+          <div className={className} onClick={() => onClick?.()}>{text}</div>
+        </div>
+      </div>
+    );
+  }
+
   getData(datasetName: string, dataName: string) {
     const data = (this.state.data as any)[dataName];
     const labels = data.map((d: any) => d.label);
@@ -277,7 +297,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
             <BricksTab activeTab={BricksActiveTab.Overview} history={this.props.history} />
             <div className="tab-content">
               <div className="boxes-d103 margin-top-1">
-                {this.renderBox(this.state.data.published, 'Published', true, () => {
+                {this.renderPublishedBox(this.state.data.published, this.state.data.publishedPrivate, 'Published', true, () => {
                   history.push(map.AdminBricksPlayed + '?sortBy=' + 0 + '&dateFilter=' + this.state.dateFilter);
                 })}
                 {this.renderBox(this.state.data.played, 'Played', true, () => {
