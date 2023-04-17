@@ -19,7 +19,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import OverviewPlayedSidebar, { PDateFilter } from "./OverviewSidebar";
-import { getOverviewData } from "services/axios/brick";
+import { getOverviewAssignedData, getOverviewCompetitionData, getOverviewData, getOverviewNewSignups, getOverviewPlayedData } from "services/axios/brick";
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
@@ -91,24 +91,77 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
       this.setState({ isLoading: true });
       const data = await getOverviewData(dateFilter);
       if (data) {
-        if (dateFilter === PDateFilter.Past24Hours) {
-          let dateR = new Date();
-          for (let i = 0; i < 24; i++) {
-            const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
-            dateR.setHours(dateR.getHours() - 1);
-            data.competitionData[i].label = label;
-            data.newSignupsData[i].label = label;
-            data.playedData[i].label = label;
-            data.assignedData[i].label = label;
-          }
-        }
-
-        data.newSignupsData = data.newSignupsData.reverse();
-        data.playedData = data.playedData.reverse();
-        data.competitionData = data.competitionData.reverse();
-        data.assignedData = data.assignedData.reverse();
+        data.newSignupsData = []; // data.newSignupsData.reverse();
+        data.playedData = []; // data.playedData.reverse();
+        data.competitionData = [];// data.competitionData.reverse();
+        data.assignedData = []; // data.assignedData.reverse();
 
         this.setState({ data, dateFilter, isLoading: false });
+
+        const data2 = await getOverviewNewSignups(dateFilter);
+
+        if (data2) {
+          if (dateFilter === PDateFilter.Past24Hours) {
+            let dateR = new Date();
+            for (let i = 0; i < 24; i++) {
+              const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
+              dateR.setHours(dateR.getHours() - 1);
+              data.newSignupsData[i].label = label;
+            }
+          }
+
+          const dataN = { ...this.state.data };
+          dataN.newSignupsData = data2.newSignupsData;
+          this.setState({ data: dataN });
+
+          const data3 = await getOverviewPlayedData(dateFilter);
+          if (data3) {
+            if (dateFilter === PDateFilter.Past24Hours) {
+              const dateR = new Date();
+              for (let i = 0; i < 24; i++) {
+                const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
+                dateR.setHours(dateR.getHours() - 1);
+                data3.playedData[i].label = label;
+              }
+            }
+
+            const dataP = { ...this.state.data };
+            dataP.playedData = data3.playedData;
+            this.setState({ data: dataP });
+
+            const data4 = await getOverviewCompetitionData(dateFilter);
+            if (data4) {
+              if (dateFilter === PDateFilter.Past24Hours) {
+                const dateR = new Date();
+                for (let i = 0; i < 24; i++) {
+                  const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
+                  dateR.setHours(dateR.getHours() - 1);
+                  data4.competitionData[i].label = label;
+                }
+              }
+
+              const dataC = { ...this.state.data };
+              dataC.competitionData = data4.competitionData;
+              this.setState({ data: dataC });
+
+              const data5 = await getOverviewAssignedData(dateFilter);
+              if (data5) {
+                if (dateFilter === PDateFilter.Past24Hours) {
+                  const dateR = new Date();
+                  for (let i = 0; i < 24; i++) {
+                    const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
+                    dateR.setHours(dateR.getHours() - 1);
+                    data4.assignedData[i].label = label;
+                  }
+                }
+
+                const dataA = { ...this.state.data };
+                dataA.assignedData = data5.assignedData;
+                this.setState({ data: dataA });
+              }
+            }
+          }
+        }
       } else if (data === false) {
         this.setState({ isLoading: false });
       }
