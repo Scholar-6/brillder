@@ -120,6 +120,38 @@ export const getOverviewData = async (dateFilter: PDateFilter) => {
   }
 }
 
+export const getOverviewNewSignups = async (dateFilter: PDateFilter) => {
+  try {
+    return await get<any>(`/admin/getOverviewNewSignups/` + dateFilter);
+  } catch {
+    return false;
+  }
+} 
+
+export const getOverviewPlayedData = async (dateFilter: PDateFilter) => {
+  try {
+    return await get<any>(`/admin/getOverviewPlayedData/` + dateFilter);
+  } catch {
+    return false;
+  }
+}
+
+export const getOverviewCompetitionData = async (dateFilter: PDateFilter) => {
+  try {
+    return await get<any>(`/admin/getOverviewCompetitionData/` + dateFilter);
+  } catch {
+    return false;
+  }
+}
+
+export const getOverviewAssignedData = async (dateFilter: PDateFilter) => {
+  try {
+    return await get<any>(`/admin/getOverviewAssignedData/` + dateFilter);
+  } catch {
+    return false;
+  }
+}
+
 export const getAdminBricksPublished = async (dateFilter: PDateFilter) => {
   try {
     return await get<Brick[]>(`/admin/getAdminBricksPublished/` + dateFilter);
