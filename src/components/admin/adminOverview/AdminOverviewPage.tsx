@@ -54,7 +54,12 @@ export interface OverviewData {
 
 interface OverviewState {
   dateFilter: PDateFilter;
+  isInitLoading: boolean;
   isLoading: boolean;
+  isNewSingupsLoading: boolean;
+  isPlayedBricksLoading: boolean;
+  isCompetitionLoading: boolean;
+  isAssignmentsLoading: boolean;
   data: OverviewData;
 }
 
@@ -66,7 +71,12 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
     this.state = {
       dateFilter,
-      isLoading: false,
+      isInitLoading: true,
+      isLoading: true,
+      isNewSingupsLoading: true,
+      isPlayedBricksLoading: true,
+      isCompetitionLoading: true,
+      isAssignmentsLoading: true,
 
       data: {
         published: 0,
@@ -87,8 +97,8 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
   }
 
   async loadData(dateFilter: PDateFilter) {
-    if (!this.state.isLoading) {
-      this.setState({ isLoading: true });
+    if (!this.state.isLoading || this.state.isInitLoading) {
+      this.setState({ isLoading: true, isNewSingupsLoading: true, isPlayedBricksLoading: true, isCompetitionLoading: true, isAssignmentsLoading: true });
       const data = await getOverviewData(dateFilter);
       if (data) {
         data.newSignupsData = [];
@@ -112,7 +122,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
           const dataN = { ...this.state.data };
           dataN.newSignupsData = data2.newSignupsData.reverse();
-          this.setState({ data: dataN });
+          this.setState({ data: dataN, isNewSingupsLoading: false });
 
           const data3 = await getOverviewPlayedData(dateFilter);
           if (data3) {
@@ -127,7 +137,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
             const dataP = { ...this.state.data };
             dataP.playedData = data3.playedData.reverse();
-            this.setState({ data: dataP });
+            this.setState({ data: dataP, isPlayedBricksLoading: false });
 
             const data4 = await getOverviewCompetitionData(dateFilter);
             if (data4) {
@@ -142,7 +152,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
               const dataC = { ...this.state.data };
               dataC.competitionData = data4.competitionData.reverse();
-              this.setState({ data: dataC });
+              this.setState({ data: dataC, isCompetitionLoading: false });
 
               const data5 = await getOverviewAssignedData(dateFilter);
               if (data5) {
@@ -162,9 +172,8 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
             }
           }
         }
-      } else if (data === false) {
-        this.setState({ isLoading: false });
       }
+      this.setState({ isInitLoading: false, isLoading: false, isNewSingupsLoading: false, isPlayedBricksLoading: false, isCompetitionLoading: false, isAssignmentsLoading: false });
     }
   }
 
@@ -288,18 +297,18 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
               </div>
               <div className="schart-row">
                 <div className="schart-column">
-                  <Bar options={options} data={data} />
+                  {this.state.isNewSingupsLoading ? <SpriteIcon name="f-loader" className="spinning" /> : <Bar options={options} data={data} />}
                 </div>
                 <div className="schart-column">
-                  <Bar options={options} data={data2} />
+                  {this.state.isPlayedBricksLoading ? <SpriteIcon name="f-loader" className="spinning" /> : <Bar options={options} data={data2} />}
                 </div>
               </div>
               <div className="schart-row">
                 <div className="schart-column">
-                  <Bar options={options} data={data3} />
+                  {this.state.isCompetitionLoading ? <SpriteIcon name="f-loader" className="spinning" /> : <Bar options={options} data={data3} />}
                 </div>
                 <div className="schart-column">
-                  <Bar options={options} data={data4} />
+                  {this.state.isAssignmentsLoading ? <SpriteIcon name="f-loader" className="spinning" /> : <Bar options={options} data={data4} />}
                 </div>
               </div>
             </div>
