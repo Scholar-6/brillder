@@ -20,6 +20,7 @@ const DesktopBookTheme = React.lazy(() => import('../themes/PageBookDesktopTheme
 
 interface BookProps {
   user: User;
+  student: User;
   attempt: PlayAttempt;
   attempts: PlayAttempt[];
   color: string;
@@ -108,7 +109,8 @@ class BookPages extends React.Component<BookProps, BookState> {
 
   render() {
     const { color } = this.props;
-    const { brick, student } = this.props.attempt;
+    const { brick } = this.props.attempt;
+    const {student} = this.props;
 
     const isOwner = student.id === this.props.user.id;
 

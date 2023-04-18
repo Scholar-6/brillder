@@ -39,6 +39,7 @@ import { stripHtml, stripHtmlWithSpaces } from "components/build/questionService
 import { checkTeacher } from "components/services/brickService";
 import { CashAttempt } from "localStorage/play";
 import { getSubjects } from "services/axios/subject";
+import { getUserById } from "services/axios/user";
 
 const MobileTheme = React.lazy(() => import('../themes/PageMobileTheme'));
 
@@ -70,6 +71,7 @@ interface ProposalState {
   subjects: Subject[];
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
+  student: User;
   mode?: boolean; // live - false, review - true, undefined - default
   playHovered: boolean;
   showLibraryButton: boolean;
@@ -97,6 +99,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       questionIndex: 0,
       activeAttemptIndex: 0,
       attempt: null,
+      student: {} as User,
       mode: true,
       bookHovered,
       attempts: [],
@@ -119,7 +122,19 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     if (subjects && attempts && attempts.length > 0) {
       const attempt = attempts[this.state.activeAttemptIndex];
       this.prepareAttempt(attempt);
-      this.setState({ attempt: attempt, attempts, subjects });
+
+      let student = attempt.student;
+
+      if (this.props.user.id !== userId) {
+        let data = await getUserById(userId);
+        if (data) {
+          student = data;
+        }
+      } else {
+        student = this.props.user;
+      }
+
+      this.setState({ attempt: attempt, student, attempts, subjects });
     }
   }
 
@@ -198,7 +213,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     if (!this.state.attempt) {
       return <PageLoader content="...Getting Attempt..." />;
     }
-    const { brick, student } = this.state.attempt;
+    const { brick } = this.state.attempt;
+    const { student } = this.state;
 
     if (!this.state.attempt.liveAnswers) {
       console.log('redirect has no live answers');
