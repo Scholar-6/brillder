@@ -19,7 +19,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import OverviewPlayedSidebar, { PDateFilter } from "./OverviewSidebar";
-import { getOverviewData } from "services/axios/brick";
+import { getOverviewAssignedData, getOverviewCompetitionData, getOverviewData, getOverviewNewSignups, getOverviewPlayedData } from "services/axios/brick";
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
@@ -40,19 +40,27 @@ interface Props {
 
 export interface OverviewData {
   published: number;
+  publishedPrivate: number;
   played: number;
   competitionPlays: number;
+  competitionData: any[];
   newClasses: number;
   assignedBricks: number;
   newSignups: number;
   individualSubscriptions: number;
   playedData: any[];
   newSignupsData: any[];
+  assignedData: any[];
 }
 
 interface OverviewState {
   dateFilter: PDateFilter;
+  isInitLoading: boolean;
   isLoading: boolean;
+  isNewSingupsLoading: boolean;
+  isPlayedBricksLoading: boolean;
+  isCompetitionLoading: boolean;
+  isAssignmentsLoading: boolean;
   data: OverviewData;
 }
 
@@ -64,10 +72,16 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
     this.state = {
       dateFilter,
-      isLoading: false,
+      isInitLoading: true,
+      isLoading: true,
+      isNewSingupsLoading: true,
+      isPlayedBricksLoading: true,
+      isCompetitionLoading: true,
+      isAssignmentsLoading: true,
 
       data: {
         published: 0,
+        publishedPrivate: 0,
         played: 0,
         competitionPlays: 0,
         newClasses: 0,
@@ -75,7 +89,9 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
         newSignups: 0,
         individualSubscriptions: 0,
         playedData: [],
-        newSignupsData: []
+        newSignupsData: [],
+        competitionData: [],
+        assignedData: []
       }
     }
 
@@ -83,16 +99,83 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
   }
 
   async loadData(dateFilter: PDateFilter) {
-    if (!this.state.isLoading) {
-      this.setState({isLoading: true});
+    if (!this.state.isLoading || this.state.isInitLoading) {
+      this.setState({ isLoading: true, isNewSingupsLoading: true, isPlayedBricksLoading: true, isCompetitionLoading: true, isAssignmentsLoading: true });
       const data = await getOverviewData(dateFilter);
       if (data) {
-        data.newSignupsData = data.newSignupsData.reverse();
-        data.playedData = data.playedData.reverse();
+        data.newSignupsData = [];
+        data.playedData = [];
+        data.competitionData = [];
+        data.assignedData = [];
+
         this.setState({ data, dateFilter, isLoading: false });
-      } else if (data === false) {
-        this.setState({ isLoading: false });
+
+        const data2 = await getOverviewNewSignups(dateFilter);
+
+        if (data2) {
+          if (dateFilter === PDateFilter.Past24Hours) {
+            let dateR = new Date();
+            for (let i = 0; i < 24; i++) {
+              const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
+              dateR.setHours(dateR.getHours() - 1);
+              data2.newSignupsData[i].label = label;
+            }
+          }
+
+          const dataN = { ...this.state.data };
+          dataN.newSignupsData = data2.newSignupsData.reverse();
+          this.setState({ data: dataN, isNewSingupsLoading: false });
+
+          const data3 = await getOverviewPlayedData(dateFilter);
+          if (data3) {
+            if (dateFilter === PDateFilter.Past24Hours) {
+              const dateR = new Date();
+              for (let i = 0; i < 24; i++) {
+                const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
+                dateR.setHours(dateR.getHours() - 1);
+                data3.playedData[i].label = label;
+              }
+            }
+
+            const dataP = { ...this.state.data };
+            dataP.playedData = data3.playedData.reverse();
+            this.setState({ data: dataP, isPlayedBricksLoading: false });
+
+            const data4 = await getOverviewCompetitionData(dateFilter);
+            if (data4) {
+              if (dateFilter === PDateFilter.Past24Hours) {
+                const dateR = new Date();
+                for (let i = 0; i < 24; i++) {
+                  const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
+                  dateR.setHours(dateR.getHours() - 1);
+                  data4.competitionData[i].label = label;
+                }
+              }
+
+              const dataC = { ...this.state.data };
+              dataC.competitionData = data4.competitionData.reverse();
+              this.setState({ data: dataC, isCompetitionLoading: false });
+
+              const data5 = await getOverviewAssignedData(dateFilter);
+              if (data5) {
+                if (dateFilter === PDateFilter.Past24Hours) {
+                  const dateR = new Date();
+                  for (let i = 0; i < 24; i++) {
+                    const label = dateR.toLocaleString("en-US", { hour: "numeric", hour12: true });
+                    dateR.setHours(dateR.getHours() - 1);
+                    data5.assignedData[i].label = label;
+                  }
+                }
+
+                const dataA = { ...this.state.data };
+                dataA.assignedData = data5.assignedData.reverse();
+                this.setState({ data: dataA });
+              }
+            }
+          }
+        }
       }
+      this.setState({ isInitLoading: false, isLoading: false, isNewSingupsLoading: false, isPlayedBricksLoading: false, isCompetitionLoading: false, isAssignmentsLoading: false });
     }
   }
 
@@ -114,8 +197,25 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
     );
   }
 
+  renderPublishedBox(number: number, number2: number, text: string, isUnderline?: boolean, onClick?: Function) {
+    let className = "second-text-d103";
+    if (isUnderline) {
+      className += ' underline';
+    }
+
+    return (
+      <div className="">
+        <div>
+          <div className="bold">
+            {this.state.isLoading ? <SpriteIcon name="f-loader" className="spinning" /> : (number + number2)}
+          </div>
+          <div className={className} onClick={() => onClick?.()}>{text}</div>
+        </div>
+      </div>
+    );
+  }
+
   getData(datasetName: string, dataName: string) {
-    console.log(this.state.data, dataName)
     const data = (this.state.data as any)[dataName];
     const labels = data.map((d: any) => d.label);
 
@@ -135,8 +235,8 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
 
     const data = this.getData('New Signups', 'newSignupsData');
     const data2 = this.getData('Played Bricks', 'playedData');
-
-    console.log('data2', data2);
+    const data3 = this.getData('Competition Plays', 'competitionData');
+    const data4 = this.getData('Assigned Bricks', 'assignedData');
 
     let options = {
       responsive: true,
@@ -197,7 +297,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
             <BricksTab activeTab={BricksActiveTab.Overview} history={this.props.history} />
             <div className="tab-content">
               <div className="boxes-d103 margin-top-1">
-                {this.renderBox(this.state.data.published, 'Published', true, () => {
+                {this.renderPublishedBox(this.state.data.published, this.state.data.publishedPrivate, 'Published', true, () => {
                   history.push(map.AdminBricksPlayed + '?sortBy=' + 0 + '&dateFilter=' + this.state.dateFilter);
                 })}
                 {this.renderBox(this.state.data.played, 'Played', true, () => {
@@ -217,10 +317,18 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
               </div>
               <div className="schart-row">
                 <div className="schart-column">
-                  <Bar options={options} data={data} />
+                  {this.state.isNewSingupsLoading ? <SpriteIcon name="f-loader" className="spinning" /> : <Bar options={options} data={data} />}
                 </div>
                 <div className="schart-column">
-                  <Bar options={options} data={data2} />
+                  {this.state.isPlayedBricksLoading ? <SpriteIcon name="f-loader" className="spinning" /> : <Bar options={options} data={data2} />}
+                </div>
+              </div>
+              <div className="schart-row">
+                <div className="schart-column">
+                  {this.state.isCompetitionLoading ? <SpriteIcon name="f-loader" className="spinning" /> : <Bar options={options} data={data3} />}
+                </div>
+                <div className="schart-column">
+                  {this.state.isAssignmentsLoading ? <SpriteIcon name="f-loader" className="spinning" /> : <Bar options={options} data={data4} />}
                 </div>
               </div>
             </div>
