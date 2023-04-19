@@ -1768,9 +1768,11 @@
 
 // missing words hint
 .play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .missing-word-choice  .question-hint {
-  font-size: 0.9vw !important;
+  padding: 0.05vw 0.3vw;
+  border-radius: 0.3vw;
+  font-size: 1.1vw !important;
   p {
-    font-size: 0.9vw !important;
+    font-size: 1.1vw !important;
   }
   
   .hint-icon-block {
@@ -1791,4 +1793,5 @@
 
 .play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .missing-word-choice  .missing-select p {
   font-size: 1.2vw !important;
+  line-height: 0.5 !important;
 }
