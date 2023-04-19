@@ -360,10 +360,19 @@
   height: unset !important;
 }
 
-.only-bricks-played-page .tab-content .table {
-  width: 100%;
-  overflow-y: scroll;
-  .table-scroll {
-    width: 102vw;
+.only-bricks-played-page .tab-content {
+  padding-bottom: 0 !important;
+  .table {
+    width: 100%;
+    overflow-y: scroll;
+    .table-scroll {
+      width: 102vw;
+  
+      .table-body {
+        height: 40vh;
+        overflow-y: scroll;
+        height: calc(100vh - 5.834vw - 2vw - 2vh - 6.6vh - 0.4vw - 1.8vw - 0.1vh - 1.8vw) !important;
+      }
+    }
   }
 }
