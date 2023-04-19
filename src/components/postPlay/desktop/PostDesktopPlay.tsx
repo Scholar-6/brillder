@@ -40,6 +40,7 @@ import { fileUrl } from "components/services/uploadFile";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { ClassroomApi, getAllClassrooms } from "components/teach/service";
 import { getSubjects } from "services/axios/subject";
+import { getUserById } from "services/axios/user";
 
 const TabletTheme = React.lazy(() => import('../themes/PageTabletTheme'));
 const DesktopTheme = React.lazy(() => import('../themes/PageDesktopTheme'));
@@ -70,6 +71,7 @@ interface ProposalState {
   subjects: Subject[];
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
+  student: User;
   classroom: ClassroomApi | null;
   mode?: boolean; // live - false, review - true, undefined - default
 }
@@ -97,6 +99,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
     this.state = {
       bookState,
+      student: {} as User,
       questionIndex,
       attempt: null,
       attempts: [],
@@ -137,8 +140,21 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     if (subjects && attempts && attempts.length > 0) {
       const attempt = attempts[0];
       this.prepareAttempt(attempt);
-      this.setState({ attempt: attempt, attempts, classroom, subjects });
+
+      let student = attempt.student;
+
+      if (this.props.user.id !== userId) {
+        let data = await getUserById(userId);
+        if (data) {
+          student = data;
+        }
+      } else {
+        student = this.props.user;
+      }
+
+      this.setState({ attempt: attempt, student, attempts, classroom, subjects });
     }
+
   }
 
   async saveAttempt(attempt: PlayAttempt) {
@@ -369,7 +385,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
       }
 
       return <BookPages
-        history={this.props.history} color={color} user={this.props.user} attempt={this.state.attempt} attempts={this.state.attempts}
+        history={this.props.history} color={color} user={this.props.user} student={this.state.student} attempt={this.state.attempt} attempts={this.state.attempts}
         setAttempt={this.setAttempt.bind(this)}
       />
     }
@@ -435,16 +451,17 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
     const renderTopUserData = () => {
       if (this.state.attempt) {
-        const { student } = this.state.attempt;
+        const { student } = this.state;
         return (
           <div className="absolute-top-part">
             {this.renderClassroom()}
+            {student &&
             <div className='profile-image-v5'>
               {student.profileImage ? <img alt="profile" src={fileUrl(student.profileImage)} /> : <SpriteIcon name="user" />}
-            </div>
-            {student.firstName} {student.lastName}
+            </div>}
+            {student && `${student.firstName} ${student.lastName}`}
             {renderAbsolutePercentage()}
-            {this.renderLibraryLink(student)}
+            {student && this.renderLibraryLink(student)}
           </div>
         );
       }
