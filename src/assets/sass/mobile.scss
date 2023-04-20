@@ -1438,7 +1438,6 @@
     min-width: 20vw;
     display: inline-block !important; 
     position: relative;
-    line-height: 1 !important;
     padding-right: 2vw !important;
 
     &::before, &::after {
@@ -1446,20 +1445,33 @@
     }
     .MuiSelect-root {
       display: inline-block;
-      height: 6vw !important;
+      height: 6.4vw !important;
       padding-top: 0 !important;
       padding-bottom: 0 !important;
       padding-left: 1vw !important;
       padding-right: 2vw !important;
       min-width: 18vw !important;
-    }
-    p {
+      font-size: 3vw !important;
+      line-height: 1.45 !important;
+      border-radius: 1.2vw !important;
+
+      p {
+        font-size: 4.5vw !important;
+      }
     }
     svg {
       bottom: 0.5vw;
     }
     input {
       position: absolute;
+    }
+  }
+  .question-hint {
+    padding: 0 2.2vw !important;
+    font-size: 4.5vw !important;
+    border-radius: 1.2vw !important;
+    p {
+      font-size: 4.5vw !important;
     }
   }
 }
