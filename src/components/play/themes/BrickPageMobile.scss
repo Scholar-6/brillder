@@ -1433,7 +1433,6 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
     color: var(--theme-dark-blue);
     font-family: $font-family-regular;
     margin: 0 0 1vh 0;
-    overflow-y: auto;
     &.prep-box {
       margin-bottom: 21vh;
     }
