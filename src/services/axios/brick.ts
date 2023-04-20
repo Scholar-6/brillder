@@ -354,9 +354,13 @@ export const searchCoreBricksByStatus = async (data: SearchCoreBrickStatuses) =>
   }
 }
 
-export const searchPaginateBricks = async (searchString: string = '', page: number, pageSize: number, isCore: boolean, subjectIds?: number[]) => {
+export const searchPaginateBricks = async (searchString: string = '', page: number, pageSize: number, isCore: boolean, subjectIds?: number[], isKeyword?: boolean) => {
   try {
-    return await post<PageBricks>(`/bricks/search/public/page/${page}`, { searchString, pageSize, isCore, subjectIds: subjectIds ? subjectIds : [] });
+    return await post<PageBricks>(`/bricks/search/public/page/${page}`, {
+      searchString, pageSize, isCore,
+      subjectIds: subjectIds ? subjectIds : [],
+      isKeyword: isKeyword ? isKeyword : false
+    });
   } catch {
     return null;
   }

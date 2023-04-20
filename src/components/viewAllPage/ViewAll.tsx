@@ -789,7 +789,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterSuggestionKeyword(keyword: KeyWord) {
-    this.loadAndSetSearchBricks(keyword.name, 0, this.state.pageSize, this.state.isCore);
+    this.loadAndSetSearchBricks(keyword.name, 0, this.state.pageSize, this.state.isCore, true);
 
     this.setState({
       ...this.state,
@@ -883,8 +883,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...this.state, dropdownShown: false });
   }
 
-  async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number, isCore: boolean) {
-    let pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore);
+  async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number, isCore: boolean, isKeyword?: boolean) {
+    const pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore, [], isKeyword ? isKeyword : false);
 
     if (pageBricks && pageBricks.bricks.length >= 0) {
       this.setState({
