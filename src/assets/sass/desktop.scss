@@ -922,6 +922,10 @@
       padding-right: 0.8vw !important;
       min-width: 3vw !important;
     }
+    svg {
+      width: 1.3vw;
+      height: 1.3vw;
+    }
   }
   &.poem {
     white-space: nowrap;
@@ -1771,6 +1775,7 @@
   padding: 0 0.3vw;
   border-radius: 0.3vw;
   font-size: 1.1vw !important;
+  span,
   p {
     font-size: 1.1vw !important;
   }
@@ -1791,7 +1796,9 @@
   border-radius: 0.3vw;
 }
 
-.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .missing-word-choice  .missing-select p {
-  font-size: 1.1vw !important;
-  line-height: 0.5 !important;
+.play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .missing-word-choice  .missing-select {
+  span, p {
+    font-size: 1.1vw !important;
+    line-height: 0.5 !important;
+  }
 }
