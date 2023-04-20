@@ -101,6 +101,8 @@ interface ViewAllState {
   sortBy: SortBy;
   keywords: KeyWord[];
 
+  isKeywordSearch: boolean;
+
   filterCompetition: boolean;
   filterLevels: AcademicLevel[];
   filterLength: BrickLengthEnum[];
@@ -227,6 +229,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       searchBricks: [],
       searchString,
       searchTyping: false,
+      isKeywordSearch: false,
       activeSubject: {} as SubjectItem,
       isSearching: false,
       pageSize: this.getPageSize(),
@@ -834,7 +837,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if (index >= this.state.pageSize) {
       if (this.state.isSearching) {
-        this.loadAndSetSearchBricks(this.state.searchString, this.state.page - 1, this.state.pageSize, this.state.isCore);
+        this.loadAndSetSearchBricks(this.state.searchString, this.state.page - 1, this.state.pageSize, this.state.isCore, this.state.isKeywordSearch);
       } else {
         if (this.state.subjectGroup) {
           this.loadAndSetUnauthBricks(this.state.page - 1, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
@@ -851,7 +854,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if (index + pageSize <= bricksCount - 1) {
       if (this.state.isSearching) {
-        this.loadAndSetSearchBricks(this.state.searchString, this.state.page + 1, this.state.pageSize, this.state.isCore);
+        this.loadAndSetSearchBricks(this.state.searchString, this.state.page + 1, this.state.pageSize, this.state.isCore, this.state.isKeywordSearch);
       } else {
         if (this.state.subjectGroup) {
           this.loadAndSetUnauthBricks(this.state.page + 1, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.subjectGroup);
@@ -869,6 +872,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         ...this.state,
         searchString,
         searchTyping: false,
+        isKeywordSearch: false,
         isSearching: false,
       });
     } else {
@@ -893,6 +897,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         bricks: pageBricks.bricks,
         bricksCount: pageBricks.pageCount,
         searchBricks: pageBricks.bricks,
+        isKeywordSearch: isKeyword ? isKeyword : false,
         shown: true,
         isLoading: false,
         isSearchBLoading: false,
@@ -914,7 +919,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     setTimeout(() => {
       try {
-        this.loadAndSetSearchBricks(searchString, 0, this.state.pageSize, this.state.isCore);
+        this.loadAndSetSearchBricks(searchString, 0, this.state.pageSize, this.state.isCore, this.state.isKeywordSearch);
       } catch {
         this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
       }
