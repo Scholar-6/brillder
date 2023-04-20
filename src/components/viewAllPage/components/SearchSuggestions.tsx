@@ -39,7 +39,21 @@ interface SearchSuggestionsProps {
 
 const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
   const [suggestions, setSuggestions] = React.useState([] as any[]);
-  var searchString = props.searchString.toLocaleLowerCase();
+  const [suggetionTimeout, setSuggestionTimeout] = React.useState(-1);
+  const [searchString, setSearchString] = React.useState('');
+
+  useEffect(() => {
+    if (props.searchString) {
+      if (suggetionTimeout) { clearTimeout(suggetionTimeout)}
+
+      const timeout = setTimeout(() => {
+        setSearchString(props.searchString)
+      }, 500);
+      setSuggestionTimeout(timeout);
+    }
+  }, [props.searchString])
+
+  // var searchString = props.searchString.toLocaleLowerCase();
   
   const search = async () => {
     let res: ResultObj[] = [];
