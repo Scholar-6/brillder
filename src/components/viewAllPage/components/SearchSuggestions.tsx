@@ -53,8 +53,6 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
     }
   }, [props.searchString])
 
-  // var searchString = props.searchString.toLocaleLowerCase();
-  
   const search = async () => {
     let res: ResultObj[] = [];
 
