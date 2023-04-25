@@ -74,6 +74,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
           status = 'Not Found';
         }
         return (<div className="table-row" key={i}>
+          <div className="index-column">{i + 1}</div>
           <div className="link-column">{bl.link}</div>
           <div className="brick-column">{bl.brickId}</div>
           <div className="status-column">{status}</div>
@@ -87,6 +88,9 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
       <div className="table-container">
         <div className="table users-table-d34">
           <div className="table-head bold">
+            <div className="index-column header">
+              <div>Index</div>
+            </div>
             <div className="link-column header">
               <div>Link</div>
             </div>
