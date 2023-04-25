@@ -603,6 +603,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             <BricksTab activeTab={BricksActiveTab.Users} history={this.props.history} />
             <div className="tab-content">
               <div className="flex f-justify-end">
+                <a className="brick-links" onClick={() => this.props.history.push('/admin/brickLinks')}>Brick Links</a>
                 <AddUserBtn onClick={() => {
                   this.props.history.push(map.UserProfileNew);
                 }} />

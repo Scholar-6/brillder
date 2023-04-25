@@ -2,7 +2,8 @@ import { PDateFilter } from "components/admin/bricksPlayed/BricksPlayedSidebar";
 import { ACSortBy } from "components/admin/classesEvents/ClassesEvents";
 import { CDomain } from "components/admin/classesEvents/ClassesSidebar";
 import { ClassroomApi } from "components/teach/service";
-import { post } from ".";
+import { get, post } from ".";
+import { BrickLink } from "components/admin/brickLinks/BrickLinks";
 
 interface ClassroomsPage {
   classrooms: ClassroomApi[];
@@ -112,7 +113,14 @@ export const adminAddCredits = async (data: AdminAddCredits) => {
   try {
     return await post<any>(`/institution/addCredits`, data);
   } catch (e) {
-    console.log(e);
+    return false;
+  }
+}
+
+export const adminGetBrickLinks = async () => {
+  try {
+    return await get<BrickLink[]>(`/admin/getBrickLinks`);
+  } catch (e) {
     return false;
   }
 }
