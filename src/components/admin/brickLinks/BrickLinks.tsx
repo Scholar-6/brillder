@@ -47,7 +47,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
   async loadInitData() {
     const brickLinks = await adminGetBrickLinks();
     if (brickLinks) {
-      brickLinks.sort((a,b) => a.status - b.status);
+      brickLinks.sort((a,b) => b.status - a.status);
       this.setState({ brickLinks });
     }
   }
