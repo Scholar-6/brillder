@@ -10,6 +10,8 @@ import './BrickLinks.scss';
 import { User, } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { adminGetBrickLinks } from "services/axios/admin";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import BrickLinksSidebar from "./BrickLinksSidebar";
 
 
 interface UsersProps {
@@ -28,8 +30,17 @@ export interface BrickLink {
   link: string;
 }
 
+export interface HttpStatus {
+  status: number;
+  label: string;
+  checked: boolean;
+}
+
 interface UsersState {
+  isAscending: boolean;
+  statuses: HttpStatus[];
   brickLinks: BrickLink[];
+  finalLinks: BrickLink[];
 }
 
 class BrickLinksPage extends Component<UsersProps, UsersState> {
@@ -37,34 +48,63 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
     super(props);
 
     this.state = {
+      isAscending: false,
+      statuses: [{
+        status: 200,
+        label: 'Loaded',
+        checked: false
+      }, {
+        status: 404,
+        label: 'Not found',
+        checked: false
+      }, {
+        status: 403,
+        label: 'Forbidden',
+        checked: false
+      }],
       brickLinks: [],
+      finalLinks: []
     };
 
     this.loadInitData();
   }
 
+  filterAndSort(isAscending: boolean) {
+    let finalLinks: any[] = [];
+
+    let statuses = this.state.statuses.filter(s => s.checked).map(s => s.status);
+
+    if (statuses.length === 0) {
+      finalLinks = this.state.brickLinks;
+    } else {
+      finalLinks = this.state.brickLinks.filter(bl => statuses.find(s => bl.status === s) ? true : false)
+    }
+
+    return finalLinks;
+  }
+
   async loadInitData() {
     const brickLinks = await adminGetBrickLinks();
     if (brickLinks) {
-      brickLinks.sort((a,b) => b.status - a.status);
-      this.setState({ brickLinks });
+      brickLinks.sort((a, b) => b.status - a.status);
+      this.setState({ brickLinks, finalLinks: brickLinks });
     }
   }
 
   renderBody() {
-    const { brickLinks } = this.state;
-    if (brickLinks.length == 0) {
+    const { finalLinks } = this.state;
+    if (finalLinks.length == 0) {
       return <div className="table-body">
         <div className="table-row">
           <div className="link-column">No Links</div>
         </div>
       </div>;
     }
-    
+
 
     return <div className="table-body">
-      {brickLinks.map((bl, i) => {
-        let status:any = bl.status;
+      {finalLinks.map((bl, i) => {
+        let status: any = bl.status;
         if (status === 200) {
           status = 'Loaded';
         } else if (status === 403) {
@@ -75,8 +115,8 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
         return (<div className="table-row" key={i}>
           <div className="index-column">{i + 1}</div>
           <div className="link-column">{bl.link}</div>
-          <div className="brick-column">{bl.brickId}</div>
           <div className="status-column">{status}</div>
+          <div className="brick-column">{bl.brickId}</div>
         </div>);
       })}
     </div>
@@ -93,11 +133,16 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
             <div className="link-column header">
               <div>Link</div>
             </div>
-            <div className="brick-column header">
-              <div>BrickId</div>
-            </div>
             <div className="status-column header">
               <div>Status</div>
+            </div>
+            <div className="brick-column header">
+              <div>BrickId</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                let isAscending = !this.state.isAscending;
+                const finalLinks = this.filterAndSort(isAscending)
+                this.setState({ isAscending, finalLinks });
+              }} /></div>
             </div>
           </div>
           {this.renderBody()}
@@ -118,12 +163,21 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
           searching={() => { }}
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
-          <Grid container item xs={3} className="sort-and-filter-container teach-assigned">
-            <div className="sort-box">
-              <div className="bold font1-5">Links of all Bricks</div>
-            </div>
-            <div className="sidebar-footer" />
-          </Grid>
+          <BrickLinksSidebar
+            statuses={this.state.statuses}
+            uncheckAll={() => {
+              for (let status of this.state.statuses) {
+                status.checked = false;
+              }
+              const finalLinks = this.filterAndSort(this.state.isAscending)
+              this.setState({ statuses: [...this.state.statuses], finalLinks });
+            }}
+            toggleStatus={status => {
+              status.checked = !status.checked;
+              const finalLinks = this.filterAndSort(this.state.isAscending)
+              this.setState({ statuses: [...this.state.statuses], finalLinks });
+            }}
+          />
           <Grid item xs={9} className="brick-row-container">
             <div className="tab-content">
               {this.renderTable()}
