@@ -12,6 +12,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import { adminGetBrickLinks } from "services/axios/admin";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BrickLinksSidebar from "./BrickLinksSidebar";
+import { buildPlan, buildQuesiton, buildSynthesis } from "components/build/routes";
 
 
 interface UsersProps {
@@ -28,6 +29,7 @@ export interface BrickLink {
   brickId: number;
   status: number;
   link: string;
+  position: string;
 }
 
 export interface HttpStatus {
@@ -114,7 +116,20 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
         }
         return (<div className="table-row" key={i}>
           <div className="index-column">{i + 1}</div>
-          <div className="link-column">{bl.link}</div>
+          <div
+            className="link-column link-real"
+            onClick={() => {
+              if (bl.position === 'brief' || bl.position === 'prep') {
+                this.props.history.push(buildPlan(bl.brickId));
+              } else if (bl.position === 'synthesis') {
+                this.props.history.push(buildSynthesis(bl.brickId));
+              } else if (bl.position.slice(0, 8) === 'question') {
+                const qData = bl.position.split('_');
+                console.log('dddd', qData, bl.position);
+                this.props.history.push(buildQuesiton(bl.brickId) + '/' + qData[1]);
+              }
+            }}
+          >{bl.link}</div>
           <div className="status-column">{status}</div>
           <div className="brick-column">{bl.brickId}</div>
         </div>);
