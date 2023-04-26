@@ -125,10 +125,14 @@
   }
 }
 
-.brick-links-page .table-container {
+.brick-links-page .tab-content .table-container {
   width: 100%;
   overflow-x: scroll;
   .users-table-d34 {
     width: 100%;
+
+    .table-row {
+      height: auto !important;
+    }
   }
 }
