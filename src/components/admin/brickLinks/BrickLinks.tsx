@@ -9,7 +9,6 @@ import actions from 'redux/actions/requestFailed';
 import './BrickLinks.scss';
 import { User, } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import { adminGetBrickLinks } from "services/axios/admin";
 
 
@@ -57,7 +56,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
     if (brickLinks.length == 0) {
       return <div className="table-body">
         <div className="table-row">
-          <div className="link-column">No Users</div>
+          <div className="link-column">No Links</div>
         </div>
       </div>;
     }
