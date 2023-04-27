@@ -13,6 +13,8 @@ import { adminGetBrickLinks } from "services/axios/admin";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BrickLinksSidebar from "./BrickLinksSidebar";
 import { buildPlan, buildQuesiton, buildSynthesis } from "components/build/routes";
+import { PlayLiveLastPrefix, PlayNewPrepLastPrefix, PlaySynthesisLastPrefix } from "components/play/routes";
+import { playPreview } from "components/map";
 
 
 interface UsersProps {
@@ -119,19 +121,38 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
           <div
             className="link-column link-real"
             onClick={() => {
+              const a = document.createElement('a');
+              a.target = "_blank";
+              a.href = bl.link;
+              a.click();
+            }}
+          >{bl.link}</div>
+          <div className={`status-column ${(bl.status === 200 ? '' : 'text-orange')}`}>{status}</div>
+          <div className="brick-column">
+            <span>
+              {bl.brickId}
+            </span>
+
+            <SpriteIcon name="link-to-build" onClick={() => {
               if (bl.position === 'brief' || bl.position === 'prep') {
                 this.props.history.push(buildPlan(bl.brickId));
               } else if (bl.position === 'synthesis') {
                 this.props.history.push(buildSynthesis(bl.brickId));
               } else if (bl.position.slice(0, 8) === 'question') {
                 const qData = bl.position.split('_');
-                console.log('dddd', qData, bl.position);
                 this.props.history.push(buildQuesiton(bl.brickId) + '/' + qData[1]);
               }
-            }}
-          >{bl.link}</div>
-          <div className="status-column">{status}</div>
-          <div className="brick-column">{bl.brickId}</div>
+            }} />
+            <SpriteIcon name="link-to-view" onClick={() => {
+              if (bl.position === 'brief' || bl.position === 'prep') {
+                this.props.history.push(playPreview(bl.brickId) + PlayNewPrepLastPrefix);
+              } else if (bl.position === 'synthesis') {
+                this.props.history.push(playPreview(bl.brickId) + PlaySynthesisLastPrefix);
+              } else if (bl.position.slice(0, 8) === 'question') {
+                this.props.history.push(playPreview(bl.brickId) + PlayLiveLastPrefix);
+              }
+            }} />
+          </div>
         </div>);
       })}
     </div>
