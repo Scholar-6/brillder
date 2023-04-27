@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
-import { Subject } from "model/brick";
-import CategorySelect from "../components/CategorySelect";
-import SubjectsList from "../components/SubjectsList";
 import { HttpStatus } from "./BrickLinks";
 
 export enum PDateFilter {
@@ -72,8 +69,6 @@ class BrickLinksSidebar extends Component<FilterSidebarProps> {
               control={<Radio onClick={() => status403 && this.props.toggleStatus(status403)} className={"filter-radio custom-color"} />}
               label="Forbidden" />}
         </div>
-        <div className="filter-header">File type</div>
-        
         <div className="sidebar-footer" />
       </Grid>
     );
