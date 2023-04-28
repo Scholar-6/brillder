@@ -12,6 +12,7 @@ import {
   AcademicLevel,
   AcademicLevelLabels,
   Brick,
+  BrickLengthEnum,
   Subject,
   SubjectGroup,
 } from "model/brick";
@@ -76,6 +77,7 @@ interface BricksListState {
   groupSubjects: Subject[];
 
   filterLevels: AcademicLevel[];
+  filterLength: BrickLengthEnum[];
 
   searchExpanded: boolean;
 }
@@ -118,6 +120,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       expandedSubjects: [],
       expandedGroup,
       filterLevels: [],
+      filterLength: [],
       mySubjects: [],
       subjects: [],
       totalSubjects: [],
@@ -250,7 +253,23 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     } else {
 
     }
+
     this.setState({ filterLevels: levels });
+  }
+
+  filterByLength(length: BrickLengthEnum) {
+    const { filterLength } = this.state;
+    const lengths = toggleElement(filterLength, length);
+
+    // filter
+    // way to rerender infinity loaders with new data
+    if (this.props.user) {
+
+    } else {
+
+    }
+
+    this.setState({ filterLength: lengths });
   }
 
   toggleSubject(s: Subject) {
@@ -389,7 +408,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (this.state.searchExpanded) {
       return (
         <div className="search-container expanded">
-          <div className="backgrond-blur" />
+          <div className="backgrond-blur" onClick={() => this.setState({searchExpanded: false})} />
           <div className="search-and-filters-popup">
             <div className="back-arrow-container">
               <SpriteIcon
@@ -414,10 +433,29 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 />
               </div>
             </div>
+            <div className="level-and-length">
+              <div className="level-rd5">
+                <div className="bold">Level</div>
+                <div className="ba-filter">
+                  {this.renderAcademicLevel(AcademicLevel.First)}
+                  {this.renderAcademicLevel(AcademicLevel.Second)}
+                  {this.renderAcademicLevel(AcademicLevel.Third)}
+                </div>
+              </div>
+              <div className="length-rd5">
+                <div className="bold">Length</div>
+                <div className="ba-filter">
+                  {this.renderBrickLengthBox(BrickLengthEnum.S20min)}
+                  {this.renderBrickLengthBox(BrickLengthEnum.S40min)}
+                  {this.renderBrickLengthBox(BrickLengthEnum.S60min)}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       );
     }
+
     return (
       <div className="search-container">
         <div className="back-arrow-container">
@@ -523,6 +561,18 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         onClick={() => this.filterByLevel(level)}
       >
         {AcademicLevelLabels[level]}
+      </div>
+    );
+  }
+
+  renderBrickLengthBox(length: number) {
+    const isActive = !!this.state.filterLength.find((l) => l === length);
+    return (
+      <div
+        className={`va-round-level ${isActive ? "active" : ""}`}
+        onClick={() => this.filterByLength(length)}
+      >
+        {length}
       </div>
     );
   }
