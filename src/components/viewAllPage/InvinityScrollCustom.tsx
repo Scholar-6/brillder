@@ -3,12 +3,16 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import useBricks from './useBricks';
 import { User } from 'model/user';
 import PhoneTopBrickScroll16x9 from 'components/baseComponents/PhoneTopBrickScroll16x9';
-import { Brick, Subject } from 'model/brick';
+import { AcademicLevel, Brick, BrickLengthEnum, Subject } from 'model/brick';
 
 interface Props {
   user: User;
   isCore: boolean;
   subjects: Subject[];
+ 
+  filterLevels: AcademicLevel[];
+  filterLength: BrickLengthEnum[];
+
   searchString?: string;
   onLoad(data: any): void;
   setBrick(b: Brick): void;
@@ -25,7 +29,7 @@ const InfinityScrollCustom = (props: Props) => {
     results,
     hasNextPage,
     data
-  } = useBricks(pageNum, props.user, props.subjects, props.isCore, [], [], props.searchString);
+  } = useBricks(pageNum, props.user, props.subjects, props.isCore, props.filterLevels, props.filterLength, props.searchString);
 
   useEffect(() => {
     props.onLoad(data);
@@ -66,7 +70,7 @@ const InfinityScrollCustom = (props: Props) => {
       setPageNum(0);
       setSubjects(props.subjects);
     }
-  }, [props.subjects, props.searchString]); // need to update when searchString changed.
+  }, [props.subjects, props.searchString, props.filterLength, props.filterLength]); // need to update when searchString changed.
 
   const intObserver = useRef() as any;
 

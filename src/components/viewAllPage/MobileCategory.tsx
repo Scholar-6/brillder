@@ -365,6 +365,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             <InfinityScrollCustom
               searchString={this.state.searchString}
               user={this.props.user}
+              filterLevels={this.state.filterLevels}
+              filterLength={this.state.filterLength}
               isCore={this.state.isCore}
               subjects={subjects}
               setBrick={(b: Brick) => {
@@ -535,6 +537,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               searchString={this.state.searchString}
               user={this.props.user}
               isCore={this.state.isCore}
+              filterLevels={this.state.filterLevels}
+              filterLength={this.state.filterLength}
               subjects={this.state.groupSubjects}
               setBrick={(b: Brick) => {
                 if (this.props.user && this.checkAssignment(b)) {
@@ -706,6 +710,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 user={this.props.user}
                 isCore={this.state.isCore}
                 subjects={this.state.mySubjects}
+                filterLevels={this.state.filterLevels}
+                filterLength={this.state.filterLength} 
                 setBrick={(b: Brick) => {
                   if (this.props.user && this.checkAssignment(b)) {
                     this.props.history.push(map.postAssignment(b.id, this.props.user.id));
@@ -743,6 +749,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 user={this.props.user}
                 isCore={this.state.isCore}
                 subjects={this.state.subjects}
+                filterLevels={this.state.filterLevels}
+                filterLength={this.state.filterLength}
                 setBrick={(b: Brick) => {
                   if (this.props.user && this.checkAssignment(b)) {
                     this.props.history.push(map.postAssignment(b.id, this.props.user.id));
