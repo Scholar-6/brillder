@@ -1349,7 +1349,7 @@
       top: 1.5vw;
       left: 1.5vw;
       width: 97vw;
-      height: 30vw;
+      height: 35.5vw;
       border-radius: 2vw;
       background: white !important;
       border: 1px solid var(--tab-gray);
@@ -1369,6 +1369,41 @@
           }
           input {
             border-bottom: none;
+          }
+        }
+      }
+      .level-and-length {
+        display: flex;
+
+        .level-rd5 {
+          border-right: 1px solid var(--tab-gray);
+        }
+        .length-rd5, .level-rd5 {
+          width: 50%;
+          padding: 2vw 2vw;
+        }
+
+        .ba-filter {
+          display: flex;
+  
+          .va-round-level {
+            border-radius: 50%;
+            margin: 1vw;
+            width: 10vw;
+            height: 10vw;
+            border: 0.8vw solid var(--tab-gray);
+            background: var(--white);
+            color: var(--tab-gray);
+            display: flex;
+            font-size: 5.5vw;
+            align-items: center;
+            justify-content: center;
+            font-family: $font-family-bold;
+  
+            &.active {
+              background: var(--tab-gray);
+              color: var(--white);
+            }
           }
         }
       }
