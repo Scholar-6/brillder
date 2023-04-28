@@ -15,7 +15,14 @@ import BrickLinksSidebar from "./BrickLinksSidebar";
 import { buildPlan, buildQuesiton, buildSynthesis } from "components/build/routes";
 import { PlayLiveLastPrefix, PlayNewPrepLastPrefix, PlaySynthesisLastPrefix } from "components/play/routes";
 import { playPreview } from "components/map";
+import { getFormattedDate } from "components/services/brickService";
 
+export enum DSortBy {
+  Status,
+  BrickId,
+  Link,
+  Updated
+}
 
 interface UsersProps {
   history: History;
@@ -32,6 +39,7 @@ export interface BrickLink {
   status: number;
   link: string;
   position: string;
+  datePublished: string;
 }
 
 export interface HttpStatus {
@@ -42,6 +50,7 @@ export interface HttpStatus {
 
 interface UsersState {
   isAscending: boolean;
+  sortBy: DSortBy;
   statuses: HttpStatus[];
   brickLinks: BrickLink[];
   finalLinks: BrickLink[];
@@ -52,7 +61,8 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
     super(props);
 
     this.state = {
-      isAscending: false,
+      isAscending: true,
+      sortBy: DSortBy.Status,
       statuses: [{
         status: 200,
         label: 'Loaded',
@@ -73,8 +83,8 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
     this.loadInitData();
   }
 
-  filterAndSort(isAscending: boolean) {
-    let finalLinks: any[] = [];
+  filterAndSort(isAscending: boolean, sortBy?: DSortBy) {
+    let finalLinks: BrickLink[] = [];
 
     let statuses = this.state.statuses.filter(s => s.checked).map(s => s.status);
 
@@ -82,6 +92,28 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
       finalLinks = this.state.brickLinks;
     } else {
       finalLinks = this.state.brickLinks.filter(bl => statuses.find(s => bl.status === s) ? true : false)
+    }
+
+    if (sortBy) {
+      if (sortBy === DSortBy.BrickId)  {
+        if (!isAscending) {
+          finalLinks.sort((a,b) => b.brickId - a.brickId);
+        } else {
+          finalLinks.sort((a,b) => a.brickId - b.brickId);
+        }
+      } else if (sortBy === DSortBy.Link) {
+        if (!isAscending) {
+          finalLinks.sort((a,b) => a.link.localeCompare(b.link));
+        } else {
+          finalLinks.sort((a,b) => b.link.localeCompare(a.link));
+        }
+      } else if (sortBy === DSortBy.Updated) {
+        if (!isAscending) {
+          finalLinks.sort((a,b) => new Date(a.datePublished).getTime() - new Date(b.datePublished).getTime());
+        } else {
+          finalLinks.sort((a,b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
+        }
+      }
     }
 
     return finalLinks;
@@ -117,7 +149,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
           status = 'Not Found';
         }
         return (<div className="table-row" key={i}>
-          <div className="index-column">{i + 1}</div>
+          <div className="index-column">{bl.datePublished && getFormattedDate(bl.datePublished)}</div>
           <div
             className="link-column link-real"
             onClick={() => {
@@ -164,10 +196,20 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
         <div className="table users-table-d34">
           <div className="table-head bold">
             <div className="index-column header">
-              <div>Index</div>
+              <div>Updated</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                let isAscending = !this.state.isAscending;
+                const finalLinks = this.filterAndSort(isAscending, DSortBy.Updated)
+                this.setState({ isAscending, finalLinks });
+              }} /></div>
             </div>
             <div className="link-column header">
               <div>Link</div>
+              <div><SpriteIcon name="sort-arrows" onClick={() => {
+                let isAscending = !this.state.isAscending;
+                const finalLinks = this.filterAndSort(isAscending, DSortBy.Link)
+                this.setState({ isAscending, finalLinks });
+              }} /></div>
             </div>
             <div className="status-column header">
               <div>Status</div>
@@ -176,7 +218,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
               <div>BrickId</div>
               <div><SpriteIcon name="sort-arrows" onClick={() => {
                 let isAscending = !this.state.isAscending;
-                const finalLinks = this.filterAndSort(isAscending)
+                const finalLinks = this.filterAndSort(isAscending, DSortBy.BrickId);
                 this.setState({ isAscending, finalLinks });
               }} /></div>
             </div>
