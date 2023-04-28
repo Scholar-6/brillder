@@ -1149,7 +1149,7 @@
       padding-left: 12vw;
       border-radius: 0;
       font-size: $font16;
-      width: calc(100% - 13vw);
+      width: calc(100% - 13vw - 20vw);
       font-size: 4.3vw;
       height: 11.5vw;
       border-bottom: 1px solid #BBB;
@@ -1168,6 +1168,30 @@
       position: absolute;
       top: 0.2vw;
       right: 14vw;
+    }
+
+    .filter-btn {
+      position: absolute;
+      top: 2vw;
+      right: 0;
+      color: white;
+      > div {
+        border-radius: 1.5vw;
+        padding: 1.5vw 1vw 1.5vw 2vw;
+        display: flex;
+        align-items: center;
+        background: var(--theme-dark-blue);
+        white-space: nowrap;
+
+        svg {
+          margin-left: 1vw;
+          position: relative;
+          left: unset;
+          top: unset;
+          width: 5vw;
+          height: 5vw;
+        }
+      }
     }
   }
 
@@ -1202,7 +1226,7 @@
 
     .search-container {
       height: 9%;
-      background: var(--theme-dark-blue);
+      background: var(--theme-light-blue);
     }
 
     .back-arrow-container {
@@ -1310,6 +1334,46 @@
   .bricks-flex-row {
     margin-top: 4vw;
   }
+
+  .search-container.expanded {
+    .backgrond-blur {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 15;
+    }
+    .search-and-filters-popup {
+      position: absolute;
+      z-index: 16;
+      top: 1.5vw;
+      left: 1.5vw;
+      width: 97vw;
+      height: 30vw;
+      border-radius: 2vw;
+      background: white !important;
+      border: 1px solid var(--tab-gray);
+      .back-arrow-container {
+        height: 12vw;
+        width: 100%;
+        border-bottom: 1px solid var(--tab-gray);
+    
+        .absolute-arrow {
+          height: 10vw;
+          color: var(--theme-dark-blue);
+        }
+
+        .ba-search-input-container {
+          svg {
+            color: var(--theme-dark-blue);
+          }
+          input {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
 }
 
 
@@ -1325,7 +1389,7 @@
 
   .header-mobile {
     color: white;
-    background: var(--theme-dark-blue);
+    background: var(--theme-light-blue);
   }
 
   .page-header {
@@ -1407,7 +1471,7 @@
         margin-top: 1vw;
         margin-bottom: 1vw;
 
-        border-radius: 1vw;
+        border-radius: 1.5vw;
 
         &.bg-purple {
           background: #8E44F6;
@@ -1429,7 +1493,7 @@
     }
 
     .subject-category {
-      border-radius: 2vw;
+      border-radius: 3vw;
       border: 1px solid #D7D7D7;
       margin-top: 1.5vw;
       margin-bottom: 1.5vw;

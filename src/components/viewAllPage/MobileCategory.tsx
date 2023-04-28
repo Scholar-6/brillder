@@ -21,7 +21,7 @@ import brickActions from "redux/actions/brickActions";
 import actions from "redux/actions/requestFailed";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import map from "components/map";
+import map, { SubjectCategories } from "components/map";
 import { toggleElement } from "./service/viewAll";
 import routes from "components/play/routes";
 import InfinityScrollCustom from "./InvinityScrollCustom";
@@ -385,27 +385,34 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  renderGroupSearch() {
+  renderGroupSearch(label: string, clickBack?: Function) {
     if (this.state.searchExpanded) {
       return (
         <div className="search-container expanded">
-          <div className="back-arrow-container">
-            <SpriteIcon
-              name="arrow-left-stroke" className="absolute-arrow"
-              onClick={() => {
-                this.setState({ expandedGroup: null, typingString: '', searchString: '', groupSubjects: [] })
-                this.props.history.push(this.props.location.pathname);
-              }}
-            />
-            <div className="ba-search-input-container" onClick={() => {
-              this.setState({ searchExpanded: true });
-            }}>
-              <SpriteIcon name="search" />
-              <input
-                value={this.state.typingString}
-                onChange={e => this.search(e.target.value)}
-                placeholder="Search in subject"
+          <div className="backgrond-blur" />
+          <div className="search-and-filters-popup">
+            <div className="back-arrow-container">
+              <SpriteIcon
+                name="arrow-left-stroke" className="absolute-arrow"
+                onClick={() => {
+                  if (clickBack) {
+                    clickBack();
+                  } else {
+                    this.setState({ expandedGroup: null, typingString: '', searchString: '', groupSubjects: [] })
+                    this.props.history.push(this.props.location.pathname);
+                  }
+                }}
               />
+              <div className="ba-search-input-container" onClick={() => {
+                this.setState({ searchExpanded: true });
+              }}>
+                <SpriteIcon name="search" />
+                <input
+                  value={this.state.typingString}
+                  onChange={e => this.search(e.target.value)}
+                  placeholder={label}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -417,8 +424,12 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           <SpriteIcon
             name="arrow-left-stroke" className="absolute-arrow"
             onClick={() => {
-              this.setState({ expandedGroup: null, typingString: '', searchString: '', groupSubjects: [] })
-              this.props.history.push(this.props.location.pathname);
+              if (clickBack) {
+                clickBack();
+              } else {
+                this.setState({ expandedGroup: null, typingString: '', searchString: '', groupSubjects: [] })
+                this.props.history.push(this.props.location.pathname);
+              }
             }}
           />
           <div className="ba-search-input-container">
@@ -426,8 +437,18 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             <input
               value={this.state.typingString}
               onChange={e => this.search(e.target.value)}
-              placeholder="Search in subject"
+              placeholder={label}
             />
+            <div className="filter-btn">
+              <div onClick={() => {
+                this.setState({ searchExpanded: true });
+              }}>
+                <div>
+                  Filters
+                </div>
+                <SpriteIcon name="arrow-down" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -437,7 +458,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   renderSubjectsList(subjects: Subject[]) {
     return (
       <div className="subject-d33">
-        {subjects.map(s => <div>
+        {subjects.map((s, i) => <div key={i}>
           <svg viewBox="0 0 120 120">
             <circle cx="60" cy="60" r="50" fill={s.color} />
           </svg>
@@ -463,7 +484,10 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             history={this.props.history}
           />
           <div className="select-subject-dashboard-d33">
-            {this.renderGroupSearch()}
+            {this.renderGroupSearch('Search in ' + this.renderGroupName(subjectGroup), () => {
+              this.setState({ expandedGroup: null, typingString: '', searchString: '', activeTab: ActiveTab.Categories, groupSubjects: [] })
+              this.props.history.push(SubjectCategories);
+            })}
             <div className="subjects-title-d33 subject-custom-d33">
               <div className="subject-title">{this.renderGroupName(subjectGroup)}</div>
               {this.state.bricksCount ? <div className="bricks-count">{this.state.bricksCount} Brick{this.state.bricksCount > 1 ? 's' : ''} found</div> : ''}
@@ -618,7 +642,10 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               history={this.props.history}
             />
             <div className="select-subject-dashboard-d33">
-              {this.renderGroupSearch()}
+              {this.renderGroupSearch('Search in my subjects', () => {
+                this.setState({ expandedGroup: null, typingString: '', searchString: '', activeTab: ActiveTab.Categories, groupSubjects: [] })
+                this.props.history.push(SubjectCategories);
+              })}
               <div className="subjects-title-d33 subject-custom-d33">
                 <div className="subject-title">My Subjects</div>
                 {this.state.bricksCount ? <div className="bricks-count">{this.state.bricksCount} Brick{this.state.bricksCount > 1 ? 's' : ''}</div> : ''}
@@ -657,7 +684,10 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               history={this.props.history}
             />
             <div className="select-subject-dashboard-d33">
-              {this.renderGroupSearch()}
+              {this.renderGroupSearch('Search in all bricks', () => {
+                this.setState({ expandedGroup: null, typingString: '', searchString: '', activeTab: ActiveTab.Categories, groupSubjects: [] })
+                this.props.history.push(SubjectCategories);
+              })}
               <InfinityScrollCustom
                 searchString={this.state.searchString}
                 user={this.props.user}
