@@ -246,30 +246,13 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   filterByLevel(level: AcademicLevel) {
     const { filterLevels } = this.state;
     const levels = toggleElement(filterLevels, level);
-
-    // way to rerender infinity loaders with new data
-    if (this.props.user) {
-
-    } else {
-
-    }
-
-    this.setState({ filterLevels: levels });
+    this.setState({ filterLevels: [...levels] });
   }
 
   filterByLength(length: BrickLengthEnum) {
     const { filterLength } = this.state;
     const lengths = toggleElement(filterLength, length);
-
-    // filter
-    // way to rerender infinity loaders with new data
-    if (this.props.user) {
-
-    } else {
-
-    }
-
-    this.setState({ filterLength: lengths });
+    this.setState({ filterLength: [...lengths] });
   }
 
   toggleSubject(s: Subject) {

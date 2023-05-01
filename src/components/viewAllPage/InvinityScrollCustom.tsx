@@ -22,6 +22,8 @@ const InfinityScrollCustom = (props: Props) => {
   const [pageNum, setPageNum] = useState(0);
   const [subjectsB, setSubjects] = useState([] as Subject[]);
   const [oldSearch, setOldSearchStr] = useState('');
+  const [oldLength, setOldLength] = useState([] as number[]);
+  const [oldLevels, setOldLevels] = useState([] as number[]);
 
   const {
     isLoading,
@@ -41,6 +43,16 @@ const InfinityScrollCustom = (props: Props) => {
     const subject2Ids = subjectsB.map(s => s.id);
 
     let isModified = subjectIds.length !== subject2Ids.length;
+
+    if (props.filterLevels != oldLevels) {
+      isModified = true;
+      setOldLevels(props.filterLevels);
+    }
+
+    if (props.filterLength != oldLength) {
+      isModified = true;
+      setOldLength(props.filterLength);
+    }
 
     if (searchString && searchString.length >= 3) {
       if (searchString != oldSearch) {
@@ -70,7 +82,7 @@ const InfinityScrollCustom = (props: Props) => {
       setPageNum(0);
       setSubjects(props.subjects);
     }
-  }, [props.subjects, props.searchString, props.filterLength, props.filterLength]); // need to update when searchString changed.
+  }, [props.subjects, props.searchString, props.filterLevels, props.filterLength]); // need to update when searchString changed.
 
   const intObserver = useRef() as any;
 
