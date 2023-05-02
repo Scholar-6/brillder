@@ -255,30 +255,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.setState({ filterLength: [...lengths] });
   }
 
-  toggleSubject(s: Subject) {
-    // toggle subject
-    const expandedSubjects = [...this.state.expandedSubjects];
-    const foundIndex = expandedSubjects.findIndex(sub => sub.id === s.id);
-    if (foundIndex >= 0) {
-      expandedSubjects.splice(foundIndex, 1);
-    } else {
-      expandedSubjects.push(s);
-    }
-
-    let isCore = true;
-    if (this.state.expandedGroup === SubjectGroup.Personal) {
-      isCore = false;
-    }
-    this.setState({ expandedSubjects, isCore });
-
-    // prepare link
-    let link = this.props.location.pathname + '?subjectId=' + JSON.stringify(expandedSubjects.map(s => s.id));
-    if (this.state.expandedGroup) {
-      link += '&' + this.justSubjectGroup(this.state.expandedGroup);
-    }
-    this.props.history.push(link);
-  }
-
   async search(searchString: string) {
     if (this.state.typingTimeout) {
       clearTimeout(this.state.typingTimeout);
@@ -393,23 +369,16 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (this.state.searchExpanded) {
       return (
         <div className="search-container expanded">
-          <div className="backgrond-blur" onClick={() => this.setState({searchExpanded: false})} />
+          <div className="backgrond-blur" onClick={() => this.setState({ searchExpanded: false })} />
           <div className="search-and-filters-popup">
             <div className="back-arrow-container">
               <SpriteIcon
                 name="arrow-left-stroke" className="absolute-arrow"
                 onClick={() => {
-                  if (clickBack) {
-                    clickBack();
-                  } else {
-                    this.setState({ expandedGroup: null, typingString: '', searchString: '', groupSubjects: [] })
-                    this.props.history.push(this.props.location.pathname);
-                  }
+                  this.setState({ searchExpanded: false });
                 }}
               />
-              <div className="ba-search-input-container" onClick={() => {
-                this.setState({ searchExpanded: true });
-              }}>
+              <div className="ba-search-input-container">
                 <SpriteIcon name="search" />
                 <input
                   value={this.state.typingString}
@@ -478,10 +447,34 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  toggleSelectedSubject(s: Subject) {
+    // toggle subject
+    const expandedSubjects = [...this.state.expandedSubjects];
+    const foundIndex = expandedSubjects.findIndex(sub => sub.id === s.id);
+    if (foundIndex >= 0) {
+      expandedSubjects.splice(foundIndex, 1);
+    } else {
+      expandedSubjects.push(s);
+    }
+
+    let isCore = true;
+    if (this.state.expandedGroup === SubjectGroup.Personal) {
+      isCore = false;
+    }
+    this.setState({ expandedSubjects, isCore });
+
+    // prepare link
+    let link = this.props.location.pathname + '?subjectId=' + JSON.stringify(expandedSubjects.map(s => s.id));
+    if (this.state.expandedGroup) {
+      link += '&' + this.justSubjectGroup(this.state.expandedGroup);
+    }
+    this.props.history.push(link);
+  }
+
   renderSubjectsList(subjects: Subject[]) {
     return (
       <div className="subject-d33">
-        {subjects.map((s, i) => <div key={i}>
+        {subjects.map((s, i) => <div key={i} className={this.state.expandedSubjects.find(sr => sr.id === s.id) ? 'selected' : ''} onClick={() => this.toggleSelectedSubject(s)}>
           <svg viewBox="0 0 120 120">
             <circle cx="60" cy="60" r="50" fill={s.color} />
           </svg>
@@ -496,6 +489,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       return <div />;
     }
 
+    console.log('group subjects', this.state.groupSubjects);
+
     return (
       <React.Suspense fallback={<></>}>
         <MobileTheme />
@@ -508,7 +503,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           />
           <div className="select-subject-dashboard-d33">
             {this.renderGroupSearch('Search in ' + this.renderGroupName(subjectGroup), () => {
-              this.setState({ expandedGroup: null, typingString: '', searchString: '', activeTab: ActiveTab.Categories, groupSubjects: [] })
+              this.setState({ expandedGroup: null, typingString: '', expandedSubjects: [], searchString: '', activeTab: ActiveTab.Categories, groupSubjects: [] })
               this.props.history.push(SubjectCategories);
             })}
             <div className="subjects-title-d33 subject-custom-d33">
@@ -522,7 +517,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               isCore={this.state.isCore}
               filterLevels={this.state.filterLevels}
               filterLength={this.state.filterLength}
-              subjects={this.state.groupSubjects}
+              subjects={this.state.expandedSubjects.length > 0 ? this.state.expandedSubjects : this.state.groupSubjects}
               setBrick={(b: Brick) => {
                 if (this.props.user && this.checkAssignment(b)) {
                   this.props.history.push(map.postAssignment(b.id, this.props.user.id));
@@ -604,7 +599,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         this.setState({ expandedGroup, groupSubjects: [s1, s2], isCore: true });
         this.props.history.push(this.pathSubjectGroup(expandedGroup));
       }
-    } else if (expandedGroup === SubjectGroup.Personal) {
+    } else if (expandedGroup === SubjectGroup.Personal) {   
       this.setState({ expandedGroup, groupSubjects: this.state.totalSubjects, isCore: false });
       this.props.history.push(this.pathSubjectGroup(expandedGroup));
     } else {
@@ -692,9 +687,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 searchString={this.state.searchString}
                 user={this.props.user}
                 isCore={this.state.isCore}
-                subjects={this.state.mySubjects}
+                subjects={this.state.expandedSubjects ? this.state.expandedSubjects : this.state.mySubjects}
                 filterLevels={this.state.filterLevels}
-                filterLength={this.state.filterLength} 
+                filterLength={this.state.filterLength}
                 setBrick={(b: Brick) => {
                   if (this.props.user && this.checkAssignment(b)) {
                     this.props.history.push(map.postAssignment(b.id, this.props.user.id));

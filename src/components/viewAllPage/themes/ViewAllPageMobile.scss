@@ -1268,6 +1268,10 @@
           height: 4vw;
           padding-right: 2vw;
         }
+
+        &.selected {
+          background: var(--tab-gray);
+        }
       }
     }
     .phone-top-brick-16x9 {
