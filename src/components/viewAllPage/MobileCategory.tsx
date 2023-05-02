@@ -569,6 +569,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       }
     } else if (subjectGroup === SubjectGroup.HumanitiesAndSocialSciences) {
       groupSubjects = groupSubjects.filter(s => s.name != ENGLISH_LITERATURE_SUBJECT);
+    } else if (subjectGroup === SubjectGroup.Languages) {
+      groupSubjects = groupSubjects.filter(s => s.name != ENGLISH_LANGUAGE_SUBJECT);
     }
     return groupSubjects;
   }
