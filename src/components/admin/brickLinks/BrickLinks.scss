@@ -3,6 +3,32 @@
 @import 'src/assets/sass/partials/extensions';
 
 .brick-links-page {
+
+  // SCROLLBAR
+  ::-webkit-scrollbar {
+    // background-color: transparent;
+    display: initial !important;
+  }
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-thumb {
+    display: initial !important;
+  }
+
+  ::-webkit-scrollbar-track {
+    display: initial !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    display: block !important;
+
+    &:hover {
+      cursor: pointer;
+      display: block !important;
+    }
+  }
+
   .tab-content {
     overflow-y: auto;
     padding-bottom: 1vw;
@@ -33,7 +59,7 @@
       padding-left: 1vw;
       width: 8%;
     }
-    
+
     .link-column {
       padding-left: 1.5%;
       width: 60%;
@@ -44,6 +70,7 @@
         text-decoration: underline;
       }
     }
+
     .brick-column {
       padding-left: 2vw;
       width: 15%;
@@ -60,9 +87,11 @@
         height: 1.8vw;
       }
     }
+
     .status-column {
       width: 12%;
     }
+
     .table-row {
       display: flex;
       font-size: 1vw;
@@ -80,6 +109,7 @@
 
   .select-container {
     position: relative;
+
     .absolute-placeholder {
       font-size: 1vw;
       position: absolute;
@@ -99,6 +129,7 @@
     display: flex;
     justify-content: center;
     width: 21vw;
+
     .MuiSelect-select {
       padding-top: 0;
       padding-bottom: 0;
@@ -109,7 +140,9 @@
       border-radius: 0.5vw;
       background: var(--white);
     }
-    &::after, &::before {
+
+    &::after,
+    &::before {
       display: none !important;
       content: null !important;
     }
@@ -125,14 +158,15 @@
       left: 0;
       top: 0;
     }
-    
-    > div {
+
+    >div {
       cursor: pointer;
       font-size: 1vw;
       font-family: $font-family-bold;
       color: var(--dark-gray);
       margin: calc(2vh + 0.3vw) 0.5vw;
       border-bottom: 2px solid rgba($color: #000, $alpha: 0);
+
       &.active {
         color: var(--theme-dark-blue);
         border-bottom: 2px solid var(--theme-dark-blue);
@@ -144,6 +178,7 @@
 .brick-links-page .tab-content .table-container {
   width: 100%;
   overflow-x: scroll;
+
   .users-table-d34 {
     width: 100%;
 
