@@ -144,7 +144,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
         if (status === 200) {
           status = 'Loaded';
         } else if (status === 403) {
-          status = 'Forbiden';
+          status = 'Forbidden';
         } else if (status === 404) {
           status = 'Not Found';
         }
