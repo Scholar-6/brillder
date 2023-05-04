@@ -565,9 +565,12 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
                       const dateString = getDateStringV2(date.toString(), '_');
                       var blob = new Blob([data], { type: "text/plain" });
                       FileSaver.saveAs(blob, 'Emails_by_class ' + dateString + '.txt');
+                    } else {
+                      alert('no classes with students, please check other filters');
                     }
                   }}>
-                    <div>Copy emails</div>
+                    <div>Email List</div>
+                    <SpriteIcon name="download" />
                   </div>
                   <div className="btn btn-green flex-center" onClick={() => this.setState({ downloadClicked: true })}>
                     <div>Export</div>
