@@ -161,5 +161,10 @@
         color: var(--white);
       }
     }
+
+    &.empty .MuiSelect-root {
+      padding-left: 2vw;
+      padding-right: 2vw;
+    }
   }
 }

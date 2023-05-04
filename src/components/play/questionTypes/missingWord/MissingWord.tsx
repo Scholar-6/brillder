@@ -142,7 +142,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     return (
       <Select
         disabled={disabled}
-        className={`missing-select ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''}`}
+        className={`missing-select ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''} ${value === '' ? 'empty' : ''}`}
         value={value}
         IconComponent={ExpandMoreIcon}
         onChange={e => this.setUserAnswer(e, index)}
