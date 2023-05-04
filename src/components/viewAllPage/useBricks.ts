@@ -13,6 +13,8 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
   const [subjectsB, setSubjects] = useState([] as Subject[]);
   const [pageNumB, setPageNum] = useState(-1);
   const [oldSearch, setOldSearchStr] = useState("");
+  const [oldLength, setOldLength] = useState([] as number[]);
+  const [oldLevels, setOldLevels] = useState([] as number[]);
 
   const bricksPerPage = 6;
 
@@ -85,6 +87,16 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
       }
     }
 
+    if (levels != oldLevels) {
+      isModified = true;
+      setOldLevels(levels);
+    }
+
+    if (lengths != oldLength) {
+      isModified = true;
+      setOldLength(lengths);
+    }
+
     if (!isModified) {
       for (let index = 0; index < subjectIds.length; index++) {
         let same = subject2Ids[index] == subjectIds[index];
@@ -126,7 +138,7 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
         setPageNum(pageNum);
       }
     }
-  }, [pageNum, subjects, searchString])
+  }, [pageNum, subjects, searchString, levels, lengths])
 
   return { isLoading, isError, error, results, hasNextPage, data }
 }

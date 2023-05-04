@@ -3,12 +3,16 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import useBricks from './useBricks';
 import { User } from 'model/user';
 import PhoneTopBrickScroll16x9 from 'components/baseComponents/PhoneTopBrickScroll16x9';
-import { Brick, Subject } from 'model/brick';
+import { AcademicLevel, Brick, BrickLengthEnum, Subject } from 'model/brick';
 
 interface Props {
   user: User;
   isCore: boolean;
   subjects: Subject[];
+ 
+  filterLevels: AcademicLevel[];
+  filterLength: BrickLengthEnum[];
+
   searchString?: string;
   onLoad(data: any): void;
   setBrick(b: Brick): void;
@@ -18,6 +22,8 @@ const InfinityScrollCustom = (props: Props) => {
   const [pageNum, setPageNum] = useState(0);
   const [subjectsB, setSubjects] = useState([] as Subject[]);
   const [oldSearch, setOldSearchStr] = useState('');
+  const [oldLength, setOldLength] = useState([] as number[]);
+  const [oldLevels, setOldLevels] = useState([] as number[]);
 
   const {
     isLoading,
@@ -25,7 +31,7 @@ const InfinityScrollCustom = (props: Props) => {
     results,
     hasNextPage,
     data
-  } = useBricks(pageNum, props.user, props.subjects, props.isCore, [], [], props.searchString);
+  } = useBricks(pageNum, props.user, props.subjects, props.isCore, props.filterLevels, props.filterLength, props.searchString);
 
   useEffect(() => {
     props.onLoad(data);
@@ -37,6 +43,16 @@ const InfinityScrollCustom = (props: Props) => {
     const subject2Ids = subjectsB.map(s => s.id);
 
     let isModified = subjectIds.length !== subject2Ids.length;
+
+    if (props.filterLevels != oldLevels) {
+      isModified = true;
+      setOldLevels(props.filterLevels);
+    }
+
+    if (props.filterLength != oldLength) {
+      isModified = true;
+      setOldLength(props.filterLength);
+    }
 
     if (searchString && searchString.length >= 3) {
       if (searchString != oldSearch) {
@@ -66,7 +82,7 @@ const InfinityScrollCustom = (props: Props) => {
       setPageNum(0);
       setSubjects(props.subjects);
     }
-  }, [props.subjects, props.searchString]); // need to update when searchString changed.
+  }, [props.subjects, props.searchString, props.filterLevels, props.filterLength]); // need to update when searchString changed.
 
   const intObserver = useRef() as any;
 
