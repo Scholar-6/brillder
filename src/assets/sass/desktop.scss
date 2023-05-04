@@ -914,14 +914,12 @@
   .MuiInputBase-root {
     position: relative;
     min-width: 5vw;
-    padding-right: 0.8vw;
+    padding-right: 0vw;
     font-size: 1.1vw !important;
     line-height: 1.5 !important;
-    display: inline-block !important;
     .MuiSelect-select {
-      display: inline-block !important;
       padding: 0;
-      padding-right: 0.8vw !important;
+      padding-right: 1.3vw !important;
       min-width: 3vw !important;
     }
     svg {

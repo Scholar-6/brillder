@@ -47,6 +47,10 @@
     .question-hint.correct {
       background: var(--off-white) !important;
     }
+
+    .MuiInputBase-root {
+      display: inline;
+    }
   }
 
   @include phone_and_tabletP {
@@ -93,7 +97,7 @@
 .brick-container .introduction-page .missing-word-choice {
   .MuiSelect-icon {
     top: unset !important;
-    right: -0.4vw;
+    right: 0vw;
     bottom: 0.2vw;
   }
   
