@@ -14,7 +14,7 @@
 
 $height: 20vw;
 $play-footer-height: $mobile-menu-height;
-$new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
+$new-play-height: calc(100% - #{$play-footer-height}); // - #{$progress-bar-height} - overflow in IPhones
 .play-preview-pages {
   figcaption {
     font-size: 4vw;
