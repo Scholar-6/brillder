@@ -35,14 +35,18 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
     if (imageCaption) {
       imageCaptionS = stripHtml(imageCaption);
     }
+    console.log('render answer');
     return (
       <div className="image-container">
         <div className="absolute-image-hider-p3"
           onClick={e => {
+            console.log('click phone')
             if (lastClick && e.timeStamp - lastClick < 250) {
+              console.log('double click');
               setLastClick(0);
               onDoubleClick();
             } else {
+              console.log('set last click')
               setLastClick(e.timeStamp);
             }
           }}
