@@ -13,7 +13,6 @@ export function stripHtml(html: string) {
   return div.textContent || div.innerText || "";
 }
 
-/* experemental function to remove html from sources
 export function stripHtmlAndGetLink(html: string) {
   let linksText = '';
   const div = document.createElement("div");
@@ -32,7 +31,7 @@ export function stripHtmlAndGetLink(html: string) {
   }
   let text = div.textContent || div.innerText || "";
   return text + linksText;
-}*/
+}
 
 export function stripHtmlWithSpaces(html: string) {
   const div = document.createElement("div");

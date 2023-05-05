@@ -1,5 +1,6 @@
 import React from 'react';
 import SpriteIcon from './SpriteIcon';
+import { stripHtmlAndGetLink } from 'components/build/questionService/ConvertService';
 
 interface SourceInputProps {
   source: string;
@@ -25,7 +26,17 @@ const SourceInput: React.FC<SourceInputProps> = ({ source, validationRequired, s
       <input
         value={source}
         className={validate()}
-        onChange={(e) => setSource(e.target.value)}
+        onChange={(e) => {
+          // check if html
+          let value = e.target.value;
+          let isLink = value.indexOf('<a href=') >= 0;
+          if (isLink) {
+            try {
+              value = stripHtmlAndGetLink(value);
+            } catch {}
+          }
+          setSource(value)}
+        }
         placeholder="Add link to source or name of owner"
       />
     </div>
