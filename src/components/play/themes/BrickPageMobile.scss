@@ -1046,6 +1046,7 @@ $new-play-height: calc(100% - #{$play-footer-height}); // - #{$progress-bar-heig
             .synthesis-content {
               width: 100%;
               height: auto;
+              padding-bottom: 26px;
               li {
                 font-size: $mbase-font-size;
               }
