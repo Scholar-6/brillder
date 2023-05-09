@@ -29,6 +29,7 @@ import { CDomain, PDateFilter } from "../classesEvents/ClassesSidebar";
 import AddingCreditsDialog from "./AddingCreditsDialog";
 import { resendInvitation } from "services/axios/classroom";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
+import EmailTest from "../components/EmailTest";
 
 
 interface UsersProps {
@@ -603,6 +604,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             <BricksTab activeTab={BricksActiveTab.Users} history={this.props.history} />
             <div className="tab-content">
               <div className="flex f-justify-end">
+                <EmailTest />
                 <AddUserBtn onClick={() => {
                   this.props.history.push(map.UserProfileNew);
                 }} />
