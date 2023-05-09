@@ -226,7 +226,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
           haveImage && (isMobile
             ? <span><SpriteIcon name="f-zoom-in" />Double tap images to zoom.</span>
             : <span><SpriteIcon name="f-zoom-in" />Hover over images to zoom.</span>)
-        } <SpriteIcon name="pair-match-phone-d3" /> <span>Drag on left to scroll. Tap an answer to swap it for another.</span>
+        } <SpriteIcon name="pair-match-phone-d3" /> <span style={{width: '70vw'}}>Drag on left to scroll. Tap an answer to swap it for another.</span>
       </span>
     )
   }

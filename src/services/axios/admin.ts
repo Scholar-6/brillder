@@ -124,3 +124,11 @@ export const adminGetBrickLinks = async () => {
     return false;
   }
 }
+
+export const adminSendTestEmail = async (email: string, type: any) => {
+  try {
+    return await post<any>(`/institution/sendTestEmail`, { email, type });
+  } catch (e) {
+    return false;
+  }
+}
