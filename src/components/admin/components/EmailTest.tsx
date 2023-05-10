@@ -15,6 +15,8 @@ enum EmailType {
   StudentInvitedToClassAuth,
   StudentInvitedToClassAuth2,
   StudentInvitedToClassUnAuth,
+  CompetitionWinner,
+  InvitationToEdit,
   ResetPassword
 }
 
@@ -51,6 +53,12 @@ const EmailTestBtn: React.FC = () => {
     }, {
       type: EmailType.StudentInvitedToClassUnAuth,
       name: 'Student Invited To Class Unauth'
+    }, {
+      type: EmailType.CompetitionWinner,
+      name: 'Send Competition Winner'
+    }, {
+      type: EmailType.InvitationToEdit,
+      name: 'Send Invitation To Edit'
     }, {
       type: EmailType.ResetPassword,
       name: 'Reset Password'
