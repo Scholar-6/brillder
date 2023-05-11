@@ -24,6 +24,7 @@ import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
 import { AdminBricksFilters, GetAdminBricksFilters, SetAdminBricksFilters } from "localStorage/admin";
 import BrickPlayedPopup from "./BrickPlayedPopup";
+import map from "components/map";
 
 enum SortBy {
   Published,
@@ -653,7 +654,7 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           <Grid item xs={9} className="brick-row-container">
             <BricksTab activeTab={BricksActiveTab.Bricks} history={this.props.history} />
             <div className="tab-content">
-              <a className="brick-links" onClick={() => this.props.history.push('/admin/brickLinks')}>Brick Links</a>
+              <a className="brick-links" onClick={() => this.props.history.push(map.BrickLinks)}>Brick Links</a>
               <ExportBtn onClick={() => this.setState({ downloadClicked: true })} />
               {this.state.downloadClicked && <Dialog className="sort-dialog-classes export-dialog-ew35" open={this.state.downloadClicked} onClose={() => this.setState({ downloadClicked: false })}>
                 <div className="popup-3rfw bold">

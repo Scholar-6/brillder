@@ -9,7 +9,7 @@ import actions from 'redux/actions/requestFailed';
 import './BrickLinks.scss';
 import { User, } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import { adminGetBrickLinks } from "services/axios/admin";
+import { adminGetBrickSources } from "services/axios/admin";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BrickLinksSidebar from "./BrickLinksSidebar";
 import { buildPlan, buildQuesiton, buildSynthesis } from "components/build/routes";
@@ -84,7 +84,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
       }],
       brickLinks: [],
       finalLinks: [],
-      activeTab: ActiveTab.Links
+      activeTab: ActiveTab.Sources
     };
 
     this.loadInitData();
@@ -127,7 +127,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
   }
 
   async loadInitData() {
-    const brickLinks = await adminGetBrickLinks();
+    const brickLinks = await adminGetBrickSources();
     if (brickLinks) {
       brickLinks.sort((a, b) => b.status - a.status);
       this.setState({ brickLinks, finalLinks: brickLinks });
@@ -238,7 +238,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
 
   linksTab() {
     return (
-      <div className="active">
+      <div className="no-active" onClick={() => this.props.history.push(map.BrickLinks)}>
         <div style={{ display: 'flex' }}>
           <span>Links</span>
         </div>
@@ -248,7 +248,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
 
   sourcesTab() {
     return (
-      <div className="no-active" onClick={() => this.props.history.push(map.BrickSources)}>
+      <div className="active">
         <div style={{ display: 'flex' }}>
           <span>Sources</span>
         </div>
