@@ -8,6 +8,7 @@ import { adminSendTestEmail } from "services/axios/admin";
 enum EmailType {
   AssignmentReminder = 1,
   BrickAssigned,
+  NewBrickPublished,
   BrickPublished,
   BrickReturnedToAuthorByEditor,
   BrickSharedAuth,
@@ -17,7 +18,8 @@ enum EmailType {
   StudentInvitedToClassUnAuth,
   CompetitionWinner,
   InvitationToEdit,
-  ResetPassword
+  ResetPassword,
+  WelcomeSignup
 }
 
 const EmailTestBtn: React.FC = () => {
@@ -35,6 +37,9 @@ const EmailTestBtn: React.FC = () => {
     }, {
       type: EmailType.BrickPublished,
       name: 'Brick Published'
+    }, {
+      type: EmailType.NewBrickPublished,
+      name: 'New Brick Published'
     }, {
       type: EmailType.BrickReturnedToAuthorByEditor,
       name: 'Brick Returned To Author By Editor'
@@ -62,6 +67,9 @@ const EmailTestBtn: React.FC = () => {
     }, {
       type: EmailType.ResetPassword,
       name: 'Reset Password'
+    }, {
+      type: EmailType.WelcomeSignup,
+      name: 'Welcome Signup'
     }
   ];
 
