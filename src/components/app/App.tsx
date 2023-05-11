@@ -80,6 +80,7 @@ import LandingSubscribePage from 'components/landingSubscribePage/LandingSubscri
 import PayTerms from 'components/stripePageCreditCard/terms/PayTerms';
 import SharePersonalBricks from 'components/sharePersonalBricksPage/SharePersonalBricks';
 import BrickLinks from 'components/admin/brickLinks/BrickLinks';
+import BrickSources from 'components/admin/brickLinks/BrickSources';
 
 
 interface AppProps {
@@ -349,6 +350,7 @@ const App: React.FC<AppProps> = props => {
             <AdminOrInstitutionRoute path={map.UsersEvents} component={UsersEvents} />
             <AdminOrInstitutionRoute path={map.ClassesEvents} component={ClassesEvents} />
             <AdminOrInstitutionRoute path={'/admin/brickLinks'} component={BrickLinks} />
+            <AdminOrInstitutionRoute path={'/admin/brickSources'} component={BrickSources} />
 
             <Route path={map.TermsPage} component={PublicTerms} />
             <Route component={AuthRedirectRoute} />

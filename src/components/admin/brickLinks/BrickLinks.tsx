@@ -14,7 +14,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BrickLinksSidebar from "./BrickLinksSidebar";
 import { buildPlan, buildQuesiton, buildSynthesis } from "components/build/routes";
 import { PlayLiveLastPrefix, PlayNewPrepLastPrefix, PlaySynthesisLastPrefix } from "components/play/routes";
-import { playPreview } from "components/map";
+import map, { playPreview } from "components/map";
 import { getFormattedDate } from "components/services/brickService";
 
 export enum DSortBy {
@@ -42,6 +42,11 @@ export interface BrickLink {
   datePublished: string;
 }
 
+enum ActiveTab {
+  Links,
+  Sources
+}
+
 export interface HttpStatus {
   status: number;
   label: string;
@@ -50,6 +55,7 @@ export interface HttpStatus {
 
 interface UsersState {
   isAscending: boolean;
+  activeTab: ActiveTab;
   sortBy: DSortBy;
   statuses: HttpStatus[];
   brickLinks: BrickLink[];
@@ -77,7 +83,8 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
         checked: false
       }],
       brickLinks: [],
-      finalLinks: []
+      finalLinks: [],
+      activeTab: ActiveTab.Links
     };
 
     this.loadInitData();
@@ -95,23 +102,23 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
     }
 
     if (sortBy) {
-      if (sortBy === DSortBy.BrickId)  {
+      if (sortBy === DSortBy.BrickId) {
         if (!isAscending) {
-          finalLinks.sort((a,b) => b.brickId - a.brickId);
+          finalLinks.sort((a, b) => b.brickId - a.brickId);
         } else {
-          finalLinks.sort((a,b) => a.brickId - b.brickId);
+          finalLinks.sort((a, b) => a.brickId - b.brickId);
         }
       } else if (sortBy === DSortBy.Link) {
         if (!isAscending) {
-          finalLinks.sort((a,b) => a.link.localeCompare(b.link));
+          finalLinks.sort((a, b) => a.link.localeCompare(b.link));
         } else {
-          finalLinks.sort((a,b) => b.link.localeCompare(a.link));
+          finalLinks.sort((a, b) => b.link.localeCompare(a.link));
         }
       } else if (sortBy === DSortBy.Updated) {
         if (!isAscending) {
-          finalLinks.sort((a,b) => new Date(a.datePublished).getTime() - new Date(b.datePublished).getTime());
+          finalLinks.sort((a, b) => new Date(a.datePublished).getTime() - new Date(b.datePublished).getTime());
         } else {
-          finalLinks.sort((a,b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
+          finalLinks.sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
         }
       }
     }
@@ -229,6 +236,26 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
     );
   }
 
+  linksTab() {
+    return (
+      <div className="active">
+        <div style={{ display: 'flex' }}>
+          <span>Links</span>
+        </div>
+      </div>
+    );
+  }
+
+  sourcesTab() {
+    return (
+      <div className="no-active" onClick={() => this.props.history.push(map.BrickSources)}>
+        <div style={{ display: 'flex' }}>
+          <span>Sources</span>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="main-listing bricks-played-page user-list-page manage-classrooms-page brick-links-page">
@@ -257,6 +284,10 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
             }}
           />
           <Grid item xs={9} className="brick-row-container">
+            <div className="tab-container">
+              {this.linksTab()}
+              {this.sourcesTab()}
+            </div>
             <div className="tab-content">
               {this.renderTable()}
             </div>
