@@ -35,7 +35,7 @@
     color: var(--theme-dark-blue);
     position: relative;
 
-    height: calc(100vh - 5.834vw - 2vw) !important;
+    height: calc(100vh - 5.834vw - 2vw - 6.6vh) !important;
 
 
     .table-head {
@@ -67,7 +67,10 @@
 
       &.link-real {
         cursor: pointer;
-        text-decoration: underline;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
 

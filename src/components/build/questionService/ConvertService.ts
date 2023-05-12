@@ -13,6 +13,26 @@ export function stripHtml(html: string) {
   return div.textContent || div.innerText || "";
 }
 
+export function stripHtmlAndGetLink(html: string) {
+  let linksText = '';
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  div.querySelectorAll(".quill-desmos").forEach(el => div.removeChild(el));
+  try {
+    var links = div.getElementsByTagName('a');
+    for (var i = 0; i < links.length; i++) {
+      let data = links[i].getAttribute('href');
+      if (data) {
+        linksText += ' ' + data;
+      }
+    }
+  } catch (e) {
+    
+  }
+  let text = div.textContent || div.innerText || "";
+  return text + linksText;
+}
+
 export function stripHtmlWithSpaces(html: string) {
   const div = document.createElement("div");
   div.innerHTML = html;

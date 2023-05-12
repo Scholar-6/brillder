@@ -5,7 +5,7 @@ interface Props {
   onClick(): void;
 }
 
-const ExportBtn: React.FC<Props> = ({onClick}) => {
+const AddUserBtn: React.FC<Props> = ({onClick}) => {
   return (
     <div className="btn-container margin-right-small">
       <div className="btn btn-blue flex-center" onClick={onClick}>
@@ -16,4 +16,4 @@ const ExportBtn: React.FC<Props> = ({onClick}) => {
   )
 }
 
-export default ExportBtn;
+export default AddUserBtn;

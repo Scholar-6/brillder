@@ -26,6 +26,7 @@
     }
 
     br {
+      display: none !important;
       position: relative;
       display: inline-block;
       font-size: 0;
@@ -46,6 +47,10 @@
 
     .question-hint.correct {
       background: var(--off-white) !important;
+    }
+
+    .MuiInputBase-root {
+      display: inline;
     }
   }
 
@@ -93,7 +98,7 @@
 .brick-container .introduction-page .missing-word-choice {
   .MuiSelect-icon {
     top: unset !important;
-    right: -0.4vw;
+    right: 0vw;
     bottom: 0.2vw;
   }
   
@@ -156,6 +161,11 @@
       p {
         color: var(--white);
       }
+    }
+
+    &.empty .MuiSelect-root {
+      padding-left: 2vw;
+      padding-right: 2vw;
     }
   }
 }

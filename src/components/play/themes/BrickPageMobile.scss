@@ -14,7 +14,7 @@
 
 $height: 20vw;
 $play-footer-height: $mobile-menu-height;
-$new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
+$new-play-height: calc(100% - #{$play-footer-height}); // - #{$progress-bar-height} - overflow in IPhones
 .play-preview-pages {
   figcaption {
     font-size: 4vw;
@@ -1046,6 +1046,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
             .synthesis-content {
               width: 100%;
               height: auto;
+              padding-bottom: 26px;
               li {
                 font-size: $mbase-font-size;
               }
@@ -2167,7 +2168,7 @@ $new-play-height: calc(100% - #{$play-footer-height} - #{$progress-bar-height});
       position: fixed;
       top: 25vw;
       width: 100vw;
-      height: calc(100% - 17.5vw - 25vw - 26px) !important;
+      height: calc(100% - 17.5vw - 25vw) !important;
       .question-live-play {
         padding-bottom: 3vh;
       }
