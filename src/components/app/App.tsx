@@ -81,6 +81,7 @@ import PayTerms from 'components/stripePageCreditCard/terms/PayTerms';
 import SharePersonalBricks from 'components/sharePersonalBricksPage/SharePersonalBricks';
 import BrickLinks from 'components/admin/brickLinks/BrickLinks';
 import BrickSources from 'components/admin/brickLinks/BrickSources';
+import BrickPersonalLinks from 'components/admin/brickLinks/BrickPersonalLinks';
 
 
 interface AppProps {
@@ -349,8 +350,9 @@ const App: React.FC<AppProps> = props => {
             <AdminOrInstitutionRoute path={map.AdminBricksPlayed} component={BricksPlayed} />
             <AdminOrInstitutionRoute path={map.UsersEvents} component={UsersEvents} />
             <AdminOrInstitutionRoute path={map.ClassesEvents} component={ClassesEvents} />
-            <AdminOrInstitutionRoute path={'/admin/brickLinks'} component={BrickLinks} />
-            <AdminOrInstitutionRoute path={'/admin/brickSources'} component={BrickSources} />
+            <AdminOrInstitutionRoute path={map.BrickLinks} component={BrickLinks} />
+            <AdminOrInstitutionRoute path={map.BrickSources} component={BrickSources} />
+            <AdminOrInstitutionRoute path={map.BrickPersonalLinks} component={BrickPersonalLinks} />
 
             <Route path={map.TermsPage} component={PublicTerms} />
             <Route component={AuthRedirectRoute} />

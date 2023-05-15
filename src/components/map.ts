@@ -79,6 +79,7 @@ export const SearchPublishBrickPage = ViewAllPage + SearchPublishPrefix;
 
 export const BrickLinks = '/admin/brickLinks';
 export const BrickSources = '/admin/brickSources';
+export const BrickPersonalLinks = '/admin/brickPersonalLinks';
 
 const investigation = (brickId: number) => {
   return `/build/brick/${brickId}/investigation`;
@@ -251,5 +252,6 @@ export default {
   investigationQuestionSuggestions,
 
   BrickLinks,
-  BrickSources
+  BrickSources,
+  BrickPersonalLinks,
 }

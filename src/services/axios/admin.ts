@@ -125,6 +125,14 @@ export const adminGetBrickLinks = async () => {
   }
 }
 
+export const adminGetPersonalBrickLinks = async () => {
+  try {
+    return await get<BrickLink[]>(`/admin/getPersonalBrickLinks`);
+  } catch (e) {
+    return false;
+  }
+}
+
 export const adminGetBrickSources = async () => {
   try {
     return await get<BrickLink[]>(`/admin/getBrickSources`);
