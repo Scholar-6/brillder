@@ -9,7 +9,7 @@ import actions from 'redux/actions/requestFailed';
 import './BrickLinks.scss';
 import { User, } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import { adminGetBrickSources } from "services/axios/admin";
+import { adminGetPersonalBrickLinks } from "services/axios/admin";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BrickLinksSidebar from "./BrickLinksSidebar";
 import { buildPlan, buildQuesiton, buildSynthesis } from "components/build/routes";
@@ -62,7 +62,7 @@ interface UsersState {
   finalLinks: BrickLink[];
 }
 
-class BrickLinksPage extends Component<UsersProps, UsersState> {
+class BrickPersonalLinksPage extends Component<UsersProps, UsersState> {
   constructor(props: UsersProps) {
     super(props);
 
@@ -84,7 +84,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
       }],
       brickLinks: [],
       finalLinks: [],
-      activeTab: ActiveTab.Sources
+      activeTab: ActiveTab.Links
     };
 
     this.loadInitData();
@@ -127,7 +127,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
   }
 
   async loadInitData() {
-    const brickLinks = await adminGetBrickSources();
+    const brickLinks = await adminGetPersonalBrickLinks();
     if (brickLinks) {
       brickLinks.sort((a, b) => b.status - a.status);
       this.setState({ brickLinks, finalLinks: brickLinks });
@@ -248,7 +248,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
 
   sourcesTab() {
     return (
-      <div className="active">
+      <div className="no-active" onClick={() => this.props.history.push(map.BrickSources)}>
         <div style={{ display: 'flex' }}>
           <span>Sources</span>
         </div>
@@ -258,7 +258,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
 
   personalLinksTab() {
     return (
-      <div className="no-active" onClick={() => this.props.history.push(map.BrickPersonalLinks)}>
+      <div className="active">
         <div style={{ display: 'flex' }}>
           <span>Self-Published Links</span>
         </div>
@@ -279,7 +279,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <BrickLinksSidebar
-            label="All link Sources"
+            label="All Self-Published links"
             statuses={this.state.statuses}
             uncheckAll={() => {
               for (let status of this.state.statuses) {
@@ -316,4 +316,4 @@ const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
 });
 
-export default connect(mapState, mapDispatch)(BrickLinksPage);
+export default connect(mapState, mapDispatch)(BrickPersonalLinksPage);

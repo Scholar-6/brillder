@@ -22,6 +22,7 @@ export enum ESubjectCategory {
 }
 
 interface FilterSidebarProps {
+  label: string;
   statuses: HttpStatus[];
   uncheckAll(): void;
   toggleStatus(status: HttpStatus): void;
@@ -43,7 +44,7 @@ class BrickLinksSidebar extends Component<FilterSidebarProps> {
         className="sort-and-filter-container teach-assigned"
       >
         <div className="sort-box">
-          <div className="bold font1-5">All Bricks Links</div>
+          <div className="bold font1-5">{this.props.label}</div>
         </div>
         <div className="filter-header">Status</div>
         {status200 && status404 && status403 &&

@@ -256,6 +256,16 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
     );
   }
 
+  personalLinksTab() {
+    return (
+      <div className="no-active" onClick={() => this.props.history.push(map.BrickPersonalLinks)}>
+        <div style={{ display: 'flex' }}>
+          <span>Self-Published Links</span>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="main-listing bricks-played-page user-list-page manage-classrooms-page brick-links-page">
@@ -269,6 +279,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
         />
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <BrickLinksSidebar
+            label="All Bricks Links"
             statuses={this.state.statuses}
             uncheckAll={() => {
               for (let status of this.state.statuses) {
@@ -287,6 +298,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
             <div className="tab-container">
               {this.linksTab()}
               {this.sourcesTab()}
+              {this.personalLinksTab()}
             </div>
             <div className="tab-content">
               {this.renderTable()}
