@@ -112,6 +112,13 @@
       width: 10%;
       position: relative;
 
+      svg {
+        cursor: pointer;
+        margin-left: 0.5vw;
+        width: 1.5vw;
+        height: 1.5vw;
+      }
+
       .players-popup-d3423 {
         overflow-y: scroll;
         max-height: 20vh;
@@ -191,6 +198,8 @@
 
     .author-column {
       width: 13%;
+      overflow-x: scroll;
+      padding-right: 0.5vw;
     }
 
     .btn-container {
