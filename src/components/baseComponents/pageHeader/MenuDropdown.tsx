@@ -166,6 +166,9 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       if (isBuilderPreference(user)) {
         canSee = true;
       }
+      if (isPhone()) {
+        canSee = false;
+      }
       if (canSee) {
         return (
           <MenuItem className="menu-item" onClick={() => move(map.ManageClassroomsTab, 'Manage Classes')}>
