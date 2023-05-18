@@ -19,7 +19,8 @@ enum EmailType {
   CompetitionWinner,
   InvitationToEdit,
   ResetPassword,
-  WelcomeSignup
+  WelcomeSignup,
+  TestEmail
 }
 
 const EmailTestBtn: React.FC = () => {
@@ -70,6 +71,9 @@ const EmailTestBtn: React.FC = () => {
     }, {
       type: EmailType.WelcomeSignup,
       name: 'Welcome Signup'
+    }, {
+      type: EmailType.TestEmail,
+      name: 'Test Email'
     }
   ];
 
