@@ -366,6 +366,7 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
                 </Select>
                 <div className="btn-green" onClick={() => {
                   this.props.history.push(playCover(this.props.brick));
+                  this.props.close();
                 }}>
                   Go to Cover
                   <SpriteIcon name="arrow-right-s" />
