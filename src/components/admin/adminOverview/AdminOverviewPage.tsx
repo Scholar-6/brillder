@@ -3,15 +3,6 @@ import { History } from "history";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import { Bar } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-} from "chart.js";
 
 import './AdminOverviewPage.scss';
 import { User } from "model/user";
@@ -23,14 +14,6 @@ import { getOverviewAssignedData, getOverviewCompetitionData, getOverviewData, g
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
 
 interface Props {
   history: History;
