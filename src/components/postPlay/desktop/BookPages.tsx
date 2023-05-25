@@ -29,8 +29,8 @@ interface BookProps {
 }
 
 interface BookState {
-  closeTimeout: number,
-  firstHoverTimeout: number,
+  closeTimeout: number | NodeJS.Timeout;
+  firstHoverTimeout: number | NodeJS.Timeout;
   isFirstHover: boolean;
   bookHovered: boolean;
   animationRunning: boolean;

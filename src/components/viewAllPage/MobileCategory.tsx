@@ -59,7 +59,7 @@ enum ActiveTab {
 interface BricksListState {
   typingString: string;
   searchString: string;
-  typingTimeout: number;
+  typingTimeout: number | NodeJS.Timeout;
   mySubjects: Subject[];
   totalSubjects: Subject[];
   subjects: Subject[];

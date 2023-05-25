@@ -15,7 +15,7 @@ interface CounterState {
   seconds: string;
   milliseconds: string;
   isCounting: boolean;
-  timerInterval: number;
+  timerInterval: number | NodeJS.Timeout;
   isDeadlineSoon: boolean;
 }
 

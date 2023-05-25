@@ -15,7 +15,7 @@ import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getTerms } from "services/axios/terms";
 import map from "components/map";
-import { useHistory, useRouteMatch } from "react-router";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { ReduxCombinedState } from "redux/reducers";
 
 const mapState = (state: ReduxCombinedState) => ({

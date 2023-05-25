@@ -21,7 +21,7 @@ interface ImageProps {
 
 const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   const [isOpen, setOpen] = React.useState(false);
-  const [hoverTimeout, setHoverTimeout] = React.useState(-1);
+  const [hoverTimeout, setHoverTimeout] = React.useState(-1 as number | NodeJS.Timeout);
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.value);
   const [isCloseOpen, setCloseDialog] = React.useState(false);

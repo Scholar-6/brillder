@@ -18,7 +18,7 @@ export interface TextComponentProps {
 }
 
 const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, data, ...props}) => {
-  const [refreshTimeout, setRefreshTimeout] = React.useState(-1);
+  const [refreshTimeout, setRefreshTimeout] = React.useState(-1 as number | NodeJS.Timeout);
   const [questionId, setQuestionId] = React.useState(props.questionId);
   const onChange = (htmlString: string) => {
     let comp = Object.assign({}, data);

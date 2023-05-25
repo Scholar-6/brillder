@@ -39,7 +39,7 @@ const HtmlImageWithSpaces: React.FC<SpacesProps> = ({ index, className, value, h
     }
   });
 
-  const [hoverTimeout, setHoverTimeout] = React.useState(-1);
+  const [hoverTimeout, setHoverTimeout] = React.useState(-1 as number | NodeJS.Timeout);
 
   const onHover = () => {
     clearTimeout(hoverTimeout);

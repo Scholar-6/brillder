@@ -41,10 +41,10 @@ const BookAnnotation: React.FC<BookAnnotationProps> = ({ annotation, ...props })
     /*eslint-disable-next-line*/
   }, [annotation, props.updateAnnotation]);
 
-  const onAnnotationChangeRef = React.useRef<(() => void) & _.Cancelable>();
+  const onAnnotationChangeRef = React.useRef<(() => void)>();
   React.useEffect(() => {
     if (onAnnotationChangeRef.current) {
-      onAnnotationChangeRef.current.cancel();
+      //onAnnotationChangeRef.current.cancel();
     }
     onAnnotationChangeRef.current = _.throttle(onAnnotationChange, 500, { leading: true, trailing: true });
   }, [onAnnotationChange]);
