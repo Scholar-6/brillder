@@ -35,7 +35,7 @@ interface QuillEditorProps {
 }
 
 const MissingWordQuill = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, forwardRef) => {
-    const [updateTimeout, setUpdateTimeout] = React.useState(-1);
+    const [updateTimeout, setUpdateTimeout] = React.useState(-1 as number | NodeJS.Timeout);
 
     /*eslint-disable-next-line*/
     const [currentQuillId, setCurrentQuillId] = React.useContext(QuillEditorContext);

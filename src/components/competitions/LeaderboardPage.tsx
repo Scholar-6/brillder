@@ -2,7 +2,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import { User } from "model/user";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { ReduxCombinedState } from "redux/reducers";
 import { getCompetitionLeaderboard } from "services/axios/competitions";
 

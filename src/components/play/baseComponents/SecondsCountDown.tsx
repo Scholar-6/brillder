@@ -2,7 +2,7 @@ import React from "react";
 
 interface State {
   seconds: number;
-  interval: number;
+  interval: number | NodeJS.Timeout;
   isApearing: boolean;
 }
 

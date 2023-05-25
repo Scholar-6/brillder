@@ -1228,7 +1228,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           <MobileTheme />
           <div className="main-listing dashboard-page">
             <Switch>
-              <Route exec path={map.SubjectCategories}>
+              <Route path={map.SubjectCategories}>
                 <SubjectCategoriesComponent
                   user={user}
                   subjects={this.state.subjects}
@@ -1242,7 +1242,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                   }
                 />
               </Route>
-              <Route exec path={map.SearchPublishBrickPage}>
+              <Route path={map.SearchPublishBrickPage}>
                 <React.Suspense fallback={<></>}>
                   {isPhone() && <MobileTheme />}
                   <PhoneSearchPage
@@ -1252,7 +1252,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                   />
                 </React.Suspense>
               </Route>
-              <Route exec path={map.ViewAllPage}>
+              <Route path={map.ViewAllPage}>
                 <MobileCategory
                   history={history}
                   location={this.props.location}
@@ -1316,7 +1316,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               searching={this.searching.bind(this)}
             />
             <Switch>
-              <Route exec path={map.SubjectCategories}>
+              <Route path={map.SubjectCategories}>
                 <SubjectCategoriesComponent
                   user={user}
                   subjects={this.state.subjects}
@@ -1330,7 +1330,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                   }
                 />
               </Route>
-              <Route exec path={map.ViewAllPage}>
+              <Route path={map.ViewAllPage}>
                 {this.renderDesktopViewAllPage()}
               </Route>
             </Switch>

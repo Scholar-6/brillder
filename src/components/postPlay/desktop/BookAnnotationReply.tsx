@@ -33,10 +33,11 @@ const BookAnnotationReply: React.FC<CommentChildProps> = ({ annotation, ...props
   /*eslint-disable-next-line*/
   }, [annotation, props.updateAnnotation]);
 
-  const onAnnotationChangeRef = React.useRef<(() => void) & _.Cancelable>();
+  /*eslint-disable-next-line*/
+  const onAnnotationChangeRef = React.useRef<(() => void)>();
   React.useEffect(() => {
     if(onAnnotationChangeRef.current) {
-      onAnnotationChangeRef.current.cancel();
+      //onAnnotationChangeRef.current.cancel();
     }
     onAnnotationChangeRef.current = _.debounce(onAnnotationChange, 200);
   }, [onAnnotationChange]);
