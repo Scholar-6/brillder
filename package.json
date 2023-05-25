@@ -15,8 +15,6 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "@types/enzyme": "^3.10.12",
-    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/indefinite": "^2.3.0",
     "@types/jest": "^24.9.1",
@@ -128,6 +126,8 @@
     ]
   },
   "devDependencies": {
+    "@types/enzyme": "^3.10.13",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/file-saver": "^2.0.5",
     "@types/prop-types": "^15.7.3",
     "@types/redux-socket.io": "^1.4.0",
