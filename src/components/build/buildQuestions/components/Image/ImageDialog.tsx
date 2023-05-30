@@ -193,7 +193,7 @@ const ImageDialog: React.FC<DialogProps> = ({
             defaultValue={height}
             aria-labelledby="discrete-slider"
             step={1}
-            marks={marks} min={20} max={50}
+            marks={marks} min={20} max={100}
             onChange={(e: any, v: any) => setHeight(v)}
           />
         </div>
