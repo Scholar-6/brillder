@@ -184,7 +184,6 @@ class Sort extends CompComponent<SortProps, SortState> {
     // if error emptify results
     if (hadError) {
       if (choices) {
-        console.log(userCats);
         userCats.forEach(cat => cat.choices = []);
         userCats[userCats.length - 1].choices = choices;
       }
@@ -330,7 +329,7 @@ class Sort extends CompComponent<SortProps, SortState> {
 
     return (
       <div className={className} key={choice.id ? choice.id : i}>
-        <div className="sort-choice-absolute" />
+        { isMobile && <div className="sort-choice-absolute" />}
         <ListItem className="sort-choice-custom">
           <ListItemText>
             {this.renderChoiceContent(choice)}
