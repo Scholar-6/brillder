@@ -1114,6 +1114,15 @@ $base-build-border: $editor-radius;
   }
 }
 
+
+// pair match build
+.investigation-build-page .pair-match-build {
+  .pair-image .build-image-caption {
+    padding-left: 2vw !important;
+  }
+}
+
+
 .phone-question-preview {
   .short-answer-input {
     .quill-document-editor {
