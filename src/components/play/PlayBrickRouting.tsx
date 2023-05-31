@@ -952,7 +952,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           {isPhone() && <PhonePlaySimpleFooter brick={brick} history={history} music="/sounds/mixkit-hard-horror-hit-drum.wav" btnText="Start Timer" next={moveToReview} />}
         </Route>
 
-        <Route exac path={routes.reviewRoute}>
+        <Route path={routes.reviewRoute}>
           <Review
             mode={mode}
             status={status}
@@ -971,7 +971,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
           {isPhone() && renderPhoneFooter(PlayPage.Review)}
         </Route>
-        <Route exac path="/play/brick/:brickId/ending">
+        <Route path="/play/brick/:brickId/ending">
           {reviewBrills >= 0 ?
             <Ending
               status={status}
@@ -988,7 +988,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               move={finishBrick}
             /> : <PageLoader content="loading brills" />}
         </Route>
-        <Route exac path="/play/brick/:brickId/finalStep">
+        <Route path="/play/brick/:brickId/finalStep">
           <FinalStep
             user={props.user}
             brick={brick}

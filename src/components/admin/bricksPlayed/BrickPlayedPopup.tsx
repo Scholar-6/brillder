@@ -48,13 +48,12 @@ interface TeachState {
 
   assignments: any[];
   attempts: any[];
+
 }
 
 class BrickPlayedPopup extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
-
-    console.log(66, props.brick);
 
     const dateArray = [
       {
@@ -134,6 +133,34 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
     });
 
     return attempts;
+  }
+
+  filterByDate2(brickAssignments: any[], dateFilter: PDateFilter) {
+    if (dateFilter === PDateFilter.AllTime) {
+      return brickAssignments;
+    }
+
+    // timestamp
+
+    const date = new Date();
+    let dateNumber = date.getTime();
+
+    if (dateFilter === PDateFilter.Past24Hours) {
+      dateNumber = date.setDate(date.getDate() - 1);
+    } else if (dateFilter === PDateFilter.PastWeek) {
+      dateNumber = date.setDate(date.getDate() - 7);
+    } else if (dateFilter === PDateFilter.PastMonth) {
+      dateNumber = date.setMonth(date.getMonth() - 1);
+    } else if (dateFilter === PDateFilter.PastYear) {
+      dateNumber = date.setFullYear(date.getFullYear() - 1);
+    }
+
+    var assignments = brickAssignments.filter(b => {
+      const date = new Date(b.assignedDate).getTime();
+      return (dateNumber > date) ? false : true;
+    });
+
+    return assignments;
   }
 
   renderUserType(u: User) {
@@ -331,13 +358,15 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
                   onChange={e => {
                     const selectedDate = e.target.value as any;
                     const attempts = this.filterByDate(this.props.brickAttempts, selectedDate.value);
-                    this.setState({ selectedDate, attempts });
+                    const assignments = this.filterByDate2(this.props.assignments, selectedDate.value);
+                    this.setState({ selectedDate, assignments, attempts });
                   }}
                 >
                   {this.state.dateArray.map((c, i) => <MenuItem value={c as any} key={i}>{c.text}</MenuItem>)}
                 </Select>
                 <div className="btn-green" onClick={() => {
                   this.props.history.push(playCover(this.props.brick));
+                  this.props.close();
                 }}>
                   Go to Cover
                   <SpriteIcon name="arrow-right-s" />

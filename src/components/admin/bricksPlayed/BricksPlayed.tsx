@@ -499,8 +499,9 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
             e.stopPropagation();
             this.search(b.author.firstName.toLocaleLowerCase());
           }}>{b.author.firstName} {b.author.lastName} {b.author.email}</div>
-          <div className="second-column" onClick={(e) => this.openBrickStatisticPopup(e, b)}>
+          <div className="second-column">
             {b.attemptsCount}
+            <SpriteIcon name="plus-circle" onClick={(e) => this.openBrickStatisticPopup(e, b)} />
           </div>
           <div className="third-column">{b.isCore ? <SpriteIcon name="globe" /> : <SpriteIcon name="key" />}</div>
           <div className="sponsor-column">

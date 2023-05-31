@@ -306,7 +306,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             <Route exact path={routes.newPrepRoute}>
               <NewPrep history={history} brick={brick} moveNext={moveToLive} briefExpanded={true} endTime={prepEndTime} setEndTime={setPrepEndTime} />
             </Route>
-            <Route exac path={routes.preLiveRoute}>
+            <Route path={routes.preLiveRoute}>
               <Live
                 history={history}
                 status={status}
@@ -325,7 +325,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 }}
               />
             </Route>
-            <Route exac path="/play-preview/brick/:brickId/provisionalScore">
+            <Route path="/play-preview/brick/:brickId/provisionalScore">
               <ProvisionalScore
                 history={history}
                 location={location}
@@ -337,10 +337,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 isPlayPreview={true}
               />
             </Route>
-            <Route exac path="/play-preview/brick/:brickId/synthesis">
+            <Route path="/play-preview/brick/:brickId/synthesis">
               <Synthesis status={status} attempts={attempts} history={history} brick={brick} endTime={synthesisEndTime} setEndTime={setSynthesisEndTime} isPlayPreview={true} moveNext={moveToReview} />
             </Route>
-            <Route exac path="/play-preview/brick/:brickId/review">
+            <Route path="/play-preview/brick/:brickId/review">
               <Review
                 history={history}
                 isPlayPreview={true}
@@ -358,7 +358,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 }}
               />
             </Route>
-            <Route exac path="/play-preview/brick/:brickId/ending">
+            <Route path="/play-preview/brick/:brickId/ending">
               <Ending
                 location={location}
                 status={status}
@@ -372,10 +372,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 move={saveBrickAttempt}
               />
             </Route>
-            <Route exac path="/play-preview/brick/:brickId/build-complete">
+            <Route path="/play-preview/brick/:brickId/build-complete">
               <BuildCompletePage brick={brick} history={history} />
             </Route>
-            <Route exac path="/play-preview/brick/:brickId/submit">
+            <Route path="/play-preview/brick/:brickId/submit">
               <FinalStep user={props.user} status={status} history={history} location={location} />
             </Route>
           </Switch>

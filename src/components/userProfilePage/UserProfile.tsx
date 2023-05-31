@@ -92,7 +92,7 @@ interface UserProfileState {
   emailInvalid: boolean;
   editPassword: boolean;
   saveDisabled: boolean;
-  minimizeTimeout?: number;
+  minimizeTimeout?: number | NodeJS.Timeout;
   introJsSuspended?: boolean;
 
   isProfile: boolean;
@@ -722,9 +722,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       if (subscriptionState && (subscriptionState === 2 || subscriptionState === 3 || subscriptionState === SubscriptionState.Cancelled)) {
         return <div />;
       }
-      if (subscriptionState === SubscriptionState.StudentViaBrills) {
+      
+      if (subscriptionState && subscriptionState === SubscriptionState.StudentViaBrills) {
         return <div />;
       }
+      
       if (this.props.user.isFromInstitution) {
         return <div />;
       }

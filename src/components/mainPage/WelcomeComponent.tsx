@@ -27,7 +27,7 @@ interface WelcomeState {
   animatedNotificationText3: string;
   isTextClickable: boolean;
   animationStarted: boolean;
-  interval: number | null;
+  interval: number | NodeJS.Timeout | null;
   nameHovered: boolean;
 }
 

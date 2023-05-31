@@ -43,7 +43,7 @@ interface EndingState {
 
   isMobileSecondPart: boolean;
 
-  interval: number;
+  interval: number | NodeJS.Timeout;
 }
 
 interface EndingProps {

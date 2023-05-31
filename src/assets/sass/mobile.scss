@@ -2439,3 +2439,17 @@
 .sorted-row .synthesis-content {
   overflow-y: unset !important;
 }
+
+.subjects-popper {
+  $subjects-height: 23vh;
+  min-height: $subjects-height !important;
+  height: $subjects-height !important;
+  .MuiPaper-root {
+    min-height: $subjects-height !important;
+    height: $subjects-height !important;
+    .MuiAutocomplete-listbox {
+      min-height: $subjects-height !important;
+      height: $subjects-height !important;
+    }
+  }
+}

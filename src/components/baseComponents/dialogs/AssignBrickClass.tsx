@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import { connect } from 'react-redux';
 import Radio from '@material-ui/core/Radio';

@@ -32,7 +32,7 @@ interface BricksListProps {
 }
 
 interface BricksListState {
-  typingTimeout: number;
+  typingTimeout: number | NodeJS.Timeout;
 
   expandedBrick: Brick | null;
   bricks: Array<Brick>;

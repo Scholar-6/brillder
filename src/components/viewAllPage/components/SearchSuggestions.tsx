@@ -39,7 +39,7 @@ interface SearchSuggestionsProps {
 
 const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
   const [suggestions, setSuggestions] = React.useState([] as any[]);
-  const [suggetionTimeout, setSuggestionTimeout] = React.useState(-1);
+  const [suggetionTimeout, setSuggestionTimeout] = React.useState(-1 as number | NodeJS.Timeout);
   const [searchString, setSearchString] = React.useState('');
 
   useEffect(() => {
@@ -47,11 +47,11 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
       if (suggetionTimeout) { clearTimeout(suggetionTimeout)}
 
       const timeout = setTimeout(() => {
-        setSearchString(props.searchString)
+        setSearchString(props.searchString);
       }, 500);
       setSuggestionTimeout(timeout);
     }
-  }, [props.searchString])
+  }, [props.searchString]);
 
   const search = async () => {
     let res: ResultObj[] = [];

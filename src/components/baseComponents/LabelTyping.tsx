@@ -10,7 +10,7 @@ interface LabelTypingProps {
 interface LabelTypingState {
   animatedText: string;
   animationStarted: boolean;
-  interval: number | null;
+  interval: number | NodeJS.Timeout | null;
 }
 
 class LabelTyping extends Component<LabelTypingProps, LabelTypingState> {

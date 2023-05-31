@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
-import { Dialog, MobileStepper, Avatar, CardHeader, Grid } from '@material-ui/core';
+import { Dialog, MobileStepper, Grid } from '@material-ui/core';
 import { BrickInvitation } from 'model/classroom';
 
 import './ClassInvitationDialog.scss';
 import map from 'components/map';
-import SpriteIcon from '../SpriteIcon';
-import { stripHtml } from 'components/build/questionService/ConvertService';
 
 interface Props {
   onFinish?(): void;

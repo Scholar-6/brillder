@@ -16,13 +16,13 @@ interface CounterProps {
 interface CounterState {
   value: number;
   isCounting: boolean;
-  timerInterval: number;
+  timerInterval: number | NodeJS.Timeout;
   isDeadlineSoon: boolean;
 
   hovered: boolean;
 
   textShown: boolean;
-  toggleTextTimeout: number;
+  toggleTextTimeout: number | NodeJS.Timeout;
 
   minutesDown: number;
   secondsDown: number;
