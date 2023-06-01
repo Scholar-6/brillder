@@ -135,7 +135,38 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         key={sortableKey}
         group={{ name: "cloning-group-name", pull: "clone" }}
         setList={newList => {
-          setState({ ...state, list: newList })
+          // check if lists are the same
+          let same:boolean = true;
+          for (let i = 0; i < newList.length; i++) {
+            let item1 = state.list[i];
+            let item2 = newList[i];
+            let res = item1 === item2;
+
+            // onclick chosen is set from true to false double check
+            if (res == false) {
+              let item3 = Object.assign({...item1});
+              let item4 = Object.assign({...item2});
+              delete item3.chosen;
+              delete item4.chosen;
+
+              const keys3 = Object.keys(item3);
+              const keys4 = Object.keys(item4);
+
+              if (keys3.length !== keys4.length) {
+                same = false;
+              }
+            
+              for (let key of keys3) {
+                if (item3[key] !== item4[key]) {
+                  same = false;
+                  break;
+                }
+              }
+            }
+          }
+          if (same === false) {
+            setState({ ...state, list: newList })
+          }
         }}
       >
         {state.list.map((answer: Answer, i: number) => renderAnswer(answer, i))}
