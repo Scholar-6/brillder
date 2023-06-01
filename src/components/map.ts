@@ -64,7 +64,7 @@ export const TeachAssignedClass = (classroomId: number) => {
 
 // query strings
 export const NewTeachQuery = 'newTeacher=true';
-
+export const QuickassignPrefix = 'quickassign';
 
 export const ViewAllPage = '/play/dashboard';
 export const ViewAllPageA = ViewAllPage + '?mySubject=true';
@@ -237,6 +237,8 @@ export default {
   SubjectCategories,
   SearchPublishPrefix,
   SearchPublishBrickPage,
+
+  QuickassignPrefix,
 
   postPlay,
   postAssignment,

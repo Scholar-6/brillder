@@ -24,6 +24,14 @@ export const getClassrooms = async () => {
   }
 }
 
+export const getClassroomByCode = async (code: string) => {
+  try {
+    return await get<any>("/classroom/code/" + code);
+  } catch {
+    return null;
+  }
+}
+
 export const getStudentClassrooms = async () => {
   try {
     return await get<TeachClassroom[]>("/classrooms/me");

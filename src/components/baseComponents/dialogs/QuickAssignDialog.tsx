@@ -10,6 +10,8 @@ import { User } from 'model/user';
 import { Brick } from 'model/brick';
 import { ClassroomApi } from 'components/teach/service';
 import SpriteIcon from '../SpriteIcon';
+import map from 'components/map';
+
 
 interface AssignPersonOrClassProps {
   brick: Brick;
@@ -35,7 +37,7 @@ const QuickAssignDialog: React.FC<AssignPersonOrClassProps> = (props) => {
 
   useEffect(() => {
     if (props.classroom) {
-      writeQRCode('https://dev-app.brillder.com/quickassignment/' + props.classroom.code);
+      writeQRCode(`https://dev-app.brillder.com/${map.QuickassignPrefix}/` + props.classroom.code);
     }
     /*eslint-disable-next-line*/
   }, [props.classroom]);
