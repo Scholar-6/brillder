@@ -476,6 +476,9 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
               }
             }
           }
+          .quick-assign-button {
+            width: 100% !important;
+          }
           .grey-line {
             display: flex;
             justify-content: center;
