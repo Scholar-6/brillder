@@ -4,6 +4,17 @@ import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import { Bar } from 'react-chartjs-2';
 
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+
 import './AdminOverviewPage.scss';
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
@@ -14,6 +25,15 @@ import { getOverviewAssignedData, getOverviewCompetitionData, getOverviewData, g
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface Props {
   history: History;
@@ -213,6 +233,11 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
     }
   }
 
+  renderBar(options: any, data: any) {
+    console.log(options, data);
+    return <Bar options={options} data={data} />
+  }
+
   render() {
     const { history } = this.props;
 
@@ -304,6 +329,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
                 </div>
                 <div className="schart-column">
                   {this.state.isPlayedBricksLoading ? <SpriteIcon name="f-loader" className="spinning" /> : <Bar options={options} data={data2} />}
+                  {this.state.isNewSingupsLoading ? <SpriteIcon name="f-loader" className="spinning" /> : this.renderBar(options, data)}
                 </div>
               </div>
               <div className="schart-row">
