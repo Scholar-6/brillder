@@ -4,10 +4,13 @@ import { Dialog, Grid } from '@material-ui/core';
 import './ClassInvitationDialog.scss';
 import SpriteIcon from '../SpriteIcon';
 import { ClearQuickAssignment, GetQuickAssignment, SetQuickAssignment } from 'localStorage/play';
+import { User } from 'model/user';
+import { quickAcceptClassroom } from 'services/axios/classroom';
 
 
 interface Props {
   brickId: number;
+  user: User;
   onFinish?(): void;
 }
 
@@ -38,9 +41,15 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
 
   const handleAccept = async () => {
     if (assignment) {
-      assignment.accepted = true;
-      setAssignment(null);
-      SetQuickAssignment(JSON.stringify(assignment));
+      if (props.user) {
+        await quickAcceptClassroom(assignment.classroom.id);
+        // need to think what do if failed
+        ClearQuickAssignment();
+      } else {
+        assignment.accepted = true;
+        setAssignment(null);
+        SetQuickAssignment(JSON.stringify(assignment));
+      }
     }
   }
 
