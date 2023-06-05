@@ -15,6 +15,8 @@ import { isPhone } from "services/phone";
 import { hideZendesk } from "services/zendesk";
 import axios from "axios";
 import { User, UserPreferenceType } from "model/user";
+import { ClearQuickAssignment, GetQuickAssignment } from "localStorage/play";
+import { quickAcceptClassroom } from "services/axios/classroom";
 
 
 interface BricksListProps {
@@ -52,6 +54,17 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
     };
 
     this.getTerms();
+
+    // checking and accepting quick assignment
+    const assignment = GetQuickAssignment();
+    if (assignment && assignment.accepted === true) {
+      console.log('adding assignment', assignment);
+
+      if (assignment.classroom) {
+        quickAcceptClassroom(assignment.classroom.id);
+      }
+      ClearQuickAssignment();
+    }
   }
 
   componentDidMount() {

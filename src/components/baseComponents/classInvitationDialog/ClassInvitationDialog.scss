@@ -3,58 +3,68 @@
 @import "src/assets/sass/partials/extensions";
 
 .classroom-invitation {
-    color: var(--theme-dark-blue);
+  color: var(--theme-dark-blue);
 
-    .classroom-name {
-        margin-bottom: 1em;
+  .classroom-name {
+    margin-bottom: 1em;
+  }
+
+  .btn {
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 1.5vw;
+      height: 1.5vw;
+      stroke-width: 3;
+      margin-right: 0.5vw;
     }
 
-    .btn {
-        margin-left: 0.2em;
-        margin-right: 0.2em;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        svg {
-            width: 1.5vw;
-            height: 1.5vw;
-            stroke-width: 3;
-            margin-right: 0.5vw;
-        }
-
-        &:hover {
-            background: var(--theme-dark-blue) !important;
-        }
+    &:hover {
+      background: var(--theme-dark-blue) !important;
     }
+  }
 
-    .sent-by {
-        span {
-            font-size: 1.25rem;
-        }
+  .sent-by {
+    span {
+      font-size: 1.25rem;
     }
+  }
 }
 
 .personal-brick-invitation {
-    .brick-title-re2 {
-        margin-bottom: 1.5vh;
-        white-space: nowrap;
+  .brick-title-re2 {
+    margin-bottom: 1.5vh;
+    white-space: nowrap;
 
-        p {
-            display: inline;
-        }
-
-        br {
-            display: none !important;
-        }
+    p {
+      display: inline;
     }
 
-    .btn {
-        margin-top: 2vh;
-        width: 10vw;
+    br {
+      display: none !important;
     }
-    .MuiMobileStepper-root {
-        margin-top: 2vh;
+  }
+
+  .btn {
+    margin-top: 2vh;
+    width: 10vw;
+  }
+
+  .MuiMobileStepper-root {
+    margin-top: 2vh;
+  }
+}
+
+.quick-assign-accept-dialog {
+  .classroom-invitation {
+    h1 {
+      text-align: center;
+      margin-bottom: 1vw;
     }
+  }
 }
