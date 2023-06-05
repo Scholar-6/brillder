@@ -35,6 +35,7 @@
     "@types/validator": "^13.6.6",
     "axios": "^0.25.0",
     "canvas-confetti": "^1.5.1",
+    "chart.js": "^4.3.0",
     "desmos": "^1.5.4",
     "dot-prop": "^4.2.1",
     "dotenv": "^8.2.0",
