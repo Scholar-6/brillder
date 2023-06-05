@@ -55,15 +55,6 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
     };
 
     this.getTerms();
-
-    // checking and accepting quick assignment
-    const assignment = GetQuickAssignment();
-    if (assignment && assignment.accepted === true) {
-      if (assignment.classroom) {
-        quickAcceptClassroom(assignment.classroom.id);
-      }
-      ClearQuickAssignment();
-    }
   }
 
   componentDidMount() {
