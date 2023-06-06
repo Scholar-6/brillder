@@ -20,7 +20,8 @@ enum EmailType {
   InvitationToEdit,
   ResetPassword,
   WelcomeSignup,
-  TestEmail
+  TestEmail,
+  PersonalBrickShared
 }
 
 const EmailTestBtn: React.FC = () => {
@@ -74,6 +75,9 @@ const EmailTestBtn: React.FC = () => {
     }, {
       type: EmailType.TestEmail,
       name: 'Test Email'
+    }, {
+      type: EmailType.PersonalBrickShared,
+      name: 'Personal Brick Shared'
     }
   ];
 
