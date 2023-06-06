@@ -28,12 +28,21 @@
     br {
       display: none !important;
       position: relative;
-      display: inline-block;
       font-size: 0;
       line-height: 0;
       height: 0;
       content: "A";
       width: 0;
+    }
+
+    > span > div > p > br {
+      display: inline-block !important;
+      position: relative;
+      font-size: 18px;
+      line-height: 1.4;
+      height: auto;
+      content: unset;
+      width: auto;
     }
 
     .missing-select {
