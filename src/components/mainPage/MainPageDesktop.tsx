@@ -424,13 +424,16 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
     this.setState({ stepsEnabled: false });
   }
 
-  onCompleted() {
-    if (this.state.isNewTeacher) {
-      this.props.history.push(map.ViewAllPageB + '&newTeacher=true');
-      this.setState({ stepsEnabled: false });
-    } else {
-      this.props.history.push(map.ViewAllPageB);
-      this.setState({ stepsEnabled: false });
+  onIntroChange(e: number) {
+    console.log(e, this.state.steps.length);
+    if (e >= this.state.steps.length - 1) {
+      if (this.state.isNewTeacher) {
+        this.props.history.push(map.ViewAllPageB + '&newTeacher=true');
+        this.setState({ stepsEnabled: false });
+      } else {
+        this.props.history.push(map.ViewAllPageB);
+        this.setState({ stepsEnabled: false });
+      }
     }
   }
 
@@ -607,8 +610,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
             initialStep={0}
             // Called before exiting intro
             onExit={this.onIntroExit.bind(this)}
-            // Callback when all steps are completed
-            onComplete={this.onCompleted.bind(this)}
+            onChange={this.onIntroChange.bind(this)}
             options={{
               nextLabel: 'Next',
               doneLabel: 'Start Exploring!'

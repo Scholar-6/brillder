@@ -1,8 +1,6 @@
 export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean, isLibraryOrigin: boolean, library: any) {
   let steps: any = [];
 
-  console.log(isLibraryOrigin);
-
   if (isStudent) {
     steps.push({
       element: '.view-item-container',
@@ -54,6 +52,10 @@ export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean,
       {
         element: '.view-item-container',
         intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
+      },
+      {
+        element: '.view-item-container',
+        intro: `<p>Browse the catalogue, and assign your first brick to a new class</p>`,
       }
     ];
   }
@@ -65,6 +67,10 @@ export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean,
       intro: `<p>We offer free accounts to participating UK libraries. Link your account at the end of this tutorial.</p>`
     });
   }*/
+
+  steps.push({
+    intro: `<p></p>`,
+  });
 
   return steps;
 }
