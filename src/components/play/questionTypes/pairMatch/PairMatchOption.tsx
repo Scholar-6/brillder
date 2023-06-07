@@ -61,7 +61,7 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
         </div>
       );
     }
-    return <MathInHtml value={answer.option} />;
+    return <MathInHtml value={answer.option} className="text-answer" />;
   }
 
   let className = "pair-match-play-option";
