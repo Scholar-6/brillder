@@ -58,6 +58,11 @@
         text-align: center !important;
       }
 
+      .text-answer {
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+
       img {
         @include tabletP {
           width: auto !important;
