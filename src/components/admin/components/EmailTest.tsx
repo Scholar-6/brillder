@@ -14,7 +14,6 @@ enum EmailType {
   BrickSharedAuth,
   BrickSharedUnAuth,
   StudentInvitedToClassAuth,
-  StudentInvitedToClassAuth2,
   StudentInvitedToClassUnAuth,
   CompetitionWinner,
   InvitationToEdit,
@@ -54,9 +53,6 @@ const EmailTestBtn: React.FC = () => {
     }, {
       type: EmailType.StudentInvitedToClassAuth,
       name: 'Student Invited To Class Auth'
-    }, {
-      type: EmailType.StudentInvitedToClassAuth2,
-      name: 'Student Invited To Class Auth 2'
     }, {
       type: EmailType.StudentInvitedToClassUnAuth,
       name: 'Student Invited To Class Unauth'
