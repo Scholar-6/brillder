@@ -1811,3 +1811,16 @@
     line-height: 0.5 !important;
   }
 }
+
+// pair match fix
+.pair-match-play-choice.sound-with-image {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  .relative-waves-container {
+    padding-bottom: 2vw;
+  }
+  .play-wave-container {
+    border-top: 3px solid var(--tab-gray);
+    border-bottom: 3px solid var(--tab-gray);
+  }
+}
