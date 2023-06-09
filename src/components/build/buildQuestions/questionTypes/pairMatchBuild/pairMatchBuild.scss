@@ -30,7 +30,12 @@
   }
 
   .play-icon-container-d1 {
-    padding-left: 0.5vw !important;
+    height: 3vw;
+    padding-left: 0.3vw !important;
+  }
+
+  .relative-waves-container {
+    height: 4vw;
   }
 
   .volume-container-main {
@@ -221,6 +226,22 @@
     .right-top-icon {
       top: 0.1vw !important;
       right: 0vw !important;
+    }
+
+    .sound-image-dropbox {
+      height: 1.8vw;
+      position: relative;
+      margin-left: 4vw;
+    }
+
+    .sound-image-file {
+      display: flex;
+      align-items: center;
+
+      .question-image-drop {
+        width: 100%;
+        position: relative !important;
+      }
     }
   }
 }
