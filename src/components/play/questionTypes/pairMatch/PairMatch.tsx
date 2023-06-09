@@ -135,6 +135,9 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (answer.swapping === true) {
       className += " active";
     }
+    if (answer.answerType === QuestionValueType.Sound && answer.valueFile) {
+      className += " sound-with-image";
+    }
     if (this.props.attempt && this.props.isReview) {
       let state = this.getState(answer.index);
       if (state === 1) {
