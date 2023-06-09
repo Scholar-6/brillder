@@ -14,6 +14,7 @@ import { ChooseOneChoice } from 'components/interfaces/chooseOne';
 import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
 import ZoomHelpText from '../../components/ZoomHelpText';
 import { isPhone } from 'services/phone';
+import { fileUrl } from 'components/services/uploadFile';
 
 export interface ChooseOneComponent {
   type: number;
@@ -100,6 +101,14 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     } else if (answer.answerType === QuestionValueType.Sound) {
       return (
         <div style={{ width: '100%' }}>
+          {answer.valueFile &&
+          <div className="flex-align image-container-v4">
+            <img
+              alt="" src={fileUrl(answer.valueFile)} width="100%"
+              onMouseEnter={() => {}}
+              onMouseLeave={() => {}}
+            />
+          </div>}
           <Audio src={answer.soundFile} />
           <div>{answer.soundCaption ? answer.soundCaption : 'Click to select'}</div>
         </div>
@@ -143,6 +152,8 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
     if (choice.answerType === QuestionValueType.Image) {
       className += " image-choice";
+    } else if (choice.answerType === QuestionValueType.Sound) {
+      className += " sound-image-choice";
     }
 
     if (index === activeItem.shuffleIndex) {
@@ -182,6 +193,8 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
     if (choice.answerType === QuestionValueType.Image) {
       className += " image-choice";
+    } else if (choice.answerType === QuestionValueType.Sound) {
+      className += " sound-image-choice";
     }
 
     // book preview
