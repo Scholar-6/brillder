@@ -103,12 +103,11 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     save();
   }
 
-  const sendSoundImage = (fileName: string) => {
+  const setSoundImage = (fileName: string) => {
     if (locked) { return; }
     if (fileName) {
       answer.valueFile = fileName;
     }
-    console.log(answer);
     update();
     save();
   }
@@ -141,7 +140,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
               type={answer.answerType || QuestionValueType.None}
               fileName={answer.valueFile}
               locked={locked}
-              update={sendSoundImage}
+              update={setSoundImage}
             />
           </div>
           <SoundRecord
