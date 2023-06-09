@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import './categoriseBuild.scss'
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import { UniqueComponentProps } from '../types';
+import QuestionImageDropZoneV2 from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzoneV2';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
 import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfaces/sort';
 import { showSameAnswerPopup } from '../service/questionBuild';
@@ -133,6 +134,15 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       save();
     }
 
+    const setSoundImage = (fileName: string) => {
+      if (locked) { return; }
+      if (fileName) {
+        answer.valueFile = fileName;
+      }
+      update();
+      save();
+    }
+
     const setSound = (soundFile: string, caption: string) => {
       if (locked) { return; }
       answer.value = '';
@@ -184,6 +194,16 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       return (
         <div className="categorise-sound unique-component" key={i}>
           <RemoveButton onClick={() => answerChanged(answer, '')} />
+          <div className={answer.valueFile ? "sound-image-file" : "sound-image-dropbox"}>
+            <QuestionImageDropZoneV2
+              answer={answer as any}
+              className="pair-image"
+              type={answer.answerType || QuestionValueType.None}
+              fileName={answer.valueFile}
+              locked={locked}
+              update={setSoundImage}
+            />
+          </div>
           <SoundRecord
             locked={locked}
             answer={answer as any}
