@@ -1818,9 +1818,19 @@
   padding-right: 0 !important;
   .relative-waves-container {
     padding-bottom: 2vw;
+    width: 25vw !important;
+    margin-right: 1vw;
   }
   .play-wave-container {
     border-top: 3px solid var(--tab-gray);
     border-bottom: 3px solid var(--tab-gray);
+
+    .custom-audio-controls {
+      margin-top: 0 !important;
+      width: 6vw !important;
+      .volume-container-main input {
+        width: 2.8vw !important;
+      }
+    }
   }
 }
