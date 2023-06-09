@@ -241,6 +241,14 @@
       .question-image-drop {
         width: 100%;
         position: relative !important;
+
+        .dropzone {
+          width: 100%;
+
+          img {
+            max-width: 100%;
+          }
+        }
       }
     }
   }
