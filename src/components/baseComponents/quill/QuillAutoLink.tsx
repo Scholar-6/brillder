@@ -141,6 +141,7 @@ export default class AutoLink {
         quill.clipboard.addMatcher(Node.TEXT_NODE, (node: any, delta: Delta) => {
             const matches: string[] = node.data.match(URL_REGEXP);
             const selection = quill.getSelection();
+
             if(matches && matches.length > 0) {
                 const ops: any[] = [];
                 let str: string = node.data;
@@ -154,12 +155,13 @@ export default class AutoLink {
                       const beforeLink = split.shift() ?? "";
                       if(beforeLink.length > 0) ops.push({ insert: beforeLink });
                       ops.push({ insert: { "inline-link": { url: match, title: "Loading...", image: "" } } });
+                      ops.push({ insert: " " });
+                      ops.push({ insert: " " });
                       str = split.join(match);
 
                       getLinkMetadata(match).then((linkMetadata) => {
                         if(!selection) return;
                         const [leaf] = quill.getLeaf(selection.index + beforeLink.length + 1);
-                        console.log(selection.index, beforeLink.length, leaf);
                         leaf.replaceWith("inline-link", { ...linkMetadata });
                       });
                     } else {
@@ -174,14 +176,19 @@ export default class AutoLink {
                       getLinkMetadata(match).then((linkMetadata) => {
                         if(!selection) return;
                         const [embed] = quill.getLeaf(selection.index + beforeLink.length + 1);
-                        console.log(selection.index, beforeLink.length, embed);
                         embed.replaceWith("link-embed", { ...linkMetadata });
                       });
                     }
                 }
                 if(str.length > 0) ops.push({ insert: str });
                 delta.ops = ops;
-                console.log(ops);
+            }
+
+            if (selection) {
+              setTimeout(() => {
+                console.log('set selection', selection.index);
+                quill.setSelection(selection.index + 2, 0);
+              }, 1000);
             }
             return delta;
         });
@@ -189,13 +196,11 @@ export default class AutoLink {
         quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node: any, delta: Delta, ...args: any[]) => {
           const linkEmbed = (delta.ops.find((op: any) => op.insert["link-embed"])?.insert as any)?.["link-embed"];
           if(linkEmbed) {
-            console.log(node);
             if(linkEmbed.title === "Loading..." && linkEmbed.url) {
               getLinkMetadata(linkEmbed.url).then((linkMetadata) => {
                 const domNode = document.querySelector(`a.link-embed[data-url="${linkEmbed.url}"]`);
                 if(!domNode) return;
                 const blot = GlobalQuill.find(domNode);
-                console.log(blot);
                 blot.replaceWith("link-embed", { ...linkMetadata });
               });
             }
@@ -203,13 +208,11 @@ export default class AutoLink {
 
           const inlineLink = (delta.ops.find((op: any) => op.insert["inline-link"])?.insert as any)?.["inline-link"];
           if(inlineLink) {
-            console.log(node);
             if(inlineLink.title === "Loading..." && inlineLink.url) {
               getLinkMetadata(inlineLink.url).then((linkMetadata) => {
                 const domNode = document.querySelector(`a.inline-link[data-url="${inlineLink.url}"]`);
                 if(!domNode) return;
                 const blot = GlobalQuill.find(domNode);
-                console.log(blot);
                 blot.replaceWith("inline-link", { ...linkMetadata });
               });
             }
