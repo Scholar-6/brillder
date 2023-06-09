@@ -22,6 +22,7 @@ import SortImage from './SortImage';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isMobile } from 'react-device-detect';
 import { isPhone } from 'services/phone';
+import { fileUrl } from 'components/services/uploadFile';
 
 interface UserCategory {
   name: string;
@@ -279,8 +280,16 @@ class Sort extends CompComponent<SortProps, SortState> {
     } else if (choice.answerType === QuestionValueType.Sound) {
       return (
         <div style={{ width: '100%' }} className="audio-play">
+          {choice.valueFile &&
+          <div className="flex-align image-container-v4">
+            <img
+              alt="" src={fileUrl(choice.valueFile)} width="100%"
+              onMouseEnter={() => {}}
+              onMouseLeave={() => {}}
+            />
+          </div>}
           <Audio src={choice.soundFile} />
-          <div>{choice.soundCaption}</div>
+          <div className="text-center sound-caption">{choice.soundCaption}</div>
         </div>
       );
     }
