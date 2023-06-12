@@ -10,8 +10,16 @@
     background: var(--solitude-light);
 
     .play-wave-container {
+      height: 4.5vw !important;
       margin-left: 2.2vw;
+      padding-top: 0 !important;
       width: calc(100% - 5.5vw);
+
+      .custom-audio-controls,
+      .play-icon-container-d1 {
+        height: 3vw !important;
+        margin: 0 !important;
+      }
   
       .play-icon-d1 {
         width: 3vw !important;
@@ -157,6 +165,22 @@
         display: block;
         opacity: 1;
       }
+    }
+  }
+}
+
+
+// fix
+.vertical-shuffle-build {
+  .question-image-drop.pair-image {
+    position: relative;
+    margin-top: $editor-spacing;
+    margin-bottom: $editor-spacing;
+    top: 0;
+    width: 100%;
+  
+    img {
+      max-width: 9.5vw;
     }
   }
 }
