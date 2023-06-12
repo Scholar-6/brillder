@@ -2453,3 +2453,33 @@
     }
   }
 }
+
+// horizontal shuffle fix
+.play-preview-panel .horizontal-shuffle-play {
+  .play-icon-container-d1 {
+    width: 12vw !important;
+    height: 8vw !important;
+    justify-content: center;
+  }
+  .play-wave-container {
+    width: 20vw;
+    height: 10vw;
+    align-items: center;
+  }
+
+  .play-icon-d1 {
+    width: 8vw !important;
+    height: 8vw !important;
+  }
+
+  .custom-audio-controls {
+    width: 8vw !important;
+    height: 8vw !important;
+    justify-content: center;
+    align-self: center;
+  }
+
+  .relative-waves-container {
+    display: none;
+  }
+}

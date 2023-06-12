@@ -7,6 +7,7 @@ import { showSameAnswerPopup } from '../../service/questionBuild';
 
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import QuestionImageDropzone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
+import QuestionImageDropzoneV2 from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzoneV2';
 import RemoveItemButton from '../../components/RemoveItemButton';
 import RemoveButton from '../../components/RemoveButton';
 import { stripHtml } from 'components/build/questionService/ConvertService';
@@ -91,6 +92,15 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
       save();
     }
 
+    const setSoundImage = (fileName: string) => {
+      if (locked) { return; }
+      if (fileName) {
+        answer.valueFile = fileName;
+      }
+      update();
+      save();
+    }
+
     const onTextChanged = (answer: any, value: string) => {
       if (locked) { return; }
       answer.value = value;
@@ -127,6 +137,16 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
             <div className="index-circle">{i + 1}</div>
           </div>
           <RemoveButton onClick={() => changed(answer, '')} />
+          <div className={answer.valueFile ? "sound-image-file" : "sound-image-dropbox"}>
+            <QuestionImageDropzoneV2
+              answer={answer as any}
+              className="pair-image"
+              type={answer.answerType || QuestionValueType.None}
+              fileName={answer.valueFile}
+              locked={locked}
+              update={setSoundImage}
+            />
+          </div>
           <SoundRecord
             locked={locked}
             answer={answer}
