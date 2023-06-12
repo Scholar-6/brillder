@@ -1,13 +1,15 @@
 import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 
+import { fileUrl } from 'components/services/uploadFile';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
-import MathInHtml from '../../baseComponents/MathInHtml';
-import PairMatchImageContent from './PairMatchImageContent';
 import { Hint, HintStatus } from 'model/question';
-import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import HintBox from 'components/play/baseComponents/HintBox';
 import { ComponentAttempt } from 'components/play/model';
+
+import MathInHtml from '../../baseComponents/MathInHtml';
+import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
+import PairMatchImageContent from './PairMatchImageContent';
 
 interface OptionProps {
   index: number;
@@ -56,6 +58,14 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
     } else if (answer.optionType && answer.optionType === QuestionValueType.Sound) {
       return (
         <div style={{ width: '100%' }}>
+          {answer.valueFile &&
+          <div className="flex-align image-container-v4">
+            <img
+              alt="" src={fileUrl(answer.optionFile)} width="100%"
+              onMouseEnter={() => {}}
+              onMouseLeave={() => {}}
+            />
+          </div>}
           <Audio src={answer.optionSoundFile} />
           <div>{answer.optionSoundCaption ? answer.optionSoundCaption : ''}</div>
         </div>
@@ -73,6 +83,10 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
   }
   if (props.isReview && correct) {
     className += ' correct';
+  }
+
+  if (item.answerType === QuestionValueType.Sound && item.valueFile) {
+    className += " sound-with-image";
   }
 
   return (

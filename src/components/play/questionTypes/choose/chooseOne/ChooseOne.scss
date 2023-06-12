@@ -15,4 +15,15 @@
       display: block;
     }
   }
+  .sound-image-choice {
+    img {
+      width: auto;
+      max-width: 100%;
+      max-height: 20vh;
+    }
+
+    .relative-waves-container {
+      padding-bottom: 1.8vw;
+    }
+  }
 }

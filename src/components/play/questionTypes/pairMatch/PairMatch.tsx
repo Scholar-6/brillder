@@ -14,6 +14,7 @@ import PairMatchImageContent from './PairMatchImageContent';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
+import { fileUrl } from 'components/services/uploadFile';
 
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
@@ -103,6 +104,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     } else if (answer.answerType && answer.answerType === QuestionValueType.Sound) {
       return (
         <div style={{ width: '100%' }}>
+          {answer.valueFile &&
+          <div className="flex-align image-container-v4">
+            <img
+              alt="" src={fileUrl(answer.valueFile)} width="100%"
+              onMouseEnter={() => {}}
+              onMouseLeave={() => {}}
+            />
+          </div>}
           <Audio src={answer.valueSoundFile} />
           <div>{answer.valueSoundCaption ? answer.valueSoundCaption : ''}</div>
         </div>
@@ -125,6 +134,9 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
     if (answer.swapping === true) {
       className += " active";
+    }
+    if (answer.answerType === QuestionValueType.Sound && answer.valueFile) {
+      className += " sound-with-image";
     }
     if (this.props.attempt && this.props.isReview) {
       let state = this.getState(answer.index);
