@@ -1345,8 +1345,8 @@ $base-build-border: $editor-radius;
   .play-wave-container {
     position: relative;
     display: flex;
-    height: 6vw;
-    padding-bottom: 3vw;
+    height: 4.5vw;
+    padding-bottom: 0;
     .play-icon-container-d1 {
       height: 3vw;
     }
@@ -1366,6 +1366,19 @@ $base-build-border: $editor-radius;
 
     .custom-audio-controls {
       height: 3vw;
+    }
+
+    .absolute-start-time,
+    .absolute-end-time {
+      top: 3vw !important;
+    }
+
+    .absolute-start-time {
+      left: -55% !important;
+    }
+
+    .absolute-end-time {
+      right: -55% !important;
     }
 
     .play-icon-d1 {

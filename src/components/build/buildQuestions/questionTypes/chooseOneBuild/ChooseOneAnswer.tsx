@@ -3,6 +3,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import './ChooseOneAnswer.scss';
 import QuestionImageDropzone from "components/build/baseComponents/questionImageDropzone/QuestionImageDropzone";
+import QuestionImageDropzoneV2 from "components/build/baseComponents/questionImageDropzone/QuestionImageDropzoneV2";
 import { QuestionValueType } from "../types";
 import { ChooseOneAnswer } from './types';
 import RemoveItemButton from "../components/RemoveItemButton";
@@ -33,6 +34,15 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   removeFromList, update, save, onChecked, onBlur
 }) => {
   const [clearOpen, setClear] = React.useState(false);
+
+  const setSoundImage = (fileName: string) => {
+    if (locked) { return; }
+    if (fileName) {
+      answer.valueFile = fileName;
+    }
+    update();
+    save();
+  }
 
   const setImage = (fileName: string) => {
     if (locked) { return; }
@@ -96,6 +106,16 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     if (answer.answerType === QuestionValueType.Sound) {
       return (
         <div className="choose-sound">
+          <div className={answer.valueFile ? "sound-image-file" : "sound-image-dropbox"}>
+            <QuestionImageDropzoneV2
+              answer={answer as any}
+              className="pair-image"
+              type={answer.answerType || QuestionValueType.None}
+              fileName={answer.valueFile}
+              locked={locked}
+              update={setSoundImage}
+            />
+          </div>
           <SoundRecord
             locked={locked}
             answer={answer}
