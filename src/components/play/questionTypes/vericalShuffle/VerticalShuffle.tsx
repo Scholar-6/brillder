@@ -14,7 +14,7 @@ import { isPhone } from 'services/phone';
 import PairMatchImageContent from '../pairMatch/PairMatchImageContent';
 import Audio from 'components/build/buildQuestions/questionTypes/sound/Audio';
 import { ReactComponent as DragIcon } from 'assets/img/drag.svg';
-import { ReactComponent as TapIcon } from 'assets/img/tap.svg';
+import { fileUrl } from 'components/services/uploadFile';
 
 
 const MobileTheme = React.lazy(() => import('./themes/Phone'));
@@ -198,6 +198,14 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     } else if (answer.answerType === QuestionValueType.Sound) {
       return (
         <div>
+          {answer.valueFile &&
+          <div className="flex-align image-container-v4">
+            <img
+              alt="" src={fileUrl(answer.valueFile)} width="100%"
+              onMouseEnter={() => {}}
+              onMouseLeave={() => {}}
+            />
+          </div>}
           <Audio src={answer.soundFile} />
           <div>{answer.soundCaption}</div>
         </div>
@@ -219,6 +227,10 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
     if (this.props.isBookPreview) {
       className += getValidationClassName(isCorrect);
+    }
+
+    if (answer.answerType === QuestionValueType.Sound && answer.valueFile) {
+      className += " sound-with-image";
     }
 
     const hasHint = this.props.isReview || this.props.isPreview;
