@@ -61,7 +61,7 @@ const PairMatchOption: React.FC<OptionProps> = (props) => {
           {answer.valueFile &&
           <div className="flex-align image-container-v4">
             <img
-              alt="" src={fileUrl(answer.valueFile)} width="100%"
+              alt="" src={fileUrl(answer.optionFile)} width="100%"
               onMouseEnter={() => {}}
               onMouseLeave={() => {}}
             />
