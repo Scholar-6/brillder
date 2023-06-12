@@ -1852,3 +1852,25 @@
     font-size: 1.25vw !important;
   }
 }
+
+// vertical shuffle
+.vertical-shuffle-choice.sound-with-image {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  .relative-waves-container {
+    padding-bottom: 2vw;
+    margin-right: 1vw;
+  }
+  .image-container-v4 img {
+    max-height: 20vh;
+  }
+  .play-wave-container {
+    .custom-audio-controls {
+      margin-top: 0 !important;
+      width: 6vw !important;
+      .volume-container-main input {
+        width: 2.8vw !important;
+      }
+    }
+  }
+}
