@@ -65,7 +65,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   const setSoundImage = (fileName: string) => {
     if (locked) { return; }
     if (fileName) {
-      answer.valueFile = fileName;
+      answer.optionFile = fileName;
     }
     update();
     save();
@@ -116,12 +116,12 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     return (
       <Grid container item xs={6}>
         <div className="choose-sound bigger">
-          <div className={answer.valueFile ? "sound-image-file" : "sound-image-dropbox"}>
+          <div className={answer.optionFile ? "sound-image-file" : "sound-image-dropbox"}>
             <QuestionImageDropZoneV2
               answer={answer as any}
               className="pair-image"
               type={answer.answerType || QuestionValueType.None}
-              fileName={answer.valueFile}
+              fileName={answer.optionFile}
               locked={locked}
               update={setSoundImage}
             />
