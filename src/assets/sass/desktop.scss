@@ -1813,6 +1813,7 @@
 }
 
 // pair match fix
+.pair-match-play-option.sound-with-image,
 .pair-match-play-choice.sound-with-image {
   padding-left: 0 !important;
   padding-right: 0 !important;
@@ -1832,6 +1833,13 @@
         width: 2.8vw !important;
       }
     }
+  }
+}
+
+.pair-match-play-option.sound-with-image {
+  .play-wave-container {
+    border-top: 3px solid var(--off-white);
+    border-bottom: 3px solid var(--off-white);
   }
 }
 
