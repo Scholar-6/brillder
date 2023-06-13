@@ -684,6 +684,8 @@
 
 .choose-one-live, .choose-several-live {
   .choose-choice {
+    padding-left: 1vw !important;
+    padding-right: 1vw !important;
     .question-hint {
       background: var(--solitude-light) !important;
     }
