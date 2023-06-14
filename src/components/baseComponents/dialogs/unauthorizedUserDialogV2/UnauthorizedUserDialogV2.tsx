@@ -9,9 +9,7 @@ import SpriteIcon from "../../SpriteIcon";
 import { isPhone } from "services/phone";
 import { SetAuthBrickCash } from "localStorage/play";
 import GoogleDesktopButton from "components/loginPage/desktop/GoogleDesktopButton";
-import RegisterDesktopButton from "components/loginPage/desktop/RegisterDesktopButton";
 import map from "components/map";
-import SignUpComponent from "./SignUpComponent";
 
 import userActions from 'redux/actions/user';
 import { Brick } from "model/brick";
@@ -41,9 +39,6 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
   const [onlyLibrary, setOnlyLibrary] = useState(false);
 
   const [warningOpen, setWaringOpen] = useState(false);
-
-  const [registerClicked, setRegister] = useState(false);
-  const [registerWithEmailClicked, setRegisterEmail] = useState(false);
 
   useEffect(() => {
     const values = queryString.parse(location.search);
@@ -122,45 +117,6 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
       )
     }
 
-    if (registerClicked) {
-      if (registerWithEmailClicked) {
-        return (
-          <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
-            <SignUpComponent success={async () => {
-              console.log('success')
-              await props.getUser();
-              props.registered?.();
-            }} />
-            <div className="back-button-de" onClick={() => {
-              setRegisterEmail(false);
-              setRegister(false);
-            }}>
-              <SpriteIcon name="arrow-left" />
-              Back
-            </div>
-          </Dialog>
-        )
-      }
-      return (
-        <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog">
-          <div className="title bold">
-            {props.isBeforeReview
-              ? <span>To save and improve your score, and start building your personal library, create an account.</span>
-              : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
-          </div>
-          <GoogleDesktopButton label="Register with Google" newTab={true} />
-          <MicrosoftDesktopButton returnUrl={props.history.location.pathname} />
-          <RegisterDesktopButton label="Register with email" onClick={() => setRegisterEmail(true)} />
-          <div className="back-button-de" onClick={() => setRegister(false)}>
-            <SpriteIcon name="arrow-left" />
-            Back
-          </div>
-          <div className="small-text">
-            You will be redirected to this page after making your choice
-          </div>
-        </Dialog>
-      )
-    }
     return (
       <Dialog open={props.isOpen} className="dialog-box light-blue set-user-email-dialog auth-confirm-dialog" onClose={props.close}>
         <div className="title bigger bold">

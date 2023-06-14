@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@material-ui/core";
-import DynamicFont from 'react-dynamic-font';
 import queryString from 'query-string';
 import { isMobile } from "react-device-detect";
 
@@ -20,13 +19,13 @@ import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits"
 
 import map from "components/map";
 import { isPhone } from "services/phone";
-import { stripHtml } from "components/build/questionService/ConvertService";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademicLevelLabels, Brick } from "model/brick";
 import { CreateByEmailRes } from "services/axios/user";
 import { rightKeyPressed } from "components/services/key";
 import { SubscriptionState, User } from "model/user";
 import { checkAdmin, checkPublisher, isAorP } from "components/services/brickService";
+import QuickClassInvitationDialog from "components/baseComponents/classInvitationDialog/QuickClassInvitationDialog";
 
 
 interface Props {
@@ -53,6 +52,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [editorBioOpen, setEditorBio] = useState(false);
   const [onlyLibrary, setOnlyLibrary] = useState(false);
 
+  const {user} = props;
+
   useEffect(() => {
     const values = queryString.parse(location.search);
     if (values.origin === 'library') {
@@ -75,11 +76,10 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     }
 
     const userTimeout = setTimeout(() => {
-      if (!props.user) {
+      if (!user) {
         setUnauthorizedV2(true);
       }
     }, 20000);
-    
 
     document.addEventListener("keydown", handleMove, false);
 
@@ -97,7 +97,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   }, [props.activeCompetition]);
 
   const startBrick = () => {
-    if (!props.user && onlyLibrary) {
+    if (!user && onlyLibrary) {
       setUnauthorizedV2(false);
     } else {
       props.moveNext();
@@ -164,8 +164,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   };
 
   let isPublisher = false;
-  if (props.user) {
-    isPublisher = checkPublisher(props.user, brick);
+  if (user) {
+    isPublisher = checkPublisher(user, brick);
   }
 
   const renderBrickCircle = () => {
@@ -190,18 +190,18 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
 
   const renderCoverPlay = () => {
     let isPublisher = false;
-    if (props.user) {
-      isPublisher = isAorP(props.user.roles);
+    if (user) {
+      isPublisher = isAorP(user.roles);
     }
     return (
       <CoverCreditsPlay
-        user={props.user}
+        user={user}
         isAssignment={props.isAssignment}
-        isAuthor={brick.author.id === props.user?.id} isPublisher={isPublisher}
-        isLibraryUser={!!props.user?.library}
-        isPaidEducator={props.user?.subscriptionState === SubscriptionState.PaidTeacher} isCompetition={!!props.activeCompetition}
+        isAuthor={brick.author.id === user?.id} isPublisher={isPublisher}
+        isLibraryUser={!!user?.library}
+        isPaidEducator={user?.subscriptionState === SubscriptionState.PaidTeacher} isCompetition={!!props.activeCompetition}
         onClick={() => {
-          if (props.user) {
+          if (user) {
             startBrick();
           } if (onlyLibrary) {
             setUnauthorizedV2(true);
@@ -230,7 +230,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           </div>
           <CoverAuthorRow brick={brick} onlyLibrary={onlyLibrary} setLibraryLogin={() => setUnauthorizedV2(true)} />
           {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
-            user={props.user}
+            user={user}
             brick={brick}
           />}
           <div className="keywords-row">
@@ -238,7 +238,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           </div>
           <div className="image-container centered">
             <CoverImage
-              locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user.id)}
+              locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== user.id)}
               brickId={brick.id}
               data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
             />
@@ -326,6 +326,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             {renderCoverPlay()}
           </div>
         </div>
+        <QuickClassInvitationDialog user={user} brickId={brick.id} />
         <UnauthorizedUserDialogV2
           history={props.history}
           brick={brick}
@@ -386,7 +387,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                 <CoverAuthorRow brick={brick} onlyLibrary={onlyLibrary} setLibraryLogin={() => setUnauthorizedV2(true)} />
                 <div className="image-container centered">
                   <CoverImage
-                    locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== props.user?.id)}
+                    locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== user?.id)}
                     brickId={brick.id}
                     data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
                   />
@@ -431,13 +432,13 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   <div className="keywords-row">
                     <SpriteIcon name="hash" />
                     <KeyWordsPreview keywords={brick.keywords} onClick={keyword => {
-                      if (onlyLibrary && !props.user) {
+                      if (onlyLibrary && !user) {
                         setUnauthorizedV2(true);
                       } else {
                         props.history.push(map.ViewAllPageB + '&searchString=' + keyword.name);
                       }
                     }} />
-                    {!isMobile && props.user && checkAdmin(props.user.roles) && <div className="btn b-green text-white" onClick={() => props.history.push(map.Proposal(brick.id))}>Edit</div>}
+                    {!isMobile && user && checkAdmin(user.roles) && <div className="btn b-green text-white" onClick={() => props.history.push(map.Proposal(brick.id))}>Edit</div>}
                   </div>
                   <CoverTimer brickLength={brick.brickLength} />
                 </div>
@@ -446,7 +447,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <Grid item sm={4} xs={12}>
               <div className="introduction-info">
                 {(brick.isCore || brick.subject?.name === GENERAL_SUBJECT) && <SponsorImageComponent
-                  user={props.user}
+                  user={user}
                   brick={brick}
                 />}
                 <div className="brief-ellipsis">
@@ -459,6 +460,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           </Grid>
         </div>
       </div>
+      <QuickClassInvitationDialog user={user} brickId={brick.id} />
       <UnauthorizedUserDialogV2
         history={props.history}
         brick={brick}

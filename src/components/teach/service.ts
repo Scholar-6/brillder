@@ -20,6 +20,7 @@ export interface ClassroomApi {
   teacher?: User;
   teachers: User[];
   assignments?: any[];
+  code?: string;
 }
 
 /**

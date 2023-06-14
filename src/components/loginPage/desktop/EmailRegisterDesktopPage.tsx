@@ -20,6 +20,7 @@ import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailed
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import LibraryConnectDialog from "components/baseComponents/dialogs/LibraryConnected";
 import { LibraryLoginPage } from "./routes";
+import { afterLoginorRegister } from "services/afterLogin";
 
 const mapState = (state: ReduxCombinedState) => ({
   referralId: state.auth.referralId,
@@ -103,10 +104,9 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
           const { data } = response;
           if (data.termsAndConditionsAcceptedVersion === null) {
             props.history.push(map.TermsSignUp);
-            props.loginSuccess();
-          } else {
-            props.loginSuccess();
           }
+          props.loginSuccess();
+          afterLoginorRegister();
         }).catch(error => {
           // error
           toggleAlertMessage(true);

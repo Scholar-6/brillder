@@ -6,13 +6,19 @@ import axios from "axios";
 import actions from "redux/actions/brickActions";
 import { ReduxCombinedState } from 'redux/reducers';
 import { PlayMode } from './model';
+import { User } from "model/user";
+import { Brick } from "model/brick";
+import routes, { PlayPreInvestigationLastPrefix } from "./routes";
+import { isInstitutionPreference } from "components/services/preferenceService";
+import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
+import { getCompetitionByUser } from "services/axios/competitions";
+import { Competition } from "model/competition";
+import { checkCompetitionActive } from "services/competition";
+
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
-import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
-import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
-import { Brick } from "model/brick";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
 import HighlightTextButton from "./baseComponents/sidebarButtons/HighlightTextButton";
@@ -20,17 +26,13 @@ import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
-import routes, { PlayPreInvestigationLastPrefix } from "./routes";
 import ShareDialogs from "./finalStep/dialogs/ShareDialogs";
 import GenerateCoverButton from "./baseComponents/sidebarButtons/GenerateCoverButton";
-import { isInstitutionPreference } from "components/services/preferenceService";
 import CompetitionButton from "./baseComponents/sidebarButtons/CompetitionButton";
 import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDialog";
-import { getCompetitionByUser } from "services/axios/competitions";
-import { Competition } from "model/competition";
-import { checkCompetitionActive } from "services/competition";
 import HighScore from "./baseComponents/HighScore";
 import AdminBrickStatisticButton from "./baseComponents/AdminBrickStatisticButton";
+import QuickAssignButton from "./baseComponents/sidebarButtons/QuickAssignButton";
 
 interface SidebarProps {
   history: any;
@@ -98,11 +100,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   async getCompetition() {
-    console.log('get competition')
     const c = await getCompetitionByUser(this.props.user.id, this.props.brick.id);
     if (c) {
       const isActive = checkCompetitionActive(c);
-      console.log('is active')
       if (isActive) {
         this.props.competitionCreated(c);
       }
@@ -192,7 +192,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       { withCredentials: true }
     );
     if (response.status === 200) {
-      console.log('created');
       await this.getCompetition();
     }
     return;
@@ -316,6 +315,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           haveCircle={haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />}
+        <QuickAssignButton
+          sidebarRolledUp={sidebarRolledUp}
+          user={this.props.user}
+          brick={this.props.brick}
+          haveCircle={haveBriefCircles}
+          history={this.props.history}
+          showPremium={() => this.props.showPremium && this.props.showPremium()}
+        />
         <AssignButton
           sidebarRolledUp={sidebarRolledUp}
           user={this.props.user}

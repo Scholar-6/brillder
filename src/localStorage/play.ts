@@ -1,5 +1,6 @@
 import { Brick } from 'model/brick';
-import {AttemptCash, YoutubeClicked, PreviewAttemptCash, VolumeToggle, UserBrills, AuthBrickCash, UnauthBrickCash} from './types';
+import {AttemptCash, YoutubeClicked, PreviewAttemptCash, VolumeToggle, UserBrills, AuthBrickCash, UnauthBrickCash, QuickAssignment} from './types';
+import { QuickAssigment } from 'components/baseComponents/classInvitationDialog/QuickClassInvitationDialog';
 
 export function SetYoutubeClick() {
   localStorage.setItem(YoutubeClicked, "true");
@@ -135,4 +136,26 @@ export function GetUserBrills() {
     return parseInt(brills);
   }
   return 0;
+}
+
+
+
+
+
+// quick assignment
+// he will be redirected to login and then after success will be redirected to personal brick again.
+export function SetQuickAssignment(code: string) {
+  localStorage.setItem(QuickAssignment, code);
+}
+
+export function GetQuickAssignment () {
+  const data = localStorage.getItem(QuickAssignment)
+  if (data) {
+    return JSON.parse(data) as QuickAssigment;
+  }
+  return data as null;
+}
+
+export function ClearQuickAssignment() {
+  localStorage.removeItem(QuickAssignment);
 }

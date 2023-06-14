@@ -82,6 +82,7 @@ import SharePersonalBricks from 'components/sharePersonalBricksPage/SharePersona
 import BrickLinks from 'components/admin/brickLinks/BrickLinks';
 import BrickSources from 'components/admin/brickLinks/BrickSources';
 import BrickPersonalLinks from 'components/admin/brickLinks/BrickPersonalLinks';
+import QuickAssign from 'components/play/quickAssign/QuickAssign';
 
 
 interface AppProps {
@@ -355,6 +356,7 @@ const App: React.FC<AppProps> = props => {
             <AdminOrInstitutionRoute path={map.BrickPersonalLinks} component={BrickPersonalLinks} />
 
             <Route path={map.TermsPage} component={PublicTerms} />
+            <Route path={`/${map.QuickassignPrefix}/:code`} component={QuickAssign} />
             <Route component={AuthRedirectRoute} />
           </Switch>
           <VersionLabel />
