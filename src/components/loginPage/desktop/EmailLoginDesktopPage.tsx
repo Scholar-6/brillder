@@ -8,7 +8,12 @@ import isEmail from 'validator/lib/isEmail';
 
 import actions from "redux/actions/auth";
 import { login } from "services/axios/auth";
-import LoginLogo from '../components/LoginLogo';
+import { trackSignUp } from "services/matomo";
+import map from "components/map";
+import { getTerms } from "services/axios/terms";
+import { ReduxCombinedState } from "redux/reducers";
+import { afterLoginorRegister } from "services/afterLogin";
+
 import WrongLoginDialog from "../components/WrongLoginDialog";
 import DesktopLoginForm from "./DesktopLoginForm";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -16,11 +21,9 @@ import TeachIcon from "components/mainPage/components/TeachIcon";
 import PhoneIcon from "./PhoneIcon";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import TermsLink from "components/baseComponents/TermsLink";
-import { trackSignUp } from "services/matomo";
-import map from "components/map";
-import { getTerms } from "services/axios/terms";
 import LoginBricks from "../components/LoginBricks";
-import { ReduxCombinedState } from "redux/reducers";
+import LoginLogo from '../components/LoginLogo';
+
 
 const mapState = (state: ReduxCombinedState) => ({
   referralId: state.auth.referralId,
@@ -91,10 +94,9 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             /*eslint-disable-next-line*/
             if (r && r.lastModifiedDate != data.termsAndConditionsAcceptedVersion) {
               props.history.push(map.TermsOnlyAccept);
-              props.loginSuccess();
-            } else {
-              props.loginSuccess();
             }
+            afterLoginorRegister();
+            props.loginSuccess();
           });
         }).catch(error => {
           // error

@@ -22,6 +22,7 @@ import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailed
 import { UserPreferenceType } from "model/user";
 import { LibraryLoginPage, RegisterPage } from "../desktop/routes";
 import LibraryConnectDialog from "components/baseComponents/dialogs/LibraryConnected";
+import { afterLoginorRegister } from "services/afterLogin";
 
 interface MobileLoginProps {
   history: History;
@@ -113,10 +114,9 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
 
         if (data.termsAndConditionsAcceptedVersion === null) {
           props.history.push(map.TermsSignUp);
-          props.loginSuccess();
-        } else {
-          props.loginSuccess();
         }
+        afterLoginorRegister();
+        props.loginSuccess();
       }
       let { msg } = data;
       if (!msg) {
