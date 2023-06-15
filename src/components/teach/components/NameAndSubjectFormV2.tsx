@@ -12,6 +12,7 @@ import InviteStudentEmailDialog from '../manageClassrooms/components/InviteStude
 import "./NameAndSubjectForm.scss";
 import ShareTeacherDialog from './ShareTeacherDialog';
 import { ClassroomStatus } from 'model/classroom';
+import QuickAssignDialog from 'components/baseComponents/dialogs/QuickAssignDialog';
 
 interface NameAndSubjectFormProps {
   classroom: any;
@@ -28,6 +29,7 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
   const [inviteOpen, setInvite] = useState(false);
   const [numStudentsInvited, setInvitedCount] = useState(0);
   const [isShareTeachOpen, setShareTeach] = useState(false);
+  const [isCodeOpen, setCodeOpen] = useState(false);
 
   const [name, setName] = React.useState<string>();
   const [subjectIndex, setSubjectIndex] = React.useState<number>();
@@ -120,8 +122,15 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
         </div>
         <div className="classroom-btns-container">
           <div className="assign-button-container">
+            {props.classroom.code ? 
+            <div className="btn" onClick={() => setCodeOpen(true)}>
+              Share by code
+              <SpriteIcon name="share" />
+            </div> : <div />}
+          </div>
+          <div className="assign-button-container">
             <div className="btn" onClick={() => setInvite(true)}>
-              Share class with Students
+              Share by email
               <SpriteIcon name="share" />
             </div>
           </div>
@@ -160,6 +169,12 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
           close={() => setInvitedCount(0)}
         />
         <ShareTeacherDialog isOpen={isShareTeachOpen} classId={props.classroom.id} close={() => setShareTeach(false)} />
+        <QuickAssignDialog
+          isOpen={isCodeOpen}
+          user={props.user}
+          classroom={props.classroom}
+          close={() => setCodeOpen(false)}
+        />
       </div>
     );
 }

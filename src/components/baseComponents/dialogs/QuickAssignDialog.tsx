@@ -16,7 +16,6 @@ import map from 'components/map';
 interface AssignPersonOrClassProps {
   brick: Brick;
   user?: User;
-  history: any;
   isOpen: boolean;
   classroom: ClassroomApi | null;
   close(): void;

@@ -21,6 +21,7 @@ interface ButtonProps {
 }
 
 const QuickAssignButton: React.FC<ButtonProps> = (props) => {
+  const [isOpening, setOpening] = React.useState(false);
   const [newClassroom, setNewClass] = React.useState(null as ClassroomApi | null);
   const [hovered, setHover] = React.useState(false);
   const [isOpen, setOpen] = React.useState(false);
@@ -39,6 +40,10 @@ const QuickAssignButton: React.FC<ButtonProps> = (props) => {
 
   // creating class and assignment
   const openQuickAssignment = async () => {
+    setOpening(true);
+    if (isOpening) {
+      return;
+    }
     const {brick} = props;
     const newClassroom = await createClass(brick.title);
     if (newClassroom) {
@@ -47,6 +52,7 @@ const QuickAssignButton: React.FC<ButtonProps> = (props) => {
       if (res.success) {
         setOpen(true);
       }
+      setOpening(false);
     } else {
       console.log('can`t create class');
     }
@@ -62,7 +68,6 @@ const QuickAssignButton: React.FC<ButtonProps> = (props) => {
         isOpen={isOpen}
         user={props.user}
         classroom={newClassroom}
-        history={props.history}
         close={() => setOpen(false)}
       />
     )
