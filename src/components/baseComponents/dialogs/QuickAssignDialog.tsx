@@ -41,14 +41,26 @@ const QuickAssignDialog: React.FC<AssignPersonOrClassProps> = (props) => {
     /*eslint-disable-next-line*/
   }, [props.classroom]);
 
+  const handleCopy = () => {
+    if (props.classroom && props.classroom.code) {
+      navigator.clipboard.writeText(props.classroom.code);
+    }
+  }
+
   if (props.classroom) {
     return (
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue quick-assign-dialog">
         <div className="dialog-header">
           <SpriteIcon name="cancel-custom" className="close-btn" onClick={props.close} />
-          <div className="r-popup-title bold r-first-class">Code for joining class</div>
-          <div>{props.classroom.code}</div>
-          <div ><img className="qr-code-img" src={imgBase64} /></div>
+          <div className="r-popup-title bold r-first-class">Quick Assign</div>
+          <div>Give students a simple code to start a brick quickly</div>
+          <div><img className="qr-code-img" src={imgBase64} /></div>
+          <div className="code-view">{props.classroom.code}</div>
+          <div className="flex-center">
+            <button className="btn btn-md b-green text-white" onClick={handleCopy}>
+              Copy
+            </button>
+          </div>
         </div>
       </Dialog>
     );
