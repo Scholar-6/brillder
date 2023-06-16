@@ -69,10 +69,6 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
               <SpriteIcon name="check-custom" />
               Accept
             </button>
-            <button className="btn btn-md b-red text-white" onClick={handleReject}>
-              <SpriteIcon name="cancel-custom" />
-              Reject
-            </button>
           </Grid>
         </Grid>
       </Dialog>

@@ -17,4 +17,15 @@
     stroke-width: 3;
     color: var(--theme-orange);
   }
+  .code-view {
+    text-transform: uppercase;
+    font-size: 2vw;
+  }
+  .flex-center {
+    margin-bottom: 0 !important;
+  }
+
+  .dialog-header > div {
+    margin-bottom: 2.3vh !important;
+  }
 }
