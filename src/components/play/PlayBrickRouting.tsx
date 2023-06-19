@@ -59,7 +59,7 @@ import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 import { trackSignUp } from "services/matomo";
-import { CashAttempt, ClearAuthBrickCash, GetAuthBrickCash, GetCashedPlayAttempt, SetUnauthBrickCash } from "localStorage/play";
+import { CashAttempt, ClearAuthBrickCash, GetAuthBrickCash, GetCashedPlayAttempt, GetQuickAssignment, SetUnauthBrickCash } from "localStorage/play";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
@@ -452,7 +452,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         redirectUrl = values.returnUrl as string;
       }
       SetFinishRedirectUrl(redirectUrl);
-      console.log('66 set redirect url', redirectUrl);
       if (!props.user) {
         setTimeout(() => {
           window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
@@ -536,16 +535,24 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     brickAttempt.brickId = brick.id;
     if (props.user) {
       brickAttempt.studentId = props.user.id;
+    } else {
+      const assignment = GetQuickAssignment();
+      brickAttempt.code = assignment?.classroom?.code;
+      brickAttempt.typedName = assignment?.typedName;
     }
 
     if (assignmentId) {
       brickAttempt.assignmentId = assignmentId;
     }
+
     return axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       { brickAttempt, userId: props.user?.id },
       { withCredentials: true }
     ).then(async (response) => {
+      if (!response.data) {
+        return '';
+      }
       clearAssignmentId();
       if (props.user) {
         await props.getUser();
@@ -675,8 +682,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (props.user) {
       history.push(routes.playReview(brick));
     } else {
-      // unauthorized users finish it here. show popup
-      setUnauthorized(true);
+      // !!!Dangerous!!!
+      // if user enter code he will be able to play once as a student of teacher
+      const assignment = GetQuickAssignment();
+      if (assignment && assignment.accepted === true) {
+        // same brick
+        history.push(routes.playReview(brick));
+      } else {
+        // unauthorized users finish it here. show popup
+        setUnauthorized(true);
+      }
     }
   }
 

@@ -6,7 +6,6 @@ import SpriteIcon from '../SpriteIcon';
 import { ClearQuickAssignment, GetQuickAssignment, SetQuickAssignment } from 'localStorage/play';
 import { User } from 'model/user';
 import { quickAcceptClassroom } from 'services/axios/classroom';
-import { isPhone } from 'services/phone';
 
 
 interface Props {
@@ -17,11 +16,13 @@ interface Props {
 
 export interface QuickAssigment {
   accepted: boolean;
+  typedName: string;
   brick: any;
   classroom: any;
 }
 
 const QuickClassInvitationDialog: React.FC<Props> = props => {
+  const [name, setName] = React.useState('');
   const [assignment, setAssignment] = React.useState(null as null | QuickAssigment);
 
   const getInvitations = async () => {
@@ -48,6 +49,7 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
         ClearQuickAssignment();
       } else {
         assignment.accepted = true;
+        assignment.typedName = name;
         SetQuickAssignment(JSON.stringify(assignment));
       }
       setAssignment(null);
@@ -57,11 +59,13 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
 
   if (assignment) {
     const {classroom} = assignment;
-    const {teacher} = classroom;
     return (
       <Dialog open={assignment != null} className="dialog-box link-copied-dialog quick-assign-accept-dialog">
         <Grid className="classroom-invitation" container direction="column" alignItems="center">
-          <h1>Welcome to Brillder,{isPhone() ? <br /> : ''} you have been assigned this Brick <br/> by {teacher.firstName} {teacher.lastName},{isPhone() ? <br /> : ''} do you wish to accept?</h1>
+          <h1 className="bold">Welcome to <span className="capitalize">{classroom.name.toUpperCase()}</span></h1>
+          <p>Enter your name to join class. Please make sure to</p>
+          <p>enter a name your teacher can recognize.</p>
+          <input type="text" onChange={e => setName(e.target.value)} />
           <Grid item container direction="row" justifyContent="center">
             <button className="btn btn-md b-green text-white" onClick={handleAccept}>
               <SpriteIcon name="check-custom" />

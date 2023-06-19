@@ -33,6 +33,9 @@ export interface BrickAttempt {
   answers: ComponentAttempt<any>[];
   liveAnswers?: ComponentAttempt<any>[];
 
+  code?: string;
+  typedName?: string;
+
   assignmentId?: number;
 }
 
