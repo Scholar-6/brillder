@@ -43,26 +43,25 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
   const handleAccept = async () => {
     if (assignment) {
       if (props.user) {
+        console.log(222);
         await quickAcceptClassroom(assignment.classroom.id);
         // need to think what do if failed
         ClearQuickAssignment();
       } else {
+        console.log(555);
         assignment.accepted = true;
-        setAssignment(null);
         SetQuickAssignment(JSON.stringify(assignment));
       }
+      setAssignment(null);
+      
     }
-  }
-
-  const handleReject = async () => {
-    ClearQuickAssignment();
   }
 
   if (assignment) {
     const {classroom} = assignment;
     const {teacher} = classroom;
     return (
-      <Dialog open={true} className="dialog-box link-copied-dialog quick-assign-accept-dialog">
+      <Dialog open={assignment != null} className="dialog-box link-copied-dialog quick-assign-accept-dialog">
         <Grid className="classroom-invitation" container direction="column" alignItems="center">
           <h1>Welcome to Brillder,{isPhone() ? <br /> : ''} you have been assigned this Brick <br/> by {teacher.firstName} {teacher.lastName},{isPhone() ? <br /> : ''} do you wish to accept?</h1>
           <Grid item container direction="row" justifyContent="center">
