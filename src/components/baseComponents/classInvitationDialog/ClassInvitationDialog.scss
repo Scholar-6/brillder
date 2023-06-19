@@ -61,10 +61,30 @@
 }
 
 .quick-assign-accept-dialog {
-  .classroom-invitation {
-    h1 {
-      text-align: center;
-      margin-bottom: 1vw;
+  .MuiPaper-root {
+    background: #12326A;
+    .classroom-invitation {
+      color: white;
+      h1 {
+        text-align: center;
+        margin-bottom: 1vw;
+        font-size: 1.5vw;
+      }
+  
+      p {
+        font-size: 1.3vw;
+      }
+
+      input {
+        padding-left: 0.5vw;
+        font-size: 1.7vw;
+        margin-top: 1.3vw;
+        margin-bottom: 1.3vw;
+        width: 100%;
+        border-radius: 0.3vw;
+        color: var(--theme-dark-blue);
+        background: var(--tab-gray);
+      }
     }
   }
 }

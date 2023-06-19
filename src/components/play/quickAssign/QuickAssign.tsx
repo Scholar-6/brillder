@@ -14,7 +14,6 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
   const code = props.match.params.code as string;
   
   useEffect(() => {
-
     getClassroomByCode(code).then((res) => {
       if (res.brick) {
         const {brick} = res;
@@ -26,6 +25,7 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
           classroom: {
             id: res.class.id,
             code,
+            name: res.class.name,
             teacher: res.class.teacher
           }
         }));
