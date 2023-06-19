@@ -24,6 +24,14 @@ export const getClassrooms = async () => {
   }
 }
 
+export const getClassroomByCode = async (code: string) => {
+  try {
+    return await get<any>("/classroom/code/" + code);
+  } catch {
+    return null;
+  }
+}
+
 export const getStudentClassrooms = async () => {
   try {
     return await get<TeachClassroom[]>("/classrooms/me");
@@ -130,3 +138,17 @@ export const teachRejectClass = async (classroomId: number) => {
     return null;
   }
 }
+
+export const quickAcceptClassroom = async (classroomId: number) => {
+  try {
+    const res = await post<any>('/classrooms/quickAssignAccept', { classroomId });
+    if (res.status == 200) {
+      return true;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+

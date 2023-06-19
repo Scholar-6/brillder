@@ -347,3 +347,9 @@
   height: 100%;
   z-index: 4;
 }
+
+
+// sort image height
+.play-preview-panel .question-live-play .sort-play .sort-category-list-container .audio-play img {
+  max-height: 20vh;
+}

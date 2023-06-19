@@ -2453,3 +2453,70 @@
     }
   }
 }
+
+// horizontal shuffle fix
+.play-preview-panel .horizontal-shuffle-play {
+  .play-icon-container-d1 {
+    width: 12vw !important;
+    height: 8vw !important;
+    justify-content: center;
+  }
+  .play-wave-container {
+    width: 20vw;
+    height: 10vw;
+    align-items: center;
+  }
+
+  .play-icon-d1 {
+    width: 8vw !important;
+    height: 8vw !important;
+  }
+
+  .custom-audio-controls {
+    width: 8vw !important;
+    height: 8vw !important;
+    justify-content: center;
+    align-self: center;
+  }
+
+  .relative-waves-container {
+    display: none;
+  }
+}
+
+.play-preview-pages .introduction-page .sort-two-columns .play-wave-container {
+  .absolute-start-time {
+    left: -21%;
+  }
+}
+
+.play-preview-pages .introduction-page .sort-two-columns .play-wave-container {
+  .absolute-start-time {
+    left: 1%;
+  }
+}
+
+.pair-match-play .answers-list .pair-match-play-choice .MuiListItem-root img,
+.pair-match-play .pair-match-play-option .option-container img {
+  max-width: 100% !important;
+  width: auto;
+}
+
+.quick-assign-accept-dialog {
+  .classroom-invitation {
+    h1 {
+      font-size: 6vw !important;
+      margin-top: 1vh;
+      margin-bottom: 2vh;
+    }
+
+    .btn.btn-md.b-green.text-white {
+      font-size: 6vw;
+      svg {
+        width: 5vw;
+        height: 5vw;
+        margin-right: 1vw;
+      }
+    }
+  }
+}

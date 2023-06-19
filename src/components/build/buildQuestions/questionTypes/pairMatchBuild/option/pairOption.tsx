@@ -3,6 +3,7 @@ import { Grid } from "@material-ui/core";
 import { QuestionValueType } from '../../types';
 import { Answer } from '../types';
 import QuestionImageDropZone from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzone';
+import QuestionImageDropZoneV2 from 'components/build/baseComponents/questionImageDropzone/QuestionImageDropzoneV2';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import QuillEditorContainer from "components/baseComponents/quill/QuillEditorContainer";
 import SoundRecord from "../../sound/SoundRecord";
@@ -61,6 +62,15 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     save();
   }
 
+  const setSoundImage = (fileName: string) => {
+    if (locked) { return; }
+    if (fileName) {
+      answer.optionFile = fileName;
+    }
+    update();
+    save();
+  }
+
   const setSound = (soundFile: string, caption: string) => {
     if (locked) { return; }
     answer.value = '';
@@ -106,6 +116,16 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     return (
       <Grid container item xs={6}>
         <div className="choose-sound bigger">
+          <div className={answer.optionFile ? "sound-image-file" : "sound-image-dropbox"}>
+            <QuestionImageDropZoneV2
+              answer={answer as any}
+              className="pair-image"
+              type={answer.answerType || QuestionValueType.None}
+              fileName={answer.optionFile}
+              locked={locked}
+              update={setSoundImage}
+            />
+          </div>
           <SoundRecord
             locked={locked}
             answer={soundAnswer}

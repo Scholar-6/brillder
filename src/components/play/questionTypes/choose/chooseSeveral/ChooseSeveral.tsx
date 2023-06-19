@@ -16,6 +16,7 @@ import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
 import ZoomHelpText from '../../components/ZoomHelpText';
 import { isPhone } from 'services/phone';
+import { fileUrl } from 'components/services/uploadFile';
 
 export type ChooseSeveralAnswer = ActiveItem[];
 export interface ChooseSeveralComponent {
@@ -124,6 +125,14 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     } else if (answer.answerType === QuestionValueType.Sound && answer.soundFile) {
       return (
         <div style={{ width: '100%' }}>
+          {answer.valueFile &&
+          <div className="flex-align image-container-v4">
+            <img
+              alt="" src={fileUrl(answer.valueFile)} width="100%"
+              onMouseEnter={() => {}}
+              onMouseLeave={() => {}}
+            />
+          </div>}
           <Audio src={answer.soundFile} />
           <div>{answer.soundCaption ? answer.soundCaption : 'Click to select'}</div>
         </div>
@@ -174,6 +183,8 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
     if (choice.answerType === QuestionValueType.Image) {
       className += " image-choice";
+    } else if (choice.answerType === QuestionValueType.Sound) {
+      className += " sound-image-choice";
     }
     return className;
   }

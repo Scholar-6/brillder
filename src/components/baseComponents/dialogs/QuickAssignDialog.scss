@@ -1,0 +1,31 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.quick-assign-dialog {
+  .qr-code-img {
+    height: 40vh;
+  }
+
+  .close-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 0.5vw;
+    right: 0.3vw;
+    width: 1vw;
+    height: 1vw;
+    stroke-width: 3;
+    color: var(--theme-orange);
+  }
+  .code-view {
+    text-transform: uppercase;
+    font-size: 2vw;
+  }
+  .flex-center {
+    margin-bottom: 0 !important;
+  }
+
+  .dialog-header > div {
+    margin-bottom: 2.3vh !important;
+  }
+}

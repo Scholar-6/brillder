@@ -17,6 +17,7 @@ import { getTerms } from "services/axios/terms";
 import map from "components/map";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { ReduxCombinedState } from "redux/reducers";
+import { afterLoginorRegister } from "services/afterLogin";
 
 const mapState = (state: ReduxCombinedState) => ({
   referralId: state.auth.referralId,
@@ -75,7 +76,6 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
 
   const sendLogin = async (email: string, password: string) => {
     let data = await login(email, password);
-    console.log('login success');
     if (!data.isError) {
       if (data === "OK") {
         axios.get(
@@ -87,10 +87,9 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
             /*eslint-disable-next-line*/
             if (r && r.lastModifiedDate != data.termsAndConditionsAcceptedVersion) {
               history.push(map.TermsOnlyAccept);
-              props.loginSuccess();
-            } else {
-              props.loginSuccess();
             }
+            afterLoginorRegister();
+            props.loginSuccess();
           });
         }).catch(error => {
           // error
