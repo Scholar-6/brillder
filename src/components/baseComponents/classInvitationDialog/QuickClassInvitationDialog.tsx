@@ -6,6 +6,7 @@ import SpriteIcon from '../SpriteIcon';
 import { ClearQuickAssignment, GetQuickAssignment, SetQuickAssignment } from 'localStorage/play';
 import { User } from 'model/user';
 import { quickAcceptClassroom } from 'services/axios/classroom';
+import { isPhone } from 'services/phone';
 
 
 interface Props {
@@ -63,7 +64,7 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
     return (
       <Dialog open={true} className="dialog-box link-copied-dialog quick-assign-accept-dialog">
         <Grid className="classroom-invitation" container direction="column" alignItems="center">
-          <h1>Welcome to Brillder, you have been assigned this Brick <br/> by {teacher.firstName} {teacher.lastName}, do you wish to accept?</h1>
+          <h1>Welcome to Brillder,{isPhone() ? <br /> : ''} you have been assigned this Brick <br/> by {teacher.firstName} {teacher.lastName},{isPhone() ? <br /> : ''} do you wish to accept?</h1>
           <Grid item container direction="row" justifyContent="center">
             <button className="btn btn-md b-green text-white" onClick={handleAccept}>
               <SpriteIcon name="check-custom" />

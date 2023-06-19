@@ -2501,3 +2501,22 @@
   max-width: 100% !important;
   width: auto;
 }
+
+.quick-assign-accept-dialog {
+  .classroom-invitation {
+    h1 {
+      font-size: 6vw !important;
+      margin-top: 1vh;
+      margin-bottom: 2vh;
+    }
+
+    .btn.btn-md.b-green.text-white {
+      font-size: 6vw;
+      svg {
+        width: 5vw;
+        height: 5vw;
+        margin-right: 1vw;
+      }
+    }
+  }
+}
