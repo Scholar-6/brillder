@@ -43,12 +43,10 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
   const handleAccept = async () => {
     if (assignment) {
       if (props.user) {
-        console.log(222);
         await quickAcceptClassroom(assignment.classroom.id);
         // need to think what do if failed
         ClearQuickAssignment();
       } else {
-        console.log(555);
         assignment.accepted = true;
         SetQuickAssignment(JSON.stringify(assignment));
       }
