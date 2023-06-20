@@ -10,6 +10,7 @@ enum EmailType {
   BrickAssigned,
   NewBrickPublished,
   BrickPublished,
+  BrickSelfPublished,
   BrickReturnedToAuthorByEditor,
   BrickSharedAuth,
   BrickSharedUnAuth,
@@ -20,7 +21,7 @@ enum EmailType {
   ResetPassword,
   WelcomeSignup,
   TestEmail,
-  PersonalBrickShared
+  PersonalBrickShared,
 }
 
 const EmailTestBtn: React.FC = () => {
@@ -37,7 +38,10 @@ const EmailTestBtn: React.FC = () => {
       name: 'Brick Assigned'
     }, {
       type: EmailType.BrickPublished,
-      name: 'Brick Published'
+      name: 'Brick Published. Public Brick'
+    }, {
+      type: EmailType.BrickSelfPublished,
+      name: 'Brick Self Published. Private Brick'
     }, {
       type: EmailType.NewBrickPublished,
       name: 'New Brick Published'
