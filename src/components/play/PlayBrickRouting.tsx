@@ -59,7 +59,7 @@ import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 import { trackSignUp } from "services/matomo";
-import { CashAttempt, ClearAuthBrickCash, GetAuthBrickCash, GetCashedPlayAttempt, SetUnauthBrickCash } from "localStorage/play";
+import { CashAttempt, ClearAuthBrickCash, GetAuthBrickCash, GetCashedPlayAttempt, GetQuickAssignment, ClearQuickAssignment } from "localStorage/play";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
@@ -386,7 +386,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const res = await getCompetitionsByBrickId(brick.id);
     if (res && res.length > 0) {
       const competition = getNewestCompetition(res);
-      console.log('competition passed test', competition)
       if (competition) {
         setActiveCompetition(competition);
       }
@@ -452,7 +451,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         redirectUrl = values.returnUrl as string;
       }
       SetFinishRedirectUrl(redirectUrl);
-      console.log('66 set redirect url', redirectUrl);
       if (!props.user) {
         setTimeout(() => {
           window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
@@ -536,16 +534,28 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     brickAttempt.brickId = brick.id;
     if (props.user) {
       brickAttempt.studentId = props.user.id;
+    } else {
+      const assignment = GetQuickAssignment();
+      brickAttempt.code = assignment?.classroom?.code;
+      brickAttempt.typedName = assignment?.typedName;
     }
 
     if (assignmentId) {
       brickAttempt.assignmentId = assignmentId;
     }
+
     return axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       { brickAttempt, userId: props.user?.id },
       { withCredentials: true }
     ).then(async (response) => {
+      // if without user but with code
+      if (!props.user) {
+        setLiveBrills(0);
+        setCreatingAttempt(false);
+        setAttemptId(response.data.id);
+        return 0;
+      }
       clearAssignmentId();
       if (props.user) {
         await props.getUser();
@@ -575,17 +585,40 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       const brillsSv = await createBrickAttempt(brickAttempt);
       setLiveBrills(0);
       setReviewBrills(brillsSv);
+      ClearQuickAssignment();
       return;
     }
-    
+
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
+    brickAttempt.id = attemptId;
+
+    // if no user use code from class
+    if (!props.user) {
+      const assignment = GetQuickAssignment();
+
+      return axios.put(
+        process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
+        { id: attemptId, code: assignment?.classroom?.code, body: brickAttempt },
+        { withCredentials: true }
+      ).then(async (response) => {
+        clearAssignmentId();
+        await props.getUser();
+        setAttemptId(response.data.Id);
+        setReviewBrills(0);
+        props.storeLiveStep(0, 0);
+      }).catch(() => {
+        setFailed(true);
+      });
+    }
+
     brickAttempt.studentId = props.user.id;
+
     const assignmentId = getAssignmentId();
     if (assignmentId) {
       brickAttempt.assignmentId = assignmentId;
     }
-    brickAttempt.id = attemptId;
+
     return axios.put(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       { id: attemptId, userId: props.user.id, body: brickAttempt },
@@ -675,8 +708,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (props.user) {
       history.push(routes.playReview(brick));
     } else {
-      // unauthorized users finish it here. show popup
-      setUnauthorized(true);
+      // !!!Dangerous!!!
+      // if user enter code he will be able to play once as a student of teacher
+      const assignment = GetQuickAssignment();
+      if (assignment && assignment.accepted === true) {
+        // same brick
+        history.push(routes.playReview(brick));
+      } else {
+        // unauthorized users finish it here. show popup
+        setUnauthorized(true);
+      }
     }
   }
 
@@ -808,7 +849,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             activeCompetition={activeCompetition}
             competitionId={competitionId}
             setCompetitionId={id => {
-              console.log('set competition', id)
               setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
             }}
@@ -1065,7 +1105,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               competition={activeCompetition}
               competitionCreated={competition => {
                 brick.competitionId = competition.id;
-                console.log('competition created')
                 history.push(props.history.location.pathname + '?competitionId=' + competition.id);
                 setCanSeeCompetitionDialog(true);
                 setActiveCompetition(competition);
