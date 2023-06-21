@@ -59,7 +59,7 @@ import PreSynthesis from "./preSynthesis/PreSynthesis";
 import PreReview from "./preReview/PreReview";
 import { clearAssignmentId, getAssignmentId } from "localStorage/playAssignmentId";
 import { trackSignUp } from "services/matomo";
-import { CashAttempt, ClearAuthBrickCash, GetAuthBrickCash, GetCashedPlayAttempt, GetQuickAssignment, SetUnauthBrickCash } from "localStorage/play";
+import { CashAttempt, ClearAuthBrickCash, GetAuthBrickCash, GetCashedPlayAttempt, GetQuickAssignment, ClearQuickAssignment } from "localStorage/play";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
@@ -585,6 +585,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       const brillsSv = await createBrickAttempt(brickAttempt);
       setLiveBrills(0);
       setReviewBrills(brillsSv);
+      ClearQuickAssignment();
       return;
     }
 
