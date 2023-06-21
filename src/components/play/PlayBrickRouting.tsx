@@ -386,7 +386,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const res = await getCompetitionsByBrickId(brick.id);
     if (res && res.length > 0) {
       const competition = getNewestCompetition(res);
-      console.log('competition passed test', competition)
       if (competition) {
         setActiveCompetition(competition);
       }
@@ -550,8 +549,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       { brickAttempt, userId: props.user?.id },
       { withCredentials: true }
     ).then(async (response) => {
-      if (!response.data) {
-        return '';
+      // if without user but with code
+      if (!props.user) {
+        setLiveBrills(0);
+        setCreatingAttempt(false);
+        setAttemptId(response.data.id);
+        return 0;
       }
       clearAssignmentId();
       if (props.user) {
@@ -584,15 +587,37 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       setReviewBrills(brillsSv);
       return;
     }
-    
+
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
+    brickAttempt.id = attemptId;
+
+    // if no user use code from class
+    if (!props.user) {
+      const assignment = GetQuickAssignment();
+
+      return axios.put(
+        process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
+        { id: attemptId, code: assignment?.classroom?.code, body: brickAttempt },
+        { withCredentials: true }
+      ).then(async (response) => {
+        clearAssignmentId();
+        await props.getUser();
+        setAttemptId(response.data.Id);
+        setReviewBrills(0);
+        props.storeLiveStep(0, 0);
+      }).catch(() => {
+        setFailed(true);
+      });
+    }
+
     brickAttempt.studentId = props.user.id;
+
     const assignmentId = getAssignmentId();
     if (assignmentId) {
       brickAttempt.assignmentId = assignmentId;
     }
-    brickAttempt.id = attemptId;
+
     return axios.put(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       { id: attemptId, userId: props.user.id, body: brickAttempt },
@@ -823,7 +848,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             activeCompetition={activeCompetition}
             competitionId={competitionId}
             setCompetitionId={id => {
-              console.log('set competition', id)
               setCompetitionId(id, prevAttempts);
               history.push(routes.playCover(brick));
             }}
@@ -1080,7 +1104,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               competition={activeCompetition}
               competitionCreated={competition => {
                 brick.competitionId = competition.id;
-                console.log('competition created')
                 history.push(props.history.location.pathname + '?competitionId=' + competition.id);
                 setCanSeeCompetitionDialog(true);
                 setActiveCompetition(competition);
