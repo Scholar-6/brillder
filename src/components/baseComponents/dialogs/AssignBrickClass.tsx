@@ -114,7 +114,10 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
             freeSolo
             value={brick}
             options={bricks}
-            onChange={(e: any, v: any) => setBrick(v)}
+            onChange={(e: any, v: any) => {
+              setSearchText(stripHtml(v.title));
+              setBrick(v);
+            }}
             noOptionsText="Sorry, try typing something else"
             className="subject-autocomplete"
             PopperComponent={PopperCustom}
