@@ -36,7 +36,7 @@ const QuickAssignDialog: React.FC<AssignPersonOrClassProps> = (props) => {
 
   useEffect(() => {
     if (props.classroom) {
-      writeQRCode(`https://dev-app.brillder.com/${map.QuickassignPrefix}/` + props.classroom.code);
+      writeQRCode(window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + props.classroom.code);
     }
     /*eslint-disable-next-line*/
   }, [props.classroom]);
