@@ -8,6 +8,9 @@ export interface PlayState {
 
   brickId: number;
   liveStep: number;
+
+  assignPopup: boolean;
+  quickAssignPopup: boolean;
 }
 
 const AccountInitialState: PlayState = {
@@ -17,6 +20,9 @@ const AccountInitialState: PlayState = {
 
   brickId: -1,
   liveStep: -1,
+
+  assignPopup: false,
+  quickAssignPopup: false
 }
 
 export default (state = AccountInitialState, action: any) => {
@@ -27,6 +33,10 @@ export default (state = AccountInitialState, action: any) => {
       return { ...state, imageHovered: false, fileName: '', imageSource: '' } as PlayState;
     case types.LIVE_STEP:
       return { ...state, liveStep: action.liveStep, brickId: action.brickId } as PlayState;
+    case types.ASSIGN_OPEN:
+      return { ...state, assignPopup: action.assignPopup } as PlayState;
+    case types.QUICK_ASSIGN_OPEN:
+      return { ...state, quickAssignPopup: action.quickAssignPopup } as PlayState;
     default: return state;
   }
 }

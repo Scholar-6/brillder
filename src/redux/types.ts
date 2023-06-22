@@ -63,6 +63,8 @@ const PLAY_ON_BLUR = 'PLAY_BLUR';
 const LIVE_STEP = 'LIVE_STEP';
 
 const UNAUTH_BRICK = 'UNAUTH_BRICK';
+const QUICK_ASSIGN_OPEN = 'QUICK_ASSIGN_OPEN';
+const ASSIGN_OPEN = 'ASSIGN_OPEN';
 
 export default {
   REQUEST_FAILED,
@@ -157,4 +159,7 @@ export default {
   LIVE_STEP,
 
   UNAUTH_BRICK,
+
+  QUICK_ASSIGN_OPEN,
+  ASSIGN_OPEN,
 }

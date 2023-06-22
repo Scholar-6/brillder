@@ -40,4 +40,22 @@ const storeLiveStep = (liveStep: number, brickId: number) => {
   }
 }
 
-export default { setImageHover, setImageBlur, storeLiveStep, setUnauthReturnBrick }
+const setAssignPopup = (open: boolean) => {
+  return async function (dispatch: Dispatch) {
+    dispatch({
+      type: types.ASSIGN_OPEN,
+      assignPopup: open
+    } as Action);
+  }
+}
+
+const setQuickAssignPopup = (open: boolean) => {
+  return async function (dispatch: Dispatch) {
+    dispatch({
+      type: types.QUICK_ASSIGN_OPEN,
+      quickAssignPopup: open 
+    } as Action);
+  }
+}
+
+export default { setImageHover, setImageBlur, storeLiveStep, setUnauthReturnBrick, setAssignPopup, setQuickAssignPopup }

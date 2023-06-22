@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import queryString from 'query-string';
+import { connect } from "react-redux";
 
 import { User } from 'model/user';
 import { Brick } from 'model/brick';
 import { checkTeacherOrAdmin } from 'components/services/brickService';
 import { ClassroomApi, createClass } from 'components/teach/service';
 import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
+import playActions from 'redux/actions/play';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import QuickAssignDialog from 'components/baseComponents/dialogs/QuickAssignDialog';
+import { ReduxCombinedState } from 'redux/reducers';
 
 
 interface ButtonProps {
@@ -17,6 +20,8 @@ interface ButtonProps {
   history: any;
   haveCircle?: boolean;
   sidebarRolledUp: boolean;
+  quickAssignPopup: boolean;
+  setQuickAssignPopup(isOpen: boolean): void;
   showPremium(): void;
 }
 
@@ -24,9 +29,7 @@ const QuickAssignButton: React.FC<ButtonProps> = (props) => {
   const [isOpening, setOpening] = React.useState(false);
   const [newClassroom, setNewClass] = React.useState(null as ClassroomApi | null);
   const [hovered, setHover] = React.useState(false);
-  const [isOpen, setOpen] = React.useState(false);
   const [isNewTeacher, setNewTeacher] = React.useState(false);
-
 
   useEffect(() => {
     const values = queryString.parse(props.history.location.search);
@@ -50,7 +53,7 @@ const QuickAssignButton: React.FC<ButtonProps> = (props) => {
       setNewClass(newClassroom);
       const res = await assignClasses(brick.id, { classesIds: [newClassroom.id]} as AssignClassData);
       if (res.success) {
-        setOpen(true);
+        props.setQuickAssignPopup(true);
       }
       setOpening(false);
     } else {
@@ -65,10 +68,10 @@ const QuickAssignButton: React.FC<ButtonProps> = (props) => {
   const renderPopup = () => {
     return (
       <QuickAssignDialog
-        isOpen={isOpen}
+        isOpen={props.quickAssignPopup}
         user={props.user}
         classroom={newClassroom}
-        close={() => setOpen(false)}
+        close={() => props.setQuickAssignPopup(false)}
       />
     )
   }
@@ -114,4 +117,15 @@ const QuickAssignButton: React.FC<ButtonProps> = (props) => {
   );
 }
 
-export default QuickAssignButton;
+
+const mapState = (state: ReduxCombinedState) => ({
+  quickAssignPopup: state.play.quickAssignPopup,
+});
+
+const mapDispatch = (dispatch: any) => ({
+  setQuickAssignPopup: (isOpen: boolean) => dispatch(playActions.setQuickAssignPopup(isOpen)),
+});
+
+const connector = connect(mapState, mapDispatch);
+
+export default connector(QuickAssignButton);
