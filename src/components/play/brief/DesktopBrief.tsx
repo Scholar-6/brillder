@@ -104,4 +104,5 @@ const BriefPage: React.FC<Props> = ({ brick, ...props }) => {
   );
 };
 
+
 export default BriefPage;

@@ -109,6 +109,9 @@ interface BrickRoutingProps {
   history: any;
   location: any;
 
+  assignPopup: boolean;
+  quickAssignPopup: boolean;
+
   // redux
   brick: Brick;
   user: User;
@@ -684,24 +687,30 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setSidebar(true);
   }
 
-  const moveToSections = () => history.push(playSections(brick));
-  const moveToBrief = () => history.push(playBrief(brick));
-  const moveToPrePrep = () => history.push(playPrePrep(brick));
-  const moveToNewPrep = () => history.push(playNewPrep(brick));
+  const moveNextR = (link: string) => {
+    if (props.quickAssignPopup == false && props.assignPopup == false) {
+      history.push(link);
+    }
+  }
+
+  const moveToSections = () => moveNextR(playSections(brick));
+  const moveToBrief = () => moveNextR(playBrief(brick));
+  const moveToPrePrep = () => moveNextR(playPrePrep(brick));
+  const moveToNewPrep = () => moveNextR(playNewPrep(brick));
   const moveToPreInvestigation = (isResume: boolean) => {
     if (isResume) {
       moveToInvestigation();
     } else {
-      history.push(playPreInvesigation(brick));
+      moveNextR(playPreInvesigation(brick));
     }
   }
-  const moveToInvestigation = () => history.push(playInvestigation(brick));
-  const moveToTimeInvestigation = () => history.push(playCountInvesigation(brick));
-  const moveToTimeSynthesis = () => history.push(routes.playTimeSynthesis(brick));
-  const moveToSynthesis = () => history.push(routes.playSynthesis(brick));
-  const moveToPreReview = () => history.push(routes.playPreReview(brick));
-  const moveToTimeReview = () => history.push(routes.playTimeReview(brick));
-  const finishBrick = () => history.push(routes.playFinalStep(brick));
+  const moveToInvestigation = () => moveNextR(playInvestigation(brick));
+  const moveToTimeInvestigation = () => moveNextR(playCountInvesigation(brick));
+  const moveToTimeSynthesis = () => moveNextR(routes.playTimeSynthesis(brick));
+  const moveToSynthesis = () => moveNextR(routes.playSynthesis(brick));
+  const moveToPreReview = () => moveNextR(routes.playPreReview(brick));
+  const moveToTimeReview = () => moveNextR(routes.playTimeReview(brick));
+  const finishBrick = () => moveNextR(routes.playFinalStep(brick));
 
 
   const moveToReview = () => {
@@ -1248,6 +1257,8 @@ const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
   brick: state.brick.brick,
   isAuthenticated: state.auth.isAuthenticated,
+  assignPopup: state.play.assignPopup,
+  quickAssignPopup: state.play.quickAssignPopup,
 });
 
 const mapDispatch = (dispatch: any) => ({
