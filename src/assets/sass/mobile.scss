@@ -2502,12 +2502,23 @@
   width: auto;
 }
 
-.quick-assign-accept-dialog {
+.quick-assign-accept-dialog .MuiPaper-root {
   .classroom-invitation {
     h1 {
       font-size: 6vw !important;
       margin-top: 1vh;
       margin-bottom: 2vh;
+    }
+
+    p {
+      font-size: 4.1vw;
+    }
+
+    input {
+      border-radius: 2vw;
+      margin-top: 2vh;
+      margin-bottom: 2vh;
+      font-size: 5vw;
     }
 
     .btn.btn-md.b-green.text-white {
