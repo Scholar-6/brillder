@@ -38,9 +38,11 @@ interface Props {
   competitionId: number;
   activeCompetition: any;
   isAssignment: boolean;
+  canSeeCompetitionDialog?: boolean | null;
+
   assignPopup: boolean;
   quickAssignPopup: boolean;
-  canSeeCompetitionDialog?: boolean | null;
+
   setCompetitionId(id: number): void;
   setUser(data: CreateByEmailRes): void;
   moveNext(): void;
