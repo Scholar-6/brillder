@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import axios from "axios";
 
 import actions from "redux/actions/brickActions";
+import playActions from "redux/actions/play";
 import { ReduxCombinedState } from 'redux/reducers';
 import { PlayMode } from './model';
 import { User } from "model/user";
@@ -61,6 +62,9 @@ interface SidebarProps {
   user: User;
   competitionId?: number;
   fetchBrick(brickId: number): Promise<Brick | null>;
+
+  assignPopup: boolean;
+  setAssignPopup(isOpen: boolean): void;
 }
 
 interface SidebarState {
@@ -68,7 +72,6 @@ interface SidebarState {
   competition: any | null;
   isCompetitionOpen: boolean;
   isCoomingSoonOpen: boolean;
-  isAssigningOpen: boolean;
   isAssignedSuccessOpen: boolean;
   isAssignedFailedOpen: boolean;
   isSharingOpen: boolean;
@@ -86,7 +89,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isCompetitionOpen: false,
       isAdaptBrickOpen: false,
       isCoomingSoonOpen: false,
-      isAssigningOpen: false,
       isAssignedSuccessOpen: false,
       isAssignedFailedOpen: false,
       isSharingOpen: false,
@@ -159,7 +161,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   openAssignDialog() {
-    this.setState({ isAssigningOpen: true });
+    this.props.setAssignPopup(true);
   }
 
   async createBrickCopy() {
@@ -315,6 +317,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           haveCircle={haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />}
+        {/* 
         <QuickAssignButton
           sidebarRolledUp={sidebarRolledUp}
           user={this.props.user}
@@ -322,7 +325,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           haveCircle={haveBriefCircles}
           history={this.props.history}
           showPremium={() => this.props.showPremium && this.props.showPremium()}
-        />
+        />*/}
         <AssignButton
           sidebarRolledUp={sidebarRolledUp}
           user={this.props.user}
@@ -374,18 +377,19 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         />
         {canSee &&
           <AssignPersonOrClassDialog
-            isOpen={this.state.isAssigningOpen}
+            isOpen={this.props.assignPopup}
             user={this.props.user}
             history={this.props.history}
             success={(items: any[], failedItems: any[]) => {
               if (items.length > 0) {
-                this.setState({ isAssigningOpen: false, selectedItems: items, failedItems, isAssignedSuccessOpen: true });
+                this.props.setAssignPopup(false);
+                this.setState({ selectedItems: items, failedItems, isAssignedSuccessOpen: true });
               } else if (failedItems.length > 0) {
                 this.setState({ failedItems, isAssignedFailedOpen: true });
               }
             }}
             showPremium={() => this.props.showPremium && this.props.showPremium()}
-            close={() => this.setState({ isAssigningOpen: false })}
+            close={() => this.props.setAssignPopup(false)}
           />}
         <AssignSuccessDialog
           isOpen={this.state.isAssignedSuccessOpen}
@@ -490,10 +494,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 };
 
 const mapState = (state: ReduxCombinedState) => ({
+  assignPopup: state.play.assignPopup,
   user: state.user.user,
 });
 
 const mapDispatch = (dispatch: any) => ({
+  setAssignPopup: (isOpen: boolean) => dispatch(playActions.setAssignPopup(isOpen)),
   fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
 });
 

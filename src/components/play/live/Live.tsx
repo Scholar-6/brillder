@@ -45,6 +45,9 @@ interface LivePageProps {
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): Promise<void>;
 
+  assignPopup: boolean;
+  quickAssignPopup: boolean;
+
   // things related to count down
   endTime: any;
   setEndTime(time: Moment): void;
@@ -91,13 +94,17 @@ const LivePage: React.FC<LivePageProps> = ({
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
-        if (questions.length - 1 > activeStep) {
-          next();
-        } else {
-          setSubmitAnswers(true);
+        if (props.quickAssignPopup == false && props.assignPopup == false) {
+          if (questions.length - 1 > activeStep) {
+            next();
+          } else {
+            setSubmitAnswers(true);
+          }
         }
       } else if (leftKeyPressed(e)) {
-        prev();
+        if (props.quickAssignPopup == false && props.assignPopup == false) {
+          prev();
+        }
       }
     }
 
@@ -529,6 +536,8 @@ const LivePage: React.FC<LivePageProps> = ({
 const mapState = (state: ReduxCombinedState) => ({
   liveBrickId: state.play.brickId,
   liveStep: state.play.liveStep,
+  assignPopup: state.play.assignPopup,
+  quickAssignPopup: state.play.quickAssignPopup,
 });
 
 const mapDispatch = (dispatch: any) => ({

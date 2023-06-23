@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import queryString from 'query-string';
 import { isMobile } from "react-device-detect";
+import { connect } from "react-redux";
 
 import CoverImage from "./CoverImage";
 import KeyWordsPreview from "components/build/proposal/questionnaire/brickTitle/components/KeywordsPlay";
@@ -26,6 +27,7 @@ import { rightKeyPressed } from "components/services/key";
 import { SubscriptionState, User } from "model/user";
 import { checkAdmin, checkPublisher, isAorP } from "components/services/brickService";
 import QuickClassInvitationDialog from "components/baseComponents/classInvitationDialog/QuickClassInvitationDialog";
+import { ReduxCombinedState } from "redux/reducers";
 
 
 interface Props {
@@ -37,6 +39,10 @@ interface Props {
   activeCompetition: any;
   isAssignment: boolean;
   canSeeCompetitionDialog?: boolean | null;
+
+  assignPopup: boolean;
+  quickAssignPopup: boolean;
+
   setCompetitionId(id: number): void;
   setUser(data: CreateByEmailRes): void;
   moveNext(): void;
@@ -71,7 +77,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   useEffect(() => {
     function handleMove(e: any) {
       if (rightKeyPressed(e)) {
-        startBrick();
+        if (props.quickAssignPopup == false && props.assignPopup == false) {
+          startBrick();
+        }
       }
     }
 
@@ -501,4 +509,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   );
 };
 
-export default CoverPage;
+const mapState = (state: ReduxCombinedState) => ({
+  assignPopup: state.play.assignPopup,
+  quickAssignPopup: state.play.quickAssignPopup,
+});
+
+export default connect(mapState)(CoverPage);
