@@ -77,6 +77,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     } as any;
     let success = await updateClassroom(classroomApi);
     if (success) {
+      classroom.name = name;
       this.props.reloadClass(classroom.id);
     }
   }
