@@ -46,7 +46,7 @@ In this contract:
 #
 
 1. Introduction
-    1. We are Scholar 6 Limited, a company registered in England and Wales under company number: 12023679.  Our registered office is at: c/o Jamieson Alexander Legal 222 Temple Chambers, 3-7 Temple Avenue, London, EC4Y 0DB. We are not currently registered for VAT.   We provide digital content to aid learners in their education in various subject matters and courses.
+    1. We are Scholar 6 Limited, a company registered in England and Wales under company number: 12023679.  Our registered office is at: 10 St Andrew's Close, Wraysbury, TW195DG. We are not currently registered for VAT.   We provide digital content to aid learners in their education in various subject matters and courses.
     2. This contract is only available in English.  No other languages will apply to this contract.
     3. When using the Site you also agree to be legally bound by our user policies (including the Acceptable Use Policy).
     4. Any key information we give you by law forms part of this contract (as is set out in full here).
@@ -288,7 +288,7 @@ Your privacy is important to us.  In addition to this Privacy Policy we subscrib
 
 2 **Who controls your information?**
 
-Scholar 6 Limited, a company registered in England and Wales under company number: 12023679.  Our registered office is at: c/o Jamieson Alexander Legal 222 Temple Chambers, 3-7 Temple Avenue, London, Ec4Y 0DB.  Scholar 6 Ltd is the sole information controller for all information collected in relation to the Brillder Platform/Site.
+Scholar 6 Limited, a company registered in England and Wales under company number: 12023679.  Our registered office is at: 10 St Andrew's Close, Wraysbury, TW195DG.  Scholar 6 Ltd is the sole information controller for all information collected in relation to the Brillder Platform/Site.
 
 3 **What information does Scholar 6 Ltd collect?**
 
