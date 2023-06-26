@@ -68,7 +68,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     }
   }
 
-  async updateClassroom(classroom: TeachClassroom, name: string) {
+  async updateClassroomName(classroom: TeachClassroom, name: string) {
     let classroomApi = {
       id: classroom.id,
       name: name,
@@ -78,7 +78,6 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     let success = await updateClassroom(classroomApi);
     if (success) {
       classroom.name = name;
-      this.props.reloadClass(classroom.id);
     }
   }
 
@@ -90,7 +89,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <NameAndSubjectFormV2
           classroom={classroom}
           isArchive={this.props.isArchive}
-          onChange={(name) => this.updateClassroom(classroom, name)}
+          onChange={(name) => this.updateClassroomName(classroom, name)}
           onArchive={this.props.onArchive}
           onDelete={this.props.onDelete}
         />
