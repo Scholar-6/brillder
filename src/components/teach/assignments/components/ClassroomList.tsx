@@ -79,6 +79,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     if (success) {
       classroom.name = name;
       this.setState({classroom: {...classroom }});
+      this.props.reloadClass(classroom.id);
     }
   }
 
