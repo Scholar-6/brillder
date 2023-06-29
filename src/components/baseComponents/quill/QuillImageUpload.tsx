@@ -66,7 +66,6 @@ export class CustomImageBlot extends Embed {
         if (format == '.stl') {
             const imageNode = document.createElement("div");
             imageNode.className = "image-3d-stl";
-            imageNode.setAttribute('style', `max-height: ${value.imageHeight}vh`);
             imageNode.setAttribute('src', value.url);
             imageContainer2.appendChild(imageNode);
         } else {
