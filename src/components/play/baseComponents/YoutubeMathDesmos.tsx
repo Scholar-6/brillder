@@ -13,10 +13,12 @@ import HtmlWithSpaces from './HtmlWithSpaces';
 import SoundPlay from 'components/baseComponents/SoundPlay';
 import HtmlImageWithSpaces from './HtmlImageWithSpaces';
 import { renderStl } from 'services/stl';
+import { isPhone } from 'services/phone';
 
 interface MathHtmlProps {
   innerRef?: any;
   value: string;
+  isPhonePreview?: boolean;
   isSynthesisParser?: boolean;
 }
 
@@ -50,15 +52,17 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
       }
 
       setCalcs(newCalcs);
-
-      // stl 3d
-      const stlElems = elt.getElementsByClassName("image-3d-stl");
-      console.log('stl', stlElems);
-
-      for(const element of Array.from(stlElems)) {
+     
+      let phone = isPhone();
+      
+      const stlElements = elt.getElementsByClassName("image-3d-stl");
+      for(const element of Array.from(stlElements)) {
         element.innerHTML = "";
-        console.log('render 555');
-        renderStl(element);
+        if (phone || props.isPhonePreview) {
+          renderStl(element, 200, 200);
+        } else {
+          renderStl(element, 700, 700);
+        }
       }
     }
   /*eslint-disable-next-line*/
@@ -70,6 +74,9 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
 
   if (arr.length === 0) {
     return <div>{props.value}</div>;
+  }
+  const isStl = (el: string) => {
+    return /<div class=\"image-3d-stl\"/.test(el);
   }
 
   const isYoutube = (el: string) => {
@@ -105,6 +112,9 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
             res = isYoutube(el);
             if (res) {
               return <YoutubeLink key={i} value={el} />;
+            }
+            res = isStl(el);
+            if (res) {
             }
 
             const image = isImage(el);
