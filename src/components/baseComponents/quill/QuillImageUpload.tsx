@@ -53,6 +53,8 @@ export class CustomImageBlot extends Embed {
         containerNode.className = "image-play-container";
         containerNode.contentEditable = "false";
 
+        let format = value.url.slice(-4);
+
         const imageContainer = document.createElement("div");
         imageContainer.className = "il-image-container";
         containerNode.appendChild(imageContainer);
@@ -61,11 +63,19 @@ export class CustomImageBlot extends Embed {
         imageContainer2.className = "ili-image-container";
         imageContainer.appendChild(imageContainer2);
 
-        const imageNode = document.createElement("img");
-        imageNode.className = "image-play";
-        imageNode.setAttribute('style', `max-height: ${value.imageHeight}vh`);
-        imageNode.setAttribute('src', value.url);
-        imageContainer2.appendChild(imageNode);
+        if (format == '.stl') {
+            const imageNode = document.createElement("div");
+            imageNode.className = "image-3d-stl";
+            imageNode.setAttribute('style', `max-height: ${value.imageHeight}vh`);
+            imageNode.setAttribute('src', value.url);
+            imageContainer2.appendChild(imageNode);
+        } else {
+            const imageNode = document.createElement("img");
+            imageNode.className = "image-play";
+            imageNode.setAttribute('style', `max-height: ${value.imageHeight}vh`);
+            imageNode.setAttribute('src', value.url);
+            imageContainer2.appendChild(imageNode);
+        }
 
         const containerSource = document.createElement("div");
         containerSource.className = "image-source-container";
@@ -164,7 +174,7 @@ export default class ImageUpload {
         if (fileInput === null) {
             fileInput = document.createElement("input");
             fileInput.setAttribute("type", "file");
-            fileInput.setAttribute("accept", "image/png, image/gif, image/jpeg, image/bmp, image/x-icon");
+            fileInput.setAttribute("accept", "image/png, image/gif, image/jpeg, image/bmp, image/x-icon, .stl");
             fileInput.classList.add("ql-image");
             fileInput.addEventListener("change", () => {
                 if (fileInput.files !== null && fileInput.files[0] !== null) {
