@@ -53,7 +53,6 @@ export class CustomImageBlot extends Embed {
         containerNode.className = "image-play-container";
         containerNode.contentEditable = "false";
 
-        console.log('file', value.url);
         let format = value.url.slice(-4);
 
         const imageContainer = document.createElement("div");
