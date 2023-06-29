@@ -51,7 +51,7 @@ const PlanPreviewComponent: React.FC<PlanPreviewProps> = ({ data }) => {
         </div>
       </div>
       <div className="base-font">
-        <YoutubeMathDesmos value={currentBrick.prep} />
+        <YoutubeMathDesmos value={currentBrick.prep} isPhonePreview={true} />
       </div>
     </div>
   );
