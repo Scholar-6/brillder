@@ -1578,3 +1578,9 @@ html body #root .browser-type-container .sorted-row .brick-row-container.teach-t
 .play-preview-pages .sorted-row .brick-row-container .brick-container .introduction-page .missing-word-choice  .missing-select p {
   font-size: 1vw !important;
 }
+
+// zendesk#972 qoute fix
+.post-play-page .book-page blockquote {
+  border-left: 0.3vw solid var(--tab-gray);
+  padding-left: 1.8vw;
+}
