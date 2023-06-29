@@ -12,6 +12,7 @@ import { renderGraph } from 'services/graph';
 import HtmlWithSpaces from './HtmlWithSpaces';
 import SoundPlay from 'components/baseComponents/SoundPlay';
 import HtmlImageWithSpaces from './HtmlImageWithSpaces';
+import { renderStl } from 'services/stl';
 
 interface MathHtmlProps {
   innerRef?: any;
@@ -49,6 +50,16 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
       }
 
       setCalcs(newCalcs);
+
+      // stl 3d
+      const stlElems = elt.getElementsByClassName("image-3d-stl");
+      console.log('stl', stlElems);
+
+      for(const element of Array.from(stlElems)) {
+        element.innerHTML = "";
+        console.log('render 555');
+        renderStl(element);
+      }
     }
   /*eslint-disable-next-line*/
   }, [props.value]);
