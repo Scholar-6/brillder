@@ -34,7 +34,6 @@ import { isAorPorE } from "components/services/brickService";
 import QuillTitleEditor from "components/baseComponents/quill/QuillTitleEditor";
 import DifficultySelectV2 from "../proposal/questionnaire/brickTitle/components/DifficultySelectV2";
 import QuillOpenQuestionEditor from "components/baseComponents/quill/QuillOpenQuestionEditor";
-import STLComponent from "../baseComponents/three";
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -350,9 +349,6 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       allowLinks={true}
                       allowTables={true}
                     />
-                  </div>
-                  <div>
-                    <STLComponent />
                   </div>
                 </Grid>
               </div>
