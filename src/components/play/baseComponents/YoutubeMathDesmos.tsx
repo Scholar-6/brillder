@@ -75,9 +75,6 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
   if (arr.length === 0) {
     return <div>{props.value}</div>;
   }
-  const isStl = (el: string) => {
-    return /<div class=\"image-3d-stl\"/.test(el);
-  }
 
   const isYoutube = (el: string) => {
     /*eslint-disable-next-line*/
@@ -112,9 +109,6 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
             res = isYoutube(el);
             if (res) {
               return <YoutubeLink key={i} value={el} />;
-            }
-            res = isStl(el);
-            if (res) {
             }
 
             const image = isImage(el);

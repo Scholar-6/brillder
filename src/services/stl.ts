@@ -12,11 +12,6 @@ export const renderStl = (el: Element, width: number, height: number) => {
 
   const scene = new THREE.Scene();
 
-  const light = new THREE.SpotLight()
-  light.position.set(2, 2, 2)
-  scene.add(light)
-  
-  
   const camera = new THREE.PerspectiveCamera(75, width / height, 1);
   camera.position.z = 6;
 
