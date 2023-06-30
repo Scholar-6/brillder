@@ -1584,3 +1584,34 @@ html body #root .browser-type-container .sorted-row .brick-row-container.teach-t
   border-left: 0.3vw solid var(--tab-gray);
   padding-left: 1.8vw;
 }
+
+
+
+
+
+
+// zendesk#968 bullets fix
+.ql-indent-1 {
+  padding-left: 3vw;
+}
+
+.introduction-page li.ql-indent-1[data-list=bullet]::before {
+  margin-left: 2vw;
+}
+
+.youtube-video-session ol li.ql-indent-1 {
+  padding-left: 4.5vw;
+}
+
+
+.ql-editor li.ql-indent-1:not(.ql-direction-rtl) {
+  padding-left: 2vw;
+}
+
+.phone-question-preview li.ql-indent-1[data-list=bullet]::before {
+  margin-left: 1.6vw;
+}
+
+.question-live-play ol li.ql-indent-1, .youtube-video-session ol li.ql-indent-1, .phone-question-preview ol li.ql-indent-1 {
+  padding-left: 2.5vw;
+}

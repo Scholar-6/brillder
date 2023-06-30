@@ -2537,3 +2537,33 @@
   border-left: 3px solid var(--tab-gray) !important;
   padding-left: 1.8vw;
 }
+
+
+
+
+
+
+
+
+
+
+// zendesk#968 bullets fix
+.ql-indent-1 {
+  padding-left: 3vw;
+}
+
+.youtube-video-session li.ql-indent-1[data-list=bullet]::before,
+.introduction-page li.ql-indent-1[data-list=bullet]::before,
+.phone-question-preview li.ql-indent-1[data-list=bullet]::before {
+  margin-left: 5vw;
+}
+
+.youtube-video-session ol li.ql-indent-1,
+.ql-editor li.ql-indent-1:not(.ql-direction-rtl),
+.question-live-play ol li.ql-indent-1, .youtube-video-session ol li.ql-indent-1 {
+  padding-left: 10vw;
+}
+
+.post-play-page li[data-list=bullet]::before {
+  content: "•";
+}
