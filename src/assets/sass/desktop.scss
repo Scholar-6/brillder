@@ -1876,3 +1876,13 @@
     }
   }
 }
+
+.stl-d3 > canvas {
+  max-width: 30vw;
+}
+
+// zendesk#972 qoute fix
+.post-play-page .book-page blockquote {
+  border-left: 0.3vw solid var(--tab-gray);
+  padding-left: 1.8vw;
+} 

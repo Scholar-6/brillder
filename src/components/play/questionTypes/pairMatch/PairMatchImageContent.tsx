@@ -6,8 +6,8 @@ import { fileUrl } from 'components/services/uploadFile';
 import { isPhone } from 'services/phone';
 import actions from 'redux/actions/play';
 import { ReduxCombinedState } from 'redux/reducers';
-import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import { stripHtml } from 'components/build/questionService/ConvertService';
+import CaptionText from './CaptionText';
 
 interface AnswerProps {
   fileName: string;
@@ -50,12 +50,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
         <div className="image-container-v5">
           <img alt="" className="no-pointer-events" src={fileUrl(fileName)} width="100%" />
         </div>
-        {imageCaptionS && imageCaption && <div className="image-caption-v4">
-          <div>
-            <MathInHtml value={imageCaption} />
-          </div>
-        </div>
-        }
+        {imageCaptionS && imageCaption && <CaptionText caption={imageCaption} />}
       </div>
     );
   }
@@ -92,11 +87,7 @@ const PairMatchImageContent: React.FC<AnswerProps> = ({ fileName, imageCaption, 
             onMouseLeave={props.blur}
           />
         </div>
-        {imageCaption && <div className='image-caption-v4'>
-          <div>
-            <MathInHtml value={imageCaption} />
-          </div>
-        </div>}
+        {imageCaption && <CaptionText caption={imageCaption} />}
       </div>
     </div>
   );

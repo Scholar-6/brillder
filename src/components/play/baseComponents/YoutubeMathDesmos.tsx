@@ -12,10 +12,13 @@ import { renderGraph } from 'services/graph';
 import HtmlWithSpaces from './HtmlWithSpaces';
 import SoundPlay from 'components/baseComponents/SoundPlay';
 import HtmlImageWithSpaces from './HtmlImageWithSpaces';
+import { renderStl } from 'services/stl';
+import { isPhone } from 'services/phone';
 
 interface MathHtmlProps {
   innerRef?: any;
   value: string;
+  isPhonePreview?: boolean;
   isSynthesisParser?: boolean;
 }
 
@@ -49,6 +52,18 @@ const YoutubeMathDesmos: React.FC<MathHtmlProps> = (props) => {
       }
 
       setCalcs(newCalcs);
+     
+      let phone = isPhone();
+      
+      const stlElements = elt.getElementsByClassName("image-3d-stl");
+      for(const element of Array.from(stlElements)) {
+        element.innerHTML = "";
+        if (phone || props.isPhonePreview) {
+          renderStl(element, 200, 200);
+        } else {
+          renderStl(element, 700, 700);
+        }
+      }
     }
   /*eslint-disable-next-line*/
   }, [props.value]);
