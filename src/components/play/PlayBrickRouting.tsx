@@ -933,9 +933,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             finishBrick={finishLive}
             endTime={liveEndTime}
             setEndTime={time => {
-              if (liveEndTime === null) {
-                setLiveEndTime(time);
-              }
+              setLiveEndTime(time);
             }}
             moveNext={() => cashAttempt(routes.PlayProvisionalScoreLastPrefix, PlayStatus.Review)}
           />

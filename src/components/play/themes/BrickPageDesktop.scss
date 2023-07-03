@@ -179,9 +179,31 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     padding: 0.2vw 1vw;
     font-size: 1.4vw;
     letter-spacing: 0;
+
+    &.stop-time {
+      margin-left: 2vw;
+
+      &.fixed {
+        position: fixed;
+        z-index: 106;
+        bottom: 2.9vw;
+      }
+    }
+
     &:hover {
       background: var(--theme-green);
     }
+
+  }
+
+  .stop-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 102;
+    height: 100%;
+    width: 100%;
+    background: rgba(1,1,1,0.2);
   }
 
   .question-unique-play {
@@ -2186,10 +2208,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     color: white;
   }
   .footer-space {
-    padding-left: 6vw;
+    padding-left: 5vw;
     font-size: 2vw;
     font-family: $font-family-bold;
-    width: 26vw;
+    width: 32vw;
     display: flex;
     align-items: center;
     padding-right: 5.9vw;

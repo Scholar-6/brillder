@@ -11,6 +11,7 @@ interface CounterProps {
   isLive?: boolean;
   isIntro?: boolean;
   isSynthesis?: boolean;
+  stopped?: any;
   brickLength: BrickLengthEnum;
   minutes?: number;
   endTime: any;
@@ -66,6 +67,11 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
 
   if (!props.endTime) {
     endTime = getEndTime();
+  }
+
+  console.log(duration, props.minutes, endTime);
+  if (props.stopped && props.stopped.stopped === true) {
+    return <div />;
   }
 
   return <ProgressbarCountdown onEnd={props.onEnd} minutes={props.minutes} duration={duration} endTime={endTime} />;
