@@ -179,10 +179,18 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     padding: 0.2vw 1vw;
     font-size: 1.4vw;
     letter-spacing: 0;
+
+    &.stop-time {
+      margin-left: 2vw;
+    }
+
     &:hover {
       background: var(--theme-green);
     }
+
   }
+
+
 
   .question-unique-play {
     padding-bottom: 2vw !important;
@@ -2186,10 +2194,10 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
     color: white;
   }
   .footer-space {
-    padding-left: 6vw;
+    padding-left: 5vw;
     font-size: 2vw;
     font-family: $font-family-bold;
-    width: 26vw;
+    width: 32vw;
     display: flex;
     align-items: center;
     padding-right: 5.9vw;
