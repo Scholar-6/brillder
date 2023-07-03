@@ -155,7 +155,7 @@ const LivePage: React.FC<LivePageProps> = ({
       if (step != activeStep) {
         document.getElementsByClassName("introduction-content")[0].scrollTo({ top: 0 });
       }
-    } catch {}
+    } catch { }
 
     setActiveAnswer();
 
@@ -512,29 +512,33 @@ const LivePage: React.FC<LivePageProps> = ({
                   {timerHidden ? 'Show Timer' : 'Hide Timer'}
                 </div>}
               {!isMobile &&
-                <div className="btn toggle-timer stop-time" onClick={() => {
-                  if (timerStopped.stopped === true) {
-                    if (timerStopped.time) {
-                      const diffMilliseconds = new Date().getTime() - timerStopped.time?.getTime();
-                      const date22 = new Date(props.endTime.toDate().getTime() + diffMilliseconds);
-                      const date33 = moment(date22);
-                      //console.log('timeDiff ', diffMilliseconds, props.endTime);
-                      console.log(props.endTime.toDate(), date22);
-                      props.setEndTime(date33);
+                <div>
+                  {timerStopped.stopped && <div className="stop-background" /> }
+                  <div className={`btn toggle-timer stop-time ${timerStopped.stopped ? ' fixed' : ''}`} onClick={() => {
+                    if (timerStopped.stopped === true) {
+                      if (timerStopped.time) {
+                        const diffMilliseconds = new Date().getTime() - timerStopped.time?.getTime();
+                        const date22 = new Date(props.endTime.toDate().getTime() + diffMilliseconds);
+                        const date33 = moment(date22);
+                        //console.log('timeDiff ', diffMilliseconds, props.endTime);
+                        console.log(props.endTime.toDate(), date22);
+                        props.setEndTime(date33);
+                      }
+                      setStopTimer({
+                        stopped: false,
+                        time: null
+                      });
+                    } else {
+                      setStopTimer({
+                        stopped: true,
+                        time: new Date()
+                      });
                     }
-                    setStopTimer({
-                      stopped: false,
-                      time: null
-                    });
-                  } else {
-                    setStopTimer({
-                      stopped: true,
-                      time: new Date()
-                    });
-                  }
-                }}>
-                  Stop Time
-              </div>}
+                  }}>
+                    {timerStopped.stopped ? 'Continue' : 'Stop Time'}
+                  </div>
+                </div>
+              }
             </div>
             <div className="new-navigation-buttons">
               <div className="n-btn back" onClick={prev}>

@@ -182,6 +182,12 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
     &.stop-time {
       margin-left: 2vw;
+
+      &.fixed {
+        position: fixed;
+        z-index: 106;
+        bottom: 2.9vw;
+      }
     }
 
     &:hover {
@@ -190,7 +196,15 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
   }
 
-
+  .stop-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 102;
+    height: 100%;
+    width: 100%;
+    background: rgba(1,1,1,0.2);
+  }
 
   .question-unique-play {
     padding-bottom: 2vw !important;
