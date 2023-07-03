@@ -535,7 +535,7 @@ const LivePage: React.FC<LivePageProps> = ({
                       });
                     }
                   }}>
-                    {timerStopped.stopped ? 'Continue' : 'Stop Time'}
+                    {timerStopped.stopped ? 'Continue' : 'Pause Timer'}
                   </div>
                 </div>
               }
