@@ -317,7 +317,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           haveCircle={haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />}
-        {/* 
         <QuickAssignButton
           sidebarRolledUp={sidebarRolledUp}
           user={this.props.user}
@@ -325,7 +324,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           haveCircle={haveBriefCircles}
           history={this.props.history}
           showPremium={() => this.props.showPremium && this.props.showPremium()}
-        />*/}
+        />
         <AssignButton
           sidebarRolledUp={sidebarRolledUp}
           user={this.props.user}
