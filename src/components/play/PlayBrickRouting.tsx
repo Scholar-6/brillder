@@ -219,7 +219,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [prepEndTime, setPrepEndTime] = useState(initPrepEndTime);
   const [mode, setMode] = useState(initMode);
   const [liveEndTime, setLiveEndTime] = useState(initLiveEndTime);
-  console.log('render live time', liveEndTime);
   const [synthesisEndTime, setSynthesisEndTime] = useState(null);
   const [reviewEndTime, setReviewEndTime] = useState(initReviewEndTime);
   const [attemptId, setAttemptId] = useState<string>(initAttemptId);
@@ -934,7 +933,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             finishBrick={finishLive}
             endTime={liveEndTime}
             setEndTime={time => {
-              console.log('set end time', time, liveEndTime);
               setLiveEndTime(time);
             }}
             moveNext={() => cashAttempt(routes.PlayProvisionalScoreLastPrefix, PlayStatus.Review)}
