@@ -1615,3 +1615,14 @@ html body #root .browser-type-container .sorted-row .brick-row-container.teach-t
 .question-live-play ol li.ql-indent-1, .youtube-video-session ol li.ql-indent-1, .phone-question-preview ol li.ql-indent-1 {
   padding-left: 2.5vw;
 }
+// image caption can`t have new lines
+.image-caption-v4 {
+  div,
+  p {
+    display: inline;
+  }
+
+  br {
+    display: none;
+  }
+}
