@@ -24,8 +24,11 @@ class MathInHtml extends Component<MathHtmlProps> {
       return <Katex latex={latex} key={i} />
     }
 
+
     if (arr.length === 0) {
-      return <div className={this.props.className}>{this.props.value}</div>;
+      return <div className={this.props.className}>
+        <Katex latex={this.props.value} />
+      </div>;
     }
 
     return (
