@@ -7,6 +7,7 @@ import AddImageBtnContent from "../AddImageBtnContent";
 import ImageDialogV2 from "./ImageDialogV2";
 import { MainImageProps } from "components/build/buildQuestions/components/Image/model";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import Katex from "components/baseComponents/katex/Katex";
 
 export interface ImageAnswerData extends MainImageProps {
   value: string;
@@ -65,10 +66,10 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
   const renderCaption = () => {
     if (type === QuestionValueType.Image) {
       if (isOption) {
-        return <span dangerouslySetInnerHTML={{__html: answer.imageOptionCaption}} />;
+        return <Katex latex={answer.imageOptionCaption} />;
       }
       if (answer && answer.imageCaption) {
-        return <span dangerouslySetInnerHTML={{__html: answer.imageCaption}} />;
+        return <Katex latex={answer.imageCaption} />;
       }
     }
     return '';

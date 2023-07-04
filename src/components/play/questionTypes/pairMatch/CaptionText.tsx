@@ -11,7 +11,7 @@ const CaptionText: React.FC<AnswerProps> = ({ caption }) => {
   const [realCaption, setCaption] = React.useState('');
   
   React.useEffect(() => {
-    var data = stripHtml(caption);
+    var data = caption;
     if (data.length > 0) {
       setCaption(data);
     }

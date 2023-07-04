@@ -17,6 +17,7 @@ import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
 import ZoomHelpText from '../../components/ZoomHelpText';
 import { isPhone } from 'services/phone';
 import { fileUrl } from 'components/services/uploadFile';
+import Katex from 'components/baseComponents/katex/Katex';
 
 export type ChooseSeveralAnswer = ActiveItem[];
 export interface ChooseSeveralComponent {
@@ -134,7 +135,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
             />
           </div>}
           <Audio src={answer.soundFile} />
-          <div>{answer.soundCaption ? answer.soundCaption : 'Click to select'}</div>
+          <div>{answer.soundCaption ? <Katex latex={answer.soundCaption} /> : 'Click to select'}</div>
         </div>
       );
     } else {
