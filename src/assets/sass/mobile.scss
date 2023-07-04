@@ -2567,3 +2567,15 @@
 .post-play-page li[data-list=bullet]::before {
   content: "•";
 }
+
+// image caption can`t have new lines
+.image-caption-v4 {
+  div,
+  p {
+    display: inline;
+  }
+
+  br {
+    display: none;
+  }
+}

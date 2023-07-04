@@ -1914,3 +1914,15 @@
 .phone-question-preview ol li.ql-indent-1 {
   padding-left: 2.5vw;
 }
+
+// image caption can`t have new lines
+.image-caption-v4 {
+  div,
+  p {
+    display: inline;
+  }
+
+  br {
+    display: none;
+  }
+}
