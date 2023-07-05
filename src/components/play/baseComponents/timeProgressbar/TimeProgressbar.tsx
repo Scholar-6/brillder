@@ -69,7 +69,6 @@ const TimeProgressbar: React.FC<CounterProps> = (props) => {
     endTime = getEndTime();
   }
 
-  console.log(duration, props.minutes, endTime);
   if (props.stopped && props.stopped.stopped === true) {
     return <div />;
   }

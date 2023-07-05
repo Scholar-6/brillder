@@ -1011,9 +1011,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             finishBrick={finishReview}
             endTime={reviewEndTime}
             setEndTime={time => {
-              if (reviewEndTime === null) {
-                setReviewEndTime(time);
-              }
+              setReviewEndTime(time);
             }}
           />
           {isPhone() && renderPhoneFooter(PlayPage.Review)}
