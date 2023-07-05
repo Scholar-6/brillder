@@ -34,6 +34,7 @@ import CategoriseAnswersDialog from "components/baseComponents/dialogs/Categorie
 import { ReduxCombinedState } from "redux/reducers";
 import { connect } from "react-redux";
 import moment from "moment";
+import StopTimerBtn from "../baseComponents/StopTimerBtn";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -511,34 +512,7 @@ const LivePage: React.FC<LivePageProps> = ({
                 <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
                   {timerHidden ? 'Show Timer' : 'Hide Timer'}
                 </div>}
-              {!isMobile &&
-                <div>
-                  {timerStopped.stopped && <div className="stop-background" /> }
-                  <div className={`btn toggle-timer stop-time ${timerStopped.stopped ? ' fixed' : ''}`} onClick={() => {
-                    if (timerStopped.stopped === true) {
-                      if (timerStopped.time) {
-                        const diffMilliseconds = new Date().getTime() - timerStopped.time?.getTime();
-                        const date22 = new Date(props.endTime.toDate().getTime() + diffMilliseconds);
-                        const date33 = moment(date22);
-                        //console.log('timeDiff ', diffMilliseconds, props.endTime);
-                        console.log(props.endTime.toDate(), date22);
-                        props.setEndTime(date33);
-                      }
-                      setStopTimer({
-                        stopped: false,
-                        time: null
-                      });
-                    } else {
-                      setStopTimer({
-                        stopped: true,
-                        time: new Date()
-                      });
-                    }
-                  }}>
-                    {timerStopped.stopped ? 'Continue' : 'Pause Timer'}
-                  </div>
-                </div>
-              }
+              <StopTimerBtn timerStopped={timerStopped} setStopTimer={setStopTimer} endTime={props.endTime} setEndTime={props.setEndTime} />
             </div>
             <div className="new-navigation-buttons">
               <div className="n-btn back" onClick={prev}>
