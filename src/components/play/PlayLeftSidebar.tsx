@@ -34,6 +34,7 @@ import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDial
 import HighScore from "./baseComponents/HighScore";
 import AdminBrickStatisticButton from "./baseComponents/AdminBrickStatisticButton";
 import QuickAssignButton from "./baseComponents/sidebarButtons/QuickAssignButton";
+import AssignSuccessDialogV2 from "components/baseComponents/dialogs/AssignSuccessDialogV2";
 
 interface SidebarProps {
   history: any;
@@ -390,10 +391,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
             showPremium={() => this.props.showPremium && this.props.showPremium()}
             close={() => this.props.setAssignPopup(false)}
           />}
-        <AssignSuccessDialog
+        <AssignSuccessDialogV2
           isOpen={this.state.isAssignedSuccessOpen}
           brickTitle={brick.title}
           selectedItems={this.state.selectedItems}
+          history={this.props.history}
           close={() => {
             if (this.state.failedItems.length > 0) {
               this.setState({ isAssignedSuccessOpen: false, isAssignedFailedOpen: true });

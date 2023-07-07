@@ -26,6 +26,7 @@ import previewRoutes from "components/playPreview/routes";
 import HoveredImage from "../baseComponents/HoveredImage";
 import { isMobile } from "react-device-detect";
 import { CashQuestionFromPlay } from "localStorage/buildLocalStorage";
+import StopTimerBtn from "../baseComponents/StopTimerBtn";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -61,6 +62,11 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
   const [questionScrollRef] = React.useState(React.createRef<HTMLDivElement>());
   const [timerHidden, hideTimer] = React.useState(false);
+
+  const [timerStopped, setStopTimer] = React.useState({
+    stopped: false,
+    time: null as Date | null
+  });
 
   const theme = useTheme();
 
@@ -332,16 +338,19 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
               {questions.map(renderQuestionContainer)}
               {renderPhoneButtons()}
               <div className="time-container">
-                <TimeProgressbar
-                  onEnd={onEnd}
-                  endTime={props.endTime}
-                  brickLength={brick.brickLength}
-                  setEndTime={(a) => {
-                    console.log("set end 3");
-                    console.log(props.setEndTime);
-                    props.setEndTime(a);
-                  }}
-                />
+                {!timerHidden &&
+                  <TimeProgressbar
+                    onEnd={onEnd}
+                    endTime={props.endTime}
+                    stopped={timerStopped}
+                    brickLength={brick.brickLength}
+                    setEndTime={(a) => {
+                      console.log("set end 3");
+                      console.log(props.setEndTime);
+                      props.setEndTime(a);
+                    }}
+                  />
+                }
               </div>
             </div>
             <SubmitAnswersDialog
@@ -381,10 +390,10 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 <TimeProgressbar
                   onEnd={onEnd}
                   minutes={minutes}
+                  stopped={timerStopped}
                   endTime={props.endTime}
                   brickLength={brick.brickLength}
                   setEndTime={(a) => {
-                    console.log("set end 6");
                     props.setEndTime(a);
                   }}
                 />}
@@ -394,6 +403,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 <div className="btn toggle-timer" onClick={() => hideTimer(!timerHidden)}>
                   {timerHidden ? 'Show Timer' : 'Hide Timer'}
                 </div>}
+              <StopTimerBtn timerStopped={timerStopped} setStopTimer={setStopTimer} endTime={props.endTime} setEndTime={props.setEndTime} />
             </div>
             <div className="new-navigation-buttons">
               <div className="n-btn back" onClick={prev}>
