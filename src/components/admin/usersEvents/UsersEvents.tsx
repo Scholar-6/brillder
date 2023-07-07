@@ -295,7 +295,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
     } else if (u.subscriptionState === SubscriptionState.PaidTeacher) {
       return 'Educator';
     } else if (u.subscriptionState === SubscriptionState.PaidStudent) {
-      return 'Learnder';
+      return 'Learner';
     } else if (u.subscriptionState === SubscriptionState.Cancelled) {
       return 'Cancelled';
     } else if (u.subscriptionState === SubscriptionState.StudentViaBrills) {
