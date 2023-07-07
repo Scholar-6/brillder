@@ -394,7 +394,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                   endTime={props.endTime}
                   brickLength={brick.brickLength}
                   setEndTime={(a) => {
-                    console.log("set end 6");
                     props.setEndTime(a);
                   }}
                 />}

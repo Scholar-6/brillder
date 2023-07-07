@@ -1003,7 +1003,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (this.state.subjectGroup) {
         return SubjectGroupNames[this.state.subjectGroup];
       }
-      return "All subjects";
+      return "All Subjects";
     }
     return "My Subjects";
   }
