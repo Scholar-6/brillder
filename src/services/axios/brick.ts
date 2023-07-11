@@ -225,7 +225,7 @@ export const getPublishedBricksByPage = async (
  */
  export const getUnauthPublishedBricksByPage = async (
   pageSize: number, page: number, level: number[], length: BrickLengthEnum[],
-  subjectIds: number[], onlyCompetitions: boolean, subjectGroup?: number
+  subjectIds: number[], onlyCompetitions: boolean, subjectGroup?: number | null
 ) => {
   try {
 
