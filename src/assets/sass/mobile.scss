@@ -2546,11 +2546,6 @@
 
 
 
-// zendesk#968 bullets fix
-.ql-indent-1 {
-  padding-left: 3vw;
-}
-
 .youtube-video-session li.ql-indent-1[data-list=bullet]::before,
 .introduction-page li.ql-indent-1[data-list=bullet]::before,
 .phone-question-preview li.ql-indent-1[data-list=bullet]::before {
