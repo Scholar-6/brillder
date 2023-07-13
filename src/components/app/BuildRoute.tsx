@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
+import queryString from 'query-string';
 
 import actions from "../../redux/actions/auth";
 import userActions from "../../redux/actions/user";
@@ -71,6 +72,16 @@ class BuildRoute extends React.Component<BuildRouteProps> {
       props.isAuthorized();
       return <PageLoader content="...Checking rights..." />;
     } else {
+      const values = queryString.parse(props.location.search);
+
+      // move to microsoft login or other login way
+      if (values.loginUrl) {
+        const a = document.createElement('a');
+        a.href = values.loginUrl as string;
+        a.click();
+        return <div />;
+      }
+
       return <LoginRedirect />;
     }
   }
