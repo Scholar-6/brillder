@@ -88,10 +88,12 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     const values = queryString.parse(props.location.search);
 
-    let subjectIds = [];
+    let subjectIds:number[] = [];
     if (values.subjectIds) {
       try {
-        subjectIds = JSON.parse(values.subjectIds as string);
+        let subjectsStr = values.subjectIds as string;
+        const idsArray = subjectsStr.split(',');
+        subjectIds.push(...idsArray.map(id => parseInt(id)));
       } catch { }
     }
 
@@ -464,7 +466,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.setState({ expandedSubjects, isCore });
 
     // prepare link
-    let link = this.props.location.pathname + '?subjectId=' + JSON.stringify(expandedSubjects.map(s => s.id));
+    let link = this.props.location.pathname + '?subjectIds=' + expandedSubjects.map(s => s.id);
+
     if (this.state.expandedGroup) {
       link += '&' + this.justSubjectGroup(this.state.expandedGroup);
     }
