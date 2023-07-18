@@ -576,13 +576,34 @@
     padding: 0.4vw 0;
 
     svg {
+      background: white;
+      padding: 0.3vw;
+      overflow: visible;
+      border-radius: 50%;
       left: 30%;
+      height: 3.3vw;
     }
 
     transition: all 200ms ease-in-out;
 
     &:hover {
       background: var(--theme-green);
+    }
+  }
+
+  .microsoft-btn-v2 {
+    text-align: center;
+    margin-top: 0.8vw;
+    position: relative;
+    .microsoft-icon-v2 {
+      background: white;
+      border-radius: 50%;
+      padding: 0.7vw;
+      position: absolute;
+      overflow: visible;
+      top: calc(50% - 1.5vw);
+      left: 12.4%;
+      height: 3vw;
     }
   }
 }

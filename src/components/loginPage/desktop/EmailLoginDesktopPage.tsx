@@ -322,14 +322,18 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
         <div className="dialog-header" style={{ marginBottom: 0 }}>
           <ListItem>
             <ListItemText
-              primary="Accessing Brillder with the email address you have entered requires logging in to your school or institution Microsoft account. Please click the button below"
+              primary="Your access to Brillder is provided by your school. Please click below to log in via your school’s Microsoft portal"
               style={{ minWidth: '30vw' }}
             />
           </ListItem>
           <div className="dialog-footer">
-            <button className="btn btn-md bg-theme-green yes-button" onClick={() => {}}>
-              <span>School or Institution (Microsoft)</span>
-            </button>
+            <a
+              className="btn btn-md bg-theme-green yes-button microsoft-btn-v2"
+              href={`${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login`}
+            >
+              <img className="microsoft-icon-v2" alt="" src="/images/microsoft.png" />
+              <span>Continue with your school Microsoft account</span>
+            </a>
           </div>
         </div>
       </Dialog>
