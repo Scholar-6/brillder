@@ -404,7 +404,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
           <div className="publish-column">{ u.created && getDateString(u.created)}</div>
           <div className="author-column">{u.firstName} {u.lastName}</div>
           <div className="second-column">
-            {u.email} {u.isGoogle ? <SpriteIcon name="gmail" className="active" /> : ''} {u.isMicrosoft ? <SpriteIcon name="microsoft" className="active" /> : "" }
+            {u.email} {u.isGoogle ? <SpriteIcon name="gmail" className="active" /> : ''} {u.isMicrosoft ? <img alt="" src="/images/microsoft.png" className="microsoft-icon" /> : "" }
           </div>
           <div className="third-column">{this.renderUserType(u)}{this.renderLibrary(u)}</div>
           <div className="third-column">{this.renderSubscription(u)}</div>
