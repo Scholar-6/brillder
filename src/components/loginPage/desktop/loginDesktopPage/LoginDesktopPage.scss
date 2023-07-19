@@ -563,9 +563,15 @@
 }
 
 .different-auth-alert {
-  .dialog-header .MuiListItemText-primary {
-    margin-right: 0 !important;
-    font-size: 1.9vw !important;
+  .dialog-header {
+    .MuiListItem-root {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    .MuiListItemText-primary {
+      margin-right: 0 !important;
+      font-size: 1.85vw !important;
+    }
   }
   .google-button {
     width: 100%;
