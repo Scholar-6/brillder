@@ -143,6 +143,16 @@ const App: React.FC<AppProps> = props => {
       history.push(redirectUrl);
     }
 
+    // login redirect
+
+    const values = queryString.parse(location.search);
+
+    if (values.loginUrl) {
+      const a = document.createElement('a');
+      a.href = values.loginUrl as string;
+      a.click();
+    }
+
     /*eslint-disable-next-line*/
   }, []);
 
