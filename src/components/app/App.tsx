@@ -70,7 +70,7 @@ import LeaderboardPage from 'components/competitions/LeaderboardPage';
 import StripeCreditsPage from 'components/stripeCreditsPage/StripeCreditsPage';
 
 import { GetOrigin, SetOrigin } from 'localStorage/origin';
-import { GetLoginRedirectUrl, UnsetLoginRedirectUrl } from 'localStorage/login';
+import { GetLoginRedirectUrl, SetFinishRedirectUrl, SetHeartOfMerciaUser, SetLoginRedirectUrl, UnsetLoginRedirectUrl } from 'localStorage/login';
 import AdminOrInstitutionRoute from './AdminOrInstitutionRoute';
 import BricksPlayed from 'components/admin/bricksPlayed/BricksPlayed';
 import UsersEvents from 'components/admin/usersEvents/UsersEvents';
@@ -151,6 +151,24 @@ const App: React.FC<AppProps> = props => {
       const a = document.createElement('a');
       a.href = values.loginUrl as string;
       a.click();
+    }
+
+    if (values.origin && values.origin === 'heartofmercia' || values.origin === "ms-sso") {
+      SetLoginRedirectUrl(location.pathname);
+      SetHeartOfMerciaUser();
+      let redirectUrl = document.referrer;
+      if (redirectUrl === 'https://brillder.com/') {
+        redirectUrl = values.returnUrl as string;
+      } else if (redirectUrl === '') {
+        // redirect without iframe
+        redirectUrl = values.returnUrl as string;
+      }
+      SetFinishRedirectUrl(redirectUrl);
+      if (!props.user) {
+        setTimeout(() => {
+          window.location.href = `${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login${location.pathname}`;
+        }, 1000);
+      }
     }
 
     /*eslint-disable-next-line*/
