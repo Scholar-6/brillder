@@ -194,6 +194,9 @@ const App: React.FC<AppProps> = props => {
       const loginUrlV2 = GetLoginUrl();
       if (loginUrlV2) {
         console.log('after login url', loginUrlV2);
+        const a = document.createElement('a');
+        a.href = loginUrlV2;
+        a.click();
         UnsetLoginUrl();
       }
     }
