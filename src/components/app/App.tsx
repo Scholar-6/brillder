@@ -70,7 +70,7 @@ import LeaderboardPage from 'components/competitions/LeaderboardPage';
 import StripeCreditsPage from 'components/stripeCreditsPage/StripeCreditsPage';
 
 import { GetOrigin, SetOrigin } from 'localStorage/origin';
-import { GetLoginRedirectUrl, SetFinishRedirectUrl, SetHeartOfMerciaUser, SetLoginRedirectUrl, UnsetLoginRedirectUrl } from 'localStorage/login';
+import { GetLoginRedirectUrl, GetLoginUrl, SetFinishRedirectUrl, SetHeartOfMerciaUser, SetLoginRedirectUrl, SetLoginUrl, UnsetLoginRedirectUrl, UnsetLoginUrl } from 'localStorage/login';
 import AdminOrInstitutionRoute from './AdminOrInstitutionRoute';
 import BricksPlayed from 'components/admin/bricksPlayed/BricksPlayed';
 import UsersEvents from 'components/admin/usersEvents/UsersEvents';
@@ -147,12 +147,6 @@ const App: React.FC<AppProps> = props => {
 
     const values = queryString.parse(location.search);
 
-    if (values.loginUrl) {
-      const a = document.createElement('a');
-      a.href = values.loginUrl as string;
-      a.click();
-    }
-
     if (values.origin && values.origin === 'heartofmercia' || values.origin === "ms-sso") {
       SetLoginRedirectUrl(location.pathname);
       SetHeartOfMerciaUser();
@@ -170,9 +164,40 @@ const App: React.FC<AppProps> = props => {
         }, 1000);
       }
     }
-
     /*eslint-disable-next-line*/
   }, []);
+
+  // login and after login stuff
+  useEffect(() => {
+    // if user not logged in do login redirect
+    if (!props.user) {
+      const values = queryString.parse(location.search);
+
+      if (values.loginUrl) {
+        const loginUrl = values.loginUrl as string;
+        const a = document.createElement('a');
+        a.href = loginUrl;
+        // trying to get return url from login url
+        try {
+          const backUrl = loginUrl.split('login/')[1];
+          console.log('back url', backUrl);
+          SetLoginUrl(backUrl);
+        } catch {
+          // can`t get return url from login url
+        }
+        a.click();
+      }
+    }
+
+    // if user logged in do after login redirect
+    if (props.user) {
+      const loginUrlV2 = GetLoginUrl();
+      if (loginUrlV2) {
+        console.log('after login url', loginUrlV2);
+        UnsetLoginUrl();
+      }
+    }
+  }, [props.user]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);

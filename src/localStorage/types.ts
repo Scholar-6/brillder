@@ -14,5 +14,6 @@ export const VolumeToggle = 'VolumeToggle';
 export const UserBrills = 'UserBrills';
 export const Origin = 'Origin';
 export const QuickAssignment = 'QuickAssignment';
+export const LoginUrl = 'LoginUrl';
 
 export const AdminDashboardBricksFilters = 'AdminDashboardBricksFilters';

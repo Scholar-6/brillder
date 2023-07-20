@@ -14,6 +14,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
 import LoginRedirect from "components/baseComponents/LoginRedirect";
 import BaseTermsRedirect from "./BaseTermsRedirect";
+import { GetLoginUrl, SetLoginUrl, UnsetLoginUrl } from "localStorage/login";
 
 interface BuildRouteProps {
   exact?: any;
@@ -76,8 +77,9 @@ class BuildRoute extends React.Component<BuildRouteProps> {
 
       // move to microsoft login or other login way
       if (values.loginUrl) {
+        const loginUrl = values.loginUrl as string;
         const a = document.createElement('a');
-        a.href = values.loginUrl as string;
+        a.href = loginUrl;
         a.click();
         return <div />;
       }
