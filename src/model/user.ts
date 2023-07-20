@@ -81,6 +81,9 @@ export interface User extends UserBase {
   userCredits?: number;
   isFromInstitution?: boolean;
 
+  isGoogle?: boolean;
+  isMicrosoft?: boolean;
+
   freeAssignmentsLeft: number;
   freeAttemptsLeft: number;
   freeCompetitionLeft: number;

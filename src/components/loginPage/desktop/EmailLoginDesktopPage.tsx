@@ -23,6 +23,8 @@ import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import TermsLink from "components/baseComponents/TermsLink";
 import LoginBricks from "../components/LoginBricks";
 import LoginLogo from '../components/LoginLogo';
+import GoogleButton from "../components/GoogleButton";
+import MicrosoftButton from "../components/MicrosoftButton";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -56,6 +58,8 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
+  const [googleAlert, setGoogleAlert] = useState(false);
+  const [microsoftAlert, setMicrosoftAlert] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -126,6 +130,10 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             //setAlertMessage("The email or password may be wrong.");
             //setLoginWrong(true);
             setInvalidLogin(true);
+          } else if (msg === 'google_acount') {
+            setGoogleAlert(true);
+          } else if (msg === 'microsoft_account') {
+            setMicrosoftAlert(true);
           }
         }
       } else {
@@ -295,6 +303,38 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
             </ListItemAvatar>
           </ListItem>
           <div></div>
+        </div>
+      </Dialog>
+      <Dialog open={googleAlert} onClose={() => setGoogleAlert(false)} className="dialog-box width-50 different-auth-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <ListItem>
+            <ListItemText
+              primary="The email address you have entered is set to access Brillder with your Google account. Please click to continue"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+          <div className="dialog-footer">
+            <GoogleButton />
+          </div>
+        </div>
+      </Dialog>
+      <Dialog open={microsoftAlert} onClose={() => setMicrosoftAlert(false)} className="dialog-box width-50 different-auth-alert">
+        <div className="dialog-header" style={{ marginBottom: 0 }}>
+          <ListItem>
+            <ListItemText
+              primary="Your access to Brillder is provided by your school. Please click below to log in via your school’s Microsoft portal"
+              style={{ minWidth: '30vw' }}
+            />
+          </ListItem>
+          <div className="dialog-footer">
+            <a
+              className="btn btn-md bg-theme-green yes-button microsoft-btn-v2"
+              href={`${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login`}
+            >
+              <img className="microsoft-icon-v2" alt="" src="/images/microsoft.png" />
+              <span>Continue with your school Microsoft account</span>
+            </a>
+          </div>
         </div>
       </Dialog>
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
