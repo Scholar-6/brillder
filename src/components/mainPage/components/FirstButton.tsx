@@ -19,7 +19,7 @@ const FirstButton: React.FC<FirstButtonProps> = props => {
     const { userPreference } = props.user;
     if (userPreference) {
       if (isTeacherPreference(props.user)) {
-        return "Assign Bricks";
+        return "View & Assign Bricks";
       } else if (isStudentPreference(props.user)) {
         return "View & Play";
       }
