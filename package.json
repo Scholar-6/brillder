@@ -1,6 +1,6 @@
 {
   "name": "brillder",
-  "version": "17.1.0",
+  "version": "17.1.4",
   "private": false,
   "dependencies": {
     "@dschoon/react-waves": "^4.0.3",
