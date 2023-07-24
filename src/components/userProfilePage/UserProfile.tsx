@@ -622,6 +622,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       }
       
       const institutionUser = this.state.user.roles.find(r => r === UserType.InstitutionUser);
+
       if (institutionUser) {
         if (this.state.user.userPreference?.preferenceId === UserPreferenceType.Teacher) {
           return (

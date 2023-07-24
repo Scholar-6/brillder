@@ -1,4 +1,4 @@
-import { UserPreferenceType } from "model/user";
+import { UserPreferenceType, UserType } from "model/user";
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 
@@ -8,6 +8,7 @@ import { UserRoleItem } from "./model";
 
 interface BoxState {
   userPreference?: UserPreferenceType;
+  isInstitution: boolean;
 }
 
 interface BoxProps {
@@ -24,12 +25,18 @@ class RolesBox extends Component<BoxProps, BoxState> {
   constructor(props: BoxProps) {
     super(props);
 
+    const isInstitution = props.userRoles.find(r => r === UserType.InstitutionUser);
+
     this.state = {
       userPreference: props.userPreference,
+      isInstitution
     };
   }
 
   async onPreferenceChange(userPreference: UserPreferenceType) {
+    if (this.state.isInstitution) {
+      return;
+    }
     this.props.togglePreference();
     if (this.props.isAdmin && this.props.userId) {
       const success = await setUserPreferenceTypeById(userPreference, this.props.userId);
@@ -64,13 +71,14 @@ class RolesBox extends Component<BoxProps, BoxState> {
 
   render() {
     const { userPreference } = this.state;
+
     return (
       <div className="flex-center roles-box">
         <p className="fixed-label">User Type</p>
         <div className="first-column">
           <Grid item>
             <FormControlLabel
-              className="filter-container"
+              className={`filter-container ${this.state.isInstitution ? "disabled" : ""}`}
               checked={userPreference === UserPreferenceType.Student}
               onClick={() => this.onPreferenceChange(UserPreferenceType.Student)}
               control={<Radio className="filter-radio" />}
@@ -79,7 +87,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
           </Grid>
           <Grid item>
             <FormControlLabel
-              className="filter-container"
+              className={`filter-container ${this.state.isInstitution ? "disabled" : ""}`}
               checked={userPreference === UserPreferenceType.Teacher}
               onClick={() => this.onPreferenceChange(UserPreferenceType.Teacher)}
               control={<Radio className="filter-radio" />}
@@ -88,7 +96,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
           </Grid>
           <Grid item>
             <FormControlLabel
-              className="filter-container"
+              className={`filter-container ${this.state.isInstitution ? "disabled" : ""}`}
               checked={userPreference === UserPreferenceType.Builder}
               onClick={() => this.onPreferenceChange(UserPreferenceType.Builder)}
               control={<Radio className="filter-radio" />}
@@ -99,7 +107,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
         <div>
           <Grid item>
             <FormControlLabel
-              className="filter-container"
+              className={`filter-container ${this.state.isInstitution ? "disabled" : ""}`}
               checked={userPreference === UserPreferenceType.Institution}
               onClick={() => this.onPreferenceChange(UserPreferenceType.Institution)}
               control={<Radio className="filter-radio" />}
