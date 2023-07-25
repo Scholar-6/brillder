@@ -28,6 +28,7 @@ import routes from "components/play/routes";
 import InfinityScrollCustom from "./InvinityScrollCustom";
 import { getPublishedBricksByPage, getUnauthPublishedBricksByPage } from "services/axios/brick";
 import { ENGLISH_LANGUAGE_SUBJECT, ENGLISH_LITERATURE_SUBJECT, GENERAL_SUBJECT } from "components/services/subject";
+import { SortBy } from "./components/ViewAllFilter";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -194,7 +195,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         this.props.requestFailed("Can`t get subjects");
       }
     } else {
-      const data = await getUnauthPublishedBricksByPage(1, 0, [], [], [], false);
+      const data = await getUnauthPublishedBricksByPage(1, 0, [], [], [], false, SortBy.Date);
 
       if (data) {
         const subjects = data.subjects.filter(s => s.count > 0);

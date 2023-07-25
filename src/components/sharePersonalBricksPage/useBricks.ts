@@ -2,6 +2,7 @@ import { Brick, Subject } from 'model/brick';
 import { User } from 'model/user';
 import { useState, useEffect } from 'react';
 import { getPublishedBricksByPage, getUnauthPublishedBricksByPage } from 'services/axios/brick';
+import { SortBy } from './components/ViewAllFilter';
 
 const useBricks = (pageNum = 0, user: User, subject: Subject, isCore: boolean, levels: number[], lengths: number[] ) => {
   const [results, setResults] = useState([] as Brick[]);
@@ -31,7 +32,7 @@ const useBricks = (pageNum = 0, user: User, subject: Subject, isCore: boolean, l
         }
       });
     } else {
-        getUnauthPublishedBricksByPage(bricksPerPage, pageNum, [], [], [subject.id], false, subject.group).then(data => {
+        getUnauthPublishedBricksByPage(bricksPerPage, pageNum, [], [], [subject.id], false, SortBy.Date, subject.group).then(data => {
           if (data) {
             setResults(prev => [...prev, ...data.bricks]);
             setHasNextPage(data.pageCount - ((pageNum + 1) * bricksPerPage) >= 0);
