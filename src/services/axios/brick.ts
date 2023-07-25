@@ -7,6 +7,7 @@ import { Question } from 'model/question';
 
 import { get, put, post, axiosDelete } from './index';
 import { createQuestion } from './question';
+import { SortBy } from 'components/viewAllPage/components/ViewAllFilter';
 
 export const getPublicBrickById = async (id: number) => {
   try {
@@ -199,7 +200,7 @@ export interface PageBricks {
 export const getPublishedBricksByPage = async (
   pageSize: number, page: number, isCore: boolean,
   level: number[], length: BrickLengthEnum[], subjectIds: number[],
-  onlyCompetitions: boolean
+  onlyCompetitions: boolean, sortBy?: SortBy
 ) => {
   try {
 
@@ -210,6 +211,7 @@ export const getPublishedBricksByPage = async (
       length,
       subjectIds,
       onlyCompetitions,
+      sortBy
     } as any;
 
     return await post<PageBricks>(`/bricks/byStatus/${BrickStatus.Publish}/page/${page}`, data);
