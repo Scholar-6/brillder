@@ -616,7 +616,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           shown: true,
         });
       } catch { }
-    }, 100);
+    }, 200);
   }
 
   filterByLevel(filterLevels: AcademicLevel[]) {
@@ -635,7 +635,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           );
         }
       } catch { }
-    }, 100);
+    }, 200);
   }
 
   filterByCompetition() {
@@ -655,7 +655,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           );
         }
       } catch { }
-    }, 100);
+    }, 200);
   }
 
   filterByLength(filterLength: BrickLengthEnum[]) {
@@ -674,7 +674,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           );
         }
       } catch { }
-    }, 100);
+    }, 200);
   }
 
   checkUserSubject(s: Subject) {
@@ -937,7 +937,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       } catch {
         this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
       }
-    }, 100);
+    }, 200);
   }
 
   renderSortedBricks() {
@@ -985,7 +985,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         0, isCore, this.state.filterLevels, this.state.filterLength,
         this.state.filterCompetition, this.state.isAllSubjects, this.state.sortBy
       );
-    }, 100);
+    }, 200);
   }
 
   renderMainTitle(filterSubjects: number[]) {
