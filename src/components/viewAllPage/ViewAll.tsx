@@ -53,21 +53,15 @@ import RecommendButton from "components/viewAllPage/components/RecommendBuilderB
 import SubjectCategoriesComponent from "./subjectCategories/SubjectCategories";
 
 import {
-  sortAndFilterBySubject,
   getCheckedSubjects,
   prepareVisibleBricks2,
   toggleSubject,
   renderTitle,
   sortAndCheckSubjects,
-  filterSearchBricks,
   getCheckedSubjectIds,
   getSubjectsWithBricks,
   checkAllSubjects,
 } from "./service/viewAll";
-import {
-  filterByLevels,
-  filterByCompetitions
-} from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import { playCover } from "components/play/routes";
 import { isPhone } from "services/phone";
@@ -155,6 +149,8 @@ const DesktopTheme = React.lazy(
 );
 
 class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
+  static animationTimeout = 600;
+
   constructor(props: ViewAllProps) {
     super(props);
 
@@ -427,7 +423,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           let newTeacher = values.newTeacher as any;
           this.setState({ stepsEnabled: !!newTeacher });
         }
-      }, 300);
+      }, ViewAllPage.animationTimeout);
     } else {
       this.setState({ isLoading: false });
     }
@@ -554,19 +550,26 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   handleSortChange = (e: any) => {
     const { state } = this;
+
     const sortBy = parseInt(e.target.value) as SortBy;
 
-    if (this.props.user) {
-      this.loadAndSetBricks(
-        0, state.isCore, state.filterLevels, state.filterLength,
-        state.filterCompetition, state.isAllSubjects, sortBy
-      );
-    } else {
-      this.loadAndSetUnauthBricks(
-        0, state.filterLevels, state.filterLength,
-        this.state.filterCompetition, sortBy, state.subjectGroup
-      );
-    }
+    this.setState({ ...state, sortBy, shown: false });
+
+    setTimeout(() => {
+      try {
+        if (this.props.user) {
+          this.loadAndSetBricks(
+            0, state.isCore, state.filterLevels, state.filterLength,
+            state.filterCompetition, state.isAllSubjects, sortBy
+          );
+        } else {
+          this.loadAndSetUnauthBricks(
+            0, state.filterLevels, state.filterLength,
+            this.state.filterCompetition, sortBy, state.subjectGroup
+          );
+        }
+      } catch { }
+    }, ViewAllPage.animationTimeout);
   };
 
   isFilterClear() {
@@ -616,7 +619,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           shown: true,
         });
       } catch { }
-    }, 200);
+    }, ViewAllPage.animationTimeout);
   }
 
   filterByLevel(filterLevels: AcademicLevel[]) {
@@ -635,7 +638,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           );
         }
       } catch { }
-    }, 200);
+    }, ViewAllPage.animationTimeout);
   }
 
   filterByCompetition() {
@@ -655,7 +658,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           );
         }
       } catch { }
-    }, 200);
+    }, ViewAllPage.animationTimeout);
   }
 
   filterByLength(filterLength: BrickLengthEnum[]) {
@@ -674,7 +677,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           );
         }
       } catch { }
-    }, 200);
+    }, ViewAllPage.animationTimeout);
   }
 
   checkUserSubject(s: Subject) {
@@ -937,7 +940,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       } catch {
         this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
       }
-    }, 200);
+    }, ViewAllPage.animationTimeout);
   }
 
   renderSortedBricks() {
