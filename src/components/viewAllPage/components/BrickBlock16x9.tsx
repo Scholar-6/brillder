@@ -72,7 +72,6 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
   if (brick.assignments) {
     for (let assignmen of brick.assignments) {
       const assignment = assignmen as any;
-      console.log(24, assignment);
       if (assignment && assignment.stats) {
         for (let student of assignment?.stats?.byStudent ?? []) {
           if (student.studentId === props.user.id) {

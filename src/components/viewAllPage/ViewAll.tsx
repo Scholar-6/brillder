@@ -549,13 +549,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   handleSortChange = (e: any) => {
-    const { state } = this;
 
     const sortBy = parseInt(e.target.value) as SortBy;
 
-    this.setState({ ...state, sortBy, shown: false });
+    this.setState({ ...this.state, sortBy, shown: false });
 
     setTimeout(() => {
+      const { state } = this;
       try {
         if (this.props.user) {
           this.loadAndSetBricks(
@@ -608,13 +608,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...state, isViewAll: false, shown: false });
     setTimeout(() => {
       try {
-        if (this.props.user) {
-
-        } else {
-          // no subjects here
-        }
         this.setState({
-          ...state,
+          ...this.state,
           isClearFilter: this.isFilterClear(),
           shown: true,
         });
@@ -984,9 +979,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const isCore = !this.state.isCore;
     this.setState({ isCore, shown: false, page: 0 });
     setTimeout(() => {
+      const {state} = this;
       this.loadAndSetBricks(
-        0, isCore, this.state.filterLevels, this.state.filterLength,
-        this.state.filterCompetition, this.state.isAllSubjects, this.state.sortBy
+        0, isCore, state.filterLevels, state.filterLength,
+        state.filterCompetition, state.isAllSubjects, state.sortBy
       );
     }, 200);
   }
@@ -1287,9 +1283,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             </Switch>
             <FailedRequestDialog
               isOpen={this.state.failedRequest}
-              close={() =>
+              close={() => {
                 this.setState({ ...this.state, failedRequest: false })
-              }
+              }}
             />
             <NoSubjectDialog
               isOpen={this.state.noSubjectOpen}
@@ -1363,7 +1359,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           </div>
           <FailedRequestDialog
             isOpen={this.state.failedRequest}
-            close={() => this.setState({ ...this.state, failedRequest: false })}
+            close={() => {
+              this.setState({ ...this.state, failedRequest: false })
+            }}
           />
           <NoSubjectDialog
             isOpen={this.state.noSubjectOpen}
