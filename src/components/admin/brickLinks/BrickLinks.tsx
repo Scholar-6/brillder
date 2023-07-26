@@ -154,6 +154,10 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
           status = 'Forbidden';
         } else if (status === 404) {
           status = 'Not Found';
+        } else if (status === 602) {
+          status = 'Youtube Clip';
+        } else if (status === 601) {
+          status = 'Deleted or Restricted';
         }
         return (<div className="table-row" key={i}>
           <div className="index-column">{bl.datePublished && getFormattedDate(bl.datePublished)}</div>

@@ -372,7 +372,23 @@ class PageHeader extends Component<Props, State> {
               {this.props.isAuthenticated === isAuthenticated.False &&
                 <Grid container direction="row" className="action-container">
                   <div className="login-button">
-                    <span onClick={() => this.props.history.push(map.Login)}>Login</span> | <span onClick={() => this.props.history.push(JoinPage)}>Register</span>
+                    <span onClick={() => {
+                      const {pathname} = this.props.history.location;
+                      const isPlay = pathname.search('/play/brick/') !== -1;
+                      if (isPlay) {
+                        const brickId = pathname.split('/')[3];
+                        SetAuthBrickCash({id: brickId} as Brick, -1);
+                      }
+                      this.props.history.push(map.Login);
+                    }}>Login</span> | <span onClick={() => {
+                      const {pathname} = this.props.history.location;
+                      const isPlay = pathname.search('/play/brick/') !== -1;
+                      if (isPlay) {
+                        const brickId = pathname.split('/')[3];
+                        SetAuthBrickCash({id: brickId} as Brick, -1);
+                      }
+                      this.props.history.push(JoinPage);
+                    }}>Register</span>
                   </div>
                 </Grid>
               }
