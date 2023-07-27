@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ListItemIcon, ListItemText, MenuItem, Select, SvgIcon } from '@material-ui/core';
+import { SvgIcon } from '@material-ui/core';
 
 import AssignBrickClass from 'components/baseComponents/dialogs/AssignBrickClass';
 import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
@@ -7,7 +7,6 @@ import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccess
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import StudentInviteSuccessDialog from 'components/play/finalStep/dialogs/StudentInviteSuccessDialog';
 import { checkAdmin } from 'components/services/brickService';
-import { Subject } from 'model/brick';
 import { User } from 'model/user';
 import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -149,6 +148,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
             isOpen={isOpen}
             classroom={props.classroom}
             subjectId={props.classroom.subjectId || props.classroom.subject.id}
+            subjects={user.subjects}
             success={brick => {
               setSuccess({ isOpen: true, brick })
               if (props.onAssigned) {

@@ -11,7 +11,7 @@ import { ListItemIcon, ListItemText, MenuItem, Popper, SvgIcon } from '@material
 
 import './AssignBrickClass.scss';
 import actions from 'redux/actions/requestFailed';
-import { Brick } from 'model/brick';
+import { Brick, Subject } from 'model/brick';
 import SpriteIcon from '../SpriteIcon';
 import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
 import { getSuggestedByTitles } from 'services/axios/brick';
@@ -28,6 +28,7 @@ interface AssignPersonOrClassProps {
   classroom: Classroom;
   subjectId: number;
   isOpen: boolean;
+  subjects: Subject[];
   success(brick: Brick): void;
   showPremium(): void;
   failed(brick: Brick): void;
@@ -109,7 +110,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
       <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue assign-dialog assign-dialog-new">
         <div className="dialog-header">
           {props.user.subscriptionState === 0 && renderTopLabel()}
-          <div className="r-popup-title bold">Already know what you're looking for?</div>
+          <div className="r-popup-title">If you know the title you are looking for, enter it below</div>
           <Autocomplete
             freeSolo
             value={brick}
@@ -122,7 +123,10 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
             className="subject-autocomplete"
             PopperComponent={PopperCustom}
             getOptionLabel={(option: any) => stripHtml(option.title)}
-            renderOption={(brick: Brick) => (
+            renderOption={(brick: Brick) => {
+              let subject = props.subjects.find(s => s.id === brick.subjectId);
+              console.log('color', brick, subject)
+              return (
               <React.Fragment>
                 <MenuItem>
                   <ListItemIcon>
@@ -130,7 +134,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
                       <SpriteIcon
                         name="circle-filled"
                         className="w100 h100 active"
-                        style={{ color: brick.subject?.color || '' }}
+                        style={{ color: subject?.color || '' }}
                       />
                     </SvgIcon>
                   </ListItemIcon>
@@ -139,7 +143,8 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
                   </ListItemText>
                 </MenuItem>
               </React.Fragment>
-            )}
+            )
+          }}
             renderInput={(params: any) => {
               params.inputProps.value = searchText;
 
@@ -203,7 +208,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
                     </div>
                   </div>
                 </div>
-                to explore
+                to explore the catalogue
               </div>
             </div>}
           <div className="dialog-footer centered-important" style={{ justifyContent: 'center' }}>

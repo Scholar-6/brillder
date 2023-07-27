@@ -38,8 +38,13 @@ span.bold {
   .MuiDialog-paper .dialog-header > div {
     width: auto !important;
   }
+
+  .MuiDialog-paper .dialog-header .regular {
+    font-family: $font-family-regular;
+  }
+  
   .MuiDialog-paper .dialog-header .subject-autocomplete {
-    width: 33vw !important;
+    width: 43vw !important;
   }
   .subject-autocomplete .MuiInputBase-root.MuiInput-root.MuiAutocomplete-inputRoot {
     padding-left: 0 !important;
