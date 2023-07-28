@@ -53,21 +53,15 @@ import RecommendButton from "components/viewAllPage/components/RecommendBuilderB
 import SubjectCategoriesComponent from "./subjectCategories/SubjectCategories";
 
 import {
-  sortAndFilterBySubject,
   getCheckedSubjects,
   prepareVisibleBricks2,
   toggleSubject,
   renderTitle,
   sortAndCheckSubjects,
-  filterSearchBricks,
   getCheckedSubjectIds,
   getSubjectsWithBricks,
   checkAllSubjects,
 } from "./service/viewAll";
-import {
-  filterByLevels,
-  filterByCompetitions
-} from "components/backToWorkPage/service";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import { playCover } from "components/play/routes";
 import { isPhone } from "services/phone";
@@ -155,6 +149,8 @@ const DesktopTheme = React.lazy(
 );
 
 class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
+  static animationTimeout = 600;
+
   constructor(props: ViewAllProps) {
     super(props);
 
@@ -427,7 +423,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           let newTeacher = values.newTeacher as any;
           this.setState({ stepsEnabled: !!newTeacher });
         }
-      }, 300);
+      }, ViewAllPage.animationTimeout);
     } else {
       this.setState({ isLoading: false });
     }
@@ -553,20 +549,27 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   handleSortChange = (e: any) => {
-    const { state } = this;
+
     const sortBy = parseInt(e.target.value) as SortBy;
 
-    if (this.props.user) {
-      this.loadAndSetBricks(
-        0, state.isCore, state.filterLevels, state.filterLength,
-        state.filterCompetition, state.isAllSubjects, sortBy
-      );
-    } else {
-      this.loadAndSetUnauthBricks(
-        0, state.filterLevels, state.filterLength,
-        this.state.filterCompetition, sortBy, state.subjectGroup
-      );
-    }
+    this.setState({ ...this.state, sortBy, shown: false });
+
+    setTimeout(() => {
+      const { state } = this;
+      try {
+        if (this.props.user) {
+          this.loadAndSetBricks(
+            0, state.isCore, state.filterLevels, state.filterLength,
+            state.filterCompetition, state.isAllSubjects, sortBy
+          );
+        } else {
+          this.loadAndSetUnauthBricks(
+            0, state.filterLevels, state.filterLength,
+            this.state.filterCompetition, sortBy, state.subjectGroup
+          );
+        }
+      } catch { }
+    }, ViewAllPage.animationTimeout);
   };
 
   isFilterClear() {
@@ -605,18 +608,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ ...state, isViewAll: false, shown: false });
     setTimeout(() => {
       try {
-        if (this.props.user) {
-
-        } else {
-          // no subjects here
-        }
         this.setState({
-          ...state,
+          ...this.state,
           isClearFilter: this.isFilterClear(),
           shown: true,
         });
       } catch { }
-    }, 200);
+    }, ViewAllPage.animationTimeout);
   }
 
   filterByLevel(filterLevels: AcademicLevel[]) {
@@ -635,7 +633,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           );
         }
       } catch { }
-    }, 200);
+    }, ViewAllPage.animationTimeout);
   }
 
   filterByCompetition() {
@@ -655,7 +653,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           );
         }
       } catch { }
-    }, 200);
+    }, ViewAllPage.animationTimeout);
   }
 
   filterByLength(filterLength: BrickLengthEnum[]) {
@@ -674,7 +672,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           );
         }
       } catch { }
-    }, 200);
+    }, ViewAllPage.animationTimeout);
   }
 
   checkUserSubject(s: Subject) {
@@ -937,7 +935,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       } catch {
         this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
       }
-    }, 200);
+    }, ViewAllPage.animationTimeout);
   }
 
   renderSortedBricks() {
@@ -981,9 +979,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const isCore = !this.state.isCore;
     this.setState({ isCore, shown: false, page: 0 });
     setTimeout(() => {
+      const {state} = this;
       this.loadAndSetBricks(
-        0, isCore, this.state.filterLevels, this.state.filterLength,
-        this.state.filterCompetition, this.state.isAllSubjects, this.state.sortBy
+        0, isCore, state.filterLevels, state.filterLength,
+        state.filterCompetition, state.isAllSubjects, state.sortBy
       );
     }, 200);
   }
@@ -1284,9 +1283,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             </Switch>
             <FailedRequestDialog
               isOpen={this.state.failedRequest}
-              close={() =>
+              close={() => {
                 this.setState({ ...this.state, failedRequest: false })
-              }
+              }}
             />
             <NoSubjectDialog
               isOpen={this.state.noSubjectOpen}
@@ -1360,7 +1359,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           </div>
           <FailedRequestDialog
             isOpen={this.state.failedRequest}
-            close={() => this.setState({ ...this.state, failedRequest: false })}
+            close={() => {
+              this.setState({ ...this.state, failedRequest: false })
+            }}
           />
           <NoSubjectDialog
             isOpen={this.state.noSubjectOpen}

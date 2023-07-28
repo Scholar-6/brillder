@@ -753,6 +753,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           <AssignBrickClass
             isOpen={this.state.isAssignOpen}
             classroom={this.state.activeClassroom}
+            subjects={this.state.subjects}
             subjectId={this.state.activeClassroom.subjectId || this.state.activeClassroom.subject?.id}
             success={(brick: any) => {
               this.setState({ successAssignResult: { isOpen: true, brick } });
