@@ -11,15 +11,10 @@ import map from "components/map";
 
 import "./AssignedBricks.scss";
 import { Subject } from "model/brick";
-import { Tab } from "./service";
 
 interface AssignedBricksProps {
   user: User;
-  tab: Tab;
-  shown: boolean;
   subjects: Subject[];
-  pageSize: number;
-  sortedIndex: number;
   assignments: AssignmentBrick[];
   history: any;
 }
@@ -37,7 +32,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       row={item.row}
       user={this.props.user}
       key={item.index}
-      shown={this.props.shown}
+      shown={true}
       isAssignment={true}
       completedDate={item.completedDate}
       assignmentStatus={item.status}
@@ -45,7 +40,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       assignmentId={item.assignmentId}
       history={this.props.history}
       color={color}
-      isCompleted={this.props.tab === Tab.Completed}
+      isCompleted={false}
       bestScore={item.bestScore}
       teacher={item.teacher}
       circleIcon={circleIcon}
@@ -55,7 +50,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
   }
 
   renderSortedBricks() {
-    const data = prepareVisibleAssignments(this.props.sortedIndex, this.props.pageSize, this.props.assignments);
+    const data = prepareVisibleAssignments(this.props.assignments);
     return data.map(item => this.renderBrick(item));
   }
 

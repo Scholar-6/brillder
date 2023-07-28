@@ -1,16 +1,14 @@
 import { AssignmentBrickData } from './model';
 import { AssignmentBrick } from "model/assignment";
 
-export const prepareVisibleAssignments = (sortedIndex: number, pageSize: number, assignments: AssignmentBrick[]) => {
+export const prepareVisibleAssignments = (assignments: AssignmentBrick[]) => {
   let data: AssignmentBrickData[] = [];
   let count = 0;
-  for (let i = 0 + sortedIndex; i < pageSize + sortedIndex; i++) {
-    const assignment = assignments[i];
+  for (let assignment of assignments) {
     if (assignment) {
       let row = Math.floor(count / 3);
       data.push({
         brick: assignment.brick,
-        key: i,
         index: count,
         assignmentId: assignment.id,
         status: assignment.status,
