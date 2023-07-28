@@ -186,7 +186,6 @@ export const getPublishedBricks = async () => {
   }
 }
 
-
 export interface PageBricks {
   pageCount: number;
   bricks: Brick[];
