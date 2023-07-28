@@ -30,6 +30,7 @@ interface FilterProps {
   isClearFilter: any;
   isCore: boolean;
   user: User;
+  isSearching: boolean;
 
   subjectGroup?: SubjectGroup | null;
 
@@ -290,6 +291,59 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
     );
   }
 
+  sortByBox() {
+    if (this.props.isSearching) {
+      return (
+        <div className="filter-container sort-by-box view-all-sort-box" style={{ height: "6.5vw" }}>
+          <div className="sort-header">Sort By</div>
+          <div className="sort-group">
+            <Grid container direction="row">
+              <Grid item xs={6}>
+                <FormControlLabel
+                  style={{ marginRight: 0 }}
+                  control={<Radio className="sortBy" />}
+                  checked={true}
+                  label="Relevance"
+                />
+              </Grid>
+            </Grid>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="filter-container sort-by-box view-all-sort-box" style={{ height: "6.5vw" }}>
+        <div className="sort-header">Sort By</div>
+        <RadioGroup
+          className="sort-group"
+          aria-label="SortBy"
+          name="SortBy"
+          value={this.props.sortBy}
+          onChange={this.props.handleSortChange}
+        >
+          <Grid container direction="row">
+            <Grid item xs={6}>
+              <FormControlLabel
+                value={SortBy.Popularity}
+                style={{ marginRight: 0, width: "50%" }}
+                control={<Radio className="sortBy" />}
+                label="Popularity"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <FormControlLabel
+                value={SortBy.Date}
+                style={{ marginRight: 0 }}
+                control={<Radio className="sortBy" />}
+                label="Date Added"
+              />
+            </Grid>
+          </Grid>
+        </RadioGroup>
+      </div>
+    );
+  }
+
   render() {
     let { subjects, isAllSubjects } = this.props;
     if (!isAllSubjects) {
@@ -309,38 +363,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       <Grid container item xs={3} className="sort-and-filter-container">
         <div className="flex-height-box">
           <div className="sort-box">
-            <div
-              className="filter-container sort-by-box view-all-sort-box"
-              style={{ height: "6.5vw" }}
-            >
-              <div className="sort-header">Sort By</div>
-              <RadioGroup
-                className="sort-group"
-                aria-label="SortBy"
-                name="SortBy"
-                value={this.props.sortBy}
-                onChange={this.props.handleSortChange}
-              >
-                <Grid container direction="row">
-                  <Grid item xs={6}>
-                    <FormControlLabel
-                      value={SortBy.Popularity}
-                      style={{ marginRight: 0, width: "50%" }}
-                      control={<Radio className="sortBy" />}
-                      label="Popularity"
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormControlLabel
-                      value={SortBy.Date}
-                      style={{ marginRight: 0 }}
-                      control={<Radio className="sortBy" />}
-                      label="Date Added"
-                    />
-                  </Grid>
-                </Grid>
-              </RadioGroup>
-            </div>
+            {this.sortByBox()}
             {this.renderFilterLabelBox()}
             {this.renderCompetitionFilter()}
             <div className="sort-box level-filter-box less-top-padding-s3">
@@ -358,32 +381,32 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
               : this.renderCategoryLabelBox()}
             {this.renderSubjectsToggle()}
             {this.props.user &&
-            <div className="scroll-buttons">
-              {this.props.user && (
-                <div className="radio-container flex-center" onClick={() => this.props.selectUserSubjects(!this.props.isViewAll)}>
-                  <RadioButton checked={this.props.isViewAll} name="" color="#001c58" />
-                  All
-                </div>
-              )}
-              <SpriteIcon
-                name="arrow-up"
-                className={`${!this.state.canScroll ? "disabled" : ""}`}
-                onClick={this.scrollUp.bind(this)}
-              />
-              <SpriteIcon
-                name="arrow-down"
-                className={`${!this.state.canScroll ? "disabled" : ""}`}
-                onClick={this.scrollDown.bind(this)}
-              />
-              {this.props.isClearFilter && (
-                <button
-                  className="btn-transparent filter-icon arrow-cancel"
-                  onClick={() =>
-                    this.props.selectAllSubjects(!this.props.isViewAll)
-                  }
-                ></button>
-              )}
-            </div>}
+              <div className="scroll-buttons">
+                {this.props.user && (
+                  <div className="radio-container flex-center" onClick={() => this.props.selectUserSubjects(!this.props.isViewAll)}>
+                    <RadioButton checked={this.props.isViewAll} name="" color="#001c58" />
+                    All
+                  </div>
+                )}
+                <SpriteIcon
+                  name="arrow-up"
+                  className={`${!this.state.canScroll ? "disabled" : ""}`}
+                  onClick={this.scrollUp.bind(this)}
+                />
+                <SpriteIcon
+                  name="arrow-down"
+                  className={`${!this.state.canScroll ? "disabled" : ""}`}
+                  onClick={this.scrollDown.bind(this)}
+                />
+                {this.props.isClearFilter && (
+                  <button
+                    className="btn-transparent filter-icon arrow-cancel"
+                    onClick={() =>
+                      this.props.selectAllSubjects(!this.props.isViewAll)
+                    }
+                  ></button>
+                )}
+              </div>}
           </div>
           <div
             className="sort-box subject-scrollable"

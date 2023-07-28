@@ -9,6 +9,15 @@
   .index-box:hover {
     background: var(--light-blue-alpha3) !important;
   }
+
+  .sort-by-box {
+    border-bottom: 2px solid rgba(222,222,222, 0.1);
+  }
+
+  .classrooms-filter .right-index .white-box {
+    padding: 0.2vw 0.8vw;
+  }
+
   .index-box.active:hover {
     background: var(--theme-orange) !important;
   }
