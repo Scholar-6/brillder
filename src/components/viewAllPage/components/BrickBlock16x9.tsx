@@ -229,7 +229,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
       <Grow
         in={props.shown}
         style={{ transformOrigin: "0 0 0" }}
-        timeout={index * 150}
+        timeout={150}
       >
         <div className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
           {isAssignment && props.teacher && <div className="absolute-assignment-title">Assigned by {props.teacher.firstName} {props.teacher.lastName}</div>}
