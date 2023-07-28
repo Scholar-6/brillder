@@ -131,3 +131,14 @@
     }
   }
 }
+
+// color fix for radio button sidebar
+.student-assignments-page .sorted-row .sort-and-filter-container .sort-box .filter-container .MuiFormControlLabel-root svg {
+  color: var(--white) !important;
+}
+
+// overflow scroll filter classes sidebar
+.classrooms-filter {
+  height: calc(100vh - 5.834vw - 2vw - 5vw - 2.4vw - 2vw - 0.3vw);
+  overflow-y: auto;
+}
