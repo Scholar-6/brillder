@@ -54,6 +54,7 @@ export interface Classroom {
   status: ClassroomStatus;
   students: TeachStudent[];
   teachers: UserBase[];
+  teacher: UserBase;
   creator: UserBase;
   assignments: Assignment[];
 }

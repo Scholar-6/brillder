@@ -14,7 +14,7 @@ import PlayFilterSidebar from "./PlayFilterSidebar";
 import map from "components/map";
 import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
-import { countClassAssignments, countClassroomAssignments, filter, getAssignmentsTabCount, getCompletedTabCount, sortAssignments } from "./service";
+import { countClassroomAssignments, filter, sortAssignments } from "./service";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 
@@ -29,14 +29,11 @@ interface PlayProps {
 }
 
 interface PlayState {
-  assignmentsTabCount: number;
-  completedTabCount: number;
   subjects: Subject[];
   finalAssignments: AssignmentBrick[];
   rawAssignments: AssignmentBrick[];
   activeClassroomId: number;
   classrooms: any[];
-  sortedIndex: number;
   isLoaded: boolean;
 }
 
@@ -51,14 +48,11 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     }
 
     this.state = {
-      assignmentsTabCount: 0,
-      completedTabCount: 0,
       subjects: [],
       finalAssignments: [],
       rawAssignments: [],
       classrooms: [],
       activeClassroomId,
-      sortedIndex: 0,
       isLoaded: false,
     }
 
@@ -67,6 +61,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
 
   async getAssignments(classroomId: number) {
     let assignments = await getAssignedBricks();
+    console.log(assignments);
     const subjects = await getSubjects();
     if (assignments && subjects) {
       assignments = assignments.sort(sortAssignments);
@@ -91,9 +86,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
 
     const finalAssignments = filter(assignments, classroomId);
     countClassroomAssignments(classrooms, assignments);
-    const assignmentsTabCount = getAssignmentsTabCount(assignments);
-    const completedTabCount = getCompletedTabCount(assignments);
-    this.setState({ ...this.state, subjects, isLoaded: true, classrooms, assignmentsTabCount, completedTabCount, rawAssignments: assignments, finalAssignments, sortedIndex: 0 });
+    this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments, finalAssignments });
   }
 
   setActiveClassroom(classroomId: number) {
@@ -105,9 +98,6 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     }
     const assignments = filter(rawAssignments, classroomId);
 
-    let assignmentsTabCount = 0;
-    let completedTabCount = 0; 
-
     if (classroomId > 0) {
       let assignments = [];
       for (let a of rawAssignments) {
@@ -115,12 +105,10 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
           assignments.push(a);
         }
       }
-      ({ assignmentsTabCount, completedTabCount } = countClassAssignments(classroomId, rawAssignments))
-    } else {
-      assignmentsTabCount = getAssignmentsTabCount(rawAssignments);
-      completedTabCount = getCompletedTabCount(rawAssignments);
     }
-    this.setState({ activeClassroomId: classroomId, assignmentsTabCount, completedTabCount, finalAssignments: assignments, sortedIndex: 0 });
+    this.setState({
+      activeClassroomId: classroomId, finalAssignments: assignments
+    });
   }
 
   getViewAllCount() {
@@ -146,7 +134,9 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
             <div className="tab-content learn-tab-desktop">
               <AssignedBricks
                 user={this.props.user}
+                activeClassroomId={this.state.activeClassroomId}
                 subjects={this.state.subjects}
+                classrooms={this.state.classrooms}
                 assignments={this.state.finalAssignments}
                 history={this.props.history}
               />
