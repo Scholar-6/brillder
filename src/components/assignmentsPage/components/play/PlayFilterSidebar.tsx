@@ -63,6 +63,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps> {
             {this.props.classrooms.map((c, i) => this.renderClassroomBox(c, i))}
           </div>
         </div>
+        <div className="sidebar-footer" />
       </Grid>
     );
   }
