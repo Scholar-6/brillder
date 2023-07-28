@@ -101,6 +101,7 @@ class AllSubjectsPage extends Component<AllSubjectsProps, AllSubjectsState> {
             <ViewAllFilter
               user={this.props.user}
               sortBy={SortBy.Date}
+              isSearching={false}
               subjects={this.state.subjects}
               userSubjects={this.props.user ? this.props.user.subjects : []}
               isCore={true}

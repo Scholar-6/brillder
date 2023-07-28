@@ -1193,6 +1193,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         </div>}
         <ViewAllFilter
           user={this.props.user}
+          isSearching={this.state.isSearching}
           sortBy={this.state.sortBy}
           subjects={this.state.subjects}
           userSubjects={this.state.userSubjects}
