@@ -408,10 +408,7 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
                 )}
               </div>}
           </div>
-          <div
-            className="sort-box subject-scrollable"
-            ref={this.state.scrollArea}
-          >
+          <div className="sort-box subject-scrollable" ref={this.state.scrollArea}>
             {!this.props.isAllCategory ?
               <SubjectsListV3
                 user={this.props.user}
