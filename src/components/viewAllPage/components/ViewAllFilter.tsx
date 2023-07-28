@@ -401,9 +401,9 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
                 {this.props.isClearFilter && (
                   <button
                     className="btn-transparent filter-icon arrow-cancel"
-                    onClick={() =>
-                      this.props.selectAllSubjects(!this.props.isViewAll)
-                    }
+                    onClick={() => {
+                      this.props.clearSubjects();
+                    }}
                   ></button>
                 )}
               </div>}
