@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { ClassroomApi } from "components/teach/service";
-import { Tab } from "./service";
 import { stripHtml } from "components/build/questionService/ConvertService";
 
 interface FilterSidebarProps {
   assignmentsLength: number;
   classrooms: ClassroomApi[];
   activeClassroomId: number;
-  activeTab: Tab;
   setActiveClassroom(classroom: number): void;
 }
 

@@ -5,6 +5,7 @@
 .student-assignments-page {
   .bricks-list-container {
     padding-top: 2vw;
+    height: 100% !important;
   }
   .index-box:hover {
     background: var(--light-blue-alpha3) !important;
@@ -24,61 +25,8 @@
   .brick-row-container {
     background: inherit;
   }
-  .er-tab-container {
-    display: flex;
-    .er-tab {
-      cursor: pointer;
-      height: 6.6vh;
-      border-top-left-radius: 0.5vw;
-      border-top-right-radius: 0.5vw;
-      padding-left: 1.5vw;
-      width: 50%;
-      transition: all 150ms ease-out;
-      background: var(--tab-gray);
-      display: flex;
-      align-items: center;
-      font-size: 4.5vh;
-      font-family: $font-family-bold;
-      color: var(--theme-dark-blue);
-
-      svg {
-        margin-left: 1vw;
-        stroke-width: 2.4;
-        width: 4.6vh;
-        height: 4.6vh;
-      }
-
-      &.first {
-        margin-right: 0.2vw;
-        svg {
-          color: var(--theme-orange);
-        }
-      }
-
-      &.second {
-        margin-left: 0.2vw;
-        svg {
-          color: var(--theme-green);
-        }
-      }
-
-      &.active {
-        background: var(--white);
-      }
-
-      &.no-active {
-        span {
-          opacity: 0.2;
-        }
-      }
-
-      &.no-active:hover {
-        background: var(--off-white);
-      }
-    }
-  }
   .tab-content {
-    height: calc(100vh - #{$home-button-size} - 2vw - 6.6vh);
+    height: calc(100vh - #{$home-button-size} - 2vw);
     background: var(--white);
   }
   .fwe1-16x9-deadline {

@@ -1,23 +1,11 @@
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 
-export enum Tab {
-  Assignments,
-  Completed
-}
-
 export const isAssignmentsTab = (a: AssignmentBrick) => {
   return a.status === AssignmentBrickStatus.ToBeCompleted;
 }
 
 export const isCompletedTab = (a: AssignmentBrick) => {
   return a.status !== AssignmentBrickStatus.ToBeCompleted;
-}
-
-export const isVisibled = (tab: Tab, a: AssignmentBrick) => {
-  if (tab === Tab.Assignments) {
-    return isAssignmentsTab(a);
-  }
-  return isCompletedTab(a);
 }
 
 export const getAssignmentsTabCount = (assignments: AssignmentBrick[]) => {
@@ -60,7 +48,7 @@ export const countClassAssignments = (classroomId: number, assignments: Assignme
   return { assignmentsTabCount, completedTabCount };
 }
 
-export const filter = (assignments: AssignmentBrick[], activeTab: Tab, classroomId: number) => {
+export const filter = (assignments: AssignmentBrick[], classroomId: number) => {
   let asins = assignments;
   if (classroomId > 0) {
     asins = assignments.filter(s => s.classroom?.id === classroomId);
@@ -68,9 +56,7 @@ export const filter = (assignments: AssignmentBrick[], activeTab: Tab, classroom
 
   const res = [];
   for (let a of asins) {
-    if (isVisibled(activeTab, a)) {
-      res.push(a);
-    }
+    res.push(a);
   }
   return res;
 }
@@ -89,14 +75,12 @@ export const sortAssignments = (a: AssignmentBrick, b: AssignmentBrick) => {
   return 1;
 }
 
-export const countClassroomAssignments = (tab: Tab, classrooms: any[], assignments: AssignmentBrick[]) => {
+export const countClassroomAssignments = (classrooms: any[], assignments: AssignmentBrick[]) => {
   for (let c of classrooms) {
     c.assignmentsCount = 0;
     for (let a of assignments) {
       if (a.classroom && a.classroom.id === c.id) {
-        if (isVisibled(tab, a)) {
-          c.assignmentsCount += 1;
-        }
+        c.assignmentsCount += 1;
       }
     }
   }
