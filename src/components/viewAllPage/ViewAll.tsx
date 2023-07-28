@@ -596,17 +596,22 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     toggleSubject(state.subjects, id);
     toggleSubject(state.userSubjects, id);
 
-
     if (state.subjectGroup) {
       this.loadAndSetUnauthBricks(
         0, state.filterLevels, state.filterLength,
         state.filterCompetition, state.sortBy, state.subjectGroup
       );
     } else if (this.props.user) {
-      this.loadAndSetBricks(
-        0, state.isCore, state.filterLevels, state.filterLength,
-        state.filterCompetition, state.isAllSubjects, state.sortBy
-      );
+      if (this.state.isSearching) {
+        this.loadAndSetSearchBricks(
+          state.searchString, 0, state.pageSize, state.isCore, this.getSubjectIds(), state.isKeywordSearch
+        );
+      } else {
+        this.loadAndSetBricks(
+          0, state.isCore, state.filterLevels, state.filterLength,
+          state.filterCompetition, state.isAllSubjects, state.sortBy
+        );
+      }
     }
 
     this.setState({ ...state, isViewAll: false, shown: false });
