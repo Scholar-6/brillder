@@ -12,6 +12,7 @@ import map from "components/map";
 import "./AssignedBricks.scss";
 import { Subject } from "model/brick";
 import { Classroom } from "model/classroom";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 interface AssignedBricksProps {
   user: User;
@@ -30,9 +31,13 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       circleIcon = "users";
     }
 
-    console.log(item);
+    if (item.brick.title) {
+      if (stripHtml(item.brick.title) == 'Sound test') {
+        console.log(item);
+      }
+    }
     let isCompleted = false;
-    if (item.completedDate) {
+    if (item.completedDate && item.bestScore > 0) {
       isCompleted = true;
     }
 
