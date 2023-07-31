@@ -238,10 +238,11 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
           }
           <div className="publish-brick-container">
             {renderDeadline()}
+            {!props.isCompleted &&
             <div className="level-and-length">
               {renderLevelCircles()}
               <div className="length-text-r3">{brick.brickLength} min</div>
-            </div>
+            </div>}
             {brick.coverImage ?
               <div className="p-cover-image">
                 <div className="scroll-block">
