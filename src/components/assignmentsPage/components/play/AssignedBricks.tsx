@@ -29,6 +29,13 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     if (item.isInvitation) {
       circleIcon = "users";
     }
+
+    console.log(item);
+    let isCompleted = false;
+    if (item.completedDate) {
+      isCompleted = true;
+    }
+
     return <BrickBlock16x9
       key={i}
       brick={item.brick}
@@ -43,9 +50,8 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       assignmentId={item.assignmentId}
       history={this.props.history}
       color={color}
-      isCompleted={false}
+      isCompleted={isCompleted}
       bestScore={item.bestScore}
-      teacher={item.teacher}
       circleIcon={circleIcon}
       deadline={item.deadline}
       searchString=""
@@ -71,7 +77,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
   renderTeacher(classroom: Classroom) {
     if (classroom.teacher) {
       const {teacher} = classroom;
-      return `by ${teacher.firstName} ${teacher.lastName}` 
+      return `${teacher.firstName} ${teacher.lastName}` 
     }
     return '';
   }

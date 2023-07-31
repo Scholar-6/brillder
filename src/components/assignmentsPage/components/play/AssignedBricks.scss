@@ -16,6 +16,47 @@
 
 
 .student-assignments-page .classroom-name-v5 {
+  margin-top: 0.9vw;
   margin-left: 0.9vw;
-  color: var(--theme-dark-blue);  
+  margin-right: 1.3vw;
+  font-size: 1.1vw;
+  color: var(--theme-dark-blue);
+  border-bottom: 1px solid #DEDEDE;
+}
+
+.student-assignments-page .assignment-complete {
+  position: absolute;
+  top: 1.05vw;
+  left: 0.9vw;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.6);
+  height: calc(100% - 2.1vw - 3vw);
+  width: calc(100% - 2.2vw);
+
+  .assignment-score {
+    height: 100%;
+    text-align: center;
+    .score-number {
+      position: absolute;
+      top: 3vw;
+      left: 0;
+      height: 3vw;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: $font-family-bold;
+    }
+    .CircularProgressbar {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 3vw;
+      height: 3vw;
+
+      .CircularProgressbar-path {
+        stroke: var(--theme-green) !important;
+      }
+    }
+  }
 }
