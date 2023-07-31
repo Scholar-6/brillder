@@ -194,7 +194,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 19vw;
+        width: 21vw;
 
         &.va-hide {
           svg {
@@ -213,6 +213,42 @@
       width: 58vw;
       height: 33vw;
       padding: 0 !important;
+
+      .best-score-container {
+        position: absolute;
+        z-index: 100;
+        background: rgba(255,255,255,0);
+        width: 100%;
+        height: calc(100% - 9vw);
+
+        $borderc: 1.6vw;
+        $sizec: 12vw;
+
+        .score-circle {
+          border-radius: 50%;
+          padding: $borderc !important;
+          background: white;
+          position: relative;
+          top: unset !important;
+          left: unset !important;
+          right: unset !important;
+
+          .round-button {
+            width: $sizec !important;
+            height: $sizec !important;
+            .label-circle-text {
+              font-size: 4.5vw !important;
+            }
+          }
+
+          .CircularProgressbar {
+            margin-top: $borderc;
+            margin-right: $borderc;
+            width: 12vw;
+            height: 12vw;
+          }
+        }
+      }
 
       .p-cover-image {
         width: 115%;
