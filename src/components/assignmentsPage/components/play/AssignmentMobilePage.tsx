@@ -254,13 +254,16 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
       <div>
         <div className="gg-subject-name">
           <span className="bold">{classroom.name}</span> by
-          {classroom.assignments.length > 0 && <div className="va-class-count">{classroom.assignments.length}</div>}
+
           {classroom.assignments.length > 0 && (
             <div
               className="va-expand va-hide"
               onClick={this.hideClass.bind(this)}
             >
-              <SpriteIcon name="arrow-up" />
+              {classroom.assignments.length > 0 && <div className="va-class-count">
+                {classroom.assignments.length}
+                view all
+              </div>}
             </div>
           )}
         </div>
@@ -274,14 +277,16 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     return (
       <div key={i}>
         <div className="gg-subject-name">
-          <span className="bold">{classroom.name}</span> {teacher && <span>by <span className="bold">{teacher.firstName} {teacher.lastName}</span></span>}
+          <div className="gg-class-name">
+            <span className="bold">{classroom.name}</span> {teacher && <span>by <span className="bold">{teacher.firstName} {teacher.lastName}</span></span>}
+          </div>
           {assignments.length > 0 && (
             <div
               className="va-expand"
               onClick={() => this.expandClass(classroom)}
             >
-              <div className="va-class-count">{assignments.length}</div>
-              <SpriteIcon name="arrow-down" />
+              <div className="va-class-count flex-center">{assignments.length}</div>
+              View All
             </div>
           )}
         </div>

@@ -156,46 +156,45 @@
     }
 
     .gg-subject-name {
-      font-size: 6vw;
+      margin-left: 4vw;
+      margin-right: 4vw;
+      font-size: 4vw;
       line-height: 1;
-      padding-left: 5vw;
+      padding-left: 0.3vw;
       padding-top: 2vh;
-      padding-bottom: 2vh;
+      padding-bottom: 0.5vh;
+      margin-bottom: 1.5vh;
       color: var(--theme-dark-blue);
       position: relative;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #DEDEDE;
+
+      .gg-class-name {
+        height: 4.7vw;
+        line-height: 4.7vw;
+      }
 
       .va-class-count {
-        border-radius: 50%;
-        margin-left: 2vw;
-        width: 9vw;
-        height: 9vw;
+        border-radius: 2vw;
+        line-height: 0;
+        height: 4.7vw;
+        width: 6.3vw;
+        margin-right: 1vw;
         font-family: $font-family-bold;
-        border: 0.8vw solid var(--theme-orange);
-        background: var(--white);
-        display: flex;
-        font-size: 5.5vw;
-        align-items: center;
-        justify-content: center;
+        color: white;
+        background: var(--theme-light-blue);
+        font-size: 4vw;
       }
 
       .va-expand {
         position: absolute;
-        top: calc(2vh + 0.6vw);
-        right: 6vw;
+        top: 2vh;
+        right: 2vw;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 50%;
-        background: var(--theme-orange);
-        width: 8vw;
-        height: 8vw;
-
-        svg {
-          padding-top: 0.5vw;
-          width: 7vw;
-          height: 7vw;
-          color: var(--white);
-        }
+        width: 19vw;
 
         &.va-hide {
           svg {
