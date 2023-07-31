@@ -169,8 +169,8 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
   const renderScore = () => {
     if (props.isCompleted && props.bestScore && props.bestScore > 0) {
       return (
-        <div className="level score">
-          <div style={{ background: 'white' }}>
+        <div className="assignment-score">
+          <div className="score-number">
             {Math.round(props.bestScore)}
           </div>
           <CircularProgressbar
@@ -232,14 +232,16 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
         timeout={150}
       >
         <div className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
-          {isAssignment && props.teacher && <div className="absolute-assignment-title">Assigned by {props.teacher.firstName} {props.teacher.lastName}</div>}
+          {props.isAssignment && props.isCompleted && <div className="assignment-complete">
+            {renderScore()}
+            </div>
+          }
           <div className="publish-brick-container">
             {renderDeadline()}
             <div className="level-and-length">
               {renderLevelCircles()}
               <div className="length-text-r3">{brick.brickLength} min</div>
             </div>
-            {renderScore()}
             {brick.coverImage ?
               <div className="p-cover-image">
                 <div className="scroll-block">
