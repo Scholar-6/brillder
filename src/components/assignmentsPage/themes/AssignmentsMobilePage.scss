@@ -173,6 +173,10 @@
       .gg-class-name {
         height: 4.7vw;
         line-height: 4.7vw;
+        width: 68vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .va-class-count {
@@ -311,6 +315,7 @@
       }
     }
     .ba-content {
+      overflow-x: hidden;
       height: calc(100% - 1vh - 10vw - 1vh - 14vw - 1vh - 10vw - 2vw - 4vw - 0.5vh - 1vh - 0.2vh);
   
       &.empty {
@@ -351,6 +356,42 @@
               $size: 8vw;
               width: $size !important;
               height: $size !important;
+            }
+          }
+
+          .best-score-container {
+            position: absolute;
+            z-index: 100;
+            background: rgba(255,255,255,0);
+            width: 100%;
+            height: calc(100% - 9vw);
+    
+            $borderc: 1.6vw;
+            $sizec: 12vw;
+    
+            .score-circle {
+              border-radius: 50%;
+              padding: $borderc !important;
+              background: white;
+              position: relative;
+              top: unset !important;
+              left: unset !important;
+              right: unset !important;
+    
+              .round-button {
+                width: $sizec !important;
+                height: $sizec !important;
+                .label-circle-text {
+                  font-size: 4.5vw !important;
+                }
+              }
+    
+              .CircularProgressbar {
+                margin-top: $borderc;
+                margin-right: $borderc;
+                width: 12vw;
+                height: 12vw;
+              }
             }
           }
   
