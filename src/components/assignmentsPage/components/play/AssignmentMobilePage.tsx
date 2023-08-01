@@ -128,7 +128,8 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
 
   expandClass(c: any) {
     c.assignments = this.sortAssignments(c.assignments);
-    this.setState({ expandedClassroom: c })
+    this.setState({ expandedClassroom: c });
+    this.props.history.push(map.AssignmentsPage + '/' + c.id);
   }
 
   hideClass() {
@@ -249,21 +250,17 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
   }
 
   renderExpandedClass(classroom: ClassroomView) {
-    console.log(classroom);
+    const { assignments, teacher } = classroom;
     return (
       <div>
         <div className="gg-subject-name">
-          <span className="bold">{classroom.name}</span> by
-
-          {classroom.assignments.length > 0 && (
-            <div
-              className="va-expand va-hide"
-              onClick={this.hideClass.bind(this)}
-            >
-              {classroom.assignments.length > 0 && <div className="va-class-count">
-                {classroom.assignments.length}
-                view all
-              </div>}
+          <div className="gg-class-name">
+            <span className="bold">{classroom.name}</span> {teacher && <span>by <span className="bold">{teacher.firstName} {teacher.lastName}</span></span>}
+          </div>
+          {assignments.length > 0 && (
+            <div className="va-expand" onClick={() => this.expandClass(classroom)}>
+              <div className="va-class-count flex-center">{assignments.length}</div>
+              View All
             </div>
           )}
         </div>
@@ -295,6 +292,15 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     );
   }
 
+  moveBack() {
+    if (this.state.expandedClassroom) {
+      this.setState({expandedClassroom: null});
+      this.props.history.push(map.AssignmentsPage);
+    } else {
+      this.props.history.push(map.MainPage);
+    }
+  }
+
   render() {
     const { expandedAssignment, expandedClassroom } = this.state;
     const classrooms = this.state.classrooms;
@@ -307,7 +313,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
         />
         <div className="assignment-phone-container">
           <div className="assigments-top-menu">
-            <div className="flex-center">
+            <div className="flex-center" onClick={() => this.moveBack()}>
               <SpriteIcon name="arrow-left-stroke" className="arrow-left-v6" />
             </div>
             <div className="flex-center">
