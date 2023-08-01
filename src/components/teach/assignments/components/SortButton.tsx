@@ -6,6 +6,7 @@ import { SortClassroom } from './TeachFilterSidebar';
 
 interface Props {
   sort: SortClassroom;
+  classroom?: string;
   sortByDate(): void;
   sortByName(): void;
   sortByAssignmets(): void;
@@ -17,17 +18,13 @@ const SortButton: React.FC<Props> = ({ sort, ...props }) => {
   return (
     <div className="sort-v4y4">
       <SpriteIcon
-        name={
-          ascending
-            ? "hero-sort-descending"
-            : "hero-sort-ascending"
-        }
+        name={ascending ? "hero-sort-descending" : "hero-sort-ascending"}
         onClick={() => setClicked(true)}
       />
       <div className="css-custom-tooltip">
         Sort
       </div>
-      {clicked && <Dialog className="sort-dialog-ew33" open={clicked} onClose={()=> setClicked(false)}>
+      {clicked && <Dialog className={"sort-dialog-ew33 " + props.classroom} open={clicked} onClose={()=> setClicked(false)}>
         <div className="popup-3rfw bold">
           <div className="no-click">Sort By</div>
           <div className="btn-sort" onClick={() => {
