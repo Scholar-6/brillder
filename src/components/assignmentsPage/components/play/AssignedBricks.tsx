@@ -107,7 +107,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
               </div>
               <div className="bricks-list" key={i}>
                 {
-                  this.props.assignments.map((item, i) => this.renderBrick(prepareVisibleAssignment(item), i))
+                  classroom.assignments.map((item, i) => this.renderBrick(prepareVisibleAssignment(item), i))
                 }
               </div>
             </div>
