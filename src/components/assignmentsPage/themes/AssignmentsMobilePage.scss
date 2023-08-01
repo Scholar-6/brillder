@@ -103,13 +103,23 @@
       width: 10vw;
       height: 10vw;
     }
+
+    .search-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      z-index: 101;
+      background: rgba(0, 0, 0, 0.1);
+      height: 1111%;
+    }
    
     .assignments-search-dropdown {
       position: absolute;
       top: 100%;
       left: 3vw;
       width: 94vw;
-      z-index: 101;
+      z-index: 102;
       background: var(--theme-light-blue);
       border-bottom-left-radius: 2vw;
       border-bottom-right-radius: 2vw;
@@ -215,9 +225,9 @@
       .va-class-count {
         border-radius: 2vw;
         line-height: 0;
+        padding-left: 2vw;
+        padding-right: 2vw;
         height: 4.7vw;
-        width: 6.3vw;
-        margin-right: 1vw;
         font-family: $font-family-bold;
         color: white;
         background: var(--theme-light-blue);
@@ -231,7 +241,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 21vw;
 
         &.va-hide {
           svg {

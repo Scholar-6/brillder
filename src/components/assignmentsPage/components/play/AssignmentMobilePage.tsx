@@ -147,25 +147,29 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
 
   renderGroupSearch() {
     if (this.state.searchExpanded) {
-      console.log(666, this.state.classrooms)
       return (
-        <div className="assignments-search-dropdown">
-          <div className="relative drop-container">
-            <FormControlLabel
-              checked={this.state.expandedClassroom ? false : true}
-              control={<Radio onClick={() => this.hideClass()} className="filter-radio custom-color" />}
-              label="All Classes" />
-            <div className="c-count-v5">{this.state.assignments.length}</div>
-          </div>
-          {this.state.classrooms.map(c =>
-            <div className="relative drop-container" onClick={() => this.expandClass(c)}>
+        <div>
+          <div className="search-background" onClick={() => this.setState({
+            searchExpanded: false
+          })}></div>
+          <div className="assignments-search-dropdown">
+            <div className="relative drop-container">
               <FormControlLabel
-                checked={this.state.expandedClassroom ? this.state.expandedClassroom.id === c.id : false}
-                control={<Radio onClick={() => { }} className="filter-radio custom-color" />}
-                label={c.name} />
-              <div className="c-count-v5">{c.assignments.length}</div>
+                checked={this.state.expandedClassroom ? false : true}
+                control={<Radio onClick={() => this.hideClass()} className="filter-radio custom-color" />}
+                label="All Classes" />
+              <div className="c-count-v5">{this.state.assignments.length}</div>
             </div>
-          )}
+            {this.state.classrooms.map(c =>
+              <div className="relative drop-container" onClick={() => this.expandClass(c)}>
+                <FormControlLabel
+                  checked={this.state.expandedClassroom ? this.state.expandedClassroom.id === c.id : false}
+                  control={<Radio onClick={() => { }} className="filter-radio custom-color" />}
+                  label={c.name} />
+                <div className="c-count-v5">{c.assignments.length}</div>
+              </div>
+            )}
+          </div>
         </div>
       );
     }
@@ -243,7 +247,6 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
           {assignments.length > 0 && (
             <div className="va-expand" onClick={() => this.expandClass(classroom)}>
               <div className="va-class-count flex-center">{assignments.length}</div>
-              View All
             </div>
           )}
         </div>
@@ -254,6 +257,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
 
   renderClassroom(classroom: ClassroomView, i: number) {
     const { assignments, teacher } = classroom;
+    let completed = assignments.filter(a => a.bestScore && a.bestScore > 0).length;
     return (
       <div key={i}>
         <div className="gg-subject-name">
@@ -265,8 +269,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
               className="va-expand"
               onClick={() => this.expandClass(classroom)}
             >
-              <div className="va-class-count flex-center">{assignments.length}</div>
-              View All
+              <div className="va-class-count flex-center">{completed}/{assignments.length}</div>
             </div>
           )}
         </div>
@@ -308,10 +311,8 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             </div>
             <div className="filter-btn-container">
               <div className="filter-btn">
-                <div onClick={() => this.setState({ searchExpanded: true })}>
-                  <div>
-                    Filters
-                  </div>
+                <div onClick={() => this.setState({ searchExpanded: !this.state.searchExpanded })}>
+                  <div>Choose Class</div>
                   <SpriteIcon name="arrow-down" />
                 </div>
               </div>
