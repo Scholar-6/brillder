@@ -137,6 +137,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
                 classrooms={this.state.classrooms}
                 assignments={this.state.rawAssignments}
                 history={this.props.history}
+                activateClassroom={this.setActiveClassroom.bind(this)}
               />
             </div>
           }
