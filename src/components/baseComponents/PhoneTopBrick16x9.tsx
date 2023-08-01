@@ -64,9 +64,8 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
         className = 'yellow';
       }
       res = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
-    } else {
-      className = 'smaller-blue';
     }
+    
     return (<div className="fwe1-16x9-deadline">
       <div>
         <div className={className}>{res}</div>
@@ -113,7 +112,7 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
 
   return (
     <div className={brick.alternateSubject ? "phone-top-brick-16x9 alternative-subject-container" : "phone-top-brick-16x9"} onClick={() => props.onClick ? props.onClick() : {}}>
-      {!props.bestScore && renderDeadline()}
+      {!props.bestScore && props.deadline && renderDeadline()}
       {renderCompetitionBanner()}
       {color
         && (
