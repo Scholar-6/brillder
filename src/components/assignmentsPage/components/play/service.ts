@@ -77,12 +77,10 @@ export const sortAssignments = (a: AssignmentBrick, b: AssignmentBrick) => {
 
 export const countClassroomAssignments = (classrooms: any[], assignments: AssignmentBrick[]) => {
   for (let c of classrooms) {
-    c.assignments = [];
-    c.assignmentsCount = 0;
+    c.assignmentsBrick = [];
     for (let a of assignments) {
       if (a.classroom && a.classroom.id === c.id) {
-        c.assignmentsCount += 1;
-        c.assignments.push(a);
+        c.assignmentsBrick.push(a);
       }
     }
   }

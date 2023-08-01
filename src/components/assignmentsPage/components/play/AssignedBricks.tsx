@@ -95,19 +95,19 @@ class AssignedBricks extends Component<AssignedBricksProps> {
         classrooms.push(classroom);
       }
     } else {
-      classrooms = this.props.classrooms.filter(c => c.assignments.length > 0);
+      classrooms = this.props.classrooms.filter(c => c.assignmentsBrick.length > 0);
     }
     return (
       <div className="bricks-list-container">
         {classrooms.map((classroom, i) => {
           return (
-            <div>
+            <div key={i}>
               <div className="classroom-name-v5">
                 <span className="bold">{classroom.name}</span> by <span className="bold">{this.renderTeacher(classroom)}</span>
               </div>
-              <div className="bricks-list" key={i}>
+              <div className="bricks-list">
                 {
-                  classroom.assignments.map((item, i) => this.renderBrick(prepareVisibleAssignment(item), i))
+                  classroom.assignmentsBrick.map((item, i) => this.renderBrick(prepareVisibleAssignment(item), i))
                 }
               </div>
             </div>

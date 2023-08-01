@@ -1,6 +1,7 @@
 import { User, UserBase } from "./user";
 import { Brick, Subject } from "./brick";
 import { AssignmentStudent } from "./stats";
+import { AssignmentBrick } from "./assignment";
 
 export enum ClassroomStatus {
   Disabled,
@@ -57,6 +58,7 @@ export interface Classroom {
   teacher: UserBase;
   creator: UserBase;
   assignments: Assignment[];
+  assignmentsBrick: AssignmentBrick[];
 }
 
 export interface ClassroomInvitation {

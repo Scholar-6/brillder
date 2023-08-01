@@ -1,41 +1,41 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
-import { ClassroomApi } from "components/teach/service";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import { Classroom } from "model/classroom";
 
 interface FilterSidebarProps {
   assignmentsLength: number;
-  classrooms: ClassroomApi[];
+  classrooms: Classroom[];
   activeClassroomId: number;
   setActiveClassroom(classroom: number): void;
 }
 
 class PlayFilterSidebar extends Component<FilterSidebarProps> {
-  renderNumber(c: ClassroomApi) {
-    if (c.assignmentsCount && c.assignmentsCount >= 1) {
+  renderNumber(c: Classroom) {
+    if (c.assignmentsBrick && c.assignmentsBrick.length) {
       return (
         <div className="right-index">
-          <div className="white-box">{c.assignmentsCount}</div>
+          <div className="white-box">{c.assignmentsBrick.length}</div>
         </div>
       )
     }
     return '';
   }
 
-  renderClassroomBox = (c: ClassroomApi, i: number) => {
+  renderClassroomBox = (c: Classroom, i: number) => {
     const { activeClassroomId } = this.props;
 
     return (
-      <div className={`index-box '}`} onClick={() => this.props.setActiveClassroom(c.id)} key={i}>
+      <div className="index-box" onClick={() => this.props.setActiveClassroom(c.id)} key={i}>
         <FormControlLabel
           checked={activeClassroomId === c.id}
-          control={<Radio className={"filter-radio custom-color"} />}
+          control={<Radio className="filter-radio custom-color" />}
           label="" />
         {stripHtml(c.name)}
         {this.renderNumber(c)}
       </div>
-    )
+    );
   }
 
   render() {
