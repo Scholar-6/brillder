@@ -30,7 +30,6 @@ interface PlayProps {
 
 interface PlayState {
   subjects: Subject[];
-  finalAssignments: AssignmentBrick[];
   rawAssignments: AssignmentBrick[];
   activeClassroomId: number;
   classrooms: any[];
@@ -49,7 +48,6 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
 
     this.state = {
       subjects: [],
-      finalAssignments: [],
       rawAssignments: [],
       classrooms: [],
       activeClassroomId,
@@ -61,7 +59,6 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
 
   async getAssignments(classroomId: number) {
     let assignments = await getAssignedBricks();
-    console.log(assignments);
     const subjects = await getSubjects();
     if (assignments && subjects) {
       assignments = assignments.sort(sortAssignments);
@@ -84,48 +81,25 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
       }
     }
 
-    const finalAssignments = filter(assignments, classroomId);
     countClassroomAssignments(classrooms, assignments);
-    this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments, finalAssignments });
+    this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments });
   }
 
   setActiveClassroom(classroomId: number) {
-    const {rawAssignments} = this.state;
     if (classroomId > 0) {
       this.props.history.push(map.AssignmentsPage + '/' + classroomId);
     } else {
       this.props.history.push(map.AssignmentsPage);
     }
-    const assignments = filter(rawAssignments, classroomId);
-
-    if (classroomId > 0) {
-      let assignments = [];
-      for (let a of rawAssignments) {
-        if (a.classroom?.id === classroomId) {
-          assignments.push(a);
-        }
-      }
-    }
-    this.setState({
-      activeClassroomId: classroomId, finalAssignments: assignments
-    });
-  }
-
-  getViewAllCount() {
-    let allCount = 0;
-    for (let a of this.state.rawAssignments) {
-      allCount += 1;
-    }
-    return allCount;
+    this.setState({ activeClassroomId: classroomId });
   }
 
   render() {
-    const allCount = this.getViewAllCount();
     return (
       <Grid container direction="row" className="sorted-row">
         <PlayFilterSidebar
           activeClassroomId={this.state.activeClassroomId}
-          assignmentsLength={allCount}
+          assignmentsLength={this.state.rawAssignments.length}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           classrooms={this.state.classrooms}
         />
@@ -137,7 +111,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
                 activeClassroomId={this.state.activeClassroomId}
                 subjects={this.state.subjects}
                 classrooms={this.state.classrooms}
-                assignments={this.state.finalAssignments}
+                assignments={this.state.rawAssignments}
                 history={this.props.history}
               />
             </div>
