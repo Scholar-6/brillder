@@ -104,6 +104,39 @@
       height: 10vw;
     }
    
+    .assignments-search-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 3vw;
+      width: 94vw;
+      z-index: 101;
+      background: var(--theme-light-blue);
+      border-bottom-left-radius: 2vw;
+      border-bottom-right-radius: 2vw;
+      height: 50vh;
+      overflow-y: auto;
+
+      .MuiSvgIcon-root {
+        margin-left: 5vw;
+        width: 5vw;
+        height: 5vw;
+        color: white !important;
+      }
+
+      .drop-container {
+        .c-count-v5 {
+          position: absolute;
+          top: 2.3vw;
+          right: 5vw;
+          padding-left: 3vw;
+          padding-right: 3vw;
+          font-size: 4vw;
+          border-radius: 5vw;
+          background: white;
+          color: var(--theme-dark-blue);
+        }
+      }
+    }
     
     .filter-btn-container {
       top: 0;

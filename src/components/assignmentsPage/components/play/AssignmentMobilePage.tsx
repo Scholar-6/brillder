@@ -18,6 +18,7 @@ import ClassInvitationDialog from "components/baseComponents/classInvitationDial
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
 import { Subject } from "model/brick";
+import { FormControlLabel, Radio } from "@material-ui/core";
 
 
 interface ClassroomView {
@@ -41,8 +42,7 @@ interface PlayState {
   subjects: Subject[];
   expandedClassroom: ClassroomView | null;
   expandedAssignment: AssignmentBrick | null;
-  finalAssignments: AssignmentBrick[];
-  rawAssignments: AssignmentBrick[];
+  assignments: AssignmentBrick[];
   classrooms: ClassroomView[];
   isAdmin: boolean;
   isTeach: boolean;
@@ -61,8 +61,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
       searchExpanded: false,
       expandedAssignment: null,
       expandedClassroom: null,
-      finalAssignments: [],
-      rawAssignments: [],
+      assignments: [],
       classrooms: [],
       isLoaded: false,
       isAdmin, isTeach,
@@ -99,7 +98,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     if (assignments && subjects) {
       let classrooms = this.getClassrooms(assignments);
       classrooms = this.sortClassrooms(classrooms);
-      this.setState({ ...this.state, subjects, isLoaded: true, rawAssignments: assignments, finalAssignments: assignments, classrooms });
+      this.setState({ ...this.state, subjects, isLoaded: true, assignments, classrooms });
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
       this.setState({ isLoaded: true })
@@ -128,25 +127,13 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
 
   expandClass(c: any) {
     c.assignments = this.sortAssignments(c.assignments);
-    this.setState({ expandedClassroom: c });
+    this.setState({ expandedClassroom: c, searchExpanded: false });
     this.props.history.push(map.AssignmentsPage + '/' + c.id);
   }
 
   hideClass() {
-    this.setState({ expandedClassroom: null });
-  }
-
-  clearAssignments(classrooms: ClassroomView[]) {
-    for (let classroom of classrooms) {
-      classroom.assignments = [];
-    }
-  }
-
-  addBrickByClass(classrooms: ClassroomView[], assignment: AssignmentBrick) {
-    const classrrom = classrooms.find(c => c.id === assignment.classroom?.id);
-    if (classrrom) {
-      classrrom.assignments.push(assignment);
-    }
+    this.setState({ expandedClassroom: null, searchExpanded: false });
+    this.props.history.push(map.AssignmentsPage);
   }
 
   getColor(a: AssignmentBrick) {
@@ -158,64 +145,60 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     this.props.history.push(map.postPlay(a.brick.id, this.props.user.id));
   }
 
-  renderMobileBricks() {
-    const assignments = this.state.finalAssignments.sort((a, b) => new Date(a.brick.updated).getTime() - new Date(b.brick.updated).getTime());
-
-    return (
-      <Swiper slidesPerView={1}>
-        {assignments.map((a, i) => {
-          const color = this.getColor(a);
-          return (
-            <SwiperSlide key={i} onClick={() => { }}>
-              {i === 0 && <div className="week-brick">Latest assignment</div>}
-              <PhoneTopBrick16x9
-                circleIcon='file-plus'
-                brick={a.brick}
-                deadline={a.deadline}
-                bestScore={a.bestScore}
-                isAssignment={true}
-                color={color}
-              />
-            </SwiperSlide>
-          );
-        }
-        )}
-      </Swiper>
-    );
-  }
-
-  renderAssignments(assignments: any[]) {
-    return (
-      assignments.map((a, i) => {
-        const color = this.getColor(a);
-        return (
-          <PhoneTopBrick16x9
-            key={i}
-            brick={a.brick}
-            color={color}
-            isAssignment={true}
-            deadline={a.deadline}
-            bestScore={a.bestScore}
-            onIconClick={e => this.onIconClick(e, a)}
-            onClick={() => {
-              if (this.state.expandedAssignment === a) {
-                this.setState({ expandedAssignment: null });
-              } else {
-                this.setState({ expandedAssignment: a });
-              }
-            }}
-          />
-        );
-      }
-      )
-    );
+  renderGroupSearch() {
+    if (this.state.searchExpanded) {
+      console.log(666, this.state.classrooms)
+      return (
+        <div className="assignments-search-dropdown">
+          <div className="relative drop-container">
+            <FormControlLabel
+              checked={this.state.expandedClassroom ? false : true}
+              control={<Radio onClick={() => this.hideClass()} className="filter-radio custom-color" />}
+              label="All Classes" />
+            <div className="c-count-v5">{this.state.assignments.length}</div>
+          </div>
+          {this.state.classrooms.map(c =>
+            <div className="relative drop-container" onClick={() => this.expandClass(c)}>
+              <FormControlLabel
+                checked={this.state.expandedClassroom ? this.state.expandedClassroom.id === c.id : false}
+                control={<Radio onClick={() => { }} className="filter-radio custom-color" />}
+                label={c.name} />
+              <div className="c-count-v5">{c.assignments.length}</div>
+            </div>
+          )}
+        </div>
+      );
+    }
   }
 
   renderHorizontalAssignments(assignments: AssignmentBrick[]) {
     return (
       <div className="bricks-scroll-row">
         <div className="bricks-flex-row" style={{ width: assignments.length * 60 + 2 + "vw" }}>
-          {this.renderAssignments(assignments)}
+          {
+            assignments.map((a, i) => {
+              const color = this.getColor(a);
+              return (
+                <PhoneTopBrick16x9
+                  key={i}
+                  brick={a.brick}
+                  color={color}
+                  isAssignment={true}
+                  deadline={a.deadline}
+                  bestScore={a.bestScore}
+                  onIconClick={e => this.onIconClick(e, a)}
+                  onClick={() => {
+                    if (this.state.expandedAssignment === a) {
+                      this.setState({ expandedAssignment: null });
+                    } else {
+                      this.setState({ expandedAssignment: a });
+                    }
+                  }}
+                />
+              );
+            }
+            )
+          }
         </div>
       </div>
     )
@@ -294,7 +277,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
 
   moveBack() {
     if (this.state.expandedClassroom) {
-      this.setState({expandedClassroom: null});
+      this.setState({ expandedClassroom: null });
       this.props.history.push(map.AssignmentsPage);
     } else {
       this.props.history.push(map.MainPage);
@@ -316,11 +299,13 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             <div className="flex-center" onClick={() => this.moveBack()}>
               <SpriteIcon name="arrow-left-stroke" className="arrow-left-v6" />
             </div>
+            {this.state.searchExpanded && <div>
+              {this.renderGroupSearch()}
+            </div>
+            }
             <div className="flex-center">
               Assignments
             </div>
-
-            {/*
             <div className="filter-btn-container">
               <div className="filter-btn">
                 <div onClick={() => this.setState({ searchExpanded: true })}>
@@ -330,7 +315,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
                   <SpriteIcon name="arrow-down" />
                 </div>
               </div>
-            </div>*/}
+            </div>
           </div>
           <div className="va-bricks-container">
             {expandedClassroom
