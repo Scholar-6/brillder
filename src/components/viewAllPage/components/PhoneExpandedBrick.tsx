@@ -52,8 +52,6 @@ const PhoneExpandedBrick: React.FC<BrickBlockProps> = ({ brick, history, user })
     if (brick.assignments && user) {
       for (let assignmen of brick.assignments) {
         let assignment = assignmen as any;
-        console.log(26, assignment);
-
         if (assignment && assignment.stats) {
           for (let student of assignment?.stats?.byStudent) {
             if (student.studentId === user.id) {
