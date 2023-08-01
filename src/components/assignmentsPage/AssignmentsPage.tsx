@@ -69,6 +69,7 @@ class AssignmentsPage extends Component<AssignmentProps, AssignmentState> {
             user={this.props.user}
             placeholder="Live & Completed Assignments"
             history={this.props.history}
+            searchHidden={true}
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
           />

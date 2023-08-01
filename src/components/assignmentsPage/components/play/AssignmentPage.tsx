@@ -14,9 +14,10 @@ import PlayFilterSidebar from "./PlayFilterSidebar";
 import map from "components/map";
 import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
-import { countClassroomAssignments, filter, sortAssignments } from "./service";
+import { countClassroomAssignments, sortAssignments } from "./service";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
+import { SortClassroom } from "components/admin/bricksPlayed/BricksPlayedSidebar";
 
 
 interface PlayProps {
@@ -33,6 +34,7 @@ interface PlayState {
   rawAssignments: AssignmentBrick[];
   activeClassroomId: number;
   classrooms: any[];
+  classSort: SortClassroom;
   isLoaded: boolean;
 }
 
@@ -51,6 +53,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
       rawAssignments: [],
       classrooms: [],
       activeClassroomId,
+      classSort: SortClassroom.Assignment,
       isLoaded: false,
     }
 
@@ -94,6 +97,10 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     this.setState({ activeClassroomId: classroomId });
   }
 
+  sorting(sort: SortClassroom) {
+
+  }
+
   render() {
     return (
       <Grid container direction="row" className="sorted-row">
@@ -102,6 +109,8 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
           assignmentsLength={this.state.rawAssignments.length}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           classrooms={this.state.classrooms}
+          classSort={this.state.classSort}
+          sorting={this.sorting.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
           {this.state.isLoaded &&

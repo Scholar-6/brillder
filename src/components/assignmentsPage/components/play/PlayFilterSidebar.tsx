@@ -3,11 +3,15 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { Classroom } from "model/classroom";
+import SortButton from "components/teach/assignments/components/SortButton";
+import { SortClassroom } from "components/admin/bricksPlayed/BricksPlayedSidebar";
 
 interface FilterSidebarProps {
   assignmentsLength: number;
   classrooms: Classroom[];
+  classSort: SortClassroom;
   activeClassroomId: number;
+  sorting(sort: SortClassroom): void;
   setActiveClassroom(classroom: number): void;
 }
 
@@ -18,7 +22,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps> {
         <div className="right-index">
           <div className="white-box">{c.assignmentsBrick.length}</div>
         </div>
-      )
+      );
     }
     return '';
   }
@@ -46,6 +50,13 @@ class PlayFilterSidebar extends Component<FilterSidebarProps> {
         <div className="sort-box teach-sort-box play-index-box">
           <div className="filter-container sort-by-box">
             <div className="sort-header">INBOX</div>
+            <SortButton sort={this.props.classSort} sortByName={() => {
+              this.props.sorting(SortClassroom.Name);
+            }} sortByDate={() => {
+              this.props.sorting(SortClassroom.Date);
+            }} sortByAssignmets={() => {
+              this.props.sorting(SortClassroom.Assignment);
+            }} />
           </div>
           <div className="filter-container indexes-box classrooms-filter">
             <div className="index-box" onClick={() => this.props.setActiveClassroom(-1)}>

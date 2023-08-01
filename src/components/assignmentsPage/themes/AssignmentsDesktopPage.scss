@@ -12,7 +12,18 @@
   }
 
   .sort-by-box {
+    position: relative;
     border-bottom: 2px solid rgba(222,222,222, 0.1);
+
+    .sort-v4y4 {
+      position: absolute;
+      top: 1.4vw;
+      right: 1.2vw;
+      svg {
+        width: 1.8vw;
+        height: 1.8vw;
+      }
+    }
   }
 
   .classrooms-filter .right-index .white-box {
