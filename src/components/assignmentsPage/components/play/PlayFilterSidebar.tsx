@@ -50,7 +50,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps> {
         <div className="sort-box teach-sort-box play-index-box">
           <div className="filter-container sort-by-box">
             <div className="sort-header">INBOX</div>
-            <SortButton sort={this.props.classSort} sortByName={() => {
+            <SortButton classroom="sort-dialog-ew55" sort={this.props.classSort} sortByName={() => {
               this.props.sorting(SortClassroom.Name);
             }} sortByDate={() => {
               this.props.sorting(SortClassroom.Date);
