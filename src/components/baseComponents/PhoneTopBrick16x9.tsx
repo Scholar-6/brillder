@@ -64,9 +64,8 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
         className = 'yellow';
       }
       res = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
-    } else {
-      className = 'smaller-blue';
     }
+    
     return (<div className="fwe1-16x9-deadline">
       <div>
         <div className={className}>{res}</div>
@@ -93,16 +92,18 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
   const renderBestScore = () => {
     if (props.bestScore) {
       return (
-        <div className="left-brick-circle brick-status-circle score-circle">
-          <div className="round-button" style={{ background: "white" }}>
-            <div className="label-circle-text">{Math.round(props.bestScore)}</div>
+        <div className="best-score-container flex-center">
+          <div className="left-brick-circle brick-status-circle score-circle">
+            <div className="round-button" style={{ background: "white" }}>
+              <div className="label-circle-text">{Math.round(props.bestScore)}</div>
+            </div>
+            <CircularProgressbar
+              className="circle-progress-first"
+              strokeWidth={8}
+              counterClockwise={false}
+              value={props.bestScore}
+            />
           </div>
-          <CircularProgressbar
-            className="circle-progress-first"
-            strokeWidth={8}
-            counterClockwise={false}
-            value={props.bestScore}
-          />
         </div>
       );
     }
@@ -111,7 +112,7 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
 
   return (
     <div className={brick.alternateSubject ? "phone-top-brick-16x9 alternative-subject-container" : "phone-top-brick-16x9"} onClick={() => props.onClick ? props.onClick() : {}}>
-      {renderDeadline()}
+      {!props.bestScore && props.deadline && renderDeadline()}
       {renderCompetitionBanner()}
       {color
         && (

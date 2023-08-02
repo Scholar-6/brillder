@@ -4,16 +4,6 @@
 
 
 .animated-brick-container {
-  .absolute-assignment-title {
-    top: -0.25vw;
-    left: 0.1vw;
-    position: absolute;
-    margin-left: 0.9vw;
-    font-size: 0.9vw;
-    font-family: $font-family-light-italic;
-    color: var(--theme-dark-blue);
-  }
-
   .competition-baner {
     background: var(--theme-orange);
     z-index: 1000;

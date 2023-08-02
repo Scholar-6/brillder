@@ -1,38 +1,45 @@
 import React, { Component } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
-import { ClassroomApi } from "components/teach/service";
-import { Tab } from "./service";
+import { stripHtml } from "components/build/questionService/ConvertService";
+import { Classroom } from "model/classroom";
+import SortButton from "components/teach/assignments/components/SortButton";
+import { SortClassroom } from "components/admin/bricksPlayed/BricksPlayedSidebar";
 
 interface FilterSidebarProps {
   assignmentsLength: number;
-  classrooms: ClassroomApi[];
+  classrooms: Classroom[];
+  classSort: SortClassroom;
   activeClassroomId: number;
-  activeTab: Tab;
+  sorting(sort: SortClassroom): void;
   setActiveClassroom(classroom: number): void;
 }
 
 class PlayFilterSidebar extends Component<FilterSidebarProps> {
-  renderNumber(c: ClassroomApi) {
-    if (c.assignmentsCount && c.assignmentsCount >= 1) {
+  renderNumber(c: Classroom) {
+    if (c.assignmentsBrick && c.assignmentsBrick.length) {
       return (
         <div className="right-index">
-          <div className="white-box">{c.assignmentsCount}</div>
+          <div className="white-box">{c.assignmentsBrick.length}</div>
         </div>
-      )
+      );
     }
     return '';
   }
 
-  renderClassroomBox = (c: ClassroomApi, i: number) => {
+  renderClassroomBox = (c: Classroom, i: number) => {
     const { activeClassroomId } = this.props;
 
     return (
-      <div className={`index-box ${activeClassroomId === c.id ? 'active' : ''}`} key={i} onClick={() => this.props.setActiveClassroom(c.id)}>
-        {c.name}
+      <div className="index-box" onClick={() => this.props.setActiveClassroom(c.id)} key={i}>
+        <FormControlLabel
+          checked={activeClassroomId === c.id}
+          control={<Radio className="filter-radio custom-color" />}
+          label="" />
+        {stripHtml(c.name)}
         {this.renderNumber(c)}
       </div>
-    )
+    );
   }
 
   render() {
@@ -43,10 +50,22 @@ class PlayFilterSidebar extends Component<FilterSidebarProps> {
         <div className="sort-box teach-sort-box play-index-box">
           <div className="filter-container sort-by-box">
             <div className="sort-header">INBOX</div>
+            {this.props.activeClassroomId > 0 ? <div /> :
+            <SortButton classroom="sort-dialog-ew55" sort={this.props.classSort} sortByName={() => {
+              this.props.sorting(SortClassroom.Name);
+            }} sortByDate={() => {
+              this.props.sorting(SortClassroom.Date);
+            }} sortByAssignmets={() => {
+              this.props.sorting(SortClassroom.Assignment);
+            }} />}
           </div>
           <div className="filter-container indexes-box classrooms-filter">
-            <div className={`index-box ${activeClassroomId > 0 ? '' : 'active'}`} onClick={() => this.props.setActiveClassroom(-1)}>
-              View All
+            <div className="index-box" onClick={() => this.props.setActiveClassroom(-1)}>
+              <FormControlLabel
+                checked={activeClassroomId > 0 ? false : true}
+                control={<Radio className={"filter-radio custom-color"} />}
+                label="" />
+              All Classes
               <div className="right-index">
                 <div className="white-box">{this.props.assignmentsLength}</div>
               </div>
@@ -54,6 +73,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps> {
             {this.props.classrooms.map((c, i) => this.renderClassroomBox(c, i))}
           </div>
         </div>
+        <div className="sidebar-footer" />
       </Grid>
     );
   }

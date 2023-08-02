@@ -557,7 +557,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     setTimeout(() => {
       const { state } = this;
       try {
-        if (this.props.user) {
+        if (this.state.isSearching) {
+          this.loadAndSetSearchBricks(
+            state.searchString, 0, state.pageSize, state.isCore, this.getSubjectIds(), state.isKeywordSearch
+          );
+        } else if (this.props.user) {
           this.loadAndSetBricks(
             0, state.isCore, state.filterLevels, state.filterLength,
             state.filterCompetition, state.isAllSubjects, sortBy
@@ -592,17 +596,22 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     toggleSubject(state.subjects, id);
     toggleSubject(state.userSubjects, id);
 
-
     if (state.subjectGroup) {
       this.loadAndSetUnauthBricks(
         0, state.filterLevels, state.filterLength,
         state.filterCompetition, state.sortBy, state.subjectGroup
       );
     } else if (this.props.user) {
-      this.loadAndSetBricks(
-        0, state.isCore, state.filterLevels, state.filterLength,
-        state.filterCompetition, state.isAllSubjects, state.sortBy
-      );
+      if (this.state.isSearching) {
+        this.loadAndSetSearchBricks(
+          state.searchString, 0, state.pageSize, state.isCore, this.getSubjectIds(), state.isKeywordSearch
+        );
+      } else {
+        this.loadAndSetBricks(
+          0, state.isCore, state.filterLevels, state.filterLength,
+          state.filterCompetition, state.isAllSubjects, state.sortBy
+        );
+      }
     }
 
     this.setState({ ...state, isViewAll: false, shown: false });
@@ -792,7 +801,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterSuggestionKeyword(keyword: KeyWord) {
-    this.loadAndSetSearchBricks(keyword.name, 0, this.state.pageSize, this.state.isCore, true);
+    this.loadAndSetSearchBricks(keyword.name, 0, this.state.pageSize, this.state.isCore, this.getSubjectIds(), true);
 
     this.setState({
       ...this.state,
@@ -829,7 +838,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const { subjects, userSubjects } = state;
     subjects.forEach((r: any) => (r.checked = false));
     userSubjects.forEach((r: any) => (r.checked = false));
-    this.setState({ ...state, isClearFilter: false });
+
+    if (this.state.isSearching) {
+      this.loadAndSetSearchBricks(
+        state.searchString, 0, state.pageSize, state.isCore, [], state.isKeywordSearch
+      );
+    } else {
+      this.loadAndSetBricks(
+        0, this.state.isCore, this.state.filterLevels, this.state.filterLength,
+        this.state.filterCompetition, this.state.isAllSubjects, this.state.sortBy
+      );
+    }
   };
 
   moveAllBack() {
@@ -838,7 +857,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if (index >= state.pageSize) {
       if (state.isSearching) {
-        this.loadAndSetSearchBricks(state.searchString, state.page - 1, state.pageSize, state.isCore, state.isKeywordSearch);
+        this.loadAndSetSearchBricks(
+          state.searchString, state.page - 1, state.pageSize, state.isCore,
+          this.getSubjectIds(), state.isKeywordSearch
+        );
       } else {
         if (this.props.user) {
           this.loadAndSetBricks(
@@ -861,7 +883,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if (index + pageSize <= bricksCount - 1) {
       if (state.isSearching) {
-        this.loadAndSetSearchBricks(state.searchString, state.page + 1, state.pageSize, state.isCore, state.isKeywordSearch);
+        this.loadAndSetSearchBricks(state.searchString, state.page + 1, state.pageSize, state.isCore, this.getSubjectIds(), state.isKeywordSearch);
       } else {
         if (this.props.user) {
           this.loadAndSetBricks(
@@ -895,12 +917,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   showDropdown() {
     this.setState({ ...this.state, dropdownShown: true });
   }
+
   hideDropdown() {
     this.setState({ ...this.state, dropdownShown: false });
   }
 
-  async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number, isCore: boolean, isKeyword?: boolean) {
-    const pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore, [], isKeyword ? isKeyword : false);
+  async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number, isCore: boolean, subjectIds: number[], isKeyword?: boolean) {
+    const pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore, subjectIds, isKeyword ? isKeyword : false);
 
     if (pageBricks && pageBricks.bricks.length >= 0) {
       this.setState({
@@ -931,7 +954,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     setTimeout(() => {
       try {
-        this.loadAndSetSearchBricks(searchString, 0, this.state.pageSize, this.state.isCore, this.state.isKeywordSearch);
+        let subjectIds = this.getSubjectIds();
+        this.loadAndSetSearchBricks(
+          searchString, 0, this.state.pageSize, this.state.isCore, subjectIds, this.state.isKeywordSearch
+        );
       } catch {
         this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
       }
@@ -980,10 +1006,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ isCore, shown: false, page: 0 });
     setTimeout(() => {
       const {state} = this;
-      this.loadAndSetBricks(
-        0, isCore, state.filterLevels, state.filterLength,
-        state.filterCompetition, state.isAllSubjects, state.sortBy
-      );
+      if (this.state.isSearching) {
+        this.loadAndSetSearchBricks(
+          state.searchString, 0, state.pageSize, state.isCore,
+          this.getSubjectIds(), state.isKeywordSearch
+        );
+      } else {
+        this.loadAndSetBricks(
+          0, isCore, state.filterLevels, state.filterLength,
+          state.filterCompetition, state.isAllSubjects, state.sortBy
+        );
+      }
     }, 200);
   }
 
@@ -1193,6 +1226,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         </div>}
         <ViewAllFilter
           user={this.props.user}
+          isSearching={this.state.isSearching}
           sortBy={this.state.sortBy}
           subjects={this.state.subjects}
           userSubjects={this.state.userSubjects}

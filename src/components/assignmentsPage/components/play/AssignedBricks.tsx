@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { User } from "model/user";
 import { AssignmentBrickData } from '../../model';
-import { prepareVisibleAssignments } from '../../service';
+import { prepareVisibleAssignment } from '../../service';
 import { AssignmentBrick } from "model/assignment";
 
 import BrickBlock16x9 from "components/viewAllPage/components/BrickBlock16x9";
@@ -11,33 +11,45 @@ import map from "components/map";
 
 import "./AssignedBricks.scss";
 import { Subject } from "model/brick";
-import { Tab } from "./service";
+import { Classroom } from "model/classroom";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 interface AssignedBricksProps {
   user: User;
-  tab: Tab;
-  shown: boolean;
+  activeClassroomId: number;
   subjects: Subject[];
-  pageSize: number;
-  sortedIndex: number;
+  classrooms: Classroom[];
   assignments: AssignmentBrick[];
   history: any;
+
+  activateClassroom(classroomId: number): void;
 }
 
 class AssignedBricks extends Component<AssignedBricksProps> {
-  renderBrick(item: AssignmentBrickData) {
+  renderBrick(item: AssignmentBrickData, i: number) {
     let circleIcon = '';
     const color = this.props.subjects.find(s => s.id === item.brick.subjectId)?.color;
     if (item.isInvitation) {
-      circleIcon="users";
+      circleIcon = "users";
     }
+
+    if (item.brick.title) {
+      if (stripHtml(item.brick.title) == 'Sound test') {
+        console.log(item);
+      }
+    }
+    let isCompleted = false;
+    if (item.completedDate && item.bestScore > 0) {
+      isCompleted = true;
+    }
+
     return <BrickBlock16x9
+      key={i}
       brick={item.brick}
       index={item.index}
       row={item.row}
       user={this.props.user}
-      key={item.index}
-      shown={this.props.shown}
+      shown={true}
       isAssignment={true}
       completedDate={item.completedDate}
       assignmentStatus={item.status}
@@ -45,18 +57,12 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       assignmentId={item.assignmentId}
       history={this.props.history}
       color={color}
-      isCompleted={this.props.tab === Tab.Completed}
+      isCompleted={isCompleted}
       bestScore={item.bestScore}
-      teacher={item.teacher}
       circleIcon={circleIcon}
       deadline={item.deadline}
       searchString=""
     />
-  }
-
-  renderSortedBricks() {
-    const data = prepareVisibleAssignments(this.props.sortedIndex, this.props.pageSize, this.props.assignments);
-    return data.map(item => this.renderBrick(item));
   }
 
   renderEmptyPage() {
@@ -75,15 +81,41 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     )
   }
 
+  renderTeacher(classroom: Classroom) {
+    if (classroom.teacher) {
+      const {teacher} = classroom;
+      return `${teacher.firstName} ${teacher.lastName}` 
+    }
+    return '';
+  }
+
   render() {
+    let classrooms:Classroom[] = [];
+    if (this.props.activeClassroomId > 0) {
+      let classroom = this.props.classrooms.find(c => c.id === this.props.activeClassroomId);
+      if (classroom) {
+        classrooms.push(classroom);
+      }
+    } else {
+      classrooms = this.props.classrooms.filter(c => c.assignmentsBrick.length > 0);
+    }
     return (
       <div className="bricks-list-container">
-        {this.props.assignments.length > 0 ?
-          <div className="bricks-list">
-            { this.renderSortedBricks() }
-          </div>
-          : this.renderEmptyPage()
-        }
+        {classrooms.map((classroom, i) => {
+          return (
+            <div key={i}>
+              <div className="classroom-name-v5" onClick={() => this.props.activateClassroom(classroom.id)}>
+                <span className="bold">{classroom.name}</span> by <span className="bold">{this.renderTeacher(classroom)}</span>
+              </div>
+              <div className="bricks-list">
+                {
+                  classroom.assignmentsBrick.map((item, i) => this.renderBrick(prepareVisibleAssignment(item), i))
+                }
+              </div>
+            </div>
+          );
+        })}
+        {this.props.assignments.length == 0 && this.renderEmptyPage()}
       </div>
     );
   }

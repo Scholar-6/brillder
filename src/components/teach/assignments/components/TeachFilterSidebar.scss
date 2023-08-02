@@ -204,4 +204,14 @@
       }
     }
   }
+
+  &.sort-dialog-ew55 {
+    .MuiDialog-container {
+      align-items: flex-start;
+      justify-content: flex-start;
+      .MuiPaper-root {
+        margin-top: calc(5.834vw + 2vw + 2.4vw + 1vw); 
+      }
+    }
+  }
 }
