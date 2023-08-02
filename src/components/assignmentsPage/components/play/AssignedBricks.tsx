@@ -103,8 +103,8 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       <div className="bricks-list-container">
         {classrooms.map((classroom, i) => {
           return (
-            <div key={i} onClick={() => this.props.activateClassroom(classroom.id)}>
-              <div className="classroom-name-v5">
+            <div key={i}>
+              <div className="classroom-name-v5" onClick={() => this.props.activateClassroom(classroom.id)}>
                 <span className="bold">{classroom.name}</span> by <span className="bold">{this.renderTeacher(classroom)}</span>
               </div>
               <div className="bricks-list">
