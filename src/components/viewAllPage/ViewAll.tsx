@@ -165,7 +165,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     let userIdSearch = -1;
     if (values.searchUserId) {
-      userIdSearch = parseInt(values.searchUserId as string);
+      userIdSearch = parseInt(values.searchUserId as string, 10);
+    }
+
+    let page = 0;
+    if (values.page) {
+      page = parseInt(values.page as string, 10);
     }
 
     let isViewAll = false;
@@ -191,7 +196,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       subjects: [],
       userSubjects: props.user ? Object.assign([], props.user.subjects) : [],
       bricksCount: 0,
-      page: 0,
+      page,
 
       isSubjectPopupOpen: false,
       noSubjectOpen: false,
@@ -331,7 +336,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     await this.loadSubjects(values);
 
     if (values.searchString) {
-      this.search();
+      let page = 0;
+      if (values.page) {
+        page = parseInt(values.page as string, 10);
+      }
+      this.search(page);
     } else if (this.props.user) {
       if (this.state.subjectGroup) {
         this.loadUnauthorizedBricks(this.state.subjectGroup);
@@ -491,6 +500,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         shown: true,
         sortBy
       });
+
+      this.historyUpdate(isAllSubjects, page, this.state.searchString);
     }
   }
 
@@ -531,6 +542,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         sortBy,
         shown: true
       });
+
+      this.historyUpdate(this.state.isAllSubjects, page, this.state.searchString);
     }
   }
 
@@ -851,28 +864,46 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   };
 
+  historyUpdate(isAllSubjects: boolean, page: number, searchString: string) {
+    let link = map.ViewAllPage + '?page=' + page;
+
+    if (isAllSubjects === true) {
+      link += '&mySubject=false'
+    } else {
+      link += '&mySubject=true'
+    }
+
+    if (searchString) {
+      link += '&searchString=' + searchString;
+    }
+
+    this.props.history.push(link);
+  }
+
   moveAllBack() {
     const {state} = this;
     let index = state.page * state.pageSize;
 
     if (index >= state.pageSize) {
+      let page = state.page - 1;
       if (state.isSearching) {
         this.loadAndSetSearchBricks(
-          state.searchString, state.page - 1, state.pageSize, state.isCore,
+          state.searchString, page, state.pageSize, state.isCore,
           this.getSubjectIds(), state.isKeywordSearch
         );
       } else {
         if (this.props.user) {
           this.loadAndSetBricks(
-            state.page - 1, state.isCore, state.filterLevels,
+            page, state.isCore, state.filterLevels,
             state.filterLength, state.filterCompetition, state.isAllSubjects, state.sortBy
           );
         } else {
           this.loadAndSetUnauthBricks(
-            state.page - 1, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
+            page, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
           );
         }
       }
+      this.historyUpdate(this.state.isAllSubjects, page, this.state.searchString);
     }
   }
 
@@ -882,20 +913,22 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const { pageSize, bricksCount } = state;
 
     if (index + pageSize <= bricksCount - 1) {
+      const page = state.page + 1;
       if (state.isSearching) {
-        this.loadAndSetSearchBricks(state.searchString, state.page + 1, state.pageSize, state.isCore, this.getSubjectIds(), state.isKeywordSearch);
+        this.loadAndSetSearchBricks(state.searchString, page, state.pageSize, state.isCore, this.getSubjectIds(), state.isKeywordSearch);
       } else {
         if (this.props.user) {
           this.loadAndSetBricks(
-            state.page + 1, state.isCore, state.filterLevels,
+            page, state.isCore, state.filterLevels,
             state.filterLength, state.filterCompetition, state.isAllSubjects, state.sortBy
           );
         } else {
           this.loadAndSetUnauthBricks(
-            state.page + 1, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
+            page, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
           );
         }
       }
+      this.historyUpdate(this.state.isAllSubjects, page, this.state.searchString);
     }
   }
 
@@ -938,6 +971,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         isSearchBLoading: false,
         isSearching: true,
       });
+
+      this.historyUpdate(this.state.isAllSubjects, page, this.state.searchString);
     } else {
       this.setState({
         ...this.state,
@@ -948,7 +983,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  async search() {
+  async search(page: number) {
     const { searchString } = this.state;
     this.setState({ shown: false, searchTyping: false, isSearchBLoading: true });
 
@@ -956,8 +991,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       try {
         let subjectIds = this.getSubjectIds();
         this.loadAndSetSearchBricks(
-          searchString, 0, this.state.pageSize, this.state.isCore, subjectIds, this.state.isKeywordSearch
+          searchString, page, this.state.pageSize, this.state.isCore, subjectIds, this.state.isKeywordSearch
         );
+        this.historyUpdate(this.state.isAllSubjects, page, searchString);
       } catch {
         this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
       }
@@ -1011,6 +1047,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           state.searchString, 0, state.pageSize, state.isCore,
           this.getSubjectIds(), state.isKeywordSearch
         );
+        this.historyUpdate(this.state.isAllSubjects, 0, this.state.searchString);
       } else {
         this.loadAndSetBricks(
           0, isCore, state.filterLevels, state.filterLength,
@@ -1366,9 +1403,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             <PageHeadWithMenu
               page={PageEnum.ViewAll}
               user={user}
+              initialSearchString={this.state.searchString}
               placeholder="Subjects, Topics, Titles & more"
               history={history}
-              search={() => this.search()}
+              search={() => this.search(0)}
               searching={this.searching.bind(this)}
             />
             <Switch>

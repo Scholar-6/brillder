@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { History } from "history";
+import { useLocation } from "react-router-dom";
 import axios from 'axios';
+import queryString from 'query-string';
+import { connect } from "react-redux";
 
 import "./activateAccountPage.scss";
 import map from "components/map";
-import { useLocation } from "react-router-dom";
-import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { isPhone } from "services/phone";
-import DesktopActivateAccountPage from "./desktop/DesktopActivateAccountPage";
-import { connect } from "react-redux";
+import { SetActivateUrl } from "localStorage/login";
 import auth from "redux/actions/auth";
 import { UserType } from "model/user";
+
+import PageLoader from "components/baseComponents/loaders/pageLoader";
+import DesktopActivateAccountPage from "./desktop/DesktopActivateAccountPage";
 import ActivateAccountPhonePage from "./phone/ActivateAccountPhonePage";
 
 export enum LoginState {
@@ -34,8 +37,14 @@ const ActivateAccountPage: React.FC<ActivateAccountProps> = (props) => {
   const params = new URLSearchParams(search);
   const token = params.get("token");
 
+  useEffect(() => {
+    const values = queryString.parse(props.history.location.search);
+    if (values.returnUrl) {
+      SetActivateUrl(values.returnUrl as string);
+    }
+  }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/auth/verifyResetPassword/${token}`);
