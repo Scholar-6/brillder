@@ -88,14 +88,15 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
         if (isStudentPreference(user)) {
           var url = GetActivateUrl();
           if (url) {
-            history.push(url);
+            const dd = '/' + url.split('/').slice(3).join('/');
+            history.push(dd);
           } else {
             history.push(map.MainPage + '?newStudent=true');
           }
         } else {
           history.push(map.SelectSubjectPage);
         }
-        UnsetActivateUrl();
+        //UnsetActivateUrl();
       } else {
         //this.props.requestFailed("Can`t save user profile");
       }
@@ -130,7 +131,10 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
           <div>
             {isPhone() && <div className="wef-user-icon-container flex-center"><SpriteIcon name="user" /></div>}
             <h1>
-              <LabelTyping start={true} value="Please enter your full name." onFinish={() => setStep(AnimationStep.TitleFinished)} />
+              <LabelTyping
+                start={true} value="Please enter your full name."
+                onFinish={() => setStep(AnimationStep.TitleFinished)}
+              />
             </h1>
             <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
               <Input
