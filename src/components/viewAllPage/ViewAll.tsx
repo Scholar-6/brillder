@@ -168,6 +168,25 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       userIdSearch = parseInt(values.searchUserId as string, 10);
     }
 
+    let filterLength:BrickLengthEnum[] = [];
+    if (values.length) {
+      try {
+        filterLength = (values.length as string).split(',').map(a => parseInt(a));
+      } catch {}
+    }
+
+    let sortBy = SortBy.Date;
+    if (values.sortBy) {
+      sortBy = parseInt((values.sortBy as string));
+    }
+
+    let filterLevels:AcademicLevel[] = [];
+    if (values.level) {
+      try {
+        filterLevels = (values.level as string).split(',').map(a => parseInt(a));
+      } catch {}
+    }
+
     let page = 0;
     if (values.page) {
       page = parseInt(values.page as string, 10);
@@ -192,7 +211,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     this.state = {
       bricks: [],
-      sortBy: SortBy.Date,
+      sortBy,
       subjects: [],
       userSubjects: props.user ? Object.assign([], props.user.subjects) : [],
       bricksCount: 0,
@@ -224,8 +243,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAllCategory,
 
       filterCompetition: false,
-      filterLevels: [],
-      filterLength: [],
+      filterLevels,
+      filterLength,
       keywords: [],
       isClearFilter: false,
       failedRequest: false,
@@ -361,7 +380,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
    */
   async loadSubjects(values: queryString.ParsedQuery<string>) {
     const subjects = (await getSubjects()) as SubjectItem[] | null;
-
     if (subjects) {
       sortAndCheckSubjects(subjects, values);
       this.setState({ ...this.state, subjects });
@@ -394,16 +412,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadBricks(values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
       let subjectIds: number[] = [];
-      if (this.state.isAllSubjects == false) {
+      const {state} = this;
+      if (state.isAllSubjects == false) {
         subjectIds = this.props.user.subjects.map(s => s.id);
       }
       const pageBricks = await getPublishedBricksByPage(
-        this.state.pageSize, this.state.page, true,
-        [], [], subjectIds,
-        this.state.filterCompetition, this.state.sortBy
+        state.pageSize, state.page, true,
+        state.filterLevels, state.filterLength, subjectIds,
+        state.filterCompetition, state.sortBy
       );
       if (pageBricks) {
-        let { subjects } = this.state;
+        let { subjects } = state;
 
         for (let subject of pageBricks.subjects) {
           const filterSubject = subjects.find(s => s.id === subject.id);
@@ -417,7 +436,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         }
 
         this.setState({
-          ...this.state,
+          ...state,
           subjects,
           bricksCount: pageBricks.pageCount,
           bricks: pageBricks.bricks,
@@ -425,7 +444,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           shown: true,
         });
       } else {
-        this.setState({ ...this.state, isLoading: false, failedRequest: true });
+        this.setState({ ...state, isLoading: false, failedRequest: true });
       }
       setTimeout(() => {
         if (values) {
@@ -501,7 +520,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         sortBy
       });
 
-      this.historyUpdate(isAllSubjects, page, this.state.searchString);
+      const {state} = this;
+
+      this.historyUpdate(
+        isAllSubjects, page, state.searchString,
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds
+      );
     }
   }
 
@@ -543,7 +567,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         shown: true
       });
 
-      this.historyUpdate(this.state.isAllSubjects, page, this.state.searchString);
+      const {state} = this;
+
+      this.historyUpdate(
+        state.isAllSubjects, page, state.searchString,
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds
+      );
     }
   }
 
@@ -864,7 +893,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   };
 
-  historyUpdate(isAllSubjects: boolean, page: number, searchString: string) {
+  historyUpdate(
+    isAllSubjects: boolean, page: number, searchString: string,
+    filterLevel: AcademicLevel[], filterLength: BrickLengthEnum[],
+    sortBy: SortBy, subjectIds: number[]
+  ) {
     let link = map.ViewAllPage + '?page=' + page;
 
     if (isAllSubjects === true) {
@@ -877,6 +910,22 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       link += '&searchString=' + searchString;
     }
 
+    if (filterLevel && filterLevel.length > 0) {
+      link += '&level=' + filterLevel.join(',');
+    }
+
+    if (filterLength && filterLength.length > 0) {
+      link += '&length=' + filterLength.join(',');
+    }
+
+    if (sortBy) {
+      link += '&sortBy=' + sortBy;
+    }
+
+    if (subjectIds) {
+      link += '&subjectIds=' + subjectIds.join(',');
+    }
+
     this.props.history.push(link);
   }
 
@@ -886,10 +935,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if (index >= state.pageSize) {
       let page = state.page - 1;
+
+      const subjectIds = this.getSubjectIds();
+
       if (state.isSearching) {
         this.loadAndSetSearchBricks(
           state.searchString, page, state.pageSize, state.isCore,
-          this.getSubjectIds(), state.isKeywordSearch
+          subjectIds, state.isKeywordSearch
         );
       } else {
         if (this.props.user) {
@@ -903,7 +955,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           );
         }
       }
-      this.historyUpdate(this.state.isAllSubjects, page, this.state.searchString);
+
+      this.historyUpdate(
+        state.isAllSubjects, page, state.searchString,
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds
+      );
     }
   }
 
@@ -914,8 +970,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if (index + pageSize <= bricksCount - 1) {
       const page = state.page + 1;
+      const subjectIds = this.getSubjectIds();
+
       if (state.isSearching) {
-        this.loadAndSetSearchBricks(state.searchString, page, state.pageSize, state.isCore, this.getSubjectIds(), state.isKeywordSearch);
+        this.loadAndSetSearchBricks(
+          state.searchString, page, state.pageSize, state.isCore, subjectIds, state.isKeywordSearch
+        );
       } else {
         if (this.props.user) {
           this.loadAndSetBricks(
@@ -928,7 +988,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           );
         }
       }
-      this.historyUpdate(this.state.isAllSubjects, page, this.state.searchString);
+
+      this.historyUpdate(
+        state.isAllSubjects, page, state.searchString,
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds
+      );
     }
   }
 
@@ -969,6 +1033,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number, isCore: boolean, subjectIds: number[], isKeyword?: boolean) {
     const pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore, subjectIds, isKeyword ? isKeyword : false);
 
+    const {state} = this;
+
     if (pageBricks && pageBricks.bricks.length >= 0) {
       this.setState({
         ...this.state,
@@ -983,7 +1049,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         isSearching: true,
       });
 
-      this.historyUpdate(this.state.isAllSubjects, page, this.state.searchString);
+      this.historyUpdate(
+        state.isAllSubjects, page, state.searchString,
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds
+      );
     } else {
       this.setState({
         ...this.state,
@@ -996,15 +1065,23 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async search(page: number) {
     const { searchString } = this.state;
+    if (searchString.length < 1) {
+      return;
+    }
     this.setState({ shown: false, searchTyping: false, isSearchBLoading: true });
 
     setTimeout(() => {
       try {
+        const {state} = this;
         let subjectIds = this.getSubjectIds();
         this.loadAndSetSearchBricks(
-          searchString, page, this.state.pageSize, this.state.isCore, subjectIds, this.state.isKeywordSearch
+          searchString, page, state.pageSize,
+          state.isCore, subjectIds, state.isKeywordSearch
         );
-        this.historyUpdate(this.state.isAllSubjects, page, searchString);
+        this.historyUpdate(
+          state.isAllSubjects, page, searchString,
+          state.filterLevels, state.filterLength, state.sortBy, subjectIds
+        );
       } catch {
         this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
       }
@@ -1053,12 +1130,16 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.setState({ isCore, shown: false, page: 0 });
     setTimeout(() => {
       const { state } = this;
-      if (this.state.isSearching) {
+      if (state.isSearching) {
+        const subjectIds = this.getSubjectIds();
         this.loadAndSetSearchBricks(
           state.searchString, 0, state.pageSize, state.isCore,
-          this.getSubjectIds(), state.isKeywordSearch
+          subjectIds, state.isKeywordSearch
         );
-        this.historyUpdate(this.state.isAllSubjects, 0, this.state.searchString);
+        this.historyUpdate(
+          state.isAllSubjects, 0, state.searchString,
+          state.filterLevels, state.filterLength, state.sortBy, subjectIds
+        );
       } else {
         this.loadAndSetBricks(
           0, isCore, state.filterLevels, state.filterLength,
@@ -1386,10 +1467,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           </div>
         </React.Suspense>
       );
-    }
-
-    if (this.state.isSearching) {
-      //bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
     }
 
     let className = 'main-listing dashboard-page';
