@@ -31,6 +31,7 @@ import QuillDesmos, { DesmosBlot } from "./QuillDesmos";
 import QuillDesmosDialog from "./QuillDesmosDialog";
 import SoundRecordDialog from "components/build/buildQuestions/questionTypes/sound/SoundRecordDialog";
 import { fileUrl } from "components/services/uploadFile";
+import { getKeyboardBindings } from "./KeyBoardBinddings";
 
 function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -187,7 +188,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         soundupload: props.soundDialog ?? false,
         clipboard: true,
         keyboard: {
-            bindings: QuillBetterTable.keyboardBindings,
+            bindings: getKeyboardBindings(),
         },
         history: {
             userOnly: true,
