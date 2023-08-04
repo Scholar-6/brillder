@@ -89,6 +89,15 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
 
     classrooms.sort((c1, c2) => c2.assignmentsBrick.length - c1.assignmentsBrick.length);
 
+    for (let classroom of classrooms) {
+      classroom.assignmentsBrick.sort((a: any) => {
+        if (a.bestScore && a.bestScore > 0) {
+          return 1;
+        }
+        return -1;
+      });
+    }
+
     this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments });
   }
 
