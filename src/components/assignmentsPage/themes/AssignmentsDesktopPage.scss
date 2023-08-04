@@ -47,6 +47,9 @@
     height: calc(100vh - #{$home-button-size} - 2vw);
     background: var(--white);
   }
+  .animated-brick-container .flex-brick-container .publish-brick-container .p-cover-image .scroll-block {
+    overflow-y:hidden;
+  }
   .fwe1-16x9-deadline {
     z-index: 3;
     position: absolute;
