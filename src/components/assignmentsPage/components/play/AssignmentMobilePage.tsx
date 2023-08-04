@@ -85,7 +85,14 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
           classroom.assignments.push(assignment);
         }
       }
+      classroom.assignments.sort((a, b) => {
+        if (a.bestScore && a.bestScore > 0) {
+          return 1;
+        }
+        return -1;
+      });
     }
+    // sort 
     return classrooms.filter(c => c.assignments.length > 0);
   }
 

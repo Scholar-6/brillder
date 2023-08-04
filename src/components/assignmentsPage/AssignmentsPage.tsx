@@ -34,8 +34,6 @@ class AssignmentsPage extends Component<AssignmentProps, AssignmentState> {
   constructor(props: AssignmentProps) {
     super(props);
 
-    console.log(22222);
-
     this.state = {
       searchString: "",
       isSearching: false,
