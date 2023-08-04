@@ -18,9 +18,11 @@ interface FilterSidebarProps {
 class PlayFilterSidebar extends Component<FilterSidebarProps> {
   renderNumber(c: Classroom) {
     if (c.assignmentsBrick && c.assignmentsBrick.length) {
+      const count = c.assignmentsBrick.filter(a => a.bestScore && a.bestScore > 0).length;
+
       return (
         <div className="right-index">
-          <div className="white-box">{c.assignmentsBrick.length}</div>
+          <div className="white-box">{count}/{c.assignmentsBrick.length}</div>
         </div>
       );
     }
