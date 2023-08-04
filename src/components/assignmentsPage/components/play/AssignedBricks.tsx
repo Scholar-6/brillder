@@ -13,6 +13,7 @@ import "./AssignedBricks.scss";
 import { Subject } from "model/brick";
 import { Classroom } from "model/classroom";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import { getDateStringV2 } from "components/services/brickService";
 
 interface AssignedBricksProps {
   user: User;
@@ -105,7 +106,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
           return (
             <div key={i}>
               <div className="classroom-name-v5" onClick={() => this.props.activateClassroom(classroom.id)}>
-                <span className="bold">{classroom.name}</span> by <span className="bold">{this.renderTeacher(classroom)}</span>
+                <span className="bold">{classroom.name}</span> by <span className="bold">{this.renderTeacher(classroom)}</span> Date Created: {getDateStringV2(classroom.created.toString(), '/')}
               </div>
               <div className="bricks-list">
                 {
