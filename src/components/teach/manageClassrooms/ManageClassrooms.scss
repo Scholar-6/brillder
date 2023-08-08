@@ -36,6 +36,21 @@ $base-build-font-size: 1.25vw;
 
   .new-class-container {
     cursor: pointer;
+    .icon-container {
+      height: 15vh !important;
+    }
+
+    .btn-orange {
+      margin-top: 3.4vh;
+      padding: 0.6vw 1.2vw;
+      color: white;
+      border-radius: 4vw;
+      background: var(--theme-orange);
+
+      &:hover {
+        background: var(--theme-dark-blue);
+      }
+    }
     .bold-hover {
       font-size: 2vw;
       text-align: center;
