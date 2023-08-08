@@ -1,14 +1,19 @@
 import LabelTyping from "components/baseComponents/LabelTyping";
 import React, { Component } from "react";
 
+interface PropsFilter {
+  createClassToggle(): void;
+}
+
 interface EmptyState {
   firstStarted: boolean;
   secondStarted: boolean;
   thirdStarted: boolean;
   fourthStarted: boolean;
+
 }
 
-class EmptyFilter extends Component<any, EmptyState> {
+class EmptyFilter extends Component<PropsFilter, EmptyState> {
   constructor(props: any) {
     super(props);
 
@@ -22,6 +27,10 @@ class EmptyFilter extends Component<any, EmptyState> {
   render() {
     return (
       <div className="empty-filter-content">
+        <div className="top-row-v5">
+          <div className="text bold">CLASSES</div>
+          <div className="btn btn-orange" onClick={this.props.createClassToggle}>Create Class</div>
+        </div>
         <LabelTyping
           value="Welcome to the Classes tab"
           className="bold title"
@@ -29,17 +38,17 @@ class EmptyFilter extends Component<any, EmptyState> {
           onFinish={() => this.setState({secondStarted: true})}
         />
         <LabelTyping
-          value="This is where you will be able to"
+          value="This is where you will be able to keep"
           start={this.state.secondStarted}
           onFinish={() => this.setState({thirdStarted: true})}
         />
         <LabelTyping
-          value="keep track of bricks you have"
+          value="track of bricks you have assigned to"
           start={this.state.thirdStarted}
           onFinish={() => this.setState({fourthStarted: true})}
         />
         <LabelTyping
-          value="assigned to classes or tutees."
+          value="classes or tutees."
           start={this.state.fourthStarted}
         />
       </div>

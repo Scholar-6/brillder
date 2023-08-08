@@ -327,7 +327,7 @@ class TeachFilterSidebar extends Component<
       return <div></div>;
     }
     if (this.props.isLoaded && this.props.classrooms.length === 0) {
-      return <EmptyFilter />;
+      return <EmptyFilter createClassToggle={() => this.setState({ createClassOpen: true })} />;
     }
     return this.renderClassesBox();
   }
@@ -345,9 +345,7 @@ class TeachFilterSidebar extends Component<
   render() {
     return (
       <Grid
-        container
-        item
-        xs={3}
+        container item xs={3}
         className="sort-and-filter-container teach-assigned"
       >
         {this.renderContent()}

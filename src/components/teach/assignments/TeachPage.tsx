@@ -740,7 +740,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         />}
         <Steps
           enabled={this.state.stepsEnabled}
-          steps={this.state.steps}
+          steps={this.state.steps}  
           initialStep={0}
           onChange={this.onIntroChanged.bind(this)}
           onExit={this.onIntroExit.bind(this)}
