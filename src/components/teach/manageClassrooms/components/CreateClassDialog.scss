@@ -35,20 +35,52 @@
     padding-left: 0 !important;
     padding-right: 1.1vw !important;
   }
-
-  .title { 
-    font-size: 2vw;
-  }
 }
 
 // only create class popup
 .create-classroom-dialog {
+  .MuiDialog-paper {
+    color: var(--theme-dark-blue) !important;
+    background: white !important;
+    width: 45vw;
+  }
   .MuiPaper-root {
     padding: 0 !important;
   }
   .dialog-header {
-    padding: 3vh 3vw 4vh 3vw;
-    width: 55vw;
+    padding: 3vh 0 4vh 0;
+
+    .title-box {
+      position: relative;
+      border-bottom: 1px solid #E5E8ED;
+
+      .title {
+        font-size: 1.5vw;
+        margin-bottom: 2.3vh !important;
+      }
+
+      svg {
+        cursor: pointer;
+        top: 0.1vw;
+        right: 1.5vw;
+        width: 2vw;
+        height: 2vw;
+        stroke-width: 2.2;
+        position: absolute;
+        transition: all 100ms ease-in-out;
+
+        &:hover {
+          color: var(--theme-orange);
+        }
+      }
+    }
+
+    .text-block {
+      padding-top: 4vh;
+      padding-left: 2vw;
+      padding-right: 2vw;
+      font-family: $font-family-regular !important;
+    }
 
     .text-r324 {
       margin-bottom: 2vh !important;
@@ -64,6 +96,9 @@
     .r-class-inputs input {
       border-radius: 1vw !important;
       width: 100% !important;
+      background: var(--white) !important;
+      color: var(--theme-dark-blue) !important;
+      border: 2px solid #BCC4D3;
     }
 
     > div {
@@ -79,19 +114,44 @@
 
   .dialog-footer {
     background: white;
-    padding: 2vh 3vw 2vh 3vw;
-    
+    padding: 2vh 2vw;
+    border-top: 1px solid #E5E8ED;
+
+    $height: 3.5vw;
+   
+    .info-box {
+      margin-right: 0.3vw;
+      height: $height !important;
+      svg {
+        margin-top: 0.2vw;
+        width: 1.4vw;
+        height: 1.4vw;
+      }
+    }
     .message-box-r5 {
-      font-size: 1.3vw;
-      width: 33vw;
-      color: var(--theme-orange);
+      font-size: 1.05vw;
+      width: 40vw;
+      height: $height !important;
     }
 
-    .invalid {
-      opacity: 0.7 !important;
-    }
     .btn {
+      height: $height !important;
+      padding-top: 0.7vw !important;
+      padding-bottom: 0.7vw !important;
       width: 11vw !important;
+
+      &.invalid {
+        opacity: 0.3;
+      }
+    }
+
+    .cancel-button {
+      border: 2px solid #BCC4D3;
+      background: white;
+
+      &:hover {
+        background: var(--tab-gray);
+      }
     }
   }
 
