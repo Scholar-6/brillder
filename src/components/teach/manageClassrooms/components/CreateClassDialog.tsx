@@ -17,9 +17,10 @@ interface AssignClassProps {
 }
 
 const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
+  const [secondOpen, setSecondOpen] = React.useState(false);
   const [helpTextExpanded, setHelpText] = React.useState(false);
   const [value, setValue] = React.useState("");
-  const [canSubmit, setSubmit] = React.useState(true);
+  const [canSubmit, setSubmit] = React.useState(false);
   const [isSaving, setSaving] = React.useState(false);
 
   const [currentEmail, setCurrentEmail] = React.useState("");
@@ -69,67 +70,53 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     setSaving(false);
   }
 
-  return (
+  return (<div>
     <Dialog
-      open={props.isOpen}
+      open={props.isOpen && !secondOpen}
       onClose={props.close}
       className="dialog-box light-blue assign-class-dialog create-classroom-dialog"
     >
-      <div className="close-button svgOnHover" onClick={props.close}>
-        <SpriteIcon name="cancel" className="w100 h100 active" />
-      </div>
       <div className="dialog-header">
-        <div className="title">Create New Class</div>
-        <div className="text-r324 bold">Enter the name of your class</div>
-        <div className="r-class-inputs">
-          <input placeholder="Class Name" value={value} onChange={e => setValue(e.target.value)} />
+        <div className="title-box">
+          <div className="title">New Class</div>
+          <SpriteIcon name="cancel-custom" onClick={props.close} />
         </div>
-        <div className="r-regular-center help-text-r423">
-          Invite your students below. Or, leave blank to set bricks before inviting students.
-        </div>
-        <div className="r-student-emails">
-          <AutocompleteUsernameButEmail
-            placeholder="Type or paste up to 50 learner emails, then press Enter ⏎"
-            currentEmail={currentEmail}
-            users={users}
-            onAddEmail={onAddUser}
-            onChange={email => checkSpaces(email.trim())}
-            setUsers={users => {
-              setCurrentEmail('');
-              setUsers(users as User[]);
-            }}
-            isEmpty={canSubmit}
-            setEmpty={setSubmit}
-          />
+        <div className="text-block">
+          <div className="text-r324">Enter the name of your class</div>
+          <div className="r-class-inputs">
+            <input placeholder="Class Name" value={value} onChange={e => {
+              if (canSubmit === false && value.length > 0) {
+                setSubmit(true);
+              } else if (canSubmit === false && value.length === 0) {
+                setSubmit(false);
+              }
+              setValue(e.target.value)
+            }} />
+          </div>
         </div>
       </div>
       <div className="dialog-footer">
+        <div className="info-box">
+          <SpriteIcon name="info-icon" />
+        </div>
         <div className="message-box-r5">
-          {!canSubmit
-            ? 'Please ensure that you have entered all email addresses correctly and pressed enter.'
-            : (users.length > 0) && <div className="help-expandable">
-              <div className="help-icon-v3">
-                <SpriteIcon name="help-icon-v3" />
-              </div>
-              <div className="help-text">
-                <div>Students might not receive invites if your institution</div>
-                <div className="text-with-icon">
-                  filters emails. <span className="underline bold" onClick={() => {
-                    setHelpText(!helpTextExpanded);
-                  }}>How to avoid this</span>
-                  <SpriteIcon name="arrow-down" className={helpTextExpanded ? 'expanded' : ''} onClick={() => {
-                    setHelpText(!helpTextExpanded);
-                  }} />
-                </div>
-              </div>
-            </div>
-          }
+          Add a name that will be recognisable later to you and to your students, for example: Year 11 French 2023.
         </div>
         <button
-          className={`btn btn-md bg-theme-orange yes-button r-long ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
-          onClick={create}
+          className="btn btn-md cancel-button"
+          onClick={props.close}
         >
-          <span className="bold">Create</span>
+          <span className="bold">Cancel</span>
+        </button>
+        <button
+          className={`btn btn-md bg-theme-green yes-button ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
+          onClick={() => {
+            if (canSubmit) {
+              setSecondOpen(true)
+            }
+          }}
+        >
+          <span className="bold">Next</span>
         </button>
       </div>
       {canSubmit && helpTextExpanded && users.length > 0 &&
@@ -145,6 +132,59 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           </div>
         </div>}
     </Dialog>
+    <Dialog
+      open={props.isOpen && secondOpen}
+      onClose={props.close}
+      className="dialog-box light-blue assign-class-dialog create-classroom-dialog"
+    >
+      <div className="dialog-header">
+        <div className="title-box">
+          <div className="title">
+            Add Assignment to Class
+          </div>
+          <SpriteIcon onClick={props.close} name="cancel-custom" />
+        </div>
+        <div className="text-block">
+          <div className="text-r324">
+            If you have the title you’re looking for enter it below
+          </div>
+        </div>
+      </div>
+      <div className="dialog-footer">
+        <div className="info-box">
+          <SpriteIcon name="info-icon" />
+        </div>
+        <div className="message-box-r5">
+          If you have the title you’re looking for enter it below
+        </div>
+        <div></div>
+        <button
+          className="btn btn-md cancel-button"
+          //onClick={cancel}
+        >
+          <span className="bold">Cancel</span>
+        </button>
+        <button
+          className={`btn btn-md bg-theme-green yes-button ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
+          onClick={() => { }}
+        >
+          <span className="bold">Next</span>
+        </button>
+      </div>
+      {canSubmit && helpTextExpanded && users.length > 0 &&
+        <div className="expanded-text-v3">
+          <div className="justify">
+            To ensure invites are received, please ask your network administrator to whitelist <a href="mailto: notifications@brillder.com" className="text-underline">notifications@brillder.com</a>. They may want the following information:
+          </div>
+          <div className="light">
+            Brillder is the trading name of Scholar 6 Ltd, which is on the UK Register of Learning
+          </div>
+          <div className="text-center light">
+            Providers (UK Provider Reference Number 10090571)
+          </div>
+        </div>}
+    </Dialog>
+  </div>
   );
 }
 
