@@ -15,6 +15,7 @@ import { resendInvitation } from "services/axios/classroom";
 import { getClassAssignedCount } from "../service/service";
 import { User } from "model/user";
 import SortButton from "./SortButton";
+import { Subject } from "model/brick";
 
 enum TeachFilterFields {
   Assigned = "assigned",
@@ -28,13 +29,13 @@ interface FilterSidebarProps {
   classrooms: TeachClassroom[];
   activeStudent: TeachStudent | null;
   activeClassroom: TeachClassroom | null;
+  isArchive: boolean;
   setActiveStudent(s: TeachStudent): void;
   setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
   hideIntro(): void;
   moveToPremium(): void;
   createClass(name: string, users: User[]): void;
-  isArchive: boolean;
 }
 
 interface FilterSidebarState {
@@ -44,6 +45,7 @@ interface FilterSidebarState {
   isInviteOpen: boolean;
   createClassOpen: boolean;
   sort: SortClassroom;
+  subjects: Subject[];
 }
 
 export enum SortClassroom {
@@ -70,6 +72,7 @@ class TeachFilterSidebar extends Component<
         completed: false,
       },
       createClassOpen: false,
+      subjects: []
     };
   }
 
@@ -353,6 +356,7 @@ class TeachFilterSidebar extends Component<
         {this.state.createClassOpen &&
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
+          subjects={this.state.subjects}
           submit={(name, users) => {
             this.props.createClass(name, users);
             this.setState({ createClassOpen: false });

@@ -48,6 +48,27 @@ export const createClass = async (name: string) => {
 }
 
 /**
+ * Get Classroom By Id with assignments
+ * @param id id of classroom
+ * return classroom object if success or null if failed
+ */
+export const getClassById = async (id: number) => {
+  try {
+    const res = await axios.get(
+      process.env.REACT_APP_BACKEND_HOST + "/classroomById/" + id,
+      { withCredentials: true }
+    );
+    if (res.data) {
+      return (res.data as ClassroomApi);
+    }
+    return null;
+  }
+  catch (e) {
+    return null;
+  }
+}
+
+/**
  * Get all classrooms
  * return list of classrooms if success or null if failed
  */
