@@ -732,6 +732,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         {this.state.createClassOpen &&
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
+          subjects={this.state.subjects}
           submit={(name, users) => {
             this.createClass(name, users);
             this.setState({ createClassOpen: false })
