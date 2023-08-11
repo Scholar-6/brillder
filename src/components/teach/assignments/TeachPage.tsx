@@ -711,6 +711,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             isNewTeacher={this.state.isNewTeacher}
             classrooms={showedClasses}
             isLoaded={this.state.isLoaded}
+            history={this.props.history}
             activeStudent={this.state.activeStudent}
             activeClassroom={this.state.activeClassroom}
             hideIntro={() => this.setState({ isNewTeacher: false })}
@@ -733,6 +734,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
           subjects={this.state.subjects}
+          history={this.props.history}
           submit={(name, users) => {
             this.createClass(name, users);
             this.setState({ createClassOpen: false })
