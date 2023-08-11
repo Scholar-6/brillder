@@ -36,7 +36,7 @@ interface FilterSidebarProps {
   filterChanged(filters: TeachFilters): void;
   hideIntro(): void;
   moveToPremium(): void;
-  createClass(name: string, users: User[]): void;
+  loadClass(classId: number): void;
 }
 
 interface FilterSidebarState {
@@ -359,8 +359,8 @@ class TeachFilterSidebar extends Component<
           isOpen={this.state.createClassOpen}
           subjects={this.state.subjects}
           history={this.props.history}
-          submit={(name, users) => {
-            this.props.createClass(name, users);
+          submit={classroomId => {
+            this.props.loadClass(classroomId);
             this.setState({ createClassOpen: false });
           }}
           close={() => {

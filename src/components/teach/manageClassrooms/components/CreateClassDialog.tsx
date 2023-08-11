@@ -2,30 +2,31 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import * as QRCode from "qrcode";
-
-import './CreateClassDialog.scss';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { User } from 'model/user';
-import { ReduxCombinedState } from 'redux/reducers';
+import { ListItemIcon, ListItemText, MenuItem, Popper, SvgIcon } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { Checkbox, ListItemIcon, ListItemText, MenuItem, Popper, SvgIcon } from '@material-ui/core';
+
+import './CreateClassDialog.scss';
+import { User } from 'model/user';
+import { ReduxCombinedState } from 'redux/reducers';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import { Brick, Subject } from 'model/brick';
 import { getSuggestedByTitles } from 'services/axios/brick';
-import BrickTitle from 'components/baseComponents/BrickTitle';
 import { createClass, getClassById } from 'components/teach/service';
 import { assignClasses } from 'services/axios/assignBrick';
 import { assignToClassByEmails, updateClassroom } from 'services/axios/classroom';
 import map from 'components/map';
+
+import BrickTitle from 'components/baseComponents/BrickTitle';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import HoverHelp from 'components/baseComponents/hoverHelp/HoverHelp';
 
 interface AssignClassProps {
   isOpen: boolean;
   subjects: Subject[];
 
-  submit(value: string, users: User[]): void;
+  submit(classroomId: number): void;
   close(): void;
 
   user: User;
@@ -37,28 +38,30 @@ const PopperCustom = function (props: any) {
 }
 
 const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
-  const [imgBase64, setImageBase64] = React.useState('');
+  const [imgBase64, setImageBase64] = useState('');
 
-  const [canSubmitV2, setSubmitV2] = React.useState(true);
-  const [closeV2Open, setCloseV2Open] = React.useState(false);
+  const [expandedWarning, expandWarning] = useState(false);
 
-  const [expandedV3Popup, expandV3Popup] = React.useState(false);
+  const [canSubmitV2, setSubmitV2] = useState(true);
+  const [closeV2Open, setCloseV2Open] = useState(false);
 
-  const [secondOpen, setSecondOpen] = React.useState(false);
-  const [thirdOpen, setThirdOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-  const [canSubmit, setSubmit] = React.useState(false);
-  const [isSaving, setSaving] = React.useState(false);
+  const [expandedV3Popup, expandV3Popup] = useState(false);
 
-  const [classroom, setClassroom] = React.useState(null as any);
+  const [secondOpen, setSecondOpen] = useState(false);
+  const [thirdOpen, setThirdOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [canSubmit, setSubmit] = useState(false);
+  const [isSaving, setSaving] = useState(false);
+
+  const [classroom, setClassroom] = useState(null as any);
 
   const [selectedBricks, selectBricks] = useState([] as any[]);
   const [bricks, setBricks] = useState([] as any[]);
 
   const [searchText, setSearchText] = useState('');
 
-  const [currentEmail, setCurrentEmail] = React.useState("");
-  const [users, setUsers] = React.useState<User[]>([]);
+  const [currentEmail, setCurrentEmail] = useState("");
+  const [users, setUsers] = useState<User[]>([]);
 
   //eslint-disable-next-line
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -113,10 +116,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         setClassroom(newClassroom);
 
         if (newClassroom) {
-          for (let selectedBrick of selectedBricks) {
-            await assignClasses(selectedBrick.id, { classesIds: [newClassroom.id], deadline: null });
-          }
-
           // after assigning get class with assignments
           const resultClass = await getClassById(newClassroom.id);
           if (resultClass) {
@@ -128,19 +127,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           );
         }
       } else {
-        // updating classroom
-        const bricks = selectedBricks.filter(b => {
-          const found = classroom.assignments.find((a: any) => {
-            return a.brick.id === parseInt(b.id)
-          });
-          if (found) {
-            return false;
-          }
-          return true;
-        })
-        for (const selectedBrick of bricks) {
-          await assignClasses(selectedBrick.id, { classesIds: [classroom.id], deadline: null });
-        }
         // after assigning get class with assignments
         const resultClass = await getClassById(classroom.id);
         if (resultClass) {
@@ -163,13 +149,17 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     }
 
     const res = await assignToClassByEmails(classroom, currentUsers.map(u => u.email));
-    if (res) {
-      //props.history.push(`${map.TeachAssignedTab}?classroomId=${newClassroom.id}&${map.NewTeachQuery}&assignmentExpanded=true`);
+
+    for (let selectedBrick of selectedBricks) {
+      await assignClasses(selectedBrick.id, { classesIds: [classroom.id], deadline: null });
     }
-    //await getClasses();
+
+    if (res) {
+      props.history.push(`${map.TeachAssignedTab}?classroomId=${classroom.id}&${map.NewTeachQuery}&assignmentExpanded=true`);
+    }
     setSecondOpen(false);
     setThirdOpen(false);
-    props.close();
+    props.submit(classroom.id);
   }
 
   const closeV2 = () => {
@@ -490,8 +480,12 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                     />
                   </div>
                   {users.length > 0 && <div className="email-warning">
-                    Students might not receive invites if your institution filters emails. <span className="underline bold">How to avoid this</span>
-                    <SpriteIcon name="arrow-down" />
+                    <div>
+                      <span>
+                        Students might not receive invites if your institution filters emails. <span className="underline bold">How to avoid this</span>
+                        <SpriteIcon name="arrow-down" />
+                      </span>
+                    </div>
                   </div>}
                 </div>}
             </div>
@@ -524,8 +518,22 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                 />
               </div>
               {users.length > 0 && <div className="email-warning">
-                Students might not receive invites if your institution filters emails. <span className="underline bold">How to avoid this</span>
-                <SpriteIcon name="arrow-down" />
+                <div>
+                  <span>
+                    Students might not receive invites if your institution filters emails. <span className="underline bold">How to avoid this</span>
+                  </span>
+                  <SpriteIcon name="arrow-down" className={expandedWarning ? 'arrow-up' : ''} onClick={() => {
+                    expandWarning(!expandedWarning)
+                  }} />
+                </div>
+                {expandedWarning &&
+                  <div>
+                    <span>To ensure invites are received, please ask your network administrator to whitelist notifications@brillder.com. They may want the following information:</span>
+                  </div>}
+                {expandedWarning &&
+                  <div>
+                    <span>Brillder is the trading name of Scholar 6 Ltd, which is on the UK Register of Learning Providers (UK Provider Reference Number 10090571)</span>
+                  </div>}
               </div>}
             </div>}
         </div>

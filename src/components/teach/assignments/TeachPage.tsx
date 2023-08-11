@@ -13,7 +13,7 @@ import actions from 'redux/actions/requestFailed';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { TeachClassroom, TeachStudent } from "model/classroom";
-import { createClass, getAllClassrooms, getAssignmentsClassrooms, searchClassrooms } from "components/teach/service";
+import { getAllClassrooms, getAssignmentsClassrooms, searchClassrooms } from "components/teach/service";
 import { checkAdmin, checkTeacher } from "components/services/brickService";
 import { TeachFilters } from '../model';
 import { Assignment } from "model/classroom";
@@ -436,16 +436,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
-  async createClass(name: string, users: User[]) {
-    const newClassroom = await createClass(name);
-    if (newClassroom) {
-      if (users && users.length > 0) {
-        await assignToClassByEmails(newClassroom, users.map(u => u.email));
-      }
-      await this.loadClasses(newClassroom.id);
-    }
-  }
-
   getTotalCount() {
     const { classrooms, activeClassroom } = this.state;
     let itemsCount = 0;
@@ -717,9 +707,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
             hideIntro={() => this.setState({ isNewTeacher: false })}
             isArchive={isArchive}
             setActiveClassroom={this.setActiveClassroom.bind(this)}
+            loadClass={classId => this.loadClass(classId)}
             setActiveStudent={this.setActiveStudent.bind(this)}
             filterChanged={this.teachFilterUpdated.bind(this)}
-            createClass={this.createClass.bind(this)}
             moveToPremium={() => this.setState({ isPremiumDialogOpen: true })}
           />
           {this.renderData()}
@@ -735,9 +725,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
           isOpen={this.state.createClassOpen}
           subjects={this.state.subjects}
           history={this.props.history}
-          submit={(name, users) => {
-            this.createClass(name, users);
-            this.setState({ createClassOpen: false })
+          submit={async (classroomId) => {
+            await this.loadClass(classroomId);
+            this.setState({ createClassOpen: false });
           }}
           close={() => { this.setState({ createClassOpen: false }) }}
         />}
