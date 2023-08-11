@@ -61,6 +61,18 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     this.getAssignments();
   }
 
+  componentDidUpdate() {
+    const {pathname} = this.props.history.location;
+    const res = pathname.split('/');
+
+    // checking path for class id
+    if (res.length === 2) {
+      if (this.state.activeClassroomId > 0) {
+        this.setState({activeClassroomId: -1});
+      }
+    }
+  }
+
   async getAssignments() {
     let assignments = await getAssignedBricks();
     const subjects = await getSubjects();

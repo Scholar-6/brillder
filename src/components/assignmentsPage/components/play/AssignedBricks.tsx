@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 
+import map from "components/map";
+import "./AssignedBricks.scss";
+import { Subject } from "model/brick";
+import { Classroom } from "model/classroom";
+import { getDateStringV2 } from "components/services/brickService";
 import { User } from "model/user";
 import { AssignmentBrickData } from '../../model';
 import { prepareVisibleAssignment } from '../../service';
@@ -7,13 +12,7 @@ import { AssignmentBrick } from "model/assignment";
 
 import BrickBlock16x9 from "components/viewAllPage/components/BrickBlock16x9";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import map from "components/map";
 
-import "./AssignedBricks.scss";
-import { Subject } from "model/brick";
-import { Classroom } from "model/classroom";
-import { stripHtml } from "components/build/questionService/ConvertService";
-import { getDateStringV2 } from "components/services/brickService";
 
 interface AssignedBricksProps {
   user: User;
@@ -22,7 +21,6 @@ interface AssignedBricksProps {
   classrooms: Classroom[];
   assignments: AssignmentBrick[];
   history: any;
-
   activateClassroom(classroomId: number): void;
 }
 
@@ -34,11 +32,6 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       circleIcon = "users";
     }
 
-    if (item.brick.title) {
-      if (stripHtml(item.brick.title) == 'Sound test') {
-        console.log(item);
-      }
-    }
     let isCompleted = false;
     if (item.completedDate && item.bestScore > 0) {
       isCompleted = true;
