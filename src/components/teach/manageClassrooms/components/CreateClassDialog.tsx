@@ -42,7 +42,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   const [canSubmitV2, setSubmitV2] = React.useState(true);
   const [closeV2Open, setCloseV2Open] = React.useState(false);
 
-  const [sendEmails, setSendEmails] = React.useState(false);
+  const [expandedV3Popup, expandV3Popup] = React.useState(false);
 
   const [secondOpen, setSecondOpen] = React.useState(false);
   const [thirdOpen, setThirdOpen] = React.useState(false);
@@ -162,7 +162,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       setCurrentEmail("");
     }
 
-    const res = await assignToClassByEmails(classroom, currentUsers.map(u => u.email), !sendEmails);
+    const res = await assignToClassByEmails(classroom, currentUsers.map(u => u.email));
     if (res) {
       //props.history.push(`${map.TeachAssignedTab}?classroomId=${newClassroom.id}&${map.NewTeachQuery}&assignmentExpanded=true`);
     }
@@ -470,41 +470,64 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                 } />
                 <div className="copy-btn">Copy</div>
               </div>
+              {expandedV3Popup &&
+                <div>
+                  <div className="or-text-v2 bold">OR</div>
+                  <div className="bold text-left left-padding-v2">Invite learners by email</div>
+                  <div className="r-student-emails">
+                    <AutocompleteUsernameButEmail
+                      placeholder="Type or paste up to 50 learner emails, then press Enter ⏎"
+                      currentEmail={currentEmail}
+                      users={users}
+                      onAddEmail={onAddUser}
+                      onChange={email => checkSpaces(email.trim())}
+                      setUsers={users => {
+                        setCurrentEmail('');
+                        setUsers(users as User[]);
+                      }}
+                      isEmpty={canSubmit}
+                      setEmpty={setSubmitV2}
+                    />
+                  </div>
+                  {users.length > 0 && <div className="email-warning">
+                    Students might not receive invites if your institution filters emails. <span className="underline bold">How to avoid this</span>
+                    <SpriteIcon name="arrow-down" />
+                  </div>}
+                </div>}
             </div>
             <div className="block-two">
-              <div className="text-left">Share QR code</div>
-              <div className="code-box flex-center">
+              {!expandedV3Popup && <div className="text-left">Share QR code</div>}
+              <div className={`code-box flex-center ${expandedV3Popup ? 'expanded' : ''}`}>
+                <SpriteIcon className="expand-btn" name="collapse" onClick={() => expandV3Popup(!expandedV3Popup)} />
                 <img className="qr-code-img" src={imgBase64} />
+                {expandedV3Popup && <div className="absolute-code-label">Class Code: <span className="bold">{classroom.code}</span></div>}
               </div>
             </div>
           </div>
-          <div className="or-text-v2 bold">OR</div>
-          <div className="bold text-left left-padding-v2">Add learners by email address</div>
-          <div className="r-student-emails">
-            <AutocompleteUsernameButEmail
-              placeholder="Type or paste up to 50 learner emails, then press Enter ⏎"
-              currentEmail={currentEmail}
-              users={users}
-              onAddEmail={onAddUser}
-              onChange={email => checkSpaces(email.trim())}
-              setUsers={users => {
-                setCurrentEmail('');
-                setUsers(users as User[]);
-              }}
-              isEmpty={canSubmit}
-              setEmpty={setSubmitV2}
-            />
-          </div>
-          {users.length > 0 && <div className="email-warning">
-            Students might not receive invites if your institution filters emails. <span className="underline bold">How to avoid this</span>
-            <SpriteIcon name="arrow-down" />
-          </div>}
-          <div></div>
-          {/*
-          <div className="send-email-box">
-            <Checkbox checked={sendEmails} onClick={() => setSendEmails(!sendEmails)} />
-            Send email invitations when finished
-            </div>*/}
+          {!expandedV3Popup &&
+            <div className="bottom-box-padding">
+              <div className="or-text-v2 bold">OR</div>
+              <div className="bold text-left left-padding-v2">Invite learners by email</div>
+              <div className="r-student-emails">
+                <AutocompleteUsernameButEmail
+                  placeholder="Type or paste up to 50 learner emails, then press Enter ⏎"
+                  currentEmail={currentEmail}
+                  users={users}
+                  onAddEmail={onAddUser}
+                  onChange={email => checkSpaces(email.trim())}
+                  setUsers={users => {
+                    setCurrentEmail('');
+                    setUsers(users as User[]);
+                  }}
+                  isEmpty={canSubmit}
+                  setEmpty={setSubmitV2}
+                />
+              </div>
+              {users.length > 0 && <div className="email-warning">
+                Students might not receive invites if your institution filters emails. <span className="underline bold">How to avoid this</span>
+                <SpriteIcon name="arrow-down" />
+              </div>}
+            </div>}
         </div>
         <div className="dialog-footer one-line">
           <div className="info-box">
