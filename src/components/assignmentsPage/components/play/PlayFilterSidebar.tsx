@@ -20,9 +20,14 @@ class PlayFilterSidebar extends Component<FilterSidebarProps> {
     if (c.assignmentsBrick && c.assignmentsBrick.length) {
       const count = c.assignmentsBrick.filter(a => a.bestScore && a.bestScore > 0).length;
 
+      let className = 'white-box';
+      if (count === c.assignmentsBrick.length) {
+        className += ' completed';
+      }
+
       return (
         <div className="right-index">
-          <div className="white-box">{count}/{c.assignmentsBrick.length}</div>
+          <div className={className}>{count}/{c.assignmentsBrick.length}</div>
         </div>
       );
     }
@@ -47,6 +52,11 @@ class PlayFilterSidebar extends Component<FilterSidebarProps> {
   render() {
     const { activeClassroomId } = this.props;
 
+    let count = 0;
+    for (let c of this.props.classrooms) {
+      count += c.assignmentsBrick.filter(a => a.bestScore && a.bestScore > 0).length;
+    }
+
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
         <div className="sort-box teach-sort-box play-index-box">
@@ -69,7 +79,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps> {
                 label="" />
               All Classes
               <div className="right-index">
-                <div className="white-box">{this.props.assignmentsLength}</div>
+                <div className="white-box">{count}/{this.props.assignmentsLength}</div>
               </div>
             </div>
             {this.props.classrooms.map((c, i) => this.renderClassroomBox(c, i))}
