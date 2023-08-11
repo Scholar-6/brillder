@@ -19,6 +19,7 @@ import { createClass, getClassById } from 'components/teach/service';
 import { assignClasses } from 'services/axios/assignBrick';
 import { assignToClassByEmails, updateClassroom } from 'services/axios/classroom';
 import map from 'components/map';
+import HoverHelp from 'components/baseComponents/hoverHelp/HoverHelp';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -381,7 +382,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       <div className="dialog-header">
         <div className="title-box">
           <div className="title">
-          Are you sure you want to quit Class Creation?
+            Are you sure you want to quit Class Creation?
           </div>
           <SpriteIcon onClick={props.close} name="cancel-custom" />
         </div>
@@ -429,7 +430,15 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               </div>
               <div className="text-left test-r5-d3 with-help-icon">
                 Share by code
-                <SpriteIcon name="help-circle-custom" />
+                <div className="share-popup-box">
+                  <HoverHelp>
+                    <div>
+                      <div>Students can use this code to</div>
+                      <div>access the class with the Class</div>
+                      <div>Code option on <a className="bold" href="https://brillder.com">brillder.com</a></div>
+                    </div>
+                  </HoverHelp>
+                </div>
               </div>
               <div className="gray-box">
                 <input id="classroom-code-vr3" value={classroom.code} />
@@ -445,7 +454,15 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               </div>
               <div className="text-left test-r5-d3 with-help-icon">
                 Share by link
-                <SpriteIcon name="help-circle-custom" />
+                <div className="share-popup-box">
+                  <HoverHelp>
+                    <div>
+                      <div>Paste this link on a class site, or</div>
+                      <div>into an email or other message to</div>
+                      <div>your students</div>
+                    </div>
+                  </HoverHelp>
+                </div>
               </div>
               <div className="gray-box underline-text">
                 <input id="classroom-link-vr3" value={

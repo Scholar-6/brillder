@@ -250,11 +250,33 @@
 
       &.with-help-icon {
         position: relative;
-        
-        svg {
+
+        .share-popup-box {
           position: absolute;
           top: 0.1vw;
-          right: 2vw;
+          right: 1.6vw;
+          svg {
+            margin: 0 !important;
+          }
+
+          .hover-content {
+            padding: 0 1vw !important;
+            top: 2vw !important;
+            left: unset !important;
+            right: 0 !important;
+            font-size: 1vw !important;
+            border-radius: 0.7vw !important;
+            line-height: 1.2;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            background: white;
+            width: 15vw;
+            color: var(--theme-dark-blue);
+
+            a {
+              text-decoration: underline;
+              color: var(--theme-dark-blue);
+            }
+          }
         }
       }
     }
