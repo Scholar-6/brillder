@@ -856,6 +856,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <CreateClassDialog
             isOpen={this.state.createClassOpen}
             subjects={this.state.subjects}
+            history={this.props.history}
             submit={(name, users) => {
               this.createClass(name, users);
               this.setState({ createClassOpen: false })
