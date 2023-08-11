@@ -857,9 +857,16 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             isOpen={this.state.createClassOpen}
             subjects={this.state.subjects}
             history={this.props.history}
-            submit={(name, users) => {
-              this.createClass(name, users);
+            submit={async (classroomId) => {
+              const classrooms = await this.getClassrooms();
               this.setState({ createClassOpen: false })
+              let activeClassroom: any = classrooms.find(c => c.id === classroomId);
+              if (!activeClassroom) {
+                activeClassroom = null;
+              } else {
+                activeClassroom.isActive = true;
+              }
+              this.setState({ activeClassroom, createClassOpen: false });
             }}
             close={() => { this.setState({ createClassOpen: false }) }}
           />

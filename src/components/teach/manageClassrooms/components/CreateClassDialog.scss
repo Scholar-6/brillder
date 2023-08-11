@@ -436,16 +436,33 @@
       padding-top: 0.6vh;
       padding-bottom: 0.6vh;
       width: calc(100% - #{$main-padding-side});
-      margin-left: $main-padding-side;
       border: 2px dashed #BCC4D3;
       background: #FFFDEA;
       font-family: $font-family-regular;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      .underline {
-        padding-left: 0.4vw;
-        text-decoration: underline;
+
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        span {
+          text-align: left !important;
+        }
+        .underline {
+          display: inline;
+          cursor: pointer;
+          padding-left: 0.4vw;
+          text-decoration: underline;
+        }
+
+        svg {
+          cursor: pointer;
+          transition: all 300ms ease-in-out;
+
+          &.arrow-up {
+            transform: rotate(180deg);
+          }
+        }
       }
     }
   }
