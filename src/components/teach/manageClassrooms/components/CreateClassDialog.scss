@@ -100,7 +100,11 @@
       margin-top: 3vh;
       margin-bottom: 1.5vh !important;
       font-size: 1vw;
-      padding-right: 1.5vw;
+      padding-right: 3.8vw;
+    }
+
+    .bottom-box-padding {
+      padding-left: $main-padding-side;
     }
 
     .text-left {
@@ -110,7 +114,6 @@
 
     .left-padding-v2 {
       padding-bottom: 1vh;
-      padding-left: $main-padding-side;
     }
 
     .code-box {
@@ -118,16 +121,46 @@
       width: 25vw;
       height: calc(5vh + 10vw);
       background: var(--tab-gray);
+      position: relative;
+
+      transition: all 300ms ease-in-out;
 
       .qr-code-img {
         padding-top: 2.5vh;
         padding-bottom: 2.5vh;
         height: 100%;
       }
+
+      .expand-btn {
+        cursor: pointer;
+        position: absolute;
+        top: 0.3vw;
+        right: 0.2vw;
+        transition: all 100ms ease-in-out;
+
+        &:hover {
+          color: var(--theme-light-blue);
+        }
+      }
+
+      &.expanded {
+        padding-left: 2vw;
+        padding-right: 2vw;
+        height: calc(35vh + 10vw);
+
+        .qr-code-img {
+          padding-top: 3.1vw;
+          padding-bottom: 3.5vw;
+        }
+
+        .absolute-code-label {
+          position: absolute;
+          bottom: 1.2vw;
+        }
+      }
     }
 
     .r-student-emails {
-      padding-left: $main-padding-side;
       padding-right: $main-padding-side;
       color: var(--theme-dark-blue) !important;
 
