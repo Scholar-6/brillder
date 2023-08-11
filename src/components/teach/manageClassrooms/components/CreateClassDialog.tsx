@@ -232,7 +232,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     </Dialog>
     <Dialog
       open={props.isOpen && secondOpen && !closeV2Open && !thirdOpen}
-      onClose={props.close}
+      onClose={closeV2}
       className="dialog-box light-blue assign-class-dialog create-classroom-dialog"
     >
       <div className="dialog-header">
@@ -375,7 +375,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       </div>
     </Dialog>
     <Dialog
-      open={props.isOpen && closeV2Open && secondOpen && !thirdOpen}
+      open={props.isOpen && closeV2Open}
       onClose={props.close}
       className="dialog-box light-blue assign-class-dialog create-classroom-dialog"
     >
@@ -410,10 +410,10 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         </button>
       </div>
     </Dialog>
-    {props.isOpen && secondOpen && thirdOpen &&
+    {props.isOpen && secondOpen && thirdOpen && !closeV2Open &&
       <Dialog
-        open={props.isOpen && secondOpen && thirdOpen}
-        onClose={props.close}
+        open={props.isOpen && secondOpen && thirdOpen && !closeV2Open}
+        onClose={closeV2}
         className="dialog-box light-blue assign-class-dialog create-classroom-dialog longer"
       >
         <div className="dialog-header">
@@ -421,7 +421,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
             <div className="title">
               Sharing and Invites
             </div>
-            <SpriteIcon onClick={props.close} name="cancel-custom" />
+            <SpriteIcon onClick={closeV2} name="cancel-custom" />
           </div>
           <div className="text-block two-columns">
             <div className="block-one">
