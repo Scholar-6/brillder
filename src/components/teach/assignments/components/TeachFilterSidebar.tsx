@@ -26,6 +26,7 @@ interface FilterSidebarProps {
   isLoaded: boolean;
   isNewTeacher: boolean;
   user: User;
+  history: any;
   classrooms: TeachClassroom[];
   activeStudent: TeachStudent | null;
   activeClassroom: TeachClassroom | null;
@@ -357,6 +358,7 @@ class TeachFilterSidebar extends Component<
         <CreateClassDialog
           isOpen={this.state.createClassOpen}
           subjects={this.state.subjects}
+          history={this.props.history}
           submit={(name, users) => {
             this.props.createClass(name, users);
             this.setState({ createClassOpen: false });

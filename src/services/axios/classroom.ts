@@ -88,9 +88,9 @@ export const getClassInvitations = async (searchString?: string) => {
   }
 }
 
-export const assignToClassByEmails = async (classroom: ClassroomApi, emails: string[]) => {
+export const assignToClassByEmails = async (classroom: ClassroomApi, emails: string[], withoutEmail?: boolean) => {
   try {
-    return await post<any>(`/classrooms/students/${classroom.id}/new`, { emails });
+    return await post<any>(`/classrooms/students/${classroom.id}/new`, { emails, withoutEmail });
   } catch {
     return null;
   }

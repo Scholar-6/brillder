@@ -9,24 +9,26 @@ import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { ListItemIcon, ListItemText, MenuItem, Popper, SvgIcon } from '@material-ui/core';
+import { Checkbox, ListItemIcon, ListItemText, MenuItem, Popper, SvgIcon } from '@material-ui/core';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import { Brick, Subject } from 'model/brick';
 import { getSuggestedByTitles } from 'services/axios/brick';
 import BrickTitle from 'components/baseComponents/BrickTitle';
 import { createClass, getClassById } from 'components/teach/service';
-import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
+import { assignClasses } from 'services/axios/assignBrick';
 import { assignToClassByEmails, updateClassroom } from 'services/axios/classroom';
 import map from 'components/map';
 
 interface AssignClassProps {
   isOpen: boolean;
   subjects: Subject[];
+
   submit(value: string, users: User[]): void;
   close(): void;
 
   user: User;
+  history?: any;
 }
 
 const PopperCustom = function (props: any) {
@@ -37,6 +39,9 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   const [imgBase64, setImageBase64] = React.useState('');
 
   const [canSubmitV2, setSubmitV2] = React.useState(true);
+  const [closeV2Open, setCloseV2Open] = React.useState(false);
+
+  const [sendEmails, setSendEmails] = React.useState(false);
 
   const [secondOpen, setSecondOpen] = React.useState(false);
   const [thirdOpen, setThirdOpen] = React.useState(false);
@@ -156,7 +161,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       setCurrentEmail("");
     }
 
-    const res = await assignToClassByEmails(classroom, currentUsers.map(u => u.email));
+    const res = await assignToClassByEmails(classroom, currentUsers.map(u => u.email), !sendEmails);
     if (res) {
       //props.history.push(`${map.TeachAssignedTab}?classroomId=${newClassroom.id}&${map.NewTeachQuery}&assignmentExpanded=true`);
     }
@@ -164,6 +169,10 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     setSecondOpen(false);
     setThirdOpen(false);
     props.close();
+  }
+
+  const closeV2 = () => {
+    setCloseV2Open(true);
   }
 
   return (<div>
@@ -183,7 +192,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
             <input placeholder="Class Name" value={value} onChange={e => {
               if (canSubmit === false && value.length > 0) {
                 setSubmit(true);
-              } else if (canSubmit === false && value.length === 0) {
+              } else if (canSubmit === true && value.length === 0) {
                 setSubmit(false);
               }
               setValue(e.target.value);
@@ -196,7 +205,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           <SpriteIcon name="info-icon" />
         </div>
         <div className="message-box-r5">
-          Add a name that will be recognisable later to you and to your students, for example: Year 11 French 2023.
+          Add a name that will be recognisable later to you and to your students, for example: <span className="italic">Year 11 French 2023.</span>
         </div>
         <button
           className="btn btn-md cancel-button"
@@ -205,7 +214,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           <span className="bold">Cancel</span>
         </button>
         <button
-          className="btn btn-md bg-theme-green yes-button"
+          className={`btn btn-md bg-theme-green yes-button ${!canSubmit ? 'invalid' : ''}`}
           onClick={async () => {
             if (canSubmit) {
               setSecondOpen(true);
@@ -221,7 +230,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       </div>
     </Dialog>
     <Dialog
-      open={props.isOpen && secondOpen && !thirdOpen}
+      open={props.isOpen && secondOpen && !closeV2Open && !thirdOpen}
       onClose={props.close}
       className="dialog-box light-blue assign-class-dialog create-classroom-dialog"
     >
@@ -230,7 +239,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           <div className="title">
             Add Assignment to Class
           </div>
-          <SpriteIcon onClick={props.close} name="cancel-custom" />
+          <SpriteIcon onClick={closeV2} name="cancel-custom" />
         </div>
         <div className="text-block">
           <div className="text-r324">
@@ -304,7 +313,9 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
             OR
           </div>
           <div className="flex-center">
-            <div className="btn btn-glasses flex-center">
+            <div className="btn btn-glasses flex-center" onClick={() => {
+              props.history.push(map.ViewAllPage);
+            }}>
               <div className="flex-center">
                 <SpriteIcon name="glasses-home" />
               </div>
@@ -362,6 +373,42 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         </button>
       </div>
     </Dialog>
+    <Dialog
+      open={props.isOpen && closeV2Open && secondOpen && !thirdOpen}
+      onClose={props.close}
+      className="dialog-box light-blue assign-class-dialog create-classroom-dialog"
+    >
+      <div className="dialog-header">
+        <div className="title-box">
+          <div className="title">
+          Are you sure you want to quit Class Creation?
+          </div>
+          <SpriteIcon onClick={props.close} name="cancel-custom" />
+        </div>
+        <div className="text-block">
+          <div className="text-r324">
+            Class including any added bricks or students will not be saved. Click ‘Stay’ to continue editing, or ‘Quit’ to discard the changes and exit the process.
+          </div>
+        </div>
+      </div>
+      <div className="dialog-footer">
+        <div className="info-box">
+        </div>
+        <div className="message-box-r5"></div>
+        <button
+          className="btn btn-md cancel-button"
+          onClick={props.close}
+        >
+          <span className="bold">Quit</span>
+        </button>
+        <button
+          className={`btn btn-md bg-theme-green yes-button ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
+          onClick={() => setCloseV2Open(false)}
+        >
+          <span className="bold">Stay</span>
+        </button>
+      </div>
+    </Dialog>
     {props.isOpen && secondOpen && thirdOpen &&
       <Dialog
         open={props.isOpen && secondOpen && thirdOpen}
@@ -385,15 +432,25 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                 <SpriteIcon name="help-circle-custom" />
               </div>
               <div className="gray-box">
-                {classroom.code}
-                <div className="copy-btn">Copy</div>
+                <input id="classroom-code-vr3" value={classroom.code} />
+                <div className="copy-btn" onClick={() => {
+                  const linkEl = document.getElementById('classroom-code-vr3') as HTMLInputElement;
+                  if (linkEl) {
+                    linkEl.select();
+                    linkEl.setSelectionRange(0, 20);
+                    document.execCommand('copy');
+                    linkEl.setSelectionRange(0, 0);
+                  }
+                }}>Copy</div>
               </div>
               <div className="text-left test-r5-d3 with-help-icon">
                 Share by link
                 <SpriteIcon name="help-circle-custom" />
               </div>
               <div className="gray-box underline-text">
-                {classroom.code}
+                <input id="classroom-link-vr3" value={
+                  document.location.host + '/' + map.QuickassignPrefix + '/' + classroom.code
+                } />
                 <div className="copy-btn">Copy</div>
               </div>
             </div>
@@ -421,8 +478,18 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               setEmpty={setSubmitV2}
             />
           </div>
+          {users.length > 0 && <div className="email-warning">
+            Students might not receive invites if your institution filters emails. <span className="underline bold">How to avoid this</span>
+            <SpriteIcon name="arrow-down" />
+          </div>}
+          <div></div>
+          {/*
+          <div className="send-email-box">
+            <Checkbox checked={sendEmails} onClick={() => setSendEmails(!sendEmails)} />
+            Send email invitations when finished
+            </div>*/}
         </div>
-        <div className="dialog-footer">
+        <div className="dialog-footer one-line">
           <div className="info-box">
             <SpriteIcon name="info-icon" />
           </div>
