@@ -39,6 +39,7 @@
 
 // only create class popup
 .create-classroom-dialog {
+  $main-padding-side: 1.4vw;
   .MuiDialog-paper {
     color: var(--theme-dark-blue) !important;
     background: white !important;
@@ -99,7 +100,7 @@
       margin-top: 3vh;
       margin-bottom: 1.5vh !important;
       font-size: 1vw;
-      padding-right: 1.2vw;
+      padding-right: 1.5vw;
     }
 
     .text-left {
@@ -109,7 +110,7 @@
 
     .left-padding-v2 {
       padding-bottom: 1vh;
-      padding-left: 2vw;
+      padding-left: $main-padding-side;
     }
 
     .code-box {
@@ -126,8 +127,8 @@
     }
 
     .r-student-emails {
-      padding-left: 2vw;
-      padding-right: 2vw;
+      padding-left: $main-padding-side;
+      padding-right: $main-padding-side;
       color: var(--theme-dark-blue) !important;
 
       .MuiAutocomplete-root {
@@ -151,8 +152,8 @@
 
     .text-block {
       padding-top: 4vh;
-      padding-left: 2vw;
-      padding-right: 2vw;
+      padding-left: $main-padding-side;
+      padding-right: $main-padding-side;
       font-family: $font-family-regular !important;
     }
 
@@ -203,12 +204,28 @@
       border-radius: 0.7vw;
       line-height: 2.8;
       font-size: 1.1vw;
-      width: calc(100% - 2vw);
+      width: calc(100% - #{$main-padding-side});
       padding-left: 1vw;
       text-align: left;
       background: #E5E8ED;
 
+      input {
+        padding: 0 !important;
+        font-size: 1.1vw !important;
+        background: unset !important;
+
+
+        &#classroom-link-vr3 {
+          width: 16vw;
+          white-space: nowrap;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
       .copy-btn {
+        transition: all 300ms ease-in-out;
+        cursor: pointer;
         position: absolute;
         border-radius: 0.4vw;
         top: 0.6vw;
@@ -219,6 +236,11 @@
         right: 1vw;
         color: white;
         background: var(--theme-dark-blue);
+
+        &:hover {
+          color: var(--theme-dark-blue);
+          background: white;
+        }
       }
     }
 
@@ -286,6 +308,7 @@
       margin-bottom: 1.8vh;
     }
     .btn-glasses {
+      cursor: pointer;
       padding-top: 0.4vw;
       padding-bottom: 0.4vw;
       padding-left: 2.6vw;
@@ -297,6 +320,37 @@
         height: 3vw;
         width: 4vw;
         color: var(--theme-orange);
+      }
+
+      &:hover {
+        color: white;
+        background: var(--theme-dark-blue);
+      }
+    }
+
+    .send-email-box {
+      padding-left: $main-padding-side;
+      display: flex;
+      font-size: 1.1vw;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: $font-family-regular;
+
+      input {
+        padding: 0vw 0vw !important;
+      }
+
+      .MuiButtonBase-root {
+        padding: 0.3vw !important;
+      }
+
+      .MuiSvgIcon-root {
+        margin: 0 !important;
+        padding: 0vw 0vw !important;
+        stroke-width: 1 !important;
+        color: #BCC4D3 !important;
+        width: 1.4vw !important;
+        height: 1.4vw !important;
       }
     }
 
@@ -319,14 +373,34 @@
       margin-top: 2vh !important;
       margin-bottom: 2vh !important;
     }
+
+    .email-warning {
+      margin-top: 1vh;
+      font-size: 1vw;
+      padding-left: 1vw;
+      padding-top: 0.6vh;
+      padding-bottom: 0.6vh;
+      width: calc(100% - #{$main-padding-side});
+      margin-left: $main-padding-side;
+      border: 2px dashed #BCC4D3;
+      background: #FFFDEA;
+      font-family: $font-family-regular;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      .underline {
+        padding-left: 0.4vw;
+        text-decoration: underline;
+      }
+    }
   }
 
   .dialog-footer {
     background: white;
-    padding: 2vh 2vw;
+    padding: 2vh $main-padding-side;
     border-top: 1px solid #E5E8ED;
 
-    $height: 3.5vw;
+    $height: 3vw;
    
     .info-box {
       margin-right: 0.3vw;
@@ -338,16 +412,17 @@
       }
     }
     .message-box-r5 {
-      font-size: 1.05vw;
+      font-size: 0.95vw;
       width: 40vw;
       height: $height !important;
     }
 
     .btn {
       height: $height !important;
-      padding-top: 0.7vw !important;
-      padding-bottom: 0.7vw !important;
+      padding-top: 0vw !important;
+      padding-bottom: 0vw !important;
       width: 11vw !important;
+      font-size: 1.2vw !important;
 
       &.invalid {
         opacity: 0.3;
@@ -361,6 +436,17 @@
       &:hover {
         background: var(--tab-gray);
       }
+    }
+  }
+
+  .dialog-footer.one-line {
+    .info-box {
+      display: flex;
+      align-items: center;
+    }
+    .message-box-r5 {
+      display: flex;
+      align-items: center;
     }
   }
 
