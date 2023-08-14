@@ -196,7 +196,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
   }
 
   renderAssignment(a: AssignmentBrick, i: number) {
-    const {brick} = a;
+    const { brick } = a;
     const color = this.getColor(a);
     return (
       <PhoneTopBrick16x9
@@ -209,7 +209,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
         onIconClick={e => this.onIconClick(e, a)}
         onClick={() => {
           if (a.bestScore && a.bestScore > 0) {
-            const {user} = this.props;
+            const { user } = this.props;
             this.props.history.push(map.postAssignment(brick.id, user.id));
           } else {
             this.props.history.push(routes.playBrief(brick));
@@ -240,6 +240,12 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
   renderExpandedClass(classroom: ClassroomView) {
     const { assignments, teacher } = classroom;
     const completed = assignments.filter(a => a.bestScore && a.bestScore > 0).length;
+
+    let done = false;
+    if (completed == assignments.length) {
+      done = true;
+    }
+
     return (
       <div>
         <div className="gg-subject-name">
@@ -248,7 +254,14 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
           </div>
           {assignments.length > 0 && (
             <div className="va-expand">
-              <div className="va-class-count flex-center">{completed}/{assignments.length}</div>
+              {done === true ?
+                <div className="va-class-count flex-center completed">
+                  <SpriteIcon name="check-custom" />
+                </div>
+                :
+                <div className="va-class-count flex-center">
+                  {completed}/{assignments.length}
+                </div>}
             </div>
           )}
         </div>
@@ -260,6 +273,10 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
   renderClassroom(classroom: ClassroomView, i: number) {
     const { assignments, teacher } = classroom;
     const completed = assignments.filter(a => a.bestScore && a.bestScore > 0).length;
+    let done = false;
+    if (completed == assignments.length) {
+      done = true;
+    }
     return (
       <div key={i}>
         <div className="gg-subject-name" onClick={() => this.expandClass(classroom)}>
@@ -271,7 +288,14 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
               className="va-expand"
               onClick={() => this.expandClass(classroom)}
             >
-              <div className="va-class-count flex-center">{completed}/{assignments.length}</div>
+              {done === true ?
+                <div className="va-class-count flex-center completed">
+                  <SpriteIcon name="check-custom" />
+                </div>
+                :
+                <div className="va-class-count flex-center">
+                  {completed}/{assignments.length}
+                </div>}
             </div>
           )}
         </div>
