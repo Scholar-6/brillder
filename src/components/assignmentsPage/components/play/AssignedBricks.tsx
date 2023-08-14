@@ -33,7 +33,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     }
 
     let isCompleted = false;
-    if (item.completedDate && item.bestScore > 0) {
+    if (item.bestScore > 0) {
       isCompleted = true;
     }
 
