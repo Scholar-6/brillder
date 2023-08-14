@@ -17,12 +17,18 @@
 
 .student-assignments-page .classroom-name-v5 {
   cursor: pointer;
+  position: relative;
   margin-top: 0.9vw;
   margin-left: 0.9vw;
   margin-right: 1.3vw;
   font-size: 1.1vw;
   color: var(--theme-dark-blue);
   border-bottom: 1px solid #DEDEDE;
+
+  .absolute-right-v5 {
+    position: absolute;
+    right: 0;
+  }
 }
 
 .student-assignments-page .assignment-complete {

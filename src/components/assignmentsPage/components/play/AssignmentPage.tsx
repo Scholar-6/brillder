@@ -70,6 +70,12 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
       if (this.state.activeClassroomId > 0) {
         this.setState({activeClassroomId: -1});
       }
+    } else if (res.length === 3) {
+      // check if active class the same
+      const id = parseInt(res[2]);
+      if (this.state.activeClassroomId != id) {
+        this.setState({activeClassroomId: id});
+      }
     }
   }
 

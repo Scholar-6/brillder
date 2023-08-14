@@ -167,7 +167,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
   }
 
   const renderScore = () => {
-    if (props.isCompleted && props.bestScore && props.bestScore > 0) {
+    if (props.isCompleted && props.bestScore) {
       return (
         <div className="assignment-score">
           <div className="score-number">
