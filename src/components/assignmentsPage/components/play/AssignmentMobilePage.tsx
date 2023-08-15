@@ -74,7 +74,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
   }
 
   componentDidUpdate() {
-    const {pathname} = this.props.history.location;
+    const { pathname } = this.props.history.location;
     const res = pathname.split('/');
 
     // checking path for class id
@@ -104,7 +104,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
         }
       }
     }
-    
+
     for (let classroom of classrooms) {
       classroom.assignments = [];
       for (let assignment of assignments) {
@@ -184,28 +184,41 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
 
   renderGroupSearch() {
     if (this.state.searchExpanded) {
+      let completed = 0;
+      let totalCount = 0;
+      for (let classroom of this.state.classrooms) {
+        totalCount += classroom.assignments.length;
+        completed += classroom.assignments.filter(a => a.bestScore && a.bestScore > 0).length;
+      }
       return (
         <div>
-          <div className="search-background" onClick={() => this.setState({
-            searchExpanded: false
-          })}></div>
+          <div className="search-background" onClick={() => this.setState({ searchExpanded: false })}></div>
           <div className="assignments-search-dropdown">
             <div className="relative drop-container">
               <FormControlLabel
                 checked={this.state.expandedClassroom ? false : true}
                 control={<Radio onClick={() => this.hideClass()} className="filter-radio custom-color" />}
                 label="All Classes" />
-              <div className="c-count-v5">{this.state.assignments.length}</div>
+              <div className="c-count-v5">{completed}/{totalCount}</div>
             </div>
-            {this.state.classrooms.map(c =>
-              <div className="relative drop-container" onClick={() => this.expandClass(c)}>
-                <FormControlLabel
-                  checked={this.state.expandedClassroom ? this.state.expandedClassroom.id === c.id : false}
-                  control={<Radio onClick={() => { }} className="filter-radio custom-color" />}
-                  label={c.name} />
-                <div className="c-count-v5">{c.assignments.length}</div>
-              </div>
-            )}
+            {this.state.classrooms.map(c => {
+              const completed = c.assignments.filter(a => a.bestScore && a.bestScore > 0).length;
+
+              let done = false;
+              if (completed == c.assignments.length) {
+                done = true;
+              }
+
+              return (
+                <div className="relative drop-container" onClick={() => this.expandClass(c)}>
+                  <FormControlLabel
+                    checked={this.state.expandedClassroom ? this.state.expandedClassroom.id === c.id : false}
+                    control={<Radio className="filter-radio custom-color" />}
+                    label={c.name} />
+                  <div className={`c-count-v5 ${done ? 'completed' : ''}`}>{completed}/{c.assignments.length}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       );
@@ -262,8 +275,6 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     if (completed == assignments.length) {
       done = true;
     }
-
-    console.log('assignments: ', assignments);
 
     return (
       <div>
