@@ -40,7 +40,10 @@ const ClassInvitationDialog: React.FC<Props> = props => {
     try {
       if (invitations && invitations[activeStep]) {
         const classId = invitations[activeStep].classroom.id;
-        const res = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].classroom.id}/accept`, {}, { withCredentials: true });
+        const res = await axios.post(
+          `${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].classroom.id}/accept`,
+          {}, { withCredentials: true }
+        );
         if (res.data && res.data === 'OK') {
           setActiveStep(activeStep => activeStep + 1);
           if (activeStep + 1 >= invitations.length) {

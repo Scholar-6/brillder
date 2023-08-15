@@ -144,6 +144,10 @@
           border-radius: 5vw;
           background: white;
           color: var(--theme-dark-blue);
+
+          &.completed {
+            background: #788CB6;
+          }
         }
       }
     }
