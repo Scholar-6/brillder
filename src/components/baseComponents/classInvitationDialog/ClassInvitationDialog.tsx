@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import SpriteIcon from '../SpriteIcon';
 
 interface Props {
-  onFinish?(): void;
+  onFinish?(classId: number): void;
 }
 
 const ClassInvitationDialog: React.FC<Props> = props => {
@@ -47,7 +47,7 @@ const ClassInvitationDialog: React.FC<Props> = props => {
             const newInvitations = await getInvitations();
             if (newInvitations && newInvitations.length <= 0) {
               history.push(map.AssignmentsPage + '/' + classId);
-              props.onFinish?.();
+              props.onFinish?.(classId);
             }
           }
         }
