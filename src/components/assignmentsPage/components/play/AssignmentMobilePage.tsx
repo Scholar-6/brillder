@@ -67,6 +67,30 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     this.getAssignments();
   }
 
+  componentDidUpdate() {
+    const {pathname} = this.props.history.location;
+    const res = pathname.split('/');
+
+    console.log(res);
+
+    // checking path for class id
+    if (res.length === 2) {
+      if (this.state.expandedClassroom) {
+        this.setState({ expandedClassroom: null, searchExpanded: false });
+      }
+    } else if (res.length === 3) {
+      // check if active class the same
+      const id = parseInt(res[2]);
+      console.log('classId', id);
+      if (this.state.expandedClassroom && this.state.expandedClassroom.id != id) {
+        const classroom = this.state.classrooms.find(c => c.id === id);
+        if (classroom) {
+          this.setState({ expandedClassroom: classroom, searchExpanded: false });
+        }
+      }
+    }
+  }
+
   getClassrooms(assignments: AssignmentBrick[]) {
     let classrooms: ClassroomView[] = [];
     for (let assignment of assignments) {
