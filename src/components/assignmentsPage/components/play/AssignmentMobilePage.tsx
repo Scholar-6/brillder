@@ -64,14 +64,18 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
       isAdmin, isTeach,
     }
 
-    this.getAssignments();
+    let activeClassroomId = -1;
+    const { classId } = props.match.params;
+    if (classId && classId > 0) {
+      activeClassroomId = parseInt(classId as string);
+    }
+
+    this.getAssignments(activeClassroomId);
   }
 
   componentDidUpdate() {
     const {pathname} = this.props.history.location;
     const res = pathname.split('/');
-
-    console.log(res);
 
     // checking path for class id
     if (res.length === 2) {
@@ -81,7 +85,6 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     } else if (res.length === 3) {
       // check if active class the same
       const id = parseInt(res[2]);
-      console.log('classId', id);
       if (this.state.expandedClassroom && this.state.expandedClassroom.id != id) {
         const classroom = this.state.classrooms.find(c => c.id === id);
         if (classroom) {
@@ -101,6 +104,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
         }
       }
     }
+    
     for (let classroom of classrooms) {
       classroom.assignments = [];
       for (let assignment of assignments) {
@@ -109,23 +113,33 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
           classroom.assignments.push(assignment);
         }
       }
-      classroom.assignments.sort((a, b) => {
+      classroom.assignments = classroom.assignments.sort((a, b) => {
         if (a.bestScore && a.bestScore > 0) {
           return 1;
         }
         return -1;
       });
+
+      if (classroom.assignments.length > 0) {
+        console.log('classroom1', classroom)
+      }
     }
     // sort 
     return classrooms.filter(c => c.assignments.length > 0);
   }
 
-  async getAssignments() {
+  async getAssignments(activeClassroomId: number) {
     const assignments = await getAssignedBricks();
     const subjects = await getSubjects();
     if (assignments && subjects) {
       let classrooms = this.getClassrooms(assignments);
-      classrooms = this.sortClassrooms(classrooms);
+      console.log('classrooms', classrooms)
+      if (activeClassroomId > 0) {
+        const classroom = classrooms.find(c => c.id === activeClassroomId);
+        if (classroom) {
+          return this.setState({ ...this.state, subjects, isLoaded: true, assignments, classrooms, expandedClassroom: classroom });
+        }
+      }
       this.setState({ ...this.state, subjects, isLoaded: true, assignments, classrooms });
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
@@ -133,28 +147,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     }
   }
 
-  sortClassrooms(classrooms: ClassroomView[]) {
-    return classrooms.sort(c1 => c1.assignments.find(a => a.deadline) ? -1 : 1);
-  }
-
-  sortAssignments(assignments: AssignmentBrick[]) {
-    return assignments.sort((a, b) => {
-      if (a.deadline) {
-        if (a.deadline && b.deadline) {
-          if (new Date(a.deadline).getTime() < new Date(b.deadline).getTime()) {
-            return -1;
-          } else {
-            return 0;
-          }
-        }
-        return -1;
-      }
-      return 1;
-    });
-  }
-
   expandClass(c: any) {
-    c.assignments = this.sortAssignments(c.assignments);
     this.setState({ expandedClassroom: c, searchExpanded: false });
     this.props.history.push(map.AssignmentsPage + '/' + c.id);
   }
@@ -270,6 +263,8 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
       done = true;
     }
 
+    console.log('assignments: ', assignments);
+
     return (
       <div>
         <div className="gg-subject-name">
@@ -280,7 +275,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             <div className="va-expand">
               {done === true ?
                 <div className="va-class-count flex-center completed">
-                  <SpriteIcon name="check-custom" />
+                  {completed}/{assignments.length}
                 </div>
                 :
                 <div className="va-class-count flex-center">
@@ -289,7 +284,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             </div>
           )}
         </div>
-        {this.renderExpandClassAssignments(classroom.assignments)}
+        {this.renderExpandClassAssignments(assignments)}
       </div>
     )
   }
@@ -314,7 +309,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             >
               {done === true ?
                 <div className="va-class-count flex-center completed">
-                  <SpriteIcon name="check-custom" />
+                  {completed}/{assignments.length}
                 </div>
                 :
                 <div className="va-class-count flex-center">
@@ -375,7 +370,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
             }
           </div>
         </div>
-        <ClassInvitationDialog onFinish={() => this.getAssignments()} />
+        <ClassInvitationDialog onFinish={classId => this.getAssignments(classId)} />
         <PersonalBrickInvitationDialog />
         <ClassTInvitationDialog />
       </div>
