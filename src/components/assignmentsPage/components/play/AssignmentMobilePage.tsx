@@ -119,10 +119,6 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
         }
         return -1;
       });
-
-      if (classroom.assignments.length > 0) {
-        console.log('classroom1', classroom)
-      }
     }
     // sort 
     return classrooms.filter(c => c.assignments.length > 0);
@@ -132,8 +128,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     const assignments = await getAssignedBricks();
     const subjects = await getSubjects();
     if (assignments && subjects) {
-      let classrooms = this.getClassrooms(assignments);
-      console.log('classrooms', classrooms)
+      const classrooms = this.getClassrooms(assignments);
       if (activeClassroomId > 0) {
         const classroom = classrooms.find(c => c.id === activeClassroomId);
         if (classroom) {
