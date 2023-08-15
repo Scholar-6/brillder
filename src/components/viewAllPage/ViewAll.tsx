@@ -144,9 +144,7 @@ interface ViewAllState {
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 const TabletTheme = React.lazy(() => import("./themes/ViewAllPageTabletTheme"));
-const DesktopTheme = React.lazy(
-  () => import("./themes/ViewAllPageDesktopTheme")
-);
+const DesktopTheme = React.lazy(() => import("./themes/ViewAllPageDesktopTheme"));
 
 class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   static animationTimeout = 600;
@@ -271,7 +269,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const oldNotifications = prevProps.notifications;
     if (notifications && oldNotifications) {
       if (notifications.length > oldNotifications.length) {
-        this.loadBricks();
+        this.loadBricks(this.state.subjects);
       }
     }
     this.addWheelListener();
@@ -352,7 +350,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadData(values: queryString.ParsedQuery<string>) {
-    await this.loadSubjects(values);
+    const subjects = await this.loadSubjects(values);
 
     if (values.searchString) {
       let page = 0;
@@ -364,7 +362,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (this.state.subjectGroup) {
         this.loadUnauthorizedBricks(this.state.subjectGroup);
       } else {
-        this.loadBricks(values);
+        this.loadBricks(subjects, values);
       }
     } else {
       if (this.state.subjectGroup) {
@@ -409,13 +407,17 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
-  async loadBricks(values?: queryString.ParsedQuery<string>) {
+  async loadBricks(subjects: SubjectItem[] | null, values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
       let subjectIds: number[] = [];
       const {state} = this;
       if (state.isAllSubjects == false) {
         subjectIds = this.props.user.subjects.map(s => s.id);
+      } else {
+        let checked = subjects?.filter(s => s.checked);
+        subjectIds = checked ? checked.map(s => s.id) : [];
       }
+
       const pageBricks = await getPublishedBricksByPage(
         state.pageSize, state.page, true,
         state.filterLevels, state.filterLength, subjectIds,
