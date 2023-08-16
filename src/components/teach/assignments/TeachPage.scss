@@ -421,10 +421,6 @@
   }
 
   .empty-filter-content {
-    padding-top: calc(30vh);
-    padding-left: 2vw;
-    padding-right: 2vw;
-
     font-size: 1.3vw;
 
     text-align: center;
@@ -435,41 +431,45 @@
     }
 
     position: relative;
-    .top-row-v5 {
-      position: absolute;
-      top: 0;
-      left: 0;
-      padding-left: 2vw;
+  }
+
+  .top-row-v5 {
+    padding-left: 2vw;
+    display: flex;
+    width: 100%;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    border-bottom: 2px solid rgba(222,222,222, 0.2);
+
+    .text {
       display: flex;
-      width: 100%;
-      padding-top: 4vh;
-      padding-bottom: 4vh;
-      border-bottom: 2px solid rgba(222,222,222, 0.2);
+      align-items: center;
+      margin-bottom: 0;
+    }
 
-      .text {
-        margin-bottom: 0;
-      }
+    .btn-orange {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-size: 1vw;
+      margin-left: 7vw;
+      color: white;
+      border-radius: 3vw;
+      padding-top: 0.3vw;
+      padding-bottom: 0.3vw;
+      padding-left: 1vw;
+      padding-right: 1vw;
+      background: var(--theme-orange);
 
-      .btn-orange {
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        font-size: 1vw;
-        margin-left: 7vw;
-        color: white;
-        border-radius: 3vw;
-        padding-top: 0.3vw;
-        padding-bottom: 0.3vw;
-        padding-left: 1vw;
-        padding-right: 1vw;
-        background: var(--theme-orange);
-
-        &:hover {
-          background: white;
-          color: var(--theme-dark-blue);
-        }
+      &:hover {
+        background: white;
+        color: var(--theme-dark-blue);
       }
     }
+  }
+
+  .typed-textbox-v9 {
+    padding-top: 20vh;
   }
 }
 
@@ -593,9 +593,6 @@
     font-family: $font-family-regular;
     padding-left: 1.4vw;
 
-    color: var(--white);
-    background: var(--theme-orange) !important;
-
     &.m-view-all-d31 {
       display: flex;
     }
@@ -638,7 +635,7 @@
   }
   .one-classroom-assignments {
     background: white;
-    height: calc(100vh - 7.834vw - 2vh - 6.6vh - 2.6vw);
+    height: calc(100vh - 5.834vw - 2vh);
   }
   .name-and-edit-btn {
     display: flex;
