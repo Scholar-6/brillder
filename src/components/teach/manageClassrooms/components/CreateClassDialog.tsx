@@ -326,7 +326,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                 if (i === selectedBricks.length - 1) {
                   additionalClass = '';
                 }
-                return (<div className={`brick-row bold ${additionalClass}`}>
+                return (<div className={`brick-row bold ${additionalClass}`} key={i}>
                   {stripHtml(b.title)}
                   <SpriteIcon name="cancel-custom" onClick={() => {
                     const filteredBricks = selectedBricks.filter(bs => bs.id !== b.id);

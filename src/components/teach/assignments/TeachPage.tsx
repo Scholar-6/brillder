@@ -617,16 +617,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       return (
         <Grid item xs={9} className="brick-row-container teach-tab-d94 bg-light-blue no-active-class flex-center">
           <div>
-            <div className="icon-container">
-              <TeachIcon />
-            </div>
-            <div className="sub-title-sd32">
-              Nothing Selected
-            </div>
-            <div>
-              <div className="font-light">Select a class from the panel on the left to</div>
-              <div className="font-light">start managing classes and learners</div>
-            </div>
           </div>
         </Grid>
       );
@@ -646,7 +636,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (!this.state.isLoaded) {
       return (
         <Grid item xs={9} className="brick-row-container teach-tab-d94">
-          <TeachTab activeTab={TeachActiveTab.Assignments} history={this.props.history} onAssign={() => this.setState({ isAssignOpen: true })} assignmentsEnabled={true} />
           <div className="tab-content">
             <div className="f-top-loader">
               <SpriteIcon name="f-loader" className="spinning" />
@@ -705,7 +694,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
             activeStudent={this.state.activeStudent}
             activeClassroom={this.state.activeClassroom}
             hideIntro={() => this.setState({ isNewTeacher: false })}
-            isArchive={isArchive}
             setActiveClassroom={this.setActiveClassroom.bind(this)}
             loadClass={classId => this.loadClass(classId)}
             setActiveStudent={this.setActiveStudent.bind(this)}

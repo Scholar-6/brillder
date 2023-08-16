@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid } from "@material-ui/core";
+import { FormControlLabel, Grid, Radio } from "@material-ui/core";
 // @ts-ignore
 import { Steps } from 'intro.js-react';
 
@@ -30,7 +30,6 @@ interface FilterSidebarProps {
   classrooms: TeachClassroom[];
   activeStudent: TeachStudent | null;
   activeClassroom: TeachClassroom | null;
-  isArchive: boolean;
   setActiveStudent(s: TeachStudent): void;
   setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
@@ -97,6 +96,12 @@ class TeachFilterSidebar extends Component<
     if (active === true) {
       this.props.setActiveClassroom(activeClassroom.id);
     }
+  }
+
+  unselectClassroom(e: any) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.props.setActiveClassroom(-1);
   }
 
   renderStudent(s: TeachStudent, key: number) {
@@ -219,9 +224,7 @@ class TeachFilterSidebar extends Component<
 
   renderClassesBox() {
     let finalClasses = [];
-    let finalArchivedClasses = [];
     let classrooms = this.props.classrooms.filter(c => c.status == ClassroomStatus.Active);
-    let archivedClassrooms = this.props.classrooms.filter(c => c.status == ClassroomStatus.Archived);
 
     for (const cls of classrooms) {
       const finalClass = Object.assign({}, cls) as any;
@@ -243,35 +246,13 @@ class TeachFilterSidebar extends Component<
       });
     }
 
-    for (const cls of archivedClassrooms) {
-      const finalClass = Object.assign({}, cls) as any;
-      finalClass.assigned = getClassAssignedCount(cls);
-      finalArchivedClasses.push(finalClass);
-    }
-
-    if (sort === SortClassroom.Date) {
-      finalArchivedClasses = finalArchivedClasses.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
-    } else if (sort === SortClassroom.Assignment) {
-      finalArchivedClasses = finalArchivedClasses.sort((a, b) => b.assignmentsCount - a.assignmentsCount);
-    } else if (sort === SortClassroom.Name) {
-      finalArchivedClasses = finalArchivedClasses.sort((a, b) => {
-        const al = a.name.toUpperCase();
-        const bl = b.name.toUpperCase();
-        if (al < bl) { return -1; }
-        if (al > bl) { return 1; }
-        return 0;
-      });
-    }
-
     return (
       <div className="sort-box teach-sort-box flex-height-box">
         <div className="sort-box">
-          <div className="classrooms-header">
-            <div className="label-ew23 bold">
-              My Classes
-            </div>
-            <div className="create-class-button assign flex-relative" onClick={() => this.setState({ createClassOpen: true })}>
-              <SpriteIcon name="plus-circle" /> Create Class
+          <div className="top-row-v5">
+            <div className="text bold">CLASSES</div>
+            <div className="btn btn-orange" onClick={() => this.setState({ createClassOpen: true })}>
+              Create Class
             </div>
           </div>
           <div
@@ -281,7 +262,19 @@ class TeachFilterSidebar extends Component<
             }
           >
             <div className="label-34rerf">
-              Current ({finalClasses.length})
+              <FormControlLabel
+                value={!this.props.activeClassroom}
+                style={{ marginRight: 0}}
+                onClick={e => this.unselectClassroom(e)}
+                control={
+                  <Radio
+                    className="sortBy"
+                    checked={!this.props.activeClassroom}
+                  />
+                }
+                label={`All Classes (${finalClasses.length}`}
+              />
+              )
             </div>
             <SortButton sort={this.state.sort} sortByName={() => {
               this.setState({ sort: SortClassroom.Name });
@@ -297,30 +290,6 @@ class TeachFilterSidebar extends Component<
             {finalClasses.map(this.renderClassroom.bind(this))}
           </div>
         </div>
-        <div className="sort-box">
-          <div
-            className={
-              "index-box m-view-all flex-center " +
-              (!this.props.activeClassroom ? "active" : "")
-            }
-          >
-            <div className="label-34rerf">
-              Archived ({finalArchivedClasses.length})
-            </div>
-            <SortButton sort={this.state.sort} sortByName={() => {
-              this.setState({ sort: SortClassroom.Name });
-            }} sortByDate={() => {
-              this.setState({ sort: SortClassroom.Date });
-            }} sortByAssignmets={() => {
-              this.setState({ sort: SortClassroom.Assignment });
-            }} />
-          </div>
-        </div>
-        <div className="sort-box subject-scrollable">
-          <div className="filter-container indexes-box classrooms-filter">
-            {finalArchivedClasses.map(this.renderClassroom.bind(this))}
-          </div>
-        </div>
         {(this.props.user.subscriptionState === 0 || !this.props.user.subscriptionState) && this.renderPremiumBoxCondition()}
       </div>
     );
@@ -333,6 +302,7 @@ class TeachFilterSidebar extends Component<
     if (this.props.isLoaded && this.props.classrooms.length === 0) {
       return <EmptyFilter createClassToggle={() => this.setState({ createClassOpen: true })} />;
     }
+
     return this.renderClassesBox();
   }
 
@@ -355,18 +325,18 @@ class TeachFilterSidebar extends Component<
         {this.renderContent()}
         <div className="sidebar-footer" />
         {this.state.createClassOpen &&
-        <CreateClassDialog
-          isOpen={this.state.createClassOpen}
-          subjects={this.state.subjects}
-          history={this.props.history}
-          submit={classroomId => {
-            this.props.loadClass(classroomId);
-            this.setState({ createClassOpen: false });
-          }}
-          close={() => {
-            this.setState({ createClassOpen: false });
-          }}
-        />}
+          <CreateClassDialog
+            isOpen={this.state.createClassOpen}
+            subjects={this.state.subjects}
+            history={this.props.history}
+            submit={classroomId => {
+              this.props.loadClass(classroomId);
+              this.setState({ createClassOpen: false });
+            }}
+            close={() => {
+              this.setState({ createClassOpen: false });
+            }}
+          />}
         {this.props.isNewTeacher &&
           <Steps
             enabled={this.props.isNewTeacher}

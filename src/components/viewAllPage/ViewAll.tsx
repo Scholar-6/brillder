@@ -273,6 +273,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       }
     }
     this.addWheelListener();
+
+    // check if back button pressed
+    // refresh page data
   }
 
   onBricksWheel(e: any) {
@@ -413,6 +416,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       const {state} = this;
       if (state.isAllSubjects == false) {
         subjectIds = this.props.user.subjects.map(s => s.id);
+        let checked = subjects?.filter(s => s.checked);
+        if (checked && checked.length > 0) {
+          subjectIds = checked.map(s => s.id);
+        }
       } else {
         let checked = subjects?.filter(s => s.checked);
         subjectIds = checked ? checked.map(s => s.id) : [];

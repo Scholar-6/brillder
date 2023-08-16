@@ -159,24 +159,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   render() {
     return (
       <div>
-        <div className="classroom-title one-of-many first">
-          {this.renderClassname()}
-        </div>
-        <TeachTab
-          activeTab={TeachActiveTab.Assignments}
-          classroom={this.props.activeClassroom}
-          history={this.props.history}
-          onAssign={this.props.onAssign}
-          assignmentsEnabled={true} 
-        />
-        <ArchiveToggle
-          isArchive={this.props.isArchive}
-          history={this.props.history}
-          activeStudent=""
-          activeClassroom={this.props.activeClassroom}
-          setArchive={this.props.toggleArchive}
-        />
         <div className="classroom-list one-classroom-assignments">
+          <div className="sub-title-v8 bold">All My Classes</div>
           {this.renderContent()}
         </div>
       </div>
