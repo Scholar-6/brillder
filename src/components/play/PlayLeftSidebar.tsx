@@ -335,12 +335,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         />
         {renderAdaptButton()}
         <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
-        {checkTeacherOrAdmin(this.props.user) &&
+        {/*checkTeacherOrAdmin(this.props.user) &&
           <GenerateCoverButton
             sidebarRolledUp={sidebarRolledUp}
             brick={this.props.brick}
           />
-        }
+        */}
         {(isInstitutionPreference(this.props.user) || isAdmin) &&
           <CompetitionButton competitionPresent={this.state.competition !== null} sidebarRolledUp={sidebarRolledUp} onDownload={this.onDownload.bind(this)} onClick={this.onCompetition.bind(this)} />}
         {isAdmin && <AdminBrickStatisticButton brick={this.props.brick} history={this.props.history} />}

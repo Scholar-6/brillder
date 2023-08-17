@@ -97,7 +97,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         <div className="share-row flex-center">
           <ShareColumn onClick={() => setShare(true)} />
           {canSee && <AssignBrickColumn onClick={() => setAssign(true)} />}
-          {canSee && <GenerateCoverButton brick={brick} isFinal={true} />}
+          {/*canSee && <GenerateCoverButton brick={brick} isFinal={true} />*/}
         </div>
       );
     }
@@ -106,7 +106,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         <ShareColumn size={3} onClick={() => setShare(true)} />
         {canSee && <AssignBrickColumn size={3} onClick={() => setAssign(true)} />}
         {canSee && <AdaptBrickColumn size={3} onClick={() => setIsAdaptBrickOpen(true)} />}
-        {canSee && <GenerateCoverButton size={3} brick={brick} isFinal={true} />}
+        {/*canSee && <GenerateCoverButton size={3} brick={brick} isFinal={true} />*/}
       </Grid>
     );
   }
