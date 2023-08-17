@@ -163,7 +163,7 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
         Assign Brick <SpriteIcon name="file-plus" />
       </MenuItem>
       <FullScreenButton />
-      <GenerateCoverButton brick={brick} isMenuItem={true} />
+      {/*<GenerateCoverButton brick={brick} isMenuItem={true} />*/}
     </Menu>
     <ExitPlayDialog isOpen={exitPlay} history={history} subjectId={brick.subject?.id || brick.subjectId} close={() => setExit(false)} />
   </div>;
