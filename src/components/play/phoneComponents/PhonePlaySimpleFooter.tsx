@@ -47,7 +47,7 @@ const PhonePlaySimpleFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
         <SpriteIcon name="" />
         <SpriteIcon name="" />
-        {props.showQRCode && <GenerateCoverButton brick={brick} isSvg={true} />}
+        {/*props.showQRCode && <GenerateCoverButton brick={brick} isSvg={true} />*/}
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         {props.music && <MusicAutoplay url={props.music} />}
