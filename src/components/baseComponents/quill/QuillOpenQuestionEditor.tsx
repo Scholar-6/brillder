@@ -16,6 +16,7 @@ import QuillBetterTable from "./QuillBetterTable";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import { getKeyboardBindings } from "./KeyBoardBinddings";
 
 function randomEditorId() {
   return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -87,7 +88,7 @@ const QuillOpenQuestionEditor = React.forwardRef<HTMLDivElement, QuillEditorProp
     autolink: props.allowLinks ?? false,
     mediaembed: props.allowMediaEmbed ?? false,
     keyboard: {
-      bindings: QuillBetterTable.keyboardBindings,
+      bindings: getKeyboardBindings(),
     },
     history: {
       userOnly: true,

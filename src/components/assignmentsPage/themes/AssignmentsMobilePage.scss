@@ -144,6 +144,10 @@
           border-radius: 5vw;
           background: white;
           color: var(--theme-dark-blue);
+
+          &.completed {
+            background: #788CB6;
+          }
         }
       }
     }
@@ -232,6 +236,17 @@
         color: white;
         background: var(--theme-light-blue);
         font-size: 4vw;
+
+        svg {
+          width: 4vw;
+          height: 4vw;
+        }
+
+        &.completed {
+          stroke-width: 3;
+          color: var(--theme-dark-blue);
+          background: #788CB6;
+        }
       }
 
       .va-expand {
@@ -263,9 +278,9 @@
       .best-score-container {
         position: absolute;
         z-index: 100;
-        background: rgba(255,255,255,0);
+        background: rgba(255,255,255,0.4);
         width: 100%;
-        height: calc(100% - 9vw);
+        height: calc(33vw - 9vw);
 
         $borderc: 1.6vw;
         $sizec: 12vw;
@@ -406,7 +421,7 @@
             z-index: 100;
             background: rgba(255,255,255,0);
             width: 100%;
-            height: calc(100% - 9vw);
+            height: calc(33vw - 9vw);
     
             $borderc: 1.6vw;
             $sizec: 12vw;
@@ -628,4 +643,10 @@
       }
     }
   }
+}
+
+// expanded class
+.student-mobile-assignments-page .va-bricks-container .ba-content.full .phone-top-brick-16x9 .best-score-container {
+  height: 36.6vw !important;
+  background: rgba(255, 255, 255, 0.4);
 }

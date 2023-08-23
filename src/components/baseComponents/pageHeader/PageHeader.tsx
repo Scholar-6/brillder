@@ -48,6 +48,8 @@ interface Props {
   competitionId?: number;
   suggestions?: boolean;
 
+  initialSearchString?: string;
+
   user: User;
   history: any;
   search(): void;
@@ -81,10 +83,16 @@ interface State {
 class PageHeader extends Component<Props, State> {
   constructor(props: any) {
     super(props);
+
+    let value = '';
+    if (props.initialSearchString) {
+      value = props.initialSearchString;
+    }
+
     this.state = {
       searchVisible: false,
       dropdownShown: false,
-      value: '',
+      value,
       bricks: [],
       keywords: [],
       subjects: [],

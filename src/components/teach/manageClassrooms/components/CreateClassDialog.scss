@@ -35,28 +35,378 @@
     padding-left: 0 !important;
     padding-right: 1.1vw !important;
   }
-
-  .title { 
-    font-size: 2vw;
-  }
 }
 
 // only create class popup
 .create-classroom-dialog {
+  $main-padding-side: 1.4vw;
+  .MuiDialog-paper {
+    color: var(--theme-dark-blue) !important;
+    background: white !important;
+    width: 45vw;
+  }
+
+  &.longer .MuiDialog-paper {
+    width: 55vw;
+  }
   .MuiPaper-root {
     padding: 0 !important;
   }
   .dialog-header {
-    padding: 3vh 3vw 4vh 3vw;
-    width: 55vw;
+    padding: 3vh 0 4vh 0;
+
+    .title-box {
+      position: relative;
+      border-bottom: 1px solid #E5E8ED;
+
+      .title {
+        font-size: 1.5vw;
+        margin-bottom: 2.3vh !important;
+      }
+
+      svg {
+        cursor: pointer;
+        top: 0.1vw;
+        right: 1.5vw;
+        width: 2vw;
+        height: 2vw;
+        stroke-width: 2.2;
+        position: absolute;
+        transition: all 100ms ease-in-out;
+
+        &:hover {
+          color: var(--theme-orange);
+        }
+      }
+    }
+
+    .two-columns {
+      display: flex;
+
+      .block-one {
+        width: 25vw;
+        border-right: 1px solid #E5E8ED;
+      }
+      .block-two {
+        padding-left: 1.2vw;
+
+        .text-left {
+          padding-left: 0;
+        }
+      }
+    }
+
+    .or-text-v2 {
+      margin-top: 3vh;
+      margin-bottom: 1.5vh !important;
+      font-size: 1vw;
+      padding-right: 3.8vw;
+    }
+
+    .bottom-box-padding {
+      padding-left: $main-padding-side;
+    }
+
+    .text-left {
+      font-size: 1.1vw;
+      text-align: left !important;
+    }
+
+    .left-padding-v2 {
+      padding-bottom: 1vh;
+    }
+
+    .code-box {
+      border-radius: 0.5vw;
+      width: 25vw;
+      height: calc(5vh + 10vw);
+      background: var(--tab-gray);
+      position: relative;
+
+      transition: all 300ms ease-in-out;
+
+      .qr-code-img {
+        padding-top: 2.5vh;
+        padding-bottom: 2.5vh;
+        height: 100%;
+      }
+
+      .expand-btn {
+        cursor: pointer;
+        position: absolute;
+        top: 0.3vw;
+        right: 0.2vw;
+        transition: all 100ms ease-in-out;
+
+        &:hover {
+          color: var(--theme-light-blue);
+        }
+      }
+
+      &.expanded {
+        padding-left: 2vw;
+        padding-right: 2vw;
+        height: calc(35vh + 10vw);
+
+        .qr-code-img {
+          padding-top: 3.1vw;
+          padding-bottom: 3.5vw;
+        }
+
+        .absolute-code-label {
+          position: absolute;
+          bottom: 1.2vw;
+        }
+      }
+    }
+
+    .r-student-emails {
+      padding-right: $main-padding-side;
+      color: var(--theme-dark-blue) !important;
+
+      .MuiAutocomplete-root {
+        color: var(--theme-dark-blue) !important;
+        border-radius: 0.8vw;
+        border: 2px solid var(--tab-gray) !important;
+
+        .MuiInputBase-root {
+          padding-top: 0.5vw;
+          background: white !important;
+          color: var(--theme-dark-blue) !important;
+  
+          input {
+            font-size: 1.2vw !important;
+            color: var(--theme-dark-blue) !important;
+            background: white !important;
+          }
+        }
+      }
+    }
+
+    .text-block {
+      padding-top: 4vh;
+      padding-left: $main-padding-side;
+      padding-right: $main-padding-side;
+      font-family: $font-family-regular !important;
+    }
 
     .text-r324 {
       margin-bottom: 2vh !important;
       text-align: left !important;
+
+      .subject-autocomplete {
+        margin-top: 1.5vh !important;
+        margin-bottom: 1.8vh !important;
+        border: none;
+        position: relative;
+
+        .search-container {
+          position: absolute;
+          top: 0.8vw;
+          left: 0.6vw;
+          z-index: 6;
+
+          svg {
+            color: #7E7E7E;
+            stroke-width: 2;
+            width: 1.4vw;
+            height: 1.4vw;
+          }
+        }
+
+        .MuiInputBase-root {
+          padding: 0 !important;
+
+          input {
+            border: 1px solid #BCC4D3;
+            border-radius: 1vw;
+            padding-left: 3vw;
+          }
+  
+          &::after,
+          &::before {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .gray-box {
+      margin-top: 0.4vw;
+      position: relative;
+      border-radius: 0.7vw;
+      line-height: 2.8;
+      font-size: 1.1vw;
+      width: calc(100% - #{$main-padding-side});
+      padding-left: 1vw;
+      text-align: left;
+      background: #E5E8ED;
+
+      input {
+        padding: 0 !important;
+        font-size: 1.1vw !important;
+        background: unset !important;
+
+
+        &#classroom-link-vr3 {
+          width: 16vw;
+          white-space: nowrap;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .copy-btn {
+        transition: all 300ms ease-in-out;
+        cursor: pointer;
+        position: absolute;
+        border-radius: 0.4vw;
+        top: 0.6vw;
+        line-height: 1.6;
+        height: 1.9vw;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        right: 1vw;
+        color: white;
+        background: var(--theme-dark-blue);
+
+        &:hover {
+          color: var(--theme-dark-blue);
+          background: white;
+        }
+      }
+    }
+
+    .test-r5-d3 {
+      margin-top: 2vh;
+      font-size: 1.1vw;
+
+      &.with-help-icon {
+        position: relative;
+
+        .share-popup-box {
+          position: absolute;
+          top: 0.1vw;
+          right: 1.6vw;
+          svg {
+            margin: 0 !important;
+          }
+
+          .hover-content {
+            padding: 0 1vw !important;
+            top: 2vw !important;
+            left: unset !important;
+            right: 0 !important;
+            font-size: 1vw !important;
+            border-radius: 0.7vw !important;
+            line-height: 1.2;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            background: white;
+            width: 15vw;
+            color: var(--theme-dark-blue);
+
+            a {
+              text-decoration: underline;
+              color: var(--theme-dark-blue);
+            }
+          }
+        }
+      }
     }
 
     .help-text-r423 {
       text-align: left !important;
+    }
+
+    .bricks-box {
+      height: 14vw;
+      background: #F7F7F7;
+      overflow-y: auto;
+
+      .brick-row {
+        margin-left: 0.7vw;
+        margin-right: 0.7vw;
+        position: relative;
+        text-align: left;
+        line-height: 2.4;
+        padding-left: 1vw;
+        padding-right: 4vw;
+
+        &.down-border {
+          border-bottom: 2px solid #E5E8ED;
+        }
+
+        svg {
+          cursor: pointer;
+          position: absolute;
+          top: 0.94vw;
+          right: 0.4vw;
+          width: 1.6vw;
+          height: 1.6vw;
+          stroke-width: 2;
+          transition: all 100ms ease-in-out;
+
+          &:hover {
+            color: var(--theme-orange);
+          }
+        }
+      }
+
+      &.empty {
+        font-size: 1vw;
+        color: #4C608A;
+      }
+    }
+
+    .or-text {
+      font-size: 1.1vw;
+      margin-bottom: 1.8vh;
+    }
+    .btn-glasses {
+      cursor: pointer;
+      padding-top: 0.4vw;
+      padding-bottom: 0.4vw;
+      padding-left: 2.6vw;
+      padding-right: 3.5vw;
+      background: #E5E8ED;
+
+      svg {
+        padding-right: 1vw;
+        height: 3vw;
+        width: 4vw;
+        color: var(--theme-orange);
+      }
+
+      &:hover {
+        color: white;
+        background: var(--theme-dark-blue);
+      }
+    }
+
+    .send-email-box {
+      padding-left: $main-padding-side;
+      display: flex;
+      font-size: 1.1vw;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: $font-family-regular;
+
+      input {
+        padding: 0vw 0vw !important;
+      }
+
+      .MuiButtonBase-root {
+        padding: 0.3vw !important;
+      }
+
+      .MuiSvgIcon-root {
+        margin: 0 !important;
+        padding: 0vw 0vw !important;
+        stroke-width: 1 !important;
+        color: #BCC4D3 !important;
+        width: 1.4vw !important;
+        height: 1.4vw !important;
+      }
     }
 
     font-size: 1.4vw !important;
@@ -64,6 +414,9 @@
     .r-class-inputs input {
       border-radius: 1vw !important;
       width: 100% !important;
+      background: var(--white) !important;
+      color: var(--theme-dark-blue) !important;
+      border: 2px solid #BCC4D3;
     }
 
     > div {
@@ -75,23 +428,97 @@
       margin-top: 2vh !important;
       margin-bottom: 2vh !important;
     }
+
+    .email-warning {
+      margin-top: 1vh;
+      font-size: 1vw;
+      padding-left: 1vw;
+      padding-top: 0.6vh;
+      padding-bottom: 0.6vh;
+      width: calc(100% - #{$main-padding-side});
+      border: 2px dashed #BCC4D3;
+      background: #FFFDEA;
+      font-family: $font-family-regular;
+
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        span {
+          text-align: left !important;
+        }
+        .underline {
+          display: inline;
+          cursor: pointer;
+          padding-left: 0.4vw;
+          text-decoration: underline;
+        }
+
+        svg {
+          cursor: pointer;
+          transition: all 300ms ease-in-out;
+
+          &.arrow-up {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
   }
 
   .dialog-footer {
     background: white;
-    padding: 2vh 3vw 2vh 3vw;
-    
+    padding: 2vh $main-padding-side;
+    border-top: 1px solid #E5E8ED;
+
+    $height: 3vw;
+   
+    .info-box {
+      margin-right: 0.3vw;
+      height: $height !important;
+      svg {
+        margin-top: 0.2vw;
+        width: 1.4vw;
+        height: 1.4vw;
+      }
+    }
     .message-box-r5 {
-      font-size: 1.3vw;
-      width: 33vw;
-      color: var(--theme-orange);
+      font-size: 0.95vw;
+      width: 40vw;
+      height: $height !important;
     }
 
-    .invalid {
-      opacity: 0.7 !important;
-    }
     .btn {
+      height: $height !important;
+      padding-top: 0vw !important;
+      padding-bottom: 0vw !important;
       width: 11vw !important;
+      font-size: 1.2vw !important;
+
+      &.invalid {
+        opacity: 0.3;
+      }
+    }
+
+    .cancel-button {
+      border: 2px solid #BCC4D3;
+      background: white;
+
+      &:hover {
+        background: var(--tab-gray);
+      }
+    }
+  }
+
+  .dialog-footer.one-line {
+    .info-box {
+      display: flex;
+      align-items: center;
+    }
+    .message-box-r5 {
+      display: flex;
+      align-items: center;
     }
   }
 
