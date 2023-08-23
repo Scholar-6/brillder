@@ -37,6 +37,8 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
     setPreference(preferenceId);
     try {
       await setUserPreference(preferenceId, true);
+      await props.getUser();
+
       if (!isInit && !isPhone()) {
         props.history.push(map.SetUsername);
       }

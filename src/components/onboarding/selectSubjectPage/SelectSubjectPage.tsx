@@ -102,10 +102,9 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
     const saved = await updateUser(userToSave);
 
     if (saved) {
-      let isSchool = checkIfSchool();
+      const {history} = this.props;
+      const isSchool = checkIfSchool();
       
-      console.log('isschool', isSchool)
-
       if (isSchool) {
         window.location.href = 'https://brillder.com/brilliant-minds-prizes/';
         return;
@@ -113,11 +112,11 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
 
       await this.props.getUser();
       if (isStudentPreference(user)) {
-        this.props.history.push(map.MainPage + '?newStudent=true');
+        history.push(map.MainPage + '?newStudent=true');
       } else if (isTeacherPreference(user)) {
-        this.props.history.push(map.MainPage + '?' + map.NewTeachQuery);
+        history.push(map.MainPage + '?' + map.NewTeachQuery);
       } else {
-        this.props.history.push(map.UserProfile + '?onboardingUser=true');
+        history.push(map.UserProfile + '?onboardingUser=true');
       }
     } else {
       //this.props.requestFailed("Can`t save user profile");

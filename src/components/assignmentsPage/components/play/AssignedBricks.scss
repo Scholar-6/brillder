@@ -16,23 +16,30 @@
 
 
 .student-assignments-page .classroom-name-v5 {
+  cursor: pointer;
+  position: relative;
   margin-top: 0.9vw;
   margin-left: 0.9vw;
   margin-right: 1.3vw;
   font-size: 1.1vw;
   color: var(--theme-dark-blue);
   border-bottom: 1px solid #DEDEDE;
+
+  .absolute-right-v5 {
+    position: absolute;
+    right: 0;
+  }
 }
 
 .student-assignments-page .assignment-complete {
   position: absolute;
   cursor: pointer;
-  top: 1.05vw;
-  left: 0.9vw;
+  top: 0;
+  left: 0;
   z-index: 100;
   background: rgba(255, 255, 255, 0.8);
-  height: calc(100% - 2.1vw - 3vw);
-  width: calc(100% - 2.2vw);
+  height: calc(calc( 100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh )/3 - 3vw);
+  width: 100%;
 
   .assignment-score {
     height: 100%;

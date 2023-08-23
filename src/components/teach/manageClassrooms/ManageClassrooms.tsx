@@ -31,7 +31,7 @@ import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/Studen
 import NameAndSubjectForm from "../components/NameAndSubjectForm";
 import ClassroomFilterItem from "./components/ClassroomFilterItem";
 import { socket } from "socket/socket";
-import map from "components/map";
+import { Subject } from "model/brick";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -88,6 +88,8 @@ interface UsersListState {
 
   teacherId: number;
 
+  subjects: Subject[];
+
   pageStudentsSelected: boolean;
 }
 
@@ -109,6 +111,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       users: [],
       classrooms: [],
       page: 0,
+      subjects: [],
       pageSize,
       classPageSize: 12,
       viewAllPageSize: pageSize,
@@ -852,9 +855,18 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         {this.state.createClassOpen &&
           <CreateClassDialog
             isOpen={this.state.createClassOpen}
-            submit={(name, users) => {
-              this.createClass(name, users);
+            subjects={this.state.subjects}
+            history={this.props.history}
+            submit={async (classroomId) => {
+              const classrooms = await this.getClassrooms();
               this.setState({ createClassOpen: false })
+              let activeClassroom: any = classrooms.find(c => c.id === classroomId);
+              if (!activeClassroom) {
+                activeClassroom = null;
+              } else {
+                activeClassroom.isActive = true;
+              }
+              this.setState({ activeClassroom, createClassOpen: false });
             }}
             close={() => { this.setState({ createClassOpen: false }) }}
           />

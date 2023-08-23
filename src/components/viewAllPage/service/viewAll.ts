@@ -76,6 +76,7 @@ export const sortAndCheckSubjects = (subjects: Subject[], values: queryString.Pa
       }
     }
   });
+
   if (values.subjectIds) {
     const subjectIds = values.subjectIds as string;
     const idsArray = subjectIds.split(',');

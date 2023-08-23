@@ -477,6 +477,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             {this.state.user.userPreference &&
               <RolesBox
                 roles={this.state.roles}
+                user={this.props.user}
                 userId={this.state.user.id}
                 userRoles={this.state.user.roles}
                 isAdmin={this.state.isAdmin}
