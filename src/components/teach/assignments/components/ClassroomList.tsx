@@ -137,6 +137,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
 
     convertClassAssignments(items, classroom, this.props.isArchive);
 
+    console.log(items);
+
     if (items.length === 0) {
       if (classroom.status === ClassroomStatus.Active) {
         return <EmptyClassTab history={this.props.history} activeClassroom={classroom} />;
@@ -160,7 +162,6 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     return (
       <div>
         <div className="classroom-list one-classroom-assignments">
-          <div className="sub-title-v8 bold">All My Classes</div>
           {this.renderContent()}
         </div>
       </div>
