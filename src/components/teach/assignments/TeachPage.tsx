@@ -87,7 +87,7 @@ interface TeachState {
   remindersData: RemindersData;
   createClassOpen: boolean;
   isAssignOpen: boolean;
-  assignClass: any;
+  selectedClassroom: any;
   successAssignResult: any;
   failAssignResult: any;
 
@@ -170,7 +170,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       deleteClassOpen: false,
       classroomToRemove: null,
       isAssignOpen: false,
-      assignClass: null,
+      selectedClassroom: null,
 
       successAssignResult: {
         isOpen: false, brick: null
@@ -686,13 +686,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
                     name="button-r46"
                     className="button-svg"
                     onClick={() => { 
-                      this.setState({isAssignOpen: true, assignClass: c})
+                      this.setState({isAssignOpen: true, selectedClassroom: c})
                     }}
                   />
                   <SpriteIcon
                     name="button-r44"
                     className="button-svg"
-                    onClick={() => { }}
+                    onClick={() => {
+                      this.setState({selectedClassroom: c})
+                    }}
                   />
                   <SpriteIcon
                     name="button-r45"
@@ -811,12 +813,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
         {this.state.isAssignOpen &&
           <AssignBrickClass
             isOpen={this.state.isAssignOpen}
-            classroom={this.state.assignClass}
+            classroom={this.state.selectedClassroom}
             subjects={this.state.subjects}
-            subjectId={this.state.assignClass.subjectId || this.state.assignClass.subject?.id}
+            subjectId={this.state.selectedClassroom.subjectId || this.state.selectedClassroom.subject?.id}
             success={(brick: any) => {
               this.setState({ successAssignResult: { isOpen: true, brick } });
-              this.loadClass(this.state.assignClass.id);
+              this.loadClass(this.state.selectedClassroom.id);
             }}
             showPremium={() => this.setState({ isPremiumDialogOpen: true })}
             failed={brick => this.setState({ failAssignResult: { isOpen: true, brick } })}
@@ -826,14 +828,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
           <AssignSuccessDialog
             isOpen={this.state.successAssignResult.isOpen}
             brickTitle={this.state.successAssignResult.brick?.title}
-            selectedItems={[this.state.activeClassroom]}
+            selectedItems={[this.state.selectedClassroom]}
             close={() => this.setState({ successAssignResult: { isOpen: false, brick: null } })}
           />}
         {this.state.failAssignResult.isOpen &&
           <AssignFailedDialog
             isOpen={this.state.failAssignResult.isOpen}
             brickTitle={this.state.failAssignResult.brick?.title}
-            selectedItems={[{ classroom: this.state.activeClassroom }]}
+            selectedItems={[{ classroom: this.state.selectedClassroom }]}
             close={() => this.setState({ failAssignResult: { isOpen: false, brick: null } })}
           />}
         <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => this.setState({ isPremiumDialogOpen: false })} submit={() => this.props.history.push(map.StripeEducator)} />
