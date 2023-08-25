@@ -10,12 +10,9 @@ import { TeachClassroom, Assignment, ClassroomStatus } from "model/classroom";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import { updateClassroom } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
-import TeachTab from "components/teach/TeachTab";
-import { TeachActiveTab } from "components/teach/model";
 import NameAndSubjectFormV2 from "components/teach/components/NameAndSubjectFormV2";
 import EmptyArchivedClassTab from "./EmptyArchivedClassTab";
 import EmptyClassTab from "./EmptyClassTab";
-import ArchiveToggle from "./ArchiveToggle";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -101,6 +98,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
 
   renderTeachListItem(c: TeachListItem, i: number) {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
+      console.log(i);
       if (c.assignment && c.classroom) {
         return (
           <Grow
@@ -161,6 +159,9 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   render() {
     return (
       <div>
+        <div className="bg-theme-dark-blue top-name-v431">
+          {this.renderClassname()}
+        </div>
         <div className="classroom-list one-classroom-assignments">
           {this.renderContent()}
         </div>
