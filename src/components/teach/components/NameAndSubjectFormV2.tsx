@@ -51,25 +51,6 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
     /* eslint-disable-next-line */
   }, [name, subjectIndex, props]);
 
-  if (props.isArchive) {
-    return (
-      <div className="name-subject-display">
-        <div className="subject-icon">
-          <SpriteIcon
-            name={(props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ? "circle-empty" : "circle-filled"}
-            className="w100 h100 active"
-            style={{
-              color: (props.classroom.subject?.color ?? "#FFFFFF") === "#FFFFFF" ?
-                "var(--theme-dark-blue)" :
-                props.classroom.subject.color
-            }}
-          />
-        </div>
-        <h1 className="name-display">{props.classroom!.name}</h1>
-      </div>
-    );
-  }
-
   let color = '#4C608A';
   if (props.classroom.subject) {
     color = props.classroom.subject.color;
@@ -78,15 +59,6 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
   return edit ?
     (
       <div className="name-subject-form">
-        <div className="subject-input">
-          <SvgIcon>
-            <SpriteIcon
-              name="circle-filled"
-              className="w100 h100 active"
-              style={{ color }}
-            />
-          </SvgIcon>
-        </div>
         <input
           value={name}
           onChange={e => setName(e.target.value)}
@@ -138,16 +110,6 @@ const NameAndSubjectFormV2: React.FC<NameAndSubjectFormProps> = props => {
             <SpriteIcon name="send" className="w100 h100 active" />
             <div className="css-custom-tooltip bold">Add joint teacher</div>
           </span>
-          {props.classroom.status === ClassroomStatus.Active &&
-          <span className="edit-icon archive" onClick={() => {
-            props.onArchive(props.classroom)
-          }}>
-            <SpriteIcon
-              name="archive"
-              className="w100 h100 active"
-            />
-            <div className="css-custom-tooltip bold">Archive</div>
-          </span>}
           <span className="edit-icon delete-icon" onClick={() => props.onDelete(props.classroom)}>
             <SpriteIcon
               name="delete"
