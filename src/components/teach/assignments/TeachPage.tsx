@@ -13,7 +13,7 @@ import actions from 'redux/actions/requestFailed';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { TeachClassroom, TeachStudent } from "model/classroom";
-import { getAllClassrooms, getAssignmentsClassrooms, getClassById, searchClassrooms } from "components/teach/service";
+import { getAllClassrooms, getAssignmentsClassrooms, searchClassrooms } from "components/teach/service";
 import { checkAdmin, checkTeacher, getDateString } from "components/services/brickService";
 import { TeachFilters } from '../model';
 import { Assignment } from "model/classroom";
@@ -354,10 +354,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const { classrooms } = this.state;
     let classroom = classrooms.find(c => c.id === id);
     if (classroom) {
-      if (!classroom.assignments) {
-        classroom.assignments = await getAssignmentsClassrooms(classroom.id);
-      }
-
+      classroom.assignments = await getAssignmentsClassrooms(classroom.id);
       classroom.active = true;
 
       this.setState({
@@ -551,38 +548,40 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
 
     return (
-      <div className="tab-content">
-        <ArchiveToggle
-          isArchive={isArchive}
-          history={this.props.history}
-          activeStudent={this.state.activeStudent}
-          activeClassroom={this.state.activeClassroom}
-          setArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
-        />
-        {this.state.activeStudent ?
-          <ActiveStudentBricks
-            subjects={this.state.subjects}
-            history={this.props.history}
+      <Grid item xs={9} className="brick-row-container teach-tab-d94 bg-light-blue no-active-class flex-center">
+        <div className="tab-content">
+          <ArchiveToggle
             isArchive={isArchive}
-            classroom={activeClassroom}
-            activeStudent={this.state.activeStudent}
-            onRemind={this.setReminderNotification.bind(this)}
-          />
-          : this.state.activeAssignment && this.state.assignmentStats && activeClassroom &&
-          <ExpandedAssignment
-            classroom={activeClassroom}
-            assignment={this.state.activeAssignment}
-            stats={this.state.assignmentStats}
-            subjects={this.state.subjects}
-            startIndex={this.state.sortedIndex}
-            pageSize={this.state.assignmentPageSize}
             history={this.props.history}
-            minimize={() => this.moveToNoAssignment()}
-            onRemind={this.setReminderNotification.bind(this)}
+            activeStudent={this.state.activeStudent}
+            activeClassroom={this.state.activeClassroom}
+            setArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
           />
-        }
-        {this.renderTeachPagination()}
-      </div>
+          {this.state.activeStudent ?
+            <ActiveStudentBricks
+              subjects={this.state.subjects}
+              history={this.props.history}
+              isArchive={isArchive}
+              classroom={activeClassroom}
+              activeStudent={this.state.activeStudent}
+              onRemind={this.setReminderNotification.bind(this)}
+            />
+            : this.state.activeAssignment && this.state.assignmentStats && activeClassroom &&
+            <ExpandedAssignment
+              classroom={activeClassroom}
+              assignment={this.state.activeAssignment}
+              stats={this.state.assignmentStats}
+              subjects={this.state.subjects}
+              startIndex={this.state.sortedIndex}
+              pageSize={this.state.assignmentPageSize}
+              history={this.props.history}
+              minimize={() => this.moveToNoAssignment()}
+              onRemind={this.setReminderNotification.bind(this)}
+            />
+          }
+          {this.renderTeachPagination()}
+        </div>
+      </Grid>
     );
   }
 
@@ -685,15 +684,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
                   <SpriteIcon
                     name="button-r46"
                     className="button-svg"
-                    onClick={() => { 
-                      this.setState({isAssignOpen: true, selectedClassroom: c})
+                    onClick={() => {
+                      this.setState({ isAssignOpen: true, selectedClassroom: c })
                     }}
                   />
                   <SpriteIcon
                     name="button-r44"
                     className="button-svg"
                     onClick={() => {
-                      this.setState({selectedClassroom: c})
+                      this.setState({ selectedClassroom: c })
                     }}
                   />
                   <SpriteIcon
@@ -739,6 +738,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     if (this.state.activeClassroom && !this.state.activeAssignment && !this.state.activeStudent) {
       return this.renderClassroom(isArchive);
+    } else if (this.state.activeClassroom && this.state.activeAssignment) {
+      return this.renderTabContent();
     } else {
       return this.renderContainer();
     }
