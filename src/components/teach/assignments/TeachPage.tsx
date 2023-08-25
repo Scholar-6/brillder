@@ -13,7 +13,7 @@ import actions from 'redux/actions/requestFailed';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { TeachClassroom, TeachStudent } from "model/classroom";
-import { getAllClassroomsV2, getAssignmentsClassrooms, getClassById, searchClassrooms } from "components/teach/service";
+import { getAllClassrooms, getAssignmentsClassrooms, getClassById, searchClassrooms } from "components/teach/service";
 import { checkAdmin, checkTeacher, getDateString } from "components/services/brickService";
 import { TeachFilters } from '../model';
 import { Assignment } from "model/classroom";
@@ -26,8 +26,6 @@ import TeachFilterSidebar from './components/TeachFilterSidebar';
 import ClassroomList from './components/ClassroomList';
 import ActiveStudentBricks from "./components/ActiveStudentBricks";
 import ExpandedAssignment from './components/ExpandedAssignment';
-import TeachTab from "components/teach/TeachTab";
-import { TeachActiveTab } from "components/teach/model";
 import { getSubjects } from "services/axios/subject";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import map from "components/map";
@@ -234,7 +232,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async loadClasses(activeClassId?: number) {
-    let classrooms = await getAllClassroomsV2() as TeachClassroom[] | null;
+    let classrooms = await getAllClassrooms() as TeachClassroom[] | null;
     if (classrooms) {
       if (this.state.teacherId > 0) {
         classrooms = classrooms.filter(c => {
@@ -353,18 +351,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const { classrooms } = this.state;
     let classroom = classrooms.find(c => c.id === id);
     if (classroom) {
-      const classroomV2 = await getClassById(classroom.id);
-      console.log(classroomV2);
-
       if (!classroom.assignments) {
         classroom.assignments = await getAssignmentsClassrooms(classroom.id);
-      }
-
-      if (classroomV2) {
-       // classroom.students = classroomV2.students;
-      }
-      if (classroomV2) {
-       // classroom.studentsInvitations = classroomV2.studentsInvitations;
       }
 
       classroom.active = true;
@@ -517,13 +505,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
     } else if (activeClassroom) {
       pageSize = this.state.classPageSize;
 
-      let itemsCount = 100;
+      let itemsCount = 0;
       if (activeClassroom.assignments) {
-        if (this.state.isArchive) {
-          itemsCount = parseInt(activeClassroom.archivedAssignmentsCount);
-        } else {
-          itemsCount = parseInt(activeClassroom.assignmentsCount) - parseInt(activeClassroom.archivedAssignmentsCount);
-        }
+        itemsCount = parseInt(activeClassroom.assignmentsCount);
       }
 
       return <BackPagePagination
@@ -629,8 +613,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
     </div>
   }
 
-  renderAssignment(assignment: any, assignmentsCount: number) {
-    return <div className="assignment-v31">
+  renderAssignment(assignment: any, classroomId: number, assignmentsCount: number) {
+    return <div className="assignment-v31" onClick={() => {
+      this.setActiveClassroom(classroomId);
+    }}>
       <div className="absolute-bricks-count">
         <SpriteIcon name="book-checked-circled" />
         <div>{assignmentsCount} Bricks</div>
@@ -640,79 +626,79 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   renderContainer() {
-    if (this.state.activeClassroom === null) {
+    return (
+      <Grid item xs={9} className="brick-row-container teach-tab-d94 bg-light-blue no-active-class flex-center">
+        <div>
+          <div className="sub-title-v12 bold">All My Classes</div>
+          {this.state.classrooms.map(c => {
+            let teacherNames = '';
 
-      return (
-        <Grid item xs={9} className="brick-row-container teach-tab-d94 bg-light-blue no-active-class flex-center">
-          <div>
-            <div className="sub-title-v12 bold">All My Classes</div>
-            {this.state.classrooms.map(c => {
-              let teacherNames = '';
+            let index = 0;
 
-              let index = 0;
-
-              for (let teacher of c.teachers) {
-                let teacherName = (teacher.firstName ? teacher.firstName : '') + ' ' + (teacher.lastName ? teacher.lastName : '');
-                teacherNames += teacherName;
-                if (index < c.teachers.length - 1) {
-                  teacherNames += ', ';
-                }
-                index += 1;
+            for (let teacher of c.teachers) {
+              let teacherName = (teacher.firstName ? teacher.firstName : '') + ' ' + (teacher.lastName ? teacher.lastName : '');
+              teacherNames += teacherName;
+              if (index < c.teachers.length - 1) {
+                teacherNames += ', ';
               }
+              index += 1;
+            }
 
-              const assignmentsCount = c.assignments.length;
+            const assignmentsCount = parseInt(c.assignmentsCount, 10);
 
-              let newestAssignment = null;
-              for (let assignment of c.assignments) {
-                if (newestAssignment === null) {
-                  newestAssignment = assignment;
-                } else {
-                  //console.log(newestAssignment.assignedDate, assignment.assignedDate);
-                }
+            let newestAssignment = null;
+            for (let assignment of c.assignments) {
+              if (newestAssignment === null) {
+                newestAssignment = assignment;
               }
+            }
 
-              return (
-                <div className="classroom-row-v12">
-                  <div className="assignment-column">
-                    {assignmentsCount > 0
-                      ? this.renderAssignment(newestAssignment, assignmentsCount)
-                      : this.renderEmptyAssignment()
-                    }
-                  </div>
-                  <div className="title-column">
-                    <div>
-                      <div className="bold overflow-ellipsis">{c.name}</div>
-                      <div>{teacherNames}</div>
-                    </div>
-                  </div>
-                  <div className="users-column">
-                    <div>
-                      <div className="flex-left-v2"><SpriteIcon name="users-v2" /> {c.students.length}</div>
-                      {c.studentsInvitations.length > 0 &&
-                        <div className="flex-left-v2"><SpriteIcon name="sandclock-v2" /> {c.studentsInvitations.length} Pending</div>
-                      }
-                    </div>
-                  </div>
-                  <div className="flex-center before-last-column">
-                    <SpriteIcon name="calendar-v2" /> {getDateString(c.created.toString())}
-                  </div>
-                  <div className="flex-center last-column">
-                    <SpriteIcon name="button-r46" className="button-svg" />
-                    <SpriteIcon name="button-r44" className="button-svg" />
-                    <SpriteIcon name="button-r45" className="button-svg last-btn" />
+            return (
+              <div className="classroom-row-v12">
+                <div className="assignment-column">
+                  {assignmentsCount > 0
+                    ? this.renderAssignment(newestAssignment, c.id, assignmentsCount)
+                    : this.renderEmptyAssignment()
+                  }
+                </div>
+                <div className="title-column">
+                  <div>
+                    <div className="bold overflow-ellipsis">{c.name}</div>
+                    <div>{teacherNames}</div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </Grid>
-      );
-    }
-
-    return (
-      <Grid item xs={9} className="brick-row-container teach-tab-d94">
-        <TeachTab activeTab={TeachActiveTab.Assignments} history={this.props.history} onAssign={() => this.setState({ isAssignOpen: true })} assignmentsEnabled={true} />
-        {this.renderTabContent()}
+                <div className="users-column">
+                  <div>
+                    <div className="flex-left-v2"><SpriteIcon name="users-v2" /> {c.students.length}</div>
+                    {c.studentsInvitations.length > 0 &&
+                      <div className="flex-left-v2"><SpriteIcon name="sandclock-v2" /> {c.studentsInvitations.length} Pending</div>
+                    }
+                  </div>
+                </div>
+                <div className="flex-center before-last-column">
+                  <SpriteIcon name="calendar-v2" /> {getDateString(c.created.toString())}
+                </div>
+                <div className="flex-center last-column">
+                  <SpriteIcon
+                    name="button-r46"
+                    className="button-svg"
+                    onClick={() => { }}
+                  />
+                  <SpriteIcon
+                    name="button-r44"
+                    className="button-svg"
+                    onClick={() => { }}
+                  />
+                  <SpriteIcon
+                    name="button-r45"
+                    className="button-svg last-btn"
+                    onClick={() => this.onDeleteClass(c)}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </Grid>
     );
   }

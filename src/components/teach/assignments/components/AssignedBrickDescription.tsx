@@ -115,11 +115,13 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
     let everyoneFinished = true;
     if (this.props.classroom) {
+      console.log(this.props.classroom)
+      /*
       let { length } = this.props.classroom.students;
       completedCount = studentStatus.filter(({ status }) => status === 2).length;
       if (length !== completedCount) {
         everyoneFinished = false;
-      }
+      }*/
     } else {
       // if student assignment
       if (!this.isStudentCompleted(studentStatus)) {
@@ -161,11 +163,12 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
     const { studentStatus } = assignment;
     if (this.props.classroom) {
+      /*
       const { length } = this.props.classroom.students;
       const completedNumber = this.countNumberOfCompleted(studentStatus);
       if (length === completedNumber) {
         return true;
-      }
+      }*/
     }
     return false;
   }
