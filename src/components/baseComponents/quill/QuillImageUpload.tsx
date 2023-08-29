@@ -42,6 +42,11 @@ export class CustomImageBlot extends Embed {
         const node: Element = super.create();
 
         node.className = node.className + " image-play-container2" + ((value.imageAlign === ImageAlign.center) ? " center" : "");
+
+        if (value.blockquote) {
+            node.className = node.className + " blockquote";
+        }
+
         node.setAttribute('data-value', value.url);
         node.setAttribute('data-source', value.imageSource);
         node.setAttribute('data-caption', value.imageCaption);
@@ -155,8 +160,6 @@ export default class ImageUpload {
     }
 
     onImagePaste(node: any, delta: Delta) {
-        console.log("h");
-        console.log(node);
         if (!node.src) return;
         axios.get(node.src, { responseType: "blob" }).then((response) => {
             const file = new File([response.data as Blob], "imageFile");
@@ -187,7 +190,6 @@ export default class ImageUpload {
 
     imageSelected(files: File[]) {
         if (files.length >= 1) {
-            console.log(this.openDialog);
             this.openDialog(files[0]);
         }
     }
@@ -206,14 +208,24 @@ export default class ImageUpload {
         }
         const fileName = res.data.fileName;
 
-        this.quill.insertEmbed(selection, 'customImage', {
+        let data = {
             url: fileUrl(fileName),
             imageSource: source,
             imageCaption: caption,
             imageAlign: align,
             imageHeight: height,
             imagePermision: true,
-        });
+            blockquote: false
+        }
+
+        if (selection) {
+          var formats = this.quill.getFormat(selection);
+          if (formats.blockquote == true) {
+            data.blockquote = true;
+          }
+        }
+
+        this.quill.insertEmbed(selection, 'customImage', data);
         this.quill.insertEmbed(selection + 1, 'devider', '');
         return true;
     }
@@ -239,34 +251,9 @@ export default class ImageUpload {
                 imageHeight: data.height ?? leafData.imageHeight,
                 imagePermision: data.permission ?? leafData.imagePermision,
             };
-            console.log(newData);
-            const newLeaf = leaf.replaceWith("customImage", newData);
-            console.log(newLeaf);
+            leaf.replaceWith("customImage", newData);
         }
     }
-
-    // uploadImages(this: {quill: Quill}, range: any, files: File[]) {
-    //     console.log(files);
-    //     const promises = files.map(file => new Promise((resolve, reject) => {
-    //         uploadFile(file, (res: any) => {
-    //             const fileName = res.data.fileName;
-    //             const url = `${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`;
-    //             resolve(url);
-    //         }, reject);
-    //     }));
-
-    //     Promise.all(promises).then((urls) => {
-    //         const update = urls.reduce(
-    //             (delta: Delta, image) => delta.insert({ image }),
-    //             new Delta().retain(range.index).delete(range.length)
-    //         );
-    //         this.quill.updateContents(update as unknown as DeltaStatic, "user");
-    //         this.quill.setSelection(
-    //             range.index + urls.length,
-    //             "silent"
-    //         );
-    //     });
-    // }
 }
 
 GlobalQuill.register("modules/imageupload", ImageUpload);

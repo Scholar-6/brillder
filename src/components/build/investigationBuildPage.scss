@@ -1426,11 +1426,13 @@ $base-build-border: $editor-radius;
 
 // blockqoutes
 .fixed-build-phone {
+  .blockquote,
   blockquote {
     border-left: 3px solid var(--tab-gray) !important;
     overflow-x: auto;
   }
   .question-hint, .question-hint-global {
+    .blockquote,
     blockquote {
       border-left: 3px solid var(--theme-dark-blue) !important;
     }
