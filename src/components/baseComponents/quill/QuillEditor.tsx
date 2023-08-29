@@ -18,7 +18,6 @@ import "./QuillSoundUpload";
 import "./QuillDesmos";
 import "./QuillCapitalization";
 import "./QuillBlockQuote";
-import QuillBetterTable from "./QuillBetterTable";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
@@ -121,6 +120,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     React.useEffect(() => {
         if(imageModule) {
             imageModule.openDialog = (file?: File, data?: any, blot?: CustomImageBlot, shouldUpdate?: boolean) => {
+                //CustomImageBlot
                 if (quill) {
                   const range = quill.getSelection();
                   const position = range ? range.index : 0;
@@ -131,6 +131,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 setImageDialogOpen(true);
                 setImageDialogShouldUpdate(shouldUpdate ?? false);
                 setImageDialogBlot(blot);
+                console.log('test12222', blot);
             }
         }
     /*eslint-disable-next-line*/

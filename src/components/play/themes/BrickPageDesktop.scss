@@ -984,6 +984,7 @@ $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
             //#1684 bug fix - overflow: auto;
             margin-top: 1.5vh;
             margin-bottom: 1.5vh;
+            .blockquote,
             blockquote {
               border-left: 0.3vw solid var(--tab-gray);
               font-size: 1.4vw;
