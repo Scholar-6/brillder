@@ -305,7 +305,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           </div>
           <div className="flex-center">
             <div className="btn btn-glasses flex-center" onClick={() => {
-              props.history.push(map.ViewAllPage);
+              props.history.push(map.ViewAllPage  + '?assigning-bricks=true');
             }}>
               <div className="flex-center">
                 <SpriteIcon name="glasses-home" />
@@ -348,7 +348,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           <SpriteIcon name="info-icon" />
         </div>
         <div className="message-box-r5">
-          You can skip this step for now and add bricks to the class later from the My Classes menu
+          You can skip this step for now and assign bricks to the class later from the Manage Classes menu.
         </div>
         <button
           className="btn btn-md cancel-button"
@@ -360,7 +360,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           className={`btn btn-md bg-theme-green yes-button ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
           onClick={create}
         >
-          <span className="bold">Next</span>
+          <span className="bold">Skip</span>
         </button>
       </div>
     </Dialog>
