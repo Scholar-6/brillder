@@ -46,6 +46,9 @@ interface BrickBlockProps {
   assignmentId?: number;
   bestScore?: number;
 
+  // teacher assignment
+  assignClassId?: number;
+
   teacher?: User;
 }
 
@@ -92,6 +95,10 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
    * @returns void
    */
   const move = () => {
+    if (props.assignClassId && props.assignClassId > 0) {
+      props.history.push(playCover(brick) + '?assigning-bricks=' + props.assignClassId);
+      return;
+    }
     if (isAssignment && assignmentId && props.user.userPreference?.preferenceId !== UserPreferenceType.Teacher) {
       setAssignmentId(assignmentId);
       props.history.push(map.postAssignment(brick.id, props.user.id));

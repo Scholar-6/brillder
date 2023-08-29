@@ -138,6 +138,37 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     setThirdOpen(true);
   }
 
+  const createV2 = async (value: string) => {
+    if (isSaving) { return; }
+    setSaving(true);
+
+    if (canSubmit === false || value === '') {
+      return;
+    }
+
+    if (value) {
+      // creating new class
+      if (!classroom) {
+        const newClassroom = await createClass(value);
+        setClassroom(newClassroom);
+
+        if (newClassroom) {
+          writeQRCode(
+            window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + newClassroom.code
+          );
+        }
+      } else {
+        // after assigning get class with assignments
+        const resultClass = await getClassById(classroom.id);
+        if (resultClass) {
+          setClassroom(resultClass);
+        }
+      }
+    }
+    setSaving(false);
+    setSecondOpen(true);
+  }
+
   const assignStudentsToBrick = async () => {
     // assign students to class
     const currentUsers = users;
@@ -206,15 +237,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         </button>
         <button
           className={`btn btn-md bg-theme-green yes-button ${!canSubmit ? 'invalid' : ''}`}
-          onClick={async () => {
-            if (canSubmit) {
-              setSecondOpen(true);
-              if (classroom) {
-                classroom.name = value;
-                await updateClassroom({ ...classroom });
-              }
-            }
-          }}
+          onClick={() => createV2(value) }
         >
           <span className="bold">Next</span>
         </button>
@@ -305,7 +328,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           </div>
           <div className="flex-center">
             <div className="btn btn-glasses flex-center" onClick={() => {
-              props.history.push(map.ViewAllPage  + '?assigning-bricks=true');
+              props.history.push(map.ViewAllPage  + '?assigning-bricks=' + classroom.id);
             }}>
               <div className="flex-center">
                 <SpriteIcon name="glasses-home" />

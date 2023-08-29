@@ -95,6 +95,9 @@ interface ViewAllState {
   sortBy: SortBy;
   keywords: KeyWord[];
 
+  assignPopupOpen: boolean;
+  assignClassId: number;
+
   isKeywordSearch: boolean;
 
   filterCompetition: boolean;
@@ -166,11 +169,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       userIdSearch = parseInt(values.searchUserId as string, 10);
     }
 
-    let filterLength:BrickLengthEnum[] = [];
+    let filterLength: BrickLengthEnum[] = [];
     if (values.length) {
       try {
         filterLength = (values.length as string).split(',').map(a => parseInt(a));
-      } catch {}
+      } catch { }
     }
 
     let sortBy = SortBy.Date;
@@ -178,11 +181,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       sortBy = parseInt((values.sortBy as string));
     }
 
-    let filterLevels:AcademicLevel[] = [];
+    let filterLevels: AcademicLevel[] = [];
     if (values.level) {
       try {
         filterLevels = (values.level as string).split(',').map(a => parseInt(a));
-      } catch {}
+      } catch { }
     }
 
     let page = 0;
@@ -214,6 +217,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       userSubjects: props.user ? Object.assign([], props.user.subjects) : [],
       bricksCount: 0,
       page,
+      assignClassId: (values['assigning-bricks']) ? parseInt(values['assigning-bricks'] as string) : -1,
+      assignPopupOpen: (values['assigning-bricks']) ? true : false,
 
       isSubjectPopupOpen: false,
       noSubjectOpen: false,
@@ -413,7 +418,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadBricks(subjects: SubjectItem[] | null, values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
       let subjectIds: number[] = [];
-      const {state} = this;
+      const { state } = this;
       if (state.isAllSubjects == false) {
         subjectIds = this.props.user.subjects.map(s => s.id);
         let checked = subjects?.filter(s => s.checked);
@@ -529,7 +534,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         sortBy
       });
 
-      const {state} = this;
+      const { state } = this;
 
       this.historyUpdate(
         isAllSubjects, page, state.searchString,
@@ -576,7 +581,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         shown: true
       });
 
-      const {state} = this;
+      const { state } = this;
 
       this.historyUpdate(
         state.isAllSubjects, page, state.searchString,
@@ -1042,7 +1047,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number, isCore: boolean, subjectIds: number[], isKeyword?: boolean) {
     const pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore, subjectIds, isKeyword ? isKeyword : false);
 
-    const {state} = this;
+    const { state } = this;
 
     if (pageBricks && pageBricks.bricks.length >= 0) {
       this.setState({
@@ -1081,7 +1086,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     setTimeout(() => {
       try {
-        const {state} = this;
+        const { state } = this;
         let subjectIds = this.getSubjectIds();
         this.loadAndSetSearchBricks(
           searchString, page, state.pageSize,
@@ -1128,6 +1133,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           shown={this.state.shown}
           history={this.props.history}
           circleIcon={circleIcon}
+          assignClassId={this.state.assignClassId}
           isPlay={true}
         />
       );
@@ -1562,6 +1568,29 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             }}
             onComplete={() => { }}
           />}
+        {this.state.assignPopupOpen &&
+        <div className="popup-assign-top">
+          <div>
+            <SpriteIcon name="cancel-custom" onClick={() => {
+              this.setState({ assignPopupOpen: false});
+            }} />
+            You can browse our catalogue here to select a brick to assign to <span className="bold">French 20</span>
+          </div>
+          <div className="bottom-part-s42">
+            <div>
+              <SpriteIcon name="info-icon" />
+            </div>
+            <div className="text-s45">
+              If you navigate away from the catalogue, your brick will be saved and can be accessed later from the Manage Classes page.
+            </div>
+            <div>
+              <div className="btn btn-green" onClick={() => {
+                this.setState({ assignPopupOpen: false});
+              }}>OK</div>
+            </div>
+            <div className="triangle"></div>
+          </div>
+        </div>}
       </React.Suspense>
     );
   }
