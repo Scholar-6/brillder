@@ -57,6 +57,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [bioOpen, setBio] = useState(false);
   const [editorBioOpen, setEditorBio] = useState(false);
   const [onlyLibrary, setOnlyLibrary] = useState(false);
+  const [assignClassId, setAssignClassId] = useState(-1);
 
   const {user} = props;
 
@@ -65,7 +66,12 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     if (values.origin === 'library') {
       setOnlyLibrary(true);
     }
+    if (values["assigning-bricks"]) {
+      setAssignClassId(parseInt(values["assigning-bricks"] as string))
+    }
   }, []);
+
+  console.log(assignClassId)
 
   const [playClicked, setClickPlay] = useState(false);
   const [unauthPopupShown, setUnauthPopupShown] = useState(false)
