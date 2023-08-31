@@ -12,7 +12,7 @@ import actions from 'redux/actions/requestFailed';
 
 import { User } from "model/user";
 import { Subject } from "model/brick";
-import { TeachClassroom, TeachStudent } from "model/classroom";
+import { ClassroomStatus, TeachClassroom, TeachStudent } from "model/classroom";
 import { getAllClassrooms, getAssignmentsClassrooms, searchClassrooms } from "components/teach/service";
 import { checkAdmin, checkTeacher, getDateString } from "components/services/brickService";
 import { TeachFilters } from '../model';
@@ -22,7 +22,7 @@ import { ApiAssignemntStats } from "model/stats";
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 import BackPagePagination from 'components/backToWorkPage/components/BackPagePagination';
-import TeachFilterSidebar from './components/TeachFilterSidebar';
+import TeachFilterSidebar, { SortClassroom } from './components/TeachFilterSidebar';
 import ClassroomList from './components/ClassroomList';
 import ActiveStudentBricks from "./components/ActiveStudentBricks";
 import ExpandedAssignment from './components/ExpandedAssignment';
@@ -34,7 +34,7 @@ import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog"
 import EmptyTabContent from "./components/EmptyTabContent";
 import ArchiveToggle from "./components/ArchiveToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getArchivedAssignedCount } from "./service/service";
+import { getArchivedAssignedCount, getClassAssignedCount } from "./service/service";
 import PremiumEducatorDialog from "components/play/baseComponents/dialogs/PremiumEducatorDialog";
 import DeleteClassDialog from "../manageClassrooms/components/DeleteClassDialog";
 import { archiveClassroom, deleteClassroom, unarchiveClassroom } from "services/axios/classroom";
@@ -472,6 +472,31 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
+  sortClassrooms(sort: SortClassroom) {
+    let finalClasses = [];
+    let classrooms = this.state.classrooms.filter(c => c.status == ClassroomStatus.Active);
+
+    for (const cls of classrooms) {
+      const finalClass = Object.assign({}, cls) as any;
+      finalClass.assigned = getClassAssignedCount(cls);
+      finalClasses.push(finalClass);
+    }
+    if (sort === SortClassroom.Date) {
+      finalClasses = finalClasses.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime());
+    } else if (sort === SortClassroom.Assignment) {
+      finalClasses = finalClasses.sort((a, b) => b.assignmentsCount - a.assignmentsCount);
+    } else if (sort === SortClassroom.Name) {
+      finalClasses = finalClasses.sort((a, b) => {
+        const al = a.name.toUpperCase();
+        const bl = b.name.toUpperCase();
+        if (al < bl) { return -1; }
+        if (al > bl) { return 1; }
+        return 0;
+      });
+    }
+    this.setState({classrooms: finalClasses})
+  }
+
   async search() {
     let classrooms = await searchClassrooms(this.state.searchString, this.state.searchType) as TeachClassroom[] | null;
     if (classrooms) {
@@ -777,6 +802,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             loadClass={classId => this.loadClass(classId)}
             setActiveStudent={this.setActiveStudent.bind(this)}
             filterChanged={this.teachFilterUpdated.bind(this)}
+            sortClassrooms={this.sortClassrooms.bind(this)}
             moveToPremium={() => this.setState({ isPremiumDialogOpen: true })}
           />
           {this.renderData()}
