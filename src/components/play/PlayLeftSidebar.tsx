@@ -36,6 +36,7 @@ import AssignSuccessDialogV2 from "components/baseComponents/dialogs/AssignSucce
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
 import { assignClasses } from "services/axios/assignBrick";
 import { getClassById } from "components/teach/service";
+import map from "components/map";
 
 interface SidebarProps {
   history: any;
@@ -530,6 +531,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                   <div className="btn btn-blue" onClick={async () => {
                     await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id], deadline: null });
                     this.setState({ isAssignV2Open: false });
+                    this.props.history.push(map.ViewAllPage  + '?assigning-bricks=' + this.props.assignClass.id);
                   }}>Assign and keep browsing</div>
                 </div>
                 <div>

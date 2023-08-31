@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { FormControlLabel, Grid, Radio } from "@material-ui/core";
-// @ts-ignore
-import { Steps } from 'intro.js-react';
 
 import "./TeachFilterSidebar.scss";
 import { ClassroomStatus, TeachClassroom, TeachStudent } from "model/classroom";
@@ -24,7 +22,6 @@ enum TeachFilterFields {
 
 interface FilterSidebarProps {
   isLoaded: boolean;
-  isNewTeacher: boolean;
   user: User;
   history: any;
   classrooms: TeachClassroom[];
@@ -33,7 +30,6 @@ interface FilterSidebarProps {
   setActiveStudent(s: TeachStudent): void;
   setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
-  hideIntro(): void;
   moveToPremium(): void;
   loadClass(classId: number): void;
 }
@@ -306,16 +302,6 @@ class TeachFilterSidebar extends Component<
     return this.renderClassesBox();
   }
 
-  onIntroExit() {
-    this.props.hideIntro();
-  }
-
-  onIntroChanged(e: any) {
-    if (e !== 0) {
-      this.props.hideIntro();
-    }
-  }
-
   render() {
     return (
       <Grid
@@ -336,21 +322,6 @@ class TeachFilterSidebar extends Component<
             close={() => {
               this.setState({ createClassOpen: false });
             }}
-          />}
-        {this.props.isNewTeacher &&
-          <Steps
-            enabled={this.props.isNewTeacher}
-            steps={[{
-              element: '.classes-box',
-              intro: `<p>Invited learners will remain amber until they accept to join your class</p>`,
-            }, {
-              element: '.classes-box',
-              intro: `<p>Invited learners will remain amber until they accept to join your class</p>`,
-            }]}
-            initialStep={0}
-            onChange={this.onIntroChanged.bind(this)}
-            onExit={this.onIntroExit.bind(this)}
-            onComplete={() => { }}
           />}
         <StudentInviteSuccessDialog
           numStudentsInvited={this.state.isInviteOpen ? 1 : 0}

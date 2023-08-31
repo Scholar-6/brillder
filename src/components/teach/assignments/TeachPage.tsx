@@ -768,13 +768,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <TeachFilterSidebar
             user={this.props.user}
-            isNewTeacher={this.state.isNewTeacher}
             classrooms={showedClasses}
             isLoaded={this.state.isLoaded}
             history={this.props.history}
             activeStudent={this.state.activeStudent}
             activeClassroom={this.state.activeClassroom}
-            hideIntro={() => this.setState({ isNewTeacher: false })}
             setActiveClassroom={this.setActiveClassroom.bind(this)}
             loadClass={classId => this.loadClass(classId)}
             setActiveStudent={this.setActiveStudent.bind(this)}
