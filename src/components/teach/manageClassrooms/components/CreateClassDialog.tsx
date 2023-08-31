@@ -269,7 +269,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       <div className="dialog-header">
         <div className="title-box">
           <div className="title">
-            Add Assignment to Class
+            Add Assignments to Class
           </div>
           <SpriteIcon onClick={closeV2} name="cancel-custom" />
         </div>
