@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid } from "@material-ui/core";
+import { Dialog, Grid } from "@material-ui/core";
 import { connect } from 'react-redux';
 import axios from "axios";
 
@@ -21,20 +21,21 @@ import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignP
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import UnauthorizedText from "./UnauthorizedText";
 import AdaptBrickDialog from "components/baseComponents/dialogs/AdaptBrickDialog";
-import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
 import HighlightTextButton from "./baseComponents/sidebarButtons/HighlightTextButton";
 import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 import ShareDialogs from "./finalStep/dialogs/ShareDialogs";
-import GenerateCoverButton from "./baseComponents/sidebarButtons/GenerateCoverButton";
 import CompetitionButton from "./baseComponents/sidebarButtons/CompetitionButton";
 import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDialog";
 import HighScore from "./baseComponents/HighScore";
 import AdminBrickStatisticButton from "./baseComponents/AdminBrickStatisticButton";
 import QuickAssignButton from "./baseComponents/sidebarButtons/QuickAssignButton";
 import AssignSuccessDialogV2 from "components/baseComponents/dialogs/AssignSuccessDialogV2";
+import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
+import { assignClasses } from "services/axios/assignBrick";
+import { getClassById } from "components/teach/service";
 
 interface SidebarProps {
   history: any;
@@ -51,6 +52,9 @@ interface SidebarProps {
   empty?: boolean;
   mode?: PlayMode;
   setMode?(mode: PlayMode): void;
+
+  // teacher
+  assignClass?: any;
 
   //play-preview
   isPreview?: boolean;
@@ -79,6 +83,9 @@ interface SidebarState {
   isAdapting: boolean;
   selectedItems: any[];
   failedItems: any[];
+  isAssignV2Open: boolean;
+  isAssignV3Open: boolean;
+  assignClass: any;
 }
 
 class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
@@ -93,8 +100,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isAssignedSuccessOpen: false,
       isAssignedFailedOpen: false,
       isSharingOpen: false,
+      isAssignV2Open: false,
+      isAssignV3Open: false,
       selectedItems: [],
-      failedItems: []
+      failedItems: [],
+      assignClass: null
     }
 
     if (this.props.user) {
@@ -310,6 +320,25 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     const isAdmin = checkAdmin(this.props.user.roles);
 
+    if (this.props.assignClass && this.props.assignClass.id > 0) {
+      return (
+        <div className="sidebar-button">
+          <div className="m-t-2vh" />
+          <div className="m-t-2vh" />
+          <AssignButton
+            sidebarRolledUp={sidebarRolledUp}
+            user={this.props.user}
+            haveCircle={haveBriefCircles}
+            history={this.props.history}
+            openAssignDialog={() => {
+              this.setState({ isAssignV2Open: true })
+            }}
+          />
+          <div className="label-r54345">Click Assign to add this brick to your class</div>
+        </div>
+      );
+    }
+
     return (
       <div className="sidebar-button">
         {(this.isPrep() || this.isSynthesis()) && <HighlightTextButton
@@ -335,12 +364,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         />
         {renderAdaptButton()}
         <ShareButton haveCircle={haveBriefCircles} sidebarRolledUp={sidebarRolledUp} share={this.share.bind(this)} />
-        {/*checkTeacherOrAdmin(this.props.user) &&
-          <GenerateCoverButton
-            sidebarRolledUp={sidebarRolledUp}
-            brick={this.props.brick}
-          />
-        */}
         {(isInstitutionPreference(this.props.user) || isAdmin) &&
           <CompetitionButton competitionPresent={this.state.competition !== null} sidebarRolledUp={sidebarRolledUp} onDownload={this.onDownload.bind(this)} onClick={this.onCompetition.bind(this)} />}
         {isAdmin && <AdminBrickStatisticButton brick={this.props.brick} history={this.props.history} />}
@@ -489,6 +512,48 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           {this.renderButtons()}
           {this.renderDialogs()}
         </div>
+        {this.state.isAssignV2Open &&
+          <Dialog
+            open={this.state.isAssignV2Open}
+            onClose={() => this.setState({ isAssignV2Open: false })}
+            className="dialog-box popup-assign-f54"
+          >
+            <div className="popup-assign-top-f54">
+              <div>
+                <SpriteIcon name="cancel-custom" onClick={() => {
+                  this.setState({ isAssignV2Open: false })
+                }} />
+                Assigning <span className="bold">Economies and Diseconomies of Scale</span> to <span className="bold">Eco 2023</span>
+              </div>
+              <div className="bottom-part-s42">
+                <div className="text-s45">
+                  <div className="btn btn-blue" onClick={async () => {
+                    await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id], deadline: null });
+                    this.setState({ isAssignV2Open: false });
+                  }}>Assign and keep browsing</div>
+                </div>
+                <div>
+                  <div className="btn btn-green" onClick={async () => {
+                    await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id], deadline: null });
+                    const classroom = await getClassById(this.props.assignClass.id);
+                    this.setState({ isAssignV2Open: false, assignClass: classroom, isAssignV3Open: true });
+                  }}>Assign and return to class</div>
+                </div>
+              </div>
+            </div>
+          </Dialog>}
+        <CreateClassDialog
+          isOpen={this.state.isAssignV3Open}
+          classroom={this.state.assignClass}
+          subjects={[]}
+          history={this.props.history}
+          submit={() => {
+            this.setState({ isAssignV3Open: false });
+          }}
+          close={() => {
+            this.setState({ isAssignV3Open: false });
+          }}
+        />
       </Grid >
     );
   }
