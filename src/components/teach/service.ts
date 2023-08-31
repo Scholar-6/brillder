@@ -55,7 +55,7 @@ export const createClass = async (name: string) => {
 export const getClassById = async (id: number) => {
   try {
     const res = await axios.get(
-      process.env.REACT_APP_BACKEND_HOST + "/classroomById/" + id,
+      process.env.REACT_APP_BACKEND_HOST + "/classroom/" + id,
       { withCredentials: true }
     );
     if (res.data) {

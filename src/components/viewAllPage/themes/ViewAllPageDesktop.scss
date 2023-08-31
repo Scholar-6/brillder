@@ -3,14 +3,13 @@
 @import 'src/assets/sass/partials/extensions';
 
 
-.popup-assign-top {
+.popup-assign-top-f53 {
   position: absolute;
-  top: 8.6vw;
-  left: 28vw;
   width: 35vw;
+  top: 8.4vw;
+  left: 28vw;
   color: var(--theme-dark-blue);
   background:white;
-  z-index: 100;
   border-radius: 1vw;
 
   .triangle {
@@ -34,6 +33,7 @@
     font-size: 1.2vw;
     text-align: center;
     svg {
+      cursor: pointer;
       position: absolute;
       stroke-width: 2;
       top: 1.1vw;

@@ -76,6 +76,7 @@ import MobileCategory from "./MobileCategory";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
 import SharePersonalBrickButton from "./components/SharePersonalBrickButton";
+import { ClassroomApi, getClassById } from "components/teach/service";
 
 interface ViewAllProps {
   user: User;
@@ -97,6 +98,8 @@ interface ViewAllState {
 
   assignPopupOpen: boolean;
   assignClassId: number;
+  assignClassroom: ClassroomApi | null;
+  assigningBricks: boolean;
 
   isKeywordSearch: boolean;
 
@@ -219,6 +222,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       page,
       assignClassId: (values['assigning-bricks']) ? parseInt(values['assigning-bricks'] as string) : -1,
       assignPopupOpen: (values['assigning-bricks']) ? true : false,
+      assigningBricks: false,
+      assignClassroom: null,
 
       isSubjectPopupOpen: false,
       noSubjectOpen: false,
@@ -1491,6 +1496,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       className += ' one-column-inside';
     }
 
+    console.log(this.state.assignPopupOpen)
+
     return (
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
@@ -1569,7 +1576,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             onComplete={() => { }}
           />}
         {this.state.assignPopupOpen &&
-        <div className="popup-assign-top">
+        <div className="popup-assign-top-f53">
           <div>
             <SpriteIcon name="cancel-custom" onClick={() => {
               this.setState({ assignPopupOpen: false});
@@ -1584,13 +1591,26 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               If you navigate away from the catalogue, your brick will be saved and can be accessed later from the Manage Classes page.
             </div>
             <div>
-              <div className="btn btn-green" onClick={() => {
-                this.setState({ assignPopupOpen: false});
+              <div className="btn btn-green" onClick={async () => {
+                const assignClassroom = await getClassById(this.state.assignClassId);
+                if (assignClassroom) {
+                  this.setState({ assignPopupOpen: false, assignClassroom, assigningBricks: true});
+                }
               }}>OK</div>
             </div>
             <div className="triangle"></div>
           </div>
         </div>}
+        {this.state.assigningBricks &&
+          <div className="bottom-bricks-popup-f53">
+            <div>
+              <div className="class-name"><span className="bold">{this.state.assignClassroom?.name}</span></div>
+              <div>{this.state.assignClassroom?.assignments?.length} Bricks Assigned</div>
+            </div>
+            <div className="btn">Quit</div>
+            <div className="btn btn-green">Back to Class</div>
+          </div>
+        }
       </React.Suspense>
     );
   }

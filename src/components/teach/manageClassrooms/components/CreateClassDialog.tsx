@@ -15,16 +15,19 @@ import { Brick, Subject } from 'model/brick';
 import { getSuggestedByTitles } from 'services/axios/brick';
 import { createClass, getClassById } from 'components/teach/service';
 import { assignClasses } from 'services/axios/assignBrick';
-import { assignToClassByEmails, updateClassroom } from 'services/axios/classroom';
+import { assignToClassByEmails } from 'services/axios/classroom';
 import map from 'components/map';
 
 import BrickTitle from 'components/baseComponents/BrickTitle';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import HoverHelp from 'components/baseComponents/hoverHelp/HoverHelp';
+import { Classroom } from 'model/classroom';
 
 interface AssignClassProps {
   isOpen: boolean;
   subjects: Subject[];
+
+  classroom?: Classroom;
 
   submit(classroomId: number): void;
   close(): void;
@@ -55,7 +58,22 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
 
   const [classroom, setClassroom] = useState(null as any);
 
-  const [selectedBricks, selectBricks] = useState([] as any[]);
+  React.useEffect(() => {
+    if (props.classroom) {
+      setClassroom(props.classroom);
+      setSecondOpen(true);
+      setValue(props.classroom.name);
+      props.classroom.assignments.sort((c1, c2) => {
+        return c1.assignedDate > c2.assignedDate ? -1 : 1;
+      });
+      setAssignments(props.classroom.assignments);
+      setSubmit(true);
+    }
+  }, [props.classroom]);
+
+  console.log(7777, classroom)
+
+  const [assignments, setAssignments] = useState([] as any[]);
   const [bricks, setBricks] = useState([] as any[]);
 
   const [searchText, setSearchText] = useState('');
@@ -65,6 +83,8 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
 
   //eslint-disable-next-line
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  console.log('test', classroom, secondOpen)
 
   const writeQRCode = (str: string) => {
     QRCode.toDataURL(str, {
@@ -181,10 +201,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
 
     const res = await assignToClassByEmails(classroom, currentUsers.map(u => u.email));
 
-    for (let selectedBrick of selectedBricks) {
-      await assignClasses(selectedBrick.id, { classesIds: [classroom.id], deadline: null });
-    }
-
     if (res) {
       props.history.push(`${map.TeachAssignedTab}?classroomId=${classroom.id}&${map.NewTeachQuery}&assignmentExpanded=true`);
     }
@@ -196,6 +212,8 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   const closeV2 = () => {
     setCloseV2Open(true);
   }
+
+  console.log(assignments);
 
   return (<div>
     <Dialog
@@ -261,13 +279,22 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
             <Autocomplete
               freeSolo
               options={bricks}
-              onChange={(e: any, v: any) => {
-                setSearchText(stripHtml(v.title));
-                const newBricks = [...selectedBricks];
-                const found = newBricks.find(b => b.id === v.id);
-                if (!found) {
-                  newBricks.push(v);
-                  selectBricks(newBricks)
+              onChange={async (e: any, brickV5: any) => {
+                if (classroom) {
+                  setSearchText(stripHtml(brickV5.title));
+                  const newAssignments = [...assignments];
+                  const found = newAssignments.find(b => b.id === brickV5.id);
+                  if (!found) {
+                    await assignClasses(brickV5.id, { classesIds: [classroom.id], deadline: null });
+                    const classroomV2 = await getClassById(classroom.id);
+                    console.log(5656556, classroomV2);
+                    if (classroomV2 && classroomV2.assignments) {
+                      classroomV2.assignments.sort((c1, c2) => {
+                        return c1.assignedDate > c2.assignedDate ? -1 : 1;
+                      });
+                      setAssignments(classroomV2.assignments);
+                    }
+                  }
                 }
               }}
               noOptionsText="Sorry, try typing something else"
@@ -341,19 +368,19 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           <div className="bold text-left">
             Bricks Added
           </div>
-          {selectedBricks.length > 0
+          {assignments.length > 0
             ?
             <div className="bricks-box">
-              {selectedBricks.map((b, i) => {
+              {assignments.map((a, i) => {
                 let additionalClass = 'down-border';
-                if (i === selectedBricks.length - 1) {
+                if (i === assignments.length - 1) {
                   additionalClass = '';
                 }
                 return (<div className={`brick-row bold ${additionalClass}`} key={i}>
-                  {stripHtml(b.title)}
+                  {stripHtml(a.brick.title)}
                   <SpriteIcon name="cancel-custom" onClick={() => {
-                    const filteredBricks = selectedBricks.filter(bs => bs.id !== b.id);
-                    selectBricks(filteredBricks);
+                    const filteredAssignments = assignments.filter(bs => bs.id !== a.brick.id);
+                    setAssignments(filteredAssignments);
                   }} />
                 </div>
                 );
@@ -411,7 +438,10 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         <div className="message-box-r5"></div>
         <button
           className="btn btn-md cancel-button"
-          onClick={props.close}
+          onClick={() => {
+            setCloseV2Open(false);
+            props.close();
+          }}
         >
           <span className="bold">Quit</span>
         </button>
