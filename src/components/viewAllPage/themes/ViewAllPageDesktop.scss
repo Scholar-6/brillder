@@ -2,9 +2,19 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+.popup-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
 
 .popup-assign-top-f53 {
   position: absolute;
+  z-index: 11;
   width: 35vw;
   top: 8.4vw;
   left: 28vw;

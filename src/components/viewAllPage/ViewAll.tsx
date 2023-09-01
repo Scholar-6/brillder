@@ -1612,28 +1612,32 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             onComplete={() => { }}
           />}
         {this.state.assignPopupOpen &&
-        <div className="popup-assign-top-f53">
           <div>
-            <SpriteIcon name="cancel-custom" onClick={() => {
-              this.setState({ assignPopupOpen: false});
-            }} />
-            You can browse our catalogue here to select a brick to assign to <span className="bold">{this.state.assignClassroom?.name}</span>
+            <div className="popup-background"></div>
+            <div className="popup-assign-top-f53">
+              <div>
+                <SpriteIcon name="cancel-custom" onClick={() => {
+                  this.setState({ assignPopupOpen: false });
+                }} />
+                You can browse our catalogue here to select a brick to assign to <span className="bold">{this.state.assignClassroom?.name}</span>
+              </div>
+              <div className="bottom-part-s42">
+                <div>
+                  <SpriteIcon name="info-icon" />
+                </div>
+                <div className="text-s45">
+                  If you navigate away from the catalogue, your brick will be saved and can be accessed later from the Manage Classes page.
+                </div>
+                <div>
+                  <div className="btn btn-green" onClick={async () => {
+                    this.setState({ assignPopupOpen: false, assigningBricks: true });
+                  }}>OK</div>
+                </div>
+                <div className="triangle"></div>
+              </div>
+            </div>
           </div>
-          <div className="bottom-part-s42">
-            <div>
-              <SpriteIcon name="info-icon" />
-            </div>
-            <div className="text-s45">
-              If you navigate away from the catalogue, your brick will be saved and can be accessed later from the Manage Classes page.
-            </div>
-            <div>
-              <div className="btn btn-green" onClick={async () => {
-                this.setState({ assignPopupOpen: false, assigningBricks: true});
-              }}>OK</div>
-            </div>
-            <div className="triangle"></div>
-          </div>
-        </div>}
+        }
         {this.state.assigningBricks &&
           <div className="bottom-bricks-popup-f53">
             <div>
@@ -1641,7 +1645,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               <div>{this.state.assignClassroom?.assignments?.length} Bricks Assigned</div>
             </div>
             <div className="btn" onClick={() => {
-              const {state} = this;
+              const { state } = this;
               this.setState({ assigningBricks: false });
               this.historyUpdate(
                 state.isAllSubjects, state.page, state.searchString,
