@@ -20,7 +20,8 @@
 
   .cover-play-button {
     position: absolute;
-    top: calc(74vh - 5.8vw);
+    top: unset;
+    bottom: 6.5vw;
   }
 
   .brick-container {

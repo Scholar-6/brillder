@@ -363,6 +363,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadData(values: queryString.ParsedQuery<string>) {
     const subjects = await this.loadSubjects(values);
 
+    console.log('load data')
+
     if (values.searchString) {
       let page = 0;
       if (values.page) {
@@ -931,7 +933,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   historyUpdate(
     isAllSubjects: boolean, page: number, searchString: string,
     filterLevel: AcademicLevel[], filterLength: BrickLengthEnum[],
-    sortBy: SortBy, subjectIds: number[], isCore: boolean
+    sortBy: SortBy, subjectIds: number[], isCore: boolean, stopAssignBrick?: boolean
   ) {
     let link = map.ViewAllPage + '?page=' + page;
 
@@ -965,10 +967,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       link += '&personal=true'
     }
 
-
-    const values = queryString.parse(this.props.location.search);
-    if (values["assigning-bricks"]) {
-      link += '&assigning-bricks=' + values["assigning-bricks"];
+    if (!stopAssignBrick) {
+      const values = queryString.parse(this.props.location.search);
+      if (values["assigning-bricks"]) {
+        link += '&assigning-bricks=' + values["assigning-bricks"];
+      }
     }
 
     console.log('move', link)
@@ -1083,6 +1086,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const { state } = this;
 
     if (pageBricks && pageBricks.bricks.length >= 0) {
+
+      const values = queryString.parse(this.props.location.search);
+
+      if (values) {
+        await this.setStateAndAssignClassroom(state, values);
+      }
+
       this.setState({
         ...this.state,
         page,
@@ -1630,8 +1640,18 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               <div className="class-name"><span className="bold">{this.state.assignClassroom?.name}</span></div>
               <div>{this.state.assignClassroom?.assignments?.length} Bricks Assigned</div>
             </div>
-            <div className="btn">Quit</div>
-            <div className="btn btn-green">Back to Class</div>
+            <div className="btn" onClick={() => {
+              const {state} = this;
+              this.setState({ assigningBricks: false });
+              this.historyUpdate(
+                state.isAllSubjects, state.page, state.searchString,
+                state.filterLevels, state.filterLength, state.sortBy,
+                this.getSubjectIds(), state.isCore, true
+              );
+            }}>Quit</div>
+            <div className="btn btn-green" onClick={() => {
+              this.props.history.push(map.TeachAssignedTab + '?classroomId=' + this.state.assignClassroom?.id)
+            }}>Back to Class</div>
           </div>
         }
       </React.Suspense>
