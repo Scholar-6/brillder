@@ -97,7 +97,6 @@ interface ViewAllState {
   keywords: KeyWord[];
 
   assignPopupOpen: boolean;
-  assignClassId: number;
   assignClassroom: ClassroomApi | null;
   assigningBricks: boolean;
 
@@ -220,8 +219,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       userSubjects: props.user ? Object.assign([], props.user.subjects) : [],
       bricksCount: 0,
       page,
-      assignClassId: (values['assigning-bricks']) ? parseInt(values['assigning-bricks'] as string) : -1,
-      assignPopupOpen: (values['assigning-bricks']) ? true : false,
+      assignPopupOpen: false,
       assigningBricks: false,
       assignClassroom: null,
 
@@ -257,7 +255,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isClearFilter: false,
       failedRequest: false,
       isAdmin,
-      isCore: true,
+      isCore: values.personal ? false : true,
       shown: false,
       isSearchBLoading: false,
       isAllSubjects,
@@ -386,6 +384,20 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
+
+  async setStateAndAssignClassroom(state: any, queryValues: queryString.ParsedQuery<string>) {
+    let assignValue = queryValues['assigning-bricks'];
+    const classroomId = assignValue ? parseInt(assignValue as string) : -1;
+
+    if (classroomId > 0) {
+      const assignClassroom = await getClassById(classroomId);
+      if (assignClassroom) {
+        state.assignClassroom = assignClassroom;
+        state.assignPopupOpen = assignValue ? true : false;
+      }
+    }
+  }
+
   /**
    * Load subject and check by query string
    */
@@ -423,7 +435,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadBricks(subjects: SubjectItem[] | null, values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
       let subjectIds: number[] = [];
-      const { state } = this;
+      let { state } = this;
       if (state.isAllSubjects == false) {
         subjectIds = this.props.user.subjects.map(s => s.id);
         let checked = subjects?.filter(s => s.checked);
@@ -454,6 +466,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           this.checkSubjectsWithBricks(subjects);
         }
 
+        if (values) {
+          await this.setStateAndAssignClassroom(state, values);
+        }
+
         this.setState({
           ...state,
           subjects,
@@ -466,7 +482,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         this.setState({ ...state, isLoading: false, failedRequest: true });
       }
       setTimeout(() => {
-        if (values) {
+        if (values && values.newTeacher) {
           let newTeacher = values.newTeacher as any;
           this.setState({ stepsEnabled: !!newTeacher });
         }
@@ -543,7 +559,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       this.historyUpdate(
         isAllSubjects, page, state.searchString,
-        state.filterLevels, state.filterLength, state.sortBy, subjectIds
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds, isCore
       );
     }
   }
@@ -590,7 +606,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       this.historyUpdate(
         state.isAllSubjects, page, state.searchString,
-        state.filterLevels, state.filterLength, state.sortBy, subjectIds
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
       );
     }
   }
@@ -915,7 +931,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   historyUpdate(
     isAllSubjects: boolean, page: number, searchString: string,
     filterLevel: AcademicLevel[], filterLength: BrickLengthEnum[],
-    sortBy: SortBy, subjectIds: number[]
+    sortBy: SortBy, subjectIds: number[], isCore: boolean
   ) {
     let link = map.ViewAllPage + '?page=' + page;
 
@@ -944,6 +960,18 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (subjectIds) {
       link += '&subjectIds=' + subjectIds.join(',');
     }
+
+    if (isCore === false) {
+      link += '&personal=true'
+    }
+
+
+    const values = queryString.parse(this.props.location.search);
+    if (values["assigning-bricks"]) {
+      link += '&assigning-bricks=' + values["assigning-bricks"];
+    }
+
+    console.log('move', link)
 
     this.props.history.push(link);
   }
@@ -977,7 +1005,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       this.historyUpdate(
         state.isAllSubjects, page, state.searchString,
-        state.filterLevels, state.filterLength, state.sortBy, subjectIds
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
       );
     }
   }
@@ -1010,7 +1038,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       this.historyUpdate(
         state.isAllSubjects, page, state.searchString,
-        state.filterLevels, state.filterLength, state.sortBy, subjectIds
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
       );
     }
   }
@@ -1070,7 +1098,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       this.historyUpdate(
         state.isAllSubjects, page, state.searchString,
-        state.filterLevels, state.filterLength, state.sortBy, subjectIds
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
       );
     } else {
       this.setState({
@@ -1099,7 +1127,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         );
         this.historyUpdate(
           state.isAllSubjects, page, searchString,
-          state.filterLevels, state.filterLength, state.sortBy, subjectIds
+          state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
         );
       } catch {
         this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
@@ -1138,7 +1166,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           shown={this.state.shown}
           history={this.props.history}
           circleIcon={circleIcon}
-          assignClassId={this.state.assignClassId}
+          assignClassroom={this.state.assignClassroom}
           isPlay={true}
         />
       );
@@ -1158,7 +1186,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         );
         this.historyUpdate(
           state.isAllSubjects, 0, state.searchString,
-          state.filterLevels, state.filterLength, state.sortBy, subjectIds
+          state.filterLevels, state.filterLength, state.sortBy, subjectIds, isCore
         );
       } else {
         this.loadAndSetBricks(
@@ -1496,8 +1524,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       className += ' one-column-inside';
     }
 
-    console.log(this.state.assignPopupOpen)
-
     return (
       <React.Suspense fallback={<></>}>
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
@@ -1581,7 +1607,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             <SpriteIcon name="cancel-custom" onClick={() => {
               this.setState({ assignPopupOpen: false});
             }} />
-            You can browse our catalogue here to select a brick to assign to <span className="bold">French 20</span>
+            You can browse our catalogue here to select a brick to assign to <span className="bold">{this.state.assignClassroom?.name}</span>
           </div>
           <div className="bottom-part-s42">
             <div>
@@ -1592,10 +1618,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             </div>
             <div>
               <div className="btn btn-green" onClick={async () => {
-                const assignClassroom = await getClassById(this.state.assignClassId);
-                if (assignClassroom) {
-                  this.setState({ assignPopupOpen: false, assignClassroom, assigningBricks: true});
-                }
+                this.setState({ assignPopupOpen: false, assigningBricks: true});
               }}>OK</div>
             </div>
             <div className="triangle"></div>
