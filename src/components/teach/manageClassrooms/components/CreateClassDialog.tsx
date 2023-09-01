@@ -71,8 +71,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     }
   }, [props.classroom]);
 
-  console.log(7777, classroom)
-
   const [assignments, setAssignments] = useState([] as any[]);
   const [bricks, setBricks] = useState([] as any[]);
 
@@ -83,8 +81,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
 
   //eslint-disable-next-line
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-  console.log('test', classroom, secondOpen)
 
   const writeQRCode = (str: string) => {
     QRCode.toDataURL(str, {
@@ -362,6 +358,16 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               </div>
               <div className="flex-center">
                 Browse the catalogue
+              </div>
+            </div>
+            <div className="btn btn-key flex-center" onClick={() => {
+              props.history.push(map.ViewAllPage  + '?assigning-bricks=' + classroom.id +'&personal=true');
+            }}>
+              <div className="flex-center">
+                <SpriteIcon name="key" />
+              </div>
+              <div className="flex-center">
+                Personal Bricks
               </div>
             </div>
           </div>
