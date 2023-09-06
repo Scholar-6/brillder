@@ -39,17 +39,17 @@ class EmptyFilter extends Component<PropsFilter, EmptyState> {
             onFinish={() => this.setState({ secondStarted: true })}
           />
           <LabelTyping
-            value="This is where you will be able to keep"
+            value="This is where you will be able to"
             start={this.state.secondStarted}
             onFinish={() => this.setState({ thirdStarted: true })}
           />
           <LabelTyping
-            value="track of bricks you have assigned to"
+            value="manage your Classes by adding"
             start={this.state.thirdStarted}
             onFinish={() => this.setState({ fourthStarted: true })}
           />
           <LabelTyping
-            value="classes or tutees."
+            value="students and assigning bricks."
             start={this.state.fourthStarted}
           />
         </div>

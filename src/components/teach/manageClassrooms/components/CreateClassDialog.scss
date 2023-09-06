@@ -160,6 +160,10 @@
         .absolute-code-label {
           position: absolute;
           bottom: 1.2vw;
+
+          .upper-text {
+            text-transform: uppercase;
+          }
         }
       }
     }
@@ -195,8 +199,13 @@
     }
 
     .text-r324 {
+      font-size: 1.3vw !important;
       margin-bottom: 2vh !important;
       text-align: left !important;
+
+      &.text-center {
+        text-align: center !important;
+      }
 
       .subject-autocomplete {
         margin-top: 1.5vh !important;
