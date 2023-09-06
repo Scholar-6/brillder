@@ -452,7 +452,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       }
 
       const pageBricks = await getPublishedBricksByPage(
-        state.pageSize, state.page, true,
+        state.pageSize, state.page, (values && values.personal) ? false : true,
         state.filterLevels, state.filterLength, subjectIds,
         state.filterCompetition, state.sortBy
       );

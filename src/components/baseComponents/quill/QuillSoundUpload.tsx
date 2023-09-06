@@ -11,7 +11,6 @@ export interface AudioData {
 }
 export class AudioBlot extends Embed {
   static create(data: AudioData) {
-    console.log(data);
     let node = super.create();
     node.classList.add('ql-sound-custom');
     node.setAttribute('data-value', data.url);

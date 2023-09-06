@@ -131,7 +131,6 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
                 setImageDialogOpen(true);
                 setImageDialogShouldUpdate(shouldUpdate ?? false);
                 setImageDialogBlot(blot);
-                console.log('test12222', blot);
             }
         }
     /*eslint-disable-next-line*/

@@ -199,7 +199,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   async loadInitData() {
     const subjects = await getSubjects();
-    console.log('sssss', subjects)
     if (subjects) {
       this.setState({ subjects });
     }
@@ -775,7 +774,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   render() {
-    console.log('sss333', this.state.subjects)
     const { isArchive } = this.state;
     let showedClasses = this.state.classrooms;
     if (isArchive) {
@@ -789,7 +787,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
-          placeholder="Brick Title, Student Name, or Subject"
+          placeholder="Search by Class Name, Brick Title or Subject Name"
           user={this.props.user}
           history={history}
           search={this.search.bind(this)}

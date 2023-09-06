@@ -98,7 +98,6 @@ export default class MediaEmbed {
             clipboard.addMatcher(Node.TEXT_NODE, (node: any, delta: Delta) => {
                 const matches: string[] = Array.from(node.data.matchAll(regexp));
                 if (matches && matches.length > 0) {
-                    console.log(matches);
                     const ops = [];
                     let str: string = node.data;
                     for (const match of matches) {

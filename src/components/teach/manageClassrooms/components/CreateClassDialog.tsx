@@ -442,8 +442,8 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           <SpriteIcon onClick={props.close} name="cancel-custom" />
         </div>
         <div className="text-block">
-          <div className="text-r324">
-            Class including any added bricks or students will not be saved. Click ‘Stay’ to continue editing, or ‘Quit’ to discard the changes and exit the process.
+          <div className="text-r324 text-center">
+            If you want to return to the class later, select Save and Quit to make this class available from the Manage Classes page. Alternatively, select Delete Class to cancel class creation and discard any assigned bricks or students.
           </div>
         </div>
       </div>
@@ -458,13 +458,13 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
             props.close();
           }}
         >
-          <span className="bold">Quit</span>
+          <span className="bold">Delete Class</span>
         </button>
         <button
           className={`btn btn-md bg-theme-green yes-button ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
           onClick={() => setCloseV2Open(false)}
         >
-          <span className="bold">Stay</span>
+          <span className="bold">Save and Quit</span>
         </button>
       </div>
     </Dialog>
@@ -562,7 +562,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               <div className={`code-box flex-center ${expandedV3Popup ? 'expanded' : ''}`}>
                 <SpriteIcon className="expand-btn" name="collapse" onClick={() => expandV3Popup(!expandedV3Popup)} />
                 <img className="qr-code-img" src={imgBase64} />
-                {expandedV3Popup && <div className="absolute-code-label">Class Code: <span className="bold">{classroom.code}</span></div>}
+                {expandedV3Popup && <div className="absolute-code-label">Class Code: <span className="bold upper-text">{classroom.code}</span></div>}
               </div>
             </div>
           </div>
