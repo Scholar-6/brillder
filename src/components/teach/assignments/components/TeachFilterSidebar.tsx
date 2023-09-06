@@ -23,6 +23,7 @@ interface FilterSidebarProps {
   isLoaded: boolean;
   user: User;
   history: any;
+  subjects: Subject[];
   classrooms: TeachClassroom[];
   activeStudent: TeachStudent | null;
   activeClassroom: TeachClassroom | null;
@@ -41,7 +42,6 @@ interface FilterSidebarState {
   isInviteOpen: boolean;
   createClassOpen: boolean;
   sort: SortClassroom;
-  subjects: Subject[];
 }
 
 export enum SortClassroom {
@@ -68,7 +68,6 @@ class TeachFilterSidebar extends Component<
         completed: false,
       },
       createClassOpen: false,
-      subjects: []
     };
   }
 
@@ -247,9 +246,8 @@ class TeachFilterSidebar extends Component<
                     checked={!this.props.activeClassroom}
                   />
                 }
-                label={`All Classes (${classrooms.length}`}
+                label={`All Classes (${classrooms.length})`}
               />
-              )
             </div>
             <SortButton sort={this.state.sort} sortByName={() => {
               this.props.sortClassrooms(SortClassroom.Name);
@@ -285,6 +283,7 @@ class TeachFilterSidebar extends Component<
   }
 
   render() {
+    console.log('s55', this.props.subjects)
     return (
       <Grid
         container item xs={3}
@@ -295,7 +294,7 @@ class TeachFilterSidebar extends Component<
         {this.state.createClassOpen &&
           <CreateClassDialog
             isOpen={this.state.createClassOpen}
-            subjects={this.state.subjects}
+            subjects={this.props.subjects}
             history={this.props.history}
             submit={classroomId => {
               this.props.loadClass(classroomId);

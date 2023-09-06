@@ -56,6 +56,8 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   const [canSubmit, setSubmit] = useState(false);
   const [isSaving, setSaving] = useState(false);
 
+  console.log('subjects44', props.subjects);
+
   const [classroom, setClassroom] = useState(null as any);
 
   React.useEffect(() => {
@@ -251,7 +253,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         </button>
         <button
           className={`btn btn-md bg-theme-green yes-button ${!canSubmit ? 'invalid' : ''}`}
-          onClick={() => createV2(value) }
+          onClick={() => createV2(value)}
         >
           <span className="bold">Next</span>
         </button>
@@ -299,6 +301,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               getOptionLabel={(option: any) => stripHtml(option.title)}
               renderOption={(brick: Brick) => {
                 const subject = props.subjects.find(s => s.id === brick.subjectId);
+                console.log(444, props.subjects, subject, brick);
                 return (
                   <React.Fragment>
                     <MenuItem>
@@ -351,7 +354,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           </div>
           <div className="flex-center">
             <div className="btn btn-glasses flex-center" onClick={() => {
-              props.history.push(map.ViewAllPage  + '?assigning-bricks=' + classroom.id);
+              props.history.push(map.ViewAllPage + '?assigning-bricks=' + classroom.id);
             }}>
               <div className="flex-center">
                 <SpriteIcon name="glasses-home" />
@@ -361,7 +364,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               </div>
             </div>
             <div className="btn btn-key flex-center" onClick={() => {
-              props.history.push(map.ViewAllPage  + '?assigning-bricks=' + classroom.id +'&personal=true');
+              props.history.push(map.ViewAllPage + '?assigning-bricks=' + classroom.id + '&personal=true');
             }}>
               <div className="flex-center">
                 <SpriteIcon name="key" />
