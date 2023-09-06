@@ -12,7 +12,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import { Brick, Subject } from 'model/brick';
-import { getSuggestedByTitles } from 'services/axios/brick';
+import { getSuggestedByTitles, hasPersonalBricks } from 'services/axios/brick';
 import { createClass, getClassById } from 'components/teach/service';
 import { assignClasses } from 'services/axios/assignBrick';
 import { assignToClassByEmails } from 'services/axios/classroom';
@@ -56,8 +56,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   const [canSubmit, setSubmit] = useState(false);
   const [isSaving, setSaving] = useState(false);
 
-  console.log('subjects44', props.subjects);
-
   const [classroom, setClassroom] = useState(null as any);
 
   React.useEffect(() => {
@@ -72,6 +70,17 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       setSubmit(true);
     }
   }, [props.classroom]);
+
+  const setPersonal = async () => {
+    const hasPersonal = await hasPersonalBricks();
+    setHasPersonal(hasPersonal);
+  }
+
+  React.useEffect(() => {
+    setPersonal();
+  }, []);
+
+  const [hasPersonal, setHasPersonal] = useState(false);
 
   const [assignments, setAssignments] = useState([] as any[]);
   const [bricks, setBricks] = useState([] as any[]);
@@ -211,8 +220,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     setCloseV2Open(true);
   }
 
-  console.log(assignments);
-
   return (<div>
     <Dialog
       open={props.isOpen && !secondOpen}
@@ -285,7 +292,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                   if (!found) {
                     await assignClasses(brickV5.id, { classesIds: [classroom.id], deadline: null });
                     const classroomV2 = await getClassById(classroom.id);
-                    console.log(5656556, classroomV2);
                     if (classroomV2 && classroomV2.assignments) {
                       classroomV2.assignments.sort((c1, c2) => {
                         return c1.assignedDate > c2.assignedDate ? -1 : 1;
@@ -301,7 +307,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               getOptionLabel={(option: any) => stripHtml(option.title)}
               renderOption={(brick: Brick) => {
                 const subject = props.subjects.find(s => s.id === brick.subjectId);
-                console.log(444, props.subjects, subject, brick);
                 return (
                   <React.Fragment>
                     <MenuItem>
@@ -353,16 +358,17 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
             OR
           </div>
           <div className="flex-center">
-            <div className="btn btn-glasses flex-center" onClick={() => {
+            <div className={`btn btn-glasses flex-center ${hasPersonal ? '' : 'one-button'}`} onClick={() => {
               props.history.push(map.ViewAllPage + '?assigning-bricks=' + classroom.id);
             }}>
               <div className="flex-center">
                 <SpriteIcon name="glasses-home" />
               </div>
               <div className="flex-center">
-                Browse the catalogue
+                Browse Public Catalogue
               </div>
             </div>
+            {hasPersonal &&
             <div className="btn btn-key flex-center" onClick={() => {
               props.history.push(map.ViewAllPage + '?assigning-bricks=' + classroom.id + '&personal=true');
             }}>
@@ -372,10 +378,10 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               <div className="flex-center">
                 Personal Bricks
               </div>
-            </div>
+            </div>}
           </div>
-          <div className="bold text-left">
-            Bricks Added
+          <div className="bold text-left m-top-small">
+            Assigned Bricks
           </div>
           {assignments.length > 0
             ?

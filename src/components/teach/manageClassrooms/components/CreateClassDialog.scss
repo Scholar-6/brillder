@@ -4,6 +4,10 @@
 
 .create-classroom-dialog,
 .dialog-box {
+  .m-top-small {
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+  }
   .dialog-select-container {
     position: relative;
     margin-bottom: 2vh !important;
@@ -385,6 +389,12 @@
         color: var(--theme-orange);
       }
 
+      &.one-button {
+        border-right: none;
+        border-top-right-radius: 0.6vw;
+        border-bottom-right-radius: 0.6vw;
+      }
+
       &:hover {
         color: white;
         background: var(--theme-dark-blue);
@@ -522,6 +532,7 @@
     .message-box-r5 {
       font-size: 1.1vw;
       width: 40vw;
+      line-height: 1.2;
       height: $height !important;
     }
 
