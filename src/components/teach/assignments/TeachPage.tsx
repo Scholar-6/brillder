@@ -3,8 +3,6 @@ import { History } from "history";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import queryString from 'query-string';
-// @ts-ignore
-import { Steps } from 'intro.js-react';
 
 import './TeachPage.scss';
 import { ReduxCombinedState } from "redux/reducers";
@@ -14,7 +12,7 @@ import { User } from "model/user";
 import { Subject } from "model/brick";
 import { ClassroomStatus, TeachClassroom, TeachStudent } from "model/classroom";
 import { getAllClassrooms, getAssignmentsClassrooms, searchClassrooms } from "components/teach/service";
-import { checkAdmin, checkTeacher, getDateString } from "components/services/brickService";
+import { getDateString } from "components/services/brickService";
 import { TeachFilters } from '../model';
 import { Assignment } from "model/classroom";
 import { getAssignmentStats } from "services/axios/stats";
@@ -32,17 +30,17 @@ import map from "components/map";
 import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuccessDialog";
 import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
 import EmptyTabContent from "./components/EmptyTabContent";
-import ArchiveToggle from "./components/ArchiveToggle";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getArchivedAssignedCount, getClassAssignedCount } from "./service/service";
+import { getClassAssignedCount } from "./service/service";
 import PremiumEducatorDialog from "components/play/baseComponents/dialogs/PremiumEducatorDialog";
 import DeleteClassDialog from "../manageClassrooms/components/DeleteClassDialog";
-import { archiveClassroom, deleteClassroom, unarchiveClassroom } from "services/axios/classroom";
+import { deleteClassroom } from "services/axios/classroom";
 import EmptyClassTab from "./components/EmptyClassTab";
 import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
 import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 import { fileUrl } from "components/services/uploadFile";
+import HoverButton from "components/baseComponents/hoverHelp/HoverButton";
 
 
 interface RemindersData {
@@ -67,9 +65,11 @@ interface TeachProps {
 }
 
 interface TeachState {
-  isTeach: boolean;
-  isAdmin: boolean;
-  isArchive: boolean;
+  isSearching: boolean;
+  finalSearchString: string;
+  searchString: string;
+  searchType: ClassroomSearchType;
+
   pageSize: number;
   classPageSize: number;
   assignmentPageSize: number;
@@ -81,8 +81,7 @@ interface TeachState {
   assignmentStats: ApiAssignemntStats | null;
   totalCount: number;
   subjects: Subject[];
-  searchString: string;
-  searchType: ClassroomSearchType;
+
   isLoaded: boolean;
   remindersData: RemindersData;
   createClassOpen: boolean;
@@ -96,13 +95,7 @@ interface TeachState {
 
   isPremiumDialogOpen: boolean;
 
-  isNewTeacher: boolean;
-
   teacherId: number;
-
-  haveArchivedBrick: boolean;
-  stepsEnabled: boolean;
-  steps: any[];
 
   filters: TeachFilters;
   handleKey(e: any): void;
@@ -112,12 +105,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
-    const isTeach = checkTeacher(props.user);
-    const isAdmin = checkAdmin(props.user.roles);
-
-    const pathname = props.history.location.pathname as string;
-    const isArchive = pathname.search('/archive') >= 0;
-
     let teacherId = -1;
 
     const values = queryString.parse(this.props.history.location.search);
@@ -126,10 +113,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
 
     this.state = {
-      isAdmin,
-      isTeach,
-
-      isArchive,
+      isSearching: false,
+      finalSearchString: '',
 
       filters: {
         assigned: false,
@@ -142,7 +127,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       assignmentStats: null,
       activeStudent: null,
       isLoaded: false,
-      isNewTeacher: false,
 
       remindersData: {
         isOpen: false,
@@ -158,14 +142,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       searchString: '',
       searchType: ClassroomSearchType.Any,
       subjects: [],
-
-      haveArchivedBrick: false,
-      stepsEnabled: false,
-      steps: [{
-        element: '.archive-toggle-button',
-        position: 'left',
-        intro: `<p>Find your archived assignments here</p>`,
-      }],
 
       deleteClassOpen: false,
       classroomToRemove: null,
@@ -209,7 +185,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       await this.loadClasses(classroomId);
       if (values.newTeacher) {
         const activeAssignment = this.state.activeClassroom?.assignments[0] as any;
-        this.setState({ isNewTeacher: true });
         if (activeAssignment) {
           await this.setActiveAssignment(classroomId, activeAssignment.id);
         }
@@ -228,10 +203,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       this.setState({ subjects });
     }
     this.loadClasses();
-  }
-
-  findClassArchive(c: TeachClassroom) {
-    return getArchivedAssignedCount(c) > 0;
   }
 
   async loadClasses(activeClassId?: number) {
@@ -262,7 +233,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       classrooms = this.sortAndReturnClassrooms(SortClassroom.Date, classrooms);
 
-      this.setState({ classrooms, stepsEnabled: false, activeClassroom, isLoaded: true });
+      this.setState({ classrooms, activeClassroom, isLoaded: true });
       return classrooms;
     } else {
       this.props.requestFailed('can`t get classrooms');
@@ -280,16 +251,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       } else {
         this.setState({ activeClassroom: null, activeAssignment: null });
       }
-    }
-  }
-
-  onIntroExit() {
-    this.setState({ stepsEnabled: false });
-  }
-
-  onIntroChanged(e: any) {
-    if (e !== 0) {
-      this.setState({ stepsEnabled: false });
     }
   }
 
@@ -319,24 +280,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       let index = classrooms.indexOf(classroomToRemove);
       classrooms.splice(index, 1);
       this.setState({ classrooms, activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
-    }
-  }
-
-  async onArchiveClass(c: TeachClassroom) {
-    let archived = await archiveClassroom(c.id);
-    if (archived) {
-      const { activeClassroom } = this.state;
-      this.setState({ activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
-      await this.loadClasses(activeClassroom.id);
-    }
-  }
-
-  async onUnarchiveClass(c: TeachClassroom) {
-    let unarchived = await unarchiveClassroom(c.id);
-    if (unarchived) {
-      const { activeClassroom } = this.state;
-      this.setState({ activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
-      await this.loadClasses(activeClassroom.id);
     }
   }
 
@@ -452,6 +395,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (searchString.length === 0) {
       this.setState({
         ...this.state, searchString,
+        isSearching: false,
+        finalSearchString: '',
         activeClassroom: null,
         activeAssignment: null,
         assignmentStats: null,
@@ -474,11 +419,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
   sortClassrooms(sort: SortClassroom) {
     const classrooms = this.state.classrooms.filter(c => c.status == ClassroomStatus.Active);
     const finalClasses = this.sortAndReturnClassrooms(sort, classrooms);
-    this.setState({classrooms: finalClasses});
+    this.setState({ classrooms: finalClasses });
   }
 
   sortAndReturnClassrooms(sort: SortClassroom, classrooms: TeachClassroom[]) {
-    let finalClasses:any[] = [];
+    let finalClasses: any[] = [];
     for (const cls of classrooms) {
       const finalClass = Object.assign({}, cls) as any;
       finalClass.assigned = getClassAssignedCount(cls);
@@ -503,7 +448,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async search() {
     let classrooms = await searchClassrooms(this.state.searchString, this.state.searchType) as TeachClassroom[] | null;
     if (classrooms) {
-      this.setState({ ...this.state, isLoaded: true, activeClassroom: null, activeAssignment: null, activeStudent: null, classrooms, sortedIndex: 0 });
+      this.setState({ ...this.state, isSearching: true, finalSearchString: this.state.searchString, isLoaded: true, activeClassroom: null, activeAssignment: null, activeStudent: null, classrooms, sortedIndex: 0 });
     } else {
       // failed
     }
@@ -557,8 +502,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   renderTabContent() {
-    const { isArchive } = this.state;
-
     if (!this.state.isLoaded) {
       return (
         <div className="tab-content">
@@ -578,18 +521,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
     return (
       <Grid item xs={9} className="brick-row-container teach-tab-d94 bg-light-blue no-active-class flex-center">
         <div className="tab-content">
-          <ArchiveToggle
-            isArchive={isArchive}
-            history={this.props.history}
-            activeStudent={this.state.activeStudent}
-            activeClassroom={this.state.activeClassroom}
-            setArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
-          />
           {this.state.activeStudent ?
             <ActiveStudentBricks
               subjects={this.state.subjects}
               history={this.props.history}
-              isArchive={isArchive}
+              isArchive={false}
               classroom={activeClassroom}
               activeStudent={this.state.activeStudent}
               onRemind={this.setReminderNotification.bind(this)}
@@ -613,22 +549,22 @@ class TeachPage extends Component<TeachProps, TeachState> {
     );
   }
 
-  renderClassroom(isArchive: boolean) {
+  renderClassroom() {
     return (
       <Grid item xs={9} className="brick-row-container teach-tab-d94">
         <ClassroomList
           subjects={this.state.subjects}
-          isArchive={isArchive}
+          isArchive={false}
           history={this.props.history}
           startIndex={this.state.sortedIndex}
           activeClassroom={this.state.activeClassroom}
           pageSize={this.state.classPageSize}
-          toggleArchive={v => this.setState({ sortedIndex: 0, isArchive: v })}
+          toggleArchive={() => { }}
           expand={this.moveToAssignment.bind(this)}
           reloadClass={this.loadClass.bind(this)}
           onRemind={this.setReminderNotification.bind(this)}
-          onArchive={this.onArchiveClass.bind(this)}
-          onUnarchive={this.onUnarchiveClass.bind(this)}
+          onArchive={() => { }}
+          onUnarchive={() => { }}
           onDelete={this.onDeleteClass.bind(this)}
           onAssign={() => this.setState({ isAssignOpen: true })}
         />
@@ -649,7 +585,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }}>
       <div className="absolute-bricks-count">
         <SpriteIcon name="book-checked-circled" />
-        <div>{assignmentsCount} Bricks</div>
+        <div>{assignmentsCount} Brick{assignmentsCount > 1 ? 's' : ''}</div>
       </div>
       <img src={fileUrl(assignment.brick.coverImage)} />
     </div>
@@ -659,7 +595,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     return (
       <Grid item xs={9} className="brick-row-container teach-tab-d94 bg-light-blue no-active-class flex-center">
         <div>
-          <div className="sub-title-v12 bold">All My Classes</div>
+          <div className="sub-title-v12 bold">{this.state.isSearching ? 'Search: ' + this.state.finalSearchString : 'All My Classes'}</div>
           {this.state.classrooms.map(c => {
             let teacherNames = '';
 
@@ -693,7 +629,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 </div>
                 <div className="title-column">
                   <div>
-                    <div className="bold overflow-ellipsis">{c.name}</div>
+                    <div className="bold overflow-ellipsis" dangerouslySetInnerHTML={{ __html: c.name }} />
                     <div>{teacherNames}</div>
                   </div>
                 </div>
@@ -709,25 +645,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
                   <SpriteIcon name="calendar-v2" /> {getDateString(c.created.toString())}
                 </div>
                 <div className="flex-center last-column">
-                  <SpriteIcon
-                    name="button-r46"
-                    className="button-svg"
-                    onClick={() => {
-                      this.setState({ isAssignOpen: true, selectedClassroom: c })
-                    }}
-                  />
-                  <SpriteIcon
-                    name="button-r44"
-                    className="button-svg"
-                    onClick={() => {
-                      this.setState({ selectedClassroom: c })
-                    }}
-                  />
-                  <SpriteIcon
-                    name="button-r45"
-                    className="button-svg last-btn"
-                    onClick={() => this.onDeleteClass(c)}
-                  />
+                  <HoverButton icon="button-r46" className="button-svg first-btn-s57" onClick={() => this.setState({ isAssignOpen: true, selectedClassroom: c })}>
+                    <div>Assign Bricks</div>
+                  </HoverButton>
+                  <HoverButton icon="button-r44" className="button-svg" onClick={() => this.setState({ selectedClassroom: c })}>
+                    <div>Share</div>
+                  </HoverButton>
+                  <HoverButton icon="button-r45" className="button-svg last-btn" onClick={() => this.onDeleteClass(c)}>
+                    <div>Delete Class</div>
+                  </HoverButton>
                 </div>
               </div>
             );
@@ -738,8 +664,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   renderData() {
-    const { isArchive } = this.state;
-
     if (!this.state.isLoaded) {
       return (
         <Grid item xs={9} className="brick-row-container teach-tab-d94">
@@ -765,7 +689,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
 
     if (this.state.activeClassroom && !this.state.activeAssignment && !this.state.activeStudent) {
-      return this.renderClassroom(isArchive);
+      return this.renderClassroom();
     } else if (this.state.activeClassroom && this.state.activeAssignment) {
       return this.renderTabContent();
     } else {
@@ -774,11 +698,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   render() {
-    const { isArchive } = this.state;
     let showedClasses = this.state.classrooms;
-    if (isArchive) {
-      showedClasses = this.state.classrooms.filter(this.findClassArchive);
-    }
 
     const { history } = this.props;
     const { remindersData } = this.state;
@@ -787,7 +707,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
-          placeholder="Search by Class Name, Brick Title or Subject Name"
+          placeholder="Search by Class Name, Brick Title, Subject, or Student"
           user={this.props.user}
           history={history}
           search={this.search.bind(this)}
@@ -828,17 +748,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
             }}
             close={() => { this.setState({ createClassOpen: false }) }}
           />}
-        <Steps
-          enabled={this.state.stepsEnabled}
-          steps={this.state.steps}
-          initialStep={0}
-          onChange={this.onIntroChanged.bind(this)}
-          onExit={this.onIntroExit.bind(this)}
-          options={{
-            hidePrev: true,
-            doneLabel: 'View'
-          }}
-        />
         {this.state.isAssignOpen &&
           <AssignBrickClass
             isOpen={this.state.isAssignOpen}

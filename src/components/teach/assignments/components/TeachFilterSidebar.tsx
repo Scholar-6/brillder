@@ -182,7 +182,7 @@ class TeachFilterSidebar extends Component<
         >
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
             {this.renderClassoomSubject(c)}
-            <span className="filter-class-name">{c.name}</span>
+            <span className="filter-class-name" dangerouslySetInnerHTML={{ __html: c.name}}></span>
           </div>
         </div>
       </div>
