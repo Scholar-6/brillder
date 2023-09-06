@@ -17,6 +17,18 @@ export const getPublicBrickById = async (id: number) => {
   }
 }
 
+export const hasPersonalBricks = async () => {
+  try {
+    const res = await get<any>("/brick/hasPersonalBrick");
+    if (res && res.success) {
+      return true;
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Get all bricks
  * return list of bricks if success or null if failed
@@ -284,7 +296,6 @@ export const getLibraryBricks = async <T>(userId: number, classroomId?: number) 
     if (classroomId) {
       obj = { userId, classroomId };
     }
-    console.log(obj)
     return await post<T[]>("/play/library", obj);
   } catch (e) {
     return null;
@@ -534,7 +545,6 @@ export const copyBrick = async (brick: Brick, questions: Question[]) => {
     copy.status = BrickStatus.Draft;
     copy.questions = [];
     copy.id = null;
-    console.log(copy)
     const res = await post<Brick>('/brick', copy);
     if (res) {
       res.isCore = true;
