@@ -610,7 +610,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
               index += 1;
             }
 
-            const assignmentsCount = parseInt(c.assignmentsCount, 10);
+            const assignmentsCount = c.assignments.length;
 
             let newestAssignment = null;
             for (let assignment of c.assignments) {
