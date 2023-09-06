@@ -425,7 +425,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           className={`btn btn-md bg-theme-green yes-button ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
           onClick={create}
         >
-          <span className="bold">Next</span>
+          <span className="bold">{ (classroom && classroom.assignments && classroom.assignments.length > 0) ? 'Next': 'Skip'}</span>
         </button>
       </div>
     </Dialog>
