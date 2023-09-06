@@ -826,6 +826,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   render() {
     const { history } = this.props;
 
+    console.log('s333', this.state.subjects)
+
     const { activeClassroom } = this.state;
 
     return (

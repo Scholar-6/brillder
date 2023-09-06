@@ -199,6 +199,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   async loadInitData() {
     const subjects = await getSubjects();
+    console.log('sssss', subjects)
     if (subjects) {
       this.setState({ subjects });
     }
@@ -236,6 +237,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   async loadClasses(activeClassId?: number) {
     let classrooms = await getAllClassrooms() as TeachClassroom[] | null;
+
+
     if (classrooms) {
       if (this.state.teacherId > 0) {
         classrooms = classrooms.filter(c => {
@@ -258,12 +261,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
         }
       }
 
-      // if reloading
-      let stepsEnabled = false;
+      classrooms = this.sortAndReturnClassrooms(SortClassroom.Date, classrooms);
 
-      classrooms.sort((c1, c2) => parseInt(c2.assignmentsCount) - parseInt(c1.assignmentsCount));
-
-      this.setState({ classrooms, stepsEnabled, activeClassroom, isLoaded: true });
+      this.setState({ classrooms, stepsEnabled: false, activeClassroom, isLoaded: true });
       return classrooms;
     } else {
       this.props.requestFailed('can`t get classrooms');
@@ -473,9 +473,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   sortClassrooms(sort: SortClassroom) {
-    let finalClasses = [];
-    let classrooms = this.state.classrooms.filter(c => c.status == ClassroomStatus.Active);
+    const classrooms = this.state.classrooms.filter(c => c.status == ClassroomStatus.Active);
+    const finalClasses = this.sortAndReturnClassrooms(sort, classrooms);
+    this.setState({classrooms: finalClasses});
+  }
 
+  sortAndReturnClassrooms(sort: SortClassroom, classrooms: TeachClassroom[]) {
+    let finalClasses:any[] = [];
     for (const cls of classrooms) {
       const finalClass = Object.assign({}, cls) as any;
       finalClass.assigned = getClassAssignedCount(cls);
@@ -494,7 +498,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         return 0;
       });
     }
-    this.setState({classrooms: finalClasses})
+    return finalClasses;
   }
 
   async search() {
@@ -771,6 +775,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   render() {
+    console.log('sss333', this.state.subjects)
     const { isArchive } = this.state;
     let showedClasses = this.state.classrooms;
     if (isArchive) {
@@ -795,6 +800,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             user={this.props.user}
             classrooms={showedClasses}
             isLoaded={this.state.isLoaded}
+            subjects={this.state.subjects}
             history={this.props.history}
             activeStudent={this.state.activeStudent}
             activeClassroom={this.state.activeClassroom}

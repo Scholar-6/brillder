@@ -97,6 +97,7 @@ interface ViewAllState {
   keywords: KeyWord[];
 
   assignPopupOpen: boolean;
+  assignPopupClossingAnimation: boolean;
   assignClassroom: ClassroomApi | null;
   assigningBricks: boolean;
 
@@ -220,6 +221,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricksCount: 0,
       page,
       assignPopupOpen: false,
+      assignPopupClossingAnimation: false,
       assigningBricks: false,
       assignClassroom: null,
 
