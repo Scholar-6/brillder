@@ -1650,4 +1650,7 @@
       </clipPath>
     </defs>
   </svg>
+  <svg id="expand-v55" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18.375 18.375L13.125 13.125M18.375 18.375V14.175M18.375 18.375H14.175M2.625 14.175V18.375M2.625 18.375H6.825M2.625 18.375L7.875 13.125M18.375 6.825V2.625M18.375 2.625H14.175M18.375 2.625L13.125 7.875M2.625 6.825V2.625M2.625 2.625H6.825M2.625 2.625L7.875 7.875" stroke="#001C58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
 </svg>

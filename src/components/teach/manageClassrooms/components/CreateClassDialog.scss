@@ -2,10 +2,40 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-.create-classroom-dialog,
-.dialog-box {
+
+.create-classroom-dialog {
+  $font-22: 1.65vw;
+  $font-18: 1.5vw;
+  $font-16: 1.33vw;
+  $font-14: 1.16vw;
+  $font-12: 1vw;
+  $font-11: 0.91vw;
+  
+  .font-22 {
+    font-size: $font-22 !important;
+  }
+  .font-18 {
+    font-size: $font-18 !important;
+  }
+  .font-16 {
+    font-size: $font-16 !important;
+  }
+  .font-14 {
+    font-size: $font-14 !important;
+  }
+  .font-12 {
+    font-size: $font-12 !important;
+  }
+  .font-11 {
+    font-size: $font-11 !important;
+  }
+
+  .MuiChip-label {
+    font-size: $font-14;
+  }
+
   .m-top-small {
-    margin-top: 2vh;
+    margin-top: 2.5vh;
     margin-bottom: 1vh;
   }
   .dialog-select-container {
@@ -39,10 +69,7 @@
     padding-left: 0 !important;
     padding-right: 1.1vw !important;
   }
-}
 
-// only create class popup
-.create-classroom-dialog {
   $main-padding-side: 1.4vw;
   .MuiDialog-paper {
     color: var(--theme-dark-blue) !important;
@@ -64,7 +91,6 @@
       border-bottom: 1px solid #E5E8ED;
 
       .title {
-        font-size: 1.5vw;
         margin-bottom: 2.3vh !important;
       }
 
@@ -103,7 +129,6 @@
     .or-text-v2 {
       margin-top: 3vh;
       margin-bottom: 1.5vh !important;
-      font-size: 1vw;
       padding-right: 3.8vw;
     }
 
@@ -112,7 +137,6 @@
     }
 
     .text-left {
-      font-size: 1.1vw;
       text-align: left !important;
     }
 
@@ -183,7 +207,6 @@
           color: var(--theme-dark-blue) !important;
   
           input {
-            font-size: 1.2vw !important;
             color: var(--theme-dark-blue) !important;
             background: white !important;
           }
@@ -199,7 +222,6 @@
     }
 
     .text-r324 {
-      font-size: 1.3vw !important;
       margin-bottom: 2vh !important;
       text-align: left !important;
 
@@ -215,7 +237,7 @@
 
         .search-container {
           position: absolute;
-          top: 0.8vw;
+          top: 2vh;
           left: 0.6vw;
           z-index: 6;
 
@@ -232,7 +254,10 @@
 
           input {
             border: 1px solid #BCC4D3;
-            border-radius: 1vw;
+            border-radius: 0.5vw;
+            padding-top: 2vh;
+            padding-bottom: 2vh;
+            font-size: $font-14;
             padding-left: 3vw;
           }
   
@@ -249,7 +274,6 @@
       position: relative;
       border-radius: 0.7vw;
       line-height: 2.8;
-      font-size: 1.1vw;
       width: calc(100% - #{$main-padding-side});
       padding-left: 1vw;
       text-align: left;
@@ -257,7 +281,6 @@
 
       input {
         padding: 0 !important;
-        font-size: 1.1vw !important;
         background: unset !important;
 
 
@@ -294,9 +317,39 @@
       }
     }
 
+    .test-r5-d4 {
+      position: relative;
+      .share-popup-box {
+        position: absolute;
+        top: 0.1vw;
+        right: 0vw;
+        svg {
+          margin: 0 !important;
+        }
+
+        .hover-content {
+          padding: 0 1vw !important;
+          top: 2vw !important;
+          left: unset !important;
+          right: 0 !important;
+          font-size: 1vw !important;
+          border-radius: 0.7vw !important;
+          line-height: 1.2;
+          box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+          background: white;
+          width: 16vw;
+          color: var(--theme-dark-blue);
+
+          a {
+            text-decoration: underline;
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
+    }
+
     .test-r5-d3 {
       margin-top: 2vh;
-      font-size: 1.1vw;
 
       &.with-help-icon {
         position: relative;
@@ -341,11 +394,11 @@
       overflow-y: auto;
 
       .brick-row {
-        margin-left: 0.7vw;
-        margin-right: 0.7vw;
+        margin-left: 0.4vw;
+        margin-right: 0.4vw;
         position: relative;
         text-align: left;
-        line-height: 2.4;
+        line-height: 3;
         padding-left: 1vw;
         padding-right: 4vw;
 
@@ -376,7 +429,6 @@
     }
 
     .or-text {
-      font-size: 1.1vw;
       margin-bottom: 1.8vh;
     }
     .btn-glasses {
@@ -441,7 +493,6 @@
     .send-email-box {
       padding-left: $main-padding-side;
       display: flex;
-      font-size: 1.1vw;
       align-items: center;
       justify-content: flex-start;
       font-family: $font-family-regular;
@@ -464,11 +515,10 @@
       }
     }
 
-    font-size: 1.4vw !important;
-
     .r-class-inputs input {
-      border-radius: 1vw !important;
+      border-radius: 0.5vw !important;
       width: 100% !important;
+      padding-left: 1vw !important;
       background: var(--white) !important;
       color: var(--theme-dark-blue) !important;
       border: 2px solid #BCC4D3;
@@ -539,7 +589,6 @@
       }
     }
     .message-box-r5 {
-      font-size: 1.1vw;
       width: 40vw;
       line-height: 1.2;
       height: $height !important;
@@ -550,7 +599,6 @@
       padding-top: 0vw !important;
       padding-bottom: 0vw !important;
       width: 11vw !important;
-      font-size: 1.2vw !important;
 
       &.invalid {
         opacity: 0.3;
@@ -575,6 +623,12 @@
     .message-box-r5 {
       display: flex;
       align-items: center;
+    }
+
+    button {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      width: 7vw !important;
     }
   }
 
@@ -666,3 +720,25 @@
     }
   }
 }
+
+.create-classroom-dialog.new-class-r5 {
+  .MuiDialog-paper {
+    width: 40vw;
+  }
+
+  .dialog-footer {
+    button {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      width: 10vw !important;
+      text-align: center;
+    }
+  }
+}
+
+.create-classroom-dialog.delete-class-r5 {
+  .MuiDialog-paper {
+    width: 41.5vw;
+  }
+}
+
