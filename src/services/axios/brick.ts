@@ -5,7 +5,7 @@ import { AssignmentBrick } from 'model/assignment';
 import { Brick, BrickLengthEnum, BrickStatus, KeyWord, Subject } from 'model/brick';
 import { Question } from 'model/question';
 
-import { get, put, post, axiosDelete } from './index';
+import { get, put, post, axiosDelete, del } from './index';
 import { createQuestion } from './question';
 import { SortBy } from 'components/viewAllPage/components/ViewAllFilter';
 
@@ -495,6 +495,14 @@ export const sendAssignmentReminder = async (assignmentId: number) => {
 export const archiveAssignment = async (assignmentId: number) => {
   try {
     return await post<AssignmentBrick>(`/brick/assignment/${assignmentId}/archive`, {});
+  } catch {
+    return false;
+  }
+}
+
+export const deleteAssignment = async (assignmentId: number) => {
+  try {
+    return await del(`/brick/assignment/${assignmentId}/delete`);
   } catch {
     return false;
   }
