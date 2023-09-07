@@ -224,17 +224,17 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     <Dialog
       open={props.isOpen && !secondOpen}
       onClose={props.close}
-      className="dialog-box light-blue assign-class-dialog create-classroom-dialog"
+      className="dialog-box light-blue assign-class-dialog create-classroom-dialog new-class-r5"
     >
       <div className="dialog-header">
         <div className="title-box">
-          <div className="title">New Class</div>
+          <div className="title font-18">New Class</div>
           <SpriteIcon name="cancel-custom" onClick={props.close} />
         </div>
         <div className="text-block">
-          <div className="text-r324">Enter the name of your class</div>
+          <div className="text-r324 font-14">Enter the name of your class</div>
           <div className="r-class-inputs">
-            <input placeholder="Class Name" value={value} onChange={e => {
+            <input placeholder="Class name" value={value} className="font-14" onChange={e => {
               if (canSubmit === false && value.length > 0) {
                 setSubmit(true);
               } else if (canSubmit === true && value.length === 0) {
@@ -249,17 +249,17 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         <div className="info-box">
           <SpriteIcon name="info-icon" />
         </div>
-        <div className="message-box-r5">
-          Add a name that will be recognisable later to you and to your students, for example: <span className="italic">Year 11 French 2023.</span>
+        <div className="message-box-r5 font-11">
+          Choose a name that will be recognisable later to you and to your students, for example: <span className="italic">Year 11 French 2023.</span>
         </div>
         <button
-          className="btn btn-md cancel-button"
+          className="btn btn-md font-16 cancel-button"
           onClick={props.close}
         >
           <span className="bold">Cancel</span>
         </button>
         <button
-          className={`btn btn-md bg-theme-green yes-button ${!canSubmit ? 'invalid' : ''}`}
+          className={`btn btn-md bg-theme-green font-16 yes-button ${!canSubmit ? 'invalid' : ''}`}
           onClick={() => createV2(value)}
         >
           <span className="bold">Next</span>
@@ -273,13 +273,13 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     >
       <div className="dialog-header">
         <div className="title-box">
-          <div className="title">
+          <div className="title font-18">
             Add Assignments to Class
           </div>
           <SpriteIcon onClick={closeV2} name="cancel-custom" />
         </div>
         <div className="text-block">
-          <div className="text-r324">
+          <div className="text-r324 font-14">
             If you have the title you’re looking for enter it below
             <Autocomplete
               freeSolo
@@ -354,7 +354,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               }}
             />
           </div>
-          <div className="or-text bold">
+          <div className="or-text bold font-14">
             OR
           </div>
           <div className="flex-center">
@@ -364,23 +364,23 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               <div className="flex-center">
                 <SpriteIcon name="glasses-home" />
               </div>
-              <div className="flex-center">
+              <div className="flex-center font-14">
                 Browse Public Catalogue
               </div>
             </div>
             {hasPersonal &&
-            <div className="btn btn-key flex-center" onClick={() => {
-              props.history.push(map.ViewAllPage + '?assigning-bricks=' + classroom.id + '&personal=true');
-            }}>
-              <div className="flex-center">
-                <SpriteIcon name="key" />
-              </div>
-              <div className="flex-center">
-                Personal Bricks
-              </div>
-            </div>}
+              <div className="btn btn-key flex-center" onClick={() => {
+                props.history.push(map.ViewAllPage + '?assigning-bricks=' + classroom.id + '&personal=true');
+              }}>
+                <div className="flex-center">
+                  <SpriteIcon name="key" />
+                </div>
+                <div className="flex-center font-14">
+                  Personal Bricks
+                </div>
+              </div>}
           </div>
-          <div className="bold text-left m-top-small">
+          <div className="bold text-left m-top-small font-16">
             Assigned Bricks
           </div>
           {assignments.length > 0
@@ -391,7 +391,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                 if (i === assignments.length - 1) {
                   additionalClass = '';
                 }
-                return (<div className={`brick-row bold ${additionalClass}`} key={i}>
+                return (<div className={`brick-row bold font-12 ${additionalClass}`} key={i}>
                   {stripHtml(a.brick.title)}
                   <SpriteIcon name="cancel-custom" onClick={() => {
                     const filteredAssignments = assignments.filter(bs => bs.id !== a.brick.id);
@@ -402,7 +402,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               })}
             </div>
             :
-            <div className="bricks-box empty flex-center">
+            <div className="bricks-box empty flex-center font-12">
               No bricks yet
             </div>
           }
@@ -410,40 +410,42 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       </div>
       <div className="dialog-footer">
         <div className="info-box">
-          <SpriteIcon name="info-icon" />
+          {assignments.length > 0 ? '' : <SpriteIcon name="info-icon" />}
         </div>
-        <div className="message-box-r5">
-          You can skip this step for now and assign bricks to the class later from the Manage Classes menu.
+        <div className="message-box-r5 font-11">
+          {assignments.length > 0 ? '' : 'You can skip this step for now and assign bricks to the class later from the Manage Classes menu.'}
         </div>
         <button
-          className="btn btn-md cancel-button"
+          className="btn btn-md cancel-button font-16"
           onClick={() => setSecondOpen(false)}
         >
           <span className="bold">Previous</span>
         </button>
         <button
-          className={`btn btn-md bg-theme-green yes-button ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
+          className={`btn btn-md bg-theme-green font-16 yes-button ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
           onClick={create}
         >
-          <span className="bold">{ (classroom && classroom.assignments && classroom.assignments.length > 0) ? 'Next': 'Skip'}</span>
+          <span className="bold">{(classroom && classroom.assignments && classroom.assignments.length > 0) ? 'Next' : 'Skip'}</span>
         </button>
       </div>
     </Dialog>
     <Dialog
       open={props.isOpen && closeV2Open}
       onClose={props.close}
-      className="dialog-box light-blue assign-class-dialog create-classroom-dialog"
+      className="dialog-box light-blue assign-class-dialog create-classroom-dialog delete-class-r5"
     >
       <div className="dialog-header">
         <div className="title-box">
-          <div className="title">
+          <div className="title font-18">
             Are you sure you want to quit Class Creation?
           </div>
           <SpriteIcon onClick={props.close} name="cancel-custom" />
         </div>
         <div className="text-block">
-          <div className="text-r324 text-center">
-            If you want to return to the class later, select Save and Quit to make this class available from the Manage Classes page. Alternatively, select Delete Class to cancel class creation and discard any assigned bricks or students.
+          <div className="text-r324 text-center font-14">
+            If you want to return to the class later, select Save and Quit to make this class<br/>
+            available from the Manage Classes page. Alternatively, select Delete Class to cancel<br/>
+            class creation and discard any assigned bricks or students.
           </div>
         </div>
       </div>
@@ -452,7 +454,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         </div>
         <div className="message-box-r5"></div>
         <button
-          className="btn btn-md cancel-button"
+          className="btn btn-md cancel-button font-16"
           onClick={() => {
             setCloseV2Open(false);
             props.close();
@@ -461,7 +463,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           <span className="bold">Delete Class</span>
         </button>
         <button
-          className={`btn btn-md bg-theme-green yes-button ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
+          className={`btn btn-md bg-theme-green yes-button font-16 ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
           onClick={() => setCloseV2Open(false)}
         >
           <span className="bold">Save and Quit</span>
@@ -476,12 +478,12 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       >
         <div className="dialog-header">
           <div className="title-box">
-            <div className="title">
+            <div className="title font-18">
               Sharing and Invites
             </div>
             <SpriteIcon onClick={closeV2} name="cancel-custom" />
           </div>
-          <div className="text-block two-columns">
+          <div className="text-block two-columns font-14">
             <div className="block-one">
               <div className="bold text-left">
                 Quick access
@@ -498,8 +500,8 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                   </HoverHelp>
                 </div>
               </div>
-              <div className="gray-box">
-                <input id="classroom-code-vr3" value={classroom.code} />
+              <div className="gray-box font-14">
+                <input id="classroom-code-vr3" value={classroom.code} className="font-14" />
                 <div className="copy-btn" onClick={() => {
                   const linkEl = document.getElementById('classroom-code-vr3') as HTMLInputElement;
                   if (linkEl) {
@@ -525,13 +527,21 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               <div className="gray-box underline-text">
                 <input id="classroom-link-vr3" value={
                   document.location.host + '/' + map.QuickassignPrefix + '/' + classroom.code
-                } />
-                <div className="copy-btn">Copy</div>
+                } className="font-14" />
+                <div className="copy-btn" onClick={() => {
+                  const linkEl = document.getElementById('classroom-link-vr3') as HTMLInputElement;
+                  if (linkEl) {
+                    linkEl.select();
+                    linkEl.setSelectionRange(0, 100);
+                    document.execCommand('copy');
+                    linkEl.setSelectionRange(0, 0);
+                  }
+                }}>Copy</div>
               </div>
               {expandedV3Popup &&
                 <div>
-                  <div className="or-text-v2 bold">OR</div>
-                  <div className="bold text-left left-padding-v2">Invite learners by email</div>
+                  <div className="or-text-v2 font-14 bold">OR</div>
+                  <div className="bold text-left left-padding-v2 font-16">Invite learners by email</div>
                   <div className="r-student-emails">
                     <AutocompleteUsernameButEmail
                       placeholder="Type or paste up to 50 learner emails, then press Enter ⏎"
@@ -549,7 +559,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                   </div>
                   {users.length > 0 && <div className="email-warning">
                     <div>
-                      <span>
+                      <span className="font-12">
                         Students might not receive invites if your institution filters emails. <span className="underline bold">How to avoid this</span>
                         <SpriteIcon name="arrow-down" />
                       </span>
@@ -558,9 +568,19 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                 </div>}
             </div>
             <div className="block-two">
-              {!expandedV3Popup && <div className="text-left">Share QR code</div>}
+              {!expandedV3Popup && <div className="text-left test-r5-d4 with-help-icon">Share QR code
+                <div className="share-popup-box">
+                  <HoverHelp>
+                    <div>
+                      <div>The QR code can be expanded, or</div>
+                      <div>downloaded for inclusion on a </div>
+                      <div>presentation, poster, or similar</div>
+                    </div>
+                  </HoverHelp>
+                </div>
+              </div>}
               <div className={`code-box flex-center ${expandedV3Popup ? 'expanded' : ''}`}>
-                <SpriteIcon className="expand-btn" name="collapse" onClick={() => expandV3Popup(!expandedV3Popup)} />
+                <SpriteIcon className="expand-btn" name={expandedV3Popup ? "collapse" : "expand-v55"} onClick={() => expandV3Popup(!expandedV3Popup)} />
                 <img className="qr-code-img" src={imgBase64} />
                 {expandedV3Popup && <div className="absolute-code-label">Class Code: <span className="bold upper-text">{classroom.code}</span></div>}
               </div>
@@ -568,8 +588,8 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           </div>
           {!expandedV3Popup &&
             <div className="bottom-box-padding">
-              <div className="or-text-v2 bold">OR</div>
-              <div className="bold text-left left-padding-v2">Invite learners by email</div>
+              <div className="or-text-v2 font-14 bold">OR</div>
+              <div className="bold text-left font-16 left-padding-v2">Invite learners by email</div>
               <div className="r-student-emails">
                 <AutocompleteUsernameButEmail
                   placeholder="Type or paste up to 50 learner emails, then press Enter ⏎"
@@ -587,7 +607,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               </div>
               {users.length > 0 && <div className="email-warning">
                 <div>
-                  <span>
+                  <span className="font-12">
                     Students might not receive invites if your institution filters emails. <span className="underline bold">How to avoid this</span>
                   </span>
                   <SpriteIcon name="arrow-down" className={expandedWarning ? 'arrow-up' : ''} onClick={() => {
@@ -596,11 +616,11 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                 </div>
                 {expandedWarning &&
                   <div>
-                    <span>To ensure invites are received, please ask your network administrator to whitelist notifications@brillder.com. They may want the following information:</span>
+                    <span className="font-12">To ensure invites are received, please ask your network administrator to whitelist notifications@brillder.com. They may want the following information:</span>
                   </div>}
                 {expandedWarning &&
                   <div>
-                    <span>Brillder is the trading name of Scholar 6 Ltd, which is on the UK Register of Learning Providers (UK Provider Reference Number 10090571)</span>
+                    <span className="font-12">Brillder is the trading name of Scholar 6 Ltd, which is on the UK Register of Learning Providers (UK Provider Reference Number 10090571)</span>
                   </div>}
               </div>}
             </div>}
@@ -609,17 +629,17 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           <div className="info-box">
             <SpriteIcon name="info-icon" />
           </div>
-          <div className="message-box-r5">
+          <div className="message-box-r5 font-11">
             These options can be accessed again later from the Share menu on the Class page
           </div>
           <button
-            className="btn btn-md cancel-button"
+            className="btn btn-md font-16 cancel-button"
             onClick={() => setThirdOpen(false)}
           >
             <span className="bold">Previous</span>
           </button>
           <button
-            className={`btn btn-md bg-theme-green yes-button ${!canSubmitV2 ? 'invalid' : ''}`}
+            className={`btn btn-md bg-theme-green font-16 yes-button ${!canSubmitV2 ? 'invalid' : ''}`}
             onClick={assignStudentsToBrick}
           >
             <span className="bold">Finish</span>
