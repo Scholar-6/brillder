@@ -434,7 +434,8 @@
   }
 
   .top-row-v5 {
-    padding-left: 2vw;
+    position: relative;
+    padding-left: 1.5vw;
     display: flex;
     width: 100%;
     padding-top: 2vh;
@@ -443,6 +444,7 @@
 
     .text {
       display: flex;
+      font-size: 1.4vw;
       align-items: center;
       margin-bottom: 0;
     }
@@ -452,7 +454,7 @@
       display: flex;
       align-items: center;
       font-size: 1vw;
-      margin-left: 9vw;
+      margin-left: 7.3vw;
       color: white;
       border-radius: 3vw;
       padding-top: 0.3vw;

@@ -6,6 +6,8 @@ export const CURRENT_AFFAIRS_SUBJECT = "Current Affairs";
 export const ENGLISH_LANGUAGE_SUBJECT = "English Language";
 export const ENGLISH_LITERATURE_SUBJECT = "English Literature";
 
+export const CHINESE_SUBJECT = "Chinese";
+
 export interface SubjectsResult {
   data: Subject[];
 }
