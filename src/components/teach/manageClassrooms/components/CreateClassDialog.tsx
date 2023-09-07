@@ -15,7 +15,7 @@ import { Brick, Subject } from 'model/brick';
 import { getSuggestedByTitles, hasPersonalBricks } from 'services/axios/brick';
 import { createClass, getClassById } from 'components/teach/service';
 import { assignClasses } from 'services/axios/assignBrick';
-import { assignToClassByEmails } from 'services/axios/classroom';
+import { assignToClassByEmails, deleteClassroom } from 'services/axios/classroom';
 import map from 'components/map';
 
 import BrickTitle from 'components/baseComponents/BrickTitle';
@@ -218,6 +218,14 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
 
   const closeV2 = () => {
     setCloseV2Open(true);
+  }
+
+  const deleteClass = async () => {
+    const deleted = await deleteClassroom(classroom.id);
+    if (deleted) {
+      setCloseV2Open(false);
+      props.close();
+    }
   }
 
   return (<div>
@@ -455,16 +463,17 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         <div className="message-box-r5"></div>
         <button
           className="btn btn-md cancel-button font-16"
-          onClick={() => {
-            setCloseV2Open(false);
-            props.close();
-          }}
+          onClick={deleteClass}
         >
           <span className="bold">Delete Class</span>
         </button>
         <button
           className={`btn btn-md bg-theme-green yes-button font-16 ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
-          onClick={() => setCloseV2Open(false)}
+          onClick={() => {
+            setCloseV2Open(false);
+            props.submit(classroom.id);
+            props.close();
+          }}
         >
           <span className="bold">Save and Quit</span>
         </button>
