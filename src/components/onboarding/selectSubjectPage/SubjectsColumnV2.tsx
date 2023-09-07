@@ -113,7 +113,6 @@ const SubjectsColumn: React.FC<Props> = ({ next, onClick, ...props }) => {
         {list.map((row, i) =>
           <div key={i} className="subject-row">
             {row.map((s, j) => renderSubject(s, j))}
-            {i === list.length - 1 && renderCorporateButton()}
             {i === list.length - 1 && renderNextButton()}
           </div>
         )}
