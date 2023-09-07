@@ -12,7 +12,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import { Brick, Subject } from 'model/brick';
-import { getSuggestedByTitles, hasPersonalBricks } from 'services/axios/brick';
+import { deleteAssignment, getSuggestedByTitles, hasPersonalBricks } from 'services/axios/brick';
 import { createClass, getClassById } from 'components/teach/service';
 import { assignClasses } from 'services/axios/assignBrick';
 import { assignToClassByEmails, deleteClassroom } from 'services/axios/classroom';
@@ -401,9 +401,13 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                 }
                 return (<div className={`brick-row bold font-12 ${additionalClass}`} key={i}>
                   {stripHtml(a.brick.title)}
-                  <SpriteIcon name="cancel-custom" onClick={() => {
-                    const filteredAssignments = assignments.filter(bs => bs.id !== a.brick.id);
-                    setAssignments(filteredAssignments);
+                  <SpriteIcon name="cancel-custom" onClick={async () => {
+                    const res = await deleteAssignment(a.id);
+                    console.log('removed');
+                    if (res) {
+                      const filteredAssignments = assignments.filter(bs => bs.id !== a.id);
+                      setAssignments(filteredAssignments);
+                    }
                   }} />
                 </div>
                 );
