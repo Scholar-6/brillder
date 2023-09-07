@@ -22,6 +22,12 @@
     height: calc(100% - 2vw);
     background: white;
 
+    .classroom-name {
+      color: var(--theme-dark-blue);
+      font-size: 2vw;
+      padding-left: 2vw;
+    }
+
     .bricks-list {
       display: flex;
     }
