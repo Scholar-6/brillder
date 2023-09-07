@@ -55,17 +55,136 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
     minimizeZendeskButton();
   }, []);
 
+  const renderAssignments = () => {
+    return (
+      <div className="bricks-list">
+        {assignments.map((a, i) => {
+          const { brick } = a;
+
+          var alternateColor = "";
+          let color = "";
+          if (!brick.subject) {
+            color = "#B0B0AD";
+          } else {
+            color = brick.subject.color;
+          }
+
+          if (brick.alternateSubject) {
+            alternateColor = brick.alternateSubject.color;
+          }
+
+          const renderLevelCircles = () => {
+            if (alternateColor) {
+              return (
+                <div className="level before-alternative">
+                  <div style={{ background: alternateColor }}>
+                    <div className="level">
+                      <div style={{ background: color }}>
+                        {AcademicLevelLabels[brick.academicLevel]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
+            return (
+              <div className="level only-one-circle">
+                <div style={{ background: color }}>
+                  {AcademicLevelLabels[brick.academicLevel]}
+                </div>
+              </div>
+            );
+          }
+
+          return (
+            <div className="animated-brick-container" key={i} onClick={() => {
+              SetQuickAssignment(JSON.stringify({
+                brick: {
+                  id: brick.id,
+                  title: brick.title
+                },
+                classroom: {
+                  id: classroom.id,
+                  code,
+                  name: classroom.name,
+                  teacher: classroom.teacher
+                }
+              }));
+              props.history.push(routes.playCover(brick as Brick));
+            }}>
+              <div className="flex-brick-container">
+                <div className="publish-brick-container">
+                  <div className="level-and-length">
+                    {renderLevelCircles()}
+                    <div className="length-text-r3">{brick.brickLength} min</div>
+                  </div>
+                  {brick.coverImage ?
+                    <div className="p-cover-image">
+                      <div className="scroll-block">
+                        <img alt="" className={imgLoaded ? 'visible' : 'hidden'} onLoad={() => setImgLoaded(true)} src={fileUrl(brick.coverImage)} />
+                      </div>
+                    </div>
+                    :
+                    <div className="p-cover-icon">
+                      <SpriteIcon name="image" />
+                    </div>
+                  }
+                  <div className="bottom-description-color"></div>
+                  <div className="bottom-description">
+                    <span className="bold brick-title" dangerouslySetInnerHTML={{ __html: a.brick.title }}></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
   if (isPhone()) {
+    const renderMobileContent = () => {
+      if (failed) {
+      }
+
+      if (classroom && assignments && assignments.length > 0) {
+        return (
+          <div className="page-content">
+            <div className="top-header flex-center">
+              <div>
+                <span className="bold" dangerouslySetInnerHTML={{ __html: classroom.name }} /> by <span className="bold">{classroom.teacher.firstName}</span>
+              </div>
+            </div>
+            {renderAssignments()}
+          </div>
+        );
+      }
+
+      return (
+        <div className="page-content">
+          <div className="top-header"></div>
+          Class don`t have assignments yet
+        </div>
+      );
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         <MobileTheme />
+
         <div className="QuickAssignPage">
-          <div>
-            <HomeButtonComponent history={props.history} />
-            <div className="sidebar"></div>
-          </div>
-          <div className="page-content">
-            Class don`t have assignments yet
+          {renderMobileContent()}
+          <div className="page-header">
+            <div className="flex-center home-btn">
+              <SpriteIcon name="logo" className="svg text-theme-orange" />
+            </div>
+            <div className="flex-center search-btn-container">
+              <div className="search-btn">
+                <SpriteIcon name="search" />
+                <div className="gh-phone-background"></div>
+              </div>
+            </div>
           </div>
         </div>
       </React.Suspense>
@@ -88,89 +207,7 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
           <div className="classroom-name" >
             <span className="bold" dangerouslySetInnerHTML={{ __html: classroom.name }} /> by <span className="bold">{classroom.teacher.firstName} {classroom.teacher.lastName}</span>
           </div>
-          <div className="bricks-list">
-            {assignments.map((a, i) => {
-              const { brick } = a;
-
-              var alternateColor = "";
-              let color = "";
-              if (!brick.subject) {
-                color = "#B0B0AD";
-              } else {
-                color = brick.subject.color;
-              }
-
-              if (brick.alternateSubject) {
-                alternateColor = brick.alternateSubject.color;
-              }
-
-              const renderLevelCircles = () => {
-                if (alternateColor) {
-                  return (
-                    <div className="level before-alternative">
-                      <div style={{ background: alternateColor }}>
-                        <div className="level">
-                          <div style={{ background: color }}>
-                            {AcademicLevelLabels[brick.academicLevel]}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-
-                return (
-                  <div className="level only-one-circle">
-                    <div style={{ background: color }}>
-                      {AcademicLevelLabels[brick.academicLevel]}
-                    </div>
-                  </div>
-                );
-              }
-
-              return (
-                <div className="animated-brick-container" key={i} onClick={() => {
-                  SetQuickAssignment(JSON.stringify({
-                    brick: {
-                      id: brick.id,
-                      title: brick.title
-                    },
-                    classroom: {
-                      id: classroom.id,
-                      code,
-                      name: classroom.name,
-                      teacher: classroom.teacher
-                    }
-                  }));
-                  props.history.push(routes.playCover(brick as Brick));
-                }}>
-                  <div className="flex-brick-container">
-                    <div className="publish-brick-container">
-                      <div className="level-and-length">
-                        {renderLevelCircles()}
-                        <div className="length-text-r3">{brick.brickLength} min</div>
-                      </div>
-                      {brick.coverImage ?
-                        <div className="p-cover-image">
-                          <div className="scroll-block">
-                            <img alt="" className={imgLoaded ? 'visible' : 'hidden'} onLoad={() => setImgLoaded(true)} src={fileUrl(brick.coverImage)} />
-                          </div>
-                        </div>
-                        :
-                        <div className="p-cover-icon">
-                          <SpriteIcon name="image" />
-                        </div>
-                      }
-                      <div className="bottom-description-color"></div>
-                      <div className="bottom-description">
-                        <span className="bold brick-title" dangerouslySetInnerHTML={{ __html: a.brick.title }}></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          {renderAssignments()}
         </div>
       )
     }
