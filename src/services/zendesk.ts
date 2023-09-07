@@ -73,15 +73,29 @@ const initZendeskPopupStyling = () => {
   return success;
 }
 
-export function minimizeZendeskButton(iframe?: any) {
+export async function minimizeZendeskButton(iframe?: any) {
   if (isMobile) { return; }
   if (!iframe) {
     iframe = getZendeskIframe();
-    if (!iframe) { return; }
+
+    const timeoutR1 = (ms: number) => {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    
+    // wait a second sometimes zendesk take time to load
+    if (!iframe) { 
+      await timeoutR1(1000);
+
+      iframe = getZendeskIframe();
+
+      if (!iframe) { 
+        return;
+      }      
+    }
   }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
 
-  let div = innerDoc.querySelectorAll('#Embed')[0]
+  let div = innerDoc.querySelectorAll('#Embed')[0];
   if (div) {
     div.classList.add("minimized");
   }

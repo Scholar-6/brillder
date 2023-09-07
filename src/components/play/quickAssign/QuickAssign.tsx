@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 
-import "./QuickAssign.scss";
 import { getClassroomByCode } from 'services/axios/classroom';
 import routes from '../routes';
 import { AcademicLevelLabels, Brick } from 'model/brick';
@@ -8,6 +7,11 @@ import { SetQuickAssignment } from 'localStorage/play';
 import HomeButtonComponent from 'components/baseComponents/homeButton/HomeButton';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { fileUrl } from 'components/services/uploadFile';
+import { isPhone } from 'services/phone';
+import { minimizeZendeskButton } from 'services/zendesk';
+
+const MobileTheme = React.lazy(() => import('./themes/QuickAssignMobileTheme'));
+const DesktopTheme = React.lazy(() => import('./themes/QuickAssignDesktopTheme'));
 
 interface AssignPersonOrClassProps {
   history: any;
@@ -47,29 +51,39 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
         setFailed(true);
       }
     });
+    console.log('minimize')
+    minimizeZendeskButton();
   }, []);
 
-  if (failed) {
+  if (isPhone()) {
     return (
-      <div className="QuickAssignPage">
-        <div>
-          <HomeButtonComponent history={props.history} />
-          <div className="sidebar"></div>
+      <React.Suspense fallback={<></>}>
+        <MobileTheme />
+        <div className="QuickAssignPage">
+          <div>
+            <HomeButtonComponent history={props.history} />
+            <div className="sidebar"></div>
+          </div>
+          <div className="page-content">
+            Class don`t have assignments yet
+          </div>
         </div>
-        <div className="page-content">
-          Class don`t have assignments yet
-        </div>
-      </div>
+      </React.Suspense>
     );
   }
 
-  if (classroom && assignments && assignments.length > 0) {
-    return (
-      <div className="QuickAssignPage">
-        <div>
-          <HomeButtonComponent history={props.history} />
-          <div className="sidebar"></div>
+
+  const renderContent = () => {
+    if (failed) {
+      return (
+        <div className="page-content">
+          Class don`t have assignments yet
         </div>
+      );
+    }
+
+    if (classroom && assignments && assignments.length > 0) {
+      return (
         <div className="page-content">
           <div className="classroom-name" >
             <span className="bold" dangerouslySetInnerHTML={{ __html: classroom.name }} /> by <span className="bold">{classroom.teacher.firstName} {classroom.teacher.lastName}</span>
@@ -115,7 +129,7 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
               }
 
               return (
-                <div className="animated-brick-container" onClick={() => {
+                <div className="animated-brick-container" key={i} onClick={() => {
                   SetQuickAssignment(JSON.stringify({
                     brick: {
                       id: brick.id,
@@ -158,20 +172,29 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
             })}
           </div>
         </div>
+      )
+    }
+
+    return (
+      <div className="page-content">
+        <div className="classroom-name">
+          ...Loading data...
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="QuickAssignPage">
-      <div>
-        <HomeButtonComponent history={props.history} />
-        <div className="sidebar"></div>
+    <React.Suspense fallback={<></>}>
+      <DesktopTheme />
+      <div className="QuickAssignPage">
+        <div>
+          <HomeButtonComponent history={props.history} />
+          <div className="sidebar"></div>
+        </div>
+        {renderContent()}
       </div>
-      <div className="page-content">
-        Class don`t have assignments yet
-      </div>
-    </div>
+    </React.Suspense>
   );
 }
 
