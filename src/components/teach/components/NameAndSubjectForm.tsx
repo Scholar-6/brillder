@@ -74,7 +74,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
             }}
           />
         </div>
-        <h1 className="name-display">{props.classroom!.name}</h1>
+        <h1 className="name-display" dangerouslySetInnerHTML={{__html: props.classroom!.name}}>{}</h1>
       </div>
     );
   }
