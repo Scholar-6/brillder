@@ -1,0 +1,29 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.QuickAssignPage {
+  height: 100%;
+  display: flex;
+  background: var(--theme-dark-blue);
+  .sidebar {
+    margin-top: calc(5.834vw + 2vw);
+    height: calc(100% - 5.834vw - 2vw);
+    width: 5.834vw;
+    border-top-right-radius: 2vw;
+    background: var(--theme-light-blue);
+  }
+
+  .page-content {
+    border-top-left-radius: 2vw;
+    margin-top: 2vw;
+    margin-left: 2vw;
+    width: calc(100vw - 5.834vw);
+    height: calc(100% - 2vw);
+    background: white;
+
+    .bricks-list {
+      display: flex;
+    }
+  }
+}
