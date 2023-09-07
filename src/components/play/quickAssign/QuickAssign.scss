@@ -15,6 +15,7 @@
   }
 
   .page-content {
+    overflow-y: scroll;
     border-top-left-radius: 2vw;
     margin-top: 2vw;
     margin-left: 2vw;
@@ -23,13 +24,25 @@
     background: white;
 
     .classroom-name {
+      padding-top: 5vh;
+      padding-bottom: 2vh;
       color: var(--theme-dark-blue);
-      font-size: 2vw;
+      font-size: 1.8vw;
       padding-left: 2vw;
     }
 
     .bricks-list {
+      width: 100%;
       display: flex;
+      flex-wrap: wrap;
+      margin-left: 1.5vw;
+
+      .publish-brick-container {
+        min-width: unset !important;
+        width: 21vw;
+        margin-left: 0.6vw;
+        margin-right: 0.6vw;
+      }
     }
   }
 }

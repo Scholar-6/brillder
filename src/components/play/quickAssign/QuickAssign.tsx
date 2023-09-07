@@ -71,7 +71,9 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
           <div className="sidebar"></div>
         </div>
         <div className="page-content">
-          <div className="classroom-name bold" dangerouslySetInnerHTML={{ __html: classroom.name }} />
+          <div className="classroom-name" >
+            <span className="bold" dangerouslySetInnerHTML={{ __html: classroom.name }} /> by <span className="bold">{classroom.teacher.firstName} {classroom.teacher.lastName}</span>
+          </div>
           <div className="bricks-list">
             {assignments.map((a, i) => {
               const { brick } = a;
