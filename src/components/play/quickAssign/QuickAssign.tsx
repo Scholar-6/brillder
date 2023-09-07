@@ -3,9 +3,11 @@ import React, { useEffect } from 'react';
 import "./QuickAssign.scss";
 import { getClassroomByCode } from 'services/axios/classroom';
 import routes from '../routes';
-import { Brick } from 'model/brick';
+import { AcademicLevelLabels, Brick } from 'model/brick';
 import { SetQuickAssignment } from 'localStorage/play';
 import HomeButtonComponent from 'components/baseComponents/homeButton/HomeButton';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { fileUrl } from 'components/services/uploadFile';
 
 interface AssignPersonOrClassProps {
   history: any;
@@ -18,6 +20,7 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
   const [failed, setFailed] = React.useState(false);
   const [classroom, setClassroom] = React.useState(null as any);
   const [assignments, setAssignments] = React.useState([] as any[]);
+  const [imgLoaded, setImgLoaded] = React.useState(false);
 
   useEffect(() => {
     getClassroomByCode(code).then((res) => {
@@ -68,28 +71,80 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
           <div className="sidebar"></div>
         </div>
         <div className="page-content">
-          <div className="classroom-name" dangerouslySetInnerHTML={{ __html: classroom.name }} />
+          <div className="classroom-name bold" dangerouslySetInnerHTML={{ __html: classroom.name }} />
           <div className="bricks-list">
             {assignments.map((a, i) => {
+              const { brick } = a;
+
+              var alternateColor = "";
+              let color = "";
+              if (!brick.subject) {
+                color = "#B0B0AD";
+              } else {
+                color = brick.subject.color;
+              }
+
+              if (brick.alternateSubject) {
+                alternateColor = brick.alternateSubject.color;
+              }
+
+              const renderLevelCircles = () => {
+                if (alternateColor) {
+                  return (
+                    <div className="level before-alternative">
+                      <div style={{ background: alternateColor }}>
+                        <div className="level">
+                          <div style={{ background: color }}>
+                            {AcademicLevelLabels[brick.academicLevel]}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div className="level only-one-circle">
+                    <div style={{ background: color }}>
+                      {AcademicLevelLabels[brick.academicLevel]}
+                    </div>
+                  </div>
+                );
+              }
+
               return (
-                <div className="animated-brick-container">
+                <div className="animated-brick-container" onClick={() => {
+                  SetQuickAssignment(JSON.stringify({
+                    brick: {
+                      id: brick.id,
+                      title: brick.title
+                    },
+                    classroom: {
+                      id: classroom.id,
+                      code,
+                      name: classroom.name,
+                      teacher: classroom.teacher
+                    }
+                  }));
+                  props.history.push(routes.playCover(brick as Brick));
+                }}>
                   <div className="flex-brick-container">
                     <div className="publish-brick-container">
                       <div className="level-and-length">
-                        <div className="level before-alternative">
-                          <div style={{ background: "rgb(101, 196, 76);" }}>
-                            <div className="level">
-                              <div style={{ background: "rgb(0, 107, 253);" }}>I</div>
-                            </div>
+                        {renderLevelCircles()}
+                        <div className="length-text-r3">{brick.brickLength} min</div>
+                      </div>
+                      {brick.coverImage ?
+                        <div className="p-cover-image">
+                          <div className="scroll-block">
+                            <img alt="" className={imgLoaded ? 'visible' : 'hidden'} onLoad={() => setImgLoaded(true)} src={fileUrl(brick.coverImage)} />
                           </div>
                         </div>
-                        <div className="length-text-r3">20 min</div>
-                      </div>
-                      <div className="p-cover-icon">
-                        <svg className="svg ">
-                          <use href="/static/media/icons-sprite.7e9f4bdc6b19212c8882b7c96f3168d9.svg#image"></use>
-                        </svg>
-                      </div>
+                        :
+                        <div className="p-cover-icon">
+                          <SpriteIcon name="image" />
+                        </div>
+                      }
                       <div className="bottom-description-color"></div>
                       <div className="bottom-description">
                         <span className="bold brick-title" dangerouslySetInnerHTML={{ __html: a.brick.title }}></span>
