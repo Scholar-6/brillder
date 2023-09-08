@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Grow } from "@material-ui/core";
 
 import './ClassroomList.scss';
-import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
 import { TeachClassroom, Assignment, TeachStudent } from "model/classroom";
 
@@ -24,11 +22,9 @@ export interface TeachListItem {
 }
 
 interface ClassroomListProps {
-  stats: any;
   history: any;
   subjects: Subject[];
   activeClassroom: TeachClassroom;
-  expand(classroomId: number, assignmentId: number): void;
   reloadClass(id: number): void;
   assignPopup(): void;
   inviteStudents(): void;
@@ -236,6 +232,4 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({ stats: state.stats.stats });
-
-export default connect(mapState)(ClassroomList);
+export default ClassroomList;

@@ -2,22 +2,15 @@ import React, { Component } from "react";
 import { FormControlLabel, Grid, Radio } from "@material-ui/core";
 
 import "./TeachFilterSidebar.scss";
-import { ClassroomStatus, TeachClassroom, TeachStudent } from "model/classroom";
-import { TeachFilters } from "../../model";
+import { ClassroomStatus, TeachClassroom } from "model/classroom";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import EmptyFilter from "../filter/EmptyFilter";
 import RadioButton from "components/baseComponents/buttons/RadioButton";
 import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
-import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
-import { resendInvitation } from "services/axios/classroom";
 import { User } from "model/user";
 import SortButton from "./SortButton";
 import { Subject } from "model/brick";
 
-enum TeachFilterFields {
-  Assigned = "assigned",
-  Completed = "completed",
-}
 
 interface FilterSidebarProps {
   isLoaded: boolean;
@@ -25,21 +18,15 @@ interface FilterSidebarProps {
   history: any;
   subjects: Subject[];
   classrooms: TeachClassroom[];
-  activeStudent: TeachStudent | null;
   activeClassroom: TeachClassroom | null;
-  setActiveStudent(s: TeachStudent): void;
   setActiveClassroom(id: number | null): void;
-  filterChanged(filters: TeachFilters): void;
   moveToPremium(): void;
   loadClass(classId: number): void;
   sortClassrooms(sort: SortClassroom): void;
 }
 
 interface FilterSidebarState {
-  filters: TeachFilters;
-  ascending: boolean | null;
   sortByName: boolean | null;
-  isInviteOpen: boolean;
   createClassOpen: boolean;
   sort: SortClassroom;
 }
@@ -57,32 +44,12 @@ class TeachFilterSidebar extends Component<
   constructor(props: FilterSidebarProps) {
     super(props);
     this.state = {
-      ascending: true,
       sortByName: null,
-      isInviteOpen: false,
-
       sort: SortClassroom.Date,
-
-      filters: {
-        assigned: false,
-        completed: false,
-      },
       createClassOpen: false,
     };
   }
 
-  async resendInvitation(s: any) {
-    if (this.props.activeClassroom) {
-      await resendInvitation(this.props.activeClassroom as any, s.email);
-      this.setState({ isInviteOpen: true });
-    }
-  }
-
-  toggleFilter(filter: TeachFilterFields) {
-    const { filters } = this.state;
-    filters[filter] = !filters[filter];
-    this.props.filterChanged(filters);
-  }
 
   toggleClassroom(e: any, activeClassroom: TeachClassroom) {
     e.stopPropagation();
@@ -97,60 +64,6 @@ class TeachFilterSidebar extends Component<
     e.stopPropagation();
     e.preventDefault();
     this.props.setActiveClassroom(-1);
-  }
-
-  renderStudent(s: TeachStudent, key: number) {
-    let className = "student-row";
-
-    if (this.props.activeStudent) {
-      if (s.id === this.props.activeStudent.id) {
-        className += " active";
-      }
-    }
-
-    return (
-      <div
-        className={className}
-        key={key}
-        onClick={() => this.props.setActiveStudent(s)}
-      >
-        <span className="student-name">
-          {s.firstName} {s.lastName}
-        </span>
-      </div>
-    );
-  }
-
-  renderInvitation(s: any, key: number) {
-    return (
-      <div className="student-row invitation" key={key}>
-        <span className="student-name">
-          <span>{s.email}</span>
-          <button className="btn resend-label" onClick={
-            () => this.resendInvitation(s)
-          }>Resend<SpriteIcon name="send-custom" /></button>
-        </span>
-      </div>
-    );
-  }
-
-  renderStudentList(c: TeachClassroom) {
-    if (c.active) {
-      const sts = c.students.sort((a, b) => {
-        if (a.lastName && b.lastName) {
-          const al = a.lastName.toUpperCase();
-          const bl = b.lastName.toUpperCase();
-          if (al < bl) { return -1; }
-          if (al > bl) { return 1; }
-        }
-        return 0;
-      });
-
-      return <div>
-        {sts.map(this.renderStudent.bind(this))}
-      </div>
-    }
-    return <div />
   }
 
   renderClassoomSubject(c: TeachClassroom) {
@@ -303,10 +216,6 @@ class TeachFilterSidebar extends Component<
               this.setState({ createClassOpen: false });
             }}
           />}
-        <StudentInviteSuccessDialog
-          numStudentsInvited={this.state.isInviteOpen ? 1 : 0}
-          close={() => this.setState({ isInviteOpen: false })}
-        />
       </Grid>
     );
   }
