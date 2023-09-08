@@ -5,7 +5,7 @@ import { Grow } from "@material-ui/core";
 import './ClassroomList.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
-import { TeachClassroom, Assignment } from "model/classroom";
+import { TeachClassroom, Assignment, TeachStudent } from "model/classroom";
 
 import { updateClassroom } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
@@ -13,6 +13,9 @@ import EmptyClassTab from "./EmptyClassTab";
 import AssignedBrickDescriptionV2 from "./AssignedBrickDescriptionV2";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import NameAndSubjectFormV3 from "components/teach/components/NameAndSubjectFormV3";
+import UnassignStudentDialog from "components/teach/manageClassrooms/components/UnassignStudentDialog";
+import { MUser } from "components/teach/model";
+import { unassignStudent } from "components/teach/service";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -33,8 +36,8 @@ interface ClassroomListProps {
 }
 
 interface ListState {
-  classroom: TeachClassroom;
-  shown: boolean;
+  unassignOpen: boolean;
+  unassignStudent: any;
 }
 
 class ClassroomList extends Component<ClassroomListProps, ListState> {
@@ -42,21 +45,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     super(props);
 
     this.state = {
-      classroom: props.activeClassroom,
-      shown: false
-    }
-  }
-
-  componentDidMount() {
-    this.setState({ shown: true });
-  }
-
-  componentDidUpdate(props: ClassroomListProps) {
-    if (this.props.activeClassroom !== props.activeClassroom) {
-      this.setState({ shown: false });
-      setTimeout(() => {
-        this.setState({ shown: true, classroom: this.props.activeClassroom });
-      }, 700);
+      unassignStudent: null,
+      unassignOpen: false,
     }
   }
 
@@ -70,13 +60,38 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     let success = await updateClassroom(classroomApi);
     if (success) {
       classroom.name = name;
-      this.setState({ classroom: { ...classroom } });
       this.props.reloadClass(classroom.id);
     }
   }
 
+  unassignStudent(student: MUser | null) {
+    const { activeClassroom } = this.props;
+    if (activeClassroom && student) {
+      const { id } = activeClassroom;
+      unassignStudent(id, student.id).then(res => {
+        if (res) {
+          const index = activeClassroom.students.findIndex(s => s.id === student.id);
+          if (index == -1) {
+            const index = activeClassroom.studentsInvitations.findIndex(s => s.id === student.id);
+            activeClassroom.studentsInvitations.splice(index, 1);
+          } else {
+            activeClassroom.students.splice(index, 1);
+          }
+          this.setState({ unassignOpen: false });
+        } else {
+          // failture
+          this.setState({ unassignOpen: false });
+        }
+      });
+    }
+  }
+
+  unassigningStudent(student: TeachStudent) {
+    this.setState({ unassignStudent: student, unassignOpen: true });
+  }
+
   renderClassname() {
-    const classroom = this.state.classroom as any;
+    const classroom = this.props.activeClassroom as any;
     let className = 'classroom-title';
     return (
       <div className={className}>
@@ -113,7 +128,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     return '';
   }
 
-  renderStudent(s: any, i: number) {
+  renderStudent(s: TeachStudent, i: number) {
     return (
       <div className="student" key={i}>
         <div className="email-box">
@@ -123,10 +138,12 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
           </div>
         </div>
         <div className="flex-center button-box">
-          <div className="library flex-center"><SpriteIcon name="bar-chart-2" /></div>
+          <div className="library flex-center" onClick={() => { }}><SpriteIcon name="bar-chart-2" /></div>
         </div>
         <div className="flex-center button-box">
-          <div className="delete flex-center"><SpriteIcon name="delete" /></div>
+          <div className="delete flex-center" onClick={() => {
+            this.unassigningStudent(s);
+           }}><SpriteIcon name="delete" /></div>
         </div>
       </div>
     );
@@ -142,14 +159,16 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
           </div>
         </div>
         <div className="flex-center button-box">
-          <div className="delete flex-center"><SpriteIcon name="delete" /></div>
+          <div className="delete flex-center" onClick={() => {
+            this.unassigningStudent(s);
+           }}><SpriteIcon name="delete" /></div>
         </div>
       </div>
     );
   }
 
   renderContent() {
-    const { classroom } = this.state;
+    const classroom = this.props.activeClassroom;
     let items = [] as TeachListItem[];
 
     convertClassAssignments(items, classroom);
@@ -186,6 +205,12 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <div className="classroom-list one-classroom-assignments">
           {this.renderContent()}
         </div>
+        <UnassignStudentDialog
+          isOpen={this.state.unassignOpen}
+          student={this.state.unassignStudent}
+          close={() => this.setState({ unassignOpen: false })}
+          submit={() => this.unassignStudent(this.state.unassignStudent)}
+        />
       </div>
     );
   }
