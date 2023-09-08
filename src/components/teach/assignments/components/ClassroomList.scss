@@ -1,9 +1,35 @@
+.container-d23423 {
+  background: var(--theme-light-blue);
+}
 .top-name-v431 {
   padding-left: 1vw;
   padding-top: 2vh;
   padding-bottom: 2vh;
 }
 .one-classroom-assignments {
+  .absolute-library-link {
+    transition: all 200ms ease-in-out;
+    position: relative;
+    .css-custom-tooltip {
+      z-index: 2;
+      display: none;
+      position: absolute;
+      top: 2.2vw;
+      padding-left:0.4vw;
+      padding-right:0.4vw;
+      opacity: 1;
+      white-space: nowrap;
+      color: white;
+      background: var(--theme-dark-blue);
+    }
+
+    &:hover {
+      background: var(--theme-light-blue) !important;
+      .css-custom-tooltip {
+        display: block;
+      }
+    }
+  }
   padding-top: 0 !important;
   .sub-title-v8 {
     padding-left: 2vw;
@@ -149,6 +175,8 @@
           }
         }
         .delete {
+          transition: all 200ms ease-in-out;
+          position: relative;
           cursor: pointer;
           border-radius: 50%;
           width: 2vw;
@@ -160,6 +188,27 @@
             width: 1vw;
             height: 1vw;
             color: white;
+          }
+
+          .css-custom-tooltip {
+            z-index: 2;
+            display: none;
+            position: absolute;
+            top: 2.2vw;
+            right: -1.2vw;
+            padding-left:0.4vw;
+            padding-right:0.4vw;
+            opacity: 1;
+            white-space: nowrap;
+            color: white;
+            background: var(--theme-dark-blue);
+          }
+      
+          &:hover {
+            background: var(--theme-light-blue) !important;
+            .css-custom-tooltip {
+              display: block;
+            }
           }
         }
       }
@@ -189,6 +238,9 @@
           background: #DEDEDE;
         }
         .delete {
+          transition: all 200ms ease-in-out;
+          position: relative;
+
           cursor: pointer;
           border-radius: 50%;
           width: 2vw;
@@ -200,6 +252,27 @@
             width: 1vw;
             height: 1vw;
             color: white;
+          }
+
+          .css-custom-tooltip {
+            z-index: 2;
+            display: none;
+            position: absolute;
+            top: 2.2vw;
+            right: -1.2vw;
+            padding-left:0.4vw;
+            padding-right:0.4vw;
+            opacity: 1;
+            white-space: nowrap;
+            color: white;
+            background: var(--theme-dark-blue);
+          }
+      
+          &:hover {
+            background: var(--theme-light-blue) !important;
+            .css-custom-tooltip {
+              display: block;
+            }
           }
         }
       }
