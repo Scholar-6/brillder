@@ -57,6 +57,7 @@ export interface Classroom {
   teachers: UserBase[];
   teacher: UserBase;
   creator: UserBase;
+  code: string;
   assignments: Assignment[];
   assignmentsBrick: AssignmentBrick[];
 }

@@ -37,10 +37,11 @@ import DeleteClassDialog from "../manageClassrooms/components/DeleteClassDialog"
 import { deleteClassroom } from "services/axios/classroom";
 import EmptyClassTab from "./components/EmptyClassTab";
 import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
-import AssignSuccessDialog from "components/baseComponents/dialogs/AssignSuccessDialog";
+import AssignSuccessDialogV3 from "components/baseComponents/dialogs/AssignSuccessDialogV3";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 import { fileUrl } from "components/services/uploadFile";
 import HoverButton from "components/baseComponents/hoverHelp/HoverButton";
+import UpdateClassDialog from "../manageClassrooms/components/UpdateClassDialog";
 
 
 interface RemindersData {
@@ -79,12 +80,12 @@ interface TeachState {
   activeAssignment: Assignment | null;
   activeStudent: TeachStudent | null;
   assignmentStats: ApiAssignemntStats | null;
-  totalCount: number;
   subjects: Subject[];
 
   isLoaded: boolean;
   remindersData: RemindersData;
   createClassOpen: boolean;
+  updateClassId: number;
   isAssignOpen: boolean;
   selectedClassroom: any;
   successAssignResult: any;
@@ -134,11 +135,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
         isDeadlinePassed: false
       },
       createClassOpen: false,
+      updateClassId: -1,
       isPremiumDialogOpen: false,
 
       teacherId,
 
-      totalCount: 0,
       searchString: '',
       searchType: ClassroomSearchType.Any,
       subjects: [],
@@ -554,19 +555,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
       <Grid item xs={9} className="brick-row-container teach-tab-d94">
         <ClassroomList
           subjects={this.state.subjects}
-          isArchive={false}
           history={this.props.history}
-          startIndex={this.state.sortedIndex}
           activeClassroom={this.state.activeClassroom}
-          pageSize={this.state.classPageSize}
-          toggleArchive={() => { }}
           expand={this.moveToAssignment.bind(this)}
           reloadClass={this.loadClass.bind(this)}
           onRemind={this.setReminderNotification.bind(this)}
-          onArchive={() => { }}
-          onUnarchive={() => { }}
+          assignPopup={() => this.setState({ isAssignOpen: true })}
+          inviteStudents={() => this.setState({ updateClassId: this.state.activeClassroom.id })}
           onDelete={this.onDeleteClass.bind(this)}
-          onAssign={() => this.setState({ isAssignOpen: true })}
         />
         {this.renderTeachPagination()}
       </Grid>
@@ -703,6 +699,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const { history } = this.props;
     const { remindersData } = this.state;
 
+    console.log(this.state.selectedClassroom)
+
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
@@ -748,25 +746,37 @@ class TeachPage extends Component<TeachProps, TeachState> {
             }}
             close={() => { this.setState({ createClassOpen: false }) }}
           />}
+        {this.state.updateClassId > 0 &&
+          <UpdateClassDialog
+            isOpen={this.state.updateClassId > 0}
+            classroom={this.state.activeClassroom}
+            subjects={this.state.subjects}
+            history={this.props.history}
+            submit={async (classroomId) => {
+              await this.loadClass(classroomId);
+              this.setState({ createClassOpen: false });
+            }}
+            close={() => { this.setState({ updateClassId: -1 }) }}
+          />}
         {this.state.isAssignOpen &&
           <AssignBrickClass
             isOpen={this.state.isAssignOpen}
-            classroom={this.state.selectedClassroom}
+            classroom={this.state.activeClassroom}
             subjects={this.state.subjects}
-            subjectId={this.state.selectedClassroom.subjectId || this.state.selectedClassroom.subject?.id}
+            subjectId={this.state.activeClassroom?.subjectId || this.state.activeClassroom?.subject?.id}
             success={(brick: any) => {
               this.setState({ successAssignResult: { isOpen: true, brick } });
-              this.loadClass(this.state.selectedClassroom.id);
+              this.loadClass(this.state.activeClassroom.id);
             }}
             showPremium={() => this.setState({ isPremiumDialogOpen: true })}
             failed={brick => this.setState({ failAssignResult: { isOpen: true, brick } })}
             close={() => this.setState({ isAssignOpen: false })}
           />}
         {this.state.successAssignResult.isOpen &&
-          <AssignSuccessDialog
+          <AssignSuccessDialogV3
             isOpen={this.state.successAssignResult.isOpen}
             brickTitle={this.state.successAssignResult.brick?.title}
-            selectedItems={[this.state.selectedClassroom]}
+            classroomName={this.state.activeClassroom.name}
             close={() => this.setState({ successAssignResult: { isOpen: false, brick: null } })}
           />}
         {this.state.failAssignResult.isOpen &&

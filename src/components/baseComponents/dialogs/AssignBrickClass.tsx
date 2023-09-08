@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import { connect } from 'react-redux';
-import Radio from '@material-ui/core/Radio';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { ListItemIcon, ListItemText, MenuItem, Popper, SvgIcon } from '@material-ui/core';
@@ -13,7 +11,6 @@ import './AssignBrickClass.scss';
 import actions from 'redux/actions/requestFailed';
 import { Brick, Subject } from 'model/brick';
 import SpriteIcon from '../SpriteIcon';
-import TimeDropdowns from '../timeDropdowns/TimeDropdowns';
 import { getSuggestedByTitles } from 'services/axios/brick';
 import map from 'components/map';
 import { AssignClassData, assignClasses } from 'services/axios/assignBrick';
@@ -26,7 +23,7 @@ import { Classroom } from 'model/classroom';
 
 interface AssignPersonOrClassProps {
   classroom: Classroom;
-  subjectId: number;
+  subjectId: number | null;
   isOpen: boolean;
   subjects: Subject[];
   success(brick: Brick): void;
@@ -42,7 +39,7 @@ const PopperCustom = function (props: any) {
   return (<Popper {...props} className="assign-brick-class-poopper" />)
 }
 
-const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
+const AssignBrickClassDialogV2: React.FC<AssignPersonOrClassProps> = (props) => {
   const [alreadyAssigned, setAssigned] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [bricks, setBricks] = useState([] as any[]);
@@ -124,8 +121,7 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
             PopperComponent={PopperCustom}
             getOptionLabel={(option: any) => stripHtml(option.title)}
             renderOption={(brick: Brick) => {
-              let subject = props.subjects.find(s => s.id === brick.subjectId);
-              console.log('color', brick, subject)
+              const subject = props.subjects.find(s => s.id === brick.subjectId);
               return (
               <React.Fragment>
                 <MenuItem>
@@ -169,20 +165,6 @@ const AssignBrickClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
           />
           {brick ?
             <div>
-              <div className="r-popup-title bold">When is it due?</div>
-              <div className="r-radio-buttons">
-                <FormControlLabel
-                  checked={haveDeadline === false}
-                  control={<Radio onClick={() => toggleDeadline(false)} />}
-                  label="No deadline"
-                />
-                <FormControlLabel
-                  checked={haveDeadline === true}
-                  control={<Radio onClick={() => toggleDeadline(true)} />}
-                  label="Set date"
-                />
-                {haveDeadline && <TimeDropdowns date={deadlineDate} onChange={setDeadline} />}
-              </div>
             </div> :
             <div>
               <div className="text-with-glasses">
@@ -234,4 +216,4 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(mapState, mapDispatch);
 
-export default connector(AssignBrickClassDialog);
+export default connector(AssignBrickClassDialogV2);
