@@ -55,41 +55,49 @@ class StudentsTable extends Component<StudentsProps, State> {
     return "";
   }
 
+  renderInvestigationScore(attempt: any) {
+    if (attempt.oldScore) {
+      return Math.round(attempt.oldScore / attempt.maxScore * 100) + '%';
+    } else if (attempt.score) {
+      return Math.round(attempt.score / attempt.maxScore * 100) + '%';
+    }
+    return '';
+  }
+
   renderStudent(student: TeachStudent) {
-    const studentResult = this.props.assignment.byStudent.find((s: any) => s.studentId == student.id);
+    if (this.props.assignment.byStudent) {
+      const studentResult = this.props.assignment.byStudent.find((s: any) => s.studentId == student.id);
 
-    console.log(studentResult)
+      if (studentResult) {
+        const attempt = studentResult.attempts[0];
 
-    if (studentResult) {
-      const attempt = studentResult.attempts[0];
-      console.log(attempt)
-
-      return (
-        <tr className="user-row">
-          <td className="assigned-student-name">
-            {student.firstName} {student.lastName}
-          </td>
-          {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
-            (a, i) =>
-              <td key={i} className="icon-container">
-                <div className="centered">
-                  {this.renderQuestionAttemptIcon(attempt, i)}
-                </div>
-              </td>
-          )}
-          <td>
-            <div className="centered">
-              {attempt.oldScore && Math.round(attempt.oldScore / attempt.maxScore * 10000) / 100 + '%'}
-            </div>
-          </td>
-          <td>
-            <div className="centered">
-              {attempt.score && Math.round(attempt.score / attempt.maxScore * 10000) / 100 + '%'}
-            </div>
-          </td>
-          <td><div className="centered">{Math.round(attempt.percentScore * 100) / 100}%</div></td>
-        </tr>
-      );
+        return (
+          <tr className="user-row">
+            <td className="assigned-student-name">
+              {student.firstName} {student.lastName}
+            </td>
+            {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
+              (a, i) =>
+                <td key={i} className="icon-container">
+                  <div className="centered">
+                    {this.renderQuestionAttemptIcon(attempt, i)}
+                  </div>
+                </td>
+            )}
+            <td>
+              <div className="centered">
+                {this.renderInvestigationScore(attempt)}
+              </div>
+            </td>
+            <td>
+              <div className="centered">
+                 {attempt.score && attempt.oldScore && Math.round(attempt.score / attempt.maxScore * 100) + '%'}
+              </div>
+            </td>
+            <td><div className="centered">{Math.round(attempt.percentScore)}%</div></td>
+          </tr>
+        );
+      }
     }
 
     return '';
