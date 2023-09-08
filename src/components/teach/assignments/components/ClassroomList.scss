@@ -86,7 +86,9 @@
     color: var(--theme-dark-blue);
 
     .assignments-column {
+      overflow-y: scroll;
       width: 48.5vw;
+      height: calc(100vh - 5.834vw - 2vw - 4vh - 2vw);
 
       .assignments-title {
         padding-top: 1vw;
