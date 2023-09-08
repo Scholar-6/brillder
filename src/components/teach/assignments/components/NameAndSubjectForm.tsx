@@ -18,7 +18,7 @@ interface NameAndSubjectFormProps {
   onDelete(apiClass: any): void;
 }
 
-const NameAndSubjectFormV3: React.FC<NameAndSubjectFormProps> = props => {
+const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
   const { user } = props;
   const [edit, setEdit] = useState(false);
   const [isShareTeachOpen, setShareTeach] = useState(false);
@@ -110,4 +110,4 @@ const NameAndSubjectFormV3: React.FC<NameAndSubjectFormProps> = props => {
 }
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
-export default connect(mapState)(NameAndSubjectFormV3);
+export default connect(mapState)(NameAndSubjectForm);

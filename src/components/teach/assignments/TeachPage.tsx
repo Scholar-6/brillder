@@ -13,26 +13,27 @@ import { Subject } from "model/brick";
 import { ClassroomStatus, TeachClassroom } from "model/classroom";
 import { getAllClassrooms, getAssignmentsClassrooms, searchClassrooms } from "components/teach/service";
 import { getDateString } from "components/services/brickService";
+import map from "components/map";
+import { getSubjects } from "services/axios/subject";
+import { deleteClassroom } from "services/axios/classroom";
+import { getClassAssignedCount } from "./service/service";
 
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import TeachFilterSidebar, { SortClassroom } from './components/TeachFilterSidebar';
 import ClassroomList from './components/ClassroomList';
-import { getSubjects } from "services/axios/subject";
-import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import map from "components/map";
-import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuccessDialog";
-import CreateClassDialog from "../manageClassrooms/components/CreateClassDialog";
 import EmptyTabContent from "./components/EmptyTabContent";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getClassAssignedCount } from "./service/service";
-import PremiumEducatorDialog from "components/play/baseComponents/dialogs/PremiumEducatorDialog";
-import DeleteClassDialog from "../manageClassrooms/components/DeleteClassDialog";
-import { deleteClassroom } from "services/axios/classroom";
-import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
-import AssignSuccessDialogV3 from "components/baseComponents/dialogs/AssignSuccessDialogV3";
-import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 import { fileUrl } from "components/services/uploadFile";
 import HoverButton from "components/baseComponents/hoverHelp/HoverButton";
-import UpdateClassDialog from "../manageClassrooms/components/UpdateClassDialog";
+
+import ReminderSuccessDialog from "components/baseComponents/dialogs/ReminderSuccessDialog";
+import CreateClassDialog from "./components/CreateClassDialog";
+import PremiumEducatorDialog from "components/play/baseComponents/dialogs/PremiumEducatorDialog";
+import DeleteClassDialog from "./components/DeleteClassDialog";
+import UpdateClassDialog from "./components/UpdateClassDialog";
+import AssignSuccessDialogV3 from "components/baseComponents/dialogs/AssignSuccessDialogV3";
+import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
+import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 
 
 interface RemindersData {
@@ -440,7 +441,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   renderData() {
     if (!this.state.isLoaded) {
       return (
-        <Grid item xs={9} className="brick-row-container teach-tab-d94">
+        <Grid item xs={9} className="brick-row-container teach-tab-d94 flex-center">
           <div className="tab-content">
             <div className="f-top-loader">
               <SpriteIcon name="f-loader" className="spinning" />
@@ -520,7 +521,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
           <UpdateClassDialog
             isOpen={this.state.updateClassId > 0}
             classroom={this.state.activeClassroom}
-            subjects={this.state.subjects}
             history={this.props.history}
             submit={async (classroomId) => {
               await this.loadClass(classroomId);

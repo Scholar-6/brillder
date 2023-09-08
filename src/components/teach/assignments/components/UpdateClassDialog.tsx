@@ -8,7 +8,6 @@ import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
 import {  Subject } from 'model/brick';
-import { hasPersonalBricks } from 'services/axios/brick';
 import { assignToClassByEmails } from 'services/axios/classroom';
 import map from 'components/map';
 
@@ -18,7 +17,6 @@ import { Classroom } from 'model/classroom';
 
 interface AssignClassProps {
   isOpen: boolean;
-  subjects: Subject[];
 
   classroom: Classroom;
 

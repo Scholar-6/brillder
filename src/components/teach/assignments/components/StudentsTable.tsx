@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import './AssignedBrickDescriptionV2.scss';
+import './AssignedBrickDescription.scss';
 import { Classroom, TeachStudent } from "model/classroom";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Student } from "model/user";
