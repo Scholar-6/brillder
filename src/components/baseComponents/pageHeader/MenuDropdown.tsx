@@ -171,7 +171,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       }
       if (canSee) {
         return (
-          <MenuItem className="menu-item" onClick={() => move(map.ManageClassroomsTab, 'Manage Classes')}>
+          <MenuItem className="menu-item" onClick={() => move(map.TeachAssignedTab, 'Manage Classes')}>
             <span className="menu-text">Manage Classes</span>
             <div className="btn btn-transparent svgOnHover">
               <SpriteIcon name="manage-class" className="active text-white" />

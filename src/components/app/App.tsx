@@ -26,7 +26,6 @@ import UsersListPage from '../userManagement/UsersList';
 import LoginPage from '../loginPage/loginPage';
 import ResetPasswordPage from '../resetPasswordPage/ResetPasswordPage';
 import ActivateAccountPage from '../activateAccountPage/activateAccountPage';
-import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import PostPlay from 'components/postPlay/PostPlay';
 import Library from 'components/library/Library';
 
@@ -359,7 +358,6 @@ const App: React.FC<AppProps> = props => {
             <StudentRoute path={map.ChoosePlan} component={LandingSubscribePage} />
             <AllUsersRoute path={map.SubscriptionTerms} component={PayTerms} />
 
-            <BuildRoute path={map.ManageClassroomsTab} component={ManageClassrooms} location={location} />
             <BuildRoute path={map.TeachAssignedTab} component={TeachPage} location={location} />
 
             <PlayPreviewRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />

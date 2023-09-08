@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import StudentInviteSuccessDialog from 'components/play/finalStep/dialogs/StudentInviteSuccessDialog';
 import { checkAdmin } from 'components/services/brickService';
 import { User } from 'model/user';
 import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
-import InviteStudentEmailDialog from '../manageClassrooms/components/InviteStudentEmailDialog';
 
 import "./NameAndSubjectForm.scss";
 import ShareTeacherDialog from './ShareTeacherDialog';
-import QuickAssignDialog from 'components/baseComponents/dialogs/QuickAssignDialog';
 
 interface NameAndSubjectFormProps {
   classroom: any;
