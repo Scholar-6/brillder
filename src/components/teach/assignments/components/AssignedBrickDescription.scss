@@ -6,6 +6,31 @@
   position: relative;
   padding-left: 2vw !important;
 
+  .assign-cover-image {
+    position: relative;
+    width: 11vw !important;
+    height: 6vw !important;
+    background: red;
+
+    .expand-button {
+      width: 6vw;
+      border-radius: 5vw;
+      position: absolute;
+      background: rgba(255,255,255,0.8);
+      top: 0;
+      right: 0;
+      font-size: 1vw;
+  
+      svg {
+        color: white;
+        width: 1vw;
+        height: 1vw;
+        border-radius: 50%;
+        background: var(--theme-dark-blue);
+      }
+    }
+  }
+
   @include tabletP {
     height: calc(#{$bricks-height / 6.35});
   }
