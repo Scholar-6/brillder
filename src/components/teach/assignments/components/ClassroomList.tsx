@@ -16,6 +16,7 @@ import NameAndSubjectFormV3 from "components/teach/components/NameAndSubjectForm
 import UnassignStudentDialog from "components/teach/manageClassrooms/components/UnassignStudentDialog";
 import { MUser } from "components/teach/model";
 import { unassignStudent } from "components/teach/service";
+import map from "components/map";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -128,6 +129,25 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     return '';
   }
 
+  renderLibraryLink(student: TeachStudent) {
+    let name = '';
+    const { firstName } = student;
+    let lastLetter = firstName[firstName.length - 1];
+    if (lastLetter === 's') {
+      name = firstName + "'";
+    } else {
+      name = firstName + "'s";
+    }
+    return (
+      <div className="absolute-library-link library flex-center" onClick={() => {
+        this.props.history.push(map.MyLibrary + '/' + student.id);
+      }}>
+        <SpriteIcon name="bar-chart-2" />
+        <div className="css-custom-tooltip">View {name} library</div>
+      </div>
+    );
+  }
+
   renderStudent(s: TeachStudent, i: number) {
     return (
       <div className="student" key={i}>
@@ -138,7 +158,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
           </div>
         </div>
         <div className="flex-center button-box">
-          <div className="library flex-center" onClick={() => { }}><SpriteIcon name="bar-chart-2" /></div>
+          {this.renderLibraryLink(s)}
         </div>
         <div className="flex-center button-box">
           <div className="delete flex-center" onClick={() => {
