@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { FormControlLabel, Radio } from '@material-ui/core';
 
+import { Assignment } from "model/classroom";
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { justParseQuestion } from 'components/build/questionService/QuestionService';
 import QuestionPlay from 'components/play/questionPlay/QuestionPlay';
@@ -8,7 +9,13 @@ import { AttemptStats } from 'model/stats';
 import { getAttempts } from 'services/axios/attempt';
 
 import './BookDialog.scss';
-import { BookData } from './ExpandedAssignment';
+
+
+export interface BookData {
+  open: boolean;
+  student: any;
+  assignment: Assignment | null;
+}
 
 interface Props {
   bookData: BookData;

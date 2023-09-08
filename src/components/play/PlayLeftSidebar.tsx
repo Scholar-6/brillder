@@ -33,10 +33,10 @@ import HighScore from "./baseComponents/HighScore";
 import AdminBrickStatisticButton from "./baseComponents/AdminBrickStatisticButton";
 import QuickAssignButton from "./baseComponents/sidebarButtons/QuickAssignButton";
 import AssignSuccessDialogV2 from "components/baseComponents/dialogs/AssignSuccessDialogV2";
-import CreateClassDialog from "components/teach/manageClassrooms/components/CreateClassDialog";
 import { assignClasses } from "services/axios/assignBrick";
 import { getClassById } from "components/teach/service";
 import map from "components/map";
+import CreateClassDialog from "components/teach/assignments/components/CreateClassDialog";
 
 interface SidebarProps {
   history: any;

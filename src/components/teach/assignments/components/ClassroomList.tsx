@@ -8,9 +8,9 @@ import { TeachClassroom, Assignment, TeachStudent } from "model/classroom";
 import { updateClassroom } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
 import EmptyClassTab from "./EmptyClassTab";
-import AssignedBrickDescriptionV2 from "./AssignedBrickDescriptionV2";
+import AssignedBrickDescription from "./AssignedBrickDescription";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import NameAndSubjectFormV3 from "components/teach/components/NameAndSubjectFormV3";
+import NameAndSubjectForm from "./NameAndSubjectForm";
 import UnassignStudentDialog from "components/teach/manageClassrooms/components/UnassignStudentDialog";
 import { MUser } from "components/teach/model";
 import { unassignStudent } from "components/teach/service";
@@ -92,7 +92,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     let className = 'classroom-title';
     return (
       <div className={className}>
-        <NameAndSubjectFormV3
+        <NameAndSubjectForm
           classroom={classroom}
           addBrick={this.props.assignPopup}
           inviteStudents={this.props.inviteStudents}
@@ -113,7 +113,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
           timeout={i * 200}
         >
           <div className="expanded-assignment">
-            <AssignedBrickDescriptionV2
+            <AssignedBrickDescription
               subjects={this.props.subjects}
               classroom={c.classroom}
               assignment={c.assignment}

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 
-import './AssignedBrickDescriptionV2.scss';
-import { TeachClassroom, Assignment, StudentStatus, StudentAssignmentStatus, TeachStudent, ClassroomStatus } from "model/classroom";
+import './AssignedBrickDescription.scss';
+import { TeachClassroom, Assignment } from "model/classroom";
 import { AcademicLevelLabels, Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
-import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getTotalStudentsCount } from "../service/service";
 import BrickTitle from "components/baseComponents/BrickTitle";
@@ -23,7 +22,7 @@ interface State {
   coverLoaded: boolean;
 }
 
-class AssignedBrickDescriptionV2 extends Component<AssignedDescriptionProps, State> {
+class AssignedBrickDescription extends Component<AssignedDescriptionProps, State> {
   constructor(props: AssignedDescriptionProps) {
     super(props);
 
@@ -32,39 +31,6 @@ class AssignedBrickDescriptionV2 extends Component<AssignedDescriptionProps, Sta
       questionCount: 0,
       coverLoaded: false,
     }
-  }
-
-  countNumberOfCompleted(studentStatuses: StudentStatus[]) {
-    let completedNumber = 0;
-
-    for (let studentStatus of studentStatuses) {
-      if (studentStatus.status === StudentAssignmentStatus.Completed) {
-        completedNumber += 1;
-      }
-    }
-    return completedNumber;
-  }
-
-  isCompleted() {
-    const { assignment } = this.props;
-    if (assignment.deadline) {
-      const endTime = new Date(assignment.deadline).getTime();
-      const nowTime = new Date().getTime();
-      if (endTime < nowTime) {
-        return true;
-      }
-    }
-
-    const { studentStatus } = assignment;
-    if (this.props.classroom) {
-      /*
-      const { length } = this.props.classroom.students;
-      const completedNumber = this.countNumberOfCompleted(studentStatus);
-      if (length === completedNumber) {
-        return true;
-      }*/
-    }
-    return false;
   }
 
   getCompleteStudents() {
@@ -76,42 +42,13 @@ class AssignedBrickDescriptionV2 extends Component<AssignedDescriptionProps, Sta
     return studentsCompleted;
   }
 
-  renderQuestionAttemptIcon(studentResult: any, questionNumber: number) {
-    if (studentResult) {
-      try {
-        const attempt = studentResult.attempts[0].answers[questionNumber];
-        const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
-
-        // yellow tick
-        if (attempt.correct === true && liveAttempt.correct === false) {
-          return <SpriteIcon name="check-icon" className="text-yellow" />;
-        } else if (attempt.correct === false && liveAttempt.correct === true) {
-          return <SpriteIcon name="check-icon" className="text-yellow" />;
-        }
-
-        if (attempt.correct === true && liveAttempt.correct === true) {
-          return <SpriteIcon name="check-icon" className="text-theme-green" />;
-        }
-
-        return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
-      } catch {
-        console.log('can`t parse attempt');
-      }
-    }
-    return "";
-  }
-
   render() {
-    let subjectId = this.props.assignment.brick.subjectId;
-    let color = getSubjectColor(this.props.subjects, subjectId);
-    const subject = this.props.subjects.find(s => s.id === subjectId);
-
-    if (!color) {
-      color = "#B0B0AD";
-    }
-
     let { assignment } = this.props;
     const { brick } = assignment;
+
+    let subjectId = brick.subjectId;
+    const subject = this.props.subjects.find(s => s.id === subjectId);
+
     
     const completedStudents = this.getCompleteStudents();
 
@@ -163,4 +100,4 @@ class AssignedBrickDescriptionV2 extends Component<AssignedDescriptionProps, Sta
   }
 }
 
-export default AssignedBrickDescriptionV2;
+export default AssignedBrickDescription;
