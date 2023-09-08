@@ -13,7 +13,6 @@ import ArchiveWarningDialog from "components/baseComponents/dialogs/ArchiveWarni
 import ArchiveButton from "./ArchiveButton";
 import ReminderButton from "./ReminderButton";
 import UnarchiveButton from "./UnarchiveButton";
-import DeadlinePopup from "./DeadlinePopup";
 import { fileUrl } from "components/services/uploadFile";
 
 interface AssignedDescriptionProps {
@@ -36,7 +35,6 @@ interface AssignedDescriptionProps {
 interface State {
   warningOpen: boolean;
   archiveHovered: boolean;
-  deadlineEditable: boolean;
 
   coverLoaded: boolean;
 }
@@ -48,7 +46,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     this.state = {
       warningOpen: false,
       archiveHovered: false,
-      deadlineEditable: false,
       coverLoaded: false,
     }
   }
@@ -329,14 +326,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           submit={this.archiveAssignment.bind(this)}
           close={() => this.setState({ warningOpen: false })}
         />
-        {this.state.deadlineEditable && <DeadlinePopup
-          isOpen={this.state.deadlineEditable} close={() => this.setState({ deadlineEditable: false })}
-          update={deadline => {
-            this.props.assignment.deadline = deadline;
-            this.setState({ deadlineEditable: false });
-          }}
-          assignment={this.props.assignment}
-        />}
       </div>
     );
   }

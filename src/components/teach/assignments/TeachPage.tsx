@@ -10,20 +10,12 @@ import actions from 'redux/actions/requestFailed';
 
 import { User } from "model/user";
 import { Subject } from "model/brick";
-import { ClassroomStatus, TeachClassroom, TeachStudent } from "model/classroom";
+import { ClassroomStatus, TeachClassroom } from "model/classroom";
 import { getAllClassrooms, getAssignmentsClassrooms, searchClassrooms } from "components/teach/service";
 import { getDateString } from "components/services/brickService";
-import { TeachFilters } from '../model';
-import { Assignment } from "model/classroom";
-import { getAssignmentStats } from "services/axios/stats";
-import { ApiAssignemntStats } from "model/stats";
-import { downKeyPressed, upKeyPressed } from "components/services/key";
 
-import BackPagePagination from 'components/backToWorkPage/components/BackPagePagination';
 import TeachFilterSidebar, { SortClassroom } from './components/TeachFilterSidebar';
 import ClassroomList from './components/ClassroomList';
-import ActiveStudentBricks from "./components/ActiveStudentBricks";
-import ExpandedAssignment from './components/ExpandedAssignment';
 import { getSubjects } from "services/axios/subject";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import map from "components/map";
@@ -35,7 +27,6 @@ import { getClassAssignedCount } from "./service/service";
 import PremiumEducatorDialog from "components/play/baseComponents/dialogs/PremiumEducatorDialog";
 import DeleteClassDialog from "../manageClassrooms/components/DeleteClassDialog";
 import { deleteClassroom } from "services/axios/classroom";
-import EmptyClassTab from "./components/EmptyClassTab";
 import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
 import AssignSuccessDialogV3 from "components/baseComponents/dialogs/AssignSuccessDialogV3";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
@@ -71,15 +62,8 @@ interface TeachState {
   searchString: string;
   searchType: ClassroomSearchType;
 
-  pageSize: number;
-  classPageSize: number;
-  assignmentPageSize: number;
-  sortedIndex: number;
   classrooms: TeachClassroom[];
   activeClassroom: any;
-  activeAssignment: Assignment | null;
-  activeStudent: TeachStudent | null;
-  assignmentStats: ApiAssignemntStats | null;
   subjects: Subject[];
 
   isLoaded: boolean;
@@ -97,9 +81,6 @@ interface TeachState {
   isPremiumDialogOpen: boolean;
 
   teacherId: number;
-
-  filters: TeachFilters;
-  handleKey(e: any): void;
 }
 
 class TeachPage extends Component<TeachProps, TeachState> {
@@ -117,16 +98,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
       isSearching: false,
       finalSearchString: '',
 
-      filters: {
-        assigned: false,
-        completed: false
-      },
-
       classrooms: [],
       activeClassroom: null,
-      activeAssignment: null,
-      assignmentStats: null,
-      activeStudent: null,
       isLoaded: false,
 
       remindersData: {
@@ -156,22 +129,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
         isOpen: false, brick: null
       },
 
-      pageSize: 6,
-      classPageSize: 5,
-      assignmentPageSize: 8,
-      sortedIndex: 0,
-      handleKey: this.handleKey.bind(this),
     };
 
     this.loadInitData();
-  }
-
-  componentDidMount() {
-    document.addEventListener("keydown", this.state.handleKey, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.state.handleKey, false);
   }
 
   async loadInitData() {
@@ -184,12 +144,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (values.classroomId) {
       const classroomId = parseInt(values.classroomId as string);
       await this.loadClasses(classroomId);
-      if (values.newTeacher) {
-        const activeAssignment = this.state.activeClassroom?.assignments[0] as any;
-        if (activeAssignment) {
-          await this.setActiveAssignment(classroomId, activeAssignment.id);
-        }
-      }
     } else if (values.search) {
       this.searching(values.search as string);
       this.search();
@@ -248,48 +202,29 @@ class TeachPage extends Component<TeachProps, TeachState> {
       if (classroom) {
         classroom.active = true;
         classroom.assignments = await getAssignmentsClassrooms(classroom.id);
-        this.setState({ activeClassroom: classroom, activeAssignment: null });
+        this.setState({ activeClassroom: classroom });
       } else {
-        this.setState({ activeClassroom: null, activeAssignment: null });
+        this.setState({ activeClassroom: null });
       }
-    }
-  }
-
-  handleKey(e: any) {
-    let pageSize = this.state.pageSize;
-    if (!this.state.activeStudent && this.state.activeClassroom && this.state.activeAssignment) {
-      pageSize = this.state.assignmentPageSize;
-    }
-    if (this.state.activeClassroom) {
-      pageSize = this.state.classPageSize;
-    }
-    if (upKeyPressed(e)) {
-      this.moveBack(pageSize);
-    } else if (downKeyPressed(e)) {
-      this.moveNext(pageSize);
     }
   }
 
   async deleteClass() {
     const { classroomToRemove } = this.state;
     if (!classroomToRemove) {
-      return this.setState({ deleteClassOpen: false, activeClassroom: null, classroomToRemove: null, sortedIndex: 0 });
+      return this.setState({ deleteClassOpen: false, activeClassroom: null, classroomToRemove: null });
     }
     let deleted = await deleteClassroom(classroomToRemove.id);
     if (deleted) {
       const { classrooms } = this.state;
       let index = classrooms.indexOf(classroomToRemove);
       classrooms.splice(index, 1);
-      this.setState({ classrooms, activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, sortedIndex: 0 });
+      this.setState({ classrooms, activeClassroom: null, classroomToRemove: null, deleteClassOpen: false });
     }
   }
 
   onDeleteClass(c: TeachClassroom) {
     this.setState({ deleteClassOpen: true, classroomToRemove: c });
-  }
-
-  setActiveStudent(activeStudent: TeachStudent) {
-    this.setState({ activeStudent, sortedIndex: 0 });
   }
 
   async setActiveClassroom(id: number | null) {
@@ -301,41 +236,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
       classroom.active = true;
 
       this.setState({
-        sortedIndex: 0, classrooms,
+        classrooms,
         activeClassroom: classroom,
-        activeAssignment: null,
-        activeStudent: null,
-        assignmentStats: null
       });
       this.props.history.push({ search: queryString.stringify({ classroomId: id, teacherId: this.state.teacherId }) });
     } else {
       this.setState({
-        sortedIndex: 0,
         activeClassroom: null,
-        activeStudent: null,
-        activeAssignment: null,
-        assignmentStats: null
       });
       this.props.history.push({ search: "" });
     }
-  }
-
-  async setActiveAssignment(classroomId: number, assignmentId: number) {
-    this.collapseClasses();
-    const classroom = this.state.classrooms.find(c => c.id === classroomId);
-    if (classroom) {
-      const assignment = classroom.assignments.find(c => c.id === assignmentId);
-      if (assignment) {
-        classroom.active = true;
-        const assignmentStats = await getAssignmentStats(assignment.id);
-        this.setState({ sortedIndex: 0, activeClassroom: classroom, activeAssignment: assignment, assignmentStats });
-      }
-    }
-  }
-
-  moveToAssignment(classroomId: number, assignmentId: number) {
-    this.setActiveAssignment(classroomId, assignmentId);
-    this.props.history.push({ search: queryString.stringify({ classroomId, assignmentId, teacherId: this.state.teacherId }) });
   }
 
   collapseClasses() {
@@ -343,40 +253,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       classroom.active = false;
     }
   }
-
-  unselectAssignment() {
-    this.setState({ sortedIndex: 0, activeAssignment: null, assignmentStats: null });
-  }
-
-  moveToNoAssignment() {
-    this.unselectAssignment();
-    this.props.history.push({ search: queryString.stringify({ classroomId: this.state.activeClassroom?.id, teacherId: this.state.teacherId }) });
-  }
-
-  teachFilterUpdated(filters: TeachFilters) {
-    this.setState({ filters });
-  }
-
   //#region pagination
-  moveNext(pageSize: number) {
-    const index = this.state.sortedIndex;
-    let itemsCount = this.getTotalCount();
-
-    if (!this.state.activeStudent && this.state.activeAssignment && this.state.assignmentStats && this.state.activeClassroom) {
-      itemsCount = this.state.activeClassroom.students.length;
-    }
-
-    if (index + pageSize < itemsCount) {
-      this.setState({ ...this.state, sortedIndex: index + pageSize });
-    }
-  }
-
-  moveBack(pageSize: number) {
-    let index = this.state.sortedIndex;
-    if (index >= pageSize) {
-      this.setState({ ...this.state, sortedIndex: index - pageSize });
-    }
-  }
 
   getTotalCount() {
     const { classrooms, activeClassroom } = this.state;
@@ -398,10 +275,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         ...this.state, searchString,
         isSearching: false,
         finalSearchString: '',
-        activeClassroom: null,
-        activeAssignment: null,
-        assignmentStats: null,
-        activeStudent: null
+        activeClassroom: null
       });
       this.loadInitData();
     } else {
@@ -449,105 +323,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async search() {
     let classrooms = await searchClassrooms(this.state.searchString, this.state.searchType) as TeachClassroom[] | null;
     if (classrooms) {
-      this.setState({ ...this.state, isSearching: true, finalSearchString: this.state.searchString, isLoaded: true, activeClassroom: null, activeAssignment: null, activeStudent: null, classrooms, sortedIndex: 0 });
+      this.setState({ ...this.state, isSearching: true, finalSearchString: this.state.searchString, isLoaded: true, activeClassroom: null, classrooms });
     } else {
       // failed
     }
-  }
-
-  renderAssignmentPagination = (classroom: TeachClassroom) => {
-    const { assignmentPageSize } = this.state;
-    const itemsCount = classroom.students.length;
-    return <BackPagePagination
-      sortedIndex={this.state.sortedIndex}
-      pageSize={this.state.assignmentPageSize}
-      bricksLength={itemsCount}
-      isRed={this.state.sortedIndex === 0}
-      moveNext={() => this.moveNext(assignmentPageSize)}
-      moveBack={() => this.moveBack(assignmentPageSize)}
-    />
-  }
-
-  renderTeachPagination = () => {
-    let pageSize = this.state.pageSize;
-    const { activeClassroom } = this.state;
-
-    if (this.state.activeStudent) {
-      return "";
-    } else if (activeClassroom && this.state.activeAssignment) {
-      return this.renderAssignmentPagination(activeClassroom);
-    } else if (activeClassroom) {
-      pageSize = this.state.classPageSize;
-
-      let itemsCount = 0;
-      if (activeClassroom.assignments) {
-        itemsCount = parseInt(activeClassroom.assignmentsCount);
-      }
-
-      return <BackPagePagination
-        sortedIndex={this.state.sortedIndex}
-        pageSize={pageSize}
-        bricksLength={itemsCount}
-        isRed={this.state.sortedIndex === 0}
-        moveNext={() => this.moveNext(pageSize)}
-        moveBack={() => this.moveBack(pageSize)}
-      />
-    }
-
-    return <div />;
   }
   //#endregion
 
   setReminderNotification(count: number, isDeadlinePassed: boolean) {
     this.setState(state => ({ ...state, remindersData: { isOpen: true, count, isDeadlinePassed } }));
-  }
-
-  renderTabContent() {
-    if (!this.state.isLoaded) {
-      return (
-        <div className="tab-content">
-          <div className="f-top-loader">
-            <SpriteIcon name="f-loader" className="spinning" />
-          </div>
-        </div>
-      );
-    }
-
-    const { activeClassroom } = this.state;
-
-    if (this.state.isLoaded && (this.state.classrooms?.length === 0 || (activeClassroom && activeClassroom?.assignments?.length === 0))) {
-      return <EmptyClassTab history={this.props.history} activeClassroom={this.state.activeClassroom} />;
-    }
-
-    return (
-      <Grid item xs={9} className="brick-row-container teach-tab-d94 bg-light-blue no-active-class flex-center">
-        <div className="tab-content">
-          {this.state.activeStudent ?
-            <ActiveStudentBricks
-              subjects={this.state.subjects}
-              history={this.props.history}
-              isArchive={false}
-              classroom={activeClassroom}
-              activeStudent={this.state.activeStudent}
-              onRemind={this.setReminderNotification.bind(this)}
-            />
-            : this.state.activeAssignment && this.state.assignmentStats && activeClassroom &&
-            <ExpandedAssignment
-              classroom={activeClassroom}
-              assignment={this.state.activeAssignment}
-              stats={this.state.assignmentStats}
-              subjects={this.state.subjects}
-              startIndex={this.state.sortedIndex}
-              pageSize={this.state.assignmentPageSize}
-              history={this.props.history}
-              minimize={() => this.moveToNoAssignment()}
-              onRemind={this.setReminderNotification.bind(this)}
-            />
-          }
-          {this.renderTeachPagination()}
-        </div>
-      </Grid>
-    );
   }
 
   renderClassroom() {
@@ -557,22 +341,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
           subjects={this.state.subjects}
           history={this.props.history}
           activeClassroom={this.state.activeClassroom}
-          expand={this.moveToAssignment.bind(this)}
           reloadClass={this.loadClass.bind(this)}
           onRemind={this.setReminderNotification.bind(this)}
           assignPopup={() => this.setState({ isAssignOpen: true })}
           inviteStudents={() => this.setState({ updateClassId: this.state.activeClassroom.id })}
           onDelete={this.onDeleteClass.bind(this)}
         />
-        {this.renderTeachPagination()}
       </Grid>
     )
-  }
-
-  renderEmptyAssignment() {
-    return <div className="empty-assignment">
-      <SpriteIcon name="manage-classes-v51" />
-    </div>
   }
 
   renderAssignment(assignment: any, classroomId: number, assignmentsCount: number) {
@@ -620,7 +396,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 <div className="assignment-column">
                   {assignmentsCount > 0
                     ? this.renderAssignment(newestAssignment, c.id, assignmentsCount)
-                    : this.renderEmptyAssignment()
+                    : <div className="empty-assignment">
+                      <SpriteIcon name="manage-classes-v51" />
+                    </div>
                   }
                 </div>
                 <div className="title-column">
@@ -684,13 +462,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
       );
     }
 
-    if (this.state.activeClassroom && !this.state.activeAssignment && !this.state.activeStudent) {
+    if (this.state.activeClassroom) {
       return this.renderClassroom();
-    } else if (this.state.activeClassroom && this.state.activeAssignment) {
-      return this.renderTabContent();
-    } else {
-      return this.renderContainer();
     }
+    return this.renderContainer();
   }
 
   render() {
@@ -698,8 +473,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     const { history } = this.props;
     const { remindersData } = this.state;
-
-    console.log(this.state.selectedClassroom)
 
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
@@ -718,12 +491,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
             isLoaded={this.state.isLoaded}
             subjects={this.state.subjects}
             history={this.props.history}
-            activeStudent={this.state.activeStudent}
             activeClassroom={this.state.activeClassroom}
             setActiveClassroom={this.setActiveClassroom.bind(this)}
             loadClass={classId => this.loadClass(classId)}
-            setActiveStudent={this.setActiveStudent.bind(this)}
-            filterChanged={this.teachFilterUpdated.bind(this)}
             sortClassrooms={this.sortClassrooms.bind(this)}
             moveToPremium={() => this.setState({ isPremiumDialogOpen: true })}
           />
@@ -783,7 +553,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           <AssignFailedDialog
             isOpen={this.state.failAssignResult.isOpen}
             brickTitle={this.state.failAssignResult.brick?.title}
-            selectedItems={[{ classroom: this.state.selectedClassroom }]}
+            selectedItems={[{ classroom: this.state.selectedClassroom || this.state.activeClassroom }]}
             close={() => this.setState({ failAssignResult: { isOpen: false, brick: null } })}
           />}
         <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => this.setState({ isPremiumDialogOpen: false })} submit={() => this.props.history.push(map.StripeEducator)} />
