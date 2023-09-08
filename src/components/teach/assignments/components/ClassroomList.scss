@@ -54,23 +54,31 @@
 
 // assignments
 .one-classroom-assignments {
-  $base: 1;
+  $base: 0.9;
   $font-20: $base * 1.65vw;
+  $font-16: $base * 1.32vw;
   $font-14: $base * 1.16vw;
   $font-13: $base * 1.07vw;
   $font-11: $base * 0.91vw;
+  $font-10: $base * 0.83vw;
 
   .font-20 {
-    font-size: $font-20;
+    font-size: $font-20 !important;
+  }
+  .font-16 {
+    font-size: $font-16 !important;
   }
   .font-14 {
-    font-size: $font-14;
+    font-size: $font-14 !important;
   }
   .font-13 {
-    font-size: $font-13;
+    font-size: $font-13 !important;
   }
   .font-11 {
-    font-size: $font-11;
+    font-size: $font-11 !important;
+  }
+  .font-10 {
+    font-size: $font-10 !important;
   }
   .classroom-assignments-columns {
     display: flex;
@@ -82,6 +90,7 @@
 
       .assignments-title {
         padding-top: 1vw;
+        padding-bottom: 1vw;
         padding-left: 2vw;
       }
     }
