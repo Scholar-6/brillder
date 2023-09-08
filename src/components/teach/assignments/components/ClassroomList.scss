@@ -4,7 +4,7 @@
   padding-bottom: 2vh;
 }
 .one-classroom-assignments {
-  padding-top: 4vh !important;
+  padding-top: 0 !important;
   .sub-title-v8 {
     padding-left: 2vw;
     color: var(--theme-dark-blue);
@@ -48,6 +48,147 @@
     }
     .tab-content {
       width: 30vw;
+    }
+  }
+}
+
+// assignments
+.one-classroom-assignments {
+  $base: 1;
+  $font-20: $base * 1.65vw;
+  $font-14: $base * 1.16vw;
+  $font-13: $base * 1.07vw;
+  $font-11: $base * 0.91vw;
+
+  .font-20 {
+    font-size: $font-20;
+  }
+  .font-14 {
+    font-size: $font-14;
+  }
+  .font-13 {
+    font-size: $font-13;
+  }
+  .font-11 {
+    font-size: $font-11;
+  }
+  .classroom-assignments-columns {
+    display: flex;
+    height: 100%;
+    color: var(--theme-dark-blue);
+
+    .assignments-column {
+      width: 48.5vw;
+
+      .assignments-title {
+        padding-top: 1vw;
+        padding-left: 2vw;
+      }
+    }
+    .students-column {
+      width: 26.5vw;
+      display: flex;
+      height: 100%;
+      background: #F3F4F7;
+      padding-left: 1vw;
+      padding-right: 1vw;
+      padding-top: 1vw;
+
+      .learners-title {
+        margin-bottom: 1vw;
+      }
+
+      .student {
+        display: flex;
+        $width: 19.5vw;
+        background: white;
+        border-bottom: 1px solid #DEDEDE;
+        .email-box {
+          padding-left: 0.5vw;
+          width: $width;
+          display: flex;
+          padding-top: 0.5vw;
+          padding-bottom: 0.5vw;
+        }
+        .email {
+          max-width: $width;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+        }
+        .pending {
+          height: 1.4vw;
+          padding-left: 0.5vw;
+          padding-right: 0.5vw;
+          margin-left: 0.5vw;
+          border-radius: 0.2vw;
+          background: #DEDEDE;
+        }
+        .library {
+          border-radius: 50%;
+          width: 2vw;
+          height: 2vw;
+          background: var(--theme-dark-blue);
+          margin-right: 0.5vw;
+
+          svg {
+            width: 1.3vw;
+            height: 1.3vw;
+            color: white;
+          }
+        }
+        .delete {
+          border-radius: 50%;
+          width: 2vw;
+          height: 2vw;
+          background: var(--theme-orange);
+          margin-right: 0.5vw;
+
+          svg {
+            width: 1vw;
+            height: 1vw;
+            color: white;
+          }
+        }
+      }
+
+      .invitation {
+        display: flex;
+        $width: 22vw;
+        border-bottom: 1px solid #DEDEDE;
+        .email-box {
+          padding-left: 0.5vw;
+          width: $width;
+          display: flex;
+          padding-top: 0.5vw;
+          padding-bottom: 0.5vw;
+        }
+        .email {
+          max-width: $width;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+        }
+        .pending {
+          height: 1.4vw;
+          padding-left: 0.5vw;
+          padding-right: 0.5vw;
+          margin-left: 0.5vw;
+          border-radius: 0.2vw;
+          background: #DEDEDE;
+        }
+        .delete {
+          border-radius: 50%;
+          width: 2vw;
+          height: 2vw;
+          background: var(--theme-orange);
+          margin-right: 0.5vw;
+
+          svg {
+            width: 1vw;
+            height: 1vw;
+            color: white;
+          }
+        }
+      }
     }
   }
 }
