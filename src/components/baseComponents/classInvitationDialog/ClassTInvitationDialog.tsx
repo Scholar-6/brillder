@@ -45,7 +45,7 @@ const ClassTInvitationDialog: React.FC<Props> = props => {
           if (activeStep + 1 >= invitations.length) {
             const newInvitations = await getInvitations();
             if (newInvitations && newInvitations.length <= 0) {
-              history.push(map.ManageClassroomsTab + '?classroomId=' + classId);
+              history.push(map.TeachAssignedTab + '?classroomId=' + classId);
               props.onFinish?.();
             }
           }

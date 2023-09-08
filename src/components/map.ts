@@ -56,7 +56,6 @@ export const StripeEducator = StripePage + '/educator';
 
 export const TeachAssignedTab = '/teach/assigned';
 export const TeachAssignedArchiveTab = TeachAssignedTab + '/archive';
-export const ManageClassroomsTab = '/teach/manage-classrooms';
 
 export const TeachAssignedClass = (classroomId: number) => {
   return classroomId ? (TeachAssignedTab + '?classroomId=' + classroomId) : TeachAssignedTab;
@@ -223,7 +222,6 @@ export default {
 
   TeachAssignedTab,
   TeachAssignedArchiveTab,
-  ManageClassroomsTab,
   TeachAssignedClass,
 
   NewTeachQuery,
