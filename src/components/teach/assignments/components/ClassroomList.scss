@@ -91,7 +91,7 @@
       .assignments-title {
         padding-top: 1vw;
         padding-bottom: 1vw;
-        padding-left: 2vw;
+        padding-left: 1.8vw;
       }
     }
     .students-column {
@@ -133,6 +133,7 @@
           background: #DEDEDE;
         }
         .library {
+          cursor: pointer;
           border-radius: 50%;
           width: 2vw;
           height: 2vw;
@@ -146,6 +147,7 @@
           }
         }
         .delete {
+          cursor: pointer;
           border-radius: 50%;
           width: 2vw;
           height: 2vw;
@@ -185,6 +187,7 @@
           background: #DEDEDE;
         }
         .delete {
+          cursor: pointer;
           border-radius: 50%;
           width: 2vw;
           height: 2vw;

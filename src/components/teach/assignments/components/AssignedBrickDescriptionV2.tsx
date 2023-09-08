@@ -9,6 +9,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getTotalStudentsCount } from "../service/service";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { fileUrl } from "components/services/uploadFile";
+import StudentsTable from "./StudentsTable";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -18,6 +19,7 @@ interface AssignedDescriptionProps {
 
 interface State {
   expanded: boolean;
+  questionCount: number;
   coverLoaded: boolean;
 }
 
@@ -27,6 +29,7 @@ class AssignedBrickDescriptionV2 extends Component<AssignedDescriptionProps, Sta
 
     this.state = {
       expanded: false,
+      questionCount: 0,
       coverLoaded: false,
     }
   }
@@ -73,21 +76,32 @@ class AssignedBrickDescriptionV2 extends Component<AssignedDescriptionProps, Sta
     return studentsCompleted;
   }
 
-  getAverageScore() {
-    const { byStatus } = this.props.assignment;
-    let average = '';
-    if (byStatus) {
-      average = byStatus[1] ? 'Avg: ' + Math.round(byStatus[1].avgScore).toString() : '';
-    }
-    return average;
-  }
+  renderQuestionAttemptIcon(studentResult: any, questionNumber: number) {
+    if (studentResult) {
+      try {
+        const attempt = studentResult.attempts[0].answers[questionNumber];
+        const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
 
-  isStudentCompleted(studentStatus: StudentStatus[]) {
-    return !(!studentStatus || studentStatus.length !== 1 || studentStatus[0].status <= 0)
+        // yellow tick
+        if (attempt.correct === true && liveAttempt.correct === false) {
+          return <SpriteIcon name="check-icon" className="text-yellow" />;
+        } else if (attempt.correct === false && liveAttempt.correct === true) {
+          return <SpriteIcon name="check-icon" className="text-yellow" />;
+        }
+
+        if (attempt.correct === true && liveAttempt.correct === true) {
+          return <SpriteIcon name="check-icon" className="text-theme-green" />;
+        }
+
+        return <SpriteIcon name="cancel" className="text-theme-orange smaller stroke-2" />;
+      } catch {
+        console.log('can`t parse attempt');
+      }
+    }
+    return "";
   }
 
   render() {
-    const { classroom } = this.props as any;
     let subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
     const subject = this.props.subjects.find(s => s.id === subjectId);
@@ -98,42 +112,52 @@ class AssignedBrickDescriptionV2 extends Component<AssignedDescriptionProps, Sta
 
     let { assignment } = this.props;
     const { brick } = assignment;
-    let className = "assigned-brick-description-v2";
+    
+    const completedStudents = this.getCompleteStudents();
 
     return (
-      <div className={className} style={{ display: 'flex' }}>
-        <div>
-          <div className="assign-brick-d343">
-            <div className="assign-cover-image" onClick={() => this.setState({ expanded: !this.state.expanded })}>
-              <img alt="" className={this.state.coverLoaded ? ' visible' : 'hidden'} onLoad={() => this.setState({ coverLoaded: true })} src={fileUrl(brick.coverImage)} />
-              <div className="expand-button">
-                <div>
-                  <span className="font-10 flex-center">{this.state.expanded ? 'Collapse' : 'Expand'}</span>
-                  <div className="arrow-btn flex-center">
-                    <SpriteIcon name="arrow-down" className={this.state.expanded ? 'rotated' : ''} />
+      <div className="assigned-brick-description-v3">
+        <div className="assigned-brick-description-v2" style={{ display: 'flex' }}>
+          <div>
+            <div className="assign-brick-d343">
+              <div className="assign-cover-image" onClick={() => {
+                if (completedStudents > 0) {
+                  this.setState({ expanded: !this.state.expanded })
+                }
+              }}>
+                <img alt="" className={this.state.coverLoaded ? ' visible' : 'hidden'} onLoad={() => this.setState({ coverLoaded: true })} src={fileUrl(brick.coverImage)} />
+                {completedStudents > 0 &&
+                  <div className="expand-button">
+                    <div>
+                      <span className="font-10 flex-center">{this.state.expanded ? 'Collapse' : 'Expand'}</span>
+                      <div className="arrow-btn flex-center">
+                        <SpriteIcon name="arrow-down" className={this.state.expanded ? 'rotated' : ''} />
+                      </div>
+                    </div>
                   </div>
-                </div>
+                }
               </div>
             </div>
           </div>
+          <div className="short-brick-info long">
+            <div className="link-description">
+              <BrickTitle title={brick.title} className="font-20" />
+            </div>
+            <div className="link-info font-16">
+              {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)}
+            </div>
+            <div className="subject font-13">
+              {subject?.name}, Level {AcademicLevelLabels[brick.academicLevel]}
+            </div>
+          </div>
+          <div className="assignment-second-part">
+            <div className="users-complete-count">
+              <SpriteIcon name="users-big-and-small" className="text-theme-dark-blue" />
+              <span>{completedStudents}/{getTotalStudentsCount(this.props.classroom)}</span>
+            </div>
+          </div>
         </div>
-        <div className="short-brick-info long">
-          <div className="link-description">
-            <BrickTitle title={brick.title} className="font-20" />
-          </div>
-          <div className="link-info font-16">
-            {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)}
-          </div>
-          <div className="subject font-13">
-            {subject?.name}, Level {AcademicLevelLabels[brick.academicLevel]}
-          </div>
-        </div>
-        <div className="assignment-second-part">
-          <div className="users-complete-count">
-            <SpriteIcon name="users-big-and-small" className="text-theme-dark-blue" />
-            <span>{this.getCompleteStudents()}/{getTotalStudentsCount(this.props.classroom)}</span>
-          </div>
-        </div>
+        {this.state.expanded && this.props.classroom && <StudentsTable classroom={this.props.classroom} assignment={this.props.assignment} />}
       </div>
     );
   }

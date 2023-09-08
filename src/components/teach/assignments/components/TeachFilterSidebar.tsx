@@ -283,7 +283,6 @@ class TeachFilterSidebar extends Component<
   }
 
   render() {
-    console.log('s55', this.props.subjects)
     return (
       <Grid
         container item xs={3}

@@ -735,7 +735,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
     const { activeClassroom } = this.state;
     let users = Object.assign([], this.state.users) as MUser[];
-
     let classHasStudents = activeClassroom && activeClassroom.students.length > 0;
 
     if (activeClassroom && !classHasStudents) {
@@ -773,7 +772,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
 
     const visibleUsers = this.getUsersByPage(users);
-
 
     if (this.state.isPending) {
       const visibleUsers = this.getUsersByPage(this.state.pendingUsers);
@@ -825,9 +823,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   render() {
     const { history } = this.props;
-
-    console.log('s333', this.state.subjects)
-
     const { activeClassroom } = this.state;
 
     return (
