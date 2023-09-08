@@ -159,7 +159,10 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <div className="flex-center button-box">
           <div className="delete flex-center" onClick={() => {
             this.unassigningStudent(s);
-           }}><SpriteIcon name="delete" /></div>
+           }}>
+            <SpriteIcon name="delete" />
+            <div className="css-custom-tooltip">Unassign Student</div>
+          </div>
         </div>
       </div>
     );
@@ -177,7 +180,10 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <div className="flex-center button-box">
           <div className="delete flex-center" onClick={() => {
             this.unassigningStudent(s);
-           }}><SpriteIcon name="delete" /></div>
+           }}>
+            <SpriteIcon name="delete" />
+            <div className="css-custom-tooltip">Remove Invite</div>
+          </div>
         </div>
       </div>
     );
@@ -214,8 +220,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
 
   render() {
     return (
-      <div>
-        <div className="bg-theme-dark-blue top-name-v431">
+      <div className="container-d23423">
+        <div className="top-name-v431">
           {this.renderClassname()}
         </div>
         <div className="classroom-list one-classroom-assignments">
