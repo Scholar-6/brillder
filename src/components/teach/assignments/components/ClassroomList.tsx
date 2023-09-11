@@ -2,19 +2,21 @@ import React, { Component } from "react";
 import { Grow } from "@material-ui/core";
 
 import './ClassroomList.scss';
+import map from "components/map";
 import { Subject } from "model/brick";
 import { TeachClassroom, Assignment, TeachStudent } from "model/classroom";
-
 import { updateClassroom } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
-import EmptyClassTab from "./EmptyClassTab";
-import AssignedBrickDescription from "./AssignedBrickDescription";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
-import NameAndSubjectForm from "./NameAndSubjectForm";
-import UnassignStudentDialog from "components/teach/manageClassrooms/components/UnassignStudentDialog";
 import { MUser } from "components/teach/model";
 import { unassignStudent } from "components/teach/service";
-import map from "components/map";
+
+import ReminderButton from "./ReminderButton";
+import EmptyClassTab from "./EmptyClassTab";
+import UnassignStudentDialog from "components/teach/manageClassrooms/components/UnassignStudentDialog";
+import NameAndSubjectForm from "./NameAndSubjectForm";
+import AssignedBrickDescription from "./AssignedBrickDescription";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { sendAssignmentReminder } from "services/axios/brick";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -29,7 +31,7 @@ interface ClassroomListProps {
   assignPopup(): void;
   inviteStudents(): void;
   onDelete(classroom: TeachClassroom): void;
-  onRemind?(count: number, isDeadlinePassed: boolean): void;
+  onRemind?(count: number): void;
 }
 
 interface ListState {
@@ -207,7 +209,9 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         </div>
         <div className="students-column">
           <div>
-            <div className="learners-title font-20 bold">Learners ({classroom.students.length + classroom.studentsInvitations.length})</div>
+            <div className="learners-title font-20 bold">
+              <div className="learners-count">Learners ({classroom.students.length + classroom.studentsInvitations.length})</div>
+            </div>
             <div>
               {classroom.students.map(this.renderStudent.bind(this))}
               {classroom.studentsInvitations.map(this.renderInvitation.bind(this))}

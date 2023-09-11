@@ -137,8 +137,8 @@ class TeachFilterSidebar extends Component<
       <div className="sort-box teach-sort-box flex-height-box">
         <div className="sort-box">
           <div className="top-row-v5">
-            <div className="text bold">CLASSES</div>
-            <div className="btn btn-orange" onClick={() => this.setState({ createClassOpen: true })}>
+            <div className="text bold font-20">CLASSES</div>
+            <div className="btn btn-orange font-16" onClick={() => this.setState({ createClassOpen: true })}>
               Create Class
             </div>
           </div>

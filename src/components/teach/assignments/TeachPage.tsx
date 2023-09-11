@@ -39,7 +39,6 @@ import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDi
 interface RemindersData {
   isOpen: boolean;
   count: number;
-  isDeadlinePassed: boolean;
 }
 
 enum ClassroomSearchType {
@@ -105,8 +104,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       remindersData: {
         isOpen: false,
-        count: 0,
-        isDeadlinePassed: false
+        count: 0
       },
       createClassOpen: false,
       updateClassId: -1,
@@ -331,8 +329,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
   //#endregion
 
-  setReminderNotification(count: number, isDeadlinePassed: boolean) {
-    this.setState(state => ({ ...state, remindersData: { isOpen: true, count, isDeadlinePassed } }));
+  setReminderNotification(count: number) {
+    this.setState(state => ({ ...state, remindersData: { isOpen: true, count } }));
   }
 
   renderClassroom() {
@@ -353,12 +351,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   renderAssignment(assignment: any, classroomId: number, assignmentsCount: number) {
+    console.log(assignment);
     return <div className="assignment-v31" onClick={() => {
       this.setActiveClassroom(classroomId);
     }}>
       <div className="absolute-bricks-count">
         <SpriteIcon name="book-checked-circled" />
-        <div>{assignmentsCount} Brick{assignmentsCount > 1 ? 's' : ''}</div>
+        <div className="font-10">{assignmentsCount} Brick{assignmentsCount > 1 ? 's' : ''}</div>
       </div>
       <img src={fileUrl(assignment.brick.coverImage)} />
     </div>
@@ -368,7 +367,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     return (
       <Grid item xs={9} className="brick-row-container teach-tab-d94 bg-light-blue no-active-class flex-center">
         <div>
-          <div className="sub-title-v12 bold">{this.state.isSearching ? 'Search: ' + this.state.finalSearchString : 'All My Classes'}</div>
+          <div className="sub-title-v12 font-20 bold">{this.state.isSearching ? 'Search: ' + this.state.finalSearchString : 'All My Classes'}</div>
           {this.state.classrooms.map(c => {
             let teacherNames = '';
 
@@ -383,7 +382,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
               index += 1;
             }
 
-            const assignmentsCount = c.assignments.length;
+            const assignmentsCount = c.assignmentsCount ? parseInt(c.assignmentsCount) : c.assignmentsCount.length;
 
             let newestAssignment = null;
             for (let assignment of c.assignments) {
@@ -391,6 +390,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 newestAssignment = assignment;
               }
             }
+
+            console.log(c.assignments)
 
             return (
               <div className="classroom-row-v12">
@@ -404,19 +405,19 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 </div>
                 <div className="title-column">
                   <div>
-                    <div className="bold overflow-ellipsis" dangerouslySetInnerHTML={{ __html: c.name }} />
-                    <div>{teacherNames}</div>
+                    <div className="bold overflow-ellipsis font-20" dangerouslySetInnerHTML={{ __html: c.name }} />
+                    <div className="font-18">{teacherNames}</div>
                   </div>
                 </div>
                 <div className="users-column">
                   <div>
-                    <div className="flex-left-v2"><SpriteIcon name="users-v2" /> {c.students.length}</div>
+                    <div className="flex-left-v2 font-16"><SpriteIcon name="users-v2" /> {c.students.length}</div>
                     {c.studentsInvitations.length > 0 &&
-                      <div className="flex-left-v2"><SpriteIcon name="sandclock-v2" /> {c.studentsInvitations.length} Pending</div>
+                      <div className="flex-left-v2 font-16"><SpriteIcon name="sandclock-v2" /> {c.studentsInvitations.length} Pending</div>
                     }
                   </div>
                 </div>
-                <div className="flex-center before-last-column">
+                <div className="flex-center before-last-column font-16">
                   <SpriteIcon name="calendar-v2" /> {getDateString(c.created.toString())}
                 </div>
                 <div className="flex-center last-column">
@@ -503,7 +504,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <ReminderSuccessDialog
           header={`Reminder${remindersData.count > 1 ? 's' : ''} sent!`}
           isOpen={remindersData.isOpen}
-          isDeadlinePassed={remindersData.isDeadlinePassed}
           close={() => this.setState(state => ({ ...state, remindersData: { ...remindersData, isOpen: false } }))}
         />
         {this.state.createClassOpen &&
