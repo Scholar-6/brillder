@@ -19,10 +19,10 @@ const EmptyTabContent: React.FC<Props> = (props) => {
           <div className="icon-container">
             <SpriteIcon name="glasses-sprite" className="stroke-1" />
           </div>
-          <div className="bold">You don’t have any classes</div>
-          <div className="text-center f-s-2">Create a class to set assignments and track your students' progress</div>
+          <div className="bold font-20">You don’t have any classes</div>
+          <div className="text-center f-s-2 font-16">Create a class to set assignments and track your students' progress</div>
           <div className="flex-center">
-            <div className="btn btn-orange">Create Class</div>
+            <div className="btn btn-orange font-18">Create Class</div>
           </div>
         </div>
       </div>

@@ -548,6 +548,36 @@
     height: 80%;
   }
 
+  &.empty-tab {
+    height: 100%;
+    background: white;
+
+    .tab-content-centered {
+      height: 100%;
+    }
+
+    .new-class-container {
+      .icon-container {
+        margin-bottom: 2vh;
+        svg {
+          height: 7vw;
+        }
+      }
+      .btn-orange {
+        cursor: pointer;
+        border-radius: 4vw;
+        padding: 0.7vw 1.2vw;
+        color: white;
+        margin-top: 2vh;
+        background: var(--theme-orange);
+
+        &:hover {
+          background: var(--theme-dark-blue);
+        }
+      }
+    }
+  }
+
   .assignment-tab-content-text {
     padding-top: 0.1vw;
     padding-bottom: 0.1vw;
