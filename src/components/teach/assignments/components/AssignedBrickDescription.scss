@@ -44,6 +44,7 @@
     background: var(--tab-gray);
 
     img {
+      border-radius: 0.9vw !important;
       width: 11.3vw !important;
       height: 6.4vw !important;
       object-fit: cover;
@@ -100,7 +101,7 @@
 
   .short-brick-info {
     padding-left: 1vw;
-    width: 25vw;
+    width: 31vw;
     padding-top: 0;
     @include flexToXCenter;
     flex-direction: column;
@@ -119,14 +120,11 @@
   .assignment-second-part {
     color: var(--theme-dark-blue);
     display: flex;
-    width: 17vw;
+    width: 6vw;
+    margin-right: 1.8vw;
+    justify-content: flex-end;
     .users-complete-count {
-      margin-left: 2vw;
-      margin-right: 2vw;
       @include flexCenter;
-      span {
-        margin-right: 0.5vw;
-      }
       svg {
         margin-right: 0.5vw;
         height: 1.4vw;

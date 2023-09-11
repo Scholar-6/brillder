@@ -132,7 +132,46 @@
       padding-top: 1vw;
 
       .learners-title {
+        display: flex;
         margin-bottom: 1vw;
+
+        .learners-count {
+          width: 18vw;
+        }
+
+        .reminder-brick-actions-container {
+          position: relative;
+          margin-left: 4vw;
+          .reminder-button-container {
+            cursor: pointer;
+            border-radius: 50%;
+            width: 2vw;
+            height: 2vw;
+            background: var(--theme-yellow);
+    
+            svg {
+              color: white;
+              width: 1.3vw;
+              height: 1.3vw;
+            }
+          }
+          .css-custom-tooltip {
+            right: -1.2vw;
+            top: 2.3vw;
+            padding-right: 0.5vw;
+            white-space: nowrap;
+            display: none;
+            z-index: 3;
+            opacity: 0;
+          }
+  
+          &:hover {
+            .css-custom-tooltip {
+              display: block;
+              opacity: 1;
+            }
+          }
+        }
       }
 
       .student {

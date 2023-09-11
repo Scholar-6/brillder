@@ -444,7 +444,6 @@
 
     .text {
       display: flex;
-      font-size: 1.4vw;
       align-items: center;
       margin-bottom: 0;
     }
@@ -454,7 +453,7 @@
       display: flex;
       align-items: center;
       font-size: 1vw;
-      margin-left: 7.3vw;
+      margin-left: 6.7vw;
       color: white;
       border-radius: 3vw;
       padding-top: 0.3vw;
@@ -543,7 +542,6 @@
     }
     .bold {
       text-align: center;
-      font-size: 1.5vw;
     }
   }
   .empty-tab-content {
@@ -562,7 +560,6 @@
     background: var(--tab-gray);
 
     p {
-      font-size: 1.5vw;
       color: var(--theme-dark-blue);
       margin-top: 1.5vw;
       margin-bottom: 1.5vw;
@@ -591,7 +588,6 @@
     padding-top: 1vh;
     padding-bottom: 1vh;
     display: block;
-    font-size: 1.05vw;
     font-family: $font-family-regular;
     padding-left: 1.4vw;
 
@@ -653,7 +649,6 @@
       background: var(--theme-orange);
       display: flex;
       align-items: center;
-      font-size: 1.3vw;
       div {
         padding-right: 0.4vw;
       }
@@ -672,7 +667,6 @@
 
   .unarchive-empty-tab {
     height: 60% !important;
-    font-size: 1.3vw;
     .icon-container {
       margin: 0 !important;
       &:hover {
@@ -680,7 +674,6 @@
       }
     }
     .bold {
-      font-size: 1.3vw;
       margin-top: 2vh;
       margin-bottom: 2vh;
     }
@@ -690,7 +683,6 @@
     .btn {
       cursor: pointer;
       margin-top: 2.5vh;
-      font-size: 1.2vw;
       padding: 0.1vw 0.5vw;
       color: white;
       background: var(--theme-dark-blue);
@@ -728,7 +720,6 @@
     .classroom-row-v12 {
       padding-top: 1vw;
       padding-bottom: 1vw;
-      font-size: 1.1vw;
       margin-left: 2vw;
       margin-right: 2vw;
       display: flex;
@@ -762,8 +753,9 @@
         overflow: hidden;
 
         img {
-          width: 12vw;
-          overflow: hidden;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
         .absolute-bricks-count {
@@ -772,7 +764,6 @@
           align-items: center;
           top: 0.35vw;
           right: 0.35vw;
-          font-size: 0.8vw;
           background: white;
           border-radius: 1vw;
           padding-right: 0.4vw;
@@ -785,10 +776,8 @@
         align-items: center;
         padding-left: 1vw;
         width: 37vw;
-        font-size: 1.2vw;
 
         .overflow-ellipsis {
-          font-size: 1.4vw;
           white-space: nowrap;
           overflow-x: hidden;
           text-overflow: ellipsis;
@@ -817,7 +806,6 @@
         left: -2vw;
         border-radius: 0.5vw;
         text-align: center;
-        font-size: 1.05vw;
       }
 
       .last-column {
@@ -857,5 +845,38 @@
         height: 10vw;
       }
     }
+  }
+}
+
+.manage-classrooms-page {
+  $base: 0.9;
+  $font-20: $base * 1.65vw;
+  $font-18: $base * 1.48vw;
+  $font-16: $base * 1.32vw;
+  $font-14: $base * 1.16vw;
+  $font-13: $base * 1.07vw;
+  $font-11: $base * 0.91vw;
+  $font-10: $base * 0.83vw;
+
+  .font-20 {
+    font-size: $font-20 !important;
+  }
+  .font-18 {
+    font-size: $font-16 !important;
+  }
+  .font-16 {
+    font-size: $font-16 !important;
+  }
+  .font-14 {
+    font-size: $font-14 !important;
+  }
+  .font-13 {
+    font-size: $font-13 !important;
+  }
+  .font-11 {
+    font-size: $font-11 !important;
+  }
+  .font-10 {
+    font-size: $font-10 !important;
   }
 }
