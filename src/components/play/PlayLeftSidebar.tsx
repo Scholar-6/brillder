@@ -394,6 +394,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           <AssignPersonOrClassDialog
             isOpen={this.props.assignPopup}
             history={this.props.history}
+            brick={this.props.brick}
             subjects={[]}
             submit={() => {}}
             /*

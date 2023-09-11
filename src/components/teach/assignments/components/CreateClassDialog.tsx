@@ -27,6 +27,8 @@ interface AssignClassProps {
   isOpen: boolean;
   subjects: Subject[];
 
+  brick?: Brick;
+
   classroom?: Classroom;
 
   submit(classroomId: number): void;
@@ -172,6 +174,8 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     if (canSubmit === false || value === '') {
       return;
     }
+    
+    console.log('create class')
 
     if (value) {
       // creating new class
@@ -179,7 +183,23 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         const newClassroom = await createClass(value);
         setClassroom(newClassroom);
 
+        console.log('create 2')
+
         if (newClassroom) {
+          console.log('create 3')
+
+          if (props.brick) {
+            console.log('create 4')
+            await assignClasses(props.brick.id, { classesIds: [newClassroom.id], deadline: null });
+            const classroomV2 = await getClassById(newClassroom.id);
+            if (classroomV2 && classroomV2.assignments) {
+              classroomV2.assignments.sort((c1, c2) => {
+                return c1.assignedDate > c2.assignedDate ? -1 : 1;
+              });
+              setAssignments(classroomV2.assignments);
+            }
+          }
+
           writeQRCode(
             window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + newClassroom.code
           );

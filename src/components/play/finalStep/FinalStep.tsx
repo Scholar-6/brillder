@@ -175,6 +175,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         <AssignPersonOrClassDialog
           isOpen={assign}
           history={history}
+          brick={brick}
           subjects={[]}
           submit={() => {}}
           /*

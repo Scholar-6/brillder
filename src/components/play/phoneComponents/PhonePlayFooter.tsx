@@ -71,6 +71,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <AssignPersonOrClassDialog
           isOpen={assign}
           history={history}
+          brick={brick}
           subjects={[]}
           submit={() => {}}
           /*
