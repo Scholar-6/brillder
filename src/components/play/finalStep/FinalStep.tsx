@@ -175,6 +175,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
         <AssignPersonOrClassDialog
           isOpen={assign}
           history={history}
+          subjects={[]}
+          submit={() => {}}
+          /*
           success={(items: any[], failedItems: any[]) => {
             if (items.length > 0) {
               setAssign(false);
@@ -185,7 +188,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
               setAssignFailedItems(failedItems);
               setAssignFailed(true);
             }
-          }}
+          }}*/
           close={() => setAssign(false)}
         />
         <AssignSuccessDialog

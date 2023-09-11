@@ -31,7 +31,6 @@ import CompetitionButton from "./baseComponents/sidebarButtons/CompetitionButton
 import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDialog";
 import HighScore from "./baseComponents/HighScore";
 import AdminBrickStatisticButton from "./baseComponents/AdminBrickStatisticButton";
-import QuickAssignButton from "./baseComponents/sidebarButtons/QuickAssignButton";
 import AssignSuccessDialogV2 from "components/baseComponents/dialogs/AssignSuccessDialogV2";
 import { assignClasses } from "services/axios/assignBrick";
 import { getClassById } from "components/teach/service";
@@ -348,14 +347,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           haveCircle={haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />}
-        <QuickAssignButton
-          sidebarRolledUp={sidebarRolledUp}
-          user={this.props.user}
-          brick={this.props.brick}
-          haveCircle={haveBriefCircles}
-          history={this.props.history}
-          showPremium={() => this.props.showPremium && this.props.showPremium()}
-        />
         <AssignButton
           sidebarRolledUp={sidebarRolledUp}
           user={this.props.user}
@@ -402,8 +393,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.props.assignPopup}
-            user={this.props.user}
             history={this.props.history}
+            subjects={[]}
+            submit={() => {}}
+            /*
             success={(items: any[], failedItems: any[]) => {
               if (items.length > 0) {
                 this.props.setAssignPopup(false);
@@ -411,8 +404,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
               } else if (failedItems.length > 0) {
                 this.setState({ failedItems, isAssignedFailedOpen: true });
               }
-            }}
-            showPremium={() => this.props.showPremium && this.props.showPremium()}
+            }}*/
             close={() => this.props.setAssignPopup(false)}
           />}
         <AssignSuccessDialogV2
