@@ -28,8 +28,8 @@ class EmptyFilter extends Component<PropsFilter, EmptyState> {
     return (
       <div className="empty-filter-content">
         <div className="top-row-v5">
-          <div className="text bold">CLASSES</div>
-          <div className="btn btn-orange" onClick={this.props.createClassToggle}>Create Class</div>
+          <div className="text bold font-20">CLASSES</div>
+          <div className="btn btn-orange font-16" onClick={this.props.createClassToggle}>Create Class</div>
         </div>
         <div className="typed-textbox-v9">
           <LabelTyping

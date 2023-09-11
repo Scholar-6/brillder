@@ -351,7 +351,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   renderAssignment(assignment: any, classroomId: number, assignmentsCount: number) {
-    console.log(assignment);
     return <div className="assignment-v31" onClick={() => {
       this.setActiveClassroom(classroomId);
     }}>
@@ -359,7 +358,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <SpriteIcon name="book-checked-circled" />
         <div className="font-10">{assignmentsCount} Brick{assignmentsCount > 1 ? 's' : ''}</div>
       </div>
-      <img src={fileUrl(assignment.brick.coverImage)} />
+      {assignment?.brick?.coverImage ? <img src={fileUrl(assignment.brick.coverImage)} />
+        : <div className="empty-assignment">
+          <SpriteIcon name="manage-classes-v51" />
+        </div>
+      }
     </div>
   }
 
@@ -368,7 +371,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       <Grid item xs={9} className="brick-row-container teach-tab-d94 bg-light-blue no-active-class flex-center">
         <div>
           <div className="sub-title-v12 font-20 bold">{this.state.isSearching ? 'Search: ' + this.state.finalSearchString : 'All My Classes'}</div>
-          {this.state.classrooms.map(c => {
+          {this.state.classrooms.map((c, i) => {
             let teacherNames = '';
 
             let index = 0;
@@ -382,22 +385,20 @@ class TeachPage extends Component<TeachProps, TeachState> {
               index += 1;
             }
 
-            const assignmentsCount = c.assignmentsCount ? parseInt(c.assignmentsCount) : c.assignmentsCount.length;
-
             let newestAssignment = null;
             for (let assignment of c.assignments) {
               if (newestAssignment === null) {
-                newestAssignment = assignment;
+                if (assignment.brick.coverImage) {
+                  newestAssignment = assignment;
+                }
               }
             }
 
-            console.log(c.assignments)
-
             return (
-              <div className="classroom-row-v12">
+              <div className="classroom-row-v12" key={i}>
                 <div className="assignment-column">
-                  {assignmentsCount > 0
-                    ? this.renderAssignment(newestAssignment, c.id, assignmentsCount)
+                  {c.assignments.length > 0
+                    ? this.renderAssignment(newestAssignment, c.id, c.assignments.length)
                     : <div className="empty-assignment">
                       <SpriteIcon name="manage-classes-v51" />
                     </div>
