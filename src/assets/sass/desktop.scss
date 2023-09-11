@@ -2060,3 +2060,46 @@
     }
   }
 }
+
+.back-to-work-teach .tab-container>div.active {
+  background: var(--white);
+}
+
+.back-to-work-teach .tab-container>div {
+  background: var(--tab-gray);
+  border-top-left-radius: 0.5vw;
+  border-top-right-radius: 0.5vw;
+  color: var(--theme-dark-blue);
+  cursor: pointer;
+  font-family: Brandon Grotesque Bold;
+  font-size: 4.8vh;
+  margin-right: 0.2vw;
+  min-height: 6.6vh;
+  padding-left: 1.5vw;
+  width: 100%;
+}
+
+.back-to-work-teach .tab-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.back-to-work-teach .brick-row-container {
+  background: inherit!important;
+  .tab-content {
+    background: white;
+  }
+}
+
+.back-to-work-teach .tab-container>div:last-child {
+  border-top-right-radius: 0;
+  margin-right: 0;
+}
+
+.back-to-work-teach .tab-container>div.no-active>div {
+  opacity: .2;
+}
+
+.back-to-work-teach .tab-content {
+  height: calc(100vh - 5.834vw - 2vw - 6.6vh) !important;
+}

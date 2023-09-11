@@ -444,7 +444,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (!this.state.isLoaded) {
       return (
         <Grid item xs={9} className="brick-row-container teach-tab-d94 flex-center">
-          <div className="tab-content">
+          <div className="tab-content loader-content">
             <div className="f-top-loader">
               <SpriteIcon name="f-loader" className="spinning" />
             </div>

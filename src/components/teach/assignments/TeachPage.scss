@@ -474,7 +474,12 @@
   }
 }
 
-.tab-content {
+.back-to-work-teach .tab-content {
+  width: 100% !important;
+  &.loader-content {
+    border-top-left-radius: 2vw;
+    height: calc(100vh - 5.834vw - 2vw) !important;
+  }
   .tab-content-centered {
     width: 100%;
     height: 70%;
