@@ -13,7 +13,7 @@ interface TabProps {
   activeTab: BricksActiveTab;
 }
 
-const TeachTab: React.FC<TabProps> = ({ activeTab, history }) => {
+const BricksTab: React.FC<TabProps> = ({ activeTab, history }) => {
   const overviewTab = () => {
     let className = 'no-active';
     if (activeTab === BricksActiveTab.Overview) {
@@ -80,4 +80,4 @@ const TeachTab: React.FC<TabProps> = ({ activeTab, history }) => {
   )
 }
 
-export default TeachTab;
+export default BricksTab;
