@@ -62,7 +62,7 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
     return (
       <Dialog open={assignment != null} className="dialog-box link-copied-dialog quick-assign-accept-dialog">
         <Grid className="classroom-invitation" container direction="column" alignItems="center">
-          <h1 className="bold">Welcome to <span className="capitalize">{classroom.name.toUpperCase()}</span></h1>
+          <h1 className="bold">Welcome to <span className="capitalize" dangerouslySetInnerHTML={{__html: classroom.name.toUpperCase()}} /></h1>
           <p>Enter your name to join class. Please make sure to</p>
           <p>enter a name your teacher can recognize.</p>
           <input type="text" onChange={e => setName(e.target.value)} />

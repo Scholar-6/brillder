@@ -17,7 +17,7 @@ interface AssignedDescriptionProps {
 }
 
 interface State {
-  expanded: boolean;
+  expanded: boolean | number;
   questionCount: number;
   coverLoaded: boolean;
 }
@@ -30,6 +30,15 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
       expanded: false,
       questionCount: 0,
       coverLoaded: false,
+    }
+  }
+
+  componentDidUpdate() {
+    console.log('updated');
+    if (this.state.expanded) {
+      if (this.state.expanded != this.props.assignment.id) {
+        this.setState({expanded: false});
+      }
     }
   }
 
@@ -59,7 +68,11 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             <div className="assign-brick-d343">
               <div className="assign-cover-image" onClick={() => {
                 if (completedStudents > 0) {
-                  this.setState({ expanded: !this.state.expanded })
+                  if (this.state.expanded === false) {
+                    this.setState({expanded: assignment.id })
+                  } else {
+                    this.setState({ expanded: false })
+                  }
                 }
               }}>
                 <img alt="" className={this.state.coverLoaded ? ' visible' : 'hidden'} onLoad={() => this.setState({ coverLoaded: true })} src={fileUrl(brick.coverImage)} />
@@ -94,7 +107,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             </div>
           </div>
         </div>
-        {this.state.expanded && this.props.classroom && <StudentsTable classroom={this.props.classroom} assignment={this.props.assignment} />}
+        {this.state.expanded && this.state.expanded === assignment.id && this.props.classroom && <StudentsTable classroom={this.props.classroom} assignment={this.props.assignment} />}
       </div>
     );
   }

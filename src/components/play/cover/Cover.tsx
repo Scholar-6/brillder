@@ -26,8 +26,9 @@ import { CreateByEmailRes } from "services/axios/user";
 import { rightKeyPressed } from "components/services/key";
 import { SubscriptionState, User } from "model/user";
 import { checkAdmin, checkPublisher, isAorP } from "components/services/brickService";
-import QuickClassInvitationDialog from "components/baseComponents/classInvitationDialog/QuickClassInvitationDialog";
+import QuickClassInvitationDialog, { QuickAssigment } from "components/baseComponents/classInvitationDialog/QuickClassInvitationDialog";
 import { ReduxCombinedState } from "redux/reducers";
+import { GetQuickAssignment } from "localStorage/play";
 
 
 interface Props {
@@ -61,6 +62,18 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
 
   const {user} = props;
 
+  const [assignment, setAssignment] = React.useState(null as null | QuickAssigment);
+
+  const getInvitations = async () => {
+    try {
+      const assignment = GetQuickAssignment();
+      // same brick
+      if (assignment && assignment.brick.id === brick.id) {
+        setAssignment(assignment)
+      }
+    } catch (e) { }
+  }
+
   useEffect(() => {
     const values = queryString.parse(location.search);
     if (values.origin === 'library') {
@@ -69,9 +82,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     if (values["assigning-bricks"]) {
       setAssignClassId(parseInt(values["assigning-bricks"] as string))
     }
+    getInvitations();
   }, []);
-
-  console.log(assignClassId)
 
   const [playClicked, setClickPlay] = useState(false);
   const [unauthPopupShown, setUnauthPopupShown] = useState(false)
@@ -89,11 +101,12 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       }
     }
 
+    // not a user and not an assignment
     const userTimeout = setTimeout(() => {
-      if (!user) {
+      if (!user && !assignment) {
         setUnauthorizedV2(true);
       }
-    }, 20000);
+    }, 5000);
 
     document.addEventListener("keydown", handleMove, false);
 
@@ -218,9 +231,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           if (user) {
             startBrick();
           } if (onlyLibrary) {
-            setUnauthorizedV2(true);
+            //setUnauthorizedV2(true);
           } else {
-            if (!unauthPopupShown) {
+            if (!unauthPopupShown && !assignment) {
               setUnauthorizedV2(true);
             } else {
               startBrick();
@@ -492,7 +505,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           setUnauthPopupShown(true);
         }}
         registered={() => {
-          console.log('cover');
           if (playClicked) {
             startBrick()
           } else {
