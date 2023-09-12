@@ -13,7 +13,7 @@ interface Props {
 const EmptyTabContent: React.FC<Props> = (props) => {
   const { activeClassroom } = props;
   return (
-    <div className="tab-content empty-tab">
+    <div className="tab-content loader-content empty-tab">
       <div className={"tab-content-centered " + (activeClassroom ? 'empty-tab-content' : '')}>
         <div className="new-class-container" onClick={props.openClass}>
           <div className="icon-container">
