@@ -22,6 +22,8 @@ const BackPagePagination: React.FC<BackPageTitleProps> = ({
   const showPrev = sortedIndex >= pageSize;
   const showNext = sortedIndex + pageSize < bricksLength;
 
+  console.log(sortedIndex, bricksLength, pageSize, showPrev, showNext)
+
   const getBricksRange = () => {
     let maxRange = sortedIndex + pageSize;
     if (sortedIndex + pageSize > bricksLength) {

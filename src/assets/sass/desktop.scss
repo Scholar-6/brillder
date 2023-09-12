@@ -1383,7 +1383,7 @@
 
 .question-live-play ol li,
 .youtube-video-session ol li {
-  padding-left: 1.6vw;
+  padding-left: 1.9vw;
 }
 
 .desktop-credit-coins {
@@ -1882,15 +1882,17 @@
 }
 
 // zendesk#972 qoute fix
-.post-play-page .book-page blockquote {
-  border-left: 0.3vw solid var(--tab-gray);
-  padding-left: 1.8vw;
+.post-play-page .book-page {
+  .blockquote,
+  blockquote {
+    border-left: 0.3vw solid var(--tab-gray);
+    padding-left: 1.8vw;
+  }
 }
 
-
-
-
-
+.investigation-build-background .blockquote {
+  border-left: 4px solid #ccc;
+}
 
 // zendesk#968 bullets fix
 .youtube-video-session ol li.ql-indent-1,
@@ -1924,4 +1926,180 @@
   br {
     display: none;
   }
+}
+
+.label-r54345 {
+  padding-top: 10vh;
+  font-size: 1vw;
+  font-family: $font-family-regular;
+  text-align: center;
+  padding: 18vh 1.2vw 0 1.2vw;
+}
+
+
+.dialog-box.popup-assign-f54 .MuiDialog-container .MuiDialog-paperScrollPaper {
+  padding-top: 0.5vw !important;
+  padding-bottom: 0vw !important;
+}
+
+.popup-assign-top-f54 {
+  width: 34vw;
+  color: var(--theme-dark-blue);
+  background:white;
+  border-radius: 1vw;
+
+  > div {
+    padding-top: 0.8vw;
+    padding-bottom: 0.8vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    position: relative;
+    font-size: 1.2vw;
+    text-align: center;
+    svg {
+      cursor: pointer;
+      position: absolute;
+      stroke-width: 2;
+      top: 1vw;
+      right: -1vw;
+      width: 2.4vw;
+      height: 1.5vw;
+    }
+  }
+
+  .bottom-part-s42 {
+    font-size: 0.85vw;
+    display: flex;
+    padding-top: 0.8vw;
+    padding-left: 1.3vw;
+    padding-right: 1.3vw;
+    text-align: left;
+    border-top: 1px solid #ccc;
+
+    svg {
+      top: unset;
+      right: unset;
+      position: relative;
+      width: 2.2vw;
+      height: 1.3vw;
+    }
+
+    .text-s45 {
+      padding-right: 2vw;
+    }
+
+    div.btn {
+      cursor: pointer;
+      font-size: 1.2vw;
+      color: white;
+      padding: 0.5vw 1.2vw;
+      border-radius: 0.3vw;
+      background: var(--theme-green);
+      transition: all 300ms ease-in-out;
+
+      &:hover {
+        background: var(--theme-light-blue);
+      }
+
+      &.btn-blue {
+        background: var(--theme-dark-blue);
+        
+        &:hover {
+          background: var(--theme-green);
+        }
+      }
+    }
+  }
+}
+
+.bottom-bricks-popup-f53 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  background: white;
+  color: var(--theme-dark-blue);
+  display: flex;
+  padding: 1vw 0.2vw 1vw 1vw;
+  border-top-left-radius: 0.7vw;
+  box-shadow: 0px 4px 20px 0px #0000004D;
+
+  .class-name {
+    width: 11vw;
+    font-size: 1.1vw;
+  }
+
+  .btn {
+    cursor: pointer;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+    border: 2px solid #BCC4D3;
+    border-radius: 0.5vw;
+    padding: 0.2vw 0.7vw;
+    font-size: 1.2vw;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: white;
+      background: var(--theme-dark-blue);
+    }
+
+    &.btn-green {
+      padding: 0.2vw 0.6vw;
+      border: 2px solid var(--theme-green);
+      color: white;
+      background: var(--theme-green);
+
+      &:hover {
+        border: 2px solid var(--theme-dark-blue);
+        background: var(--theme-dark-blue);
+      }
+    }
+  }
+}
+
+.back-to-work-teach .tab-container>div.active {
+  background: var(--white);
+}
+
+.back-to-work-teach .tab-container>div {
+  background: var(--tab-gray);
+  border-top-left-radius: 0.5vw;
+  border-top-right-radius: 0.5vw;
+  color: var(--theme-dark-blue);
+  cursor: pointer;
+  font-family: Brandon Grotesque Bold;
+  font-size: 4.8vh;
+  margin-right: 0.2vw;
+  min-height: 6.6vh;
+  padding-left: 1.5vw;
+  width: 100%;
+}
+
+.back-to-work-teach .tab-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.back-to-work-teach .brick-row-container {
+  background: inherit!important;
+  .tab-content {
+    background: white;
+  }
+}
+
+.back-to-work-teach .tab-container>div:last-child {
+  border-top-right-radius: 0;
+  margin-right: 0;
+}
+
+.back-to-work-teach .tab-container>div.no-active>div {
+  opacity: .2;
+}
+
+.back-to-work-teach .tab-content {
+  height: calc(100vh - 5.834vw - 2vw - 6.6vh) !important;
 }

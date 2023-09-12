@@ -1,43 +1,24 @@
 import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
-import { TeachClassroom, Assignment, StudentStatus, StudentAssignmentStatus, TeachStudent, ClassroomStatus } from "model/classroom";
+import { TeachClassroom, Assignment } from "model/classroom";
 import { AcademicLevelLabels, Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
-import { getSubjectColor } from "components/services/subject";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { archiveAssignment, sendAssignmentReminder, unarchiveAssignment } from "services/axios/brick";
-import { getTotalStudentsCount, isDeadlinePassed } from "../service/service";
+import { getTotalStudentsCount } from "../service/service";
 import BrickTitle from "components/baseComponents/BrickTitle";
-import ArchiveWarningDialog from "components/baseComponents/dialogs/ArchiveWarningDialog";
-import ArchiveButton from "./ArchiveButton";
-import ReminderButton from "./ReminderButton";
-import UnarchiveButton from "./UnarchiveButton";
-import DeadlinePopup from "./DeadlinePopup";
 import { fileUrl } from "components/services/uploadFile";
+import StudentsTable from "./StudentsTable";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
   classroom?: TeachClassroom;
   assignment: Assignment;
-  isExpanded?: boolean;
-  isStudent?: boolean;
-  isStudentAssignment?: boolean;
-  activeStudent?: TeachStudent;
-  isArchive?: boolean;
-  move?(): void;
-  expand?(classroomId: number, assignmentId: number): void;
-  minimize?(): void;
-  unarchive(): void;
-  archive(): void;
-  onRemind?(count: number, passed: boolean): void;
 }
 
 interface State {
-  warningOpen: boolean;
-  archiveHovered: boolean;
-  deadlineEditable: boolean;
-
+  expanded: boolean | number;
+  questionCount: number;
   coverLoaded: boolean;
 }
 
@@ -46,128 +27,19 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     super(props);
 
     this.state = {
-      warningOpen: false,
-      archiveHovered: false,
-      deadlineEditable: false,
+      expanded: false,
+      questionCount: 0,
       coverLoaded: false,
     }
   }
 
-  sendNotifications() {
-    sendAssignmentReminder(this.props.assignment.id);
-    const count = getTotalStudentsCount(this.props.classroom);
-    const passed = isDeadlinePassed(this.props.assignment);
-    this.props.onRemind?.(count, passed);
-  }
-
-  renderVertical(assignmentId: number, color: string) {
-    const { isExpanded } = this.props;
-    return (
-      <div
-        className="vertical-brick"
-        onClick={() => {
-          if (this.props.isExpanded) {
-            if (this.props.minimize) {
-              return this.props.minimize();
-            }
-          } else {
-            if (this.props.expand) {
-              if (this.props.classroom) {
-                return this.props.expand(this.props.classroom.id, assignmentId)
-              } else {
-                this.props.expand(-1, -1);
-              }
-            }
-          }
-        }}
-      >
-        <div className="brick-relative">
-          <div className="brick-middle" style={{ background: color }}>
-            <SpriteIcon name="arrow-right" className={isExpanded ? "rotated" : "active"} />
-          </div>
-          <div className="hover-area" style={{ background: color }} />
-        </div>
-        <div className="css-custom-tooltip">
-          {this.props.minimize ? 'Minimize' : 'Expand'}
-        </div>
-      </div>
-    );
-  }
-
-  renderStatus(assignment: Assignment) {
-    const { studentStatus } = assignment;
-
-    // expanded student
-    if (this.props.isStudentAssignment) {
-      const { activeStudent } = this.props;
-
-      let res: any = null;
-      if (activeStudent) {
-        res = studentStatus.find(s => s.studentId === activeStudent.id);
-      }
-
-      if (res && res.numberOfAttempts > 0) {
-        return '';
+  componentDidUpdate() {
+    console.log('updated');
+    if (this.state.expanded) {
+      if (this.state.expanded != this.props.assignment.id) {
+        this.setState({expanded: false});
       }
     }
-
-    let completedCount = 0;
-
-    let everyoneFinished = true;
-    if (this.props.classroom) {
-      let { length } = this.props.classroom.students;
-      completedCount = studentStatus.filter(({ status }) => status === 2).length;
-      if (length !== completedCount) {
-        everyoneFinished = false;
-      }
-    } else {
-      // if student assignment
-      if (!this.isStudentCompleted(studentStatus)) {
-        everyoneFinished = false;
-      }
-    }
-    if (everyoneFinished) {
-      // everyone has completed the assignment, so the button is disabled.
-      return <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2 finished" />;
-    } else {
-      let className = '';
-      if (assignment.deadline && isDeadlinePassed(assignment)) {
-        className = 'deadline';
-      }
-      return <ReminderButton className={className} studentCount={studentStatus.length - completedCount} sendNotifications={this.sendNotifications.bind(this)} />
-    }
-  }
-
-  countNumberOfCompleted(studentStatuses: StudentStatus[]) {
-    let completedNumber = 0;
-
-    for (let studentStatus of studentStatuses) {
-      if (studentStatus.status === StudentAssignmentStatus.Completed) {
-        completedNumber += 1;
-      }
-    }
-    return completedNumber;
-  }
-
-  isCompleted() {
-    const { assignment } = this.props;
-    if (assignment.deadline) {
-      const endTime = new Date(assignment.deadline).getTime();
-      const nowTime = new Date().getTime();
-      if (endTime < nowTime) {
-        return true;
-      }
-    }
-
-    const { studentStatus } = assignment;
-    if (this.props.classroom) {
-      const { length } = this.props.classroom.students;
-      const completedNumber = this.countNumberOfCompleted(studentStatus);
-      if (length === completedNumber) {
-        return true;
-      }
-    }
-    return false;
   }
 
   getCompleteStudents() {
@@ -179,161 +51,63 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     return studentsCompleted;
   }
 
-  getAverageScore() {
-    const { byStatus } = this.props.assignment;
-    let average = '';
-    if (byStatus) {
-      average = byStatus[1] ? 'Avg: ' + Math.round(byStatus[1].avgScore).toString() : '';
-    }
-    return average;
-  }
-
-  async unarchiveAssignment() {
-    const res = await unarchiveAssignment(this.props.assignment.id);
-    if (res) {
-      this.props.unarchive();
-    }
-  }
-
-  async archiveAssignment() {
-    const res = await archiveAssignment(this.props.assignment.id);
-    if (res) {
-      this.props.archive();
-    }
-  }
-
-  checkArchive() {
-    const completed = this.isCompleted();
-    if (completed) {
-      this.archiveAssignment();
-    } else {
-      this.setState({ warningOpen: true });
-    }
-  }
-
-  renderNoAttempt() {
-    return (
-      <div className="status-text-centered">
-        Not yet attempted
-      </div>
-    );
-  }
-
-  isStudentCompleted(studentStatus: StudentStatus[]) {
-    return !(!studentStatus || studentStatus.length !== 1 || studentStatus[0].status <= 0)
-  }
-
-  renderStudentStatus() {
-    if (!this.props.isStudent) { return <div /> }
-    const { activeStudent } = this.props;
-    const { studentStatus } = this.props.assignment;
-
-    let res: any = null;
-
-    if (activeStudent) {
-      res = studentStatus.find(s => s.studentId === activeStudent.id);
-    }
-
-    if (!res) {
-      return this.renderNoAttempt();
-    }
-
-    if (res.numberOfAttempts === 0) {
-      return this.renderNoAttempt();
-    }
-
-    return (
-      <div className="status-text-centered">
-        Score: {res.avgScore > 0 && Math.round(res.avgScore)}%
-      </div>
-    );
-  }
-
-  renderArchiveToggle() {
-    if (this.props.classroom?.status === ClassroomStatus.Active) {
-      if (this.props.isArchive) {
-        return <UnarchiveButton onClick={this.unarchiveAssignment.bind(this)} />;
-      } else {
-        return <ArchiveButton isCompleted={this.isCompleted.bind(this)} checkArchive={this.checkArchive.bind(this)} />;
-      }
-    }
-  }
-
   render() {
-    const { classroom } = this.props as any;
-    let subjectId = this.props.assignment.brick.subjectId;
-    let color = getSubjectColor(this.props.subjects, subjectId);
-    const subject = this.props.subjects.find(s => s.id === subjectId);
-
-    if (!color) {
-      color = "#B0B0AD";
-    }
-
     let { assignment } = this.props;
     const { brick } = assignment;
-    let className = "assigned-brick-description";
+
+    let subjectId = brick.subjectId;
+    const subject = this.props.subjects.find(s => s.id === subjectId);
+
+    
+    const completedStudents = this.getCompleteStudents();
 
     return (
-      <div className={className} style={{ display: 'flex' }}>
-        <div className="first-part">
-          {this.renderVertical(assignment.id, color)}
-        </div>
-        {this.props.isExpanded &&
-        <div>
-          <div className="assign-brick-d343">
-            <div className="assign-cover-image">
-              <img alt="" className={this.state.coverLoaded ? ' visible' : 'hidden'} onLoad={() => this.setState({ coverLoaded: true })} src={fileUrl(brick.coverImage)} />
+      <div className="assigned-brick-description-v3">
+        <div className="assigned-brick-description-v2" style={{ display: 'flex' }}>
+          <div>
+            <div className="assign-brick-d343">
+              <div className="assign-cover-image" onClick={() => {
+                if (completedStudents > 0) {
+                  if (this.state.expanded === false) {
+                    this.setState({expanded: assignment.id })
+                  } else {
+                    this.setState({ expanded: false })
+                  }
+                }
+              }}>
+                <img alt="" className={this.state.coverLoaded ? ' visible' : 'hidden'} onLoad={() => this.setState({ coverLoaded: true })} src={fileUrl(brick.coverImage)} />
+                {completedStudents > 0 &&
+                  <div className="expand-button">
+                    <div>
+                      <span className="font-10 flex-center">{this.state.expanded ? 'Collapse' : 'Expand'}</span>
+                      <div className="arrow-btn flex-center">
+                        <SpriteIcon name="arrow-down" className={this.state.expanded ? 'rotated' : ''} />
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
             </div>
           </div>
-        </div>}
-        <div className="short-brick-info long">
-          <div className="link-description">
-            <BrickTitle title={brick.title} />
-          </div>
-          <div className="link-info">
-            {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)}
-          </div>
-          {this.props.isExpanded &&
-            <div className="subject">
+          <div className="short-brick-info long">
+            <div className="link-description">
+              <BrickTitle title={brick.title} className="font-20" />
+            </div>
+            <div className="link-info font-16">
+              {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)}
+            </div>
+            <div className="subject font-13">
               {subject?.name}, Level {AcademicLevelLabels[brick.academicLevel]}
-            </div>}
-        </div>
-        <div className="reminder-container">
-          {!this.props.isArchive && this.renderStatus(assignment)}
-        </div>
-        <div className="assignment-second-part">
-          {!this.props.isStudentAssignment &&
+            </div>
+          </div>
+          <div className="assignment-second-part">
             <div className="users-complete-count">
               <SpriteIcon name="users-big-and-small" className="text-theme-dark-blue" />
-              <span>{this.getCompleteStudents()}/{getTotalStudentsCount(this.props.classroom)}</span>
-              {classroom && classroom.studentsInvitations && classroom.studentsInvitations.length > 0 && <span style={{ marginLeft: '1vw' }}>{classroom.studentsInvitations.length} Pending</span>}
-            </div>}
-          <div className="average">
-            {this.getAverageScore()}
+              <span>{completedStudents}/{getTotalStudentsCount(this.props.classroom)}</span>
+            </div>
           </div>
-          {this.renderStudentStatus()}
         </div>
-        <div className="deadline-e33">
-          {assignment.deadline &&
-            <div>
-              <SpriteIcon name="deadline-icon" />
-              <span>{getFormattedDate(assignment.deadline)}</span>
-            </div>}
-        </div>
-        {this.renderArchiveToggle()}
-        <ArchiveWarningDialog
-          isOpen={this.state.warningOpen}
-          submit={this.archiveAssignment.bind(this)}
-          close={() => this.setState({ warningOpen: false })}
-        />
-        {this.state.deadlineEditable && <DeadlinePopup
-          isOpen={this.state.deadlineEditable} close={() => this.setState({ deadlineEditable: false })}
-          update={deadline => {
-            this.props.assignment.deadline = deadline;
-            this.setState({ deadlineEditable: false });
-          }}
-          assignment={this.props.assignment}
-        />}
+        {this.state.expanded && this.state.expanded === assignment.id && this.props.classroom && <StudentsTable classroom={this.props.classroom} assignment={this.props.assignment} />}
       </div>
     );
   }

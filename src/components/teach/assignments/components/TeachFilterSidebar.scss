@@ -73,6 +73,12 @@
   justify-content: flex-start;
   .label-34rerf {
     width: 88%;
+
+    font-size: 1.05vw;
+
+    .MuiRadio-colorSecondary {
+      color: var(--white) !important;
+    }
   }
   .sort-v4y4 {
     position: relative;
@@ -137,9 +143,6 @@
 }
 
 .teach-sort-box {
-  .subject-scrollable {
-    max-height: calc(28.2vh);
-  }
   .classrooms-header {
     margin-top: 1vh;
     margin-bottom: 1vh;

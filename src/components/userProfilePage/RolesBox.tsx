@@ -12,6 +12,7 @@ interface BoxState {
 }
 
 interface BoxProps {
+  user: any;
   roles: any[];
   userRoles: any[];
   userId: number;
@@ -25,7 +26,7 @@ class RolesBox extends Component<BoxProps, BoxState> {
   constructor(props: BoxProps) {
     super(props);
 
-    const isInstitution = props.userRoles.find(r => r === UserType.InstitutionUser);
+    const isInstitution = props.userRoles.find(r => r === UserType.InstitutionUser) || props.user.isFromInstitution;
 
     this.state = {
       userPreference: props.userPreference,

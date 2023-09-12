@@ -1,4 +1,4 @@
-import {LoginRedirectUrl, LoginHeartOfMercia, PlayFinishRedirectURL, LoginUrl} from './types';
+import {LoginRedirectUrl, LoginHeartOfMercia, PlayFinishRedirectURL, LoginUrl, ActivateUrl} from './types';
 
 export function SetLoginRedirectUrl(url: string) {
   localStorage.setItem(LoginRedirectUrl, url);
@@ -42,16 +42,25 @@ export function UnsetFinishRedirectUrl() {
 
 
 export function SetLoginUrl(url: string) {
-  console.log('set login url');
   localStorage.setItem(LoginUrl, url);
 }
 
 export function GetLoginUrl() {
-  console.log('get login url');
   return localStorage.getItem(LoginUrl);
 }
 
 export function UnsetLoginUrl() {
-  console.log('remove login url');
   localStorage.removeItem(LoginUrl);
+}
+
+export function SetActivateUrl(url: string) {
+  localStorage.setItem(ActivateUrl, url);
+}
+
+export function GetActivateUrl() {
+  return localStorage.getItem(ActivateUrl);
+}
+
+export function UnsetActivateUrl() {
+  localStorage.removeItem(ActivateUrl);
 }

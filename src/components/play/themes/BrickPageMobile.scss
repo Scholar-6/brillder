@@ -945,6 +945,7 @@ $new-play-height: calc(100% - #{$play-footer-height}); // - #{$progress-bar-heig
             margin-top: 1.5vh;
             margin-bottom: 1.5vh;
 
+            .blockquote,
             blockquote {
               border-left: 0.3vw solid var(--tab-gray);
               padding-left: 1.8vw;
@@ -1050,6 +1051,7 @@ $new-play-height: calc(100% - #{$play-footer-height}); // - #{$progress-bar-heig
               li {
                 font-size: $mbase-font-size;
               }
+              .blockquote,
               blockquote {
                 padding-left: 3vw;
                 color: var(--theme-dark-blue);
@@ -2354,11 +2356,13 @@ $new-play-height: calc(100% - #{$play-footer-height}); // - #{$progress-bar-heig
       margin-right: 1vw;
     }
   }
+  .blockquote,
   blockquote {
     padding-left: 1.8vw;
     border-left: 3px solid var(--tab-gray) !important;
   }
   .question-hint, .question-hint-global {
+    .blockquote,
     blockquote {
       border-left: 3px solid var(--theme-dark-blue);
     }

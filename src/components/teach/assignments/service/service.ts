@@ -1,23 +1,14 @@
 import { Assignment, TeachClassroom } from "model/classroom";
 
 
-export const convertClassAssignments = (items: any[], classroom: TeachClassroom, isArchive: boolean) => {
+export const convertClassAssignments = (items: any[], classroom: TeachClassroom) => {
   if (classroom.assignments) {
     for (let assignment of classroom.assignments) {
       let item: any = {
         classroom,
         assignment
       };
-
-      if (assignment.isArchived === true) {
-        if (isArchive) {
-          items.push(item);
-        }
-      } else {
-        if (!isArchive) {
-          items.push(item);
-        }
-      }
+      items.push(item);
     }
   }
 }

@@ -5,7 +5,7 @@ import { AssignmentBrick } from 'model/assignment';
 import { Brick, BrickLengthEnum, BrickStatus, KeyWord, Subject } from 'model/brick';
 import { Question } from 'model/question';
 
-import { get, put, post, axiosDelete } from './index';
+import { get, put, post, axiosDelete, del } from './index';
 import { createQuestion } from './question';
 import { SortBy } from 'components/viewAllPage/components/ViewAllFilter';
 
@@ -14,6 +14,18 @@ export const getPublicBrickById = async (id: number) => {
     return await get<Brick>("/brick/public/" + id);
   } catch {
     return null;
+  }
+}
+
+export const hasPersonalBricks = async () => {
+  try {
+    const res = await get<any>("/brick/hasPersonalBrick");
+    if (res && res.success) {
+      return true;
+    }
+    return false;
+  } catch {
+    return false;
   }
 }
 
@@ -284,7 +296,6 @@ export const getLibraryBricks = async <T>(userId: number, classroomId?: number) 
     if (classroomId) {
       obj = { userId, classroomId };
     }
-    console.log(obj)
     return await post<T[]>("/play/library", obj);
   } catch (e) {
     return null;
@@ -489,6 +500,14 @@ export const archiveAssignment = async (assignmentId: number) => {
   }
 }
 
+export const deleteAssignment = async (assignmentId: number) => {
+  try {
+    return await del(`/brick/assignment/${assignmentId}/delete`);
+  } catch {
+    return false;
+  }
+}
+
 export const unarchiveAssignment = async (assignmentId: number) => {
   try {
     return await post<AssignmentBrick>(`/brick/assignment/${assignmentId}/unarchive`, {});
@@ -534,7 +553,6 @@ export const copyBrick = async (brick: Brick, questions: Question[]) => {
     copy.status = BrickStatus.Draft;
     copy.questions = [];
     copy.id = null;
-    console.log(copy)
     const res = await post<Brick>('/brick', copy);
     if (res) {
       res.isCore = true;

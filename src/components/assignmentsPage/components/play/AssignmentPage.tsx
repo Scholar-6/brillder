@@ -61,6 +61,24 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     this.getAssignments();
   }
 
+  componentDidUpdate() {
+    const {pathname} = this.props.history.location;
+    const res = pathname.split('/');
+
+    // checking path for class id
+    if (res.length === 2) {
+      if (this.state.activeClassroomId > 0) {
+        this.setState({activeClassroomId: -1});
+      }
+    } else if (res.length === 3) {
+      // check if active class the same
+      const id = parseInt(res[2]);
+      if (this.state.activeClassroomId != id) {
+        this.setState({activeClassroomId: id});
+      }
+    }
+  }
+
   async getAssignments() {
     let assignments = await getAssignedBricks();
     const subjects = await getSubjects();
@@ -88,6 +106,15 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     countClassroomAssignments(classrooms, assignments);
 
     classrooms.sort((c1, c2) => c2.assignmentsBrick.length - c1.assignmentsBrick.length);
+
+    for (let classroom of classrooms) {
+      classroom.assignmentsBrick.sort((a: any) => {
+        if (a.bestScore && a.bestScore > 0) {
+          return 1;
+        }
+        return -1;
+      });
+    }
 
     this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments });
   }

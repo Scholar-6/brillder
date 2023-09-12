@@ -15,6 +15,7 @@ import "./QuillBlockQuote";
 import QuillBetterTable from "./QuillBetterTable";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillCustomClipboard from "./QuillCustomClipboard";
+import { getKeyboardBindings } from "./KeyBoardBinddings";
 
 function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -88,7 +89,7 @@ const MissingWordQuill = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
         imageupload: false,
         clipboard: true,
         keyboard: {
-            bindings: QuillBetterTable.keyboardBindings,
+            bindings: getKeyboardBindings(),
         },
         history: {
             userOnly: true,

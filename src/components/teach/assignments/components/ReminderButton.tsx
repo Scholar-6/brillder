@@ -5,7 +5,6 @@ import { TeachClassroom } from 'model/classroom';
 import YesNoDialog from 'components/build/baseComponents/dialogs/YesNoDialog';
 
 interface Props {
-  className: string;
   studentCount: number;
   classroom?: TeachClassroom;
   sendNotifications(): void;
@@ -13,15 +12,12 @@ interface Props {
 
 const ReminderButton: React.FC<Props> = (props) => {
   const [clicked, setClicked] = React.useState(false)
-  const realClassName = 'reminder-brick-actions-container completed ' + props.className;
+  const realClassName = 'reminder-brick-actions-container flex-center';
   const isPlural = props.studentCount > 1 ? true : false;
   return (
     <div className={realClassName}>
-      <div className="reminder-button-container" onClick={() => setClicked(true)} >
-        <div className="green-hover">
-          <div />
-        </div>
-        <SpriteIcon name="reminder" className="active reminder-icon reminder-icon2" />
+      <div className="reminder-button-container flex-center" onClick={() => setClicked(true)} >
+        <SpriteIcon name="reminder" className="active reminder-icon" />
       </div>
       <div className="css-custom-tooltip">
         Send Reminder{isPlural ? 's' : ''}

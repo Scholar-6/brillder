@@ -10,7 +10,6 @@ import SpriteIcon from "../SpriteIcon";
 interface SuccessDialogProps {
   isOpen: boolean;
   header: string;
-  isDeadlinePassed: boolean;
   close(): void;
 }
 
@@ -26,7 +25,7 @@ const ReminderSuccessDialog: React.FC<SuccessDialogProps> = props => {
         <ListItem>
           <ListItemText primary={props.header} className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
-            <Avatar className={`circle-check ${props.isDeadlinePassed ? "bg-theme-orange" : "b-yellow"}`}>
+            <Avatar className="circle-check b-yellow">
               <SpriteIcon name="reminder" className="active stroke-2" />
             </Avatar>
           </ListItemAvatar>

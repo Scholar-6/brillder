@@ -14,7 +14,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from "components/map";
 import LoginRedirect from "components/baseComponents/LoginRedirect";
 import BaseTermsRedirect from "./BaseTermsRedirect";
-import { GetLoginUrl, SetLoginUrl, UnsetLoginUrl } from "localStorage/login";
+
 
 interface BuildRouteProps {
   exact?: any;

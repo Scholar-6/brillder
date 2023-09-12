@@ -1,21 +1,22 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Grow } from "@material-ui/core";
 
 import './ClassroomList.scss';
-import { ReduxCombinedState } from "redux/reducers";
+import map from "components/map";
 import { Subject } from "model/brick";
-import { TeachClassroom, Assignment, ClassroomStatus } from "model/classroom";
-
-import AssignedBrickDescription from "./AssignedBrickDescription";
+import { TeachClassroom, Assignment, TeachStudent } from "model/classroom";
 import { updateClassroom } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
-import TeachTab from "components/teach/TeachTab";
-import { TeachActiveTab } from "components/teach/model";
-import NameAndSubjectFormV2 from "components/teach/components/NameAndSubjectFormV2";
-import EmptyArchivedClassTab from "./EmptyArchivedClassTab";
+import { MUser } from "components/teach/model";
+import { unassignStudent } from "components/teach/service";
+
+import ReminderButton from "./ReminderButton";
 import EmptyClassTab from "./EmptyClassTab";
-import ArchiveToggle from "./ArchiveToggle";
+import UnassignStudentDialog from "components/teach/manageClassrooms/components/UnassignStudentDialog";
+import NameAndSubjectForm from "./NameAndSubjectForm";
+import AssignedBrickDescription from "./AssignedBrickDescription";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { sendAssignmentReminder } from "services/axios/brick";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -23,26 +24,19 @@ export interface TeachListItem {
 }
 
 interface ClassroomListProps {
-  stats: any;
   history: any;
   subjects: Subject[];
-  startIndex: number;
-  pageSize: number;
   activeClassroom: TeachClassroom;
-  isArchive: boolean;
-  toggleArchive(v: boolean): void;
-  expand(classroomId: number, assignmentId: number): void;
   reloadClass(id: number): void;
-  onAssign(): void;
-  onArchive(classroom: TeachClassroom): void;
-  onUnarchive(classroom: TeachClassroom): void;
+  assignPopup(): void;
+  inviteStudents(): void;
   onDelete(classroom: TeachClassroom): void;
-  onRemind?(count: number, isDeadlinePassed: boolean): void;
+  onRemind?(count: number): void;
 }
 
 interface ListState {
-  classroom: TeachClassroom;
-  shown: boolean;
+  unassignOpen: boolean;
+  unassignStudent: any;
 }
 
 class ClassroomList extends Component<ClassroomListProps, ListState> {
@@ -50,21 +44,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     super(props);
 
     this.state = {
-      classroom: props.activeClassroom,
-      shown: false
-    }
-  }
-
-  componentDidMount() {
-    this.setState({ shown: true });
-  }
-
-  componentDidUpdate(props: ClassroomListProps) {
-    if (this.props.activeClassroom !== props.activeClassroom) {
-      this.setState({ shown: false });
-      setTimeout(() => {
-        this.setState({ shown: true, classroom: this.props.activeClassroom });
-      }, 700);
+      unassignStudent: null,
+      unassignOpen: false,
     }
   }
 
@@ -78,21 +59,46 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     let success = await updateClassroom(classroomApi);
     if (success) {
       classroom.name = name;
-      this.setState({classroom: {...classroom }});
       this.props.reloadClass(classroom.id);
     }
   }
 
+  unassignStudent(student: MUser | null) {
+    const { activeClassroom } = this.props;
+    if (activeClassroom && student) {
+      const { id } = activeClassroom;
+      unassignStudent(id, student.id).then(res => {
+        if (res) {
+          const index = activeClassroom.students.findIndex(s => s.id === student.id);
+          if (index == -1) {
+            const index = activeClassroom.studentsInvitations.findIndex(s => s.id === student.id);
+            activeClassroom.studentsInvitations.splice(index, 1);
+          } else {
+            activeClassroom.students.splice(index, 1);
+          }
+          this.setState({ unassignOpen: false });
+        } else {
+          // failture
+          this.setState({ unassignOpen: false });
+        }
+      });
+    }
+  }
+
+  unassigningStudent(student: TeachStudent) {
+    this.setState({ unassignStudent: student, unassignOpen: true });
+  }
+
   renderClassname() {
-    const classroom = this.state.classroom as any;
+    const classroom = this.props.activeClassroom as any;
     let className = 'classroom-title';
     return (
       <div className={className}>
-        <NameAndSubjectFormV2
+        <NameAndSubjectForm
           classroom={classroom}
-          isArchive={this.props.isArchive}
+          addBrick={this.props.assignPopup}
+          inviteStudents={this.props.inviteStudents}
           onChange={(name) => this.updateClassroomName(classroom, name)}
-          onArchive={this.props.onArchive}
           onDelete={this.props.onDelete}
         />
       </div>
@@ -100,90 +106,140 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   }
 
   renderTeachListItem(c: TeachListItem, i: number) {
-    if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
-      if (c.assignment && c.classroom) {
-        return (
-          <Grow
-            in={true}
-            key={i}
-            style={{ transformOrigin: "left 0 0" }}
-            timeout={i * 200}
-          >
-            <div>
-              <AssignedBrickDescription
-                subjects={this.props.subjects}
-                isArchive={this.props.isArchive}
-                expand={this.props.expand.bind(this)}
-                key={i} classroom={c.classroom} assignment={c.assignment}
-                archive={() => this.props.reloadClass(c.classroom.id)}
-                unarchive={() => this.props.reloadClass(c.classroom.id)}
-                onRemind={this.props.onRemind}
-              />
-            </div>
-          </Grow>
-        );
-      }
+    if (c.assignment && c.classroom) {
+      return (
+        <Grow
+          in={true}
+          key={i}
+          style={{ transformOrigin: "left 0 0" }}
+          timeout={i * 200}
+        >
+          <div className="expanded-assignment">
+            <AssignedBrickDescription
+              subjects={this.props.subjects}
+              classroom={c.classroom}
+              assignment={c.assignment}
+            />
+          </div>
+        </Grow>
+      );
     }
-    return "";
+    return '';
   }
 
-  isArchived(assignment: Assignment) {
-    return assignment.studentStatus && assignment.studentStatus.length > 0 && assignment.studentStatus[0].status === 3;
+  renderLibraryLink(student: TeachStudent) {
+    let name = '';
+    const { firstName } = student;
+    let lastLetter = firstName[firstName.length - 1];
+    if (lastLetter === 's') {
+      name = firstName + "'";
+    } else {
+      name = firstName + "'s";
+    }
+    return (
+      <div className="absolute-library-link library flex-center" onClick={() => {
+        this.props.history.push(map.MyLibrary + '/' + student.id);
+      }}>
+        <SpriteIcon name="bar-chart-2" />
+        <div className="css-custom-tooltip">View {name} library</div>
+      </div>
+    );
+  }
+
+  renderStudent(s: TeachStudent, i: number) {
+    return (
+      <div className="student" key={i}>
+        <div className="email-box">
+          <div>
+            <div className="name bold font-14">{s.firstName + ' ' + s.lastName}</div>
+            <div className="email font-13">{s.email}</div>
+          </div>
+        </div>
+        <div className="flex-center button-box">
+          {this.renderLibraryLink(s)}
+        </div>
+        <div className="flex-center button-box">
+          <div className="delete flex-center" onClick={() => {
+            this.unassigningStudent(s);
+           }}>
+            <SpriteIcon name="delete" />
+            <div className="css-custom-tooltip">Unassign Student</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderInvitation(s: any, i: number) {
+    return (
+      <div className="invitation" key={i}>
+        <div className="email-box">
+          <div className="email font-13">{s.email}</div>
+          <div className="flex-center">
+            <div className="pending flex-center bold font-11">Pending</div>
+          </div>
+        </div>
+        <div className="flex-center button-box">
+          <div className="delete flex-center" onClick={() => {
+            this.unassigningStudent(s);
+           }}>
+            <SpriteIcon name="delete" />
+            <div className="css-custom-tooltip">Remove Invite</div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   renderContent() {
-    const { classroom } = this.state;
+    const classroom = this.props.activeClassroom;
     let items = [] as TeachListItem[];
 
-    convertClassAssignments(items, classroom, this.props.isArchive);
+    convertClassAssignments(items, classroom);
 
     if (items.length === 0) {
-      if (classroom.status === ClassroomStatus.Active) {
-        return <EmptyClassTab history={this.props.history} activeClassroom={classroom} />;
-      }
-      return <EmptyArchivedClassTab unarchive={() => this.props.onUnarchive(classroom)} />;
+      return <EmptyClassTab history={this.props.history} activeClassroom={classroom} />;
     }
 
-    if (classroom.status === ClassroomStatus.Archived) {
-      return <div className="archived-bricks">
-        <div className="archived-bricks-d44">
+    return (
+      <div className="classroom-assignments-columns">
+        <div className="assignments-column">
+          <div className="bold assignments-title font-20">Assignments</div>
           {items.map((item, i) => this.renderTeachListItem(item, i))}
         </div>
-        <EmptyArchivedClassTab unarchive={() => this.props.onUnarchive(classroom)} />
+        <div className="students-column">
+          <div>
+            <div className="learners-title font-20 bold">
+              <div className="learners-count">Learners ({classroom.students.length + classroom.studentsInvitations.length})</div>
+            </div>
+            <div>
+              {classroom.students.map(this.renderStudent.bind(this))}
+              {classroom.studentsInvitations.map(this.renderInvitation.bind(this))}
+            </div>
+          </div>
+        </div>
       </div>
-    }
-
-    return items.map((item, i) => this.renderTeachListItem(item, i));
+    );
   }
 
   render() {
     return (
-      <div>
-        <div className="classroom-title one-of-many first">
+      <div className="container-d23423">
+        <div className="top-name-v431">
           {this.renderClassname()}
         </div>
-        <TeachTab
-          activeTab={TeachActiveTab.Assignments}
-          classroom={this.props.activeClassroom}
-          history={this.props.history}
-          onAssign={this.props.onAssign}
-          assignmentsEnabled={true} 
-        />
-        <ArchiveToggle
-          isArchive={this.props.isArchive}
-          history={this.props.history}
-          activeStudent=""
-          activeClassroom={this.props.activeClassroom}
-          setArchive={this.props.toggleArchive}
-        />
         <div className="classroom-list one-classroom-assignments">
           {this.renderContent()}
         </div>
+        <UnassignStudentDialog
+          isOpen={this.state.unassignOpen}
+          student={this.state.unassignStudent}
+          close={() => this.setState({ unassignOpen: false })}
+          submit={() => this.unassignStudent(this.state.unassignStudent)}
+        />
       </div>
     );
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({ stats: state.stats.stats });
-
-export default connect(mapState)(ClassroomList);
+export default ClassroomList;

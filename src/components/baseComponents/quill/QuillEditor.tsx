@@ -18,7 +18,6 @@ import "./QuillSoundUpload";
 import "./QuillDesmos";
 import "./QuillCapitalization";
 import "./QuillBlockQuote";
-import QuillBetterTable from "./QuillBetterTable";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
@@ -31,6 +30,7 @@ import QuillDesmos, { DesmosBlot } from "./QuillDesmos";
 import QuillDesmosDialog from "./QuillDesmosDialog";
 import SoundRecordDialog from "components/build/buildQuestions/questionTypes/sound/SoundRecordDialog";
 import { fileUrl } from "components/services/uploadFile";
+import { getKeyboardBindings } from "./KeyBoardBinddings";
 
 function randomEditorId() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
@@ -120,6 +120,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     React.useEffect(() => {
         if(imageModule) {
             imageModule.openDialog = (file?: File, data?: any, blot?: CustomImageBlot, shouldUpdate?: boolean) => {
+                //CustomImageBlot
                 if (quill) {
                   const range = quill.getSelection();
                   const position = range ? range.index : 0;
@@ -187,7 +188,7 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
         soundupload: props.soundDialog ?? false,
         clipboard: true,
         keyboard: {
-            bindings: QuillBetterTable.keyboardBindings,
+            bindings: getKeyboardBindings(),
         },
         history: {
             userOnly: true,
@@ -204,33 +205,6 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     /*eslint-disable-next-line*/
     }), [uniqueId, props.showToolbar, props.allowLinks, props.allowMediaEmbed, props.allowTables, props.allowDesmos, props.imageDialog]);
     
-    /*
-    const toolbarItems: { [key: string]: any } = {
-        bold: <button className="ql-bold" />,
-        italic: <button className="ql-italic" />,
-        strikethrough: <button className="ql-strike" />,
-        fontColor: <select className="ql-color">
-          <option value="#C43C30">Red</option>
-          <option value="#0681DB">Blue</option>
-          <option value="#30C474">Green</option>
-          <option value="#FF9D00">Yellow</option>
-          <option value="#6A2E15">Brown</option>
-          <option value="#4523FF">Purple</option>
-          <option value="#FC7502">Orange</option>
-        </select>,
-        subscript: <button className="ql-script" value="sub" />,
-        superscript: <button className="ql-script" value="super" />,
-        align: <select className="ql-align" />,
-        blockQuote: <button className="ql-blockquote" />,
-        bulletedList: <button className="ql-list" value="bullet" />,
-        numberedList: <button className="ql-list" value="ordered" />,
-        latex: (<button className="ql-latex">
-            <LatexIcon />
-        </button>),
-        image: <button className="ql-image" />,
-    };
-    */
-
     const ref = React.useCallback((node: ReactQuill) => {
         if(node) {
             const editor = node.getEditor();
@@ -260,16 +234,6 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
             ref={forwardRef}
         >
             {(props.showToolbar ?? false) &&
-                // <div className={`ql-toolbar quill-${uniqueId}`}>
-                // {
-                //     props.toolbar.length > 0 &&
-                //     <div className="ql-formats">
-                //     {props.toolbar.map((item) => (
-                //         <React.Fragment key={item}>{ toolbarItems[item] }</React.Fragment>
-                //     ))}
-                //     </div>
-                // }
-                // </div>
                 <QuillToolbar
                     quill={quill}
                     quillId={uniqueId}

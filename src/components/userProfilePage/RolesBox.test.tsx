@@ -20,6 +20,7 @@ describe("Roles Box", () => {
         roles={roles}
         userRoles={[]}
         userId={1}
+        user={{}}
         isAdmin={false}
         togglePreference={() => {}}
         userPreference={UserPreferenceType.Student}
@@ -48,6 +49,7 @@ describe("Roles Box", () => {
         roles={roles}
         userRoles={[]}
         userId={1}
+        user={{}}
         isAdmin={false}
         togglePreference={() => {}}
         userPreference={UserPreferenceType.Teacher}
@@ -74,6 +76,7 @@ describe("Roles Box", () => {
         roles={roles}
         userId={1}
         isAdmin={false}
+        user={{}}
         togglePreference={() => {}}
         userRoles={[]}
         userPreference={UserPreferenceType.Builder}
@@ -100,6 +103,7 @@ describe("Roles Box", () => {
         roles={roles}
         userId={1}
         isAdmin={false}
+        user={{}}
         togglePreference={() => {}}
         userRoles={[]}
         userPreference={UserPreferenceType.Institution}
@@ -125,6 +129,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userId={1}
+        user={{}}
         isAdmin={false}
         togglePreference={() => {}}
         userRoles={[UserType.Admin]}
@@ -150,6 +155,7 @@ describe("Roles Box", () => {
       <RolesBox
         roles={roles}
         userId={1}
+        user={{}}
         isAdmin={false}
         togglePreference={() => {}}
         userRoles={[UserType.Admin, UserType.Publisher]}

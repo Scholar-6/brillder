@@ -14,6 +14,8 @@ import { isPhone } from 'services/phone';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import BasePhonePreview from 'components/baseComponents/BasePhonePreview';
 import LabelTyping from 'components/baseComponents/LabelTyping';
+import { isStudentPreference } from 'components/services/preferenceService';
+import { GetActivateUrl, UnsetActivateUrl } from 'localStorage/login';
 
 
 interface InputState {
@@ -81,7 +83,20 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     setTimeout(async () => {
       if (saved) {
         await props.getUser();
-        props.history.push(map.SelectSubjectPage);
+        const { history } = props;
+
+        if (isStudentPreference(user)) {
+          var url = GetActivateUrl();
+          if (url) {
+            const dd = '/' + url.split('/').slice(3).join('/');
+            history.push(dd);
+          } else {
+            history.push(map.MainPage + '?newStudent=true');
+          }
+        } else {
+          history.push(map.SelectSubjectPage);
+        }
+        //UnsetActivateUrl();
       } else {
         //this.props.requestFailed("Can`t save user profile");
       }
@@ -116,7 +131,10 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
           <div>
             {isPhone() && <div className="wef-user-icon-container flex-center"><SpriteIcon name="user" /></div>}
             <h1>
-              <LabelTyping start={true} value="Please enter your full name." onFinish={() => setStep(AnimationStep.TitleFinished)} />
+              <LabelTyping
+                start={true} value="Please enter your full name."
+                onFinish={() => setStep(AnimationStep.TitleFinished)}
+              />
             </h1>
             <div className={`inputs-box ${animationStep >= AnimationStep.TitleFinished ? 'shown hidden' : 'hidden'}`}>
               <Input

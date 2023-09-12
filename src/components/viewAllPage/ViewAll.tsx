@@ -76,6 +76,7 @@ import MobileCategory from "./MobileCategory";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
 import SharePersonalBrickButton from "./components/SharePersonalBrickButton";
+import { ClassroomApi, getClassById } from "components/teach/service";
 
 interface ViewAllProps {
   user: User;
@@ -94,6 +95,11 @@ interface ViewAllState {
   isSearching: boolean;
   sortBy: SortBy;
   keywords: KeyWord[];
+
+  assignPopupOpen: boolean;
+  assignPopupClossingAnimation: boolean;
+  assignClassroom: ClassroomApi | null;
+  assigningBricks: boolean;
 
   isKeywordSearch: boolean;
 
@@ -144,9 +150,7 @@ interface ViewAllState {
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 const TabletTheme = React.lazy(() => import("./themes/ViewAllPageTabletTheme"));
-const DesktopTheme = React.lazy(
-  () => import("./themes/ViewAllPageDesktopTheme")
-);
+const DesktopTheme = React.lazy(() => import("./themes/ViewAllPageDesktopTheme"));
 
 class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   static animationTimeout = 600;
@@ -165,7 +169,31 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     let userIdSearch = -1;
     if (values.searchUserId) {
-      userIdSearch = parseInt(values.searchUserId as string);
+      userIdSearch = parseInt(values.searchUserId as string, 10);
+    }
+
+    let filterLength: BrickLengthEnum[] = [];
+    if (values.length) {
+      try {
+        filterLength = (values.length as string).split(',').map(a => parseInt(a));
+      } catch { }
+    }
+
+    let sortBy = SortBy.Date;
+    if (values.sortBy) {
+      sortBy = parseInt((values.sortBy as string));
+    }
+
+    let filterLevels: AcademicLevel[] = [];
+    if (values.level) {
+      try {
+        filterLevels = (values.level as string).split(',').map(a => parseInt(a));
+      } catch { }
+    }
+
+    let page = 0;
+    if (values.page) {
+      page = parseInt(values.page as string, 10);
     }
 
     let isViewAll = false;
@@ -187,11 +215,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     this.state = {
       bricks: [],
-      sortBy: SortBy.Date,
+      sortBy,
       subjects: [],
       userSubjects: props.user ? Object.assign([], props.user.subjects) : [],
       bricksCount: 0,
-      page: 0,
+      page,
+      assignPopupOpen: false,
+      assignPopupClossingAnimation: false,
+      assigningBricks: false,
+      assignClassroom: null,
 
       isSubjectPopupOpen: false,
       noSubjectOpen: false,
@@ -219,13 +251,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAllCategory,
 
       filterCompetition: false,
-      filterLevels: [],
-      filterLength: [],
+      filterLevels,
+      filterLength,
       keywords: [],
       isClearFilter: false,
       failedRequest: false,
       isAdmin,
-      isCore: true,
+      isCore: values.personal ? false : true,
       shown: false,
       isSearchBLoading: false,
       isAllSubjects,
@@ -247,10 +279,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const oldNotifications = prevProps.notifications;
     if (notifications && oldNotifications) {
       if (notifications.length > oldNotifications.length) {
-        this.loadBricks();
+        this.loadBricks(this.state.subjects);
       }
     }
     this.addWheelListener();
+
+    // check if back button pressed
+    // refresh page data
   }
 
   onBricksWheel(e: any) {
@@ -328,15 +363,21 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadData(values: queryString.ParsedQuery<string>) {
-    await this.loadSubjects(values);
+    const subjects = await this.loadSubjects(values);
+
+    console.log('load data')
 
     if (values.searchString) {
-      this.search();
+      let page = 0;
+      if (values.page) {
+        page = parseInt(values.page as string, 10);
+      }
+      this.search(page);
     } else if (this.props.user) {
       if (this.state.subjectGroup) {
         this.loadUnauthorizedBricks(this.state.subjectGroup);
       } else {
-        this.loadBricks(values);
+        this.loadBricks(subjects, values);
       }
     } else {
       if (this.state.subjectGroup) {
@@ -347,12 +388,25 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
+
+  async setStateAndAssignClassroom(state: any, queryValues: queryString.ParsedQuery<string>) {
+    let assignValue = queryValues['assigning-bricks'];
+    const classroomId = assignValue ? parseInt(assignValue as string) : -1;
+
+    if (classroomId > 0) {
+      const assignClassroom = await getClassById(classroomId);
+      if (assignClassroom) {
+        state.assignClassroom = assignClassroom;
+        state.assignPopupOpen = assignValue ? true : false;
+      }
+    }
+  }
+
   /**
    * Load subject and check by query string
    */
   async loadSubjects(values: queryString.ParsedQuery<string>) {
     const subjects = (await getSubjects()) as SubjectItem[] | null;
-
     if (subjects) {
       sortAndCheckSubjects(subjects, values);
       this.setState({ ...this.state, subjects });
@@ -376,25 +430,34 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadUnauthorizedBricks(sGroup?: SubjectGroup) {
-    const {state} = this;
+    const { state } = this;
     this.loadAndSetUnauthBricks(
       0, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, sGroup
     );
   }
 
-  async loadBricks(values?: queryString.ParsedQuery<string>) {
+  async loadBricks(subjects: SubjectItem[] | null, values?: queryString.ParsedQuery<string>) {
     if (this.props.user) {
       let subjectIds: number[] = [];
-      if (this.state.isAllSubjects == false) {
+      let { state } = this;
+      if (state.isAllSubjects == false) {
         subjectIds = this.props.user.subjects.map(s => s.id);
+        let checked = subjects?.filter(s => s.checked);
+        if (checked && checked.length > 0) {
+          subjectIds = checked.map(s => s.id);
+        }
+      } else {
+        let checked = subjects?.filter(s => s.checked);
+        subjectIds = checked ? checked.map(s => s.id) : [];
       }
+
       const pageBricks = await getPublishedBricksByPage(
-        this.state.pageSize, this.state.page, true,
-        [], [], subjectIds,
-        this.state.filterCompetition, this.state.sortBy
+        state.pageSize, state.page, (values && values.personal) ? false : true,
+        state.filterLevels, state.filterLength, subjectIds,
+        state.filterCompetition, state.sortBy
       );
       if (pageBricks) {
-        let { subjects } = this.state;
+        let { subjects } = state;
 
         for (let subject of pageBricks.subjects) {
           const filterSubject = subjects.find(s => s.id === subject.id);
@@ -407,8 +470,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           this.checkSubjectsWithBricks(subjects);
         }
 
+        if (values) {
+          await this.setStateAndAssignClassroom(state, values);
+        }
+
         this.setState({
-          ...this.state,
+          ...state,
           subjects,
           bricksCount: pageBricks.pageCount,
           bricks: pageBricks.bricks,
@@ -416,10 +483,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           shown: true,
         });
       } else {
-        this.setState({ ...this.state, isLoading: false, failedRequest: true });
+        this.setState({ ...state, isLoading: false, failedRequest: true });
       }
       setTimeout(() => {
-        if (values) {
+        if (values && values.newTeacher) {
           let newTeacher = values.newTeacher as any;
           this.setState({ stepsEnabled: !!newTeacher });
         }
@@ -491,6 +558,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         shown: true,
         sortBy
       });
+
+      const { state } = this;
+
+      this.historyUpdate(
+        isAllSubjects, page, state.searchString,
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds, isCore
+      );
     }
   }
 
@@ -531,6 +605,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         sortBy,
         shown: true
       });
+
+      const { state } = this;
+
+      this.historyUpdate(
+        state.isAllSubjects, page, state.searchString,
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
+      );
     }
   }
 
@@ -591,7 +672,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterBySubject(id: number) {
-    const {state} = this;
+    const { state } = this;
 
     toggleSubject(state.subjects, id);
     toggleSubject(state.userSubjects, id);
@@ -629,7 +710,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   filterByLevel(filterLevels: AcademicLevel[]) {
     this.setState({ filterLevels, shown: false });
     setTimeout(() => {
-      const {state} = this;
+      const { state } = this;
       try {
         if (this.props.user) {
           this.loadAndSetBricks(
@@ -649,7 +730,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     let filterCompetition = !this.state.filterCompetition;
     this.setState({ filterCompetition, shown: false });
     setTimeout(() => {
-      const {state} = this;
+      const { state } = this;
       try {
         if (this.props.user) {
           this.loadAndSetBricks(
@@ -668,7 +749,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   filterByLength(filterLength: BrickLengthEnum[]) {
     this.setState({ filterLength, shown: false });
     setTimeout(() => {
-      const {state} = this;
+      const { state } = this;
       try {
         if (this.props.user) {
           this.loadAndSetBricks(
@@ -713,7 +794,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   selectAllSubjects(isViewAll: boolean) {
-    const {state} = this;
+    const { state } = this;
     if (this.state.subjectGroup) {
       checkAllSubjects(state.subjects, state.isCore);
       this.loadAndSetUnauthBricks(
@@ -742,7 +823,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   selectUserSubjects(isViewAll: boolean) {
-    const {state} = this;
+    const { state } = this;
     if (state.subjectGroup) {
       this.checkUserSubjects();
       this.loadAndSetUnauthBricks(
@@ -851,57 +932,124 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   };
 
+  historyUpdate(
+    isAllSubjects: boolean, page: number, searchString: string,
+    filterLevel: AcademicLevel[], filterLength: BrickLengthEnum[],
+    sortBy: SortBy, subjectIds: number[], isCore: boolean, stopAssignBrick?: boolean
+  ) {
+    let link = map.ViewAllPage + '?page=' + page;
+
+    if (isAllSubjects === true) {
+      link += '&mySubject=false'
+    } else {
+      link += '&mySubject=true'
+    }
+
+    if (searchString) {
+      link += '&searchString=' + searchString;
+    }
+
+    if (filterLevel && filterLevel.length > 0) {
+      link += '&level=' + filterLevel.join(',');
+    }
+
+    if (filterLength && filterLength.length > 0) {
+      link += '&length=' + filterLength.join(',');
+    }
+
+    if (sortBy) {
+      link += '&sortBy=' + sortBy;
+    }
+
+    if (subjectIds) {
+      link += '&subjectIds=' + subjectIds.join(',');
+    }
+
+    if (isCore === false) {
+      link += '&personal=true'
+    }
+
+    if (!stopAssignBrick) {
+      const values = queryString.parse(this.props.location.search);
+      if (values["assigning-bricks"]) {
+        link += '&assigning-bricks=' + values["assigning-bricks"];
+      }
+    }
+
+    console.log('move', link)
+
+    this.props.history.push(link);
+  }
+
   moveAllBack() {
-    const {state} = this;
+    const { state } = this;
     let index = state.page * state.pageSize;
 
     if (index >= state.pageSize) {
+      let page = state.page - 1;
+
+      const subjectIds = this.getSubjectIds();
+
       if (state.isSearching) {
         this.loadAndSetSearchBricks(
-          state.searchString, state.page - 1, state.pageSize, state.isCore,
-          this.getSubjectIds(), state.isKeywordSearch
+          state.searchString, page, state.pageSize, state.isCore,
+          subjectIds, state.isKeywordSearch
         );
       } else {
         if (this.props.user) {
           this.loadAndSetBricks(
-            state.page - 1, state.isCore, state.filterLevels,
+            page, state.isCore, state.filterLevels,
             state.filterLength, state.filterCompetition, state.isAllSubjects, state.sortBy
           );
         } else {
           this.loadAndSetUnauthBricks(
-            state.page - 1, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
+            page, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
           );
         }
       }
+
+      this.historyUpdate(
+        state.isAllSubjects, page, state.searchString,
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
+      );
     }
   }
 
   moveAllNext() {
-    const {state} = this;
+    const { state } = this;
     let index = state.page * state.pageSize;
     const { pageSize, bricksCount } = state;
 
     if (index + pageSize <= bricksCount - 1) {
+      const page = state.page + 1;
+      const subjectIds = this.getSubjectIds();
+
       if (state.isSearching) {
-        this.loadAndSetSearchBricks(state.searchString, state.page + 1, state.pageSize, state.isCore, this.getSubjectIds(), state.isKeywordSearch);
+        this.loadAndSetSearchBricks(
+          state.searchString, page, state.pageSize, state.isCore, subjectIds, state.isKeywordSearch
+        );
       } else {
         if (this.props.user) {
           this.loadAndSetBricks(
-            state.page + 1, state.isCore, state.filterLevels,
+            page, state.isCore, state.filterLevels,
             state.filterLength, state.filterCompetition, state.isAllSubjects, state.sortBy
           );
         } else {
           this.loadAndSetUnauthBricks(
-            state.page + 1, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
+            page, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
           );
         }
       }
+
+      this.historyUpdate(
+        state.isAllSubjects, page, state.searchString,
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
+      );
     }
   }
 
   searching(searchString: string) {
     if (searchString.length === 0) {
-
       this.setState({
         ...this.state,
         searchString,
@@ -909,6 +1057,18 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         isKeywordSearch: false,
         isSearching: false,
       });
+      const { state } = this;
+      if (this.props.user) {
+        this.loadAndSetBricks(
+          0, state.isCore, state.filterLevels, state.filterLength,
+          state.filterCompetition, state.isAllSubjects, state.sortBy
+        );
+      } else {
+        this.loadAndSetUnauthBricks(
+          0, state.filterLevels, state.filterLength,
+          this.state.filterCompetition, state.sortBy, state.subjectGroup
+        );
+      }
     } else {
       this.setState({ ...this.state, searchTyping: true, searchString });
     }
@@ -925,7 +1085,16 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number, isCore: boolean, subjectIds: number[], isKeyword?: boolean) {
     const pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore, subjectIds, isKeyword ? isKeyword : false);
 
+    const { state } = this;
+
     if (pageBricks && pageBricks.bricks.length >= 0) {
+
+      const values = queryString.parse(this.props.location.search);
+
+      if (values) {
+        await this.setStateAndAssignClassroom(state, values);
+      }
+
       this.setState({
         ...this.state,
         page,
@@ -938,6 +1107,11 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         isSearchBLoading: false,
         isSearching: true,
       });
+
+      this.historyUpdate(
+        state.isAllSubjects, page, state.searchString,
+        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
+      );
     } else {
       this.setState({
         ...this.state,
@@ -948,15 +1122,24 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  async search() {
+  async search(page: number) {
     const { searchString } = this.state;
+    if (searchString.length < 1) {
+      return;
+    }
     this.setState({ shown: false, searchTyping: false, isSearchBLoading: true });
 
     setTimeout(() => {
       try {
+        const { state } = this;
         let subjectIds = this.getSubjectIds();
         this.loadAndSetSearchBricks(
-          searchString, 0, this.state.pageSize, this.state.isCore, subjectIds, this.state.isKeywordSearch
+          searchString, page, state.pageSize,
+          state.isCore, subjectIds, state.isKeywordSearch
+        );
+        this.historyUpdate(
+          state.isAllSubjects, page, searchString,
+          state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
         );
       } catch {
         this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
@@ -995,6 +1178,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           shown={this.state.shown}
           history={this.props.history}
           circleIcon={circleIcon}
+          assignClassroom={this.state.assignClassroom}
           isPlay={true}
         />
       );
@@ -1005,11 +1189,16 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const isCore = !this.state.isCore;
     this.setState({ isCore, shown: false, page: 0 });
     setTimeout(() => {
-      const {state} = this;
-      if (this.state.isSearching) {
+      const { state } = this;
+      if (state.isSearching) {
+        const subjectIds = this.getSubjectIds();
         this.loadAndSetSearchBricks(
           state.searchString, 0, state.pageSize, state.isCore,
-          this.getSubjectIds(), state.isKeywordSearch
+          subjectIds, state.isKeywordSearch
+        );
+        this.historyUpdate(
+          state.isAllSubjects, 0, state.searchString,
+          state.filterLevels, state.filterLength, state.sortBy, subjectIds, isCore
         );
       } else {
         this.loadAndSetBricks(
@@ -1132,7 +1321,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           <div className="centered text-theme-dark-blue title found">
             {renderTitle(this.state.bricksCount)}
             <CreateOneButton onClick={this.moveToCreateOne.bind(this)} />
-            {this.state.isCore === false && <SharePersonalBrickButton history={this.props.history} /> }
+            {this.state.isCore === false && <SharePersonalBrickButton history={this.props.history} />}
           </div>
         </div>
       );
@@ -1239,7 +1428,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           selectAllSubjects={this.selectAllSubjects.bind(this)}
           selectUserSubjects={this.selectUserSubjects.bind(this)}
           setAllSubjects={(isAllSubjects) => {
-            const {state} = this;
+            const { state } = this;
             if (state.subjectGroup) {
               this.loadAndSetUnauthBricks(
                 0, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
@@ -1340,10 +1529,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       );
     }
 
-    if (this.state.isSearching) {
-      //bricks = filterSearchBricks(this.state.searchBricks, this.state.isCore);
-    }
-
     let className = 'main-listing dashboard-page';
     if (this.state.pageSize === 4) {
       className += ' two-columns-inside';
@@ -1366,9 +1551,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             <PageHeadWithMenu
               page={PageEnum.ViewAll}
               user={user}
+              initialSearchString={this.state.searchString}
               placeholder="Subjects, Topics, Titles & more"
               history={history}
-              search={() => this.search()}
+              search={() => this.search(0)}
               searching={this.searching.bind(this)}
             />
             <Switch>
@@ -1427,6 +1613,53 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             }}
             onComplete={() => { }}
           />}
+        {this.state.assignPopupOpen &&
+          <div>
+            <div className="popup-background"></div>
+            <div className="popup-assign-top-f53">
+              <div>
+                <SpriteIcon name="cancel-custom" onClick={() => {
+                  this.setState({ assignPopupOpen: false });
+                }} />
+                You can browse our catalogue here to select a brick to assign to <span className="bold">{this.state.assignClassroom?.name}</span>
+              </div>
+              <div className="bottom-part-s42">
+                <div>
+                  <SpriteIcon name="info-icon" />
+                </div>
+                <div className="text-s45">
+                  If you navigate away from the catalogue, your brick will be saved and can be accessed later from the Manage Classes page.
+                </div>
+                <div>
+                  <div className="btn btn-green" onClick={async () => {
+                    this.setState({ assignPopupOpen: false, assigningBricks: true });
+                  }}>OK</div>
+                </div>
+                <div className="triangle"></div>
+              </div>
+            </div>
+          </div>
+        }
+        {this.state.assigningBricks &&
+          <div className="bottom-bricks-popup-f53">
+            <div>
+              <div className="class-name"><span className="bold">{this.state.assignClassroom?.name}</span></div>
+              <div>{this.state.assignClassroom?.assignments?.length} Bricks Assigned</div>
+            </div>
+            <div className="btn" onClick={() => {
+              const { state } = this;
+              this.setState({ assigningBricks: false });
+              this.historyUpdate(
+                state.isAllSubjects, state.page, state.searchString,
+                state.filterLevels, state.filterLength, state.sortBy,
+                this.getSubjectIds(), state.isCore, true
+              );
+            }}>Quit</div>
+            <div className="btn btn-green" onClick={() => {
+              this.props.history.push(map.TeachAssignedTab + '?classroomId=' + this.state.assignClassroom?.id)
+            }}>Back to Class</div>
+          </div>
+        }
       </React.Suspense>
     );
   }

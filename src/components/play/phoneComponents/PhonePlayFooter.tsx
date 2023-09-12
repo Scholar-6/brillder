@@ -191,7 +191,7 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         </MenuItem>}
       <VolumeButton />
       <FullScreenButton />
-      {canSee && <GenerateCoverButton brick={brick} isMenuItem={true} />}
+      {/*canSee && <GenerateCoverButton brick={brick} isMenuItem={true} />*/}
     </Menu>
     {renderPopups()}
     <CookiePolicyDialog isOpen={cookieOpen} isReOpened={cookieReOpen} close={() => {

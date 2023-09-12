@@ -46,6 +46,9 @@ interface BrickBlockProps {
   assignmentId?: number;
   bestScore?: number;
 
+  // teacher assignment
+  assignClassroom?: any;
+
   teacher?: User;
 }
 
@@ -92,6 +95,10 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
    * @returns void
    */
   const move = () => {
+    if (props.assignClassroom) {
+      props.history.push(playCover(brick) + '?assigning-bricks=' + props.assignClassroom.id);
+      return;
+    }
     if (isAssignment && assignmentId && props.user.userPreference?.preferenceId !== UserPreferenceType.Teacher) {
       setAssignmentId(assignmentId);
       props.history.push(map.postAssignment(brick.id, props.user.id));
@@ -167,7 +174,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
   }
 
   const renderScore = () => {
-    if (props.isCompleted && props.bestScore && props.bestScore > 0) {
+    if (props.isCompleted && props.bestScore) {
       return (
         <div className="assignment-score">
           <div className="score-number">
@@ -232,17 +239,17 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
         timeout={150}
       >
         <div className="flex-brick-container" onClick={evt => { evt.preventDefault(); move(); }}>
-          {props.isAssignment && props.isCompleted && <div className="assignment-complete">
-            {renderScore()}
-            </div>
-          }
           <div className="publish-brick-container">
+            {props.isAssignment && props.isCompleted && <div className="assignment-complete">
+              {renderScore()}
+            </div>
+            }
             {renderDeadline()}
             {!props.isCompleted &&
-            <div className="level-and-length">
-              {renderLevelCircles()}
-              <div className="length-text-r3">{brick.brickLength} min</div>
-            </div>}
+              <div className="level-and-length">
+                {renderLevelCircles()}
+                <div className="length-text-r3">{brick.brickLength} min</div>
+              </div>}
             {brick.coverImage ?
               <div className="p-cover-image">
                 <div className="scroll-block">

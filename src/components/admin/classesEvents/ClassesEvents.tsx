@@ -219,7 +219,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       <SpriteIcon
         name={`students-${total === c.students.length ? 1 : 2}`}
         className="active"
-        onClick={() => this.props.history.push(map.ManageClassroomsTab + '?classroomId=' + c.id)}
+        onClick={() => this.props.history.push(map.TeachAssignedTab + '?classroomId=' + c.id)}
       />
     );
   }

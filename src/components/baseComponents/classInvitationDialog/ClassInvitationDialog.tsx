@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import SpriteIcon from '../SpriteIcon';
 
 interface Props {
-  onFinish?(): void;
+  onFinish?(classId: number): void;
 }
 
 const ClassInvitationDialog: React.FC<Props> = props => {
@@ -40,14 +40,17 @@ const ClassInvitationDialog: React.FC<Props> = props => {
     try {
       if (invitations && invitations[activeStep]) {
         const classId = invitations[activeStep].classroom.id;
-        const res = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].classroom.id}/accept`, {}, { withCredentials: true });
+        const res = await axios.post(
+          `${process.env.REACT_APP_BACKEND_HOST}/classrooms/${invitations[activeStep].classroom.id}/accept`,
+          {}, { withCredentials: true }
+        );
         if (res.data && res.data === 'OK') {
           setActiveStep(activeStep => activeStep + 1);
           if (activeStep + 1 >= invitations.length) {
             const newInvitations = await getInvitations();
             if (newInvitations && newInvitations.length <= 0) {
               history.push(map.AssignmentsPage + '/' + classId);
-              props.onFinish?.();
+              props.onFinish?.(classId);
             }
           }
         }
