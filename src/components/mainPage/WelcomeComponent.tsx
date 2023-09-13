@@ -59,7 +59,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
   async loadInstitutionImage() {
     const institutionImage = await getInstitutionLogo();
     if (institutionImage) {
-      this.setState({institutionImage});
+      this.setState({ institutionImage });
     }
   }
 
@@ -179,6 +179,21 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
     return '';
   }
 
+  renderInstitutionLogo() {
+    if (this.state.institutionImage) {
+      return (
+        <img src={this.state.institutionImage} onClick={() => {
+          window.location.href = "https://app.brillder.com/";
+        }} />
+      );
+    }
+    return (
+      <SpriteIcon name="institution-heart-of-mercia" onClick={() => {
+        window.location.href = "https://www.heartofmercia.org.uk/"
+      }} />
+    );
+  }
+
   render() {
     let className = "notifications-text";
     if (this.state.isTextClickable) {
@@ -214,16 +229,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         <div className="notifications-text-2" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText2 }} />
         <div className="notifications-text-3" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText3 }} />
 
-        {this.props.user.isFromInstitution ?
-          <div className="institution-logo">
-            <SpriteIcon name="institution-heart-of-mercia" onClick={() => {
-              if (process.env.REACT_APP_HEART_OF_MEARCIA_HOMEPAGE) {
-                window.location.href=process.env.REACT_APP_HEART_OF_MEARCIA_HOMEPAGE;
-              } else {
-                window.location.href="https://www.heartofmercia.org.uk/"
-              }
-            }} />
-          </div> : <div />}
+        {this.props.user.isFromInstitution && <div className="institution-logo">{this.renderInstitutionLogo()}</div>}
       </div>
     );
   }
