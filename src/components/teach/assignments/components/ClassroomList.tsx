@@ -212,7 +212,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
             <div className="learners-title font-20 bold">
               <div className="learners-count">Learners ({classroom.students.length + classroom.studentsInvitations.length})</div>
             </div>
-            <div>
+            <div className="scrollable-students">
               {classroom.students.map(this.renderStudent.bind(this))}
               {classroom.studentsInvitations.map(this.renderInvitation.bind(this))}
             </div>
