@@ -218,3 +218,10 @@
     }
   }
 }
+
+.teach-assigned .filter-class-name {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  width: 19vw;
+}
