@@ -6,6 +6,7 @@ import { checkTeacherEditorOrAdmin } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import map from "components/map";
 import { fileUrl } from "components/services/uploadFile";
+import { getInstitutionLogo } from "services/axios/institution";
 
 enum FieldName {
   animatedNotificationText = "animatedNotificationText",
@@ -29,6 +30,7 @@ interface WelcomeState {
   animationStarted: boolean;
   interval: number | NodeJS.Timeout | null;
   nameHovered: boolean;
+  institutionImage: string;
 }
 
 class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
@@ -45,20 +47,20 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       animatedNotificationText3: '',
       isTextClickable: false,
       animationStarted: false,
-      nameHovered: false
+      nameHovered: false,
+      institutionImage: ""
     } as any;
+
+    if (props.user && props.user.isFromInstitution) {
+      this.loadInstitutionImage();
+    }
   }
 
-  shouldComponentUpdate(props: WelcomeProps) {
-    if (props.notifications && props.notifications !== this.props.notifications && !this.state.animationStarted) {
-      /* not working sometimes better hide
-      if (this.state.interval) {
-        clearInterval(this.state.interval);
-      }
-      this.runAnimation(props, true);
-      */
+  async loadInstitutionImage() {
+    const institutionImage = await getInstitutionLogo();
+    if (institutionImage) {
+      this.setState({institutionImage});
     }
-    return true;
   }
 
   componentWillUnmount() {

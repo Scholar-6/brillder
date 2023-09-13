@@ -148,11 +148,10 @@ class TeachFilterSidebar extends Component<
               (!this.props.activeClassroom ? "active" : "")
             }
           >
-            <div className="label-34rerf">
+            <div className="label-34rerf font-14" onClick={e => this.unselectClassroom(e)}>
               <FormControlLabel
                 value={!this.props.activeClassroom}
                 style={{ marginRight: 0}}
-                onClick={e => this.unselectClassroom(e)}
                 control={
                   <Radio
                     className="sortBy"
