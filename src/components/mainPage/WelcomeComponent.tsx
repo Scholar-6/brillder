@@ -30,7 +30,7 @@ interface WelcomeState {
   animationStarted: boolean;
   interval: number | NodeJS.Timeout | null;
   nameHovered: boolean;
-  institutionImage: string;
+  institutionImage: any;
 }
 
 class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
@@ -180,10 +180,10 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
   }
 
   renderInstitutionLogo() {
-    if (this.state.institutionImage) {
+    if (this.state.institutionImage && this.state.institutionImage.img) {
       return (
-        <img src={this.state.institutionImage} onClick={() => {
-          window.location.href = "https://app.brillder.com/";
+        <img src={this.state.institutionImage.img} onClick={() => {
+          window.location.href = "https://ke6n.ac.uk/";
         }} />
       );
     }
