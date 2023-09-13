@@ -524,7 +524,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                 <SpriteIcon name="cancel-custom" onClick={() => {
                   this.setState({ isAssignV2Open: false })
                 }} />
-                Assigning <span className="bold">Economies and Diseconomies of Scale</span> to <span className="bold">Eco 2023</span>
+                Assigning <span className="bold" dangerouslySetInnerHTML={{__html: this.props.brick.title}} /> to <span className="bold" dangerouslySetInnerHTML={{__html: this.state.assignClass?.name}} />
               </div>
               <div className="bottom-part-s42">
                 <div className="text-s45">
