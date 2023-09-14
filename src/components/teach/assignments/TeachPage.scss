@@ -933,3 +933,25 @@
     }
   }
 }
+
+.back-to-work-teach {
+  ::-webkit-scrollbar {
+    width: 0.4vw;
+    display: block !important;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    display: block !important;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    display: block !important;
+  }
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    display: block !important;
+  }
+}
