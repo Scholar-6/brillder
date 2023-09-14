@@ -1102,6 +1102,24 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     return '';
   }
 
+  const renderCount = () => {
+    let assignmentsCount = assignClass?.assignments?.length;
+    if (assignmentsCount == 1) {
+      return (
+        <div>
+          <div className="class-name font-16"><span className="bold">{assignClass?.name}</span></div>
+          <div className="font-11">{assignmentsCount} Brick Assigned</div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <div className="class-name font-16"><span className="bold">{assignClass?.name} wefwefwef wefwef wef </span></div>
+        <div className="font-11">{assignmentsCount} Bricks Assigned</div>
+      </div>
+    );
+  }
+
   return (
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
@@ -1174,10 +1192,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       <AdaptedBrickAssignedDialog assignment={adaptedBrickAssignment} history={history} close={() => setAdaptedBrickAssignment(null)} />
       {assignClass &&
         <div className="bottom-bricks-popup-f53">
-          <div>
-            <div className="class-name"><span className="bold">{assignClass?.name}</span></div>
-            <div>{assignClass?.assignments?.length} Bricks Assigned</div>
-          </div>
+          {renderCount()}
           <div className="btn" onClick={() => {
             setAssignClass(null);
             props.history.push(props.history.location.href)

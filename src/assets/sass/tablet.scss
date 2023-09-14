@@ -1117,6 +1117,67 @@ html body #root .browser-type-container .manage-classrooms-page .sorted-row {
   }
 }
 
+.bottom-bricks-popup-f53 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  background: white;
+  color: var(--theme-dark-blue);
+  display: flex;
+  padding: 1vw 0.2vw 1vw 1vw;
+  border-top-left-radius: 0.7vw;
+  box-shadow: 0px 4px 20px 0px #0000004D;
+
+  $base: 0.9;
+  $font-14: $base * 1.16vw;
+  $font-18: $base * 1.48vw;
+
+  .font-18 {
+    font-size: $font-18 !important;
+  }
+
+  .font-14 {
+    font-size: $font-14 !important;
+  }
+
+  .class-name {
+    width: 11vw;
+    font-size: 1.1vw;
+  }
+
+  .btn {
+    cursor: pointer;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+    border: 2px solid #BCC4D3;
+    border-radius: 0.5vw;
+    padding: 0.2vw 0.7vw;
+    font-size: 1.2vw;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: white;
+      background: var(--theme-dark-blue);
+    }
+
+    &.btn-green {
+      padding: 0.2vw 0.6vw;
+      border: 2px solid var(--theme-green);
+      color: white;
+      background: var(--theme-green);
+
+      &:hover {
+        border: 2px solid var(--theme-dark-blue);
+        background: var(--theme-dark-blue);
+      }
+    }
+  }
+}
+
 .manage-classrooms-page {
   .user-row {
     font-size: 1.4vw !important;
