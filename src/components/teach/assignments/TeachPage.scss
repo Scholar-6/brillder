@@ -815,9 +815,10 @@
         display: flex;
         align-items: center;
         padding-left: 1vw;
-        width: 37vw;
+        width: 35vw;
 
         .overflow-ellipsis {
+          width: 32vw;
           white-space: nowrap;
           overflow-x: hidden;
           text-overflow: ellipsis;
@@ -827,7 +828,7 @@
       .users-column {
         display: flex;
         align-items: center;
-        width: 7vw;
+        width: 9vw;
 
         .flex-left-v2 {
           display: flex;
@@ -838,6 +839,7 @@
 
       .before-last-column {
         width: 7vw;
+        padding-right: 1.4vw;
       }
 
       .hover-area.custom:hover .hover-content {
@@ -921,7 +923,6 @@
   }
 
   .label-34rerf.font-14 {
-    padding-left: 0.4vw;
     .MuiButtonBase-root {
       width: 100%;
       padding: 0 !important;

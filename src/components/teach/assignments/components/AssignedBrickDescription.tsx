@@ -103,7 +103,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           <div className="assignment-second-part">
             <div className="users-complete-count">
               <SpriteIcon name="users-big-and-small" className="text-theme-dark-blue" />
-              <span>{completedStudents}/{getTotalStudentsCount(this.props.classroom)}</span>
+              <span className="font-16">{completedStudents}/{getTotalStudentsCount(this.props.classroom)}</span>
             </div>
           </div>
         </div>
