@@ -141,20 +141,24 @@
           margin-top: 1vh;
           width: 100%;
           .dropzone {
-            background: inherit !important;
             padding-left: 0.4vw !important;
             padding-right: 0.4vw !important;
-            margin-bottom: 0.4vw !important;
             margin-top: 5vw !important;
             border-top-left-radius: 0 !important;
             border-top-right-radius: 0 !important;
+            border-bottom-left-radius: 0.49vw !important;
+            border-bottom-right-radius: 0.49vw !important;
             border: none !important;
             height: calc(100vh - 18vh - 21vw);
             overflow-y: auto;
 
+            .cover-image-placeholder {
+              margin-top: 4vh;
+            }
+
             svg {
-              width: 35vh;
-              height: 35vh;
+              width: 30vh;
+              height: 30vh;
               stroke-width: 0.7 !important;
               color: var(--theme-dark-blue);
             }

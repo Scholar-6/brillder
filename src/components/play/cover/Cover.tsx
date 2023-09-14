@@ -231,7 +231,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           if (user) {
             startBrick();
           } if (onlyLibrary) {
-            //setUnauthorizedV2(true);
+            setUnauthorizedV2(true);
           } else {
             if (!unauthPopupShown && !assignment) {
               setUnauthorizedV2(true);
