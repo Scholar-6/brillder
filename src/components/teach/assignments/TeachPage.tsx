@@ -399,12 +399,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 <div className="assignment-column">
                   {c.assignments.length > 0
                     ? this.renderAssignment(newestAssignment, c.id, c.assignments.length)
-                    : <div className="empty-assignment">
+                    : <div className="empty-assignment" onClick={() => {
+                      this.setActiveClassroom(c.id);
+                    }}>
                       <SpriteIcon name="manage-classes-v51" />
                     </div>
                   }
                 </div>
-                <div className="title-column">
+                <div className="title-column" onClick={() => {
+                  this.setActiveClassroom(c.id);
+                }}>
                   <div>
                     <div className="bold overflow-ellipsis font-20" dangerouslySetInnerHTML={{ __html: c.name }} />
                     <div className="font-18">{teacherNames}</div>

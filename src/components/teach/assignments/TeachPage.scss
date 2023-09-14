@@ -779,6 +779,10 @@
         }
       }
 
+      .empty-assignment {
+        cursor: pointer;
+      }
+
       .assignment-v31 {
         cursor: pointer;
         position: relative;
@@ -807,6 +811,7 @@
       }
 
       .title-column {
+        cursor: pointer;
         display: flex;
         align-items: center;
         padding-left: 1vw;
