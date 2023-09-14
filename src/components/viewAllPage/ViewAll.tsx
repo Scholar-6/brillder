@@ -1643,8 +1643,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         {this.state.assigningBricks &&
           <div className="bottom-bricks-popup-f53">
             <div>
-              <div className="class-name"><span className="bold">{this.state.assignClassroom?.name}</span></div>
-              <div>{this.state.assignClassroom?.assignments?.length} Bricks Assigned</div>
+              <div className="class-name font-16"><span className="bold">{this.state.assignClassroom?.name}</span></div>
+              <div className="font-11">{this.state.assignClassroom?.assignments?.length} Bricks Assigned</div>
             </div>
             <div className="btn" onClick={() => {
               const { state } = this;
