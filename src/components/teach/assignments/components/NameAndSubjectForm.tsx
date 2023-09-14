@@ -67,7 +67,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
     ) : (
       <div className="name-subject-display">
         <div className="name-and-edit-btn">
-          <h1 className="name-display">{props.classroom!.name}</h1>
+          <h1 className="name-display" dangerouslySetInnerHTML={{__html: props.classroom!.name}} />
           {(checkAdmin(user.roles) && props.classroom!.teachers) &&
             <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span>
           }
