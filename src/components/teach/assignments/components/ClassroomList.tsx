@@ -151,7 +151,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       <div className="student" key={i}>
         <div className="email-box">
           <div>
-            <div className="name bold font-14">{s.firstName + ' ' + s.lastName}</div>
+            <div className="name bold font-14">{s.firstName} {s.lastName}</div>
             <div className="email font-13">{s.email}</div>
           </div>
         </div>
