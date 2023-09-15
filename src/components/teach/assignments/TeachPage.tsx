@@ -75,6 +75,8 @@ interface TeachState {
   successAssignResult: any;
   failAssignResult: any;
 
+  shareClass: any;
+
   deleteClassOpen: boolean;
   classroomToRemove: TeachClassroom | null;
 
@@ -101,6 +103,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
       classrooms: [],
       activeClassroom: null,
       isLoaded: false,
+
+      shareClass: null,
 
       remindersData: {
         isOpen: false,
@@ -429,7 +433,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                   <HoverButton icon="button-r46" className="button-svg first-btn-s57" onClick={() => this.setState({ isAssignOpen: true, selectedClassroom: c })}>
                     <div>Assign Bricks</div>
                   </HoverButton>
-                  <HoverButton icon="button-r44" className="button-svg" onClick={() => this.setState({ selectedClassroom: c })}>
+                  <HoverButton icon="button-r44" className="button-svg" onClick={() => this.setState({ shareClass: c })}>
                     <div>Share</div>
                   </HoverButton>
                   <HoverButton icon="button-r45" className="button-svg last-btn" onClick={() => this.onDeleteClass(c)}>
@@ -521,6 +525,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
               this.setState({ createClassOpen: false });
             }}
             close={() => { this.setState({ createClassOpen: false }) }}
+          />}
+          {this.state.shareClass && <UpdateClassDialog
+            isOpen={true}
+            classroom={this.state.shareClass}
+            history={this.props.history}
+            submit={async (classroomId) => {
+              await this.loadClass(classroomId);
+              this.setState({ shareClass: null });
+            }}
+            close={() => { this.setState({ shareClass: null }) }}
           />}
         {this.state.updateClassId > 0 &&
           <UpdateClassDialog
