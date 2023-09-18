@@ -133,6 +133,14 @@ export const getOverviewData = async (dateFilter: PDateFilter) => {
   }
 }
 
+export const getInstitutionOverviewData = async (dateFilter: PDateFilter) => {
+  try {
+    return await get<OverviewData>(`/institution/getOverviewData/` + dateFilter);
+  } catch {
+    return false;
+  }
+}
+
 export const getOverviewNewSignups = async (dateFilter: PDateFilter) => {
   try {
     return await get<any>(`/admin/getOverviewNewSignups/` + dateFilter);
