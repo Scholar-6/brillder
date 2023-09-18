@@ -21,9 +21,10 @@ import { ReduxCombinedState } from "redux/reducers";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import OverviewPlayedSidebar, { PDateFilter } from "./OverviewSidebar";
-import { getOverviewAssignedData, getOverviewCompetitionData, getOverviewData, getOverviewNewSignups, getOverviewPlayedData } from "services/axios/brick";
+import { getInstitutionOverviewData, getOverviewAssignedData, getOverviewCompetitionData, getOverviewData, getOverviewNewSignups, getOverviewPlayedData } from "services/axios/brick";
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { checkRealInstitution } from "components/services/brickService";
 
 
 ChartJS.register(
@@ -104,7 +105,18 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
   async loadData(dateFilter: PDateFilter) {
     if (!this.state.isLoading || this.state.isInitLoading) {
       this.setState({ isLoading: true, isNewSingupsLoading: true, isPlayedBricksLoading: true, isCompetitionLoading: true, isAssignmentsLoading: true });
-      const data = await getOverviewData(dateFilter);
+      const isInstitution = checkRealInstitution(this.props.user.roles);
+
+      let data:any = null;
+
+      if (isInstitution) {
+        data = await getInstitutionOverviewData(dateFilter);
+      } else {
+        data = await getOverviewData(dateFilter);
+      }
+
+      console.log(data);
+
       if (data) {
         data.newSignupsData = [];
         data.playedData = [];
