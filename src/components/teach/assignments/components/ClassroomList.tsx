@@ -10,13 +10,13 @@ import { convertClassAssignments } from "../service/service";
 import { MUser } from "components/teach/model";
 import { unassignStudent } from "components/teach/service";
 
-import ReminderButton from "./ReminderButton";
 import EmptyClassTab from "./EmptyClassTab";
 import UnassignStudentDialog from "components/teach/manageClassrooms/components/UnassignStudentDialog";
 import NameAndSubjectForm from "./NameAndSubjectForm";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { sendAssignmentReminder } from "services/axios/brick";
+import SortButtonV2 from "./SortButtonV2";
+import { SortClassroom } from "./TeachFilterSidebar";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -37,6 +37,7 @@ interface ClassroomListProps {
 interface ListState {
   unassignOpen: boolean;
   unassignStudent: any;
+  sortBy: SortClassroom;
 }
 
 class ClassroomList extends Component<ClassroomListProps, ListState> {
@@ -46,6 +47,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     this.state = {
       unassignStudent: null,
       unassignOpen: false,
+      sortBy: SortClassroom.Date
     }
   }
 
@@ -161,7 +163,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <div className="flex-center button-box">
           <div className="delete flex-center" onClick={() => {
             this.unassigningStudent(s);
-           }}>
+          }}>
             <SpriteIcon name="delete" />
             <div className="css-custom-tooltip">Unassign Student</div>
           </div>
@@ -182,13 +184,27 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <div className="flex-center button-box">
           <div className="delete flex-center" onClick={() => {
             this.unassigningStudent(s);
-           }}>
+          }}>
             <SpriteIcon name="delete" />
             <div className="css-custom-tooltip">Remove Invite</div>
           </div>
         </div>
       </div>
     );
+  }
+
+  sortClassrooms(sort: SortClassroom) {
+    console.log(sort)
+    if (sort === SortClassroom.Name) {
+      this.props.activeClassroom.assignments = this.props.activeClassroom.assignments.sort((a, b) => {
+        return a.brick.title > b.brick.title ? 1 : -1;
+      });
+    } else if (sort === SortClassroom.Date) {
+      this.props.activeClassroom.assignments = this.props.activeClassroom.assignments.sort((a, b) => {
+        return new Date(a.brick.created).getTime() - new Date(b.brick.created).getTime();
+      });
+    }
+    this.setState({sortBy: sort});
   }
 
   renderContent() {
@@ -204,7 +220,17 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     return (
       <div className="classroom-assignments-columns">
         <div className="assignments-column">
-          <div className="bold assignments-title font-20">Assignments</div>
+          <div className="bold assignments-title font-20">
+            <div>Assignments</div>
+            <div>
+              <SortButtonV2
+                sortBy={this.state.sortBy}
+                classroom="wefwef"
+                sort={this.sortClassrooms.bind(this)}
+              />
+            </div>
+          </div>
+
           {items.map((item, i) => this.renderTeachListItem(item, i))}
         </div>
         <div className="students-column">
