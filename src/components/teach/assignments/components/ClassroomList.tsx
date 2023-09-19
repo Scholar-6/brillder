@@ -17,6 +17,7 @@ import AssignedBrickDescription from "./AssignedBrickDescription";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SortButtonV2 from "./SortButtonV2";
 import { SortClassroom } from "./TeachFilterSidebar";
+import { GetSetSortSidebarAssignment, SetSortSidebarAssignment } from "localStorage/assigningClass";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -44,11 +45,17 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   constructor(props: ClassroomListProps) {
     super(props);
 
+    let sortBy = GetSetSortSidebarAssignment();
+
+    sortBy = sortBy ? sortBy : SortClassroom.Date;
+
     this.state = {
       unassignStudent: null,
       unassignOpen: false,
-      sortBy: SortClassroom.Date
+      sortBy: sortBy
     }
+
+    this.sortClassrooms(sortBy)
   }
 
   async updateClassroomName(classroom: TeachClassroom, name: string) {
@@ -194,7 +201,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   }
 
   sortClassrooms(sort: SortClassroom) {
-    console.log(sort)
+    SetSortSidebarAssignment(sort);
     if (sort === SortClassroom.Name) {
       this.props.activeClassroom.assignments = this.props.activeClassroom.assignments.sort((a, b) => {
         return a.brick.title > b.brick.title ? 1 : -1;
