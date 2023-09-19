@@ -225,7 +225,6 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
             <div>
               <SortButtonV2
                 sortBy={this.state.sortBy}
-                classroom="wefwef"
                 sort={this.sortClassrooms.bind(this)}
               />
             </div>
