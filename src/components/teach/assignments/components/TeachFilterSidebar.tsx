@@ -32,6 +32,7 @@ interface FilterSidebarState {
 }
 
 export enum SortClassroom {
+  Empty,
   Name,
   Date,
   Assignment

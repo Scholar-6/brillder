@@ -1,4 +1,5 @@
-import {AssigningClassrooms} from './types';
+import { SortClassroom } from 'components/admin/bricksPlayed/BricksPlayedSidebar';
+import {AssigningClassrooms, SidebarAssignmentsSort} from './types';
 
 export function GetAssigningClassrooms() {
   const dateFilter = localStorage.getItem(AssigningClassrooms);
@@ -16,4 +17,19 @@ export function UnsetAssigningClassrooms() {
 
 export function SetAssigningClassrooms(bricks: any[]) {
   localStorage.setItem(AssigningClassrooms, JSON.stringify(bricks));
+}
+
+
+
+
+export function GetSetSortSidebarAssignment() {
+  const sort = localStorage.getItem(SidebarAssignmentsSort);
+  if (sort) {
+    return parseInt(sort);
+  }
+  return null;
+}
+
+export function SetSortSidebarAssignment(sort: number) {
+  localStorage.setItem(SidebarAssignmentsSort, sort.toString());
 }
