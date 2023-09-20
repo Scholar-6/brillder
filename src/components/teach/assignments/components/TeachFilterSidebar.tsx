@@ -10,6 +10,7 @@ import CreateClassDialog from "./CreateClassDialog";
 import { User } from "model/user";
 import SortButton from "./SortButton";
 import { Subject } from "model/brick";
+import { GetSortSidebarClassroom } from "localStorage/assigningClass";
 
 
 interface FilterSidebarProps {
@@ -44,11 +45,18 @@ class TeachFilterSidebar extends Component<
 > {
   constructor(props: FilterSidebarProps) {
     super(props);
+
+    const sort = GetSortSidebarClassroom();
+
     this.state = {
       sortByName: null,
-      sort: SortClassroom.Date,
+      sort: sort ? sort : SortClassroom.Date,
       createClassOpen: false,
     };
+
+    if (sort) {
+      this.props.sortClassrooms(sort);
+    }
   }
 
 
@@ -162,16 +170,7 @@ class TeachFilterSidebar extends Component<
                 label={`All Classes (${classrooms.length})`}
               />
             </div>
-            <SortButton sort={this.state.sort} sortByName={() => {
-              this.props.sortClassrooms(SortClassroom.Name);
-              this.setState({ sort: SortClassroom.Name });
-            }} sortByDate={() => {
-              this.props.sortClassrooms(SortClassroom.Date);
-              this.setState({ sort: SortClassroom.Date });
-            }} sortByAssignmets={() => {
-              this.props.sortClassrooms(SortClassroom.Assignment);
-              this.setState({ sort: SortClassroom.Assignment });
-            }} />
+            <SortButton sortBy={this.state.sort} sort={this.props.sortClassrooms.bind(this)} />
           </div>
         </div>
         <div className="sort-box subject-scrollable">

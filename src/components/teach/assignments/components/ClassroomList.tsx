@@ -52,7 +52,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     this.state = {
       unassignStudent: null,
       unassignOpen: false,
-      sortBy: sortBy
+      sortBy
     }
 
     this.sortClassrooms(sortBy)
