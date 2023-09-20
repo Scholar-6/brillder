@@ -18,6 +18,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SortButtonV2 from "./SortButtonV2";
 import { SortClassroom } from "./TeachFilterSidebar";
 import { GetSetSortSidebarAssignment, SetSortSidebarAssignment } from "localStorage/assigningClass";
+import SortButtonV3, { SortStudentV3 } from "./SortButtonV3";
 
 export interface TeachListItem {
   classroom: TeachClassroom;
@@ -39,6 +40,7 @@ interface ListState {
   unassignOpen: boolean;
   unassignStudent: any;
   sortBy: SortClassroom;
+  sortStudentBy: SortStudentV3;
 }
 
 class ClassroomList extends Component<ClassroomListProps, ListState> {
@@ -52,7 +54,24 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     this.state = {
       unassignStudent: null,
       unassignOpen: false,
-      sortBy
+      sortBy,
+      sortStudentBy: SortStudentV3.Name
+    }
+
+    const classroom = props.activeClassroom;
+
+    for (let student of classroom.students) {
+      student.completedCount = 0;
+      for (let assignment of classroom.assignments) {
+        if (assignment.byStudent) {
+          console.log(assignment.byStudent);
+          for (let item of assignment.byStudent) {
+            if (item.studentId == student.id) {
+              student.completedCount += 1;
+            }
+          }
+        }
+      }
     }
 
     this.sortClassrooms(sortBy)
@@ -156,6 +175,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   }
 
   renderStudent(s: TeachStudent, i: number) {
+    console.log(s);
     return (
       <div className="student" key={i}>
         <div className="email-box">
@@ -163,6 +183,9 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
             <div className="name bold font-14">{s.firstName} {s.lastName}</div>
             <div className="email font-13">{s.email}</div>
           </div>
+        </div>
+        <div className="count-box">
+          <div>{s.completedCount}/{this.props.activeClassroom.assignments.length}</div>
         </div>
         <div className="flex-center button-box">
           {this.renderLibraryLink(s)}
@@ -244,13 +267,20 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
               />
             </div>
           </div>
-
           {items.map((item, i) => this.renderTeachListItem(item, i))}
         </div>
         <div className="students-column">
           <div>
             <div className="learners-title font-20 bold">
               <div className="learners-count">Learners ({classroom.students.length + classroom.studentsInvitations.length})</div>
+              <div><SortButtonV3 sortBy={this.state.sortStudentBy} sort={sortStudentBy => {
+                if (sortStudentBy === SortStudentV3.Name) {
+                  classroom.students.sort((a, b) => a.firstName > b.firstName ? 1 : -1);
+                } else if (sortStudentBy === SortStudentV3.NumberOfCompleted) {
+                  classroom.students.sort((a, b) => b.completedCount - a.completedCount);
+                }
+                this.setState({sortStudentBy});
+              }} /></div>
             </div>
             <div className="scrollable-students">
               {classroom.students.map(this.renderStudent.bind(this))}

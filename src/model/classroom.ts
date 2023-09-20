@@ -27,6 +27,8 @@ export interface Assignment {
   deadline: string;
   assignedDate: string;
 
+  byStudent?: any[];
+
   student?: User;
   isArchived: boolean;
 
@@ -45,6 +47,7 @@ export interface TeachStudent extends UserBase {
   studentResult: AssignmentStudent | undefined;
   studentStatus: StudentStatus | undefined;
   remindersCounter?: number;
+  completedCount: number;
 }
 
 export interface Classroom {

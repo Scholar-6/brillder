@@ -99,7 +99,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
           return (
             <div key={i}>
               <div className="classroom-name-v5" onClick={() => this.props.activateClassroom(classroom.id)}>
-                <span className="bold">{classroom.name}</span> by <span className="bold">{this.renderTeacher(classroom)}</span> 
+                <span className="bold" dangerouslySetInnerHTML={{__html: classroom.name}} /> by <span className="bold">{this.renderTeacher(classroom)}</span> 
                 <span className="absolute-right-v5">Date Created: {getDateStringV2(classroom.created.toString(), '/')}</span>
               </div>
               <div className="bricks-list">
