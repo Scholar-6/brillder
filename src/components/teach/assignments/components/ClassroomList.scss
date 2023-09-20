@@ -163,8 +163,27 @@
         display: flex;
         margin-bottom: 1vw;
 
+        svg {
+          cursor: pointer;
+          width: 1.6vw;
+          height: 1.6vw;
+        }
+
+        .sort-v4y4 .css-custom-tooltip {
+          margin-left: -1vw;
+          z-index: 10;
+          padding-right: 0.5vw;
+      }
+
+        .sort-v4y4:hover {
+          .css-custom-tooltip {
+            display: block;
+            opacity: 1;
+          }
+        }
+
         .learners-count {
-          width: 18vw;
+          width: 22vw;
         }
 
         .reminder-brick-actions-container {
@@ -210,7 +229,7 @@
 
       .student {
         display: flex;
-        $width: 19.3vw;
+        $width: 15.3vw;
         background: white;
         border-bottom: 1px solid #DEDEDE;
         .email-box {
@@ -225,6 +244,13 @@
             overflow-x: hidden;
             text-overflow: ellipsis;
           }
+        }
+        .count-box {
+          width: 4vw;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1vw;
         }
         .email {
           max-width: $width;
