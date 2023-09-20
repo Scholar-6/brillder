@@ -4,7 +4,7 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { Classroom } from "model/classroom";
 import SortButton from "components/teach/assignments/components/SortButton";
-import { SortClassroom } from "components/admin/bricksPlayed/BricksPlayedSidebar";
+import { SortClassroom } from "components/teach/assignments/components/TeachFilterSidebar";
 
 interface FilterSidebarProps {
   assignmentsLength: number;
