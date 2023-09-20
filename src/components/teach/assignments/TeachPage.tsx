@@ -34,7 +34,7 @@ import UpdateClassDialog from "./components/UpdateClassDialog";
 import AssignSuccessDialogV3 from "components/baseComponents/dialogs/AssignSuccessDialogV3";
 import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
-import { GetSetSortSidebarAssignment } from "localStorage/assigningClass";
+import { GetSetSortSidebarAssignment, GetSortSidebarClassroom } from "localStorage/assigningClass";
 
 
 interface RemindersData {
@@ -200,7 +200,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
         }
       }
 
-      classrooms = this.sortAndReturnClassrooms(SortClassroom.Date, classrooms);
+      const sort = GetSortSidebarClassroom();
+
+      if (sort) {
+        classrooms = this.sortAndReturnClassrooms(sort, classrooms);
+      }
 
       this.setState({ classrooms, activeClassroom, isLoaded: true });
       return classrooms;

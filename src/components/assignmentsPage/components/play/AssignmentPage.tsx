@@ -19,6 +19,7 @@ import ClassInvitationDialog from "components/baseComponents/classInvitationDial
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import { SortClassroom } from "components/admin/bricksPlayed/BricksPlayedSidebar";
 import { stripHtml } from "components/build/questionService/ConvertService";
+import { GetSortSidebarClassroom } from "localStorage/assigningClass";
 
 
 interface PlayProps {
@@ -48,17 +49,19 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     if (classId && classId > 0) {
       activeClassroomId = parseInt(classId as string);
     }
+    
+    const classSort = GetSortSidebarClassroom();
 
     this.state = {
       subjects: [],
       rawAssignments: [],
       classrooms: [],
       activeClassroomId,
-      classSort: SortClassroom.Assignment,
+      classSort: classSort ? classSort : SortClassroom.Assignment,
       isLoaded: false,
     }
 
-    this.getAssignments();
+    this.getAssignments(classSort);
   }
 
   componentDidUpdate() {
@@ -79,20 +82,20 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     }
   }
 
-  async getAssignments() {
+  async getAssignments(classSort: SortClassroom | null) {
     let assignments = await getAssignedBricks();
     const subjects = await getSubjects();
     if (assignments && subjects) {
       assignments = assignments.sort(sortAssignments);
-      this.setAssignments(assignments, subjects);
+      this.setAssignments(assignments, subjects, classSort);
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
       this.setState({ isLoaded: true })
     }
   }
 
-  setAssignments(assignments: AssignmentBrick[], subjects: Subject[]) {
-    const classrooms: any[] = [];
+  setAssignments(assignments: AssignmentBrick[], subjects: Subject[], sort: SortClassroom | null) {
+    let classrooms: any[] = [];
     for (let assignment of assignments) {
       if (assignment.classroom) {
         assignment.classroom.teacher = assignment.teacher;
@@ -105,7 +108,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
 
     countClassroomAssignments(classrooms, assignments);
 
-    classrooms.sort((c1, c2) => c2.assignmentsBrick.length - c1.assignmentsBrick.length);
+    classrooms = this.getSorted(classrooms, sort);
 
     for (let classroom of classrooms) {
       classroom.assignmentsBrick.sort((a: any) => {
@@ -129,17 +132,20 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     this.setState({ activeClassroomId: classroomId });
   }
 
-  sorting(sort: SortClassroom) {
-    let classrooms = this.state.classrooms;
-
+  getSorted(classrooms: any[], sort: SortClassroom | null) {
     if (sort == SortClassroom.Assignment) {
-      classrooms = this.state.classrooms.sort((c1, c2) => c2.assignmentsBrick.length - c1.assignmentsBrick.length);
+      classrooms = classrooms.sort((c1, c2) => c2.assignmentsBrick.length - c1.assignmentsBrick.length);
     } else if (sort === SortClassroom.Name) {
-      classrooms = this.state.classrooms.sort((c1, c2) => stripHtml(c2.name) > stripHtml(c1.name) ? -1 : 1);
+      classrooms = classrooms.sort((c1, c2) => stripHtml(c2.name) > stripHtml(c1.name) ? -1 : 1);
     } else {
-      classrooms = this.state.classrooms.sort((c1, c2) => new Date(c2.created).getTime() > new Date(c1.created).getTime() ? 1 : -1);
+      classrooms = classrooms.sort((c1, c2) => new Date(c2.created).getTime() > new Date(c1.created).getTime() ? 1 : -1);
     }
-    
+    return classrooms;
+  }
+
+  sorting(sort: SortClassroom) {
+    console.log('sorting', sort)
+    const classrooms = this.getSorted(this.state.classrooms, sort);
     this.setState({classSort: sort, classrooms});
   }
 

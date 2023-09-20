@@ -3,22 +3,20 @@ import { Dialog, Radio } from '@material-ui/core';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { SortClassroom } from './TeachFilterSidebar';
+import { SetSortSidebarClassroom } from 'localStorage/assigningClass';
 
 interface Props {
-  sort: SortClassroom;
+  sortBy: SortClassroom;
   classroom?: string;
-  sortByDate(): void;
-  sortByName(): void;
-  sortByAssignmets(): void;
+  sort(sort: SortClassroom): void;
 }
 
-const SortButton: React.FC<Props> = ({ sort, ...props }) => {
+const SortButton: React.FC<Props> = ({ sortBy, sort, ...props }) => {
   const [clicked, setClicked] = React.useState(false);
-  const [ascending, setAscending] = React.useState(true);
   return (
     <div className="sort-v4y4">
       <SpriteIcon
-        name={ascending ? "hero-sort-descending" : "hero-sort-ascending"}
+        name="hero-sort-descending"
         onClick={() => setClicked(true)}
       />
       <div className="css-custom-tooltip">
@@ -28,23 +26,28 @@ const SortButton: React.FC<Props> = ({ sort, ...props }) => {
         <div className="popup-3rfw bold">
           <div className="no-click">Sort By</div>
           <div className="btn-sort" onClick={() => {
-            props.sortByDate();
+            sort(SortClassroom.Date)
+            SetSortSidebarClassroom(SortClassroom.Date);
             setClicked(false);
           }}>
-            <Radio checked={sort === SortClassroom.Date} />
+            <Radio checked={sortBy === SortClassroom.Date} />
             Most Recent</div>
           <div className="btn-sort" onClick={() => {
-            props.sortByName();
+            sort(SortClassroom.Name);
+            SetSortSidebarClassroom(SortClassroom.Name);
             setClicked(false);
           }}>
-            <Radio checked={sort === SortClassroom.Name} />
-            A - Z</div>
+            <Radio checked={sortBy === SortClassroom.Name} />
+            A - Z
+          </div>
           <div className="btn-sort last" onClick={() => {
-            props.sortByAssignmets();
+            sort(SortClassroom.Assignment);
+            SetSortSidebarClassroom(SortClassroom.Assignment);
             setClicked(false);
           }}>
-            <Radio checked={sort === SortClassroom.Assignment} />
-            Most Assignments</div>
+            <Radio checked={sortBy === SortClassroom.Assignment} />
+            Most Assignments
+          </div>
         </div>
         </Dialog>}
     </div>

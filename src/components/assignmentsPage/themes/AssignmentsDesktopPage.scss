@@ -121,3 +121,9 @@
 .classrooms-filter {
   overflow-y: auto;
 }
+
+.student-assignments-page {
+  .classrooms-filter {
+    height: calc(100vh - 5.834vw - 2vw - 2.4vw - 2.2vw - 5vw);
+  }
+}

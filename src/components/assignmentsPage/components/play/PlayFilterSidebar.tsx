@@ -65,13 +65,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps> {
           <div className="filter-container sort-by-box">
             <div className="sort-header">INBOX</div>
             {this.props.activeClassroomId > 0 ? <div /> :
-            <SortButton classroom="sort-dialog-ew55" sort={this.props.classSort} sortByName={() => {
-              this.props.sorting(SortClassroom.Name);
-            }} sortByDate={() => {
-              this.props.sorting(SortClassroom.Date);
-            }} sortByAssignmets={() => {
-              this.props.sorting(SortClassroom.Assignment);
-            }} />}
+            <SortButton classroom="sort-dialog-ew55" sortBy={this.props.classSort} sort={this.props.sorting.bind(this)} />}
           </div>
           <div className="filter-container indexes-box classrooms-filter">
             <div className="index-box" onClick={() => this.props.setActiveClassroom(-1)}>
