@@ -36,7 +36,8 @@ export enum SortClassroom {
   Empty,
   Name,
   Date,
-  Assignment
+  Assignment,
+  DateInverse
 }
 
 class TeachFilterSidebar extends Component<

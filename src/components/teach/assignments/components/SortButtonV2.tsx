@@ -24,18 +24,25 @@ const SortButtonV2: React.FC<Props> = ({ ...props }) => {
         <div className="popup-3rfw bold">
           <div className="no-click">Sort By</div>
           <div className="btn-sort" onClick={() => {
-            props.sort(SortClassroom.Date);
-            setClicked(false);
-          }}>
-            <Radio checked={props.sortBy === SortClassroom.Date} />
-            Most Recent
-          </div>
-          <div className="btn-sort" onClick={() => {
             props.sort(SortClassroom.Name);
             setClicked(false);
           }}>
             <Radio checked={props.sortBy === SortClassroom.Name} />
             A - Z
+          </div>
+          <div className="btn-sort" onClick={() => {
+            props.sort(SortClassroom.Date);
+            setClicked(false);
+          }}>
+            <Radio checked={props.sortBy === SortClassroom.Date} />
+            Newest First
+          </div>
+          <div className="btn-sort" onClick={() => {
+            props.sort(SortClassroom.DateInverse);
+            setClicked(false);
+          }}>
+            <Radio checked={props.sortBy === SortClassroom.DateInverse} />
+            Oldest First
           </div>
         </div>
         </Dialog>}

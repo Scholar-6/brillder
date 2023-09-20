@@ -204,11 +204,19 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     SetSortSidebarAssignment(sort);
     if (sort === SortClassroom.Name) {
       this.props.activeClassroom.assignments = this.props.activeClassroom.assignments.sort((a, b) => {
-        return a.brick.title > b.brick.title ? 1 : -1;
+        const punctuation = /[\.,?!,'”<‘[(«]/g;
+        const aText = a.brick.title.replace(punctuation, "");
+        const bText = b.brick.title.replace(punctuation, "");
+        console.log(aText, bText);
+        return aText > bText ? 1 : -1;
       });
     } else if (sort === SortClassroom.Date) {
       this.props.activeClassroom.assignments = this.props.activeClassroom.assignments.sort((a, b) => {
-        return new Date(a.brick.created).getTime() - new Date(b.brick.created).getTime();
+        return new Date(b.assignedDate).getTime() - new Date(a.assignedDate).getTime();
+      });
+    } else if (sort === SortClassroom.DateInverse) {
+      this.props.activeClassroom.assignments = this.props.activeClassroom.assignments.sort((a, b) => {
+        return new Date(a.assignedDate).getTime() - new Date(b.assignedDate).getTime();
       });
     }
     this.setState({sortBy: sort});
