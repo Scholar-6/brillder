@@ -17,9 +17,9 @@ import { getSubjects } from "services/axios/subject";
 import { countClassroomAssignments, sortAssignments } from "./service";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
-import { SortClassroom } from "components/admin/bricksPlayed/BricksPlayedSidebar";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { GetSortSidebarClassroom } from "localStorage/assigningClass";
+import { SortClassroom } from "components/teach/assignments/components/TeachFilterSidebar";
 
 
 interface PlayProps {
@@ -136,7 +136,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     if (sort == SortClassroom.Assignment) {
       classrooms = classrooms.sort((c1, c2) => c2.assignmentsBrick.length - c1.assignmentsBrick.length);
     } else if (sort === SortClassroom.Name) {
-      classrooms = classrooms.sort((c1, c2) => stripHtml(c2.name) > stripHtml(c1.name) ? -1 : 1);
+      classrooms = classrooms.sort((c1, c2) =>  stripHtml(c2.name).toLocaleLowerCase() > stripHtml(c1.name).toLocaleLowerCase() ? -1 : 1);
     } else {
       classrooms = classrooms.sort((c1, c2) => new Date(c2.created).getTime() > new Date(c1.created).getTime() ? 1 : -1);
     }
@@ -144,7 +144,6 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
   }
 
   sorting(sort: SortClassroom) {
-    console.log('sorting', sort)
     const classrooms = this.getSorted(this.state.classrooms, sort);
     this.setState({classSort: sort, classrooms});
   }
