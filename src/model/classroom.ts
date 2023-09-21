@@ -34,6 +34,8 @@ export interface Assignment {
 
   classroom?: any;
 
+  order: number;
+
   studentStatus: StudentStatus[];
   byStatus: any;
   studentStatusCount: {

@@ -5,7 +5,7 @@ import './ClassroomList.scss';
 import map from "components/map";
 import { Subject } from "model/brick";
 import { TeachClassroom, Assignment, TeachStudent } from "model/classroom";
-import { updateClassroom } from "services/axios/classroom";
+import { updateClassroom, sortClassroomAssignments } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
 import { MUser } from "components/teach/model";
 import { unassignStudent } from "components/teach/service";
@@ -74,7 +74,9 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       }
     }
 
-    this.sortClassrooms(sortBy)
+    console.log(classroom.assignments);
+
+    classroom.assignments = classroom.assignments.sort((a, b) => a.order - b.order);
   }
 
   async updateClassroomName(classroom: TeachClassroom, name: string) {
@@ -223,7 +225,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     );
   }
 
-  sortClassrooms(sort: SortClassroom) {
+  async sortAssignments(sort: SortClassroom) {
     SetSortSidebarAssignment(sort);
     if (sort === SortClassroom.Name) {
       this.props.activeClassroom.assignments = this.props.activeClassroom.assignments.sort((a, b) => {
@@ -242,6 +244,15 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         return new Date(a.assignedDate).getTime() - new Date(b.assignedDate).getTime();
       });
     }
+    let order = 1;
+    for (let assignment of this.props.activeClassroom.assignments) {
+      assignment.order = order;
+      order+=1;
+    }
+    
+    const assignments = this.props.activeClassroom.assignments.map(a => { return {id: a.id, order: a.order}});
+
+    await sortClassroomAssignments(this.props.activeClassroom.id, assignments);
     this.setState({sortBy: sort});
   }
 
@@ -263,7 +274,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
             <div>
               <SortButtonV2
                 sortBy={this.state.sortBy}
-                sort={this.sortClassrooms.bind(this)}
+                sort={this.sortAssignments.bind(this)}
               />
             </div>
           </div>
