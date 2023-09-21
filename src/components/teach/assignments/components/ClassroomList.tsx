@@ -232,7 +232,6 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         const punctuation = /[\.,?!,'”<‘[(«]/g;
         const aText = a.brick.title.replace(punctuation, "");
         const bText = b.brick.title.replace(punctuation, "");
-        console.log(aText, bText);
         return aText > bText ? 1 : -1;
       });
     } else if (sort === SortClassroom.Date) {
@@ -251,7 +250,6 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     }
     
     const assignments = this.props.activeClassroom.assignments.map(a => { return {id: a.id, order: a.order}});
-
     await sortClassroomAssignments(this.props.activeClassroom.id, assignments);
     this.setState({sortBy: sort});
   }
