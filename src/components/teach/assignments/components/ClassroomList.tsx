@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Grow } from "@material-ui/core";
+import { ReactSortable } from "react-sortablejs";
 
 import './ClassroomList.scss';
 import map from "components/map";
@@ -17,12 +18,12 @@ import AssignedBrickDescription from "./AssignedBrickDescription";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SortButtonV2 from "./SortButtonV2";
 import { SortClassroom } from "./TeachFilterSidebar";
-import { GetSetSortSidebarAssignment, SetSortSidebarAssignment } from "localStorage/assigningClass";
 import SortButtonV3, { SortStudentV3 } from "./SortButtonV3";
 
 export interface TeachListItem {
+  id: number; // assignment id
   classroom: TeachClassroom;
-  assignment: Assignment | null;
+  assignment: Assignment;
 }
 
 interface ClassroomListProps {
@@ -41,30 +42,30 @@ interface ListState {
   unassignStudent: any;
   sortBy: SortClassroom;
   sortStudentBy: SortStudentV3;
+  assignments: TeachListItem[];
 }
 
 class ClassroomList extends Component<ClassroomListProps, ListState> {
   constructor(props: ClassroomListProps) {
     super(props);
 
-    let sortBy = GetSetSortSidebarAssignment();
-
-    sortBy = sortBy ? sortBy : SortClassroom.Date;
+    const classroom = props.activeClassroom;
+    let items = [] as TeachListItem[];
+    convertClassAssignments(items, classroom);
+    items = items.sort((a, b) => a.assignment.order - b.assignment.order);
 
     this.state = {
       unassignStudent: null,
       unassignOpen: false,
-      sortBy,
-      sortStudentBy: SortStudentV3.Name
+      sortBy: SortClassroom.Empty,
+      sortStudentBy: SortStudentV3.Name,
+      assignments: items,
     }
-
-    const classroom = props.activeClassroom;
 
     for (let student of classroom.students) {
       student.completedCount = 0;
       for (let assignment of classroom.assignments) {
         if (assignment.byStudent) {
-          console.log(assignment.byStudent);
           for (let item of assignment.byStudent) {
             if (item.studentId == student.id) {
               student.completedCount += 1;
@@ -73,8 +74,6 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         }
       }
     }
-
-    classroom.assignments = classroom.assignments.sort((a, b) => a.order - b.order);
   }
 
   async updateClassroomName(classroom: TeachClassroom, name: string) {
@@ -175,7 +174,6 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   }
 
   renderStudent(s: TeachStudent, i: number) {
-    console.log(s);
     return (
       <div className="student" key={i}>
         <div className="email-box">
@@ -224,21 +222,21 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   }
 
   async sortAssignments(sort: SortClassroom) {
-    SetSortSidebarAssignment(sort);
+    let assignments = this.state.assignments;
     if (sort === SortClassroom.Name) {
-      this.props.activeClassroom.assignments = this.props.activeClassroom.assignments.sort((a, b) => {
+      assignments = this.state.assignments.sort((a, b) => {
         const punctuation = /[\.,?!,'”<‘[(«]/g;
-        const aText = a.brick.title.replace(punctuation, "");
-        const bText = b.brick.title.replace(punctuation, "");
+        const aText = a.assignment.brick.title.replace(punctuation, "");
+        const bText = b.assignment.brick.title.replace(punctuation, "");
         return aText > bText ? 1 : -1;
       });
     } else if (sort === SortClassroom.Date) {
-      this.props.activeClassroom.assignments = this.props.activeClassroom.assignments.sort((a, b) => {
-        return new Date(b.assignedDate).getTime() - new Date(a.assignedDate).getTime();
+      assignments = this.state.assignments.sort((a, b) => {
+        return new Date(b.assignment.assignedDate).getTime() - new Date(a.assignment.assignedDate).getTime();
       });
     } else if (sort === SortClassroom.DateInverse) {
-      this.props.activeClassroom.assignments = this.props.activeClassroom.assignments.sort((a, b) => {
-        return new Date(a.assignedDate).getTime() - new Date(b.assignedDate).getTime();
+      assignments = this.state.assignments.sort((a, b) => {
+        return new Date(a.assignment.assignedDate).getTime() - new Date(b.assignment.assignedDate).getTime();
       });
     }
     let order = 1;
@@ -247,9 +245,9 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       order+=1;
     }
     
-    const assignments = this.props.activeClassroom.assignments.map(a => { return {id: a.id, order: a.order}});
-    await sortClassroomAssignments(this.props.activeClassroom.id, assignments);
-    this.setState({sortBy: sort});
+    const assignmentsData = assignments.map(a => { return {id: a.id, order: a.assignment.order}});
+    await sortClassroomAssignments(this.props.activeClassroom.id, assignmentsData);
+    this.setState({sortBy: sort, assignments});
   }
 
   renderContent() {
@@ -274,7 +272,20 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
               />
             </div>
           </div>
-          {items.map((item, i) => this.renderTeachListItem(item, i))}
+          <ReactSortable
+              list={this.state.assignments}
+              className="drag-assignment"
+              group="tabs-group"
+              setList={(newAssignments, e, r) => {
+                let switched = newAssignments.find((q, i) => this.state.assignments[i].id !== q.id);
+                if (switched) {
+                  console.log('set list', newAssignments, e, r);
+                  this.setState({assignments: newAssignments});
+                }
+              }}
+            >
+              {this.state.assignments.map((item, i) => this.renderTeachListItem(item, i))}
+            </ReactSortable>
         </div>
         <div className="students-column">
           <div>
