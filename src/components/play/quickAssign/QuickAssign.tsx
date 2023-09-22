@@ -32,7 +32,7 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
         let assignments = res.assignments;
         console.log(assignments);
         if (assignments[0].order > 0) {
-          assignments = res.assignments.sort((a:any, b:any) => a.order - b.order);
+          assignments = res.assignments.sort((a:any, b:any) => b.order - a.order);
         }
         setAssignments(assignments);
         setClassroom(res.class);

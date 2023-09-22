@@ -74,8 +74,6 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       }
     }
 
-    console.log(classroom.assignments);
-
     classroom.assignments = classroom.assignments.sort((a, b) => a.order - b.order);
   }
 

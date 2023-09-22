@@ -14,7 +14,7 @@ import PlayFilterSidebar from "./PlayFilterSidebar";
 import map from "components/map";
 import { Subject } from "model/brick";
 import { getSubjects } from "services/axios/subject";
-import { countClassroomAssignments, sortAssignments } from "./service";
+import { countClassroomAssignments } from "./service";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import { stripHtml } from "components/build/questionService/ConvertService";
@@ -86,7 +86,16 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     let assignments = await getAssignedBricks();
     const subjects = await getSubjects();
     if (assignments && subjects) {
-      assignments = assignments.sort(sortAssignments);
+      assignments = assignments.sort((a, b) => {
+        if (a.bestScore && a.bestScore > 0) {
+          return -1;
+        }
+        if (b.bestScore && b.bestScore > 0) {
+          return 1;
+        }
+        return a.order - b.order;
+      });
+      console.log(assignments);
       this.setAssignments(assignments, subjects, classSort);
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
@@ -109,15 +118,6 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     countClassroomAssignments(classrooms, assignments);
 
     classrooms = this.getSorted(classrooms, sort);
-
-    for (let classroom of classrooms) {
-      classroom.assignmentsBrick.sort((a: any) => {
-        if (a.bestScore && a.bestScore > 0) {
-          return 1;
-        }
-        return -1;
-      });
-    }
 
     this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments });
   }
