@@ -160,14 +160,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 hoverMarginTop="-0.85vw"
                 value={QuestionComponentTypeEnum.Text}
               />
-              {/* 
-                <DragBox
-                  locked={locked}
-                  name="“ ”"
-                  label="QUOTE"
-                  hoverMarginTop="-1.5vw"
-                  value={QuestionComponentTypeEnum.Quote}
-                />*/}
               <DragBox
                 locked={locked}
                 isImage={true} src="/images/soundicon.png"
