@@ -173,6 +173,18 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     );
   }
 
+  async setAssignmentsOrder(assignments: any[], sort: SortClassroom) {
+    let order = 1;
+    for (let assignment of assignments) {
+      assignment.order = order;
+      order+=1;
+    }
+
+    const assignmentsData = assignments.map(a => { return {id: a.id, order: a.order}});
+    this.setState({sortBy: sort, assignments});
+    await sortClassroomAssignments(this.props.activeClassroom.id, assignmentsData);
+  }
+
   renderStudent(s: TeachStudent, i: number) {
     return (
       <div className="student" key={i}>
@@ -239,15 +251,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         return new Date(a.assignment.assignedDate).getTime() - new Date(b.assignment.assignedDate).getTime();
       });
     }
-    let order = 1;
-    for (let assignment of this.props.activeClassroom.assignments) {
-      assignment.order = order;
-      order+=1;
-    }
-    
-    const assignmentsData = assignments.map(a => { return {id: a.id, order: a.assignment.order}});
-    await sortClassroomAssignments(this.props.activeClassroom.id, assignmentsData);
-    this.setState({sortBy: sort, assignments});
+       
+    this.setAssignmentsOrder(assignments, sort);
   }
 
   renderContent() {
@@ -276,11 +281,10 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
               list={this.state.assignments}
               className="drag-assignment"
               group="tabs-group"
-              setList={(newAssignments, e, r) => {
+              setList={async (newAssignments, e, r) => {
                 let switched = newAssignments.find((q, i) => this.state.assignments[i].id !== q.id);
                 if (switched) {
-                  console.log('set list', newAssignments, e, r);
-                  this.setState({assignments: newAssignments});
+                  this.setAssignmentsOrder(newAssignments, SortClassroom.Empty);
                 }
               }}
             >
