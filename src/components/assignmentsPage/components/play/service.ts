@@ -61,20 +61,6 @@ export const filter = (assignments: AssignmentBrick[], classroomId: number) => {
   return res;
 }
 
-export const sortAssignments = (a: AssignmentBrick, b: AssignmentBrick) => {
-  if (a.deadline) {
-    if (a.deadline && b.deadline) {
-      if (new Date(a.deadline).getTime() < new Date(b.deadline).getTime()) {
-        return -1;
-      } else {
-        return 0;
-      }
-    }
-    return -1;
-  }
-  return 1;
-}
-
 export const countClassroomAssignments = (classrooms: any[], assignments: AssignmentBrick[]) => {
   for (let c of classrooms) {
     c.assignmentsBrick = [];

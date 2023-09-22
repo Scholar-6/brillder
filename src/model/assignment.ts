@@ -26,6 +26,7 @@ export interface AssignmentBrick {
   isInvitation: boolean;
   classroom?: any;
   teacher?: User;
+  order: number;
 }
 
 export interface LibraryAssignmentBrick extends AssignmentBrick {
