@@ -13,7 +13,7 @@ import {
   QuestionTypeEnum,
 } from "model/question";
 import actions from "redux/actions/brickActions";
-import { socketUpdateBrick, socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
+import { socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
 import { isHighlightInvalid, validateHint, validateQuestion } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
@@ -83,7 +83,6 @@ export interface InvestigationBuildProps extends RouteComponentProps<any> {
   saveQuestion(question: any): Promise<Question | null>;
   saveBrickQuestions(questions: any): Promise<any | null>;
   createQuestion(brickId: number, question: any): any;
-  updateBrick(brick: any): any;
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
@@ -164,7 +163,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let [synthesis, setSynthesis] = React.useState(initSynthesis);
   /* Synthesis */
 
-  const { startEditing, updateBrick } = props;
+  const { startEditing } = props;
 
   let isAuthor = false;
   try {
@@ -218,24 +217,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setSkipDialog(true);
   }
 
-  // // update on socket when things change.
-  // useEffect(() => {
-  //   if (props.brick && !locked) {
-  //     let brick = props.brick;
-  //     prepareBrickToSave(brick, questions, synthesis);
-  //   }
-  // }, [questions, synthesis, locked, updateBrick, props.brick]);
-
-  // // parse questions on socket update
-  // useSocket('brick_update', (diff: any) => {
-  //   console.log(diff);
-  //   if (!diff) return;
-  //   if (currentBrick && locked) {
-  //     console.log(diff);
-  //     applyDiff(diff);
-  //   }
-  // })
-
   const applyDiff = (diff: any) => {
     const brick = applyBrickDiff(currentBrick, diff);
     console.log(currentBrick, diff, brick);
@@ -276,7 +257,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         forward: diff,
         backward: backwardDiff
       });
-      updateBrick(diff);
     }
   }
 
@@ -284,7 +264,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const diff = undoRedoService.undo();
     if (diff) {
       applyDiff(diff);
-      updateBrick(diff);
       prepareBrickToSave(brick, questions, synthesis);
       props.saveBrick(brick).then(resV3 => {
         if (resV3 === null) {
@@ -299,7 +278,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (diff) {
       console.log(diff);
       applyDiff(diff);
-      updateBrick(diff);
       prepareBrickToSave(brick, questions, synthesis);
       props.saveBrick(brick).then(resV3 => {
         if (resV3 === null) {
@@ -1072,8 +1050,7 @@ const mapDispatch = (dispatch: any) => ({
   saveBrickField: (brickId: number, fieldName: string, value: string) => dispatch(actions.saveBrickField(brickId, fieldName, value)),
   saveQuestion: (question: any) => dispatch(actions.saveQuestion(question)),
   saveBrickQuestions: (questions: any) => dispatch(actions.saveBrickQuestions(questions)),
-  createQuestion: (brickId: number, question: any) => dispatch(actions.createQuestion(brickId, question)),
-  updateBrick: (brick: any) => dispatch(socketUpdateBrick(brick))
+  createQuestion: (brickId: number, question: any) => dispatch(actions.createQuestion(brickId, question))
 });
 
 const connector = connect(mapState, mapDispatch);
