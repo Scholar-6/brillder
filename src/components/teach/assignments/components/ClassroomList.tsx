@@ -12,7 +12,7 @@ import { MUser } from "components/teach/model";
 import { unassignStudent } from "components/teach/service";
 
 import EmptyClassTab from "./EmptyClassTab";
-import UnassignStudentDialog from "components/teach/manageClassrooms/components/UnassignStudentDialog";
+import UnassignStudentDialog from "components/teach/assignments/UnassignStudentDialog";
 import NameAndSubjectForm from "./NameAndSubjectForm";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import SpriteIcon from "components/baseComponents/SpriteIcon";

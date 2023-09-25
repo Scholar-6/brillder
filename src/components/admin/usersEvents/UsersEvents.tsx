@@ -17,7 +17,7 @@ import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { deleteUser, getUserDomains, getUsersV2 } from "services/axios/user";
 import { getDateString, getFormattedDateSlash } from "components/services/brickService";
-import UsersPagination from "components/teach/manageClassrooms/components/UsersPagination";
+import UsersPagination from "./UsersPagination";
 import ExportBtn from "../components/ExportBtn";
 import { exportToCSV } from "services/excel";
 import { exportToPDF } from "services/pdf";
