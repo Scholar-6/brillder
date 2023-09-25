@@ -7,7 +7,6 @@ import queryString from 'query-string';
 
 import "./Proposal.scss";
 import actions from "redux/actions/brickActions";
-import * as socketActions from "redux/actions/socket";
 import SubjectPage from "./questionnaire/subject/Subject";
 import BrickTitle from "./questionnaire/brickTitle/brickTitle";
 import OpenQuestion from "./questionnaire/openQuestion/openQuestion";

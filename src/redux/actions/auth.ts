@@ -4,7 +4,6 @@ import { Action, Dispatch } from 'redux';
 
 
 import {LoginModel} from 'model/auth';
-import { socketLogout } from './socket';
 import notificationActions from './notifications';
 import { enableTracking, disableTracking } from 'services/matomo';
 import {UserType} from 'model/user';
@@ -85,7 +84,6 @@ const logout = () => {
       const {data} = response;
       if (data === "OK") {
         dispatch(logoutSuccess());
-        dispatch(socketLogout());
         dispatch(notificationActions.notificationReset());
         SetOrigin("");
         return;
