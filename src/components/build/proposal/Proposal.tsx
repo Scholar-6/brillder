@@ -41,7 +41,6 @@ interface ProposalProps {
   user: User;
   saveBrick(brick: Brick): Promise<Brick | null>;
   createBrick(brick: Brick): Promise<Brick | null>;
-  socketStartEditing(brickId: number): void;
 }
 
 interface ProposalState {
