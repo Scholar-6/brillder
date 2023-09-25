@@ -15,24 +15,3 @@ export const socketLogout = () => {
         type: "socket/USER_LOGOUT"
     } as Action;
 };
-
-export const socketStartEditing = (brickId: number, questionId?: number) => {
-    return {
-        type: "socket/START_EDITING",
-        brickId,
-        questionId
-    } as Action;
-};
-
-export const socketStopEditing = () => {
-    return {
-        type: "socket/STOP_EDITING"
-    } as Action;
-};
-
-export const socketNavigateToQuestion = (questionId?: number) => {
-    return {
-        type: "socket/NAVIGATE_TO_QUESTION",
-        questionId
-    } as Action;
-}

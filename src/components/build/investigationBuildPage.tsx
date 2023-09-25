@@ -13,7 +13,6 @@ import {
   QuestionTypeEnum,
 } from "model/question";
 import actions from "redux/actions/brickActions";
-import { socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
 import { isHighlightInvalid, validateHint, validateQuestion } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
@@ -76,8 +75,6 @@ import BuildMultipleDialog from "./baseComponents/dialogs/BuildMultipleDialog";
 export interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
   user: User;
-  startEditing(brickId: number): void;
-  changeQuestion(questionId?: number): void;
   saveBrick(brick: any): Promise<Brick | null>;
   saveBrickField(brickId: number, fieldName: string, value: string): Promise<any>;
   saveQuestion(question: any): Promise<Question | null>;
@@ -163,8 +160,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let [synthesis, setSynthesis] = React.useState(initSynthesis);
   /* Synthesis */
 
-  const { startEditing } = props;
-
   let isAuthor = false;
   try {
     isAuthor = props.brick.author.id === props.user.id;
@@ -196,11 +191,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     window.addEventListener('storage', onLocalStorageEvent, false);
   }, []);
 
-  // start editing on socket on load.
-  useEffect(() => {
-    startEditing(brickId)
-  }, [brickId, startEditing]);
-
   const [currentBrick, setCurrentBrick] = React.useState({ ...props.brick });
 
   // const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
@@ -217,53 +207,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setSkipDialog(true);
   }
 
-  const applyDiff = (diff: any) => {
-    const brick = applyBrickDiff(currentBrick, diff);
-    console.log(currentBrick, diff, brick);
-    let parsedQuestions: Question[] = questions;
-
-
-    if (diff.questions) {
-      for (const questionKey of Object.keys(diff.questions)) {
-        try {
-          parseQuestion(brick.questions[questionKey as any], parsedQuestions as Question[]);
-        } catch (e) {
-          parsedQuestions[questionKey as any] = null as any;
-          console.log(e);
-        }
-      }
-      parsedQuestions = parsedQuestions.filter(q => q !== null)
-        .sort((qa, qb) => qa.order - qb.order);
-      if (parsedQuestions.length > 0) {
-        setQuestions(q => update(q, { $set: parsedQuestions }));
-      }
-    }
-
-    if (diff.synthesis) {
-      setSynthesis(brick.synthesis);
-    }
-
-    setCurrentBrick(brick);
-  }
-
-  const pushDiff = (brick: any) => {
-    const diff = getBrickDiff(currentBrick, brick);
-    if (diff) {
-      const backwardDiff = getBrickDiff(brick, currentBrick);
-      if (Object.keys(diff).filter((k: any) => k !== "updated" && k !== "type").length === 0) {
-        return;
-      }
-      undoRedoService.push({
-        forward: diff,
-        backward: backwardDiff
-      });
-    }
-  }
-
   const undo = () => {
     const diff = undoRedoService.undo();
     if (diff) {
-      applyDiff(diff);
       prepareBrickToSave(brick, questions, synthesis);
       props.saveBrick(brick).then(resV3 => {
         if (resV3 === null) {
@@ -276,8 +222,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const redo = () => {
     const diff = undoRedoService.redo();
     if (diff) {
-      console.log(diff);
-      applyDiff(diff);
       prepareBrickToSave(brick, questions, synthesis);
       props.saveBrick(brick).then(resV3 => {
         if (resV3 === null) {
@@ -346,7 +290,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
     if (canEdit === true) {
       brick.synthesis = synthesis;
-      pushDiff(brick);
       setCurrentBrick(brick);
 
       props.saveBrickField(brick.id, 'synthesis', brick.synthesis).then(res => {
@@ -632,8 +575,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setSavingStatus(true);
     prepareBrickToSave(brick, questions, synthesis);
     if (canEdit === true) {
-      //const diff = getBrickDiff(currentBrick, brick);
-      pushDiff(brick);
       setCurrentBrick(brick);
       const brickToSave = {
         ...brick,
@@ -1044,8 +985,6 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  startEditing: (brickId: number) => dispatch(socketStartEditing(brickId)),
-  changeQuestion: (questionId?: number) => dispatch(socketNavigateToQuestion(questionId)),
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   saveBrickField: (brickId: number, fieldName: string, value: string) => dispatch(actions.saveBrickField(brickId, fieldName, value)),
   saveQuestion: (question: any) => dispatch(actions.saveQuestion(question)),
