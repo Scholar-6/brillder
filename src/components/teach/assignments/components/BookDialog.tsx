@@ -30,7 +30,8 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose, ...props }) => {
 
   const [attempt, setAttempt] = React.useState(null as any);
 
-  const getBestAttempt = (attempts: AttemptStats[]) => {
+
+  const getBestAttempt = (attempts: any[]) => {
     let attempt = attempts[0];
     for (let a of attempts) {
       if (a.percentScore > attempt.percentScore) {
@@ -41,10 +42,19 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose, ...props }) => {
   }
 
   const getBestStudentAttempt = () => {
-    if (student.studentStatus) {
-      return getBestAttempt(student.studentStatus.attempts);
+    if (bookData.assignment && bookData.assignment.studentStatus) {
+      const studentAttempts = bookData.assignment.studentStatus.find(s => s.studentId == bookData.student.id)?.attempts;
+
+      console.log('bookData', studentAttempts);
+      
+      if (studentAttempts) {
+        return getBestAttempt(studentAttempts);
+      }
+      //return getBestAttempt(student.studentResult.attempts);
     }
-    return getBestAttempt(student.studentResult.attempts);
+    return {
+      answers: []
+    };
   }
 
   const getAttempt = async () => {
