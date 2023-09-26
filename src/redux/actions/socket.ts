@@ -1,7 +1,4 @@
 import { Action } from 'redux';
-import { Brick } from 'model/brick';
-
-// actions to be sent to the socket.io server.
 
 export const socketLogin = (userId: number) => {
     return {
@@ -21,18 +18,5 @@ export const socketStartEditing = (brickId: number, questionId?: number) => {
         type: "socket/START_EDITING",
         brickId,
         questionId
-    } as Action;
-};
-
-export const socketStopEditing = () => {
-    return {
-        type: "socket/STOP_EDITING"
-    } as Action;
-};
-
-export const socketUpdateBrick = (brick: Brick) => {
-    return {
-        type: "socket/UPDATE_BRICK",
-        brick
     } as Action;
 };
