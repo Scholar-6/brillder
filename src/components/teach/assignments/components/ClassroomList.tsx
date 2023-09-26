@@ -62,6 +62,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       assignments: items,
     }
 
+    console.log(66666, classroom);
+
     for (let student of classroom.students) {
       student.completedCount = 0;
       for (let assignment of classroom.assignments) {
@@ -98,8 +100,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         if (res) {
           const index = activeClassroom.students.findIndex(s => s.id === student.id);
           if (index == -1) {
-            const index = activeClassroom.studentsInvitations.findIndex(s => s.id === student.id);
-            activeClassroom.studentsInvitations.splice(index, 1);
+            const index = activeClassroom.studentsInvitations?.findIndex(s => s.id === student.id);
+            activeClassroom.studentsInvitations?.splice(index, 1);
           } else {
             activeClassroom.students.splice(index, 1);
           }
@@ -157,11 +159,14 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
   renderLibraryLink(student: TeachStudent) {
     let name = '';
     const { firstName } = student;
-    let lastLetter = firstName[firstName.length - 1];
-    if (lastLetter === 's') {
-      name = firstName + "'";
-    } else {
-      name = firstName + "'s";
+    if (firstName && firstName.length > 0) {
+      let lastLetter = firstName[firstName.length - 1];
+
+      if (lastLetter === 's') {
+        name = firstName + "'";
+      } else {
+        name = firstName + "'s";
+      }
     }
     return (
       <div className="absolute-library-link library flex-center" onClick={() => {
@@ -259,6 +264,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     const classroom = this.props.activeClassroom;
     let items = [] as TeachListItem[];
 
+    console.log(7777, classroom);
+
     convertClassAssignments(items, classroom);
 
     if (items.length === 0) {
@@ -294,7 +301,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <div className="students-column">
           <div>
             <div className="learners-title font-20 bold">
-              <div className="learners-count">Learners ({classroom.students.length + classroom.studentsInvitations.length})</div>
+              <div className="learners-count">Learners ({classroom.students.length + classroom.studentsInvitations?.length})</div>
               <div><SortButtonV3 sortBy={this.state.sortStudentBy} sort={sortStudentBy => {
                 if (sortStudentBy === SortStudentV3.Name) {
                   classroom.students.sort((a, b) => a.firstName > b.firstName ? 1 : -1);
@@ -306,7 +313,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
             </div>
             <div className="scrollable-students">
               {classroom.students.map(this.renderStudent.bind(this))}
-              {classroom.studentsInvitations.map(this.renderInvitation.bind(this))}
+              {classroom.studentsInvitations?.map(this.renderInvitation.bind(this))}
             </div>
           </div>
         </div>

@@ -186,7 +186,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
         if (classroom) {
           activeClassroom = classroom;
           activeClassroom.active = true;
-          activeClassroom.assignments = await getAssignmentsClassrooms(activeClassroom.id);
+         
+          const data = await getAssignmentsClassrooms(activeClassroom.id);
+
+          classroom.assignments = data.assignments;
+          classroom.students = data.classroom.students;
+          classroom.studentsInvitations = data.classroom.studentsInvitations;
+
           const sort = GetSetSortSidebarAssignment();
           if (sort === SortClassroom.Name) {
             activeClassroom.assignments = activeClassroom.assignments.sort((a: any, b: any) => {
@@ -219,7 +225,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
       const classroom = classrooms.find(c => c.id === id);
       if (classroom) {
         classroom.active = true;
-        classroom.assignments = await getAssignmentsClassrooms(classroom.id);
+
+        const data = await getAssignmentsClassrooms(classroom.id);
+
+        classroom.assignments = data.assignments;
+        classroom.students = data.classroom.students;
+        classroom.studentsInvitations = data.classroom.studentsInvitations;
+
         this.setState({ activeClassroom: classroom });
       } else {
         this.setState({ activeClassroom: null });
@@ -250,7 +262,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const { classrooms } = this.state;
     let classroom = classrooms.find(c => c.id === id);
     if (classroom) {
-      classroom.assignments = await getAssignmentsClassrooms(classroom.id);
+      const data = await getAssignmentsClassrooms(classroom.id);
+
+      classroom.assignments = data.assignments;
+      classroom.students = data.classroom.students;
+      classroom.studentsInvitations = data.classroom.studentsInvitations;
+     
+      console.log(555, classroom);
+      
       classroom.active = true;
 
       this.setState({
