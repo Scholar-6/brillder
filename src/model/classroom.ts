@@ -19,6 +19,7 @@ export interface StudentStatus {
   status: StudentAssignmentStatus;
   numberOfAttempts: number;
   avgScore: number;
+  attempts: any[];
 }
 
 export interface Assignment {

@@ -268,13 +268,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
       classroom.students = data.classroom.students;
       classroom.studentsInvitations = data.classroom.studentsInvitations;
      
-      console.log(555, classroom);
+      console.log(555, data.assignments, classroom);
       
       classroom.active = true;
 
       this.setState({
         classrooms,
-        activeClassroom: classroom,
+        activeClassroom: {...classroom},
       });
       this.props.history.push({ search: queryString.stringify({ classroomId: id, teacherId: this.state.teacherId }) });
     } else {

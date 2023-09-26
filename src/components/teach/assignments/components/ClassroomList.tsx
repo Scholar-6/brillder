@@ -41,6 +41,7 @@ interface ListState {
   unassignOpen: boolean;
   unassignStudent: any;
   sortBy: SortClassroom;
+  classroomId: number;
   sortStudentBy: SortStudentV3;
   assignments: TeachListItem[];
 }
@@ -57,12 +58,11 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     this.state = {
       unassignStudent: null,
       unassignOpen: false,
+      classroomId: classroom.id,
       sortBy: SortClassroom.Empty,
       sortStudentBy: SortStudentV3.Name,
       assignments: items,
     }
-
-    console.log(66666, classroom);
 
     for (let student of classroom.students) {
       student.completedCount = 0;
@@ -75,6 +75,25 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
           }
         }
       }
+    }
+  }
+
+  componentDidUpdate(prevProps: ClassroomListProps) {
+    if (this.state.classroomId != this.props.activeClassroom.id) {
+
+      const classroom = this.props.activeClassroom;
+      let items = [] as TeachListItem[];
+      convertClassAssignments(items, classroom);
+      items = items.sort((a, b) => a.assignment.order - b.assignment.order);
+ 
+      this.setState({
+        unassignStudent: null,
+        unassignOpen: false,
+        classroomId: classroom.id,
+        sortBy: SortClassroom.Empty,
+        sortStudentBy: SortStudentV3.Name,
+        assignments: items,
+      })
     }
   }
 
