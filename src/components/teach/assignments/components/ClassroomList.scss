@@ -221,6 +221,10 @@
         }
       }
 
+      .pending-label {
+        margin-top: 0.85vw;
+      }
+
       .scrollable-students {
         overflow-y: scroll;
         height: calc(100vh - 5.834vw - 2vw - 4vh - 2vw - 1vw - 1vw - 2.6vw);
@@ -251,6 +255,16 @@
           align-items: center;
           justify-content: center;
           font-size: 1vw;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          svg {
+            width: 1vw;
+            height: 1vw;
+            margin-right: 0.2vw;
+          }
         }
         .email {
           max-width: $width;
