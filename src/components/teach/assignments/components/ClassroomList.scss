@@ -224,6 +224,10 @@
       .pending-label {
         margin-top: 0.85vw;
       }
+      .guests-label {
+        margin-top: 0.85vw;
+        margin-bottom: 0.3vw;
+      }
 
       .scrollable-students {
         overflow-y: scroll;
@@ -265,6 +269,9 @@
             height: 1vw;
             margin-right: 0.2vw;
           }
+        }
+        .box-r323r {
+          width: 2.5vw;
         }
         .email {
           max-width: $width;
