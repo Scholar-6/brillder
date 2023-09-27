@@ -156,9 +156,24 @@ class StudentsTable extends Component<StudentsProps, State> {
                 (a, i) =>
                   <th>{i + 1}</th>
               )}
-              <th className="icon-header-r234"><SpriteIcon name="empty-hourglass" /></th>
-              <th className="icon-header-r234"><SpriteIcon name="half-hourglass" /></th>
-              <th className="icon-header-r234"><SpriteIcon name="full-hourglass" /></th>
+              <th className="icon-header-r234">
+                <SpriteIcon name="empty-hourglass" />
+                <div className="css-custom-tooltip first">
+                  Investigation
+                </div>
+              </th>
+              <th className="icon-header-r234">
+                <SpriteIcon name="half-hourglass" />
+                <div className="css-custom-tooltip second">
+                  Review
+                </div>
+              </th>
+              <th className="icon-header-r234">
+                <SpriteIcon name="full-hourglass" />
+                <div className="css-custom-tooltip third">
+                  Final
+                </div>
+              </th>
               <th className="icon-header-r234"></th>
             </tr>
           </thead>
