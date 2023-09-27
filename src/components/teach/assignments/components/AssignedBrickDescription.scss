@@ -43,10 +43,31 @@
     }
 
     .icon-header-r234 {
+      position: relative;
       width: 3vw;
 
       svg {
         margin-top: 0.5vw;
+      }
+
+      .css-custom-tooltip  {
+        left: -2vw;
+        padding-right: 0.5vw;
+
+        &.first {
+          left: -1.5vw;
+        }
+        &.second {
+          left: -0.5vw;
+        }
+        &.third {
+          left: 0vw;
+        }
+      }
+
+      &:hover .css-custom-tooltip {
+        display: block;
+        opacity: 1;
       }
     }
   }
