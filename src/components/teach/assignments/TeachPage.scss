@@ -551,6 +551,7 @@
   }
   .empty-tab-content {
     height: 80%;
+    font-size: 1.2vw;
   }
 
   &.empty-tab {
@@ -624,7 +625,7 @@
     padding-bottom: 1vh;
     display: block;
     font-family: $font-family-regular;
-    padding-left: 1.4vw;
+    padding-left: 1.8vw;
 
     &.m-view-all-d31 {
       display: flex;
@@ -779,6 +780,10 @@
         }
       }
 
+      .empty-assignment {
+        cursor: pointer;
+      }
+
       .assignment-v31 {
         cursor: pointer;
         position: relative;
@@ -807,12 +812,14 @@
       }
 
       .title-column {
+        cursor: pointer;
         display: flex;
         align-items: center;
         padding-left: 1vw;
-        width: 37vw;
+        width: 35vw;
 
         .overflow-ellipsis {
+          width: 32vw;
           white-space: nowrap;
           overflow-x: hidden;
           text-overflow: ellipsis;
@@ -822,7 +829,7 @@
       .users-column {
         display: flex;
         align-items: center;
-        width: 7vw;
+        width: 9vw;
 
         .flex-left-v2 {
           display: flex;
@@ -833,6 +840,7 @@
 
       .before-last-column {
         width: 7vw;
+        padding-right: 0.6vw;
       }
 
       .hover-area.custom:hover .hover-content {
@@ -916,7 +924,6 @@
   }
 
   .label-34rerf.font-14 {
-    padding-left: 0.4vw;
     .MuiButtonBase-root {
       width: 100%;
       padding: 0 !important;
@@ -932,4 +939,76 @@
       font-size: $font-14 !important;
     }
   }
+}
+
+.back-to-work-teach {
+  ::-webkit-scrollbar {
+    width: 0.4vw;
+    display: block !important;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    display: block !important;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    display: block !important;
+  }
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    display: block !important;
+  }
+}
+
+.student-assignments-page .teach-sort-box {
+  // scroll shown //
+  ::-webkit-scrollbar {
+    width: 0.4vw;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  ::-webkit-scrollbar,
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-thumb,
+  ::-webkit-scrollbar-thumb:hover {
+    display: block !important;
+  }
+}
+
+.student-assignments-page .learn-tab-desktop {
+  // scroll shown //
+  ::-webkit-scrollbar {
+    width: 0.4vw;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  ::-webkit-scrollbar,
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-thumb,
+  ::-webkit-scrollbar-thumb:hover {
+    display: block !important;
+  }
+}
+
+.sort-dialog-ew33.sort-dialog-students .MuiDialog-container .MuiPaper-root {
+  margin-left: 83.5vw;
 }

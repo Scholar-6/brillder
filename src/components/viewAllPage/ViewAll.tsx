@@ -77,6 +77,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
 import SharePersonalBrickButton from "./components/SharePersonalBrickButton";
 import { ClassroomApi, getClassById } from "components/teach/service";
+import BottomAssignmentPopup from "components/play/BottomAssignmentPopup";
 
 interface ViewAllProps {
   user: User;
@@ -1640,26 +1641,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             </div>
           </div>
         }
-        {this.state.assigningBricks &&
-          <div className="bottom-bricks-popup-f53">
-            <div>
-              <div className="class-name"><span className="bold">{this.state.assignClassroom?.name}</span></div>
-              <div>{this.state.assignClassroom?.assignments?.length} Bricks Assigned</div>
-            </div>
-            <div className="btn" onClick={() => {
-              const { state } = this;
-              this.setState({ assigningBricks: false });
-              this.historyUpdate(
-                state.isAllSubjects, state.page, state.searchString,
-                state.filterLevels, state.filterLength, state.sortBy,
-                this.getSubjectIds(), state.isCore, true
-              );
-            }}>Quit</div>
-            <div className="btn btn-green" onClick={() => {
-              this.props.history.push(map.TeachAssignedTab + '?classroomId=' + this.state.assignClassroom?.id)
-            }}>Back to Class</div>
-          </div>
-        }
+        {this.state.assigningBricks && <BottomAssignmentPopup history={this.props.history} assignClass={this.state.assignClassroom} click={() => {
+          const { state } = this;
+          this.setState({ assigningBricks: false });
+          this.historyUpdate(
+            state.isAllSubjects, state.page, state.searchString,
+            state.filterLevels, state.filterLength, state.sortBy,
+            this.getSubjectIds(), state.isCore, true
+          );
+        }} />}
       </React.Suspense>
     );
   }

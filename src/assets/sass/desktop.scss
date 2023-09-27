@@ -1965,6 +1965,10 @@
       width: 2.4vw;
       height: 1.5vw;
     }
+
+    p {
+      display: inline;
+    }
   }
 
   .bottom-part-s42 {
@@ -2024,9 +2028,43 @@
   border-top-left-radius: 0.7vw;
   box-shadow: 0px 4px 20px 0px #0000004D;
 
+  $base: 0.9;
+  $font-20: $base * 1.65vw;
+  $font-18: $base * 1.48vw;
+  $font-16: $base * 1.32vw;
+  $font-14: $base * 1.16vw;
+  $font-13: $base * 1.07vw;
+  $font-11: $base * 0.91vw;
+  $font-10: $base * 0.83vw;
+
+  .font-20 {
+    font-size: $font-20 !important;
+  }
+  .font-18 {
+    font-size: $font-16 !important;
+  }
+  .font-16 {
+    font-size: $font-16 !important;
+  }
+  .font-14 {
+    font-size: $font-14 !important;
+  }
+  .font-13 {
+    font-size: $font-13 !important;
+  }
+  .font-11 {
+    font-size: $font-11 !important;
+  }
+  .font-10 {
+    font-size: $font-10 !important;
+  }
+
   .class-name {
     width: 11vw;
     font-size: 1.1vw;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow:ellipsis;
   }
 
   .btn {

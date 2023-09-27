@@ -198,7 +198,9 @@
 
     .author-column {
       width: 13%;
-      overflow-x: scroll;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       padding-right: 0.5vw;
     }
 

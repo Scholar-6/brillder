@@ -19,6 +19,7 @@ export interface StudentStatus {
   status: StudentAssignmentStatus;
   numberOfAttempts: number;
   avgScore: number;
+  attempts: any[];
 }
 
 export interface Assignment {
@@ -27,10 +28,14 @@ export interface Assignment {
   deadline: string;
   assignedDate: string;
 
+  byStudent?: any[];
+
   student?: User;
   isArchived: boolean;
 
   classroom?: any;
+
+  order: number;
 
   studentStatus: StudentStatus[];
   byStatus: any;
@@ -45,6 +50,7 @@ export interface TeachStudent extends UserBase {
   studentResult: AssignmentStudent | undefined;
   studentStatus: StudentStatus | undefined;
   remindersCounter?: number;
+  completedCount: number;
 }
 
 export interface Classroom {

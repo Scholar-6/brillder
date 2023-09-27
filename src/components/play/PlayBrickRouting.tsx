@@ -86,6 +86,7 @@ import { SetFinishRedirectUrl, SetHeartOfMerciaUser, SetLoginRedirectUrl } from 
 import AdaptedBrickAssignedDialog from "./baseComponents/dialogs/AdaptedBrickAssignedDialog";
 import { AssignmentBrickStatus } from "model/assignment";
 import { getClassById } from "components/teach/service";
+import BottomAssignmentPopup from "./BottomAssignmentPopup";
 
 
 export enum PlayPage {
@@ -1172,18 +1173,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       {renderCreditPopup()}
       {renderConvertBrills()}
       <AdaptedBrickAssignedDialog assignment={adaptedBrickAssignment} history={history} close={() => setAdaptedBrickAssignment(null)} />
-      {assignClass &&
-        <div className="bottom-bricks-popup-f53">
-          <div>
-            <div className="class-name"><span className="bold">{assignClass?.name}</span></div>
-            <div>{assignClass?.assignments?.length} Bricks Assigned</div>
-          </div>
-          <div className="btn" onClick={() => {
-            setAssignClass(null);
-            props.history.push(props.history.location.href)
-          }}>Quit</div>
-          <div className="btn btn-green" onClick={() => props.history.push(map.TeachAssignedTab + '?classroomId=' + assignClass.id)}>Back to Class</div>
-        </div>}
+      {assignClass && <BottomAssignmentPopup click={() => {
+        setAssignClass(null);
+        props.history.push(props.history.location.href)
+      }} assignClass={assignClass} />}
     </React.Suspense>
   );
 };

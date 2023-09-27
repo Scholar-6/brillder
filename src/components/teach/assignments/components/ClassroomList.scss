@@ -117,9 +117,37 @@
       height: calc(100vh - 5.834vw - 2vw - 4vh - 2vw);
 
       .assignments-title {
+        display: flex;
+        align-items: center;
         padding-top: 1vw;
         padding-bottom: 1vw;
         padding-left: 1.8vw;
+
+        .sort-v4y4 {
+          display: flex;
+          cursor: pointer;
+
+          .css-custom-tooltip {
+            z-index: 10;
+            margin-top: 2vw;
+          }
+
+          &:hover {
+            .css-custom-tooltip {
+              display: block;
+              opacity: 1;
+              padding-right: 0.5vw;
+            }
+          }
+        }
+
+        svg {
+          margin-top: 0.2vw;
+          margin-left: 1vw;
+          cursor: pointer;
+          width: 1.6vw;
+          height: 1.6vw;
+        }
       }
     }
     .students-column {
@@ -135,8 +163,27 @@
         display: flex;
         margin-bottom: 1vw;
 
+        svg {
+          cursor: pointer;
+          width: 1.6vw;
+          height: 1.6vw;
+        }
+
+        .sort-v4y4 .css-custom-tooltip {
+          margin-left: -1vw;
+          z-index: 10;
+          padding-right: 0.5vw;
+      }
+
+        .sort-v4y4:hover {
+          .css-custom-tooltip {
+            display: block;
+            opacity: 1;
+          }
+        }
+
         .learners-count {
-          width: 18vw;
+          width: 22vw;
         }
 
         .reminder-brick-actions-container {
@@ -174,15 +221,19 @@
         }
       }
 
+      .pending-label {
+        margin-top: 0.85vw;
+      }
+
       .scrollable-students {
         overflow-y: scroll;
         height: calc(100vh - 5.834vw - 2vw - 4vh - 2vw - 1vw - 1vw - 2.6vw);
-        padding-bottom: 1vw;
+        padding-bottom: 3vw;
       }
 
       .student {
         display: flex;
-        $width: 19.3vw;
+        $width: 15.3vw;
         background: white;
         border-bottom: 1px solid #DEDEDE;
         .email-box {
@@ -196,6 +247,23 @@
             white-space: nowrap;
             overflow-x: hidden;
             text-overflow: ellipsis;
+          }
+        }
+        .count-box {
+          width: 4vw;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1vw;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          svg {
+            width: 1vw;
+            height: 1vw;
+            margin-right: 0.2vw;
           }
         }
         .email {

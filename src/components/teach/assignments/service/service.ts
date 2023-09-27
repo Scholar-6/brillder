@@ -5,6 +5,7 @@ export const convertClassAssignments = (items: any[], classroom: TeachClassroom)
   if (classroom.assignments) {
     for (let assignment of classroom.assignments) {
       let item: any = {
+        id: assignment.id,
         classroom,
         assignment
       };

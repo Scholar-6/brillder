@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
-import { Classroom, TeachStudent } from "model/classroom";
+import { Assignment, Classroom, TeachStudent } from "model/classroom";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { Student } from "model/user";
+import BookDialog from "./BookDialog";
+
+export interface BookData {
+  open: boolean;
+  student: any;
+  assignment: Assignment | null;
+}
 
 interface StudentsProps {
   classroom: Classroom;
@@ -12,6 +18,7 @@ interface StudentsProps {
 
 interface State {
   questionCount: number;
+  bookData: BookData;
 }
 
 class StudentsTable extends Component<StudentsProps, State> {
@@ -27,7 +34,39 @@ class StudentsTable extends Component<StudentsProps, State> {
       }
     }
 
-    this.state = { questionCount };
+    this.state = { questionCount, bookData: { open: false, student: null, assignment: null} };
+  }
+
+  nextStudent() {
+    try {
+      const {students} = this.props.classroom;
+      const studentIndex = this.props.classroom.students.findIndex(s => s.id === this.state.bookData.student.id);
+      for (let i = studentIndex + 1; i < students.length; i++) {
+        const student = students[i];
+        if (student.studentResult) {
+          this.setState({bookData: {open: true, student, assignment: this.props.assignment }});
+          break;
+        }
+      }
+    } catch {
+      console.log('can`t find next student');
+    }
+  }
+
+  prevStudent() {
+    try {
+      const {students} = this.props.classroom;
+      const studentIndex = this.props.classroom.students.findIndex(s => s.id === this.state.bookData.student.id);
+      for (let i = studentIndex - 1; i >= 0; i--) {
+        const student = students[i];
+        if (student.studentResult) {
+          this.setState({bookData: {open: true, student, assignment: this.props.assignment }});
+          break;
+        }
+      }
+    } catch {
+      console.log('can`t find next student');
+    }
   }
 
   renderQuestionAttemptIcon(attempt: any, questionNumber: number) {
@@ -57,9 +96,9 @@ class StudentsTable extends Component<StudentsProps, State> {
 
   renderInvestigationScore(attempt: any) {
     if (attempt.oldScore) {
-      return Math.round(attempt.oldScore / attempt.maxScore * 100) + '%';
+      return Math.round(attempt.oldScore / attempt.maxScore * 100);
     } else if (attempt.score) {
-      return Math.round(attempt.score / attempt.maxScore * 100) + '%';
+      return Math.round(attempt.score / attempt.maxScore * 100);
     }
     return '';
   }
@@ -91,10 +130,13 @@ class StudentsTable extends Component<StudentsProps, State> {
             </td>
             <td>
               <div className="centered">
-                 {attempt.score && attempt.oldScore && Math.round(attempt.score / attempt.maxScore * 100) + '%'}
+                 {attempt.score && attempt.oldScore && Math.round(attempt.score / attempt.maxScore * 100)}
               </div>
             </td>
-            <td><div className="centered">{Math.round(attempt.percentScore)}%</div></td>
+            <td><div className="centered">{Math.round(attempt.percentScore)}</div></td>
+            <td className="center-icon-box-r434">
+              <SpriteIcon name="eye-filled" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})}/>
+            </td>
           </tr>
         );
       }
@@ -114,13 +156,35 @@ class StudentsTable extends Component<StudentsProps, State> {
                 (a, i) =>
                   <th>{i + 1}</th>
               )}
-              <th>Investigation</th>
-              <th>Review</th>
-              <th>Final</th>
+              <th className="icon-header-r234">
+                <SpriteIcon name="empty-hourglass" />
+                <div className="css-custom-tooltip first">
+                  Investigation
+                </div>
+              </th>
+              <th className="icon-header-r234">
+                <SpriteIcon name="half-hourglass" />
+                <div className="css-custom-tooltip second">
+                  Review
+                </div>
+              </th>
+              <th className="icon-header-r234">
+                <SpriteIcon name="full-hourglass" />
+                <div className="css-custom-tooltip third">
+                  Final
+                </div>
+              </th>
+              <th className="icon-header-r234"></th>
             </tr>
           </thead>
           {this.props.classroom.students.map(s => this.renderStudent(s as TeachStudent))}
         </table>
+        {this.state.bookData.open && <BookDialog
+          bookData={this.state.bookData}
+          nextStudent={this.nextStudent.bind(this)}
+          prevStudent={this.prevStudent.bind(this)}
+          onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />
+        }
       </div>
     );
   }

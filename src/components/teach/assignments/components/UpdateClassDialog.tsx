@@ -42,7 +42,9 @@ const UpdateClassDialog: React.FC<AssignClassProps> = (props) => {
 
   React.useEffect(() => {
     if (classroom.code) {
-      writeQRCode(classroom.code);
+      writeQRCode(
+        window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + classroom.code
+      );
     }
   }, []);
 

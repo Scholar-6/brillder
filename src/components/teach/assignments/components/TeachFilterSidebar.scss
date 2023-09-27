@@ -72,7 +72,7 @@
   display: flex !important;
   justify-content: flex-start;
   .label-34rerf {
-    width: 88%;
+    width: 85%;
 
     font-size: 1.05vw;
 
@@ -224,4 +224,12 @@
   text-overflow: ellipsis;
   overflow-x: hidden;
   width: 19vw;
+}
+
+.sort-dialog-ew33.sort-dialog-assignments {
+  .MuiDialog-container {
+    .MuiPaper-root {
+      margin-left: 30vw;
+    }
+  }
 }

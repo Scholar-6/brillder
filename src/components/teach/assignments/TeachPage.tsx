@@ -34,6 +34,7 @@ import UpdateClassDialog from "./components/UpdateClassDialog";
 import AssignSuccessDialogV3 from "components/baseComponents/dialogs/AssignSuccessDialogV3";
 import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
+import { GetSetSortSidebarAssignment, GetSortSidebarClassroom } from "localStorage/assigningClass";
 
 
 interface RemindersData {
@@ -75,6 +76,8 @@ interface TeachState {
   successAssignResult: any;
   failAssignResult: any;
 
+  shareClass: any;
+
   deleteClassOpen: boolean;
   classroomToRemove: TeachClassroom | null;
 
@@ -101,6 +104,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
       classrooms: [],
       activeClassroom: null,
       isLoaded: false,
+
+      shareClass: null,
 
       remindersData: {
         isOpen: false,
@@ -181,11 +186,31 @@ class TeachPage extends Component<TeachProps, TeachState> {
         if (classroom) {
           activeClassroom = classroom;
           activeClassroom.active = true;
-          activeClassroom.assignments = await getAssignmentsClassrooms(activeClassroom.id);
+         
+          const data = await getAssignmentsClassrooms(activeClassroom.id);
+
+          classroom.assignments = data.assignments;
+          classroom.students = data.classroom.students;
+          classroom.studentsInvitations = data.classroom.studentsInvitations;
+
+          const sort = GetSetSortSidebarAssignment();
+          if (sort === SortClassroom.Name) {
+            activeClassroom.assignments = activeClassroom.assignments.sort((a: any, b: any) => {
+              return a.brick.title > b.brick.title ? 1 : -1;
+            });
+          } else if (sort === SortClassroom.Date) {
+            activeClassroom.assignments = activeClassroom.assignments.sort((a: any, b: any) => {
+              return new Date(a.brick.created).getTime() - new Date(b.brick.created).getTime();
+            });
+          }
         }
       }
 
-      classrooms = this.sortAndReturnClassrooms(SortClassroom.Date, classrooms);
+      const sort = GetSortSidebarClassroom();
+
+      if (sort) {
+        classrooms = this.sortAndReturnClassrooms(sort, classrooms);
+      }
 
       this.setState({ classrooms, activeClassroom, isLoaded: true });
       return classrooms;
@@ -200,7 +225,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
       const classroom = classrooms.find(c => c.id === id);
       if (classroom) {
         classroom.active = true;
-        classroom.assignments = await getAssignmentsClassrooms(classroom.id);
+
+        const data = await getAssignmentsClassrooms(classroom.id);
+
+        classroom.assignments = data.assignments;
+        classroom.students = data.classroom.students;
+        classroom.studentsInvitations = data.classroom.studentsInvitations;
+
         this.setState({ activeClassroom: classroom });
       } else {
         this.setState({ activeClassroom: null });
@@ -231,12 +262,19 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const { classrooms } = this.state;
     let classroom = classrooms.find(c => c.id === id);
     if (classroom) {
-      classroom.assignments = await getAssignmentsClassrooms(classroom.id);
+      const data = await getAssignmentsClassrooms(classroom.id);
+
+      classroom.assignments = data.assignments;
+      classroom.students = data.classroom.students;
+      classroom.studentsInvitations = data.classroom.studentsInvitations;
+     
+      console.log(555, data.assignments, classroom);
+      
       classroom.active = true;
 
       this.setState({
         classrooms,
-        activeClassroom: classroom,
+        activeClassroom: {...classroom},
       });
       this.props.history.push({ search: queryString.stringify({ classroomId: id, teacherId: this.state.teacherId }) });
     } else {
@@ -399,12 +437,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 <div className="assignment-column">
                   {c.assignments.length > 0
                     ? this.renderAssignment(newestAssignment, c.id, c.assignments.length)
-                    : <div className="empty-assignment">
+                    : <div className="empty-assignment" onClick={() => {
+                      this.setActiveClassroom(c.id);
+                    }}>
                       <SpriteIcon name="manage-classes-v51" />
                     </div>
                   }
                 </div>
-                <div className="title-column">
+                <div className="title-column" onClick={() => {
+                  this.setActiveClassroom(c.id);
+                }}>
                   <div>
                     <div className="bold overflow-ellipsis font-20" dangerouslySetInnerHTML={{ __html: c.name }} />
                     <div className="font-18">{teacherNames}</div>
@@ -425,7 +467,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                   <HoverButton icon="button-r46" className="button-svg first-btn-s57" onClick={() => this.setState({ isAssignOpen: true, selectedClassroom: c })}>
                     <div>Assign Bricks</div>
                   </HoverButton>
-                  <HoverButton icon="button-r44" className="button-svg" onClick={() => this.setState({ selectedClassroom: c })}>
+                  <HoverButton icon="button-r44" className="button-svg" onClick={() => this.setState({ shareClass: c })}>
                     <div>Share</div>
                   </HoverButton>
                   <HoverButton icon="button-r45" className="button-svg last-btn" onClick={() => this.onDeleteClass(c)}>
@@ -517,6 +559,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
               this.setState({ createClassOpen: false });
             }}
             close={() => { this.setState({ createClassOpen: false }) }}
+          />}
+          {this.state.shareClass && <UpdateClassDialog
+            isOpen={true}
+            classroom={this.state.shareClass}
+            history={this.props.history}
+            submit={async (classroomId) => {
+              await this.loadClass(classroomId);
+              this.setState({ shareClass: null });
+            }}
+            close={() => { this.setState({ shareClass: null }) }}
           />}
         {this.state.updateClassId > 0 &&
           <UpdateClassDialog

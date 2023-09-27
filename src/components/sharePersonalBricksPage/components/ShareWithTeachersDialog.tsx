@@ -108,6 +108,7 @@ const ShareWithTeachersDialog: React.FC<InviteStudentEmailProps> = (props) => {
           users={users}
           onAddEmail={onAddUser}
           onChange={email => checkSpaces(email.trim())}
+          placeholder="Type or paste up to 50 emails, then press Enter ⏎"
           setUsers={users => {
             setCurrentEmail('');
             setUsers(users as User[]);

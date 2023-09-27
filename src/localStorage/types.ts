@@ -19,3 +19,5 @@ export const ActivateUrl = 'ActivateUrl';
 
 export const AdminDashboardBricksFilters = 'AdminDashboardBricksFilters';
 export const AssigningClassrooms = 'AssigningClassrooms';
+export const SidebarAssignmentsSort = 'SidebarAssignmentsSort';
+export const SidebarClassroomSort = 'SidebarClassroomSort';

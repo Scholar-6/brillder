@@ -95,15 +95,27 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
    * @returns void
    */
   const move = () => {
+    // non students go to cover page
+    if (props.user.userPreference?.preferenceId !== UserPreferenceType.Student) {
+      let coverLink = playCover(brick);
+      if (props.assignClassroom) {
+        coverLink += '?assigning-bricks=' + props.assignClassroom.id;
+      }
+      props.history.push(coverLink);
+      return;
+    }
+
     if (props.assignClassroom) {
       props.history.push(playCover(brick) + '?assigning-bricks=' + props.assignClassroom.id);
       return;
     }
-    if (isAssignment && assignmentId && props.user.userPreference?.preferenceId !== UserPreferenceType.Teacher) {
+
+    if (isAssignment && assignmentId) {
       setAssignmentId(assignmentId);
       props.history.push(map.postAssignment(brick.id, props.user.id));
       return;
     }
+
     if (isAssignment && props.assignmentId && props.assignmentStatus != null && props.assignmentStatus !== AssignmentBrickStatus.ToBeCompleted) {
       setAssignmentId(props.assignmentId);
       props.history.push(map.postAssignment(brick.id, props.user.id));

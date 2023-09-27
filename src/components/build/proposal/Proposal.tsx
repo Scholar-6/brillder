@@ -7,7 +7,6 @@ import queryString from 'query-string';
 
 import "./Proposal.scss";
 import actions from "redux/actions/brickActions";
-import * as socketActions from "redux/actions/socket";
 import SubjectPage from "./questionnaire/subject/Subject";
 import BrickTitle from "./questionnaire/brickTitle/brickTitle";
 import OpenQuestion from "./questionnaire/openQuestion/openQuestion";
@@ -42,7 +41,6 @@ interface ProposalProps {
   user: User;
   saveBrick(brick: Brick): Promise<Brick | null>;
   createBrick(brick: Brick): Promise<Brick | null>;
-  socketStartEditing(brickId: number): void;
 }
 
 interface ProposalState {
@@ -96,10 +94,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     let localBrick = getLocalBrick();
     if (localBrick) {
       initBrick = localBrick;
-    }
-
-    if (initBrick.id) {
-      this.props.socketStartEditing(initBrick.id); // start editing in socket as well.
     }
 
     this.state = {
@@ -441,7 +435,6 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
-  socketStartEditing: (brickId: number) => dispatch(socketActions.socketStartEditing(brickId)),
 });
 
 const connector = connect(mapState, mapDispatch);

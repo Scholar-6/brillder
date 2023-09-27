@@ -454,6 +454,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       return <Grid container item className={className}></Grid>
     }
 
+    console.log('test: ', this.props.brick.title, this.props.assignClass);
+
     return (
       <Grid container item className={className}>
         <div className="collapsable-sidebar">
@@ -524,7 +526,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                 <SpriteIcon name="cancel-custom" onClick={() => {
                   this.setState({ isAssignV2Open: false })
                 }} />
-                Assigning <span className="bold" dangerouslySetInnerHTML={{__html: this.props.brick.title}} /> to <span className="bold" dangerouslySetInnerHTML={{__html: this.state.assignClass?.name}} />
+                Assigning <span className="bold" dangerouslySetInnerHTML={{__html: this.props.brick.title}} /> to <span className="bold" dangerouslySetInnerHTML={{__html: this.props.assignClass?.name}} />
               </div>
               <div className="bottom-part-s42">
                 <div className="text-s45">
@@ -546,7 +548,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           </Dialog>}
         <CreateClassDialog
           isOpen={this.state.isAssignV3Open}
-          classroom={this.state.assignClass}
+          classroom={this.props.assignClass}
           subjects={[]}
           history={this.props.history}
           submit={() => {

@@ -16,6 +16,17 @@ export const updateClassroom = async (
   }
 }
 
+export const sortClassroomAssignments = async (
+  classroomId: number, assignments: any[]
+) => {
+  try {
+    await post("/classroom/" + classroomId + "/reorderAssignments", { classroomId, assignments });
+    return true;
+  } catch (e) {
+    return false
+  }
+}
+
 export const getClassrooms = async () => {
   try {
     return await get<TeachClassroom[]>("/classrooms");
