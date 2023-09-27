@@ -85,7 +85,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       let items = [] as TeachListItem[];
       convertClassAssignments(items, classroom);
       items = items.sort((a, b) => a.assignment.order - b.assignment.order);
- 
+
       this.setState({
         unassignStudent: null,
         unassignOpen: false,
@@ -201,11 +201,11 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     let order = 1;
     for (let assignment of assignments) {
       assignment.order = order;
-      order+=1;
+      order += 1;
     }
 
-    const assignmentsData = assignments.map(a => { return {id: a.id, order: a.order}});
-    this.setState({sortBy: sort, assignments});
+    const assignmentsData = assignments.map(a => { return { id: a.id, order: a.order } });
+    this.setState({ sortBy: sort, assignments });
     await sortClassroomAssignments(this.props.activeClassroom.id, assignmentsData);
   }
 
@@ -219,7 +219,10 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
           </div>
         </div>
         <div className="count-box">
-          <div>{s.completedCount}/{this.props.activeClassroom.assignments.length}</div>
+          <SpriteIcon name="lucide_book-open-check" />
+          <span>
+            {s.completedCount}/{this.props.activeClassroom.assignments.length}
+          </span>
         </div>
         <div className="flex-center button-box">
           {this.renderLibraryLink(s)}
@@ -275,7 +278,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         return new Date(a.assignment.assignedDate).getTime() - new Date(b.assignment.assignedDate).getTime();
       });
     }
-       
+
     this.setAssignmentsOrder(assignments, sort);
   }
 
@@ -304,18 +307,18 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
             </div>
           </div>
           <ReactSortable
-              list={this.state.assignments}
-              className="drag-assignment"
-              group="tabs-group"
-              setList={async (newAssignments, e, r) => {
-                let switched = newAssignments.find((q, i) => this.state.assignments[i].id !== q.id);
-                if (switched) {
-                  this.setAssignmentsOrder(newAssignments, SortClassroom.Empty);
-                }
-              }}
-            >
-              {this.state.assignments.map((item, i) => this.renderTeachListItem(item, i))}
-            </ReactSortable>
+            list={this.state.assignments}
+            className="drag-assignment"
+            group="tabs-group"
+            setList={async (newAssignments, e, r) => {
+              let switched = newAssignments.find((q, i) => this.state.assignments[i].id !== q.id);
+              if (switched) {
+                this.setAssignmentsOrder(newAssignments, SortClassroom.Empty);
+              }
+            }}
+          >
+            {this.state.assignments.map((item, i) => this.renderTeachListItem(item, i))}
+          </ReactSortable>
         </div>
         <div className="students-column">
           <div>
@@ -327,11 +330,12 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
                 } else if (sortStudentBy === SortStudentV3.NumberOfCompleted) {
                   classroom.students.sort((a, b) => b.completedCount - a.completedCount);
                 }
-                this.setState({sortStudentBy});
+                this.setState({ sortStudentBy });
               }} /></div>
             </div>
             <div className="scrollable-students">
               {classroom.students.map(this.renderStudent.bind(this))}
+              <div className="font-14 pending-label">Pending ({classroom.studentsInvitations.length})</div>
               {classroom.studentsInvitations?.map(this.renderInvitation.bind(this))}
             </div>
           </div>

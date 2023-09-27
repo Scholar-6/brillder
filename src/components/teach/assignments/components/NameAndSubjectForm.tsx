@@ -89,7 +89,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           <div className="assign-button-container bold">
             <div className="btn" onClick={props.addBrick}>
               Add Brick
-              <SpriteIcon name="plus-line-custom" />
+              <SpriteIcon name="lucide_book-open-check" />
             </div>
           </div>
           <span className="edit-icon send-teacher" onClick={() => setShareTeach(true)}>
