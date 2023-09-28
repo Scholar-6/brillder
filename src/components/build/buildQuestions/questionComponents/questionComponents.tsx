@@ -187,10 +187,16 @@ const QuestionComponents = ({
     );
   }
 
-  const setList = (components: any) => {
+  const setList = (updatedComponents: any, r: any, d: any) => {
     if (locked) { return; }
-    setComponents(components);
-    updateComponentsAndSave(components);
+
+    let oldComps = JSON.stringify(components);
+    let newComps = JSON.stringify(updatedComponents);
+
+    if (oldComps != newComps) {
+      setComponents(components);
+      updateComponentsAndSave(updatedComponents);
+    }
   }
 
   const hideDialog = () => {
