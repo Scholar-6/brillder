@@ -25,7 +25,11 @@ const DifficultySelect: React.FC<DifficultySelectProps> = ({isCore, ...props}) =
       <div className="fixed-icon">
         {isCore === true ? <SpriteIcon name="globe" /> : isCore === false ? <SpriteIcon name="key" /> : <div />}
       </div>
-      <Select value={isCore} disabled={coreSelectLocked} onChange={e => props.onChange(e.target.value as string === 'true')}>
+      <Select value={isCore} className={props.disabled ? "disabled" : ""} onChange={e => {
+        if (coreSelectLocked) {
+          props.onChange(e.target.value as string === 'true')
+        }
+      }}>
         <MenuItem value="true">Public</MenuItem>
         <MenuItem value="false">Personal</MenuItem>
       </Select>
