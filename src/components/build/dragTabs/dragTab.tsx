@@ -24,7 +24,6 @@ const DragTab: React.FC<DragTabProps> = ({ index, ...props }) => {
   };
 
   const renderRemoveIcon = () => {
-    console.log(props);
     if (!props.active || props.deleteHidden) {
       return;
     }

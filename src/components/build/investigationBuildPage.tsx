@@ -439,7 +439,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setQuestionAndSave = (index: number, question: Question) => {
     let updatedQuestions = update(questions, { [index]: { $set: question } });
     setQuestions(updatedQuestions);
-    // saveBrickQuestions(updatedQuestions);
     saveQuestion(question)
   }
 
@@ -640,7 +639,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           ...question, contentBlocks: undefined, type: undefined, order: idx
         })),
       };
-      console.log('save brick');
       props.saveBrick(brickToSave).then(res => {
         if (res === null) {
           setSaveFailed(true);
