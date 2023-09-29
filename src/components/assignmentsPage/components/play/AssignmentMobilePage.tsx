@@ -126,6 +126,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
 
   async getAssignments(activeClassroomId: number) {
     const assignments = await getAssignedBricks();
+
     const subjects = await getSubjects();
     if (assignments && subjects) {
       const classrooms = this.getClassrooms(assignments);

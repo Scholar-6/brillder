@@ -90,6 +90,19 @@ export const sortAndCheckSubjects = (subjects: Subject[], values: queryString.Pa
   }
 }
 
+export const getSubjectIdsFromUrl = (values: queryString.ParsedQuery<string>) => {
+  let subjectIds:number[] = [];
+  if (values.subjectId) {
+    subjectIds.push(parseInt(values.subjectId as string));
+  }
+
+  if (values.subjectIds) {
+    const subjectIdsV2 = values.subjectIds as string;
+    subjectIds = subjectIdsV2.split(',').map(id => parseInt(id));
+  }
+  return subjectIds;
+}
+
 export const countSubjectBricks = (subjects: any[], bricks: Brick[]) => {
   subjects.forEach((s: any) => {
     s.publicCount = 0;

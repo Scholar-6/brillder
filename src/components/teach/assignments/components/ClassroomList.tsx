@@ -239,6 +239,29 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     );
   }
 
+  renderGuest(s: TeachStudent, i: number) {
+    return (
+      <div className="student" key={i}>
+        <div className="email-box">
+          <div>
+            <div className="name bold font-14">{s.firstName} {s.lastName}</div>
+            <div className="email font-13">{s.email}</div>
+          </div>
+        </div>
+        <div className="count-box"/>
+        <div className="box-r323r"/>
+        <div className="flex-center button-box">
+          <div className="delete flex-center" onClick={() => {
+            this.unassigningStudent(s);
+          }}>
+            <SpriteIcon name="delete" />
+            <div className="css-custom-tooltip">Unassign Student</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderInvitation(s: any, i: number) {
     return (
       <div className="invitation" key={i}>
@@ -286,13 +309,15 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     const classroom = this.props.activeClassroom;
     let items = [] as TeachListItem[];
 
-    console.log(7777, classroom);
-
     convertClassAssignments(items, classroom);
 
     if (items.length === 0) {
       return <EmptyClassTab history={this.props.history} activeClassroom={classroom} />;
     }
+
+    let students = classroom.students.filter(s => s.email);
+
+    let quests = classroom.students.filter(s => !s.email);
 
     return (
       <div className="classroom-assignments-columns">
@@ -334,7 +359,9 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
               }} /></div>
             </div>
             <div className="scrollable-students">
-              {classroom.students.map(this.renderStudent.bind(this))}
+              {students.map(this.renderStudent.bind(this))}
+              <div className="font-14 guests-label">Guests ({quests.length})</div>
+              {quests.map(this.renderGuest.bind(this))}
               <div className="font-14 pending-label">Pending ({classroom.studentsInvitations.length})</div>
               {classroom.studentsInvitations?.map(this.renderInvitation.bind(this))}
             </div>

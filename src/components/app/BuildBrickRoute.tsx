@@ -27,13 +27,15 @@ interface BuildRouteProps {
   location: any;
   getUser(): void;
   isAuthorized(): void;
-  fetchBrick(id: number): Promise<any>;
+  fetchBrickWithoutComments(id: number): Promise<any>;
 }
 
 const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
   component: Component,
   ...rest
 }) => {
+  const [brickLoading, setBrickLoading] = React.useState(false);
+
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!rest.user) {
       rest.getUser();
@@ -76,11 +78,14 @@ const ProposalBrickRoute: React.FC<BuildRouteProps> = ({
           // fetch brick
           const brickId = parseInt(props.match.params.brickId);
           if (!rest.brick || !rest.brick.author || rest.brick.id !== brickId) {
-            rest.fetchBrick(brickId).then(res => {
-              if (res.status === 403) {
-                props.history.push(map.MainPage);
-              }
-            })
+            if (brickLoading === false) {
+              setBrickLoading(true);
+              rest.fetchBrickWithoutComments(brickId).then(res => {
+                if (res.status === 403) {
+                  props.history.push(map.MainPage);
+                }
+              })
+            }
             return <PageLoader content="...Getting Brick..." />;
           }
 
@@ -123,7 +128,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   isAuthorized: () => dispatch(actions.isAuthorized()),
-  fetchBrick: (id: number) => dispatch(brickActions.fetchBrick(id)),
+  fetchBrickWithoutComments: (id: number) => dispatch(brickActions.fetchBrickWithoutComments(id)),
   getUser: () => dispatch(userActions.getUser()),
 });
 

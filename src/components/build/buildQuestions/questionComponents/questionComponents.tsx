@@ -118,7 +118,6 @@ const QuestionComponents = ({
   let canRemove = (components.length > 3) ? true : false;
 
   const updatingComponent = (compData: any, index: number) => {
-    console.log('update component', JSON.parse(JSON.stringify(question.components)));
     let copyComponents = Object.assign([], components) as any[];
     copyComponents[index] = compData;
     setComponents(copyComponents);
@@ -187,10 +186,16 @@ const QuestionComponents = ({
     );
   }
 
-  const setList = (components: any) => {
+  const setList = (updatedComponents: any, r: any, d: any) => {
     if (locked) { return; }
-    setComponents(components);
-    updateComponentsAndSave(components);
+
+    let oldComps = JSON.stringify(components);
+    let newComps = JSON.stringify(updatedComponents);
+
+    if (oldComps != newComps) {
+      setComponents(components);
+      updateComponentsAndSave(updatedComponents);
+    }
   }
 
   const hideDialog = () => {

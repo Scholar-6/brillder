@@ -140,6 +140,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [activeQuestionType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
   const [isSaving, setSavingStatus] = React.useState(false);
+
+  const [savingQuestionTimeout, setSavingQuestionTimeout] = React.useState(-1 as number | NodeJS.Timeout);
+
   const [hasSaveError, setSaveError] = React.useState(false);
   const [skipTutorialOpen, setSkipDialog] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
@@ -439,7 +442,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setQuestionAndSave = (index: number, question: Question) => {
     let updatedQuestions = update(questions, { [index]: { $set: question } });
     setQuestions(updatedQuestions);
-    // saveBrickQuestions(updatedQuestions);
     saveQuestion(question)
   }
 
@@ -608,19 +610,23 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         await createNewQuestionV2(updatedQuestion, callback);
         setSavingStatus(false);
       } else {
-        props.saveQuestion(getApiQuestion(updatedQuestion)).then(res => {
-          if (res === null) {
+        clearTimeout(savingQuestionTimeout)
+        let timeout = setTimeout(() => {
+          props.saveQuestion(getApiQuestion(updatedQuestion)).then(res => {
+            if (res === null) {
+              setSavingStatus(false);
+              setSaveFailed(true);
+              return;
+            }
+            if (callback) { callback(res); }
             setSavingStatus(false);
-            setSaveFailed(true);
-            return;
-          }
-          if (callback) { callback(res); }
-          setSavingStatus(false);
-        }).catch((err: any) => {
-          console.log(err);
-          console.log("Error saving brick.");
-          setSaveError(true);
-        });
+          }).catch((err: any) => {
+            console.log(err);
+            console.log("Error saving brick.");
+            setSaveError(true);
+          });
+        }, 2500);
+        setSavingQuestionTimeout(timeout);
       }
     }
   }
@@ -640,7 +646,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           ...question, contentBlocks: undefined, type: undefined, order: idx
         })),
       };
-      console.log('save brick');
       props.saveBrick(brickToSave).then(res => {
         if (res === null) {
           setSaveFailed(true);
@@ -937,9 +942,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             </Grid>
           </Grid>
           <LastSave isEditor={isCurrentEditor} updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={hasSaveError} />
-          {/* <Route path="/build/brick/:brickId/investigation/" exact>
-            <Redirect to={`/build/brick/${brick.id}/investigation/question-component/${questions[0].id}`} />
-          </Route> */}
           <Route path="/build/brick/:brickId/investigation/question-component/:questionId">
             <div className="fixed-build-phone">
               <PhoneQuestionPreview

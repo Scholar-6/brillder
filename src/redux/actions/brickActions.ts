@@ -37,6 +37,22 @@ const fetchBrick = (id: number) => {
   }
 }
 
+const fetchBrickWithoutComments = (id: number) => {
+  return function (dispatch: any) {
+    return axios.get(process.env.REACT_APP_BACKEND_HOST + '/brick/' + id, {withCredentials: true})
+      .then(res => {
+        const brick = res.data as Brick;
+        brick.questions.sort((q1, q2) => q1.order - q2.order);
+        dispatch(fetchBrickSuccess(brick));
+        return { status: res.status };
+      })
+      .catch((error) => {
+        dispatch(fetchBrickFailure(error.message));
+        return { status: error.request?.status }
+      });
+  }
+}
+
 const fetchPublicBrick = (id: number) => {
   return function (dispatch: any) {
     return getPublicBrickById(id).then(brick => {
@@ -269,5 +285,6 @@ const sendToPublisherConfirmed = () => {
 export default {
   fetchBrick, fetchPublicBrick, forgetBrick, saveBrickField,
   createBrick, saveBrick, createQuestion, saveQuestion, saveBrickQuestions,
-  assignEditor, sendToPublisher, sendToPublisherConfirmed
+  assignEditor, sendToPublisher, sendToPublisherConfirmed,
+  fetchBrickWithoutComments
 }

@@ -8,7 +8,7 @@ import { enterPressed, spaceKeyPressed } from "components/services/key";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyWord } from "model/brick";
 import KeyWordsPlay from "./KeywordsPlay";
-import { getKeywords } from "services/axios/brick";
+import { getKeywords, getSuggestedKeywords } from "services/axios/brick";
 
 export const MaxKeywordLength = 35;
 
@@ -24,6 +24,7 @@ interface KeyWordsState {
   keyWords: KeyWord[];
   keyWord: string;
   allKeyWords: KeyWord[];
+  timeout: number | NodeJS.Timeout;
 }
 
 const PopperCustom = function (props: any) {
@@ -41,14 +42,14 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
 
     this.state = {
       keyWords,
+      timeout: -1,
       keyWord: '',
       allKeyWords: []
     }
-
-    this.loadKeywords();
   }
 
-  async loadKeywords() {
+  async suggestKeywords() {
+    /*
     const keywords = await getKeywords();
     if (keywords) {
       const sorted = keywords.sort((a, b) => {
@@ -59,7 +60,7 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
         return 0;
       });
       this.setState({ allKeyWords: sorted });
-    }
+    }*/
   }
 
   checkIfPresent(keyWord: string) {
@@ -141,12 +142,26 @@ class KeyWordsComponent extends Component<KeyWordsProps, KeyWordsState> {
             PopperComponent={PopperCustom}
             getOptionLabel={(option: any) => option.name}
             renderInput={(params: any) => {
-              console.log(params);
               params.inputProps.value = this.state.keyWord;
               return <TextField
                 {...params}
                 variant="standard"
-                onChange={(e) => this.setState({ keyWord: e.target.value })}
+                onChange={async (e) => {
+                  const value = e.target.value;
+                  console.log('changed');
+
+                  clearTimeout(this.state.timeout);
+
+                  const timeout = setTimeout(async () => {
+                    console.log('get data');
+                    const keysRes = await getSuggestedKeywords(value);
+                    if (keysRes) {
+                      this.setState({ allKeyWords: keysRes });
+                    }
+                  },200);
+
+                  this.setState({ timeout, keyWord: value });
+                }}
                 onKeyDown={this.checkKeyword.bind(this)}
                 label=""
                 placeholder="Type keyword "

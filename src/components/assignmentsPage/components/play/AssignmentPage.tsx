@@ -84,6 +84,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
 
   async getAssignments(classSort: SortClassroom | null) {
     let assignments = await getAssignedBricks();
+
     const subjects = await getSubjects();
     if (assignments && subjects) {
       assignments = assignments.sort((a, b) => {
