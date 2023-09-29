@@ -253,7 +253,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [canSeeCompetitionDialog, setCanSeeCompetitionDialog] = useState(true as boolean | null); // null means some data not loaded
 
 
-  const setCompetitionId = (compId: number, previousAttempts: any[]) => {
+  const setCompetitionId = (compId: number) => {
     setCompetitionIdV2(compId);
     brick.competitionId = compId;
     setCanSeeCompetitionDialog(true);
@@ -356,7 +356,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       if (values.competitionId) {
         try {
           var compId = parseInt(values.competitionId as string);
-          setCompetitionId(compId, attempts || []);
+          setCompetitionId(compId);
         } catch {
           console.log('can`t convert competition id');
         }
@@ -366,7 +366,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       if (values.competitionId) {
         try {
           var competId = parseInt(values.competitionId as string);
-          setCompetitionId(competId, []);
+          setCompetitionId(competId);
         } catch {
           console.log('can`t convert competition id');
         }
@@ -873,7 +873,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             activeCompetition={activeCompetition}
             competitionId={competitionId}
             setCompetitionId={id => {
-              setCompetitionId(id, prevAttempts);
+              setCompetitionId(id);
               history.push(routes.playCover(brick));
             }}
             canSeeCompetitionDialog={canSeeCompetitionDialog}
@@ -886,7 +886,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route path={routes.briefRoute}>
           <Brief brick={brick} mode={mode} user={props.user} competitionId={competitionId} setCompetitionId={id => {
-            setCompetitionId(id, prevAttempts);
+            setCompetitionId(id);
             history.push(routes.playBrief(brick));
           }} moveNext={moveToPrePrep} onHighlight={onHighlight} />
           {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={() => history.push(routes.playPrePrep(brick))} />}
