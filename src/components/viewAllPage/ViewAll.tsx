@@ -61,6 +61,7 @@ import {
   getCheckedSubjectIds,
   getSubjectsWithBricks,
   checkAllSubjects,
+  getSubjectIdsFromUrl,
 } from "./service/viewAll";
 import SubjectsColumn from "./allSubjectsPage/components/SubjectsColumn";
 import { playCover } from "components/play/routes";
@@ -276,13 +277,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   // load bricks when notification come
   componentDidUpdate(prevProps: ViewAllProps) {
-    const { notifications } = this.props;
-    const oldNotifications = prevProps.notifications;
-    if (notifications && oldNotifications) {
-      if (notifications.length > oldNotifications.length) {
-        this.loadBricks(this.state.subjects);
-      }
-    }
     this.addWheelListener();
 
     // check if back button pressed
@@ -364,10 +358,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadData(values: queryString.ParsedQuery<string>) {
-    const subjects = await this.loadSubjects(values);
-
-    console.log('load data')
-
     if (values.searchString) {
       let page = 0;
       if (values.page) {
@@ -378,7 +368,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (this.state.subjectGroup) {
         this.loadUnauthorizedBricks(this.state.subjectGroup);
       } else {
-        this.loadBricks(subjects, values);
+        this.loadBricks(values);
       }
     } else {
       if (this.state.subjectGroup) {
@@ -437,19 +427,22 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
   }
 
-  async loadBricks(subjects: SubjectItem[] | null, values?: queryString.ParsedQuery<string>) {
+  async loadBricks(values: queryString.ParsedQuery<string>) {
     if (this.props.user) {
       let subjectIds: number[] = [];
       let { state } = this;
       if (state.isAllSubjects == false) {
         subjectIds = this.props.user.subjects.map(s => s.id);
-        let checked = subjects?.filter(s => s.checked);
+        
+        let checked = getSubjectIdsFromUrl(values);
         if (checked && checked.length > 0) {
-          subjectIds = checked.map(s => s.id);
+          subjectIds = checked;
         }
       } else {
-        let checked = subjects?.filter(s => s.checked);
-        subjectIds = checked ? checked.map(s => s.id) : [];
+        let checked = getSubjectIdsFromUrl(values);
+        if (checked && checked.length > 0) {
+          subjectIds = checked;
+        }
       }
 
       const pageBricks = await getPublishedBricksByPage(
@@ -461,11 +454,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         let { subjects } = state;
 
         for (let subject of pageBricks.subjects) {
-          const filterSubject = subjects.find(s => s.id === subject.id);
-          if (filterSubject) {
-            filterSubject.personalCount = subject.count;
-            filterSubject.publicCount = subject.count;
-          }
+          subject.personalCount = subject.count;
+          subject.publicCount = subject.count;
         }
         if (values && values.isViewAll) {
           this.checkSubjectsWithBricks(subjects);
@@ -477,7 +467,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
         this.setState({
           ...state,
-          subjects,
+          subjects: pageBricks.subjects as SubjectItem[],
           bricksCount: pageBricks.pageCount,
           bricks: pageBricks.bricks,
           isLoading: false,
