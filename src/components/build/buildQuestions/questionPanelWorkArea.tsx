@@ -63,8 +63,6 @@ export interface QuestionProps {
 const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   brick, question, history, validationRequired, locked, getQuestionIndex, ...props
 }) => {
-  const [savingTimeout, setSavingTimeout] = React.useState(-1 as number | NodeJS.Timeout);
-
   const [componentTypes, setComponentType] = React.useState([
     { id: 1, type: QuestionComponentTypeEnum.Text },
     { id: 4, type: QuestionComponentTypeEnum.Sound },
@@ -99,14 +97,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     if (workarea.current) {
       workarea.current.scrollBy(0, -100);
     }
-  }
-
-  const saveQuestion = (question: Question) => {
-    clearTimeout(savingTimeout);
-    let timeout = setTimeout(() => {
-      props.saveQuestion(question);
-    }, 2500);
-    setSavingTimeout(timeout);
   }
 
   const scrollDown = () => {
@@ -196,7 +186,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             question={question}
             validationRequired={validationRequired}
             componentFocus={props.componentFocus}
-            saveQuestion={saveQuestion}
+            saveQuestion={props.saveQuestion}
             updateFirstComponent={props.updateFirstComponent}
             updateComponents={props.updateComponents}
             setQuestionHint={setQuestionHint}
