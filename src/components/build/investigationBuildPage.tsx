@@ -935,9 +935,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             </Grid>
           </Grid>
           <LastSave isEditor={isCurrentEditor} updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} saveError={hasSaveError} />
-          {/* <Route path="/build/brick/:brickId/investigation/" exact>
-            <Redirect to={`/build/brick/${brick.id}/investigation/question-component/${questions[0].id}`} />
-          </Route> */}
           <Route path="/build/brick/:brickId/investigation/question-component/:questionId">
             <div className="fixed-build-phone">
               <PhoneQuestionPreview
