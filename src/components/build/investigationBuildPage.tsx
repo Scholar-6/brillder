@@ -140,6 +140,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [activeQuestionType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
   const [isSaving, setSavingStatus] = React.useState(false);
+
+  const [savingQuestionTimeout, setSavingQuestionTimeout] = React.useState(-1 as number | NodeJS.Timeout);
+
   const [hasSaveError, setSaveError] = React.useState(false);
   const [skipTutorialOpen, setSkipDialog] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
@@ -607,19 +610,23 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         await createNewQuestionV2(updatedQuestion, callback);
         setSavingStatus(false);
       } else {
-        props.saveQuestion(getApiQuestion(updatedQuestion)).then(res => {
-          if (res === null) {
+        clearTimeout(savingQuestionTimeout)
+        let timeout = setTimeout(() => {
+          props.saveQuestion(getApiQuestion(updatedQuestion)).then(res => {
+            if (res === null) {
+              setSavingStatus(false);
+              setSaveFailed(true);
+              return;
+            }
+            if (callback) { callback(res); }
             setSavingStatus(false);
-            setSaveFailed(true);
-            return;
-          }
-          if (callback) { callback(res); }
-          setSavingStatus(false);
-        }).catch((err: any) => {
-          console.log(err);
-          console.log("Error saving brick.");
-          setSaveError(true);
-        });
+          }).catch((err: any) => {
+            console.log(err);
+            console.log("Error saving brick.");
+            setSaveError(true);
+          });
+        }, 2500);
+        setSavingQuestionTimeout(timeout);
       }
     }
   }
