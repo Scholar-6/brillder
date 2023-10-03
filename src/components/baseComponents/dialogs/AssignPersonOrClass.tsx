@@ -7,13 +7,12 @@ import { ReduxCombinedState } from 'redux/reducers';
 import SpriteIcon from '../SpriteIcon';
 import CreateClassDialog from 'components/teach/assignments/components/CreateClassDialog';
 import { Brick } from 'model/brick';
-import { createClass } from 'components/teach/service';
-import map from 'components/map';
+import { User } from 'model/user';
 
 interface AssignClassProps {
   isOpen: boolean;
+  user: User;
   history: any;
-  subjects: any[];
   brick: Brick;
   submit: any;
   close(): void;
@@ -21,11 +20,25 @@ interface AssignClassProps {
 
 const AssignDialog: React.FC<AssignClassProps> = (props) => {
   const [createOpen, setCreateClass] = React.useState(false);
+  const [setToClassOpen, setAddToClass] = React.useState(false);
 
   if (createOpen) {
     return (
       <CreateClassDialog
         isOpen={true}
+        history={props.history}
+        subjects={[]}
+        submit={props.submit}
+        close={() => setCreateClass(false)}
+      />
+    );
+  }
+
+  if (setToClassOpen) {
+    return (
+      <AddToClassDialog
+        isOpen={true}
+        brick={props.brick}
         history={props.history}
         subjects={[]}
         submit={props.submit}
@@ -50,14 +63,7 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
         <div className="flex-center">
           <SpriteIcon name="send-plane" />
         </div>
-        <div className="text-container" onClick={async () => {
-          console.log('brick', props.brick);
-          const res = await createClass(props.brick.title);
-          console.log(res);
-          if (res) {
-            props.history.push(map.TeachAssignedTab + '?classroomId=' + res.id + '&shareOpen=true')
-          }
-        }}>
+        <div className="text-container">
           <div className="bold">Quick Assignment</div>
           <div className="">Create a class with a single click and share instantly</div>
         </div>
@@ -77,7 +83,9 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
           <SpriteIcon name="arrow-right" className="arrow-right" />
         </div>
       </div>
-      <div className="icon-text-btn font-16" onClick={() => { }}>
+      <div className="icon-text-btn font-16" onClick={() => {
+        setAddToClass(true);
+      }}>
         <div className="flex-center">
           <SpriteIcon name="manage-class-icon" />
         </div>
