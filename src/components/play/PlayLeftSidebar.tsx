@@ -402,20 +402,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.props.assignPopup}
-            user={this.props.user}
             brick={this.props.brick}
             history={this.props.history}
-            success={(items: any[], failedItems: any[]) => {
-              if (items.length > 0) {
-                this.props.setAssignPopup(false);
-                this.setState({ selectedItems: items, failedItems, isAssignedSuccessOpen: true });
-              } else if (failedItems.length > 0) {
-                this.setState({ failedItems, isAssignedFailedOpen: true });
-              }
-            }}
-            showPremium={() => this.props.showPremium && this.props.showPremium()}
+            submit={() => {}}
             close={() => this.props.setAssignPopup(false)}
-          />}
+          />
+        }
         <AssignSuccessDialogV2
           isOpen={this.state.isAssignedSuccessOpen}
           brickTitle={brick.title}
