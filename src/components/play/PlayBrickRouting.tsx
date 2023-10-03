@@ -1173,10 +1173,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       {renderCreditPopup()}
       {renderConvertBrills()}
       <AdaptedBrickAssignedDialog assignment={adaptedBrickAssignment} history={history} close={() => setAdaptedBrickAssignment(null)} />
-      {assignClass && <BottomAssignmentPopup click={() => {
-        setAssignClass(null);
-        props.history.push(props.history.location.href)
-      }} assignClass={assignClass} />}
+      {assignClass && <BottomAssignmentPopup 
+        history={props.history}
+        click={() => {
+          setAssignClass(null);
+          props.history.push(props.history.location.href)
+        }}
+        assignClass={assignClass} 
+      />}
     </React.Suspense>
   );
 };

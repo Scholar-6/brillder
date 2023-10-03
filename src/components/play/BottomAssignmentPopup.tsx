@@ -31,7 +31,9 @@ const BottomAssignmentPopup: React.FC<any> = (props: Props) => {
     <div className="bottom-bricks-popup-f53">
       {renderCount()}
       <div className="btn" onClick={props.click}>Quit</div>
-      <div className="btn btn-green" onClick={() => props.history.push(map.TeachAssignedTab + '?classroomId=' + props.assignClass.id)}>Back to Class</div>
+      <div className="btn btn-green" onClick={() => props.history.push(map.TeachAssignedTab + '?classroomId=' + props.assignClass.id)}>
+        Back to Class
+      </div>
     </div>
   );
 }
