@@ -7,6 +7,8 @@ import { ReduxCombinedState } from 'redux/reducers';
 import SpriteIcon from '../SpriteIcon';
 import CreateClassDialog from 'components/teach/assignments/components/CreateClassDialog';
 import { Brick } from 'model/brick';
+import { createClass } from 'components/teach/service';
+import map from 'components/map';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -26,7 +28,6 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
         isOpen={true}
         history={props.history}
         subjects={[]}
-        brick={props.brick}
         submit={props.submit}
         close={() => setCreateClass(false)}
       />
@@ -49,7 +50,14 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
         <div className="flex-center">
           <SpriteIcon name="send-plane" />
         </div>
-        <div className="text-container">
+        <div className="text-container" onClick={async () => {
+          console.log('brick', props.brick);
+          const res = await createClass(props.brick.title);
+          console.log(res);
+          if (res) {
+            props.history.push(map.TeachAssignedTab + '?classroomId=' + res.id + '&shareOpen=true')
+          }
+        }}>
           <div className="bold">Quick Assignment</div>
           <div className="">Create a class with a single click and share instantly</div>
         </div>
