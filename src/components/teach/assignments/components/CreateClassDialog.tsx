@@ -68,6 +68,12 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       });
       setAssignments(props.classroom.assignments);
       setSubmit(true);
+
+      if (props.classroom.code) {
+        writeQRCode(
+          window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + props.classroom.code
+        );
+      }
     }
   }, [props.classroom]);
 
@@ -403,7 +409,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                   {stripHtml(a.brick.title)}
                   <SpriteIcon name="cancel-custom" onClick={async () => {
                     const res = await deleteAssignment(a.id);
-                    console.log('removed');
                     if (res) {
                       const filteredAssignments = assignments.filter(bs => bs.id !== a.id);
                       setAssignments(filteredAssignments);
@@ -443,7 +448,11 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     </Dialog>
     <Dialog
       open={props.isOpen && closeV2Open}
-      onClose={props.close}
+      onClose={() => {
+        setThirdOpen(false);
+        setCloseV2Open(false);
+        props.close();
+      }}
       className="dialog-box light-blue assign-class-dialog create-classroom-dialog delete-class-r5"
     >
       <div className="dialog-header">
@@ -451,7 +460,11 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
           <div className="title font-18">
             Are you sure you want to quit Class Creation?
           </div>
-          <SpriteIcon onClick={props.close} name="cancel-custom" />
+          <SpriteIcon onClick={() => {
+            setThirdOpen(false);
+            setCloseV2Open(false);
+            props.close();
+          }} name="cancel-custom" />
         </div>
         <div className="text-block">
           <div className="text-r324 text-center font-14">
