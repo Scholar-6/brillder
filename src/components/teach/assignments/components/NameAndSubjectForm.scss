@@ -205,6 +205,12 @@
     .assign-button-container .btn {
       font-size: 1.2vw;
     }
+
+    .assign-button-container:hover {
+      svg {
+        color: white !important;
+      }
+    }
   }
   .assign-button-container {
     margin-left: 1vw;
