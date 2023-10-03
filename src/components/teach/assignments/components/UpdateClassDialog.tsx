@@ -32,7 +32,7 @@ const UpdateClassDialog: React.FC<AssignClassProps> = (props) => {
 
   const [expandedWarning, expandWarning] = useState(false);
 
-  const [canSubmitV2, setSubmitV2] = useState(false);
+  const [canSubmitV2, setSubmitV2] = useState(true);
 
   const [expandedV3Popup, expandV3Popup] = useState(false);
 
@@ -53,6 +53,10 @@ const UpdateClassDialog: React.FC<AssignClassProps> = (props) => {
       setImageBase64(dataURL);
     });
   }
+
+  React.useEffect(() => {
+    writeQRCode(props.classroom.code);
+  }, [])
 
   const addUser = (email: string) => {
     if (!emailRegex.test(email)) { return; }
