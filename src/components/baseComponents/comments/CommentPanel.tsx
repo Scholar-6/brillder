@@ -62,10 +62,15 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   if (!props.comments) {
     props.getComments(props.currentBrick.id);
     return <div>Loading comments...</div>;
+  } else {
+    if (props.comments && props.comments.length > 0) {
+      // check brick id if id is different reload comments
+      let comment = props.comments[0];
+      if (comment.brick.id !== props.currentBrick.id) {
+        props.getComments(props.currentBrick.id);
+      }
+    }
   }
-
-  // 10/23/2020 too much logs
-  //console.log('CommentPanel. Comments: ', props.comments);
 
   const onDelete = (brickId: number, commentId: number) => {
     setDeleteData({ isOpen: true, brickId, commentId });
@@ -76,7 +81,6 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
    * @param comment New Comment
    */
   const createCommentAndScroll = (comment: any) => {
-    console.log('create comment');
     props.createComment(comment).then(() => {
       // wait for rerender
       setTimeout(() => {

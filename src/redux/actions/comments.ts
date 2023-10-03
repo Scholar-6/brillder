@@ -21,6 +21,12 @@ const getComments = (brickId: number) => {
             { withCredentials: true }
         ).then(response => {
             const {data} = response;
+            console.log('comments 5444', data);
+            for (let comment of data) {
+                comment.brick = {
+                    id: brickId
+                }
+            }
             dispatch(getCommentsSuccess(data));
         }).catch(error => {
             dispatch(getCommentsFailure(error.message));
