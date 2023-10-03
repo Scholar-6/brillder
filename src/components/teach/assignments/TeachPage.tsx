@@ -32,7 +32,7 @@ import PremiumEducatorDialog from "components/play/baseComponents/dialogs/Premiu
 import DeleteClassDialog from "./components/DeleteClassDialog";
 import UpdateClassDialog from "./components/UpdateClassDialog";
 import AssignSuccessDialogV3 from "components/baseComponents/dialogs/AssignSuccessDialogV3";
-import AssignBrickClass from "components/baseComponents/dialogs/AssignBrickClass";
+import AssignBrickClassDialog from "./components/AssignBrickClassDialog";
 import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 import { GetSetSortSidebarAssignment, GetSortSidebarClassroom } from "localStorage/assigningClass";
 
@@ -73,8 +73,6 @@ interface TeachState {
   updateClassId: number;
   isAssignOpen: boolean;
   selectedClassroom: any;
-  successAssignResult: any;
-  failAssignResult: any;
 
   shareClass: any;
 
@@ -125,14 +123,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       classroomToRemove: null,
       isAssignOpen: false,
       selectedClassroom: null,
-
-      successAssignResult: {
-        isOpen: false, brick: null
-      },
-      failAssignResult: {
-        isOpen: false, brick: null
-      },
-
     };
 
     this.loadInitData();
@@ -582,34 +572,22 @@ class TeachPage extends Component<TeachProps, TeachState> {
             close={() => { this.setState({ updateClassId: -1 }) }}
           />}
         {this.state.isAssignOpen &&
-          <AssignBrickClass
+          <AssignBrickClassDialog
             isOpen={this.state.isAssignOpen}
             classroom={this.state.activeClassroom}
             subjects={this.state.subjects}
-            subjectId={this.state.activeClassroom?.subjectId || this.state.activeClassroom?.subject?.id}
-            success={(brick: any) => {
-              this.setState({ successAssignResult: { isOpen: true, brick } });
-              this.loadClass(this.state.activeClassroom.id);
+            history={this.props.history}
+            submit={async (classroomId) => {
+              await this.loadClass(classroomId);
+              this.setState({ isAssignOpen: false });
             }}
-            showPremium={() => this.setState({ isPremiumDialogOpen: true })}
-            failed={brick => this.setState({ failAssignResult: { isOpen: true, brick } })}
             close={() => this.setState({ isAssignOpen: false })}
           />}
-        {this.state.successAssignResult.isOpen &&
-          <AssignSuccessDialogV3
-            isOpen={this.state.successAssignResult.isOpen}
-            brickTitle={this.state.successAssignResult.brick?.title}
-            classroomName={this.state.activeClassroom.name}
-            close={() => this.setState({ successAssignResult: { isOpen: false, brick: null } })}
-          />}
-        {this.state.failAssignResult.isOpen &&
-          <AssignFailedDialog
-            isOpen={this.state.failAssignResult.isOpen}
-            brickTitle={this.state.failAssignResult.brick?.title}
-            selectedItems={[{ classroom: this.state.selectedClassroom || this.state.activeClassroom }]}
-            close={() => this.setState({ failAssignResult: { isOpen: false, brick: null } })}
-          />}
-        <PremiumEducatorDialog isOpen={this.state.isPremiumDialogOpen} close={() => this.setState({ isPremiumDialogOpen: false })} submit={() => this.props.history.push(map.StripeEducator)} />
+        <PremiumEducatorDialog 
+          isOpen={this.state.isPremiumDialogOpen}
+          close={() => this.setState({ isPremiumDialogOpen: false })}
+          submit={() => this.props.history.push(map.StripeEducator)}
+        />
         <DeleteClassDialog
           isOpen={this.state.deleteClassOpen}
           submit={() => this.deleteClass()}
