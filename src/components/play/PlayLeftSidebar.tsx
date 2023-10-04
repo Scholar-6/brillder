@@ -31,7 +31,6 @@ import CompetitionButton from "./baseComponents/sidebarButtons/CompetitionButton
 import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDialog";
 import HighScore from "./baseComponents/HighScore";
 import AdminBrickStatisticButton from "./baseComponents/AdminBrickStatisticButton";
-import QuickAssignButton from "./baseComponents/sidebarButtons/QuickAssignButton";
 import AssignSuccessDialogV2 from "components/baseComponents/dialogs/AssignSuccessDialogV2";
 import { assignClasses } from "services/axios/assignBrick";
 import { getClassById } from "components/teach/service";
@@ -348,14 +347,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           haveCircle={haveBriefCircles}
           setHighlightMode={this.setHighlightMode.bind(this)}
         />}
-        <QuickAssignButton
-          sidebarRolledUp={sidebarRolledUp}
-          user={this.props.user}
-          brick={this.props.brick}
-          haveCircle={haveBriefCircles}
-          history={this.props.history}
-          showPremium={() => this.props.showPremium && this.props.showPremium()}
-        />
         <AssignButton
           sidebarRolledUp={sidebarRolledUp}
           user={this.props.user}
@@ -402,19 +393,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         {canSee &&
           <AssignPersonOrClassDialog
             isOpen={this.props.assignPopup}
-            user={this.props.user}
+            brick={this.props.brick}
             history={this.props.history}
-            success={(items: any[], failedItems: any[]) => {
-              if (items.length > 0) {
-                this.props.setAssignPopup(false);
-                this.setState({ selectedItems: items, failedItems, isAssignedSuccessOpen: true });
-              } else if (failedItems.length > 0) {
-                this.setState({ failedItems, isAssignedFailedOpen: true });
-              }
-            }}
-            showPremium={() => this.props.showPremium && this.props.showPremium()}
+            submit={() => {}}
             close={() => this.props.setAssignPopup(false)}
-          />}
+          />
+        }
         <AssignSuccessDialogV2
           isOpen={this.state.isAssignedSuccessOpen}
           brickTitle={brick.title}
@@ -531,14 +515,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
               <div className="bottom-part-s42">
                 <div className="text-s45">
                   <div className="btn btn-blue" onClick={async () => {
-                    await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id], deadline: null });
+                    await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id] });
                     this.setState({ isAssignV2Open: false });
                     this.props.history.push(map.ViewAllPage  + '?assigning-bricks=' + this.props.assignClass.id);
                   }}>Assign and keep browsing</div>
                 </div>
                 <div>
                   <div className="btn btn-green" onClick={async () => {
-                    await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id], deadline: null });
+                    await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id] });
                     const classroom = await getClassById(this.props.assignClass.id);
                     this.setState({ isAssignV2Open: false, assignClass: classroom, isAssignV3Open: true });
                   }}>Assign and return to class</div>
