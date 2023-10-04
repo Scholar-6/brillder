@@ -6,16 +6,15 @@ import { ListItemIcon, ListItemText, MenuItem, Popper, SvgIcon } from '@material
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
-import './CreateClassDialog.scss';
 import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import { Brick, Subject } from 'model/brick';
 import { deleteAssignment, getSuggestedByTitles, hasPersonalBricks } from 'services/axios/brick';
-import { createClass, getClassById } from 'components/teach/service';
+import { getClassById } from 'components/teach/service';
 import { assignClasses } from 'services/axios/assignBrick';
-import { assignToClassByEmails, deleteClassroom } from 'services/axios/classroom';
+import { assignToClassByEmails, deleteClassroom, searchClassroomsByName } from 'services/axios/classroom';
 import map from 'components/map';
 
 import BrickTitle from 'components/baseComponents/BrickTitle';
@@ -29,6 +28,8 @@ interface AssignClassProps {
 
   classroom?: Classroom;
 
+  brick: Brick;
+
   submit(classroomId: number): void;
   close(): void;
 
@@ -40,8 +41,10 @@ const PopperCustom = function (props: any) {
   return (<Popper {...props} className="assign-brick-class-poopper" />)
 }
 
-const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
+const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   const [imgBase64, setImageBase64] = useState('');
+
+  const [multiple, setMultiple] = useState(false);
 
   const [expandedWarning, expandWarning] = useState(false);
 
@@ -91,6 +94,8 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   const [assignments, setAssignments] = useState([] as any[]);
   const [bricks, setBricks] = useState([] as any[]);
 
+  const [classrooms, setClassrooms] = useState([] as any[]);
+
   const [searchText, setSearchText] = useState('');
 
   const [currentEmail, setCurrentEmail] = useState("");
@@ -138,66 +143,40 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     if (isSaving) { return; }
     setSaving(true);
 
-    if (canSubmit === false || value === '') {
-      return;
-    }
+    // add brick to classroom or classrooms
 
-    if (value) {
-      // creating new class
-      if (!classroom) {
-        const newClassroom = await createClass(value);
-        setClassroom(newClassroom);
-
-        if (newClassroom) {
-          // after assigning get class with assignments
-          const resultClass = await getClassById(newClassroom.id);
-          if (resultClass) {
-            setClassroom(resultClass);
-          }
-
-          writeQRCode(
-            window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + newClassroom.code
-          );
-        }
-      } else {
-        // after assigning get class with assignments
-        const resultClass = await getClassById(classroom.id);
-        if (resultClass) {
-          setClassroom(resultClass);
-        }
-      }
-    }
     setSaving(false);
     setThirdOpen(true);
   }
 
-  const createV2 = async (value: string) => {
+  const addToClass = async () => {
+    console.log('add to class', isSaving, canSubmit, classroom)
     if (isSaving) { return; }
     setSaving(true);
 
-    if (canSubmit === false || value === '') {
+    if (canSubmit === false || !classroom) {
+      console.log('can`t save')
+      setSaving(false);
       return;
     }
 
-    if (value) {
-      // creating new class
-      if (!classroom) {
-        const newClassroom = await createClass(value);
-        setClassroom(newClassroom);
+    console.log('assigning');
 
-        if (newClassroom) {
-          writeQRCode(
-            window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + newClassroom.code
-          );
-        }
-      } else {
-        // after assigning get class with assignments
-        const resultClass = await getClassById(classroom.id);
-        if (resultClass) {
-          setClassroom(resultClass);
-        }
+    const res = await assignClasses(props.brick.id, { classesIds: [classroom.id] });
+
+    console.log(res);
+
+    if (res) {
+      const classroomV2 = await getClassById(classroom.id);
+      if (classroomV2 && classroomV2.assignments) {
+        classroomV2.assignments.sort((c1, c2) => {
+          return c1.assignedDate > c2.assignedDate ? -1 : 1;
+        });
+        setAssignments(classroomV2.assignments);
       }
+      setClassroom(classroomV2);
     }
+
     setSaving(false);
     setSecondOpen(true);
   }
@@ -242,29 +221,90 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
     >
       <div className="dialog-header">
         <div className="title-box">
-          <div className="title font-18">New Class</div>
+          <div className="title font-18">Add to Class</div>
           <SpriteIcon name="cancel-custom" onClick={props.close} />
         </div>
         <div className="text-block">
-          <div className="text-r324 font-14">Enter the name of your class</div>
-          <div className="r-class-inputs">
-            <input placeholder="Class name" value={value} className="font-14" onChange={e => {
-              if (canSubmit === false && value.length > 0) {
-                setSubmit(true);
-              } else if (canSubmit === true && value.length === 0) {
-                setSubmit(false);
-              }
-              setValue(e.target.value);
-            }} />
+          <div className="text-r324 font-14">Find your class</div>
+          <div className="r-class-inputs search-class-box">
+            <Autocomplete
+              value={classroom}
+              options={classrooms}
+              onChange={async (e: any, classV2: any) => {
+                if (classV2) {
+                  const classroomV2 = await getClassById(classV2.id);
+                  if (classroomV2 && classroomV2.assignments) {
+                    classroomV2.assignments.sort((c1, c2) => {
+                      return c1.assignedDate > c2.assignedDate ? -1 : 1;
+                    });
+                    setAssignments(classroomV2.assignments);
+                  }
+                  setClassroom(classroomV2);
+                  setSubmit(true);
+                }
+              }}
+              noOptionsText="Sorry, try typing something else"
+              className="subject-autocomplete"
+              PopperComponent={PopperCustom}
+              getOptionLabel={(option: any) => stripHtml(option.name)}
+              renderOption={(classroom: Classroom) => {
+                const subject = props.subjects.find(s => s.id === classroom.subjectId);
+                return (
+                  <React.Fragment>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <SvgIcon>
+                          <SpriteIcon
+                            name="circle-filled"
+                            className="w100 h100 active"
+                            style={{ color: subject?.color || '' }}
+                          />
+                        </SvgIcon>
+                      </ListItemIcon>
+                      <ListItemText>
+                        <BrickTitle title={classroom.name} />
+                      </ListItemText>
+                    </MenuItem>
+                  </React.Fragment>
+                )
+              }}
+              renderInput={(params: any) => {
+                params.inputProps.value = searchText;
+
+                return (
+                  <div>
+                    <div className="search-container">
+                      <SpriteIcon name="search-custom" />
+                    </div>
+                    <TextField
+                      {...params}
+                      variant="standard"
+                      label=""
+                      onChange={async (e) => {
+                        setSearchText(e.target.value);
+                        if (e.target.value.length >= 3) {
+                          const classes = await searchClassroomsByName(e.target.value);
+                          if (classes) {
+                            setClassrooms(classes);
+                          }
+                        }
+                      }}
+                      placeholder="Search by class name"
+                    />
+                  </div>
+                )
+              }}
+            />
           </div>
         </div>
       </div>
       <div className="dialog-footer">
         <div className="info-box">
-          <SpriteIcon name="info-icon" />
         </div>
-        <div className="message-box-r5 font-11">
-          Choose a name that will be recognisable later to you and to your students, for example: <span className="italic">Year 11 French 2023.</span>
+        <div className="message-box-r5 clickable-btn flex-y-center font-16 bold" onClick={() => {
+          setMultiple(true);
+        }}>
+          Add to multiple classes
         </div>
         <button
           className="btn btn-md font-16 cancel-button"
@@ -274,7 +314,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         </button>
         <button
           className={`btn btn-md bg-theme-green font-16 yes-button ${!canSubmit ? 'invalid' : ''}`}
-          onClick={() => createV2(value)}
+          onClick={addToClass}
         >
           <span className="bold">Next</span>
         </button>
@@ -468,8 +508,8 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         </div>
         <div className="text-block">
           <div className="text-r324 text-center font-14">
-            If you want to return to the class later, select Save and Quit to make this class<br/>
-            available from the Manage Classes page. Alternatively, select Delete Class to cancel<br/>
+            If you want to return to the class later, select Save and Quit to make this class<br />
+            available from the Manage Classes page. Alternatively, select Delete Class to cancel<br />
             class creation and discard any assigned bricks or students.
           </div>
         </div>
@@ -679,4 +719,4 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
 
-export default connector(CreateClassDialog);
+export default connector(AddToClassDialog);

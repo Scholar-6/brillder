@@ -56,11 +56,7 @@ const AssignBrickClassDialogV2: React.FC<AssignPersonOrClassProps> = (props) => 
       return;
     }
 
-    const data = { classesIds, deadline: null } as AssignClassData;
-
-    if (haveDeadline && deadlineDate) {
-      data.deadline = deadlineDate;
-    }
+    const data = { classesIds } as AssignClassData;
 
     const res = await assignClasses(brick.id, data);
     if (res.success === false) {

@@ -2,7 +2,6 @@ import { post, put } from './index';
 
 export interface AssignClassData {
   classesIds: number[];
-  deadline: Date | null;
 }
 
 export interface AssignClassResult {

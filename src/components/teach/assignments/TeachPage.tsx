@@ -138,6 +138,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (values.classroomId) {
       const classroomId = parseInt(values.classroomId as string);
       await this.loadClasses(classroomId);
+
+      let updateClassId = -1;
+      if (values.shareOpen) {
+        updateClassId = parseInt(values.classroomId as string);
+        this.setState({updateClassId});
+      }
     } else if (values.search) {
       this.searching(values.search as string);
       this.search();

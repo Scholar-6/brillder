@@ -71,17 +71,8 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
         <AssignPersonOrClassDialog
           isOpen={assign}
           history={history}
-          success={(items: any[], failedItems: any[]) => {
-            if (items.length > 0) {
-              setAssign(false);
-              setAssignItems(items);
-              setAssignFailedItems(failedItems);
-              setAssignSuccess(true);
-            } else if (failedItems.length > 0) {
-              setAssignFailedItems(failedItems);
-              setAssignFailed(true);
-            }
-          }}
+          brick={brick}
+          submit={() => {}}
           close={() => setAssign(false)}
         />
         <AssignSuccessDialog

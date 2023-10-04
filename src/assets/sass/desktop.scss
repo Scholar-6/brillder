@@ -189,6 +189,41 @@
     }
   }
 
+  .r-class-inputs.search-class-box {
+    .MuiAutocomplete-root > div {
+      display: flex;
+      .search-container {
+        width: 4vw;
+      }
+      svg {
+        margin-left: 0.7vw;
+        margin-top: 0.5vw;
+        width: 1.6vw;
+        height: 1.6vw;
+        stroke-width: 3;
+        color: #7E7E7E;
+      }
+      border-radius: 0.5vw;
+      padding-right: 1vw;
+      border: 1px solid var(--theme-dark-blue) !important;
+      .MuiInputBase-root {
+        padding: 0vw !important;
+        padding-top: 0.3vw !important;
+        padding-bottom: 0.3vw !important;
+      }
+      .MuiInput-underline::after, .MuiInput-underline::before {
+        display: none !important;
+      }
+      .MuiFormControl-root {
+        input {
+          padding-left: 0.5vw !important;
+          border: none !important;
+          font-size: 1vw;
+        }
+      }
+    }
+  }
+
   .r-regular-center {
     text-align: left;
     font-family: $font-family-bold;
