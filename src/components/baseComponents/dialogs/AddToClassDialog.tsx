@@ -64,7 +64,7 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
       setClassroom(classroom);
       setSecondOpen(true);
       setValue(classroom.name);
-      classroom.assignments.sort((c1, c2) => {
+      classroom.assignments.sort((c1: any, c2: any) => {
         return c1.assignedDate > c2.assignedDate ? -1 : 1;
       });
       setAssignments(classroom.assignments);
@@ -72,7 +72,7 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
 
       if (classroom.code) {
         writeQRCode(
-          window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + props.classroom.code
+          window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + classroom.code
         );
       }
     }
