@@ -16,3 +16,9 @@
 .f-black {
   font-family: $font-family-black;
 }
+
+.flex-y-center {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}

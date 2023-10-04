@@ -595,6 +595,14 @@
       height: $height !important;
     }
 
+    .clickable-btn {
+      cursor: pointer;
+
+      &:hover {
+        color: var(--theme-light-blue);
+      }
+    }
+
     .btn {
       height: $height !important;
       padding-top: 0vw !important;

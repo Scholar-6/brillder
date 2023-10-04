@@ -8,6 +8,9 @@ import SpriteIcon from '../SpriteIcon';
 import CreateClassDialog from 'components/teach/assignments/components/CreateClassDialog';
 import { Brick } from 'model/brick';
 import { User } from 'model/user';
+import AddToClassDialog from './AddToClassDialog';
+import { createClass } from 'components/teach/service';
+import map from 'components/map';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -42,7 +45,7 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
         history={props.history}
         subjects={[]}
         submit={props.submit}
-        close={() => setCreateClass(false)}
+        close={() => setAddToClass(false)}
       />
     );
   }
@@ -59,7 +62,12 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
           <SpriteIcon name="cancel-custom" onClick={props.close} />
         </div>
       </div>
-      <div className="icon-text-btn font-16" onClick={() => {}}>
+      <div className="icon-text-btn font-16" onClick={async () => {
+        const res = await createClass(props.brick.title);
+        if (res) {
+          props.history.push(map.TeachAssignedTab)
+        }
+      }}>
         <div className="flex-center">
           <SpriteIcon name="send-plane" />
         </div>
