@@ -90,7 +90,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                   const newAssignments = [...assignments];
                   const found = newAssignments.find(b => b.id === brickV5.id);
                   if (!found) {
-                    await assignClasses(brickV5.id, { classesIds: [classroom.id], deadline: null });
+                    await assignClasses(brickV5.id, { classesIds: [classroom.id] });
                     const classroomV2 = await getClassById(classroom.id);
                     if (classroomV2 && classroomV2.assignments) {
                       classroomV2.assignments.sort((c1, c2) => {
