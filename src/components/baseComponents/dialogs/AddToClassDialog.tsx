@@ -26,8 +26,6 @@ interface AssignClassProps {
   isOpen: boolean;
   subjects: Subject[];
 
-  classroom?: Classroom;
-
   brick: Brick;
 
   submit(classroomId: number): void;
@@ -62,23 +60,23 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   const [classroom, setClassroom] = useState(null as any);
 
   React.useEffect(() => {
-    if (props.classroom) {
-      setClassroom(props.classroom);
+    if (classroom) {
+      setClassroom(classroom);
       setSecondOpen(true);
-      setValue(props.classroom.name);
-      props.classroom.assignments.sort((c1, c2) => {
+      setValue(classroom.name);
+      classroom.assignments.sort((c1, c2) => {
         return c1.assignedDate > c2.assignedDate ? -1 : 1;
       });
-      setAssignments(props.classroom.assignments);
+      setAssignments(classroom.assignments);
       setSubmit(true);
 
-      if (props.classroom.code) {
+      if (classroom.code) {
         writeQRCode(
           window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + props.classroom.code
         );
       }
     }
-  }, [props.classroom]);
+  }, [classroom]);
 
   const setPersonal = async () => {
     const hasPersonal = await hasPersonalBricks();
@@ -479,10 +477,10 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
           <span className="bold">Previous</span>
         </button>
         <button
-          className={`btn btn-md bg-theme-green font-16 yes-button ${(value === '' || !canSubmit) ? 'invalid' : ''}`}
+          className={`btn btn-md bg-theme-green font-16 yes-button`}
           onClick={create}
         >
-          <span className="bold">{assignments.length > 0 ? 'Next' : 'Skip'}</span>
+          <span className="bold">Next</span>
         </button>
       </div>
     </Dialog>
