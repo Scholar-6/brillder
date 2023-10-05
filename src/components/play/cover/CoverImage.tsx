@@ -88,6 +88,8 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
     className += ' invalid';
   }
 
+  console.log(fileUrl(fileName));
+
   return (
     <div className="image-drag-n-drop">
       <div className={className} onClick={() => {
@@ -110,7 +112,7 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
       }}>
         {
           fileName
-            ? <img alt="" style={{ width: '100%' }}
+            ? <div className="cover-image-v5" style={{backgroundImage: `url(${fileUrl(fileName)})`}}
               onMouseEnter={() => {
                 if (hoverTimeout >= 0) {
                   clearTimeout(hoverTimeout);
@@ -125,7 +127,6 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
                 setHoverTimeout(-1);
                 props.blur();
               }}
-              src={fileUrl(fileName)}
             />
             : (
               <div>
