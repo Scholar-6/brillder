@@ -264,10 +264,8 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
               </div>}
             {brick.coverImage ?
               <div className="p-cover-image">
-                <div className="scroll-block">
-                  {renderCompetitionBanner()}
-                  <img alt="" className={imgLoaded ? 'visible' : 'hidden'} onLoad={() => setImgLoaded(true)} src={fileUrl(brick.coverImage)} />
-                </div>
+                {renderCompetitionBanner()}
+                <div className="scroll-block test1" style={{backgroundImage: `url(${fileUrl(brick.coverImage)})`}} />
               </div>
               :
               <div className="p-cover-icon">
