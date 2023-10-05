@@ -124,9 +124,7 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
                   </div>
                   {brick.coverImage ?
                     <div className="p-cover-image">
-                      <div className="scroll-block">
-                        <img alt="" className={imgLoaded ? 'visible' : 'hidden'} onLoad={() => setImgLoaded(true)} src={fileUrl(brick.coverImage)} />
-                      </div>
+                      <div className="scroll-block test66" style={{backgroundImage: fileUrl(brick.coverImage)}} />
                     </div>
                     :
                     <div className="p-cover-icon">

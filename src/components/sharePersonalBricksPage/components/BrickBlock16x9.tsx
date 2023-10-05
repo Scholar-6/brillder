@@ -94,9 +94,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
             </div>
             {brick.coverImage ?
               <div className="p-cover-image">
-                <div className="scroll-block">
-                  <img alt="" className={imgLoaded ? 'visible' : 'hidden'} onLoad={() => setImgLoaded(true)} src={fileUrl(brick.coverImage)} />
-                </div>
+                <div className="scroll-block test4" style={{backgroundImage: fileUrl(brick.coverImage)}} />
               </div>
               :
               <div className="p-cover-icon">
