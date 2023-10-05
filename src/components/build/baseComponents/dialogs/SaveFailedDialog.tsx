@@ -13,7 +13,11 @@ const SaveFailedDialog: React.FC<SkipTutorialDialogProps> = ({
   open, close
 }) => {
   React.useEffect(() => {
-    throw new Error("Uh Oh screen called");
+    const errorPromise = new Promise((resolve, reject) => {
+      throw new Error("Uh Oh screen called");
+    });
+
+    errorPromise.then(() => {});
   }, []);
 
   return (

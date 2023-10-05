@@ -259,10 +259,10 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
     if (index >= this.state.pageSize) {
       if (this.state.isSearching) {
         this.loadAndSetSearchBricks(this.state.searchString, this.state.page - 1, this.state.pageSize);
-        this.setState({selectedBricks: []});
+        this.setState({ selectedBricks: [] });
       } else {
         this.loadAndSetBricks(this.state.page - 1);
-        this.setState({selectedBricks: []});
+        this.setState({ selectedBricks: [] });
       }
     }
   }
@@ -274,10 +274,10 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
     if (index + pageSize <= bricksCount - 1) {
       if (this.state.isSearching) {
         this.loadAndSetSearchBricks(this.state.searchString, this.state.page + 1, this.state.pageSize);
-        this.setState({selectedBricks: []});
+        this.setState({ selectedBricks: [] });
       } else {
         this.loadAndSetBricks(this.state.page + 1);
-        this.setState({selectedBricks: []});
+        this.setState({ selectedBricks: [] });
       }
     }
   }
@@ -335,7 +335,7 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
   }
 
   share() {
-    this.setState({isSharing: true});
+    this.setState({ isSharing: true });
   }
 
   renderSortedBricks() {
@@ -466,10 +466,10 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
           selectedBricks={this.state.selectedBricks}
           submit={() => {
             this.state.selectedBricks.forEach(b => b.selected = false);
-            this.setState({selectedBricks: [], isSharing: false});
+            this.setState({ selectedBricks: [], isSharing: false });
           }}
           close={() => {
-            this.setState({isSharing: false});
+            this.setState({ isSharing: false });
           }}
         />
       </Grid>
@@ -509,10 +509,11 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
             />
             {this.renderDesktopViewAllPage()}
           </div>
-          <FailedRequestDialog
-            isOpen={this.state.failedRequest}
-            close={() => this.setState({ ...this.state, failedRequest: false })}
-          />
+          {this.state.failedRequest &&
+            <FailedRequestDialog
+              isOpen={this.state.failedRequest}
+              close={() => this.setState({ ...this.state, failedRequest: false })}
+            />}
         </div>
         <ClassInvitationDialog />
         <PersonalBrickInvitationDialog />
