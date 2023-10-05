@@ -94,7 +94,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
             </div>
             {brick.coverImage ?
               <div className="p-cover-image">
-                <div className="scroll-block test4" style={{backgroundImage: fileUrl(brick.coverImage)}} />
+                <div className="scroll-block" style={{backgroundImage: `url(${fileUrl(brick.coverImage)})`}} />
               </div>
               :
               <div className="p-cover-icon">
