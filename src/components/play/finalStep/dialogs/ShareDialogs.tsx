@@ -26,6 +26,7 @@ interface InviteResult {
 }
 
 const ShareDialogs: React.FC<ShareProps> = props => {
+  const [loaded, setLoaded] = useState(false);
   const [linkOpen, setLink] = useState(false);
   const [linkCopiedOpen, setCopiedLink] = useState(false);
   const [inviteOpen, setInvite] = useState(false);
@@ -39,13 +40,16 @@ const ShareDialogs: React.FC<ShareProps> = props => {
   React.useEffect(() => {
     (async () => {
       try {
-        if (!referralId) {
+        if (props.shareOpen && !referralId) {
           const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_HOST}/user/current/referral`, { withCredentials: true });
           setReferralId(data.referralId);
+          setLoaded(true);
         }
-      } catch(e) {}
-    })()
-  }, [props.user])
+      } catch(e) {
+        setLoaded(true);
+      }
+    })();
+  }, [props.user, props.shareOpen])
 
   let link = routes.playCover(props.brick); + `?referralId=${referralId}`;
   if (props.user && props.user.library) {
@@ -62,7 +66,7 @@ const ShareDialogs: React.FC<ShareProps> = props => {
   return (
     <div>
       <ShareDialog
-        isOpen={props.shareOpen}
+        isOpen={props.shareOpen && loaded}
         realLink={link}
         link={() => setLink(true)}
         invite={() => setInvite(true)}
