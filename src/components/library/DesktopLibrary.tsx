@@ -666,10 +666,11 @@ class Library extends Component<BricksListProps, BricksListState> {
               {this.renderContent()}
             </Grid>
           </Grid>
+          {this.state.failedRequest && 
           <FailedRequestDialog
             isOpen={this.state.failedRequest}
             close={() => this.setState({ ...this.state, failedRequest: false })}
-          />
+          />}
         </div>
         <ClassInvitationDialog />
         <PersonalBrickInvitationDialog />

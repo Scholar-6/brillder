@@ -14,7 +14,11 @@ interface FailedRequestProps {
 
 const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
   React.useEffect(() => {
-    throw new Error("Uh Oh screen called");
+    const errorPromise = new Promise((resolve, reject) => {
+      throw new Error("Uh Oh screen called");
+    });
+
+    errorPromise.then(() => {});
   }, []);
 
   return (

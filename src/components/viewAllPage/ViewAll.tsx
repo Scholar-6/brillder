@@ -433,7 +433,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       let { state } = this;
       if (state.isAllSubjects == false) {
         subjectIds = this.props.user.subjects.map(s => s.id);
-        
+
         let checked = getSubjectIdsFromUrl(values);
         if (checked && checked.length > 0) {
           subjectIds = checked;
@@ -1495,12 +1495,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 />
               </Route>
             </Switch>
-            <FailedRequestDialog
-              isOpen={this.state.failedRequest}
-              close={() => {
-                this.setState({ ...this.state, failedRequest: false })
-              }}
-            />
+            {this.state.failedRequest &&
+              <FailedRequestDialog
+                isOpen={this.state.failedRequest}
+                close={() => {
+                  this.setState({ ...this.state, failedRequest: false })
+                }}
+              />}
             <NoSubjectDialog
               isOpen={this.state.noSubjectOpen}
               subject={this.state.activeSubject}
@@ -1568,12 +1569,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               </Route>
             </Switch>
           </div>
-          <FailedRequestDialog
-            isOpen={this.state.failedRequest}
-            close={() => {
-              this.setState({ ...this.state, failedRequest: false })
-            }}
-          />
+          {this.state.failedRequest &&
+            <FailedRequestDialog
+              isOpen={this.state.failedRequest}
+              close={() => {
+                this.setState({ ...this.state, failedRequest: false })
+              }}
+            />}
           <NoSubjectDialog
             isOpen={this.state.noSubjectOpen}
             subject={this.state.activeSubject}

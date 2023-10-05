@@ -98,7 +98,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   prepareSubjects(assignments: LibraryAssignmentBrick[], subjects: SubjectAItem[]) {
     return subjects.filter(s => assignments.find(a => a.brick.subjectId === s.id));
   }
-  
+
   populateAssignments(subjectAssignments: SubjectAssignments[], assignments: LibraryAssignmentBrick[]) {
     for (let assignment of assignments) {
       const subjectAssignment = subjectAssignments.find(s => s.subject.id === assignment.brick.subjectId);
@@ -181,10 +181,11 @@ class Library extends Component<BricksListProps, BricksListState> {
               />
             </div>
           </div>
-          <FailedRequestDialog
-            isOpen={this.state.failedRequest}
-            close={() => this.setState({ ...this.state, failedRequest: false })}
-          />
+          {this.state.failedRequest &&
+            <FailedRequestDialog
+              isOpen={this.state.failedRequest}
+              close={() => this.setState({ ...this.state, failedRequest: false })}
+            />}
         </div>
         <ClassInvitationDialog />
         <PersonalBrickInvitationDialog />
