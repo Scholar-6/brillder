@@ -17,7 +17,7 @@ import FullScreenButton from "./fullScreenButton/FullScreen";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import PlaySkipDialog from "../dialogs/PlaySkipDialog";
 import { isPhone } from "services/phone";
-import { getAssignedBricks, getNumberOfAttempts } from "services/axios/brick";
+import { getAssignedBricks } from "services/axios/brick";
 import LockedDialog from "../dialogs/LockedDialog";
 import { isBuilderPreference, isStudentPreference } from "components/services/preferenceService";
 
@@ -42,7 +42,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const { page } = props;
   const {hasPlayedBrick} = props.user;
   
-  const [assignedCount, setAssignedCount] = React.useState(0);
+  const [assignedCount, setAssignedCount] = React.useState(-1);
   const [noAassignmentsOpen, setNoAssignments] = React.useState(false);
 
   const [noBooksOpen, setNoBooks] = React.useState(false);
@@ -57,11 +57,17 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     const bricks = await getAssignedBricks();
     if (bricks && bricks.length > 0) {
       setAssignedCount(bricks.length);
+    } else {
+      setAssignedCount(0);
     }
   }
 
   /*eslint-disable-next-line*/
-  useEffect(() => { prepare() }, []);
+  useEffect(() => {
+    if (props.dropdownShown && assignedCount === -1) {
+      prepare();
+    }
+  }, [props.dropdownShown]);
 
   const isStudent = isStudentPreference(props.user);
 
