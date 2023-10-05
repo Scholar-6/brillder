@@ -13,6 +13,10 @@ interface FailedRequestProps {
 }
 
 const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
+  React.useEffect(() => {
+    throw new Error("Uh Oh screen called");
+  }, []);
+
   return (
     <Dialog
       open={props.isOpen}

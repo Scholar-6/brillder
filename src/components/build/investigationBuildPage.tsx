@@ -1034,7 +1034,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         </div>
       </div>
       <BuildMultipleDialog open={buildMultiple} goHome={() => history.push(map.MainPage)} close={() => setBuildMultiple(false)} />
-      <SaveFailedDialog open={saveFailed} close={() => setSaveFailed(false)} />
+      {saveFailed && <SaveFailedDialog open={saveFailed} close={() => setSaveFailed(false)} />}
     </div>
   );
 };

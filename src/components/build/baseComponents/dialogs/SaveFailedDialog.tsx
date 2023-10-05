@@ -12,6 +12,10 @@ interface SkipTutorialDialogProps {
 const SaveFailedDialog: React.FC<SkipTutorialDialogProps> = ({
   open, close
 }) => {
+  React.useEffect(() => {
+    throw new Error("Uh Oh screen called");
+  }, []);
+
   return (
     <BaseDialogWrapper open={open} className="save-brick-dialog" close={close} submit={close}>
       <div className="dialog-header bold">
