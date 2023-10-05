@@ -15,7 +15,6 @@ import map from 'components/map';
 import UnauthorizedMenu from 'components/app/unauthorized/UnauthorizedMenu';
 import { PageEnum } from './PageHeadWithMenu';
 import { isPhone } from 'services/phone';
-import { getKeywords } from "services/axios/brick";
 import { Brick, KeyWord, Subject } from 'model/brick';
 import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestions';
 import { getSubjects } from 'services/axios/subject';
@@ -73,8 +72,8 @@ interface State {
   searchVisible: boolean;
   searchAnimation: string;
   bricks: Brick[];
-  keywords: KeyWord[];
   subjects: Subject[];
+  suggestionsLoaded: boolean;
   // mobile
   dropdownShown: boolean;
 }
@@ -93,15 +92,11 @@ class PageHeader extends Component<Props, State> {
       searchVisible: false,
       dropdownShown: false,
       value,
+      suggestionsLoaded: false,
       bricks: [],
-      keywords: [],
       subjects: [],
       searchAnimation: 'slideInLeft'
     };
-
-    if (props.suggestions) {
-      this.prepareSuggestions();
-    }
 
     if (this.props.isAuthenticated === isAuthenticated.True && !this.props.notifications) {
       this.props.getNotifications();
@@ -125,9 +120,11 @@ class PageHeader extends Component<Props, State> {
   }
 
   async prepareSuggestions() {
-    const keywords = await getKeywords() || [];
-    const subjects = await getSubjects() || [];
-    this.setState({bricks: [], subjects, keywords });
+    if (this.state.suggestionsLoaded === false) {
+      this.setState({suggestionsLoaded: true})
+      const subjects = await getSubjects() || [];
+      this.setState({bricks: [], subjects });
+    }
   }
 
   keySearch(e: any) {
@@ -228,7 +225,7 @@ class PageHeader extends Component<Props, State> {
     // page loaded by library shared link
     if (this.props.onForbiddenClick) {
       return (
-        <div className="upper-part">
+        <div className="upper-part" onClick={() => this.prepareSuggestions()}>
           <div className={!searchVisible ? "page-header" : "page-header active"}>
             <HomeButton onClick={this.props.onForbiddenClick} history={this.props.history} />
             <div className="logout-container">
@@ -292,7 +289,7 @@ class PageHeader extends Component<Props, State> {
     }
 
     return (
-      <div className="upper-part">
+      <div className="upper-part" onClick={() => this.prepareSuggestions()}>
         <div className={!searchVisible ? "page-header" : "page-header active"}>
           <Hidden only={['sm', 'md', 'lg', 'xl']}>
             <div className="logout-container">

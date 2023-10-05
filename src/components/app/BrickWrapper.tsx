@@ -13,7 +13,7 @@ interface StudentRouteProps {
   isRedirectedToProfile: boolean;
   match: any;
   isAuthenticated: isAuthenticated;
-  fetchBrick(brickId: number): void;
+  fetchBrickWithoutComments(brickId: number): void;
   fetchPublicBrick(brickId: number): void;
 }
 
@@ -26,7 +26,7 @@ const BrickWrapper: React.FC<StudentRouteProps> = ({ component: Component, ...pr
     if (props.isAuthenticated === isAuthenticated.False) {
       props.fetchPublicBrick(brickId);
     } else {
-      props.fetchBrick(brickId);
+      props.fetchBrickWithoutComments(brickId);
     }
     return <PageLoader content="...Forbidden..." />;
   }
@@ -38,7 +38,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
+  fetchBrickWithoutComments: (id: number) => dispatch(actions.fetchBrickWithoutComments(id)),
   fetchPublicBrick: (id: number) => dispatch(actions.fetchPublicBrick(id))
 });
 
