@@ -35,6 +35,14 @@ export const getClassrooms = async () => {
   }
 }
 
+export const searchClassroomsByName = async (searchString: string) => {
+  try {
+    return await get<TeachClassroom[]>("/searchClassroomsByName/" + searchString);
+  } catch {
+    return null;
+  }
+}
+
 export const getClassroomByCode = async (code: string) => {
   try {
     return await get<any>("/classroom/code/" + code);

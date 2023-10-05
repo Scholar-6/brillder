@@ -7,7 +7,6 @@ import './CreateClassDialog.scss';
 import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import AutocompleteUsernameButEmail from 'components/play/baseComponents/AutocompleteUsernameButEmail';
-import {  Subject } from 'model/brick';
 import { assignToClassByEmails } from 'services/axios/classroom';
 import map from 'components/map';
 
@@ -33,20 +32,12 @@ const UpdateClassDialog: React.FC<AssignClassProps> = (props) => {
 
   const [expandedWarning, expandWarning] = useState(false);
 
-  const [canSubmitV2, setSubmitV2] = useState(false);
+  const [canSubmitV2, setSubmitV2] = useState(true);
 
   const [expandedV3Popup, expandV3Popup] = useState(false);
 
   const [canSubmit, setSubmit] = useState(false);
   const [isSaving, setSaving] = useState(false);
-
-  React.useEffect(() => {
-    if (classroom.code) {
-      writeQRCode(
-        window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + classroom.code
-      );
-    }
-  }, []);
 
   const [currentEmail, setCurrentEmail] = useState("");
   const [users, setUsers] = useState<User[]>([]);
@@ -62,6 +53,10 @@ const UpdateClassDialog: React.FC<AssignClassProps> = (props) => {
       setImageBase64(dataURL);
     });
   }
+
+  React.useEffect(() => {
+    writeQRCode(props.classroom.code);
+  }, [])
 
   const addUser = (email: string) => {
     if (!emailRegex.test(email)) { return; }
