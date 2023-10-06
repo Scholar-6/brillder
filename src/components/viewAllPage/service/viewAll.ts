@@ -43,7 +43,7 @@ export const removeByIndex = (bricks: Brick[], brickId: number) => {
   }
 }
 
-export const getCheckedSubjects = (subjects: SubjectItem[]) => {
+export const getCheckedSubjects = (subjects: Subject[]) => {
   const filterSubjects = [];
   for (let subject of subjects) {
     if (subject.checked) {
@@ -273,7 +273,7 @@ export const isLengthVisible = (brick: Brick, lengths: BrickLengthEnum[]) => {
 }
 
 
-export const filterSubjectsByCurrentUser = (subjects: SubjectItem[], user: User) => {
+export const filterSubjectsByCurrentUser = (subjects: Subject[], user: User) => {
   let resSubjects = [];
   for (let subject of user.subjects) {
     for (let s of subjects) {
@@ -285,28 +285,25 @@ export const filterSubjectsByCurrentUser = (subjects: SubjectItem[], user: User)
   return resSubjects;
 }
 
-export const getPersonalSubjectsWithBricks = (subjects: SubjectItem[], user: User, isAllSubjects: boolean) => {
-  let filteredSubjects = subjects.filter(
-    (s) => s.personalCount && s.personalCount > 0
-  );
+export const getPersonalSubjectsWithBricks = (subjects: Subject[], user: User, isAllSubjects: boolean) => {
+  let filteredSubjects = subjects.map(s => s);
   if (!isAllSubjects) {
     filteredSubjects = filterSubjectsByCurrentUser(filteredSubjects, user);
   }
   return filteredSubjects;
 }
 
-export const getPublicSubjectsWithBricks = (subjects: SubjectItem[], user: User, isAllSubjects: boolean) => {
-  let filteredSubjects = subjects.filter((s) => s.publicCount > 0);
+export const getPublicSubjectsWithBricks = (subjects: Subject[], user: User, isAllSubjects: boolean) => {
+  let filteredSubjects = subjects.map(s => s);
   if (!isAllSubjects) {
     filteredSubjects = filterSubjectsByCurrentUser(filteredSubjects, user);
   }
   return filteredSubjects;
 }
 
-export const getSubjectsWithBricks = (subjects: SubjectItem[], user: User, isCore: boolean, isAllSubjects: boolean) => {
-  let filteredSubjects: SubjectItem[] = [];
+export const getSubjectsWithBricks = (subjects: Subject[], user: User, isCore: boolean, isAllSubjects: boolean) => {
+  let filteredSubjects: Subject[] = subjects.map(s => s);
   if (!user) {
-    filteredSubjects = subjects.filter((s) => s.publicCount > 0);
   } else {
     if (isCore) {
       filteredSubjects = getPublicSubjectsWithBricks(filteredSubjects, user, isAllSubjects);
@@ -320,22 +317,14 @@ export const getSubjectsWithBricks = (subjects: SubjectItem[], user: User, isCor
 /**
   * Check all subjects based on isCore.
   */
-export const checkAllSubjects = (subjects: SubjectItem[], isCore: boolean) => {
+export const checkAllSubjects = (subjects: Subject[], isCore: boolean) => {
   if (isCore) {
     subjects.forEach((s) => {
-      if (s.publicCount > 0) {
-        s.checked = true;
-      } else {
-        s.checked = false;
-      }
+      s.checked = true;
     });
   } else {
     subjects.forEach((s) => {
-      if (s.personalCount && s.personalCount > 0) {
-        s.checked = true;
-      } else {
-        s.checked = false;
-      }
+      s.checked = true;
     });
   }
 }

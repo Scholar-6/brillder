@@ -2,13 +2,11 @@ import types from '../types';
 import { Subject } from 'model/brick';
 
 export interface SubjectState {
-  subjects: Subject[] | null;
+  subjects: Subject[];
   error: any;
 }
 
-const InitialState = {
-  subjects: null, // null - not loaded, else - array
-} as SubjectState;
+const InitialState = {  subjects: [], error: null } as SubjectState;
 
 export default (state = InitialState, action: any) => {
   switch (action.type) {
