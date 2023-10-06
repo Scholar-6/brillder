@@ -11,7 +11,6 @@ import CoverBioDialog from "components/baseComponents/dialogs/CoverBioDialog";
 import SponsorImageComponent from "./SponsorImage";
 import CoverAuthorRow from "./components/coverAuthorRow/CoverAuthorRow";
 import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV2";
-import HoveredImage from "../baseComponents/HoveredImage";
 import CoverTimer from "./CoverTimer";
 import MathInHtml from "../baseComponents/MathInHtml";
 import CompetitionDialog from "./components/CompetitionDialog";
@@ -248,7 +247,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   if (isPhone()) {
     return (
       <React.Suspense fallback={<></>}>
-        <HoveredImage />
         <MobileTheme />
         <div className="cover-page">
           {renderFirstRow()}
@@ -400,7 +398,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
 
   return (
     <React.Suspense fallback={<></>}>
-      <HoveredImage />
       {isMobile ? <TabletTheme /> : <DesktopTheme />}
       <div className="brick-row-container cover-page">
         <div className="brick-container">
