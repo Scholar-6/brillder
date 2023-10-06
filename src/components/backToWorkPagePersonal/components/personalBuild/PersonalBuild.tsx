@@ -57,7 +57,6 @@ interface PersonalState {
   filters: PersonalFilters;
   checkedSubjectId: number;
   handleKey(e: any): void;
-  onBricksWheel(e: any): void;
   bricksRef: React.RefObject<any>;
 }
 
@@ -74,34 +73,15 @@ class PersonalBuild extends Component<PersonalBuildProps, PersonalState> {
       },
       bricksRef: React.createRef<any>(),
       handleKey: this.handleKey.bind(this),
-      onBricksWheel: this.onBricksWheel.bind(this)
     };
   }
 
   componentDidMount() {
     document.addEventListener("keydown", this.state.handleKey, false);
-
-    const {current} = this.state.bricksRef;
-    if (current) {
-      current.addEventListener('wheel', this.state.onBricksWheel, false);
-    }
-  }
-
-  onBricksWheel(e: any) {
-    if (e.wheelDeltaY < 0) {
-      this.props.moveAllNext();
-    } else {
-      this.props.moveAllBack();
-    }
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.state.handleKey, false);
-
-    const {current} = this.state.bricksRef;
-    if (current) {
-      current.removeEventListener('wheel', this.state.onBricksWheel, false);
-    }
   }
 
   handleMouseHover(index: number) {
