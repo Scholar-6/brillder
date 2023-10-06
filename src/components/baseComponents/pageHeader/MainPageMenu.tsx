@@ -21,12 +21,13 @@ import BrillIconAnimated from "../BrillIconAnimated";
 import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 import ConvertCreditsDialog from "./convertCreditsDialog/ConvertCreditsDialog";
 import { isPhone } from "services/phone";
+import { isAuthenticated } from "model/assignment";
 
 interface MainPageMenuProps {
   history: any;
   user: User;
   notificationExpanded: boolean;
-
+  isAuthenticated: isAuthenticated;
 
   notifications: Notification[] | null;
   toggleNotification(): void;
@@ -64,7 +65,9 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
 
     this.pageHeader = React.createRef();
 
-    this.props.getNotifications();
+    if (this.props.isAuthenticated === isAuthenticated.True && !this.props.notifications) {
+      this.props.getNotifications();
+    }
   }
 
   showDropdown() {
@@ -217,7 +220,8 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
 }
 
 const mapState = (state: ReduxCombinedState) => ({
-  notifications: state.notifications.notifications
+  notifications: state.notifications.notifications,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatch = (dispatch: any) => ({

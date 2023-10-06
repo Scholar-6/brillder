@@ -26,19 +26,6 @@ import { JoinPage, LibraryLoginPage, LibraryRegisterPage } from 'components/logi
 import { SetAuthBrickCash } from 'localStorage/play';
 
 
-const mapState = (state: ReduxCombinedState) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  user: state.user.user,
-  notifications: state.notifications.notifications
-});
-
-const mapDispatch = (dispatch: any) => ({
-  getNotifications: () => dispatch(notificationActions.getNotifications())
-});
-
-const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
-
-
 interface Props {
   searchPlaceholder: string;
   link?: string;
@@ -411,5 +398,17 @@ class PageHeader extends Component<Props, State> {
     );
   }
 }
+
+const mapState = (state: ReduxCombinedState) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.user.user,
+  notifications: state.notifications.notifications
+});
+
+const mapDispatch = (dispatch: any) => ({
+  getNotifications: () => dispatch(notificationActions.getNotifications())
+});
+
+const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
 
 export default connector(PageHeader);

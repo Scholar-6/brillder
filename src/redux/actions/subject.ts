@@ -22,8 +22,10 @@ const fetchSubjects = () => {
     const subjects = await getSubjects();
     if (subjects) {
       dispatch(fetchSubjectsSuccess(subjects));
+      return subjects;
     } else {
       dispatch(fetchSubjectsFailure('Can`t load subjects'));
+      return [];
     }
   }
 }

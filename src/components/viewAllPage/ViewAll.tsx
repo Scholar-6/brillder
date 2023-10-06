@@ -9,6 +9,7 @@ import { isMobile } from "react-device-detect";
 import { Steps } from 'intro.js-react';
 
 import brickActions from "redux/actions/brickActions";
+import subjectActions from "redux/actions/subject";
 import userActions from "../../redux/actions/user";
 import { User } from "model/user";
 import { Notification } from "model/notifications";
@@ -33,7 +34,6 @@ import {
   getUnauthPublishedBricksByPage,
   searchPaginateBricks,
 } from "services/axios/brick";
-import { getSubjects } from "services/axios/subject";
 
 import PageHeadWithMenu, {
   PageEnum,
@@ -57,7 +57,6 @@ import {
   prepareVisibleBricks2,
   toggleSubject,
   renderTitle,
-  sortAndCheckSubjects,
   getCheckedSubjectIds,
   getSubjectsWithBricks,
   checkAllSubjects,
@@ -87,6 +86,9 @@ interface ViewAllProps {
   location: any;
   getUser(): Promise<any>;
   forgetBrick(): Promise<any>;
+
+  subjects: Subject[];
+  getSubjects(): Subject[] | null;
 }
 
 interface ViewAllState {
@@ -108,7 +110,7 @@ interface ViewAllState {
   filterCompetition: boolean;
   filterLevels: AcademicLevel[];
   filterLength: BrickLengthEnum[];
-  subjects: SubjectItem[];
+  subjects: Subject[];
   userSubjects: Subject[];
 
   isLoading: boolean;
@@ -117,7 +119,7 @@ interface ViewAllState {
 
   isSubjectPopupOpen: boolean;
   noSubjectOpen: boolean;
-  activeSubject: SubjectItem;
+  activeSubject: Subject;
   dropdownShown: boolean;
 
   subjectGroup: SubjectGroup | null;
@@ -273,17 +275,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.loadData(values);
   }
 
-  checkSubjectsWithBricks(subjects: SubjectItem[]) {
+  checkSubjectsWithBricks(subjects: Subject[]) {
     subjects.forEach((s) => {
-      if (this.state.isCore) {
-        if (s.publicCount > 0) {
-          s.checked = true;
-        }
-      } else {
-        if (s.personalCount && s.personalCount > 0) {
-          s.checked = true;
-        }
-      }
+      s.checked = true;
     });
   }
 
@@ -326,6 +320,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadData(values: queryString.ParsedQuery<string>) {
+    let subjects = this.props.subjects;
+    if (this.props.subjects.length == 0) {
+      const subjectsV2 = await this.props.getSubjects();
+      if (subjectsV2) {
+        subjects = subjectsV2.map(s => s);
+      }
+    }
+    this.setState({subjects});
     if (values.searchString) {
       let page = 0;
       if (values.page) {
@@ -347,7 +349,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-
   async setStateAndAssignClassroom(state: any, queryValues: queryString.ParsedQuery<string>) {
     let assignValue = queryValues['assigning-bricks'];
     const classroomId = assignValue ? parseInt(assignValue as string) : -1;
@@ -361,22 +362,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  /**
-   * Load subject and check by query string
-   */
-  async loadSubjects(values: queryString.ParsedQuery<string>) {
-    const subjects = (await getSubjects()) as SubjectItem[] | null;
-    if (subjects) {
-      sortAndCheckSubjects(subjects, values);
-      this.setState({ ...this.state, subjects });
-    } else {
-      this.setState({ ...this.state, failedRequest: true });
-    }
-    return subjects;
-  }
-
   setSubjectGroup(sGroup: SubjectGroup) {
-    for (const s of this.state.subjects) {
+    for (const s of this.props.subjects) {
       s.checked = false;
     }
     this.setState({
@@ -421,10 +408,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (pageBricks) {
         let { subjects } = state;
 
-        for (let subject of pageBricks.subjects) {
-          subject.personalCount = subject.count;
-          subject.publicCount = subject.count;
-        }
         if (values && values.isViewAll) {
           this.checkSubjectsWithBricks(subjects);
         }
@@ -435,7 +418,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
         this.setState({
           ...state,
-          subjects: pageBricks.subjects as SubjectItem[],
           bricksCount: pageBricks.pageCount,
           bricks: pageBricks.bricks,
           isLoading: false,
@@ -493,13 +475,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if (pageBricks) {
       const { subjects } = this.state;
-      for (let subject of pageBricks.subjects) {
-        const filterSubject = subjects.find(s => s.id === subject.id);
-        if (filterSubject) {
-          filterSubject.personalCount = subject.count;
-          filterSubject.publicCount = subject.count;
-        }
-      }
 
       this.setState({
         ...this.state,
@@ -543,10 +518,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     if (pageBricks) {
       for (let subject of pageBricks.subjects) {
         const filterSubject = subjects.find(s => s.id === subject.id);
-        if (filterSubject) {
-          filterSubject.personalCount = subject.count;
-          filterSubject.publicCount = subject.count;
-        }
       }
     }
 
@@ -735,11 +706,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     let { subjects } = this.state;
     if (this.state.isCore) {
       subjects.forEach((s) => {
-        if (s.publicCount > 0) {
-          this.checkUserSubject(s);
-        } else {
-          s.checked = false;
-        }
+        this.checkUserSubject(s);
       });
     } else {
       subjects.forEach((s) => {
@@ -934,8 +901,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         link += '&assigning-bricks=' + values["assigning-bricks"];
       }
     }
-
-    console.log('move', link)
 
     this.props.history.push(link);
   }
@@ -1617,11 +1582,13 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
+  subjects: state.subjects.subjects,
   notifications: state.notifications.notifications,
 });
 
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects()),
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
 });
 
