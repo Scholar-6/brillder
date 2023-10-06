@@ -147,7 +147,6 @@ interface ViewAllState {
   resize(e: any): void;
 
   bricksRef: React.RefObject<any>;
-  onBricksWheel(e: any): void;
 }
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
@@ -269,26 +268,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       resize: this.resize.bind(this),
 
       bricksRef: React.createRef<any>(),
-      onBricksWheel: this.onBricksWheel.bind(this),
     };
 
     this.loadData(values);
-  }
-
-  // load bricks when notification come
-  componentDidUpdate(prevProps: ViewAllProps) {
-    this.addWheelListener();
-
-    // check if back button pressed
-    // refresh page data
-  }
-
-  onBricksWheel(e: any) {
-    if (e.wheelDeltaY < 0) {
-      this.moveAllNext();
-    } else {
-      this.moveAllBack();
-    }
   }
 
   checkSubjectsWithBricks(subjects: SubjectItem[]) {
@@ -305,28 +287,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     });
   }
 
-  addWheelListener() {
-    const { current } = this.state.bricksRef;
-    if (current) {
-      current.addEventListener("wheel", this.state.onBricksWheel, false);
-    }
-  }
-
   componentDidMount() {
     document.addEventListener("keydown", this.state.handleKey, false);
     window.addEventListener("resize", this.state.resize, false);
-
-    this.addWheelListener();
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.state.handleKey, false);
     window.removeEventListener("resize", this.state.resize, false);
-
-    const { current } = this.state.bricksRef;
-    if (current) {
-      current.removeEventListener("wheel", this.state.onBricksWheel, false);
-    }
   }
 
   async handleKey(e: any) {
