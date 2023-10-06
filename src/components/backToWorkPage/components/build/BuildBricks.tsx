@@ -46,7 +46,6 @@ interface BuildBricksProps {
 
 interface State {
   bricksRef: React.RefObject<any>;
-  onBricksWheel(e: any): void;
 }
 
 class BuildBricks extends Component<BuildBricksProps, State> {
@@ -54,31 +53,7 @@ class BuildBricks extends Component<BuildBricksProps, State> {
     super(props);
 
     this.state = {
-      bricksRef: React.createRef<any>(),
-      onBricksWheel: this.onBricksWheel.bind(this)
-    }
-  }
-
-  componentDidMount() {
-    const { current } = this.state.bricksRef;
-    if (current) {
-      current.addEventListener('wheel', this.state.onBricksWheel, false);
-    }
-  }
-
-  componentWillUnmount() {
-    const { current } = this.state.bricksRef;
-    if (current) {
-      current.removeEventListener('wheel', this.state.onBricksWheel, false);
-    }
-  }
-
-  onBricksWheel(e: any) {
-    const wheelCoef = 40;
-    if (e.wheelDeltaY < -wheelCoef) {
-      this.props.moveNext();
-    } else if (e.wheelDeltaY > wheelCoef) {
-      this.props.moveBack();
+      bricksRef: React.createRef<any>()
     }
   }
 
