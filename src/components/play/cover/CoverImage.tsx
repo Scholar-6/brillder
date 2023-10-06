@@ -7,21 +7,15 @@ import ImageCoverDialog from './ImageCoverDialog';
 import { ImageCoverData } from './model';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { setBrickCover } from 'services/axios/brick';
-import actions from 'redux/actions/play';
-import { connect } from 'react-redux';
 
 interface ImageProps {
   locked: boolean;
   brickId: number;
   data: ImageCoverData;
-
-  hover(fileName: string, imageSource: string): void;
-  blur(): void;
 }
 
 const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   const [isOpen, setOpen] = React.useState(false);
-  const [hoverTimeout, setHoverTimeout] = React.useState(-1 as number | NodeJS.Timeout);
   const [file, setFile] = React.useState(null as File | null);
   const [fileName, setFileName] = React.useState(props.data.value);
   const [isCloseOpen, setCloseDialog] = React.useState(false);
@@ -39,15 +33,6 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
       // fail
     }
   }
-
-  useEffect(() => {
-    return function cleanup() {
-      props.hover('', '');
-      props.blur();
-      clearTimeout(hoverTimeout);
-    }
-  /*eslint-disable-next-line*/
-  }, [hoverTimeout])
 
   useEffect(() => {
     if (!fileName) {
@@ -88,8 +73,6 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
     className += ' invalid';
   }
 
-  console.log(fileUrl(fileName));
-
   return (
     <div className="image-drag-n-drop">
       <div className={className} onClick={() => {
@@ -112,22 +95,7 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
       }}>
         {
           fileName
-            ? <div className="cover-image-v5" style={{backgroundImage: `url(${fileUrl(fileName)})`}}
-              onMouseEnter={() => {
-                if (hoverTimeout >= 0) {
-                  clearTimeout(hoverTimeout);
-                }
-                const timeout = setTimeout(() => {
-                  props.hover(fileName, props.data.imageSource);
-                }, 5000);
-                setHoverTimeout(timeout);
-              }}
-              onMouseLeave={() => {
-                clearTimeout(hoverTimeout);
-                setHoverTimeout(-1);
-                props.blur();
-              }}
-            />
+            ? <div className="cover-image-v5" style={{backgroundImage: `url(${fileUrl(fileName)})`}} />
             : (
               <div>
                 <SpriteIcon name="image" />
@@ -156,9 +124,4 @@ const CoverImageComponent: React.FC<ImageProps> = ({ locked, ...props }) => {
   );
 }
 
-const mapDispatch = (dispatch: any) => ({
-  hover: (fileName: string, imageSource: string) => dispatch(actions.setImageHover(fileName, imageSource)),
-  blur: () => dispatch(actions.setImageBlur()),
-});
-
-export default connect(null, mapDispatch)(CoverImageComponent);
+export default CoverImageComponent;
