@@ -24,15 +24,13 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
   const [failed, setFailed] = React.useState(false);
   const [classroom, setClassroom] = React.useState(null as any);
   const [assignments, setAssignments] = React.useState([] as any[]);
-  const [imgLoaded, setImgLoaded] = React.useState(false);
 
   useEffect(() => {
     getClassroomByCode(code).then((res) => {
       if (res.many) {
         let assignments = res.assignments;
-        console.log(assignments);
         if (assignments[0].order > 0) {
-          assignments = res.assignments.sort((a:any, b:any) => b.order - a.order);
+          assignments = res.assignments.sort((a:any, b:any) => a.order - b.order);
         }
         setAssignments(assignments);
         setClassroom(res.class);
