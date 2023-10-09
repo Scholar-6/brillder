@@ -208,7 +208,7 @@ class BuildBricks extends Component<BuildBricksProps, State> {
     }
 
     if (isEmpty && this.props.loaded) {
-      return <EmptyPage isPublish={this.props.filters.publish} published={this.props.publishedCount} switchPublish={this.switchPublish} />;
+      return <EmptyPage isPublish={this.props.filters.publish} published={this.props.publishedCount} switchPublish={this.switchPublish.bind(this)} />;
     }
 
     return (
@@ -216,7 +216,7 @@ class BuildBricks extends Component<BuildBricksProps, State> {
         <PublishToggle
           isPublish={this.props.filters.publish}
           publishedCount={this.props.publishedCount}
-          onSwitch={this.switchPublish}
+          onSwitch={this.switchPublish.bind(this)}
         />
         <div className="bricks-list list" ref={this.state.bricksRef}>
           {this.renderDescriptions()}
