@@ -7,11 +7,10 @@ import { isMobile } from 'react-device-detect';
 
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
-import { Brick, SubjectAItem } from "model/brick";
+import { Brick, Subject, SubjectAItem } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import { getLibraryBricks } from "services/axios/brick";
-import { getSubjects } from "services/axios/subject";
 import { SortBy, SubjectAssignments } from "./service/model";
 import { LibraryAssignmentBrick } from "model/assignment";
 import { getUserById } from 'services/axios/user';
@@ -29,6 +28,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { CircularProgressbar } from "react-circular-progressbar";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
+import subjectActions from "redux/actions/subject";
 
 
 interface BricksListProps {
@@ -37,6 +37,9 @@ interface BricksListProps {
   match: any;
   history: any;
   location: any;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface BricksListState {
@@ -125,8 +128,10 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async loadSubjects() {
-    console.log('get subjects 15');
-    const subjects = await getSubjects();
+    let subjects = this.props.subjects;
+    if (subjects.length === 0) {
+      subjects = await this.props.getSubjects();
+    }
 
     if (subjects) {
       subjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
@@ -683,7 +688,12 @@ class Library extends Component<BricksListProps, BricksListState> {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  notifications: state.notifications.notifications
+  notifications: state.notifications.notifications,
+  subjects: state.subjects.subjects
 });
 
-export default connect(mapState)(Library);
+const mapDispatch = (dispatch: any) => ({
+  getSubjects: () => dispatch(subjectActions.fetchSubjects())
+});
+
+export default connect(mapState, mapDispatch)(Library);

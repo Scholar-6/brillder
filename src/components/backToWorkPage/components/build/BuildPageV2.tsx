@@ -6,15 +6,13 @@ import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
 import './BuildPage.scss';
-import { Brick, BrickStatus } from "model/brick";
+import { Brick, BrickStatus, Subject } from "model/brick";
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { Filters, SortBy } from '../../model';
 import { searchBricks, getBricksByStatusPerPage } from "services/axios/brick";
 import { Notification } from 'model/notifications';
-import {
-  hideBricks, expandBrick, expandSearchBrick, removeBrickFromList
-} from '../../service';
+import { removeBrickFromList } from '../../service';
 import { downKeyPressed, upKeyPressed } from "components/services/key";
 
 import Tab from './Tab';
@@ -26,7 +24,7 @@ import map from "components/map";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { SubjectItem } from "../personalBuild/model";
 import { isPhone } from "services/phone";
-import { getSubjects } from "services/axios/subject";
+import subjectActions from "redux/actions/subject";
 
 
 interface BuildProps {
@@ -49,6 +47,9 @@ interface BuildProps {
   notifications: Notification[] | null;
   searchFinished(): void;
   requestFailed(e: string): void;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface BuildState {
@@ -70,8 +71,6 @@ interface BuildState {
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 
-  subjects: SubjectItem[];
-
   draftCount: number;
   buildCount: number;
   reviewCount: number;
@@ -82,7 +81,7 @@ interface BuildState {
   handleKey(e: any): void;
 }
 
-class BuildPage extends Component<BuildProps, BuildState> {
+class BuildPageV2 extends Component<BuildProps, BuildState> {
   constructor(props: BuildProps) {
     super(props);
 
@@ -118,7 +117,6 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
       buildCheckedSubjectId: - 1,
 
-      subjects: [],
       handleKey: this.handleKey.bind(this)
     }
 
@@ -126,10 +124,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   async getInitData() {
-    console.log('get subjects 6');
-    const subjects = await getSubjects();
-    if (subjects) {
-      this.setState({subjects});
+    if (this.props.subjects.length === 0) {
+      await this.props.getSubjects();
     }
     
     await this.getBricks(this.state.page, this.state.buildCheckedSubjectId, this.getStatusesFromFilter(this.props.filters));
@@ -360,7 +356,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
           reviewCount={this.state.reviewCount}
           filters={this.props.filters}
           isEmpty={isEmpty}
-          subjects={this.state.subjects}
+          subjects={this.props.subjects}
           filterChanged={this.filterUpdated.bind(this)}
           filterBySubject={this.filterBuildBySubject.bind(this)}
         />
@@ -410,11 +406,13 @@ class BuildPage extends Component<BuildProps, BuildState> {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  notifications: state.notifications.notifications
+  notifications: state.notifications.notifications,
+  subjects: state.subjects.subjects
 });
 
 const mapDispatch = (dispatch: any) => ({
-  requestFailed: (e: string) => dispatch(actions.requestFailed(e))
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects())
 });
 
-export default connect(mapState, mapDispatch)(BuildPage);
+export default connect(mapState, mapDispatch)(BuildPageV2);

@@ -7,7 +7,6 @@ import PageHeadWithMenu, {
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import "swiper/swiper.scss";
 
-
 import {
   AcademicLevel,
   AcademicLevelLabels,
@@ -29,19 +28,9 @@ import InfinityScrollCustom from "./InvinityScrollCustom";
 import { getPublishedBricksByPage, getUnauthPublishedBricksByPage } from "services/axios/brick";
 import { ENGLISH_LANGUAGE_SUBJECT, ENGLISH_LITERATURE_SUBJECT, GENERAL_SUBJECT } from "components/services/subject";
 import { SortBy } from "./components/ViewAllFilter";
+import subjectActions from "redux/actions/subject";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
-
-const mapState = (state: ReduxCombinedState) => ({
-  user: state.user.user,
-});
-
-const mapDispatch = (dispatch: any) => ({
-  forgetBrick: () => dispatch(brickActions.forgetBrick()),
-  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
-});
-
-const connector = connect(mapState, mapDispatch);
 
 interface BricksListProps {
   user: User;
@@ -49,6 +38,9 @@ interface BricksListProps {
   location: any;
   forgetBrick(): void;
   requestFailed(e: string): void;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 enum ActiveTab {
@@ -154,8 +146,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (this.props.user) {
       const data = await getPublishedBricksByPage(1, 0, true, [], [], [], false);
       if (data) {
+        let subjects = this.props.subjects;
+        if (this.props.subjects.length === 0) {
+          subjects = await this.props.getSubjects();
+        }
         const mySubjects: Subject[] = [];
-        const subjects = data.subjects.filter(s => s.count > 0);
 
         for (let s of this.props.user.subjects) {
           const s3 = subjects.find(s2 => s2.id == s.id);
@@ -180,7 +175,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           ...this.state,
           isCore,
           subjects,
-          totalSubjects: data.subjects,
+          totalSubjects: subjects,
           mySubjects,
           expandedSubjects,
           groupSubjects,
@@ -492,8 +487,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (this.state.groupSubjects.length === 0) {
       return <div />;
     }
-
-    console.log('group subjects', this.state.groupSubjects);
 
     return (
       <React.Suspense fallback={<></>}>
@@ -839,5 +832,18 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     )
   }
 }
+
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  subjects: state.subjects.subjects
+});
+
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(brickActions.forgetBrick()),
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects())
+});
+
+const connector = connect(mapState, mapDispatch);
 
 export default connector(MobileCategoryPage);
