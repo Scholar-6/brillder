@@ -1,18 +1,18 @@
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { StripeCredits } from 'components/map';
-import { User } from 'model/user';
 import React, { useEffect, useState } from 'react';
+import { User } from 'model/user';
 import { connect } from "react-redux";
 
-import userActions from "redux/actions/user";
+import { ReduxCombinedState } from 'redux/reducers';
+import { StripeCredits } from 'components/map';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface Props {
   className?: string;
-  user?: User;
-  getUser(): any;
   history?: any;
   popupShown?: boolean;
   onClick?(): void;
+
+  user: User;
 }
 
 const ReactiveUserCredits: React.FC<Props> = (props) => {
@@ -23,22 +23,13 @@ const ReactiveUserCredits: React.FC<Props> = (props) => {
     if (props.user && props.user.freeAttemptsLeft !== credits) {
       setCredits(props.user.freeAttemptsLeft);
     }
+
+    if (props.user && props.user.library) {
+      setLibraryUser(true);
+    } else {
+      setLibraryUser(false);
+    }
   }, [props.user]);
-
-  const getCredits = async () => {
-    try {
-      const user = await props.getUser();
-      setCredits(user.freeAttemptsLeft);
-
-      if (user.library) {
-        setLibraryUser(true);
-      } else {
-        setLibraryUser(false);
-      }
-    } catch { }
-  }
-
-  useEffect(() => { getCredits(); }, []);
 
   const renderBoldTitle = () => {
     if (credits === 0) {
@@ -73,8 +64,9 @@ const ReactiveUserCredits: React.FC<Props> = (props) => {
   );
 }
 
-const mapDispatch = (dispatch: any) => ({
-  getUser: () => dispatch(userActions.getUser()),
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
 });
 
-export default connect(null, mapDispatch)(ReactiveUserCredits);
+
+export default connect(mapState)(ReactiveUserCredits);

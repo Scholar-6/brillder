@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import Dialog from "@material-ui/core/Dialog";
-import { connect } from 'react-redux';
 import queryString from 'query-string';
 
 import './UnauthorizedUserDialog.scss';
@@ -11,7 +10,6 @@ import { SetAuthBrickCash } from "localStorage/play";
 import GoogleDesktopButton from "components/loginPage/desktop/GoogleDesktopButton";
 import map from "components/map";
 
-import userActions from 'redux/actions/user';
 import { Brick } from "model/brick";
 import MicrosoftDesktopButton from "components/loginPage/desktop/MicrosoftDesktopButton";
 import UKlibraryButton from "components/loginPage/components/UKLibraryButton";
@@ -27,8 +25,6 @@ interface UnauthorizedProps {
   notyet(): void;
   registered?(): void;
   close?(): void;
-
-  getUser(): Promise<void>;
 }
 
 const MobileTheme = React.lazy(() => import('./themes/MobileTheme'));
@@ -182,8 +178,4 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
   );
 }
 
-const mapDispatch = (dispatch: any) => ({
-  getUser: () => dispatch(userActions.getUser()),
-});
-
-export default connect(null, mapDispatch)(UnauthorizedUserDialogV2);
+export default UnauthorizedUserDialogV2;

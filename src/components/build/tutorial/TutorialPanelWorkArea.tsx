@@ -1,12 +1,10 @@
 import React from 'react'
-import { connect } from "react-redux";
 
 import ProposalPanel from './ProposalPanel';
 import InvestigationPanel from './InvestigationPanel';
 import SynthesisPanel from './SynthesisPanel';
 import PlayPanel from './PlayPanel';
 import { User } from 'model/user';
-import userActions from 'redux/actions/user';
 
 
 export enum TutorialStep {
@@ -22,11 +20,10 @@ export interface TutorialProps {
   brickId: number;
   step: TutorialStep;
   setStep(step: TutorialStep): void;
-  getUser(): void;
   skipTutorial(): void;
 }
 
-const TutorialPanelWorkArea: React.FC<TutorialProps> = ({ user, step, setStep, getUser, skipTutorial }) => {
+const TutorialPanelWorkArea: React.FC<TutorialProps> = ({ user, step, setStep, skipTutorial }) => {
   const skip = () => skipTutorial();
 
   const renderStepPanel = () => {
@@ -49,10 +46,4 @@ const TutorialPanelWorkArea: React.FC<TutorialProps> = ({ user, step, setStep, g
   );
 }
 
-const mapDispatch = (dispatch: any) => ({
-  getUser: () => dispatch(userActions.getUser()),
-});
-
-const connector = connect(null, mapDispatch);
-
-export default connector(TutorialPanelWorkArea);
+export default TutorialPanelWorkArea;

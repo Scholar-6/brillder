@@ -7,18 +7,18 @@ import { socketLogin } from './socket';
 
 
 const getUserSuccess = (user: any) => {
-    return {
-      type: types.GET_USER_SUCCESS,
-      user
-    } as Action
-  }
-  
-  const getUserFailure = (errorMessage:string) => {
-    return {
-      type: types.GET_USER_FAILURE,
-      error: errorMessage
-    } as Action
-  }
+  return {
+    type: types.GET_USER_SUCCESS,
+    user
+  } as Action
+}
+
+const getUserFailure = (errorMessage:string) => {
+  return {
+    type: types.GET_USER_FAILURE,
+    error: errorMessage
+  } as Action
+}
 
 const getUser = () => {
   return function (dispatch: Dispatch) {

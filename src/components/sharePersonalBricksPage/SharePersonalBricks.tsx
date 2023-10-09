@@ -6,7 +6,6 @@ import { Redirect } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 
 import brickActions from "redux/actions/brickActions";
-import userActions from "../../redux/actions/user";
 import { User } from "model/user";
 import { Notification } from "model/notifications";
 import {
@@ -47,7 +46,6 @@ interface ViewAllProps {
   notifications: Notification[] | null;
   history: any;
   location: any;
-  getUser(): Promise<any>;
   forgetBrick(): Promise<any>;
 }
 
@@ -504,9 +502,8 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  getUser: () => dispatch(userActions.getUser()),
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
 });
 
-export default connect(mapState, mapDispatch)(SharePersonalBricks);
+export default connect(mapState)(SharePersonalBricks);
 

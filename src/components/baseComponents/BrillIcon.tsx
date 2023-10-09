@@ -1,35 +1,31 @@
-import { User } from 'model/user';
 import React, { useEffect, useState } from 'react';
-import { isPhone } from 'services/phone';
-import SpriteIcon from './SpriteIcon';
 import { connect } from "react-redux";
 
-import userActions from "redux/actions/user";
+import SpriteIcon from './SpriteIcon';
+import { isPhone } from 'services/phone';
+import { ReduxCombinedState } from 'redux/reducers';
+import { User } from 'model/user';
 
 interface Props {
   popupShown?: boolean;
   onClick?(): void;
-  getUser(): Promise<any | User>;
+
+  user: User;
 }
 
 const BrillIcon: React.FC<Props> = (props) => {
   const [isLibraryUser, setLibraryUser] = useState(false);
 
-  const getUser = async () => {
-    try {
-      const user = await props.getUser();
-      if (user.library) {
+  useEffect(() => {
+    if (props.user) {
+      if (props.user.library) {
         setLibraryUser(true);
       } else {
         setLibraryUser(false);
       }
-    } catch { }
-  }
-
-  useEffect(() => {
-    getUser();
+    }
     /*eslint-disable-next-line*/
-  }, []);
+  }, [props.user]);
 
   if (isPhone()) {
     return (
@@ -65,12 +61,8 @@ const BrillIcon: React.FC<Props> = (props) => {
   )
 }
 
-const mapDispatch = (dispatch: any) => ({
-  getUser: () => dispatch(userActions.getUser()),
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
 });
 
-
-/**
- *  Credits will reload every 2seconds. Works only for current logged in user.
- */
-export default connect(null, mapDispatch)(BrillIcon);
+export default connect(mapState)(BrillIcon);

@@ -169,7 +169,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
           {(user.library || user.isFromInstitution) ? <div /> :
             !isPhone() &&
             <div className="header-credits-container">
-              <ReactiveUserCredits user={this.props.user} popupShown={this.state.popupShown === 1} onClick={() => {
+              <ReactiveUserCredits popupShown={this.state.popupShown === 1} onClick={() => {
                 if (this.state.popupShown === 1) {
                   this.setState({ popupShown: 0 });
                 } else {

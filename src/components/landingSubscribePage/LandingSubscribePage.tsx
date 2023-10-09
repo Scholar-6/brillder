@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
 import './LandingSubscribePage.scss';
-import { User } from 'model/user';
-import { ReduxCombinedState } from 'redux/reducers';
-import userActions from "../../redux/actions/user";
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import { isPhone } from 'services/phone';
@@ -14,8 +10,6 @@ const PhoneTheme = React.lazy(() => import('./themes/PhoneTheme'));
 interface StripePageProps {
   history: any;
   match: any;
-  user: User;
-  getUser(): void;
 }
 
 const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
@@ -148,12 +142,4 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
   );
 }
 
-const mapState = (state: ReduxCombinedState) => ({
-  user: state.user.user,
-});
-
-const mapDispatch = (dispatch: any) => ({
-  getUser: () => dispatch(userActions.getUser()),
-});
-
-export default connect(mapState, mapDispatch)(StripeCreditsPage);
+export default StripeCreditsPage;
