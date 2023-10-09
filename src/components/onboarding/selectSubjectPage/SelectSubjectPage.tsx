@@ -57,6 +57,7 @@ class SelectSubjectPage extends Component<AllSubjectsProps, AllSubjectsState> {
   }
 
   async loadSubjects() {
+    console.log('get subjects 18');
     let subjects = await getSubjects() as SubjectItem[] | null;
 
     if (subjects) {

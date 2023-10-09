@@ -123,6 +123,7 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
 
   async loadData() {
     const { userId, brickId, classId } = this.props.match.params;
+    console.log('get subjects 20');
     const subjects = await getSubjects();
     let classroom = null;
     if (classId) {

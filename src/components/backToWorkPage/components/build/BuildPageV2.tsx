@@ -126,6 +126,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   async getInitData() {
+    console.log('get subjects 6');
     const subjects = await getSubjects();
     if (subjects) {
       this.setState({subjects});

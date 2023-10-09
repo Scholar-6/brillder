@@ -24,7 +24,6 @@ import BrickLength from "./BrickLength";
 import Subjects from "./Subjects";
 import brickActions from "redux/actions/brickActions";
 import PlanPreviewComponent from "../baseComponents/phonePreview/plan/PlanPreview";
-import { getSubjects } from "services/axios/subject";
 import CoreSelect from "../proposal/questionnaire/brickTitle/components/CoreSelect";
 import { stripHtml } from "../questionService/ConvertService";
 import StatusCircle from "../baseComponents/statusCircle/StatusCircle";
@@ -34,6 +33,8 @@ import { isAorPorE } from "components/services/brickService";
 import QuillTitleEditor from "components/baseComponents/quill/QuillTitleEditor";
 import DifficultySelectV2 from "../proposal/questionnaire/brickTitle/components/DifficultySelectV2";
 import QuillOpenQuestionEditor from "components/baseComponents/quill/QuillOpenQuestionEditor";
+import subjectActions from "redux/actions/subject";
+
 
 export interface PlanProps {
   currentBrick: Brick;
@@ -48,6 +49,9 @@ export interface PlanProps {
   initSuggestionExpanded?: boolean;
   selectFirstQuestion(): void;
   setSaveFailed(): void;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 const PlanPage: React.FC<PlanProps> = (props) => {
@@ -68,11 +72,16 @@ const PlanPage: React.FC<PlanProps> = (props) => {
   const editorIdState = useState("");
 
   React.useEffect(() => {
-    getSubjects().then(allSubjects => {
-      if (allSubjects) {
-        setApiSubjects(allSubjects);
-      }
-    });
+  console.log('get subjects 12');
+    if (props.subjects.length === 0) {
+      props.getSubjects().then(allSubjects => {
+        if (allSubjects) {
+          setApiSubjects(allSubjects);
+        }
+      });
+    } else {
+      setApiSubjects(props.subjects);
+    }
     const values = queryString.parse(props.history.location.search);
     if (values.copied) {
       setTimeout(() => {
@@ -436,11 +445,13 @@ const PlanPage: React.FC<PlanProps> = (props) => {
 
 const mapState = (state: ReduxCombinedState) => ({
   currentBrick: state.brick.brick,
+  subjects: state.subjects.subjects,
 });
 
 const mapDispatch = (dispatch: any) => ({
   saveBrickField: (brickId: number, fieldName: string, value: string) => dispatch(brickActions.saveBrickField(brickId, fieldName, value)),
   saveBrick: (brick: Brick) => dispatch(brickActions.saveBrick(brick)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects()),
 });
 
 const connector = connect(mapState, mapDispatch);

@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from "react-redux";
 
 import { getAdminBrickStatistic } from 'services/axios/brick';
 import BrickPlayedPopup from 'components/admin/bricksPlayed/BrickPlayedPopup';
 import { PDateFilter } from 'components/admin/adminOverview/OverviewSidebar';
-import { Brick } from 'model/brick';
-import { getSubjects } from 'services/axios/subject';
+import { Brick, Subject } from 'model/brick';
+import subjectActions from "redux/actions/subject";
+import { ReduxCombinedState } from "redux/reducers";
 
 interface Props {
   brick: Brick;
   history: any;
+
+  subjects: Subject[];
+  getSubjects(): void;
 }
 
 const AdminBrickStatisticButton: React.FC<Props> = (props) => {
   const [data, setData] = useState({} as any);
-  const [subjects, setSubjects] = useState([] as any[]);
 
   const getData = async (e: any, b: Brick) => {
     e.stopPropagation();
@@ -23,15 +27,10 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
     }
   }
 
-  const loadSubjects = async () => {
-    const subjects = await getSubjects();
-    if (subjects) {
-      setSubjects(subjects);
-    }
-  }
-
   useEffect(() => {
-    loadSubjects();
+    if (props.subjects.length === 0) {
+      props.getSubjects();
+    }
   }, []);
 
   return (
@@ -44,7 +43,7 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
         history={props.history}
         dateFilter={PDateFilter.AllTime}
         brick={data.selectedBrick}
-        subjects={subjects}
+        subjects={props.subjects}
         assignments={data.assignments}
         brickAttempts={data.brickAttempts}
         close={() => {
@@ -55,4 +54,12 @@ const AdminBrickStatisticButton: React.FC<Props> = (props) => {
   );
 }
 
-export default AdminBrickStatisticButton;
+const mapState = (state: ReduxCombinedState) => ({
+  subjects: state.subjects.subjects,
+});
+
+const mapDispatch = (dispatch: any) => ({
+  getSubjects: () => dispatch(subjectActions.fetchSubjects()),
+});
+
+export default connect(mapState, mapDispatch)(AdminBrickStatisticButton);

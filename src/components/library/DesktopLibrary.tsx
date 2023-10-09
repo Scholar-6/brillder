@@ -125,6 +125,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async loadSubjects() {
+    console.log('get subjects 15');
     const subjects = await getSubjects();
 
     if (subjects) {

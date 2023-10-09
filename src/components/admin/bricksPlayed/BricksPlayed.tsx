@@ -25,6 +25,7 @@ import { exportToPDF } from "services/pdf";
 import { AdminBricksFilters, GetAdminBricksFilters, SetAdminBricksFilters } from "localStorage/admin";
 import BrickPlayedPopup from "./BrickPlayedPopup";
 import map from "components/map";
+import subjectActions from "redux/actions/subject";
 
 enum SortBy {
   Published,
@@ -39,6 +40,9 @@ interface TeachProps {
   history: History;
   searchString: string;
   user: User;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface TeachState {
@@ -302,7 +306,14 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
 
       this.setState({ bricks: sortedBricks, finalBricks: sortedBricks });
 
-      const subjects = await getSubjects();
+      let subjects = this.props.subjects;
+      if (subjects.length === 0) {
+        let subjectsV2 = await getSubjects();
+        if (subjectsV2) {
+          subjects = subjectsV2;
+        }
+      }
+
       if (subjects) {
         const generalSubject = this.fillSubjects(subjects, [GENERAL_SUBJECT]);
 
@@ -330,7 +341,6 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
           subjects: finalSubjects, artSubjects, mathSubjects,
           languageSubjects, humanitySubjects, generalSubject, scienceSubjects
         });
-
 
         if (filters.subjectCategory) {
           this.setSubjectCategory(filters.subjectCategory);
@@ -720,6 +730,13 @@ class BricksPlayedPage extends Component<TeachProps, TeachState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  subjects: state.subjects.subjects
+});
 
-export default connect(mapState)(BricksPlayedPage);
+const mapDispatch = (dispatch: any) => ({
+  getSubjects: () => dispatch(subjectActions.fetchSubjects())
+});
+
+export default connect(mapState, mapDispatch)(BricksPlayedPage);

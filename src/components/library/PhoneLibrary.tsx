@@ -84,6 +84,7 @@ class Library extends Component<BricksListProps, BricksListState> {
   }
 
   async loadSubjects() {
+    console.log('get subjects 17');
     const subjects = await getSubjects();
 
     if (subjects) {

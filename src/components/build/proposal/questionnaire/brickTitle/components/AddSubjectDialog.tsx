@@ -31,6 +31,7 @@ class AddSubjectDialog extends React.Component<DialogProps, DialogState> {
   }
 
   async getSubjects() {
+    console.log('get subjects 14');
     const subjects = await getSubjects();
     if (subjects) {
       this.setState({ subjects });

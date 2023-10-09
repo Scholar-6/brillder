@@ -14,7 +14,6 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import ClassesSidebar, { CDomain, PDateFilter } from "./ClassesSidebar";
 import BricksTab, { BricksActiveTab } from "../bricksPlayed/BricksTab";
 import { Subject } from "model/brick";
-import { getSubjects } from "services/axios/subject";
 import { ClassroomApi } from "components/teach/service";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { exportToCSV } from "services/excel";
@@ -26,7 +25,7 @@ import { getAllAdminClassrooms, getAllAdminClassroomsStudents, getAllUniqueEmail
 import BackPagePagination from "components/backToWorkPage/components/BackPagePagination";
 import { playCover } from "components/play/routes";
 import FileSaver from "file-saver";
-
+import subjectActions from "redux/actions/subject";
 
 export enum ACSortBy {
   Name,
@@ -46,6 +45,9 @@ interface TeachProps {
   // redux
   user: User;
   requestFailed(e: string): void;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface TeachState {
@@ -59,7 +61,6 @@ interface TeachState {
   downloadClicked: boolean;
   allDomains: boolean;
   domains: CDomain[];
-  subjects: Subject[];
   selectedSubjects: Subject[];
   classrooms: ClassroomApi[];
   finalClassrooms: ClassroomApi[];
@@ -87,7 +88,6 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
 
       downloadClicked: false,
       dateFilter,
-      subjects: [],
       selectedSubjects: [],
       allDomains: true,
       domains: [],
@@ -121,9 +121,8 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
       const { classrooms } = classroomPage;
       this.setState({ classrooms, finalClassrooms: classrooms, domains, count: classroomPage.count });
     }
-    const subjects = await getSubjects();
-    if (subjects) {
-      this.setState({ subjects });
+    if (this.props.subjects.length === 0) {
+      this.props.getSubjects();
     }
   }
 
@@ -523,7 +522,7 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
               this.state.isSearching ? this.state.searchString : '',
             )}
 
-            subjects={this.state.subjects}
+            subjects={this.props.subjects}
             selectedSubjects={this.state.selectedSubjects}
             selectSubjects={selectedSubjects => this.loadData(
               this.state.dateFilter, 0, selectedSubjects, this.state.sortBy, this.state.isAscending,
@@ -649,11 +648,14 @@ class ClassesEvents extends Component<TeachProps, TeachState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  subjects: state.subjects.subjects
+});
 
 const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects())
 });
 
 export default connect(mapState, mapDispatch)(ClassesEvents);
-

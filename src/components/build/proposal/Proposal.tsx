@@ -169,6 +169,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   async getSubject() {
+    console.log('get subjects 13');
     const subjects = await getSubjects();
     if (subjects) {
       this.setState({ subjects });
