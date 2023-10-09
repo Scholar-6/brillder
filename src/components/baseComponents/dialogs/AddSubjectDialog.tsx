@@ -5,12 +5,12 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { ListItemIcon, ListItemText, MenuItem, SvgIcon } from '@material-ui/core';
 
-
 import './AssignBrickClass.scss';
 import actions from 'redux/actions/requestFailed';
 import SpriteIcon from '../SpriteIcon';
-import { getSubjects } from 'services/axios/subject';
 import { Subject } from 'model/brick';
+import { ReduxCombinedState } from 'redux/reducers';
+import subjectActions from "redux/actions/subject";
 
 interface AddSubjectProps {
   isOpen: boolean;
@@ -18,6 +18,9 @@ interface AddSubjectProps {
   success(subject: any): void;
   close(): void;
   requestFailed(e: string): void;
+
+  subjects: Subject[];
+  getSubjects(): Subject[] | null;
 }
 
 const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
@@ -25,8 +28,13 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
   const [subject, setSubject] = React.useState(null as any);
 
   const loadSubjects = async () => {
-    console.log('get subjects 9');
-    let loadedSubjects = await getSubjects();
+    let loadedSubjects = props.subjects;
+    if (loadedSubjects.length === 0) {
+      let subjects = await props.getSubjects();
+      if (subjects) {
+        loadedSubjects = subjects;
+      }
+    }
      
     if (loadedSubjects) {
       for (let s2 of props.userSubjects) {
@@ -104,10 +112,13 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
   );
 }
 
-const mapDispatch = (dispatch: any) => ({
-  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+const mapState = (state: ReduxCombinedState) => ({
+  subjects: state.subjects.subjects,
 });
 
-const connector = connect(null, mapDispatch);
+const mapDispatch = (dispatch: any) => ({
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects()),
+});
 
-export default connector(AddSubjectDialog);
+export default connect(mapState, mapDispatch)(AddSubjectDialog);
