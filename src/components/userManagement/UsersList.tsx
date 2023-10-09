@@ -116,6 +116,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
     this.getUsers(this.state.page, this.state.sortBy);
 
+    console.log('get subject 6666')
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
       withCredentials: true,
     }).then((res) => {

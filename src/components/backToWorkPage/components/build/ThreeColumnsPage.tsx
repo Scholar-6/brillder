@@ -6,7 +6,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
 import './BuildPage.scss';
-import { Brick, BrickStatus } from "model/brick";
+import { Brick, BrickStatus, Subject } from "model/brick";
 import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters } from '../../model';
@@ -24,8 +24,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { SubjectItem } from "../personalBuild/model";
 import { isPhone } from "services/phone";
 import ThreeColumnsFilterSidebar from "./ThreeColumnsFilterSidebar";
-import { getSubjects } from "services/axios/subject";
-
+import subjectActions from "redux/actions/subject";
 
 interface BuildProps {
   searchString: string;
@@ -46,6 +45,9 @@ interface BuildProps {
   filters: Filters;
   filterUpdated(filters: Filters): void;
   requestFailed(e: string): void;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface BuildState {
@@ -66,8 +68,6 @@ interface BuildState {
 
   deleteDialogOpen: boolean;
   deleteBrickId: number;
-
-  subjects: SubjectItem[];
 
   buildCheckedSubjectId: number;
 
@@ -121,8 +121,6 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
 
       buildCheckedSubjectId: - 1,
 
-      subjects: [],
-
       handleKey: this.handleKey.bind(this)
     }
 
@@ -141,9 +139,8 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
   }
 
   async getInitData() {
-    const subjects = await getSubjects();
-    if (subjects) {
-      this.setState({ subjects });
+    if (this.props.subjects.length === 0) {
+      await this.props.getSubjects();
     }
     await this.getBricks(0, -1);
   }
@@ -213,18 +210,6 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
     } as any;
 
     this.setState({ ...this.state, page, threeColumns, bricksLoaded: true, buildCheckedSubjectId: subjectId });
-
-    /*
-    const bricks = [];
-    //[...reviewData.bricks, ...draftData.bricks, ...buildData.bricks]; //  await getThreeColumnBricks();
-    if (bricks) {
-      //let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
-      //bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === this.props.user.id)) ? -1 : 1);
-      //bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
-      this.setBricks(bricks);
-    } else {
-      this.props.requestFailed('Can`t get bricks');
-    }*/
   }
 
   componentDidMount() {
@@ -253,30 +238,6 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  getBrickSubjects(bricks: Brick[]) {
-    let subjects: SubjectItem[] = [];
-    for (let brick of bricks) {
-      if (!brick.subject) {
-        continue;
-      }
-      if (!brick.isCore) {
-        continue;
-      }
-      if (brick.status === BrickStatus.Publish) {
-        continue;
-      }
-      let subject = subjects.find(s => s.id === brick.subject?.id);
-      if (!subject) {
-        let subject = Object.assign({}, brick.subject) as SubjectItem;
-        subject.count = 1;
-        subjects.push(subject);
-      } else {
-        subject.count += 1;
-      }
-    }
-    return subjects;
-  }
-
   switchPublish() {
     this.props.history.push(map.BackToWorkPagePublished);
   }
@@ -302,8 +263,6 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
     let { page, pageSize } = this.state;
 
     const longestColumn = getLongestColumn(threeColumns);
-
-    console.log(page, pageSize, longestColumn);
 
     return (
       <BackPagePaginationV2
@@ -354,8 +313,6 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
       threeColumns = this.state.searchThreeColumns;
     }
 
-    console.log(threeColumns);
-
     let isEmpty = false;
 
     if (threeColumns.red.count === 0 && threeColumns.green.count === 0 && threeColumns.yellow.count === 0 && this.state.buildCheckedSubjectId === -1) {
@@ -370,7 +327,7 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
           threeColumns={threeColumns}
           filters={this.props.filters}
           isEmpty={isEmpty}
-          subjects={this.state.subjects}
+          subjects={this.props.subjects}
           filterChanged={this.filterUpdated.bind(this)}
           filterBySubject={this.filterBuildBySubject.bind(this)}
         />
@@ -416,11 +373,13 @@ class ThreeColumnsPage extends Component<BuildProps, BuildState> {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  notifications: state.notifications.notifications
+  notifications: state.notifications.notifications,
+  subjects: state.subjects.subjects,
 });
 
 const mapDispatch = (dispatch: any) => ({
-  requestFailed: (e: string) => dispatch(actions.requestFailed(e))
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects()),
 });
 
 export default connect(mapState, mapDispatch)(ThreeColumnsPage);

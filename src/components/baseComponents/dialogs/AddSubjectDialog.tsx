@@ -25,6 +25,7 @@ const AddSubjectDialog: React.FC<AddSubjectProps> = (props) => {
   const [subject, setSubject] = React.useState(null as any);
 
   const loadSubjects = async () => {
+    console.log('get subjects 9');
     let loadedSubjects = await getSubjects();
      
     if (loadedSubjects) {

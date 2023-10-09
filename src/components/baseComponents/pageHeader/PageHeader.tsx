@@ -17,13 +17,13 @@ import { PageEnum } from './PageHeadWithMenu';
 import { isPhone } from 'services/phone';
 import { Brick, KeyWord, Subject } from 'model/brick';
 import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestions';
-import { getSubjects } from 'services/axios/subject';
 import { User } from 'model/user';
 import VolumeButton from '../VolumeButton';
 import BrillIconAnimated from '../BrillIconAnimated';
 import ReactiveUserCredits from 'components/userProfilePage/ReactiveUserCredits';
 import { JoinPage, LibraryLoginPage, LibraryRegisterPage } from 'components/loginPage/desktop/routes';
 import { SetAuthBrickCash } from 'localStorage/play';
+import subjectActions from "redux/actions/subject";
 
 
 interface Props {
@@ -52,6 +52,9 @@ interface Props {
   notifications: Notification[];
   isAuthenticated: isAuthenticated;
   getNotifications(): void
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface State {
@@ -109,8 +112,10 @@ class PageHeader extends Component<Props, State> {
   async prepareSuggestions() {
     if (this.state.suggestionsLoaded === false) {
       this.setState({suggestionsLoaded: true})
-      const subjects = await getSubjects() || [];
-      this.setState({bricks: [], subjects });
+      if (this.props.subjects.length === 0) {
+        await this.props.getSubjects();
+      }
+      this.setState({bricks: [] });
     }
   }
 
@@ -265,7 +270,7 @@ class PageHeader extends Component<Props, State> {
             </div>
           </div>
           {this.props.suggestions && this.state.value.length >= 1 && <SearchSuggestions
-            history={this.props.history} subjects={this.state.subjects}
+            history={this.props.history} subjects={this.props.subjects}
             searchString={this.state.value} bricks={this.state.bricks}
             filterByAuthor={a => this.props.history.push(map.ViewAllPageB + '&searchString=' + a.firstName)}
             filterBySubject={s => this.props.history.push(map.ViewAllPageB + '&searchString=' + s.name)}
@@ -388,7 +393,7 @@ class PageHeader extends Component<Props, State> {
           </Hidden>
         </div>
         {this.props.suggestions && this.state.value.length >= 1 && <SearchSuggestions
-          history={this.props.history} subjects={this.state.subjects}
+          history={this.props.history} subjects={this.props.subjects}
           searchString={this.state.value} bricks={this.state.bricks}
           filterByAuthor={a => this.props.history.push(map.ViewAllPageB + '&searchString=' + a.firstName)}
           filterBySubject={s => this.props.history.push(map.ViewAllPageB + '&searchString=' + s.name)}
@@ -402,11 +407,13 @@ class PageHeader extends Component<Props, State> {
 const mapState = (state: ReduxCombinedState) => ({
   isAuthenticated: state.auth.isAuthenticated,
   user: state.user.user,
-  notifications: state.notifications.notifications
+  notifications: state.notifications.notifications,
+  subjects: state.subjects.subjects
 });
 
 const mapDispatch = (dispatch: any) => ({
-  getNotifications: () => dispatch(notificationActions.getNotifications())
+  getNotifications: () => dispatch(notificationActions.getNotifications()),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects())
 });
 
 const connector = connect(mapState, mapDispatch, null, { forwardRef: true });

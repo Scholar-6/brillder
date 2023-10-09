@@ -13,14 +13,13 @@ import AssignedBricks from "./AssignedBricks";
 import PlayFilterSidebar from "./PlayFilterSidebar";
 import map from "components/map";
 import { Subject } from "model/brick";
-import { getSubjects } from "services/axios/subject";
 import { countClassroomAssignments } from "./service";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import { GetSortSidebarClassroom } from "localStorage/assigningClass";
 import { SortClassroom } from "components/teach/assignments/components/TeachFilterSidebar";
-
+import subjectActions from "redux/actions/subject";
 
 interface PlayProps {
   history: any;
@@ -29,10 +28,12 @@ interface PlayProps {
   // redux
   user: User;
   requestFailed(value: string): void;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface PlayState {
-  subjects: Subject[];
   rawAssignments: AssignmentBrick[];
   activeClassroomId: number;
   classrooms: any[];
@@ -53,7 +54,6 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     const classSort = GetSortSidebarClassroom();
 
     this.state = {
-      subjects: [],
       rawAssignments: [],
       classrooms: [],
       activeClassroomId,
@@ -62,6 +62,9 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
     }
 
     this.getAssignments(classSort);
+    if (this.props.subjects.length === 0) {
+      this.props.getSubjects();
+    }
   }
 
   componentDidUpdate() {
@@ -85,8 +88,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
   async getAssignments(classSort: SortClassroom | null) {
     let assignments = await getAssignedBricks();
 
-    const subjects = await getSubjects();
-    if (assignments && subjects) {
+    if (assignments) {
       assignments = assignments.sort((a, b) => {
         if (a.bestScore && a.bestScore > 0) {
           return -1;
@@ -96,15 +98,14 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
         }
         return a.order - b.order;
       });
-      console.log(assignments);
-      this.setAssignments(assignments, subjects, classSort);
+      this.setAssignments(assignments, classSort);
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
       this.setState({ isLoaded: true })
     }
   }
 
-  setAssignments(assignments: AssignmentBrick[], subjects: Subject[], sort: SortClassroom | null) {
+  setAssignments(assignments: AssignmentBrick[], sort: SortClassroom | null) {
     let classrooms: any[] = [];
     for (let assignment of assignments) {
       if (assignment.classroom) {
@@ -120,7 +121,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
 
     classrooms = this.getSorted(classrooms, sort);
 
-    this.setState({ ...this.state, subjects, isLoaded: true, classrooms, rawAssignments: assignments });
+    this.setState({ ...this.state, isLoaded: true, classrooms, rawAssignments: assignments });
   }
 
 
@@ -166,7 +167,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
               <AssignedBricks
                 user={this.props.user}
                 activeClassroomId={this.state.activeClassroomId}
-                subjects={this.state.subjects}
+                subjects={this.props.subjects}
                 classrooms={this.state.classrooms}
                 assignments={this.state.rawAssignments}
                 history={this.props.history}
@@ -182,10 +183,14 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  subjects: state.subjects.subjects
+});
 
 const mapDispatch = (dispatch: any) => ({
-  requestFailed: (e: string) => dispatch(actions.requestFailed(e))
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects())
 });
 
 export default connect(mapState, mapDispatch)(AssignmentPage);

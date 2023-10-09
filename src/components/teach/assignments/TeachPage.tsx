@@ -14,7 +14,6 @@ import { ClassroomStatus, TeachClassroom } from "model/classroom";
 import { getAllClassrooms, getAssignmentsClassrooms, searchClassrooms } from "components/teach/service";
 import { getDateString } from "components/services/brickService";
 import map from "components/map";
-import { getSubjects } from "services/axios/subject";
 import { deleteClassroom } from "services/axios/classroom";
 import { getClassAssignedCount } from "./service/service";
 
@@ -31,11 +30,9 @@ import CreateClassDialog from "./components/CreateClassDialog";
 import PremiumEducatorDialog from "components/play/baseComponents/dialogs/PremiumEducatorDialog";
 import DeleteClassDialog from "./components/DeleteClassDialog";
 import UpdateClassDialog from "./components/UpdateClassDialog";
-import AssignSuccessDialogV3 from "components/baseComponents/dialogs/AssignSuccessDialogV3";
 import AssignBrickClassDialog from "./components/AssignBrickClassDialog";
-import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 import { GetSetSortSidebarAssignment, GetSortSidebarClassroom } from "localStorage/assigningClass";
-
+import subjectActions from "redux/actions/subject";
 
 interface RemindersData {
   isOpen: boolean;
@@ -55,6 +52,9 @@ interface TeachProps {
   // redux
   user: User;
   requestFailed(e: string): void;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface TeachState {
@@ -65,7 +65,6 @@ interface TeachState {
 
   classrooms: TeachClassroom[];
   activeClassroom: any;
-  subjects: Subject[];
 
   isLoaded: boolean;
   remindersData: RemindersData;
@@ -117,7 +116,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       searchString: '',
       searchType: ClassroomSearchType.Any,
-      subjects: [],
 
       deleteClassOpen: false,
       classroomToRemove: null,
@@ -129,9 +127,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async loadInitData() {
-    const subjects = await getSubjects();
-    if (subjects) {
-      this.setState({ subjects });
+    if (this.props.subjects.length === 0) {
+      await this.props.getSubjects();
     }
 
     const values = queryString.parse(this.props.history.location.search);
@@ -153,10 +150,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async loadData() {
-    const subjects = await getSubjects();
-    if (subjects) {
-      this.setState({ subjects });
-    }
+    await this.props.getSubjects();
     this.loadClasses();
   }
 
@@ -264,8 +258,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       classroom.students = data.classroom.students;
       classroom.studentsInvitations = data.classroom.studentsInvitations;
      
-      console.log(555, data.assignments, classroom);
-      
       classroom.active = true;
 
       this.setState({
@@ -371,7 +363,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     return (
       <Grid item xs={9} className="brick-row-container teach-tab-d94">
         <ClassroomList
-          subjects={this.state.subjects}
+          subjects={this.props.subjects}
           history={this.props.history}
           activeClassroom={this.state.activeClassroom}
           reloadClass={this.loadClass.bind(this)}
@@ -530,7 +522,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             user={this.props.user}
             classrooms={showedClasses}
             isLoaded={this.state.isLoaded}
-            subjects={this.state.subjects}
+            subjects={this.props.subjects}
             history={this.props.history}
             activeClassroom={this.state.activeClassroom}
             setActiveClassroom={this.setActiveClassroom.bind(this)}
@@ -548,7 +540,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         {this.state.createClassOpen &&
           <CreateClassDialog
             isOpen={this.state.createClassOpen}
-            subjects={this.state.subjects}
+            subjects={this.props.subjects}
             history={this.props.history}
             submit={async (classroomId) => {
               await this.loadClass(classroomId);
@@ -581,7 +573,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           <AssignBrickClassDialog
             isOpen={this.state.isAssignOpen}
             classroom={this.state.activeClassroom}
-            subjects={this.state.subjects}
+            subjects={this.props.subjects}
             history={this.props.history}
             submit={async (classroomId) => {
               await this.loadClass(classroomId);
@@ -604,10 +596,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  subjects: state.subjects.subjects
+});
 
 const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects())
 });
 
 export default connect(mapState, mapDispatch)(TeachPage);

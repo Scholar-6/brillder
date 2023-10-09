@@ -117,6 +117,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   async loadData() {
     const { userId, brickId } = this.props.match.params;
+    console.log('get subjects 22');
     const subjects = await getSubjects();
     let attempts = await getAttempts(brickId, userId);
     if (subjects && attempts && attempts.length > 0) {

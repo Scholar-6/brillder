@@ -30,7 +30,7 @@ import AddingCreditsDialog from "./AddingCreditsDialog";
 import { resendInvitation } from "services/axios/classroom";
 import StudentInviteSuccessDialog from "components/play/finalStep/dialogs/StudentInviteSuccessDialog";
 import EmailTest from "../components/EmailTest";
-
+import subjectActions from "redux/actions/subject";
 
 interface UsersProps {
   history: History;
@@ -39,6 +39,9 @@ interface UsersProps {
   // redux
   user: User;
   requestFailed(e: string): void;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface CreditDetails {
@@ -141,9 +144,8 @@ class UsersPage extends Component<UsersProps, UsersState> {
   }
 
   async loadInitData() {
-    const subjects = await getSubjects();
-    if (subjects) {
-      this.setState({ subjects });
+    if (this.props.subjects.length === 0) {
+      this.props.getSubjects();
     }
     const domains = await getUserDomains();
     if (domains) {
@@ -576,7 +578,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <UsersSidebar
             isLoaded={true} userPreference={this.state.userPreference}
-            subjects={this.state.subjects}
+            subjects={this.props.subjects}
             selectedSubjects={this.state.selectedSubjects}
             dateFilter={this.state.dateFilter}
             setDateFilter={dateFilter => {
@@ -712,10 +714,14 @@ class UsersPage extends Component<UsersProps, UsersState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  subjects: state.subjects.subjects
+});
 
 const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects())
 });
 
 export default connect(mapState, mapDispatch)(UsersPage);

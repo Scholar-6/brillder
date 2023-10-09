@@ -162,6 +162,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       }
     }
 
+    console.log('get subjects 26');
     getSubjects().then(subjects => {
       if (subjects) {
         let user = this.state.user;
