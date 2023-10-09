@@ -290,6 +290,14 @@ export const getAssignedBricks = async () => {
   }
 }
 
+export const checkAssignedBrick = async (brickId: number) => {
+  try {
+    return await get<AssignmentBrick[]>("/bricks/checkAssigned/" + brickId);
+  } catch (e) {
+    return null;
+  }
+}
+
 export const sharedPersonalBricks = async (brickIds: number[], emails: string[]) => {
   try {
     return await post<any>("/brick/personal/share", {brickIds, emails});

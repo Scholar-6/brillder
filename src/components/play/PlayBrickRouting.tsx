@@ -79,7 +79,7 @@ import { checkCompetitionActive } from "services/competition";
 
 import { getAttempts } from 'services/axios/attempt';
 import { CreateByEmailRes } from "services/axios/user";
-import { getAssignedBricks } from "services/axios/brick";
+import { checkAssignedBrick } from "services/axios/brick";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
 import { getUserBrillsForBrick } from "services/axios/brills";
 import { SetFinishRedirectUrl, SetHeartOfMerciaUser, SetLoginRedirectUrl } from "localStorage/login";
@@ -400,7 +400,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const getAndCheckAssignment = async () => {
-    const assignments = await getAssignedBricks();
+    const assignments = await checkAssignedBrick(brick.id);
     if (assignments) {
       for (let assignment of assignments) {
         if (assignment && assignment.brick.id && assignment.brick.id === brick.id) {
