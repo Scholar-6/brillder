@@ -72,7 +72,6 @@ const PlanPage: React.FC<PlanProps> = (props) => {
   const editorIdState = useState("");
 
   React.useEffect(() => {
-  console.log('get subjects 12');
     if (props.subjects.length === 0) {
       props.getSubjects().then(allSubjects => {
         if (allSubjects) {

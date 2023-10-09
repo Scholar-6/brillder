@@ -38,8 +38,8 @@ import map from "components/map";
 import { stripHtml, stripHtmlWithSpaces } from "components/build/questionService/ConvertService";
 import { checkTeacher } from "components/services/brickService";
 import { CashAttempt } from "localStorage/play";
-import { getSubjects } from "services/axios/subject";
 import { getUserById } from "services/axios/user";
+import subjectActions from "redux/actions/subject";
 
 const MobileTheme = React.lazy(() => import('../themes/PageMobileTheme'));
 
@@ -60,6 +60,9 @@ interface ProposalProps {
   playStatus: PlayButtonStatus;
   saveBrick(): void;
   setBrickField(name: BrickFieldNames, value: string): void;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface ProposalState {
@@ -68,7 +71,6 @@ interface ProposalState {
   bookState: BookState;
   questionIndex: number;
   activeAttemptIndex: number;
-  subjects: Subject[];
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
   student: User;
@@ -103,7 +105,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       mode: true,
       bookHovered,
       attempts: [],
-      subjects: [],
       swiper: null,
       playHovered: false,
       showLibraryButton,
@@ -117,10 +118,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   async loadData() {
     const { userId, brickId } = this.props.match.params;
-    console.log('get subjects 22');
-    const subjects = await getSubjects();
+    if (this.props.subjects.length === 0) {
+      await this.props.getSubjects();
+    }
     let attempts = await getAttempts(brickId, userId);
-    if (subjects && attempts && attempts.length > 0) {
+    if (attempts && attempts.length > 0) {
       const attempt = attempts[this.state.activeAttemptIndex];
       this.prepareAttempt(attempt);
 
@@ -135,7 +137,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
         student = this.props.user;
       }
 
-      this.setState({ attempt: attempt, student, attempts, subjects });
+      this.setState({ attempt: attempt, student, attempts });
     }
   }
 
@@ -147,7 +149,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
   }
 
   componentDidCatch(error: any, info: any) {
-    console.log(error, info);
     this.props.history.push('/home');
   }
 
@@ -157,7 +158,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   moveToQuestion(questionIndex: number) {
     if (this.state.swiper) {
-      console.log('swipe', questionIndex);
       this.state.swiper.slideTo(questionIndex + 4, 200);
     }
     this.setState({ bookState: BookState.QuestionPage, bookHovered: true, questionIndex });
@@ -218,13 +218,12 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     const { student } = this.state;
 
     if (!this.state.attempt.liveAnswers) {
-      console.log('redirect has no live answers');
       return <Redirect to="/home" />;
     }
 
     let color = "#B0B0AD";
     if (brick.subjectId) {
-      const subject = this.state.subjects.find(s => s.id === brick.subjectId);
+      const subject = this.props.subjects.find(s => s.id === brick.subjectId);
       if (subject) {
         color = subject.color;
       }
@@ -349,7 +348,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       <div onClick={() => this.moveToPrep()}><SpriteIcon name="file-text" /><span className="bold">Prep</span> <span className="ellipsis">{stripHtml(brick.prep)}</span></div>
                       {questions.map((q, i) => 
                         <div className="question-link" key={i} onClick={() => {
-                          console.log('move to question');
                           this.moveToQuestion(i);
                         }}>
                           <span className="bold">{i + 1}</span><span className="ellipsis">
@@ -475,8 +473,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
+  subjects: state.subjects.subjects
 });
 
-const connector = connect(mapState);
+const mapDispatch = (dispatch: any) => ({
+  getSubjects: () => dispatch(subjectActions.fetchSubjects()),
+});
 
-export default connector(PostPlay);
+export default connect(mapState, mapDispatch)(PostPlay);
