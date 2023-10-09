@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { History, Location } from "history";
 import queryString from 'query-string';
 
-
 import "./Proposal.scss";
 import actions from "redux/actions/brickActions";
 import SubjectPage from "./questionnaire/subject/Subject";
@@ -29,8 +28,8 @@ import { setLocalBrick, getLocalBrick } from "localStorage/proposal";
 import { leftKeyPressed, rightKeyPressed } from "components/services/key";
 import { buildQuesitonType } from "../routes";
 import { Helmet } from "react-helmet";
-import { getSubjects } from "services/axios/subject";
 import FailedToSaveBrickDialog from "components/baseComponents/failedRequestDialog/FailedToSaveBrickDialog";
+import subjectActions from "redux/actions/subject";
 
 interface ProposalProps {
   history: History;
@@ -41,6 +40,9 @@ interface ProposalProps {
   user: User;
   saveBrick(brick: Brick): Promise<Brick | null>;
   createBrick(brick: Brick): Promise<Brick | null>;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface ProposalState {
@@ -48,7 +50,6 @@ interface ProposalState {
   saving: boolean;
   hasSaveError: boolean;
   saved: boolean;
-  subjects: Subject[];
   isDialogOpen: boolean;
   moving: boolean;
   handleKey(e: any): void;
@@ -103,11 +104,12 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       saving: false,
       isDialogOpen: false,
       moving: false,
-      subjects: [],
       handleKey: this.handleKey.bind(this)
     };
 
-    this.getSubject();
+    if (this.props.subjects.length === 0) {
+      this.props.getSubjects();
+    }
   }
 
   componentDidMount() {
@@ -165,14 +167,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       } else if (pathname.slice(-PrepRoutePart.length) === PrepRoutePart) {
         history.push(baseUrl + BriefRoutePart);
       }
-    }
-  }
-
-  async getSubject() {
-    console.log('get subjects 13');
-    const subjects = await getSubjects();
-    if (subjects) {
-      this.setState({ subjects });
     }
   }
 
@@ -368,7 +362,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               baseUrl={baseUrl}
               parentState={localBrick}
               canEdit={canEdit}
-              subjects={this.state.subjects}
+              subjects={this.props.subjects}
               saveTitles={this.setTitles}
               setKeywords={this.setKeywords}
               setAcademicLevel={this.setAcademicLevel}
@@ -431,13 +425,13 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
   brick: state.brick.brick,
+  subjects: state.subjects.subjects
 });
 
 const mapDispatch = (dispatch: any) => ({
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects()),
 });
 
-const connector = connect(mapState, mapDispatch);
-
-export default connector(Proposal);
+export default connect(mapState, mapDispatch)(Proposal);
