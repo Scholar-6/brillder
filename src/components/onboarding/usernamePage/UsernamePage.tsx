@@ -82,6 +82,7 @@ const UsernamePage: React.FC<UsernamePageProps> = props => {
     // after saving user and getting user added some delay to prevent bugs
     setTimeout(async () => {
       if (saved) {
+
         await props.getUser();
         const { history } = props;
 

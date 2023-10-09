@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
-import { connect } from "react-redux";
 
 import { isIPad13, isMobile, isTablet } from 'react-device-detect';
-import userActions from 'redux/actions/user';
 import { isPhone } from "services/phone";
 import { hideZendesk } from "services/zendesk";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
@@ -13,8 +11,6 @@ import map from "components/map";
 interface BricksListProps {
   history: any;
   location: any;
-
-  getUser(): Promise<any>;
 }
 
 const MobileTheme = React.lazy(() => import('./themes/TermsMobileTheme'));
@@ -80,9 +76,4 @@ class PayTerms extends Component<BricksListProps> {
   }
 }
 
-
-const mapDispatch = (dispatch: any) => ({
-  getUser: () => dispatch(userActions.getUser()),
-});
-
-export default connect(null, mapDispatch)(PayTerms);
+export default PayTerms;

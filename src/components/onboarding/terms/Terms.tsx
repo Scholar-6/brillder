@@ -88,6 +88,7 @@ class TermsSignUp extends Component<BricksListProps, BricksListState> {
         const { data } = response;
         /*eslint-disable-next-line*/
         if (r && r.lastModifiedDate == data.termsAndConditionsAcceptedVersion) {
+
           const user = await this.props.getUser() as User;
 
           if (!user.userPreference) {

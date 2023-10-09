@@ -320,8 +320,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const showInitDialogs = async () => {
-    var user = await props.getUser();
-    if (user && user.freeAttemptsLeft <= 0) {
+    if (props.user && props.user.freeAttemptsLeft <= 0) {
       setPremiumLOpen(true);
     }
   }

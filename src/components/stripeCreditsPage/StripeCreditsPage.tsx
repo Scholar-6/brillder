@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import './StripeCreditsPage.scss';
 import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
-import userActions from "../../redux/actions/user";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import map from 'components/map';
 import { isPhone } from 'services/phone';
@@ -16,7 +15,6 @@ interface StripePageProps {
   history: any;
   match: any;
   user: User;
-  getUser(): void;
 }
 
 const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
@@ -34,8 +32,4 @@ const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
 });
 
-const mapDispatch = (dispatch: any) => ({
-  getUser: () => dispatch(userActions.getUser()),
-});
-
-export default connect(mapState, mapDispatch)(StripeCreditsPage);
+export default connect(mapState)(StripeCreditsPage);
