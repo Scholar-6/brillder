@@ -5,7 +5,6 @@ import { newStudentProfile } from './service';
 export const getNewUserState = (isAdmin: boolean) => {
   return {
     user: newStudentProfile(),
-    subjects: [],
     isNewUser: true,
     isStudent: false,
     isAdmin,
@@ -68,7 +67,6 @@ export const  getExistingUserState = (user: User) => {
       profileImage: "",
       profileImagePublic: user.profileImagePublic || false,
     },
-    subjects: [],
     userBrills: user.brills,
     isNewUser: false,
     isProfile: true,

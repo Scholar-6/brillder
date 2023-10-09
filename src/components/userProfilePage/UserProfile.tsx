@@ -18,7 +18,6 @@ import { isValid, getUserProfile } from './service';
 import { User, UserType, UserProfile, UserPreferenceType, SubscriptionState } from "model/user";
 import { Subject } from "model/brick";
 import { checkAdmin, formatTwoLastDigits } from "components/services/brickService";
-import { getSubjects } from "services/axios/subject";
 
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import SubjectDialog from "./components/SubjectDialog";
@@ -46,6 +45,7 @@ import UserCredits from "./UserCredits";
 import EmailDisplay from "./components/EmailDisplay";
 import EmailConfirmDialog from "./components/EmailConfirmDialog";
 import CancelSubscriptionDialog from "components/baseComponents/dialogs/CancelSubscriptionDialog";
+import subjectActions from "redux/actions/subject";
 
 
 const MobileTheme = React.lazy(() => import("./themes/UserMobileTheme"));
@@ -60,6 +60,9 @@ interface UserProfileProps {
   redirectedToProfile(): void;
   getUser(): Promise<void>;
   requestFailed(e: string): void;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface UserProfileState {
@@ -83,7 +86,6 @@ interface UserProfileState {
   isFromInstitution: boolean | undefined;
 
   user: UserProfile;
-  subjects: Subject[];
   isNewUser: boolean;
   isAdmin: boolean;
   isStudent: boolean;
@@ -162,21 +164,26 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       }
     }
 
-    console.log('get subjects 26');
-    getSubjects().then(subjects => {
-      if (subjects) {
-        let user = this.state.user;
-        const general = getGeneralSubject(subjects);
-        if (general) {
-          if (user.subjects.length === 0) {
-            user.subjects = [general];
-          }
+    this.loadSubjects();
+  }
+
+  async loadSubjects() {
+    let subjects = this.props.subjects;
+    if (subjects.length === 0) {
+      subjects = await this.props.getSubjects();
+    }
+    if (subjects) {
+      let user = this.state.user;
+      const general = getGeneralSubject(subjects);
+      if (general) {
+        if (user.subjects.length === 0) {
+          user.subjects = [general];
         }
-        this.setState({ subjects, user });
-      } else {
-        this.props.requestFailed("Can`t get subjects");
       }
-    });
+      this.setState({ user });
+    } else {
+      this.props.requestFailed("Can`t get subjects");
+    }
   }
 
   async componentDidMount() {
@@ -208,7 +215,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   async cancelSubscription() {
     const res = await cancelSubscription(this.state.user.id);
     if (res === true) {
-      this.setState({cancelSubscriptionDialog: false});
+      this.setState({ cancelSubscriptionDialog: false });
       this.props.getUser();
     }
   }
@@ -390,13 +397,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderSubjects(user: UserProfile) {
-    if (user.id === -1 || this.state.subjects.length === 0) {
+    if (user.id === -1 || this.props.subjects.length === 0) {
       return;
     }
     return (
       <SubjectAutocomplete
         selected={user.subjects}
-        subjects={this.state.subjects}
+        subjects={this.props.subjects}
         suspendIntroJs={this.suspendIntroJs.bind(this)}
         resumeIntroJs={this.resumeIntroJs.bind(this)}
         onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
@@ -622,7 +629,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           </div>
         );
       }
-      
+
       const institutionUser = this.state.user.roles.find(r => r === UserType.InstitutionUser);
 
       if (institutionUser) {
@@ -696,7 +703,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <a className="btn first-btn" href="mailto: support@scholar6.org">
               <SpriteIcon name="email" /> Tell us what would make you stay
             </a>
-            <div className="btn" onClick={() => this.setState({cancelSubscriptionDialog: true})}>
+            <div className="btn" onClick={() => this.setState({ cancelSubscriptionDialog: true })}>
               Cancel Subscription
             </div>
           </div>
@@ -721,15 +728,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     const renderLibrary = () => {
-      const {subscriptionState} = this.props.user;
+      const { subscriptionState } = this.props.user;
       if (subscriptionState && (subscriptionState === 2 || subscriptionState === 3 || subscriptionState === SubscriptionState.Cancelled)) {
         return <div />;
       }
-      
+
       if (subscriptionState && subscriptionState === SubscriptionState.StudentViaBrills) {
         return <div />;
       }
-      
+
       if (this.props.user.isFromInstitution) {
         return <div />;
       }
@@ -787,9 +794,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             isOpen={this.state.emailConfirmDialog}
             email={this.state.user.email}
             setEmail={newEmail => {
-              const {user} = this.state;
+              const { user } = this.state;
               user.email = newEmail;
-              this.setState({ user});
+              this.setState({ user });
             }}
             close={() => {
               this.setState({ emailConfirmDialog: false });
@@ -814,7 +821,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             isOpen={this.state.cancelSubscriptionDialog}
             history={this.props.history}
             submit={() => this.cancelSubscription()}
-            close={() => this.setState({cancelSubscriptionDialog: false})}
+            close={() => this.setState({ cancelSubscriptionDialog: false })}
           />
         </div>
       </React.Suspense>
@@ -822,13 +829,17 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  subjects: state.subjects.subjects
+});
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
   getUser: () => dispatch(userActions.getUser()),
   redirectedToProfile: () => dispatch(authActions.redirectedToProfile()),
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects()),
 });
 
 export default connect(mapState, mapDispatch)(UserProfilePage);

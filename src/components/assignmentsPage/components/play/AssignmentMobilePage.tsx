@@ -10,7 +10,6 @@ import { User } from "model/user";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PhoneTopBrick16x9 from "components/baseComponents/PhoneTopBrick16x9";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getSubjects } from "services/axios/subject";
 import map from "components/map";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
@@ -18,6 +17,7 @@ import PersonalBrickInvitationDialog from "components/baseComponents/classInvita
 import { Brick, Subject } from "model/brick";
 import { FormControlLabel, Radio } from "@material-ui/core";
 import routes from "components/play/routes";
+import subjectActions from "redux/actions/subject";
 
 
 interface ClassroomView {
@@ -34,11 +34,13 @@ interface PlayProps {
   // redux
   user: User;
   requestFailed(value: string): void;
+
+  subjects: Subject[];
+  getSubjects(): Promise<Subject[]>;
 }
 
 interface PlayState {
   searchExpanded: boolean;
-  subjects: Subject[];
   expandedClassroom: ClassroomView | null;
   assignments: AssignmentBrick[];
   classrooms: ClassroomView[];
@@ -55,7 +57,6 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     const isAdmin = checkAdmin(this.props.user.roles);
 
     this.state = {
-      subjects: [],
       searchExpanded: false,
       expandedClassroom: null,
       assignments: [],
@@ -127,17 +128,19 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
   async getAssignments(activeClassroomId: number) {
     const assignments = await getAssignedBricks();
 
-    console.log('get subjects 4');
-    const subjects = await getSubjects();
-    if (assignments && subjects) {
+    if (this.props.subjects.length === 0) {
+      this.props.getSubjects();
+    }
+
+    if (assignments) {
       const classrooms = this.getClassrooms(assignments);
       if (activeClassroomId > 0) {
         const classroom = classrooms.find(c => c.id === activeClassroomId);
         if (classroom) {
-          return this.setState({ ...this.state, subjects, isLoaded: true, assignments, classrooms, expandedClassroom: classroom });
+          return this.setState({ ...this.state, isLoaded: true, assignments, classrooms, expandedClassroom: classroom });
         }
       }
-      this.setState({ ...this.state, subjects, isLoaded: true, assignments, classrooms });
+      this.setState({ ...this.state, isLoaded: true, assignments, classrooms });
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
       this.setState({ isLoaded: true })
@@ -155,7 +158,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
   }
 
   getColor(a: AssignmentBrick) {
-    return this.state.subjects.find(s => s.id === a.brick.subjectId)?.color;
+    return this.props.subjects.find(s => s.id === a.brick.subjectId)?.color;
   }
 
   onIconClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>, a: AssignmentBrick) {
@@ -386,10 +389,14 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  subjects: state.subjects.subjects
+});
 
 const mapDispatch = (dispatch: any) => ({
-  requestFailed: (e: string) => dispatch(actions.requestFailed(e))
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  getSubjects: () => dispatch(subjectActions.fetchSubjects()),
 });
 
 export default connect(mapState, mapDispatch)(AssignmentMobilePage);
