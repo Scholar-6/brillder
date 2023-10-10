@@ -21,7 +21,7 @@ import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import TermsLink from "components/baseComponents/TermsLink";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getAssignedBricks } from "services/axios/brick";
+import { getAssignedBricks, getAssignmentsCount } from "services/axios/brick";
 import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
 import TeachButton from "./components/TeachButton";
 import FirstButton from "./components/FirstButton";
@@ -171,9 +171,9 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   async preparationForStudent() {
-    let bricks = await getAssignedBricks();
-    if (bricks && bricks.length > 0) {
-      this.setState({ backWorkActive: true, assignedCount: bricks.length });
+    let count = await getAssignmentsCount();
+    if (count && count > 0) {
+      this.setState({ backWorkActive: true, assignedCount: count });
     }
   }
 

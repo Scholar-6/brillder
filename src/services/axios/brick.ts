@@ -290,6 +290,14 @@ export const getAssignedBricks = async () => {
   }
 }
 
+export const getAssignmentsCount = async () => {
+  try {
+    return await get<number>("/bricks/getAssignmentsCount");
+  } catch (e) {
+    return null;
+  }
+}
+
 export const checkAssignedBrick = async (brickId: number) => {
   try {
     return await get<AssignmentBrick[]>("/bricks/checkAssigned/" + brickId);
