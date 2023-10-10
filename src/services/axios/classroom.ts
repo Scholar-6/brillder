@@ -5,9 +5,7 @@ import { Student } from 'model/user';
 
 import { get, put, del, post } from './index';
 
-export const updateClassroom = async (
-  classroom: ClassroomApi
-) => {
+export const updateClassroom = async (classroom: ClassroomApi) => {
   try {
     await put("/classroom", { ...classroom });
     return true;
@@ -32,6 +30,24 @@ export const getClassrooms = async () => {
     return await get<TeachClassroom[]>("/classrooms");
   } catch {
     return null;
+  }
+}
+
+export const paginateClassrooms = async (page: number, pageSize: number) => {
+  try {
+    return await post<TeachClassroom[]>("/classrooms/page/" + page, {
+      pageSize
+    });
+  } catch {
+    return null;
+  }
+}
+
+export const getClassroomById = async (id: number) => {
+  try {
+    return await get('/classroom/' + id);
+  } catch {
+    return false;
   }
 }
 

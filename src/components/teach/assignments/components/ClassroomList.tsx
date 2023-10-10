@@ -30,11 +30,12 @@ interface ClassroomListProps {
   history: any;
   subjects: Subject[];
   activeClassroom: TeachClassroom;
-  reloadClass(id: number): void;
   assignPopup(): void;
   inviteStudents(): void;
   onDelete(classroom: TeachClassroom): void;
   onRemind?(count: number): void;
+
+  setClassName(classroom: TeachClassroom): void;
 }
 
 interface ListState {
@@ -107,7 +108,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     let success = await updateClassroom(classroomApi);
     if (success) {
       classroom.name = name;
-      this.props.reloadClass(classroom.id);
+      this.props.setClassName(classroom);
     }
   }
 

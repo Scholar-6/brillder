@@ -209,6 +209,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
+  setClassName(classroom: TeachClassroom) {
+    const classroomV2 = this.state.classrooms.find(c => c.id === classroom.id);
+    if (classroomV2) {
+      classroomV2.name = classroom.name;
+      this.setState({classrooms: [...this.state.classrooms]});
+    }
+  }
+
   async loadClass(id: number | null) {
     let classrooms = await this.loadClasses();
     if (classrooms) {
@@ -366,7 +374,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           subjects={this.props.subjects}
           history={this.props.history}
           activeClassroom={this.state.activeClassroom}
-          reloadClass={this.loadClass.bind(this)}
+          setClassName={this.setClassName.bind(this)}
           onRemind={this.setReminderNotification.bind(this)}
           assignPopup={() => this.setState({ isAssignOpen: true })}
           inviteStudents={() => this.setState({ updateClassId: this.state.activeClassroom.id })}
