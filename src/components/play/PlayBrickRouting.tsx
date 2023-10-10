@@ -207,6 +207,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [isCreatingAttempt, setCreatingAttempt] = useState(false);
 
+  const [hasAssignment, setHasAssignment] = useState(false);
+
   const [prevAttempts, setPrevAttempts] = useState([] as any[]);
 
   const [brick, setBrick] = useState(parsedBrick);
@@ -401,6 +403,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const getAndCheckAssignment = async () => {
     const assignments = await checkAssignedBrick(brick.id);
     if (assignments) {
+      setHasAssignment(true);
       for (let assignment of assignments) {
         if (assignment && assignment.brick.id && assignment.brick.id === brick.id) {
           setAssignmentId(assignment.id);
@@ -417,14 +420,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
     return -1;
   }
-
-  // This is synchronous because otherwise the play button never gets rerendered for
-  // cases where play is free
-  // not sure about this part as it is working without making this call multiple times
-  /*
-  useLayoutEffect(() => {
-    getAndCheckAssignment();
-  })*/
 
   const getAndSetClassroom = async (id: number) => {
     const classroom = await getClassById(id);
@@ -1116,6 +1111,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               brick={brick}
               mode={mode}
               bestScore={totalBrills}
+              hasAssignment={hasAssignment}
               sidebarRolledUp={sidebarRolledUp}
               empty={finalStep}
               competitionId={competitionId}

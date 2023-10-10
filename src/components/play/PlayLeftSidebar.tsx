@@ -42,6 +42,8 @@ interface SidebarProps {
   sidebarRolledUp: boolean;
   toggleSidebar(): void;
 
+  hasAssignment?: boolean;
+
   liveBrills?: number;
   reviewBrills?: number;
 
@@ -311,6 +313,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       return (
         <AdaptButton
           user={this.props.user}
+          hasAssignment={this.props.hasAssignment}
           haveCircle={haveBriefCircles}
           sidebarRolledUp={sidebarRolledUp}
           onClick={this.onAdaptDialog.bind(this)}

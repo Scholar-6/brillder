@@ -10,27 +10,13 @@ import { getAllClassrooms } from 'components/teach/service';
 interface ButtonProps {
   user: User;
   sidebarRolledUp: boolean;
+  hasAssignment?: boolean;
   haveCircle?: boolean;
   onClick(): void;
 }
 
 const AdaptButton: React.FC<ButtonProps> = (props) => {
   const [hovered, setHover] = React.useState(false);
-  const [hassigned, setAssigned] = React.useState(false);
-
-  const getAssigned = async () => {
-    const classes = await getAllClassrooms();
-    if (classes && classes.length > 0) {
-      var classWithAssignments = classes.find(c => c.assignmentsCount && c.assignmentsCount > 0);
-      if (classWithAssignments) {
-        setAssigned(true);
-      }
-    }
-  }
-
-  useEffect(() => {
-    getAssigned();
-  }, []);
 
   let canSee = false;
 
@@ -40,7 +26,7 @@ const AdaptButton: React.FC<ButtonProps> = (props) => {
       canSee = true;
     } else if (checkTeacherOrAdmin(props.user) || isBuilderPreference(props.user)) {
       canSee = true;
-    } else if (hassigned) {
+    } else if (props.hasAssignment) {
       canSee = true;
     }
   }
