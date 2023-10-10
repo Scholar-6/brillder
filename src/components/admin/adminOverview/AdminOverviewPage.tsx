@@ -115,8 +115,6 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
         data = await getOverviewData(dateFilter);
       }
 
-      console.log(data);
-
       if (data) {
         data.newSignupsData = [];
         data.playedData = [];

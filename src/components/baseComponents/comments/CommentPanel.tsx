@@ -137,8 +137,8 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
               isAuthor={comment.author.id === props.currentUser.id}
               onDelete={onDelete}
             >
-              {comment.children && comment.children.map(child =>
-                <CommentChild
+              {comment.children && comment.children.map(child => {
+                return <CommentChild
                   key={child.id}
                   comment={child}
                   currentUser={props.currentUser}
@@ -146,6 +146,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
                   isAuthor={child.author.id === props.currentUser.id}
                   onDelete={onDelete}
                 />
+              }
               )}
             </CommentItem>
           ))}
