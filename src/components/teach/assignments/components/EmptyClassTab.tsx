@@ -1,43 +1,26 @@
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import map from 'components/map';
-import { TeachClassroom } from 'model/classroom';
 import React from 'react';
 
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import map from 'components/map';
+
 interface Props {
-  activeClassroom: TeachClassroom | null;
   history: any;
 }
 
 const EmptyClassTab: React.FC<Props> = (props) => {
-  const { activeClassroom } = props;
   return (
-    <div className="tab-content">
-      <div className={"tab-content-centered " + (activeClassroom ? 'empty-tab-content' : '')}>
-        <div>
-          <div className="icon-container glasses-icon-container" onClick={() => props.history.push(map.ViewAllPageB + '&newTeacher=true')}>
-            <SpriteIcon name="glasses-home-blue" className="glasses-icon" />
-            <div className="glass-eyes-inside">
-              <div className="glass-eyes-left svgOnHover">
-                <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                  <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-                </svg>
-                <div className="glass-left-inside svgOnHover">
-                  {/* <SpriteIcon name="aperture" className="aperture" /> */}
-                  <SpriteIcon name="eye-pupil" className="eye-pupil" />
-                </div>
-              </div>
-              <div className="glass-eyes-right svgOnHover">
-                <svg className="svg active eyeball" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                  <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-                </svg>
-                <div className="glass-right-inside svgOnHover">
-                  {/* <SpriteIcon name="aperture" className="aperture" /> */}
-                  <SpriteIcon name="eye-pupil" className="eye-pupil" />
-                </div>
-              </div>
-            </div>
+    <div className="assignments-column flex-center">
+      <div className="empty-classroom-tab">
+        <div className="icon-container flex-center glasses-icon-container" onClick={() => props.history.push(map.ViewAllPageB + '&newTeacher=true')}>
+          <SpriteIcon name="empty-class-icon" className="glasses-icon" />
+        </div>
+        <div className="bold font-20 text-center">You haven’t added any assignments to this class</div>
+        <div className="font-18 text-center">Click below to assign a brick to your students</div>
+        <div className="flex-center">
+          <div className="btn btn-orange btn-v342 font-18" onClick={() => props.history.push(map.ViewAllPageB + '&newTeacher=true')}>
+            <span>Add Brick</span>
+            <SpriteIcon name="lucide_book-open-plus" />
           </div>
-          {activeClassroom && <div className="bold">{activeClassroom.name} has no assignments for the moment</div>}
         </div>
       </div>
     </div>
