@@ -69,12 +69,12 @@ export const getClassById = async (id: number) => {
 }
 
 /**
- * Get all classrooms
+ * Get top 100 classrooms
  * return list of classrooms if success or null if failed
  */
 export const getAllClassrooms = async () => {
   try {
-    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/classrooms", {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/classroomsV2", {
       withCredentials: true,
     });
     if (res.data) {
@@ -84,26 +84,6 @@ export const getAllClassrooms = async () => {
           student.selected = false;
         }
       }
-      return res.data as ClassroomApi[];
-    }
-    return null;
-  }
-  catch (e) {
-    return null;
-  }
-}
-
-
-/**
- * Get all classrooms
- * return list of classrooms if success or null if failed
- */
-export const getAllClassroomsV2 = async () => {
-  try {
-    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/classroomsV2", {
-      withCredentials: true,
-    });
-    if (res.data) {
       return res.data as ClassroomApi[];
     }
     return null;
