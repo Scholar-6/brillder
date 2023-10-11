@@ -17,7 +17,7 @@ import FullScreenButton from "./fullScreenButton/FullScreen";
 import { isIPad13, isMobile, isTablet } from "react-device-detect";
 import PlaySkipDialog from "../dialogs/PlaySkipDialog";
 import { isPhone } from "services/phone";
-import { getAssignedBricks } from "services/axios/brick";
+import { getAssignmentsCount } from "services/axios/brick";
 import LockedDialog from "../dialogs/LockedDialog";
 import { isBuilderPreference, isStudentPreference } from "components/services/preferenceService";
 
@@ -54,9 +54,9 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   });
 
   const prepare = async () => {
-    const bricks = await getAssignedBricks();
-    if (bricks && bricks.length > 0) {
-      setAssignedCount(bricks.length);
+    const count = await getAssignmentsCount();
+    if (count && count > 0) {
+      setAssignedCount(count);
     } else {
       setAssignedCount(0);
     }
