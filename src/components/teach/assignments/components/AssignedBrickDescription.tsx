@@ -53,6 +53,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     return (
       <div className="assigned-brick-description-v3">
         <div className="assigned-brick-description-v2" style={{ display: 'flex' }}>
+          <SpriteIcon className="absolute-custom-drag-icon" name="drag-custom-icon" />
           <div>
             <div className="assign-brick-d343">
               <div className="assign-cover-image" onClick={() => {

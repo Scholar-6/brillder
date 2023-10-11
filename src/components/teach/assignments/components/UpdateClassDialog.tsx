@@ -55,7 +55,9 @@ const UpdateClassDialog: React.FC<AssignClassProps> = (props) => {
   }
 
   React.useEffect(() => {
-    writeQRCode(props.classroom.code);
+    if (props.classroom.code) {
+      writeQRCode(window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + classroom.code);
+    }
   }, [])
 
   const addUser = (email: string) => {
