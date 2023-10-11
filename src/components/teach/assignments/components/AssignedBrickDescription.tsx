@@ -48,7 +48,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     let subjectId = brick.subjectId;
     const subject = this.props.subjects.find(s => s.id === subjectId);
 
-    
     const completedStudents = this.getCompleteStudents();
 
     return (
@@ -57,25 +56,21 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           <div>
             <div className="assign-brick-d343">
               <div className="assign-cover-image" onClick={() => {
-                if (completedStudents > 0) {
-                  if (this.state.expanded === false) {
-                    this.setState({expanded: assignment.id })
-                  } else {
-                    this.setState({ expanded: false })
-                  }
+                if (this.state.expanded === false) {
+                  this.setState({ expanded: assignment.id })
+                } else {
+                  this.setState({ expanded: false })
                 }
               }}>
                 <img alt="" className={this.state.coverLoaded ? ' visible' : 'hidden'} onLoad={() => this.setState({ coverLoaded: true })} src={fileUrl(brick.coverImage)} />
-                {completedStudents > 0 &&
-                  <div className="expand-button">
-                    <div>
-                      <span className="font-10 flex-center">{this.state.expanded ? 'Collapse' : 'Expand'}</span>
-                      <div className="arrow-btn flex-center">
-                        <SpriteIcon name="arrow-down" className={this.state.expanded ? 'rotated' : ''} />
-                      </div>
+                <div className="expand-button">
+                  <div>
+                    <span className="font-10 flex-center">{this.state.expanded ? 'Collapse' : 'Expand'}</span>
+                    <div className="arrow-btn flex-center">
+                      <SpriteIcon name="arrow-down" className={this.state.expanded ? 'rotated' : ''} />
                     </div>
                   </div>
-                }
+                </div>
               </div>
             </div>
           </div>
@@ -97,8 +92,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
             </div>
           </div>
         </div>
-        {this.state.expanded && classroom && assignment && assignment.byStudent && assignment.byStudent.length > 0 &&
-          <StudentsTable classItem={this.props.classItem} />}
+        {this.state.expanded && classroom && assignment && assignment.byStudent && assignment.byStudent.length > 0
+          ? <StudentsTable classItem={this.props.classItem} />
+          : this.state.expanded && <div className="assigned-brick-description-no-results font-18">Results will be shown here when students have played the assignment.</div>
+        }
       </div>
     );
   }
