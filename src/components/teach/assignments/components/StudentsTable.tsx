@@ -27,8 +27,6 @@ class StudentsTable extends Component<StudentsProps, State> {
 
     let questionCount = 0;
 
-    console.log('item', props.classItem)
-
     const {assignment} = props.classItem;
 
     if (assignment && assignment.byStudent && assignment.byStudent[0]) {
