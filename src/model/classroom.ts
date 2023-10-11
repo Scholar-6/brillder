@@ -26,6 +26,7 @@ export interface Assignment {
   id: number;
   brick: Brick;
   deadline: string;
+  expanded: boolean;
   assignedDate: string;
 
   byStudent?: any[];
