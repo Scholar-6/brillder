@@ -183,6 +183,19 @@ class TeachPage extends Component<TeachProps, TeachState> {
           classroom.students = data.classroom.students;
           classroom.studentsInvitations = data.classroom.studentsInvitations;
 
+          for (let student of classroom.students) {
+            student.completedCount = 0;
+            for (let assignment of classroom.assignments) {
+              if (assignment.byStudent) {
+                for (let item of assignment.byStudent) {
+                  if (item.studentId == student.id) {
+                    student.completedCount += 1;
+                  }
+                }
+              }
+            }
+          }
+
           const sort = GetSetSortSidebarAssignment();
           if (sort === SortClassroom.Name) {
             activeClassroom.assignments = activeClassroom.assignments.sort((a: any, b: any) => {
@@ -222,6 +235,19 @@ class TeachPage extends Component<TeachProps, TeachState> {
         classroom.students = data.classroom.students;
         classroom.studentsInvitations = data.classroom.studentsInvitations;
 
+        for (let student of classroom.students) {
+      student.completedCount = 0;
+      for (let assignment of classroom.assignments) {
+        if (assignment.byStudent) {
+          for (let item of assignment.byStudent) {
+            if (item.studentId == student.id) {
+              student.completedCount += 1;
+            }
+          }
+        }
+      }
+    }
+
         this.setState({ activeClassroom: classroom });
       } else {
         this.setState({ activeClassroom: null });
@@ -257,6 +283,19 @@ class TeachPage extends Component<TeachProps, TeachState> {
       classroom.assignments = data.assignments;
       classroom.students = data.classroom.students;
       classroom.studentsInvitations = data.classroom.studentsInvitations;
+
+      for (let student of classroom.students) {
+        student.completedCount = 0;
+        for (let assignment of classroom.assignments) {
+          if (assignment.byStudent) {
+            for (let item of assignment.byStudent) {
+              if (item.studentId == student.id) {
+                student.completedCount += 1;
+              }
+            }
+          }
+        }
+      }
      
       classroom.active = true;
 
