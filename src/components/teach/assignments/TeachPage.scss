@@ -480,75 +480,6 @@
     border-top-left-radius: 2vw;
     height: calc(100vh - 5.834vw - 2vw) !important;
   }
-  .tab-content-centered {
-    width: 100%;
-    height: 70%;
-    @include flexCenter;
-    color: var(--theme-light-blue);
-    .glasses-icon-container {
-      margin-top: 5vh;
-      @include transitionAll300;
-      .glass-eyes-inside {
-        @include transitionAll300;
-        opacity: 0;
-        position: absolute;
-        @include flexCenter;
-      }
-      .glass-left-inside,
-      .glass-right-inside {
-        @include flexCenter;
-        height: 6vw;
-        z-index: 1000;
-
-        .eye-pupil {
-          width: 2vw;
-          height: 2vw;
-        }
-      }
-      .glass-eyes-right,
-      .glass-eyes-left {
-        position: absolute;
-        top: 0.7vw;
-        width: 5vw;
-        .aperture {
-          width: 40%;
-        }
-        .eyeball {
-          width: 90%;
-          height: 90%;
-        }
-      }
-      .glass-eyes-left {
-        left: 2vw;
-      }
-      .glass-eyes-right {
-        right: 2vw;
-      }
-      &:hover {
-        transform: scale(1.2);
-        .glass-eyes-inside {
-          opacity: 1;
-          .aperture {
-            @include animation(rotating 2s linear infinite)
-          }
-        }
-      }
-    }
-    .icon-container {
-      @include flexToXCenter;
-      width: 100%;
-      margin-bottom: 5vh;
-      cursor: pointer;
-    }
-    .glasses-icon {
-      width: 19vw;
-      height: 7.6vw;
-      color: var(--theme-orange);
-    }
-    .bold {
-      text-align: center;
-    }
-  }
   .empty-tab-content {
     height: 80%;
     font-size: 1.2vw;
@@ -1011,4 +942,37 @@
 
 .sort-dialog-ew33.sort-dialog-students .MuiDialog-container .MuiPaper-root {
   margin-left: 83.5vw;
+}
+
+.btn-v342 {
+  cursor: pointer;
+  margin-top: 2vh;
+  color: white;
+  background: var(--theme-orange);
+
+  padding-top: 0.7vw;
+  padding-bottom: 0.7vw;
+  border-radius: 6vw !important;
+
+  width: 10vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    margin-left: 1vw;
+    width: 1.7vw;
+    height: 1.7vw;
+  }
+
+  &:hover {
+    background: var(--theme-dark-blue);
+  }
+}
+
+.empty-classroom-tab {
+  .glasses-icon-container {
+    margin-bottom: 2vh;
+  }
 }

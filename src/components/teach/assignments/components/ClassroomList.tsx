@@ -251,8 +251,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
             <div className="email font-13">{s.email}</div>
           </div>
         </div>
-        <div className="count-box"/>
-        <div className="box-r323r"/>
+        <div className="count-box" />
+        <div className="box-r323r" />
         <div className="flex-center button-box">
           <div className="delete flex-center" onClick={() => {
             this.unassigningStudent(s);
@@ -314,40 +314,39 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
 
     convertClassAssignments(items, classroom);
 
-    if (items.length === 0) {
-      return <EmptyClassTab history={this.props.history} activeClassroom={classroom} />;
-    }
-
     let students = classroom.students.filter(s => s.email);
-
     let quests = classroom.students.filter(s => !s.email);
 
     return (
       <div className="classroom-assignments-columns">
-        <div className="assignments-column">
-          <div className="bold assignments-title font-20">
-            <div>Assignments</div>
-            <div>
-              <SortButtonV2
-                sortBy={this.state.sortBy}
-                sort={this.sortAssignments.bind(this)}
-              />
+        {items.length === 0
+          ? <EmptyClassTab history={this.props.history} />
+          : <div className="assignments-column">
+            <div className="bold assignments-title font-20">
+              <div>Assignments</div>
+              <div>
+                <SortButtonV2
+                  sortBy={this.state.sortBy}
+                  sort={this.sortAssignments.bind(this)}
+                />
+              </div>
             </div>
+            <ReactSortable
+              list={this.state.assignments}
+              className="drag-assignment"
+              group="tabs-group"
+              setList={async (newAssignments, e, r) => {
+                let switched = newAssignments.find((q, i) => this.state.assignments[i].id !== q.id);
+                if (switched) {
+                  this.setAssignmentsOrder(newAssignments, SortClassroom.Empty);
+                }
+              }}
+            >
+              {this.state.assignments.map((item, i) => this.renderTeachListItem(item, i))}
+            </ReactSortable>
           </div>
-          <ReactSortable
-            list={this.state.assignments}
-            className="drag-assignment"
-            group="tabs-group"
-            setList={async (newAssignments, e, r) => {
-              let switched = newAssignments.find((q, i) => this.state.assignments[i].id !== q.id);
-              if (switched) {
-                this.setAssignmentsOrder(newAssignments, SortClassroom.Empty);
-              }
-            }}
-          >
-            {this.state.assignments.map((item, i) => this.renderTeachListItem(item, i))}
-          </ReactSortable>
-        </div>
+        }
+
         <div className="students-column">
           <div>
             <div className="learners-title font-20 bold">
