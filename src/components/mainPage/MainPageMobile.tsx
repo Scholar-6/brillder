@@ -18,7 +18,7 @@ import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
 import DesktopVersionDialogV2 from "components/build/baseComponents/dialogs/DesktopVersionDialogV2";
 import ClassInvitationDialog from "components/baseComponents/classInvitationDialog/ClassInvitationDialog";
 import LibraryButton from "./components/LibraryButton";
-import { getAssignedBricks } from "services/axios/brick";
+import { getAssignmentsCount } from "services/axios/brick";
 import { isBuilderPreference, isInstitutionPreference, isStudentPreference, isTeacherPreference } from "components/services/preferenceService";
 import ClassTInvitationDialog from "components/baseComponents/classInvitationDialog/ClassTInvitationDialog";
 import SubscribedDialog from "./components/SubscibedDialog";
@@ -182,9 +182,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   async preparationForStudent() {
-    let bricks = await getAssignedBricks();
-    if (bricks && bricks.length > 0) {
-      this.setState({ assignedCount: bricks.length });
+    const count = await getAssignmentsCount();
+    if (count && count > 0) {
+      this.setState({ assignedCount: count });
     }
   }
 
