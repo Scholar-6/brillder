@@ -165,8 +165,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
           <div className="expanded-assignment">
             <AssignedBrickDescription
               subjects={this.props.subjects}
-              classroom={c.classroom}
-              assignment={c.assignment}
+              classItem={c}
             />
           </div>
         </Grow>

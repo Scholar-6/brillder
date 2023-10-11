@@ -19,7 +19,6 @@ const fetchSubjectsFailure = (errorMessage:string) => {
 
 const fetchSubjects = () => {
   return async function (dispatch: any) {
-    console.log('get subject rrrrr')
     const subjects = await getSubjects();
     if (subjects) {
       dispatch(fetchSubjectsSuccess(subjects));

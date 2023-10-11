@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
-import { TeachClassroom, Assignment } from "model/classroom";
 import { AcademicLevelLabels, Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -9,11 +8,11 @@ import { getTotalStudentsCount } from "../service/service";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import { fileUrl } from "components/services/uploadFile";
 import StudentsTable from "./StudentsTable";
+import { TeachListItem } from "./ClassroomList";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
-  classroom?: TeachClassroom;
-  assignment: Assignment;
+  classItem: TeachListItem;
 }
 
 interface State {
@@ -27,23 +26,14 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     super(props);
 
     this.state = {
-      expanded: false,
+      expanded: true,
       questionCount: 0,
       coverLoaded: false,
     }
   }
 
-  componentDidUpdate() {
-    console.log('updated');
-    if (this.state.expanded) {
-      if (this.state.expanded != this.props.assignment.id) {
-        this.setState({expanded: false});
-      }
-    }
-  }
-
   getCompleteStudents() {
-    const { byStatus } = this.props.assignment;
+    const { byStatus } = this.props.classItem.assignment;
     let studentsCompleted = 0;
     if (byStatus) {
       studentsCompleted = byStatus[2] ? byStatus[2].count : 0;
@@ -52,7 +42,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
   }
 
   render() {
-    let { assignment } = this.props;
+    let { assignment, classroom } = this.props.classItem;
     const { brick } = assignment;
 
     let subjectId = brick.subjectId;
@@ -103,11 +93,12 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           <div className="assignment-second-part">
             <div className="users-complete-count">
               <SpriteIcon name="users-big-and-small" className="text-theme-dark-blue" />
-              <span className="font-16">{completedStudents}/{getTotalStudentsCount(this.props.classroom)}</span>
+              <span className="font-16">{completedStudents}/{getTotalStudentsCount(classroom)}</span>
             </div>
           </div>
         </div>
-        {this.state.expanded && this.state.expanded === assignment.id && this.props.classroom && <StudentsTable classroom={this.props.classroom} assignment={this.props.assignment} />}
+        {this.state.expanded && classroom && assignment && assignment.byStudent && assignment.byStudent.length > 0 &&
+          <StudentsTable classItem={this.props.classItem} />}
       </div>
     );
   }
