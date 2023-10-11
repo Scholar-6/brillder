@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
-import { Assignment, Classroom, TeachStudent } from "model/classroom";
+import { Assignment, TeachStudent } from "model/classroom";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BookDialog from "./BookDialog";
+import { TeachListItem } from "./ClassroomList";
 
 export interface BookData {
   open: boolean;
@@ -12,8 +13,7 @@ export interface BookData {
 }
 
 interface StudentsProps {
-  classroom: Classroom;
-  assignment: any;
+  classItem: TeachListItem;
 }
 
 interface State {
@@ -26,9 +26,14 @@ class StudentsTable extends Component<StudentsProps, State> {
     super(props);
 
     let questionCount = 0;
-    if (props.assignment && props.assignment.byStudent[0]) {
+
+    console.log('item', props.classItem)
+
+    const {assignment} = props.classItem;
+
+    if (assignment && assignment.byStudent && assignment.byStudent[0]) {
       try {
-        questionCount = props.assignment.byStudent[0].attempts[0].answers.length;
+        questionCount = assignment.byStudent[0].attempts[0].answers.length;
       } catch {
         console.log('can`t get number of questions');
       }
@@ -39,12 +44,12 @@ class StudentsTable extends Component<StudentsProps, State> {
 
   nextStudent() {
     try {
-      const {students} = this.props.classroom;
-      const studentIndex = this.props.classroom.students.findIndex(s => s.id === this.state.bookData.student.id);
+      const {students} = this.props.classItem.classroom;
+      const studentIndex = students.findIndex(s => s.id === this.state.bookData.student.id);
       for (let i = studentIndex + 1; i < students.length; i++) {
         const student = students[i];
         if (student.studentResult) {
-          this.setState({bookData: {open: true, student, assignment: this.props.assignment }});
+          this.setState({bookData: {open: true, student, assignment: this.props.classItem.assignment }});
           break;
         }
       }
@@ -55,12 +60,12 @@ class StudentsTable extends Component<StudentsProps, State> {
 
   prevStudent() {
     try {
-      const {students} = this.props.classroom;
-      const studentIndex = this.props.classroom.students.findIndex(s => s.id === this.state.bookData.student.id);
+      const {students} = this.props.classItem.classroom;
+      const studentIndex = students.findIndex(s => s.id === this.state.bookData.student.id);
       for (let i = studentIndex - 1; i >= 0; i--) {
         const student = students[i];
         if (student.studentResult) {
-          this.setState({bookData: {open: true, student, assignment: this.props.assignment }});
+          this.setState({bookData: {open: true, student, assignment: this.props.classItem.assignment }});
           break;
         }
       }
@@ -103,15 +108,15 @@ class StudentsTable extends Component<StudentsProps, State> {
     return '';
   }
 
-  renderStudent(student: TeachStudent) {
-    if (this.props.assignment.byStudent) {
-      const studentResult = this.props.assignment.byStudent.find((s: any) => s.studentId == student.id);
+  renderStudent(student: TeachStudent, index: number) {
+    if (this.props.classItem.assignment.byStudent) {
+      const studentResult = this.props.classItem.assignment.byStudent.find((s: any) => s.studentId == student.id);
 
       if (studentResult) {
         const attempt = studentResult.attempts[0];
 
         return (
-          <tr className="user-row">
+          <tr className="user-row" key={index}>
             <td className="assigned-student-name">
               {student.firstName} {student.lastName}
             </td>
@@ -135,7 +140,7 @@ class StudentsTable extends Component<StudentsProps, State> {
             </td>
             <td><div className="centered">{Math.round(attempt.percentScore)}</div></td>
             <td className="center-icon-box-r434">
-              <SpriteIcon name="eye-filled" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.assignment }})}/>
+              <SpriteIcon name="eye-filled" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.classItem.assignment }})}/>
             </td>
           </tr>
         );
@@ -154,7 +159,7 @@ class StudentsTable extends Component<StudentsProps, State> {
               <th></th>
               {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
                 (a, i) =>
-                  <th>{i + 1}</th>
+                  <th key={i}>{i + 1}</th>
               )}
               <th className="icon-header-r234">
                 <SpriteIcon name="empty-hourglass" />
@@ -177,7 +182,9 @@ class StudentsTable extends Component<StudentsProps, State> {
               <th className="icon-header-r234"></th>
             </tr>
           </thead>
-          {this.props.classroom.students.map(s => this.renderStudent(s as TeachStudent))}
+          <tbody>
+            {this.props.classItem.classroom.students.map(this.renderStudent.bind(this))}
+          </tbody>
         </table>
         {this.state.bookData.open && <BookDialog
           bookData={this.state.bookData}
