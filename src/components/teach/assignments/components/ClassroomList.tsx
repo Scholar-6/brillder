@@ -55,6 +55,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     convertClassAssignments(items, classroom);
     items = items.sort((a, b) => a.assignment.order - b.assignment.order);
 
+    items.map(i => i.assignment.expanded = true);
+
     this.state = {
       unassignStudent: null,
       unassignOpen: false,
@@ -85,6 +87,8 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       let items = [] as TeachListItem[];
       convertClassAssignments(items, classroom);
       items = items.sort((a, b) => a.assignment.order - b.assignment.order);
+
+      items.map(i => i.assignment.expanded = true);
 
       this.setState({
         unassignStudent: null,
