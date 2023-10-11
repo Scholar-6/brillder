@@ -221,7 +221,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <div className="count-box">
           <SpriteIcon name="lucide_book-open-check" />
           <span>
-            {s.completedCount}/{this.props.activeClassroom.assignments.length}
+            {s.completedCount ? s.completedCount : 0}/{this.props.activeClassroom.assignments.length}
           </span>
         </div>
         <div className="flex-center button-box">
