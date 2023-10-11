@@ -69,21 +69,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
     }
 
     const getAuthorResult = () => {
-      const authorFirstNameRes = props.bricks.filter(b => stripHtml(b.author.firstName).toLowerCase().indexOf(searchString) >= 0);
-      const authorLastNameRes = props.bricks.filter(b => stripHtml(b.author.lastName).toLowerCase().indexOf(searchString) >= 0);
-  
-      var resR: ResultObj[] = [];
-      var united = [...authorFirstNameRes, ...authorLastNameRes];
-  
-      for (let el of united) {
-        /*eslint-disable-next-line*/
-        let found = resR.find(a => a.author && a.author.id == el.author.id);
-        if (!found) {
-          resR.push({ isAuthorRes: true, author: el.author });
-        }
-      }
-  
-      res = [...res, ...resR];
+      // search by author
     }
 
     const getKeyResult = async () => {
@@ -101,7 +87,6 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
   
     const getSubjectResult = () => {
       const subjectsRes = props.subjects.filter(s => s.name.toLocaleLowerCase().indexOf(searchString) >= 0);
-  
   
       for (let subject of subjectsRes) {
         res.push({
