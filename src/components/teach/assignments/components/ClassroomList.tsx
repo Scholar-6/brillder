@@ -78,7 +78,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     }
   }
 
-  componentDidUpdate(prevProps: ClassroomListProps) {
+  componentDidUpdate() {
     if (this.state.classroomId != this.props.activeClassroom.id) {
 
       const classroom = this.props.activeClassroom;
@@ -221,7 +221,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         <div className="count-box">
           <SpriteIcon name="lucide_book-open-check" />
           <span>
-            {s.completedCount ? s.completedCount : 0}/{this.props.activeClassroom.assignments.length}
+            {s.completedCount}/{this.props.activeClassroom.assignments.length}
           </span>
         </div>
         <div className="flex-center button-box">
