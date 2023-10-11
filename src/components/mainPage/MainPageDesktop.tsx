@@ -21,7 +21,7 @@ import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import TermsLink from "components/baseComponents/TermsLink";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { getAssignedBricks, getAssignmentsCount } from "services/axios/brick";
+import { getAssignmentsCount } from "services/axios/brick";
 import LockedDialog from "components/baseComponents/dialogs/LockedDialog";
 import TeachButton from "./components/TeachButton";
 import FirstButton from "./components/FirstButton";
