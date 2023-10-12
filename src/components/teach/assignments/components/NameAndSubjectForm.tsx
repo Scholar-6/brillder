@@ -88,7 +88,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
           </div>
           <div className="assign-button-container bold">
             <div className="btn" onClick={props.addBrick}>
-              Add Brick
+              Assign Brick
               <SpriteIcon name="lucide_book-open-plus" />
             </div>
           </div>

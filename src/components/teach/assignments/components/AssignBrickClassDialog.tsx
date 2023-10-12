@@ -36,7 +36,7 @@ const PopperCustom = function (props: any) {
   return (<Popper {...props} className="assign-brick-class-poopper" />)
 }
 
-const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
+const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
   const [classroom, setClassroom] = useState(null as any);
 
   const [hasPersonal, setHasPersonal] = useState(false);
@@ -74,7 +74,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
       <div className="dialog-header">
         <div className="title-box">
           <div className="title font-18">
-            Add Assignments to Class
+            Add Assignments to Class 2
           </div>
           <SpriteIcon onClick={props.close} name="cancel-custom" />
         </div>
@@ -85,8 +85,9 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               freeSolo
               options={bricks}
               onChange={async (e: any, brickV5: any) => {
-                console.log('44444')
+                console.log('44444', classroom)
                 if (classroom) {
+                  console.log('666')
                   setSearchText(stripHtml(brickV5.title));
                   const newAssignments = [...assignments];
                   const found = newAssignments.find(b => b.id === brickV5.id);
@@ -237,4 +238,4 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
 
-export default connector(CreateClassDialog);
+export default connector(AssignBrickClassDialog);

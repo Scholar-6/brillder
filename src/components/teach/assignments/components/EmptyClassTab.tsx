@@ -18,7 +18,7 @@ const EmptyClassTab: React.FC<Props> = (props) => {
         <div className="font-18 text-center">Click below to assign a brick to your students</div>
         <div className="flex-center">
           <div className="btn btn-orange btn-v342 font-18" onClick={() => props.history.push(map.ViewAllPageB + '&newTeacher=true')}>
-            <span>Add Brick</span>
+            <span>Assign Brick</span>
             <SpriteIcon name="lucide_book-open-plus" />
           </div>
         </div>
