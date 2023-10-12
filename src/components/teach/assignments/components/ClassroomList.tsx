@@ -17,7 +17,7 @@ import NameAndSubjectForm from "./NameAndSubjectForm";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SortButtonV2 from "./SortButtonV2";
-import { SortClassroom } from "./TeachFilterSidebar";
+import { SortAssignment } from "./TeachFilterSidebar";
 import SortButtonV3, { SortStudentV3 } from "./SortButtonV3";
 
 export interface TeachListItem {
@@ -40,7 +40,7 @@ interface ClassroomListProps {
 interface ListState {
   unassignOpen: boolean;
   unassignStudent: any;
-  sortBy: SortClassroom;
+  sortBy: SortAssignment;
   classroomId: number;
   sortStudentBy: SortStudentV3;
   assignments: TeachListItem[];
@@ -61,7 +61,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       unassignStudent: null,
       unassignOpen: false,
       classroomId: classroom.id,
-      sortBy: SortClassroom.Empty,
+      sortBy: SortAssignment.Custom,
       sortStudentBy: SortStudentV3.Name,
       assignments: items,
     }
@@ -94,7 +94,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         unassignStudent: null,
         unassignOpen: false,
         classroomId: classroom.id,
-        sortBy: SortClassroom.Empty,
+        sortBy: SortAssignment.Custom,
         sortStudentBy: SortStudentV3.Name,
         assignments: items,
       })
@@ -200,7 +200,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     );
   }
 
-  async setAssignmentsOrder(assignments: any[], sort: SortClassroom) {
+  async setAssignmentsOrder(assignments: any[], sort: SortAssignment) {
     let order = 1;
     for (let assignment of assignments) {
       assignment.order = order;
@@ -286,20 +286,20 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     );
   }
 
-  async sortAssignments(sort: SortClassroom) {
+  async sortAssignments(sort: SortAssignment) {
     let assignments = this.state.assignments;
-    if (sort === SortClassroom.Name) {
+    if (sort === SortAssignment.Name) {
       assignments = this.state.assignments.sort((a, b) => {
         const punctuation = /[\.,?!,'”<‘[(«]/g;
         const aText = a.assignment.brick.title.replace(punctuation, "");
         const bText = b.assignment.brick.title.replace(punctuation, "");
         return aText > bText ? 1 : -1;
       });
-    } else if (sort === SortClassroom.Date) {
+    } else if (sort === SortAssignment.Date) {
       assignments = this.state.assignments.sort((a, b) => {
         return new Date(b.assignment.assignedDate).getTime() - new Date(a.assignment.assignedDate).getTime();
       });
-    } else if (sort === SortClassroom.DateInverse) {
+    } else if (sort === SortAssignment.DateInverse) {
       assignments = this.state.assignments.sort((a, b) => {
         return new Date(a.assignment.assignedDate).getTime() - new Date(b.assignment.assignedDate).getTime();
       });
@@ -338,7 +338,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
               setList={async (newAssignments, e, r) => {
                 let switched = newAssignments.find((q, i) => this.state.assignments[i].id !== q.id);
                 if (switched) {
-                  this.setAssignmentsOrder(newAssignments, SortClassroom.Empty);
+                  this.setAssignmentsOrder(newAssignments, SortAssignment.Custom);
                 }
               }}
             >

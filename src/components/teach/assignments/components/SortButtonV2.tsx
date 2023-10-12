@@ -2,11 +2,11 @@ import React from 'react';
 import { Dialog, Radio } from '@material-ui/core';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { SortClassroom } from './TeachFilterSidebar';
+import { SortAssignment } from './TeachFilterSidebar';
 
 interface Props {
-  sortBy: SortClassroom;
-  sort(sort: SortClassroom): void;
+  sortBy: SortAssignment;
+  sort(sort: SortAssignment): void;
 }
 
 const SortButtonV2: React.FC<Props> = ({ ...props }) => {
@@ -24,25 +24,32 @@ const SortButtonV2: React.FC<Props> = ({ ...props }) => {
         <div className="popup-3rfw bold">
           <div className="no-click">Sort By</div>
           <div className="btn-sort" onClick={() => {
-            props.sort(SortClassroom.Name);
+            props.sort(SortAssignment.Name);
             setClicked(false);
           }}>
-            <Radio checked={props.sortBy === SortClassroom.Name} />
+            <Radio checked={props.sortBy === SortAssignment.Name} />
             A - Z
           </div>
           <div className="btn-sort" onClick={() => {
-            props.sort(SortClassroom.Date);
+            props.sort(SortAssignment.Date);
             setClicked(false);
           }}>
-            <Radio checked={props.sortBy === SortClassroom.Date} />
+            <Radio checked={props.sortBy === SortAssignment.Date} />
             Newest First
           </div>
           <div className="btn-sort" onClick={() => {
-            props.sort(SortClassroom.DateInverse);
+            props.sort(SortAssignment.DateInverse);
             setClicked(false);
           }}>
-            <Radio checked={props.sortBy === SortClassroom.DateInverse} />
+            <Radio checked={props.sortBy === SortAssignment.DateInverse} />
             Oldest First
+          </div>
+          <div className="btn-sort" onClick={() => {
+            props.sort(SortAssignment.Custom);
+            setClicked(false);
+          }}>
+            <Radio checked={props.sortBy === SortAssignment.Custom} />
+            Custom
           </div>
         </div>
         </Dialog>}
