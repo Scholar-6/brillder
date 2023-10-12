@@ -623,7 +623,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         {this.state.isAssignOpen &&
           <AssignBrickClassDialog
             isOpen={this.state.isAssignOpen}
-            classroom={this.state.activeClassroom}
+            classroom={this.state.activeClassroom || this.state.selectedClassroom}
             subjects={this.props.subjects}
             history={this.props.history}
             submit={async (classroomId) => {
