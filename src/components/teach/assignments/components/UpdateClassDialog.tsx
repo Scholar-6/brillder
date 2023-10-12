@@ -164,8 +164,8 @@ const UpdateClassDialog: React.FC<AssignClassProps> = (props) => {
                 </div>
               </div>
               <div className="gray-box underline-text">
-                <input id="classroom-link-vr3" defaultValue={
-                  document.location.host + '/' + map.QuickassignPrefix + '/' + classroom.code
+                <input id="classroom-link-vr3" style={{textTransform: 'lowercase'}} defaultValue={
+                  window.location.protocol + '//' + document.location.host + '/' + map.QuickassignPrefix + '/' + classroom.code
                 } className="font-14" />
                 <div className="copy-btn" onClick={() => {
                   const linkEl = document.getElementById('classroom-link-vr3') as HTMLInputElement;
