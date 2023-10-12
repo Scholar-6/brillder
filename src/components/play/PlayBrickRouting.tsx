@@ -1119,6 +1119,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               showPremium={() => { }}
               assignClass={assignClass}
               competition={activeCompetition}
+              getAndSetClassroom={getAndSetClassroom}
               competitionCreated={competition => {
                 brick.competitionId = competition.id;
                 history.push(props.history.location.pathname + '?competitionId=' + competition.id);
