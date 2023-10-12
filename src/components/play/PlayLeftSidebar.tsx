@@ -25,15 +25,12 @@ import HighlightTextButton from "./baseComponents/sidebarButtons/HighlightTextBu
 import ShareButton from "./baseComponents/sidebarButtons/ShareButton";
 import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
-import AssignFailedDialog from "components/baseComponents/dialogs/AssignFailedDialog";
 import ShareDialogs from "./finalStep/dialogs/ShareDialogs";
 import CompetitionButton from "./baseComponents/sidebarButtons/CompetitionButton";
 import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDialog";
 import HighScore from "./baseComponents/HighScore";
 import AdminBrickStatisticButton from "./baseComponents/AdminBrickStatisticButton";
-import AssignSuccessDialogV2 from "components/baseComponents/dialogs/AssignSuccessDialogV2";
 import { assignClasses } from "services/axios/assignBrick";
-import { getClassById } from "components/teach/service";
 import map from "components/map";
 import CreateClassDialog from "components/teach/assignments/components/CreateClassDialog";
 
@@ -72,6 +69,7 @@ interface SidebarProps {
 
   assignPopup: boolean;
   setAssignPopup(isOpen: boolean): void;
+  getAndSetClassroom(classroomId: number): void;
 }
 
 interface SidebarState {
@@ -79,15 +77,12 @@ interface SidebarState {
   competition: any | null;
   isCompetitionOpen: boolean;
   isCoomingSoonOpen: boolean;
-  isAssignedSuccessOpen: boolean;
-  isAssignedFailedOpen: boolean;
   isSharingOpen: boolean;
   isAdapting: boolean;
   selectedItems: any[];
   failedItems: any[];
   isAssignV2Open: boolean;
   isAssignV3Open: boolean;
-  assignClass: any;
 }
 
 class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
@@ -99,14 +94,11 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       isCompetitionOpen: false,
       isAdaptBrickOpen: false,
       isCoomingSoonOpen: false,
-      isAssignedSuccessOpen: false,
-      isAssignedFailedOpen: false,
       isSharingOpen: false,
       isAssignV2Open: false,
       isAssignV3Open: false,
       selectedItems: [],
-      failedItems: [],
-      assignClass: null
+      failedItems: []
     }
 
     if (this.props.user) {
@@ -402,25 +394,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
             close={() => this.props.setAssignPopup(false)}
           />
         }
-        <AssignSuccessDialogV2
-          isOpen={this.state.isAssignedSuccessOpen}
-          brickTitle={brick.title}
-          selectedItems={this.state.selectedItems}
-          history={this.props.history}
-          close={() => {
-            if (this.state.failedItems.length > 0) {
-              this.setState({ isAssignedSuccessOpen: false, isAssignedFailedOpen: true });
-            } else {
-              this.setState({ isAssignedSuccessOpen: false });
-            }
-          }}
-        />
-        <AssignFailedDialog
-          isOpen={this.state.isAssignedFailedOpen}
-          brickTitle={brick.title}
-          selectedItems={this.state.failedItems}
-          close={() => this.setState({ isAssignedFailedOpen: false, failedItems: [] })}
-        />
         <ShareDialogs
           shareOpen={this.state.isSharingOpen}
           brick={brick}
@@ -526,8 +499,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                 <div>
                   <div className="btn btn-green" onClick={async () => {
                     await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id] });
-                    const classroom = await getClassById(this.props.assignClass.id);
-                    this.setState({ isAssignV2Open: false, assignClass: classroom, isAssignV3Open: true });
+                    await this.props.getAndSetClassroom(this.props.assignClass.id);
+                    this.setState({ isAssignV2Open: false, isAssignV3Open: true });
                   }}>Assign and return to class</div>
                 </div>
               </div>

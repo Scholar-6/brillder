@@ -58,6 +58,16 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
 
   const [classroom, setClassroom] = useState(null as any);
 
+  const [hasPersonal, setHasPersonal] = useState(false);
+
+  const [assignments, setAssignments] = useState([] as any[]);
+  const [bricks, setBricks] = useState([] as any[]);
+
+  const [searchText, setSearchText] = useState('');
+
+  const [currentEmail, setCurrentEmail] = useState("");
+  const [users, setUsers] = useState<User[]>([]);
+
   React.useEffect(() => {
     if (props.classroom) {
       setClassroom(props.classroom);
@@ -85,16 +95,6 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   React.useEffect(() => {
     setPersonal();
   }, []);
-
-  const [hasPersonal, setHasPersonal] = useState(false);
-
-  const [assignments, setAssignments] = useState([] as any[]);
-  const [bricks, setBricks] = useState([] as any[]);
-
-  const [searchText, setSearchText] = useState('');
-
-  const [currentEmail, setCurrentEmail] = useState("");
-  const [users, setUsers] = useState<User[]>([]);
 
   //eslint-disable-next-line
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

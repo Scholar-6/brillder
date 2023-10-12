@@ -299,6 +299,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             toggleSidebar={setSidebar}
             isPreview={true}
             competition={null}
+            getAndSetClassroom={() => {}}
             competitionCreated={() => {}}
             moveToBuild={moveToBuild}
           />
