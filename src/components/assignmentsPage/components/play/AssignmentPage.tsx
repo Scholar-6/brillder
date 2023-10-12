@@ -146,6 +146,7 @@ class AssignmentPage extends Component<PlayProps, PlayState> {
   }
 
   sorting(sort: SortClassroom) {
+    console.log('sorting')
     const classrooms = this.getSorted(this.state.classrooms, sort);
     this.setState({classSort: sort, classrooms});
   }
