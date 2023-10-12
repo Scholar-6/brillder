@@ -78,6 +78,7 @@
   padding-left: 1.8vw !important;
 
   .absolute-custom-drag-icon {
+    transition: all 150ms ease-in-out;
     cursor: grab;
     position: absolute;
     top: 0;
