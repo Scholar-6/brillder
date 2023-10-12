@@ -183,7 +183,10 @@ class TeachFilterSidebar extends Component<
                 label={`All Classes (${classrooms.length})`}
               />
             </div>
-            <SortButton sortBy={this.state.sort} sort={this.props.sortClassrooms.bind(this)} />
+            <SortButton sortBy={this.state.sort} sort={(sort: SortClassroom) => {
+              this.setState({sort});
+              this.props.sortClassrooms(sort);
+            }} />
           </div>
         </div>
         <div className="sort-box subject-scrollable">

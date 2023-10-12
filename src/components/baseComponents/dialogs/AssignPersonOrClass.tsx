@@ -11,6 +11,7 @@ import { User } from 'model/user';
 import AddToClassDialog from './AddToClassDialog';
 import { createClass } from 'components/teach/service';
 import map from 'components/map';
+import { assignClasses } from 'services/axios/assignBrick';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -65,7 +66,7 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
       <div className="icon-text-btn font-16" onClick={async () => {
         const res = await createClass(props.brick.title);
         if (res) {
-          props.history.push(map.TeachAssignedTab)
+          props.history.push(map.TeachAssignedTab + '?classroomId=' + res.id)
         }
       }}>
         <div className="flex-center">

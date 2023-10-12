@@ -85,6 +85,7 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
               freeSolo
               options={bricks}
               onChange={async (e: any, brickV5: any) => {
+                console.log('44444')
                 if (classroom) {
                   setSearchText(stripHtml(brickV5.title));
                   const newAssignments = [...assignments];

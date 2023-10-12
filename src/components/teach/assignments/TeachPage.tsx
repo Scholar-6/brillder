@@ -361,7 +361,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   sortClassrooms(sort: SortClassroom) {
     const classrooms = this.state.classrooms.filter(c => c.status == ClassroomStatus.Active);
     const finalClasses = this.sortAndReturnClassrooms(sort, classrooms);
-    this.setState({ classrooms: finalClasses });
+    this.setState({ ...this.state, classrooms: finalClasses });
   }
 
   sortAndReturnClassrooms(sort: SortClassroom, classrooms: TeachClassroom[]) {
