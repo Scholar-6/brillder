@@ -275,7 +275,7 @@ const UpdateClassDialog: React.FC<AssignClassProps> = (props) => {
             className={`btn btn-md bg-theme-green font-16 yes-button ${!canSubmitV2 ? 'invalid' : ''}`}
             onClick={assignStudentsToBrick}
           >
-            <span className="bold">{users.length > 0 ? 'Invite' : 'Skip'}</span>
+            <span className="bold">{users.length > 0 ? 'Invite' : 'Finish'}</span>
           </button>
         </div>
       </Dialog>}

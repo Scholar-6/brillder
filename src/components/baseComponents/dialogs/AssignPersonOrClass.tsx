@@ -66,7 +66,10 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
       <div className="icon-text-btn font-16" onClick={async () => {
         const res = await createClass(props.brick.title);
         if (res) {
-          props.history.push(map.TeachAssignedTab + '?classroomId=' + res.id)
+          const resV2 = await assignClasses(props.brick.id, { classesIds: [res.id] });
+          if (resV2.success) {
+            props.history.push(map.TeachAssignedTab + '?classroomId=' + res.id + '&shareOpen=true')
+          }
         }
       }}>
         <div className="flex-center">
