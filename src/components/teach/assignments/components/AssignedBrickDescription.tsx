@@ -19,6 +19,7 @@ interface State {
   expanded: boolean | number;
   questionCount: number;
   coverLoaded: boolean;
+  hovered: boolean;
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps, State> {
@@ -28,6 +29,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     this.state = {
       expanded: true,
       questionCount: 0,
+      hovered: false,
       coverLoaded: false,
     }
   }
@@ -52,8 +54,12 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
     return (
       <div className="assigned-brick-description-v3">
-        <div className="assigned-brick-description-v2" style={{ display: 'flex' }}>
-          <SpriteIcon className="absolute-custom-drag-icon" name="drag-custom-icon" />
+        <div className="assigned-brick-description-v2" onMouseEnter={() => {
+          this.setState({hovered: true});
+        }} onMouseLeave={() => {
+          this.setState({hovered: false});
+        }} style={{ display: 'flex' }}>
+          <SpriteIcon className="absolute-custom-drag-icon" style={{opacity: this.state.hovered ? 1 : 0}} name="drag-custom-icon" />
           <div>
             <div className="assign-brick-d343">
               <div className="assign-cover-image" onClick={() => {
