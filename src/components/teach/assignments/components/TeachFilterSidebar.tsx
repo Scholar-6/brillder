@@ -77,12 +77,13 @@ class TeachFilterSidebar extends Component<
   }
 
   renderClassoomSubject(c: TeachClassroom) {
-    if (c.subject) {
+    let subject = this.props.subjects.find(s => s.id === c.subjectId);
+    if (subject) {
       return (
         <RadioButton
           checked={false}
-          color={c.subject.color}
-          name={c.subject.name}
+          color={subject.color}
+          name={subject.name}
         />
       );
     }
