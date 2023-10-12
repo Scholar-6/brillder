@@ -24,6 +24,7 @@ import ReactiveUserCredits from 'components/userProfilePage/ReactiveUserCredits'
 import { JoinPage, LibraryLoginPage, LibraryRegisterPage } from 'components/loginPage/desktop/routes';
 import { SetAuthBrickCash } from 'localStorage/play';
 import subjectActions from "redux/actions/subject";
+import searchActions from "redux/actions/search";
 
 
 interface Props {
@@ -55,10 +56,12 @@ interface Props {
 
   subjects: Subject[];
   getSubjects(): Promise<Subject[]>;
+
+  searchString: string;
+  setSearchString(value: string): void;
 }
 
 interface State {
-  value: string;
   searchVisible: boolean;
   searchAnimation: string;
   bricks: Brick[];
@@ -81,7 +84,6 @@ class PageHeader extends Component<Props, State> {
     this.state = {
       searchVisible: false,
       dropdownShown: false,
-      value,
       suggestionsLoaded: false,
       bricks: [],
       subjects: [],
@@ -90,6 +92,11 @@ class PageHeader extends Component<Props, State> {
 
     if (this.props.isAuthenticated === isAuthenticated.True && !this.props.notifications) {
       this.props.getNotifications();
+    }
+
+    if (value) {
+      this.props.setSearchString(value);
+      this.props.searching(value);
     }
   }
 
@@ -201,16 +208,17 @@ class PageHeader extends Component<Props, State> {
   }
 
   render() {
+    const {searchString} = this.props;
     let { searchVisible } = this.state
     let notificationCount = this.props.notifications ? this.props.notifications.length : 0;
     let link = this.props.link ? this.props.link : map.MainPage;
 
-    let className = 'search-container 44';
+    let className = 'search-container';
     if (searchVisible) {
       className += 'active animated slideInRight '
     }
 
-    if (this.state.value.length >= 1) {
+    if (searchString.length >= 1) {
       className += ' no-bottom-border';
     }
 
@@ -221,14 +229,14 @@ class PageHeader extends Component<Props, State> {
           <div className={!searchVisible ? "page-header" : "page-header active"}>
             <HomeButton onClick={this.props.onForbiddenClick} history={this.props.history} />
             <div className="logout-container">
-              <div className={`search-container ${this.state.value.length >= 1 ? 'no-bottom-border' : ''}`}>
+              <div className={`search-container ${searchString.length >= 1 ? 'no-bottom-border' : ''}`}>
                 <div className="header-btn search-button svgOnHover" onClick={this.props.onForbiddenClick}>
                   <SpriteIcon name="search" className="active" />
                 </div>
                 <div className="search-area">
                   <input
                     className="search-input"
-                    value={this.state.value}
+                    value={searchString}
                     onKeyUp={this.props.onForbiddenClick}
                     onChange={this.props.onForbiddenClick}
                     placeholder={this.props.searchPlaceholder}
@@ -238,7 +246,7 @@ class PageHeader extends Component<Props, State> {
               {this.props.isAuthenticated === isAuthenticated.True &&
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
-                  <BrillIconAnimated onClick={() => console.log(444)} />
+                  <BrillIconAnimated />
                   {(this.props.user.isFromInstitution || this.props.user.library) ? <div /> :
                     <div className="header-credits-container">
                       <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
@@ -269,9 +277,9 @@ class PageHeader extends Component<Props, State> {
               }
             </div>
           </div>
-          {this.props.suggestions && this.state.value.length >= 1 && <SearchSuggestions
+          {this.props.suggestions && searchString.length >= 1 && <SearchSuggestions
             history={this.props.history} subjects={this.props.subjects}
-            searchString={this.state.value} bricks={this.state.bricks}
+            searchString={searchString} bricks={this.state.bricks}
             filterByAuthor={a => this.props.history.push(map.ViewAllPageB + '&searchString=' + a.firstName)}
             filterBySubject={s => this.props.history.push(map.ViewAllPageB + '&searchString=' + s.name)}
             filterByKeyword={k => this.props.history.push(map.ViewAllPageB + '&searchString=' + k.name)}
@@ -298,7 +306,8 @@ class PageHeader extends Component<Props, State> {
                       className="search-input"
                       onKeyUp={(e) => this.keySearch(e)}
                       onChange={(e) => {
-                        this.setState({ ...this.state, value: e.target.value });
+                        this.props.setSearchString(e.target.value);
+                        this.setState({ ...this.state });
                         this.props.searching(e.target.value);
                       }}
                       placeholder={this.props.searchPlaceholder}
@@ -332,19 +341,20 @@ class PageHeader extends Component<Props, State> {
           <Hidden only={['xs']} >
             <HomeButton link={link} history={this.props.history} />
             <div className="logout-container">
-              <div className={`search-container ${this.state.value.length >= 1 ? 'no-bottom-border' : ''}`}>
+              <div className={`search-container ${searchString.length >= 1 ? 'no-bottom-border' : ''}`}>
                 {!this.props.searchHidden &&
                 <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>
-                  <SpriteIcon name="search" className="active" />
+                  <SpriteIcon name="search" className="active" />~
                 </div>}
                 <div className="search-area">
                   {!this.props.searchHidden &&
                   <input
                     className="search-input"
-                    value={this.state.value}
+                    value={searchString}
                     onKeyUp={(e) => this.keySearch(e)}
                     onChange={(e) => {
-                      this.setState({ ...this.state, value: e.target.value });
+                      this.props.setSearchString(e.target.value);
+                      this.setState({ ...this.state });
                       this.props.searching(e.target.value);
                     }}
                     placeholder={this.props.searchPlaceholder}
@@ -354,7 +364,7 @@ class PageHeader extends Component<Props, State> {
               {this.props.isAuthenticated === isAuthenticated.True &&
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
-                  <BrillIconAnimated onClick={() => console.log(443)} />
+                  <BrillIconAnimated />
                   {(this.props.user.isFromInstitution || this.props.user.library) ? <div /> :
                     <div className="header-credits-container">
                       <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
@@ -392,9 +402,9 @@ class PageHeader extends Component<Props, State> {
             </div>
           </Hidden>
         </div>
-        {this.props.suggestions && this.state.value.length >= 1 && <SearchSuggestions
+        {this.props.suggestions && searchString.length >= 1 && <SearchSuggestions
           history={this.props.history} subjects={this.props.subjects}
-          searchString={this.state.value} bricks={this.state.bricks}
+          searchString={searchString} bricks={this.state.bricks}
           filterByAuthor={a => this.props.history.push(map.ViewAllPageB + '&searchString=' + a.firstName)}
           filterBySubject={s => this.props.history.push(map.ViewAllPageB + '&searchString=' + s.name)}
           filterByKeyword={k => this.props.history.push(map.ViewAllPageB + '&searchString=' + k.name)}
@@ -408,12 +418,14 @@ const mapState = (state: ReduxCombinedState) => ({
   isAuthenticated: state.auth.isAuthenticated,
   user: state.user.user,
   notifications: state.notifications.notifications,
-  subjects: state.subjects.subjects
+  subjects: state.subjects.subjects,
+  searchString: state.search.value
 });
 
 const mapDispatch = (dispatch: any) => ({
   getNotifications: () => dispatch(notificationActions.getNotifications()),
-  getSubjects: () => dispatch(subjectActions.fetchSubjects())
+  getSubjects: () => dispatch(subjectActions.fetchSubjects()),
+  setSearchString: (value: string) => dispatch(searchActions.setSearchString(value)),
 });
 
 const connector = connect(mapState, mapDispatch, null, { forwardRef: true });

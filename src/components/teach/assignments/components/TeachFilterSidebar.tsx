@@ -24,6 +24,8 @@ interface FilterSidebarProps {
   moveToPremium(): void;
   loadClass(classId: number): void;
   sortClassrooms(sort: SortClassroom): void;
+
+  viewAll(): void;
 }
 
 interface FilterSidebarState {
@@ -73,7 +75,7 @@ class TeachFilterSidebar extends Component<
   unselectClassroom(e: any) {
     e.stopPropagation();
     e.preventDefault();
-    this.props.setActiveClassroom(-1);
+    this.props.viewAll();
   }
 
   renderClassoomSubject(c: TeachClassroom) {

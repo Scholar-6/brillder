@@ -10,6 +10,7 @@ import statsReducer, { StatsState } from './stats';
 import sendPublisher, { SendPublisherState } from './sendPublisher';
 import subjectReducer, { SubjectState } from './subjects';
 import playReducer, { PlayState } from './play';
+import searchReducer, { SearchState } from './search';
 
 
 export interface ReduxCombinedState {
@@ -24,6 +25,7 @@ export interface ReduxCombinedState {
   comments: CommentsState;
   requestFailed: RequestFailedState;
   stats: StatsState;
+  search: SearchState;
 }
 
 export default combineReducers({
@@ -37,5 +39,6 @@ export default combineReducers({
   comments: commentsReducer,
   sendPublisher: sendPublisher,
   requestFailed: requestFailedReducer,
-  stats: statsReducer
+  stats: statsReducer,
+  search: searchReducer
 });

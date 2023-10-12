@@ -33,6 +33,7 @@ import UpdateClassDialog from "./components/UpdateClassDialog";
 import AssignBrickClassDialog from "./components/AssignBrickClassDialog";
 import { GetSetSortSidebarAssignment, GetSortSidebarClassroom } from "localStorage/assigningClass";
 import subjectActions from "redux/actions/subject";
+import searchActions from "redux/actions/search";
 
 interface RemindersData {
   isOpen: boolean;
@@ -47,7 +48,6 @@ enum ClassroomSearchType {
 
 interface TeachProps {
   history: History;
-  searchString: string;
 
   // redux
   user: User;
@@ -55,6 +55,9 @@ interface TeachProps {
 
   subjects: Subject[];
   getSubjects(): Promise<Subject[]>;
+
+  searchString: string;
+  clearSearch(): void;
 }
 
 interface TeachState {
@@ -568,6 +571,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
             loadClass={classId => this.loadClass(classId)}
             sortClassrooms={this.sortClassrooms.bind(this)}
             moveToPremium={() => this.setState({ isPremiumDialogOpen: true })}
+            viewAll={() => {
+              if (this.props.searchString.length > 0) {
+                this.props.clearSearch();
+                this.setState({ searchString: '', isSearching: false, activeClassroom: null });
+                this.loadClasses(-1);
+              } else {
+                this.setActiveClassroom(-1);
+              }
+            }}
           />
           {this.renderData()}
         </Grid>
@@ -637,12 +649,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  subjects: state.subjects.subjects
+  subjects: state.subjects.subjects,
+  searchString: state.search.value
 });
 
 const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
-  getSubjects: () => dispatch(subjectActions.fetchSubjects())
+  getSubjects: () => dispatch(subjectActions.fetchSubjects()),
+  clearSearch: () => dispatch(searchActions.clearSearch()),
 });
 
 export default connect(mapState, mapDispatch)(TeachPage);
