@@ -357,7 +357,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
                 } else if (sortStudentBy === SortStudentV3.NumberOfCompleted) {
                   classroom.students.sort((a, b) => b.completedCount - a.completedCount);
                 }
-                this.setState({ sortStudentBy });
+                this.setState({ ...this.state, sortStudentBy });
               }} /></div>
             </div>
             <div className="scrollable-students">
