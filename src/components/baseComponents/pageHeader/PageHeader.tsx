@@ -344,7 +344,7 @@ class PageHeader extends Component<Props, State> {
               <div className={`search-container ${searchString.length >= 1 ? 'no-bottom-border' : ''}`}>
                 {!this.props.searchHidden &&
                 <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>
-                  <SpriteIcon name="search" className="active" />~
+                  <SpriteIcon name="search" className="active" />
                 </div>}
                 <div className="search-area">
                   {!this.props.searchHidden &&
