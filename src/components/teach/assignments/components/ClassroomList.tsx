@@ -170,6 +170,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
             <AssignedBrickDescription
               subjects={this.props.subjects}
               classItem={c}
+              dragHidden={this.state.assignments.length === 1}
             />
           </div>
         </Grow>

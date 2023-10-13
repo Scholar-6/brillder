@@ -13,6 +13,7 @@ import { TeachListItem } from "./ClassroomList";
 interface AssignedDescriptionProps {
   subjects: Subject[];
   classItem: TeachListItem;
+  dragHidden?: boolean;
 }
 
 interface State {
@@ -59,7 +60,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         }} onMouseLeave={() => {
           this.setState({hovered: false});
         }} style={{ display: 'flex' }}>
-          <SpriteIcon className="absolute-custom-drag-icon" style={{opacity: this.state.hovered ? 1 : 0}} name="drag-custom-icon" />
+          {!this.props.dragHidden &&
+            <SpriteIcon className="absolute-custom-drag-icon" style={{opacity: this.state.hovered ? 1 : 0}} name="drag-custom-icon" />
+          }
           <div>
             <div className="assign-brick-d343">
               <div className="assign-cover-image" onClick={() => {
