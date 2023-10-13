@@ -338,11 +338,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       }
       this.search(page);
     } else if (this.props.user) {
-      if (this.state.subjectGroup) {
-        this.loadUnauthorizedBricks(this.state.subjectGroup);
-      } else {
-        this.loadBricks(values);
-      }
+      this.loadBricks(values);
     } else {
       if (this.state.subjectGroup) {
         this.loadUnauthorizedBricks(this.state.subjectGroup);
