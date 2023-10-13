@@ -404,7 +404,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       const pageBricks = await getPublishedBricksByPage(
         state.pageSize, state.page, (values && values.personal) ? false : true,
         state.filterLevels, state.filterLength, subjectIds,
-        state.filterCompetition, state.sortBy
+        state.filterCompetition, this.state.subjectGroup, state.sortBy
       );
       if (pageBricks) {
         if (values) {
@@ -465,12 +465,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     const pageBricks = await getPublishedBricksByPage(
       this.state.pageSize, page, isCore, levels, length, subjectIds,
-      filterCompetition, sortBy
+      filterCompetition, this.state.subjectGroup, sortBy
     );
 
     if (pageBricks) {
-      const { subjects } = this.props;
-
       this.setState({
         ...this.state,
         page,
@@ -491,7 +489,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       this.historyUpdate(
         isAllSubjects, page, state.searchString,
-        state.filterLevels, state.filterLength, state.sortBy, subjectIds, isCore
+        state.filterLevels, state.filterLength, state.sortBy,
+        subjectIds, isCore, state.subjectGroup
       );
     }
   }
@@ -525,7 +524,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       this.historyUpdate(
         state.isAllSubjects, page, state.searchString,
-        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
+        state.filterLevels, state.filterLength, state.sortBy,
+        subjectIds, state.isCore, state.subjectGroup
       );
     }
   }
@@ -868,7 +868,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   historyUpdate(
     isAllSubjects: boolean, page: number, searchString: string,
     filterLevel: AcademicLevel[], filterLength: BrickLengthEnum[],
-    sortBy: SortBy, subjectIds: number[], isCore: boolean, stopAssignBrick?: boolean
+    sortBy: SortBy, subjectIds: number[], isCore: boolean,
+    subjectGroup?: SubjectGroup | null, stopAssignBrick?: boolean
   ) {
     let link = map.ViewAllPage + '?page=' + page;
 
@@ -900,6 +901,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if (isCore === false) {
       link += '&personal=true'
+    }
+
+    if (subjectGroup) {
+      link += '&subjectGroup=' + subjectGroup;
     }
 
     if (!stopAssignBrick) {
@@ -941,7 +946,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       this.historyUpdate(
         state.isAllSubjects, page, state.searchString,
-        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
+        state.filterLevels, state.filterLength, state.sortBy,
+        subjectIds, state.isCore, state.subjectGroup
       );
     }
   }
@@ -974,7 +980,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       this.historyUpdate(
         state.isAllSubjects, page, state.searchString,
-        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
+        state.filterLevels, state.filterLength, state.sortBy,
+        subjectIds, state.isCore, state.subjectGroup
       );
     }
   }
@@ -1041,7 +1048,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       this.historyUpdate(
         state.isAllSubjects, page, state.searchString,
-        state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
+        state.filterLevels, state.filterLength, state.sortBy,
+        subjectIds, state.isCore, state.subjectGroup
       );
     } else {
       this.setState({
@@ -1070,7 +1078,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         );
         this.historyUpdate(
           state.isAllSubjects, page, searchString,
-          state.filterLevels, state.filterLength, state.sortBy, subjectIds, state.isCore
+          state.filterLevels, state.filterLength,
+          state.sortBy, subjectIds, state.isCore, state.subjectGroup
         );
       } catch {
         this.setState({ isLoading: false, isSearchBLoading: false, failedRequest: true });
@@ -1129,7 +1138,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         );
         this.historyUpdate(
           state.isAllSubjects, 0, state.searchString,
-          state.filterLevels, state.filterLength, state.sortBy, subjectIds, isCore
+          state.filterLevels, state.filterLength, state.sortBy,
+          subjectIds, isCore, state.subjectGroup
         );
       } else {
         this.loadAndSetBricks(
@@ -1576,7 +1586,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           this.historyUpdate(
             state.isAllSubjects, state.page, state.searchString,
             state.filterLevels, state.filterLength, state.sortBy,
-            this.getSubjectIds(), state.isCore, true
+            this.getSubjectIds(), state.isCore, state.subjectGroup, true
           );
         }} />}
       </React.Suspense>
