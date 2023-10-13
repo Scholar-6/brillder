@@ -270,13 +270,26 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricksRef: React.createRef<any>(),
     };
 
-    this.loadData(values);
+    this.loadInitData(values);
   }
 
-  checkSubjectsWithBricks(subjects: Subject[]) {
-    subjects.forEach((s) => {
-      s.checked = true;
-    });
+  async loadInitData(values: queryString.ParsedQuery<string>) {
+    if (this.props.subjects.length == 0) {
+      await this.props.getSubjects();
+    }
+
+    let subjectIds = getSubjectIdsFromUrl(values);
+
+    if (subjectIds && subjectIds.length > 0) {
+      for (let subjectId of subjectIds) {
+        const subject = this.props.subjects.find(s => s.id == subjectId);
+        if (subject) {
+          subject.checked = true;
+        }
+      }
+    }
+
+    this.loadData(values);
   }
 
   componentDidMount() {
@@ -318,10 +331,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadData(values: queryString.ParsedQuery<string>) {
-    let subjects = this.props.subjects;
-    if (this.props.subjects.length == 0) {
-      await this.props.getSubjects();
-    }
     if (values.searchString) {
       let page = 0;
       if (values.page) {
@@ -372,7 +381,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async loadUnauthorizedBricks(sGroup?: SubjectGroup) {
     const { state } = this;
     this.loadAndSetUnauthBricks(
-      0, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, sGroup
+      0, state.filterLevels, state.filterLength,
+      state.filterCompetition, state.sortBy, sGroup
     );
   }
 
@@ -382,11 +392,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       let { state } = this;
       if (state.isAllSubjects == false) {
         subjectIds = this.props.user.subjects.map(s => s.id);
-
-        let checked = getSubjectIdsFromUrl(values);
-        if (checked && checked.length > 0) {
-          subjectIds = checked;
-        }
       } else {
         let checked = getSubjectIdsFromUrl(values);
         if (checked && checked.length > 0) {
@@ -394,18 +399,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         }
       }
 
+      subjectIds = this.props.subjects.filter(s => s.checked === true).map(s => s.id);
+
       const pageBricks = await getPublishedBricksByPage(
         state.pageSize, state.page, (values && values.personal) ? false : true,
         state.filterLevels, state.filterLength, subjectIds,
         state.filterCompetition, state.sortBy
       );
       if (pageBricks) {
-        let { subjects } = this.props;
-
-        if (values && values.isViewAll) {
-          this.checkSubjectsWithBricks(subjects);
-        }
-
         if (values) {
           await this.setStateAndAssignClassroom(state, values);
         }
@@ -607,6 +608,18 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           state.filterCompetition, state.isAllSubjects, state.sortBy
         );
       }
+    } else {
+      // not logged in but subjects
+      if (this.state.isSearching) {
+        this.loadAndSetSearchBricks(
+          state.searchString, 0, state.pageSize, state.isCore, this.getSubjectIds(), state.isKeywordSearch
+        );
+      } else {
+        this.loadAndSetUnauthBricks(
+          0, state.filterLevels, state.filterLength,
+          state.filterCompetition, state.sortBy
+        );
+      }
     }
 
     this.setState({ ...state, isViewAll: false, shown: false });
@@ -733,27 +746,37 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   selectUserSubjects(isViewAll: boolean) {
-    const { state } = this;
-    if (state.subjectGroup) {
-      this.checkUserSubjects();
-      this.loadAndSetUnauthBricks(
-        0, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
-      );
-      this.setState({
-        isViewAll,
-        isClearFilter: this.isFilterClear(),
-      });
-    }
     if (this.props.user) {
-      this.checkUserSubjects();
-      this.loadAndSetBricks(
-        0, state.isCore, state.filterLevels, state.filterLength,
-        state.filterCompetition, state.isAllSubjects, state.sortBy
-      );
-      this.setState({
-        isViewAll,
-        isClearFilter: this.isFilterClear(),
-      });
+      const { state } = this;
+
+      if (state.subjectGroup) {
+        this.checkUserSubjects();
+        this.loadAndSetUnauthBricks(
+          0, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
+        );
+        this.setState({
+          isViewAll,
+          isClearFilter: this.isFilterClear(),
+        });
+      } else {
+        if (isViewAll === false) {
+          this.checkUserSubjects();
+        } else {
+          for (let subject of this.props.subjects) {
+            subject.checked = false;
+          }
+        }
+
+        this.loadAndSetBricks(
+          0, state.isCore, state.filterLevels, state.filterLength,
+          state.filterCompetition, state.isAllSubjects, state.sortBy
+        );
+
+        this.setState({
+          isViewAll,
+          isClearFilter: this.isFilterClear(),
+        });
+      }
     }
   }
 
@@ -820,7 +843,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   viewAll() {
-    this.checkSubjectsWithBricks(this.props.subjects);
     this.setState({ isViewAll: true });
   }
 
@@ -1391,9 +1413,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                   filterByOneSubject={this.filterByOneSubject.bind(this)}
                   setViewAll={() => this.setState({ isViewAll: true })}
                   setSubjectGroup={this.setSubjectGroup.bind(this)}
-                  checkSubjectsWithBricks={() =>
-                    this.checkSubjectsWithBricks(this.props.subjects)
-                  }
+                  checkSubjectsWithBricks={() => { }}
                 />
               </Route>
               <Route path={map.SearchPublishBrickPage}>
@@ -1477,8 +1497,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                   filterByOneSubject={this.filterByOneSubject.bind(this)}
                   setViewAll={() => this.setState({ isViewAll: true })}
                   setSubjectGroup={this.setSubjectGroup.bind(this)}
-                  checkSubjectsWithBricks={() =>
-                    this.checkSubjectsWithBricks(this.props.subjects)
+                  checkSubjectsWithBricks={() => { }
                   }
                 />
               </Route>
