@@ -2,7 +2,7 @@ import { OverviewData } from 'components/admin/adminOverview/AdminOverviewPage';
 import { PDateFilter } from 'components/admin/bricksPlayed/BricksPlayedSidebar';
 import { getApiQuestion } from 'components/build/questionService/QuestionService';
 import { AssignmentBrick } from 'model/assignment';
-import { Brick, BrickLengthEnum, BrickStatus, KeyWord, Subject } from 'model/brick';
+import { Brick, BrickLengthEnum, BrickStatus, KeyWord, Subject, SubjectGroup } from 'model/brick';
 import { Question } from 'model/question';
 
 import { get, put, post, axiosDelete, del } from './index';
@@ -219,7 +219,7 @@ export interface PageBricks {
 export const getPublishedBricksByPage = async (
   pageSize: number, page: number, isCore: boolean,
   level: number[], length: BrickLengthEnum[], subjectIds: number[],
-  onlyCompetitions: boolean, sortBy?: SortBy
+  onlyCompetitions: boolean, subjectGroup?: SubjectGroup | null, sortBy?: SortBy
 ) => {
   try {
 
@@ -229,6 +229,7 @@ export const getPublishedBricksByPage = async (
       level,
       length,
       subjectIds,
+      subjectGroup,
       onlyCompetitions,
       sortBy
     } as any;
