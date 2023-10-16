@@ -14,12 +14,12 @@ const EmptyTabContent: React.FC<Props> = (props) => {
   const { activeClassroom } = props;
   return (
     <div className="tab-content loader-content empty-tab">
-      <div className={"tab-content-centered " + (activeClassroom ? 'empty-tab-content' : '')}>
+      <div className={"tab-content-centered flex-center " + (activeClassroom ? 'empty-tab-content' : '')}>
         <div className="new-class-container" onClick={props.openClass}>
-          <div className="icon-container">
+          <div className="icon-container flex-center">
             <SpriteIcon name="glasses-sprite" className="stroke-1" />
           </div>
-          <div className="bold font-20">You don’t have any classes</div>
+          <div className="bold flex-center font-20">You don’t have any classes</div>
           <div className="text-center f-s-2 font-16">Create a class to set assignments and track your students' progress</div>
           <div className="flex-center">
             <div className="btn btn-orange font-18">Create Class</div>

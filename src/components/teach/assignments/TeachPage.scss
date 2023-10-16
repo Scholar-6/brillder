@@ -492,25 +492,26 @@
     .tab-content-centered {
       height: 100%;
     }
+  }
 
-    .new-class-container {
-      .icon-container {
-        margin-bottom: 2vh;
-        svg {
-          height: 7vw;
-        }
+  .new-class-container {
+    color: var(--theme-dark-blue);
+    .icon-container {
+      margin-bottom: 2vh;
+      svg {
+        height: 7vw;
       }
-      .btn-orange {
-        cursor: pointer;
-        border-radius: 4vw;
-        padding: 0.7vw 1.2vw;
-        color: white;
-        margin-top: 2vh;
-        background: var(--theme-orange);
+    }
+    .btn-orange {
+      cursor: pointer;
+      border-radius: 4vw;
+      padding: 0.7vw 1.2vw;
+      color: white;
+      margin-top: 2vh;
+      background: var(--theme-orange);
 
-        &:hover {
-          background: var(--theme-dark-blue);
-        }
+      &:hover {
+        background: var(--theme-dark-blue);
       }
     }
   }
