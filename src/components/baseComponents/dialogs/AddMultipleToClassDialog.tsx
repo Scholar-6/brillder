@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { ListItemIcon, ListItemText, MenuItem, Popper } from '@material-ui/core';
+import { ListItemText, MenuItem, Popper } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
 import { stripHtml } from 'components/build/questionService/ConvertService';
-import { Brick } from 'model/brick';
+import { Brick, Subject } from 'model/brick';
 import { assignClasses } from 'services/axios/assignBrick';
 import { searchClassroomsByName } from 'services/axios/classroom';
 
 import BrickTitle from 'components/baseComponents/BrickTitle';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Classroom } from 'model/classroom';
+import SubjectIcon from './SubjectIcon';
+
+import './AddMultipleToClassDialog.scss';
 
 interface AssignClassProps {
   brick: Brick;
+  subjects: Subject[];
 
   submit(): void;
   close(): void;
@@ -38,28 +42,15 @@ const AddMultipleToClassDialog: React.FC<AssignClassProps> = (props) => {
     setSaving(true);
 
     if (selectedClassrooms.length === 0) {
-      console.log('can`t save')
       setSaving(false);
       return;
     }
 
     const res = await assignClasses(props.brick.id, { classesIds: selectedClassrooms.map(s => s.id) });
 
-    console.log('saved', res);
     if (res && res.success) {
       props.submit();
     }
-    /*
-    if (res) {
-      const classroomV2 = await getClassById(classroom.id);
-      if (classroomV2 && classroomV2.assignments) {
-        classroomV2.assignments.sort((c1, c2) => {
-          return c1.assignedDate > c2.assignedDate ? -1 : 1;
-        });
-        setAssignments(classroomV2.assignments);
-      }
-      setClassroom(classroomV2);
-    }*/
 
     setSaving(false);
   }
@@ -68,7 +59,7 @@ const AddMultipleToClassDialog: React.FC<AssignClassProps> = (props) => {
     <Dialog
       open={true}
       onClose={props.close}
-      className="dialog-box light-blue assign-class-dialog create-classroom-dialog new-class-r5"
+      className="dialog-box light-blue assign-class-dialog create-classroom-dialog new-class-r5 assign-multiple-class"
     >
       <div className="dialog-header">
         <div className="title-box">
@@ -92,11 +83,11 @@ const AddMultipleToClassDialog: React.FC<AssignClassProps> = (props) => {
               PopperComponent={PopperCustom}
               getOptionLabel={(option: any) => stripHtml(option.name)}
               renderOption={(classroom: Classroom) => {
+                const subject = props.subjects.find(s => s.id === classroom.subjectId);
                 return (
                   <React.Fragment>
                     <MenuItem>
-                      <ListItemIcon>
-                      </ListItemIcon>
+                      <SubjectIcon subject={subject} />
                       <ListItemText>
                         <BrickTitle title={classroom.name} />
                       </ListItemText>
