@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import * as QRCode from "qrcode";
-import { ListItemIcon, ListItemText, MenuItem, Popper, SvgIcon } from '@material-ui/core';
+import { ListItemText, MenuItem, Popper } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
@@ -22,6 +22,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import HoverHelp from 'components/baseComponents/hoverHelp/HoverHelp';
 import { Classroom } from 'model/classroom';
 import AddMultipleToClassDialog from './AddMultipleToClassDialog';
+import SubjectIcon from './SubjectIcon';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -149,21 +150,15 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   }
 
   const addToClass = async () => {
-    console.log('add to class', isSaving, canSubmit, classroom)
     if (isSaving) { return; }
     setSaving(true);
 
     if (canSubmit === false || !classroom) {
-      console.log('can`t save')
       setSaving(false);
       return;
     }
 
-    console.log('assigning');
-
     const res = await assignClasses(props.brick.id, { classesIds: [classroom.id] });
-
-    console.log(res);
 
     if (res) {
       const classroomV2 = await getClassById(classroom.id);
@@ -213,7 +208,7 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   }
 
   if (multiple) {
-    return <AddMultipleToClassDialog brick={props.brick} submit={() => {
+    return <AddMultipleToClassDialog brick={props.brick} subjects={props.subjects} submit={() => {
       setMultiple(false);
       props.close();
     }} close={() => setMultiple(false)} />;
@@ -258,15 +253,7 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
                 return (
                   <React.Fragment>
                     <MenuItem>
-                      <ListItemIcon>
-                        <SvgIcon>
-                          <SpriteIcon
-                            name="circle-filled"
-                            className="w100 h100 active"
-                            style={{ color: subject?.color || '' }}
-                          />
-                        </SvgIcon>
-                      </ListItemIcon>
+                      <SubjectIcon subject={subject} />
                       <ListItemText>
                         <BrickTitle title={classroom.name} />
                       </ListItemText>
@@ -370,15 +357,7 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
                 return (
                   <React.Fragment>
                     <MenuItem>
-                      <ListItemIcon>
-                        <SvgIcon>
-                          <SpriteIcon
-                            name="circle-filled"
-                            className="w100 h100 active"
-                            style={{ color: subject?.color || '' }}
-                          />
-                        </SvgIcon>
-                      </ListItemIcon>
+                      <SubjectIcon subject={subject} />
                       <ListItemText>
                         <BrickTitle title={brick.title} />
                       </ListItemText>
