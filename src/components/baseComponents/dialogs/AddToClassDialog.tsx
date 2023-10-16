@@ -21,6 +21,7 @@ import BrickTitle from 'components/baseComponents/BrickTitle';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import HoverHelp from 'components/baseComponents/hoverHelp/HoverHelp';
 import { Classroom } from 'model/classroom';
+import AddMultipleToClassDialog from './AddMultipleToClassDialog';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -209,6 +210,13 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
       setCloseV2Open(false);
       props.close();
     }
+  }
+
+  if (multiple) {
+    return <AddMultipleToClassDialog brick={props.brick} submit={() => {
+      setMultiple(false);
+      props.close();
+    }} close={() => setMultiple(false)} />;
   }
 
   return (<div>
