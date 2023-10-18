@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
-import { ListItemIcon, ListItemText, MenuItem, Popper, SvgIcon } from '@material-ui/core';
+import { Checkbox, ListItemIcon, ListItemText, MenuItem, Popper, SvgIcon } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
@@ -11,7 +11,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import { Brick, Subject } from 'model/brick';
 import { deleteAssignment, getSuggestedByTitles, hasPersonalBricks } from 'services/axios/brick';
-import {  getClassById } from 'components/teach/service';
+import { getClassById } from 'components/teach/service';
 import { assignClasses } from 'services/axios/assignBrick';
 import map from 'components/map';
 
@@ -40,6 +40,8 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
   const [classroom, setClassroom] = useState(null as any);
 
   const [hasPersonal, setHasPersonal] = useState(false);
+
+  const [sendEmail, setSendEmail] = useState(false);
 
   const [assignments, setAssignments] = useState([] as any[]);
   const [bricks, setBricks] = useState([] as any[]);
@@ -74,7 +76,7 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
       <div className="dialog-header">
         <div className="title-box">
           <div className="title font-18">
-            Add Assignments to Class
+            Add Assignments to Class 1
           </div>
           <SpriteIcon onClick={props.close} name="cancel-custom" />
         </div>
@@ -85,14 +87,12 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
               freeSolo
               options={bricks}
               onChange={async (e: any, brickV5: any) => {
-                console.log('44444', classroom)
                 if (classroom) {
-                  console.log('666')
                   setSearchText(stripHtml(brickV5.title));
                   const newAssignments = [...assignments];
                   const found = newAssignments.find(b => b.id === brickV5.id);
                   if (!found) {
-                    await assignClasses(brickV5.id, { classesIds: [classroom.id] });
+                    await assignClasses(brickV5.id, { classesIds: [classroom.id], sendEmail });
                     const classroomV2 = await getClassById(classroom.id);
                     if (classroomV2 && classroomV2.assignments) {
                       classroomV2.assignments.sort((c1, c2) => {
@@ -212,22 +212,22 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
               No bricks yet
             </div>
           }
+          <div className="flex-y-center" onClick={() => setSendEmail(!sendEmail)}>
+            <Checkbox checked={sendEmail} />
+            <div className="font-12">Send existing learners an email notification when finished</div>
+          </div>
         </div>
       </div>
       <div className="dialog-footer">
-        <div className="info-box">
-          {assignments.length > 0 ? '' : <SpriteIcon name="info-icon" />}
-        </div>
-        <div className="message-box-r5 font-11">
-          {assignments.length > 0 ? '' : 'You can skip this step for now and assign bricks to the class later from the Manage Classes menu.'}
-        </div>
+        <div className="info-box" />
+        <div className="message-box-r5 font-11" />
         <button
           className="btn btn-md bg-theme-green font-16 yes-button"
           onClick={() => {
             props.close();
           }}
         >
-          <span className="bold">{assignments.length > 0 ? 'Finish' : 'Skip'}</span>
+          <span className="bold">Done</span>
         </button>
       </div>
     </Dialog>
