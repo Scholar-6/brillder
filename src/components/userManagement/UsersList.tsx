@@ -538,7 +538,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         className="dialog-box">
         <div className="dialog-header">
           <div>Classrooms</div>
-          <div>wefwef</div>
         </div>
       </Dialog>
     );
