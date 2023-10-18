@@ -2,6 +2,7 @@ import { post, put } from './index';
 
 export interface AssignClassData {
   classesIds: number[];
+  sendEmail?: boolean;
 }
 
 export interface AssignClassResult {
