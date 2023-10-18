@@ -76,7 +76,7 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
       <div className="dialog-header">
         <div className="title-box">
           <div className="title font-18">
-            Add Assignments to Class 1
+            Add Assignments to Class
           </div>
           <SpriteIcon onClick={props.close} name="cancel-custom" />
         </div>
