@@ -321,7 +321,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     return (
       <div className="classroom-assignments-columns">
         {items.length === 0
-          ? <EmptyClassTab history={this.props.history} />
+          ? <EmptyClassTab history={this.props.history} click={this.props.assignPopup} />
           : <div className="assignments-column">
             <div className="bold assignments-title font-20">
               <div>Assignments</div>

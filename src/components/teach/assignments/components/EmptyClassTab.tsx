@@ -5,6 +5,7 @@ import map from 'components/map';
 
 interface Props {
   history: any;
+  click(): void;
 }
 
 const EmptyClassTab: React.FC<Props> = (props) => {
@@ -17,7 +18,7 @@ const EmptyClassTab: React.FC<Props> = (props) => {
         <div className="bold font-20 text-center">You haven’t added any assignments to this class</div>
         <div className="font-18 text-center">Click below to assign a brick to your students</div>
         <div className="flex-center">
-          <div className="btn btn-orange btn-v342 font-18" onClick={() => props.history.push(map.ViewAllPageB + '&newTeacher=true')}>
+          <div className="btn btn-orange btn-v342 font-18" onClick={props.click}>
             <span>Assign Brick</span>
             <SpriteIcon name="lucide_book-open-plus" />
           </div>
