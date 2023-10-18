@@ -21,7 +21,7 @@ const BottomAssignmentPopup: React.FC<any> = (props: Props) => {
     }
     return (
       <div>
-        <div className="class-name font-16"><span className="bold">{props.assignClass?.name} wefwefwef wefwef wef </span></div>
+        <div className="class-name font-16"><span className="bold">{props.assignClass?.name}</span></div>
         <div className="font-11">{assignmentsCount} Bricks Assigned</div>
       </div>
     );
