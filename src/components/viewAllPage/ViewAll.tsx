@@ -277,6 +277,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricksRef: React.createRef<any>(),
     };
 
+    console.log(123123)
     this.loadInitData(values);
   }
 
@@ -390,6 +391,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadBricks(values: queryString.ParsedQuery<string>) {
+    console.log('load bricks')
     if (this.props.user) {
       let subjectIds: number[] = [];
       let { state } = this;
@@ -410,6 +412,19 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         state.filterCompetition, this.state.subjectGroup, state.sortBy
       );
       if (pageBricks) {
+
+
+        this.props.subjects.map(s1 => {
+          s1.viewAllCount = 0;
+          pageBricks.res.map(s => {
+            if (s.brick_subjectId === s1.id) {
+              s1.viewAllCount = parseInt(s.count);
+            }
+          });
+        });
+
+        console.log(555, this.props.subjects);
+
         if (values) {
           await this.setStateAndAssignClassroom(state, values);
         }

@@ -69,6 +69,8 @@ export interface Subject {
   // view all page
   publicCount?: number;
   personalCount?: number;
+  bricksCount?: number;
+  viewAllCount?: number;
 }
 
 export interface SubjectItem extends Subject {

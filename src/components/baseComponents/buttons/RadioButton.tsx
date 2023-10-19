@@ -6,9 +6,10 @@ interface Props {
   checked: boolean | undefined;
   color: string;
   name: string;
+  count?: number;
 }
 
-const RadioButton: React.FC<Props> = ({checked, color, name}) => {
+const RadioButton: React.FC<Props> = ({checked, color, name, count}) => {
   const renderChecked = () => {
     if (name === GENERAL_SUBJECT) {
       color = '#001c58';
@@ -25,6 +26,7 @@ const RadioButton: React.FC<Props> = ({checked, color, name}) => {
     return (
       <div className="subject-no-border">
         <div className="filter-circle" style={{ background: color }} />
+        {count && count > 0 && <div className="right-index">{count}</div>}
       </div>
     );
   }

@@ -357,7 +357,9 @@ class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
       }
     }
 
-    subjects = subjects.sort((s1, s2) => s2.publicCount - s1.publicCount);
+    subjects = subjects.sort((s1, s2) => s2.viewAllCount - s1.viewAllCount);
+
+    console.log(44, subjects);
 
     return (
       <Grid container item xs={3} className="sort-and-filter-container">

@@ -210,6 +210,7 @@ export interface PageBricks {
   pageCount: number;
   bricks: Brick[];
   subjects: Subject[];
+  res: any[];
 }
 
 /**
