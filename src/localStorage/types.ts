@@ -21,3 +21,4 @@ export const AdminDashboardBricksFilters = 'AdminDashboardBricksFilters';
 export const AssigningClassrooms = 'AssigningClassrooms';
 export const SidebarAssignmentsSort = 'SidebarAssignmentsSort';
 export const SidebarClassroomSort = 'SidebarClassroomSort';
+export const ClassWithNewAssignments = 'ClassWithNewAssignments';

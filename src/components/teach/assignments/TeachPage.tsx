@@ -99,6 +99,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
       teacherId = parseInt(values.teacherId as string);
     }
 
+    let isAssignOpen = false;
+
+    if (values.onlyAssignBricks) {
+      isAssignOpen = true;
+    }
+
     this.state = {
       isSearching: false,
       finalSearchString: '',
@@ -125,7 +131,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       deleteClassOpen: false,
       classroomToRemove: null,
-      isAssignOpen: false,
+      isAssignOpen,
       selectedClassroom: null,
     };
 

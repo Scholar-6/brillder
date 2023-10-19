@@ -33,6 +33,7 @@ import AdminBrickStatisticButton from "./baseComponents/AdminBrickStatisticButto
 import { assignClasses } from "services/axios/assignBrick";
 import map from "components/map";
 import CreateClassDialog from "components/teach/assignments/components/CreateClassDialog";
+import { GetClassAssignedBricks, SetClassroomAssignedBricks } from "localStorage/assigningBricks";
 
 interface SidebarProps {
   history: any;
@@ -54,6 +55,7 @@ interface SidebarProps {
 
   // teacher
   assignClass?: any;
+  onlyAssignBricks?: boolean;
 
   //play-preview
   isPreview?: boolean;
@@ -493,14 +495,32 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                   <div className="btn btn-blue" onClick={async () => {
                     await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id] });
                     this.setState({ isAssignV2Open: false });
-                    this.props.history.push(map.ViewAllPage  + '?assigning-bricks=' + this.props.assignClass.id);
+                    let link = map.ViewAllPage  + '?assigning-bricks=' + this.props.assignClass.id;
+                    if (this.props.onlyAssignBricks) {
+                      link += '&only-bricks=true';
+                    }
+                    this.props.history.push(link);
                   }}>Assign and keep browsing</div>
                 </div>
                 <div>
                   <div className="btn btn-green" onClick={async () => {
-                    await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id] });
-                    await this.props.getAndSetClassroom(this.props.assignClass.id);
-                    this.setState({ isAssignV2Open: false, isAssignV3Open: true });
+                    const res = await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id] });
+                    
+                    if (this.props.onlyAssignBricks) {
+                      let classroom = GetClassAssignedBricks();
+                      if (res.success) {
+                        let found = classroom.assignments.find((a: any) => a.id === res.result[0].id);
+                        if (!found) {
+                          classroom.assignments.push(res.result[0]);
+                        }
+                        
+                        SetClassroomAssignedBricks(classroom);
+                        this.props.history.push(map.TeachAssignedTab + '?classroomId=' + classroom.id + '&onlyAssignBricks=true');
+                      }
+                    } else {
+                      await this.props.getAndSetClassroom(this.props.assignClass.id);
+                      this.setState({ isAssignV2Open: false, isAssignV3Open: true });
+                    }
                   }}>Assign and return to class</div>
                 </div>
               </div>

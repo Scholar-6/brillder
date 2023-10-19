@@ -11,13 +11,13 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import { Brick, Subject } from 'model/brick';
 import { deleteAssignment, getSuggestedByTitles, hasPersonalBricks } from 'services/axios/brick';
-import { getClassById } from 'components/teach/service';
 import { assignClasses, sendAsignEmail } from 'services/axios/assignBrick';
 import map from 'components/map';
 
 import BrickTitle from 'components/baseComponents/BrickTitle';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Classroom } from 'model/classroom';
+import { GetClassAssignedBricks, SetClassroomAssignedBricks, UnsetClassroomAssignedBricks } from 'localStorage/assigningBricks';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -50,6 +50,13 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
 
   React.useEffect(() => {
     if (props.classroom) {
+      const cashedClass = GetClassAssignedBricks();
+      console.log('cashed class', cashedClass)
+      if (cashedClass && cashedClass.id === props.classroom.id) {
+        const cashedAssignments = cashedClass.assignments.filter((a: any) => a != null);
+        setAssignments(cashedAssignments);
+      }
+  
       setClassroom(props.classroom);
     }
   }, [props.classroom]);
@@ -88,10 +95,14 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
                   const newAssignments = [...assignments];
                   const found = newAssignments.find(b => b.id === brickV5.id);
                   if (!found) {
-                    const result = await assignClasses(brickV5.id, { classesIds: [classroom.id], sendEmail });
+                    const result = await assignClasses(brickV5.id, { classesIds: [classroom.id] });
 
                     if (result.success) {
-                      setAssignments([...assignments, result.result[0]]);
+                      const assignmentsTotal = [...assignments, result.result[0]];
+                      const classCopy = Object.assign(classroom);
+                      classCopy.assignments = assignmentsTotal;
+                      SetClassroomAssignedBricks(classCopy);
+                      setAssignments(assignmentsTotal);
                     }
                   }
                 }
@@ -154,7 +165,7 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
           </div>
           <div className="flex-center">
             <div className={`btn btn-glasses flex-center ${hasPersonal ? '' : 'one-button'}`} onClick={() => {
-              props.history.push(map.ViewAllPage + '?assigning-bricks=' + classroom.id);
+              props.history.push(map.ViewAllPage + '?assigning-bricks=' + classroom.id + '&only-bricks=true');
             }}>
               <div className="flex-center">
                 <SpriteIcon name="glasses-home" />
@@ -165,7 +176,7 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
             </div>
             {hasPersonal &&
               <div className="btn btn-key flex-center" onClick={() => {
-                props.history.push(map.ViewAllPage + '?assigning-bricks=' + classroom.id + '&personal=true');
+                props.history.push(map.ViewAllPage + '?assigning-bricks=' + classroom.id + '&personal=true' + '&only-bricks=true');
               }}>
                 <div className="flex-center">
                   <SpriteIcon name="key" />
@@ -217,8 +228,9 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
           className="btn btn-md bg-theme-green font-16 yes-button"
           onClick={() => {
             if (sendEmail) {
-              sendAsignEmail(assignments.map(a => a.brick.id), classroom.id);
+              sendAsignEmail(assignments.map(a => a.id), classroom.id);
             }
+            UnsetClassroomAssignedBricks();
             props.close();
           }}
         >

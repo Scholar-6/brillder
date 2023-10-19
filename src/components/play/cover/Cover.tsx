@@ -58,6 +58,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [editorBioOpen, setEditorBio] = useState(false);
   const [onlyLibrary, setOnlyLibrary] = useState(false);
   const [assignClassId, setAssignClassId] = useState(-1);
+  const [onlyAssignBricks, setOnlyAssignBricks] = useState(false);
 
   const {user} = props;
 
@@ -80,6 +81,9 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     }
     if (values["assigning-bricks"]) {
       setAssignClassId(parseInt(values["assigning-bricks"] as string))
+      if (values["only-bricks"]) {
+        setOnlyAssignBricks(true);
+      }
     }
     getInvitations();
   }, []);
