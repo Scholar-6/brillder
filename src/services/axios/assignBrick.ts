@@ -36,6 +36,23 @@ export const assignClasses = async (brickId: number, data: AssignClassData) => {
   }
 }
 
+export const sendAsignEmail = async (assignmentIds: number[], classId: number) => {
+  try {
+    const result = await post<any[]>(`/brick/sendAssignEmail`, {assignmentIds, classId})
+    return {
+      success: true,
+      result,
+      error: ''
+    } as AssignClassResult;
+  } catch (e) {
+    return {
+      success: false,
+      result: [],
+      error: e
+    } as AssignClassResult;
+  }
+}
+
 export const changeDeadline = async (assignmentId: number, deadline: string) => {
   try {
     await put<any[]>(`/brick/assignment/${assignmentId}/updatedeadline/${deadline}`, {})

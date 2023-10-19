@@ -12,7 +12,7 @@ import { stripHtml } from 'components/build/questionService/ConvertService';
 import { Brick, Subject } from 'model/brick';
 import { deleteAssignment, getSuggestedByTitles, hasPersonalBricks } from 'services/axios/brick';
 import { getClassById } from 'components/teach/service';
-import { assignClasses } from 'services/axios/assignBrick';
+import { assignClasses, sendAsignEmail } from 'services/axios/assignBrick';
 import map from 'components/map';
 
 import BrickTitle from 'components/baseComponents/BrickTitle';
@@ -51,10 +51,6 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
   React.useEffect(() => {
     if (props.classroom) {
       setClassroom(props.classroom);
-      props.classroom.assignments.sort((c1, c2) => {
-        return c1.assignedDate > c2.assignedDate ? -1 : 1;
-      });
-      setAssignments(props.classroom.assignments);
     }
   }, [props.classroom]);
 
@@ -92,13 +88,10 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
                   const newAssignments = [...assignments];
                   const found = newAssignments.find(b => b.id === brickV5.id);
                   if (!found) {
-                    await assignClasses(brickV5.id, { classesIds: [classroom.id], sendEmail });
-                    const classroomV2 = await getClassById(classroom.id);
-                    if (classroomV2 && classroomV2.assignments) {
-                      classroomV2.assignments.sort((c1, c2) => {
-                        return c1.assignedDate > c2.assignedDate ? -1 : 1;
-                      });
-                      setAssignments(classroomV2.assignments);
+                    const result = await assignClasses(brickV5.id, { classesIds: [classroom.id], sendEmail });
+
+                    if (result.success) {
+                      setAssignments([...assignments, result.result[0]]);
                     }
                   }
                 }
@@ -197,7 +190,6 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
                   {stripHtml(a.brick.title)}
                   <SpriteIcon name="cancel-custom" onClick={async () => {
                     const res = await deleteAssignment(a.id);
-                    console.log('removed');
                     if (res) {
                       const filteredAssignments = assignments.filter(bs => bs.id !== a.id);
                       setAssignments(filteredAssignments);
@@ -224,6 +216,9 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
         <button
           className="btn btn-md bg-theme-green font-16 yes-button"
           onClick={() => {
+            if (sendEmail) {
+              sendAsignEmail(assignments.map(a => a.brick.id), classroom.id);
+            }
             props.close();
           }}
         >
