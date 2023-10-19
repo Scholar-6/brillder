@@ -34,6 +34,7 @@ import AssignBrickClassDialog from "./components/AssignBrickClassDialog";
 import { GetSetSortSidebarAssignment, GetSortSidebarClassroom } from "localStorage/assigningClass";
 import subjectActions from "redux/actions/subject";
 import searchActions from "redux/actions/search";
+import EmptySearchTabContent from "./components/EmptySearchTabContent";
 
 interface RemindersData {
   isOpen: boolean;
@@ -67,6 +68,7 @@ interface TeachState {
   searchType: ClassroomSearchType;
 
   classrooms: TeachClassroom[];
+  searchClassrooms: TeachClassroom[];
   activeClassroom: any;
 
   isLoaded: boolean;
@@ -102,6 +104,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       finalSearchString: '',
 
       classrooms: [],
+      searchClassrooms: [],
       activeClassroom: null,
       isLoaded: false,
 
@@ -142,7 +145,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       let updateClassId = -1;
       if (values.shareOpen) {
         updateClassId = parseInt(values.classroomId as string);
-        this.setState({updateClassId});
+        this.setState({ updateClassId });
       }
     } else if (values.search) {
       this.searching(values.search as string);
@@ -179,7 +182,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         if (classroom) {
           activeClassroom = classroom;
           activeClassroom.active = true;
-         
+
           const data = await getAssignmentsClassrooms(activeClassroom.id);
 
           classroom.assignments = data.assignments;
@@ -239,17 +242,17 @@ class TeachPage extends Component<TeachProps, TeachState> {
         classroom.studentsInvitations = data.classroom.studentsInvitations;
 
         for (let student of classroom.students) {
-      student.completedCount = 0;
-      for (let assignment of classroom.assignments) {
-        if (assignment.byStudent) {
-          for (let item of assignment.byStudent) {
-            if (item.studentId == student.id) {
-              student.completedCount += 1;
+          student.completedCount = 0;
+          for (let assignment of classroom.assignments) {
+            if (assignment.byStudent) {
+              for (let item of assignment.byStudent) {
+                if (item.studentId == student.id) {
+                  student.completedCount += 1;
+                }
+              }
             }
           }
         }
-      }
-    }
 
         this.setState({ activeClassroom: classroom });
       } else {
@@ -299,12 +302,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
           }
         }
       }
-     
+
       classroom.active = true;
 
       this.setState({
         classrooms,
-        activeClassroom: {...classroom},
+        activeClassroom: { ...classroom },
       });
       this.props.history.push({ search: queryString.stringify({ classroomId: id, teacherId: this.state.teacherId }) });
     } else {
@@ -390,7 +393,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async search() {
     let classrooms = await searchClassrooms(this.state.searchString, this.state.searchType) as TeachClassroom[] | null;
     if (classrooms) {
-      this.setState({ ...this.state, isSearching: true, finalSearchString: this.state.searchString, isLoaded: true, activeClassroom: null, classrooms });
+      this.setState({ ...this.state, isSearching: true, finalSearchString: this.state.searchString, isLoaded: true, activeClassroom: null, searchClassrooms: classrooms });
     } else {
       // failed
     }
@@ -434,12 +437,49 @@ class TeachPage extends Component<TeachProps, TeachState> {
     </div>
   }
 
-  renderContainer() {
+  renderData() {
+    if (!this.state.isLoaded) {
+      return (
+        <Grid item xs={9} className="brick-row-container teach-tab-d94 flex-center">
+          <div className="tab-content loader-content">
+            <div className="f-top-loader">
+              <SpriteIcon name="f-loader" className="spinning" />
+            </div>
+          </div>
+        </Grid>
+      );
+    }
+
+    let showedClasses = this.state.classrooms;
+
+    if (this.state.isSearching) {
+      showedClasses = this.state.searchClassrooms;
+    }
+
+    if (this.state.classrooms?.length === 0) {
+      return (
+        <Grid item xs={9} className="brick-row-container">
+          <EmptyTabContent openClass={() => this.setState({ createClassOpen: true })} />
+        </Grid>
+      );
+    }
+
+    if (this.state.isSearching && this.state.searchClassrooms?.length === 0) {
+      return (
+        <Grid item xs={9} className="brick-row-container">
+          <EmptySearchTabContent openClass={() => this.setState({ createClassOpen: true })} />
+        </Grid>
+      );
+    }
+
+    if (this.state.activeClassroom) {
+      return this.renderClassroom();
+    }
     return (
       <Grid item xs={9} className="brick-row-container teach-tab-d94 bg-light-blue no-active-class flex-center">
         <div>
           <div className="sub-title-v12 font-20 bold">{this.state.isSearching ? 'Search: ' + this.state.finalSearchString : 'All My Classes'}</div>
-          {this.state.classrooms.map((c, i) => {
+          {showedClasses.map((c, i) => {
             let teacherNames = '';
 
             let index = 0;
@@ -512,39 +552,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
     );
   }
 
-  renderData() {
-    if (!this.state.isLoaded) {
-      return (
-        <Grid item xs={9} className="brick-row-container teach-tab-d94 flex-center">
-          <div className="tab-content loader-content">
-            <div className="f-top-loader">
-              <SpriteIcon name="f-loader" className="spinning" />
-            </div>
-          </div>
-        </Grid>
-      );
-    }
-    if (this.state.classrooms?.length === 0) {
-      return (
-        <Grid item xs={9} className="brick-row-container">
-          <EmptyTabContent
-            history={this.props.history}
-            classrooms={this.state.classrooms}
-            activeClassroom={this.state.activeClassroom}
-            openClass={() => this.setState({ createClassOpen: true })}
-          />
-        </Grid>
-      );
-    }
-
-    if (this.state.activeClassroom) {
-      return this.renderClassroom();
-    }
-    return this.renderContainer();
-  }
-
   render() {
     let showedClasses = this.state.classrooms;
+
+    if (this.state.isSearching && this.state.searchClassrooms?.length > 0) {
+      showedClasses = this.state.searchClassrooms;
+    }
 
     const { history } = this.props;
     const { remindersData } = this.state;
@@ -599,16 +612,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
             }}
             close={() => { this.setState({ createClassOpen: false }) }}
           />}
-          {this.state.shareClass && <UpdateClassDialog
-            isOpen={true}
-            classroom={this.state.shareClass}
-            history={this.props.history}
-            submit={async (classroomId) => {
-              await this.loadClass(classroomId);
-              this.setState({ shareClass: null });
-            }}
-            close={() => { this.setState({ shareClass: null }) }}
-          />}
+        {this.state.shareClass && <UpdateClassDialog
+          isOpen={true}
+          classroom={this.state.shareClass}
+          history={this.props.history}
+          submit={async (classroomId) => {
+            await this.loadClass(classroomId);
+            this.setState({ shareClass: null });
+          }}
+          close={() => { this.setState({ shareClass: null }) }}
+        />}
         {this.state.updateClassId > 0 &&
           <UpdateClassDialog
             isOpen={this.state.updateClassId > 0}
@@ -632,7 +645,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
             }}
             close={() => this.setState({ isAssignOpen: false })}
           />}
-        <PremiumEducatorDialog 
+        <PremiumEducatorDialog
           isOpen={this.state.isPremiumDialogOpen}
           close={() => this.setState({ isPremiumDialogOpen: false })}
           submit={() => this.props.history.push(map.StripeEducator)}
