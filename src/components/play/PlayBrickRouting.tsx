@@ -247,13 +247,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const finalStep = location.pathname.search("/finalStep") >= 0;
 
   const [assignClass, setAssignClass] = useState(null as any);
+  const [onlyAssignBricks, setOnlyAssignBricks] = useState(false);
 
   // used for unauthenticated user.
   const [userToken, setUserToken] = useState<string>();
   const [emailInvalidPopup, setInvalidEmailPopup] = useState(false); // null - before submit button clicked, true - invalid
 
   const [canSeeCompetitionDialog, setCanSeeCompetitionDialog] = useState(true as boolean | null); // null means some data not loaded
-
 
   const setCompetitionId = (compId: number) => {
     setCompetitionIdV2(compId);
@@ -472,6 +472,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
 
     if (values["assigning-bricks"]) {
+      if (values["only-bricks"]) {
+        setOnlyAssignBricks(true);
+      }
       getAndSetClassroom(parseInt(values["assigning-bricks"] as string))
     }
     /*eslint-disable-next-line*/
@@ -1118,6 +1121,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               setMode={setMode}
               showPremium={() => { }}
               assignClass={assignClass}
+              onlyAssignBricks={onlyAssignBricks}
               competition={activeCompetition}
               getAndSetClassroom={getAndSetClassroom}
               competitionCreated={competition => {

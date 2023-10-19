@@ -78,6 +78,7 @@ import PersonalBrickInvitationDialog from "components/baseComponents/classInvita
 import SharePersonalBrickButton from "./components/SharePersonalBrickButton";
 import { ClassroomApi, getClassById } from "components/teach/service";
 import BottomAssignmentPopup from "components/play/BottomAssignmentPopup";
+import AssignPopupHint from "./components/AssignPopupHint";
 
 interface ViewAllProps {
   user: User;
@@ -104,6 +105,7 @@ interface ViewAllState {
   assignPopupClossingAnimation: boolean;
   assignClassroom: ClassroomApi | null;
   assigningBricks: boolean;
+  onlyAssignBricks: boolean;
 
   isKeywordSearch: boolean;
 
@@ -119,7 +121,6 @@ interface ViewAllState {
   isSubjectPopupOpen: boolean;
   noSubjectOpen: boolean;
   activeSubject: Subject;
-  dropdownShown: boolean;
 
   subjectGroup: SubjectGroup | null;
 
@@ -215,6 +216,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       isAllCategory = true;
     }
 
+    let onlyAssignBricks = false;
+
+    if (values["only-bricks"]) {
+      onlyAssignBricks = true;
+    }
+
     this.state = {
       bricks: [],
       sortBy,
@@ -225,10 +232,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       assignPopupClossingAnimation: false,
       assigningBricks: false,
       assignClassroom: null,
+      onlyAssignBricks,
 
       isSubjectPopupOpen: false,
       noSubjectOpen: false,
-      dropdownShown: false,
       searchBricks: [],
       searchString,
       searchTyping: false,
@@ -908,6 +915,10 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       if (values["assigning-bricks"]) {
         link += '&assigning-bricks=' + values["assigning-bricks"];
       }
+
+      if (values["only-bricks"]) {
+        link += '&only-bricks=true';
+      }
     }
 
     this.props.history.push(link);
@@ -1008,14 +1019,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     }
   }
 
-  showDropdown() {
-    this.setState({ ...this.state, dropdownShown: true });
-  }
-
-  hideDropdown() {
-    this.setState({ ...this.state, dropdownShown: false });
-  }
-
   async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number, isCore: boolean, subjectIds: number[], isKeyword?: boolean) {
     const pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore, subjectIds, isKeyword ? isKeyword : false);
 
@@ -1102,6 +1105,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         searchString = this.state.searchString;
       }
 
+      console.log(this.state.onlyAssignBricks)
+
       return (
         <BrickBlock16x9
           isViewAll={true}
@@ -1115,6 +1120,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           history={this.props.history}
           circleIcon={circleIcon}
           assignClassroom={this.state.assignClassroom}
+          onlyAssignBricks={this.state.onlyAssignBricks}
           isPlay={true}
         />
       );
@@ -1549,42 +1555,25 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
             }}
             onComplete={() => { }}
           />}
-        {this.state.assignPopupOpen &&
-          <div>
-            <div className="popup-background"></div>
-            <div className="popup-assign-top-f53">
-              <div>
-                <SpriteIcon name="cancel-custom" onClick={() => {
-                  this.setState({ assignPopupOpen: false });
-                }} />
-                You can browse our catalogue here to select a brick to assign to <span className="bold">{this.state.assignClassroom?.name}</span>
-              </div>
-              <div className="bottom-part-s42">
-                <div>
-                  <SpriteIcon name="info-icon" />
-                </div>
-                <div className="text-s45">
-                  If you navigate away from the catalogue, your brick will be saved and can be accessed later from the Manage Classes page.
-                </div>
-                <div>
-                  <div className="btn btn-green" onClick={async () => {
-                    this.setState({ assignPopupOpen: false, assigningBricks: true });
-                  }}>OK</div>
-                </div>
-                <div className="triangle"></div>
-              </div>
-            </div>
-          </div>
+        {this.state.assignPopupOpen && <AssignPopupHint
+          label={this.state.assignClassroom?.name}
+          cancel={() => this.setState({ assignPopupOpen: false })}
+          click={() => this.setState({ assignPopupOpen: false, assigningBricks: true })} />
         }
-        {this.state.assigningBricks && <BottomAssignmentPopup history={this.props.history} assignClass={this.state.assignClassroom} click={() => {
-          const { state } = this;
-          this.setState({ assigningBricks: false });
-          this.historyUpdate(
-            state.isAllSubjects, state.page, state.searchString,
-            state.filterLevels, state.filterLength, state.sortBy,
-            this.getSubjectIds(), state.isCore, state.subjectGroup, true
-          );
-        }} />}
+        {this.state.assigningBricks && <BottomAssignmentPopup
+          history={this.props.history}
+          onlyAssignBricks={this.state.onlyAssignBricks}
+          assignClass={this.state.assignClassroom} click={() => {
+            const { state } = this;
+            this.setState({ assigningBricks: false });
+            this.historyUpdate(
+              state.isAllSubjects, state.page, state.searchString,
+              state.filterLevels, state.filterLength, state.sortBy,
+              this.getSubjectIds(), state.isCore, state.subjectGroup, true
+            );
+          }}
+        />
+        }
       </React.Suspense>
     );
   }

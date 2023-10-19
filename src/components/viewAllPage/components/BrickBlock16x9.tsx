@@ -48,12 +48,12 @@ interface BrickBlockProps {
 
   // teacher assignment
   assignClassroom?: any;
+  onlyAssignBricks?: boolean;
 
   teacher?: User;
 }
 
 const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
-  const [imgLoaded, setImgLoaded] = React.useState(false);
   var alternateColor = "";
   let color = "";
   if (!brick.subject) {
@@ -100,13 +100,20 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
       let coverLink = playCover(brick);
       if (props.assignClassroom) {
         coverLink += '?assigning-bricks=' + props.assignClassroom.id;
+        if (props.onlyAssignBricks) {
+          coverLink += '&only-bricks=true';
+        }
       }
       props.history.push(coverLink);
       return;
     }
 
     if (props.assignClassroom) {
-      props.history.push(playCover(brick) + '?assigning-bricks=' + props.assignClassroom.id);
+      let link = playCover(brick) + '?assigning-bricks=' + props.assignClassroom.id;
+      if (props.onlyAssignBricks) {
+        link += '&only-bricks=true';
+      }
+      props.history.push(link);
       return;
     }
 

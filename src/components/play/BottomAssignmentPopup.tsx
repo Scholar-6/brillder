@@ -4,6 +4,7 @@ import map from "components/map";
 
 interface Props {
   assignClass: any;
+  onlyAssignBricks?: boolean;
   history: any;
   click(): void;
 }
@@ -31,7 +32,9 @@ const BottomAssignmentPopup: React.FC<any> = (props: Props) => {
     <div className="bottom-bricks-popup-f53">
       {renderCount()}
       <div className="btn" onClick={props.click}>Quit</div>
-      <div className="btn btn-green" onClick={() => props.history.push(map.TeachAssignedTab + '?classroomId=' + props.assignClass.id)}>
+      <div className="btn btn-green" onClick={() => {
+        props.history.push(map.TeachAssignedTab + '?classroomId=' + props.assignClass.id + '&onlyAssignBricks=true');
+      }}>
         Back to Class
       </div>
     </div>
