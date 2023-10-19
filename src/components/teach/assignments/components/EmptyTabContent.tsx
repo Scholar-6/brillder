@@ -1,21 +1,15 @@
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { TeachClassroom } from 'model/classroom';
 import React from 'react';
 
 interface Props {
-  classrooms: TeachClassroom[];
-  activeClassroom: TeachClassroom | null;
-  history: any;
-
   openClass(): void;
 }
 
-const EmptyTabContent: React.FC<Props> = (props) => {
-  const { activeClassroom } = props;
+const EmptyTabContent: React.FC<Props> = ({ openClass }) => {
   return (
     <div className="tab-content loader-content empty-tab">
-      <div className={"tab-content-centered flex-center " + (activeClassroom ? 'empty-tab-content' : '')}>
-        <div className="new-class-container" onClick={props.openClass}>
+      <div className={"tab-content-centered flex-center"}>
+        <div className="new-class-container" onClick={openClass}>
           <div className="icon-container flex-center">
             <SpriteIcon name="glasses-sprite" className="stroke-1" />
           </div>
