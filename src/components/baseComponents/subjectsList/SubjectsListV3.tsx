@@ -49,6 +49,7 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
                 checked={subject.checked}
                 name={subject.name}
                 color={subject.color}
+                count={subject.viewAllCount}
               />
             }
             label={subject.name}
