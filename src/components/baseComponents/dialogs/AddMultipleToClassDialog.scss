@@ -2,8 +2,27 @@
   .dialog-header .r-class-inputs.search-class-box .MuiAutocomplete-root > div .MuiChip-root svg {
     margin-top: 0 !important;
   }
+  .dialog-header {
+    padding-bottom: 0 !important;
+  }
   .subject-autocomplete .MuiAutocomplete-endAdornment .MuiAutocomplete-popupIndicator {
     margin-top: 0 !important;
     margin-right: 0 !important;
+  }
+  .class-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .title {
+    p {
+      display: inline !important;
+    }
+  }
+
+  .classes-container {
+    max-height: 50vh;
+    overflow-y: scroll;
   }
 }
