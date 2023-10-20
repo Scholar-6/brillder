@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { Checkbox, ListItemText, MenuItem, Popper } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+import { Checkbox } from '@material-ui/core';
 
-import { stripHtml } from 'components/build/questionService/ConvertService';
 import { Brick, Subject } from 'model/brick';
 import { assignClasses } from 'services/axios/assignBrick';
 import { searchClassroomsByName } from 'services/axios/classroom';
 
-import BrickTitle from 'components/baseComponents/BrickTitle';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Classroom } from 'model/classroom';
-import SubjectIcon from './SubjectIcon';
 
 import './AddMultipleToClassDialog.scss';
 import { getAllClassrooms } from 'components/teach/service';
@@ -25,18 +20,17 @@ interface AssignClassProps {
   close(): void;
 }
 
-const PopperCustom = function (props: any) {
-  return (<Popper {...props} className="assign-brick-class-poopper" />)
-}
-
 const AddMultipleToClassDialog: React.FC<AssignClassProps> = (props) => {
   const [canSubmit, setSubmit] = useState(false);
   const [isSaving, setSaving] = useState(false);
+
+  const [timeoutNumber, setTimeoutNumber] = useState(-1 as number | NodeJS.Timeout);
 
   const [classrooms, setClassrooms] = useState([] as any[]);
   const [selectedClassrooms, setSelectedClasses] = useState([] as Classroom[]);
 
   const [topClassrooms, setTopClassrooms] = useState([] as any[]);
+  const [searchClassrooms, setSearchClassrooms] = useState([] as any[]);
 
   const [searchText, setSearchText] = useState('');
 
@@ -69,6 +63,77 @@ const AddMultipleToClassDialog: React.FC<AssignClassProps> = (props) => {
     setSaving(false);
   }
 
+  const renderClassrooms = () => {
+    if (searchClassrooms && searchClassrooms.length > 0 && searchText.length > 2) {
+      let result = [...selectedClassrooms];
+
+      for (let searchClassroom of searchClassrooms) {
+        let found = result.find(c => c.id === searchClassroom.id);
+        if (!found) {
+          result.push(searchClassroom);
+        }
+      }
+
+      return (
+        <div className="classes-container regular">
+          {result.map(c => {
+            let checked = false;
+  
+            let found = selectedClassrooms.find(c1 => c1.id === c.id)
+            if (found) {
+              checked = true;
+            }
+  
+            return <div className="class-container" onClick={() => {
+              let index = selectedClassrooms.findIndex(c2 => c2.id === c.id);
+              if (index === -1) {
+                selectedClassrooms.push(c);
+                classrooms.push(c);
+                setSelectedClasses([...selectedClassrooms]);
+                setClassrooms([...classrooms]);
+              } else {
+                selectedClassrooms.splice(index, 1);
+                setSelectedClasses([...selectedClassrooms]);
+              }
+            }}>
+              <Checkbox checked={checked} />
+              <div>{c.name}</div>
+            </div>;
+          })}
+        </div>
+      );
+    }
+    console.log('top classes')
+    return (
+      <div className="classes-container regular">
+        {topClassrooms.map(c => {
+          let checked = false;
+
+          let found = selectedClassrooms.find(c1 => c1.id === c.id)
+          if (found) {
+            checked = true;
+          }
+
+          return <div className="class-container" onClick={() => {
+            let index = selectedClassrooms.findIndex(c2 => c2.id === c.id);
+            if (index === -1) {
+              selectedClassrooms.push(c);
+              classrooms.push(c);
+              setSelectedClasses([...selectedClassrooms]);
+              setClassrooms([...classrooms]);
+            } else {
+              selectedClassrooms.splice(index, 1);
+              setSelectedClasses([...selectedClassrooms]);
+            }
+          }}>
+            <Checkbox checked={checked} />
+            <div>{c.name}</div>
+          </div>;
+        })}
+      </div>
+    );
+  }
+
   return (
     <Dialog
       open={true}
@@ -80,92 +145,29 @@ const AddMultipleToClassDialog: React.FC<AssignClassProps> = (props) => {
           <div className="title font-18">Assigning <span dangerouslySetInnerHTML={{ __html: props.brick.title }} /> to multiple classes</div>
           <SpriteIcon name="cancel-custom" onClick={props.close} />
         </div>
-        <div className="text-block">
-          <div className="r-class-inputs search-class-box">
-            <Autocomplete
-              multiple
-              value={selectedClassrooms}
-              options={classrooms}
-              onChange={async (e: any, updatedClasses: any) => {
-                if (updatedClasses && updatedClasses.length > 0) {
-                  setSelectedClasses(updatedClasses);
-                  setSubmit(true);
-                }
-              }}
-              noOptionsText="Sorry, try typing something else"
-              className="subject-autocomplete"
-              PopperComponent={PopperCustom}
-              getOptionLabel={(option: any) => stripHtml(option.name)}
-              renderOption={(classroom: Classroom) => {
-                const subject = props.subjects.find(s => s.id === classroom.subjectId);
-                return (
-                  <React.Fragment>
-                    <MenuItem>
-                      <SubjectIcon subject={subject} />
-                      <ListItemText>
-                        <BrickTitle title={classroom.name} />
-                      </ListItemText>
-                    </MenuItem>
-                  </React.Fragment>
-                )
-              }}
-              renderInput={(params: any) => {
-                params.inputProps.value = searchText;
-
-                return (
-                  <div>
-                    <div className="search-container">
-                      <SpriteIcon name="search-custom" />
-                    </div>
-                    <TextField
-                      {...params}
-                      variant="standard"
-                      label=""
-                      onChange={async (e) => {
-                        setSearchText(e.target.value);
-                        if (e.target.value.length >= 3) {
-                          const classes = await searchClassroomsByName(e.target.value);
-                          if (classes) {
-                            setClassrooms(classes);
-                          }
-                        }
-                      }}
-                      placeholder="Search by class name"
-                    />
-                  </div>
-                )
-              }}
-            />
+        <div className="r-class-inputs search-class-box">
+          <div className="search-container flex-center">
+            <SpriteIcon name="search-custom" />
           </div>
-          <div className="classes-container">
-            {topClassrooms.map(c => {
-              let checked = false;
-
-              let found = selectedClassrooms.find(c1 => c1.id === c.id)
-              if (found) {
-                checked = true;
-              }
-
-              return <div className="class-container" onClick={() => {
-                console.log('click')
-                let index = selectedClassrooms.findIndex(c2 => c2.id === c.id);
-                console.log(index);
-                if (index === -1) {
-                  selectedClassrooms.push(c);
-                  classrooms.push(c);
-                  setSelectedClasses([...selectedClassrooms]);
-                  setClassrooms([...classrooms]);
-                } else {
-                  selectedClassrooms.splice(index, 1);
-                  setSelectedClasses([...selectedClassrooms]);
+          <input
+            onChange={async (e) => {
+              let value = e.target.value;
+              clearTimeout(timeoutNumber)
+              let timeoutNew = setTimeout(async () => {
+                if (value.length >= 3) {
+                  const classes = await searchClassroomsByName(value);
+                  if (classes) {
+                    setSearchClassrooms(classes);
+                  }
                 }
-              }}>
-                <Checkbox checked={checked} />
-                <div>{c.name}</div>
-              </div>;
-            })}
-          </div>
+              }, 700);
+              setTimeoutNumber(timeoutNew);
+              setSearchText(e.target.value);
+            }}
+            placeholder="Search by class name"
+          />
         </div>
+        {renderClassrooms()}
       </div>
       <div className="dialog-footer">
         <div className="info-box">
