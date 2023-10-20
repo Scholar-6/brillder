@@ -33,6 +33,7 @@
   }
   .class-container {
     padding-left: 0.5vw;
+    padding-right: 0.5vw;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -63,7 +64,7 @@
 
   .classes-container {
     padding-top: 1vh;
-    max-height: 59vh;
+    height: 59vh;
     overflow-y: scroll;
   }
 
