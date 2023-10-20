@@ -10,6 +10,9 @@ interface Props {
 }
 
 const RadioButton: React.FC<Props> = ({checked, color, name, count}) => {
+  const renderCount = () => {
+    return count && count > 0 ? <div className="right-index">{count}</div> : "";
+  }
   const renderChecked = () => {
     if (name === GENERAL_SUBJECT) {
       color = '#001c58';
@@ -18,6 +21,7 @@ const RadioButton: React.FC<Props> = ({checked, color, name, count}) => {
     return (
       <div className="subject-border">
         <SpriteIcon name="radio" className="radio-checked" style={{ color, fill: color }} />
+        {renderCount()}
       </div>
     );
   }
@@ -26,7 +30,7 @@ const RadioButton: React.FC<Props> = ({checked, color, name, count}) => {
     return (
       <div className="subject-no-border">
         <div className="filter-circle" style={{ background: color }} />
-        {count && count > 0 && <div className="right-index">{count}</div>}
+        {renderCount()}
       </div>
     );
   }

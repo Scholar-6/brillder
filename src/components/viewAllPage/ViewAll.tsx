@@ -141,6 +141,8 @@ interface ViewAllState {
   isViewAll: boolean;
   userIdSearch: number;
 
+  subjects: Subject[];
+
   bricksCount: number;
   page: number;
 
@@ -261,6 +263,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       filterCompetition: false,
       filterLevels,
       filterLength,
+      subjects: props.subjects,
       keywords: [],
       isClearFilter: false,
       failedRequest: false,
@@ -282,15 +285,20 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadInitData(values: queryString.ParsedQuery<string>) {
-    if (this.props.subjects.length == 0) {
-      await this.props.getSubjects();
+    let subjects = this.props.subjects;
+    if (subjects.length == 0) {
+      let subjectsNew = await this.props.getSubjects();
+      if (subjectsNew) {
+        subjects = subjectsNew;
+        this.setState({ subjects });
+      }
     }
 
     let subjectIds = getSubjectIdsFromUrl(values);
 
     if (subjectIds && subjectIds.length > 0) {
       for (let subjectId of subjectIds) {
-        const subject = this.props.subjects.find(s => s.id == subjectId);
+        const subject = subjects.find(s => s.id == subjectId);
         if (subject) {
           subject.checked = true;
         }
@@ -370,7 +378,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   setSubjectGroup(sGroup: SubjectGroup) {
-    for (const s of this.props.subjects) {
+    for (const s of this.state.subjects) {
       s.checked = false;
     }
     this.setState({
@@ -404,7 +412,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         }
       }
 
-      subjectIds = this.props.subjects.filter(s => s.checked === true).map(s => s.id);
+      subjectIds = this.state.subjects.filter(s => s.checked === true).map(s => s.id);
 
       const pageBricks = await getPublishedBricksByPage(
         state.pageSize, state.page, (values && values.personal) ? false : true,
@@ -412,18 +420,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         state.filterCompetition, this.state.subjectGroup, state.sortBy
       );
       if (pageBricks) {
-
-
-        this.props.subjects.map(s1 => {
+        console.log('get subjects')
+        this.state.subjects.map(s1 => {
           s1.viewAllCount = 0;
-          pageBricks.res.map(s => {
+          pageBricks.res && pageBricks.res.map(s => {
             if (s.brick_subjectId === s1.id) {
               s1.viewAllCount = parseInt(s.count);
             }
           });
         });
-
-        console.log(555, this.props.subjects);
 
         if (values) {
           await this.setStateAndAssignClassroom(state, values);
@@ -487,6 +492,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     );
 
     if (pageBricks) {
+      this.state.subjects.map(s1 => {
+        s1.viewAllCount = 0;
+        pageBricks.res && pageBricks.res.map(s => {
+          if (s.brick_subjectId === s1.id) {
+            s1.viewAllCount = parseInt(s.count);
+          }
+        });
+      });
       this.setState({
         ...this.state,
         page,
@@ -525,6 +538,15 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const pageBricks = await getUnauthPublishedBricksByPage(this.state.pageSize, page, levels, length, subjectIds, filterCompetition, sortBy, sGroup);
 
     if (pageBricks) {
+      this.state.subjects.map(s1 => {
+        s1.viewAllCount = 0;
+        pageBricks.res && pageBricks.res.map(s => {
+          if (s.brick_subjectId === s1.id) {
+            s1.viewAllCount = parseInt(s.count);
+          }
+        });
+      });
+
       this.setState({
         ...this.state,
         page,
@@ -591,14 +613,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   };
 
   isFilterClear() {
-    return this.props.subjects.some((r) => r.checked);
+    return this.state.subjects.some((r) => r.checked);
   }
 
   getSubjectIds() {
     let subjectIds: number[] = [];
-    const checked = this.props.subjects.find(s => s.checked === true);
+    const checked = this.state.subjects.find(s => s.checked === true);
     if (checked) {
-      const checkedSubjects = this.props.subjects.filter(s => s.checked === true);
+      const checkedSubjects = this.state.subjects.filter(s => s.checked === true);
       subjectIds = checkedSubjects.map(s => s.id);
     }
     return subjectIds;
@@ -607,7 +629,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   filterBySubject(id: number) {
     const { state } = this;
 
-    toggleSubject(this.props.subjects, id);
+    toggleSubject(this.state.subjects, id);
     toggleSubject(state.userSubjects, id);
 
     if (state.subjectGroup) {
@@ -718,7 +740,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   checkUserSubjects() {
-    let { subjects } = this.props;
+    let { subjects } = this.state;
     if (this.state.isCore) {
       subjects.forEach((s) => {
         this.checkUserSubject(s);
@@ -737,19 +759,19 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   selectAllSubjects(isViewAll: boolean) {
     const { state } = this;
     if (this.state.subjectGroup) {
-      checkAllSubjects(this.props.subjects, state.isCore);
+      checkAllSubjects(this.state.subjects, state.isCore);
       this.loadAndSetUnauthBricks(
         0, state.filterLevels, state.filterLength, state.filterCompetition, state.sortBy, state.subjectGroup
       );
     }
     if (this.props.user) {
-      checkAllSubjects(this.props.subjects, state.isCore);
+      checkAllSubjects(this.state.subjects, state.isCore);
       this.loadAndSetBricks(
         0, state.isCore, state.filterLevels, state.filterLength,
         state.filterCompetition, true, state.sortBy
       );
     } else {
-      for (let s of this.props.subjects) {
+      for (let s of this.state.subjects) {
         s.checked = false;
       }
       this.loadAndSetBricks(
@@ -780,7 +802,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         if (isViewAll === false) {
           this.checkUserSubjects();
         } else {
-          for (let subject of this.props.subjects) {
+          for (let subject of this.state.subjects) {
             subject.checked = false;
           }
         }
@@ -816,7 +838,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterSuggestionSubject(subject: Subject) {
-    toggleSubject(this.props.subjects, subject.id);
+    toggleSubject(this.state.subjects, subject.id);
     toggleSubject(this.state.userSubjects, subject.id);
 
     this.loadAndSetBricks(
@@ -848,8 +870,8 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   filterByOneSubject(id: number) {
-    this.props.subjects.forEach((s) => (s.checked = false));
-    toggleSubject(this.props.subjects, id);
+    this.state.subjects.forEach((s) => (s.checked = false));
+    toggleSubject(this.state.subjects, id);
     toggleSubject(this.state.userSubjects, id);
 
     this.setState({
@@ -866,8 +888,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   clearSubjects = () => {
     const { state } = this;
-    const { subjects } = this.props;
-    const { userSubjects } = state;
+    const { userSubjects, subjects } = state;
     subjects.forEach((r: any) => (r.checked = false));
     userSubjects.forEach((r: any) => (r.checked = false));
 
@@ -1120,8 +1141,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         searchString = this.state.searchString;
       }
 
-      console.log(this.state.onlyAssignBricks)
-
       return (
         <BrickBlock16x9
           isViewAll={true}
@@ -1181,7 +1200,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0];
-      const subject = this.props.subjects.find((s) => s.id === subjectId);
+      const subject = this.state.subjects.find((s) => s.id === subjectId);
       return subject?.name;
     } else if (this.state.isViewAll) {
       return "All bricks";
@@ -1207,7 +1226,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   async moveToCreateOne() {
     await this.props.forgetBrick();
     clearProposal();
-    const filterSubjects = getCheckedSubjects(this.props.subjects);
+    const filterSubjects = getCheckedSubjects(this.state.subjects);
     if (filterSubjects.length === 1) {
       const subjectId = filterSubjects[0].id;
       if (this.props.user) {
@@ -1235,7 +1254,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
 
   renderNoBricks() {
-    const subjects = getSubjectsWithBricks(this.props.subjects, this.props.user, this.state.isCore, this.state.isAllSubjects);
+    const subjects = getSubjectsWithBricks(this.state.subjects, this.props.user, this.state.isCore, this.state.isAllSubjects);
 
     return (
       <div className="bricks-list-container desktop-no-bricks">
@@ -1328,7 +1347,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   renderDesktopBricks() {
-    const filterSubjects = getCheckedSubjectIds(this.props.subjects);
+    const filterSubjects = getCheckedSubjectIds(this.state.subjects);
 
     return (
       <div>
@@ -1375,7 +1394,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           user={this.props.user}
           isSearching={this.state.isSearching}
           sortBy={this.state.sortBy}
-          subjects={this.props.subjects}
+          subjects={this.state.subjects}
           userSubjects={this.state.userSubjects}
           subjectGroup={this.state.subjectGroup}
           isCore={this.state.isCore}
@@ -1434,7 +1453,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               <Route path={map.SubjectCategories}>
                 <SubjectCategoriesComponent
                   user={user}
-                  subjects={this.props.subjects}
+                  subjects={this.state.subjects}
                   history={history}
                   location={this.props.location}
                   filterByOneSubject={this.filterByOneSubject.bind(this)}
@@ -1447,7 +1466,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
                 <React.Suspense fallback={<></>}>
                   {isPhone() && <MobileTheme />}
                   <PhoneSearchPage
-                    user={user} subjects={this.props.subjects}
+                    user={user} subjects={this.state.subjects}
                     history={history}
                     requestFailed={() => this.setState({ failedRequest: true })}
                   />
@@ -1498,7 +1517,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         {isMobile ? <TabletTheme /> : <DesktopTheme />}
         <div className={className}>
           {this.state.searchTyping === true && this.state.searchString.length >= 1 && <SearchSuggestions
-            history={this.props.history} subjects={this.props.subjects}
+            history={this.props.history} subjects={this.state.subjects}
             searchString={this.state.searchString} bricks={this.state.bricks}
             filterByAuthor={this.filterByAuthor.bind(this)}
             filterBySubject={this.filterSuggestionSubject.bind(this)}
@@ -1518,7 +1537,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
               <Route path={map.SubjectCategories}>
                 <SubjectCategoriesComponent
                   user={user}
-                  subjects={this.props.subjects}
+                  subjects={this.state.subjects}
                   history={history}
                   location={this.props.location}
                   filterByOneSubject={this.filterByOneSubject.bind(this)}
