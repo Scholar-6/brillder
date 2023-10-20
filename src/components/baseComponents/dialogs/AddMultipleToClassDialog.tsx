@@ -91,13 +91,14 @@ const AddMultipleToClassDialog: React.FC<AssignClassProps> = (props) => {
                 classrooms.push(c);
                 setSelectedClasses([...selectedClassrooms]);
                 setClassrooms([...classrooms]);
+                setSubmit(true);
               } else {
                 selectedClassrooms.splice(index, 1);
                 setSelectedClasses([...selectedClassrooms]);
               }
             }}>
               <Checkbox checked={checked} />
-              <div>{c.name}</div>
+              <div dangerouslySetInnerHTML={{__html: c.name}} />
             </div>;
           })}
         </div>
@@ -121,6 +122,7 @@ const AddMultipleToClassDialog: React.FC<AssignClassProps> = (props) => {
               classrooms.push(c);
               setSelectedClasses([...selectedClassrooms]);
               setClassrooms([...classrooms]);
+              setSubmit(true);
             } else {
               selectedClassrooms.splice(index, 1);
               setSelectedClasses([...selectedClassrooms]);
