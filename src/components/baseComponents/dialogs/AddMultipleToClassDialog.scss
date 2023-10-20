@@ -1,4 +1,8 @@
 .assign-multiple-class {
+  .MuiDialog-paper {
+    width: auto !important;
+    min-width: 40vw !important;
+  }
   .dialog-header .r-class-inputs.search-class-box .MuiAutocomplete-root > div .MuiChip-root svg {
     margin-top: 0 !important;
   }
@@ -61,5 +65,9 @@
     padding-top: 1vh;
     max-height: 59vh;
     overflow-y: scroll;
+  }
+
+  .dialog-footer {
+    justify-content: flex-end !important;
   }
 }

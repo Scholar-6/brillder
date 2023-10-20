@@ -170,9 +170,6 @@ const AddMultipleToClassDialog: React.FC<AssignClassProps> = (props) => {
         {renderClassrooms()}
       </div>
       <div className="dialog-footer">
-        <div className="info-box">
-        </div>
-        <div className="message-box-r5 clickable-btn flex-y-center font-16 bold" />
         <button
           className="btn btn-md font-16 cancel-button"
           onClick={props.close}
