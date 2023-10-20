@@ -47,7 +47,6 @@ const CategorySelect: React.FC<Props> = (props) => {
           MenuProps={{ classes: { paper: 'select-classes-list' } }}
           value={props.subjectCategory}
           onChange={(e) => {
-            console.log('select category', e.target.value);
             props.selectCategory(e.target.value as ESubjectCategory);
           }}
         >

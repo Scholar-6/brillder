@@ -244,7 +244,6 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
   }
 
   renderBar(options: any, data: any) {
-    console.log(options, data);
     return <Bar options={options} data={data} />
   }
 
