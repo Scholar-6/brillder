@@ -280,7 +280,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       bricksRef: React.createRef<any>(),
     };
 
-    console.log(123123)
     this.loadInitData(values);
   }
 

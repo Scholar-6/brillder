@@ -179,7 +179,6 @@ const App: React.FC<AppProps> = props => {
         // trying to get return url from login url
         try {
           const backUrl = loginUrl.split('login/')[1];
-          console.log('back url', backUrl);
           SetLoginUrl(backUrl);
         } catch {
           // can`t get return url from login url
@@ -192,7 +191,6 @@ const App: React.FC<AppProps> = props => {
     if (props.user) {
       const loginUrlV2 = GetLoginUrl();
       if (loginUrlV2) {
-        console.log('after login url', loginUrlV2);
         const a = document.createElement('a');
         a.href = loginUrlV2;
         a.click();
