@@ -210,6 +210,7 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   if (multiple) {
     return <AddMultipleToClassDialog brick={props.brick} subjects={props.subjects} submit={() => {
       setMultiple(false);
+      props.history?.push(map.TeachAssignedTab);
       props.close();
     }} close={() => setMultiple(false)} />;
   }

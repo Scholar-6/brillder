@@ -143,7 +143,7 @@ const AddMultipleToClassDialog: React.FC<AssignClassProps> = (props) => {
     >
       <div className="dialog-header">
         <div className="title-box">
-          <div className="title font-18">Assigning <span dangerouslySetInnerHTML={{ __html: props.brick.title }} /></div>
+          <div className="title font-18">Assigning <span className="italic" dangerouslySetInnerHTML={{ __html: props.brick.title }} /></div>
           <SpriteIcon name="cancel-custom" onClick={props.close} />
         </div>
         <div className="r-class-inputs search-class-box">
