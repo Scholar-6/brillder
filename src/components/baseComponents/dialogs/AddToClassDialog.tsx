@@ -42,6 +42,7 @@ const PopperCustom = function (props: any) {
 }
 
 const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
+  console.log('add to class open')
   const [imgBase64, setImageBase64] = useState('');
 
   const [multiple, setMultiple] = useState(false);
@@ -60,25 +61,6 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   const [isSaving, setSaving] = useState(false);
 
   const [classroom, setClassroom] = useState(null as any);
-
-  React.useEffect(() => {
-    if (classroom) {
-      setClassroom(classroom);
-      setSecondOpen(true);
-      setValue(classroom.name);
-      classroom.assignments.sort((c1: any, c2: any) => {
-        return c1.assignedDate > c2.assignedDate ? -1 : 1;
-      });
-      setAssignments(classroom.assignments);
-      setSubmit(true);
-
-      if (classroom.code) {
-        writeQRCode(
-          window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + classroom.code
-        );
-      }
-    }
-  }, [classroom]);
 
   const setPersonal = async () => {
     const hasPersonal = await hasPersonalBricks();
@@ -140,9 +122,22 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   }
 
   const create = async () => {
+    console.log('create 1')
     if (isSaving) { return; }
     setSaving(true);
 
+    const res = await assignClasses(props.brick.id, { classesIds: [classroom.id] });
+
+    if (res) {
+      const classroomV2 = await getClassById(classroom.id);
+      if (classroomV2 && classroomV2.assignments) {
+        classroomV2.assignments.sort((c1, c2) => {
+          return c1.assignedDate > c2.assignedDate ? -1 : 1;
+        });
+        setAssignments(classroomV2.assignments);
+      }
+      setClassroom(classroomV2);
+    }
     // add brick to classroom or classrooms
 
     setSaving(false);
@@ -150,13 +145,16 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   }
 
   const addToClass = async () => {
+    console.log('adding to class')
     if (isSaving) { return; }
     setSaving(true);
+    console.log('adding to class 1')
 
     if (canSubmit === false || !classroom) {
       setSaving(false);
       return;
     }
+    console.log('adding to class 2')
 
     const res = await assignClasses(props.brick.id, { classesIds: [classroom.id] });
 
@@ -233,14 +231,18 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
               value={classroom}
               options={classrooms}
               onChange={async (e: any, classV2: any) => {
+                console.log('test33')
                 if (classV2) {
+                  console.log('test34')
                   const classroomV2 = await getClassById(classV2.id);
+                  console.log('test35')
                   if (classroomV2 && classroomV2.assignments) {
                     classroomV2.assignments.sort((c1, c2) => {
                       return c1.assignedDate > c2.assignedDate ? -1 : 1;
                     });
                     setAssignments(classroomV2.assignments);
                   }
+                  console.log('test3')
                   setClassroom(classroomV2);
                   setSubmit(true);
                 }
