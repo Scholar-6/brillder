@@ -24,14 +24,14 @@ const mapState = (state: ReduxCombinedState) => ({
 })
 
 const mapDispatch = (dispatch: any) => ({
-  loginSuccess: () => dispatch(actions.loginSuccess()),
+  loginSuccess: (userId: number) => dispatch(actions.loginSuccess(userId)),
 });
 
 const connector = connect(mapState, mapDispatch);
 
 interface LoginProps {
   referralId?: string;
-  loginSuccess(): void;
+  loginSuccess(userId: number): void;
 }
 
 const EmailLoginPage: React.FC<LoginProps> = (props) => {
@@ -89,7 +89,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
               history.push(map.TermsOnlyAccept);
             }
             afterLoginorRegister();
-            props.loginSuccess();
+            props.loginSuccess(data.id);
           });
         }).catch(error => {
           // error

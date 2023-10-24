@@ -1,5 +1,8 @@
 import { Brick } from 'model/brick';
-import {AttemptCash, YoutubeClicked, PreviewAttemptCash, VolumeToggle, UserBrills, AuthBrickCash, UnauthBrickCash, QuickAssignment} from './types';
+import {
+  AttemptCash, YoutubeClicked, PreviewAttemptCash, VolumeToggle,
+  UserBrills, AuthBrickCash, UnauthBrickCash, QuickAssignment, LastAttemptId }
+from './types';
 import { QuickAssigment } from 'components/baseComponents/classInvitationDialog/QuickClassInvitationDialog';
 
 export function SetYoutubeClick() {
@@ -158,4 +161,23 @@ export function GetQuickAssignment () {
 
 export function ClearQuickAssignment() {
   localStorage.removeItem(QuickAssignment);
+}
+
+
+// last attempt id of not logged in user
+// he will be redirected to login and then after success will be redirected to personal brick again.
+export function SetLastAttemptId(attemptId: string | undefined) {
+  if (attemptId) {
+    localStorage.setItem(LastAttemptId, attemptId);
+  } else {
+    localStorage.setItem(LastAttemptId, '');
+  }
+}
+
+export function GetLastAttemptId() {
+  return localStorage.getItem(LastAttemptId)
+}
+
+export function ClearLastAttemptId() {
+  localStorage.removeItem(LastAttemptId);
 }

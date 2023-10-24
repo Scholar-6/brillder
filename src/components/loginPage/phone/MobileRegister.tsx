@@ -29,7 +29,7 @@ interface MobileLoginProps {
   email?: string;
   referralId?: string;
   isLibrary?: boolean;
-  loginSuccess(): void;
+  loginSuccess(userId: number): void;
 }
 
 const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
@@ -116,7 +116,7 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
           props.history.push(map.TermsSignUp);
         }
         afterLoginorRegister();
-        props.loginSuccess();
+        props.loginSuccess(data.id);
       }
       let { msg } = data;
       if (!msg) {
@@ -309,7 +309,7 @@ const mapState = (state: ReduxCombinedState) => ({
 })
 
 const mapDispatch = (dispatch: any) => ({
-  loginSuccess: () => dispatch(actions.loginSuccess()),
+  loginSuccess: (userId: number) => dispatch(actions.loginSuccess(userId)),
 });
 
 const connector = connect(mapState, mapDispatch);
