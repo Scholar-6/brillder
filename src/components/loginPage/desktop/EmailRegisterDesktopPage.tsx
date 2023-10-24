@@ -27,7 +27,7 @@ const mapState = (state: ReduxCombinedState) => ({
 })
 
 const mapDispatch = (dispatch: any) => ({
-  loginSuccess: () => dispatch(actions.loginSuccess()),
+  loginSuccess: (userId: number) => dispatch(actions.loginSuccess(userId)),
 });
 
 const connector = connect(mapState, mapDispatch);
@@ -37,7 +37,7 @@ interface LoginProps {
   isLibrary?: boolean;
   email?: string;
   referralId?: string;
-  loginSuccess(): void;
+  loginSuccess(userId: number): void;
 }
 
 const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
@@ -105,7 +105,7 @@ const EmailRegisterDesktopPage: React.FC<LoginProps> = (props) => {
           if (data.termsAndConditionsAcceptedVersion === null) {
             props.history.push(map.TermsSignUp);
           }
-          props.loginSuccess();
+          props.loginSuccess(data.id);
           afterLoginorRegister();
         }).catch(error => {
           // error

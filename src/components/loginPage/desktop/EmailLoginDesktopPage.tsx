@@ -24,7 +24,6 @@ import TermsLink from "components/baseComponents/TermsLink";
 import LoginBricks from "../components/LoginBricks";
 import LoginLogo from '../components/LoginLogo';
 import GoogleButton from "../components/GoogleButton";
-import MicrosoftButton from "../components/MicrosoftButton";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -32,7 +31,7 @@ const mapState = (state: ReduxCombinedState) => ({
 })
 
 const mapDispatch = (dispatch: any) => ({
-  loginSuccess: () => dispatch(actions.loginSuccess()),
+  loginSuccess: (userId: number) => dispatch(actions.loginSuccess(userId)),
 });
 
 const connector = connect(mapState, mapDispatch);
@@ -41,7 +40,7 @@ interface LoginProps {
   history: History;
   match: any;
   referralId?: string;
-  loginSuccess(): void;
+  loginSuccess(userId: number): void;
 }
 
 const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
@@ -100,7 +99,8 @@ const EmailLoginDesktopPage: React.FC<LoginProps> = (props) => {
               props.history.push(map.TermsOnlyAccept);
             }
             afterLoginorRegister();
-            props.loginSuccess();
+
+            props.loginSuccess(data.id);
           });
         }).catch(error => {
           // error

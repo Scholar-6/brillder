@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 
 import "./Ending.scss";
-import { CashAttempt, ClearAuthBrickCash } from "localStorage/play";
+import { CashAttempt, ClearAuthBrickCash, SetLastAttemptId } from "localStorage/play";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../../model";
 import { BrickAttempt } from "../../model";
@@ -22,6 +22,7 @@ import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 import { GetFinishRedirectUrl, GetHeartOfMerciaUser, UnsetFinishRedirectUrl, UnsetHeartOfMerciaUser } from "localStorage/login";
 import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
+import UnauthorizedUserDialogV3 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV3";
 
 
 const confetti = require('canvas-confetti');
@@ -38,6 +39,7 @@ interface EndingState {
   currentScore: number;
 
   fixedCurrentScore: number;
+  unauthorizedOpenV2: boolean;
 
   isHeartOfMercia: boolean;
 
@@ -77,6 +79,12 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
 
     let isHeartOfMercia = !!GetHeartOfMerciaUser();
 
+    let unauthorizedOpenV2 = false;
+    if (!props.user && this.props.brickAttempt) {
+      unauthorizedOpenV2 = true;
+      SetLastAttemptId(this.props.brickAttempt.id)
+    }
+
     this.state = {
       oldScore: oldScoreNumber,
 
@@ -89,6 +97,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       isHeartOfMercia,
 
       fixedCurrentScore: 0,
+
+      unauthorizedOpenV2,
 
       interval: 0,
     };
@@ -639,6 +649,21 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
             </Grid>
           </div>
         </div>
+        <UnauthorizedUserDialogV3
+          history={this.props.history}
+          brick={brick}
+          isOpen={this.state.unauthorizedOpenV2}
+          close={() => {
+            this.setState({unauthorizedOpenV2: false});
+          }}
+          competitionId={-1}
+          notyet={() => {
+            this.setState({unauthorizedOpenV2: false});
+          }}
+          registered={() => {
+            this.setState({unauthorizedOpenV2: false});
+          }}
+        />
       </React.Suspense>
     );
   }

@@ -1,21 +1,13 @@
 import React, { useState } from "react";
 import { Grid } from "@material-ui/core";
-import { connect } from "react-redux";
 import { History } from "history";
 
 import "./loginPage.scss";
-import actions from "redux/actions/auth";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import MobileLoginPage from "./phone/MobileLogin";
 import map from "components/map";
 import LoginDesktopPage from "./desktop/loginDesktopPage/LoginDesktopPage";
 import { isPhone } from "services/phone";
-
-const mapDispatch = (dispatch: any) => ({
-  loginSuccess: () => dispatch(actions.loginSuccess()),
-});
-
-const connector = connect(null, mapDispatch);
 
 export enum LoginState {
   ChooseLoginAnimation,
@@ -25,7 +17,6 @@ export enum LoginState {
 }
 
 interface LoginProps {
-  loginSuccess(): void;
   history: History;
   match: any;
 }
@@ -67,4 +58,4 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   );
 };
 
-export default connector(LoginPage);
+export default LoginPage;

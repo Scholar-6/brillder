@@ -14,7 +14,7 @@ import LibraryFailedDialog from "components/baseComponents/dialogs/LibraryFailed
 import { LibraryRegisterPage } from "./routes";
 
 const mapDispatch = (dispatch: any) => ({
-  loginSuccess: () => dispatch(actions.loginSuccess()),
+  loginSuccess: (userId: number) => dispatch(actions.loginSuccess(userId)),
 });
 
 const connector = connect(null, mapDispatch);
@@ -23,7 +23,7 @@ interface LoginProps {
   history: History;
   isLibrary?: boolean;
   email?: string;
-  loginSuccess(): void;
+  loginSuccess(userId: number): void;
 }
 
 const LibraryLoginDesktopPage: React.FC<LoginProps> = (props) => {
@@ -58,9 +58,9 @@ const LibraryLoginDesktopPage: React.FC<LoginProps> = (props) => {
             const { data } = response;
             if (data.termsAndConditionsAcceptedVersion === null) {
               props.history.push(map.TermsSignUp);
-              props.loginSuccess();
+              props.loginSuccess(data.id);
             } else {
-              props.loginSuccess();
+              props.loginSuccess(data.id);
             }
           }).catch(error => {
             // error

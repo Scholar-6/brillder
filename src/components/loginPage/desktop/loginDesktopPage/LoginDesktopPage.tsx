@@ -37,7 +37,6 @@ export enum LoginPage {
 }
 
 interface LoginProps {
-  loginSuccess(): void;
   history: History;
   match: any;
 }
@@ -216,10 +215,4 @@ const LoginDesktopPage: React.FC<LoginProps> = (props) => {
   );
 };
 
-const mapDispatch = (dispatch: any) => ({
-  loginSuccess: () => dispatch(actions.loginSuccess()),
-});
-
-const connector = connect(null, mapDispatch);
-
-export default connector(LoginDesktopPage);
+export default LoginDesktopPage;

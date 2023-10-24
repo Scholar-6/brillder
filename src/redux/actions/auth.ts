@@ -9,9 +9,29 @@ import notificationActions from './notifications';
 import { enableTracking, disableTracking } from 'services/matomo';
 import {UserType} from 'model/user';
 import { SetOrigin } from 'localStorage/origin';
+import { GetLastAttemptId } from 'localStorage/play';
 
-const loginSuccess = () => {
+const loginSuccess = (userId?: number) => {
   enableTracking();
+
+  console.log('login success');
+  // IF USER HAS attempt id set that attempt with user
+  if (userId) {
+    let attemptId = GetLastAttemptId();
+    console.log('got attemptId and setting attempt user id', userId, attemptId)
+    if (attemptId) {
+      axios.put(
+        process.env.REACT_APP_BACKEND_HOST + "/play/setAttemptAndUser",
+        { id: attemptId,
+          body: {
+            userId: userId
+          }
+        },
+        { withCredentials: true }
+      );
+    }
+  }
+
   return { type: types.LOGIN_SUCCESS } as Action
 }
 

@@ -20,7 +20,7 @@ interface MobileLoginProps {
   history: History;
   referralId?: string;
   isLibrary?: boolean;
-  loginSuccess(): void;
+  loginSuccess(userId: number): void;
 }
 
 const MobileLibraryLoginPage: React.FC<MobileLoginProps> = (props) => {
@@ -76,10 +76,8 @@ const MobileLibraryLoginPage: React.FC<MobileLoginProps> = (props) => {
             const { data } = response;
             if (data.termsAndConditionsAcceptedVersion === null) {
               props.history.push(map.TermsSignUp);
-              props.loginSuccess();
-            } else {
-              props.loginSuccess();
             }
+            props.loginSuccess(data.id);
           }).catch(error => {
             // error
             setSuggestionFailed(true);
@@ -165,7 +163,7 @@ const mapState = (state: ReduxCombinedState) => ({
 })
 
 const mapDispatch = (dispatch: any) => ({
-  loginSuccess: () => dispatch(actions.loginSuccess()),
+  loginSuccess: (userId: number) => dispatch(actions.loginSuccess(userId)),
 });
 
 const connector = connect(mapState, mapDispatch);
