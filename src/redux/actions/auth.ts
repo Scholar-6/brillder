@@ -9,7 +9,7 @@ import notificationActions from './notifications';
 import { enableTracking, disableTracking } from 'services/matomo';
 import {UserType} from 'model/user';
 import { SetOrigin } from 'localStorage/origin';
-import { GetLastAttemptId } from 'localStorage/play';
+import { ClearLastAttemptId, GetLastAttemptId } from 'localStorage/play';
 
 const loginSuccess = (userId?: number) => {
   enableTracking();
@@ -28,7 +28,9 @@ const loginSuccess = (userId?: number) => {
           }
         },
         { withCredentials: true }
-      );
+      ).then(() => {
+        ClearLastAttemptId();
+      });
     }
   }
 
