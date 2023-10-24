@@ -96,7 +96,7 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
    */
   const move = () => {
     // non students go to cover page
-    if (props.user.userPreference?.preferenceId !== UserPreferenceType.Student) {
+    if (props.user && props.user.userPreference && props.user.userPreference?.preferenceId !== UserPreferenceType.Student) {
       let coverLink = playCover(brick);
       if (props.assignClassroom) {
         coverLink += '?assigning-bricks=' + props.assignClassroom.id;
