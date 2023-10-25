@@ -13,7 +13,7 @@ const SearchInitialState: SearchState = {
 export default (state = SearchInitialState, action: any) => {
   switch (action.type) {
     case types.CLEAR_SEARCH:
-      return { ...state, value: "" } as SearchState;
+      return { ...state, value: "", classesValue: "" } as SearchState;
     case types.SET_SEARCH_VALUE:
       return { ...state, value: action.value } as SearchState;
     case types.SET_CLASSES_SEARCH_VALUE:
