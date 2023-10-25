@@ -58,7 +58,8 @@ interface Props {
   getSubjects(): Promise<Subject[]>;
 
   searchString: string;
-  setSearchString(value: string): void;
+  searchClassString: string;
+  setSearchString(value: string, page: PageEnum): void;
 }
 
 interface State {
@@ -95,7 +96,7 @@ class PageHeader extends Component<Props, State> {
     }
 
     if (value) {
-      this.props.setSearchString(value);
+      this.props.setSearchString(value, props.page);
       this.props.searching(value);
     }
   }
@@ -208,7 +209,11 @@ class PageHeader extends Component<Props, State> {
   }
 
   render() {
-    const {searchString} = this.props;
+    let searchString = this.props.searchString;
+    if (this.props.page === PageEnum.ManageClasses) {
+      searchString = this.props.searchClassString;
+    }
+
     let { searchVisible } = this.state
     let notificationCount = this.props.notifications ? this.props.notifications.length : 0;
     let link = this.props.link ? this.props.link : map.MainPage;
@@ -306,7 +311,7 @@ class PageHeader extends Component<Props, State> {
                       className="search-input"
                       onKeyUp={(e) => this.keySearch(e)}
                       onChange={(e) => {
-                        this.props.setSearchString(e.target.value);
+                        this.props.setSearchString(e.target.value, this.props.page);
                         this.setState({ ...this.state });
                         this.props.searching(e.target.value);
                       }}
@@ -353,7 +358,7 @@ class PageHeader extends Component<Props, State> {
                     value={searchString}
                     onKeyUp={(e) => this.keySearch(e)}
                     onChange={(e) => {
-                      this.props.setSearchString(e.target.value);
+                      this.props.setSearchString(e.target.value, this.props.page);
                       this.setState({ ...this.state });
                       this.props.searching(e.target.value);
                     }}
@@ -419,13 +424,14 @@ const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
   notifications: state.notifications.notifications,
   subjects: state.subjects.subjects,
-  searchString: state.search.value
+  searchString: state.search.value,
+  searchClassString: state.search.classesValue
 });
 
 const mapDispatch = (dispatch: any) => ({
   getNotifications: () => dispatch(notificationActions.getNotifications()),
   getSubjects: () => dispatch(subjectActions.fetchSubjects()),
-  setSearchString: (value: string) => dispatch(searchActions.setSearchString(value)),
+  setSearchString: (value: string, page: PageEnum) => dispatch(searchActions.setSearchString(value, page)),
 });
 
 const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
