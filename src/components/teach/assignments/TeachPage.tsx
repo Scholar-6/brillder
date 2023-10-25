@@ -105,8 +105,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
       isAssignOpen = true;
     }
 
+    let isSearching = false;
+    if (values.search || props.searchString) {
+      isSearching = true;
+    }
+
     this.state = {
-      isSearching: false,
+      isSearching,
       finalSearchString: '',
 
       classrooms: [],
@@ -126,7 +131,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       teacherId,
 
-      searchString: '',
+      searchString: props.searchString,
       searchType: ClassroomSearchType.Any,
 
       deleteClassOpen: false,
@@ -135,15 +140,18 @@ class TeachPage extends Component<TeachProps, TeachState> {
       selectedClassroom: null,
     };
 
-    this.loadInitData();
+    this.loadInitData(props.searchString);
   }
 
-  async loadInitData() {
+  async loadInitData(searchString?: string) {
     if (this.props.subjects.length === 0) {
       await this.props.getSubjects();
     }
 
+
     const values = queryString.parse(this.props.history.location.search);
+    let searchStringV2 = values.search || searchString;
+
     if (values.classroomId) {
       const classroomId = parseInt(values.classroomId as string);
       await this.loadClasses(classroomId);
@@ -153,8 +161,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
         updateClassId = parseInt(values.classroomId as string);
         this.setState({ updateClassId });
       }
-    } else if (values.search) {
-      this.searching(values.search as string);
+    } else if (searchStringV2) {
+      this.searching(searchStringV2 as string);
       this.search();
     } else {
       this.loadClasses();
@@ -462,7 +470,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       showedClasses = this.state.searchClassrooms;
     }
 
-    if (this.state.classrooms?.length === 0) {
+    if (showedClasses.length === 0 && this.state.classrooms?.length === 0) {
       return (
         <Grid item xs={9} className="brick-row-container">
           <EmptyTabContent openClass={() => this.setState({ createClassOpen: true })} />
@@ -669,7 +677,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
   subjects: state.subjects.subjects,
-  searchString: state.search.value
+  searchString: state.search.classesValue
 });
 
 const mapDispatch = (dispatch: any) => ({
