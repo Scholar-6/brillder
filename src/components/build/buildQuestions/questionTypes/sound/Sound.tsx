@@ -1,8 +1,6 @@
 import React from "react";
 import { fileUrl, uploadFile } from "components/services/uploadFile";
 import Dropzone from "../../components/Sound/Dropzone";
-import PlayButton from "../../components/Sound/components/buttons/PlayButton";
-import PauseButton from "../../components/Sound/components/buttons/PauseButton";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
 interface SoundProps {
@@ -122,7 +120,6 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
 
   render() {
     const { locked } = this.props;
-    const { status } = this.state;
     
     return (
       <div className="react-recording">
