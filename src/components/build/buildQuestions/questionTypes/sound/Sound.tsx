@@ -1,9 +1,6 @@
 import React from "react";
 import { fileUrl, uploadFile } from "components/services/uploadFile";
 import Dropzone from "../../components/Sound/Dropzone";
-import Recording from "./Recording";
-import RecordButton from "../../components/Sound/components/buttons/RecordButton";
-import RecordingButton from "../../components/Sound/components/buttons/RecordingButton";
 import PlayButton from "../../components/Sound/components/buttons/PlayButton";
 import PauseButton from "../../components/Sound/components/buttons/PauseButton";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
@@ -126,42 +123,14 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
   render() {
     const { locked } = this.props;
     const { status } = this.state;
-    let canDelete =
-      status === AudioStatus.Start || status === AudioStatus.Recording;
     
     return (
       <div className="react-recording">
         <Dropzone
           locked={locked}
-          status={status}
+          status={AudioStatus.Start}
           saveAudio={this.saveAudio.bind(this)}
         />
-        <div className="record-button-row">
-          <Recording
-            status={status}
-            isShown={true}
-            onStop={this.onStop.bind(this)}
-            onSave={this.onSave.bind(this)}
-          />
-          <RecordButton
-            status={status}
-            blobUrl={this.state.blobUrl}
-            onClick={this.startRecording.bind(this)}
-          />
-          <RecordingButton
-            status={status}
-            onClick={this.stopRecording.bind(this)}
-          />
-          <PlayButton status={status} onClick={this.playRecord.bind(this)} />
-          <PauseButton status={status} onClick={this.stopRecord.bind(this)} />
-          <button
-            className={"btn delete-record " + (canDelete ? "disabled" : "")}
-            onClick={this.deleteAudio.bind(this)}
-            disabled={canDelete}
-          >
-            <span>Delete</span>
-          </button>
-        </div>
         <ValidationFailedDialog
           isOpen={this.state.cantSave}
           header="Can`t save audio file"

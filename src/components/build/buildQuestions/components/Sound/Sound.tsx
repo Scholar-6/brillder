@@ -5,10 +5,7 @@ import "./Sound.scss";
 import Dropzone from "./Dropzone";
 import PauseButton from "./components/buttons/PauseButton";
 import PlayButton from "./components/buttons/PlayButton";
-import RecordingButton from "./components/buttons/RecordingButton";
-import RecordButton from "./components/buttons/RecordButton";
 import { fileUrl, getFile, uploadFile } from "components/services/uploadFile";
-import Recording from "./components/Recording";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
 interface SoundProps {
@@ -183,21 +180,6 @@ class SoundComponent extends React.Component<SoundProps, SoundState> {
               playing={status === AudioStatus.Play}
             />
           </div>}
-          <Recording
-            status={status}
-            isShown={true}
-            onStop={this.onStop.bind(this)}
-            onSave={this.onSave.bind(this)}
-          />
-          <RecordButton
-            status={status}
-            blobUrl={this.state.blobUrl}
-            onClick={this.startRecording.bind(this)}
-          />
-          <RecordingButton
-            status={status}
-            onClick={this.stopRecording.bind(this)}
-          />
           <PlayButton status={status} onClick={this.playRecord.bind(this)} />
           <PauseButton status={status} onClick={this.stopRecord.bind(this)} />
           <button
