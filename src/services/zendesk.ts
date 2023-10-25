@@ -12,6 +12,8 @@ const attachStyleCss = (iframe: any, path: string) => {
     cssLink.type = "text/css";
     const innnerDoc = iframe.contentDocument || iframe.contentWindow;
     innnerDoc.head.appendChild(cssLink);
+    
+    console.log(innnerDoc);
   } catch (e) {
     console.log('can`t attach zendesk styles', e);
   }
@@ -177,7 +179,18 @@ function messageSent() {
       if (iframe) {
         var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
         var footer = innerDoc.getElementsByTagName('footer')[0];
-        console.log(footer);
+
+        // changing button icon
+        var header = innerDoc.getElementsByTagName('header')[0];
+        var buttonR53 = header.getElementsByTagName('button')[0];
+        buttonR53.classList.remove("hssBvG");
+        buttonR53.classList.remove("hPvFnz");
+        buttonR53.style.background = 'transparent';
+        buttonR53.style.border = 'none';
+        buttonR53.style.lineHeight = '1';
+        buttonR53.style.fontSize = '2.07143rem';
+        buttonR53.innerHTML = '-';
+        console.log(header, buttonR53);
         if (footer && footer.children[0]) {
           var button = footer.children[0].children[1];
           button.onclick = function () {
