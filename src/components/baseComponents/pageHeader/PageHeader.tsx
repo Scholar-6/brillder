@@ -60,6 +60,7 @@ interface Props {
   searchString: string;
   searchClassString: string;
   setSearchString(value: string, page: PageEnum): void;
+  clearSearch(): void;
 }
 
 interface State {
@@ -95,9 +96,20 @@ class PageHeader extends Component<Props, State> {
       this.props.getNotifications();
     }
 
+    if (this.props.page === PageEnum.Play) {
+      this.props.clearSearch();
+    }
+
     if (value) {
       this.props.setSearchString(value, props.page);
       this.props.searching(value);
+    }
+  }
+
+  componentWillUnmount(): void {
+    console.log('destroy');
+    if (this.props.page !== PageEnum.ViewAll) {
+      this.props.clearSearch();
     }
   }
 
@@ -432,6 +444,7 @@ const mapDispatch = (dispatch: any) => ({
   getNotifications: () => dispatch(notificationActions.getNotifications()),
   getSubjects: () => dispatch(subjectActions.fetchSubjects()),
   setSearchString: (value: string, page: PageEnum) => dispatch(searchActions.setSearchString(value, page)),
+  clearSearch: () => dispatch(searchActions.clearSearch()),
 });
 
 const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
