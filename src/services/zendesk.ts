@@ -187,9 +187,10 @@ function messageSent() {
         buttonR53.classList.remove("hPvFnz");
         buttonR53.style.background = 'transparent';
         buttonR53.style.border = 'none';
-        buttonR53.style.lineHeight = '1';
-        buttonR53.style.fontSize = '2.07143rem';
+        buttonR53.style.lineHeight = '0.25';
+        buttonR53.style.fontSize = '3rem';
         buttonR53.innerHTML = '-';
+        buttonR53.style.marginBottom = '8px';
         console.log(header, buttonR53);
         if (footer && footer.children[0]) {
           var button = footer.children[0].children[1];
