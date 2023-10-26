@@ -203,6 +203,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
             </span>
           </div>
         ))}
+        {!isPhone() && <div className="space-955" />}
         {!isPhone() && this.renderGlobalHint()}
       </div>
     );
