@@ -90,7 +90,9 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   console.log('classes', classrooms, standartClasses);
 
   let result = classrooms;
-  if (classrooms.length === 0) {
+  if (classrooms.length === 0 && searchText.length <= 2) {
+    result = standartClasses;
+  } else if (searchText.length <= 2) {
     result = standartClasses;
   }
 
@@ -153,6 +155,8 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
                           if (classes) {
                             setClassrooms(classes);
                           }
+                        } else {
+                          setClassrooms([]);
                         }
                       }}
                       placeholder="Search by class name"

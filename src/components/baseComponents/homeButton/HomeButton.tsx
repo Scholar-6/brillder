@@ -1,21 +1,30 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
+import { connect } from 'react-redux';
 
 import './HomeButton.scss';
 import SpriteIcon from '../SpriteIcon';
 import { isMobile } from 'react-device-detect';
+import { PageEnum } from '../pageHeader/PageHeadWithMenu';
+import searchActions from "redux/actions/search";
 
 const DesktopTheme = React.lazy(() => import("./themes/HomeButtonDesktopTheme"));
 export interface HomeButtonProps {
   link?: string;
   history: any;
+  page?: PageEnum;
   onClick?(): void;
+
+  clearSearch(): void;
 }
 
 const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
   return (
     <Route render={() => {
       const onClick = () => {
+        if (props.page === PageEnum.ViewAll) {
+          props.clearSearch();
+        }
         if (props.onClick) {
           props.onClick();
         } else if (props.link) {
@@ -60,4 +69,9 @@ const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
   );
 }
 
-export default HomeButtonComponent;
+
+const mapDispatch = (dispatch: any) => ({
+  clearSearch: () => dispatch(searchActions.clearSearch()),
+});
+
+export default connect(null, mapDispatch)(HomeButtonComponent);
