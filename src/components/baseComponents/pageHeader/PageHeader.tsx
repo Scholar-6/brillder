@@ -244,7 +244,7 @@ class PageHeader extends Component<Props, State> {
       return (
         <div className="upper-part" onClick={() => this.prepareSuggestions()}>
           <div className={!searchVisible ? "page-header" : "page-header active"}>
-            <HomeButton onClick={this.props.onForbiddenClick} history={this.props.history} />
+            <HomeButton page={this.props.page} onClick={this.props.onForbiddenClick} history={this.props.history} />
             <div className="logout-container">
               <div className={`search-container ${searchString.length >= 1 ? 'no-bottom-border' : ''}`}>
                 <div className="header-btn search-button svgOnHover" onClick={this.props.onForbiddenClick}>
@@ -356,7 +356,7 @@ class PageHeader extends Component<Props, State> {
             </div>
           </Hidden>
           <Hidden only={['xs']} >
-            <HomeButton link={link} history={this.props.history} />
+            <HomeButton page={this.props.page} link={link} history={this.props.history} />
             <div className="logout-container">
               <div className={`search-container ${searchString.length >= 1 ? 'no-bottom-border' : ''}`}>
                 {!this.props.searchHidden &&
