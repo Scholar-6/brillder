@@ -9,11 +9,12 @@ import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import { stripHtml } from 'components/build/questionService/ConvertService';
 import { Brick, Subject } from 'model/brick';
-import { getClassById } from 'components/teach/service';
+import { getAllClassrooms } from 'components/teach/service';
 import { assignClasses } from 'services/axios/assignBrick';
 import { searchClassroomsByName } from 'services/axios/classroom';
 import map from 'components/map';
 
+import './AddToClassDialog.scss';
 import BrickTitle from 'components/baseComponents/BrickTitle';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { Classroom } from 'model/classroom';
@@ -28,6 +29,7 @@ interface AssignClassProps {
 
   submit(classroomId: number): void;
   close(): void;
+  exit(): void;
 
   user: User;
   history?: any;
@@ -46,6 +48,8 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   const [classroom, setClassroom] = useState(null as any);
   const [classrooms, setClassrooms] = useState([] as any[]);
   const [searchText, setSearchText] = useState('');
+
+  const [standartClasses, setStandartClasses] = useState([] as any[]);
 
   const addToClass = async () => {
     if (isSaving) { return; }
@@ -72,23 +76,41 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
     }} close={() => setMultiple(false)} />;
   }
 
+  const setClasses = async () => {
+    var classesV2 = await getAllClassrooms();
+    if (classesV2) {
+      setStandartClasses(classesV2.slice(0, 5));
+    }
+  }
+
+  React.useEffect(() => {
+    setClasses();
+  }, []);
+
+  console.log('classes', classrooms, standartClasses);
+
+  let result = classrooms;
+  if (classrooms.length === 0) {
+    result = standartClasses;
+  }
+
   return (<div>
     <Dialog
       open={props.isOpen}
       onClose={props.close}
-      className="dialog-box light-blue assign-class-dialog create-classroom-dialog new-class-r5"
+      className="dialog-box light-blue assign-class-dialog create-classroom-dialog new-class-r5 add-to-class-r5"
     >
       <div className="dialog-header">
         <div className="title-box">
           <div className="title font-18">Add to Class</div>
-          <SpriteIcon name="cancel-custom" onClick={props.close} />
+          <SpriteIcon name="cancel-custom" onClick={props.exit} />
         </div>
         <div className="text-block">
           <div className="text-r324 font-14">Find your class</div>
           <div className="r-class-inputs search-class-box">
             <Autocomplete
               value={classroom}
-              options={classrooms}
+              options={result}
               onChange={async (e: any, classV2: any) => {
                 if (classV2) {
                   setClassroom(classV2);
@@ -154,7 +176,7 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
           className="btn btn-md font-16 cancel-button"
           onClick={props.close}
         >
-          <span className="bold">Cancel</span>
+          <span className="bold">Back</span>
         </button>
         <button
           className={`btn btn-md bg-theme-green font-16 yes-button ${!canSubmit ? 'invalid' : ''}`}

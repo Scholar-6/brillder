@@ -1,0 +1,15 @@
+.add-to-class-r5 {
+  .search-class-box .subject-autocomplete .MuiAutocomplete-endAdornment {
+    height: 1vw;
+    .MuiAutocomplete-popupIndicator {
+      position:absolute;
+      top: 0;
+      height: calc(1.6vw + 1vw);
+      right: 0.1vw;
+      margin: 0 !important;
+      .MuiSvgIcon-root {
+        margin: 0 !important;
+      }
+    }
+  }
+}
