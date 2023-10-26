@@ -46,6 +46,10 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
         history={props.history}
         subjects={[]}
         submit={props.submit}
+        exit={() => {
+          setAddToClass(false);
+          props.close();
+        }}
         close={() => setAddToClass(false)}
       />
     );
