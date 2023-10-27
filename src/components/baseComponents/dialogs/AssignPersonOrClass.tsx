@@ -35,7 +35,6 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
         submit={props.submit}
         close={(double) => {
           setCreateClass(false);
-          console.log('double', double);
           if (double) {
             props.close();
           }

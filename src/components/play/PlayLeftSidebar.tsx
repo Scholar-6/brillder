@@ -416,8 +416,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       return <Grid container item className={className}></Grid>
     }
 
-    console.log('test: ', this.props.brick.title, this.props.assignClass);
-
     return (
       <Grid container item className={className}>
         <div className="collapsable-sidebar">
