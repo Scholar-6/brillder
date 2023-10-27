@@ -51,7 +51,6 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
   React.useEffect(() => {
     if (props.classroom) {
       const cashedClass = GetClassAssignedBricks();
-      console.log('cashed class', cashedClass)
       if (cashedClass && cashedClass.id === props.classroom.id) {
         const cashedAssignments = cashedClass.assignments.filter((a: any) => a != null);
         setAssignments(cashedAssignments);
@@ -98,11 +97,15 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
                     const result = await assignClasses(brickV5.id, { classesIds: [classroom.id] });
 
                     if (result.success) {
-                      const assignmentsTotal = [...assignments, result.result[0]];
-                      const classCopy = Object.assign(classroom);
-                      classCopy.assignments = assignmentsTotal;
-                      SetClassroomAssignedBricks(classCopy);
-                      setAssignments(assignmentsTotal);
+                      console.log(result)
+                      if (result.result.newAssignments.length > 0) {
+                        const assignmentsTotal = [...assignments, result.result.newAssignments[0]];
+                        const classCopy = Object.assign(classroom);
+                        classCopy.assignments = assignmentsTotal;
+                        SetClassroomAssignedBricks(classCopy);
+                        console.log('set assignments 2', assignmentsTotal)
+                        setAssignments(assignmentsTotal);
+                      }
                     }
                   }
                 }

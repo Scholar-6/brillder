@@ -5,34 +5,49 @@ export interface AssignClassData {
   sendEmail?: boolean;
 }
 
+export interface AssignClassResultV2 {
+  success: boolean;
+  result: {
+    existing: any[];
+    newAssignments: any[];
+  },
+  error: string;
+}
+
 export interface AssignClassResult {
   success: boolean;
-  result: any[];
+  result: [],
   error: string;
 }
 
 export const assignClasses = async (brickId: number, data: AssignClassData) => {
   try {
-    const result = await post<any[]>(`/brick/assignClasses/${brickId}`, data)
+    const result = await post<any>(`/brick/assignClasses/${brickId}`, data)
     return {
       success: true,
       result,
       error: ''
-    } as AssignClassResult;
+    } as AssignClassResultV2;
   } catch (e) {
     var dd = e as any;
     if (dd.response && dd.response.data) {
       return {
         success: false,
-        result: [],
+        result: {
+          existing: [],
+          newAssignments: []
+        },
         error: dd.response.data
-      } as AssignClassResult;
+      } as AssignClassResultV2;
     }
     return {
       success: false,
-      result: [],
+      result: {
+        existing: [],
+        newAssignments: []
+      },
       error: e
-    } as AssignClassResult;
+    } as AssignClassResultV2;
   }
 }
 
