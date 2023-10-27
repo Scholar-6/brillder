@@ -33,7 +33,14 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
         history={props.history}
         subjects={[]}
         submit={props.submit}
-        close={() => setCreateClass(false)}
+        close={(double) => {
+          setCreateClass(false);
+          console.log('double', double);
+          if (double) {
+            props.close();
+          }
+        }}
+        isBack={true}
       />
     );
   }

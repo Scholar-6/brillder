@@ -87,8 +87,6 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
     setClasses();
   }, []);
 
-  console.log('classes', classrooms, standartClasses);
-
   let result = classrooms;
   if (classrooms.length === 0 && searchText.length <= 2) {
     result = standartClasses;
@@ -99,7 +97,7 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   return (<div>
     <Dialog
       open={props.isOpen}
-      onClose={props.close}
+      onClose={props.exit}
       className="dialog-box light-blue assign-class-dialog create-classroom-dialog new-class-r5 add-to-class-r5"
     >
       <div className="dialog-header">

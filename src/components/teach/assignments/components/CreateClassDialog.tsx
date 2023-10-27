@@ -30,10 +30,12 @@ interface AssignClassProps {
   classroom?: Classroom;
 
   submit(classroomId: number): void;
-  close(): void;
+  close(double?: boolean): void;
 
   user: User;
   history?: any;
+
+  isBack?: boolean;
 }
 
 const PopperCustom = function (props: any) {
@@ -237,13 +239,13 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
   return (<div>
     <Dialog
       open={props.isOpen && !secondOpen}
-      onClose={props.close}
+      onClose={() => props.close(true)}
       className="dialog-box light-blue assign-class-dialog create-classroom-dialog new-class-r5"
     >
       <div className="dialog-header">
         <div className="title-box">
           <div className="title font-18">New Class</div>
-          <SpriteIcon name="cancel-custom" onClick={props.close} />
+          <SpriteIcon name="cancel-custom" onClick={() => props.close(true)} />
         </div>
         <div className="text-block">
           <div className="text-r324 font-14">Enter the name of your class</div>
@@ -268,9 +270,9 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         </div>
         <button
           className="btn btn-md font-16 cancel-button"
-          onClick={props.close}
+          onClick={() => props.close(false)}
         >
-          <span className="bold">Cancel</span>
+          <span className="bold">{props.isBack ? 'Back' : 'Cancel'}</span>
         </button>
         <button
           className={`btn btn-md bg-theme-green font-16 yes-button ${!canSubmit ? 'invalid' : ''}`}
