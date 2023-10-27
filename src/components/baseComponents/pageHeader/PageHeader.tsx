@@ -102,7 +102,6 @@ class PageHeader extends Component<Props, State> {
 
     if (value) {
       this.props.setSearchString(value, props.page);
-      this.props.searching(value);
     }
   }
 

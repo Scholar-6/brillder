@@ -398,7 +398,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadBricks(values: queryString.ParsedQuery<string>) {
-    console.log('load bricks')
     if (this.props.user) {
       let subjectIds: number[] = [];
       let { state } = this;
@@ -419,7 +418,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         state.filterCompetition, this.state.subjectGroup, state.sortBy
       );
       if (pageBricks) {
-        console.log('get subjects')
         this.state.subjects.map(s1 => {
           s1.viewAllCount = 0;
           pageBricks.res && pageBricks.res.map(s => {
