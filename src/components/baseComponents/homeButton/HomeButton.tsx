@@ -24,10 +24,9 @@ const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
   return (
     <Route render={() => {
       const onClick = () => {
-        if (props.page === PageEnum.ViewAll) {
-          props.subjects.map(s => s.checked = false);
-          props.clearSearch();
-        }
+        props.subjects.map(s => s.checked = false);
+        props.clearSearch();
+
         if (props.onClick) {
           props.onClick();
         } else if (props.link) {
