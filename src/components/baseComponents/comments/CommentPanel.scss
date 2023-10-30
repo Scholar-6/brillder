@@ -140,6 +140,10 @@ $margin-left: 21%;
     .comment-text {
       width: 12.5vw;
       margin-left: 0.13vw;
+
+      a:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

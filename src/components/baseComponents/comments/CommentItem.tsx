@@ -14,6 +14,7 @@ import ReplyCommentPanel from './ReplyCommentPanel';
 import SpriteIcon from '../SpriteIcon';
 
 import "./CommentItem.scss";
+import CommentText from './CommentText';
 
 interface CommentItemProps {
   currentUser: User;
@@ -93,7 +94,9 @@ const CommentItem: React.FC<CommentItemProps> = props => {
         <Grid item className="comment-text break-word">
           <span className="bold">Comment: </span>
           <Hyphenated language={gb}>
-            <i>{props.comment.text}</i>
+            <i>
+              <CommentText text={props.comment.text} />
+            </i>
           </Hyphenated>
         </Grid>
         {/*eslint-disable-next-line*/}
