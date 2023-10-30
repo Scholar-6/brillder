@@ -177,6 +177,10 @@
 .comment-text {
   padding-left: 0.2vw;
   margin-left: 2.6vw;
+
+  a:hover {
+    text-decoration: underline;
+  }
 }
 
 .comment-container,

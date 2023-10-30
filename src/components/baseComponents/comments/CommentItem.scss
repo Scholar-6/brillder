@@ -96,6 +96,10 @@ $margin-left: 21%;
   .comment-item {
     .comment-text {
       margin-left: 3%;
+
+      a:hover {
+        text-decoration: underline;
+      }
     }
   }
 
@@ -123,6 +127,10 @@ $margin-left: 21%;
         width: 8vw;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        a:hover {
+          text-decoration: underline;
+        }
       }
     }
     .comment-reply-count {

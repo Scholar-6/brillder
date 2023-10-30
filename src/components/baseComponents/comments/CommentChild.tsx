@@ -6,6 +6,7 @@ import { Comment } from "model/comments";
 import { Brick } from "model/brick";
 import { User } from "model/user";
 import SpriteIcon from "../SpriteIcon";
+import CommentText from "./CommentText";
 
 export interface CommentChildProps {
   comment: Comment;
@@ -54,7 +55,7 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
       </div>
       <div className="comment-text">
         <i>
-          {props.comment.text === "" ? "No text inserted" : props.comment.text}
+          {props.comment.text === "" ? "No text inserted" : <CommentText text={props.comment.text} />}
         </i>
       </div>
     </div>
