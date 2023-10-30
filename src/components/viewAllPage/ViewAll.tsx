@@ -871,12 +871,18 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     toggleSubject(this.state.subjects, id);
     toggleSubject(this.state.userSubjects, id);
 
-    this.setState({
-      ...this.state,
-      isClearFilter: this.isFilterClear(),
-      isViewAll: false,
-      shown: true,
-    });
+    try {
+      if (this.props.user) {
+        this.loadAndSetBricks(
+          0, this.state.isCore, this.state.filterLevels, this.state.filterLength,
+          this.state.filterCompetition, this.state.isAllSubjects, this.state.sortBy
+        );
+      } else {
+        this.loadAndSetUnauthBricks(
+          0, this.state.filterLevels, this.state.filterLength, this.state.filterCompetition, this.state.sortBy, this.state.subjectGroup
+        );
+      }
+    } catch { }
   }
 
   viewAll() {
@@ -1254,7 +1260,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     const subjects = getSubjectsWithBricks(this.state.subjects, this.props.user, this.state.isCore, this.state.isAllSubjects);
 
     return (
-      <div className="bricks-list-container desktop-no-bricks">
+      <div className="bricks-list-container desktop-no-bricks desktop-no-bricks-v2">
         <div className="main-brick-container">
           <div className="centered text-theme-dark-blue title no-found">
             Sorry, no bricks found
