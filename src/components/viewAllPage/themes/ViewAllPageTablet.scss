@@ -274,6 +274,13 @@ $sidebar-font-size: 1.3vw;
         align-items: flex-start !important;
       }
     }
+    .desktop-no-bricks-v2 {
+      height: calc(100vh - 5.834vw - 2vw - 4.9vw - 2.1vh) !important;
+    
+      .subjects-column {
+        padding-bottom: 4vh !important;
+      }
+    }
     .sort-box.subject-scrollable {
       .subject-list-v2 {
         .subjects-indexes-box {
