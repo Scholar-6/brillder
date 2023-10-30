@@ -119,7 +119,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
     return (
       <div
-        className="MuiListItemText-root"
+        className="MuiListItemText-root pair-text-content"
         style={{ width: '100%', textAlign: 'center' }}
       >
         <MathInHtml value={answer.value} />
