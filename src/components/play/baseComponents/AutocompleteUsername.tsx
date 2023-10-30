@@ -43,7 +43,7 @@ const AutocompleteUsername: React.FC<AutocompleteProps> = ({
       }}
       noOptionsText={
         searchString.length >= 3
-          ? props.onlyTeachers ? 'Sorry, no potential teachers found with that username' : 'Sorry, no potential editors found with that username'
+          ? props.onlyTeachers ? 'Sorry, no potential teachers found with that username' : 'Sorry, no potential editors found with that name'
           : "Options will start appearing after you type three characters"
       }
       renderInput={(params) => (
