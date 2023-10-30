@@ -109,7 +109,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
             <AutocompleteUsername
               canEdit={props.canEdit}
               editorError=""
-              placeholder="Editor's username (first 3 characters)"
+              placeholder="Enter Editor’s name"
               onBlur={onBlur}
               users={editors}
               setUsers={setEditors}
