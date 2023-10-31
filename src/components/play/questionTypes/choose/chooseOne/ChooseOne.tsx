@@ -50,6 +50,8 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       correct = props.attempt.correct;
     }
 
+    console.log('choose  one')
+
     this.state = { activeItem, isLiveCorrect: correct };
   }
 
@@ -163,6 +165,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
         className += " wrong";
       }
     }
+    console.log('choose one hint 1')
     return (
       <Button className={className} key={index}>
         {this.renderData(choice)}
@@ -224,6 +227,8 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     } else {
       isCorrect = false;
     }
+
+    console.log('choose one hint 2')
 
     return (
       <div

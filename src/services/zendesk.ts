@@ -12,8 +12,6 @@ const attachStyleCss = (iframe: any, path: string) => {
     cssLink.type = "text/css";
     const innnerDoc = iframe.contentDocument || iframe.contentWindow;
     innnerDoc.head.appendChild(cssLink);
-    
-    console.log(innnerDoc);
   } catch (e) {
     console.log('can`t attach zendesk styles', e);
   }
