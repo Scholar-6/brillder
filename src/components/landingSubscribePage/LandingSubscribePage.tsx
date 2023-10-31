@@ -4,6 +4,7 @@ import './LandingSubscribePage.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import { isPhone } from 'services/phone';
+import map from 'components/map';
 
 const PhoneTheme = React.lazy(() => import('./themes/PhoneTheme'));
 
@@ -96,6 +97,13 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
                 Your students do not need to subscribe to play bricks which you set. All you need is a student email to assign them a brick. Many teachers recoup this outlay from departmental resources budgets. See institutional deals for multi-teacher packages.
               </div>
             </div>
+          </div>
+          <div className="terms-link-absolute policy-text">
+            <span>
+              <a href={window.location.hostname + map.TermsPage} onClick={(e) => { e.preventDefault(); history.push(map.TermsPage); }}>
+                Terms
+              </a>
+            </span>
           </div>
         </div>
         <div className="page2-1">

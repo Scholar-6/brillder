@@ -9,6 +9,7 @@
   font-size: 1vw;
   color: var(--theme-dark-blue);
   .page1-1 {
+    position: relative;
     padding-top: 5vh;
     color: white;
     background: var(--theme-dark-blue);
@@ -158,6 +159,11 @@
       .subsc-small {
         font-size: 0.93vw;
       }
+    }
+    .terms-link-absolute {
+      position: absolute;
+      bottom: 1vw;
+      right: 7vw;
     }
   }
   .page2-1 {
