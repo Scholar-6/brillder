@@ -96,9 +96,19 @@ const HtmlImageWithSpaces: React.FC<SpacesProps> = ({ index, className, value, h
     )
   }
 
+  console.log('render image', className, value);
+
+  let isBlockQuote = false;
+  let blockIndex = value.slice(0, 100).indexOf('image-play-container2 center blockquote');
+  if (blockIndex >= 0) {
+    isBlockQuote = true;
+  }
+
+  console.log(isBlockQuote, blockIndex)
+
   return (
     <div>
-      <div className="help-image-text-d43">
+      <div className={`help-image-text-d43 ${isBlockQuote ? 'blockquote' : ''}`}>
         <SpriteIcon name="f-zoom-in" />
         Hover over image to zoom
       </div>

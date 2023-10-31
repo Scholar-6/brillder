@@ -42,6 +42,5 @@ export function validateProposal(user: User, brick: Brick) {
       }
     }
   }
-  console.log(isValid);
   return { isValid, url };
 }
