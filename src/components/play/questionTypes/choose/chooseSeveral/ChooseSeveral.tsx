@@ -202,9 +202,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       className = this.getBookPreviewClass(active, isCorrect);
     } else {
       className = this.getButtonClass(choice, active, isCorrect);
-      console.log('choice 2', className, active, isCorrect);
     }
-
 
     return (
       <div
