@@ -204,7 +204,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     // if review show correct or wrong else just make answers active
     else if (attempt && index === activeItem.shuffleIndex) {
       let { answer } = attempt;
-      if (this.props.isReview && this.props.attempt === this.props.liveAttempt) {
+      if (this.props.isReview) {
         if (answer.shuffleIndex >= 0 && answer.shuffleIndex === index) {
           if (this.props.isReview) {
             if (isCorrect === false) {
@@ -213,16 +213,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
           }
         } else {
           className += " active";
-        }
-      }
-
-      // if attempt is cashed attempt !== liveAttempt
-      // fix is bellow
-      if (this.props.isReview) {
-        if (answer.shuffleIndex >= 0 && answer.shuffleIndex === index) {
-          if (isCorrect === false) {
-            className += " wrong"
-          }
         }
       }
     }
