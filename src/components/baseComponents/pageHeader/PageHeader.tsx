@@ -263,7 +263,7 @@ class PageHeader extends Component<Props, State> {
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
                   <BrillIconAnimated />
-                  {(this.props.user.isFromInstitution || this.props.user.library) ? <div /> :
+                  {(this.props.user && (this.props.user.isFromInstitution || this.props.user.library)) ? <div /> :
                     <div className="header-credits-container">
                       <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
                     </div>}
@@ -381,7 +381,7 @@ class PageHeader extends Component<Props, State> {
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
                   <BrillIconAnimated />
-                  {(this.props.user.isFromInstitution || this.props.user.library) ? <div /> :
+                  {(this.props.user && (this.props.user.isFromInstitution || this.props.user.library)) ? <div /> :
                     <div className="header-credits-container">
                       <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
                     </div>}

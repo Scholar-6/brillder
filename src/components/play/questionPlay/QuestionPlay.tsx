@@ -55,6 +55,8 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
   constructor(props: QuestionProps) {
     super(props);
 
+    console.log('redner question', props)
+
     this.state = {
       answerRef: React.createRef<CompComponent<any, any>>(),
       refs: this.getComponentRefs()
@@ -105,7 +107,6 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
 
   renderGlobalHint() {
     const correct = this.props.liveAttempt ? this.props.liveAttempt.correct : false;
-
     return (
       <ReviewGlobalHint
         isReview={this.props.isReview}
