@@ -43,11 +43,12 @@ export class CustomImageBlot extends Embed {
 
         node.className = node.className + " image-play-container2" + ((value.imageAlign === ImageAlign.center) ? " center" : "");
 
-        if (value.blockquote) {
+        if (value.blockquote === true || value.blockquote === 'true') {
             node.className = node.className + " blockquote";
         }
 
         node.setAttribute('data-value', value.url);
+        node.setAttribute('data-blockquote', value.blockquote);
         node.setAttribute('data-source', value.imageSource);
         node.setAttribute('data-caption', value.imageCaption);
         node.setAttribute('data-align', value.imageAlign);
@@ -109,6 +110,7 @@ export class CustomImageBlot extends Embed {
         blot.imageCaption = node.getAttribute('data-caption');
         blot.imageAlign = parseInt(node.getAttribute('data-align'), 10);
         blot.imageHeight = node.getAttribute('data-height');
+        blot.blockquote = node.getAttribute('data-blockquote');
         blot.imagePermision = node.getAttribute('data-permission');
 
         return blot;
@@ -249,6 +251,7 @@ export default class ImageUpload {
                 imageCaption: data.caption ?? leafData.imageCaption,
                 imageAlign: data.align ?? leafData.imageAlign,
                 imageHeight: data.height ?? leafData.imageHeight,
+                blockquote: data.blockquote ?? leafData.blockquote,
                 imagePermision: data.permission ?? leafData.imagePermision,
             };
             leaf.replaceWith("customImage", newData);
