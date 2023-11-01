@@ -9,6 +9,7 @@
 
   .page1-1 {
     padding-top: 0;
+    padding-bottom: calc(4vh + 8vw) !important;
 
     .subc-title {
       padding-left: 7vw;
@@ -76,6 +77,13 @@
     }
     .subscribe-type-boxes .btn {
       border-radius: 2vw;
+      font-size: 5vw;
+    }
+
+    .terms-link-absolute {
+      position: absolute;
+      bottom: 2vw;
+      right: 7vw;
       font-size: 5vw;
     }
   }
