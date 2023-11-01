@@ -33,7 +33,7 @@ const CreateClassDialogV2: React.FC<AssignClassProps> = (props) => {
       if (newClassroom) {
         const res = await assignClasses(props.brickId, { classesIds: [newClassroom.id] });
         if (res.success) {
-          props.history.push(map.TeachAssignedTab + '?classroomId=' + newClassroom.id);
+          props.history.push(map.TeachAssignedTab + '?classroomId=' + newClassroom.id + '&shareOpen=true');
         }
       }
     }
