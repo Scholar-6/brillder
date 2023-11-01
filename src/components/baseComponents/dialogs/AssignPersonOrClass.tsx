@@ -5,13 +5,13 @@ import Dialog from '@material-ui/core/Dialog';
 import './AssignPersonOrClass.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import SpriteIcon from '../SpriteIcon';
-import CreateClassDialog from 'components/teach/assignments/components/CreateClassDialog';
 import { Brick } from 'model/brick';
 import { User } from 'model/user';
 import AddToClassDialog from './AddToClassDialog';
 import { createClass } from 'components/teach/service';
 import map from 'components/map';
 import { assignClasses } from 'services/axios/assignBrick';
+import CreateClassDialogV2 from 'components/teach/assignments/components/CreateClassDialogV2';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -28,18 +28,16 @@ const AssignDialog: React.FC<AssignClassProps> = (props) => {
 
   if (createOpen) {
     return (
-      <CreateClassDialog
+      <CreateClassDialogV2
         isOpen={true}
         history={props.history}
-        subjects={[]}
-        submit={props.submit}
+        brickId={props.brick.id}
         close={(double) => {
           setCreateClass(false);
           if (double) {
             props.close();
           }
         }}
-        isBack={true}
       />
     );
   }
