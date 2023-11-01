@@ -51,6 +51,7 @@ import { clearProposal } from "localStorage/proposal";
 import CreateOneButton from "components/viewAllPage/components/CreateOneButton";
 import RecommendButton from "components/viewAllPage/components/RecommendBuilderButton";
 import SubjectCategoriesComponent from "./subjectCategories/SubjectCategories";
+import searchActions from "redux/actions/search";
 
 import {
   getCheckedSubjects,
@@ -90,6 +91,7 @@ interface ViewAllProps {
 
   subjects: Subject[];
   getSubjects(): Subject[] | null;
+  clearSearch(): void;
 }
 
 interface ViewAllState {
@@ -870,7 +872,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
     this.state.subjects.forEach((s) => (s.checked = false));
     toggleSubject(this.state.subjects, id);
     toggleSubject(this.state.userSubjects, id);
-
+    this.props.clearSearch();
     try {
       if (this.props.user) {
         this.loadAndSetBricks(
@@ -1626,6 +1628,7 @@ const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
   getSubjects: () => dispatch(subjectActions.fetchSubjects()),
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
+  clearSearch: () => dispatch(searchActions.clearSearch()),
 });
 
 export default connect(mapState, mapDispatch)(ViewAllPage);

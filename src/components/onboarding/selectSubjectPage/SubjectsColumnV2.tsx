@@ -82,17 +82,6 @@ const SubjectsColumn: React.FC<Props> = ({ next, onClick, ...props }) => {
     )
   }
 
-  const renderCorporateButton = () => {
-    if (isPhone()) {
-      return '';
-    }
-    return (
-      <div className="subject-item select-all-button" onClick={() => {}}>
-        <div className="subject-name">Corporate</div>
-      </div>
-    )
-  }
-
   const renderNextButton = () => {
     if (isPhone()) {
       return '';
