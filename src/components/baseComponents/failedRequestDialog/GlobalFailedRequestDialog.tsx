@@ -10,6 +10,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import "./FailedRequestDialog.scss";
 import { ReduxCombinedState } from 'redux/reducers';
 import actions from 'redux/actions/requestFailed';
+import { sendError } from "components/play/services/errorService";
 
 interface FailedRequestProps {
   failed: boolean;
@@ -20,11 +21,7 @@ interface FailedRequestProps {
 const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
   React.useEffect(() => {
     if (props.failed) {
-      const errorPromise = new Promise((resolve, reject) => {
-        throw new Error("Uh Oh screen called");
-      });
-  
-      errorPromise.then(() => { });
+      sendError("Failed request");
     }
   }, [props.failed]);
 

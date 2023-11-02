@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import sprite from "assets/img/icons-sprite.svg";
+import { sendError } from "components/play/services/errorService";
 
 interface FailedRequestProps {
   isOpen: boolean;
@@ -14,11 +15,7 @@ interface FailedRequestProps {
 
 const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
   React.useEffect(() => {
-    const errorPromise = new Promise((resolve, reject) => {
-      throw new Error("Uh Oh screen called");
-    });
-
-    errorPromise.then(() => {});
+    sendError(" Failed Request");
   }, []);
 
   return (
