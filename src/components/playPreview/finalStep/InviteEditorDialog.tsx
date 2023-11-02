@@ -7,8 +7,8 @@ import actions from 'redux/actions/requestFailed';
 import brickActions from 'redux/actions/brickActions';
 import { Brick, Editor } from 'model/brick';
 import './InviteEditorDialog.scss';
-import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import AutocompleteEditor from 'components/play/baseComponents/AutocompleteEditor';
 
 interface InviteProps {
   canEdit: boolean;
@@ -106,7 +106,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         <div style={{ marginTop: '1.8vh' }}></div>
         <Grid item className="input-container">
           <div className="audience-inputs border-rounded">
-            <AutocompleteUsername
+            <AutocompleteEditor
               canEdit={props.canEdit}
               editorError=""
               placeholder="Enter Editor’s name"

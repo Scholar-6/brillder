@@ -41,6 +41,14 @@ export const suggestUsername = async (name: string) => {
   }
 }
 
+export const suggestEditor = async (name: string) => {
+  try {
+    return await get<User[]>(`/user/suggestEditor/${name}`);
+  } catch {
+    return null;
+  }
+}
+
 export const getUserById = async (userId: number) => {
   try {
     return await get<User>(`/user/${userId}`);
