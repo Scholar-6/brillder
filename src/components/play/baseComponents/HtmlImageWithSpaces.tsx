@@ -6,6 +6,7 @@ import actions from 'redux/actions/play';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { isPhone } from 'services/phone';
 import { isMobile } from 'react-device-detect';
+import { sendError } from '../services/errorService';
 
 
 interface SpacesProps {
@@ -53,6 +54,7 @@ const HtmlImageWithSpaces: React.FC<SpacesProps> = ({ index, className, value, h
           hover(fileName, imageSource);
         }
       } catch {
+        sendError("Can`t load image");
         console.log('can`t get image. Error 14342');
       }
     }, 0);

@@ -3,6 +3,7 @@ import BaseDialogWrapper from "components/baseComponents/dialogs/BaseDialogWrapp
 
 import './SaveDialog.scss';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { sendError } from "components/play/services/errorService";
 
 interface SkipTutorialDialogProps {
   open: boolean;
@@ -13,11 +14,7 @@ const SaveFailedDialog: React.FC<SkipTutorialDialogProps> = ({
   open, close
 }) => {
   React.useEffect(() => {
-    const errorPromise = new Promise((resolve, reject) => {
-      throw new Error("Uh Oh screen called");
-    });
-
-    errorPromise.then(() => {});
+    sendError("Build Save Failed");
   }, []);
 
   return (
