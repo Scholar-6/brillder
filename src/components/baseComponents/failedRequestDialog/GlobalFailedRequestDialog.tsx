@@ -21,7 +21,7 @@ interface FailedRequestProps {
 const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
   React.useEffect(() => {
     if (props.failed) {
-      sendError("Failed request");
+      sendError("Failed request. Sorry, we've run into a brick wall");
     }
   }, [props.failed]);
 

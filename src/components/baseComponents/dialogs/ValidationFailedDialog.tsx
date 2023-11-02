@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import sprite from "assets/img/icons-sprite.svg";
+import { sendError } from "components/play/services/errorService";
 
 interface ValidationFailedProps {
   isOpen: boolean;
@@ -15,6 +16,12 @@ interface ValidationFailedProps {
 }
 
 const ValidationFailedDialog: React.FC<ValidationFailedProps> = props => {
+  React.useEffect(() => {
+    if (props.isOpen) {
+      sendError("Validation failed. " + props.header + " " + props.label);
+    }
+  }, [props.isOpen]);
+  
   return (
     <Dialog
       open={props.isOpen}
