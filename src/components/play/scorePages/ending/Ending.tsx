@@ -20,7 +20,7 @@ import map from "components/map";
 import actions from "redux/actions/auth";
 import MusicAutoplay from "components/baseComponents/MusicAutoplay";
 import { GetFinishRedirectUrl, GetHeartOfMerciaUser, UnsetFinishRedirectUrl, UnsetHeartOfMerciaUser } from "localStorage/login";
-import { User } from 'model/user';
+import { User, UserPreferenceType } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import UnauthorizedUserDialogV3 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV3";
 
@@ -494,6 +494,15 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       );
     }
 
+    const renderMoreButton = () => {
+      if (!this.state.isHeartOfMercia) {
+        if (this.props.user && this.props.user.userPreference?.preferenceId !== UserPreferenceType.Student) {
+          return <div className="btn btn-green" onClick={this.props.move}>More Options</div>;
+        }
+      }
+      return '';
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         <DesktopTheme />
@@ -594,9 +603,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                           this.moveToLibrary();
                         }
                       }}>Exit</div>
-                      {!this.state.isHeartOfMercia &&
-                        <div className="btn btn-green" onClick={this.props.move}>More Options</div>
-                      }
+                      {renderMoreButton()}
                     </div>}
                 </div>
                 <div className="new-layout-footer" style={{ display: "none" }}>
