@@ -65,17 +65,41 @@
 
 .quick-assign-accept-dialog {
   .MuiPaper-root {
+    $base: 0.5;
+    $font-36: $base * 2.96vw;
+    $font-25: $base * 2.05vw;
+    $font-24: $base * 1.97vw;
+    $font-22: $base * 1.80vw;
+    $font-20: $base * 1.65vw;
+    $font-18: $base * 1.48vw;
+  
     background: #12326A;
     .classroom-invitation {
       color: white;
       h1 {
         text-align: center;
-        font-size: 1.5vw;
+        font-size: $font-36;
       }
 
       h2 {
-        font-size: 1.3vw;
+        font-size: $font-24;
         margin-bottom: 1vw;
+      }
+
+      .text-with-help {
+        position: relative;
+        padding-right: 3vw;
+        margin-bottom: 1vh;
+        .hover-area {
+          top: 0;
+          right: 0;
+          position: absolute;
+          svg {
+            width: 1.5vw;
+            height: 1.5vw;
+            color: white;
+          }
+        }
       }
   
       p {
@@ -84,15 +108,51 @@
 
       input {
         padding-left: 0.5vw;
-        padding-top: 0.4vw;
-        padding-bottom: 0.4vw;
-        font-size: 1.7vw;
-        margin-top: 1.3vw;
-        margin-bottom: 1.3vw;
-        width: 100%;
+        padding-top: 1.4vh;
+        padding-bottom: 1.4vh;
+        font-size: $font-25;
+        margin-bottom: 1.4vh;
+        width: calc(100% - 0.5vw);
         border-radius: 0.3vw;
         color: var(--theme-dark-blue);
         background: var(--tab-gray);
+      }
+
+      .login-or-content {
+        height: 6vh;
+        color: white;
+        font-size: 1.1vw;
+        .line {
+          margin-left: 1vw;
+          margin-right: 1vw;
+          width: 5vw;
+          border-top: 1px solid var(--white);
+        }
+      }
+
+      .hover-content {
+        top: 2vw;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        padding:0;
+        padding-left: 0.4vw;
+        padding-right: 0.4vw;
+        font-size: $font-18;
+        width: 13vw;
+        border-radius: 0.5vw;
+      }
+
+      .btn {
+        width: 100%;
+        font-size: $font-25;
+        margin-left: 0;
+        margin-right: 0;
+        padding-top: 1.4vh;
+        padding-bottom: 1.4vh;
+      }
+      .bottom-text {
+        margin-top: 2vh;
+        width: 100%;
+        font-size: $font-18;
       }
     }
   }
