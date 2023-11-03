@@ -135,7 +135,7 @@ const AssignLoginDialog: React.FC<Props> = props => {
           </button>
         </form>
         <div className="back-btn-container">
-          <div className="back-btn" onClick={() => setSign(false)}>
+          <div className="back-btn" onClick={props.close}>
             <SpriteIcon name='arrow-left' />
             Back
           </div>

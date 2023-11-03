@@ -24,15 +24,15 @@ interface PublishedSubjectsProps {
 
 class SubjectsListV3 extends Component<PublishedSubjectsProps> {
   renderSubjectItem(subject: Subject, i: number) {
-    let count = this.props.isPublic
-      ? subject.publicCount
-      : subject.personalCount;
-
     let className = "subject-list-v2";
     if (subject.checked) {
       className += " checked";
     }
 
+    if (subject.viewAllCount == 0) {
+      return '';
+    }
+    
     return (
       <Grid
         key={i}
@@ -54,16 +54,6 @@ class SubjectsListV3 extends Component<PublishedSubjectsProps> {
             }
             label={subject.name}
           />
-        </Grid>
-        <Grid item xs={1} className="published-count">
-          <Grid
-            container
-            alignContent="center"
-            justifyContent="center"
-            style={{ height: "100%", margin: "0 0" }}
-          >
-            {count && count > 0 ? count : ""}
-          </Grid>
         </Grid>
       </Grid>
     );

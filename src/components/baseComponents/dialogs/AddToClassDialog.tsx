@@ -50,6 +50,15 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   const [searchText, setSearchText] = useState('');
 
   const [standartClasses, setStandartClasses] = useState([] as any[]);
+  
+  const setClasses = async () => {
+    var classesV2 = await getAllClassrooms();
+    if (classesV2) {
+      setStandartClasses(classesV2.slice(0, 5));
+    }
+  }
+
+  React.useEffect(() => {setClasses()}, []);
 
   const addToClass = async () => {
     if (isSaving) { return; }
@@ -75,17 +84,6 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
       props.close();
     }} close={() => setMultiple(false)} />;
   }
-
-  const setClasses = async () => {
-    var classesV2 = await getAllClassrooms();
-    if (classesV2) {
-      setStandartClasses(classesV2.slice(0, 5));
-    }
-  }
-
-  React.useEffect(() => {
-    setClasses();
-  }, []);
 
   let result = classrooms;
   if (classrooms.length === 0 && searchText.length <= 2) {
