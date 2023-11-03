@@ -64,7 +64,7 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
     const { classroom } = assignment;
     if (!props.user) {
       if (signIn) {
-        return <AssignLoginDialog close={() => setSign(false)} />
+        return <AssignLoginDialog close={() => setSign(false)} history={props.history} />
       }
       return (
         <Dialog open={assignment != null} className="dialog-box link-copied-dialog quick-assign-accept-dialog">
