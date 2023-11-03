@@ -65,7 +65,7 @@ class AssignmentsPage extends Component<AssignmentProps, AssignmentState> {
         {isPhone() ? <MobileTheme /> : isMobile ? <TabletTheme /> : <DesktopTheme />}
         <div className="main-listing student-assignments-page">
           <PageHeadWithMenu
-            page={PageEnum.BackToWork}
+            page={PageEnum.MyAssignments}
             user={this.props.user}
             placeholder="Live & Completed Assignments"
             history={this.props.history}

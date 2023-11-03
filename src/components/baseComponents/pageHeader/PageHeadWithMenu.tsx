@@ -23,6 +23,7 @@ export enum PageEnum {
   Play,
   MyLibrary,
   Book,
+  MyAssignments,
 }
 
 interface HeaderMenuProps {
