@@ -349,7 +349,7 @@ class AssignmentMobilePage extends Component<PlayProps, PlayState> {
     return (
       <div className="main-listing dashboard-page mobile-category learn-mobile-tab student-mobile-assignments-page">
         <PageHeadWithMenu
-          page={PageEnum.ViewAll}
+          page={PageEnum.MyAssignments}
           user={this.props.user}
           history={this.props.history}
         />

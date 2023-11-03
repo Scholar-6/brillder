@@ -193,7 +193,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       const data = await getUnauthPublishedBricksByPage(1, 0, [], [], [], false, SortBy.Date);
 
       if (data) {
-        const subjects = data.subjects.filter(s => s.count > 0);
+        const subjects = data.subjects ? data.subjects.filter(s => s.count > 0) : [];
         const expandedSubjects = this.prepareExpandedSubjects(subjects, subjectIds);
 
         let groupSubjects = [] as Subject[];

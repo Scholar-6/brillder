@@ -17,7 +17,7 @@ import { PageEnum } from './PageHeadWithMenu';
 import { isPhone } from 'services/phone';
 import { Brick, KeyWord, Subject } from 'model/brick';
 import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestions';
-import { User } from 'model/user';
+import { SubscriptionState, User } from 'model/user';
 import VolumeButton from '../VolumeButton';
 import BrillIconAnimated from '../BrillIconAnimated';
 import ReactiveUserCredits from 'components/userProfilePage/ReactiveUserCredits';
@@ -130,11 +130,11 @@ class PageHeader extends Component<Props, State> {
 
   async prepareSuggestions() {
     if (this.state.suggestionsLoaded === false) {
-      this.setState({suggestionsLoaded: true})
+      this.setState({ suggestionsLoaded: true })
       if (this.props.subjects.length === 0) {
         await this.props.getSubjects();
       }
-      this.setState({bricks: [] });
+      this.setState({ bricks: [] });
     }
   }
 
@@ -239,6 +239,8 @@ class PageHeader extends Component<Props, State> {
     }
 
     // page loaded by library shared link
+    console.log(this.props.user);
+
     if (this.props.onForbiddenClick) {
       return (
         <div className="upper-part" onClick={() => this.prepareSuggestions()}>
@@ -304,6 +306,41 @@ class PageHeader extends Component<Props, State> {
       );
     }
 
+    if (isPhone() && (this.props.page === PageEnum.ViewAll || this.props.page === PageEnum.MyAssignments || this.props.page === PageEnum.MyLibrary)) {
+      if (this.props.isAuthenticated === isAuthenticated.False || !this.props.isAuthenticated) {
+        return (
+          <div className="upper-part">
+            <div className="page-header">
+              <HomeButton history={this.props.history} link={link} />
+            </div>
+          </div>
+        );
+      }
+      return (
+        <div className="upper-part" onClick={() => this.prepareSuggestions()}>
+          <div className={!searchVisible ? "page-header" : "page-header active"}>
+            <div className="logout-container">
+              <div className="header-btn help-button svgOnHover" />
+              <HomeButton history={this.props.history} link={link} />
+              <div className={className}>
+              </div>
+              {
+                this.props.isAuthenticated === isAuthenticated.True &&
+                <BellButton
+                  notificationCount={notificationCount}
+                  onClick={evt => this.props.showNotifications(evt)}
+                />
+              }
+              {
+                this.props.isAuthenticated === isAuthenticated.True &&
+                <MoreButton onClick={() => this.props.showDropdown()} />
+              }
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="upper-part" onClick={() => this.prepareSuggestions()}>
         <div className={!searchVisible ? "page-header" : "page-header active"}>
@@ -359,29 +396,29 @@ class PageHeader extends Component<Props, State> {
             <div className="logout-container">
               <div className={`search-container ${searchString.length >= 1 ? 'no-bottom-border' : ''}`}>
                 {!this.props.searchHidden &&
-                <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>
-                  <SpriteIcon name="search" className="active" />
-                </div>}
+                  <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>
+                    <SpriteIcon name="search" className="active" />
+                  </div>}
                 <div className="search-area">
                   {!this.props.searchHidden &&
-                  <input
-                    className="search-input"
-                    value={searchString}
-                    onKeyUp={(e) => this.keySearch(e)}
-                    onChange={(e) => {
-                      this.props.setSearchString(e.target.value, this.props.page);
-                      this.setState({ ...this.state });
-                      this.props.searching(e.target.value);
-                    }}
-                    placeholder={this.props.searchPlaceholder}
-                  />}
+                    <input
+                      className="search-input"
+                      value={searchString}
+                      onKeyUp={(e) => this.keySearch(e)}
+                      onChange={(e) => {
+                        this.props.setSearchString(e.target.value, this.props.page);
+                        this.setState({ ...this.state });
+                        this.props.searching(e.target.value);
+                      }}
+                      placeholder={this.props.searchPlaceholder}
+                    />}
                 </div>
               </div>
               {this.props.isAuthenticated === isAuthenticated.True &&
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
                   <BrillIconAnimated />
-                  {(this.props.user && (this.props.user.isFromInstitution || this.props.user.library)) ? <div /> :
+                  {(this.props.user && (this.props.user.isFromInstitution || this.props.user.library || this.props.user.subscriptionState === SubscriptionState.PaidTeacher || this.props.user.subscriptionState === SubscriptionState.TeacherByAdmin)) ? <div /> :
                     <div className="header-credits-container">
                       <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
                     </div>}
@@ -396,19 +433,19 @@ class PageHeader extends Component<Props, State> {
                 <Grid container direction="row" className="action-container">
                   <div className="login-button">
                     <span onClick={() => {
-                      const {pathname} = this.props.history.location;
+                      const { pathname } = this.props.history.location;
                       const isPlay = pathname.search('/play/brick/') !== -1;
                       if (isPlay) {
                         const brickId = pathname.split('/')[3];
-                        SetAuthBrickCash({id: brickId} as Brick, -1);
+                        SetAuthBrickCash({ id: brickId } as Brick, -1);
                       }
                       this.props.history.push(map.Login);
                     }}>Login</span> | <span onClick={() => {
-                      const {pathname} = this.props.history.location;
+                      const { pathname } = this.props.history.location;
                       const isPlay = pathname.search('/play/brick/') !== -1;
                       if (isPlay) {
                         const brickId = pathname.split('/')[3];
-                        SetAuthBrickCash({id: brickId} as Brick, -1);
+                        SetAuthBrickCash({ id: brickId } as Brick, -1);
                       }
                       this.props.history.push(JoinPage);
                     }}>Register</span>
