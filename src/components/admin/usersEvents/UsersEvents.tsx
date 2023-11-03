@@ -242,7 +242,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
       if (res) {
         this.setState({resentClassroomInvite: true});
       } else {
-        this.props.requestFailed("Can`t delete user");
+        this.props.requestFailed("Can`t send invitation to class");
       }
     }
   }

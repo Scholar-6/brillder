@@ -6,7 +6,7 @@ import './ClassroomList.scss';
 import map from "components/map";
 import { Subject } from "model/brick";
 import { TeachClassroom, Assignment, TeachStudent } from "model/classroom";
-import { updateClassroom, sortClassroomAssignments } from "services/axios/classroom";
+import { updateClassroom, sortClassroomAssignments, resendInvitation } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
 import { MUser } from "components/teach/model";
 import { unassignStudent } from "components/teach/service";
@@ -19,6 +19,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SortButtonV2 from "./SortButtonV2";
 import { SortAssignment } from "./TeachFilterSidebar";
 import SortButtonV3, { SortStudentV3 } from "./SortButtonV3";
+import ReminderButton from "./ReminderButton";
 
 export interface TeachListItem {
   id: number; // assignment id
@@ -266,13 +267,25 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     );
   }
 
-  renderInvitation(s: any, i: number) {
+  renderInvitation(s: any, i: number, arr: any[]) {
     return (
       <div className="invitation" key={i}>
         <div className="email-box">
           <div className="email font-13">{s.email}</div>
           <div className="flex-center">
             <div className="pending flex-center bold font-11">Pending</div>
+          </div>
+          <div className="flex-center">
+            <ReminderButton studentCount={arr.length} sendNotifications={async () => {
+              for (let invitation of arr) {
+                const res = await resendInvitation({ id: this.props.activeClassroom.id } as any, invitation.email);
+                if (res) {
+                  // success
+                } else {
+                  //this.props.requestFailed("Can`t send invitation to class");
+                }
+              }
+            }} />
           </div>
         </div>
         <div className="flex-center button-box">
@@ -311,12 +324,12 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
 
   renderContent() {
     const classroom = this.props.activeClassroom;
-    let items = [] as TeachListItem[];
+    const items = [] as TeachListItem[];
 
     convertClassAssignments(items, classroom);
 
-    let students = classroom.students.filter(s => s.email);
-    let quests = classroom.students.filter(s => !s.email);
+    const students = classroom.students.filter(s => s.email);
+    const quests = classroom.students.filter(s => !s.email);
 
     return (
       <div className="classroom-assignments-columns">
@@ -365,7 +378,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
               {students.map(this.renderStudent.bind(this))}
               <div className="font-14 guests-label">Guests ({quests.length})</div>
               {quests.map(this.renderGuest.bind(this))}
-              <div className="font-14 pending-label">Pending ({classroom.studentsInvitations.length})</div>
+              <div className="font-14 pending-label">Pending ({classroom.studentsInvitations.length}) </div>
               {classroom.studentsInvitations?.map(this.renderInvitation.bind(this))}
             </div>
           </div>
