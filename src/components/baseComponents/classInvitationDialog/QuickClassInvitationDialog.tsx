@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import { Dialog, Grid } from '@material-ui/core';
 
 import './ClassInvitationDialog.scss';
-import SpriteIcon from '../SpriteIcon';
 import { ClearQuickAssignment, GetQuickAssignment, SetQuickAssignment } from 'localStorage/play';
 import { User } from 'model/user';
 import { quickAcceptClassroom } from 'services/axios/classroom';
-import map from 'components/map';
 import HoverHelp from '../hoverHelp/HoverHelp';
+import AssignLoginDialog from './AssignLoginDialog';
 
 
 interface Props {
@@ -26,6 +25,7 @@ export interface QuickAssigment {
 
 const QuickClassInvitationDialog: React.FC<Props> = props => {
   const [name, setName] = React.useState('');
+  const [signIn, setSign] = React.useState(false);
   const [assignment, setAssignment] = React.useState(null as null | QuickAssigment);
 
   const getInvitations = async () => {
@@ -63,6 +63,9 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
   if (assignment) {
     const { classroom } = assignment;
     if (!props.user) {
+      if (signIn) {
+        return <AssignLoginDialog close={() => setSign(false)} />
+      }
       return (
         <Dialog open={assignment != null} className="dialog-box link-copied-dialog quick-assign-accept-dialog">
           <Grid className="classroom-invitation" container direction="column" alignItems="center">
@@ -87,11 +90,11 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
                 Sign in before playing to keep track of your score and add it to your personal library. You can also connect your account after playing.
               </HoverHelp>
             </div>
-            <button className="btn btn-md b-green text-white" onClick={() => props.history.push(map.Login)}>
+            <button className="btn btn-md b-green text-white" onClick={() => setSign(true) /*props.history.push(map.Login)*/}>
               Sign In
             </button>
             <div className="bottom-text italic">
-              Don’t have a Brillder account? Enter your name to play as a<br/> guest, and you can sign up afterwards.
+              Don’t have a Brillder account? Enter your name to play as a<br /> guest, and you can sign up afterwards.
             </div>
           </Grid>
         </Dialog>
