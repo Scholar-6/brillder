@@ -7,6 +7,7 @@ import { ClearQuickAssignment, GetQuickAssignment, SetQuickAssignment } from 'lo
 import { User } from 'model/user';
 import { quickAcceptClassroom } from 'services/axios/classroom';
 import map from 'components/map';
+import HoverHelp from '../hoverHelp/HoverHelp';
 
 
 interface Props {
@@ -67,22 +68,31 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
           <Grid className="classroom-invitation" container direction="column" alignItems="center">
             <h1 className="bold">Welcome to <span className="capitalize" dangerouslySetInnerHTML={{ __html: classroom.name.toUpperCase() }} /></h1>
             <h2>Created by {classroom.teacher.firstName}</h2>
-            <p>Sign in if you already have an account. Continue as a guest</p>
+            <div className="text-with-help">
+              Enter your name to start playing now
+              <HoverHelp icon="help-circle-white">
+                Your teacher will see your score and the name you have entered.
+              </HoverHelp>
+            </div>
             <input type="text" placeholder="Enter your name" onChange={e => setName(e.target.value)} />
-            <Grid item container direction="row" justifyContent="center">
-              <button className="btn btn-md b-green text-white" onClick={() => props.history.push(map.Login)}>
-                <div className="signin-button flex-center">
-                  <div className="flex-center">
-                    <SpriteIcon name="arrow-left" />
-                  </div>
-                  Sign In
-                </div>
-              </button>
-              <button className="btn btn-md b-green text-white" onClick={handleAccept}>
-                <SpriteIcon name="check-custom" />
-                Continue
-              </button>
-            </Grid>
+            <button className="btn btn-md b-green text-white" onClick={handleAccept}>
+              Join Class
+            </button>
+            <div className="flex-center login-or-content">
+              <div className="line"></div><div>OR</div><div className="line"></div>
+            </div>
+            <div className="text-with-help">
+              Sign in to your Brillder account first
+              <HoverHelp icon="help-circle-white">
+                Sign in before playing to keep track of your score and add it to your personal library. You can also connect your account after playing.
+              </HoverHelp>
+            </div>
+            <button className="btn btn-md b-green text-white" onClick={() => props.history.push(map.Login)}>
+              Sign In
+            </button>
+            <div className="bottom-text italic">
+              Don’t have a Brillder account? Enter your name to play as a<br/> guest, and you can sign up afterwards.
+            </div>
           </Grid>
         </Dialog>
       );
