@@ -355,7 +355,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             {renderCoverPlay()}
           </div>
         </div>
-        <QuickClassInvitationDialog user={user} brickId={brick.id} />
+        <QuickClassInvitationDialog user={user} brickId={brick.id} history={props.history} />
         <UnauthorizedUserDialogV2
           history={props.history}
           brick={brick}
@@ -488,7 +488,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           </Grid>
         </div>
       </div>
-      <QuickClassInvitationDialog user={user} brickId={brick.id} />
+      <QuickClassInvitationDialog user={user} brickId={brick.id} history={props.history} />
       <UnauthorizedUserDialogV2
         history={props.history}
         brick={brick}

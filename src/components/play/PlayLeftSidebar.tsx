@@ -506,6 +506,13 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                     
                     if (this.props.onlyAssignBricks) {
                       let classroom = GetClassAssignedBricks();
+                      console.log('classroom', classroom);
+
+                      if (!classroom) {
+                        classroom = Object.assign({}, this.props.assignClass);
+                        classroom.assignments = [];
+                      }
+
                       if (res.success && res.result.newAssignments.length > 0) {
                         let found = classroom.assignments.find((a: any) => a.id === res.result.newAssignments[0].id);
                         if (!found) {

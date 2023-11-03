@@ -547,13 +547,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setCreatingAttempt(true);
     brickAttempt.brick = brick;
     brickAttempt.brickId = brick.id;
+    const assignment = GetQuickAssignment();
     if (props.user) {
       brickAttempt.studentId = props.user.id;
     } else {
-      const assignment = GetQuickAssignment();
-      brickAttempt.code = assignment?.classroom?.code;
       brickAttempt.typedName = assignment?.typedName;
     }
+
+    brickAttempt.code = assignment?.classroom?.code;
 
     if (assignmentId) {
       brickAttempt.assignmentId = assignmentId;
@@ -608,10 +609,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     brickAttempt.brickId = brick.id;
     brickAttempt.id = attemptId;
 
+    const assignment = GetQuickAssignment();
+
     // if no user use code from class
     if (!props.user) {
-      const assignment = GetQuickAssignment();
-
       return axios.put(
         process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
         { id: attemptId, code: assignment?.classroom?.code, body: brickAttempt },
@@ -636,7 +637,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
     return axios.put(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
-      { id: attemptId, userId: props.user.id, body: brickAttempt },
+      { id: attemptId, userId: props.user.id, code: assignment?.classroom?.code, body: brickAttempt },
       { withCredentials: true }
     ).then(async (response) => {
       clearAssignmentId();
