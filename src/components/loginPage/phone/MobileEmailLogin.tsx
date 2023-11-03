@@ -24,10 +24,7 @@ interface MobileLoginProps {
   setEmail(email: string): void;
   setPassword(password: string): void;
   setHidden(hidden: boolean): void;
-  register(email: string, password: string): void;
-  login(email: string, password: string): void;
   handleLoginSubmit(event: any): void;
-  setPolicyDialog(isOpen: boolean): void;
 }
 
 interface State {
@@ -83,9 +80,7 @@ class MobileEmailLoginPage extends React.Component<MobileLoginProps, State> {
             </div>
           </div>
           <form
-            onSubmit={(e) => {
-              this.props.handleLoginSubmit(e)
-            }}
+            onSubmit={this.props.handleLoginSubmit}
             className="mobile-button-box content-box"
           >
             <div className="input-block">

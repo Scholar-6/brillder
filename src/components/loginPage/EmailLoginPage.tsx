@@ -9,7 +9,6 @@ import { login } from "services/axios/auth";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import MobileEmailLogin from './phone/MobileEmailLogin';
 import EmailLoginDesktopPage from "./desktop/EmailLoginDesktopPage";
-import { trackSignUp } from "services/matomo";
 import { isPhone } from "services/phone";
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -124,35 +123,6 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
     }
   };
 
-  const register = (email: string, password: string) => {
-    axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`,
-      { email, password, confirmPassword: password, referralId: props.referralId },
-      { withCredentials: true }
-    ).then((resp) => {
-      const { data } = resp;
-
-      if (data.errors) {
-        toggleAlertMessage(true);
-        setAlertMessage(data.errors[0].msg);
-        return;
-      }
-
-      if (data.msg) {
-        toggleAlertMessage(true);
-        setAlertMessage(data.msg);
-      }
-
-      if (data === "OK") {
-        trackSignUp();
-        sendLogin(email, password);
-      }
-    }).catch((e) => {
-      toggleAlertMessage(true);
-      setAlertMessage("Something may be wrong with the connection.");
-    });
-  };
-
   if (!isPhone()) {
     return <EmailLoginDesktopPage history={history} match={match} />;
   }
@@ -176,10 +146,7 @@ const EmailLoginPage: React.FC<LoginProps> = (props) => {
         setPassword={setPassword}
         passwordHidden={passwordHidden}
         setHidden={setHidden}
-        register={register}
-        login={login}
         handleLoginSubmit={handleLoginSubmit}
-        setPolicyDialog={setPolicyDialog}
       />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
