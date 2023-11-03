@@ -9,7 +9,9 @@ import notificationActions from './notifications';
 import { enableTracking, disableTracking } from 'services/matomo';
 import {UserType} from 'model/user';
 import { SetOrigin } from 'localStorage/origin';
-import { ClearLastAttemptId, GetLastAttemptId } from 'localStorage/play';
+import { ClearLastAttemptId, GetLastAttemptId, GetQuickAssignment } from 'localStorage/play';
+import { SetLoginRedirectUrl } from 'localStorage/login';
+import routes from 'components/play/routes';
 
 const loginSuccess = (userId?: number) => {
   enableTracking();
@@ -31,6 +33,11 @@ const loginSuccess = (userId?: number) => {
       ).then(() => {
         ClearLastAttemptId();
       });
+    } else {
+      const assignment = GetQuickAssignment();
+      if (assignment) {
+        SetLoginRedirectUrl(routes.playCover(assignment.brick));
+      }
     }
   }
 
