@@ -1,14 +1,20 @@
 import React from 'react';
 import { Dialog } from "@material-ui/core";
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { User, UserPreferenceType } from 'model/user';
 
 interface Props {
   isOpen: boolean;
+  user: User | undefined;
   onSubmit(): void;
   onClose(): void;
 }
 
-const CompetitionDialog: React.FC<Props> = ({ isOpen, onSubmit, onClose }) => {
+const CompetitionDialog: React.FC<Props> = ({ isOpen, user, onSubmit, onClose }) => {
+  if (user?.userPreference?.preferenceId === UserPreferenceType.Teacher) {
+    return <div />;
+  }
+
   return (
     <Dialog open={isOpen} className="dialog-box phone-competition-dialog" onClose={onClose}>
       <div className="dialog-header phone-competition">

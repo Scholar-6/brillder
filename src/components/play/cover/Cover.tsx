@@ -388,6 +388,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         {props.canSeeCompetitionDialog && competitionData &&
           <CompetitionDialog
             isOpen={competitionData.isOpen}
+            user={user}
             onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}
             onSubmit={() => {
               props.setCompetitionId(competitionData.competition.id);
@@ -517,6 +518,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       {props.canSeeCompetitionDialog && competitionData &&
         <CompetitionDialog
           isOpen={competitionData.isOpen}
+          user={user}
           onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}
           onSubmit={() => {
             props.setCompetitionId(competitionData.competition.id);

@@ -12,6 +12,7 @@ import CompetitionDialog from "../cover/components/CompetitionDialog";
 
 interface Props {
   brick: Brick;
+  user: User | undefined;
 
   competitionId: number;
   setCompetitionId(id: number): void;
@@ -25,7 +26,7 @@ export interface State {
   briefExpanded: boolean;
 }
 
-const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
+const PhoneBriefPage: React.FC<Props> = ({ brick, user, ...props }) => {
   const [competitionData, setCompetitionData] = React.useState(null as any);
   const [state, setState] = React.useState({ briefExpanded: true } as State);
 
@@ -107,6 +108,7 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, ...props }) => {
       {competitionData &&
         <CompetitionDialog
           isOpen={competitionData.isOpen}
+          user={user}
           onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}
           onSubmit={() => {
             props.setCompetitionId(competitionData.competition.id);
