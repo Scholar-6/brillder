@@ -11,7 +11,7 @@ import actions from 'redux/actions/requestFailed';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { ClassroomStatus, TeachClassroom } from "model/classroom";
-import { getAllClassrooms, getAssignmentsClassrooms, searchClassrooms } from "components/teach/service";
+import { getAllClassrooms, getAssignmentsClassrooms, getTeacherClassrooms, searchClassrooms } from "components/teach/service";
 import { getDateString } from "components/services/brickService";
 import map from "components/map";
 import { deleteClassroom } from "services/axios/classroom";
@@ -140,14 +140,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
       selectedClassroom: null,
     };
 
-    this.loadInitData(props.searchString);
+    this.loadInitData(props.searchString, teacherId);
   }
 
-  async loadInitData(searchString?: string) {
+  async loadInitData(searchString?: string, teacherId?: number) {
     if (this.props.subjects.length === 0) {
       await this.props.getSubjects();
     }
-
 
     const values = queryString.parse(this.props.history.location.search);
     let searchStringV2 = values.search || searchString;
@@ -165,7 +164,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       this.searching(searchStringV2 as string);
       this.search();
     } else {
-      this.loadClasses();
+      this.loadClasses(-1, teacherId);
     }
   }
 
@@ -174,8 +173,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
     this.loadClasses();
   }
 
-  async loadClasses(activeClassId?: number) {
-    let classrooms = await getAllClassrooms() as TeachClassroom[] | null;
+  async loadClasses(activeClassId?: number, teacherId?: number) {
+    let classrooms = [] as TeachClassroom[] | null;
+    if (this.state.teacherId || (teacherId && teacherId > 0)) {
+      classrooms = await getTeacherClassrooms(this.state.teacherId || teacherId) as TeachClassroom[] | null;
+    } else {
+      classrooms = await getAllClassrooms() as TeachClassroom[] | null;
+    }
 
 
     if (classrooms) {

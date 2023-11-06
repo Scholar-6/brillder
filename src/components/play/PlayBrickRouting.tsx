@@ -1039,6 +1039,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               liveBrills={liveBrills}
               reviewBrills={reviewBrills}
               bestScore={bestScore}
+              assignmentId={assignmentId}
               brickAttempt={brickAttempt}
               liveDuration={liveDuration}
               reviewDuration={reviewDuration}

@@ -93,6 +93,32 @@ export const getAllClassrooms = async () => {
   }
 }
 
+
+/**
+ * Get top 100 classrooms by teacher
+ * return list of classrooms if success or null if failed
+ */
+export const getTeacherClassrooms = async (teacherId?: number) => {
+  try {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/classroomsV2/teacher/" + teacherId, {
+      withCredentials: true,
+    });
+    if (res.data) {
+      let classrooms = (res.data as ClassroomApi[]);
+      for (let classroom of classrooms) {
+        for (let student of classroom.students as MUser[]) {
+          student.selected = false;
+        }
+      }
+      return res.data as ClassroomApi[];
+    }
+    return null;
+  }
+  catch (e) {
+    return null;
+  }
+}
+
 /**
  * Get all assignments by admin
  * return list of classrooms if success or null if failed
