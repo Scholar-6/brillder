@@ -341,6 +341,18 @@ class PageHeader extends Component<Props, State> {
       );
     }
 
+    const renderCreditsIcon = () => {
+      if (this.props.user) {
+        const { subscriptionState } = this.props.user;
+        if (!this.props.user.isFromInstitution && !this.props.user.library && subscriptionState !== SubscriptionState.PaidTeacher && subscriptionState !== SubscriptionState.TeacherByAdmin) {
+          return <div className="header-credits-container">
+            <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
+          </div>
+        }
+      }
+      return '';
+    }
+
     return (
       <div className="upper-part" onClick={() => this.prepareSuggestions()}>
         <div className={!searchVisible ? "page-header" : "page-header active"}>
@@ -418,10 +430,7 @@ class PageHeader extends Component<Props, State> {
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
                   <BrillIconAnimated />
-                  {(this.props.user && (this.props.user.isFromInstitution || this.props.user.library || this.props.user.subscriptionState === SubscriptionState.PaidTeacher || this.props.user.subscriptionState === SubscriptionState.TeacherByAdmin)) ? <div /> :
-                    <div className="header-credits-container">
-                      <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
-                    </div>}
+                  {renderCreditsIcon()}
                   <BellButton
                     notificationCount={notificationCount}
                     onClick={evt => this.props.showNotifications(evt)}
