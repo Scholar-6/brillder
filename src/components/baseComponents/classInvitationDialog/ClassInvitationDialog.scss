@@ -72,6 +72,8 @@
     $font-22: $base * 1.80vw;
     $font-20: $base * 1.65vw;
     $font-18: $base * 1.48vw;
+
+    max-width: 30vw !important;
   
     background: #12326A;
     .classroom-invitation {
@@ -108,6 +110,7 @@
       }
 
       input {
+        text-align: center;
         padding-left: 0.5vw;
         padding-top: 1.4vh;
         padding-bottom: 1.4vh;
@@ -155,6 +158,11 @@
         width: 100%;
         font-size: $font-18;
       }
+
+      .b-blue {
+        color: white;
+        background: var(--theme-dark-blue);
+      }
     }
   }
 }
@@ -168,6 +176,8 @@
     $font-22: $base * 1.80vw;
     $font-20: $base * 1.65vw;
     $font-18: $base * 1.48vw;
+
+    max-width: 27vw !important;
   
     background: #12326A;
     .classroom-invitation {
