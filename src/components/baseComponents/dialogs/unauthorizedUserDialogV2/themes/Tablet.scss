@@ -95,6 +95,21 @@
     }
   }
 
+  .microsoft-btn {
+    img {
+      position: absolute;
+      left: 1.1vw;
+      width: 1.9vw;
+      height: 1.9vw;
+    }
+    span {
+      text-align: center;
+      padding-left: 7%;
+      width: 93%;
+      margin-right: 0;
+    }
+  }
+
   .btn {
     margin-top: 0.26vw;
     margin-bottom: 0.26vw;
