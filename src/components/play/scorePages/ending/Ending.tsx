@@ -495,6 +495,13 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       );
     }
 
+    const renderAssignmentsButton = () => {
+      if (this.props.user && this.props.user.userPreference?.preferenceId === UserPreferenceType.Student) {
+        return <div className="btn btn-green" onClick={() => this.props.history.push("/assignments")}>See Assignments</div>;
+      }
+      return '';
+    }
+
     const renderMoreButton = () => {
       if (!this.state.isHeartOfMercia) {
         if (this.props.user && this.props.user.userPreference?.preferenceId !== UserPreferenceType.Student) {
@@ -604,6 +611,7 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                           this.moveToLibrary();
                         }
                       }}>Exit</div>
+                      {renderAssignmentsButton()}
                       {renderMoreButton()}
                     </div>}
                 </div>
