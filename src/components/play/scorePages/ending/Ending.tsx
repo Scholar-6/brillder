@@ -346,6 +346,21 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
 
     brillsEarned = Math.round(brillsEarned);
 
+    const renderMobileMoreOptions = () => {
+      if (!this.state.isHeartOfMercia) {
+        if (this.props.user && this.props.user.userPreference?.preferenceId !== UserPreferenceType.Student) {
+          return <div className="btn btn-green" onClick={this.props.move}>More Options</div>;
+        }
+      }
+      return '';
+    }
+
+    const renderAssignmentsButton = () => {
+      if (this.props.user && this.props.user.userPreference?.preferenceId === UserPreferenceType.Student) {
+        return <div className="btn btn-green" onClick={() => this.props.history.push("/assignments")}>See Assignments</div>;
+      }
+      return '';
+    }
 
     if (isPhone()) {
       const renderPhoneContent = () => {
@@ -404,9 +419,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
                         this.moveToLibrary();
                       }
                     }}>Exit</div>
-                    {!this.state.isHeartOfMercia &&
-                      <div className="btn btn-green" onClick={this.props.move}>More Options</div>
-                    }
+                    {renderMobileMoreOptions()}
+                    {renderAssignmentsButton()}
                   </div>}
               </div>
             </div>
@@ -493,13 +507,6 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
           {renderPhoneContent()}
         </React.Suspense>
       );
-    }
-
-    const renderAssignmentsButton = () => {
-      if (this.props.user && this.props.user.userPreference?.preferenceId === UserPreferenceType.Student) {
-        return <div className="btn btn-green" onClick={() => this.props.history.push("/assignments")}>See Assignments</div>;
-      }
-      return '';
     }
 
     const renderMoreButton = () => {
