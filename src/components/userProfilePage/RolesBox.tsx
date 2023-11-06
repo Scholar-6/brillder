@@ -26,7 +26,10 @@ class RolesBox extends Component<BoxProps, BoxState> {
   constructor(props: BoxProps) {
     super(props);
 
-    const isInstitution = props.userRoles.find(r => r === UserType.InstitutionUser) || props.user.isFromInstitution;
+    let isInstitution = props.userRoles.find(r => r === UserType.InstitutionUser) || props.user.isFromInstitution;
+    if (props.isAdmin === true) {
+      isInstitution = false;
+    }
 
     this.state = {
       userPreference: props.userPreference,
