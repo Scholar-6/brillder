@@ -45,6 +45,9 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
   }, []);
 
   const handleAccept = async () => {
+    if (name.length === 0) {
+      return;
+    }
     if (assignment) {
       if (props.user) {
         await quickAcceptClassroom(assignment.classroom.id);
@@ -66,19 +69,20 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
       if (signIn) {
         return <AssignLoginDialog close={() => setSign(false)} history={props.history} />
       }
+      const {teacher} = classroom;
       return (
         <Dialog open={assignment != null} className="dialog-box link-copied-dialog quick-assign-accept-dialog">
           <Grid className="classroom-invitation" container direction="column" alignItems="center">
             <h1 className="bold">Welcome to <span className="capitalize" dangerouslySetInnerHTML={{ __html: classroom.name.toUpperCase() }} /></h1>
-            <h2>Created by {classroom.teacher.firstName}</h2>
+            <h2>Created by {teacher.firstName ? teacher.firstName : ''} {teacher.lastName ? teacher.lastName : ''}</h2>
             <div className="text-with-help">
               Enter your name to start playing now
               <HoverHelp icon="help-circle-white">
                 Your teacher will see your score and the name you have entered.
               </HoverHelp>
             </div>
-            <input type="text" placeholder="Enter your name" onChange={e => setName(e.target.value)} />
-            <button className="btn btn-md b-green text-white" onClick={handleAccept}>
+            <input type="text" placeholder="Enter your name" value={name} onChange={e => setName(e.target.value)} />
+            <button className={`btn btn-md  ${name.length > 0 ? 'b-green text-white' : 'b-blue'}`} onClick={handleAccept}>
               Join Class
             </button>
             <div className="flex-center login-or-content">
