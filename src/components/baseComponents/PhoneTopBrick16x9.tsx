@@ -4,7 +4,7 @@ import './ShortBrickDescription.scss';
 import './PhoneTopBrick16x9.scss';
 import { AcademicLevel, AcademicLevelLabels, Brick } from "model/brick";
 
-import { User } from "model/user";
+import { User, UserPreferenceType } from "model/user";
 import BrickCircle from "./BrickCircle";
 import BrickTitle from "./BrickTitle";
 import { fileUrl } from "components/services/uploadFile";
@@ -75,6 +75,9 @@ const PhoneTopBrick16x9: React.FC<Props> = (props) => {
   }
 
   const renderCompetitionBanner = () => {
+    if (props.user?.userPreference?.preferenceId === UserPreferenceType.Teacher) {
+      return '';
+    }
     if (brick.competitions && brick.competitions.length > 0) {
       const foundActive = brick.competitions.find(checkCompetitionActive);
       if (foundActive) {

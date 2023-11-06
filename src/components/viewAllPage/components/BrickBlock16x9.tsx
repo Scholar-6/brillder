@@ -212,6 +212,10 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
   }
 
   const renderCompetitionBanner = () => {
+    if (props.user?.userPreference?.preferenceId === UserPreferenceType.Teacher) {
+      return '';
+    }
+
     if (brick.competitions && brick.competitions.length > 0) {
       const foundActive = brick.competitions.find(checkCompetitionActive);
       if (foundActive) {
