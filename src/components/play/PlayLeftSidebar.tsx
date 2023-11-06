@@ -27,7 +27,7 @@ import AssignButton from "./baseComponents/sidebarButtons/AssignButton";
 import AdaptButton from "./baseComponents/sidebarButtons/AdaptButton";
 import ShareDialogs from "./finalStep/dialogs/ShareDialogs";
 import CompetitionButton from "./baseComponents/sidebarButtons/CompetitionButton";
-import CompetitionDialog from "components/baseComponents/dialogs/CompetitionDialog";
+import CreateCompetitionDialog from "components/baseComponents/dialogs/CreateCompetitionDialog";
 import HighScore from "./baseComponents/HighScore";
 import AdminBrickStatisticButton from "./baseComponents/AdminBrickStatisticButton";
 import { assignClasses } from "services/axios/assignBrick";
@@ -379,7 +379,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
           close={() => this.setState({ isAdaptBrickOpen: false })}
           submit={this.createBrickCopy.bind(this)}
         />
-        <CompetitionDialog
+        <CreateCompetitionDialog
           isOpen={this.state.isCompetitionOpen}
           close={() => this.setState({ isCompetitionOpen: false })}
           submit={(start: any, end: any) => {
