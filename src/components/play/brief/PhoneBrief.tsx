@@ -9,6 +9,7 @@ import HighlightHtml from '../baseComponents/HighlightHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import CompetitionDialog from "../cover/components/CompetitionDialog";
+import { User } from "model/user";
 
 interface Props {
   brick: Brick;
