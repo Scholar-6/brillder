@@ -296,7 +296,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async setActiveClassroom(id: number | null) {
     this.collapseClasses();
     const { classrooms } = this.state;
+
     let classroom = classrooms.find(c => c.id === id);
+    if (this.state.isSearching) {
+      classroom = this.state.searchClassrooms.find(c => c.id === id);
+    }
     if (classroom) {
       const data = await getAssignmentsClassrooms(classroom.id);
 
@@ -334,6 +338,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   collapseClasses() {
     for (let classroom of this.state.classrooms) {
+      classroom.active = false;
+    }
+    for (let classroom of this.state.searchClassrooms) {
       classroom.active = false;
     }
   }
