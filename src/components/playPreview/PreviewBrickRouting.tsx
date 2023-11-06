@@ -367,6 +367,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 brick={brick}
                 isPlayPreview={true}
                 liveBrills={-1}
+                assignmentId={-1}
                 reviewBrills={-1}
                 bestScore={-1}
                 brickAttempt={brickAttempt}

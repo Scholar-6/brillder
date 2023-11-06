@@ -57,6 +57,7 @@ interface EndingProps {
   bestScore: number;
   liveBrills: number;
   reviewBrills: number;
+  assignmentId: number;
 
   isPlayPreview?: boolean;
   extraTry?: boolean;
