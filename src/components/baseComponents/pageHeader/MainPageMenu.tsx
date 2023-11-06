@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { User } from "model/user";
+import { SubscriptionState, User } from "model/user";
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux'
 
@@ -151,6 +151,24 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
       }
     }
 
+    const renderCreditsIcon = () => {
+      if (this.props.user && !isPhone()) {
+        const { subscriptionState } = this.props.user;
+        if (subscriptionState !== SubscriptionState.PaidTeacher && subscriptionState !== SubscriptionState.TeacherByAdmin && !this.props.user.library && !this.props.user.isFromInstitution) {
+          return <div className="header-credits-container">
+            <ReactiveUserCredits popupShown={this.state.popupShown === 1} onClick={() => {
+              if (this.state.popupShown === 1) {
+                this.setState({ popupShown: 0 });
+              } else {
+                this.setState({ popupShown: 1 });
+              }
+            }} className="desktop-credit-coins" history={this.props.history} />
+          </div>
+        }
+      }
+      return '';
+    }
+
     return (
       <div className={className} ref={this.pageHeader}>
         <div className="menu-buttons">
@@ -166,17 +184,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
               }
             }
           }} />}
-          {(user.library || user.isFromInstitution) ? <div /> :
-            !isPhone() &&
-            <div className="header-credits-container">
-              <ReactiveUserCredits popupShown={this.state.popupShown === 1} onClick={() => {
-                if (this.state.popupShown === 1) {
-                  this.setState({ popupShown: 0 });
-                } else {
-                  this.setState({ popupShown: 1 });
-                }
-              }} className="desktop-credit-coins" history={this.props.history} />
-            </div>}
+          {renderCreditsIcon()}
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
         </div>

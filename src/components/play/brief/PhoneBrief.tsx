@@ -4,12 +4,12 @@ import { Brick } from "model/brick";
 import { PlayMode } from "../model";
 import { getCompetitionsByBrickId } from "services/axios/competitions";
 import { checkCompetitionActive } from "services/competition";
+import { User } from "model/user";
 
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BrickTitle from "components/baseComponents/BrickTitle";
 import CompetitionDialog from "../cover/components/CompetitionDialog";
-import { User } from "model/user";
 
 interface Props {
   brick: Brick;
