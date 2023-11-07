@@ -1234,6 +1234,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
           }
           c.list.map((c, i) => c.index = i);
           c.list = shuffle(c.list);
+          console.log('shuffle choose one');
         }
       });
     } else if (
@@ -1268,6 +1269,31 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             valueSoundCaption: a.valueSoundCaption
           }));
           c.choices = shuffle(choices);
+
+          const checkCorrect = () => {
+            let isCorrect = false;
+            let index = 0;
+            for (let choice of c.choices) {
+              if (choice.index === index) {
+                return true
+              }
+              index += 1;
+            }
+            return isCorrect;
+          }
+
+          let isCorrect = checkCorrect();
+          if (isCorrect) {
+            c.choices = shuffle(choices);
+            isCorrect = checkCorrect();
+            if (isCorrect) {
+              c.choices = shuffle(choices);
+              isCorrect = checkCorrect();
+              if (isCorrect) {
+                c.choices = shuffle(choices);
+              }
+            }
+          }
         }
       });
     }
