@@ -229,7 +229,8 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         isAssignment={props.isAssignment}
         isAuthor={brick.author.id === user?.id} isPublisher={isPublisher}
         isLibraryUser={!!user?.library}
-        isPaidEducator={user?.subscriptionState === SubscriptionState.PaidTeacher} isCompetition={!!props.activeCompetition}
+        isPaidEducator={user?.subscriptionState === SubscriptionState.PaidTeacher || user?.subscriptionState === SubscriptionState.TeacherByAdmin}
+        isCompetition={!!props.activeCompetition}
         onClick={() => {
           if (user) {
             startBrick();
