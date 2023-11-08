@@ -370,16 +370,17 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
               {quests.map(this.renderGuest.bind(this))}
               <div className="font-14 pending-label">
                 <span>Pending ({classroom.studentsInvitations.length})</span>
-                <ReminderButton studentCount={classroom.studentsInvitations.length} sendNotifications={async () => {
-                  for (let invitation of classroom.studentsInvitations) {
-                    const res = await resendInvitation({ id: this.props.activeClassroom.id } as any, invitation.email);
-                    if (res) {
-                      // success
-                    } else {
-                      //this.props.requestFailed("Can`t send invitation to class");
+                {classroom.studentsInvitations?.length > 0 &&
+                  <ReminderButton studentCount={classroom.studentsInvitations.length} sendNotifications={async () => {
+                    for (let invitation of classroom.studentsInvitations) {
+                      const res = await resendInvitation({ id: this.props.activeClassroom.id } as any, invitation.email);
+                      if (res) {
+                        // success
+                      } else {
+                        //this.props.requestFailed("Can`t send invitation to class");
+                      }
                     }
-                  }
-                }} />
+                  }} />}
               </div>
               {classroom.studentsInvitations?.map(this.renderInvitation.bind(this))}
             </div>
