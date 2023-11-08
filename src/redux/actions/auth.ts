@@ -35,7 +35,7 @@ const loginSuccess = (userId?: number) => {
       });
     } else {
       const assignment = GetQuickAssignment();
-      if (assignment) {
+      if (assignment && !assignment.accepted) {
         SetLoginRedirectUrl(routes.playCover(assignment.brick));
       }
     }

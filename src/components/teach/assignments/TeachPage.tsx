@@ -175,7 +175,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   async loadClasses(activeClassId?: number, teacherId?: number) {
     let classrooms = [] as TeachClassroom[] | null;
-    if (this.state.teacherId || (teacherId && teacherId > 0)) {
+    if ((this.state.teacherId && this.state.teacherId > 0) || (teacherId && teacherId > 0)) {
       classrooms = await getTeacherClassrooms(this.state.teacherId || teacherId) as TeachClassroom[] | null;
     } else {
       classrooms = await getAllClassrooms() as TeachClassroom[] | null;
