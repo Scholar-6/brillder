@@ -274,16 +274,6 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
           <div className="email font-13">{s.email}</div>
           <div className="flex-center">
             <div className="pending flex-center bold font-11">Pending</div>
-            <ReminderButton studentCount={arr.length} sendNotifications={async () => {
-              for (let invitation of arr) {
-                const res = await resendInvitation({ id: this.props.activeClassroom.id } as any, invitation.email);
-                if (res) {
-                  // success
-                } else {
-                  //this.props.requestFailed("Can`t send invitation to class");
-                }
-              }
-            }} />
           </div>
           <div className="flex-center">
           </div>
@@ -378,7 +368,19 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
               {students.map(this.renderStudent.bind(this))}
               <div className="font-14 guests-label">Guests ({quests.length})</div>
               {quests.map(this.renderGuest.bind(this))}
-              <div className="font-14 pending-label">Pending ({classroom.studentsInvitations.length}) </div>
+              <div className="font-14 pending-label">
+                <span>Pending ({classroom.studentsInvitations.length})</span>
+                <ReminderButton studentCount={classroom.studentsInvitations.length} sendNotifications={async () => {
+                  for (let invitation of classroom.studentsInvitations) {
+                    const res = await resendInvitation({ id: this.props.activeClassroom.id } as any, invitation.email);
+                    if (res) {
+                      // success
+                    } else {
+                      //this.props.requestFailed("Can`t send invitation to class");
+                    }
+                  }
+                }} />
+              </div>
               {classroom.studentsInvitations?.map(this.renderInvitation.bind(this))}
             </div>
           </div>
