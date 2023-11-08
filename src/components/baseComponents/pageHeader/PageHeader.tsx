@@ -238,9 +238,6 @@ class PageHeader extends Component<Props, State> {
       className += ' no-bottom-border';
     }
 
-    // page loaded by library shared link
-    console.log(this.props.user);
-
     if (this.props.onForbiddenClick) {
       return (
         <div className="upper-part" onClick={() => this.prepareSuggestions()}>

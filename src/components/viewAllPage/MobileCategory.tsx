@@ -29,6 +29,7 @@ import { getPublishedBricksByPage, getUnauthPublishedBricksByPage } from "servic
 import { ENGLISH_LANGUAGE_SUBJECT, ENGLISH_LITERATURE_SUBJECT, GENERAL_SUBJECT } from "components/services/subject";
 import { SortBy } from "./components/ViewAllFilter";
 import subjectActions from "redux/actions/subject";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 const MobileTheme = React.lazy(() => import("./themes/ViewAllPageMobileTheme"));
 
@@ -144,7 +145,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   async loadData(subjectIds: number[], expandedGroup: SubjectGroup | null) {
     if (this.props.user) {
-      const data = await getPublishedBricksByPage(1, 0, true, [], [], [], false);
+      const data = await getPublishedBricksByPage(1, 0, true, [], [], [], false, undefined, SortBy.Date);
       if (data) {
         let subjects = this.props.subjects;
         if (this.props.subjects.length === 0) {
@@ -182,7 +183,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           shown: true,
           isLoading: false,
         });
-        const personalData = await getPublishedBricksByPage(1, 0, false, [], [], [], false);
+        const personalData = await getPublishedBricksByPage(1, 0, false, [], [], [], false, undefined, SortBy.Date);
         if (personalData && personalData.bricks && personalData.bricks.length > 0) {
           this.setState({ hasPersonalBricks: true });
         }
@@ -658,6 +659,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <PageLoader content="...Getting Bricks..." />;
+    }
     if (this.state.expandedGroup) {
       return this.renderExpandedSubjectGroup(this.state.expandedGroup);
     }

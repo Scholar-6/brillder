@@ -413,35 +413,36 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
       }
 
       subjectIds = this.state.subjects.filter(s => s.checked === true).map(s => s.id);
-
-      const pageBricks = await getPublishedBricksByPage(
-        state.pageSize, state.page, (values && values.personal) ? false : true,
-        state.filterLevels, state.filterLength, subjectIds,
-        state.filterCompetition, this.state.subjectGroup, state.sortBy
-      );
-      if (pageBricks) {
-        this.state.subjects.map(s1 => {
-          s1.viewAllCount = 0;
-          pageBricks.res && pageBricks.res.map(s => {
-            if (s.brick_subjectId === s1.id) {
-              s1.viewAllCount = parseInt(s.count);
-            }
+      if (!isPhone()) {
+        const pageBricks = await getPublishedBricksByPage(
+          state.pageSize, state.page, (values && values.personal) ? false : true,
+          state.filterLevels, state.filterLength, subjectIds,
+          state.filterCompetition, this.state.subjectGroup, state.sortBy
+        );
+        if (pageBricks) {
+          this.state.subjects.map(s1 => {
+            s1.viewAllCount = 0;
+            pageBricks.res && pageBricks.res.map(s => {
+              if (s.brick_subjectId === s1.id) {
+                s1.viewAllCount = parseInt(s.count);
+              }
+            });
           });
-        });
 
-        if (values) {
-          await this.setStateAndAssignClassroom(state, values);
+          if (values) {
+            await this.setStateAndAssignClassroom(state, values);
+          }
+
+          this.setState({
+            ...state,
+            bricksCount: pageBricks.pageCount,
+            bricks: pageBricks.bricks,
+            isLoading: false,
+            shown: true,
+          });
+        } else {
+          this.setState({ ...state, isLoading: false, failedRequest: true });
         }
-
-        this.setState({
-          ...state,
-          bricksCount: pageBricks.pageCount,
-          bricks: pageBricks.bricks,
-          isLoading: false,
-          shown: true,
-        });
-      } else {
-        this.setState({ ...state, isLoading: false, failedRequest: true });
       }
       setTimeout(() => {
         if (values && values.newTeacher) {
@@ -1443,10 +1444,6 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   render() {
-    if (this.state.isLoading) {
-      return <PageLoader content="...Getting Bricks..." />;
-    }
-
     const { user, history } = this.props;
 
     if (isPhone()) {
@@ -1508,6 +1505,9 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           </div>
         </React.Suspense>
       );
+    }
+    if (this.state.isLoading) {
+      return <PageLoader content="...Getting Bricks..." />;
     }
 
     let className = 'main-listing dashboard-page';
