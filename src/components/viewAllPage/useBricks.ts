@@ -21,7 +21,7 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
 
   const getAndSetBricks = (sIds: number[]) => {
     if (user) {
-      getPublishedBricksByPage(bricksPerPage, pageNum, isCore, levels, lengths, sIds, false).then(data => {
+      getPublishedBricksByPage(bricksPerPage, pageNum, isCore, levels, lengths, sIds, false, undefined, SortBy.Date).then(data => {
         if (data) {
           setResults(prev => [...prev, ...data.bricks]);
           setHasNextPage(data.pageCount - ((pageNum + 1) * bricksPerPage) >= 0);
