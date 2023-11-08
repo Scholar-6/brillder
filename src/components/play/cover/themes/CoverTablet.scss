@@ -15,7 +15,10 @@
     padding-right: 2.2vw;
     margin-top: 2vw;
     font-size: 2.4vh;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: -webkit-box;
+    max-height: 27vw;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 10;
     overflow: hidden;
@@ -24,7 +27,7 @@
   .cover-play-button {
     position: absolute;
     top: unset;
-    bottom: 6.5vw;
+    bottom: 10vw;
   }
 
   .brick-container {
