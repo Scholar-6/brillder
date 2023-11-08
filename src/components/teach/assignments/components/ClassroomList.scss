@@ -222,11 +222,9 @@
       }
 
       .pending-label {
+        display: flex;
         margin-top: 0.85vw;
-
-        div {
-          display: inline;
-        }
+        align-items: center;
       }
       .guests-label {
         margin-top: 0.85vw;
