@@ -151,6 +151,16 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         if (this.props.subjects.length === 0) {
           subjects = await this.props.getSubjects();
         }
+
+        subjects.map(s1 => {
+          s1.viewAllCount = 0;
+          data.res && data.res.map(s => {
+            if (s.brick_subjectId === s1.id) {
+              s1.viewAllCount = parseInt(s.count);
+            }
+          });
+        });
+
         const mySubjects: Subject[] = [];
 
         for (let s of this.props.user.subjects) {
@@ -194,8 +204,17 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       const data = await getUnauthPublishedBricksByPage(1, 0, [], [], [], false, SortBy.Date);
 
       if (data) {
-        const subjects = data.subjects ? data.subjects.filter(s => s.count > 0) : [];
+        const subjects = this.props.subjects ? this.props.subjects : [];
         const expandedSubjects = this.prepareExpandedSubjects(subjects, subjectIds);
+
+        subjects.map(s1 => {
+          s1.viewAllCount = 0;
+          data.res && data.res.map(s => {
+            if (s.brick_subjectId === s1.id) {
+              s1.viewAllCount = parseInt(s.count);
+            }
+          });
+        });
 
         let groupSubjects = [] as Subject[];
         if (expandedGroup) {
@@ -570,6 +589,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     } else if (subjectGroup === SubjectGroup.Languages) {
       groupSubjects = groupSubjects.filter(s => s.name != ENGLISH_LANGUAGE_SUBJECT);
     }
+
+    groupSubjects = groupSubjects.filter(sg => {
+      if (sg.viewAllCount && sg.viewAllCount > 0) {
+        return true;
+      }
+      return false;
+    });
+
     return groupSubjects;
   }
 
