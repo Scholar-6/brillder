@@ -595,7 +595,7 @@ $introduction-expanded-height: calc(#{$play-base-height} - #{$expanded-intro-pad
         .introduction-info {
           background-color: var(--solitude-light);
           position: relative;
-          padding: 4vh 2vw;
+          padding: 4vh 2vw 12vw 2vw;
           height: 100%;
           display: flex;
           align-items: center;
