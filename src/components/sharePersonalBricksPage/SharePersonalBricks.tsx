@@ -270,7 +270,7 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number) {
-    let pageBricks = await searchPaginateBricks(searchString, page, pageSize, false);
+    const pageBricks = await searchPaginateBricks(searchString, page, pageSize, false, [], []);
 
     if (pageBricks && pageBricks.bricks.length >= 0) {
       this.setState({
