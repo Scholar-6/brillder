@@ -1062,7 +1062,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
   }
 
   async loadAndSetSearchBricks(searchString: string, page: number, pageSize: number, isCore: boolean, subjectIds: number[], isKeyword?: boolean) {
-    const pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore, subjectIds, isKeyword ? isKeyword : false);
+    const pageBricks = await searchPaginateBricks(searchString, page, pageSize, isCore, [], [], subjectIds, isKeyword ? isKeyword : false);
 
     const { state } = this;
 

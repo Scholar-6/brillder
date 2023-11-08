@@ -51,8 +51,8 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
     }
   }
 
-  const search = (subjectIdsV3: number[]) => {
-    searchPaginateBricks(searchString, pageNum, bricksPerPage, isCore, subjectIdsV3).then(data => {
+  const search = (subjectIdsV3: number[], levels: number[], lengths: number[]) => {
+    searchPaginateBricks(searchString, pageNum, bricksPerPage, isCore, lengths, levels, subjectIdsV3).then(data => {
       if (data) {
         setResults(prev => [...prev, ...data.bricks]);
         setHasNextPage(data.pageCount - ((pageNum + 1) * bricksPerPage) >= 0);
@@ -118,7 +118,7 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
       setData({} as PageBricks);
       setHasNextPage(false);
       if (isSearching) {
-        search(subjectIds);
+        search(subjectIds, levels, lengths);
       } else {
         getAndSetBricks(subjectIds);
       }
@@ -132,7 +132,7 @@ const useBricks = (pageNum = 0, user: User, subjects: Subject[], isCore: boolean
         const sIds = subjects.map(s => s.id);
 
         if (isSearching) {
-          search(sIds);
+          search(sIds, levels, lengths);
         } else {
           getAndSetBricks(sIds);
         }
