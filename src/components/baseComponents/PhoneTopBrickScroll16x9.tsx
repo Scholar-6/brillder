@@ -25,11 +25,6 @@ const PhoneTopBrickScroll16x9 = React.forwardRef<HTMLDivElement, Props>(({ brick
   const isAssignment = checkAssignment(brick, user);
   const [imgLoaded, setLoaded] = React.useState(false);
 
-  let label = '';
-  if (brick.academicLevel >= AcademicLevel.First) {
-    label = AcademicLevelLabels[brick.academicLevel];
-  }
-
   const renderCompetitionBanner = () => {
     if (user?.userPreference?.preferenceId === UserPreferenceType.Teacher) {
       return '';
@@ -54,9 +49,9 @@ const PhoneTopBrickScroll16x9 = React.forwardRef<HTMLDivElement, Props>(({ brick
     return (
       <div className="level-and-length">
         <div className="level before-alternative">
-          <div style={{ background: color }}>
+          <div style={{ background: alternateColor }}>
             <div className="level">
-              <div style={{ background: alternateColor }}>
+              <div style={{ background: color }}>
                 {(isAssignment || brick.currentUserAttempted) ? <CircleCheck /> : AcademicLevelLabels[brick.academicLevel]}
               </div>
             </div>
