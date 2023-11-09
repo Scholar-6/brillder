@@ -9,7 +9,7 @@ interface Props {
   user: User;
   isCore: boolean;
   subjects: Subject[];
- 
+
   filterLevels: AcademicLevel[];
   filterLength: BrickLengthEnum[];
 
@@ -38,7 +38,7 @@ const InfinityScrollCustom = (props: Props) => {
   }, [data])
 
   useEffect(() => {
-    const {searchString} = props;
+    const { searchString } = props;
     const subjectIds = props.subjects.map(s => s.id);
     const subject2Ids = subjectsB.map(s => s.id);
 
@@ -68,7 +68,7 @@ const InfinityScrollCustom = (props: Props) => {
       }
     }
 
-    if(!isModified){
+    if (!isModified) {
       for (let index = 0; index < subjectIds.length; index++) {
         let same = subject2Ids[index] == subjectIds[index];
         if (!same) {
@@ -114,15 +114,21 @@ const InfinityScrollCustom = (props: Props) => {
   });
 
 
- 
+  let classStyle = 'bricks-flex-row';
+  if (isLoading || content.length === 0) {
+    classStyle += ' middle-center-screen'
+  }
 
   return (
     <div className="bricks-scroll-row">
-      <div className="bricks-flex-row">
+      <div className={classStyle}>
         {content}
-        {isLoading ? 
-          <div>...Loading</div>
-          : content.length === 0 && <div>No Bricks Found</div>
+        {isLoading ?
+          <div>...Loading...</div>
+          : content.length === 0 && <div>
+            <div>No Bricks Found</div>
+            <div>Please check your current search and filters</div>
+          </div>
         }
       </div>
     </div>

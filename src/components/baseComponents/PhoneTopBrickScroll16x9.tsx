@@ -5,7 +5,6 @@ import './PhoneTopBrick16x9.scss';
 import { AcademicLevel, AcademicLevelLabels, Brick } from "model/brick";
 
 import { User, UserPreferenceType } from "model/user";
-import BrickCircle from "./BrickCircle";
 import BrickTitle from "./BrickTitle";
 import { fileUrl } from "components/services/uploadFile";
 import CompetitionTimer from "components/viewAllPage/components/CompetitionTimer";
@@ -49,36 +48,6 @@ const PhoneTopBrickScroll16x9 = React.forwardRef<HTMLDivElement, Props>(({ brick
     return '';
   }
 
-  const renderFirstCircle = () => {
-    if (color) {
-      return (
-        <BrickCircle
-          color={color}
-          isAssignment={isAssignment}
-          canHover={true}
-          label={label}
-          onClick={e => { }}
-        />
-      );
-    }
-    return '';
-  }
-
-  const renderSecondCircle = () => {
-    if (brick.alternateSubject) {
-      return (
-        <BrickCircle
-          color={brick.alternateSubject.color}
-          circleClass="alternative-subject"
-          isAssignment={isAssignment}
-          canHover={true}
-          label=""
-          onClick={e => { }}
-        />
-      );
-    }
-    return '';
-  }
 
   const renderCircles = () => {
     let alternateColor = brick.alternateSubject ? brick.alternateSubject.color : color;
