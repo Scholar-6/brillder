@@ -457,6 +457,15 @@
   }
 }
 
+.middle-center-screen {
+  height: 91%;
+  margin-top: 0 !important;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .phone-view-all {
   .mobile-scroll-bricks.phone-top-bricks16x9 {
     $height: 56.5vw;
