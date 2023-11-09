@@ -1,16 +1,17 @@
 import React from "react";
+import { isIPad13, isMobile, isTablet } from "react-device-detect";
 
 import { Subject } from "model/brick";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { isIPad13, isMobile, isTablet } from "react-device-detect";
 
 interface Props {
   subjects: Subject[];
+  isCore: boolean;
   viewAll(): void;
   onClick(subjectId: number): void;
 }
 
-const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
+const SubjectsColumn: React.FC<Props> = ({ subjects, isCore, viewAll, onClick }) => {
   const renderSubject = (s: Subject, key: number) => {
     return (
       <div key={key} className="subject-item" onClick={() => onClick(s.id)}>
@@ -30,7 +31,7 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
         </div>
         <div className="subject-name">View All</div>
       </div>
-    )
+    );
   }
 
   const renderDesktop = () => {
@@ -38,7 +39,16 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
     let isOdd = false;
     let row = [];
 
+    console.log(isCore, subjects);
+    
+
     for (let subject of subjects) {
+      if (isCore) {
+        console.log(subject.viewAllCount);
+        if (subject.viewAllCount === 0) {
+          continue;
+        }
+      }
       row.push(subject);
       if (isOdd && row.length >= 3) {
         isOdd = false;
@@ -70,6 +80,8 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, viewAll, onClick }) => {
   if (!isMobile || (isIPad13 || isTablet)) {
     return renderDesktop();
   }
+
+  console.log('test', subjects);
 
   // render phone version
   return (
