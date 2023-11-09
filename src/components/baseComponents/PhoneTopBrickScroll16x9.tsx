@@ -2,7 +2,7 @@ import React from "react";
 
 import './ShortBrickDescription.scss';
 import './PhoneTopBrick16x9.scss';
-import { AcademicLevel, AcademicLevelLabels, Brick } from "model/brick";
+import { AcademicLevelLabels, Brick } from "model/brick";
 
 import { User, UserPreferenceType } from "model/user";
 import BrickTitle from "./BrickTitle";

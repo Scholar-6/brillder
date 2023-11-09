@@ -1307,6 +1307,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
         <div className="no-found-help-text">Try one of the following:</div>
         <SubjectsColumn
           subjects={subjects}
+          isCore={this.state.isCore}
           viewAll={this.viewAll.bind(this)}
           onClick={(subjectId) => this.filterByOneSubject(subjectId)}
         />

@@ -137,7 +137,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
     );
   }
 
-  const renderItem = (suggestion: ResultObj) => {
+  const renderItem = (suggestion: ResultObj, key: number) => {
     const { brick, subject, author, keyword } = suggestion;
 
     const renderId = () => {
@@ -148,7 +148,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
 
     if (suggestion.isTitleRes && brick) {
       return (
-        <div onClick={() => props.history.push(routes.playCover(brick))}>
+        <div key={key} onClick={() => props.history.push(routes.playCover(brick))}>
           <SpriteIcon name="logo" />
           {stripHtml(brick.title)}
           <SpriteIcon className="icon-status" name={brick.isCore ? "globe" : "key"} />
@@ -157,21 +157,21 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = (props) => {
       );
     } else if (suggestion.isSubjectRes && subject) {
       return (
-        <div onClick={() => props.filterBySubject(subject)}>
+        <div key={key} onClick={() => props.filterBySubject(subject)}>
           {renderSubjectCircle(subject)}
           {subject.name}
         </div>
       );
     } else if (suggestion.isAuthorRes && author) {
       return (
-        <div onClick={() => props.filterByAuthor(author)}>
+        <div key={key} onClick={() => props.filterByAuthor(author)}>
           {renderAutorAvatar(author)}
           {author.firstName} {author.lastName}
         </div>
       );
     } else if (suggestion.isKeyRes && keyword) {
       return (
-        <div onClick={() => props.filterByKeyword(keyword)}>
+        <div key={key} onClick={() => props.filterByKeyword(keyword)}>
           <SpriteIcon name="hash" className="keyword-icon" />
           {stripHtml(keyword.name)}
         </div>
