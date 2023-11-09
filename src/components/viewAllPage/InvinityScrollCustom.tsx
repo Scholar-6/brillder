@@ -113,15 +113,17 @@ const InfinityScrollCustom = (props: Props) => {
     return <PhoneTopBrickScroll16x9 key={i} brick={brick} user={props.user} onClick={() => props.setBrick(brick)} />
   });
 
-  if (content.length == 0) {
-    return <div />;
-  }
+
+ 
 
   return (
     <div className="bricks-scroll-row">
       <div className="bricks-flex-row">
         {content}
-        {isLoading && <div>...Loading</div>}
+        {isLoading ? 
+          <div>...Loading</div>
+          : content.length === 0 && <div>No Bricks Found</div>
+        }
       </div>
     </div>
   );

@@ -37,7 +37,6 @@ interface BricksListProps {
   user: User;
   history: any;
   location: any;
-  forgetBrick(): void;
   requestFailed(e: string): void;
 
   subjects: Subject[];
@@ -870,7 +869,6 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  forgetBrick: () => dispatch(brickActions.forgetBrick()),
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
   getSubjects: () => dispatch(subjectActions.fetchSubjects())
 });
