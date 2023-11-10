@@ -84,7 +84,7 @@
     padding: 0 !important;
   }
   .dialog-header {
-    padding: 3vh 0 4vh 0;
+    padding: 2vh 0 2vh 0;
 
     .title-box {
       position: relative;
@@ -390,7 +390,7 @@
     }
 
     .bricks-box {
-      height: 10vw;
+      height: 18vh;
       background: #F7F7F7;
       overflow-y: auto;
 
@@ -435,8 +435,8 @@
     .btn-glasses {
       width: 56%;
       cursor: pointer;
-      padding-top: 0.6vw;
-      padding-bottom: 0.6vw;
+      padding-top: 1.2vh;
+      padding-bottom: 1.2vh;
       padding-left: 2vw;
       padding-right: 2vw;
       border-top-right-radius: 0;
@@ -468,8 +468,8 @@
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
       cursor: pointer;
-      padding-top: 0.6vw;
-      padding-bottom: 0.6vw;
+      padding-top: 1.2vh;
+      padding-bottom: 1.2vh;
       padding-left: 2vw;
       padding-right: 2vw;
       background: #F7F7F7;  
@@ -578,7 +578,7 @@
     padding: 2vh $main-padding-side;
     border-top: 1px solid #E5E8ED;
 
-    $height: 3vw;
+    $height: 6vh;
    
     .info-box {
       margin-right: 0.3vw;
