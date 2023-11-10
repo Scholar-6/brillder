@@ -90,21 +90,20 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
               options={bricks}
               onChange={async (e: any, brickV5: any) => {
                 if (classroom) {
-                  setSearchText(stripHtml(brickV5.title));
                   const newAssignments = [...assignments];
                   const found = newAssignments.find(b => b.id === brickV5.id);
                   if (!found) {
                     const result = await assignClasses(brickV5.id, { classesIds: [classroom.id] });
 
                     if (result.success) {
-                      console.log(result)
                       if (result.result.newAssignments.length > 0) {
                         const assignmentsTotal = [...assignments, result.result.newAssignments[0]];
                         const classCopy = Object.assign(classroom);
                         classCopy.assignments = assignmentsTotal;
                         SetClassroomAssignedBricks(classCopy);
-                        console.log('set assignments 2', assignmentsTotal)
                         setAssignments(assignmentsTotal);
+                        setSearchText('');
+                        setBricks([]);
                       }
                     }
                   }
