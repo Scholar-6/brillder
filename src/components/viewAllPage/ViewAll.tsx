@@ -1309,7 +1309,12 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
           subjects={subjects}
           isCore={this.state.isCore}
           viewAll={this.viewAll.bind(this)}
-          onClick={(subjectId) => this.filterByOneSubject(subjectId)}
+          onClick={(subjectId) => {
+            if (this.state.searchString) {
+              this.setState({ searchString: '' });
+            }
+            this.filterByOneSubject(subjectId);
+          }}
         />
       </div>
     );
