@@ -172,6 +172,10 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
               subjects={this.props.subjects}
               classItem={c}
               dragHidden={this.state.assignments.length === 1}
+              removeAssignment={(assignmentId: number) => {
+                let assignments = this.state.assignments.filter(a => a.id !== assignmentId);
+                this.setState({assignments});
+              }}
             />
           </div>
         </Grow>
