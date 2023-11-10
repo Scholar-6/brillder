@@ -313,6 +313,8 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                         return c1.assignedDate > c2.assignedDate ? -1 : 1;
                       });
                       setAssignments(classroomV2.assignments);
+                      setSearchText('');
+                      setBricks([]);
                     }
                   }
                 }
