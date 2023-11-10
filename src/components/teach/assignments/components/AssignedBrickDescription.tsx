@@ -16,9 +16,11 @@ interface AssignedDescriptionProps {
   subjects: Subject[];
   classItem: TeachListItem;
   dragHidden?: boolean;
+  removeAssignment(assignmentId: number): void;
 }
 
 interface State {
+  clicked: boolean;
   expanded: boolean | number;
   questionCount: number;
   coverLoaded: boolean;
@@ -31,6 +33,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     super(props);
 
     this.state = {
+      clicked: false,
       deletingOpen: false,
       expanded: true,
       questionCount: 0,
@@ -48,9 +51,18 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     return studentsCompleted;
   }
 
-  removeAssignment() {
+  async removeAssignment() {
+    if (this.state.clicked) {
+      return;
+    }
+    this.setState({clicked: true});
     if (this.props.classItem.assignment) {
-      await deleteAssignment(this.props.classItem.assignment.id);
+      let assignmentId = this.props.classItem.assignment.id;
+      const res = await deleteAssignment(this.props.classItem.assignment.id);
+      if (res) {
+        this.props.removeAssignment(assignmentId);
+      }
+      this.setState({deletingOpen: false, clicked: false})
     }
   }
 
@@ -110,7 +122,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
               </div>
             </div>
             <div className="flex-center">
-              <div className="btn btn-orange" onClick={() => }>
+              <div className="btn btn-orange" onClick={() => this.setState({deletingOpen: true})}>
                 delete
               </div>
             </div>
