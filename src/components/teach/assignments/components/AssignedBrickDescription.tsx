@@ -137,14 +137,14 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
         {
           this.state.deletingOpen && <BaseDialogWrapper open={this.state.deletingOpen} close={() => this.setState({deletingOpen: false})} submit={this.removeAssignment.bind(this)}>
             <div className="dialog-header">
-              <div>Remove assignment?</div>
+              <div>Are you sure you want to delete this brick from the class?</div>
             </div>
             <div className="dialog-footer">
-              <button className="btn btn-md bg-theme-orange yes-button" onClick={this.removeAssignment.bind(this)}>
-                <span>Yes, remove</span>
-              </button>
               <button className="btn btn-md bg-gray no-button" onClick={() => this.setState({deletingOpen: false})}>
-                <span>No, keep</span>
+                <span>No, cancel</span>
+              </button>
+              <button className="btn btn-md bg-theme-orange yes-button" onClick={this.removeAssignment.bind(this)}>
+                <span>Yes, delete</span>
               </button>
             </div>
           </BaseDialogWrapper>
