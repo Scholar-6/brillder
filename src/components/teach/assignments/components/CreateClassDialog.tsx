@@ -360,8 +360,16 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
                         setSearchText(e.target.value);
                         if (e.target.value.length >= 3) {
                           const searchBricks = await getSuggestedByTitles(e.target.value);
+                          let filtered = [];
                           if (searchBricks) {
-                            setBricks(searchBricks.map(s => s.body));
+                            for (let brick of searchBricks) {
+                              let found = assignments.find((a: any) => a.brick.id === parseInt(brick.id as any));
+                              if (!found) {
+                                filtered.push(brick);
+                              }
+                            }
+
+                            setBricks(filtered.map(s => s.body));
                           }
                         }
                       }}
