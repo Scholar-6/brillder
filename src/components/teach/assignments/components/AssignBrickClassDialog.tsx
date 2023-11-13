@@ -55,7 +55,7 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
         const cashedAssignments = cashedClass.assignments.filter((a: any) => a != null);
         setAssignments(cashedAssignments);
       }
-  
+
       setClassroom(props.classroom);
     }
   }, [props.classroom]);
@@ -149,9 +149,24 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
                       onChange={async (e) => {
                         setSearchText(e.target.value);
                         if (e.target.value.length >= 3) {
-                          const searchBricks = await getSuggestedByTitles(e.target.value);
+                          let searchBricks = await getSuggestedByTitles(e.target.value);
+                          console.log(searchBricks, classroom);
+
                           if (searchBricks) {
-                            setBricks(searchBricks.map(s => s.body));
+                            // remove assigned bricks
+                            let filtered = [];
+                            if (classroom.assignments && classroom.assignments.length > 0) {
+                              console.log('filter');
+                              for (let brick of searchBricks) {
+                                let found = classroom.assignments.find((a: any) => a.brick.id === parseInt(brick.id as any));
+                                console.log('brick', brick.id, found);
+                                if (!found) {
+                                  filtered.push(brick);
+                                }
+                              }
+                            }
+
+                            setBricks(filtered.map(s => s.body));
                           }
                         }
                       }}
