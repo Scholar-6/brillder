@@ -158,8 +158,6 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
                           let searchBricks = await getSuggestedByTitles(e.target.value);
 
                           if (searchBricks) {
-                            console.log(searchBricks, classroom);
-
                             // remove assigned bricks
                             let lockedAssignments = [];
                             if (classroom && classroom.assignments) {
