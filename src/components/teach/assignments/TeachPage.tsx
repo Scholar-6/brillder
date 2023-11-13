@@ -438,7 +438,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           activeClassroom={this.state.activeClassroom}
           reloadClass={this.loadClass.bind(this)}
           onRemind={this.setReminderNotification.bind(this)}
-          assignPopup={() => this.setState({ isAssignOpen: true })}
+          assignPopup={(c) => this.setState({ isAssignOpen: true, selectedClassroom: c })}
           inviteStudents={() => this.setState({ updateClassId: this.state.activeClassroom.id })}
           onDelete={this.onDeleteClass.bind(this)}
         />

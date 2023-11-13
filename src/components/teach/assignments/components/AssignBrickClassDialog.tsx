@@ -48,14 +48,20 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
 
   const [searchText, setSearchText] = useState('');
 
+  console.log(123)
+
   React.useEffect(() => {
     if (props.classroom) {
       const cashedClass = GetClassAssignedBricks();
       if (cashedClass && cashedClass.id === props.classroom.id) {
-        const cashedAssignments = cashedClass.assignments.filter((a: any) => a != null);
-        setAssignments(cashedAssignments);
+        let cashAssignments = [];
+        if (cashedClass.cashAssignments) {
+          cashAssignments = cashedClass.cashAssignments.filter((a: any) => a != null);
+        }
+        console.log('set assignemnts', cashAssignments);
+        setAssignments(cashAssignments);
       }
-
+  
       setClassroom(props.classroom);
     }
   }, [props.classroom]);
@@ -89,7 +95,7 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
               freeSolo
               options={bricks}
               onChange={async (e: any, brickV5: any) => {
-                if (classroom) {
+                if (classroom && brickV5) {
                   const newAssignments = [...assignments];
                   const found = newAssignments.find(b => b.id === brickV5.id);
                   if (!found) {
@@ -99,7 +105,7 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
                       if (result.result.newAssignments.length > 0) {
                         const assignmentsTotal = [...assignments, result.result.newAssignments[0]];
                         const classCopy = Object.assign(classroom);
-                        classCopy.assignments = assignmentsTotal;
+                        classCopy.cashAssignments = assignmentsTotal;
                         SetClassroomAssignedBricks(classCopy);
                         setAssignments(assignmentsTotal);
                         setSearchText('');
@@ -150,16 +156,25 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
                         setSearchText(e.target.value);
                         if (e.target.value.length >= 3) {
                           let searchBricks = await getSuggestedByTitles(e.target.value);
-                          console.log(searchBricks, classroom);
 
                           if (searchBricks) {
+                            console.log(searchBricks, classroom);
+
                             // remove assigned bricks
+                            let lockedAssignments = [];
+                            if (classroom && classroom.assignments) {
+                              lockedAssignments.push(...classroom.assignments);
+                            }
+
+                            if (classroom && classroom.cashAssignments) {
+                              lockedAssignments.push(...classroom.cashAssignments);
+                            }
+
                             let filtered = [];
-                            if (classroom.assignments && classroom.assignments.length > 0) {
-                              console.log('filter');
+                            if (lockedAssignments) {
                               for (let brick of searchBricks) {
-                                let found = classroom.assignments.find((a: any) => a.brick.id === parseInt(brick.id as any));
-                                console.log('brick', brick.id, found);
+                                let found = lockedAssignments.find((a: any) => a.brick.id === parseInt(brick.id as any));
+                                console.log(brick, found);
                                 if (!found) {
                                   filtered.push(brick);
                                 }

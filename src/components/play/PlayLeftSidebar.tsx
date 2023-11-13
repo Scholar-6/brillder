@@ -491,7 +491,15 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
               <div className="bottom-part-s42">
                 <div className="text-s45">
                   <div className="btn btn-blue" onClick={async () => {
-                    await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id] });
+                    const res = await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id] });
+                    if (res.success && res.result.newAssignments.length > 0) {
+                      let classroom = GetClassAssignedBricks();
+                      let found = classroom.cashAssignments.find((a: any) => a.id === res.result.newAssignments[0].id);
+                      if (!found) {
+                        classroom.cashAssignments.push(res.result.newAssignments[0]);
+                      }
+                      SetClassroomAssignedBricks(classroom);
+                    }
                     this.setState({ isAssignV2Open: false });
                     let link = map.ViewAllPage  + '?assigning-bricks=' + this.props.assignClass.id;
                     if (this.props.onlyAssignBricks) {
@@ -510,13 +518,12 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
                       if (!classroom) {
                         classroom = Object.assign({}, this.props.assignClass);
-                        classroom.assignments = [];
                       }
 
                       if (res.success && res.result.newAssignments.length > 0) {
-                        let found = classroom.assignments.find((a: any) => a.id === res.result.newAssignments[0].id);
+                        let found = classroom.cashAssignments.find((a: any) => a.id === res.result.newAssignments[0].id);
                         if (!found) {
-                          classroom.assignments.push(res.result.newAssignments[0]);
+                          classroom.cashAssignments.push(res.result.newAssignments[0]);
                         }
                         
                         SetClassroomAssignedBricks(classroom);
