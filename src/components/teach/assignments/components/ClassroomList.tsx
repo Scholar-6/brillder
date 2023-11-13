@@ -5,7 +5,7 @@ import { ReactSortable } from "react-sortablejs";
 import './ClassroomList.scss';
 import map from "components/map";
 import { Subject } from "model/brick";
-import { TeachClassroom, Assignment, TeachStudent } from "model/classroom";
+import { TeachClassroom, Assignment, TeachStudent, Classroom } from "model/classroom";
 import { updateClassroom, sortClassroomAssignments, resendInvitation } from "services/axios/classroom";
 import { convertClassAssignments } from "../service/service";
 import { MUser } from "components/teach/model";
@@ -32,7 +32,7 @@ interface ClassroomListProps {
   subjects: Subject[];
   activeClassroom: TeachClassroom;
   reloadClass(id: number): void;
-  assignPopup(): void;
+  assignPopup(c: Classroom): void;
   inviteStudents(): void;
   onDelete(classroom: TeachClassroom): void;
   onRemind?(count: number): void;
@@ -149,7 +149,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
       <div className={className}>
         <NameAndSubjectForm
           classroom={classroom}
-          addBrick={this.props.assignPopup}
+          addBrick={() => this.props.assignPopup(classroom)}
           inviteStudents={this.props.inviteStudents}
           onChange={(name) => this.updateClassroomName(classroom, name)}
           onDelete={this.props.onDelete}
@@ -328,7 +328,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     return (
       <div className="classroom-assignments-columns">
         {items.length === 0
-          ? <EmptyClassTab history={this.props.history} click={this.props.assignPopup} />
+          ? <EmptyClassTab history={this.props.history} click={() => this.props.assignPopup(classroom)} />
           : <div className="assignments-column">
             <div className="bold assignments-title font-20">
               <div>Assignments</div>
