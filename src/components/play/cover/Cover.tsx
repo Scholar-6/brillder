@@ -140,9 +140,10 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         <div className="brick-id-container">
           Brick N<sub className="smaller">o.</sub> {brick.id}
         </div>
+        {/* 
         <div className="mobile-credit-coins">
           <ReactiveUserCredits />
-        </div>
+        </div>*/}
         <div className="hover-area">
           <SpriteIcon name="help-circle-custom" onClick={() => setFirstPhonePopup(true)} />
           {!isPhone() &&

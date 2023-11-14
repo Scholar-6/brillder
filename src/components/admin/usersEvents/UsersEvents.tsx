@@ -414,6 +414,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             <span className="brills-count">{u.brills}</span>
             {this.renderBrillCoinIcon()}
           </div>
+          {/* 
           <div className="credits-column">
             <div className="desktop-credit-coins" onClick={() => {
               this.setState({
@@ -426,7 +427,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               <SpriteIcon name="circle-lines" />
               <span>{u.freeAttemptsLeft > 99 ? '99+' : u.freeAttemptsLeft}</span>
             </div>
-          </div>
+          </div>*/}
           <div className="activity-column">
             <div className={`attempts-count-box ${u.attempts.length > 0 ? '' : 'whiter'}`} onClick={() => {
               if (u.attempts.length > 0) {

@@ -132,6 +132,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
       return '';
     }
 
+    /*
     const convertCreditsPopup = () => {
       if (this.props.user.isFromInstitution || this.props.user.library) {
         return '';
@@ -167,7 +168,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
         }
       }
       return '';
-    }
+    }*/
 
     return (
       <div className={className} ref={this.pageHeader}>
@@ -184,12 +185,12 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
               }
             }
           }} />}
-          {renderCreditsIcon()}
+          {/*renderCreditsIcon()*/}
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
         </div>
         {renderNoCreditsPopup()}
-        {convertCreditsPopup()}
+        {/*convertCreditsPopup()*/}
         <MenuDropdown
           dropdownShown={this.state.dropdownShown}
           hideDropdown={this.hideDropdown.bind(this)}

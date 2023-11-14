@@ -21,13 +21,14 @@ export default function getMainPageSteps(isStudent: boolean, isTeacher: boolean,
         : `<p>The more “bricks” you play, and the better you do, the more “brills” you can earn. Then claim cash, and other prizes. We've given you 200 as a welcome gift!</p>`,
     });
 
+    /*
     if (!library) {
       steps.push({
         element: '.desktop-credit-coins',
         intro: isLibraryOrigin
           ? `<p>As a library user, you don't need to spend credits to play bricks. But you can still use them to enter competitions.<br/>We've given you 5 free credits to get you started!</p>` : `<p>You need to spend credits to play bricks. Spend 1 credit to play a brick from the catalogue or 2 credits to enter a competition.<br/>We've given you 5 free credits to get you started!</p>`,
       });
-    }
+    }*/
 
     steps.push({
       element: '.second-button.student-back-work',
