@@ -369,9 +369,9 @@ export const getSuggestedByTitles = async (suggestion: string) => {
   }
 }
 
-export const searchBricks = async (searchString: string = '') => {
+export const searchBricks = async (query: any) => {
   try {
-    return await post<Brick[]>("/bricks/search", { searchString });
+    return await post<Brick[]>("/bricks/search", query);
   } catch {
     return null;
   }

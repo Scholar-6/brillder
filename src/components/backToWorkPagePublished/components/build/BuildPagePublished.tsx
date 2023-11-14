@@ -142,7 +142,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
   componentWillReceiveProps(nextProps: BuildProps) {
     if (nextProps.isSearching && nextProps.searchDataLoaded === false) {
       this.setState({ searchBricks: [], shown: false, bricksLoaded: false, sortedIndex: 0 });
-      searchBricks(nextProps.searchString).then(bricks => {
+      searchBricks({searchString: nextProps.searchString}).then(bricks => {
         if (bricks) {
           setTimeout(() => {
             this.setState({
