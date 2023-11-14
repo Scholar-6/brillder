@@ -20,7 +20,7 @@ import SearchSuggestions from 'components/viewAllPage/components/SearchSuggestio
 import { SubscriptionState, User } from 'model/user';
 import VolumeButton from '../VolumeButton';
 import BrillIconAnimated from '../BrillIconAnimated';
-import ReactiveUserCredits from 'components/userProfilePage/ReactiveUserCredits';
+//import ReactiveUserCredits from 'components/userProfilePage/ReactiveUserCredits';
 import { JoinPage, LibraryLoginPage, LibraryRegisterPage } from 'components/loginPage/desktop/routes';
 import { SetAuthBrickCash } from 'localStorage/play';
 import subjectActions from "redux/actions/subject";
@@ -262,10 +262,10 @@ class PageHeader extends Component<Props, State> {
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
                   <BrillIconAnimated />
-                  {(this.props.user && (this.props.user.isFromInstitution || this.props.user.library)) ? <div /> :
+                  {/*(this.props.user && (this.props.user.isFromInstitution || this.props.user.library)) ? <div /> :
                     <div className="header-credits-container">
                       <ReactiveUserCredits className="desktop-credit-coins" history={this.props.history} />
-                    </div>}
+                    </div>*/}
                   <BellButton
                     notificationCount={notificationCount}
                     onClick={evt => this.props.showNotifications(evt)}
@@ -338,6 +338,7 @@ class PageHeader extends Component<Props, State> {
       );
     }
 
+    /*
     const renderCreditsIcon = () => {
       if (this.props.user) {
         const { subscriptionState } = this.props.user;
@@ -348,7 +349,7 @@ class PageHeader extends Component<Props, State> {
         }
       }
       return '';
-    }
+    }*/
 
     return (
       <div className="upper-part" onClick={() => this.prepareSuggestions()}>
@@ -427,7 +428,7 @@ class PageHeader extends Component<Props, State> {
                 <Grid container direction="row" className="action-container">
                   <VolumeButton />
                   <BrillIconAnimated />
-                  {renderCreditsIcon()}
+                  {/*renderCreditsIcon()*/}
                   <BellButton
                     notificationCount={notificationCount}
                     onClick={evt => this.props.showNotifications(evt)}

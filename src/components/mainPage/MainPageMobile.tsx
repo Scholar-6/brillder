@@ -161,6 +161,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       intro: `<p>If you spot anything that doesn't look right, or experience a technical issue, click here to create a help ticket</p>`
     });
 
+    /*
     if (!this.props.user.library) {
       steps.push({
         element: '.coins-container',
@@ -171,7 +172,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         </p>
       `
       });
-    }
+    }*/
 
     steps.push({
       element: '.brill-coin-container',
@@ -463,7 +464,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               </div>
             </div>
           </div>
-          {!user.isFromInstitution &&
+          {/*!user.isFromInstitution &&
             <div className="coins-container">
               <ReactiveUserCredits
                 className="phone-credit-coins"
@@ -475,7 +476,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
                 })
                 }
               />
-            </div>}
+              </div>*/}
           <div className="welcome-container">
             <div>
               <div className="bold welcome-title">Welcome to Brillder,</div>
