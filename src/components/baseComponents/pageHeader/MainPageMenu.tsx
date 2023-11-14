@@ -101,6 +101,7 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
       className += " notification-expanded"
     }
 
+    /*
     if (user.freeAttemptsLeft === 0) {
       noCredits = true;
       className += " menu-without-credits";
@@ -132,7 +133,6 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
       return '';
     }
 
-    /*
     const convertCreditsPopup = () => {
       if (this.props.user.isFromInstitution || this.props.user.library) {
         return '';
@@ -179,17 +179,18 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
             } else {
               this.setState({ popupShown: 2 });
             }
+            /*
             if (!isMobile && noCredits === false) {
               if (!user.library) {
                 this.setState({ showConvertDropdown: !this.state.showConvertDropdown });
               }
-            }
+            }*/
           }} />}
           {/*renderCreditsIcon()*/}
           <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
           <MoreButton onClick={() => this.showDropdown()} />
         </div>
-        {renderNoCreditsPopup()}
+        {/* renderNoCreditsPopup() */}
         {/*convertCreditsPopup()*/}
         <MenuDropdown
           dropdownShown={this.state.dropdownShown}
@@ -219,10 +220,11 @@ class MainPageMenu extends Component<MainPageMenuProps, HeaderMenuState> {
           close={() => this.handleLogoutClose()}
           history={this.props.history}
         />
+        {/* 
         <ConvertCreditsDialog
           isOpen={this.state.convertCreditsOpen}
           close={() => this.setState({ convertCreditsOpen: false })}
-        />
+        />*/}
       </div>
     );
   }

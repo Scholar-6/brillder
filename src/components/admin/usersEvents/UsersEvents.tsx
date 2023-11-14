@@ -691,6 +691,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
             </button>
           </div>
         </Dialog>
+        {/*
         <AddingCreditsDialog isOpen={this.state.creditDetails.isOpen} userId={this.state.creditDetails.userId}
           onClose={credits => {
             if (credits) {
@@ -704,7 +705,7 @@ class UsersPage extends Component<UsersProps, UsersState> {
               userId: -1
             } as CreditDetails;
             this.setState({ creditDetails, users: this.state.users });
-          }} />
+          }} />*/}
         {this.renderClassroomPopup()}
         <StudentInviteSuccessDialog
           numStudentsInvited={this.state.resentClassroomInvite ? 1 : 0}
