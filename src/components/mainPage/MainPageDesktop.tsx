@@ -503,13 +503,10 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
       <div className="first-item">
         <div>
           <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
-          {this.renderRightButton()}
+          {this.renderCompetitionArena()}
         </div>
         <div>
-          {this.renderCompetitionArena()}
           {this.renderAssignmentsButton()}
-        </div>
-        <div className="one-btn">
           {this.renderThirdButton()}
         </div>
       </div>
