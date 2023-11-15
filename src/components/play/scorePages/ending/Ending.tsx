@@ -317,21 +317,21 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       } else if (fixedCurrentScore >= 40) {
         text = 'Tough going!';
       } else if (fixedCurrentScore >= 35) {
-        text = 'Very tough going!';
+        text = 'You can do better than that!';
       } else if (fixedCurrentScore >= 30) {
-        text = 'Ouch!';
+        text = 'Very tough going!';
       } else if (fixedCurrentScore >= 25) {
-        text = 'Yikes!';
+        text = 'Ouch!';
       } else if (fixedCurrentScore >= 20) {
-        text = 'Call a brain ambulance!';
+        text = 'Yikes!';
       } else if (fixedCurrentScore >= 15) {
-        text = "You weren't even trying";
+        text = "Could do worse, but should do better!";
       } else if (fixedCurrentScore >= 10) {
-        text = 'A monkey typing randomly would do better than that!';
+        text = 'Call a Brain Ambulance!';
       } else if (fixedCurrentScore >= 5) {
-        text = 'Almost hard to do this badly - congratulations ?';
+        text = 'Are you sure you’re not one of our testing team?';
       } else if (fixedCurrentScore >= 0) {
-        text = 'You have a genius, but just not for this brick!'
+        text = 'You have a genius, just not for this brick!'
       }
       return text;
     }

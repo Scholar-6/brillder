@@ -241,21 +241,21 @@ class ProvisionalScore extends React.Component<
       } else if (finalValue >= 40) {
         text = 'Tough going!';
       } else if (finalValue >= 35) {
-        text = 'Very tough going!';
+        text = 'You can do better than that!';
       } else if (finalValue >= 30) {
-        text = 'Ouch!';
+        text = 'Very tough going!';
       } else if (finalValue >= 25) {
-        text = 'Yikes!';
+        text = 'Ouch!';
       } else if (finalValue >= 20) {
-        text = 'Call a brain ambulance!';
+        text = 'Yikes!';
       } else if (finalValue >= 15) {
-        text = "You weren't even trying";
+        text = "Could do worse, but should do better!";
       } else if (finalValue >= 10) {
-        text = 'A monkey typing randomly would do better than that!';
+        text = 'Call a Brain Ambulance!';
       } else if (finalValue >= 5) {
-        text = 'Almost hard to do this badly - congratulations ?';
+        text = 'Are you sure you’re not one of our testing team?';
       } else if (finalValue >= 0) {
-        text = 'You have a genius, but just not for this brick!'
+        text = 'You have a genius, just not for this brick!'
       }
       return text;
     }
