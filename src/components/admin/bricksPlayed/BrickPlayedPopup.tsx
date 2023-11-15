@@ -164,20 +164,22 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
   }
 
   renderUserType(u: User) {
-    if (u.roles.find(r => r.roleId === UserType.Admin)) {
-      return 'Admin';
-    } else if (u.roles.find(r => r.roleId === UserType.Publisher)) {
-      return 'Publisher';
-    } else if (u.roles.find(r => r.roleId === UserType.Institution)) {
-      return 'Institution';
-    } else if (u.userPreference) {
-      const { preferenceId } = u.userPreference;
-      if (preferenceId === UserType.Student) {
-        return 'Learner';
-      } else if (preferenceId === UserType.Builder) {
-        return 'Builder';
-      } else if (preferenceId === UserType.Teacher) {
-        return 'Educator';
+    if (u.roles) {
+      if (u.roles.find(r => r.roleId === UserType.Admin)) {
+        return 'Admin';
+      } else if (u.roles.find(r => r.roleId === UserType.Publisher)) {
+        return 'Publisher';
+      } else if (u.roles.find(r => r.roleId === UserType.Institution)) {
+        return 'Institution';
+      } else if (u.userPreference) {
+        const { preferenceId } = u.userPreference;
+        if (preferenceId === UserType.Student) {
+          return 'Learner';
+        } else if (preferenceId === UserType.Builder) {
+          return 'Builder';
+        } else if (preferenceId === UserType.Teacher) {
+          return 'Educator';
+        }
       }
     }
     return '';
@@ -229,7 +231,7 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
         } else {
           score = Math.round((attempt.score / attempt.maxScore) * 100);
         }
-      } catch {}
+      } catch { }
 
       data.push(<div className="userRow" key={i}>
         <div className="student-name">
