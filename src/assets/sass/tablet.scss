@@ -1690,3 +1690,8 @@ html body #root .browser-type-container .sorted-row .brick-row-container.teach-t
     display: none;
   }
 }
+
+// hide beta text.
+.only-manage-classes-page~.beta-text {
+  display: none;
+}
