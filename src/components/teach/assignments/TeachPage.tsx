@@ -588,7 +588,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const { remindersData } = this.state;
 
     return (
-      <div className="main-listing user-list-page manage-classrooms-page">
+      <div className="main-listing user-list-page manage-classrooms-page only-manage-classes-page">
         <PageHeadWithMenu
           page={PageEnum.ManageClasses}
           placeholder="Search by Class Name, Brick Title, Subject, or Student"

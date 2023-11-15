@@ -2178,3 +2178,8 @@
 .back-to-work-teach .tab-content {
   height: calc(100vh - 5.834vw - 2vw - 6.6vh) !important;
 }
+
+// hide beta text.
+.only-manage-classes-page~.beta-text {
+  display: none;
+}
