@@ -195,7 +195,18 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
     const uniqueAttempts: any[] = [];
 
     for (let attempt of brickAttempts) {
-      let found = uniqueAttempts.find(sr => sr.student.id === attempt.student.id);
+      let found = uniqueAttempts.find(sr => {
+        if (attempt.student) {
+          if (sr.student.id === attempt.student.id) {
+            return true;
+          }
+        }
+        // guests
+        if (sr.student.id === attempt.studentId) {
+          return true;
+        }
+        return false;
+      });
       if (!found) {
         if (attempt.student) {
           uniqueAttempts.push(attempt);
