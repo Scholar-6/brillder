@@ -10,7 +10,7 @@ import { PlayMode } from './model';
 import { User } from "model/user";
 import { Brick } from "model/brick";
 import routes, { PlayPreInvestigationLastPrefix } from "./routes";
-import { isInstitutionPreference } from "components/services/preferenceService";
+import { isInstitutionPreference, isStudentPreference } from "components/services/preferenceService";
 import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
 import { getCompetitionByUser } from "services/axios/competitions";
 import { Competition } from "model/competition";
@@ -302,6 +302,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     const renderAdaptButton = () => {
       if (this.props.competitionId && this.props.competitionId > 0) {
+        return <div />;
+      }
+      if (this.props.user && isStudentPreference(this.props.user)) {
         return <div />;
       }
       return (

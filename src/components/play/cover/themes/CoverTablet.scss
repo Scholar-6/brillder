@@ -157,6 +157,7 @@
         padding-left: 0.5vw;
         padding-right: 0.5vw;
         font-size: 1.3vw;
+        max-width: calc(100% - 3.7vw);
         @include ellipsis;
         .key-word-play {
           cursor: pointer;
