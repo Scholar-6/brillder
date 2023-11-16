@@ -100,6 +100,24 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
         assignments: items,
       })
     }
+
+    if (this.props.activeClassroom && this.props.activeClassroom.assignments && this.props.activeClassroom.assignments.length != this.state.assignments.length) {
+      const classroom = this.props.activeClassroom;
+      let items = [] as TeachListItem[];
+      convertClassAssignments(items, classroom);
+      items = items.sort((a, b) => a.assignment.order - b.assignment.order);
+
+      items.map(i => i.assignment.expanded = true);
+
+      this.setState({
+        unassignStudent: null,
+        unassignOpen: false,
+        classroomId: classroom.id,
+        sortBy: SortAssignment.Custom,
+        sortStudentBy: SortStudentV3.Name,
+        assignments: items,
+      })
+    }
   }
 
   async updateClassroomName(classroom: TeachClassroom, name: string) {

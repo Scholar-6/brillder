@@ -856,6 +856,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 <div className="cat-name">{this.renderGroupName(SubjectGroup.Arts)}</div>
               </div>
             </div>
+            <div className="subject-category">
+              <div onClick={() => window.location.href = 'https://brillder.com/brilliant-minds-prizes/'}>
+                <div className="flex-center zoom-item">
+                  <SpriteIcon name="star-empty" />
+                </div>
+                <div className="cat-name">Competition</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

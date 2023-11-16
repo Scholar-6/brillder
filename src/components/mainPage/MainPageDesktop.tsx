@@ -249,7 +249,7 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   renderSecondButton() {
-    if (this.state.isTeacher || this.state.isAdmin) {
+    if (this.state.isTeacher || this.state.isAdmin || this.state.isBuilder) {
       return <TeachButton history={this.props.history} onMobileClick={() => this.setState({ isDesktopOpen: true })} />
     } else if (this.state.isStudent) {
       return this.renderStudentWorkButton();
@@ -379,11 +379,8 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
   }
 
   renderRightButton() {
-    if (this.state.isBuilder) {
-      return ""
-    }
     let isActive = this.props.user.hasPlayedBrick;
-    if (this.state.isTeacher) {
+    if (this.state.isTeacher || this.state.isBuilder) {
       return this.renderLiveAssignmentButton(true);
     } else if (this.state.isStudent) {
       return this.renderTryBuildButton(isActive);
@@ -553,8 +550,12 @@ class MainPageDesktop extends Component<MainPageProps, MainPageState> {
           <FirstButton history={this.props.history} user={this.props.user} isNewTeacher={this.state.isNewTeacher} />
           {this.renderCreateButton()}
         </div>
-        <div className="one-btn">
+        <div>
+          {this.renderSecondButton()}
           {this.renderThirdButton()}
+        </div>
+        <div>
+          {this.renderRightButton()}
         </div>
       </div>
     );
