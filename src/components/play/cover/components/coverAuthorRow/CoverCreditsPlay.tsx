@@ -29,8 +29,7 @@ const CoverCreditsPlay: React.FC<Props> = ({ user, isAssignment, isCompetition, 
     if (isCompetition) {
       return (
         <>
-          <SpriteIcon name="circle-lines" />
-          <div className="absolute-credits">2</div>
+          <SpriteIcon name="feather-play-circle" />
           <SpriteIcon className={`hover-icon ${isAuthor ? 'always-visible' : ''}`} name="feather-play-circle" />
           Play Now
         </>
@@ -39,8 +38,7 @@ const CoverCreditsPlay: React.FC<Props> = ({ user, isAssignment, isCompetition, 
     // All other cases are charged 1 credit
     return (
       <>
-        <SpriteIcon name="circle-lines" />
-        <div className="absolute-credits">1</div>
+        <SpriteIcon name="feather-play-circle" />
         <SpriteIcon className={`hover-icon ${isAuthor ? 'always-visible' : ''}`} name="feather-play-circle" />
         Play Now
       </>
