@@ -517,7 +517,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                     
                     if (this.props.onlyAssignBricks) {
                       let classroom = GetClassAssignedBricks();
-                      console.log('classroom', classroom);
 
                       if (!classroom) {
                         classroom = Object.assign({}, this.props.assignClass);
@@ -534,7 +533,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                       }
                     } else {
                       await this.props.getAndSetClassroom(this.props.assignClass.id);
-                      this.setState({ isAssignV2Open: false, isAssignV3Open: true });
+                      this.setState({ isAssignV2Open: false, isAssignV3Open: false });
                     }
                   }}>Assign and return to class</div>
                 </div>
