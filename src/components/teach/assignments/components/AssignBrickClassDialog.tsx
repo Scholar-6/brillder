@@ -48,8 +48,6 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
 
   const [searchText, setSearchText] = useState('');
 
-  console.log(123)
-
   React.useEffect(() => {
     if (props.classroom) {
       const cashedClass = GetClassAssignedBricks();
@@ -261,6 +259,7 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
               sendAsignEmail(assignments.map(a => a.id), classroom.id);
             }
             UnsetClassroomAssignedBricks();
+            props.submit(classroom.id);
             props.close();
           }}
         >

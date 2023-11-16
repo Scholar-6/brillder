@@ -24,6 +24,9 @@ import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverB
 import { PlayPage } from '../PlayBrickRouting';
 import FullScreenButton from 'components/baseComponents/pageHeader/fullScreenButton/FullScreen';
 import VolumeButton from 'components/baseComponents/VolumeButton';
+import { getAssignmentsCount } from 'services/axios/brick';
+import LockedDialog from 'components/baseComponents/dialogs/LockedDialog';
+import map from 'components/map';
 
 interface FooterProps {
   brick: Brick;
@@ -50,7 +53,8 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
   const [cookieOpen, setCookiePopup] = React.useState(isInitCookieOpen);
   const [cookieReOpen, setCookieReOpen] = React.useState(false);
   const [share, setShare] = React.useState(false);
-
+  const [assignedCount, setAssignedCount] = React.useState(-1);
+  const [noAassignmentsOpen, setNoAssignments] = React.useState(false);
   const [assign, setAssign] = React.useState(false);
   const [assignItems, setAssignItems] = React.useState([] as any[]);
   const [assignFailedItems, setAssignFailedItems] = React.useState([] as any[]);
@@ -59,6 +63,22 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
 
   let initMenuOpen = props.menuOpen ? true : false;
   const [menuOpen, setMenu] = React.useState(initMenuOpen);
+
+  const prepare = async () => {
+    const count = await getAssignmentsCount();
+    if (count && count > 0) {
+      setAssignedCount(count);
+    } else {
+      setAssignedCount(0);
+    }
+  }
+
+  /*eslint-disable-next-line*/
+  React.useEffect(() => {
+    if (assignedCount === -1) {
+      prepare();
+    }
+  }, []);
 
   let canSee = false;
   try {
@@ -159,6 +179,15 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
       onClose={() => setMenu(false)}
     >
       <MenuItem onClick={() => {
+        if (assignedCount > 0) {
+          props.history.push(map.AssignmentsPage);
+        } else {
+          setNoAssignments(true);
+        }
+      }}>
+        My Assignments <SpriteIcon name="student-back-to-work" className={`active ${assignedCount > 0 ? 'text-white' : 'text-theme-dark-blue'}`} />
+      </MenuItem>
+      <MenuItem onClick={() => {
         setShare(true);
         setMenu(false);
       }}>
@@ -190,6 +219,10 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
       setCookiePopup(false);
     }} />
     <ExitPlayDialog isOpen={exitPlay} history={history} subjectId={brick.subject?.id || brick.subjectId} close={() => setExit(false)} />
+    <LockedDialog
+      label="To unlock this, a brick needs to have been assigned to you"
+      isOpen={noAassignmentsOpen}
+      close={() => setNoAssignments(false)} />
   </div>;
 }
 
@@ -202,3 +235,11 @@ const mapDispatch = (dispatch: any) => ({
 });
 
 export default connect(mapState, mapDispatch)(PhonePlayFooter);
+function checkPlay() {
+  throw new Error('Function not implemented.');
+}
+
+function isCover() {
+  throw new Error('Function not implemented.');
+}
+

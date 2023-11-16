@@ -203,7 +203,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   };
 
   const renderAssignmentsItem = () => {
-    if (!isMobile) { return <div/>; }
     if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
       return (
         <MenuItem className="menu-item" onClick={() => {
@@ -276,10 +275,12 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     >
       {renderViewAllItem()}
       {!isMobile && renderStartBuildItem()}
-      {isPhone() ? renderAssignmentsItem() : renderBackToWorkItem()}
+      {renderAssignmentsItem()}
+      {!isPhone() && renderBackToWorkItem()}
       {renderManageUsersItem()}
       {renderManageClassesItem()}
       {renderMyLibraryItem()}
+      
       {isPhone() && <FullScreenButton />}
       {renderProfileItem()}
       <MenuItem className="menu-item" onClick={props.onLogout}>
