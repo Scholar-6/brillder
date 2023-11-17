@@ -529,11 +529,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                         }
                         
                         SetClassroomAssignedBricks(classroom);
-                        this.props.history.push(map.TeachAssignedTab + '?classroomId=' + classroom.id + '&onlyAssignBricks=true');
                       }
-                    } else {
-                      this.props.history.push(map.TeachAssignedTab + '?classroomId=' + this.props.assignClass.id + '&onlyAssignBricks=true');
                     }
+                    this.props.history.push(map.TeachAssignedTab + '?classroomId=' + this.props.assignClass.id + '&onlyAssignBricks=true');
                   }}>Assign and return to class</div>
                 </div>
               </div>
