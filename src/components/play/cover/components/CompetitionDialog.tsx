@@ -26,9 +26,14 @@ const CompetitionDialog: React.FC<Props> = ({ isOpen, user, onSubmit, onClose })
           If you do well, you could win bonus brills!
         </div>
       </div>
+      <div className="dialog-footer margin-bottom">
+        <button className="btn btn-md bg-green text-white yes-button" onClick={onSubmit}>
+          <span>Enter Competition</span>
+        </button>
+      </div>
       <div className="dialog-footer">
-        <button className="btn btn-md  bg-green text-white yes-button" onClick={onSubmit}>
-          <span>Start Playing</span>
+      <button className="btn btn-md bg-blue text-white yes-button" onClick={onClose}>
+          <span>Play without Entering</span>
         </button>
       </div>
       <div className="italic bottom-link flex-center" style={{ textAlign: 'center' }}>

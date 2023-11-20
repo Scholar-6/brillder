@@ -1695,3 +1695,11 @@ html body #root .browser-type-container .sorted-row .brick-row-container.teach-t
 .only-manage-classes-page~.beta-text {
   display: none;
 }
+
+.phone-competition-dialog {
+  .dialog-footer {
+    .bg-blue {
+      background: var(--theme-light-blue);
+    }
+  }
+}

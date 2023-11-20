@@ -2183,3 +2183,14 @@
 .only-manage-classes-page~.beta-text {
   display: none;
 }
+
+.phone-competition-dialog {
+  .dialog-footer {
+    &.margin-bottom {
+      margin-bottom: 2vh !important;
+    }
+    .bg-blue {
+      background: var(--theme-light-blue);
+    }
+  }
+}

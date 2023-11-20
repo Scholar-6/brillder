@@ -685,6 +685,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   render() {
+    const {user} = this.props;
     if (this.state.isLoading) {
       return <PageLoader content="...Getting Bricks..." />;
     }
@@ -698,7 +699,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           <div className="main-listing dashboard-page mobile-category phone-view-all select-subject-dashboard-d3">
             <PageHeadWithMenu
               page={PageEnum.ViewAll}
-              user={this.props.user}
+              user={user}
               toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
               history={this.props.history}
             />
@@ -711,17 +712,17 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 <div className="subject-title">My Subjects</div>
                 {this.state.bricksCount ? <div className="bricks-count">{this.state.bricksCount} Brick{this.state.bricksCount > 1 ? 's' : ''}</div> : ''}
               </div>
-              {this.renderSubjectsList(this.props.user.subjects)}
+              {this.renderSubjectsList(user.subjects)}
               <InfinityScrollCustom
                 searchString={this.state.searchString}
-                user={this.props.user}
+                user={user}
                 isCore={this.state.isCore}
                 subjects={this.state.expandedSubjects ? this.state.expandedSubjects : this.state.mySubjects}
                 filterLevels={this.state.filterLevels}
                 filterLength={this.state.filterLength}
                 setBrick={(b: Brick) => {
-                  if (this.props.user && this.checkAssignment(b)) {
-                    this.props.history.push(map.postAssignment(b.id, this.props.user.id));
+                  if (user && this.checkAssignment(b)) {
+                    this.props.history.push(map.postAssignment(b.id, user.id));
                   } else {
                     this.props.history.push(routes.playBrief(b));
                   }
@@ -742,7 +743,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           <div className="main-listing dashboard-page mobile-category phone-view-all select-subject-dashboard-d3">
             <PageHeadWithMenu
               page={PageEnum.ViewAll}
-              user={this.props.user}
+              user={user}
               toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
               history={this.props.history}
             />
@@ -753,14 +754,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               })}
               <InfinityScrollCustom
                 searchString={this.state.searchString}
-                user={this.props.user}
+                user={user}
                 isCore={this.state.isCore}
                 subjects={this.state.subjects}
                 filterLevels={this.state.filterLevels}
                 filterLength={this.state.filterLength}
                 setBrick={(b: Brick) => {
-                  if (this.props.user && this.checkAssignment(b)) {
-                    this.props.history.push(map.postAssignment(b.id, this.props.user.id));
+                  if (user && this.checkAssignment(b)) {
+                    this.props.history.push(map.postAssignment(b.id, user.id));
                   } else {
                     this.props.history.push(routes.playBrief(b));
                   }
@@ -774,11 +775,17 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         </React.Suspense>
       );
     }
+
+    let isLibraryUser = false;
+    if (user && user.library) {
+      isLibraryUser = true;
+    }
+
     return (
       <div className="mobile-categorise">
         <PageHeadWithMenu
           page={PageEnum.ViewAll}
-          user={this.props.user}
+          user={user}
           toggleSearch={() => this.props.history.push(map.SearchPublishBrickPage)}
           history={this.props.history}
         />
