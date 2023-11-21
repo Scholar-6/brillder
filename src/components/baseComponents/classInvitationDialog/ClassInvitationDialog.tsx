@@ -77,7 +77,7 @@ const ClassInvitationDialog: React.FC<Props> = props => {
       className="dialog-box link-copied-dialog"
     >
       {currentInvitation && <Grid className="classroom-invitation" container direction="column" alignItems="center">
-        <h1><strong>You have been invited to a class.</strong></h1>
+        <h1><strong>You have been invited to a class</strong></h1>
         <div className="classroom-name">
           <h2>{currentInvitation.classroom.name}</h2>
         </div>
@@ -94,7 +94,7 @@ const ClassInvitationDialog: React.FC<Props> = props => {
         <CardHeader
           className="sent-by"
           avatar={<Avatar src={`${process.env.REACT_APP_AWS_S3_IMAGES_BUCKET_NAME}/files/${currentInvitation.sentBy.profileImage}`} />}
-          title={`sent by ${currentInvitation.sentBy.firstName} ${currentInvitation.sentBy.lastName}`}
+          title={`Sent by ${currentInvitation.sentBy.firstName} ${currentInvitation.sentBy.lastName}`}
         />
         <MobileStepper 
           variant="dots"
