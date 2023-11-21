@@ -26,4 +26,12 @@
       padding-bottom: 1.8vw;
     }
   }
+  .question-hint.wrong {
+    background: var(--theme-orange) !important;
+  }
+}
+
+// wrong hint
+.choose-one-live .choose-choice .question-hint.wrong {
+  background: var(--theme-yellow) !important;
 }

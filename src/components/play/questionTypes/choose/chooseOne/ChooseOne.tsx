@@ -15,6 +15,7 @@ import PairMatchImageContent from '../../pairMatch/PairMatchImageContent';
 import ZoomHelpText from '../../components/ZoomHelpText';
 import { isPhone } from 'services/phone';
 import { fileUrl } from 'components/services/uploadFile';
+import ChooseOneReviewEachHint from 'components/play/baseComponents/ChooseOneReviewEachHint';
 
 export interface ChooseOneComponent {
   type: number;
@@ -224,6 +225,8 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       isCorrect = false;
     }
 
+    console.log('answer corrent', this.props.liveAttempt, isCorrect);
+
     return (
       <div
         className={className}
@@ -237,7 +240,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       >
         {this.renderData(choice)}
         {this.props.isPreview ?
-          <ReviewEachHint
+          <ChooseOneReviewEachHint
             isPhonePreview={true}
             isReview={false}
             isCorrect={isCorrect}
@@ -245,7 +248,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
             hint={this.props.question.hint}
           />
           : this.props.isReview &&
-          <ReviewEachHint
+          <ChooseOneReviewEachHint
             isPhonePreview={false}
             isReview={true}
             isCorrect={isCorrect}
