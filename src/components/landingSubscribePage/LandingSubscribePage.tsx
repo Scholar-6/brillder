@@ -22,56 +22,21 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
       <div className="LandingSubscribePage">
         <div className="page1-1">
           <HomeButton link="/home" history={history} />
-          <div className="subc-title bold">Choose your Subscription. <span className="text-orange">Save 50%!</span></div>
+          <div className="subc-title bold">Subscribe to Brillder. <span className="text-orange">Save 50%!</span></div>
           {isPhone() ?
             <div className="subc-description">
-              <div>Trial Brillder for free - 6 complimentary credits for learners,</div>
-              <div>10 for teachers. When you run out of credits, you’re obviously</div>
-              <div>  hooked. It’s time to subscribe!</div>
+              <div>Brillder is for free to play!</div>
+              <div>But if you`re a teacher, you can also create up to 10 classes.</div>
+              <div>Subscribe to use Brillder without limits!</div>
+
+
             </div>
             :
             <div className="subc-description">
-              <div>Trial Brillder for free - 6 complimentary credits for learners, 10 for teachers.</div>
-              <div>When you run out of credits, you’re obviously hooked. It’s time to subscribe!</div>
+              <div>Brillder is for free to play! But if you`re a teacher, you can also create up to 10 classes.</div>
+              <div>Subscribe to use Brillder without limits!</div>
             </div>}
-          <div className="flex-center">
-            <div className="subc-help-text bold flex-center">
-              <div>Tell me about credits, brills and books</div>
-              <SpriteIcon name="help-circle-custom" />
-              <div className="absolute-subscription-hover">
-                <div className="bold">Credits, brills and books</div>
-                <div>
-                  Each brick costs 1 credit to play (as a learner) or assign (as a teacher). Competition bricks cost 2 credits to play. With every brick played, you earn brills, our reward points, by scoring 50% or more (65% = 65 brills). You can earn loads more brills by playing competition bricks (4 are set every week).  Brills can be collected, exchanged for more credits, or even cashed in if you earn loads through competitions. Your progress will  also be reflected in your Library - with each brick on which you score 50% or more you collect a personalised virtual book.
-                </div>
-              </div>
-            </div>
-          </div>
           <div className="subscribe-type-boxes">
-            <div>
-              <div className="subc-type dd-learner bold">Learner</div>
-              <div className="price-before">£99</div>
-              <div className="bold price-now">£49.99</div>
-              <div className="price-description">
-                Billed Annually
-              </div>
-
-              <div className="subsc-list">
-                <div><SpriteIcon name="check-icon" /> Play unlimited bricks *</div>
-                <div><SpriteIcon name="check-icon" /> Cash in Brills for prizes or additional credits</div>
-                <div><SpriteIcon name="check-icon" /> Collect unlimited books in your library</div>
-                <div><SpriteIcon name="check-icon" /> New content notifications</div>
-                <div><SpriteIcon name="check-icon" /> Access to weekly competitions</div>
-                <div><SpriteIcon name="check-icon" /> Unlimited replays of bricks in your library</div>
-              </div>
-
-              <div className="btn learner" onClick={() => {
-                history.push('/stripe-subscription/learner');
-              }}>Get Brillder for Learners</div>
-
-              <div className="subsc-small">
-                * You get 60 credits, but every brick you play earns brills, which are Brillder’s prize points. Brills can be exchanged for more credits or, if you have enough, for cash prizes. It’s almost impossible to run out of credits, but if you do we’ll top you up.
-              </div>
-            </div>
             <div>
               <div className="subc-type dd-teacher bold">Teacher</div>
               <div className="price-before">£129.99</div>
@@ -86,7 +51,7 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
                 <div><SpriteIcon name="check-icon" /> Priority requests for content</div>
                 <div><SpriteIcon name="check-icon" /> Free training on request</div>
                 <div><SpriteIcon name="check-icon" /> Adapt catalogue bricks or build personal bricks</div>
-                <div><SpriteIcon name="check-icon" /> Sell your best personal bricks to us</div>
+                <div><SpriteIcon name="check-icon" /> Help with publishing your personal bricks to the public catalogue</div>
               </div>
 
               <button className="btn teacher" onClick={() => {
@@ -94,7 +59,8 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
               }}>Get Brillder for Teachers</button>
 
               <div className="subsc-small">
-                Your students do not need to subscribe to play bricks which you set. All you need is a student email to assign them a brick. Many teachers recoup this outlay from departmental resources budgets. See institutional deals for multi-teacher packages.
+                Students do not need to sign in or subscribe to play bricks which you set, but you may invite them to sign up in order to more easily
+                monitor their progress. Many teachers recoup this outlay from departmental budgets. See institutional deals for multi-teacher packages.
               </div>
             </div>
           </div>
