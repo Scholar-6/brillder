@@ -6,19 +6,19 @@ import Menu from '@material-ui/core/Menu';
 import { isAuthenticated } from 'model/brick';
 import { Brick } from 'model/brick';
 import { User } from 'model/user';
-import { getCookies, acceptCookies } from 'localStorage/cookies';
+import { getCookies, acceptCookies, clearCookiePolicy } from 'localStorage/cookies';
 import { ReduxCombinedState } from 'redux/reducers';
 import { checkTeacherOrAdmin } from 'components/services/brickService';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
-import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
-import AssignSuccessDialog from 'components/baseComponents/dialogs/AssignSuccessDialog';
-import AssignFailedDialog from 'components/baseComponents/dialogs/AssignFailedDialog';
 import ShareDialogs from '../finalStep/dialogs/ShareDialogs';
-import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
 import FullScreenButton from 'components/baseComponents/pageHeader/fullScreenButton/FullScreen';
+import VolumeButton from 'components/baseComponents/VolumeButton';
+import { getAssignmentsCount } from 'services/axios/brick';
+import map from 'components/map';
+import LockedDialog from 'components/baseComponents/dialogs/LockedDialog';
 
 interface FooterProps {
   brick: Brick;
@@ -40,66 +40,62 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
     isInitCookieOpen = true;
   }
 
+  let canStopTrack = false;
+  if (props.isAuthenticated !== isAuthenticated.True && getCookies()) {
+    canStopTrack = true;
+  }
+
   const { brick, history } = props;
   const [exitPlay, setExit] = React.useState(false);
   const [cookieOpen, setCookiePopup] = React.useState(isInitCookieOpen);
+  const [assignedCount, setAssignedCount] = React.useState(-1);
+  const [noAassignmentsOpen, setNoAssignments] = React.useState(false);
+  const [cookieReOpen, setCookieReOpen] = React.useState(false);
 
   const [share, setShare] = React.useState(false);
 
   const [menuOpen, setMenu] = React.useState(false);
-  const [assign, setAssign] = React.useState(false);
-  const [assignItems, setAssignItems] = React.useState([] as any[]);
-  const [assignFailedItems, setAssignFailedItems] = React.useState([] as any[]);
-  const [assignSuccess, setAssignSuccess] = React.useState(false);
-  const [assignFailed, setAssignFailed] = React.useState(false);
+  
+  const prepare = async () => {
+    const count = await getAssignmentsCount();
+    if (count && count > 0) {
+      setAssignedCount(count);
+    } else {
+      setAssignedCount(0);
+    }
+  }
+
+  /*eslint-disable-next-line*/
+  React.useEffect(() => {
+    if (assignedCount === -1) {
+      prepare();
+    }
+  }, []);
 
   let canSee = false;
   try {
     canSee = checkTeacherOrAdmin(props.user);
   } catch { }
 
-  const renderPopups = () => {
-    return <div>
-      {canSee && <div>
-        <AssignPersonOrClassDialog
-          isOpen={assign}
-          history={history}
-          brick={props.brick}
-          submit={() => {}}
-          close={() => setAssign(false)}
-        />
-        <AssignSuccessDialog
-          isOpen={assignSuccess}
-          brickTitle={brick.title}
-          selectedItems={assignItems}
-          close={() => {
-            setAssignSuccess(false);
-            if (assignFailedItems.length > 0) {
-              setAssignFailed(true);
-            }
-          }}
-        />
-        <AssignFailedDialog
-          isOpen={assignFailed}
-          brickTitle={brick.title}
-          selectedItems={assignFailedItems}
-          close={() => {
-            setAssignFailedItems([]);
-            setAssignFailed(false);
-          }}
-        />
-      </div>}
-      <ShareDialogs
-        shareOpen={share}
-        brick={brick}
-        user={props.user}
-        close={() => setShare(false)}
-      />
-    </div>
-  }
-
-
   const renderFooter = () => {
+    if (props.isCover) {
+      return (
+        <div>
+          <svg />
+          <SpriteIcon name="logo" className="text-theme-orange" onClick={() => {
+            if (props.onlyLibrary && props.setLibrary) {
+              props.setLibrary();
+            } else {
+              setExit(true);
+            }
+          }} />
+          <SpriteIcon name="feather-share" className="gt-smaller" onClick={() => setShare(true)} />
+          <svg />
+          <SpriteIcon name="f-more-vertical" className="gt-smaller" onClick={() => setMenu(true)} />
+        </div>
+      );
+    }
+
     return (
       <div>
         <span>{/* Requires 6 SpriteIcons to keep spacing correct  */}</span>
@@ -114,24 +110,32 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
         {props.isCover && canSee && <svg />}
         <SpriteIcon name="feather-share" className="gt-smaller" onClick={() => setShare(true)} />
         {canSee
-          ? props.isCover
-            ? <SpriteIcon name="file-plus" className="gt-smaller" onClick={() => setAssign(true)} />
-            : <SpriteIcon name="f-more-vertical" className="gt-smaller" onClick={() => setMenu(true)} />
+          ? <SpriteIcon name="f-more-vertical" className="gt-smaller" onClick={() => setMenu(true)} />
           : <SpriteIcon name="" />
         }
-        <svg/>
-        <svg/>
-        {props.isCover ? canSee ? <GenerateCoverButton brick={brick} isSvg={true} /> : <svg /> :
-          <div
-            className="f-fixed-arrow-button"
-            onClick={props.next}
-          >
-            Next
-            <SpriteIcon name="arrow-right" className="text-white" />
-          </div>
-        }
+        <svg />
+        <svg />
+        <div
+          className="f-fixed-arrow-button"
+          onClick={props.next}
+        >
+          Next
+          <SpriteIcon name="arrow-right" className="text-white" />
+        </div>
       </div>
     );
+  }
+
+  const deleteAllCookies = () => {
+    const cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i];
+      var eqPos = cookie.indexOf("=");
+      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+    clearCookiePolicy();
   }
 
   return <div className="phone-play-footer phone-share-footer">
@@ -140,7 +144,6 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
       acceptCookies();
       setCookiePopup(false);
     }} />
-    {renderPopups()}
     <Menu
       className="phone-down-play-menu menu-dropdown"
       keepMounted
@@ -148,15 +151,47 @@ const PhonePlayShareFooter: React.FC<FooterProps> = (props) => {
       onClose={() => setMenu(false)}
     >
       <MenuItem onClick={() => {
-        setAssign(true);
+        if (assignedCount > 0) {
+          props.history.push(map.AssignmentsPage);
+        } else {
+          setNoAssignments(true);
+        }
+      }}>
+        My Assignments <SpriteIcon name="student-back-to-work" className={`active ${assignedCount > 0 ? 'text-white' : 'text-theme-dark-blue'}`} />
+      </MenuItem>
+      <MenuItem onClick={() => {
+        setShare(true);
         setMenu(false);
       }}>
-        Assign Brick <SpriteIcon name="file-plus" />
+        Share Brick <SpriteIcon name="feather-share" />
       </MenuItem>
+      {canStopTrack &&
+        <MenuItem onClick={() => {
+          deleteAllCookies();
+          setMenu(false);
+          setCookiePopup(true);
+          setCookieReOpen(true);
+        }}>
+          Stop Tracking <SpriteIcon name="feather-x-octagon" />
+        </MenuItem>}
+      <VolumeButton />
       <FullScreenButton />
-      {/*<GenerateCoverButton brick={brick} isMenuItem={true} />*/}
     </Menu>
     <ExitPlayDialog isOpen={exitPlay} history={history} subjectId={brick.subject?.id || brick.subjectId} close={() => setExit(false)} />
+    <LockedDialog
+      label="To unlock this, a brick needs to have been assigned to you"
+      isOpen={noAassignmentsOpen}
+      close={() => setNoAssignments(false)} />
+    <CookiePolicyDialog isOpen={cookieOpen} isReOpened={cookieReOpen} close={() => {
+      acceptCookies();
+      setCookiePopup(false);
+    }} />
+    <ShareDialogs
+        shareOpen={share}
+        brick={brick}
+        user={props.user}
+        close={() => setShare(false)}
+      />
   </div>;
 }
 
