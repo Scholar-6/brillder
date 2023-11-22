@@ -36,8 +36,8 @@ const AddMultipleToClassDialog: React.FC<AssignClassProps> = (props) => {
 
   const getClassrooms = async () => {
     const classrooms = await getAllClassrooms();
-    if (classrooms) {
-      setTopClassrooms(classrooms);
+    if (classrooms && classrooms.result) {
+      setTopClassrooms(classrooms.result);
     }
   }
 

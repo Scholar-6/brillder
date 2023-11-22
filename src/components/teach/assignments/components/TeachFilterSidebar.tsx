@@ -11,6 +11,7 @@ import { User } from "model/user";
 import SortButton from "./SortButton";
 import { Subject } from "model/brick";
 import { GetSortSidebarClassroom } from "localStorage/assigningClass";
+import { checkAdminOrInstitution } from "components/services/brickService";
 
 
 interface FilterSidebarProps {
@@ -18,6 +19,7 @@ interface FilterSidebarProps {
   user: User;
   history: any;
   subjects: Subject[];
+  myClassrooms: TeachClassroom[];
   classrooms: TeachClassroom[];
   activeClassroom: TeachClassroom | null;
   setActiveClassroom(id: number | null): void;
@@ -32,6 +34,7 @@ interface FilterSidebarState {
   sortByName: boolean | null;
   createClassOpen: boolean;
   sort: SortClassroom;
+  isMyClasses: boolean;
 }
 
 export enum SortClassroom {
@@ -62,6 +65,7 @@ class TeachFilterSidebar extends Component<
 
     this.state = {
       sortByName: null,
+      isMyClasses: false,
       sort: sort ? sort : SortClassroom.Date,
       createClassOpen: false,
     };
@@ -76,6 +80,7 @@ class TeachFilterSidebar extends Component<
     e.stopPropagation();
     e.preventDefault();
     let active = !activeClassroom.active;
+    console.log(activeClassroom)
     if (active === true) {
       this.props.setActiveClassroom(activeClassroom.id);
     }
@@ -117,7 +122,7 @@ class TeachFilterSidebar extends Component<
         >
           <div className={"classroom-name " + (c.active ? "icon-animated" : "")}>
             {this.renderClassoomSubject(c)}
-            <span className="filter-class-name" dangerouslySetInnerHTML={{ __html: c.name}}></span>
+            <span className="filter-class-name" dangerouslySetInnerHTML={{ __html: c.name }}></span>
           </div>
         </div>
       </div>
@@ -154,7 +159,11 @@ class TeachFilterSidebar extends Component<
 
   renderClassesBox() {
     const classrooms = this.props.classrooms.filter(c => c.status == ClassroomStatus.Active);
-    
+
+    const myClassrooms = this.props.myClassrooms.filter(c => c.status == ClassroomStatus.Active);
+
+    let isAdminOrInstitution = checkAdminOrInstitution(this.props.user.roles);
+
     return (
       <div className="sort-box teach-sort-box flex-height-box">
         <div className="sort-box">
@@ -164,6 +173,39 @@ class TeachFilterSidebar extends Component<
               Create Class
             </div>
           </div>
+          {isAdminOrInstitution &&
+            <div
+              className={
+                "index-box m-view-all flex-center " +
+                (!this.props.activeClassroom ? "active" : "")
+              }
+            >
+              <div className="label-34rerf font-14" onClick={e => this.unselectClassroom(e)}>
+                <FormControlLabel
+                  value={!this.props.activeClassroom}
+                  style={{ marginRight: 0 }}
+                  control={
+                    <Radio
+                      className="sortBy"
+                      checked={!this.props.activeClassroom}
+                    />
+                  }
+                  label={`My Classes (${myClassrooms.length})`}
+                />
+              </div>
+              <SortButton sortBy={this.state.sort} sort={(sort: SortClassroom) => {
+                this.setState({ sort });
+                this.props.sortClassrooms(sort);
+              }} />
+            </div>}
+        </div>
+        {isAdminOrInstitution && 
+        <div className="sort-box subject-scrollable">
+          <div className="filter-container indexes-box classrooms-filter">
+            {myClassrooms.map(this.renderClassroom.bind(this))}
+          </div>
+        </div>}
+        <div className="sort-box">
           <div
             className={
               "index-box m-view-all flex-center " +
@@ -173,7 +215,7 @@ class TeachFilterSidebar extends Component<
             <div className="label-34rerf font-14" onClick={e => this.unselectClassroom(e)}>
               <FormControlLabel
                 value={!this.props.activeClassroom}
-                style={{ marginRight: 0}}
+                style={{ marginRight: 0 }}
                 control={
                   <Radio
                     className="sortBy"
@@ -184,7 +226,7 @@ class TeachFilterSidebar extends Component<
               />
             </div>
             <SortButton sortBy={this.state.sort} sort={(sort: SortClassroom) => {
-              this.setState({sort});
+              this.setState({ sort });
               this.props.sortClassrooms(sort);
             }} />
           </div>

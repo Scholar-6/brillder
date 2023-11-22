@@ -23,6 +23,11 @@ export interface ClassroomApi {
   code?: string;
 }
 
+export interface ClassroomsResult {
+  result: ClassroomApi[];
+  adminResult: ClassroomApi[];
+}
+
 /**
  * Create Classroom
  * @param name name of classroom
@@ -78,13 +83,14 @@ export const getAllClassrooms = async () => {
       withCredentials: true,
     });
     if (res.data) {
-      let classrooms = (res.data as ClassroomApi[]);
+      let data = res.data as ClassroomsResult;
+      let classrooms = data.result;
       for (let classroom of classrooms) {
         for (let student of classroom.students as MUser[]) {
           student.selected = false;
         }
       }
-      return res.data as ClassroomApi[];
+      return res.data as ClassroomsResult;
     }
     return null;
   }

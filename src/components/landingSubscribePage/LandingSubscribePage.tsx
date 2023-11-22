@@ -25,15 +25,13 @@ const StripeCreditsPage: React.FC<any> = (props: StripePageProps) => {
           <div className="subc-title bold">Subscribe to Brillder. <span className="text-orange">Save 50%!</span></div>
           {isPhone() ?
             <div className="subc-description">
-              <div>Brillder is for free to play!</div>
-              <div>But if you`re a teacher, you can also create up to 10 classes.</div>
+              <div>Brillder is free to play!</div>
+              <div>But if you’re a teacher, you can also create up to 10 classes.</div>
               <div>Subscribe to use Brillder without limits!</div>
-
-
             </div>
             :
             <div className="subc-description">
-              <div>Brillder is for free to play! But if you`re a teacher, you can also create up to 10 classes.</div>
+              <div>Brillder is free to play! But if you’re a teacher, you can also create up to 10 classes.</div>
               <div>Subscribe to use Brillder without limits!</div>
             </div>}
           <div className="subscribe-type-boxes">

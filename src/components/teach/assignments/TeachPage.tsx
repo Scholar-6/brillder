@@ -78,6 +78,8 @@ interface TeachState {
   isAssignOpen: boolean;
   selectedClassroom: any;
 
+  myClassrooms: any[];
+
   shareClass: any;
 
   deleteClassOpen: boolean;
@@ -114,6 +116,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       isSearching,
       finalSearchString: '',
 
+      myClassrooms: [],
       classrooms: [],
       searchClassrooms: [],
       activeClassroom: null,
@@ -174,13 +177,20 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async loadClasses(activeClassId?: number, teacherId?: number) {
+    let myClassrooms = [] as TeachClassroom[];
     let classrooms = [] as TeachClassroom[] | null;
     if ((this.state.teacherId && this.state.teacherId > 0) || (teacherId && teacherId > 0)) {
       classrooms = await getTeacherClassrooms(this.state.teacherId || teacherId) as TeachClassroom[] | null;
     } else {
-      classrooms = await getAllClassrooms() as TeachClassroom[] | null;
+      let data = await getAllClassrooms();
+      if (data && data.result) {
+        classrooms = data.result as any[];
+      }
+      console.log('data', data);
+      if (data && data.adminResult) {
+        myClassrooms = data.adminResult as any[];
+      }
     }
-
 
     if (classrooms) {
       if (this.state.teacherId > 0) {
@@ -239,7 +249,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         classrooms = this.sortAndReturnClassrooms(sort, classrooms);
       }
 
-      this.setState({ classrooms, activeClassroom, isLoaded: true });
+      this.setState({ classrooms, myClassrooms, activeClassroom, isLoaded: true });
       return classrooms;
     } else {
       this.props.requestFailed('can`t get classrooms');
@@ -600,6 +610,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <TeachFilterSidebar
             user={this.props.user}
+            myClassrooms={this.state.myClassrooms}
             classrooms={showedClasses}
             isLoaded={this.state.isLoaded}
             subjects={this.props.subjects}

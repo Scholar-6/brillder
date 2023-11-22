@@ -53,8 +53,8 @@ const AddToClassDialog: React.FC<AssignClassProps> = (props) => {
   
   const setClasses = async () => {
     var classesV2 = await getAllClassrooms();
-    if (classesV2) {
-      setStandartClasses(classesV2.slice(0, 5));
+    if (classesV2 && classesV2.result) {
+      setStandartClasses(classesV2.result.slice(0, 5));
     }
   }
 
