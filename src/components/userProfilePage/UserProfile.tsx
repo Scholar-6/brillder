@@ -630,6 +630,19 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         );
       }
 
+      const institutionAdmin = this.state.user.roles.find(r => r === UserType.Institution);
+
+      if (institutionAdmin) {
+        return (
+          <div className="current-plan">
+            <span>
+              {renderLabel()} Institution Admin
+            </span>
+            {renderPremiumButton()}
+          </div>
+        );
+      }
+
       const institutionUser = this.state.user.roles.find(r => r === UserType.InstitutionUser);
 
       if (institutionUser) {
