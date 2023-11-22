@@ -134,66 +134,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     }
   };
 
-  const renderFirstRow = () => {
-    return (
-      <div className="first-row">
-        <div className="brick-id-container">
-          Brick N<sub className="smaller">o.</sub> {brick.id}
-        </div>
-        {/* 
-        <div className="mobile-credit-coins">
-          <ReactiveUserCredits />
-        </div>*/}
-        <div className="hover-area">
-          <SpriteIcon name="help-circle-custom" onClick={() => setFirstPhonePopup(true)} />
-          {!isPhone() &&
-            <div className="hover-content">
-              <div>A brick is a learning unit that should take either 20, 40, or 60 minutes to complete.</div>
-              <br />
-              <div>Bricks follow a cognitively optimised sequence:</div>
-              <div className="container">
-                <div className="white-circle">1</div>
-                <div className="l-text">
-                  Preparation: <span className="regular">stimulus content gets you in the zone.</span>
-                </div>
-              </div>
-              <div className="container">
-                <div className="white-circle">2</div>
-                <div className="l-text">
-                  Investigation: <span className="regular">challenging interactive questions make you think.</span>
-                </div>
-              </div>
-              <div className="container">
-                <div className="white-circle">3</div>
-                <div className="l-text">
-                  <span className="regular">A preliminary score</span>
-                </div>
-              </div>
-              <div className="container">
-                <div className="white-circle">4</div>
-                <div className="l-text">
-                  Synthesis: <span className="regular">explanation.</span>
-                </div>
-              </div>
-              <div className="container">
-                <div className="white-circle">5</div>
-                <div className="l-text">
-                  Review: <span className="regular">hints help you correct your answers.</span>
-                </div>
-              </div>
-              <div className="container">
-                <div className="white-circle">6</div>
-                <div className="l-text">
-                  <span className="regular">A final score</span>
-                </div>
-              </div>
-            </div>
-          }
-        </div>
-      </div>
-    );
-  };
-
   let isPublisher = false;
   if (user) {
     isPublisher = checkPublisher(user, brick);
@@ -255,7 +195,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       <React.Suspense fallback={<></>}>
         <MobileTheme />
         <div className="cover-page">
-          {renderFirstRow()}
           <div className="brick-title q-brick-title">
             <h1 dangerouslySetInnerHTML={{ __html: brick.title }} />
           </div>
@@ -276,7 +215,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
             <div className="cover-info-row">
               {renderBrickCircle()}
               <span>{brick.subject?.name}{brick.alternateSubject ? ` - ${brick.alternateSubject.name}` : ''}, Level {brick.academicLevel && AcademicLevelLabels[brick.academicLevel]}</span>
-              <SpriteIcon name="help-circle-custom" onClick={() => setSecondPhonePopup(true)} />
               {firstPhonePopup &&
                 <div className="mobile-help-container" onClick={() => setFirstPhonePopup(false)}>
                   <div>A brick is a learning unit that should take either 20, 40, or 60 minutes to complete.</div>
@@ -316,37 +254,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                     <div className="white-circle">6</div>
                     <div className="l-text">
                       <span className="regular">A final score</span>
-                    </div>
-                  </div>
-                </div>}
-              {secondPhonePopup &&
-                <div className="mobile-help-container second" onClick={() => setSecondPhonePopup(false)}>
-                  <div className="flex-content">
-                    <div>Brillder focusses on universal concepts and topics, not specific exam courses.</div>
-                    <br />
-                    <div>LEVELS:</div>
-                    <div className="container">
-                      <div className="white-circle">I</div>
-                      <div className="l-text">
-                        <div>Foundation</div>
-                        <div className="regular">For 15-16 yr-olds, equivalent to GCSE / IB Middle Years / High School Diploma</div>
-                      </div>
-                    </div>
-                    <br />
-                    <div className="container">
-                      <div className="white-circle">II</div>
-                      <div className="l-text">
-                        <div>Core</div>
-                        <div className="regular">For 17-18 yr-olds, equivalent to A-level / IB / High School Honors</div>
-                      </div>
-                    </div>
-                    <br />
-                    <div className="container">
-                      <div className="white-circle">III</div>
-                      <div className="l-text">
-                        <div>Extension</div>
-                        <div className="regular">College / Undergraduate level, to challenge Oxbridge (UK) or Advanced Placement (US) learners</div>
-                      </div>
                     </div>
                   </div>
                 </div>}

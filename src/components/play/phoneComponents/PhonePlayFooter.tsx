@@ -193,13 +193,6 @@ const PhonePlayFooter: React.FC<FooterProps> = (props) => {
       }}>
         Share Brick <SpriteIcon name="feather-share" />
       </MenuItem>
-      {canSee &&
-        <MenuItem onClick={() => {
-          setAssign(true);
-          setMenu(false);
-        }}>
-          Assign Brick <SpriteIcon name="file-plus" />
-        </MenuItem>}
       {canStopTrack &&
         <MenuItem onClick={() => {
           deleteAllCookies();
