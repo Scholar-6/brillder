@@ -128,9 +128,9 @@ class PostDesktopPlay extends React.Component<ProposalProps, ProposalState> {
     let classroom = null;
     if (classId) {
       const classrooms = await getAllClassrooms();
-      if (classrooms) {
+      if (classrooms && classrooms.result) {
         /*eslint-disable-next-line*/
-        var found = classrooms.find(c => c.id == classId);
+        var found = classrooms.result.find(c => c.id == classId);
         if (found) {
           classroom = found;
         }
