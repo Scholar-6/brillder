@@ -16,7 +16,9 @@
   width: auto;
   @include flexCenter;
   @include tabletP {
-    padding: 5vh 0;
+    padding: 0;
+    margin-top: 1.3vw;
+    margin-bottom: 0vw;
   }
   button {
     display: block;
@@ -33,7 +35,7 @@
   }
   .btn svg {
     width: 8.7vw;
-    height: 7vw;
+    height: 6.5vw;
     @include phone_and_tabletP {
       width: 150px;
       height: 120px;
