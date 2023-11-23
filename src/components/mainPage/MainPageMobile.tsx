@@ -332,8 +332,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <Grid item xs={6} className="btn-center-v4 rrr-b2">
             {this.renderAssignmentsButton()}
           </Grid>
-          <Grid item xs={12} className="btn-center-v4 rrr-b3">
+          <Grid item xs={6} className="btn-center-v4 rrr-b3">
             {this.renderLibraryButton()}
+          </Grid>
+          <Grid item xs={6} className="btn-center-v4 rrr-b3">
+            {this.renderCompetitionButton()}
           </Grid>
         </Grid>
       );
@@ -397,8 +400,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         <Grid item xs={6} className="btn-center-v4 rrr-b2">
           {this.renderAssignmentsButton()}
         </Grid>
-        <Grid item xs={12} className="btn-center-v4 rrr-b3">
+        <Grid item xs={6} className="btn-center-v4 rrr-b3">
           {this.renderLibraryButton()}
+        </Grid>
+        <Grid item xs={6} className="btn-center-v4 rrr-b3">
+          {this.renderCompetitionButton()}
         </Grid>
       </Grid>
     );
