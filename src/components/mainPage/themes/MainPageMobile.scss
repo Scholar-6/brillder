@@ -224,6 +224,9 @@
           height: 17vw;
           padding-bottom: 2vw;
         }
+        .item-description {
+          font-family: $font-family-light !important;
+        }
       }
   
       .assignments-btn {
@@ -237,6 +240,9 @@
           &.disabled {
             color: var(--theme-light-blue);
           }
+        }
+        .item-description {
+          font-family: $font-family-light !important;
         }
       }
 
@@ -265,6 +271,7 @@
   
       .my-library-button {
         svg {
+          padding-top: 1.5vw;
           width: 30vw;
           height: 17vw;
           padding-bottom: 2vw;
@@ -272,6 +279,18 @@
 
         &.disabled svg {
           color: var(--theme-light-blue);
+        }
+      }
+
+      
+      .competition-item-container {
+        svg {
+          width: 30vw;
+          height: 21vw;
+        }
+        .btn .item-description {
+          font-size: 6vw !important;
+          font-family: $font-family-light !important;
         }
       }
     }
