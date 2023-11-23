@@ -2194,3 +2194,32 @@
     }
   }
 }
+
+@media (min-aspect-ratio: 2.05) and (max-aspect-ratio: 100) {
+  .create-classroom-dialog {
+    .MuiDialog-paperScrollPaper {
+      max-height: 100% !important;
+    }
+    .dialog-header {
+      padding-top: 1vh !important;
+      padding-bottom: 1vh !important;
+      .or-text-v2 {
+        line-height: 1 !important;
+        margin-top: 1vh !important;
+        margin-bottom: 0 !important;
+      }
+      .left-padding-v2 {
+        line-height: 1 !important;
+      }
+      .r-student-emails {
+        .MuiFormControl-root {
+          max-height: 12vh !important;
+          .MuiOutlinedInput-root {
+            height: 12vh !important;
+          }
+        }
+      }
+    }
+  }
+}
+
