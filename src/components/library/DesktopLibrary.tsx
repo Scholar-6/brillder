@@ -464,17 +464,18 @@ class Library extends Component<BricksListProps, BricksListState> {
     if (this.state.subjectChecked) {
       const subject = this.state.subjects.find(s => s.checked === true);
       if (subject) {
-        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
-        if (subjectAssignment) {
-          for (let assignment of subjectAssignment.assignments) {
-            number += assignment.numberOfAttempts;
-          }
+        let played = subject.playedCount;
+        if (played > 0) {
+          number += played;
         }
       }
     } else {
-      for (let assign of this.state.finalAssignments) {
-        if (assign.numberOfAttempts) {
-          number += assign.numberOfAttempts;
+      for (let subject of this.state.subjects) {
+        if (subject) {
+          let played = subject.playedCount;
+          if (played > 0) {
+            number += played;
+          }
         }
       }
     }
