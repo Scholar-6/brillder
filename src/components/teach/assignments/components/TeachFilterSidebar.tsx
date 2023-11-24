@@ -11,15 +11,17 @@ import { User } from "model/user";
 import SortButton from "./SortButton";
 import { Subject } from "model/brick";
 import { GetSortSidebarClassroom } from "localStorage/assigningClass";
-import { checkAdminOrInstitution } from "components/services/brickService";
+import { checkAdminOrInstitution, checkRealInstitution } from "components/services/brickService";
 
 export enum ClassroomChoice {
   MyClasses = 1,
+  Domain,
   AllClasses,
 }
 
 export interface ClassroomSelect {
   value: string;
+  domain: string;
   type: ClassroomChoice;
 }
 
@@ -42,7 +44,7 @@ interface FilterSidebarProps {
   totalCount: number;
   selectedChoice: ClassroomChoice;
   moveToPage(page: number): void;
-  classGroupSelected(choice: ClassroomChoice): void;
+  classGroupSelected(choice: ClassroomChoice, domain: string): void;
 }
 
 interface FilterSidebarState {
@@ -93,6 +95,22 @@ class TeachFilterSidebar extends Component<
         value: 'My Classes',
         type: ClassroomChoice.MyClasses
       } as ClassroomSelect);
+
+      let isInstitution = checkRealInstitution(this.props.user.roles);
+
+      if (isInstitution) {
+        let domains = this.props.user.instituitonDomains;
+        if (domains) {
+          for (let domain of domains) {
+            classroomChoices.push({
+              value: domain,
+              domain: domain,
+              type: ClassroomChoice.Domain
+            } as ClassroomSelect);
+          }
+        }
+      }
+
       classroomChoices.push({
         value: 'All Classes',
         type: ClassroomChoice.AllClasses
@@ -198,18 +216,23 @@ class TeachFilterSidebar extends Component<
 
   renderPagination() {
     let lastPage = (this.props.page + 1) * 100;
+    let endLimit = this.props.totalCount > (this.props.page + 1) * 100;
+    
     return (
       <div className="sort-box">
         <div className="index-box m-view-all flex-center pagination">
-          <span onClick={() => {
-            if (this.props.page > 1) {
-              this.props.moveToPage(this.props.page - 1);
-            }
-          }}>&lt;</span> {1 + (this.props.page * 100)}-{lastPage < this.props.totalCount ? lastPage : this.props.totalCount} | {this.props.totalCount} <span onClick={() => {
-            if (this.props.totalCount > (this.props.page + 1) * 100) {
-              this.props.moveToPage(this.props.page + 1);
-            }
-          }}>&gt;</span>
+          {this.props.page >= 1 &&
+            <span onClick={() => {
+              if (this.props.page >= 1) {
+                this.props.moveToPage(this.props.page - 1);
+              }
+            }}>&lt;</span>
+          } {1 + (this.props.page * 100)}-{lastPage < this.props.totalCount ? lastPage : this.props.totalCount} | {this.props.totalCount} {endLimit &&
+            <span onClick={() => {
+              if (endLimit) {
+                this.props.moveToPage(this.props.page + 1);
+              }
+            }}>&gt;</span>}
         </div>
       </div>
     );
@@ -241,7 +264,7 @@ class TeachFilterSidebar extends Component<
                 onChange={e => {
                   const selectedChoice = e.target.value as ClassroomSelect;
                   this.setState({ selectedChoice });
-                  this.props.classGroupSelected(selectedChoice.type);
+                  this.props.classGroupSelected(selectedChoice.type, selectedChoice.domain);
                 }}
               >
                 {this.state.classroomChoices.map((c, i) => <MenuItem value={c as any} key={i}>{c.value}</MenuItem>)}

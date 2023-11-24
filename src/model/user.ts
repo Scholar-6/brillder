@@ -104,6 +104,8 @@ export interface User extends UserBase {
   classroomInvitations?: any[];
 
   attempts: any[];
+
+  instituitonDomains?: string[];
 }
 
 export interface UserProfile extends UserBase {
