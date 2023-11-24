@@ -88,6 +88,7 @@ interface TeachState {
   teacherId: number;
 
   selectedChoice: ClassroomChoice;
+  selectedDomain: string;
   isAdminOrInstitution: boolean;
   page: number;
   totalCount: number;
@@ -119,6 +120,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     this.state = {
       isAdminOrInstitution,
+      selectedDomain: '',
       selectedChoice: ClassroomChoice.AllClasses,
 
       isSearching,
@@ -270,23 +272,22 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
-  async loadClassesV2(selectedChoice:ClassroomChoice, page: number) {
+  async loadClassesV2(selectedChoice:ClassroomChoice, page: number, selectedDomain: string) {
     let totalCount = this.state.totalCount;
     let classrooms = [] as TeachClassroom[] | null;
-    let data = await getAdminClassrooms(selectedChoice, page);
+    let data = await getAdminClassrooms(selectedChoice, page, selectedDomain);
     if (data && data.result) {
       classrooms = data.result as any[];
       totalCount = data.count;
     }
 
     if (classrooms) {
-      this.setState({ classrooms, selectedChoice, page, totalCount, activeClassroom: null, isLoaded: true });
+      this.setState({ classrooms, selectedChoice, page, totalCount, selectedDomain, activeClassroom: null, isLoaded: true });
       return classrooms;
     } else {
       this.props.requestFailed('can`t get classrooms');
     }
   }
-
 
   async loadClass(id: number | null) {
     let classrooms = await this.loadClasses();
@@ -661,13 +662,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 this.setActiveClassroom(-1);
               }
             }}
-            classGroupSelected={type => {
-              this.loadClassesV2(type, 0);
+            classGroupSelected={(type, domain) => {
+              this.loadClassesV2(type, 0, domain);
             }}
             page={this.state.page}
             totalCount={this.state.totalCount}
             moveToPage={page => {
-              this.loadClassesV2(this.state.selectedChoice, page);
+              this.loadClassesV2(this.state.selectedChoice, page, this.state.selectedDomain);
             }}
           />
           {this.renderData()}
