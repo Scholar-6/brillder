@@ -232,16 +232,6 @@ html body #root .browser-type-container .my-library .sorted-row .brick-row-conta
         }
       }
     }
-
-    .ls-score {
-      margin-left: 1vw;
-
-      .CircularProgressbar {
-        .CircularProgressbar-path {
-          stroke: var(--theme-orange);
-        }
-      }
-    }
   }
 
   .library-title {

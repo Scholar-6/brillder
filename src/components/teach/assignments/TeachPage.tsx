@@ -11,14 +11,14 @@ import actions from 'redux/actions/requestFailed';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { ClassroomStatus, TeachClassroom } from "model/classroom";
-import { getAllClassrooms, getAssignmentsClassrooms, getTeacherClassrooms, searchClassrooms } from "components/teach/service";
-import { getDateString } from "components/services/brickService";
+import { getAdminClassrooms, getAllClassrooms, getAssignmentsClassrooms, getTeacherClassrooms, searchClassrooms } from "components/teach/service";
+import { checkAdminOrInstitution, getDateString } from "components/services/brickService";
 import map from "components/map";
 import { deleteClassroom } from "services/axios/classroom";
 import { getClassAssignedCount } from "./service/service";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import TeachFilterSidebar, { SortClassroom } from './components/TeachFilterSidebar';
+import TeachFilterSidebar, { ClassroomChoice, SortClassroom } from './components/TeachFilterSidebar';
 import ClassroomList from './components/ClassroomList';
 import EmptyTabContent from "./components/EmptyTabContent";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -78,8 +78,6 @@ interface TeachState {
   isAssignOpen: boolean;
   selectedClassroom: any;
 
-  myClassrooms: any[];
-
   shareClass: any;
 
   deleteClassOpen: boolean;
@@ -88,6 +86,11 @@ interface TeachState {
   isPremiumDialogOpen: boolean;
 
   teacherId: number;
+
+  selectedChoice: ClassroomChoice;
+  isAdminOrInstitution: boolean;
+  page: number;
+  totalCount: number;
 }
 
 class TeachPage extends Component<TeachProps, TeachState> {
@@ -112,11 +115,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
       isSearching = true;
     }
 
+    let isAdminOrInstitution = checkAdminOrInstitution(this.props.user.roles);
+
     this.state = {
+      isAdminOrInstitution,
+      selectedChoice: ClassroomChoice.AllClasses,
+
       isSearching,
       finalSearchString: '',
 
-      myClassrooms: [],
       classrooms: [],
       searchClassrooms: [],
       activeClassroom: null,
@@ -136,6 +143,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       searchString: props.searchString,
       searchType: ClassroomSearchType.Any,
+
+      page: 0,
+      totalCount: 0,
 
       deleteClassOpen: false,
       classroomToRemove: null,
@@ -177,18 +187,22 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async loadClasses(activeClassId?: number, teacherId?: number) {
-    let myClassrooms = [] as TeachClassroom[];
+    let totalCount = 0;
     let classrooms = [] as TeachClassroom[] | null;
     if ((this.state.teacherId && this.state.teacherId > 0) || (teacherId && teacherId > 0)) {
       classrooms = await getTeacherClassrooms(this.state.teacherId || teacherId) as TeachClassroom[] | null;
     } else {
-      let data = await getAllClassrooms();
-      if (data && data.result) {
-        classrooms = data.result as any[];
-      }
-      console.log('data', data);
-      if (data && data.adminResult) {
-        myClassrooms = data.adminResult as any[];
+      if (this.state.isAdminOrInstitution) {
+        let data = await getAdminClassrooms(this.state.selectedChoice, this.state.page);
+        if (data && data.result) {
+          classrooms = data.result as any[];
+          totalCount = data.count;
+        }
+      } else {
+        let data = await getAllClassrooms();
+        if (data && data.result) {
+          classrooms = data.result as any[];
+        }
       }
     }
 
@@ -249,12 +263,28 @@ class TeachPage extends Component<TeachProps, TeachState> {
         classrooms = this.sortAndReturnClassrooms(sort, classrooms);
       }
 
-      this.setState({ classrooms, myClassrooms, activeClassroom, isLoaded: true });
+      this.setState({ classrooms, activeClassroom, totalCount, isLoaded: true });
       return classrooms;
     } else {
       this.props.requestFailed('can`t get classrooms');
     }
   }
+
+  async loadClassesV2(selectedChoice:ClassroomChoice, page: number) {
+    let classrooms = [] as TeachClassroom[] | null;
+    let data = await getAdminClassrooms(selectedChoice, page);
+    if (data && data.result) {
+      classrooms = data.result as any[];
+    }
+
+    if (classrooms) {
+      this.setState({ classrooms, selectedChoice, page, activeClassroom: null, isLoaded: true });
+      return classrooms;
+    } else {
+      this.props.requestFailed('can`t get classrooms');
+    }
+  }
+
 
   async loadClass(id: number | null) {
     let classrooms = await this.loadClasses();
@@ -610,10 +640,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <Grid container direction="row" className="sorted-row back-to-work-teach">
           <TeachFilterSidebar
             user={this.props.user}
-            myClassrooms={this.state.myClassrooms}
             classrooms={showedClasses}
             isLoaded={this.state.isLoaded}
             subjects={this.props.subjects}
+            selectedChoice={this.state.selectedChoice}
             history={this.props.history}
             activeClassroom={this.state.activeClassroom}
             setActiveClassroom={this.setActiveClassroom.bind(this)}
@@ -628,6 +658,14 @@ class TeachPage extends Component<TeachProps, TeachState> {
               } else {
                 this.setActiveClassroom(-1);
               }
+            }}
+            classGroupSelected={type => {
+              this.loadClassesV2(type, this.state.page);
+            }}
+            page={this.state.page}
+            totalCount={this.state.totalCount}
+            moveToPage={page => {
+              this.loadClassesV2(this.state.selectedChoice, page);
             }}
           />
           {this.renderData()}

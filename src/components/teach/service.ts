@@ -3,6 +3,7 @@ import { Subject } from "model/brick";
 import { User } from "model/user";
 
 import { MUser } from "./model";
+import { ClassroomChoice } from "./assignments/components/TeachFilterSidebar";
 
 export interface ClassroomApi {
   created: string;
@@ -25,7 +26,7 @@ export interface ClassroomApi {
 
 export interface ClassroomsResult {
   result: ClassroomApi[];
-  adminResult: ClassroomApi[];
+  count: number;
 }
 
 /**
@@ -99,6 +100,31 @@ export const getAllClassrooms = async () => {
   }
 }
 
+/**
+ * Get top 100 admin classrooms
+ * return list of classrooms if success or null if failed
+ */
+export const getAdminClassrooms = async (type: ClassroomChoice, page: number, domain?: string) => {
+  try {
+    const res = await axios.post(process.env.REACT_APP_BACKEND_HOST + "/adminClassrooms/", { type, domain, page }, {
+      withCredentials: true,
+    });
+    if (res.data) {
+      let data = res.data as ClassroomsResult;
+      let classrooms = data.result;
+      for (let classroom of classrooms) {
+        for (let student of classroom.students as MUser[]) {
+          student.selected = false;
+        }
+      }
+      return res.data as ClassroomsResult;
+    }
+    return null;
+  }
+  catch (e) {
+    return null;
+  }
+}
 
 /**
  * Get top 100 classrooms by teacher
