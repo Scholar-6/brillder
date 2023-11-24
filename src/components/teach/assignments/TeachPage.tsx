@@ -271,14 +271,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async loadClassesV2(selectedChoice:ClassroomChoice, page: number) {
+    let totalCount = this.state.totalCount;
     let classrooms = [] as TeachClassroom[] | null;
     let data = await getAdminClassrooms(selectedChoice, page);
     if (data && data.result) {
       classrooms = data.result as any[];
+      totalCount = data.count;
     }
 
     if (classrooms) {
-      this.setState({ classrooms, selectedChoice, page, activeClassroom: null, isLoaded: true });
+      this.setState({ classrooms, selectedChoice, page, totalCount, activeClassroom: null, isLoaded: true });
       return classrooms;
     } else {
       this.props.requestFailed('can`t get classrooms');
@@ -660,7 +662,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
               }
             }}
             classGroupSelected={type => {
-              this.loadClassesV2(type, this.state.page);
+              this.loadClassesV2(type, 0);
             }}
             page={this.state.page}
             totalCount={this.state.totalCount}

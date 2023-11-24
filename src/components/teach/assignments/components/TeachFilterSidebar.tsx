@@ -312,6 +312,7 @@ class TeachFilterSidebar extends Component<
     if (!this.props.isLoaded) {
       return <div></div>;
     }
+
     if (this.props.isLoaded && this.props.classrooms.length === 0) {
       return <EmptyFilter createClassToggle={() => this.setState({ createClassOpen: true })} />;
     }
