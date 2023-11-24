@@ -71,6 +71,29 @@
 .manage-classrooms-page .m-view-all.flex-center {
   display: flex !important;
   justify-content: flex-start;
+  
+  .selected-class-group {
+    margin-left: 1vw;
+    background: white;
+    border-radius: 0.5vw;
+    color: var(--theme-dark-blue);
+    margin-right: 3.5vw;
+
+    &::before {
+      display: none !important;
+    }
+    &::after {
+      display: none !important;
+    }
+
+    .MuiSelect-root {
+      padding-left: 0.5vw;
+      padding-top: 0.3vw !important;
+      padding-bottom: 0.3vw !important;
+      width: 10vw;
+    }
+  }
+
   .label-34rerf {
     width: 85%;
 
@@ -101,6 +124,14 @@
       display: block;
       opacity: 1;
     }
+  }
+
+  &.pagination {
+    background: var(--theme-light-blue) !important;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1vw;
+    border-top: 2px solid rgba(222, 222, 222, 0.2);
   }
 }
 

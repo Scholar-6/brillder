@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormControlLabel, Grid, Radio } from "@material-ui/core";
+import { FormControlLabel, Grid, MenuItem, Radio, Select } from "@material-ui/core";
 
 import "./TeachFilterSidebar.scss";
 import { ClassroomStatus, TeachClassroom } from "model/classroom";
@@ -13,13 +13,21 @@ import { Subject } from "model/brick";
 import { GetSortSidebarClassroom } from "localStorage/assigningClass";
 import { checkAdminOrInstitution } from "components/services/brickService";
 
+export enum ClassroomChoice {
+  MyClasses = 1,
+  AllClasses,
+}
+
+export interface ClassroomSelect {
+  value: string;
+  type: ClassroomChoice;
+}
 
 interface FilterSidebarProps {
   isLoaded: boolean;
   user: User;
   history: any;
   subjects: Subject[];
-  myClassrooms: TeachClassroom[];
   classrooms: TeachClassroom[];
   activeClassroom: TeachClassroom | null;
   setActiveClassroom(id: number | null): void;
@@ -28,6 +36,13 @@ interface FilterSidebarProps {
   sortClassrooms(sort: SortClassroom): void;
 
   viewAll(): void;
+
+  // admin
+  page: number;
+  totalCount: number;
+  selectedChoice: ClassroomChoice;
+  moveToPage(page: number): void;
+  classGroupSelected(choice: ClassroomChoice): void;
 }
 
 interface FilterSidebarState {
@@ -35,6 +50,8 @@ interface FilterSidebarState {
   createClassOpen: boolean;
   sort: SortClassroom;
   isMyClasses: boolean;
+  selectedChoice: ClassroomSelect | null;
+  classroomChoices: ClassroomSelect[];
 }
 
 export enum SortClassroom {
@@ -63,18 +80,40 @@ class TeachFilterSidebar extends Component<
 
     const sort = GetSortSidebarClassroom();
 
+    if (sort) {
+      this.props.sortClassrooms(sort);
+    }
+
+    let selectedChoice: ClassroomSelect | null = null;
+    let classroomChoices: ClassroomSelect[] = [];
+
+    let isAdminOrInstitution = checkAdminOrInstitution(this.props.user.roles);
+    if (isAdminOrInstitution) {
+      classroomChoices.push({
+        value: 'My Classes',
+        type: ClassroomChoice.MyClasses
+      } as ClassroomSelect);
+      classroomChoices.push({
+        value: 'All Classes',
+        type: ClassroomChoice.AllClasses
+      } as ClassroomSelect);
+
+      let choice = classroomChoices.find(c => c.type == props.selectedChoice);
+      if (!choice) {
+        choice = classroomChoices[0];
+      }
+      selectedChoice = choice;
+    }
+
     this.state = {
+      selectedChoice,
+      classroomChoices,
       sortByName: null,
       isMyClasses: false,
       sort: sort ? sort : SortClassroom.Date,
       createClassOpen: false,
     };
-
-    if (sort) {
-      this.props.sortClassrooms(sort);
-    }
   }
-
 
   toggleClassroom(e: any, activeClassroom: TeachClassroom) {
     e.stopPropagation();
@@ -157,12 +196,71 @@ class TeachFilterSidebar extends Component<
     return this.renderPremiumBox();
   }
 
+  renderPagination() {
+    let lastPage = (this.props.page + 1) * 100;
+    return (
+      <div className="sort-box">
+        <div className="index-box m-view-all flex-center pagination">
+          <span onClick={() => {
+            if (this.props.page > 1) {
+              this.props.moveToPage(this.props.page - 1);
+            }
+          }}>&lt;</span> {1 + (this.props.page * 100)}-{lastPage < this.props.totalCount ? lastPage : this.props.totalCount} | {this.props.totalCount} <span onClick={() => {
+            if (this.props.totalCount > (this.props.page + 1) * 100) {
+              this.props.moveToPage(this.props.page + 1);
+            }
+          }}>&gt;</span>
+        </div>
+      </div>
+    );
+  }
+
   renderClassesBox() {
     const classrooms = this.props.classrooms.filter(c => c.status == ClassroomStatus.Active);
 
-    const myClassrooms = this.props.myClassrooms.filter(c => c.status == ClassroomStatus.Active);
-
     let isAdminOrInstitution = checkAdminOrInstitution(this.props.user.roles);
+
+    if (isAdminOrInstitution) {
+      return (
+        <div className="sort-box teach-sort-box flex-height-box">
+          <div className="sort-box">
+            <div className="top-row-v5">
+              <div className="text bold font-20">CLASSES</div>
+              <div className="btn btn-orange font-16" onClick={() => this.setState({ createClassOpen: true })}>
+                Create Class
+              </div>
+            </div>
+          </div>
+          <div className="sort-box">
+            <div className={"index-box m-view-all flex-center " + (!this.props.activeClassroom ? "active" : "")}>
+              <div>Show:</div>
+              <Select
+                className="selected-class-group"
+                value={this.state.selectedChoice}
+                MenuProps={{ classes: { paper: 'select-time-list' } }}
+                onChange={e => {
+                  const selectedChoice = e.target.value as ClassroomSelect;
+                  this.setState({ selectedChoice });
+                  this.props.classGroupSelected(selectedChoice.type);
+                }}
+              >
+                {this.state.classroomChoices.map((c, i) => <MenuItem value={c as any} key={i}>{c.value}</MenuItem>)}
+              </Select>
+              <SortButton sortBy={this.state.sort} sort={(sort: SortClassroom) => {
+                this.setState({ sort });
+                this.props.sortClassrooms(sort);
+              }} />
+            </div>
+          </div>
+          <div className="sort-box subject-scrollable">
+            <div className="filter-container indexes-box classrooms-filter">
+              {classrooms.map(this.renderClassroom.bind(this))}
+            </div>
+          </div>
+          {this.renderPagination()}
+        </div>
+      );
+    }
 
     return (
       <div className="sort-box teach-sort-box flex-height-box">
@@ -173,38 +271,7 @@ class TeachFilterSidebar extends Component<
               Create Class
             </div>
           </div>
-          {isAdminOrInstitution &&
-            <div
-              className={
-                "index-box m-view-all flex-center " +
-                (!this.props.activeClassroom ? "active" : "")
-              }
-            >
-              <div className="label-34rerf font-14" onClick={e => this.unselectClassroom(e)}>
-                <FormControlLabel
-                  value={!this.props.activeClassroom}
-                  style={{ marginRight: 0 }}
-                  control={
-                    <Radio
-                      className="sortBy"
-                      checked={!this.props.activeClassroom}
-                    />
-                  }
-                  label={`My Classes (${myClassrooms.length})`}
-                />
-              </div>
-              <SortButton sortBy={this.state.sort} sort={(sort: SortClassroom) => {
-                this.setState({ sort });
-                this.props.sortClassrooms(sort);
-              }} />
-            </div>}
         </div>
-        {isAdminOrInstitution && 
-        <div className="sort-box subject-scrollable">
-          <div className="filter-container indexes-box classrooms-filter">
-            {myClassrooms.map(this.renderClassroom.bind(this))}
-          </div>
-        </div>}
         <div className="sort-box">
           <div
             className={

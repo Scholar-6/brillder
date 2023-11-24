@@ -582,48 +582,6 @@ class Library extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  lowestScore() {
-    let number = 100;
-
-    if (this.state.subjectChecked) {
-      const subject = this.state.subjects.find(s => s.checked === true);
-      if (subject) {
-        const subjectAssignment = this.state.subjectAssignments.find(sa => sa.subject.id === subject.id);
-        if (subjectAssignment) {
-          for (let assign of subjectAssignment.assignments) {
-            if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 0 && assign.bestAttemptPercentScore < number) {
-              number = assign.bestAttemptPercentScore;
-            }
-          }
-        }
-      }
-    } else {
-      for (let assign of this.state.finalAssignments) {
-        if (assign.bestAttemptPercentScore && assign.bestAttemptPercentScore >= 0 && assign.bestAttemptPercentScore < number) {
-          number = assign.bestAttemptPercentScore;
-        }
-      }
-    }
-    
-    return (
-      <div className="flex-center hs-score ls-score">
-        <div className="custom-tooltip bold">
-          <div>Lowest Score</div>
-        </div>
-        LS
-        <div className="score-container-v5">
-          <CircularProgressbar
-            strokeWidth={12}
-            counterClockwise={true}
-            value={number}
-          />
-          <div className="score-absolute">{Math.round(number)}</div>
-        </div>
-      </div>
-    );
-  }
-
-
   render() {
     if (this.state.isLoading) {
       return <PageLoader content="...Getting Bricks..." />;
@@ -667,7 +625,6 @@ class Library extends Component<BricksListProps, BricksListState> {
                 <div className="absolute-scores">
                   {this.highestScore()}
                   {this.averageScore()}
-                  {this.lowestScore()}
                 </div>
               </div>
               {this.renderContent()}
