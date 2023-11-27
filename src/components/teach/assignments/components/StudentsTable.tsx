@@ -5,6 +5,7 @@ import { Assignment, TeachStudent } from "model/classroom";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BookDialog from "./BookDialog";
 import { TeachListItem } from "./ClassroomList";
+import moment from "moment";
 
 export interface BookData {
   open: boolean;
@@ -114,7 +115,30 @@ class StudentsTable extends Component<StudentsProps, State> {
       if (studentResult) {
         const attempt = studentResult.attempts[0];
 
-        console.log(studentResult, attempt);
+        let duration = 0;
+        if (attempt.liveDuration) {
+          duration = attempt.liveDuration;
+        }
+        if (attempt.reviewDuration) {
+          duration += attempt.reviewDuration;
+        }
+
+        duration = 125000;
+
+        let seconds = 0;
+        let minutes = 0;
+
+        if (duration) {
+          seconds = Math.round(duration / 1000) % 60;
+        }
+        if (duration >= 6000) {
+          minutes = Math.floor(duration / 60000);
+        }
+
+        let time = seconds + 's';
+        if (minutes > 0) {
+          time = minutes + 'm' + time;
+        }
 
         return (
           <tr className="user-row" key={index}>
@@ -130,6 +154,7 @@ class StudentsTable extends Component<StudentsProps, State> {
                 </td>
             )}
             <td><div className="centered">{Math.round(attempt.percentScore)}</div></td>
+            <td><div className="centered">{duration > 0 ? time : ''}</div></td>
             <td className="center-icon-box-r434">
               <SpriteIcon name="eye-filled" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.classItem.assignment }})}/>
             </td>
