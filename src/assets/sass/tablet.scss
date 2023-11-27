@@ -1703,3 +1703,15 @@ html body #root .browser-type-container .sorted-row .brick-row-container.teach-t
     }
   }
 }
+
+// student assignment teacher page
+.only-manage-classes-page .user-row {
+  .duration-time {
+    font-size: 1.1vw !important;
+  }
+  .two-lines {
+    line-height: 1.1;
+    font-size: 1vw !important;
+    text-align: center;
+  }
+}
