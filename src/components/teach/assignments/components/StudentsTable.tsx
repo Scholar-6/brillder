@@ -123,8 +123,6 @@ class StudentsTable extends Component<StudentsProps, State> {
           duration += attempt.reviewDuration;
         }
 
-        duration = 125000;
-
         let seconds = 0;
         let minutes = 0;
 
@@ -154,7 +152,12 @@ class StudentsTable extends Component<StudentsProps, State> {
                 </td>
             )}
             <td><div className="centered">{Math.round(attempt.percentScore)}</div></td>
-            <td><div className="centered">{duration > 0 ? time : ''}</div></td>
+            <td><div className="centered duration-time">{duration > 0 ? time : ''}</div></td>
+            <td>
+              <div className="centered two-lines">
+                {attempt.timestamp ? moment(attempt.timestamp).format('h:mm DD.MM.YY') : ''}
+              </div>
+            </td>
             <td className="center-icon-box-r434">
               <SpriteIcon name="eye-filled" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.classItem.assignment }})}/>
             </td>
@@ -190,7 +193,7 @@ class StudentsTable extends Component<StudentsProps, State> {
                 </div>
               </th>
               <th className="icon-header-r234">
-                <SpriteIcon name="clock" />
+                <SpriteIcon name="calendar-v2" />
                 <div className="css-custom-tooltip first">
                   Time stamp
                 </div>
