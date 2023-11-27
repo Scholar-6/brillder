@@ -110,8 +110,11 @@ class StudentsTable extends Component<StudentsProps, State> {
     if (this.props.classItem.assignment.byStudent) {
       const studentResult = this.props.classItem.assignment.byStudent.find((s: any) => s.studentId == student.id);
 
+
       if (studentResult) {
         const attempt = studentResult.attempts[0];
+
+        console.log(studentResult, attempt);
 
         return (
           <tr className="user-row" key={index}>
@@ -126,16 +129,6 @@ class StudentsTable extends Component<StudentsProps, State> {
                   </div>
                 </td>
             )}
-            <td>
-              <div className="centered">
-                {this.renderInvestigationScore(attempt)}
-              </div>
-            </td>
-            <td>
-              <div className="centered">
-                 {attempt.score && attempt.oldScore && Math.round(attempt.score / attempt.maxScore * 100)}
-              </div>
-            </td>
             <td><div className="centered">{Math.round(attempt.percentScore)}</div></td>
             <td className="center-icon-box-r434">
               <SpriteIcon name="eye-filled" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.classItem.assignment }})}/>
@@ -160,21 +153,21 @@ class StudentsTable extends Component<StudentsProps, State> {
                   <th key={i}>{i + 1}</th>
               )}
               <th className="icon-header-r234">
-                <SpriteIcon name="empty-hourglass" />
+                <SpriteIcon name="percentage" />
                 <div className="css-custom-tooltip first">
-                  Investigation
+                  Percentage score
                 </div>
               </th>
               <th className="icon-header-r234">
-                <SpriteIcon name="half-hourglass" />
-                <div className="css-custom-tooltip second">
-                  Review
+                <SpriteIcon name="clock" />
+                <div className="css-custom-tooltip first">
+                  Time
                 </div>
               </th>
               <th className="icon-header-r234">
-                <SpriteIcon name="full-hourglass" />
-                <div className="css-custom-tooltip third">
-                  Final
+                <SpriteIcon name="clock" />
+                <div className="css-custom-tooltip first">
+                  Time stamp
                 </div>
               </th>
               <th className="icon-header-r234"></th>

@@ -518,6 +518,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (competitionId > -1) {
       ba.competitionId = competitionId;
     }
+
+
+    const now = moment().add(getLiveTime(brick.brickLength), 'minutes');
+    const dif = moment.duration(now.diff(liveEndTime));
+    console.log('duration', dif, (dif as any)._milliseconds);
+
+    ba.liveDuration = (dif as any)._milliseconds;
+
     const promise = createBrickAttempt(ba);
     settingLiveDuration();
     return promise;
@@ -532,6 +540,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setStatus(PlayStatus.Ending);
     saveReviewBrickAttempt(ba);
     settingReviewDuration();
+
+    const now = moment().add(getReviewTime(brick.brickLength), 'minutes');
+    const dif = moment.duration(now.diff(reviewEndTime));
+    ba.reviewDuration = (dif as any)._milliseconds;
 
     // cashing review question answer could be faster. delay added.
     setTimeout(() => {
