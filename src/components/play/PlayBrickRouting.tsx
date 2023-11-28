@@ -72,8 +72,6 @@ import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthor
 import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import VolumeButton from "components/baseComponents/VolumeButton";
-import BuyCreditsDialog from "./baseComponents/dialogs/BuyCreditsDialog";
-import ConvertBrillsDialog from "./baseComponents/dialogs/ConvertBrillsDialog";
 import { isAorP } from "components/services/brickService";
 import { checkCompetitionActive } from "services/competition";
 
@@ -321,12 +319,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }));
   }
 
-  const showInitDialogs = async () => {
-    if (props.user && props.user.freeAttemptsLeft <= 0) {
-      setPremiumLOpen(true);
-    }
-  }
-
   const getBestScore = async () => {
     if (props.user) {
       const attempts = await getAttempts(brick.id, props.user.id);
@@ -430,8 +422,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   // only cover page should have big sidebar
   useEffect(() => {
-    showInitDialogs();
-
     if (!isPhone()) {
       let { pathname } = history.location;
       if (pathname.search(PlayCoverLastPrefix) === -1) {
@@ -1088,38 +1078,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     className += " sorted-row-expanded";
   }
 
-  const renderCreditPopup = () => {
-    const { user } = props;
-    if (user && !isAorP(user.roles)) {
-      return <BuyCreditsDialog
-        isOpen={isPremiumLOpen}
-        competitionId={activeCompetition?.id}
-        user={user}
-        history={history}
-        convert={() => {
-          setPremiumLOpen(false);
-          setConvertBrills(true);
-        }}
-        close={() => setPremiumLOpen(false)}
-      />
-    }
-    return '';
-  }
-
-  const renderConvertBrills = () => {
-    const { user } = props;
-    if (user) {
-      return <ConvertBrillsDialog
-        isOpen={converBrillsOpen}
-        competitionId={activeCompetition?.id}
-        user={user}
-        submit={() => { }}
-        close={() => setConvertBrills(false)}
-      />
-    }
-    return '';
-  }
-
   return (
     <React.Suspense fallback={<></>}>
       {isIPad13 || isTablet ? <TabletTheme /> : isMobile ? <MobileTheme /> : <DesktopTheme />}
@@ -1190,8 +1148,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           label="You might already have an account, try signing in."
         />
       </div>
-      {renderCreditPopup()}
-      {renderConvertBrills()}
       <AdaptedBrickAssignedDialog assignment={adaptedBrickAssignment} history={history} close={() => setAdaptedBrickAssignment(null)} />
       {assignClass && <BottomAssignmentPopup 
         history={props.history}

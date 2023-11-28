@@ -28,14 +28,14 @@ const QuillGlobalToolbar: React.FC<QuillGlobalToolbarProps> = props => {
         const element = elements[0];
         const editorElement = element.getElementsByClassName("quill")[0].getElementsByClassName("ql-container")[0];
         const newQuill = GlobalQuill.find(editorElement) as Quill;
-        // const reactProps = getReactPropsByNode(element);
-        // const toolbar = reactProps.toolbar;
         const toolbarString = element.getAttribute("data-toolbar");
         if(!toolbarString) return [newQuill, []];
 
         const toolbar = toolbarString.split(",");
         return [newQuill, toolbar];
     }, [currentQuillId]);
+
+    console.log(44, enabled);
 
     return (
         <QuillToolbar

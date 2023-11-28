@@ -223,7 +223,7 @@ const QuestionComponents = ({
         disabled={locked}
         availableOptions={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'align', 'image', 'table'
+          'latex', 'bulletedList', 'numberedList', 'blockQuote', 'align', 'image', 'table', 'codeBlock'
         ]}
       />
       <div className="questions" ref={scrollRef}>

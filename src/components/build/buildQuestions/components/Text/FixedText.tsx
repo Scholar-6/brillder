@@ -53,7 +53,7 @@ const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, dat
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
           'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table', 'align',
-          'uploadImageCustom', 'image'
+          'uploadImageCustom', 'image', 'codeBlock'
         ]}
         placeholder="Introduce your question"
         imageDialog={true}
