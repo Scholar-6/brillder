@@ -512,7 +512,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
     const now = moment().add(getLiveTime(brick.brickLength), 'minutes');
     const dif = moment.duration(now.diff(liveEndTime));
-    console.log('duration', dif, (dif as any)._milliseconds);
 
     ba.liveDuration = (dif as any)._milliseconds;
 
@@ -1201,7 +1200,6 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
           }
           c.list.map((c, i) => c.index = i);
           c.list = shuffle(c.list);
-          console.log('shuffle choose one');
         }
       });
     } else if (
@@ -1258,6 +1256,30 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
               isCorrect = checkCorrect();
               if (isCorrect) {
                 c.choices = shuffle(choices);
+                if (isCorrect) {
+                  isCorrect = checkCorrect();
+                  c.choices = shuffle(choices);
+                  if (isCorrect) {
+                    isCorrect = checkCorrect();
+                    c.choices = shuffle(choices);
+                    if (isCorrect) {
+                      isCorrect = checkCorrect();
+                      c.choices = shuffle(choices);
+                      if (isCorrect) {
+                        isCorrect = checkCorrect();
+                        c.choices = shuffle(choices);
+                        if (isCorrect) {
+                          isCorrect = checkCorrect();
+                          c.choices = shuffle(choices);
+                          if (isCorrect) {
+                            isCorrect = checkCorrect();
+                            c.choices = shuffle(choices);
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }

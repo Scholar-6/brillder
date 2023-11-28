@@ -187,7 +187,7 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
 
   renderStudent(u: User) {
     if (u) {
-      return u.firstName + ' ' + u.lastName;
+      return u.firstName + ' ' + (u.lastName ? u.lastName : '');
     }
     return '';
   }
