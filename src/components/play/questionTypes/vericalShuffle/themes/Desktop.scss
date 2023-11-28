@@ -110,7 +110,9 @@
   .image-caption-v4 {
     overflow-x: hidden;
     text-overflow: ellipsis;
-    width: 55vw;
+    width: 100%;
+    font-size: 1.4vw !important;
+    line-height: 1.25 !important;
   
     > div {
       display: inline;
