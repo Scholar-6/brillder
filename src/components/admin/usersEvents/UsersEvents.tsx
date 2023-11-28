@@ -414,20 +414,6 @@ class UsersPage extends Component<UsersProps, UsersState> {
             <span className="brills-count">{u.brills}</span>
             {this.renderBrillCoinIcon()}
           </div>
-          {/* 
-          <div className="credits-column">
-            <div className="desktop-credit-coins" onClick={() => {
-              this.setState({
-                creditDetails: {
-                  isOpen: true,
-                  userId: u.id
-                }
-              })
-            }}>
-              <SpriteIcon name="circle-lines" />
-              <span>{u.freeAttemptsLeft > 99 ? '99+' : u.freeAttemptsLeft}</span>
-            </div>
-          </div>*/}
           <div className="activity-column">
             <div className={`attempts-count-box ${u.attempts.length > 0 ? '' : 'whiter'}`} onClick={() => {
               if (u.attempts.length > 0) {
@@ -513,12 +499,6 @@ class UsersPage extends Component<UsersProps, UsersState> {
               <div>Brills</div>
               <div><SpriteIcon name="sort-arrows" onClick={() => {
                 this.orderBy("brillCoin.credits");
-              }} /></div>
-            </div>
-            <div className="credits-column header">
-              <div>Credits</div>
-              <div><SpriteIcon name="sort-arrows" onClick={() => {
-                this.orderBy("subscription.brickCredits");
               }} /></div>
             </div>
             <div className="activity-column header">
@@ -691,21 +671,6 @@ class UsersPage extends Component<UsersProps, UsersState> {
             </button>
           </div>
         </Dialog>
-        {/*
-        <AddingCreditsDialog isOpen={this.state.creditDetails.isOpen} userId={this.state.creditDetails.userId}
-          onClose={credits => {
-            if (credits) {
-              let user = this.state.users.find(u => u.id === this.state.creditDetails.userId);
-              if (user) {
-                user.freeAttemptsLeft += credits;
-              }
-            }
-            let creditDetails = {
-              isOpen: false,
-              userId: -1
-            } as CreditDetails;
-            this.setState({ creditDetails, users: this.state.users });
-          }} />*/}
         {this.renderClassroomPopup()}
         <StudentInviteSuccessDialog
           numStudentsInvited={this.state.resentClassroomInvite ? 1 : 0}
