@@ -10,7 +10,6 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { ReduxCombinedState } from 'redux/reducers';
 import CookiePolicyDialog from 'components/baseComponents/policyDialog/CookiePolicyDialog';
 import ExitPlayDialog from '../baseComponents/dialogs/ExitPlayDialog';
-import GenerateCoverButton from '../baseComponents/sidebarButtons/GenerateCoverButton';
 import MusicAutoplay from 'components/baseComponents/MusicAutoplay';
 
 
@@ -47,12 +46,11 @@ const PhonePlaySimpleFooter: React.FC<FooterProps> = (props) => {
         <SpriteIcon name="logo" className="text-theme-orange" onClick={() => setExit(true)} />
         <SpriteIcon name="" />
         <SpriteIcon name="" />
-        {/*props.showQRCode && <GenerateCoverButton brick={brick} isSvg={true} />*/}
         <SpriteIcon name="" />
         <SpriteIcon name="" />
         {props.music && <MusicAutoplay url={props.music} />}
         <div
-          className="f-fixed-arrow-button"
+          className="f-fixed-arrow-button long-arrow-text"
           onClick={props.next}
         >
           {props.btnText}

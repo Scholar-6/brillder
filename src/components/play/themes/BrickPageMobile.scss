@@ -424,6 +424,10 @@ $new-play-height: calc(100% - #{$play-footer-height}); // - #{$progress-bar-heig
     svg {
       width: 11vw !important;
     }
+
+    &.long-arrow-text {
+      width: 55vw !important;
+    }
   }
   // only ending page scroll fix
   .sorted-row
