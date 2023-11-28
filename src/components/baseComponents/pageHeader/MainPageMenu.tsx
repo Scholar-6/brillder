@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { SubscriptionState, User } from "model/user";
+import { User } from "model/user";
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux'
 
@@ -18,8 +18,6 @@ import { PageEnum } from './PageHeadWithMenu';
 import { isMobile } from "react-device-detect";
 import NotificationPanel from "../notificationPanel/NotificationPanel";
 import BrillIconAnimated from "../BrillIconAnimated";
-import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
-import ConvertCreditsDialog from "./convertCreditsDialog/ConvertCreditsDialog";
 import { isPhone } from "services/phone";
 import { isAuthenticated } from "model/assignment";
 

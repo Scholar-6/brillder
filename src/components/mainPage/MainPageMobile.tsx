@@ -25,7 +25,6 @@ import SubscribedDialog from "./components/SubscibedDialog";
 import PersonalBrickInvitationDialog from "components/baseComponents/classInvitationDialog/PersonalBrickInvitationDialog";
 import { checkAdmin } from "components/services/brickService";
 import { fileUrl } from "components/services/uploadFile";
-import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,

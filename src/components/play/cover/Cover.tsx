@@ -15,7 +15,6 @@ import CoverTimer from "./CoverTimer";
 import MathInHtml from "../baseComponents/MathInHtml";
 import CompetitionDialog from "./components/CompetitionDialog";
 import CoverCreditsPlay from "./components/coverAuthorRow/CoverCreditsPlay";
-import ReactiveUserCredits from "components/userProfilePage/ReactiveUserCredits";
 
 import map from "components/map";
 import { isPhone } from "services/phone";
