@@ -9,7 +9,6 @@ import ImageUpload from './QuillImageUpload';
 import DesmosModule from './QuillDesmos';
 import { QuillValidColors } from './QuillEditor';
 import QuillCapitalization from './QuillCapitalization';
-import LineStyleDialog from 'components/build/buildQuestions/questionTypes/highlighting/wordHighlighting/LineStyleDialog';
 import SoundUpload from './QuillSoundUpload';
 
 interface QuillToolbarProps {
@@ -27,40 +26,44 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
 
     React.useEffect(() => {
         const onSelectChange = (range: RangeStatic) => {
-            if(range) {
+            if (range) {
                 update();
             }
         }
         props.quill?.on("selection-change", onSelectChange);
         return () => { props.quill?.off("selection-change", onSelectChange); }
-    /*eslint-disable-next-line*/
+        /*eslint-disable-next-line*/
     }, [props.quill]);
 
 
     const quillHandler = React.useCallback((format: string, value?: string) => {
-        if(!props.quill) return;
-        if(format === "image") {
+        if (!props.quill) return;
+        if (format === "image") {
             const imageUpload = props.quill.getModule("imageupload") as ImageUpload;
             imageUpload.uploadHandler(toolbarNode.current);
             return true;
-        } else if(format === "sound") {
+        } else if (format === "sound") {
             const soundUpload = props.quill.getModule("soundupload") as SoundUpload;
             soundUpload.uploadHandler(toolbarNode.current);
             return true;
-        } else if(format === "desmos") {
+        } else if (format === "desmos") {
             const desmos = props.quill.getModule("desmos") as DesmosModule;
             desmos.newGraphHandler();
             return true;
-        } else if(format === "table") {
+        } else if (format === "table") {
             const betterTable = props.quill.getModule("better-table");
             betterTable.insertTable(2, 2);
             return true;
-        } else if(format === "caps") {
+        } else if (format === "caps") {
+            const capitalization = props.quill.getModule("capitalization") as QuillCapitalization;
+            capitalization.format(value);
+            return true;
+        } else if (format === "codeBlock") {
             const capitalization = props.quill.getModule("capitalization") as QuillCapitalization;
             capitalization.format(value);
             return true;
         }
-        if(props.quill.getFormat()[format] === (value ?? true) || value === "left") {
+        if (props.quill.getFormat()[format] === (value ?? true) || value === "left") {
             props.quill.format(format, false, "user");
             return false;
         } else {
@@ -71,13 +74,15 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
 
     const format = React.useMemo(() => {
         const selection = props.quill?.getSelection(false);
-        if(selection) {
+        if (selection) {
             return props.quill?.getFormat(selection ?? undefined);
         } else {
             return null;
         }
-    //eslint-disable-next-line
+        //eslint-disable-next-line
     }, [props.quill, id]);
+
+    console.log(format)
 
     const toolbarItems: { [key: string]: any } = React.useMemo(() => ({
         bold: (props: any) => <QuillToolbarButton name="bold" {...props} />,
@@ -107,6 +112,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             <option value="lower">Lower</option>
             <option value="title">Title</option>
         </QuillToolbarAlignSelect>,
+        codeBlock: (props: any) => <QuillToolbarButton name="image" icon="image" {...props} />,
     }), []);
 
     return (
