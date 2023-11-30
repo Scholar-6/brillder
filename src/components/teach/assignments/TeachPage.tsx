@@ -92,6 +92,8 @@ interface TeachState {
   isAdminOrInstitution: boolean;
   page: number;
   totalCount: number;
+
+  sort: number;
 }
 
 class TeachPage extends Component<TeachProps, TeachState> {
@@ -118,6 +120,10 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
     let isAdminOrInstitution = checkAdminOrInstitution(this.props.user.roles);
 
+    let sortD = GetSortSidebarClassroom();
+
+    let sort = sortD ? sortD : SortClassroom.Name;
+
     this.state = {
       isAdminOrInstitution,
       selectedDomain: '',
@@ -125,6 +131,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       isSearching,
       finalSearchString: '',
+
+      sort,
 
       classrooms: [],
       searchClassrooms: [],
@@ -195,7 +203,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       classrooms = await getTeacherClassrooms(this.state.teacherId || teacherId) as TeachClassroom[] | null;
     } else {
       if (this.state.isAdminOrInstitution) {
-        let data = await getAdminClassrooms(this.state.selectedChoice, this.state.page);
+        let data = await getAdminClassrooms(this.state.selectedChoice, this.state.page, this.state.sort);
         if (data && data.result) {
           classrooms = data.result as any[];
           totalCount = data.count;
@@ -272,10 +280,19 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
-  async loadClassesV2(selectedChoice:ClassroomChoice, page: number, selectedDomain: string) {
+  async loadClassesV2(selectedChoice: ClassroomChoice, page: number, selectedDomain: string, sort: number, searchString?: string) {
     let totalCount = this.state.totalCount;
     let classrooms = [] as TeachClassroom[] | null;
-    let data = await getAdminClassrooms(selectedChoice, page, selectedDomain);
+
+    let searchStringR = '';
+    if (searchString) {
+      searchStringR = searchString;
+    }
+    if (this.state.isSearching && this.state.searchString) {
+      searchStringR = this.state.searchString;
+    }
+    const data = await getAdminClassrooms(selectedChoice, page, sort, selectedDomain, searchStringR);
+
     if (data && data.result) {
       classrooms = data.result as any[];
       totalCount = data.count;
@@ -430,9 +447,13 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   sortClassrooms(sort: SortClassroom) {
-    const classrooms = this.state.classrooms.filter(c => c.status == ClassroomStatus.Active);
-    const finalClasses = this.sortAndReturnClassrooms(sort, classrooms);
-    this.setState({ ...this.state, classrooms: finalClasses });
+    if (this.state.isAdminOrInstitution) {
+      this.loadClassesV2(this.state.selectedChoice, 0, this.state.selectedDomain, sort);
+    } else {
+      const classrooms = this.state.classrooms.filter(c => c.status == ClassroomStatus.Active);
+      const finalClasses = this.sortAndReturnClassrooms(sort, classrooms);
+      this.setState({ ...this.state, classrooms: finalClasses });
+    }
   }
 
   sortAndReturnClassrooms(sort: SortClassroom, classrooms: TeachClassroom[]) {
@@ -459,11 +480,15 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async search() {
-    let classrooms = await searchClassrooms(this.state.searchString, this.state.searchType) as TeachClassroom[] | null;
-    if (classrooms) {
-      this.setState({ ...this.state, isSearching: true, finalSearchString: this.state.searchString, isLoaded: true, activeClassroom: null, searchClassrooms: classrooms });
+    if (this.state.isAdminOrInstitution) {
+      this.loadClassesV2(this.state.selectedChoice, 0, this.state.selectedDomain, this.state.sort, this.state.searchString);
     } else {
-      // failed
+      let classrooms = await searchClassrooms(this.state.searchString, this.state.searchType) as TeachClassroom[] | null;
+      if (classrooms) {
+        this.setState({ ...this.state, isSearching: true, finalSearchString: this.state.searchString, isLoaded: true, activeClassroom: null, searchClassrooms: classrooms });
+      } else {
+        // failed
+      }
     }
   }
   //#endregion
@@ -644,6 +669,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           <TeachFilterSidebar
             user={this.props.user}
             classrooms={showedClasses}
+            isSearching={this.state.isSearching}
             isLoaded={this.state.isLoaded}
             subjects={this.props.subjects}
             selectedChoice={this.state.selectedChoice}
@@ -663,12 +689,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
               }
             }}
             classGroupSelected={(type, domain) => {
-              this.loadClassesV2(type, 0, domain);
+              this.loadClassesV2(type, 0, domain, this.state.sort);
             }}
             page={this.state.page}
             totalCount={this.state.totalCount}
             moveToPage={page => {
-              this.loadClassesV2(this.state.selectedChoice, page, this.state.selectedDomain);
+              this.loadClassesV2(this.state.selectedChoice, page, this.state.selectedDomain, this.state.sort);
             }}
           />
           {this.renderData()}

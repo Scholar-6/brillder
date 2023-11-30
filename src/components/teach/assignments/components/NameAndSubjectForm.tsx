@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { checkAdmin } from 'components/services/brickService';
+import { checkAdminOrInstitution } from 'components/services/brickService';
 import { User } from 'model/user';
 import { connect } from 'react-redux';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -68,7 +68,7 @@ const NameAndSubjectForm: React.FC<NameAndSubjectFormProps> = props => {
       <div className="name-subject-display">
         <div className="name-and-edit-btn">
           <h1 className="name-display" dangerouslySetInnerHTML={{__html: props.classroom!.name}} />
-          {(checkAdmin(user.roles) && props.classroom!.teachers) &&
+          {(checkAdminOrInstitution(user.roles) && props.classroom!.teachers) &&
             <span className="class-creator">Created by <span className="creator-name">{props.classroom!.teachers[0].firstName} {props.classroom!.teachers[0].lastName}</span></span>
           }
           <span className="edit-icon" onClick={startEditing}>

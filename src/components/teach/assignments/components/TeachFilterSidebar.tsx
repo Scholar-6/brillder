@@ -37,6 +37,7 @@ interface FilterSidebarProps {
   loadClass(classId: number): void;
   sortClassrooms(sort: SortClassroom): void;
 
+  isSearching: boolean;
   viewAll(): void;
 
   // admin
@@ -54,6 +55,7 @@ interface FilterSidebarState {
   isMyClasses: boolean;
   selectedChoice: ClassroomSelect | null;
   classroomChoices: ClassroomSelect[];
+  isAdminOrInstitution: boolean;
 }
 
 export enum SortClassroom {
@@ -98,8 +100,9 @@ class TeachFilterSidebar extends Component<
 
       let isInstitution = checkRealInstitution(this.props.user.roles);
 
+      let domains:string[] = [];
       if (isInstitution) {
-        let domains = this.props.user.instituitonDomains;
+        domains = this.props.user.instituitonDomains ? this.props.user.instituitonDomains : [];
         if (domains) {
           for (let domain of domains) {
             classroomChoices.push({
@@ -111,10 +114,15 @@ class TeachFilterSidebar extends Component<
         }
       }
 
-      classroomChoices.push({
-        value: 'All Classes',
-        type: ClassroomChoice.AllClasses
-      } as ClassroomSelect);
+      // instution with one domain don`t need all classes in dropdown
+      if (domains && domains.length === 1) {
+
+      } else {
+        classroomChoices.push({
+          value: 'All Classes',
+          type: ClassroomChoice.AllClasses
+        } as ClassroomSelect);
+      }
 
       let choice = classroomChoices.find(c => c.type == props.selectedChoice);
       if (!choice) {
@@ -124,6 +132,7 @@ class TeachFilterSidebar extends Component<
     }
 
     this.state = {
+      isAdminOrInstitution,
       selectedChoice,
       classroomChoices,
       sortByName: null,
@@ -215,6 +224,9 @@ class TeachFilterSidebar extends Component<
   }
 
   renderPagination() {
+    if (this.props.isSearching) {
+      return '';
+    }
     let lastPage = (this.props.page + 1) * 100;
     let endLimit = this.props.totalCount > (this.props.page + 1) * 100;
     
@@ -241,9 +253,7 @@ class TeachFilterSidebar extends Component<
   renderClassesBox() {
     const classrooms = this.props.classrooms.filter(c => c.status == ClassroomStatus.Active);
 
-    let isAdminOrInstitution = checkAdminOrInstitution(this.props.user.roles);
-
-    if (isAdminOrInstitution) {
+    if (this.state.isAdminOrInstitution) {
       return (
         <div className="sort-box teach-sort-box flex-height-box">
           <div className="sort-box">
@@ -336,7 +346,7 @@ class TeachFilterSidebar extends Component<
       return <div></div>;
     }
 
-    if (this.props.isLoaded && this.props.classrooms.length === 0) {
+    if (this.props.isLoaded && this.props.classrooms.length === 0 && !this.state.isAdminOrInstitution) {
       return <EmptyFilter createClassToggle={() => this.setState({ createClassOpen: true })} />;
     }
 
