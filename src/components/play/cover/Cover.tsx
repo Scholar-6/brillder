@@ -52,12 +52,12 @@ const TabletTheme = React.lazy(() => import('./themes/CoverTabletTheme'));
 const DesktopTheme = React.lazy(() => import('./themes/CoverDesktopTheme'));
 
 const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
+  let intervalAuth = 45000;
+
   const [competitionData, setCompetitionData] = useState(null as any);
   const [bioOpen, setBio] = useState(false);
   const [editorBioOpen, setEditorBio] = useState(false);
   const [onlyLibrary, setOnlyLibrary] = useState(false);
-  const [assignClassId, setAssignClassId] = useState(-1);
-  const [onlyAssignBricks, setOnlyAssignBricks] = useState(false);
 
   const {user} = props;
 
@@ -78,12 +78,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
     if (values.origin === 'library') {
       setOnlyLibrary(true);
     }
-    if (values["assigning-bricks"]) {
-      setAssignClassId(parseInt(values["assigning-bricks"] as string))
-      if (values["only-bricks"]) {
-        setOnlyAssignBricks(true);
-      }
-    }
     getInvitations();
   }, []);
 
@@ -92,7 +86,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [unauthorizedOpenV2, setUnauthorizedV2] = useState(false);
 
   const [firstPhonePopup, setFirstPhonePopup] = useState(false);
-  const [secondPhonePopup, setSecondPhonePopup] = useState(false);
 
   useEffect(() => {
     function handleMove(e: any) {
@@ -103,20 +96,24 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
       }
     }
 
-    // not a user and not an assignment
-    const userTimeout = setTimeout(() => {
-      if (!user && !assignment) {
-        setUnauthorizedV2(true);
-      }
-    }, 5000);
-
     document.addEventListener("keydown", handleMove, false);
 
     return function cleanup() {
       document.removeEventListener("keydown", handleMove, false);
-      clearTimeout(userTimeout);
     };
   });
+
+  useEffect(() => {
+    const userTimeout = setTimeout(() => {
+      if (!user && !assignment) {
+        setUnauthorizedV2(true);
+      }
+    }, 35000);
+
+    return function cleanup() {
+      clearTimeout(userTimeout);
+    };
+  }, []);
 
   useEffect(() => {
     if (props.activeCompetition && competitionData === null) {
@@ -271,12 +268,18 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           competitionId={props.competitionId}
           close={() => {
             setUnauthorizedV2(false);
+            setTimeout(() => {
+              setUnauthorizedV2(true);
+            }, intervalAuth);
           }}
           notyet={() => {
             if (playClicked) {
               startBrick()
             } else {
               setUnauthorizedV2(false);
+              setTimeout(() => {
+                setUnauthorizedV2(true);
+              }, intervalAuth)
             }
             setUnauthPopupShown(true);
           }}
@@ -405,12 +408,18 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         isOpen={unauthorizedOpenV2}
         close={() => {
           setUnauthorizedV2(false);
+          setTimeout(() => {
+            setUnauthorizedV2(true);
+          }, intervalAuth);
         }}
         notyet={() => {
           if (playClicked) {
             startBrick();
           } else {
             setUnauthorizedV2(false);
+            setTimeout(() => {
+              setUnauthorizedV2(true);
+            }, intervalAuth);
           }
           setUnauthPopupShown(true);
         }}
