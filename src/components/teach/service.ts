@@ -104,9 +104,9 @@ export const getAllClassrooms = async () => {
  * Get top 100 admin classrooms
  * return list of classrooms if success or null if failed
  */
-export const getAdminClassrooms = async (type: ClassroomChoice, page: number, domain?: string) => {
+export const getAdminClassrooms = async (type: ClassroomChoice, page: number, sortBy: number | null, domain?: string, searchString?: string) => {
   try {
-    const res = await axios.post(process.env.REACT_APP_BACKEND_HOST + "/adminClassrooms/", { type, domain, page }, {
+    const res = await axios.post(process.env.REACT_APP_BACKEND_HOST + "/adminClassrooms/", { type, sortBy, domain, page, searchString }, {
       withCredentials: true,
     });
     if (res.data) {

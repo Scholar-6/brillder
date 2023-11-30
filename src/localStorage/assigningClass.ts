@@ -1,4 +1,3 @@
-import { SortClassroom } from 'components/admin/bricksPlayed/BricksPlayedSidebar';
 import {AssigningClassrooms, SidebarAssignmentsSort, SidebarClassroomSort} from './types';
 
 export function GetAssigningClassrooms() {
