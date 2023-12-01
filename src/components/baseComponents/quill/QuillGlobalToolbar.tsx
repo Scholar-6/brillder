@@ -5,14 +5,6 @@ import { QuillEditorContext } from './QuillEditorContext';
 import _ from 'lodash';
 import QuillToolbar from './QuillToolbar';
 
-// const getReactPropsByNode = (node: any) => {
-//     for(const key in node) {
-//         if(key.startsWith("__reactInternalInstance$")) {
-//             return node[key]._debugOwner.memoizedProps;
-//         }
-//     }
-//     return null;
-// }
 
 interface QuillGlobalToolbarProps {
     availableOptions: string[];
@@ -34,8 +26,6 @@ const QuillGlobalToolbar: React.FC<QuillGlobalToolbarProps> = props => {
         const toolbar = toolbarString.split(",");
         return [newQuill, toolbar];
     }, [currentQuillId]);
-
-    console.log(44, enabled);
 
     return (
         <QuillToolbar

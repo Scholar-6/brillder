@@ -1,3 +1,4 @@
+import hljs from 'highlight.js';
 import Quill, { Sources } from "quill";
 import Delta from "quill-delta";
 import React from "react";
@@ -6,7 +7,6 @@ import "./QuillEditor.scss";
 import "react-quill/dist/quill.snow.css";
 import "quill-table-ui/dist/index.css";
 import _ from "lodash";
-//import { ReactComponent as LatexIcon } from "assets/img/latex.svg";
 
 import "./QuillLatex";
 import "./QuillAutoLink";
@@ -69,6 +69,9 @@ interface QuillEditorProps {
 }
 
 const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, forwardRef) => {
+    hljs.configure({
+      languages: ['javascript', 'ruby', 'python', 'rust'],
+    });
     /*eslint-disable-next-line*/
     const [currentQuillId, setCurrentQuillId] = React.useContext(QuillEditorContext);
 
@@ -226,6 +229,8 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     }, []);
 
     const valid = (!props.validate || (data && (props.isValid !== false)));
+
+    console.log(props.toolbar);
 
     return (
         <div
