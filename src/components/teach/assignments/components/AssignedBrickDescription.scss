@@ -60,21 +60,50 @@
         margin-top: 0.5vw;
       }
 
+      .css-custom-tooltip {
+        display: none;
+      }
+
       .css-custom-tooltip  {
         left: -2vw;
         padding-right: 0.5vw;
+        z-index: 10;
 
         &.first {
-          left: -1.5vw;
+          left: -1.2vw;
         }
         &.second {
-          left: -0.5vw;
+          left: 0vw;
         }
         &.third {
           left: 0vw;
         }
       }
 
+      &:hover .css-custom-tooltip {
+        display: block;
+        opacity: 1;
+      }
+    }
+
+    .score-hover-container {
+      position: relative;
+      .css-custom-tooltip {
+        display: none;
+      }
+
+      .css-custom-tooltip {
+        top: 3vw;
+        left: -3vw;
+        color: white;
+        width: 9vw;
+        padding-top: 0.5vw;
+        padding-bottom: 0.5vw;
+        text-align: center;
+        padding-right: 0.5vw;
+        z-index: 10;
+        background: var(--theme-light-blue);
+      }
       &:hover .css-custom-tooltip {
         display: block;
         opacity: 1;
