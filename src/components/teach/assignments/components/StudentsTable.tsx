@@ -28,7 +28,7 @@ class StudentsTable extends Component<StudentsProps, State> {
 
     let questionCount = 0;
 
-    const {assignment} = props.classItem;
+    const { assignment } = props.classItem;
 
     if (assignment && assignment.byStudent && assignment.byStudent[0]) {
       try {
@@ -38,17 +38,17 @@ class StudentsTable extends Component<StudentsProps, State> {
       }
     }
 
-    this.state = { questionCount, bookData: { open: false, student: null, assignment: null} };
+    this.state = { questionCount, bookData: { open: false, student: null, assignment: null } };
   }
 
   nextStudent() {
     try {
-      const {students} = this.props.classItem.classroom;
+      const { students } = this.props.classItem.classroom;
       const studentIndex = students.findIndex(s => s.id === this.state.bookData.student.id);
       for (let i = studentIndex + 1; i < students.length; i++) {
         const student = students[i];
         if (student.studentResult) {
-          this.setState({bookData: {open: true, student, assignment: this.props.classItem.assignment }});
+          this.setState({ bookData: { open: true, student, assignment: this.props.classItem.assignment } });
           break;
         }
       }
@@ -59,12 +59,12 @@ class StudentsTable extends Component<StudentsProps, State> {
 
   prevStudent() {
     try {
-      const {students} = this.props.classItem.classroom;
+      const { students } = this.props.classItem.classroom;
       const studentIndex = students.findIndex(s => s.id === this.state.bookData.student.id);
       for (let i = studentIndex - 1; i >= 0; i--) {
         const student = students[i];
         if (student.studentResult) {
-          this.setState({bookData: {open: true, student, assignment: this.props.classItem.assignment }});
+          this.setState({ bookData: { open: true, student, assignment: this.props.classItem.assignment } });
           break;
         }
       }
@@ -107,6 +107,24 @@ class StudentsTable extends Component<StudentsProps, State> {
     return '';
   }
 
+  getTimeDuration(duration: number) {
+    let seconds = 0;
+    let minutes = 0;
+
+    if (duration) {
+      seconds = Math.round(duration / 1000) % 60;
+    }
+    if (duration >= 6000) {
+      minutes = Math.floor(duration / 60000);
+    }
+
+    let time = seconds + 's';
+    if (minutes > 0) {
+      time = minutes + 'm' + time;
+    }
+    return time;
+  }
+
   renderStudent(student: TeachStudent, index: number) {
     if (this.props.classItem.assignment.byStudent) {
       const studentResult = this.props.classItem.assignment.byStudent.find((s: any) => s.studentId == student.id);
@@ -123,20 +141,9 @@ class StudentsTable extends Component<StudentsProps, State> {
           duration += attempt.reviewDuration;
         }
 
-        let seconds = 0;
-        let minutes = 0;
-
-        if (duration) {
-          seconds = Math.round(duration / 1000) % 60;
-        }
-        if (duration >= 6000) {
-          minutes = Math.floor(duration / 60000);
-        }
-
-        let time = seconds + 's';
-        if (minutes > 0) {
-          time = minutes + 'm' + time;
-        }
+        let time = this.getTimeDuration(duration);
+        let liveTime = this.getTimeDuration(attempt.liveDuration);
+        let reviewTime = this.getTimeDuration(attempt.reviewDuration);
 
         return (
           <tr className="user-row" key={index}>
@@ -151,15 +158,34 @@ class StudentsTable extends Component<StudentsProps, State> {
                   </div>
                 </td>
             )}
-            <td><div className="centered">{Math.round(attempt.percentScore)}</div></td>
-            <td><div className="centered duration-time">{duration > 0 ? time : ''}</div></td>
+            <td>
+              <div className="centered score-hover-container">
+                {Math.round(attempt.percentScore)}
+                <div className="css-custom-tooltip">
+                  {attempt.oldScore ? <div className="bold">Review: {attempt.score / attempt.maxScore * 100}</div> : ""}
+                  <div>Investigation: {attempt.oldScore ? (attempt.oldScore / attempt.maxScore * 100) : (attempt.score / attempt.maxScore * 100)}</div>
+                  {attempt.oldScore ? <div>Average: {Math.round(attempt.percentScore)}</div> : ""}
+                </div>
+              </div>
+            </td>
+            <td>
+              <div className="centered duration-time score-hover-container">
+                {duration > 0 ? time : ''}
+                {duration > 0 ?
+                  <div className="css-custom-tooltip">
+                    <div>Total Time: {time}</div>
+                    <div>Investigation: {liveTime}</div>
+                    <div>Review: {reviewTime}</div>
+                  </div> : ""}
+              </div>
+            </td>
             <td>
               <div className="centered two-lines">
-                {attempt.timestamp ? moment(attempt.timestamp).format('h:mm DD.MM.YY') : ''}
+                {attempt.timestamp ? moment(attempt.timestamp).format('H:mm DD.MM.YY') : ''}
               </div>
             </td>
             <td className="center-icon-box-r434">
-              <SpriteIcon name="eye-filled" onClick={() => this.setState({bookData: {open: true, student, assignment: this.props.classItem.assignment }})}/>
+              <SpriteIcon name="eye-filled" onClick={() => this.setState({ bookData: { open: true, student, assignment: this.props.classItem.assignment } })} />
             </td>
           </tr>
         );
@@ -188,13 +214,13 @@ class StudentsTable extends Component<StudentsProps, State> {
               </th>
               <th className="icon-header-r234">
                 <SpriteIcon name="clock" />
-                <div className="css-custom-tooltip first">
+                <div className="css-custom-tooltip second">
                   Time
                 </div>
               </th>
               <th className="icon-header-r234">
                 <SpriteIcon name="calendar-v2" />
-                <div className="css-custom-tooltip first">
+                <div className="css-custom-tooltip third">
                   Time stamp
                 </div>
               </th>
@@ -209,7 +235,7 @@ class StudentsTable extends Component<StudentsProps, State> {
           bookData={this.state.bookData}
           nextStudent={this.nextStudent.bind(this)}
           prevStudent={this.prevStudent.bind(this)}
-          onClose={() => this.setState({bookData: {open: false, student: null, assignment: null}})} />
+          onClose={() => this.setState({ bookData: { open: false, student: null, assignment: null } })} />
         }
       </div>
     );
