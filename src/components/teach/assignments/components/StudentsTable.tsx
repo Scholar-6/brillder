@@ -246,7 +246,6 @@ class StudentsTable extends Component<StudentsProps, State> {
           }
           return 1;
         });
-        console.log(classroom.students);
         this.setState({ students: sortedStudents })
       }
     }
