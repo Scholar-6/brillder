@@ -525,10 +525,15 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                       }
 
                       if (res.success && res.result.newAssignments.length > 0) {
+                        if (!classroom.cashAssignments) {
+                          classroom.cashAssignments = [];
+                        }
                         let found = classroom.cashAssignments.find((a: any) => a.id === res.result.newAssignments[0].id);
                         if (!found) {
                           classroom.cashAssignments.push(res.result.newAssignments[0]);
                         }
+
+                        console.log(found, classroom);
                         
                         SetClassroomAssignedBricks(classroom);
                       }
