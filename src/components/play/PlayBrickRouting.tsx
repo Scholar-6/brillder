@@ -63,7 +63,7 @@ import { CashAttempt, ClearAuthBrickCash, GetAuthBrickCash, GetCashedPlayAttempt
 import TextDialog from "components/baseComponents/dialogs/TextDialog";
 import PhonePlaySimpleFooter from "./phoneComponents/PhonePlaySimpleFooter";
 import PhonePlayShareFooter from "./phoneComponents/PhonePlayShareFooter";
-import { getLiveTime, getReviewTime } from "./services/playTimes";
+import { getLiveTime, getPrepareTime, getReviewTime, getSynthesisTime } from "./services/playTimes";
 import PhoneTimeSynthesisPage from "./preSynthesis/PhoneTimeSynthesis";
 import PhoneCountdownReview from "./preReview/PhoneCountdownReview";
 import CountdownInvestigationPage from "./preInvestigation/CountdownInvestigation";
@@ -138,7 +138,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initReviewEndTime: any = null;
   let initAttemptId: any = null;
   let initPrepEndTime: any = undefined;
+  let initPreparationDuration: null | moment.Duration = null;
   let initLiveDuration: null | moment.Duration = null;
+  let initSynthesisDuration: null | moment.Duration = null;
   let initReviewDuration: null | moment.Duration = null;
 
   const cashAttemptString = GetCashedPlayAttempt();
@@ -175,7 +177,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       initReviewEndTime = cashAttempt.reviewEndTime ? moment(cashAttempt.reviewEndTime) : null;
       initAttemptId = cashAttempt.attemptId;
       initStatus = parseInt(cashAttempt.status);
+      initPreparationDuration = cashAttempt.preparationDuration;
       initLiveDuration = cashAttempt.liveDuration;
+      initSynthesisDuration = cashAttempt.synthesisDuration;
       initBrickAttempt = cashAttempt.brickAttempt;
       initReviewDuration = cashAttempt.reviewDuration;
       if (cashAttempt.prepEndTime) {
@@ -222,7 +226,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewEndTime, setReviewEndTime] = useState(initReviewEndTime);
   const [attemptId, setAttemptId] = useState<string>(initAttemptId);
 
+  const [preparationDuration, setPreparationDuration] = useState(initPreparationDuration);
   const [liveDuration, setLiveDuration] = useState(initLiveDuration);
+  const [synthesisDuration, setSynthesisDuration] = useState(initSynthesisDuration);
   const [reviewDuration, setReviewDuration] = useState(initReviewDuration);
 
   const [assignmentId, setAssignmentId] = useState(-1); // -1 if not set otherwise it is >= 1
@@ -480,10 +486,23 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   };
 
+  const settingPreparationDuration = () => {
+    const now = moment().add(getPrepareTime(brick.brickLength), 'minutes');
+    const dif = moment.duration(now.diff(prepEndTime));
+    console.log('prepare duration', dif)
+    setPreparationDuration(dif);
+  }
+
   const settingLiveDuration = () => {
     const now = moment().add(getLiveTime(brick.brickLength), 'minutes');
     const dif = moment.duration(now.diff(liveEndTime));
     setLiveDuration(dif);
+  }
+
+  const settingSynthesisDuration = () => {
+    const now = moment().add(getSynthesisTime(brick.brickLength), 'minutes');
+    const dif = moment.duration(now.diff(synthesisEndTime));
+    setSynthesisDuration(dif);
   }
 
   const settingReviewDuration = () => {
@@ -506,6 +525,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const now = moment().add(getLiveTime(brick.brickLength), 'minutes');
     const dif = moment.duration(now.diff(liveEndTime));
 
+    console.log(preparationDuration);
+    ba.preparationDuration = (preparationDuration as any)._milliseconds;
     ba.liveDuration = (dif as any)._milliseconds;
 
     const promise = createBrickAttempt(ba);
@@ -522,6 +543,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
     const now = moment().add(getReviewTime(brick.brickLength), 'minutes');
     const dif = moment.duration(now.diff(reviewEndTime));
+
+    ba.synthesisDuration = (synthesisDuration as any)._milliseconds;
     ba.reviewDuration = (dif as any)._milliseconds;
 
     setStatus(PlayStatus.Ending);
@@ -680,6 +703,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
     moveToInvestigation();
     setSidebar(true);
+    console.log('move to live');
+    settingPreparationDuration();
   }
 
   const coverMoveNext = () => {
@@ -707,12 +732,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     } else {
       moveNextR(playPreInvesigation(brick));
     }
+    settingPreparationDuration();
   }
   const moveToInvestigation = () => moveNextR(playInvestigation(brick));
   const moveToTimeInvestigation = () => moveNextR(playCountInvesigation(brick));
   const moveToTimeSynthesis = () => moveNextR(routes.playTimeSynthesis(brick));
   const moveToSynthesis = () => moveNextR(routes.playSynthesis(brick));
-  const moveToPreReview = () => moveNextR(routes.playPreReview(brick));
+  const moveToPreReview = () => {
+    moveNextR(routes.playPreReview(brick));
+    settingSynthesisDuration();
+  };
   const moveToTimeReview = () => moveNextR(routes.playTimeReview(brick));
   const finishBrick = () => moveNextR(routes.playFinalStep(brick));
 

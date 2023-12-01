@@ -141,9 +141,16 @@ class StudentsTable extends Component<StudentsProps, State> {
           duration += attempt.reviewDuration;
         }
 
+        if (attempt.preparationDuration) {
+          duration += attempt.preparationDuration;
+        }
+
         let time = this.getTimeDuration(duration);
         let liveTime = this.getTimeDuration(attempt.liveDuration);
         let reviewTime = this.getTimeDuration(attempt.reviewDuration);
+        let preparationDuration = this.getTimeDuration(attempt.preparationDuration);
+
+        console.log(attempt)
 
         return (
           <tr className="user-row" key={index}>
@@ -174,6 +181,7 @@ class StudentsTable extends Component<StudentsProps, State> {
                 {duration > 0 ?
                   <div className="css-custom-tooltip">
                     <div>Total Time: {time}</div>
+                    <div>Preparation: {preparationDuration}</div>
                     <div>Investigation: {liveTime}</div>
                     <div>Review: {reviewTime}</div>
                   </div> : ""}
