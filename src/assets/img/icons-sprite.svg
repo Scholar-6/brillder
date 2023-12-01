@@ -1743,4 +1743,8 @@
     <path d="M6.75 9C8.13071 9 9.25 7.88071 9.25 6.5C9.25 5.11929 8.13071 4 6.75 4C5.36929 4 4.25 5.11929 4.25 6.5C4.25 7.88071 5.36929 9 6.75 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M17.75 20C19.1307 20 20.25 18.8807 20.25 17.5C20.25 16.1193 19.1307 15 17.75 15C16.3693 15 15.25 16.1193 15.25 17.5C15.25 18.8807 16.3693 20 17.75 20Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
+  <svg id="fontawesome-codeblock" viewBox="0 0 640 512">
+    <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+    <path opacity="1" fill="currentColor" d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/>
+  </svg>
 </svg>

@@ -58,9 +58,19 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             const capitalization = props.quill.getModule("capitalization") as QuillCapitalization;
             capitalization.format(value);
             return true;
-        } else if (format === "codeBlock") {
-            const capitalization = props.quill.getModule("capitalization") as QuillCapitalization;
-            capitalization.format(value);
+        } else if (format === "code-block") {
+            const usedFormat = props.quill.getFormat();
+            console.log('format before:', value, usedFormat, usedFormat[format]);
+            if (usedFormat[format]) {
+                console.log('is code-block')
+                props.quill.format(format, false, "user");
+                return false;
+            } else {
+                console.log('not code-block')
+                props.quill.format(format, value ?? true, "user");
+                return true;
+            }
+            //props.quill.format(format, false, "user");
             return true;
         }
         if (props.quill.getFormat()[format] === (value ?? true) || value === "left") {
@@ -81,8 +91,6 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
         }
         //eslint-disable-next-line
     }, [props.quill, id]);
-
-    console.log(format)
 
     const toolbarItems: { [key: string]: any } = React.useMemo(() => ({
         bold: (props: any) => <QuillToolbarButton name="bold" {...props} />,
@@ -112,7 +120,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             <option value="lower">Lower</option>
             <option value="title">Title</option>
         </QuillToolbarAlignSelect>,
-        codeBlock: (props: any) => <QuillToolbarButton name="image" icon="image" {...props} />,
+        codeBlock: (props: any) => <QuillToolbarButton name="code-block" icon="fontawesome-codeblock" {...props} />,
     }), []);
 
     return (

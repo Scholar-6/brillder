@@ -142,23 +142,6 @@ export default class ImageUpload {
                 };
             })
         })
-
-        // quill.on("selection-change", (range, oldRange) => {
-        //     if (!range) return;
-        //     const [leaf] = quill.getLeaf(range.index);
-        //     if (leaf instanceof CustomImageBlot) {
-        //         leaf.domNode.ondblclick = () => {
-        //             const data = CustomImageBlot.value(leaf.domNode);
-        //             this.existingImageSelected({ ...data, value: (data.url as string).match(imageUrlRegex)?.[1] });
-        //         }
-        //     }
-
-        //     if (!oldRange) return;
-        //     const [oldLeaf] = quill.getLeaf(oldRange.index);
-        //     if (oldLeaf instanceof CustomImageBlot) {
-        //         leaf.domNode.onclick = null;
-        //     }
-        // });
     }
 
     onImagePaste(node: any, delta: Delta) {

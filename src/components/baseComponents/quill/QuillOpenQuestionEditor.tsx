@@ -12,7 +12,6 @@ import "./QuillMediaEmbed";
 import "./QuillKeyboard";
 import "./QuillCapitalization";
 import "./QuillBlockQuote";
-import QuillBetterTable from "./QuillBetterTable";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
 import { stripHtml } from "components/build/questionService/ConvertService";
