@@ -192,6 +192,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
               dragHidden={this.state.assignments.length === 1}
               removeAssignment={(assignmentId: number) => {
                 let assignments = this.state.assignments.filter(a => a.id !== assignmentId);
+                console.log(assignmentId, assignments);
                 this.setState({assignments});
               }}
             />

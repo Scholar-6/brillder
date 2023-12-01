@@ -51,9 +51,29 @@ export interface BrickAttempt {
 function shuffle(a: any[]) {
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
+
+    if (a[i].index === i + 1) {
+      continue;
+    }
+    if (a[j].index === j + 1) {
+      continue;
+    }
+    
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
+}
+
+const checkCorrect = (choices: any[]) => {
+  let isCorrect = false;
+  let index = 0;
+  for (let choice of choices) {
+    if (choice.index === index) {
+      return true
+    }
+    index += 1;
+  }
+  return isCorrect;
 }
 
 interface BrickRoutingProps {
@@ -430,6 +450,42 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
           }
           c.list.map((c: any, i: number) => c.index = i);
           c.list = shuffle(c.list);
+          let isCorrect = checkCorrect(c.list);
+          if (isCorrect) {
+            c.list = shuffle(c.list);
+            isCorrect = checkCorrect(c.list);
+            if (isCorrect) {
+              c.list = shuffle(c.list);
+              isCorrect = checkCorrect(c.list);
+              if (isCorrect) {
+                c.list = shuffle(c.list);
+                if (isCorrect) {
+                  isCorrect = checkCorrect(c.list);
+                  c.list = shuffle(c.list);
+                  if (isCorrect) {
+                    isCorrect = checkCorrect(c.list);
+                    c.list = shuffle(c.list);
+                    if (isCorrect) {
+                      isCorrect = checkCorrect(c.list);
+                      c.list = shuffle(c.list);
+                      if (isCorrect) {
+                        isCorrect = checkCorrect(c.list);
+                        c.list = shuffle(c.list);
+                        if (isCorrect) {
+                          isCorrect = checkCorrect(c.list);
+                          c.list = shuffle(c.list);
+                          if (isCorrect) {
+                            isCorrect = checkCorrect(c.list);
+                            c.list = shuffle(c.list);
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       });
     } else if (question.type === QuestionTypeEnum.VerticalShuffle || question.type === QuestionTypeEnum.HorizontalShuffle) {
@@ -441,6 +497,42 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
           }
           c.list.map((c: any, i: number) => c.index = i);
           c.list = shuffle(c.list);
+          let isCorrect = checkCorrect(c.list);
+          if (isCorrect) {
+            c.list = shuffle(c.list);
+            isCorrect = checkCorrect(c.list);
+            if (isCorrect) {
+              c.list = shuffle(c.list);
+              isCorrect = checkCorrect(c.list);
+              if (isCorrect) {
+                c.list = shuffle(c.list);
+                if (isCorrect) {
+                  isCorrect = checkCorrect(c.list);
+                  c.list = shuffle(c.list);
+                  if (isCorrect) {
+                    isCorrect = checkCorrect(c.list);
+                    c.list = shuffle(c.list);
+                    if (isCorrect) {
+                      isCorrect = checkCorrect(c.list);
+                      c.list = shuffle(c.list);
+                      if (isCorrect) {
+                        isCorrect = checkCorrect(c.list);
+                        c.list = shuffle(c.list);
+                        if (isCorrect) {
+                          isCorrect = checkCorrect(c.list);
+                          c.list = shuffle(c.list);
+                          if (isCorrect) {
+                            isCorrect = checkCorrect(c.list);
+                            c.list = shuffle(c.list);
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       });
     } else if (question.type === QuestionTypeEnum.PairMatch) {
@@ -460,7 +552,44 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             valueSoundCaption: a.valueSoundCaption,
             imageCaption: a.imageCaption
           }));
+          
           c.choices = shuffle(choices);
+          let isCorrect = checkCorrect(c.choices);
+          if (isCorrect) {
+            c.choices = shuffle(c.choices);
+            isCorrect = checkCorrect(c.choices);
+            if (isCorrect) {
+              c.choices = shuffle(c.choices);
+              isCorrect = checkCorrect(c.choices);
+              if (isCorrect) {
+                c.choices = shuffle(c.choices);
+                if (isCorrect) {
+                  isCorrect = checkCorrect(c.choices);
+                  c.choices = shuffle(c.choices);
+                  if (isCorrect) {
+                    isCorrect = checkCorrect(c.choices);
+                    c.choices = shuffle(c.choices);
+                    if (isCorrect) {
+                      isCorrect = checkCorrect(c.choices);
+                      c.choices = shuffle(c.choices);
+                      if (isCorrect) {
+                        isCorrect = checkCorrect(c.choices);
+                        c.choices = shuffle(c.choices);
+                        if (isCorrect) {
+                          isCorrect = checkCorrect(c.choices);
+                          c.choices = shuffle(c.choices);
+                          if (isCorrect) {
+                            isCorrect = checkCorrect(c.choices);
+                            c.choices = shuffle(c.choices);
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       });
     }
