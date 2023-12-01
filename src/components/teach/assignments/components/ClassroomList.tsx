@@ -156,6 +156,12 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
     }
   }
 
+  removeAssignment(assignmentId: number) {
+    let assignments = this.state.assignments.filter(a => a.id !== assignmentId);
+    this.props.activeClassroom.assignments = this.props.activeClassroom.assignments.filter(a => a.id !== assignmentId);
+    this.setState({...this.state, assignments});
+  }
+
   unassigningStudent(student: TeachStudent) {
     this.setState({ unassignStudent: student, unassignOpen: true });
   }
@@ -190,11 +196,7 @@ class ClassroomList extends Component<ClassroomListProps, ListState> {
               subjects={this.props.subjects}
               classItem={c}
               dragHidden={this.state.assignments.length === 1}
-              removeAssignment={(assignmentId: number) => {
-                let assignments = this.state.assignments.filter(a => a.id !== assignmentId);
-                console.log(assignmentId, assignments);
-                this.setState({assignments});
-              }}
+              removeAssignment={this.removeAssignment.bind(this)}
             />
           </div>
         </Grow>
