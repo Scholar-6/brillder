@@ -59,7 +59,15 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
         console.log('set assignemnts', cashAssignments);
         setAssignments(cashAssignments);
       }
-  
+
+      if (cashedClass) {
+        if (cashedClass.id !== props.classroom.id) {
+          SetClassroomAssignedBricks(props.classroom);
+        }
+      } else {
+        SetClassroomAssignedBricks(props.classroom);
+      }
+
       setClassroom(props.classroom);
     }
   }, [props.classroom]);
