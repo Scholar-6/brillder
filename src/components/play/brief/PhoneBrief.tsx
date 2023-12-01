@@ -115,6 +115,9 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, user, ...props }) => {
             props.setCompetitionId(competitionData.competition.id);
             setCompetitionData({ ...competitionData, isOpen: false });
           }}
+          onCancel={() => {
+            
+          }}
         />
       }
     </div>

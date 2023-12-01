@@ -59,7 +59,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [editorBioOpen, setEditorBio] = useState(false);
   const [onlyLibrary, setOnlyLibrary] = useState(false);
 
-  const {user} = props;
+  const { user } = props;
 
   const [assignment, setAssignment] = React.useState(null as null | QuickAssigment);
 
@@ -86,22 +86,6 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
   const [unauthorizedOpenV2, setUnauthorizedV2] = useState(false);
 
   const [firstPhonePopup, setFirstPhonePopup] = useState(false);
-
-  useEffect(() => {
-    function handleMove(e: any) {
-      if (rightKeyPressed(e)) {
-        if (props.quickAssignPopup == false && props.assignPopup == false) {
-          startBrick();
-        }
-      }
-    }
-
-    document.addEventListener("keydown", handleMove, false);
-
-    return function cleanup() {
-      document.removeEventListener("keydown", handleMove, false);
-    };
-  });
 
   useEffect(() => {
     const userTimeout = setTimeout(() => {
@@ -184,6 +168,26 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         }}
       />
     )
+  }
+
+  const renderCompetitionDialog = () => {
+    if (props.canSeeCompetitionDialog && competitionData) {
+      return (
+        <CompetitionDialog
+          isOpen={competitionData.isOpen}
+          user={user}
+          onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}
+          onSubmit={() => {
+            props.setCompetitionId(competitionData.competition.id);
+            setCompetitionData({ ...competitionData, isOpen: false });
+          }}
+          onCancel={() => {
+            props.setCompetitionId(-1);
+            setCompetitionData(null);
+          }}
+        />
+      );
+    }
   }
 
   if (isPhone()) {
@@ -296,18 +300,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
         {brick.editors && brick.editors.length > 0 &&
           <CoverBioDialog isOpen={editorBioOpen} onlyLibrary={onlyLibrary} user={brick.editors[0] as any} close={() => setEditorBio(false)} />
         }
-        {props.canSeeCompetitionDialog && competitionData &&
-          <CompetitionDialog
-            isOpen={competitionData.isOpen}
-            user={user}
-            onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}
-            onSubmit={() => {
-              props.setCompetitionId(competitionData.competition.id);
-              setCompetitionData({ ...competitionData, isOpen: false });
-              startBrick();
-            }}
-          />
-        }
+        {renderCompetitionDialog()}
       </React.Suspense>
     );
   }
@@ -432,17 +425,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           setUnauthPopupShown(true);
         }}
       />
-      {props.canSeeCompetitionDialog && competitionData &&
-        <CompetitionDialog
-          isOpen={competitionData.isOpen}
-          user={user}
-          onClose={() => setCompetitionData({ ...competitionData, isOpen: false })}
-          onSubmit={() => {
-            props.setCompetitionId(competitionData.competition.id);
-            setCompetitionData({ ...competitionData, isOpen: false });
-          }}
-        />
-      }
+      {renderCompetitionDialog()}
     </React.Suspense>
   );
 };

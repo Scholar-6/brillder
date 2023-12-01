@@ -72,7 +72,6 @@ import UnauthorizedUserDialogV2 from "components/baseComponents/dialogs/unauthor
 import PlaySkipDialog from "components/baseComponents/dialogs/PlaySkipDialog";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import VolumeButton from "components/baseComponents/VolumeButton";
-import { isAorP } from "components/services/brickService";
 import { checkCompetitionActive } from "services/competition";
 
 import { getAttempts } from 'services/axios/attempt';
@@ -207,8 +206,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const [hasAssignment, setHasAssignment] = useState(false);
 
-  const [prevAttempts, setPrevAttempts] = useState([] as any[]);
-
   const [brick, setBrick] = useState(parsedBrick);
   const [status, setStatus] = useState(initStatus);
   const [liveBrills, setLiveBrills] = useState(-1);
@@ -235,9 +232,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [sidebarRolledUp, toggleSideBar] = useState(false);
   const [searchString, setSearchString] = useState("");
   const [saveFailed, setFailed] = useState(false);
-
-  const [isPremiumLOpen, setPremiumLOpen] = useState(false);
-  const [converBrillsOpen, setConvertBrills] = useState(false);
 
   const [extraTry, setExtraTry] = useState(false);
 
@@ -336,7 +330,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           setBestScore(Math.round((bestScore / maxScore) * 100));
           setExtraTry(true);
         }
-        setPrevAttempts(attempts);
       }
 
       const brills = await getUserBrillsForBrick(brick.id);
@@ -690,8 +683,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const coverMoveNext = () => {
-    const { user } = props;
-
     if (props.user) {
       moveToBrief();
     } else {
@@ -1218,6 +1209,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
       });
     } else if (question.type === QuestionTypeEnum.PairMatch) {
       question.components.forEach((c) => {
+        console.log("shuffle pairmatch");
         if (c.type === QuestionComponentTypeEnum.Component) {
           for (let [index, item] of c.list.entries()) {
             item.index = index;

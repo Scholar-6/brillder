@@ -7,10 +7,11 @@ interface Props {
   isOpen: boolean;
   user: User | undefined;
   onSubmit(): void;
+  onCancel(): void;
   onClose(): void;
 }
 
-const CompetitionDialog: React.FC<Props> = ({ isOpen, user, onSubmit, onClose }) => {
+const CompetitionDialog: React.FC<Props> = ({ isOpen, user, onSubmit, onCancel, onClose }) => {
   if (user?.userPreference?.preferenceId === UserPreferenceType.Teacher) {
     return <div />;
   }
@@ -27,12 +28,12 @@ const CompetitionDialog: React.FC<Props> = ({ isOpen, user, onSubmit, onClose })
         </div>
       </div>
       <div className="dialog-footer margin-bottom">
-        <button className="btn btn-md bg-green text-white yes-button" onClick={onSubmit}>
+        <button className="btn btn-md bg-green text-white yes-button bold" onClick={onSubmit}>
           <span>Enter Competition</span>
         </button>
       </div>
       <div className="dialog-footer">
-      <button className="btn btn-md bg-blue text-white yes-button" onClick={onClose}>
+        <button className="btn btn-md bg-blue text-white yes-button bold" onClick={onCancel}>
           <span>Play without Entering</span>
         </button>
       </div>
