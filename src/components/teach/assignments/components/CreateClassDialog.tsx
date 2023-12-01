@@ -22,6 +22,7 @@ import BrickTitle from 'components/baseComponents/BrickTitle';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import HoverHelp from 'components/baseComponents/hoverHelp/HoverHelp';
 import { Classroom } from 'model/classroom';
+import { GetClassAssignedBricks, SetClassroomAssignedBricks } from 'localStorage/assigningBricks';
 
 interface AssignClassProps {
   isOpen: boolean;
@@ -85,6 +86,15 @@ const CreateClassDialog: React.FC<AssignClassProps> = (props) => {
         writeQRCode(
           window.location.protocol + '//' + window.location.host + `/${map.QuickassignPrefix}/` + props.classroom.code
         );
+      }
+
+      const cashedClass = GetClassAssignedBricks();
+      if (cashedClass) {
+        if (cashedClass.id !== props.classroom.id) {
+          SetClassroomAssignedBricks(props.classroom);
+        }
+      } else {
+        SetClassroomAssignedBricks(props.classroom);
       }
     }
   }, [props.classroom]);
