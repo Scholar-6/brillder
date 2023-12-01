@@ -145,10 +145,15 @@ class StudentsTable extends Component<StudentsProps, State> {
           duration += attempt.preparationDuration;
         }
 
+        if (attempt.synthesisDuration) {
+          duration += attempt.synthesisDuration;
+        }
+
         let time = this.getTimeDuration(duration);
+        let preparationTime = this.getTimeDuration(attempt.preparationDuration);
         let liveTime = this.getTimeDuration(attempt.liveDuration);
+        let synthesisTime = this.getTimeDuration(attempt.synthesisDuration);
         let reviewTime = this.getTimeDuration(attempt.reviewDuration);
-        let preparationDuration = this.getTimeDuration(attempt.preparationDuration);
 
         console.log(attempt)
 
@@ -181,9 +186,10 @@ class StudentsTable extends Component<StudentsProps, State> {
                 {duration > 0 ?
                   <div className="css-custom-tooltip">
                     <div>Total Time: {time}</div>
-                    <div>Preparation: {preparationDuration}</div>
+                    <div>Preparation: {preparationTime}</div>
                     <div>Investigation: {liveTime}</div>
-                    <div>Review: {reviewTime}</div>
+                    {synthesisTime ? <div>Synthesis: {synthesisTime}</div> : ""}
+                    {reviewTime ? <div>Review: {reviewTime}</div> : ""}
                   </div> : ""}
               </div>
             </td>
