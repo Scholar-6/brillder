@@ -51,6 +51,7 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
   React.useEffect(() => {
     if (props.classroom) {
       const cashedClass = GetClassAssignedBricks();
+      console.log('cashed class', cashedClass);
       if (cashedClass && cashedClass.id === props.classroom.id) {
         let cashAssignments = [];
         if (cashedClass.cashAssignments) {
