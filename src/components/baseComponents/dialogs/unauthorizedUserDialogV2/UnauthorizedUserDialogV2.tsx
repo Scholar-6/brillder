@@ -7,14 +7,14 @@ import './UnauthorizedUserDialog.scss';
 import SpriteIcon from "../../SpriteIcon";
 import { isPhone } from "services/phone";
 import { SetAuthBrickCash } from "localStorage/play";
-import GoogleDesktopButton from "components/loginPage/desktop/GoogleDesktopButton";
 import map from "components/map";
 
 import { Brick } from "model/brick";
-import MicrosoftDesktopButton from "components/loginPage/desktop/MicrosoftDesktopButton";
 import UKlibraryButton from "components/loginPage/components/UKLibraryButton";
 import FlexLinesWithOr from "components/baseComponents/FlexLinesWithOr/FlexLinesWithOr";
 import { LibraryLoginPage } from "components/loginPage/desktop/routes";
+import GoogleDesktopButtonV2 from "components/loginPage/desktop/GoogleDesktopButtonV2";
+import MicrosoftDesktopButtonV2 from "components/loginPage/desktop/MicrosoftDesktopButtonV2";
 
 interface UnauthorizedProps {
   isOpen: boolean;
@@ -124,8 +124,14 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
             : <span>Great that you've clicked a brick!<br /> A new world of learning starts here.</span>}
         </div>
 
-        <GoogleDesktopButton label="Continue with Google" newTab={true} />
-        <MicrosoftDesktopButton returnUrl={props.history.location.pathname} />
+        <GoogleDesktopButtonV2 label="Continue with Google" onClick={(link) => {
+          SetAuthBrickCash(props.brick, props.competitionId);
+          window.location.href = link;
+        }} />
+        <MicrosoftDesktopButtonV2 returnUrl={props.history.location.pathname} onClick={(link) => {
+          SetAuthBrickCash(props.brick, props.competitionId);
+          window.location.href = link;
+        }} />
         <UKlibraryButton history={props.history} />
         <FlexLinesWithOr />
         <button className="btn btn-md bg-orange" onClick={() => {
@@ -136,7 +142,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
           <span>Continue with Email</span>
         </button>
         {!props.isBeforeReview &&
-          <button className="btn btn-md bg-blue" onClick={() => {
+          <button className="btn btn-md bg-blue big-text" onClick={() => {
             if (props.isBeforeReview) {
               setWaringOpen(true);
             } else {
@@ -144,7 +150,7 @@ const UnauthorizedUserDialogV2: React.FC<UnauthorizedProps> = (props) => {
             }
           }}>
             <SpriteIcon name="feather-search-custom" />
-            <span>Keep exploring</span>
+            <span>Explore without signing in</span>
           </button>}
         <div className="small-text">
           You will be redirected to this page after making your choice

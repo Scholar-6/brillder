@@ -1477,7 +1477,7 @@
 
 .phone-competition-dialog {
   .dialog-header {
-    font-size: 5.3vw !important;
+    font-size: 5vw !important;
   }
   .dialog-footer {
     display: flex;
@@ -1489,6 +1489,9 @@
     }
     .bg-blue {
       background: var(--theme-light-blue);
+    }
+    &.margin-bottom {
+      margin-bottom: 2vh !important;
     }
   }
 }

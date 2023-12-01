@@ -1698,6 +1698,9 @@ html body #root .browser-type-container .sorted-row .brick-row-container.teach-t
 
 .phone-competition-dialog {
   .dialog-footer {
+    &.margin-bottom {
+      margin-bottom: 2vh !important;
+    }
     .bg-blue {
       background: var(--theme-light-blue);
     }

@@ -91,6 +91,14 @@
         margin-right: 13vw;
       }
     }
+
+    &.big-text {
+      padding-right: 14vw !important;
+
+      svg {
+        margin-right: 8vw !important;
+      }
+    }
   }
 
   .library-button {
