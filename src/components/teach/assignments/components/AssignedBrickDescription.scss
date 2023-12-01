@@ -55,6 +55,30 @@
       position: relative;
       width: 3vw;
 
+      .sorting-column {
+        position: relative;
+        display: flex;
+        justify-content: center;
+
+        svg {
+          margin-top: 0;
+        }
+
+        .sort-arrows {
+          display: flex;
+          align-items: center;
+  
+          svg {
+            cursor: pointer;
+            height: 0.9vw;
+          }
+        }
+
+        .css-custom-tooltip {
+          top: 1.8vw;
+        }
+      }
+
       svg {
         stroke-width: 2;
         margin-top: 0.5vw;

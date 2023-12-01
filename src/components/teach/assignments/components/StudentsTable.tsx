@@ -13,6 +13,12 @@ export interface BookData {
   assignment: Assignment | null;
 }
 
+enum SortStudentOption {
+  ByDuration = 1,
+  ByTime,
+  ByScore
+}
+
 interface StudentsProps {
   classItem: TeachListItem;
 }
@@ -20,6 +26,7 @@ interface StudentsProps {
 interface State {
   questionCount: number;
   bookData: BookData;
+  students: TeachStudent[];
 }
 
 class StudentsTable extends Component<StudentsProps, State> {
@@ -38,7 +45,7 @@ class StudentsTable extends Component<StudentsProps, State> {
       }
     }
 
-    this.state = { questionCount, bookData: { open: false, student: null, assignment: null } };
+    this.state = { questionCount, students: props.classItem.classroom.students, bookData: { open: false, student: null, assignment: null } };
   }
 
   nextStudent() {
@@ -107,6 +114,25 @@ class StudentsTable extends Component<StudentsProps, State> {
     return '';
   }
 
+  getDuration(attempt: any) {
+    let duration = 0;
+    if (attempt.liveDuration) {
+      duration = attempt.liveDuration;
+    }
+    if (attempt.reviewDuration) {
+      duration += attempt.reviewDuration;
+    }
+
+    if (attempt.preparationDuration) {
+      duration += attempt.preparationDuration;
+    }
+
+    if (attempt.synthesisDuration) {
+      duration += attempt.synthesisDuration;
+    }
+    return duration;
+  }
+
   getTimeDuration(duration: number) {
     let seconds = 0;
     let minutes = 0;
@@ -127,35 +153,18 @@ class StudentsTable extends Component<StudentsProps, State> {
 
   renderStudent(student: TeachStudent, index: number) {
     if (this.props.classItem.assignment.byStudent) {
-      const studentResult = this.props.classItem.assignment.byStudent.find((s: any) => s.studentId == student.id);
-
+      const studentResult = this.getStudentResult(student.id);
 
       if (studentResult) {
         const attempt = studentResult.attempts[0];
 
-        let duration = 0;
-        if (attempt.liveDuration) {
-          duration = attempt.liveDuration;
-        }
-        if (attempt.reviewDuration) {
-          duration += attempt.reviewDuration;
-        }
-
-        if (attempt.preparationDuration) {
-          duration += attempt.preparationDuration;
-        }
-
-        if (attempt.synthesisDuration) {
-          duration += attempt.synthesisDuration;
-        }
+        let duration = this.getDuration(attempt);
 
         let time = this.getTimeDuration(duration);
         let preparationTime = this.getTimeDuration(attempt.preparationDuration);
         let liveTime = this.getTimeDuration(attempt.liveDuration);
         let synthesisTime = this.getTimeDuration(attempt.synthesisDuration);
         let reviewTime = this.getTimeDuration(attempt.reviewDuration);
-
-        console.log(attempt)
 
         return (
           <tr className="user-row" key={index}>
@@ -209,6 +218,40 @@ class StudentsTable extends Component<StudentsProps, State> {
     return '';
   }
 
+  getStudentResult(studentId: number) {
+    return (this.props.classItem as any).assignment.byStudent.find((s: any) => s.studentId == studentId);
+  }
+
+  sortClassroomStudents(sortBy: SortStudentOption) {
+    if (this.props.classItem.assignment.byStudent) {
+      let classroom = this.props.classItem.classroom;
+      if (classroom) {
+        let sortedStudents = classroom.students.sort((st1, st2) => {
+          const student1Result = this.getStudentResult(st1.id);
+          const student2Result = this.getStudentResult(st2.id);
+
+          if (student1Result && student2Result) {
+            const attempt1 = student1Result.attempts[0];
+            const attempt2 = student2Result.attempts[0];
+
+            if (sortBy === SortStudentOption.ByTime) {
+              return attempt1.timestamp > attempt2.timestamp ? -1 : 1;
+            } else if (sortBy == SortStudentOption.ByDuration) {
+              const duration1 = this.getDuration(attempt1);
+              const duration2 = this.getDuration(attempt2);
+              return duration1 > duration2 ? -1 : 1;
+            } else if (sortBy == SortStudentOption.ByScore) {
+              return attempt1.percentScore > attempt2.percentScore ? -1 : 1;
+            }
+          }
+          return 1;
+        });
+        console.log(classroom.students);
+        this.setState({ students: sortedStudents })
+      }
+    }
+  }
+
   render() {
     return (
       <div className="student-results-v2">
@@ -221,28 +264,43 @@ class StudentsTable extends Component<StudentsProps, State> {
                   <th key={i}>{i + 1}</th>
               )}
               <th className="icon-header-r234">
-                <SpriteIcon name="percentage" />
-                <div className="css-custom-tooltip first">
-                  Percentage score
+                <div className="sorting-column">
+                  <SpriteIcon name="percentage" />
+                  <div className="sort-arrows" onClick={() => this.sortClassroomStudents(SortStudentOption.ByScore)}>
+                    <SpriteIcon name="sort-arrows" />
+                  </div>
+                  <div className="css-custom-tooltip first">
+                    Percentage score
+                  </div>
                 </div>
               </th>
               <th className="icon-header-r234">
-                <SpriteIcon name="clock" />
-                <div className="css-custom-tooltip second">
-                  Time
+                <div className="sorting-column">
+                  <SpriteIcon name="clock" />
+                  <div className="sort-arrows" onClick={() => this.sortClassroomStudents(SortStudentOption.ByDuration)}>
+                    <SpriteIcon name="sort-arrows" />
+                  </div>
+                  <div className="css-custom-tooltip second">
+                    Time
+                  </div>
                 </div>
               </th>
               <th className="icon-header-r234">
-                <SpriteIcon name="calendar-v2" />
-                <div className="css-custom-tooltip third">
-                  Time stamp
+                <div className="sorting-column">
+                  <SpriteIcon name="calendar-v2" />
+                  <div className="sort-arrows" onClick={() => this.sortClassroomStudents(SortStudentOption.ByTime)}>
+                    <SpriteIcon name="sort-arrows" />
+                  </div>
+                  <div className="css-custom-tooltip third">
+                    Time stamp
+                  </div>
                 </div>
               </th>
               <th className="icon-header-r234"></th>
             </tr>
           </thead>
           <tbody>
-            {this.props.classItem.classroom.students.map(this.renderStudent.bind(this))}
+            {this.state.students.map(this.renderStudent.bind(this))}
           </tbody>
         </table>
         {this.state.bookData.open && <BookDialog
