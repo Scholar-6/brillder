@@ -514,6 +514,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
                 <div>
                   <div className="btn btn-green" onClick={async () => {
                     const res = await assignClasses(this.props.brick.id, { classesIds: [this.props.assignClass.id] });
+
+                    console.log('assigned', res, this.props.onlyAssignBricks);
                     
                     if (this.props.onlyAssignBricks) {
                       let classroom = GetClassAssignedBricks();

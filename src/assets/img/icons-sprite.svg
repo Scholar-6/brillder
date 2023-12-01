@@ -1738,7 +1738,7 @@
     <circle cx="2.5" cy="24.5" r="2.5" fill="#4C608A"/>
     <circle cx="2.5" cy="13.5" r="2.5" fill="#4C608A"/>
   </svg>
-  <svg id="percentage" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg id="percentage" viewBox="0 4 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M19.25 5L5.25 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M6.75 9C8.13071 9 9.25 7.88071 9.25 6.5C9.25 5.11929 8.13071 4 6.75 4C5.36929 4 4.25 5.11929 4.25 6.5C4.25 7.88071 5.36929 9 6.75 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M17.75 20C19.1307 20 20.25 18.8807 20.25 17.5C20.25 16.1193 19.1307 15 17.75 15C16.3693 15 15.25 16.1193 15.25 17.5C15.25 18.8807 16.3693 20 17.75 20Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

@@ -181,10 +181,10 @@ class StudentsTable extends Component<StudentsProps, State> {
             )}
             <td>
               <div className="centered score-hover-container">
-                {Math.round(attempt.percentScore)}
+                {Math.round(attempt.score / attempt.maxScore * 100)}
                 <div className="css-custom-tooltip">
-                  {attempt.oldScore ? <div className="bold">Review: {attempt.score / attempt.maxScore * 100}</div> : ""}
-                  <div>Investigation: {attempt.oldScore ? (attempt.oldScore / attempt.maxScore * 100) : (attempt.score / attempt.maxScore * 100)}</div>
+                  {attempt.oldScore ? <div className="bold">Review: {Math.round(attempt.score / attempt.maxScore * 100)}</div> : ""}
+                  <div>Investigation: {attempt.oldScore ? Math.round(attempt.oldScore / attempt.maxScore * 100) : Math.round(attempt.score / attempt.maxScore * 100)}</div>
                   {attempt.oldScore ? <div>Average: {Math.round(attempt.percentScore)}</div> : ""}
                 </div>
               </div>

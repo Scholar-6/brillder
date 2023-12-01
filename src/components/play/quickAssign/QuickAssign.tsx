@@ -98,8 +98,6 @@ const QuickAssignPage: React.FC<AssignPersonOrClassProps> = (props) => {
             );
           }
 
-          console.log('imaga url 3', brick.coverImage);
-
           return (
             <div className="animated-brick-container" key={i} onClick={() => {
               SetQuickAssignment(JSON.stringify({
