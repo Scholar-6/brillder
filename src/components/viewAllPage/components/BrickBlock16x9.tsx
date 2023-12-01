@@ -254,8 +254,6 @@ const BrickBlock16x9Component: React.FC<BrickBlockProps> = ({ brick, index, row 
     );
   }
 
-  console.log('imaga url 1', brick.coverImage);
-
   return (
     <div className="animated-brick-container">
       <Grow

@@ -481,9 +481,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
 
     if (values["assigning-bricks"]) {
-      if (values["only-bricks"]) {
-        setOnlyAssignBricks(true);
-      }
+      setOnlyAssignBricks(true);
       getAndSetClassroom(parseInt(values["assigning-bricks"] as string))
     }
     /*eslint-disable-next-line*/
