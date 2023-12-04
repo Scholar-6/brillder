@@ -1,4 +1,3 @@
-import hljs from 'highlight.js';
 import Quill, { Sources } from "quill";
 import Delta from "quill-delta";
 import React from "react";
