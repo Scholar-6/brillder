@@ -69,9 +69,6 @@ interface QuillEditorProps {
 }
 
 const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, forwardRef) => {
-    hljs.configure({
-      languages: ['javascript', 'ruby', 'python', 'rust'],
-    });
     /*eslint-disable-next-line*/
     const [currentQuillId, setCurrentQuillId] = React.useContext(QuillEditorContext);
 
