@@ -22,3 +22,24 @@
   align-items: center;
   justify-content: flex-start;
 }
+
+.codeblockcustom {
+  width: 100%;
+  display: block;
+  font-family: monospace;
+  background: #23241f;
+  color: #f8f8f2;
+  padding-top: 0vw;
+  padding-bottom: 0vw;
+  padding-left: 0.5vw;
+
+  strong {
+    font-family: monospace !important;
+  }
+}
+
+.quill-document-editor {
+  .codeblockcustom {
+    padding-left: 0.4vw;
+  }
+}

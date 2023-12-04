@@ -37,6 +37,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
 
 
     const quillHandler = React.useCallback((format: string, value?: string) => {
+        console.log('format', format, value)
         if (!props.quill) return;
         if (format === "image") {
             const imageUpload = props.quill.getModule("imageupload") as ImageUpload;
@@ -60,23 +61,21 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             return true;
         } else if (format === "code-block") {
             const usedFormat = props.quill.getFormat();
-            console.log('format before:', value, usedFormat, usedFormat[format]);
             if (usedFormat[format]) {
-                console.log('is code-block')
                 props.quill.format(format, false, "user");
                 return false;
             } else {
-                console.log('not code-block')
                 props.quill.format(format, value ?? true, "user");
                 return true;
             }
-            //props.quill.format(format, false, "user");
-            return true;
         }
+        console.log('usedFormat', props.quill.getFormat()[format])
         if (props.quill.getFormat()[format] === (value ?? true) || value === "left") {
             props.quill.format(format, false, "user");
+            console.log('false');
             return false;
         } else {
+            console.log('true', props.quill.getFormat(), format, value ?? true);
             props.quill.format(format, value ?? true, "user");
             return true;
         }
@@ -120,7 +119,7 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             <option value="lower">Lower</option>
             <option value="title">Title</option>
         </QuillToolbarAlignSelect>,
-        codeBlock: (props: any) => <QuillToolbarButton name="code-block" icon="fontawesome-codeblock" {...props} />,
+        codeBlock: (props: any) => <QuillToolbarButton name="codeblockcustom" icon="fontawesome-codeblock" {...props} />,
     }), []);
 
     return (
