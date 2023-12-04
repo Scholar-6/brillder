@@ -59,23 +59,11 @@ const QuillToolbar: React.FC<QuillToolbarProps> = props => {
             const capitalization = props.quill.getModule("capitalization") as QuillCapitalization;
             capitalization.format(value);
             return true;
-        } else if (format === "code-block") {
-            const usedFormat = props.quill.getFormat();
-            if (usedFormat[format]) {
-                props.quill.format(format, false, "user");
-                return false;
-            } else {
-                props.quill.format(format, value ?? true, "user");
-                return true;
-            }
         }
-        console.log('usedFormat', props.quill.getFormat()[format])
         if (props.quill.getFormat()[format] === (value ?? true) || value === "left") {
             props.quill.format(format, false, "user");
-            console.log('false');
             return false;
         } else {
-            console.log('true', props.quill.getFormat(), format, value ?? true);
             props.quill.format(format, value ?? true, "user");
             return true;
         }
