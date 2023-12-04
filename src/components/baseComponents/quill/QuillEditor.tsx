@@ -18,6 +18,7 @@ import "./QuillSoundUpload";
 import "./QuillDesmos";
 import "./QuillCapitalization";
 import "./QuillBlockQuote";
+import "./QuillCodeBlockCustom";
 import ImageDialog from "components/build/buildQuestions/components/Image/ImageDialog";
 import { QuillEditorContext } from "./QuillEditorContext";
 import QuillToolbar from "./QuillToolbar";
@@ -229,8 +230,6 @@ const QuillEditor = React.forwardRef<HTMLDivElement, QuillEditorProps>((props, f
     }, []);
 
     const valid = (!props.validate || (data && (props.isValid !== false)));
-
-    console.log(props.toolbar);
 
     return (
         <div
