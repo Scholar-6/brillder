@@ -139,7 +139,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 isValid={!!stripHtml(this.state.synthesis)}
                 toolbar={[
                   'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
-                  'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "sound", "table", "desmos", "caps"
+                  'latex', 'bulletedList', 'numberedList', "align", 'blockQuote', "image", "sound", "table", "desmos", "caps", "codeBlock"
                 ]}
                 imageDialog={true}
                 soundDialog={true}
