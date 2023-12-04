@@ -224,7 +224,7 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                     "numberedList",
                     "blockQuote",
                     "align",
-                    "image", "sound", "table", "desmos", "caps"
+                    "image", "sound", "table", "desmos", "caps", "codeBlock"
                   ]}
                 />
                 <Grid container direction="row" className="inner-quills" ref={scrollArea}>
@@ -335,21 +335,18 @@ const PlanPage: React.FC<PlanProps> = (props) => {
                       allowDesmos={true}
                       isValid={!!stripHtml(currentBrick.prep)}
                       toolbar={[
-                        "bold",
-                        "italic",
+                        "bold", "italic",
                         "fontColor",
                         "latex",
-                        "subscript",
-                        "superscript",
+                        "subscript", "superscript",
                         "strikethrough",
                         "bulletedList",
                         "numberedList",
                         "blockQuote",
-                        "image",
-                        "video",
+                        "image", "video",
                         "table",
                         "align",
-                        "sound", "desmos", "caps"
+                        "sound", "desmos", "caps", "codeBlock"
                       ]}
                       imageDialog={true}
                       soundDialog={true}

@@ -41,7 +41,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, d
         toolbar={[
           'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough',
           'latex', 'bulletedList', 'numberedList', 'blockQuote', 'table', 'align',
-          'uploadImageCustom', 'image'
+          'uploadImageCustom', 'image', 'codeBlock'
         ]}
         placeholder="Additional text"
         imageDialog={true}
