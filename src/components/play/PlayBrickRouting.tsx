@@ -541,8 +541,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const now = moment().add(getLiveTime(brick.brickLength), 'minutes');
     const dif = moment.duration(now.diff(liveEndTime));
 
-    ba.preparationDuration = (preparationDuration as any)._milliseconds;
-    ba.liveDuration = (dif as any)._milliseconds;
+    if (preparationDuration) {
+      ba.preparationDuration = (preparationDuration as any)._milliseconds;
+    }
+    if (dif) {
+      ba.liveDuration = (dif as any)._milliseconds;
+    }
 
     const promise = createBrickAttempt(ba);
     settingLiveDuration();
@@ -559,8 +563,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const now = moment().add(getReviewTime(brick.brickLength), 'minutes');
     const dif = moment.duration(now.diff(reviewEndTime));
 
-    ba.synthesisDuration = (synthesisDuration as any)._milliseconds;
-    ba.reviewDuration = (dif as any)._milliseconds;
+    if (synthesisDuration) {
+      ba.synthesisDuration = (synthesisDuration as any)._milliseconds;
+    }
+    if (dif) {
+      ba.reviewDuration = (dif as any)._milliseconds;
+    }
 
     setStatus(PlayStatus.Ending);
     saveReviewBrickAttempt(ba);
