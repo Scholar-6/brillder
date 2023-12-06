@@ -16,7 +16,7 @@ export interface BookData {
 enum SortStudentOption {
   ByDuration = 1,
   ByTime,
-  ByScore
+  ByScore,
 }
 
 interface StudentsProps {
@@ -25,6 +25,8 @@ interface StudentsProps {
 
 interface State {
   questionCount: number;
+  isAscending: boolean;
+  sorting: SortStudentOption;
   bookData: BookData;
   students: TeachStudent[];
 }
@@ -45,7 +47,11 @@ class StudentsTable extends Component<StudentsProps, State> {
       }
     }
 
-    this.state = { questionCount, students: props.classItem.classroom.students, bookData: { open: false, student: null, assignment: null } };
+    this.state = { 
+      isAscending: false, sorting: SortStudentOption.ByTime,
+      questionCount,
+      students: props.classItem.classroom.students, bookData: { open: false, student: null, assignment: null }
+    };
   }
 
   nextStudent() {
@@ -158,7 +164,7 @@ class StudentsTable extends Component<StudentsProps, State> {
         let reviewTime = this.getTimeDuration(attempt.reviewDuration);
 
         return (
-          <tr className="user-row" key={index}>
+          <tr className="user-row" key={index} onMouseEnter={() => console.log(attempt)}>
             <td className="assigned-student-name">
               {student.firstName} {student.lastName}
             </td>
@@ -217,6 +223,12 @@ class StudentsTable extends Component<StudentsProps, State> {
     if (this.props.classItem.assignment.byStudent) {
       let classroom = this.props.classItem.classroom;
       if (classroom) {
+        let isAscending = this.state.isAscending;
+        if (this.state.sorting === sortBy) {
+          if (sortBy === this.state.sorting) {
+            isAscending = !isAscending;
+          }
+        }
         let sortedStudents = classroom.students.sort((st1, st2) => {
           const student1Result = this.getStudentResult(st1.id);
           const student2Result = this.getStudentResult(st2.id);
@@ -226,18 +238,34 @@ class StudentsTable extends Component<StudentsProps, State> {
             const attempt2 = student2Result.attempts[0];
 
             if (sortBy === SortStudentOption.ByTime) {
-              return attempt1.timestamp > attempt2.timestamp ? -1 : 1;
+              if (isAscending) {
+                return attempt1.timestamp < attempt2.timestamp ? -1 : 1;
+              } else {
+                return attempt1.timestamp > attempt2.timestamp ? -1 : 1;
+              }
             } else if (sortBy == SortStudentOption.ByDuration) {
               const duration1 = this.getDuration(attempt1);
               const duration2 = this.getDuration(attempt2);
-              return duration1 > duration2 ? -1 : 1;
+              if (isAscending) {
+                return duration1 < duration2 ? -1 : 1;
+              } else {
+                return duration1 > duration2 ? -1 : 1;
+              }
             } else if (sortBy == SortStudentOption.ByScore) {
-              return attempt1.score > attempt2.score ? -1 : 1;
+              let score1 = Math.round(attempt1.score / attempt1.maxScore * 100);
+              let score2 = Math.round(attempt2.score / attempt2.maxScore * 100);
+
+              if (isAscending) {
+                return score1 > score2 ? 1 : -1;
+              } else {
+                return score1 >= score2 ? -1 : 1;
+              }
             }
           }
           return 1;
         });
-        this.setState({ students: sortedStudents })
+        
+        this.setState({ isAscending, students: sortedStudents, sorting: sortBy })
       }
     }
   }
@@ -260,7 +288,7 @@ class StudentsTable extends Component<StudentsProps, State> {
                     <SpriteIcon name="sort-arrows" />
                   </div>
                   <div className="css-custom-tooltip first">
-                    Percentage score
+                    Score
                   </div>
                 </div>
               </th>
@@ -271,7 +299,7 @@ class StudentsTable extends Component<StudentsProps, State> {
                     <SpriteIcon name="sort-arrows" />
                   </div>
                   <div className="css-custom-tooltip second">
-                    Time
+                    Play Time
                   </div>
                 </div>
               </th>
@@ -282,7 +310,7 @@ class StudentsTable extends Component<StudentsProps, State> {
                     <SpriteIcon name="sort-arrows" />
                   </div>
                   <div className="css-custom-tooltip third">
-                    Time stamp
+                    Time and Date
                   </div>
                 </div>
               </th>
