@@ -21,7 +21,6 @@ import { isPhone } from "services/phone";
 import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademicLevelLabels, Brick } from "model/brick";
 import { CreateByEmailRes } from "services/axios/user";
-import { rightKeyPressed } from "components/services/key";
 import { SubscriptionState, User } from "model/user";
 import { checkAdmin, checkPublisher, isAorP } from "components/services/brickService";
 import QuickClassInvitationDialog, { QuickAssigment } from "components/baseComponents/classInvitationDialog/QuickClassInvitationDialog";
@@ -42,6 +41,7 @@ interface Props {
   assignPopup: boolean;
   quickAssignPopup: boolean;
 
+  setCanSeeCompetitionDialog(value: boolean): void;
   setCompetitionId(id: number): void;
   setUser(data: CreateByEmailRes): void;
   moveNext(): void;
@@ -183,6 +183,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
           }}
           onCancel={() => {
             props.setCompetitionId(-1);
+            props.setCanSeeCompetitionDialog(false);
             setCompetitionData(null);
           }}
         />
