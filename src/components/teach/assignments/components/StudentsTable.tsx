@@ -105,15 +105,6 @@ class StudentsTable extends Component<StudentsProps, State> {
     return "";
   }
 
-  renderInvestigationScore(attempt: any) {
-    if (attempt.oldScore) {
-      return Math.round(attempt.oldScore / attempt.maxScore * 100);
-    } else if (attempt.score) {
-      return Math.round(attempt.score / attempt.maxScore * 100);
-    }
-    return '';
-  }
-
   getDuration(attempt: any) {
     let duration = 0;
     if (attempt.liveDuration) {
@@ -241,7 +232,7 @@ class StudentsTable extends Component<StudentsProps, State> {
               const duration2 = this.getDuration(attempt2);
               return duration1 > duration2 ? -1 : 1;
             } else if (sortBy == SortStudentOption.ByScore) {
-              return attempt1.percentScore > attempt2.percentScore ? -1 : 1;
+              return attempt1.score > attempt2.score ? -1 : 1;
             }
           }
           return 1;
