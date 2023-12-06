@@ -2239,14 +2239,17 @@
   padding-top: 0vw;
   padding-bottom: 0vw;
   padding-left: 1vw;
-  font-size: 0.9vw;
 }
 
 .phone-question-preview-box {
   .codeblockcustom {
-    font-size: 0.9vw;
     padding-top: 0vw;
     padding-bottom: 0vw;
     padding-left: 0.5vw;
+    font-size: 1vw;
   } 
+}
+
+.play-preview-pages .codeblockcustom {
+  font-size: 1.4vw;
 }
