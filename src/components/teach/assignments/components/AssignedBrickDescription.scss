@@ -95,13 +95,15 @@
         z-index: 10;
 
         &.first {
-          left: -1.2vw;
+          left: -0.3vw;
         }
         &.second {
-          left: 0vw;
+          width: 5.4vw;
+          left: -1.3vw;
         }
         &.third {
-          left: 0vw;
+          width: 7.6vw;
+          left: -2.2vw;
         }
       }
 
