@@ -507,7 +507,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const settingPreparationDuration = () => {
     const now = moment().add(getPrepareTime(brick.brickLength), 'minutes');
     const dif = moment.duration(now.diff(prepEndTime));
-    console.log('prepare duration', dif)
     setPreparationDuration(dif);
   }
 
@@ -539,11 +538,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       ba.competitionId = competitionId;
     }
 
-
     const now = moment().add(getLiveTime(brick.brickLength), 'minutes');
     const dif = moment.duration(now.diff(liveEndTime));
 
-    console.log(preparationDuration);
     ba.preparationDuration = (preparationDuration as any)._milliseconds;
     ba.liveDuration = (dif as any)._milliseconds;
 
@@ -721,7 +718,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
     moveToInvestigation();
     setSidebar(true);
-    console.log('move to live');
     settingPreparationDuration();
   }
 
@@ -913,6 +909,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               history.push(routes.playCover(brick));
             }}
             canSeeCompetitionDialog={canSeeCompetitionDialog}
+            setCanSeeCompetitionDialog={setCanSeeCompetitionDialog}
             setUser={setUser}
             moveNext={coverMoveNext}
           />
@@ -921,10 +918,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           }} isCover={true} brick={brick} history={history} next={coverMoveNext} />}
         </Route>
         <Route path={routes.briefRoute}>
-          <Brief brick={brick} mode={mode} user={props.user} competitionId={competitionId} setCompetitionId={id => {
-            setCompetitionId(id);
-            history.push(routes.playBrief(brick));
-          }} moveNext={moveToPrePrep} onHighlight={onHighlight} />
+          <Brief
+            brick={brick} mode={mode} user={props.user}
+            competitionId={competitionId} canSeeCompetitionDialog={canSeeCompetitionDialog}
+            setCompetitionId={id => {
+              setCompetitionId(id);
+              history.push(routes.playBrief(brick));
+            }}
+            moveNext={moveToPrePrep} onHighlight={onHighlight}
+          />
           {isPhone() && <PhonePlayShareFooter brick={brick} history={history} next={() => history.push(routes.playPrePrep(brick))} />}
         </Route>
         <Route path={routes.sectionsRoute}>

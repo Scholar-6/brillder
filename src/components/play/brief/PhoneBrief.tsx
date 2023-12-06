@@ -18,6 +18,7 @@ interface Props {
   competitionId: number;
   setCompetitionId(id: number): void;
   moveNext(): void;
+  canSeeCompetitionDialog: boolean | null;
 
   // only real play
   mode?: PlayMode;
@@ -106,7 +107,7 @@ const PhoneBriefPage: React.FC<Props> = ({ brick, user, ...props }) => {
           </div>
         </div>
       </div>
-      {competitionData &&
+      {competitionData && props.canSeeCompetitionDialog &&
         <CompetitionDialog
           isOpen={competitionData.isOpen}
           user={user}
