@@ -1,0 +1,62 @@
+import React, { Component } from "react";
+
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+
+interface UserProfileProps {
+  moveNext(): void;
+  moveBack(): void;
+}
+
+interface FirstQuestionProps {
+  choice: any;
+  popup: boolean;
+}
+
+class SecondQuestion extends Component<UserProfileProps, FirstQuestionProps> {
+  constructor(props: UserProfileProps) {
+    super(props);
+
+    this.state = {
+      choice: null,
+      popup: false
+    }
+  }
+
+  render() {
+    let renderCheckbox = (currentChoice: any, label: string) => {
+      return (
+        <label className="check-box-container container" onClick={() => this.setState({ choice: currentChoice })}>
+          {label}
+          <span className={`checkmark ${currentChoice === this.state.choice ? "checked" : ""}`}></span>
+        </label>
+      );
+    }
+
+    return (
+      <div className="question">
+        <SpriteIcon name="ios-library" />
+        <div className="font-20">
+          QUESTION 3
+        </div>
+        <div className="bold font-32 question-text">
+          What qualifications are you studying for at present?
+        </div>
+        <div className="boxes-container font-24">
+          {renderCheckbox(1, "GCSEs")}
+          {renderCheckbox(2, "Practical & Vocational Qualifications")}
+        </div>
+        <div className="absolute-back-btn" onClick={() => {
+          this.props.moveBack();
+        }}>
+          <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span className="font-25">Previous</span>
+        </div>
+        <button className="absolute-contunue-btn font-25" onClick={this.props.moveNext}>Continue to Question 4</button>
+      </div>
+    );
+  }
+}
+
+export default SecondQuestion;

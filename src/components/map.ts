@@ -10,6 +10,7 @@ export const AssignmentEvents = Admin + '/assignment-events';
 
 export const Login = '/login';
 export const ActivateAccount = '/activateAccount';
+export const SixthformChoices = '/sixthform-choices';
 export const ActivateAccountEmail = ActivateAccount + '/email';
 export const ResetPassword = '/resetPassword';
 export const Build = '/build';
@@ -196,6 +197,7 @@ export default {
   SetUsername,
   SelectSubjectPage,
   UserPreferencePage,
+  SixthformChoices,
 
   NewBrick,
   ProposalStart,
