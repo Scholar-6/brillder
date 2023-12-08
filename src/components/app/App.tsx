@@ -82,6 +82,7 @@ import BrickLinks from 'components/admin/brickLinks/BrickLinks';
 import BrickSources from 'components/admin/brickLinks/BrickSources';
 import BrickPersonalLinks from 'components/admin/brickLinks/BrickPersonalLinks';
 import QuickAssign from 'components/play/quickAssign/QuickAssign';
+import SixthFormChoices from 'components/sixthformChoices/SixthformChoices';
 
 
 interface AppProps {
@@ -409,6 +410,7 @@ const App: React.FC<AppProps> = props => {
 
             <Route path={map.TermsPage} component={PublicTerms} />
             <Route path={`/${map.QuickassignPrefix}/:code`} component={QuickAssign} />
+            <Route path={map.SixthformChoices} component={SixthFormChoices} />
             <Route component={AuthRedirectRoute} />
           </Switch>
           <VersionLabel />
