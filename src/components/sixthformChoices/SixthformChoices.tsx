@@ -2,11 +2,15 @@ import React, { Component } from "react";
 
 import "./SixthformChoices.scss";
 import { User } from "model/user";
+import { SixthformSubject, getSixthformSubjects } from "services/axios/sixthformChoices";
+
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import FirstQuestion from "./components/FirstQuestion";
 import SecondQuestion from "./components/ThirdQuestion";
 import ThirdQuestion from "./components/ThirdQuestion";
+import moment from "moment";
+
 
 interface UserProfileProps {
   user: User;
@@ -33,9 +37,8 @@ enum SubjectType {
 
 interface UserProfileState {
   subjectType: SubjectType;
-  vocationalSubjects: any[];
-  ALevels: any[];
-  subjects: any[];
+  allSubjects: SixthformSubject[];
+  subjects: SixthformSubject[];
   page: Pages;
 }
 
@@ -43,114 +46,44 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   constructor(props: UserProfileProps) {
     super(props);
 
-    let ALevels = [
-      'Mathematics',
-      'Psychology',
-      'Biology',
-      'Chemistry',
-      'Sociology',
-      'History',
-      'Business',
-      'Economics',
-      'Physics',
-      'Geography',
-      'English Literature',
-      'Politics',
-      'Computer Science',
-      'Religious Studies',
-      'Media Studies',
-      'Law',
-      'Art and Design (Fine Art)',
-      'English Language',
-      'Further Mathematics',
-      'Physical Education',
-      'Art and Design (Photography)',
-      'Drama and Theatre',
-      'Design and Technology: Product Design',
-      'Spanish',
-      'Film Studies',
-      'English Language and Literature',
-      'French',
-      'Art and Design (Art, Craft and Design)',
-      'Art and Design (Graphic Communication)',
-      'Classical Civilisation',
-      'Philosophy',
-      'Music',
-      'Art and Design (Textile Design)',
-      'Accounting',
-      'Other languages',
-      'German',
-      'Art and Design (Three-dimensional design)',
-      'Environmental Science',
-      'Music Technology',
-      'Dance',
-      'Latin',
-      'Geology',
-      'Ancient Hist',
-      'Hist of Art',
-      'Electronics',
-      'Design and Technology: Design Engineering',
-      'Design and Technology: Fashion and Textiles',
-      'Classical Greek',
-      'Art and Design (Critical and Contextual Studies)',
-      'Biblical Hebrew',
-    ];
-
-    let vocationalSubjects = [
-      'Animal Care',
-      'Art & Design ',
-      'Automotive & Vehicle ',
-      'Business & Enterprise',
-      'Catering & Hospitality',
-      'Child Development & Care',
-      'Dance',
-      'Built Environment (Construction)',
-      'Built Environment (Design)',
-      'Creative Media',
-      'Digital & IT',
-      'Engineering Technology',
-      'Event Operations',
-      'Hair & Beauty',
-      'Health & Social Care',
-      'Interactive Media',
-      'Land Based Studies',
-      'Music',
-      'Music (General)',
-      'Music (Instrument & Performance)',
-      'Music (Technology)',
-      'Music (Theory)',
-      'Performing Arts',
-      'Maintenance & Service Engineering',
-      'Sport, Activity & Fitness',
-      'Travel & Tourism',
-    ];
-
     this.state = {
       subjectType: SubjectType.AllSubjects,
-      vocationalSubjects,
-      ALevels,
-      subjects: [...vocationalSubjects, ...ALevels],
+      allSubjects: [],
+      subjects: [],
       page: Pages.Welcome,
     }
+
+    let momen2t = moment(new Date());
+
+    var duration = moment.duration(momen2t.diff(new Date('12 11 2023')));
+    var hours = duration.asHours();
+
+    let sss = duration.asMilliseconds();
+
+    console.log(hours, sss);
 
     this.loadSubjects();
   }
 
   async loadSubjects() {
-
+    const subjects = await getSixthformSubjects();
+    if (subjects) {
+      this.setState({subjects, allSubjects: subjects});
+    }
   }
 
   renderSidebarCheckbox(currentSubjectType: SubjectType, label: string) {
     return (
       <label className="check-box-container container font-16" onClick={() => {
         let subjects: any[] = [];
-        if (currentSubjectType === SubjectType.ALevels) {
-          subjects = this.state.ALevels;
-
+        if (currentSubjectType === SubjectType.AcademicSubjects) {
+          subjects = this.state.allSubjects.filter(s => s.isAcademic === true);
+        } else if (currentSubjectType === SubjectType.ALevels) {
+          subjects = this.state.allSubjects.filter(s => s.isALevel === true);
         } else if (currentSubjectType === SubjectType.VocationalSubjects) {
-          subjects = this.state.vocationalSubjects;
-        } else if (currentSubjectType === 4) {
-          subjects = [...this.state.vocationalSubjects, ...this.state.ALevels];
+          subjects = this.state.allSubjects.filter(s => s.isVocational === true);
+        } else if (currentSubjectType === SubjectType.AllSubjects) {
+          subjects = this.state.allSubjects;
         }
         this.setState({ subjectType: currentSubjectType, subjects });
       }}>
@@ -226,7 +159,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                     }, 1000);
                   }}>
                     <div className="circle" />
-                    <div>{subject}</div>
+                    <div>{subject.name}</div>
                   </div>
                 })}
               </div>

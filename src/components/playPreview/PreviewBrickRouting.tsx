@@ -65,15 +65,22 @@ function shuffle(a: any[]) {
 }
 
 const checkCorrect = (choices: any[]) => {
-  let isCorrect = false;
   let index = 0;
+  let count = choices.length;
+  let correctCount = 0;
   for (let choice of choices) {
     if (choice.index === index) {
-      return true
+      correctCount += 1;
     }
     index += 1;
   }
-  return isCorrect;
+
+  // if less than 66% correct answers 
+  if (correctCount < count * 0.66) {
+    return true;
+  }
+
+  return false;
 }
 
 interface BrickRoutingProps {
