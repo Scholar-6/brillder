@@ -46,12 +46,12 @@ class ProgressbarCountdown extends Component<CounterProps, CounterState> {
     return setInterval(() => {
       const now = moment();
       const dif = moment.duration(this.props.endTime.diff(now));
-      this.setValue(dif._milliseconds);
-      if (dif._milliseconds < 1000) {
+      this.setValue(dif.asMilliseconds());
+      if (dif.asMilliseconds() < 1000) {
         this.props.onEnd();
         clearInterval(this.state.timerInterval);
       }
-      if (dif._milliseconds < 31000 && this.state.isDeadlineSoon === false) {
+      if (dif.asMilliseconds() < 31000 && this.state.isDeadlineSoon === false) {
         this.setState({ ...this.state, isDeadlineSoon: true })
       }
     }, 300);

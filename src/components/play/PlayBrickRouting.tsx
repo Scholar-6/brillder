@@ -112,15 +112,22 @@ function shuffle(a: any[]) {
 }
 
 const checkCorrect = (choices: any[]) => {
-  let isCorrect = false;
   let index = 0;
+  let count = choices.length;
+  let correctCount = 0;
   for (let choice of choices) {
     if (choice.index === index) {
-      return true
+      correctCount += 1;
     }
     index += 1;
   }
-  return isCorrect;
+
+  // if less than 66% correct answers 
+  if (correctCount < count * 0.66) {
+    return true;
+  }
+
+  return false;
 }
 
 interface BrickRoutingProps {
@@ -542,10 +549,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const dif = moment.duration(now.diff(liveEndTime));
 
     if (preparationDuration) {
-      ba.preparationDuration = (preparationDuration as any)._milliseconds;
+      ba.preparationDuration = preparationDuration.asMilliseconds();
     }
     if (dif) {
-      ba.liveDuration = (dif as any)._milliseconds;
+      ba.liveDuration = dif.asMilliseconds();
     }
 
     const promise = createBrickAttempt(ba);
@@ -564,10 +571,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const dif = moment.duration(now.diff(reviewEndTime));
 
     if (synthesisDuration) {
-      ba.synthesisDuration = (synthesisDuration as any)._milliseconds;
+      ba.synthesisDuration = synthesisDuration.asMilliseconds();
     }
     if (dif) {
-      ba.reviewDuration = (dif as any)._milliseconds;
+      ba.reviewDuration = dif.asMilliseconds();
     }
 
     setStatus(PlayStatus.Ending);

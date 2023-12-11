@@ -45,11 +45,11 @@ class CounterDown extends Component<CounterProps, CounterState> {
       let seconds = this.formatTwoLastDigits(dif.seconds());
       let milliseconds = this.formatTwoLastDigits(Math.round(dif.milliseconds() / 10));
       this.setState({ minutes, seconds, milliseconds, isCounting: true });
-      if (dif._milliseconds < 1000) {
+      if (dif.asMilliseconds() < 1000) {
         this.props.onEnd();
         clearInterval(this.state.timerInterval);
       }
-      if (dif._milliseconds < 31000 && this.state.isDeadlineSoon === false) {
+      if (dif.asMilliseconds() < 31000 && this.state.isDeadlineSoon === false) {
         this.setState({ ...this.state, isDeadlineSoon: true })
       }
     }, 1000);
