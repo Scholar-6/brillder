@@ -174,6 +174,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const values = queryString.parse(this.props.history.location.search);
     let searchStringV2 = values.search || searchString;
 
+    console.log('init', values.classroomId)
+
     if (values.classroomId) {
       const classroomId = parseInt(values.classroomId as string);
       await this.loadClasses(classroomId);
@@ -187,19 +189,16 @@ class TeachPage extends Component<TeachProps, TeachState> {
       this.searching(searchStringV2 as string);
       this.search();
     } else {
+      console.log('load by teacherId')
       this.loadClasses(-1, teacherId);
     }
-  }
-
-  async loadData() {
-    await this.props.getSubjects();
-    this.loadClasses();
   }
 
   async loadClasses(activeClassId?: number, teacherId?: number) {
     let totalCount = 0;
     let classrooms = [] as TeachClassroom[] | null;
     if ((this.state.teacherId && this.state.teacherId > 0) || (teacherId && teacherId > 0)) {
+      console.log('get teacher classrooms')
       classrooms = await getTeacherClassrooms(this.state.teacherId || teacherId) as TeachClassroom[] | null;
     } else {
       if (this.state.isAdminOrInstitution) {
@@ -228,6 +227,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
       }
 
       let { activeClassroom } = this.state;
+
+      console.log('active', activeClassId)
 
       if (activeClassId) {
         const classroom = classrooms.find(c => c.id === activeClassId);
@@ -273,6 +274,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
         classrooms = this.sortAndReturnClassrooms(sort, classrooms);
       }
 
+      console.log('set classrooms', classrooms)
+
       this.setState({ classrooms, activeClassroom, totalCount, isLoaded: true });
       return classrooms;
     } else {
@@ -281,6 +284,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async loadClassesV2(selectedChoice: ClassroomChoice, page: number, selectedDomain: string, sort: number, searchString?: string) {
+    console.log('load v2')
     let totalCount = this.state.totalCount;
     let classrooms = [] as TeachClassroom[] | null;
 
@@ -447,7 +451,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   sortClassrooms(sort: SortClassroom) {
-    if (this.state.isAdminOrInstitution) {
+    if (this.state.isAdminOrInstitution && this.state.teacherId <= 0) {
       this.loadClassesV2(this.state.selectedChoice, 0, this.state.selectedDomain, sort);
     } else {
       const classrooms = this.state.classrooms.filter(c => c.status == ClassroomStatus.Active);
@@ -480,7 +484,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async search() {
-    if (this.state.isAdminOrInstitution) {
+    if (this.state.isAdminOrInstitution && this.state.teacherId <= 0) {
       this.loadClassesV2(this.state.selectedChoice, 0, this.state.selectedDomain, this.state.sort, this.state.searchString);
     } else {
       let classrooms = await searchClassrooms(this.state.searchString, this.state.searchType) as TeachClassroom[] | null;
