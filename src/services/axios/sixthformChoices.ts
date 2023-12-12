@@ -1,11 +1,18 @@
 
 import {get} from './index';
 
+export enum UserSubjectChoice {
+  Maybe, // null or 0 or undefined
+  Definetly,
+  NotForMe
+}
+
 export interface SixthformSubject {
   id: number;  
   isALevel: boolean;
   isAcademic: boolean;
   isVocational: boolean;
+  userChoice?: UserSubjectChoice;
   name: string;
 }
 
