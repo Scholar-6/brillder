@@ -186,6 +186,11 @@
     height: calc(100vh - 7.834vw - 2vh - 3vw - 2vh - 1vh - 4vh - 6.5vw - 1vw - 2.5vw);
     border: 2px solid rgba(222, 222, 222, 0.1);
     overflow-y: scroll;
+    transition: all 300ms ease-in-out;
+
+    > div:hover {
+      background: #4C608A;
+    }
   }
 
   .subjects-scrollbar>div {
@@ -200,8 +205,12 @@
     width: 0.7vw;
     height: 0.7vw;
     border-radius: 50%;
-    background: var(--theme-orange);
+    color: var(--theme-orange);
     margin-right: 0.5vw;
+
+    &.circle-yellow {
+      color: var(--theme-yellow);
+    }
   }
 
 
@@ -291,9 +300,6 @@
     border: 0.15vw solid var(--theme-dark-blue);
   }
 
-  .boxes-container .check-box-container .checkmark::after {
-  }
-
   .boxes-container .check-box-container .checkmark.checked {
     border: 0.15vw solid var(--theme-orange);
   }
@@ -364,12 +370,181 @@
     background: rgba(0, 0, 0, 0.6);
   }
 
+  .subject-sixth-popup {
+    position: fixed;
+    z-index: 9;
+    color: var(--theme-dark-blue);
+    top: calc(50vh - 13vw);
+    left: 21vw;
+    width: 23.5vw;
+    background: white;
+    border-radius: 0.5vw;
+    padding: 2vh 1.2vw;
+
+    .subject-name {
+      display: flex;
+      align-items: center;
+  
+      .yellow-circle {
+        margin-right: 0.3vw;
+        width: 0.8vw;
+        height: 0.8vw;
+        color: var(--theme-yellow);
+      }
+    }
+  
+    .second-row {
+      display: flex;
+
+      .box-v32 {
+        border-radius: 0.3vw;
+        width: 33.3%;
+        background: #4C608A1A;
+        svg {
+          padding-top: 0.5vw;
+          width: 2vw;
+          height: 2vw;
+        }
+
+        &.m-r {
+          margin-right: 0.5vw;
+        }
+        &.m-l {
+          margin-left: 0.5vw;
+        }
+
+        > div {
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
+
+    .switch-button {
+      border-radius: 0.5vw;
+      margin-top: 2vh;
+      background: #EEF0F4;
+      color: #181B20;
+      display: flex;
+      padding-top: 0.22vw;
+      padding-bottom: 0.22vw;
+      padding-left: 0.22vw;
+      padding-right: 0.22vw;
+
+      > div {
+        cursor: pointer;
+        text-align: center;
+        width: 33.4%;
+        padding-top: 0.15vw;
+        padding-bottom: 0.15vw;
+      }
+
+      .active {
+        border-radius: 0.5vw;
+      }
+
+      .active-yellow {
+        color: white;
+        background: var(--theme-yellow);
+      }
+
+      .active-green {
+        color: white;
+        background: var(--theme-green);
+      }
+
+      .active-red {
+        color: white;
+        background: var(--theme-orange);
+      }
+    }
+    .taste-container {
+      margin-top: 2vh;
+      display: flex;
+      background: #4C608A1A;
+      border-radius: 0.5vw;
+      padding: 1vw 0.6vw;
+
+      > div {
+        width: 48%;
+      }
+
+      .label-container {
+        display: flex;
+        align-items: center;
+        padding-right: 0.6vw;
+        width: 52%;
+      }
+
+      .brick-container {
+        position: relative;
+
+        .scroll-block {
+          width: 9.5vw;
+          height: 7vw;
+          border-radius: 1vw;
+          background-size: cover;
+          background-position: center center;
+  
+          flex-flow: column nowrap;
+          background-repeat: no-repeat;
+          position: relative;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .bottom-description,
+        .bottom-description-color {
+          position: absolute;
+          bottom: 0;
+          height: 1.8vw;
+          width: 100%;
+        }
+
+        .bottom-description-color {
+          opacity: 0.8;
+          background: var(--tab-gray);
+          z-index: 10;
+        }
+
+        .bottom-description {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 11;
+        }
+      }
+    }
+  }
+
+
+
+
 
 
 
 
 
   /* fonts */
+  .font-8 {
+    font-size: calc(0.5vw * $font-scale);
+  }
+  .font-11 {
+    font-size: calc(0.6875vw * $font-scale);
+  }
+
+  .font-12 {
+    font-size: calc(0.75vw * $font-scale);
+  }
+
+  .font-14 {
+    font-size: calc(0.875vw * $font-scale);
+  }
+
+  .font-15 {
+    font-size: calc(0.9375vw * $font-scale);
+  }
+
   .font-16 {
     font-size: calc(1vw * $font-scale);
   }

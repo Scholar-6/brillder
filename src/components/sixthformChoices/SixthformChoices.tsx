@@ -2,14 +2,13 @@ import React, { Component } from "react";
 
 import "./SixthformChoices.scss";
 import { User } from "model/user";
-import { SixthformSubject, getSixthformSubjects } from "services/axios/sixthformChoices";
+import { SixthformSubject, UserSubjectChoice, getSixthformSubjects } from "services/axios/sixthformChoices";
 
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import FirstQuestion from "./components/FirstQuestion";
 import SecondQuestion from "./components/ThirdQuestion";
 import ThirdQuestion from "./components/ThirdQuestion";
-import moment from "moment";
 
 
 interface UserProfileProps {
@@ -39,6 +38,8 @@ interface UserProfileState {
   subjectType: SubjectType;
   allSubjects: SixthformSubject[];
   subjects: SixthformSubject[];
+  popupSubject: SixthformSubject | null;
+  popupTimeout: number | NodeJS.Timeout;
   page: Pages;
 }
 
@@ -50,17 +51,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       subjectType: SubjectType.AllSubjects,
       allSubjects: [],
       subjects: [],
+      popupTimeout: -1,
+      popupSubject: null,
       page: Pages.Welcome,
     }
-
-    let momen2t = moment(new Date());
-
-    var duration = moment.duration(momen2t.diff(new Date('12 11 2023')));
-    var hours = duration.asHours();
-
-    let sss = duration.asMilliseconds();
-
-    console.log(hours, sss);
 
     this.loadSubjects();
   }
@@ -68,7 +62,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   async loadSubjects() {
     const subjects = await getSixthformSubjects();
     if (subjects) {
-      this.setState({subjects, allSubjects: subjects});
+      this.setState({ subjects, allSubjects: subjects });
     }
   }
 
@@ -111,21 +105,104 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           <div className="smaller-text-box text-box-number3 font-20">
             Let’s start by identifying the type of study you are interested in.
           </div>
-          <button className="absolute-contunue-btn font-25" onClick={() => this.setState({page: Pages.Question1})}>Continue</button>
+          <button className="absolute-contunue-btn font-25" onClick={() => this.setState({ page: Pages.Question1 })}>Continue</button>
         </div>
       );
     }
 
     if (this.state.page === Pages.Question1) {
-      return <FirstQuestion moveNext={() => this.setState({page: Pages.Question2})} moveBack={() => this.setState({page: Pages.Welcome})} />
+      return <FirstQuestion moveNext={() => this.setState({ page: Pages.Question2 })} moveBack={() => this.setState({ page: Pages.Welcome })} />
     } else if (this.state.page === Pages.Question2) {
-      return <SecondQuestion moveNext={() => this.setState({page: Pages.Question3})} moveBack={() => this.setState({page: Pages.Question1})} />
+      return <SecondQuestion moveNext={() => this.setState({ page: Pages.Question3 })} moveBack={() => this.setState({ page: Pages.Question1 })} />
     } else if (this.state.page === Pages.Question3) {
-      return <ThirdQuestion moveNext={() => this.setState({page: Pages.Question4})} moveBack={() => this.setState({page: Pages.Question2})} />
+      return <ThirdQuestion moveNext={() => this.setState({ page: Pages.Question4 })} moveBack={() => this.setState({ page: Pages.Question2 })} />
     } else if (this.state.page === Pages.Question4) {
       //return <FourthQuestion setPage={setPage} />
     }
     return <div />;
+  }
+
+  renderSwitchButton(subject: SixthformSubject) {
+
+    return (
+      <div className="switch-button font-12 bold">
+        <div 
+          className={`${subject.userChoice === UserSubjectChoice.Definetly ? 'active active-green' : ''}`} 
+          onClick={() => {
+            subject.userChoice = UserSubjectChoice.Definetly;
+            this.setState({popupSubject: subject});
+          }}>Definitely!</div>
+        <div
+          className={`${subject.userChoice === UserSubjectChoice.Maybe || !subject.userChoice ? 'active active-yellow' : ''}`} 
+          onClick={() => {
+            subject.userChoice = UserSubjectChoice.Maybe;
+            this.setState({popupSubject: subject});
+          }}>Maybe</div>
+        <div
+          className={`${subject.userChoice === UserSubjectChoice.NotForMe ? 'active active-red' : ''}`} 
+          onClick={() => {
+            subject.userChoice = UserSubjectChoice.NotForMe;
+            this.setState({popupSubject: subject});
+          }}>Not for me</div>
+      </div>
+    );
+  }
+
+  renderSubjectPopup(subject: SixthformSubject) {
+    if (this.state.popupSubject && this.state.popupSubject === subject) {
+      const { popupSubject } = this.state;
+      return (
+        <div className="subject-sixth-popup">
+          <div className="subject-name font-24 bold">
+            <SpriteIcon name="circle-filled" className="yellow-circle" />
+            {popupSubject.name}
+          </div>
+          <div className="font-14">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </div>
+          <div className="second-row">
+            <div className="box-v32 m-r">
+              <div>
+                <SpriteIcon name="user-custom-v3" />
+              </div>
+              <div className="font-12">Candidates</div>
+              <div className="bold font-15">220,000</div>
+            </div>
+            <div className="box-v32">
+              <div>
+                <SpriteIcon name="facility-icon-hat" />
+              </div>
+              <div className="font-12">Facilitating Subject</div>
+              <div className="bold font-15">STEM</div>
+            </div>
+            <div className="box-v32 m-l">
+              <div>
+                <SpriteIcon name="bricks-icon-v3" />
+              </div>
+              <div className="font-12">Often taken with</div>
+              <div className="bold font-11">Accounting, Business</div>
+            </div>
+          </div>
+          {this.renderSwitchButton(subject)}
+          <div className="taste-container">
+            <div className="label-container">
+              <div>
+                <div className="bold font-20">Take a Tester Brick!</div>
+                <div className="font-14">Try out a Brick for this subject to see if it’s a good fit for you.</div>
+              </div>
+            </div>
+            <div>
+              <div className="brick-container">
+                <div className="scroll-block" style={{backgroundImage: `url(https://s3.eu-west-2.amazonaws.com/app.brillder.files.com/files/6c5bb9cb-28f0-4bb4-acc6-0169ef9ce9aa.png)`}}></div>
+                <div className="bottom-description-color" />
+                <div className="bottom-description font-8 bold">Introduction to Advanced Mathemathics</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return;
   }
 
   render() {
@@ -154,12 +231,19 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               <div className="subjects-scrollbar font-16">
                 {this.state.subjects.map((subject, i) => {
                   return <div key={i} onMouseEnter={() => {
-                    setTimeout(() => {
-                      //setHoveredSubject(subject);
+                    if (this.state.popupTimeout) {
+                      clearTimeout(this.state.popupTimeout);
+                    }
+                    let popupTimeout = setTimeout(() => {
+                      this.setState({ popupSubject: subject });
                     }, 1000);
+                    this.setState({popupTimeout});
+                  }} onMouseLeave={(e) => {
+                    this.setState({ popupSubject: null });
                   }}>
-                    <div className="circle" />
+                    <SpriteIcon name="circle-filled" className="circle circle-yellow" />
                     <div>{subject.name}</div>
+                    {this.renderSubjectPopup(subject)}
                   </div>
                 })}
               </div>
