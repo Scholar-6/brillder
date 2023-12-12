@@ -13,6 +13,7 @@ export interface SixthformSubject {
   isAcademic: boolean;
   isVocational: boolean;
   userChoice?: UserSubjectChoice;
+  score: number;
   name: string;
 }
 

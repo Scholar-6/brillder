@@ -201,15 +201,21 @@
     border-bottom: 2px solid rgba(222, 222, 222, 0.1);
   }
 
-  .subjects-scrollbar .circle {
+  .subjects-scrollbar .subject-circle {
     width: 0.7vw;
     height: 0.7vw;
     border-radius: 50%;
     color: var(--theme-orange);
     margin-right: 0.5vw;
 
-    &.circle-yellow {
+    &.yellow-circle {
       color: var(--theme-yellow);
+    }
+    &.green-circle {
+      color: var(--theme-green);
+    }
+    &.red-circle {
+      color: var(--theme-orange);
     }
   }
 
@@ -385,11 +391,19 @@
       display: flex;
       align-items: center;
   
-      .yellow-circle {
+      .subject-circle {
         margin-right: 0.3vw;
         width: 0.8vw;
         height: 0.8vw;
+      }
+      .yellow-circle {
         color: var(--theme-yellow);
+      }
+      .green-circle {
+        color: var(--theme-green);
+      }
+      .red-circle {
+        color: var(--theme-orange);
       }
     }
   

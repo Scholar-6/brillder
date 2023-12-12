@@ -61,9 +61,40 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   async loadSubjects() {
     const subjects = await getSixthformSubjects();
+    
     if (subjects) {
+      for (let subject of subjects) {
+        subject.score = 3;
+        subject.userChoice = UserSubjectChoice.Maybe;
+      }
       this.setState({ subjects, allSubjects: subjects });
     }
+  }
+
+  sortByScore(subjects: SixthformSubject[]) {
+    subjects.sort((a, b) => {
+      console.log(a.score, b.score)
+      if (a.score > b.score) {
+        console.log(-1)
+        return -1;
+      } else if (a.score < b.score) {
+        console.log(1);
+        return 1;
+      }
+      return 0;
+    });
+    console.log(subjects[0]);
+    return subjects;
+  }
+
+  renderCircle(subject: SixthformSubject) {
+    let colorClass = 'subject-circle yellow-circle';
+    if (subject.userChoice === UserSubjectChoice.Definetly) {
+      colorClass = 'subject-circle green-circle';
+    } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
+      colorClass = 'subject-circle red-circle';
+    }
+    return <SpriteIcon name="circle-filled" className={colorClass} />
   }
 
   renderSidebarCheckbox(currentSubjectType: SubjectType, label: string) {
@@ -123,26 +154,60 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderSwitchButton(subject: SixthformSubject) {
-
     return (
       <div className="switch-button font-12 bold">
-        <div 
-          className={`${subject.userChoice === UserSubjectChoice.Definetly ? 'active active-green' : ''}`} 
+        <div
+          className={`${subject.userChoice === UserSubjectChoice.Definetly ? 'active active-green' : ''}`}
           onClick={() => {
+            if (!subject.score) {
+              subject.score = 0;
+            }
+            if (subject.userChoice === UserSubjectChoice.Maybe) {
+              subject.score += 2;
+            } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
+              subject.score += 15;
+            } else {
+              subject.score += 5;
+            }
             subject.userChoice = UserSubjectChoice.Definetly;
-            this.setState({popupSubject: subject});
+            console.log('sort 1')
+            this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
           }}>Definitely!</div>
         <div
-          className={`${subject.userChoice === UserSubjectChoice.Maybe || !subject.userChoice ? 'active active-yellow' : ''}`} 
+          className={`${subject.userChoice === UserSubjectChoice.Maybe || !subject.userChoice ? 'active active-yellow' : ''}`}
           onClick={() => {
+            if (!subject.score) {
+              subject.score = 0;
+            }
+
+            if (subject.userChoice === UserSubjectChoice.Definetly) {
+              subject.score -= 2;
+            } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
+              subject.score += 13;
+            } else {
+              subject.score += 3;
+            }
             subject.userChoice = UserSubjectChoice.Maybe;
-            this.setState({popupSubject: subject});
+            console.log('sort2')
+            this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
           }}>Maybe</div>
         <div
-          className={`${subject.userChoice === UserSubjectChoice.NotForMe ? 'active active-red' : ''}`} 
+          className={`${subject.userChoice === UserSubjectChoice.NotForMe ? 'active active-red' : ''}`}
           onClick={() => {
+            if (!subject.score) {
+              subject.score = 0;
+            }
+
+            if (subject.userChoice === UserSubjectChoice.Definetly) {
+              subject.score -= 15;
+            } else if (subject.userChoice === UserSubjectChoice.Maybe) {
+              subject.score -= 13;
+            } else {
+              subject.score -= 10;
+            }
             subject.userChoice = UserSubjectChoice.NotForMe;
-            this.setState({popupSubject: subject});
+            console.log('sort 3')
+            this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
           }}>Not for me</div>
       </div>
     );
@@ -154,8 +219,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return (
         <div className="subject-sixth-popup">
           <div className="subject-name font-24 bold">
-            <SpriteIcon name="circle-filled" className="yellow-circle" />
-            {popupSubject.name}
+            {this.renderCircle(subject)}
+            {popupSubject.name} {popupSubject.score}
           </div>
           <div className="font-14">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -193,7 +258,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </div>
             <div>
               <div className="brick-container">
-                <div className="scroll-block" style={{backgroundImage: `url(https://s3.eu-west-2.amazonaws.com/app.brillder.files.com/files/6c5bb9cb-28f0-4bb4-acc6-0169ef9ce9aa.png)`}}></div>
+                <div className="scroll-block" style={{ backgroundImage: `url(https://s3.eu-west-2.amazonaws.com/app.brillder.files.com/files/6c5bb9cb-28f0-4bb4-acc6-0169ef9ce9aa.png)` }}></div>
                 <div className="bottom-description-color" />
                 <div className="bottom-description font-8 bold">Introduction to Advanced Mathemathics</div>
               </div>
@@ -210,7 +275,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       <React.Suspense fallback={<></>}>
         <div className="page1 dashboard-page SixthformChoicesPage">
           <div className="header-top">
-            <HomeButton link={"/home"} history={history} />
+            <HomeButton link={"/home"} history={this.props.history} />
             <div className="logout-container">
               <div className="search-container font-32">
                 <div>
@@ -237,11 +302,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                     let popupTimeout = setTimeout(() => {
                       this.setState({ popupSubject: subject });
                     }, 1000);
-                    this.setState({popupTimeout});
+                    this.setState({ popupTimeout });
                   }} onMouseLeave={(e) => {
                     this.setState({ popupSubject: null });
                   }}>
-                    <SpriteIcon name="circle-filled" className="circle circle-yellow" />
+                    {this.renderCircle(subject)}
                     <div>{subject.name}</div>
                     {this.renderSubjectPopup(subject)}
                   </div>
