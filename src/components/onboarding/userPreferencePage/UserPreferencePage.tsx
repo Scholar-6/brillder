@@ -55,7 +55,7 @@ const UserPreferencePage: React.FC<UserPreferencePageProps> = props => {
 
   React.useEffect(() => {
     if (preference) {
-      handleChange(preference, false, true);
+      setPreference(preference);
     }
     /* eslint-disable-next-line */
   }, [props.defaultPreference]);
