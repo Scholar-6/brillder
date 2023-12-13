@@ -288,7 +288,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     const haveImage = this.checkImages();
     return (
       <div className="question-unique-play vertical-shuffle-play">
-        <p><span className="help-text"><DragIcon />Drag to rearrange.   {haveImage && <span>Hover over images to zoom.</span>}
+        <p><span className="help-text"><DragIcon />Drag to rearrange. {haveImage && <span className="margin-left-l23">Hover over images to zoom.</span>}
           {!isPhone() && isMobile &&
             <span>
               <SpriteIcon name="hero-cursor-click" />
