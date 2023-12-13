@@ -15,7 +15,7 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import BasePhonePreview from 'components/baseComponents/BasePhonePreview';
 import LabelTyping from 'components/baseComponents/LabelTyping';
 import { isStudentPreference } from 'components/services/preferenceService';
-import { GetActivateUrl, UnsetActivateUrl } from 'localStorage/login';
+import { GetActivateUrl } from 'localStorage/login';
 
 
 interface InputState {
