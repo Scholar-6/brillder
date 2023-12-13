@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import SpriteIcon from "components/baseComponents/SpriteIcon";
-
 interface UserProfileProps {
   moveNext(): void;
   moveBack(): void;
@@ -34,9 +32,16 @@ class SecondQuestion extends Component<UserProfileProps, FirstQuestionProps> {
 
     return (
       <div className="question">
-        <SpriteIcon name="ios-library" />
-        <div className="font-20">
-          QUESTION 2
+        <div className="progress-bar">
+          <div className='start active' />
+          <div className='active' />
+          <div />
+          <div />
+          <div />
+          <div className="end" />
+        </div>
+        <div className="font-16">
+          STEP 2: INSTITUTIONS
         </div>
         <div className="bold font-32 question-text">
           Where are you planning to do your sixth form studies?
@@ -57,7 +62,7 @@ class SecondQuestion extends Component<UserProfileProps, FirstQuestionProps> {
           </svg>
           <span className="font-25">Previous</span>
         </div>
-        <button className="absolute-contunue-btn font-25" onClick={this.props.moveNext}>Continue to Question 3</button>
+        <button className="absolute-contunue-btn font-25" onClick={this.props.moveNext}>Continue to Step 3</button>
       </div>
     );
   }
