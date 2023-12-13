@@ -2,12 +2,14 @@ import React, { Component } from "react";
 
 import "./SixthformChoices.scss";
 import { User } from "model/user";
-import { SixthformSubject, UserSubjectChoice, getSixthformSubjects } from "services/axios/sixthformChoices";
+import {
+  SixthformSubject, UserSubjectChoice, getSixthformAnswers, getSixthformSubjects, saveSixthformAnswer
+} from "services/axios/sixthformChoices";
 
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import FirstQuestion from "./components/FirstQuestion";
-import SecondQuestion from "./components/ThirdQuestion";
+import SecondQuestion from "./components/SecondQuestion";
 import ThirdQuestion from "./components/ThirdQuestion";
 
 
@@ -19,7 +21,7 @@ interface UserProfileProps {
 }
 
 enum Pages {
-  Welcome = 1,
+  Welcome = 0,
   Question1,
   Question2,
   Question3,
@@ -40,6 +42,7 @@ interface UserProfileState {
   subjects: SixthformSubject[];
   popupSubject: SixthformSubject | null;
   popupTimeout: number | NodeJS.Timeout;
+  answers: any[];
   page: Pages;
 }
 
@@ -51,6 +54,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       subjectType: SubjectType.AllSubjects,
       allSubjects: [],
       subjects: [],
+      answers: [],
       popupTimeout: -1,
       popupSubject: null,
       page: Pages.Welcome,
@@ -69,21 +73,25 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       }
       this.setState({ subjects, allSubjects: subjects });
     }
+
+    const answers = await getSixthformAnswers();
+    if (answers) {
+      for (let answer of answers) {
+        answer.answer = JSON.parse(answer.answer);
+      }
+      this.setState({answers});
+    }
   }
 
   sortByScore(subjects: SixthformSubject[]) {
     subjects.sort((a, b) => {
-      console.log(a.score, b.score)
       if (a.score > b.score) {
-        console.log(-1)
         return -1;
       } else if (a.score < b.score) {
-        console.log(1);
         return 1;
       }
       return 0;
     });
-    console.log(subjects[0]);
     return subjects;
   }
 
@@ -142,7 +150,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     }
 
     if (this.state.page === Pages.Question1) {
-      return <FirstQuestion moveNext={() => this.setState({ page: Pages.Question2 })} moveBack={() => this.setState({ page: Pages.Welcome })} />
+      return <FirstQuestion answer={this.state.answers.find(a => a.step === Pages.Question1)} moveNext={async (answer: any) => {
+        const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
+        if (result) {
+          const answerR1 = this.state.answers.find(a => a.step === Pages.Question1);
+          answerR1.answer.choice = answer.choice;
+        }
+        this.setState({ page: Pages.Question2 });
+      }} moveBack={() => this.setState({ page: Pages.Welcome })} />
     } else if (this.state.page === Pages.Question2) {
       return <SecondQuestion moveNext={() => this.setState({ page: Pages.Question3 })} moveBack={() => this.setState({ page: Pages.Question1 })} />
     } else if (this.state.page === Pages.Question3) {
@@ -170,7 +185,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               subject.score += 5;
             }
             subject.userChoice = UserSubjectChoice.Definetly;
-            console.log('sort 1')
             this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
           }}>Definitely!</div>
         <div
@@ -188,7 +202,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               subject.score += 3;
             }
             subject.userChoice = UserSubjectChoice.Maybe;
-            console.log('sort2')
             this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
           }}>Maybe</div>
         <div
@@ -206,7 +219,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               subject.score -= 10;
             }
             subject.userChoice = UserSubjectChoice.NotForMe;
-            console.log('sort 3')
             this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
           }}>Not for me</div>
       </div>
@@ -291,8 +303,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 {this.renderSidebarCheckbox(1, 'Academic Subjects Only')}
                 {this.renderSidebarCheckbox(2, 'A-Levels Only')}
                 {this.renderSidebarCheckbox(3, 'Vocational Subjects Only')}
-                {this.renderSidebarCheckbox(4, 'All Subjects')}
+                {this.renderSidebarCheckbox(4, 'Showing All Subjects')}
               </div>
+              <div className="font-18 ranking-label">Your subject rankings</div>
               <div className="subjects-scrollbar font-16">
                 {this.state.subjects.map((subject, i) => {
                   return <div key={i} onMouseEnter={() => {
