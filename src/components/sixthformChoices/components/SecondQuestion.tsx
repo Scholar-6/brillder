@@ -1,29 +1,58 @@
 import React, { Component } from "react";
 
-interface UserProfileProps {
-  moveNext(): void;
+enum SecondChoice {
+  CurrentSchool = 1,
+  SixthForm,
+  NewSchool,
+  Other
+}
+
+interface SecondQuestionProps {
+  answer: any;
+  moveNext(answer: any): void;
   moveBack(): void;
 }
 
-interface FirstQuestionProps {
-  choice: any;
+interface SecondQuestionState {
+  choice: null | SecondChoice;
+  currentSchool: string;
   popup: boolean;
 }
 
-class SecondQuestion extends Component<UserProfileProps, FirstQuestionProps> {
-  constructor(props: UserProfileProps) {
+class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState> {
+  constructor(props: SecondQuestionProps) {
     super(props);
 
+    let choice = null;
+    
+    if (props.answer) {
+      choice = props.answer.answer.choice;
+    }
+
     this.state = {
-      choice: null,
+      choice,
+      currentSchool: '',
       popup: false
     }
   }
 
   render() {
-    let renderCheckbox = (currentChoice: any, label: string) => {
+    let renderCheckbox = (currentChoice: SecondChoice, label: string) => {
+      if (currentChoice === SecondChoice.CurrentSchool) {
+        return (
+          <label className={`check-box-container container ${currentChoice === this.state.choice ? "bold" : ""}`} onClick={() => this.setState({ choice: currentChoice })}>
+            {label}
+            <span className={`checkmark ${currentChoice === this.state.choice ? "checked" : ""}`}></span>
+            <input
+              placeholder="Type your current school"
+              value={this.state.currentSchool}
+              onChange={e => this.setState({currentSchool: e.target.value})}
+            />
+          </label>
+        );
+      }
       return (
-        <label className="check-box-container container" onClick={() => this.setState({ choice: currentChoice })}>
+        <label className={`check-box-container container ${currentChoice === this.state.choice ? "bold" : ""}`} onClick={() => this.setState({ choice: currentChoice })}>
           {label}
           <span className={`checkmark ${currentChoice === this.state.choice ? "checked" : ""}`}></span>
         </label>
@@ -47,11 +76,10 @@ class SecondQuestion extends Component<UserProfileProps, FirstQuestionProps> {
           Where are you planning to do your sixth form studies?
         </div>
         <div className="boxes-container font-24">
-          {renderCheckbox(1, "My current school")}
-          {renderCheckbox(2, "A Sixth Form or FE College")}
-          {renderCheckbox(3, "A a new school or a private sixth form college")}
-          {renderCheckbox(4, "Other")}
-          {renderCheckbox(5, "I’m not sure yet")}
+          {renderCheckbox(SecondChoice.CurrentSchool, "my current school")}
+          {renderCheckbox(SecondChoice.SixthForm, "a Sixth Form or FE College")}
+          {renderCheckbox(SecondChoice.NewSchool, "a new school or a private sixth form college")}
+          {renderCheckbox(SecondChoice.Other, "other")}
         </div>
         <div id="result1"></div>
         <div className="absolute-back-btn" onClick={() => {
@@ -62,7 +90,7 @@ class SecondQuestion extends Component<UserProfileProps, FirstQuestionProps> {
           </svg>
           <span className="font-25">Previous</span>
         </div>
-        <button className="absolute-contunue-btn font-25" onClick={this.props.moveNext}>Continue to Step 3</button>
+        <button className="absolute-contunue-btn font-25" onClick={() => this.props.moveNext({choice: this.state.choice})}>Continue to Step 3</button>
       </div>
     );
   }
