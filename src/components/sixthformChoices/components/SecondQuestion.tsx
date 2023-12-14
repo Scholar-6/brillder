@@ -1,3 +1,4 @@
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 import React, { Component } from "react";
 
 enum SecondChoice {
@@ -5,6 +6,12 @@ enum SecondChoice {
   SixthForm,
   NewSchool,
   Other
+}
+
+enum OtherChoice {
+  Online = 1,
+  Home,
+  Combination
 }
 
 interface SecondQuestionProps {
@@ -15,6 +22,7 @@ interface SecondQuestionProps {
 
 interface SecondQuestionState {
   choice: null | SecondChoice;
+  otherChoice: null | OtherChoice;
   currentSchool: string;
   popup: boolean;
 }
@@ -24,13 +32,16 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     super(props);
 
     let choice = null;
-    
+    let otherChoice = null;
+
     if (props.answer) {
       choice = props.answer.answer.choice;
+      otherChoice = props.answer.answer.otherChoice;
     }
 
     this.state = {
       choice,
+      otherChoice,
       currentSchool: '',
       popup: false
     }
@@ -46,7 +57,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             <input
               placeholder="Type your current school"
               value={this.state.currentSchool}
-              onChange={e => this.setState({currentSchool: e.target.value})}
+              onChange={e => this.setState({ currentSchool: e.target.value })}
             />
           </label>
         );
@@ -57,6 +68,42 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           <span className={`checkmark ${currentChoice === this.state.choice ? "checked" : ""}`}></span>
         </label>
       );
+    }
+
+    const renderOtherChoice = () => {
+      return (
+        <div className={`check-box-container container ${this.state.choice === SecondChoice.Other ? "bold" : ""}`}>
+          <div className="main-box" onClick={() => this.setState({ choice: SecondChoice.Other })}>
+            other
+            <SpriteIcon name={this.state.choice === SecondChoice.Other ? 'radio-btn-active' : 'radio-btn-blue'} />
+          </div>
+          {this.state.choice === SecondChoice.Other &&
+            <div className="other-choices">
+              <div className={this.state.otherChoice === OtherChoice.Online ? "bold" : "regular"} onClick={() => this.setState({ otherChoice: OtherChoice.Online })}>
+                <SpriteIcon name={this.state.otherChoice === OtherChoice.Online ? 'radio-btn-active' : 'radio-btn-blue'} />
+                <span className="font-16">I will enroll in an online / distance learning college.</span>
+              </div>
+              <div className={this.state.otherChoice === OtherChoice.Home ? "bold" : "regular"} onClick={() => this.setState({ otherChoice: OtherChoice.Home })}>
+                <SpriteIcon name={this.state.otherChoice === OtherChoice.Home ? 'radio-btn-active' : 'radio-btn-blue'} />
+                <span className="font-16">I will be home schooled and / or privately tutored.</span>
+              </div>
+              <div className={this.state.otherChoice === OtherChoice.Combination ? "bold" : "regular"} onClick={() => this.setState({ otherChoice: OtherChoice.Combination })}>
+                <SpriteIcon name={this.state.otherChoice === OtherChoice.Combination ? 'radio-btn-active' : 'radio-btn-blue'} />
+                <span className="font-16">A combination of online college / homeschooling / tutoring.</span>
+              </div>
+            </div>}
+        </div>
+      );
+    }
+
+    let disabled = false;
+
+    if (this.state.choice === null) {
+      disabled = true;
+    }
+
+    if (this.state.choice === SecondChoice.Other && this.state.otherChoice === null) {
+      disabled = true;
     }
 
     return (
@@ -79,7 +126,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           {renderCheckbox(SecondChoice.CurrentSchool, "my current school")}
           {renderCheckbox(SecondChoice.SixthForm, "a Sixth Form or FE College")}
           {renderCheckbox(SecondChoice.NewSchool, "a new school or a private sixth form college")}
-          {renderCheckbox(SecondChoice.Other, "other")}
+          {renderOtherChoice()}
         </div>
         <div id="result1"></div>
         <div className="absolute-back-btn" onClick={() => {
@@ -90,7 +137,17 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           </svg>
           <span className="font-25">Previous</span>
         </div>
-        <button className="absolute-contunue-btn font-25" onClick={() => this.props.moveNext({choice: this.state.choice})}>Continue to Step 3</button>
+        <button
+          className={`absolute-contunue-btn font-25 ${disabled ? "disabled" : ""}`}
+          disabled={disabled}
+          onClick={() => {
+            this.props.moveNext({
+              choice: this.state.choice,
+              otherChoice: this.state.otherChoice,
+              currentSchool: this.state.currentSchool
+            });
+          }}
+        >Continue</button>
       </div>
     );
   }

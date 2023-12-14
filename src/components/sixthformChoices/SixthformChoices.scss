@@ -253,6 +253,11 @@
     font-family: "Brandon Grotesque Regular" !important;
     background: var(--theme-dark-blue);
     transition: all 300ms ease-in-out;
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
   .absolute-back-btn {
@@ -305,6 +310,30 @@
     line-height: 1;
     padding-left: 2.6vw;
     background: #4C608A1A;
+
+    .main-box {
+      width: 100%;
+    }
+
+    svg {
+      position: absolute;
+      top: calc(1vh + 0.5vw);
+      left: 0.8vw;
+      width: 1vw;
+      height: 1vw;
+    }
+
+    .other-choices > div {
+      padding-top: 0.4vh;
+      position: relative;
+      padding-left: 1.3vw;
+      margin-left: 0vw;
+
+      svg {
+        top: calc(0.4vh + 0.55vw);
+        left: 0vw;
+      }
+    }
   }
 
   .boxes-container .check-box-container .checkmark {
