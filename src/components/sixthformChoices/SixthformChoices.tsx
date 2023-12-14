@@ -108,6 +108,21 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       }
     }
   }
+  
+  parseAnswer2(result: any, answer: any, questionPage: Pages) {
+    if (result) {
+      const answerR1 = this.state.answers.find(a => a.step === questionPage);
+      if (answerR1) {
+        answerR1.answer.choice = answer.choice;
+        answerR1.answer.otherChoice = answer.otherChoice;
+      } else {
+        answer = result;
+        answer.answer = JSON.parse(answer.answer);
+        this.state.answers.push(answer);
+        this.setState({answers: [...this.state.answers]});
+      }
+    }
+  }
 
   renderCircle(subject: SixthformSubject) {
     let colorClass = 'subject-circle yellow-circle';
@@ -169,13 +184,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         moveNext={async (answer: any) => {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
           this.parseAnswer(result, answer, Pages.Question1);
-
-          // sorting and returning
-          this.setState({
-            page: Pages.Question2,
-            allSubjects: this.sortByScore(this.state.allSubjects),
-            subjects: this.sortByScore(this.state.subjects)
-          });
+          this.setState({ page: Pages.Question2 });
         }}
         moveBack={() => this.setState({ page: Pages.Welcome })}
       />
@@ -184,7 +193,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answer={this.state.answers.find(a => a.step === Pages.Question2)}
         moveNext={async (answer: any) => {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
-          this.parseAnswer(result, answer, Pages.Question2)
+          console.log(result, answer)
+          this.parseAnswer2(result, answer, Pages.Question2)
           this.setState({ page: Pages.Question3 });
         }}
         moveBack={() => this.setState({ page: Pages.Question1 })}
