@@ -1790,4 +1790,11 @@
       </clipPath>
     </defs>
   </svg>
+  <svg id="radio-btn-blue" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="10" cy="10.5" r="9" stroke="#4C608A" stroke-width="2"/>
+  </svg>
+  <svg id="radio-btn-active" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="10" cy="10" r="9" stroke="#C43C30" stroke-width="2"/>
+    <circle cx="10" cy="10" r="6" fill="#C43C30"/>
+  </svg>
 </svg>

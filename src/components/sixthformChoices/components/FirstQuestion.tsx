@@ -6,6 +6,14 @@ interface FirstQuestionProps {
   moveBack(): void;
 }
 
+export enum FirstChoice {
+  ALevel = 1,
+  AllAcademic,
+  Vocational,
+  ShowMeAll,
+  Other
+}
+
 interface FirstQuestionState {
   choice: any;
   popup: boolean;
@@ -89,12 +97,12 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
           What type of course or courses are you considering for the sixth form?
         </div>
         <div className="boxes-container font-24">
-          {renderCheckbox(1, "A-level courses only")}
-          {renderCheckbox(2, "All academic courses including A-level and Diploma")}
-          {renderCheckbox(3, "Vocational courses only (e.g. BTEC, T-level)")}
-          {renderCheckbox(4, "Show me all types of course")}
-          {renderCheckboxV2(5, "Are there other types of sixth form courses?*", () => {
-            this.setState({ choice: 5, popup: true });
+          {renderCheckbox(FirstChoice.ALevel, "A-level courses only")}
+          {renderCheckbox(FirstChoice.AllAcademic, "All academic courses including A-level and Diploma")}
+          {renderCheckbox(FirstChoice.Vocational, "Vocational courses only (e.g. BTEC, T-level)")}
+          {renderCheckbox(FirstChoice.ShowMeAll, "Show me all types of course")}
+          {renderCheckboxV2(FirstChoice.Other, "Are there other types of sixth form courses?*", () => {
+            this.setState({ choice: FirstChoice.Other, popup: true });
           })}
         </div>
         <div id="result1"></div>

@@ -8,7 +8,7 @@ import {
 
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import FirstQuestion from "./components/FirstQuestion";
+import FirstQuestion, { FirstChoice } from "./components/FirstQuestion";
 import SecondQuestion from "./components/SecondQuestion";
 import ThirdQuestion from "./components/ThirdQuestion";
 
@@ -168,8 +168,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answer={this.state.answers.find(a => a.step === Pages.Question1)}
         moveNext={async (answer: any) => {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
-          this.parseAnswer(result, answer, Pages.Question1)
-          this.setState({ page: Pages.Question2 });
+          this.parseAnswer(result, answer, Pages.Question1);
+
+          // sorting and returning
+          this.setState({
+            page: Pages.Question2,
+            allSubjects: this.sortByScore(this.state.allSubjects),
+            subjects: this.sortByScore(this.state.subjects)
+          });
         }}
         moveBack={() => this.setState({ page: Pages.Welcome })}
       />
