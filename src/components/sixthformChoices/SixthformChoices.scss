@@ -116,13 +116,6 @@
     user-select: none;
   }
 
-  /* Hide the browser's default radio button */
-  .container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-  }
-
   /* Create a custom radio button */
   .checkmark {
     position: absolute;
@@ -317,21 +310,45 @@
 
     svg {
       position: absolute;
-      top: calc(1vh + 0.5vw);
+      top: calc(1vh + 0.4vw);
       left: 0.8vw;
-      width: 1vw;
-      height: 1vw;
+      width: 1.2vw;
+      height: 1.2vw;
     }
 
     .other-choices > div {
       padding-top: 0.4vh;
       position: relative;
-      padding-left: 1.3vw;
+      padding-left: 1.5vw;
       margin-left: 0vw;
 
       svg {
-        top: calc(0.4vh + 0.55vw);
+        top: calc(0.4vh + 0.5vw);
         left: 0vw;
+      }
+    }
+
+    .current-school-autocomplete {
+      margin-top: 2vh;
+      margin-bottom: 1vh;
+      border-radius: 0.5vw;
+      background: white;
+
+      width: calc(100% - 1.5vw);
+
+      input {
+        color: var(--theme-dark-blue);
+        line-height: 1;
+
+        padding-top: 0.7vh;
+        padding-bottom: 0.7vh;
+
+        padding-left: 1vw;
+        width: calc(100% - 1vw);
+      }
+
+      input::placeholder {
+        color: #4C608A;
       }
     }
   }
