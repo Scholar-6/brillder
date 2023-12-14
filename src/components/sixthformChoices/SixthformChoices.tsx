@@ -65,7 +65,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   async loadSubjects() {
     const subjects = await getSixthformSubjects();
-    
+
     if (subjects) {
       for (let subject of subjects) {
         subject.score = 3;
@@ -79,7 +79,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       for (let answer of answers) {
         answer.answer = JSON.parse(answer.answer);
       }
-      this.setState({answers});
+      this.setState({ answers });
     }
   }
 
@@ -93,6 +93,20 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return 0;
     });
     return subjects;
+  }
+
+  parseAnswer(result: any, answer: any, questionPage: Pages) {
+    if (result) {
+      const answerR1 = this.state.answers.find(a => a.step === questionPage);
+      if (answerR1) {
+        answerR1.answer.choice = answer.choice;
+      } else {
+        answer = result;
+        answer.answer = JSON.parse(answer.answer);
+        this.state.answers.push(answer);
+        this.setState({answers: [...this.state.answers]});
+      }
+    }
   }
 
   renderCircle(subject: SixthformSubject) {
@@ -150,16 +164,25 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     }
 
     if (this.state.page === Pages.Question1) {
-      return <FirstQuestion answer={this.state.answers.find(a => a.step === Pages.Question1)} moveNext={async (answer: any) => {
-        const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
-        if (result) {
-          const answerR1 = this.state.answers.find(a => a.step === Pages.Question1);
-          answerR1.answer.choice = answer.choice;
-        }
-        this.setState({ page: Pages.Question2 });
-      }} moveBack={() => this.setState({ page: Pages.Welcome })} />
+      return <FirstQuestion
+        answer={this.state.answers.find(a => a.step === Pages.Question1)}
+        moveNext={async (answer: any) => {
+          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
+          this.parseAnswer(result, answer, Pages.Question1)
+          this.setState({ page: Pages.Question2 });
+        }}
+        moveBack={() => this.setState({ page: Pages.Welcome })}
+      />
     } else if (this.state.page === Pages.Question2) {
-      return <SecondQuestion moveNext={() => this.setState({ page: Pages.Question3 })} moveBack={() => this.setState({ page: Pages.Question1 })} />
+      return <SecondQuestion
+        answer={this.state.answers.find(a => a.step === Pages.Question2)}
+        moveNext={async (answer: any) => {
+          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
+          this.parseAnswer(result, answer, Pages.Question2)
+          this.setState({ page: Pages.Question3 });
+        }}
+        moveBack={() => this.setState({ page: Pages.Question1 })}
+      />
     } else if (this.state.page === Pages.Question3) {
       return <ThirdQuestion moveNext={() => this.setState({ page: Pages.Question4 })} moveBack={() => this.setState({ page: Pages.Question2 })} />
     } else if (this.state.page === Pages.Question4) {
