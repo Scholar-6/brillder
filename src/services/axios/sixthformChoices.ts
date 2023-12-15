@@ -46,3 +46,11 @@ export const getSixthformAnswers = async () => {
     return null;
   }
 }
+
+export const getSixthformSchools = async () => {
+  try {
+    return await get<any[]>(`/sixth-form-choices/schools`);
+  } catch {
+    return null;
+  }
+}

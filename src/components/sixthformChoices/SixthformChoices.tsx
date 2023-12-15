@@ -8,7 +8,7 @@ import {
 
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import FirstQuestion, { FirstChoice } from "./components/FirstQuestion";
+import FirstQuestion from "./components/FirstQuestion";
 import SecondQuestion from "./components/SecondQuestion";
 import ThirdQuestion from "./components/ThirdQuestion";
 
@@ -115,6 +115,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       if (answerR1) {
         answerR1.answer.choice = answer.choice;
         answerR1.answer.otherChoice = answer.otherChoice;
+        answerR1.answer.subStep = answer.subStep;
+        answerR1.answer.currentSchool = answer.currentSchool;
+        answerR1.answer.databaseSchool = answer.databaseSchool;
+        answerR1.answer.sixthformChoice = answer.sixthformChoice;
       } else {
         answer = result;
         answer.answer = JSON.parse(answer.answer);
@@ -160,7 +164,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return (
         <div>
           <SpriteIcon name="ios-library" className="ionLibrary" />
-          <div className="bold font-32">Welcome to our Sixth Form Course Selector!</div>
+          <div className="bold big-text-q1 font-32">Welcome to our Sixth Form Course Selector!</div>
           <div className="smaller-text-box text-box-number1 font-20">
             We take you through a ten step process which helps you identify the right courses for<br />
             you. Numerous factors have a bearing, from current subjects and interests to your<br />
@@ -173,7 +177,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           <div className="smaller-text-box text-box-number3 font-20">
             Let’s start by identifying the type of study you are interested in.
           </div>
-          <button className="absolute-contunue-btn font-25" onClick={() => this.setState({ page: Pages.Question1 })}>Continue</button>
+          <button className="absolute-contunue-btn font-24" onClick={() => this.setState({ page: Pages.Question1 })}>Continue</button>
         </div>
       );
     }
@@ -193,8 +197,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answer={this.state.answers.find(a => a.step === Pages.Question2)}
         moveNext={async (answer: any) => {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
-          console.log(result, answer)
-          this.parseAnswer2(result, answer, Pages.Question2)
+          this.parseAnswer2(result, answer, Pages.Question2);
           this.setState({ page: Pages.Question3 });
         }}
         moveBack={() => this.setState({ page: Pages.Question1 })}

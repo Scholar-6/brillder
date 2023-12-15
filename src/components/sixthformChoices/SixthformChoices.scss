@@ -67,6 +67,8 @@
     position: relative;
     display: flex;
     width: 67vw;
+    line-height: 1;
+    background: var(--white) !important;
     height: calc(100vh - 7.834vw - 5vh - 3vw - 4vh);
     border-top-left-radius: 2vw;
     margin-left: 1.2vw;
@@ -75,6 +77,14 @@
     padding: 0 4vw 5vh 5vw;
     padding-top: 4vh;
     padding-bottom: calc(5vh + 3vw);
+
+    .smaller-text-box {
+      line-height: 1.45;
+    }
+
+    .big-text-q1 {
+      padding-bottom: 2vh;
+    }
   }
 
   .bold {
@@ -241,10 +251,10 @@
     padding-left: 5vw;
     padding-right: 5vw;
     border-radius: 0.5vw;
-    padding-top: 0.4vw;
-    padding-bottom: 0.4vw;
+    padding-top: 1.7vh;
+    padding-bottom: 1.7vh;
     font-family: "Brandon Grotesque Regular" !important;
-    background: var(--theme-dark-blue);
+    background: var(--theme-light-blue);
     transition: all 300ms ease-in-out;
 
     &.disabled {
@@ -259,7 +269,7 @@
     cursor: pointer;
     position: absolute;
     bottom: 5vh;
-    left: 7vw;
+    left: 3.2vw;
     color: #4C608A;
     border-radius: 0.5vw;
     padding-top: 0.4vw;
@@ -297,7 +307,7 @@
   }
 
   .boxes-container .check-box-container {
-    max-width: 42vw;
+    max-width: 50vw;
     padding-top: 1vh;
     padding-bottom: 1vh;
     line-height: 1;
@@ -369,14 +379,74 @@
       padding-left: 3vw;
       padding-right: 3vw;
     }
+    
+    .MuiAutocomplete-root {
+      margin-bottom: 0 !important;
+      .MuiInputBase-root {
+        background: white;
+        box-shadow: none !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+  
+        input {
+          line-height: 1;
+          padding-top: 1.5vh !important;
+          padding-bottom: 1.5vh !important;
+        }
+
+        .MuiAutocomplete-endAdornment {
+          height: 100%;
+          top: 0;
+          .MuiButtonBase-root {
+            margin: 0 !important;
+          }
+          .MuiSvgIcon-root {
+            position: relative;
+            left: unset;
+            top: unset;
+            right: unset;
+            width: 2vw;
+            height: 2vw;
+          }
+        }
+      }
+    }
+    .help-without {
+      display: flex;
+      align-items: center;
+      width: 43.5vw;
+      margin-top: 6vh;
+      margin-bottom: 2vh;
+      padding-left: 0.7vw;
+      padding-top: 2vh;
+      padding-bottom: 2vh;
+      border-radius: 0.5vw;
+      color: #46494D;
+      background: #F2F6FF;
+      font-family: "Brandon Grotesque Regular" !important;
+      line-height: 1.26;
+
+      svg {
+        padding-top: 0.4vw;
+        width: 2.2vw;
+        height: 2.2vw;
+        padding-right: 0.65vw;
+      }
+    }
     .question-text {
       line-height: 1;
-      margin-top: 3vh;
-      margin-bottom: 7vh;
+      width: 93%;
+      margin-top: 5vh;
+      margin-bottom: 5vh;
+    }
+    .question-text-3 {
+      line-height: 0.4;
+      margin-top: 4vh;
+      margin-bottom: 5vh;
     }
     .progress-bar {
       display: flex;
-      margin-bottom: 1vh;
+      margin-bottom: 2vh;
 
       >div {
         margin-right: 0.4vw;
@@ -613,7 +683,6 @@
 
 
 
-
   /* fonts */
   .font-8 {
     font-size: calc(0.5vw * $font-scale);
@@ -657,5 +726,123 @@
 
   .font-32 {
     font-size: calc(2vw * $font-scale);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // step3
+  .question {
+    .main-subjects-container {
+      margin-top: 2vh;
+      display: flex;
+
+      .first-box-R21 {
+        border-radius: 0.7vw;
+        background: #4C608A1A;
+        width: 43vw;
+        height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh);
+        margin-right: 2vw;
+
+        .toggle-R21 {
+          margin-left: 0.5vw;
+          margin-top: 1vh;
+          background: #4C608A1F;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-left: 0.3vw;
+          padding-right: 0.3vw;
+          padding-top: 0.3vw;
+          padding-bottom: 0.3vw;
+          border-radius: 0.5vw;
+          color: #4C608A;
+
+          width: 21.5vw;
+
+          > div {
+            cursor: pointer;
+            border-radius: 0.55vw;
+            padding-top: 0.7vh;
+            padding-bottom: 0.7vh;
+            padding-left: 1.4vw;
+            padding-right: 1.4vw;
+          }
+
+          .active {
+            color: var(--theme-dark-blue);
+            background: var(--white);
+          }
+        }
+        .subjects-box-r21 {
+          overflow-y: scroll;
+          width: 100%;
+          height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh      - 3vh - 1.4vh - 1vw - 2vw);
+
+          .subjects-lozenges {
+            display: flex;
+            margin-left: 0.4vw;
+            flex-wrap: wrap;
+            
+            .subject-lozenge {
+              margin: 0.8vh 0.3vw;
+
+              padding: 0.8vh 0.8vw 0.6vh 0.8vw;
+
+              border-radius: 2vw;
+              display: flex;
+              background-color: #C43C3033;
+              svg {
+                width: 1vw;
+                height: 1vw;
+              }
+            }
+          }
+        }
+        .subjects-typer-r21 {
+          padding-top: 0.5vh;
+          padding-bottom: 0.5vh;
+          margin-left: 0.9vw;
+          margin-right: 0.9vw;
+          border-radius: 0.5vw;
+          background: white;
+
+          input {
+            color: var(--theme-dark-blue);
+            padding-left: 1vw;
+            width: 100%;
+            &::placeholder {
+              color: #4C608A;
+            }
+          }
+        }
+      }
+      .second-box-R21 {
+        padding-top: 1vh;
+        padding-left: 1vh;
+        border-radius: 0.7vw;
+        background: #4C608A1A;
+        width: 20.5vw;
+        height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh);
+      }
+    }
   }
 }

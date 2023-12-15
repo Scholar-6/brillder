@@ -1,5 +1,11 @@
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 import React, { Component } from "react";
+import { ListItemText, MenuItem, TextField, SvgIcon } from '@material-ui/core';
+import Autocomplete from "@material-ui/lab/Autocomplete";
+
+import CheckBoxV2 from "./CheckBox";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { getSixthformSchools } from "services/axios/sixthformChoices";
+
 
 enum SubStep {
   First,
@@ -19,6 +25,11 @@ enum OtherChoice {
   Combination
 }
 
+enum SixthformChoice {
+  SixthForm = 1,
+  Forbid
+}
+
 interface SecondQuestionProps {
   answer: any;
   moveNext(answer: any): void;
@@ -30,6 +41,9 @@ interface SecondQuestionState {
   otherChoice: null | OtherChoice;
   currentSchool: string;
   subStep: SubStep;
+  databaseSchool: any;
+  schools: any[];
+  sixthformChoice: any;
 }
 
 class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState> {
@@ -38,29 +52,90 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
 
     let choice = null;
     let otherChoice = null;
+    let currentSchool = '';
+    let databaseSchool = null;
+    let sixthformChoice = null;
 
     if (props.answer) {
       choice = props.answer.answer.choice;
       otherChoice = props.answer.answer.otherChoice;
+      currentSchool = props.answer.answer.currentSchool;
+      databaseSchool = props.answer.answer.databaseSchool;
+      sixthformChoice = props.answer.answer.sixthformChoice;
     }
 
     this.state = {
       choice,
       otherChoice,
       subStep: SubStep.First,
-      currentSchool: ''
+      currentSchool,
+      sixthformChoice,
+      databaseSchool,
+      schools: []
     };
+
+    this.loadSchools();
+  }
+
+  async loadSchools() {
+    const schools = await getSixthformSchools();
+    if (schools) {
+      this.setState({ schools });
+    }
   }
 
   renderProgressBar() {
     return (
-      <div className="progress-bar">
-        <div className='start active' />
-        <div className='active' />
-        <div />
-        <div />
-        <div />
-        <div className="end" />
+      <div>
+        <div className="progress-bar">
+          <div className='start active' />
+          <div className='active' />
+          <div />
+          <div />
+          <div />
+          <div className="end" />
+        </div>
+        <div className="font-16">
+          STEP 2: INSTITUTIONS
+        </div>
+      </div>
+    );
+  }
+
+  renderDatabaseSchool() {
+    return (
+      <div className={`check-box-container container ${this.state.sixthformChoice === SixthformChoice.SixthForm ? "bold" : ""}`}>
+        <div className="main-box" onClick={() => this.setState({ sixthformChoice: SixthformChoice.SixthForm })}>
+          Write the name of the institution into the search box and press enter.
+          <SpriteIcon name={this.state.sixthformChoice === SixthformChoice.SixthForm ? 'radio-btn-active' : 'radio-btn-blue'} />
+        </div>
+        <div className="current-school-autocomplete font-24">
+          <Autocomplete
+            value={this.state.databaseSchool}
+            options={this.state.schools}
+            onChange={(e: any, v: any) => this.setState({ databaseSchool: v })}
+            noOptionsText="Sorry, try typing something else"
+            className="subject-autocomplete"
+            getOptionLabel={(option: any) => option.name}
+            renderOption={(loopSchool: any) => (
+              <React.Fragment>
+                <MenuItem >
+                  <ListItemText>
+                    {loopSchool.name}
+                  </ListItemText>
+                </MenuItem>
+              </React.Fragment>
+            )}
+            renderInput={(params: any) => (
+              <TextField
+                {...params}
+                variant="standard"
+                label=""
+                placeholder="Type to start browsing our database"
+              />
+            )}
+          />
+        </div>
       </div>
     );
   }
@@ -81,15 +156,6 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             />
           </div>}
       </div>
-    );
-  }
-
-  renderCheckbox(currentChoice: SecondChoice, label: string) {
-    return (
-      <label className={`check-box-container container ${currentChoice === this.state.choice ? "bold" : ""}`} onClick={() => this.setState({ choice: currentChoice })}>
-        {label}
-        <span className={`checkmark ${currentChoice === this.state.choice ? "checked" : ""}`}></span>
-      </label>
     );
   }
 
@@ -119,6 +185,17 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     );
   }
 
+  moveNext() {
+    this.props.moveNext({
+      choice: this.state.choice,
+      subStep: this.state.subStep,
+      otherChoice: this.state.otherChoice,
+      currentSchool: this.state.currentSchool,
+      databaseSchool: this.state.databaseSchool,
+      sixthformChoice: this.state.sixthformChoice,
+    });
+  }
+
   render() {
 
     let disabled = false;
@@ -135,17 +212,28 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       return (
         <div className="question">
           {this.renderProgressBar()}
-          <div className="font-16">
-            STEP 2: INSTITUTIONS
-          </div>
           <div className="bold font-32 question-text">
             Some schools and colleges share the courses they offer with our database.
           </div>
           <div className="boxes-container font-24">
-            {this.renderCurrentSchool()}
-            {this.renderOtherChoice()}
+            {this.renderDatabaseSchool()}
+            <CheckBoxV2
+              currentChoice={SixthformChoice.Forbid}
+              choice={this.state.sixthformChoice}
+              label="I have not chosen, or don’t wish to disclose, my sixth form"
+              setChoice={choice => this.setState({ sixthformChoice: choice })}
+            />
+            {this.state.sixthformChoice === SixthformChoice.Forbid &&
+              <div className="help-without font-16">
+                <div>
+                  <SpriteIcon name="help-without" />
+                </div>
+                <div>
+                  No problem - you can still identify courses you’re suited to by completing this process,<br /> but remember that some may not be offered by the sixth form you eventually choose.
+                </div>
+              </div>
+            }
           </div>
-          <div id="result1"></div>
           <div className="absolute-back-btn" onClick={() => {
             this.props.moveBack();
           }}>
@@ -155,18 +243,10 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             <span className="font-25">Previous</span>
           </div>
           <button
-            className={`absolute-contunue-btn font-25 ${disabled ? "disabled" : ""}`}
+            className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`}
             disabled={disabled}
             onClick={() => {
-              if (this.state.choice === SecondChoice.SixthForm || this.state.choice === SecondChoice.NewSchool) {
-                this.setState({ subStep: SubStep.Second });
-              } else {
-                this.props.moveNext({
-                  choice: this.state.choice,
-                  otherChoice: this.state.otherChoice,
-                  currentSchool: this.state.currentSchool
-                });
-              }
+              this.moveNext();
             }}
           >Continue</button>
         </div>
@@ -176,19 +256,25 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     return (
       <div className="question">
         {this.renderProgressBar()}
-        <div className="font-16">
-          STEP 2: INSTITUTIONS
-        </div>
         <div className="bold font-32 question-text">
           Where are you planning to do your sixth form studies?
         </div>
         <div className="boxes-container font-24">
           {this.renderCurrentSchool()}
-          {this.renderCheckbox(SecondChoice.SixthForm, "a Sixth Form or FE College")}
-          {this.renderCheckbox(SecondChoice.NewSchool, "a new school or a private sixth form college")}
+          <CheckBoxV2
+            currentChoice={SecondChoice.SixthForm}
+            choice={this.state.choice}
+            label="a Sixth Form or FE College"
+            setChoice={choice => this.setState({ choice })}
+          />
+          <CheckBoxV2
+            currentChoice={SecondChoice.NewSchool}
+            choice={this.state.choice}
+            label="a new school or a private sixth form college"
+            setChoice={choice => this.setState({ choice })}
+          />
           {this.renderOtherChoice()}
         </div>
-        <div id="result1"></div>
         <div className="absolute-back-btn" onClick={() => {
           this.props.moveBack();
         }}>
@@ -198,17 +284,13 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           <span className="font-25">Previous</span>
         </div>
         <button
-          className={`absolute-contunue-btn font-25 ${disabled ? "disabled" : ""}`}
+          className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`}
           disabled={disabled}
           onClick={() => {
             if (this.state.choice === SecondChoice.SixthForm || this.state.choice === SecondChoice.NewSchool) {
               this.setState({ subStep: SubStep.Second });
             } else {
-              this.props.moveNext({
-                choice: this.state.choice,
-                otherChoice: this.state.otherChoice,
-                currentSchool: this.state.currentSchool
-              });
+              this.moveNext();
             }
           }}
         >Continue</button>
