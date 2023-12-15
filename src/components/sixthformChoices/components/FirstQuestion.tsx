@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CheckBoxV2 from "./CheckBox";
 
 interface FirstQuestionProps {
   answer: any;
@@ -61,27 +62,9 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
     );
   }
 
-  render() {
-    let renderCheckbox = (currentChoice: any, label: string) => {
-      return (
-        <label className={`check-box-container container ${currentChoice === this.state.choice ? "bold" : ""}`} onClick={() => this.setState({ choice: currentChoice })}>
-          {label}
-          <span className={`checkmark ${currentChoice === this.state.choice ? "checked" : ""}`}></span>
-        </label>
-      );
-    }
-
-    let renderCheckboxV2 = (currentChoice: any, label: string, click: any) => {
-      return (
-        <label className="check-box-container container" onClick={click}>
-          {label}
-          <span className={`checkmark ${currentChoice === this.state.choice ? "checked" : ""}`}></span>
-        </label>
-      );
-    }
-
+  renderProgressBar() {
     return (
-      <div className="question">
+      <div>
         <div className="progress-bar">
           <div className='start active' />
           <div />
@@ -93,19 +76,25 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
         <div className="font-16">
           STEP 1: TYPES OF COURSE
         </div>
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div className="question">
+        {this.renderProgressBar()}
         <div className="bold font-32 question-text">
           What type of course or courses are you considering for the sixth form?
         </div>
         <div className="boxes-container font-24">
-          {renderCheckbox(FirstChoice.ALevel, "A-level courses only")}
-          {renderCheckbox(FirstChoice.AllAcademic, "All academic courses including A-level and Diploma")}
-          {renderCheckbox(FirstChoice.Vocational, "Vocational courses only (e.g. BTEC, T-level)")}
-          {renderCheckbox(FirstChoice.ShowMeAll, "Show me all types of course")}
-          {renderCheckboxV2(FirstChoice.Other, "Are there other types of sixth form courses?*", () => {
+          <CheckBoxV2 currentChoice={FirstChoice.ALevel} choice={this.state.choice} label="A-level courses only" setChoice={choice => this.setState({choice})} />
+          <CheckBoxV2 currentChoice={FirstChoice.Vocational} choice={this.state.choice} label="Vocational courses only (e.g. BTEC, T-level)" setChoice={choice => this.setState({choice})} />
+          <CheckBoxV2 currentChoice={FirstChoice.ShowMeAll} choice={this.state.choice} label="Show me all types of course" setChoice={choice => this.setState({choice})} />
+          <CheckBoxV2 currentChoice={FirstChoice.Other} choice={this.state.choice} label="Are there other types of sixth form courses?*" setChoice={() => {
             this.setState({ choice: FirstChoice.Other, popup: true });
-          })}
+          }} />
         </div>
-        <div id="result1"></div>
         <div className="absolute-back-btn" onClick={() => {
           this.props.moveBack();
         }}>
@@ -114,7 +103,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
           </svg>
           <span className="font-25">Previous</span>
         </div>
-        <button className="absolute-contunue-btn font-25" onClick={this.moveNext.bind(this)}>Continue to Step 2</button>
+        <button className="absolute-contunue-btn font-24" onClick={this.moveNext.bind(this)}>Continue to Step 2</button>
         {this.state.popup && this.renderPopup()}
       </div>
     );
