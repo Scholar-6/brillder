@@ -1,9 +1,16 @@
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 import React, { Component } from "react";
+import subjects from "redux/reducers/subjects";
 
 
 enum SubjectGroupR21 {
   GCSE = 1,
   PracticalVocational,
+}
+
+interface SubjectR21 {
+  name: string;
+  selected?: boolean;
 }
 
 interface ThirdProps {
@@ -14,8 +21,10 @@ interface ThirdProps {
 interface ThirdQuestionProps {
   typedSubject: string;
   subjectGroup: SubjectGroupR21;
-  GCSESubjects: any[];
-  vocationalSubjects: any[];
+  GCSESubjects: SubjectR21[];
+  limit: number;
+  vocationalSubjects: SubjectR21[];
+  subjectSelections: SubjectR21[];
 }
 
 class ThirdQuestion extends Component<ThirdProps, ThirdQuestionProps> {
@@ -95,10 +104,6 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionProps> {
     }, {
       name: 'Digital & IT'
     }, {
-      name: 'Engineering [drop down] - you can select more than one'
-    }, {
-      name: 'Engineering'
-    }, {
       name: 'Engineering (Design)'
     }, {
       name: 'Engineering Technology'
@@ -134,7 +139,9 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionProps> {
       typedSubject: '',
       subjectGroup: SubjectGroupR21.GCSE,
       GCSESubjects: GCSE,
+      limit: 16,
       vocationalSubjects: vocational,
+      subjectSelections: [],
     }
   }
 
@@ -160,18 +167,17 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionProps> {
     this.setState({ subjectGroup: group });
   }
 
-  renderSubjectLozenges() {
-    let subjects = this.state.GCSESubjects;
-    if (this.state.subjectGroup === SubjectGroupR21.PracticalVocational) {
-      subjects = this.state.vocationalSubjects;
-    }
+  renderSubjectLozenges(subjects: SubjectR21[], canDelete: boolean, onClick: Function, onDelete?: Function) {
     return (
-      <div className="subjects-lozenges bold">
-        {subjects.map((subject, index) => { return (
-          <div className="subject-lozenge" key={index}>
-            <div className="subject-name">{subject.name}</div>
-          </div>
-        )})}
+      <div className="subjects-lozenges bold font-12">
+        {subjects.map((subject, index) => {
+          return (
+            <div className={`subject-lozenge ${subject.selected ? 'active' : ''}`} key={index} onClick={() => onClick(subject)}>
+              <div className="subject-name">{subject.name}</div>
+              {canDelete && (<SpriteIcon name="cancel" className="subject-delete" onClick={() => onDelete?.(subject)} />)}
+            </div>
+          )
+        })}
       </div>
     );
   }
@@ -204,9 +210,23 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionProps> {
                 </div>
               </div>
               <div className="subjects-box-r21">
-                {this.renderSubjectLozenges()}
+                {this.renderSubjectLozenges(
+                  this.state.subjectGroup === SubjectGroupR21.GCSE ? this.state.GCSESubjects : this.state.vocationalSubjects,
+                  false,
+                  (subject: SubjectR21) => {
+                    if (this.state.subjectSelections.length >= this.state.limit) {
+                      return;
+                    }
+                    const selections = this.state.subjectSelections;
+                    const found = selections.find((s: any) => s.name === subject.name);
+                    if (!found) {
+                      subject.selected = true;
+                      selections.push(subject);
+                      this.setState({ subjectSelections: selections });
+                    }
+                  })}
               </div>
-              <div className="subjects-typer-r21">
+              <div className="subjects-typer-r21 font-14">
                 <input
                   type="text"
                   placeholder={
@@ -219,7 +239,16 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionProps> {
             </div>
           </div>
           <div className="second-box-R21">
-            <div className="bold">Your Subject Selections</div>
+            <div className="bold font-16 second-box-title">Your Subject Selections</div>
+            {this.renderSubjectLozenges(this.state.subjectSelections, true, () => { }, (subject: SubjectR21) => {
+              const selections = this.state.subjectSelections;
+              const found = selections.find((s: any) => s.name === subject.name);
+              if (found) {
+                subject.selected = false;
+                let selected = selections.filter(s => s.name !== subject.name);
+                this.setState({ subjectSelections: selected });
+              }
+            })}
           </div>
         </div>
         <div className="absolute-back-btn" onClick={() => {

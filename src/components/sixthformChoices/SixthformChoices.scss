@@ -796,26 +796,6 @@
           overflow-y: scroll;
           width: 100%;
           height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh      - 3vh - 1.4vh - 1vw - 2vw);
-
-          .subjects-lozenges {
-            display: flex;
-            margin-left: 0.4vw;
-            flex-wrap: wrap;
-            
-            .subject-lozenge {
-              margin: 0.8vh 0.3vw;
-
-              padding: 0.8vh 0.8vw 0.6vh 0.8vw;
-
-              border-radius: 2vw;
-              display: flex;
-              background-color: #C43C3033;
-              svg {
-                width: 1vw;
-                height: 1vw;
-              }
-            }
-          }
         }
         .subjects-typer-r21 {
           padding-top: 0.5vh;
@@ -839,9 +819,43 @@
         padding-top: 1vh;
         padding-left: 1vh;
         border-radius: 0.7vw;
+        padding-left: 0;
+        padding-right: 0;
         background: #4C608A1A;
         width: 20.5vw;
         height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh);
+        overflow-y: scroll;
+
+        .second-box-title {
+          padding-left: 1vw;
+        }
+      }
+      .subjects-lozenges {
+        display: flex;
+        margin-left: 0.4vw;
+        flex-wrap: wrap;
+        
+        .subject-lozenge {
+          cursor: pointer;
+          margin: 0.8vh 0.3vw;
+
+          padding: 0.8vh 0.8vw 0.6vh 0.8vw;
+
+          border-radius: 2vw;
+          display: flex;
+          background-color: #C43C3033;
+          svg {
+            margin-left: 0.5vw;
+            width: 1vw;
+            height: 1vw;
+            stroke-width: 2;
+          }
+
+          &.active {
+            color: white;
+            background: var(--theme-orange);
+          }
+        }
       }
     }
   }
