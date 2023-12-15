@@ -359,6 +359,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                     }, 1000);
                     this.setState({ popupTimeout });
                   }} onMouseLeave={(e) => {
+                    clearTimeout(this.state.popupTimeout);
                     this.setState({ popupSubject: null });
                   }}>
                     {this.renderCircle(subject)}

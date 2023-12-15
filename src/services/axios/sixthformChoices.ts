@@ -22,6 +22,15 @@ export interface SixthformSubject {
   name: string;
 }
 
+export interface KeyStage4Subject {
+  id: number;
+  name: string;
+  isVocational: boolean;
+  isGCSE: boolean;
+  isPopular: boolean;
+  selected: boolean;
+}
+
 export const getSixthformSubjects = async () => {
   try {
     const subjects = await get<SixthformSubject[]>(`/sixth-form-choices/suggested-subjects`);
@@ -50,6 +59,15 @@ export const getSixthformAnswers = async () => {
 export const getSixthformSchools = async () => {
   try {
     return await get<any[]>(`/sixth-form-choices/schools`);
+  } catch {
+    return null;
+  }
+}
+
+
+export const getKeyStage4Subjects = async () => {
+  try {
+    return await get<KeyStage4Subject[]>(`/sixth-form-choices/key-stage4-subjects`);
   } catch {
     return null;
   }

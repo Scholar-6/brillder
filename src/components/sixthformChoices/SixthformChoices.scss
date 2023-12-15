@@ -3,6 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .SixthformChoicesPage {
+  $placeholder-color: #4C608A;
   $font-scale: 1.14;
   background: var(--theme-dark-blue);
 
@@ -197,7 +198,7 @@
     transition: all 300ms ease-in-out;
 
     >div:hover {
-      background: #4C608A;
+      background: $placeholder-color;
     }
   }
 
@@ -270,7 +271,7 @@
     position: absolute;
     bottom: 5vh;
     left: 3.2vw;
-    color: #4C608A;
+    color: $placeholder-color;
     border-radius: 0.5vw;
     padding-top: 0.4vw;
     padding-bottom: 0.4vw;
@@ -326,7 +327,7 @@
       height: 1.2vw;
     }
 
-    .other-choices > div {
+    .other-choices>div {
       padding-top: 0.4vh;
       position: relative;
       padding-left: 1.5vw;
@@ -358,7 +359,7 @@
       }
 
       input::placeholder {
-        color: #4C608A;
+        color: $placeholder-color;
       }
     }
   }
@@ -375,19 +376,21 @@
 
   .question {
     width: 100%;
+
     .absolute-contunue-btn {
       padding-left: 3vw;
       padding-right: 3vw;
     }
-    
+
     .MuiAutocomplete-root {
       margin-bottom: 0 !important;
+
       .MuiInputBase-root {
         background: white;
         box-shadow: none !important;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
-  
+
         input {
           line-height: 1;
           padding-top: 1.5vh !important;
@@ -397,9 +400,11 @@
         .MuiAutocomplete-endAdornment {
           height: 100%;
           top: 0;
+
           .MuiButtonBase-root {
             margin: 0 !important;
           }
+
           .MuiSvgIcon-root {
             position: relative;
             left: unset;
@@ -411,6 +416,7 @@
         }
       }
     }
+
     .help-without {
       display: flex;
       align-items: center;
@@ -433,17 +439,20 @@
         padding-right: 0.65vw;
       }
     }
+
     .question-text {
       line-height: 1;
       width: 93%;
       margin-top: 5vh;
       margin-bottom: 5vh;
     }
+
     .question-text-3 {
       line-height: 0.4;
       margin-top: 4vh;
       margin-bottom: 5vh;
     }
+
     .progress-bar {
       display: flex;
       margin-bottom: 2vh;
@@ -697,7 +706,7 @@
   }
 
   .font-14 {
-    font-size: calc(0.875vw * $font-scale);
+    font-size: calc(0.875vw * $font-scale) !important;
   }
 
   .font-15 {
@@ -774,11 +783,11 @@
           padding-top: 0.3vw;
           padding-bottom: 0.3vw;
           border-radius: 0.5vw;
-          color: #4C608A;
+          color: $placeholder-color;
 
           width: 21.5vw;
 
-          > div {
+          >div {
             cursor: pointer;
             border-radius: 0.55vw;
             padding-top: 0.7vh;
@@ -792,14 +801,16 @@
             background: var(--white);
           }
         }
+
         .subjects-box-r21 {
           overflow-y: scroll;
           width: 100%;
-          height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh      - 3vh - 1.4vh - 1vw - 2vw);
+          height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh - 4vh - 1.4vh - 1vw - 2vw);
         }
+
         .subjects-typer-r21 {
-          padding-top: 0.5vh;
-          padding-bottom: 0.5vh;
+          padding-top: 1vh;
+          padding-bottom: 1vh;
           margin-left: 0.9vw;
           margin-right: 0.9vw;
           border-radius: 0.5vw;
@@ -807,14 +818,36 @@
 
           input {
             color: var(--theme-dark-blue);
-            padding-left: 1vw;
+            padding-left: 0vw;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
             width: 100%;
+            line-height: 1.5;
+            font-size: 1vw !important;
+
             &::placeholder {
-              color: #4C608A;
+              opacity: 1 !important;
+              color: $placeholder-color;
+            }
+          }
+
+          .MuiAutocomplete-root .MuiInputBase-root {
+            &::before, &::after {
+              display: none;
+            }
+            .MuiAutocomplete-endAdornment {
+              height: auto !important;
+              top: unset !important;
+
+              .MuiSvgIcon-root {
+                width: 1.3vw;
+                height: 1.3vw;
+              }
             }
           }
         }
       }
+
       .second-box-R21 {
         padding-top: 1vh;
         padding-left: 1vh;
@@ -830,11 +863,12 @@
           padding-left: 1vw;
         }
       }
+
       .subjects-lozenges {
         display: flex;
         margin-left: 0.4vw;
         flex-wrap: wrap;
-        
+
         .subject-lozenge {
           cursor: pointer;
           margin: 0.8vh 0.3vw;
@@ -844,6 +878,7 @@
           border-radius: 2vw;
           display: flex;
           background-color: #C43C3033;
+
           svg {
             margin-left: 0.5vw;
             width: 1vw;

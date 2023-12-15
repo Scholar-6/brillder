@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ListItemText, MenuItem, TextField, SvgIcon } from '@material-ui/core';
+import { ListItemText, MenuItem, TextField } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import CheckBoxV2 from "./CheckBox";
