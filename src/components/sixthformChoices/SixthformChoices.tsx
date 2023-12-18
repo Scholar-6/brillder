@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "./SixthformChoices.scss";
 import { User } from "model/user";
 import {
-  SixthformSubject, UserSubjectChoice, getSixthformAnswers, getSixthformSubjects, saveSixthformAnswer
+  SixthformSubject, UserSubjectChoice, getSixthformAnswers, getSixthformSubjects, saveSixthformAnswer, setSixthformSubjectChoice
 } from "services/axios/sixthformChoices";
 
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
@@ -232,7 +232,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       <div className="switch-button font-12 bold">
         <div
           className={`${subject.userChoice === UserSubjectChoice.Definetly ? 'active active-green' : ''}`}
-          onClick={() => {
+          onClick={async () => {
             if (!subject.score) {
               subject.score = 0;
             }
@@ -243,6 +243,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             } else {
               subject.score += 5;
             }
+            await setSixthformSubjectChoice(subject);
             subject.userChoice = UserSubjectChoice.Definetly;
             this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
           }}>Definitely!</div>

@@ -64,6 +64,13 @@ export const getSixthformSchools = async () => {
   }
 }
 
+export const setSixthformSubjectChoice = async (subject: any) => {
+  try {
+    return await post<any[]>(`/sixth-form-choices/userSubject`, { subject });
+  } catch {
+    return null;
+  }
+}
 
 export const getKeyStage4Subjects = async () => {
   try {

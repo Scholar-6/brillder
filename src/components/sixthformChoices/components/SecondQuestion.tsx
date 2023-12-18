@@ -121,7 +121,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
               <React.Fragment>
                 <MenuItem >
                   <ListItemText>
-                    {loopSchool.name}
+                    {loopSchool.name} 
                   </ListItemText>
                 </MenuItem>
               </React.Fragment>
