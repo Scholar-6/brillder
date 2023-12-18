@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ListItemText, MenuItem, TextField } from '@material-ui/core';
+import { MenuItem, TextField } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -11,12 +11,19 @@ enum SubjectGroupR21 {
   PracticalVocational,
 }
 
+enum SubStep {
+  First,
+  Second
+}
+
 interface ThirdProps {
-  moveNext(): void;
+  answer: any;
+  moveNext(answer: any): void;
   moveBack(): void;
 }
 
-interface ThirdQuestionProps {
+interface ThirdQuestionState {
+  subStep: SubStep;
   typedSubject: string;
   subjectGroup: SubjectGroupR21;
   GCSESubjects: KeyStage4Subject[];
@@ -28,11 +35,12 @@ interface ThirdQuestionProps {
   otherGCSESubjects: KeyStage4Subject[];
 }
 
-class ThirdQuestion extends Component<ThirdProps, ThirdQuestionProps> {
+class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
     this.state = {
+      subStep: SubStep.First,
       typedSubject: '',
       subjectGroup: SubjectGroupR21.GCSE,
       GCSESubjects: [],
@@ -50,8 +58,24 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionProps> {
   async loadSubjects() {
     const subjects = await getKeyStage4Subjects();
     if (subjects) {
+      let subjectSelections: KeyStage4Subject[] = [];
+
+      if (this.props.answer && this.props.answer.answer && this.props.answer.answer.subjectSelections) {
+        subjectSelections = this.props.answer.answer.subjectSelections;
+      }
+
+      const realSubjectSelections: KeyStage4Subject[] = [];
+      subjectSelections.forEach((s: any) => {
+        const found = subjects.find((ss: any) => ss.name === s.name);
+        if (found) {
+          found.selected = true;
+          realSubjectSelections.push(found);
+        }
+      });
+
       this.setState({
         allSubjects: subjects,
+        subjectSelections: realSubjectSelections,
         GCSESubjects: subjects.filter(s => s.isGCSE && s.isPopular),
         vocationalSubjects: subjects.filter(s => s.isVocational && s.isPopular),
         otherGCSESubjects: subjects.filter(s => s.isGCSE && !s.isPopular)
@@ -97,6 +121,59 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionProps> {
   }
 
   render() {
+    if (this.state.subStep === SubStep.Second) {
+      return (
+        <div className="question">
+          {this.renderProgressBar()}
+          <div className="bold font-32 question-text-3">
+            What are your relative strengths?
+          </div>
+          <div className="font-16">
+            Here are the subjects you selected. Now decide whether you think you are likely to do very well, well, okay (average) or poorly in each subject. If you prefer, with GCSEs, you can put your predicted grade (or, if you are doing this after your results, your actual grade).
+          </div>
+          <div className="subjects-table">
+            <table cellSpacing="0" cellPadding="0">
+              <thead>
+                <tr className="bold font-16">
+                  <th>Subject</th>
+                  <th>Very Well</th>
+                  <th>Well</th>
+                  <th>OK</th>
+                  <th>Not so well</th>
+                  <th>Prediction or Grade (If Known)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.subjectSelections.map((subject, index) => {
+                  return (
+                    <tr>
+                      <td>
+                        <div className="bold font-12">
+                          <div>{subject.name}</div>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="absolute-back-btn" onClick={() => {
+            this.setState({subStep: SubStep.First});
+          }}>
+            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="font-25">Previous</span>
+          </div>
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.moveNext({
+              subjectSelections: this.state.subjectSelections
+            });
+          }}>Continue</button>
+        </div>
+      );
+    }
     return (
       <div className="question">
         {this.renderProgressBar()}
@@ -213,6 +290,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionProps> {
           <span className="font-25">Previous</span>
         </div>
         <button className="absolute-contunue-btn font-24" onClick={() => {
+          this.setState({ subStep: SubStep.Second });
         }}>Continue</button>
       </div>
     );
