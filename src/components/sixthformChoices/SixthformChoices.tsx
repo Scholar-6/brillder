@@ -30,8 +30,7 @@ enum Pages {
 }
 
 enum SubjectType {
-  AcademicSubjects = 1,
-  ALevels,
+  ALevels = 2,
   VocationalSubjects,
   AllSubjects
 }
@@ -128,6 +127,20 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     }
   }
 
+  parseAnswer3(result: any, answer: any, questionPage: Pages) {
+    if (result) {
+      const answerR1 = this.state.answers.find(a => a.step === questionPage);
+      if (answerR1) {
+        answerR1.answer.subjectSelections = answer.subjectSelections;
+      } else {
+        answer = result;
+        answer.answer = JSON.parse(answer.answer);
+        this.state.answers.push(answer);
+        this.setState({answers: [...this.state.answers]});
+      }
+    }
+  }
+
   renderCircle(subject: SixthformSubject) {
     let colorClass = 'subject-circle yellow-circle';
     if (subject.userChoice === UserSubjectChoice.Definetly) {
@@ -142,9 +155,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return (
       <label className="check-box-container container font-16" onClick={() => {
         let subjects: any[] = [];
-        if (currentSubjectType === SubjectType.AcademicSubjects) {
-          subjects = this.state.allSubjects.filter(s => s.isAcademic === true);
-        } else if (currentSubjectType === SubjectType.ALevels) {
+        if (currentSubjectType === SubjectType.ALevels) {
           subjects = this.state.allSubjects.filter(s => s.isALevel === true);
         } else if (currentSubjectType === SubjectType.VocationalSubjects) {
           subjects = this.state.allSubjects.filter(s => s.isVocational === true);
@@ -203,7 +214,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         moveBack={() => this.setState({ page: Pages.Question1 })}
       />
     } else if (this.state.page === Pages.Question3) {
-      return <ThirdQuestion moveNext={() => this.setState({ page: Pages.Question4 })} moveBack={() => this.setState({ page: Pages.Question2 })} />
+      return <ThirdQuestion
+        answer={this.state.answers.find(a => a.step === Pages.Question3)}
+        moveNext={async (answer: any) => {
+        const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
+        this.parseAnswer3(result, answer, Pages.Question2);
+        this.setState({ page: Pages.Question4 });
+      }} moveBack={() => this.setState({ page: Pages.Question2 })} />
     } else if (this.state.page === Pages.Question4) {
       //return <FourthQuestion setPage={setPage} />
     }
@@ -306,7 +323,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           <div className="taste-container">
             <div className="label-container">
               <div>
-                <div className="bold font-20">Take a Tester Brick!</div>
+                <div className="bold font-18">Take a Tester Brick!</div>
                 <div className="font-14">Try out a Brick for this subject to see if it’s a good fit for you.</div>
               </div>
             </div>
@@ -342,10 +359,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             <div className="sort-and-filter-container">
               <div className="subjects-select-box">
                 <div className="bold sidebar-title font-18">Show me:</div>
-                {this.renderSidebarCheckbox(1, 'Academic Subjects Only')}
-                {this.renderSidebarCheckbox(2, 'A-Levels Only')}
-                {this.renderSidebarCheckbox(3, 'Vocational Subjects Only')}
-                {this.renderSidebarCheckbox(4, 'Showing All Subjects')}
+                {this.renderSidebarCheckbox(SubjectType.ALevels, 'A-Levels Only')}
+                {this.renderSidebarCheckbox(SubjectType.VocationalSubjects, 'Vocational Subjects Only')}
+                {this.renderSidebarCheckbox(SubjectType.AllSubjects, 'Showing All Subjects')}
               </div>
               <div className="font-18 ranking-label">Your subject rankings</div>
               <div className="subjects-scrollbar font-16">
@@ -368,6 +384,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                   </div>
                 })}
               </div>
+              <div className="sidebar-footer"></div>
             </div>
             <div className="brick-row-container">
               {this.renderCourseContent()}

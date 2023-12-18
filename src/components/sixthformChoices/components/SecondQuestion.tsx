@@ -259,7 +259,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
         <div className="bold font-32 question-text">
           Where are you planning to do your sixth form studies?
         </div>
-        <div className="boxes-container font-24">
+        <div className="boxes-container boxes-container-2 font-24">
           {this.renderCurrentSchool()}
           <CheckBoxV2
             currentChoice={SecondChoice.SixthForm}
@@ -275,6 +275,18 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           />
           {this.renderOtherChoice()}
         </div>
+        {this.state.choice === SecondChoice.Other && this.state.otherChoice === OtherChoice.Home && <div className="home-absolute-help-box font-16">
+          <div>
+            <SpriteIcon name="help-without" />
+          </div>
+          <div>
+            If you are a home-schooled<br />
+            learner and want advice around<br />
+            online tutoring from Scholar 6,<br />
+            contact us at<br />
+            <a href="mailto: admin@scholar6.org">admin@scholar6.org</a>
+          </div>
+        </div>}
         <div className="absolute-back-btn" onClick={() => {
           this.props.moveBack();
         }}>
@@ -287,7 +299,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`}
           disabled={disabled}
           onClick={() => {
-            if (this.state.choice === SecondChoice.SixthForm || this.state.choice === SecondChoice.NewSchool) {
+            if (this.state.choice === SecondChoice.SixthForm || this.state.choice === SecondChoice.NewSchool || this.state.choice === SecondChoice.CurrentSchool) {
               this.setState({ subStep: SubStep.Second });
             } else {
               this.moveNext();

@@ -188,17 +188,27 @@
   }
 
   .subjects-scrollbar {
+    line-height: 1;
     margin-top: 1vh;
     margin-left: 1.5vw;
     margin-right: 1.5vw;
     border-radius: 0.5vw;
-    height: calc(100vh - 7.834vw - 2vh - 3vw - 2vh - 1vh - 4vh - 6.5vw - 1vw - 2.5vw - 1.8vw);
+    height: calc(100vh - 7.834vw - 2vh - 3vw - 2vh - 4vh - 6.5vw - 1vw - 4vw - 0.3vh);
     border: 2px solid rgba(222, 222, 222, 0.1);
     overflow-y: scroll;
     transition: all 300ms ease-in-out;
 
     >div:hover {
       background: $placeholder-color;
+    }
+    .sidebar-footer {
+      border-top: 0.3vw solid var(--light-blue-alpha5);
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: 5vw;
+      width: 100%;
+      background: var(--theme-light-blue);
     }
   }
 
@@ -374,8 +384,33 @@
     border: 0.15vw solid var(--theme-orange);
   }
 
+  .boxes-container-2 {
+    max-width: 45vw;
+  }
+
   .question {
     width: 100%;
+
+    .home-absolute-help-box {
+      display: flex;
+      position: absolute;
+      bottom: calc(5vh + 2vw + 7vh);
+      padding: 0.9vw;
+      padding-bottom: 1.4vw;
+      border-radius: 0.5vw;
+      line-height: 1.4;
+      right: 2.5vw;
+      width: 19vw;
+      background:#F2F6FF;
+      svg {
+        width: 2.2vw;
+        height: 2.2vw;
+        padding-right: 0.7vw;
+      }
+      a {
+        text-decoration: underline;
+      }
+    }
 
     .absolute-contunue-btn {
       padding-left: 3vw;
@@ -525,12 +560,13 @@
   }
 
   .subject-sixth-popup {
+    box-shadow: 0 1em 3em 0 #00000040;
     position: fixed;
     z-index: 9;
     color: var(--theme-dark-blue);
     top: calc(50vh - 13vw);
     left: 21vw;
-    width: 23.5vw;
+    width: 24.4vw;
     background: white;
     border-radius: 0.5vw;
     padding: 2vh 1.2vw;
@@ -538,6 +574,8 @@
     .subject-name {
       display: flex;
       align-items: center;
+
+      padding-bottom: 1vh;
 
       .subject-circle {
         margin-right: 0.3vw;
@@ -562,9 +600,16 @@
       display: flex;
 
       .box-v32 {
+        margin-top: 2vh;
         border-radius: 0.3vw;
         width: 33.3%;
         background: #4C608A1A;
+        padding-bottom: 0.5vh;
+
+        div {
+          padding-top: 0.2vh;
+          padding-bottom: 0.2vh;
+        }
 
         svg {
           padding-top: 0.5vw;
@@ -602,8 +647,8 @@
         cursor: pointer;
         text-align: center;
         width: 33.4%;
-        padding-top: 0.15vw;
-        padding-bottom: 0.15vw;
+        padding-top: 0.6vh;
+        padding-bottom: 0.6vh;
       }
 
       .active {
@@ -631,7 +676,7 @@
       display: flex;
       background: #4C608A1A;
       border-radius: 0.5vw;
-      padding: 1vw 0.6vw;
+      padding: 0 0.6vw;
 
       >div {
         width: 48%;
@@ -640,14 +685,20 @@
       .label-container {
         display: flex;
         align-items: center;
-        padding-right: 0.6vw;
+        padding-right: 0;
         width: 52%;
+
+        .font-18 {
+          margin-bottom: 1vh;
+        }
       }
 
       .brick-container {
         position: relative;
 
         .scroll-block {
+          margin-top: 2vh;
+          margin-bottom: 2vh;
           width: 9.5vw;
           height: 7vw;
           border-radius: 1vw;
@@ -760,10 +811,45 @@
 
   // step3
   .question {
+    .subjects-table {
+      border-radius: 0.5vw;
+      margin-top: 2vh;
+      background-color: #4C608A1A;
+      width: 100%;
+      height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh);
+      overflow-y: scroll;
+
+      > table {
+        width: 100%;
+        height: 100%;
+        padding-left: 1.2vw;
+
+        th {
+          padding-top: 2vh;
+          padding-bottom: 2vh;
+          padding-left: 0.4vw;
+          padding-right: 0.4vw;
+          text-align: left;
+        }
+
+        td {
+          > div {
+            margin-top: 0.25vw;
+            margin-bottom: 0.25vw;
+            display: flex;
+            > div {
+              color: white;
+              border-radius: 1vw;
+              padding: 1vh 0.7vw;
+              background: var(--theme-orange);
+            }
+          }
+        }
+      }
+    }
     .main-subjects-container {
       margin-top: 2vh;
       display: flex;
-
       .first-box-R21 {
         border-radius: 0.7vw;
         background: #4C608A1A;
