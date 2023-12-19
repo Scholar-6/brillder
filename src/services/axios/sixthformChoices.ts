@@ -22,6 +22,13 @@ export interface SixthformSubject {
   name: string;
 }
 
+export enum PredicetedStrength {
+  veryWell = 1,
+  well,
+  ok,
+  notWell
+}
+
 export interface KeyStage4Subject {
   id: number;
   name: string;
@@ -29,6 +36,8 @@ export interface KeyStage4Subject {
   isGCSE: boolean;
   isPopular: boolean;
   selected: boolean;
+
+  predicedStrength: PredicetedStrength;
 }
 
 export const getSixthformSubjects = async () => {

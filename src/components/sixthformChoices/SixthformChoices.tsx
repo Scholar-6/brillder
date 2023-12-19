@@ -67,8 +67,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     if (subjects) {
       for (let subject of subjects) {
-        subject.score = 3;
-        subject.userChoice = UserSubjectChoice.Maybe;
+        if (!subject.userChoice) {
+          subject.score = 3;
+          subject.userChoice = UserSubjectChoice.Maybe;
+        }
       }
       this.setState({ subjects, allSubjects: subjects });
     }
@@ -227,12 +229,17 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return <div />;
   }
 
+  async updateSubject(subject: SixthformSubject) {
+    await setSixthformSubjectChoice(subject);
+    this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
+  }
+
   renderSwitchButton(subject: SixthformSubject) {
     return (
       <div className="switch-button font-12 bold">
         <div
           className={`${subject.userChoice === UserSubjectChoice.Definetly ? 'active active-green' : ''}`}
-          onClick={async () => {
+          onClick={() => {
             if (!subject.score) {
               subject.score = 0;
             }
@@ -243,9 +250,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             } else {
               subject.score += 5;
             }
-            await setSixthformSubjectChoice(subject);
             subject.userChoice = UserSubjectChoice.Definetly;
-            this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
+            this.updateSubject(subject);
           }}>Definitely!</div>
         <div
           className={`${subject.userChoice === UserSubjectChoice.Maybe || !subject.userChoice ? 'active active-yellow' : ''}`}
@@ -262,7 +268,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               subject.score += 3;
             }
             subject.userChoice = UserSubjectChoice.Maybe;
-            this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
+            this.updateSubject(subject);
           }}>Maybe</div>
         <div
           className={`${subject.userChoice === UserSubjectChoice.NotForMe ? 'active active-red' : ''}`}
@@ -279,7 +285,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               subject.score -= 10;
             }
             subject.userChoice = UserSubjectChoice.NotForMe;
-            this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
+            this.updateSubject(subject);
           }}>Not for me</div>
       </div>
     );
