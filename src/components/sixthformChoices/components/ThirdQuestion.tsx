@@ -77,8 +77,6 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         }
       });
 
-      console.log(subjectSelections);
-
       this.setState({
         allSubjects: subjects,
         subjectSelections: realSubjectSelections,
@@ -201,92 +199,91 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             Here are the subjects you selected. Now decide whether you think you are likely to do very well, well, okay (average) or poorly in each subject. If you prefer, with GCSEs, you can put your predicted grade (or, if you are doing this after your results, your actual grade).
           </div>
           <div className="subjects-table">
-            <table cellSpacing="0" cellPadding="0">
-              <thead>
-                <tr className="bold font-16">
-                  <th className="first-column">Subject</th>
-                  <th>
-                    <div>
-                      <div>Very Well</div>
-                      <SpriteIcon name="help-icon-v4" className="info-icon" />
+            <div className="table-head bold font-16">
+              <div className="first-column center-y">Subject</div>
+              <div className="second-column center-column">
+                <div>Very Well</div>
+                <div className="hover-area font-14">
+                  <SpriteIcon name="help-icon-v4" className="info-icon" />
+                  <div className="hover-content">(e.g. an 8 or 9 at GCSE, or a<br /> distinction)</div>
+                  <div className="hover-arrow-bottom" />
+                </div>
+              </div>
+              <div className="third-column center-column">
+                <div>Well</div>
+                <div className="hover-area font-14">
+                  <SpriteIcon name="help-icon-v4" className="info-icon" />
+                  <div className="hover-content">(e.g. a 6 or 7 at GCSE or a merit)</div>
+                  <div className="hover-arrow-bottom" />
+                </div>
+              </div>
+              <div className="fourth-column center-column">
+                <div>OK</div>
+                <div className="hover-area font-14">
+                  <SpriteIcon name="help-icon-v4" className="info-icon" />
+                  <div className="hover-content">(e.g. 4 or 5 at GCSE or a pass)</div>
+                  <div className="hover-arrow-bottom" />
+                </div>
+              </div>
+              <div className="fifth-column center-column">
+                <div>Not so Well</div>
+                <div className="hover-area font-14">
+                  <SpriteIcon name="help-icon-v4" className="info-icon" />
+                  <div className="hover-content">(you might struggle to get a 4 or a pass)</div>
+                  <div className="hover-arrow-bottom" />
+                </div>
+              </div>
+              <div className="six-column center-column">
+                <div>Prediction or Grade (If Known)</div>
+              </div>
+            </div>
+            <div className="table-body">
+              {this.state.subjectSelections.map((subject, index) => {
+                return (
+                  <div>
+                    <div className="bold first-column subject-box-r21 font-12">
+                      <div className="subject-lozengue">{subject.name}</div>
                     </div>
-                  </th>
-                  <th>
-                    <div>
-                      <div>Well</div>
-                      <SpriteIcon name="help-icon-v4" className="info-icon" />
+                    <div className="second-column center-column">
+                      <div className="radio-container">
+                        <CheckBoxV2 currentChoice={PredicetedStrength.veryWell} choice={subject.predicedStrength} setChoice={(choice: number) => {
+                          subject.predicedStrength = choice;
+                          this.setState({ subjectSelections: this.state.subjectSelections });
+                        }} />
+                      </div>
                     </div>
-                  </th>
-                  <th>
-                    <div>
-                      <div>OK</div>
-                      <SpriteIcon name="help-icon-v4" className="info-icon" />
+                    <div className="third-column center-column">
+                      <div className="radio-container">
+                        <CheckBoxV2 currentChoice={PredicetedStrength.well} choice={subject.predicedStrength} setChoice={(choice: number) => {
+                          subject.predicedStrength = choice;
+                          this.setState({ subjectSelections: this.state.subjectSelections });
+                        }} />
+                      </div>
                     </div>
-                  </th>
-                  <th>
-                    <div>
-                      <div>Not so well</div>
-                      <SpriteIcon name="help-icon-v4" className="info-icon" />
+                    <div className="fourth-column center-column">
+                      <div className="radio-container">
+                        <CheckBoxV2 currentChoice={PredicetedStrength.ok} choice={subject.predicedStrength} setChoice={(choice: number) => {
+                          subject.predicedStrength = choice;
+                          this.setState({ subjectSelections: this.state.subjectSelections });
+                        }} />
+                      </div>
                     </div>
-                  </th>
-                  <th>
-                    <div>
-                      <div>Prediction or Grade (If Known)</div>
-                      <SpriteIcon name="help-icon-v4" className="info-icon" />
+                    <div className="fifth-column center-column">
+                      <div className="radio-container">
+                        <CheckBoxV2 currentChoice={PredicetedStrength.notWell} choice={subject.predicedStrength} setChoice={(choice: number) => {
+                          this.setState({ subjectSelections: this.state.subjectSelections });
+                          subject.predicedStrength = choice;
+                          this.setState({ subjectSelections: this.state.subjectSelections });
+                        }} />
+                      </div>
                     </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.subjectSelections.map((subject, index) => {
-                  return (
-                    <tr>
-                      <td>
-                        <div className="bold first-column font-12">
-                          <div>{subject.name}</div>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="radio-container">
-                          <CheckBoxV2 currentChoice={PredicetedStrength.veryWell} choice={subject.predicedStrength} setChoice={(choice: number) => {
-                            subject.predicedStrength = choice;
-                            this.setState({ subjectSelections: this.state.subjectSelections });
-                          }} />
-                        </div>
-                      </td>
-                      <td>
-                        <div className="radio-container">
-                          <CheckBoxV2 currentChoice={PredicetedStrength.well} choice={subject.predicedStrength} setChoice={(choice: number) => {
-                            subject.predicedStrength = choice;
-                            this.setState({ subjectSelections: this.state.subjectSelections });
-                          }} />
-                        </div>
-                      </td>
-                      <td>
-                        <div className="radio-container">
-                          <CheckBoxV2 currentChoice={PredicetedStrength.ok} choice={subject.predicedStrength} setChoice={(choice: number) => {
-                            subject.predicedStrength = choice;
-                            this.setState({ subjectSelections: this.state.subjectSelections });
-                          }} />
-                        </div>
-                      </td>
-                      <td>
-                        <div className="radio-container">
-                          <CheckBoxV2 currentChoice={PredicetedStrength.notWell} choice={subject.predicedStrength} setChoice={(choice: number) => {
-                            this.setState({ subjectSelections: this.state.subjectSelections });
-                            subject.predicedStrength = choice;
-                            this.setState({ subjectSelections: this.state.subjectSelections });
-                          }} />
-                        </div>
-                      </td>
-                      <td>
-                        {this.renderValue(subject)}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                    <div className="six-column">
+                      {this.renderValue(subject)}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <div className="absolute-back-btn" onClick={() => {
             this.setState({ subStep: SubStep.First });
