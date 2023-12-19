@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Key } from "react";
 import { MenuItem, TextField } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { KeyStage4Subject, getKeyStage4Subjects } from "services/axios/sixthformChoices";
+import { KeyStage4Subject, PredicetedStrength, SixthformSubject, getKeyStage4Subjects } from "services/axios/sixthformChoices";
+import CheckBoxV2 from "./CheckBox";
 
 
 enum SubjectGroupR21 {
@@ -69,9 +70,14 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         const found = subjects.find((ss: any) => ss.name === s.name);
         if (found) {
           found.selected = true;
+          if (s.predicedStrength) {
+            found.predicedStrength = s.predicedStrength;
+          }
           realSubjectSelections.push(found);
         }
       });
+
+      console.log(subjectSelections);
 
       this.setState({
         allSubjects: subjects,
@@ -120,6 +126,69 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     );
   }
 
+  renderValue(subject: KeyStage4Subject) {
+    if (subject.predicedStrength === PredicetedStrength.veryWell) {
+      return (
+        <div className="result-container font-14">
+          <div>
+            9
+          </div>
+        </div>
+      );
+    } else if (subject.predicedStrength === PredicetedStrength.well) {
+      return (
+        <div className="result-container font-14">
+          <div>
+            7
+          </div>
+        </div>
+      );
+    } else if (subject.predicedStrength === PredicetedStrength.ok) {
+      return (
+        <div className="result-container font-14">
+          <div>
+            5
+          </div>
+        </div>
+      );
+    } else if (subject.predicedStrength === PredicetedStrength.notWell) {
+      return (
+        <div className="result-container font-14">
+          <div>
+            3
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="result-container default font-14">
+        <div>
+          Value
+        </div>
+      </div>
+    );
+  }
+
+  renderNextBtn() {
+    let disabled = false;
+    for (let subject of this.state.subjectSelections) {
+      if (!subject.predicedStrength) {
+        disabled = true;
+        break;
+      }
+    }
+    return (
+      <button className={`absolute-contunue-btn font-24 ${disabled ? 'disabled' : ''}`} onClick={() => {
+        if (!disabled) {
+          this.props.moveNext({
+            subjectSelections: this.state.subjectSelections
+          });
+        }
+      }}>Continue</button>
+    )
+  }
+
   render() {
     if (this.state.subStep === SubStep.Second) {
       return (
@@ -135,12 +204,37 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             <table cellSpacing="0" cellPadding="0">
               <thead>
                 <tr className="bold font-16">
-                  <th>Subject</th>
-                  <th>Very Well</th>
-                  <th>Well</th>
-                  <th>OK</th>
-                  <th>Not so well</th>
-                  <th>Prediction or Grade (If Known)</th>
+                  <th className="first-column">Subject</th>
+                  <th>
+                    <div>
+                      <div>Very Well</div>
+                      <SpriteIcon name="help-icon-v4" className="info-icon" />
+                    </div>
+                  </th>
+                  <th>
+                    <div>
+                      <div>Well</div>
+                      <SpriteIcon name="help-icon-v4" className="info-icon" />
+                    </div>
+                  </th>
+                  <th>
+                    <div>
+                      <div>OK</div>
+                      <SpriteIcon name="help-icon-v4" className="info-icon" />
+                    </div>
+                  </th>
+                  <th>
+                    <div>
+                      <div>Not so well</div>
+                      <SpriteIcon name="help-icon-v4" className="info-icon" />
+                    </div>
+                  </th>
+                  <th>
+                    <div>
+                      <div>Prediction or Grade (If Known)</div>
+                      <SpriteIcon name="help-icon-v4" className="info-icon" />
+                    </div>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -148,9 +242,45 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
                   return (
                     <tr>
                       <td>
-                        <div className="bold font-12">
+                        <div className="bold first-column font-12">
                           <div>{subject.name}</div>
                         </div>
+                      </td>
+                      <td>
+                        <div className="radio-container">
+                          <CheckBoxV2 currentChoice={PredicetedStrength.veryWell} choice={subject.predicedStrength} setChoice={(choice: number) => {
+                            subject.predicedStrength = choice;
+                            this.setState({ subjectSelections: this.state.subjectSelections });
+                          }} />
+                        </div>
+                      </td>
+                      <td>
+                        <div className="radio-container">
+                          <CheckBoxV2 currentChoice={PredicetedStrength.well} choice={subject.predicedStrength} setChoice={(choice: number) => {
+                            subject.predicedStrength = choice;
+                            this.setState({ subjectSelections: this.state.subjectSelections });
+                          }} />
+                        </div>
+                      </td>
+                      <td>
+                        <div className="radio-container">
+                          <CheckBoxV2 currentChoice={PredicetedStrength.ok} choice={subject.predicedStrength} setChoice={(choice: number) => {
+                            subject.predicedStrength = choice;
+                            this.setState({ subjectSelections: this.state.subjectSelections });
+                          }} />
+                        </div>
+                      </td>
+                      <td>
+                        <div className="radio-container">
+                          <CheckBoxV2 currentChoice={PredicetedStrength.notWell} choice={subject.predicedStrength} setChoice={(choice: number) => {
+                            this.setState({ subjectSelections: this.state.subjectSelections });
+                            subject.predicedStrength = choice;
+                            this.setState({ subjectSelections: this.state.subjectSelections });
+                          }} />
+                        </div>
+                      </td>
+                      <td>
+                        {this.renderValue(subject)}
                       </td>
                     </tr>
                   );
@@ -159,18 +289,14 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             </table>
           </div>
           <div className="absolute-back-btn" onClick={() => {
-            this.setState({subStep: SubStep.First});
+            this.setState({ subStep: SubStep.First });
           }}>
             <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             <span className="font-25">Previous</span>
           </div>
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.moveNext({
-              subjectSelections: this.state.subjectSelections
-            });
-          }}>Continue</button>
+          {this.renderNextBtn()}
         </div>
       );
     }

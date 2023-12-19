@@ -4,7 +4,7 @@ import React from 'react';
 interface Props {
   currentChoice: number;
   choice: number | null;
-  label: string;
+  label?: string;
   setChoice(choice: number): void;
 }
 
