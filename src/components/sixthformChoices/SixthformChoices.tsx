@@ -30,7 +30,7 @@ enum Pages {
 }
 
 enum SubjectType {
-  ALevels = 2,
+  ALevels = 1,
   VocationalSubjects,
   AllSubjects
 }
@@ -78,11 +78,20 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     }
 
     const answers = await getSixthformAnswers();
+
     if (answers) {
       for (let answer of answers) {
         answer.answer = JSON.parse(answer.answer);
       }
-      this.setState({ answers });
+
+      const firstAnswer = answers.find(a => a.step === Pages.Question1);
+
+      let subjectType = SubjectType.AllSubjects;
+      if (firstAnswer) {
+        subjectType = firstAnswer.answer.choice;
+      }
+
+      this.setState({ answers, subjectType });
     }
   }
 
@@ -99,7 +108,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   parseAnswer(result: any, answer: any, questionPage: Pages) {
-    if (result && result.answer) {
+    if (result && result.result) {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
         answerR1.answer.choice = answer.choice;
@@ -107,11 +116,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answer = result.answer;
         answer.answer = JSON.parse(answer.answer);
         this.state.answers.push(answer);
-        this.setState({answers: [...this.state.answers]});
+        this.setState({ answers: [...this.state.answers] });
       }
     }
   }
-  
+
   parseAnswer2(result: any, answer: any, questionPage: Pages) {
     if (result) {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
@@ -126,7 +135,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answer = result;
         answer.answer = JSON.parse(answer.answer);
         this.state.answers.push(answer);
-        this.setState({answers: [...this.state.answers]});
+        this.setState({ answers: [...this.state.answers] });
       }
     }
   }
@@ -140,7 +149,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answer = result;
         answer.answer = JSON.parse(answer.answer);
         this.state.answers.push(answer);
-        this.setState({answers: [...this.state.answers]});
+        this.setState({ answers: [...this.state.answers] });
       }
     }
   }
@@ -155,23 +164,38 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return <SpriteIcon name="circle-filled" className={colorClass} />
   }
 
+  filterBySubjectType(currentSubjectType: SubjectType) {
+    let subjects: any[] = [];
+    if (currentSubjectType === SubjectType.ALevels) {
+      subjects = this.state.allSubjects.filter(s => s.isALevel === true);
+    } else if (currentSubjectType === SubjectType.VocationalSubjects) {
+      subjects = this.state.allSubjects.filter(s => s.isVocational === true);
+    } else if (currentSubjectType === SubjectType.AllSubjects) {
+      subjects = this.state.allSubjects;
+    }
+    return subjects;
+  }
+
   renderSidebarCheckbox(currentSubjectType: SubjectType, label: string) {
     return (
       <label className="check-box-container container font-16" onClick={() => {
-        let subjects: any[] = [];
-        if (currentSubjectType === SubjectType.ALevels) {
-          subjects = this.state.rankingSubjects.filter(s => s.isALevel === true);
-        } else if (currentSubjectType === SubjectType.VocationalSubjects) {
-          subjects = this.state.rankingSubjects.filter(s => s.isVocational === true);
-        } else if (currentSubjectType === SubjectType.AllSubjects) {
-          subjects = this.state.rankingSubjects;
-        }
-        this.setState({ subjectType: currentSubjectType, subjects });
+        this.saveFirstAnswer({ choice: currentSubjectType });
       }}>
         {label}
         <span className={`checkmark ${currentSubjectType === this.state.subjectType ? "checked" : ""}`}></span>
       </label>
     );
+  }
+
+  async saveFirstAnswer(answer: any) {
+    const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
+    if (result) {
+      this.parseAnswer(result, answer, Pages.Question1);
+      this.setState({
+        rankingSubjects: this.filterBySubjectType(answer.choice),
+        subjects: result.subjects, subjectType: answer.choice
+      });
+    }
   }
 
   renderCourseContent() {
@@ -200,22 +224,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (this.state.page === Pages.Question1) {
       return <FirstQuestion
         answer={this.state.answers.find(a => a.step === Pages.Question1)}
-        moveNext={async (answer: any) => {
-          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
-          if (result) {
-            this.parseAnswer(result, answer, Pages.Question1);
-            this.setState({ 
-              page: Pages.Question2, rankingSubjects: result.subjects,
-              subjects: result.subjects, subjectType: SubjectType.AllSubjects
-            });
-          }
-        }}
+        onChoiceChange={(answer: any) => this.saveFirstAnswer(answer)}
+        moveNext={() => this.setState({ page: Pages.Question2 })}
         moveBack={() => this.setState({ page: Pages.Welcome })}
       />
     } else if (this.state.page === Pages.Question2) {
       return <SecondQuestion
         answer={this.state.answers.find(a => a.step === Pages.Question2)}
         moveNext={async (answer: any) => {
+          console.log(answer);
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
           this.parseAnswer2(result, answer, Pages.Question2);
           this.setState({ page: Pages.Question3 });
@@ -229,10 +246,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         subjects={this.state.allSubjects}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
         moveNext={async (answer: any) => {
-        const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
-        this.parseAnswer3(result, answer, Pages.Question2);
-        this.setState({ page: Pages.Question4 });
-      }} moveBack={() => this.setState({ page: Pages.Question2 })} />
+          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
+          this.parseAnswer3(result, answer, Pages.Question2);
+          this.setState({ page: Pages.Question4 });
+        }} moveBack={() => this.setState({ page: Pages.Question2 })} />
     } else if (this.state.page === Pages.Question4) {
       //return <FourthQuestion setPage={setPage} />
     }
