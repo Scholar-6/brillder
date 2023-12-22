@@ -38,6 +38,7 @@ enum SubjectType {
 interface UserProfileState {
   subjectType: SubjectType;
   allSubjects: SixthformSubject[];
+  rankingSubjects: SixthformSubject[];
   subjects: SixthformSubject[];
   popupSubject: SixthformSubject | null;
   popupTimeout: number | NodeJS.Timeout;
@@ -53,6 +54,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       subjectType: SubjectType.AllSubjects,
       allSubjects: [],
       subjects: [],
+      rankingSubjects: [],
       answers: [],
       popupTimeout: -1,
       popupSubject: null,
@@ -72,7 +74,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.userChoice = UserSubjectChoice.Maybe;
         }
       }
-      this.setState({ subjects, allSubjects: subjects });
+      this.setState({ subjects, rankingSubjects: subjects, allSubjects: subjects });
     }
 
     const answers = await getSixthformAnswers();
@@ -97,12 +99,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   parseAnswer(result: any, answer: any, questionPage: Pages) {
-    if (result) {
+    if (result && result.answer) {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
         answerR1.answer.choice = answer.choice;
       } else {
-        answer = result;
+        answer = result.answer;
         answer.answer = JSON.parse(answer.answer);
         this.state.answers.push(answer);
         this.setState({answers: [...this.state.answers]});
@@ -158,11 +160,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       <label className="check-box-container container font-16" onClick={() => {
         let subjects: any[] = [];
         if (currentSubjectType === SubjectType.ALevels) {
-          subjects = this.state.allSubjects.filter(s => s.isALevel === true);
+          subjects = this.state.rankingSubjects.filter(s => s.isALevel === true);
         } else if (currentSubjectType === SubjectType.VocationalSubjects) {
-          subjects = this.state.allSubjects.filter(s => s.isVocational === true);
+          subjects = this.state.rankingSubjects.filter(s => s.isVocational === true);
         } else if (currentSubjectType === SubjectType.AllSubjects) {
-          subjects = this.state.allSubjects;
+          subjects = this.state.rankingSubjects;
         }
         this.setState({ subjectType: currentSubjectType, subjects });
       }}>
@@ -200,8 +202,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answer={this.state.answers.find(a => a.step === Pages.Question1)}
         moveNext={async (answer: any) => {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
-          this.parseAnswer(result, answer, Pages.Question1);
-          this.setState({ page: Pages.Question2 });
+          if (result) {
+            this.parseAnswer(result, answer, Pages.Question1);
+            this.setState({ 
+              page: Pages.Question2, rankingSubjects: result.subjects,
+              subjects: result.subjects, subjectType: SubjectType.AllSubjects
+            });
+          }
         }}
         moveBack={() => this.setState({ page: Pages.Welcome })}
       />
@@ -213,10 +220,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.parseAnswer2(result, answer, Pages.Question2);
           this.setState({ page: Pages.Question3 });
         }}
-        moveBack={() => this.setState({ page: Pages.Question1 })}
+        moveBack={() => {
+          this.setState({ page: Pages.Question1, rankingSubjects: this.state.allSubjects, subjects: this.state.allSubjects });
+        }}
       />
     } else if (this.state.page === Pages.Question3) {
       return <ThirdQuestion
+        subjects={this.state.allSubjects}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
         moveNext={async (answer: any) => {
         const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);

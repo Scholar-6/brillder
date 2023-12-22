@@ -12,6 +12,11 @@ export interface SixthformAnswer {
   answer: any;
 }
 
+export interface SixthformCalcResult {
+  answer: SixthformAnswer;
+  subjects: SixthformSubject[];
+}
+
 export interface SixthformSubject {
   id: number;  
   isALevel: boolean;
@@ -51,7 +56,7 @@ export const getSixthformSubjects = async () => {
 
 export const saveSixthformAnswer = async (answer: string, step: number) => {
   try {
-    return await post<SixthformAnswer>(`/sixth-form-choices/answer`, { answer: { answer, step }});
+    return await post<SixthformCalcResult>(`/sixth-form-choices/answer`, { answer: { answer, step }});
   } catch {
     return null;
   }

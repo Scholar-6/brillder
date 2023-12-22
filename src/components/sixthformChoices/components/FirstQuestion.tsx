@@ -9,14 +9,13 @@ interface FirstQuestionProps {
 
 export enum FirstChoice {
   ALevel = 1,
-  AllAcademic,
   Vocational,
   ShowMeAll,
   Other
 }
 
 interface FirstQuestionState {
-  choice: any;
+  choice: FirstChoice | null;
   popup: boolean;
 }
 
