@@ -38,7 +38,6 @@ enum SubjectType {
 interface UserProfileState {
   subjectType: SubjectType;
   allSubjects: SixthformSubject[];
-  rankingSubjects: SixthformSubject[];
   subjects: SixthformSubject[];
   popupSubject: SixthformSubject | null;
   popupTimeout: number | NodeJS.Timeout;
@@ -54,7 +53,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       subjectType: SubjectType.AllSubjects,
       allSubjects: [],
       subjects: [],
-      rankingSubjects: [],
       answers: [],
       popupTimeout: -1,
       popupSubject: null,
@@ -74,7 +72,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.userChoice = UserSubjectChoice.Maybe;
         }
       }
-      this.setState({ subjects, rankingSubjects: subjects, allSubjects: subjects });
+      this.setState({ subjects: this.sortByScore(subjects), allSubjects: this.sortByScore(subjects) });
     }
 
     const answers = await getSixthformAnswers();
@@ -90,6 +88,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       if (firstAnswer) {
         subjectType = firstAnswer.answer.choice;
       }
+
+      console.log(answers);
 
       this.setState({ answers, subjectType });
     }
@@ -144,12 +144,21 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (result) {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
+        answerR1.answer.firstPairResults = answer.firstPairResults;
+        answerR1.answer.secondPairResults = answer.secondPairResults;
         answerR1.answer.subjectSelections = answer.subjectSelections;
+        this.setState({
+          allSubjects: this.sortByScore(this.state.allSubjects),
+          subjects: this.sortByScore(this.state.subjects)
+        });
       } else {
         answer = result;
         answer.answer = JSON.parse(answer.answer);
         this.state.answers.push(answer);
-        this.setState({ answers: [...this.state.answers] });
+        this.setState({
+          answers: [...this.state.answers],
+          allSubjects: this.sortByScore(this.state.allSubjects),
+          subjects: this.sortByScore(this.state.subjects) });
       }
     }
   }
@@ -192,9 +201,27 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (result) {
       this.parseAnswer(result, answer, Pages.Question1);
       this.setState({
-        rankingSubjects: this.filterBySubjectType(answer.choice),
         subjects: result.subjects, subjectType: answer.choice
       });
+    }
+  }
+
+  async saveThirdAnswer(answer: any) {
+    const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
+    if (result) {
+      for (let subject of this.state.allSubjects) {
+        subject.score = 0;
+      }
+      let scores = result.subjectScores.filter(s => s.score !== 0);
+      for (let subject of this.state.allSubjects) {
+        let s2 = scores.find((s) => s.id == subject.id);
+        if (s2) {
+          subject.score = s2.score;
+        }
+      }
+      console.log('result', result);
+      this.parseAnswer3(result, answer, Pages.Question3);
+      // do something here with subjects ranking should change
     }
   }
 
@@ -238,13 +265,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.setState({ page: Pages.Question3 });
         }}
         moveBack={() => {
-          this.setState({ page: Pages.Question1, rankingSubjects: this.state.allSubjects, subjects: this.state.allSubjects });
+          this.setState({ page: Pages.Question1, subjects: this.state.allSubjects });
         }}
       />
     } else if (this.state.page === Pages.Question3) {
       return <ThirdQuestion
         subjects={this.state.allSubjects}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
+        saveThirdAnswer={async (answer: any) => {
+          await this.saveThirdAnswer(answer);
+        }}
         moveNext={async (answer: any) => {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
           this.parseAnswer3(result, answer, Pages.Question2);

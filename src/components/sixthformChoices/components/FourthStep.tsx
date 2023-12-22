@@ -6,7 +6,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyStage4Subject, PredicetedStrength, SixthformSubject, getKeyStage4Subjects } from "services/axios/sixthformChoices";
 import CheckBoxV2 from "./CheckBox";
 import ThirdQuestionSubStep3 from "./ThirdQuestionSubStep3";
-import ThirdQuestionSubStep4 from "./ThirdQuestionSubStep4";
+import ThirdQuestionSubStep4 from "./ThirdQuestionSubStep5";
 
 
 enum SubjectGroupR21 {
@@ -220,7 +220,6 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             Some popular and highly regarded subjects are often not studied before the sixth form. It’s important you understand what they involve and reflect on whether any could be a fit for you.<br />
             Here are six subjects which most students begin for the first time in the sixth form. First of all, can you work out what these subjects consist of? Match the subject description to the correct subject.
           </div>
-          <ThirdQuestionSubStep3 />
           <div className="absolute-back-btn" onClick={() => {
             this.setState({ subStep: SubStep.Second });
           }}>
