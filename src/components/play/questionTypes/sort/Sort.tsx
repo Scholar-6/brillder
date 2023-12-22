@@ -419,7 +419,6 @@ class Sort extends CompComponent<SortProps, SortState> {
                           className={`${unsortedCategory ? 'category' : ''} sortable-list`}
                           group={{ name: "cloning-group-name" }}
                           setList={(list: any[]) => this.updateCategory(list, i)}
-                          
                         >
                           {cat.choices.map(this.renderChoice.bind(this))}
                         </ReactSortableV1>

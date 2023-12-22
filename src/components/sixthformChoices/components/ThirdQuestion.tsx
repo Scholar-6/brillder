@@ -1,10 +1,12 @@
-import React, { Component, Key } from "react";
+import React, { Component } from "react";
 import { MenuItem, TextField } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyStage4Subject, PredicetedStrength, SixthformSubject, getKeyStage4Subjects } from "services/axios/sixthformChoices";
 import CheckBoxV2 from "./CheckBox";
+import ThirdQuestionSubStep3 from "./ThirdQuestionSubStep3";
+import ThirdQuestionSubStep4 from "./ThirdQuestionSubStep4";
 
 
 enum SubjectGroupR21 {
@@ -14,11 +16,14 @@ enum SubjectGroupR21 {
 
 enum SubStep {
   First,
-  Second
+  Second,
+  Third,
+  Fourth
 }
 
 interface ThirdProps {
   answer: any;
+  subjects: SixthformSubject[];
   moveNext(answer: any): void;
   moveBack(): void;
 }
@@ -170,24 +175,66 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
 
   renderNextBtn() {
     let disabled = false;
-    for (let subject of this.state.subjectSelections) {
-      if (!subject.predicedStrength) {
-        disabled = true;
-        break;
-      }
-    }
     return (
       <button className={`absolute-contunue-btn font-24 ${disabled ? 'disabled' : ''}`} onClick={() => {
-        if (!disabled) {
-          this.props.moveNext({
-            subjectSelections: this.state.subjectSelections
-          });
-        }
-      }}>Continue</button>
+        this.props.moveNext({
+          subjectSelections: this.state.subjectSelections
+        });
+      }}>Continue to Step 4</button>
     )
   }
 
   render() {
+    if (this.state.subStep === SubStep.Fourth) {
+      return (
+        <div className="question">
+          {this.renderProgressBar()}
+          <div className="bold font-32 question-text-3">
+            New Subjects
+          </div>
+          <div className="font-16">
+            Now think about whether you are genuinely interested in taking any of these subjects. Sort them br dragging them into one of the three categories:
+          </div>
+          <ThirdQuestionSubStep4 subjects={this.props.subjects} />
+          <div className="font-16 bottom-text-r23">You can try a taster lesson/ topic / brick  in any of the above subjects you are interested in.</div>
+          <div className="absolute-back-btn" onClick={() => {
+            this.setState({ subStep: SubStep.Third });
+          }}>
+            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="font-25">Previous</span>
+          </div>
+          {this.renderNextBtn()}
+        </div>
+      );
+    }
+    if (this.state.subStep === SubStep.Third) {
+      return (
+        <div className="question">
+          {this.renderProgressBar()}
+          <div className="bold font-32 question-text-3">
+            New Subjects
+          </div>
+          <div className="font-16">
+            Some popular and highly regarded subjects are often not studied before the sixth form. It’s important you understand what they involve and reflect on whether any could be a fit for you.<br />
+            Here are six subjects which most students begin for the first time in the sixth form. First of all, can you work out what these subjects consist of? Match the subject description to the correct subject.
+          </div>
+          <ThirdQuestionSubStep3 />
+          <div className="absolute-back-btn" onClick={() => {
+            this.setState({ subStep: SubStep.Second });
+          }}>
+            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="font-25">Previous</span>
+          </div>
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.setState({ subStep: SubStep.Fourth });
+          }}>I’ve matched all the definitions - how did I do?</button>
+        </div>
+      );
+    }
     if (this.state.subStep === SubStep.Second) {
       return (
         <div className="question">
@@ -293,7 +340,9 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             </svg>
             <span className="font-25">Previous</span>
           </div>
-          {this.renderNextBtn()}
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.setState({ subStep: SubStep.Third });
+          }}>Continue</button>
         </div>
       );
     }
