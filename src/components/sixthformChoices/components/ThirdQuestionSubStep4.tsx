@@ -1,50 +1,67 @@
 import React, { Component } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { SixthformSubject } from "services/axios/sixthformChoices";
 
 
 interface ThirdProps {
-  subjects: SixthformSubject[];
+  pairAnswers: any[];
+  onChange(pairAnswers: any[]): void;
 }
 
 interface ThirdQuestionState {
   subjects: any[];
-  interestedSubjects: any[];
-  quiteInterestedSubjects: any[];
-  notInterestedSubjects: any[];
+  answers: any[];
 }
 
-class ThirdQuestionDrag extends Component<ThirdProps, ThirdQuestionState> {
+class ThirdQuestionSubStep4 extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
-    let sNames = ['Ancient History', 'Business',
-      'Classical Civilisation',
-      'Criminology',
-      'Economics',
-      'Film Studies',
-      'History of Art',
-      'Law',
-      'Media Studies',
-      'Philosophy',
-      'Politics',
-      'Psychology',
-      'Sociology'
-    ]
+    let subjects = [{
+      correctIndex: 0,
+      name: "Ancient History"
+    }, {
+      correctIndex: 1,
+      name: "Law"
+    }, {
+      correctIndex: 2,
+      name: "Film Studies"
+    }, {
+      correctIndex: 3,
+      name: "Media Studies"
+    }, {
+      correctIndex: 4,
+      name: "Classical Civilisation"
+    }, {
+      correctIndex: 5,
+      name: "Philosophy"
+    }, {
+      correctIndex: 5,
+      name: "History of Art"
+    }];
 
-    let subjects = [];
-    for (let sName of sNames) {
-      let s = this.props.subjects.find(s => s.name === sName);
-      if (s) {
-        subjects.push(s);
-      }
+    if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
+      subjects = this.props.pairAnswers;
     }
+
+    let answers = [{
+      name: "I did History GCSE and considered A-level but I’ve always been drawn to the distant pre-Christian era. I loved studying Roman Britain and visited several sites. It made me interested in archaeology as a degree course."
+    }, {
+      name: "Although I’d love to be an advocate, I know the A-level doesn’t give you an edge applying for uni or professional training. But legal history and the concepts are so interesting - and the course is more rigorous than the Criminology diploma."
+    }, {
+      name: "I considered Media Studies but I liked the focus on purely one form and the practical opportunities to shoot and edit my own material. I am a huge fan of directors like Martin Scorsese and Jane Campion."
+    }, {
+      name: "With digital streaming we’re now constantly immersed in news, video gaming, social media and apps for everything: Media Studies is the most relevant subject to my life and I am really interested in content creation and modern advertising and marketing as careers."
+    }, {
+      name: "I knew very little Latin and no Greek but all the texts are in translation. I particularly enjoyed the epic literature and the material on the nature of Athenian democracy and the politics of Rome."
+    }, {
+      name: "I was intrigued by the course - the nature of knowledge, the nature of morality and debates around the existence of God. I did RS at GCSE so some of the ideas were familiar, but I think philosophy offers a broader, more objective approach to the big questions of life."
+    }, {
+      name: "I enjoy analysing poems in English A-level and looking at a painting closely requires a similar approach. I also did GCSE Art, so I feel it complements both and plays to my creative and essay-writing strengths."
+    }];
 
     this.state = {
       subjects,
-      interestedSubjects: [],
-      quiteInterestedSubjects: [],
-      notInterestedSubjects: [],
+      answers
     }
   }
 
@@ -52,106 +69,44 @@ class ThirdQuestionDrag extends Component<ThirdProps, ThirdQuestionState> {
     this.setState({ subjects });
   }
 
-  updateSubjects(subjects: any[]) {
-    console.log('set subjects', subjects);
-    this.setState({ subjects });
-  }
-
-  updateInterestedSubjects(interestedSubjects: any[]) {
-    this.setState({ interestedSubjects });
-  }
-
-  updateQuiteInterestedSubjects(quiteInterestedSubjects: any[]) {
-    this.setState({ quiteInterestedSubjects });
-  }
-
-  updateNotInterestedSubjects(notInterestedSubjects: any[]) {
-    this.setState({ notInterestedSubjects });
-  }
-
-  renderSubjectBox(s: any) {
-    return (
-      <div className="drag-box-r23">
-        <div className="drag-item-r23">{s.name}</div>
-      </div>
-    )
-  }
-
   render() {
-    const ReactSortableV1 = ReactSortable as any;
-
     return (
-      <div className="drag-container-r23">
-        <div className="container-r23 first font-12 bold">
-          <div>
-            <div className="sort-category-r23 font-16">
-              Subjects
-            </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.subjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateSubjects(list)}
-              >
-                {this.state.subjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
-            </div>
-          </div>
+      <div className="drag-container-r22">
+        <div className="title-r22 bold font-16">
+          Drag the subjects to match them with the right description!
         </div>
-        <div className="container-r23 second bold font-12">
-          <div>
-            <div className="sort-category-r23 font-16">
-              Very Interested
-            </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.interestedSubjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateInterestedSubjects(list)}
-              >
-                {this.state.interestedSubjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
-            </div>
+        <div className="container-r22">
+          <div className="left-part-r22">
+            <ReactSortable
+              list={this.state.subjects}
+              animation={150}
+              group={{ name: "cloning-group-name", pull: "clone" }}
+              setList={newSubjects => {
+                this.props.onChange(newSubjects);
+                this.setState({ subjects: newSubjects });
+              }}
+            >
+              {this.state.subjects.map((subject: any, i: number) => {
+                return (
+                  <div className="drag-boxv2-r22">
+                    <div className="drag-box-r22">
+                      <div className="drag-item-r22 bold font-12" key={i + 1}>
+                        {subject.name}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </ReactSortable>
           </div>
-        </div>
-        <div className="container-r23 third bold font-12">
-          <div>
-            <div className="sort-category-r23 font-16">
-              Quite Interested
-            </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.quiteInterestedSubjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateQuiteInterestedSubjects(list)}
-              >
-                {this.state.quiteInterestedSubjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
-            </div>
-          </div>
-        </div>
-        <div className="container-r23 last bold font-12">
-          <div>
-            <div className="sort-category-r23 font-16">
-              Not at all Interested
-            </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.notInterestedSubjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateNotInterestedSubjects(list)}
-              >
-                {this.state.notInterestedSubjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
-            </div>
+          <div className="right-part-r22">
+            {this.state.answers.map((answer: any, i: number) => {
+              return (
+                <div className="answer-item-r22 font-12" key={i + 1}>
+                  {answer.name}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -159,4 +114,4 @@ class ThirdQuestionDrag extends Component<ThirdProps, ThirdQuestionState> {
   }
 }
 
-export default ThirdQuestionDrag;
+export default ThirdQuestionSubStep4;

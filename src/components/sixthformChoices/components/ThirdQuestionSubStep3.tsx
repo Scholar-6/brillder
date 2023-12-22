@@ -3,6 +3,8 @@ import { ReactSortable } from "react-sortablejs";
 
 
 interface ThirdProps {
+  pairAnswers: any[];
+  onChange(pairAnswers: any[]): void;
 }
 
 interface ThirdQuestionState {
@@ -10,7 +12,7 @@ interface ThirdQuestionState {
   answers: any[];
 }
 
-class ThirdQuestionDrag extends Component<ThirdProps, ThirdQuestionState> {
+class ThirdQuestionSubStep3 extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
@@ -33,6 +35,12 @@ class ThirdQuestionDrag extends Component<ThirdProps, ThirdQuestionState> {
       correctIndex: 5,
       name: "Criminology"
     }];
+
+    console.log('pairAnswers', this.props.pairAnswers);
+
+    if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
+      subjects = this.props.pairAnswers;
+    }
 
     let answers = [{
       name: "the scientific study of the mind and behaviour, including brain function, decision making, gender differences and child development"
@@ -58,7 +66,6 @@ class ThirdQuestionDrag extends Component<ThirdProps, ThirdQuestionState> {
     this.setState({ subjects });
   }
 
-
   render() {
     return (
       <div className="drag-container-r22">
@@ -72,6 +79,7 @@ class ThirdQuestionDrag extends Component<ThirdProps, ThirdQuestionState> {
               animation={150}
               group={{ name: "cloning-group-name", pull: "clone" }}
               setList={newSubjects => {
+                this.props.onChange(newSubjects);
                 this.setState({ subjects: newSubjects });
               }}
             >
@@ -103,4 +111,4 @@ class ThirdQuestionDrag extends Component<ThirdProps, ThirdQuestionState> {
   }
 }
 
-export default ThirdQuestionDrag;
+export default ThirdQuestionSubStep3;

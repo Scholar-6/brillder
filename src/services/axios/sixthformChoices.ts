@@ -15,6 +15,7 @@ export interface SixthformAnswer {
 export interface SixthformCalcResult {
   answer: SixthformAnswer;
   subjects: SixthformSubject[];
+  subjectScores: SixthformSubject[];
 }
 
 export interface SixthformSubject {
