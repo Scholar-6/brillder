@@ -10,6 +10,14 @@ enum SubStep {
   Fourth
 }
 
+enum Category {
+  Stem = 1,
+  Science,
+  Humanities,
+  Languages,
+  Arts
+}
+
 interface ThirdProps {
   answer: any;
   subjects: SixthformSubject[];
@@ -19,6 +27,8 @@ interface ThirdProps {
 
 interface ThirdQuestionState {
   subStep: SubStep;
+  categories: Category[];
+  hoveredCategory: number;
 }
 
 class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
@@ -26,6 +36,8 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     super(props);
 
     this.state = {
+      categories: [],
+      hoveredCategory: -1,
       subStep: SubStep.First,
     }
   }
@@ -52,9 +64,297 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     let disabled = false;
     return (
       <button className={`absolute-contunue-btn font-24 ${disabled ? 'disabled' : ''}`} onClick={() => {
-        this.props.moveNext({ });
+        this.props.moveNext({});
       }}>Continue</button>
     )
+  }
+
+  leaveCategory() {
+    this.setState({ hoveredCategory: -1 })
+  }
+
+  renderStem() {
+    if (this.state.hoveredCategory === Category.Stem) {
+      return (
+        <div className="hovered-category">
+          <div className="bold font-16 h-title-r24">Traditional STEM <br /> degrees</div>
+          <div className="font-14">
+            For many science courses there is an expectation that you will have done A-level Maths.
+          </div>
+          <div className="lozengies-container font-11 first-lozengies">
+            <div>Economics</div>
+            <div>Geography</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Sociology</div>
+            <div>Psychology</div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <div className="flex-center">
+          <SpriteIcon name="stem-icon" />
+        </div>
+        <div className="bold">
+          Traditional STEM <br /> degrees
+        </div>
+      </div>
+    );
+  }
+
+  selectCategory(category: Category) {
+    let { categories } = this.state;
+    if (categories.includes(category)) {
+      categories = categories.filter(c => c !== category);
+    } else {
+      categories.push(category);
+    }
+    this.setState({ categories });
+  }
+
+  renderScience() {
+    if (this.state.hoveredCategory === Category.Science) {
+      return (
+        <div className="hovered-category">
+          <div className="bold font-16 h-title-r24">Interdisciplinary <br /> Sciences</div>
+          <div className="font-14">
+            Some subjects fuse scientific or statistical method with aspects of Humanities
+          </div>
+          <div className="lozengies-container font-11 first-lozengies">
+            <div>Chemistry</div>
+            <div>Mathematics</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Engineering</div>
+            <div>Biology</div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <div className="flex-center">
+          <SpriteIcon name="science-icon" />
+        </div>
+        <div className="bold">Interdisciplinary<br /> Sciences</div>
+      </div>
+    );
+  }
+
+  renderHumanities() {
+    if (this.state.hoveredCategory === Category.Humanities) {
+      return (
+        <div className="hovered-category">
+          <div className="bold font-16 h-title-r24">Traditional Humanities</div>
+          <div className="lozengies-container font-11 first-lozengies">
+            <div>History</div>
+            <div>Politics</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Religion, Philosophy & Ethics</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>English Literature</div>
+            <div>Law</div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <div className="flex-center">
+          <SpriteIcon name="humanity-icon" />
+        </div>
+        <div className="bold">Traditional <br /> Humanities</div>
+      </div>
+    );
+  }
+
+  renderLanguages() {
+    if (this.state.hoveredCategory === Category.Languages) {
+      return (
+        <div className="hovered-category">
+          <div className="bold font-16 h-title-r24">Languages & Cultures</div>
+          <div className="lozengies-container font-11">
+            <div>Modern European Languages</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>French</div>
+            <div>Spanish</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Eastern and Oriental Languages</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Mandarin</div>
+            <div>Japanese</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Classical Languages</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Linguistics</div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <div className="flex-center">
+          <SpriteIcon name="language-icon" />
+        </div>
+        <div className="bold">Languages & <br /> Cultures</div>
+      </div>
+    );
+  }
+
+  renderArts() {
+    if (this.state.hoveredCategory === Category.Arts) {
+      return (
+        <div className="hovered-category">
+          <div className="bold font-16 h-title-r24">Arts</div>
+          <div className="lozengies-container font-11">
+            <div>Performing Arts</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Fine Art </div>
+            <div>Photography</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Film & Media </div>
+            <div>Design</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Music</div>
+            <div>Dance</div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <div className="flex-center">
+          <SpriteIcon name="arts-icon" />
+        </div>
+        <div className="bold">Arts</div>
+      </div>
+    );
+  }
+
+  renderStemCategory() {
+    let className = "first";
+    let category = this.state.categories.includes(Category.Stem);
+    if (category) {
+      className += " active";
+    }
+    return (
+      <div
+        className={className}
+        onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
+        onMouseLeave={this.leaveCategory.bind(this)}
+        onClick={() => this.selectCategory(Category.Stem)}
+      >
+        {this.renderStem()}
+      </div>
+    );
+  }
+
+  renderScienceCategory() {
+    let className = "";
+    let category = this.state.categories.includes(Category.Science);
+
+    if (category) {
+      className += " active";
+    }
+
+    if (this.state.hoveredCategory === Category.Science) {
+      className += " start-f-r24";
+    }
+
+    return (
+      <div
+        className={className}
+        onMouseEnter={() => this.setState({ hoveredCategory: Category.Science })}
+        onMouseLeave={this.leaveCategory.bind(this)}
+        onClick={() => this.selectCategory(Category.Science)}
+      >
+        {this.renderScience()}
+      </div>
+    );
+  }
+
+  renderHumanityCategory() {
+    let className = "";
+    let category = this.state.categories.includes(Category.Humanities);
+
+    if (category) {
+      className += " active";
+    }
+
+    if (this.state.hoveredCategory === Category.Humanities) {
+      className += " start-f-r24";
+    }
+
+    return (
+      <div
+        className={className}
+        onMouseEnter={() => this.setState({ hoveredCategory: Category.Humanities })}
+        onMouseLeave={this.leaveCategory.bind(this)}
+        onClick={() => this.selectCategory(Category.Humanities)}
+      >
+        {this.renderHumanities()}
+      </div>
+    );
+  }
+
+  renderLanguageCategory() {
+    let className = "";
+    let category = this.state.categories.includes(Category.Languages);
+
+    if (category) {
+      className += " active";
+    }
+
+    if (this.state.hoveredCategory === Category.Languages) {
+      className += " start-f-r24";
+    }
+
+    return (
+      <div
+        className={className}
+        onMouseEnter={() => this.setState({ hoveredCategory: Category.Languages })}
+        onMouseLeave={this.leaveCategory.bind(this)}
+        onClick={() => this.selectCategory(Category.Languages)}
+      >
+        {this.renderLanguages()}
+      </div>
+    );
+  }
+
+  renderArtsCategory() {
+    let className = "";
+    let category = this.state.categories.includes(Category.Arts);
+
+    if (category) {
+      className += " active";
+    }
+
+    if (this.state.hoveredCategory === Category.Arts) {
+      className += " start-f-r24";
+    }
+
+    return (
+      <div
+        className={className}
+        onMouseEnter={() => this.setState({ hoveredCategory: Category.Arts })}
+        onMouseLeave={this.leaveCategory.bind(this)}
+        onClick={() => this.selectCategory(Category.Arts)}
+      >
+        {this.renderArts()}
+      </div>
+    );
   }
 
   render() {
@@ -70,49 +370,12 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         <div className="font-16 margin-bottom-1">
           First of all, let’s get a general impression of what type of degree you might pursue. Below are five broad categories. Select the one or two that you think you are most likely to fall into. Note that many very academic degrees, like Medicine and Architecture, are also vocational.
         </div>
-        <div className="categories-container bold font-16">
-          <div className="first">
-            <div>
-              <div className="flex-center">
-                <SpriteIcon name="stem-icon" />
-              </div>
-              <div>
-                Traditional STEM <br/> degrees
-              </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div className="flex-center">
-                <SpriteIcon name="science-icon" />
-              </div>
-              <div>Interdisciplinary<br/> Sciences</div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div className="flex-center">
-                <SpriteIcon name="humanity-icon" />
-              </div>
-              <div>Traditional <br/> Humanities</div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div className="flex-center">
-                <SpriteIcon name="language-icon" />
-              </div>
-              <div>Languages & <br/> Cultures</div>
-            </div>
-          </div>
-          <div className="last">
-            <div>
-              <div className="flex-center">
-                <SpriteIcon name="arts-icon" />
-              </div>
-              <div>Arts</div>
-            </div>
-          </div>
+        <div className="categories-container font-16">
+          {this.renderStemCategory()}
+          {this.renderScienceCategory()}
+          {this.renderHumanityCategory()}
+          {this.renderLanguageCategory()}
+          {this.renderArtsCategory()}
         </div>
         <div className="absolute-back-btn" onClick={() => {
           this.props.moveBack();
