@@ -73,6 +73,18 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     this.setState({ hoveredCategory: -1 })
   }
 
+  selectCategory(category: Category) {
+    let { categories } = this.state;
+    if (categories.includes(category)) {
+      categories = categories.filter(c => c !== category);
+    } else {
+      if (categories.length < 2) {
+        categories.push(category);
+      }
+    }
+    this.setState({ categories });
+  }
+
   renderStem() {
     if (this.state.hoveredCategory === Category.Stem) {
       return (
@@ -102,16 +114,6 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         </div>
       </div>
     );
-  }
-
-  selectCategory(category: Category) {
-    let { categories } = this.state;
-    if (categories.includes(category)) {
-      categories = categories.filter(c => c !== category);
-    } else {
-      categories.push(category);
-    }
-    this.setState({ categories });
   }
 
   renderScience() {
@@ -357,6 +359,19 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     );
   }
 
+  renderContinueBtn() {
+    let className = "absolute-contunue-btn font-24";
+    let disabled = this.state.categories.length === 0;
+    if (disabled) {
+      className += " disabled";
+    }
+    return (
+      <button className={className} onClick={() => {
+        this.setState({ subStep: SubStep.Second });
+      }}>Continue</button>
+    );
+  }
+
   render() {
     return (
       <div className="question">
@@ -385,9 +400,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           </svg>
           <span className="font-25">Previous</span>
         </div>
-        <button className="absolute-contunue-btn font-24" onClick={() => {
-          this.setState({ subStep: SubStep.Second });
-        }}>Continue</button>
+        {this.renderContinueBtn()}
       </div>
     );
   }
