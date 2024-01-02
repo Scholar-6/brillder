@@ -1289,6 +1289,47 @@
       margin-top: 2vh;
     }
   }
+
+
+  // step 4
+  .question {
+    .question-text-4 {
+      margin-top: 2.5vh;
+      margin-bottom: 2vh;
+    }
+    .margin-bottom-1 {
+      margin-bottom: 1.7vh;
+    }
+    .categories-container {
+      display: flex;
+  
+      > div {
+        border-radius: 0.4vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #4C608A1A;
+        width: 20vw;
+        height: calc(100vh - 5.834vw - 2vw - 4vh - 2vh - 9vh - 2vh - 8vw - 8vh - 4vw);
+        margin-left: 0.4vw;
+        margin-right: 0.4vw;
+        text-align: center;
+  
+        &.first {
+          margin-left: 0;
+        }
+        &.last {
+          margin-right: 0;
+        }
+
+        svg {
+          width: 2.6vw;
+          height: 2.6vw;
+          margin-bottom: 2vh;
+        }
+      }
+    }
+  }
 }
 
 .SixthformChoicesPage~.beta-text {

@@ -5,6 +5,8 @@ import { SixthformSubject } from "services/axios/sixthformChoices";
 
 interface ThirdProps {
   subjects: SixthformSubject[];
+  answer: any;
+  onChange(answer: any): void;
 }
 
 interface ThirdQuestionState {
