@@ -45,6 +45,7 @@ interface ThirdQuestionState {
 
   firstPairResults: any[];
   secondPairResults: any[];
+  fifthSubStepRes: any | null;
 }
 
 class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
@@ -65,6 +66,8 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
 
       firstPairResults: [],
       secondPairResults: [],
+
+      fifthSubStepRes: null
     }
 
     this.loadSubjects();
@@ -75,6 +78,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       subjectSelections: this.state.subjectSelections,
       firstPairResults: this.state.firstPairResults,
       secondPairResults: this.state.secondPairResults,
+      fifthSubStepRes: this.state.fifthSubStepRes
     };
   }
 
@@ -85,17 +89,21 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
 
       let firstPairResults: any[] = [];
       let secondPairResults: any[] = [];
+      let fifthSubStepRes: any = null;
 
       if (this.props.answer && this.props.answer.answer) {
         const { answer } = this.props.answer;
         if (answer.subjectSelections) {
-          subjectSelections = this.props.answer.answer.subjectSelections;
+          subjectSelections = answer.subjectSelections;
         }
         if (answer.firstPairResults) {
-          firstPairResults = this.props.answer.answer.firstPairResults;
+          firstPairResults = answer.firstPairResults;
         }
         if (answer.secondPairResults) {
-          secondPairResults = this.props.answer.answer.secondPairResults;
+          secondPairResults = answer.secondPairResults;
+        }
+        if (answer.fifthSubStepRes) {
+          fifthSubStepRes = answer.fifthSubStepRes;
         }
       }
 
@@ -208,6 +216,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     let disabled = false;
     return (
       <button className={`absolute-contunue-btn font-24 ${disabled ? 'disabled' : ''}`} onClick={() => {
+        console.log('move next')
         this.props.moveNext({
           subjectSelections: this.state.subjectSelections
         });
@@ -226,7 +235,10 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           <div className="font-16">
             Now think about whether you are genuinely interested in taking any of these subjects. Sort them br dragging them into one of the three categories:
           </div>
-          <ThirdQuestionSubStep5 subjects={this.props.subjects} />
+          <ThirdQuestionSubStep5
+            subjects={this.props.subjects} answer={this.state.fifthSubStepRes}
+            onChange={fifthSubStepRes => this.setState({fifthSubStepRes})}
+          />
           <div className="font-16 bottom-text-r23">You can try a taster lesson/ topic / brick  in any of the above subjects you are interested in.</div>
           <div className="absolute-back-btn" onClick={() => {
             this.setState({ subStep: SubStep.Fourth });
@@ -354,7 +366,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             <div className="table-body">
               {this.state.subjectSelections.map((subject, index) => {
                 return (
-                  <div>
+                  <div key={index}>
                     <div className="bold first-column subject-box-r21 font-12">
                       <div className="subject-lozengue">{subject.name}</div>
                     </div>

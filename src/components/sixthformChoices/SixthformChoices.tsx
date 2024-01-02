@@ -8,9 +8,11 @@ import {
 
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import FirstQuestion from "./components/FirstQuestion";
-import SecondQuestion from "./components/SecondQuestion";
-import ThirdQuestion from "./components/ThirdQuestion";
+
+import FirstStep from "./components/FirstStep";
+import SecondStep from "./components/SecondStep";
+import ThirdStep from "./components/ThirdStep";
+import FourthStep from "./components/FourthStep";
 
 
 interface UserProfileProps {
@@ -88,8 +90,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       if (firstAnswer) {
         subjectType = firstAnswer.answer.choice;
       }
-
-      console.log(answers);
 
       this.setState({ answers, subjectType });
     }
@@ -219,7 +219,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.score = s2.score;
         }
       }
-      console.log('result', result);
       this.parseAnswer3(result, answer, Pages.Question3);
       // do something here with subjects ranking should change
     }
@@ -249,17 +248,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     }
 
     if (this.state.page === Pages.Question1) {
-      return <FirstQuestion
+      return <FirstStep
         answer={this.state.answers.find(a => a.step === Pages.Question1)}
         onChoiceChange={(answer: any) => this.saveFirstAnswer(answer)}
         moveNext={() => this.setState({ page: Pages.Question2 })}
         moveBack={() => this.setState({ page: Pages.Welcome })}
       />
     } else if (this.state.page === Pages.Question2) {
-      return <SecondQuestion
+      return <SecondStep
         answer={this.state.answers.find(a => a.step === Pages.Question2)}
         moveNext={async (answer: any) => {
-          console.log(answer);
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
           this.parseAnswer2(result, answer, Pages.Question2);
           this.setState({ page: Pages.Question3 });
@@ -269,7 +267,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }}
       />
     } else if (this.state.page === Pages.Question3) {
-      return <ThirdQuestion
+      return <ThirdStep
         subjects={this.state.allSubjects}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
         saveThirdAnswer={async (answer: any) => {
@@ -281,7 +279,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.setState({ page: Pages.Question4 });
         }} moveBack={() => this.setState({ page: Pages.Question2 })} />
     } else if (this.state.page === Pages.Question4) {
-      //return <FourthQuestion setPage={setPage} />
+      return <FourthStep
+        answer={this.state.answers.find(a => a.step === Pages.Question3)}
+        moveNext={() => {}} moveBack={() => {}}
+        subjects={this.state.allSubjects}
+      />
     }
     return <div />;
   }
