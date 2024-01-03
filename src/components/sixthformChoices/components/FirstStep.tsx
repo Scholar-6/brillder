@@ -89,12 +89,23 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
           What type of course or courses are you considering for the sixth form?
         </div>
         <div className="boxes-container font-24">
-          <CheckBoxV2 currentChoice={FirstChoice.ALevel} choice={this.state.choice} label="A-level courses only" setChoice={choice => this.setChoice(choice)} />
-          <CheckBoxV2 currentChoice={FirstChoice.Vocational} choice={this.state.choice} label="Vocational courses only (e.g. BTEC, T-level)" setChoice={choice => this.setChoice(choice)} />
-          <CheckBoxV2 currentChoice={FirstChoice.ShowMeAll} choice={this.state.choice} label="Show me all types of course" setChoice={choice => this.setChoice(choice)} />
-          <CheckBoxV2 currentChoice={FirstChoice.Other} choice={this.state.choice} label="Are there other types of sixth form courses?*" setChoice={() => {
-            this.setState({ choice: FirstChoice.Other, popup: true });
-          }} />
+          <CheckBoxV2
+            currentChoice={FirstChoice.ALevel} choice={this.state.choice}
+            label="A-level courses only" setChoice={choice => this.setChoice(choice)}
+          />
+          <CheckBoxV2
+            currentChoice={FirstChoice.Vocational} choice={this.state.choice} 
+            label="Vocational courses only (e.g. BTEC, T-level)" setChoice={choice => this.setChoice(choice)} 
+          />
+          <CheckBoxV2
+            currentChoice={FirstChoice.ShowMeAll} choice={this.state.choice}
+            label="Show me all types of course" setChoice={choice => this.setChoice(choice)}
+          />
+          <CheckBoxV2
+            currentChoice={FirstChoice.Other} choice={this.state.choice}
+            label="Are there other types of sixth form courses?*"
+            setChoice={() => this.setState({ choice: FirstChoice.Other, popup: true })}
+          />
         </div>
         <div className="absolute-back-btn" onClick={() => {
           this.props.moveBack();
