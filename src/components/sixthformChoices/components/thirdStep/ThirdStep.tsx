@@ -4,10 +4,14 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyStage4Subject, PredicetedStrength, SixthformSubject, getKeyStage4Subjects } from "services/axios/sixthformChoices";
-import CheckBoxV2 from "./CheckBox";
-import ThirdQuestionSubStep3 from "./ThirdQuestionSubStep3";
-import ThirdQuestionSubStep4 from "./ThirdQuestionSubStep4";
-import ThirdQuestionSubStep5 from "./ThirdQuestionSubStep5";
+import CheckBoxV2 from "../CheckBox";
+import ThirdStepC1 from "./ThirdStepC1";
+import ThirdStepC2 from "./ThirdStepC2";
+import ThirdStepC3 from "./ThirdStepC3";
+import ThirdStepC4 from "./ThirdStepC4";
+import ThirdStepD from "./ThirdStepD";
+import ThirdStepE from "./ThirdStepE";
+import { FirstChoice } from "../FirstStep";
 
 
 enum SubjectGroupR21 {
@@ -18,12 +22,16 @@ enum SubjectGroupR21 {
 enum SubStep {
   First,
   Second,
-  Third,
-  Fourth,
-  Fifth
+  ThirdC1,
+  ThirdC2,
+  ThirdC3,
+  ThirdC4,
+  ThirdD,
+  ThirdE
 }
 
 interface ThirdProps {
+  firstAnswer: any;
   answer: any;
   subjects: SixthformSubject[];
   saveThirdAnswer(answer: any): void;
@@ -46,6 +54,8 @@ interface ThirdQuestionState {
   firstPairResults: any[];
   secondPairResults: any[];
   fifthSubStepRes: any | null;
+
+  ePairResults: any[];
 }
 
 class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
@@ -67,6 +77,8 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       firstPairResults: [],
       secondPairResults: [],
 
+      ePairResults: [],
+
       fifthSubStepRes: null
     }
 
@@ -78,7 +90,8 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       subjectSelections: this.state.subjectSelections,
       firstPairResults: this.state.firstPairResults,
       secondPairResults: this.state.secondPairResults,
-      fifthSubStepRes: this.state.fifthSubStepRes
+      fifthSubStepRes: this.state.fifthSubStepRes,
+      ePairResults: this.state.ePairResults
     };
   }
 
@@ -90,6 +103,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       let firstPairResults: any[] = [];
       let secondPairResults: any[] = [];
       let fifthSubStepRes: any = null;
+      let ePairResults: any[] = [];
 
       if (this.props.answer && this.props.answer.answer) {
         const { answer } = this.props.answer;
@@ -104,6 +118,10 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         }
         if (answer.fifthSubStepRes) {
           fifthSubStepRes = answer.fifthSubStepRes;
+        }
+
+        if (answer.ePairResults) {
+          ePairResults = answer.ePairResults;
         }
       }
 
@@ -126,7 +144,8 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         vocationalSubjects: subjects.filter(s => s.isVocational && s.isPopular),
         otherGCSESubjects: subjects.filter(s => s.isGCSE && !s.isPopular),
         firstPairResults,
-        secondPairResults
+        secondPairResults,
+        ePairResults
       });
     }
   }
@@ -225,7 +244,102 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
-    if (this.state.subStep === SubStep.Fifth) {
+    if (this.state.subStep === SubStep.ThirdE) {
+      return (
+        <div className="question">
+          {this.renderProgressBar()}
+          <div className="bold font-32 question-text-3">
+            New Subjects
+          </div>
+          <div className="font-16">
+            Here are five VAPs which you may need to understand a little better before.
+          </div>
+          <ThirdStepE
+            pairAnswers={this.state.fifthSubStepRes}
+            onChange={fifthSubStepRes => this.setState({ fifthSubStepRes })}
+          />
+          <div className="font-16 bottom-text-r23">You can try a taster lesson/ topic / brick  in any of the above subjects you are interested in.</div>
+          <div className="absolute-back-btn" onClick={() => {
+            this.setState({ subStep: SubStep.ThirdD });
+          }}>
+            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="font-25">Previous</span>
+          </div>
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.saveThirdAnswer(this.getAnswer());
+            this.props.moveNext({
+              subjectSelections: this.state.subjectSelections
+            });
+          }}>I’ve matched all the definitions - how did I do?</button>
+        </div>
+      );
+    } else if (this.state.subStep === SubStep.ThirdD) {
+      return (
+        <div className="question">
+          {this.renderProgressBar()}
+          <div className="bold font-32 question-text-3">
+            New Subjects
+          </div>
+          <div className="font-16">
+            A lot of changes are happening within vocational education. For 16-19 year-olds there will be a steady reduction in the availability of BTEC and Diploma courses in Vocational, Applied & Practical subjects (VAPs), and a rapid rolling out of T-levels.
+          </div>
+          <ThirdStepD
+            subjects={this.props.subjects} answer={this.state.fifthSubStepRes}
+            onChange={fifthSubStepRes => this.setState({ fifthSubStepRes })}
+          />
+          <div className="font-16 bottom-text-r23">You can try a taster lesson/ topic / brick  in any of the above subjects you are interested in.</div>
+          <div className="absolute-back-btn" onClick={() => {
+            // all courses and A-levels can go to C1 else D
+            let choice = this.props.firstAnswer.answer.choice;
+            if (choice === FirstChoice.ShowMeAll) {
+              this.setState({ subStep: SubStep.ThirdC4 });
+            } else {
+              this.setState({ subStep: SubStep.Second });
+            }
+          }}>
+            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="font-25">Previous</span>
+          </div>
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.saveThirdAnswer(this.getAnswer());
+            this.setState({ subStep: SubStep.ThirdE });
+          }}>I’ve matched all the definitions - how did I do?</button>
+        </div>
+      );
+    } else if (this.state.subStep === SubStep.ThirdC4) {
+      return (
+        <div className="question">
+          {this.renderProgressBar()}
+          <div className="bold font-32 question-text-3">
+            New Subjects
+          </div>
+          <div className="font-16">
+            Now consider whether you are genuinely interested in any of these subjects - all of which can be commenced in the sixth form. (Note that it’s also the case that none of these A Levels are absolutely essential if you wanted to study them at university.)
+          </div>
+          <ThirdStepC4
+            subjects={this.props.subjects} answer={this.state.fifthSubStepRes}
+            onChange={fifthSubStepRes => this.setState({ fifthSubStepRes })}
+          />
+          <div className="font-16 bottom-text-r23">You can try a taster lesson/ topic / brick  in any of the above subjects you are interested in.</div>
+          <div className="absolute-back-btn" onClick={() => {
+            this.setState({ subStep: SubStep.ThirdC2 });
+          }}>
+            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="font-25">Previous</span>
+          </div>
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.saveThirdAnswer(this.getAnswer());
+            this.setState({ subStep: SubStep.ThirdC4 });
+          }}>I’ve matched all the definitions - how did I do?</button>
+        </div>
+      );
+    } else if (this.state.subStep === SubStep.ThirdC3) {
       return (
         <div className="question">
           {this.renderProgressBar()}
@@ -235,23 +349,26 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           <div className="font-16">
             Now think about whether you are genuinely interested in taking any of these subjects. Sort them br dragging them into one of the three categories:
           </div>
-          <ThirdQuestionSubStep5
+          <ThirdStepC3
             subjects={this.props.subjects} answer={this.state.fifthSubStepRes}
-            onChange={fifthSubStepRes => this.setState({fifthSubStepRes})}
+            onChange={fifthSubStepRes => this.setState({ fifthSubStepRes })}
           />
           <div className="font-16 bottom-text-r23">You can try a taster lesson/ topic / brick  in any of the above subjects you are interested in.</div>
           <div className="absolute-back-btn" onClick={() => {
-            this.setState({ subStep: SubStep.Fourth });
+            this.setState({ subStep: SubStep.ThirdC2 });
           }}>
             <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             <span className="font-25">Previous</span>
           </div>
-          {this.renderNextBtn()}
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.saveThirdAnswer(this.getAnswer());
+            this.setState({ subStep: SubStep.ThirdC4 });
+          }}>I’ve matched all the definitions - how did I do?</button>
         </div>
       );
-    } else if (this.state.subStep === SubStep.Fourth) {
+    } else if (this.state.subStep === SubStep.ThirdC2) {
       return (
         <div className="question step3question5">
           {this.renderProgressBar()}
@@ -261,14 +378,14 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           <div className="font-16">
             Here are a few more subjects which are often new to students who begin them in the sixth form: Match the correct courses to the comments of students who chose them.
           </div>
-          <ThirdQuestionSubStep4
+          <ThirdStepC2
             pairAnswers={this.state.secondPairResults}
             onChange={(secondPairResults: any[]) => {
               this.setState({ secondPairResults });
             }}
           />
           <div className="absolute-back-btn" onClick={() => {
-            this.setState({ subStep: SubStep.Third });
+            this.setState({ subStep: SubStep.ThirdC1 });
           }}>
             <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -277,12 +394,12 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.Fifth });
+            this.setState({ subStep: SubStep.ThirdC3 });
           }}>I’ve matched all the definitions - how did I do?</button>
         </div>
       );
     }
-    if (this.state.subStep === SubStep.Third) {
+    if (this.state.subStep === SubStep.ThirdC1) {
       return (
         <div className="question">
           {this.renderProgressBar()}
@@ -293,7 +410,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             Some popular and highly regarded subjects are often not studied before the sixth form. It’s important you understand what they involve and reflect on whether any could be a fit for you.<br />
             Here are six subjects which most students begin for the first time in the sixth form. First of all, can you work out what these subjects consist of? Match the subject description to the correct subject.
           </div>
-          <ThirdQuestionSubStep3
+          <ThirdStepC1
             pairAnswers={this.state.firstPairResults}
             onChange={(firstPairResults: any[]) => {
               this.setState({ firstPairResults });
@@ -309,7 +426,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.Fourth });
+            this.setState({ subStep: SubStep.ThirdC2 });
           }}>I’ve matched all the definitions - how did I do?</button>
         </div>
       );
@@ -421,7 +538,13 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.Third });
+            // all courses and A-levels can go to C1 else D
+            let choice = this.props.firstAnswer.answer.choice;
+            if (choice === FirstChoice.ALevel || choice === FirstChoice.ShowMeAll) {
+              this.setState({ subStep: SubStep.ThirdC1 });
+            } else {
+              this.setState({ subStep: SubStep.ThirdD });
+            }
           }}>Continue</button>
         </div>
       );

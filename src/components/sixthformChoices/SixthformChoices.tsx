@@ -11,7 +11,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 import FirstStep from "./components/FirstStep";
 import SecondStep from "./components/SecondStep";
-import ThirdStep from "./components/ThirdStep";
+import ThirdStep from "./components/thirdStep/ThirdStep";
 import FourthStep from "./components/FourthStep";
 
 
@@ -201,7 +201,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (result) {
       this.parseAnswer(result, answer, Pages.Question1);
       this.setState({
-        subjects: result.subjects, subjectType: answer.choice
+        subjects: result.subjectScores, subjectType: answer.choice
       });
     }
   }
@@ -269,6 +269,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     } else if (this.state.page === Pages.Question3) {
       return <ThirdStep
         subjects={this.state.allSubjects}
+        firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
         saveThirdAnswer={async (answer: any) => {
           await this.saveThirdAnswer(answer);
@@ -281,7 +282,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     } else if (this.state.page === Pages.Question4) {
       return <FourthStep
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
-        moveNext={() => {}} moveBack={() => {}}
+        moveNext={() => {}} moveBack={() => {
+          this.setState({ page: Pages.Question3});
+        }}
         subjects={this.state.allSubjects}
       />
     }
@@ -389,7 +392,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           <div className="taste-container">
             <div className="label-container">
               <div>
-                <div className="bold font-18">Take a Tester Brick!</div>
+                <div className="bold font-18">Try a taster topic</div>
                 <div className="font-14">Try out a Brick for this subject to see if it’s a good fit for you.</div>
               </div>
             </div>

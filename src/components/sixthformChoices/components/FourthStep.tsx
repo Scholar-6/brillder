@@ -94,12 +94,12 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             For many science courses there is an expectation that you will have done A-level Maths.
           </div>
           <div className="lozengies-container font-11 first-lozengies">
-            <div>Economics</div>
-            <div>Geography</div>
+            <div>Chemistry</div>
+            <div>Mathematics</div>
           </div>
           <div className="lozengies-container font-11">
-            <div>Sociology</div>
-            <div>Psychology</div>
+            <div>Engineering</div>
+            <div>Biology</div>
           </div>
         </div>
       );
@@ -125,12 +125,12 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             Some subjects fuse scientific or statistical method with aspects of Humanities
           </div>
           <div className="lozengies-container font-11 first-lozengies">
-            <div>Chemistry</div>
-            <div>Mathematics</div>
+            <div>Economics</div>
+            <div>Geography</div>
           </div>
           <div className="lozengies-container font-11">
-            <div>Engineering</div>
-            <div>Biology</div>
+            <div>Sociology</div>
+            <div>Psychology</div>
           </div>
         </div>
       );
@@ -185,9 +185,6 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           <div className="lozengies-container font-11">
             <div>French</div>
             <div>Spanish</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>Eastern and Oriental Languages</div>
           </div>
           <div className="lozengies-container font-11">
             <div>Mandarin</div>

@@ -59,7 +59,7 @@ class SixthformSubjectPopup extends Component<SixthformSubjectProps> {
         <div className="taste-container">
           <div className="label-container">
             <div>
-              <div className="bold font-18">Take a Tester Brick!</div>
+              <div className="bold font-18">Try a taster topic</div>
               <div className="font-14">Try out a Brick for this subject to see if it’s a good fit for you.</div>
             </div>
           </div>
