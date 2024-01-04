@@ -173,14 +173,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return <SpriteIcon name="circle-filled" className={colorClass} />
   }
 
-  filterBySubjectType(currentSubjectType: SubjectType) {
+  filterBySubjectType(currentSubjectType: SubjectType, subjectsR4: SixthformSubject[]) {
     let subjects: any[] = [];
     if (currentSubjectType === SubjectType.ALevels) {
-      subjects = this.state.allSubjects.filter(s => s.isALevel === true);
+      subjects = subjectsR4.filter(s => s.isALevel === true);
     } else if (currentSubjectType === SubjectType.VocationalSubjects) {
-      subjects = this.state.allSubjects.filter(s => s.isVocational === true);
+      subjects = subjectsR4.filter(s => s.isVocational === true);
     } else if (currentSubjectType === SubjectType.AllSubjects) {
-      subjects = this.state.allSubjects;
+      subjects = subjectsR4;
     }
     return subjects;
   }
@@ -200,8 +200,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
     if (result) {
       this.parseAnswer(result, answer, Pages.Question1);
+      console.log(result, answer);
       this.setState({
-        subjects: result.subjectScores, subjectType: answer.choice
+        subjects: this.filterBySubjectType(answer.choice, result.subjectScores), allSubjects: result.subjectScores, subjectType: answer.choice
       });
     }
   }
