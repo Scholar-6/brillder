@@ -1,10 +1,8 @@
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import React, { Component } from "react";
-import { SixthformSubject } from "services/axios/sixthformChoices";
 
 
 interface ThirdProps {
-  subjects: SixthformSubject[];
   answer: any;
   onChange(answer: any): void;
 }
@@ -16,7 +14,7 @@ enum ThirdC3Status {
   BETWEEN
 }
 
-interface ThirdC3Category {
+export interface ThirdC3Category {
   boldText: string;
   text: string;
   status: ThirdC3Status;
@@ -56,6 +54,10 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
       status: ThirdC3Status.None,
     }];
 
+    if (props.answer.categories && props.answer.categories.length > 0) {
+      categories = props.answer.categories;
+    }
+
     this.state = {
       categories,
     }
@@ -75,6 +77,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
             onClick={() => {
               category.status = ThirdC3Status.True;
               this.setState({ categories: this.state.categories });
+              this.props.onChange({ categories: this.state.categories });
             }}
           />
           <SpriteIcon
@@ -82,6 +85,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
             onClick={() => {
               category.status = ThirdC3Status.BETWEEN;
               this.setState({ categories: this.state.categories });
+              this.props.onChange({ categories: this.state.categories });
             }}
           />
           <SpriteIcon
@@ -89,6 +93,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
             onClick={() => {
               category.status = ThirdC3Status.False;
               this.setState({ categories: this.state.categories });
+              this.props.onChange({ categories: this.state.categories });
             }}
           />
         </div>
