@@ -1,5 +1,5 @@
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 import React, { Component } from "react";
-import { ReactSortable } from "react-sortablejs";
 import { SixthformSubject } from "services/axios/sixthformChoices";
 
 
@@ -9,151 +9,104 @@ interface ThirdProps {
   onChange(answer: any): void;
 }
 
-interface ThirdQuestionState {
-  subjects: any[];
-  interestedSubjects: any[];
-  quiteInterestedSubjects: any[];
-  notInterestedSubjects: any[];
+enum ThirdC3Status {
+  None,
+  True,
+  False,
+  BETWEEN
 }
 
-class ThirdQuestionSubStep5 extends Component<ThirdProps, ThirdQuestionState> {
+interface ThirdC3Category {
+  boldText: string;
+  text: string;
+  status: ThirdC3Status;
+}
+
+interface ThirdQuestionState {
+  categories: ThirdC3Category[];
+}
+
+class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
-    let sNames = ['Ancient History', 'Business',
-      'Classical Civilisation',
-      'Criminology',
-      'Economics',
-      'Film Studies',
-      'History of Art',
-      'Law',
-      'Media Studies',
-      'Philosophy',
-      'Politics',
-      'Psychology',
-      'Sociology'
-    ]
-
-    let subjects = [];
-    for (let sName of sNames) {
-      let s = this.props.subjects.find(s => s.name === sName);
-      if (s) {
-        subjects.push(s);
-      }
-    }
+    let categories = [{
+      boldText: "English Language",
+      text: " - “The A Level is very unlike GCSE English Language and has much more to do with linguistics than, for example, creative writing or literature.”",
+      status: ThirdC3Status.None,
+    }, {
+      boldText: "Further Mathematics",
+      text: " - “The decision around whether to choose Further Maths should be more about your love of the subject than your ability. In fact, doing the additional A Level makes the normal A Level content easier because you get more time to spend on it.”",
+      status: ThirdC3Status.None,
+    }, {
+      boldText: "Computer Science",
+      text: "- “Having done the GCSE helps, but you don’t need the GCSE if you’re a fairly natural tecchie - i.e. you’re a keen coder and feel you have the making of a developer.”",
+      status: ThirdC3Status.None,
+    }, {
+      boldText: "Engineering",
+      text: " - “There is no Engineering A-level, Design & Technology has some Engineering content.  A large number of Physics and Maths students opt to do a BTEC in Engineering which is highly regarded by universities and employers.”",
+      status: ThirdC3Status.None,
+    }, {
+      boldText: "Physical Education, Dance, Music, Performing Arts",
+      text: " - “It’s better to do the A-level than take a vocational equivalent in these subjects”",
+      status: ThirdC3Status.None,
+    }, {
+      boldText: "Minor Modern Languages",
+      text: " - “The vocab and grammar learned at GCSE is essential before doing a language A-level.”",
+      status: ThirdC3Status.None,
+    }];
 
     this.state = {
-      subjects,
-      interestedSubjects: [],
-      quiteInterestedSubjects: [],
-      notInterestedSubjects: [],
+      categories,
     }
   }
 
-  setSubjects(subjects: any[]) {
-    this.setState({ subjects });
-  }
+  //.boldText, category.text, category.status
 
-  updateSubjects(subjects: any[]) {
-    console.log('set subjects', subjects);
-    this.setState({ subjects });
-  }
-
-  updateInterestedSubjects(interestedSubjects: any[]) {
-    this.setState({ interestedSubjects });
-  }
-
-  updateQuiteInterestedSubjects(quiteInterestedSubjects: any[]) {
-    this.setState({ quiteInterestedSubjects });
-  }
-
-  updateNotInterestedSubjects(notInterestedSubjects: any[]) {
-    this.setState({ notInterestedSubjects });
-  }
-
-  renderSubjectBox(s: any) {
+  renderBox(category: ThirdC3Category) {
     return (
-      <div className="drag-box-r23">
-        <div className="drag-item-r23">{s.name}</div>
+      <div className="font-12 combo-block-c3-r23">
+        <div className="text-block-c3-r23">
+          <span className="bold">{category.boldText}</span> {category.text}
+        </div>
+        <div className="icons-block-c3-r23">
+          <SpriteIcon
+            name={category.status == ThirdC3Status.True ? "checkbox-c4-r23-fill" : "checkbox-c4-r23"}
+            onClick={() => {
+              category.status = ThirdC3Status.True;
+              this.setState({ categories: this.state.categories });
+            }}
+          />
+          <SpriteIcon
+            name={category.status == ThirdC3Status.BETWEEN ? "minus-c4-r23-fill" : "minus-c4-r23"}
+            onClick={() => {
+              category.status = ThirdC3Status.BETWEEN;
+              this.setState({ categories: this.state.categories });
+            }}
+          />
+          <SpriteIcon
+            name={category.status == ThirdC3Status.False ? "cross-c4-r23-fill" : "cross-c4-r23"}
+            onClick={() => {
+              category.status = ThirdC3Status.False;
+              this.setState({ categories: this.state.categories });
+            }}
+          />
+        </div>
       </div>
-    )
+    );
   }
 
   render() {
-    const ReactSortableV1 = ReactSortable as any;
-
     return (
-      <div className="drag-container-r23">
-        <div className="container-r23 first font-12 bold">
-          <div>
-            <div className="sort-category-r23 font-16">
-              Subjects
-            </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.subjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateSubjects(list)}
-              >
-                {this.state.subjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
-            </div>
+      <div className="tick-container-c3-r23">
+        <div>
+          <div className="font-16 bold">
+            Tick your answer on the right for the following statements!
           </div>
-        </div>
-        <div className="container-r23 second bold font-12">
-          <div>
-            <div className="sort-category-r23 font-16">
-              Very Interested
-            </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.interestedSubjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateInterestedSubjects(list)}
-              >
-                {this.state.interestedSubjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
-            </div>
-          </div>
-        </div>
-        <div className="container-r23 third bold font-12">
-          <div>
-            <div className="sort-category-r23 font-16">
-              Quite Interested
-            </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.quiteInterestedSubjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateQuiteInterestedSubjects(list)}
-              >
-                {this.state.quiteInterestedSubjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
-            </div>
-          </div>
-        </div>
-        <div className="container-r23 last bold font-12">
-          <div>
-            <div className="sort-category-r23 font-16">
-              Not at all Interested
-            </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.notInterestedSubjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateNotInterestedSubjects(list)}
-              >
-                {this.state.notInterestedSubjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
-            </div>
+          <div className="scrollbox-c3-r23">
+            {this.state.categories.map((category, i) => {
+              return this.renderBox(category);
+            })}
           </div>
         </div>
       </div>
@@ -161,4 +114,4 @@ class ThirdQuestionSubStep5 extends Component<ThirdProps, ThirdQuestionState> {
   }
 }
 
-export default ThirdQuestionSubStep5;
+export default ThirdStepC3;

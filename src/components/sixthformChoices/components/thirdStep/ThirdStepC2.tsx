@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ReactSortable } from "react-sortablejs";
+import {shuffle} from "../../services/shuffle";
 
 
 interface ThirdProps {
@@ -12,7 +13,7 @@ interface ThirdQuestionState {
   answers: any[];
 }
 
-class ThirdQuestionSubStep4 extends Component<ThirdProps, ThirdQuestionState> {
+class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
@@ -38,6 +39,8 @@ class ThirdQuestionSubStep4 extends Component<ThirdProps, ThirdQuestionState> {
       correctIndex: 5,
       name: "History of Art"
     }];
+
+    subjects = shuffle(subjects);
 
     if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
       subjects = this.props.pairAnswers;
@@ -88,7 +91,7 @@ class ThirdQuestionSubStep4 extends Component<ThirdProps, ThirdQuestionState> {
             >
               {this.state.subjects.map((subject: any, i: number) => {
                 return (
-                  <div className="drag-boxv2-r22">
+                  <div className="drag-boxv2-r22" key={i}>
                     <div className="drag-box-r22">
                       <div className="drag-item-r22 bold font-12" key={i + 1}>
                         {subject.name}
@@ -114,4 +117,4 @@ class ThirdQuestionSubStep4 extends Component<ThirdProps, ThirdQuestionState> {
   }
 }
 
-export default ThirdQuestionSubStep4;
+export default ThirdStepC2;

@@ -280,10 +280,16 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         <div className="question">
           {this.renderProgressBar()}
           <div className="bold font-32 question-text-3">
-            New Subjects
+            T Levels
           </div>
           <div className="font-16">
             A lot of changes are happening within vocational education. For 16-19 year-olds there will be a steady reduction in the availability of BTEC and Diploma courses in Vocational, Applied & Practical subjects (VAPs), and a rapid rolling out of T-levels.
+          </div>
+          <div className="font-16">
+            T-levels focus on the skills required for a particular job. You can only take one. Each T-level requires a time commitment equivalent to 3 A-levels: it’s a fully immersive experience designed to get you ready for the workplace. Doing a T-level therefore requires you to be clear in your own mind that you want to pursue the field you choose as a profession.
+          </div>
+          <div className="font-16 bold">
+            Which of the following best applies to you?
           </div>
           <ThirdStepD
             subjects={this.props.subjects} answer={this.state.fifthSubStepRes}
@@ -312,21 +318,24 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       );
     } else if (this.state.subStep === SubStep.ThirdC4) {
       return (
-        <div className="question">
+        <div className="question question-c4">
           {this.renderProgressBar()}
           <div className="bold font-32 question-text-3">
-            New Subjects
+          What matters is what YOU think
           </div>
           <div className="font-16">
-            Now consider whether you are genuinely interested in any of these subjects - all of which can be commenced in the sixth form. (Note that it’s also the case that none of these A Levels are absolutely essential if you wanted to study them at university.)
+            Now consider whether you are genuinely interested in taking any of these subjects - all of which can be commenced in the sixth form. (Note that it’s also the case that none of them are absolutely essential in order to apply for a university degrees in the subject.)<br/>
+            Sort them into one of the three categories:
           </div>
           <ThirdStepC4
             subjects={this.props.subjects} answer={this.state.fifthSubStepRes}
             onChange={fifthSubStepRes => this.setState({ fifthSubStepRes })}
           />
-          <div className="font-16 bottom-text-r23">You can try a taster lesson/ topic / brick  in any of the above subjects you are interested in.</div>
+          <div className="font-16 bottom-text-r23">
+            You can always try a taster lesson/ topic / brick in any of the above subjects you are interested in.
+          </div>
           <div className="absolute-back-btn" onClick={() => {
-            this.setState({ subStep: SubStep.ThirdC2 });
+            this.setState({ subStep: SubStep.ThirdC3 });
           }}>
             <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -335,25 +344,24 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.ThirdC4 });
+            this.setState({ subStep: SubStep.ThirdD });
           }}>I’ve matched all the definitions - how did I do?</button>
         </div>
       );
     } else if (this.state.subStep === SubStep.ThirdC3) {
       return (
-        <div className="question">
+        <div className="question question-c3">
           {this.renderProgressBar()}
           <div className="bold font-32 question-text-3">
-            New Subjects
+            Curve Balls
           </div>
-          <div className="font-16">
-            Now think about whether you are genuinely interested in taking any of these subjects. Sort them br dragging them into one of the three categories:
+          <div className="font-16 margin-text-c3">
+            There are a few A Levels which need careful thought because there may be more to them than first meets the eye. Decide whether the statement which follows each of the following subjects is ‘TRUE’, ‘FALSE’ or ‘SOMEWHERE IN BETWEEN’.
           </div>
           <ThirdStepC3
             subjects={this.props.subjects} answer={this.state.fifthSubStepRes}
             onChange={fifthSubStepRes => this.setState({ fifthSubStepRes })}
           />
-          <div className="font-16 bottom-text-r23">You can try a taster lesson/ topic / brick  in any of the above subjects you are interested in.</div>
           <div className="absolute-back-btn" onClick={() => {
             this.setState({ subStep: SubStep.ThirdC2 });
           }}>
@@ -539,6 +547,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             // all courses and A-levels can go to C1 else D
+            console.log(this.props.firstAnswer)
             let choice = this.props.firstAnswer.answer.choice;
             if (choice === FirstChoice.ALevel || choice === FirstChoice.ShowMeAll) {
               this.setState({ subStep: SubStep.ThirdC1 });

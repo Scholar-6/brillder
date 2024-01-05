@@ -113,9 +113,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       if (answerR1) {
         answerR1.answer.choice = answer.choice;
       } else {
-        answer = result.answer;
-        answer.answer = JSON.parse(answer.answer);
-        this.state.answers.push(answer);
+        result.result.answer = JSON.parse(result.result.answer);
+        this.state.answers.push(result.result);
         this.setState({ answers: [...this.state.answers] });
       }
     }
@@ -132,9 +131,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answerR1.answer.databaseSchool = answer.databaseSchool;
         answerR1.answer.sixthformChoice = answer.sixthformChoice;
       } else {
-        answer = result;
-        answer.answer = JSON.parse(answer.answer);
-        this.state.answers.push(answer);
+        result.result.answer = JSON.parse(result.result.answer);
+        this.state.answers.push(result.result);
         this.setState({ answers: [...this.state.answers] });
       }
     }
@@ -152,9 +150,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subjects: this.sortByScore(this.state.subjects)
         });
       } else {
-        answer = result;
-        answer.answer = JSON.parse(answer.answer);
-        this.state.answers.push(answer);
+        result.result.answer = JSON.parse(result.result.answer);
+        this.state.answers.push(result.result);
         this.setState({
           answers: [...this.state.answers],
           allSubjects: this.sortByScore(this.state.allSubjects),
@@ -199,8 +196,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   async saveFirstAnswer(answer: any) {
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
     if (result) {
+      console.log(answer);
       this.parseAnswer(result, answer, Pages.Question1);
-      console.log(result, answer);
       this.setState({
         subjects: this.filterBySubjectType(answer.choice, result.subjectScores), allSubjects: result.subjectScores, subjectType: answer.choice
       });
@@ -247,6 +244,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         </div>
       );
     }
+
+    console.log('first Answer', this.state.answers.find(a => a.step === Pages.Question1));
 
     if (this.state.page === Pages.Question1) {
       return <FirstStep
