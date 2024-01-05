@@ -1419,19 +1419,36 @@
     .d3-table-leaf {
       display: flex;
       flex-direction: row;
+
       > div {
         display: flex;
         flex-direction: column;
-        width: 40%;
+        width: 50%;
       }
 
       svg {
         width: 1vw;
         height: 1vw;
       }
+
+      .first-b-r-23 {
+        margin-right: 0.4vw;
+      }
+      .second-b-r-23 {
+        margin-left: 0.4vw;
+      }
+
+      .big-r-23 {
+        svg {
+          width: 2vw;
+          height: 2vw;
+        }
+      }
     }
 
     .course-box-r-23 {
+      padding-top: 1vh;
+      padding-bottom: 1vh;
       margin-top: 0.4vh;
       margin-bottom: 0.4vh;
       border-radius: 0.4vw;

@@ -44,44 +44,44 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     super(props);
 
     let tLevelCourses1 = [{
-      icon: '',
+      icon: 'six-frame0',
       name: 'Agricultural, Environmental & Animal Care',
       subjects: [{ name: 'Agriculture, Land Management & Production' }, { name: 'Animal Care & Management' }],
     }, {
-      icon: '',
+      icon: 'six-frame1',
       name: 'Catering & Hospitality',
       subjects: [{ name: 'Catering' }],
     }, {
-      icon: '',
+      icon: 'six-frame2',
       name: 'Creative & Design',
       subjects: [{ name: 'Craft & Design' }, { name: 'Media Broadcast & Production' }],
     }, {
-      icon: '',
+      icon: 'six-frame3',
       name: 'Education and Early Years',
       subjects: [{ name: 'Education and Early Years' }],
     }, {
-      icon: '',
+      icon: 'six-frame4',
       name: 'Hair & Beauty',
       subjects: [{ name: 'Hairdressing, Barbering and Beauty Therapy' }],
     }, {
-      icon: '',
+      icon: 'six-frame5',
       name: 'Legal, Finance & Accounting',
       subjects: [{ name: 'Accounting' }, { name: 'Finance' }, { name: 'Legal Services' }],
     }];
 
     let tLevelCourses2 = [{
-      icon: '',
+      icon: 'six-frame6',
       name: 'Business & Administration',
       subjects: [{ name: 'Management and Administration' }],
     }, {
-      icon: '',
+      icon: 'six-frame7',
       name: 'Construction',
       subjects: [
         { name: 'Building Services Engineering for Construction' },
         { name: 'Design, Surveying and Planning for Construction' },
         { name: 'Onsite Construction' }],
     }, {
-      icon: '',
+      icon: 'six-frame8',
       name: 'Digital',
       subjects: [
         { name: 'Digital Business Services' },
@@ -89,7 +89,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         { name: 'Digital Support Services' }
       ],
     }, {
-      icon: '',
+      icon: 'six-frame9',
       name: 'Engineering & Manufacturing',
       subjects: [
         { name: 'Design and Development for Engineering and Manufacturing' },
@@ -97,11 +97,11 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         { name: 'Engineering, Manufacturing, Processing and Control' }
       ],
     }, {
-      icon: '',
+      icon: 'six-frame10',
       name: 'Health & Science',
       subjects: [{ name: 'Health' }, { name: 'Healthcare Science' }, { name: 'Science' }],
     }, {
-      icon: '',
+      icon: 'six-frame11',
       name: 'Sales, Marketing & Procurement',
       subjects: [{ name: 'Marketing' }]
     }];
@@ -130,11 +130,17 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
             <div>
               {this.state.tLevelCoursesPart1.map((course, i) => {
                 return (
-                  <div key={i} className="course-box-r-23">
-                    <div className="font-16 bold">
-                      <SpriteIcon name={course.icon} />
-                      {course.name}
-                      <SpriteIcon name="arrow-down" />
+                  <div key={i} className="course-box-r-23 first-b-r-23">
+                    <div className="font-16 bold flex">
+                      <div className="flex-center big-r-23">
+                        <SpriteIcon name={course.icon} />
+                      </div>
+                      <div className="flex-y-center">
+                        {course.name}
+                      </div>
+                      <div className="flex-center">
+                        <SpriteIcon name="arrow-down" />
+                      </div>
                     </div>
                   </div>
                 );
@@ -143,17 +149,27 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
             <div>
               {this.state.tLevelCoursesPart2.map((course, i) => {
                 return (
-                  <div key={i} className="course-box-r-23">
-                    <div className="font-16 bold">
-                      <SpriteIcon name={course.icon} />
-                      {course.name}
-                      <SpriteIcon name="arrow-down" />
+                  <div key={i} className="course-box-r-23 second-b-r-23">
+                    <div className="font-16 bold flex">
+                      <div className="flex-center big-r-23">
+                        <SpriteIcon name={course.icon} />
+                      </div>
+                      <div className="flex-y-center">
+                        {course.name}
+                      </div>
+                      <div className="flex-center">
+                        <SpriteIcon name="arrow-down" />
+                      </div>
                     </div>
                   </div>
                 );
               })}
             </div>
           </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.moveToStepE();
+          }}>Continue</button>
         </div>
       );
     } else if (this.state.subStep === ThirdStepDSubStep.Message) {
