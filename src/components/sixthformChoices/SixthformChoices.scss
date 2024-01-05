@@ -1415,6 +1415,28 @@
         }
       }
     }
+
+    .d3-table-leaf {
+      display: flex;
+      flex-direction: row;
+      > div {
+        display: flex;
+        flex-direction: column;
+        width: 40%;
+      }
+
+      svg {
+        width: 1vw;
+        height: 1vw;
+      }
+    }
+
+    .course-box-r-23 {
+      margin-top: 0.4vh;
+      margin-bottom: 0.4vh;
+      border-radius: 0.4vw;
+      background: #4C608A1A;
+    }
   }
 
 
