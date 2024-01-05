@@ -55,7 +55,6 @@ class ThirdQuestionSubStep5 extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   updateSubjects(subjects: any[]) {
-    console.log('set subjects', subjects);
     this.setState({ subjects });
   }
 
