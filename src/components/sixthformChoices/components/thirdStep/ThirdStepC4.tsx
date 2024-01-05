@@ -1,11 +1,20 @@
+import { notDeepStrictEqual } from "assert";
 import React, { Component } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { SixthformSubject } from "services/axios/sixthformChoices";
 
+interface ThirdCategoriesC4 {
+  subjects: any[];
+  interestedSubjects: any[];
+  quiteInterestedSubjects: any[];
+  notInterestedSubjects: any[];
+}
 
 interface ThirdProps {
   subjects: SixthformSubject[];
-  answer: any;
+  answer: {
+    categoriesC4: ThirdCategoriesC4;
+  };
   onChange(answer: any): void;
 }
 
@@ -42,11 +51,27 @@ class ThirdQuestionSubStep5 extends Component<ThirdProps, ThirdQuestionState> {
       }
     }
 
+    console.log(666, props.answer);
+
+    let interestedSubjects: any[] = [];
+    let quiteInterestedSubjects: any[] = [];
+    let notInterestedSubjects: any[] = [];
+
+    if (props.answer) {
+      let categoriesC4 = props.answer.categoriesC4;
+      if (categoriesC4.subjects && categoriesC4.interestedSubjects && categoriesC4.quiteInterestedSubjects) {
+        subjects = categoriesC4.subjects;
+        interestedSubjects = categoriesC4.interestedSubjects;
+        quiteInterestedSubjects = categoriesC4.quiteInterestedSubjects;
+        notInterestedSubjects = categoriesC4.notInterestedSubjects;
+      }
+    }
+
     this.state = {
       subjects,
-      interestedSubjects: [],
-      quiteInterestedSubjects: [],
-      notInterestedSubjects: [],
+      interestedSubjects,
+      quiteInterestedSubjects,
+      notInterestedSubjects,
     }
   }
 
@@ -54,20 +79,35 @@ class ThirdQuestionSubStep5 extends Component<ThirdProps, ThirdQuestionState> {
     this.setState({ subjects });
   }
 
+  onChange() {
+    this.props.onChange({
+      categoriesC4: {
+        subjects: this.state.subjects,
+        interestedSubjects: this.state.interestedSubjects,
+        quiteInterestedSubjects: this.state.quiteInterestedSubjects,
+        notInterestedSubjects: this.state.notInterestedSubjects,
+      }
+    })
+  }
+
   updateSubjects(subjects: any[]) {
     this.setState({ subjects });
+    this.onChange();
   }
 
   updateInterestedSubjects(interestedSubjects: any[]) {
     this.setState({ interestedSubjects });
+    this.onChange();
   }
 
   updateQuiteInterestedSubjects(quiteInterestedSubjects: any[]) {
     this.setState({ quiteInterestedSubjects });
+    this.onChange();
   }
 
   updateNotInterestedSubjects(notInterestedSubjects: any[]) {
     this.setState({ notInterestedSubjects });
+    this.onChange();
   }
 
   renderSubjectBox(s: any) {

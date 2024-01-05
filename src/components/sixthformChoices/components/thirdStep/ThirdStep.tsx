@@ -7,7 +7,7 @@ import { KeyStage4Subject, PredicetedStrength, SixthformSubject, getKeyStage4Sub
 import CheckBoxV2 from "../CheckBox";
 import ThirdStepC1 from "./ThirdStepC1";
 import ThirdStepC2 from "./ThirdStepC2";
-import ThirdStepC3 from "./ThirdStepC3";
+import ThirdStepC3, { ThirdC3Category } from "./ThirdStepC3";
 import ThirdStepC4 from "./ThirdStepC4";
 import ThirdStepD from "./ThirdStepD";
 import ThirdStepE from "./ThirdStepE";
@@ -53,7 +53,8 @@ interface ThirdQuestionState {
 
   firstPairResults: any[];
   secondPairResults: any[];
-  fifthSubStepRes: any | null;
+  categoriesC3: ThirdC3Category[] | null;
+  categoriesC4: any | null;
 
   ePairResults: any[];
 }
@@ -79,7 +80,8 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
 
       ePairResults: [],
 
-      fifthSubStepRes: null
+      categoriesC3: null,
+      categoriesC4: null
     }
 
     this.loadSubjects();
@@ -90,7 +92,9 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       subjectSelections: this.state.subjectSelections,
       firstPairResults: this.state.firstPairResults,
       secondPairResults: this.state.secondPairResults,
-      fifthSubStepRes: this.state.fifthSubStepRes,
+
+      categoriesC3: this.state.categoriesC3,
+      categoriesC4: this.state.categoriesC4,
       ePairResults: this.state.ePairResults
     };
   }
@@ -102,7 +106,8 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
 
       let firstPairResults: any[] = [];
       let secondPairResults: any[] = [];
-      let fifthSubStepRes: any = null;
+      let categoriesC3: any = null;
+      let categoriesC4: any = null;
       let ePairResults: any[] = [];
 
       if (this.props.answer && this.props.answer.answer) {
@@ -116,8 +121,11 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         if (answer.secondPairResults) {
           secondPairResults = answer.secondPairResults;
         }
-        if (answer.fifthSubStepRes) {
-          fifthSubStepRes = answer.fifthSubStepRes;
+        if (answer.categoriesC3) {
+          categoriesC3 = answer.categoriesC3;
+        }
+        if (answer.categoriesC4) {
+          categoriesC4 = answer.categoriesC4;
         }
 
         if (answer.ePairResults) {
@@ -145,6 +153,8 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         otherGCSESubjects: subjects.filter(s => s.isGCSE && !s.isPopular),
         firstPairResults,
         secondPairResults,
+        categoriesC3,
+        categoriesC4,
         ePairResults
       });
     }
@@ -249,16 +259,18 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         <div className="question">
           {this.renderProgressBar()}
           <div className="bold font-32 question-text-3">
-            New Subjects
+            VAPs
           </div>
           <div className="font-16">
             Here are five VAPs which you may need to understand a little better before.
           </div>
+          <div className="font-16">
+            Already ruled out all the subjects below? Skip to the next question.
+          </div>
           <ThirdStepE
-            pairAnswers={this.state.fifthSubStepRes}
-            onChange={fifthSubStepRes => this.setState({ fifthSubStepRes })}
+            pairAnswers={this.state.secondPairResults}
+            onChange={anyth => this.setState({})}
           />
-          <div className="font-16 bottom-text-r23">You can try a taster lesson/ topic / brick  in any of the above subjects you are interested in.</div>
           <div className="absolute-back-btn" onClick={() => {
             this.setState({ subStep: SubStep.ThirdD });
           }}>
@@ -277,43 +289,28 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       );
     } else if (this.state.subStep === SubStep.ThirdD) {
       return (
-        <div className="question">
+        <div className="question question-3d">
           {this.renderProgressBar()}
-          <div className="bold font-32 question-text-3">
-            T Levels
-          </div>
-          <div className="font-16">
-            A lot of changes are happening within vocational education. For 16-19 year-olds there will be a steady reduction in the availability of BTEC and Diploma courses in Vocational, Applied & Practical subjects (VAPs), and a rapid rolling out of T-levels.
-          </div>
-          <div className="font-16">
-            T-levels focus on the skills required for a particular job. You can only take one. Each T-level requires a time commitment equivalent to 3 A-levels: it’s a fully immersive experience designed to get you ready for the workplace. Doing a T-level therefore requires you to be clear in your own mind that you want to pursue the field you choose as a profession.
-          </div>
-          <div className="font-16 bold">
-            Which of the following best applies to you?
-          </div>
           <ThirdStepD
-            subjects={this.props.subjects} answer={this.state.fifthSubStepRes}
-            onChange={fifthSubStepRes => this.setState({ fifthSubStepRes })}
+            subjects={this.props.subjects} answer={this.state.categoriesC4}
+            onChange={categoriesC4 => this.setState({ categoriesC4 })}
+            moveBack={() => {
+              let choice = this.props.firstAnswer.answer.choice;
+              if (choice === FirstChoice.ShowMeAll) {
+                this.setState({ subStep: SubStep.ThirdC4 });
+              } else {
+                this.setState({ subStep: SubStep.Second });
+              }
+            }}
+            moveToStepE={() => {
+              this.props.saveThirdAnswer(this.getAnswer());
+              this.setState({ subStep: SubStep.ThirdE });
+            }}
+            moveToStepF={() => {
+              this.props.saveThirdAnswer(this.getAnswer());
+              this.setState({ subStep: SubStep.ThirdE });
+            }}
           />
-          <div className="font-16 bottom-text-r23">You can try a taster lesson/ topic / brick  in any of the above subjects you are interested in.</div>
-          <div className="absolute-back-btn" onClick={() => {
-            // all courses and A-levels can go to C1 else D
-            let choice = this.props.firstAnswer.answer.choice;
-            if (choice === FirstChoice.ShowMeAll) {
-              this.setState({ subStep: SubStep.ThirdC4 });
-            } else {
-              this.setState({ subStep: SubStep.Second });
-            }
-          }}>
-            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-25">Previous</span>
-          </div>
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.ThirdE });
-          }}>I’ve matched all the definitions - how did I do?</button>
         </div>
       );
     } else if (this.state.subStep === SubStep.ThirdC4) {
@@ -321,15 +318,15 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         <div className="question question-c4">
           {this.renderProgressBar()}
           <div className="bold font-32 question-text-3">
-          What matters is what YOU think
+            What matters is what YOU think
           </div>
           <div className="font-16">
-            Now consider whether you are genuinely interested in taking any of these subjects - all of which can be commenced in the sixth form. (Note that it’s also the case that none of them are absolutely essential in order to apply for a university degrees in the subject.)<br/>
+            Now consider whether you are genuinely interested in taking any of these subjects - all of which can be commenced in the sixth form. (Note that it’s also the case that none of them are absolutely essential in order to apply for a university degrees in the subject.)<br />
             Sort them into one of the three categories:
           </div>
           <ThirdStepC4
-            subjects={this.props.subjects} answer={this.state.fifthSubStepRes}
-            onChange={fifthSubStepRes => this.setState({ fifthSubStepRes })}
+            subjects={this.props.subjects} answer={this.state.categoriesC4}
+            onChange={categoriesC4 => this.setState({ categoriesC4 })}
           />
           <div className="font-16 bottom-text-r23">
             You can always try a taster lesson/ topic / brick in any of the above subjects you are interested in.
@@ -359,8 +356,8 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             There are a few A Levels which need careful thought because there may be more to them than first meets the eye. Decide whether the statement which follows each of the following subjects is ‘TRUE’, ‘FALSE’ or ‘SOMEWHERE IN BETWEEN’.
           </div>
           <ThirdStepC3
-            subjects={this.props.subjects} answer={this.state.fifthSubStepRes}
-            onChange={fifthSubStepRes => this.setState({ fifthSubStepRes })}
+            answer={this.state.categoriesC3}
+            onChange={categoriesC3 => this.setState({ categoriesC3 })}
           />
           <div className="absolute-back-btn" onClick={() => {
             this.setState({ subStep: SubStep.ThirdC2 });
@@ -406,8 +403,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           }}>I’ve matched all the definitions - how did I do?</button>
         </div>
       );
-    }
-    if (this.state.subStep === SubStep.ThirdC1) {
+    } else if (this.state.subStep === SubStep.ThirdC1) {
       return (
         <div className="question">
           {this.renderProgressBar()}
@@ -438,8 +434,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           }}>I’ve matched all the definitions - how did I do?</button>
         </div>
       );
-    }
-    if (this.state.subStep === SubStep.Second) {
+    } else if (this.state.subStep === SubStep.Second) {
       return (
         <div className="question">
           {this.renderProgressBar()}
