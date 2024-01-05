@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { SixthformSubject } from "services/axios/sixthformChoices";
 import CheckBoxV2 from "../CheckBox";
 import BackButtonSix from "../BackButtonSix";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 export enum ThirdStepDChoice {
   First,
@@ -25,17 +26,90 @@ interface ThirdProps {
   moveToStepF(): void;
 }
 
+interface TLevelCourse {
+  icon: string;
+  name: string;
+  subjects: any[];
+}
+
 interface ThirdQuestionState {
   choice: ThirdStepDChoice | null;
   subStep: ThirdStepDSubStep;
+  tLevelCoursesPart1: TLevelCourse[];
+  tLevelCoursesPart2: TLevelCourse[];
 }
 
 class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
+    let tLevelCourses1 = [{
+      icon: '',
+      name: 'Agricultural, Environmental & Animal Care',
+      subjects: [{ name: 'Agriculture, Land Management & Production' }, { name: 'Animal Care & Management' }],
+    }, {
+      icon: '',
+      name: 'Catering & Hospitality',
+      subjects: [{ name: 'Catering' }],
+    }, {
+      icon: '',
+      name: 'Creative & Design',
+      subjects: [{ name: 'Craft & Design' }, { name: 'Media Broadcast & Production' }],
+    }, {
+      icon: '',
+      name: 'Education and Early Years',
+      subjects: [{ name: 'Education and Early Years' }],
+    }, {
+      icon: '',
+      name: 'Hair & Beauty',
+      subjects: [{ name: 'Hairdressing, Barbering and Beauty Therapy' }],
+    }, {
+      icon: '',
+      name: 'Legal, Finance & Accounting',
+      subjects: [{ name: 'Accounting' }, { name: 'Finance' }, { name: 'Legal Services' }],
+    }];
+
+    let tLevelCourses2 = [{
+      icon: '',
+      name: 'Business & Administration',
+      subjects: [{ name: 'Management and Administration' }],
+    }, {
+      icon: '',
+      name: 'Construction',
+      subjects: [
+        { name: 'Building Services Engineering for Construction' },
+        { name: 'Design, Surveying and Planning for Construction' },
+        { name: 'Onsite Construction' }],
+    }, {
+      icon: '',
+      name: 'Digital',
+      subjects: [
+        { name: 'Digital Business Services' },
+        { name: 'Digital Production, Design and Development' },
+        { name: 'Digital Support Services' }
+      ],
+    }, {
+      icon: '',
+      name: 'Engineering & Manufacturing',
+      subjects: [
+        { name: 'Design and Development for Engineering and Manufacturing' },
+        { name: 'Maintenance, Installation and Repair for Engineering and Manufacturing' },
+        { name: 'Engineering, Manufacturing, Processing and Control' }
+      ],
+    }, {
+      icon: '',
+      name: 'Health & Science',
+      subjects: [{ name: 'Health' }, { name: 'Healthcare Science' }, { name: 'Science' }],
+    }, {
+      icon: '',
+      name: 'Sales, Marketing & Procurement',
+      subjects: [{ name: 'Marketing' }]
+    }];
+
     this.state = {
       choice: null,
+      tLevelCoursesPart1: tLevelCourses1,
+      tLevelCoursesPart2: tLevelCourses2,
       subStep: ThirdStepDSubStep.Start
     }
   }
@@ -51,6 +125,35 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     if (this.state.subStep === ThirdStepDSubStep.TableLeaf) {
       return (
         <div>
+          Here is a list of current T-level courses. Which courses interest you? If only ONE course which interests you, select it. But Select no more than THREE courses.
+          <div className="d3-table-leaf">
+            <div>
+              {this.state.tLevelCoursesPart1.map((course, i) => {
+                return (
+                  <div key={i} className="course-box-r-23">
+                    <div className="font-16 bold">
+                      <SpriteIcon name={course.icon} />
+                      {course.name}
+                      <SpriteIcon name="arrow-down" />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div>
+              {this.state.tLevelCoursesPart2.map((course, i) => {
+                return (
+                  <div key={i} className="course-box-r-23">
+                    <div className="font-16 bold">
+                      <SpriteIcon name={course.icon} />
+                      {course.name}
+                      <SpriteIcon name="arrow-down" />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       );
     } else if (this.state.subStep === ThirdStepDSubStep.Message) {
