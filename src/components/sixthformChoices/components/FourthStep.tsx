@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { SixthformSubject } from "services/axios/sixthformChoices";
+import CheckBoxV2 from "./CheckBox";
+import BackButtonSix from "./BackButtonSix";
 
 enum SubStep {
   First,
@@ -15,10 +17,12 @@ enum Category {
   Science,
   Humanities,
   Languages,
-  Arts
+  Arts,
+  Vocational
 }
 
 interface ThirdProps {
+  firstAnswer: any;
   answer: any;
   subjects: SixthformSubject[];
   moveNext(answer: any): void;
@@ -85,178 +89,53 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     this.setState({ categories });
   }
 
-  renderStem() {
-    if (this.state.hoveredCategory === Category.Stem) {
-      return (
-        <div className="hovered-category">
-          <div className="bold font-16 h-title-r24">Traditional STEM <br /> degrees</div>
-          <div className="font-14">
-            For many science courses there is an expectation that you will have done A-level Maths.
-          </div>
-          <div className="lozengies-container font-11 first-lozengies">
-            <div>Chemistry</div>
-            <div>Mathematics</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>Engineering</div>
-            <div>Biology</div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <div className="flex-center">
-          <SpriteIcon name="stem-icon" />
-        </div>
-        <div className="bold">
-          Traditional STEM <br /> degrees
-        </div>
-      </div>
-    );
-  }
-
-  renderScience() {
-    if (this.state.hoveredCategory === Category.Science) {
-      return (
-        <div className="hovered-category">
-          <div className="bold font-16 h-title-r24">Interdisciplinary <br /> Sciences</div>
-          <div className="font-14">
-            Some subjects fuse scientific or statistical method with aspects of Humanities
-          </div>
-          <div className="lozengies-container font-11 first-lozengies">
-            <div>Economics</div>
-            <div>Geography</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>Sociology</div>
-            <div>Psychology</div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <div className="flex-center">
-          <SpriteIcon name="science-icon" />
-        </div>
-        <div className="bold">Interdisciplinary<br /> Sciences</div>
-      </div>
-    );
-  }
-
-  renderHumanities() {
-    if (this.state.hoveredCategory === Category.Humanities) {
-      return (
-        <div className="hovered-category">
-          <div className="bold font-16 h-title-r24">Traditional Humanities</div>
-          <div className="lozengies-container font-11 first-lozengies">
-            <div>History</div>
-            <div>Politics</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>Religion, Philosophy & Ethics</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>English Literature</div>
-            <div>Law</div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <div className="flex-center">
-          <SpriteIcon name="humanity-icon" />
-        </div>
-        <div className="bold">Traditional <br /> Humanities</div>
-      </div>
-    );
-  }
-
-  renderLanguages() {
-    if (this.state.hoveredCategory === Category.Languages) {
-      return (
-        <div className="hovered-category">
-          <div className="bold font-16 h-title-r24">Languages & Cultures</div>
-          <div className="lozengies-container font-11">
-            <div>Modern European Languages</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>French</div>
-            <div>Spanish</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>Mandarin</div>
-            <div>Japanese</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>Classical Languages</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>Linguistics</div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <div className="flex-center">
-          <SpriteIcon name="language-icon" />
-        </div>
-        <div className="bold">Languages & <br /> Cultures</div>
-      </div>
-    );
-  }
-
-  renderArts() {
-    if (this.state.hoveredCategory === Category.Arts) {
-      return (
-        <div className="hovered-category">
-          <div className="bold font-16 h-title-r24">Arts</div>
-          <div className="lozengies-container font-11">
-            <div>Performing Arts</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>Fine Art </div>
-            <div>Photography</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>Film & Media </div>
-            <div>Design</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>Music</div>
-            <div>Dance</div>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <div className="flex-center">
-          <SpriteIcon name="arts-icon" />
-        </div>
-        <div className="bold">Arts</div>
-      </div>
-    );
-  }
-
   renderStemCategory() {
-    let className = "first";
+    let className = "";
     let category = this.state.categories.includes(Category.Stem);
     if (category) {
       className += " active";
     }
-    return (
-      <div
-        className={className}
-        onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
-        onMouseLeave={this.leaveCategory.bind(this)}
-        onClick={() => this.selectCategory(Category.Stem)}
-      >
-        {this.renderStem()}
+
+    if (this.state.hoveredCategory === Category.Stem) {
+      return (
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Stem)}
+        >
+          <div className="bold font-16 h-title-r24">Traditional STEM degrees</div>
+          <div className="font-14">
+            For many science courses there is an expectation that you will have done <br /> A-level Maths.
+          </div>
+          <div className="lozengies-container font-11 first-lozengies">
+            <div>Chemistry</div>
+            <div>Mathematics</div>
+            <div>Engineering</div>
+            <div>Biology</div>
+            <div>Physics</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Medicine (Human and Veterinary)</div>
+            <div>Computer Science</div>
+            <div>Geology</div>
+          </div>
+        </div>
+      );
+    }
+    return (<div
+      className={className + " flex-center"}
+      onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
+      onMouseLeave={this.leaveCategory.bind(this)}
+      onClick={() => this.selectCategory(Category.Stem)}
+    >
+      <div className="flex-center">
+        <SpriteIcon name="stem-icon" />
       </div>
+      <div className="bold">
+        Traditional STEM degrees
+      </div>
+    </div>
     );
   }
 
@@ -272,14 +151,42 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       className += " start-f-r24";
     }
 
+    if (this.state.hoveredCategory === Category.Science) {
+      return (
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Science })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Science)}
+        >
+          <div className="bold font-16 h-title-r24">Interdisciplinary Sciences</div>
+          <div className="font-14">
+            Some subjects fuse scientific or statistical method with aspects of<br /> Humanities
+          </div>
+          <div className="lozengies-container font-11 first-lozengies">
+            <div>Economics</div>
+            <div>Geography</div>
+            <div>Psychology</div>
+            <div>Environmental Sciences</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Sociology</div>
+            <div>Architecture</div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div
-        className={className}
+        className={className + " flex-center"}
         onMouseEnter={() => this.setState({ hoveredCategory: Category.Science })}
         onMouseLeave={this.leaveCategory.bind(this)}
         onClick={() => this.selectCategory(Category.Science)}
       >
-        {this.renderScience()}
+        <div className="flex-center">
+          <SpriteIcon name="science-icon" />
+        </div>
+        <div className="bold">Interdisciplinary Sciences</div>
       </div>
     );
   }
@@ -296,16 +203,84 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       className += " start-f-r24";
     }
 
+    if (this.state.hoveredCategory === Category.Humanities) {
+      return (
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Humanities })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Humanities)}
+        >
+          <div className="bold font-16 h-title-r24">Traditional Humanities</div>
+          <div className="lozengies-container font-11 first-lozengies">
+            <div>History</div>
+            <div>Politics</div>
+            <div>Religion, Philosophy & Ethics</div>
+            <div>Law</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>English Literature</div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div
-        className={className}
+        className={className + " "}
         onMouseEnter={() => this.setState({ hoveredCategory: Category.Humanities })}
         onMouseLeave={this.leaveCategory.bind(this)}
-        onClick={() => this.selectCategory(Category.Humanities)}
-      >
-        {this.renderHumanities()}
+        onClick={() => this.selectCategory(Category.Humanities)}>
+        <div className="flex-center">
+          <SpriteIcon name="humanity-icon" />
+        </div>
+        <div className="bold">Traditional Humanities</div>
       </div>
     );
+
+    /*
+
+    if (this.state.hoveredCategory === Category.Stem) {
+      return (
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Stem)}
+        >
+          <div className="bold font-16 h-title-r24">Traditional STEM degrees</div>
+          <div className="font-14">
+            For many science courses there is an expectation that you will have done <br /> A-level Maths.
+          </div>
+          <div className="lozengies-container font-11 first-lozengies">
+            <div>Chemistry</div>
+            <div>Mathematics</div>
+            <div>Engineering</div>
+            <div>Biology</div>
+            <div>Physics</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Medicine (Human and Veterinary)</div>
+            <div>Computer Science</div>
+            <div>Geology</div>
+          </div>
+        </div>
+      );
+    }
+    return (<div
+      className={className + " flex-center"}
+      onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
+      onMouseLeave={this.leaveCategory.bind(this)}
+      onClick={() => this.selectCategory(Category.Stem)}
+    >
+      <div className="flex-center">
+        <SpriteIcon name="stem-icon" />
+      </div>
+      <div className="bold">
+        Traditional STEM degrees
+      </div>
+    </div>
+    );*/
   }
 
   renderLanguageCategory() {
@@ -317,17 +292,38 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     }
 
     if (this.state.hoveredCategory === Category.Languages) {
-      className += " start-f-r24";
+      return (
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Languages })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Languages)}
+        >
+          <div className="bold font-16 h-title-r24">Languages & Cultures</div>
+          <div className="lozengies-container font-11">
+            <div>Modern European Languages (French, Spanish etc.)</div>
+            <div>Linguistics</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Eastern and Oriental Languages (Arabic, Mandarin, Japanese etc.)</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Classical Languages like Latin (also, Classical Civilisation / Archaeology)</div>
+          </div>  
+        </div>
+      );
     }
-
     return (
       <div
-        className={className}
+        className={className + " flex-center"}
         onMouseEnter={() => this.setState({ hoveredCategory: Category.Languages })}
         onMouseLeave={this.leaveCategory.bind(this)}
         onClick={() => this.selectCategory(Category.Languages)}
       >
-        {this.renderLanguages()}
+        <div className="flex-center">
+          <SpriteIcon name="language-icon" />
+        </div>
+        <div className="bold">Languages & Cultures</div>
       </div>
     );
   }
@@ -341,17 +337,81 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     }
 
     if (this.state.hoveredCategory === Category.Arts) {
-      className += " start-f-r24";
+      return (
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Arts })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Arts)}
+        >
+          <div className="bold font-16 h-title-r24">Arts</div>
+          <div className="lozengies-container font-11">
+            <div>Performing Arts</div>
+            <div>Art & Design (Photography)</div>
+            <div>Dance</div>
+            <div>Fine Art </div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Photography</div>
+            <div>Film & Media </div>
+            <div>Design</div>
+            <div>Music</div>
+          </div>
+        </div>
+      );
     }
-
     return (
       <div
-        className={className}
+        className={className + " flex-center"}
         onMouseEnter={() => this.setState({ hoveredCategory: Category.Arts })}
         onMouseLeave={this.leaveCategory.bind(this)}
         onClick={() => this.selectCategory(Category.Arts)}
       >
-        {this.renderArts()}
+        <div className="flex-center">
+          <SpriteIcon name="arts-icon" />
+        </div>
+        <div className="bold">Arts</div>
+      </div>
+    );
+  }
+
+  renderVocationalCategory() {
+    let className = "";
+    let category = this.state.categories.includes(Category.Vocational);
+
+    if (category) {
+      className += " active";
+    }
+
+    if (this.state.hoveredCategory === Category.Vocational) {
+      return (
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Vocational })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Vocational)}
+        >
+          <div className="bold font-16 h-title-r24">Vocational & Commercial</div>
+          <div className="lozengies-container font-11">
+            <div>Business & Management</div>
+            <div>Journalism</div>
+            <div>Retail</div>
+            <div>Marketing, Advertising & PR</div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div
+        className={className + " flex-center"}
+        onMouseEnter={() => this.setState({ hoveredCategory: Category.Vocational })}
+        onMouseLeave={this.leaveCategory.bind(this)}
+        onClick={() => this.selectCategory(Category.Arts)}
+      >
+        <div className="flex-center">
+          <SpriteIcon name="vocational-comertial" />
+        </div>
+        <div className="bold">Vocational & Commercial</div>
       </div>
     );
   }
@@ -364,40 +424,88 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     }
     return (
       <button className={className} onClick={() => {
-        this.setState({ subStep: SubStep.Second });
+        this.setState({ subStep: SubStep.Third });
       }}>Continue</button>
     );
   }
 
   render() {
+    if (this.state.subStep === SubStep.Third) {
+      return (
+        <div className="question">
+          {this.renderProgressBar()}
+          <div className="bold font-32 question-text-4">
+            A-levels
+          </div>
+          <div className="font-16 margin-bottom-1">
+            You have suggested that your eventual degree course might come from one of the following (one/ two) categories.
+          </div>
+          <div className="font-16 margin-bottom-1">
+            Now highlight the individual courses which most appeal to you. Choose up to three.
+          </div>
+          <div className="categories-container font-16">
+          </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.First })} />
+        </div>
+      );
+    } else if (this.state.subStep === SubStep.Second) {
+      return (
+        <div className="question">
+          {this.renderProgressBar()}
+          <div className="bold font-32 question-text-4">
+            A-levels
+          </div>
+          <div className="font-16 margin-bottom-1">
+            Most A-level students go to a university. Nobody expects you to know what degree you are going to do before you have even started the sixth form. However, it makes sense to think about what your strengths, weaknesses and interests are, because you can’t do some degrees without certain A-levels.
+          </div>
+          <div className="font-16 margin-bottom-1">
+            First of all, let’s get a general impression of what type of degree you might pursue. Below are five broad categories. Select the ONE, TWO or THREE that you think you are most likely to fall into. “(While Medicine and Architecture, are vocations,  but we class them as academic degrees.)”
+          </div>
+          <div className="categories-container font-16">
+            <div>
+              {this.renderStemCategory()}
+              {this.renderHumanityCategory()}
+              {this.renderArtsCategory()}
+            </div>
+            <div>
+              {this.renderScienceCategory()}
+              {this.renderLanguageCategory()}
+              {this.renderVocationalCategory()}
+            </div>
+          </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.First })} />
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+          this.setState({ subStep: SubStep.Third });
+        }}>Continue</button>
+        </div>
+      );
+    }
+
     return (
       <div className="question">
         {this.renderProgressBar()}
+        <div className="font-16">
+          What you choose to do in the sixth form invariably affects your options if you want to continue into higher education.
+        </div>
         <div className="bold font-32 question-text-4">
-          We think you are someone who will only study A-levels
+          From the answer you’ve given us, we think you are . . .
         </div>
-        <div className="font-16 margin-bottom-1">
-          Most A-level students go to a university. Nobody expects you to know what degree you are going to do before you have even started the sixth form. However, it makes sense to think about what your strengths, weaknesses and interests are, because you can’t do some degrees without certain A-levels.
+        <div className="boxes-container font-20">
+          <CheckBoxV2 currentChoice={2 as any} choice={null as any}
+            label="someone who will only study A-levels and apply to study at university" setChoice={() => { }}
+          />
+          <CheckBoxV2 currentChoice={2 as any} choice={null as any}
+            label="someone who may study a combination of A-level and Vocational Courses who may apply to study at university." setChoice={() => { }}
+          />
+          <CheckBoxV2 currentChoice={2 as any} choice={null as any}
+            label="someone likely to study Vocational Courses only in the sixth form, who may go directly into work at eighteen, or an apprenticeship." setChoice={() => { }}
+          />
         </div>
-        <div className="font-16 margin-bottom-1">
-          First of all, let’s get a general impression of what type of degree you might pursue. Below are five broad categories. Select the one or two that you think you are most likely to fall into. Note that many very academic degrees, like Medicine and Architecture, are also vocational.
-        </div>
-        <div className="categories-container font-16">
-          {this.renderStemCategory()}
-          {this.renderScienceCategory()}
-          {this.renderHumanityCategory()}
-          {this.renderLanguageCategory()}
-          {this.renderArtsCategory()}
-        </div>
-        <div className="absolute-back-btn" onClick={() => {
-          this.props.moveBack();
-        }}>
-          <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className="font-25">Previous</span>
-        </div>
-        {this.renderContinueBtn()}
+        <div className="font-16 white-blue">If you’ve changed your mind click the category above which best applies to you.</div>
+        <BackButtonSix onClick={() => this.props.moveBack()} />
+        <button className="absolute-contunue-btn font-24" onClick={() => {
+          this.setState({ subStep: SubStep.Second });
+        }}>Continue</button>
       </div>
     );
   }
