@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { MenuItem, TextField } from '@material-ui/core';
+import { MenuItem, Select, TextField } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyStage4Subject, PredicetedStrength, SixthformSubject, getKeyStage4Subjects } from "services/axios/sixthformChoices";
-import CheckBoxV2 from "../CheckBox";
+import CheckBoxV2 from "../CheckBoxM1";
 import ThirdStepC1 from "./ThirdStepC1";
 import ThirdStepC2 from "./ThirdStepC2";
 import ThirdStepC3, { ThirdC3Category } from "./ThirdStepC3";
@@ -218,6 +218,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   renderValue(subject: KeyStage4Subject) {
+    /*
     if (subject.predicedStrength === PredicetedStrength.veryWell) {
       return (
         <div className="result-container font-14">
@@ -259,6 +260,18 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         </div>
       </div>
     );
+    */
+    return <Select
+      className="selected-date"
+      value={subject.predicedStrength}
+      MenuProps={{ classes: { paper: 'select-time-list' } }}
+      onChange={e => {
+        subject.predicedStrength = e.target.value as any;
+        this.setState({ subjectSelections: this.state.subjectSelections });
+      }}
+    >
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((c, i) => <MenuItem value={c as any} key={i}>{c}</MenuItem>)}
+    </Select>
   }
 
   renderNextBtn() {
@@ -494,11 +507,13 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question">
           {this.renderProgressBar()}
-          <div className="bold font-32 question-text-3">
-            What are your relative strengths?
-          </div>
-          <div className="font-16">
-            Here are the subjects you selected. Now decide whether you think you are likely to do very well, well, okay (average) or poorly in each subject. If you prefer, with GCSEs, you can put your predicted grade (or, if you are doing this after your results, your actual grade).
+          <div className="flex-center">
+            <div className="bold font-32 question-text-3 question-title-sub-second">
+              What are your strengths?
+            </div>
+            <div className="font-16 question-text-sub-second">
+              Here are the subjects you selected. Now decide whether you think you are likely to do very well, well, okay (average) or poorly in each subject. If you prefer, with GCSEs, you can put your predicted grade (or, if you are doing this after your results, your actual grade).
+            </div>
           </div>
           <div className="subjects-table">
             <div className="table-head bold font-16">
@@ -548,33 +563,32 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
                     </div>
                     <div className="second-column center-column">
                       <div className="radio-container">
-                        <CheckBoxV2 currentChoice={PredicetedStrength.veryWell} choice={subject.predicedStrength} setChoice={(choice: number) => {
-                          subject.predicedStrength = choice;
+                        <CheckBoxV2 minChoice={8} maxChoice={9} currentChoice={subject.predicedStrength} setChoice={() => {
+                          subject.predicedStrength = 8;
                           this.setState({ subjectSelections: this.state.subjectSelections });
                         }} />
                       </div>
                     </div>
                     <div className="third-column center-column">
                       <div className="radio-container">
-                        <CheckBoxV2 currentChoice={PredicetedStrength.well} choice={subject.predicedStrength} setChoice={(choice: number) => {
-                          subject.predicedStrength = choice;
+                        <CheckBoxV2 minChoice={6} maxChoice={7} currentChoice={subject.predicedStrength} setChoice={() => {
+                          subject.predicedStrength = 6;
                           this.setState({ subjectSelections: this.state.subjectSelections });
                         }} />
                       </div>
                     </div>
                     <div className="fourth-column center-column">
                       <div className="radio-container">
-                        <CheckBoxV2 currentChoice={PredicetedStrength.ok} choice={subject.predicedStrength} setChoice={(choice: number) => {
-                          subject.predicedStrength = choice;
+                        <CheckBoxV2 minChoice={4} maxChoice={5} currentChoice={subject.predicedStrength} setChoice={(choice: number) => {
+                          subject.predicedStrength = 4;
                           this.setState({ subjectSelections: this.state.subjectSelections });
                         }} />
                       </div>
                     </div>
                     <div className="fifth-column center-column">
                       <div className="radio-container">
-                        <CheckBoxV2 currentChoice={PredicetedStrength.notWell} choice={subject.predicedStrength} setChoice={(choice: number) => {
-                          this.setState({ subjectSelections: this.state.subjectSelections });
-                          subject.predicedStrength = choice;
+                        <CheckBoxV2 minChoice={1} maxChoice={3} currentChoice={subject.predicedStrength} setChoice={() => {
+                          subject.predicedStrength = 2;
                           this.setState({ subjectSelections: this.state.subjectSelections });
                         }} />
                       </div>

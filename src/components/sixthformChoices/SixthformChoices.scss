@@ -241,6 +241,10 @@
     }
   }
 
+  .big-subjects-sidebar {
+    height: calc(100vh - 7.834vw - 2vh - 3vw - 2vh - 4vw);
+  }
+
 
 
 
@@ -488,7 +492,7 @@
     .question-text-3 {
       line-height: 0.4;
       margin-top: 4vh;
-      margin-bottom: 5vh;
+      margin-bottom: 3vh;
     }
 
     .progress-bar {
@@ -818,7 +822,7 @@
       margin-top: 2vh;
       background-color: #4C608A1A;
       width: 100%;
-      height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh);
+      height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 6vw - 3vh - 3.4vh - 5vh);
 
       .table-head {
         display: flex;
@@ -931,6 +935,36 @@
 
       .six-column {
         width: 20vw;
+
+        display:flex;
+        align-items: center;
+        justify-content: center;
+
+        .MuiInputBase-root {
+          border-radius: 0.4vw;
+          background: var(--white);
+          color: var(--theme-dark-blue);
+          font-size: 1.2vw;
+
+          .MuiSelect-root {
+            padding-left: 1vw;
+            padding-top: 0.3vh;
+            padding-bottom: 0.3vh;
+            padding-right: 0.9vw;
+          }
+
+          &::before, &::after {
+            display: none;
+          }
+
+          .MuiSelect-icon {
+            top: calc(50% - 1vw);
+            color: var(--theme-dark-blue);
+            width: 2vw;
+            height: 2vw;
+          }
+        }
+
       }
 
       .center-column {
@@ -940,7 +974,7 @@
       }
 
       .table-body {
-        height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh - 1.4vw - 2vh);
+        height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 6vw - 3vh - 3.4vh - 5vh - 1.4vw - 2vh);
         overflow-y: scroll;
 
         >div {
@@ -1156,7 +1190,7 @@
   // step3 sub C1
   .question {
     .drag-container-r22 {
-      margin-top: 1vh;
+      margin-top: 2vh;
       border-radius: 0.5vw;
       background: #4C608A1A;
       height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh - 2vh - 1vw);
@@ -1277,6 +1311,14 @@
         height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 8vh - 1vw - 1vh - 1.1vw - 2vh);
       }
     }
+  }
+
+  .question-title-sub-second {
+    width: 25vw;
+  }
+
+  .question-text-sub-second {
+    width: 42vw;
   }
 
   // step3 c3
