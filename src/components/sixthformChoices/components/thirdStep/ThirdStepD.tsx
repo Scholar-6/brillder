@@ -15,6 +15,7 @@ export enum ThirdStepDSubStep {
   Start = 1,
   Message,
   TableLeaf,
+  LastStep
 }
 
 interface ThirdProps {
@@ -24,11 +25,13 @@ interface ThirdProps {
   moveBack(): void;
   moveToStepE(): void;
   moveToStepF(): void;
+  moveToStep4(): void;
 }
 
 interface TLevelCourse {
   icon: string;
   name: string;
+  expanded?: boolean;
   subjects: any[];
 }
 
@@ -116,59 +119,108 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
 
   setChoice(choice: ThirdStepDChoice) {
     this.setState({ choice });
-    this.props.onChange({
-      choice: choice
-    });
+    this.props.onChange({ choice: choice });
+  }
+
+  renderList(className: string, list: TLevelCourse[], onChange: Function) {
+    return (
+      <div>
+        {list.map((course, i) => {
+          return (
+            <div key={i} className={"course-box-r-23 " + className}>
+              <div className="font-16 bold flex">
+                <div className="flex-center big-r-23">
+                  <SpriteIcon name={course.icon} />
+                </div>
+                <div className="flex-y-center course-name-r23">
+                  {course.name}
+                </div>
+                <div className="flex-center coursor-pointer" onClick={() => {
+                  course.expanded = !course.expanded;
+                  onChange();
+                  this.setState({ tLevelCoursesPart1: [...this.state.tLevelCoursesPart1] })
+                }}>
+                  <SpriteIcon name={course.expanded ? "arrow-up" : "arrow-down"} />
+                </div>
+              </div>
+              {course.expanded && <div className="course-subjects-r23">
+                {course.subjects.map((subject, i) =>
+                  <div className="course-subject-r23" onClick={() => {
+                    subject.checked = !subject.checked;
+                    onChange();
+                  }}>
+                    <div className="flex-center">
+                      <SpriteIcon name={subject.checked ? 'radio-btn-active' : 'radio-btn-blue'} />
+                    </div>
+                    <div className="flex-y-center text-container-r23 font-15">
+                      {subject.name}
+                    </div>
+                  </div>)}
+              </div>}
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 
   render() {
-    if (this.state.subStep === ThirdStepDSubStep.TableLeaf) {
+    if (this.state.subStep === ThirdStepDSubStep.LastStep) {
       return (
-        <div>
-          Here is a list of current T-level courses. Which courses interest you? If only ONE course which interests you, select it. But Select no more than THREE courses.
-          <div className="d3-table-leaf">
-            <div>
-              {this.state.tLevelCoursesPart1.map((course, i) => {
-                return (
-                  <div key={i} className="course-box-r-23 first-b-r-23">
-                    <div className="font-16 bold flex">
-                      <div className="flex-center big-r-23">
-                        <SpriteIcon name={course.icon} />
-                      </div>
-                      <div className="flex-y-center">
-                        {course.name}
-                      </div>
-                      <div className="flex-center">
-                        <SpriteIcon name="arrow-down" />
-                      </div>
-                    </div>
-                  </div>
-                );
+        <div className="font-16">
+          <div className="bold font-32 question-text-3">
+            T Levels
+          </div>
+          <div className="flex-center top-label-r3-r23 bold">
+            Awesome! How would you like to proceed?
+          </div>
+          <div className="d3-table-scroll-container">
+            <div className="button-step-d-r23 button-step-dl4-r23">
+              <div onClick={() => this.props.moveToStepE()}>
+                Now show me other Vocational, Applied and Practical Courses which are not T-levels.
+              </div>
+            </div>
+            <div className="button-step-d-r23 button-step-dl4-r23">
+              <div onClick={() => this.props.moveToStep4()}>
+                I’m only interested in T-levels - show me the next step.
+              </div>
+            </div>
+          </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
+        </div>
+      );
+    } else if (this.state.subStep === ThirdStepDSubStep.TableLeaf) {
+      return (
+        <div className="font-16">
+          <div className="bold font-32 question-text-3">
+            T Levels
+          </div>
+          <div>
+            Here is a list of current T-level courses. Which courses interest you? If only ONE course which interests you, select it. But Select no more than THREE courses.
+          </div>
+          <div className="d3-table-scroll-container">
+            <div className="d3-table-leaf">
+              {this.renderList("first-b-r-23", this.state.tLevelCoursesPart1, () => {
+                this.setState({ tLevelCoursesPart1: [...this.state.tLevelCoursesPart1] })
+              })}
+              {this.renderList("second-b-r-23", this.state.tLevelCoursesPart2, () => {
+                this.setState({ tLevelCoursesPart2: [...this.state.tLevelCoursesPart2] })
               })}
             </div>
-            <div>
-              {this.state.tLevelCoursesPart2.map((course, i) => {
-                return (
-                  <div key={i} className="course-box-r-23 second-b-r-23">
-                    <div className="font-16 bold flex">
-                      <div className="flex-center big-r-23">
-                        <SpriteIcon name={course.icon} />
-                      </div>
-                      <div className="flex-y-center">
-                        {course.name}
-                      </div>
-                      <div className="flex-center">
-                        <SpriteIcon name="arrow-down" />
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="course-box-r-23 big-b-r-23">
+              <div className="font-16 bold flex">
+                <div className="flex-y-center bold">
+                  NOTHING
+                </div>
+                <div className="flex-center nothing-hint">
+                  I like the idea of T-levels but none of these courses really interest me.
+                </div>
+              </div>
             </div>
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.moveToStepE();
+            this.setState({ subStep: ThirdStepDSubStep.LastStep });
           }}>Continue</button>
         </div>
       );
