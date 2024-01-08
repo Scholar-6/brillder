@@ -947,10 +947,14 @@
           font-size: 1.2vw;
 
           .MuiSelect-root {
+            width: 2.8vw;
+            text-align: center;
             padding-left: 1vw;
             padding-top: 0.3vh;
             padding-bottom: 0.3vh;
-            padding-right: 0.9vw;
+            padding-right: 1.8vw;
+
+            font-family: $font-family-regular !important;
           }
 
           &::before, &::after {
@@ -1288,6 +1292,8 @@
         justify-content: center;
         background: white;
 
+        font-size: 1vw;
+
         padding-top: 0.2vw;
         padding-bottom: 0.2vw;
 
@@ -1335,6 +1341,23 @@
     .bottom-text-r23 {
       margin-top: 2vh;
     }
+
+    .icons-block-c3-r23 {
+      .clickable {
+        cursor: pointer;
+      }
+      color: #A5AFC4;
+      .green-active {
+        color: var(--theme-green);
+      }
+      .red-active {
+        color: var(--theme-orange);
+      }
+      .orange {
+        color: var(--theme-yellow);
+      }
+    }
+
   }
 
   // step3 c4
@@ -1375,8 +1398,25 @@
         }
 
         &.last {
+          display: flex;
+          align-items: center;
           margin-right: 0;
-          background: #C43C3033;
+          background: none;
+          text-align: center;
+
+          .skip-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 2vh;
+            color: #4C608A;
+            > div {
+              cursor: pointer;
+              padding: 0.4vw 2vw;
+              border-radius: 0.3vw;
+              color: var(--white);
+              background: #4C608A;
+            }
+          }
         }
 
         .sort-category-r23 {
