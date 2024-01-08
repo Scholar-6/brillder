@@ -43,7 +43,7 @@ export interface KeyStage4Subject {
   isPopular: boolean;
   selected: boolean;
 
-  predicedStrength: PredicetedStrength;
+  predicedStrength: number;
 }
 
 export const getSixthformSubjects = async () => {

@@ -177,20 +177,8 @@ class ThirdQuestionSubStep5 extends Component<ThirdProps, ThirdQuestionState> {
         </div>
         <div className="container-r23 last bold font-12">
           <div>
-            <div className="sort-category-r23 font-16">
-              Not at all Interested
-            </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.notInterestedSubjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateNotInterestedSubjects(list)}
-              >
-                {this.state.notInterestedSubjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
-            </div>
+            I’m currently not interested in any of these subjects
+            <div>Skip</div>
           </div>
         </div>
       </div>
