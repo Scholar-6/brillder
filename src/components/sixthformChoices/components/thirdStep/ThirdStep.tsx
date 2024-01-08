@@ -11,6 +11,7 @@ import ThirdStepC3, { ThirdC3Category } from "./ThirdStepC3";
 import ThirdStepC4 from "./ThirdStepC4";
 import ThirdStepD from "./ThirdStepD";
 import ThirdStepE from "./ThirdStepE";
+import ThirdStepF from "./ThirdStepF";
 import { FirstChoice } from "../FirstStep";
 
 
@@ -27,7 +28,8 @@ enum SubStep {
   ThirdC3,
   ThirdC4,
   ThirdD,
-  ThirdE
+  ThirdE,
+  ThirdF
 }
 
 interface ThirdProps {
@@ -57,6 +59,9 @@ interface ThirdQuestionState {
   categoriesC4: any | null;
 
   ePairResults: any[];
+
+  coursesD: any;
+  coursesF: any;
 }
 
 class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
@@ -81,7 +86,10 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       ePairResults: [],
 
       categoriesC3: null,
-      categoriesC4: null
+      categoriesC4: null,
+
+      coursesD: null,
+      coursesF: null
     }
 
     this.loadSubjects();
@@ -95,7 +103,12 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
 
       categoriesC3: this.state.categoriesC3,
       categoriesC4: this.state.categoriesC4,
-      ePairResults: this.state.ePairResults
+
+      coursesD: this.state.coursesD,
+
+      ePairResults: this.state.ePairResults,
+
+      coursesF: this.state.coursesF,
     };
   }
 
@@ -130,6 +143,13 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
 
         if (answer.ePairResults) {
           ePairResults = answer.ePairResults;
+        }
+
+        if (answer.coursesD) {
+          this.setState({ coursesD: answer.coursesD });
+        }
+        if (answer.coursesF) {
+          this.setState({ coursesF: answer.coursesF });
         }
       }
 
@@ -246,15 +266,47 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <button className={`absolute-contunue-btn font-24 ${disabled ? 'disabled' : ''}`} onClick={() => {
         console.log('move next')
-        this.props.moveNext({
-          subjectSelections: this.state.subjectSelections
-        });
+        this.moveNext();
       }}>Continue to Step 4</button>
     )
   }
 
+  moveNext() {
+    this.props.moveNext({
+      subjectSelections: this.state.subjectSelections
+    });
+  }
+
   render() {
-    if (this.state.subStep === SubStep.ThirdE) {
+    if (this.state.subStep === SubStep.ThirdF) {
+      return (
+        <div className="question question-3d">
+          {this.renderProgressBar()}
+          <ThirdStepF
+            subjects={this.props.subjects} answer={this.state.categoriesC4}
+            moveBack={() => {
+              this.setState({ subStep: SubStep.ThirdE });
+            }}
+            moveToStep4={() => {
+              this.props.saveThirdAnswer(this.getAnswer());
+              this.moveNext();
+            }}
+          />
+          <div className="absolute-back-btn" onClick={() => {
+            this.setState({ subStep: SubStep.ThirdD });
+          }}>
+            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="font-25">Previous</span>
+          </div>
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.saveThirdAnswer(this.getAnswer());
+            this.moveNext();
+          }}>Continue</button>
+        </div>
+      );
+    } else if (this.state.subStep === SubStep.ThirdE) {
       return (
         <div className="question">
           {this.renderProgressBar()}
@@ -268,8 +320,10 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             Already ruled out all the subjects below? Skip to the next question.
           </div>
           <ThirdStepE
-            pairAnswers={this.state.secondPairResults}
-            onChange={anyth => this.setState({})}
+            pairAnswers={this.state.ePairResults}
+            onChange={(ePairResults: any[]) => {
+              this.setState({ ePairResults });
+            }}
           />
           <div className="absolute-back-btn" onClick={() => {
             this.setState({ subStep: SubStep.ThirdD });
@@ -281,10 +335,8 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
-            this.props.moveNext({
-              subjectSelections: this.state.subjectSelections
-            });
-          }}>I’ve matched all the definitions - how did I do?</button>
+            this.setState({ subStep: SubStep.ThirdF });
+          }}>Continue</button>
         </div>
       );
     } else if (this.state.subStep === SubStep.ThirdD) {
@@ -308,7 +360,11 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             }}
             moveToStepF={() => {
               this.props.saveThirdAnswer(this.getAnswer());
-              this.setState({ subStep: SubStep.ThirdE });
+              this.setState({ subStep: SubStep.ThirdF });
+            }}
+            moveToStep4={() => {
+              this.props.saveThirdAnswer(this.getAnswer());
+              this.moveNext();
             }}
           />
         </div>

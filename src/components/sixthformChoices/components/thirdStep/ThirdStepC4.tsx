@@ -51,15 +51,13 @@ class ThirdQuestionSubStep5 extends Component<ThirdProps, ThirdQuestionState> {
       }
     }
 
-    console.log(666, props.answer);
-
     let interestedSubjects: any[] = [];
     let quiteInterestedSubjects: any[] = [];
     let notInterestedSubjects: any[] = [];
 
     if (props.answer) {
       let categoriesC4 = props.answer.categoriesC4;
-      if (categoriesC4.subjects && categoriesC4.interestedSubjects && categoriesC4.quiteInterestedSubjects) {
+      if (categoriesC4 && categoriesC4.subjects && categoriesC4.interestedSubjects && categoriesC4.quiteInterestedSubjects) {
         subjects = categoriesC4.subjects;
         interestedSubjects = categoriesC4.interestedSubjects;
         quiteInterestedSubjects = categoriesC4.quiteInterestedSubjects;
