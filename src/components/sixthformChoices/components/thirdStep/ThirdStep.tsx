@@ -162,8 +162,14 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             found.predicedStrength = s.predicedStrength;
           }
           realSubjectSelections.push(found);
-        }
+        } else {}
       });
+
+      for (let s of realSubjectSelections) {
+        if (!s.predicedStrength) {
+          s.predicedStrength = 0;
+        }
+      }
 
       this.setState({
         allSubjects: subjects,
@@ -270,7 +276,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         this.setState({ subjectSelections: this.state.subjectSelections });
       }}
     >
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((c, i) => <MenuItem value={c as any} key={i}>{c}</MenuItem>)}
+      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((c, i) => <MenuItem value={c as any} key={i}>{c === 0 ? 'Value' : c}</MenuItem>)}
     </Select>
   }
 
@@ -387,7 +393,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         <div className="question question-c4">
           {this.renderProgressBar()}
           <div className="bold font-32 question-text-3">
-            What matters is what YOU think
+            What YOU think
           </div>
           <div className="font-16">
             Now consider whether you are genuinely interested in taking any of these subjects - all of which can be commenced in the sixth form. (Note that it’s also the case that none of them are absolutely essential in order to apply for a university degrees in the subject.)<br />
@@ -411,7 +417,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.ThirdD });
-          }}>I’ve matched all the definitions - how did I do?</button>
+          }}>Continue</button>
         </div>
       );
     } else if (this.state.subStep === SubStep.ThirdC3) {
@@ -439,7 +445,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.ThirdC4 });
-          }}>I’ve matched all the definitions - how did I do?</button>
+          }}>Continue</button>
         </div>
       );
     } else if (this.state.subStep === SubStep.ThirdC2) {
@@ -469,7 +475,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.ThirdC3 });
-          }}>I’ve matched all the definitions - how did I do?</button>
+          }}>Continue</button>
         </div>
       );
     } else if (this.state.subStep === SubStep.ThirdC1) {
@@ -500,7 +506,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.ThirdC2 });
-          }}>I’ve matched all the definitions - how did I do?</button>
+          }}>Continue</button>
         </div>
       );
     } else if (this.state.subStep === SubStep.Second) {

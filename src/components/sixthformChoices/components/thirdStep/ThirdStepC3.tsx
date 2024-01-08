@@ -72,30 +72,32 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
           <span className="bold">{category.boldText}</span> {category.text}
         </div>
         <div className="icons-block-c3-r23">
-          <SpriteIcon
-            name={category.status == ThirdC3Status.True ? "checkbox-c4-r23-fill" : "checkbox-c4-r23"}
+          <div
+            className={category.status == ThirdC3Status.True ? "green-active clickable bold" : "not-active clickable bold"}
             onClick={() => {
               category.status = ThirdC3Status.True;
               this.setState({ categories: this.state.categories });
               this.props.onChange({ categories: this.state.categories });
             }}
-          />
+          >TRUE</div>
+          
           <SpriteIcon
-            name={category.status == ThirdC3Status.BETWEEN ? "minus-c4-r23-fill" : "minus-c4-r23"}
+            name="circled-question-icon-v1"
+            className={category.status == ThirdC3Status.BETWEEN ? "orange" : "not-active"}
             onClick={() => {
               category.status = ThirdC3Status.BETWEEN;
               this.setState({ categories: this.state.categories });
               this.props.onChange({ categories: this.state.categories });
             }}
           />
-          <SpriteIcon
-            name={category.status == ThirdC3Status.False ? "cross-c4-r23-fill" : "cross-c4-r23"}
+          <div
+            className={category.status == ThirdC3Status.False ? "red-active clickable bold" : "not-active clickable bold"}
             onClick={() => {
               category.status = ThirdC3Status.False;
               this.setState({ categories: this.state.categories });
               this.props.onChange({ categories: this.state.categories });
             }}
-          />
+          >FALSE</div>
         </div>
       </div>
     );

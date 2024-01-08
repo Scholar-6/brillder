@@ -175,10 +175,10 @@ class ThirdQuestionSubStep5 extends Component<ThirdProps, ThirdQuestionState> {
             </div>
           </div>
         </div>
-        <div className="container-r23 last bold font-12">
+        <div className="container-r23 last bold font-16">
           <div>
-            I’m currently not interested in any of these subjects
-            <div>Skip</div>
+            <div>I’m currently not interested in <br/> any of these subjects</div>
+            <div className="skip-btn-container font-14"><div onClick={() => {}}>Skip</div></div>
           </div>
         </div>
       </div>
