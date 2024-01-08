@@ -281,6 +281,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }} moveBack={() => this.setState({ page: Pages.Question2 })} />
     } else if (this.state.page === Pages.Question4) {
       return <FourthStep
+        firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
         moveNext={() => {}} moveBack={() => {
           this.setState({ page: Pages.Question3});

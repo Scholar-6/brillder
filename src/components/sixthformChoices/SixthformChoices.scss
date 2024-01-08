@@ -13,6 +13,10 @@
     top: 0 !important;
   }
 
+  .white-blue {
+    color: #4C608A;
+  }
+
   .logo-top-container {
     cursor: pointer;
     position: absolute;
@@ -1618,7 +1622,12 @@
     .categories-container {
       display: flex;
 
-      >div {
+      > div {
+        margin-right: 0.4vw;
+        margin-left: 0.4vw;
+      }
+
+      >div > div {
         overflow-y: scroll;
         cursor: pointer;
         border-radius: 0.4vw;
@@ -1626,11 +1635,11 @@
         align-items: center;
         justify-content: center;
         background: #4C608A1A;
-        width: 16vw;
-        height: calc(100vh - 5.834vw - 2vw - 4vh - 2vh - 9vh - 2vh - 8vw - 8vh - 4vw);
-        margin-left: 0.4vw;
-        margin-right: 0.4vw;
+        width: 32vw;
+        height: calc(3vw + 3vh);
         text-align: center;
+        margin-top: 1vh;
+        margin-bottom: 1vh;
 
         &.first {
           margin-left: 0;
@@ -1658,9 +1667,11 @@
       }
 
       .hovered-category {
-        padding-left: 0.6vw;
+        padding-top: 1.5vh;
+        padding-left: 1.6vw;
+        height: calc(8.6vw + 3vh);
         text-align: left;
-        align-items: flex-start;
+        display: block;
 
         .h-title-r24 {
           margin-bottom: 1.5vh;
