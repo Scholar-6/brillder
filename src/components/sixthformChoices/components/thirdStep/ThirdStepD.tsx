@@ -138,7 +138,6 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
                 <div className="flex-center coursor-pointer" onClick={() => {
                   course.expanded = !course.expanded;
                   onChange();
-                  this.setState({ tLevelCoursesPart1: [...this.state.tLevelCoursesPart1] })
                 }}>
                   <SpriteIcon name={course.expanded ? "arrow-up" : "arrow-down"} />
                 </div>
