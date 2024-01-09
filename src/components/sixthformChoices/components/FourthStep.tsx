@@ -6,12 +6,16 @@ import CheckBoxV2 from "./CheckBox";
 import BackButtonSix from "./BackButtonSix";
 import { FirstChoice } from "./FirstStep";
 import CheckBoxB from "./CheckBoxB";
+import { ThirdStepDSubStep } from "./thirdStep/ThirdStepD";
 
 enum SubStep {
   sub4a,
   sub4b,
   sub4c,
-  sub4d
+  sub4d1,
+  sub4d2,
+  sub4e1,
+  sub4e2,
 }
 
 enum Category {
@@ -21,6 +25,14 @@ enum Category {
   Languages,
   Arts,
   Vocational
+}
+
+interface TLevelCourse {
+  icon: string;
+  name: string;
+  active: boolean;
+  expanded?: boolean;
+  subjects: any[];
 }
 
 interface ThirdProps {
@@ -36,6 +48,11 @@ interface ThirdQuestionState {
   cetegoriesData: any[];
   categories: Category[];
   hoveredCategory: number;
+  facilitatingSubjects: any[];
+  nonFacilitatingSubjects: any[];
+
+  tVocCoursesE1Part1: TLevelCourse[];
+  tVocCoursesE1Part2: TLevelCourse[];
 }
 
 class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
@@ -172,11 +189,290 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       }]
     }]
 
+    let facilitatingSubjects = [{
+      name: "Maths",
+      selected: false,
+    }, {
+      name: "Further Maths",
+      selected: false,
+    }, {
+      name: "Physics",
+      selected: false,
+    }, {
+      name: "Biology",
+      selected: false,
+    }, {
+      name: "Chemistry",
+      selected: false,
+    }, {
+      name: "Geography",
+      selected: false,
+    }, {
+      name: "History",
+      selected: false,
+    }, {
+      name: "French",
+      selected: false,
+    }, {
+      name: "German",
+      selected: false,
+    }, {
+      name: "Spanish",
+      selected: false,
+    }, {
+      name: "Other Modern Language",
+      selected: false,
+    }, {
+      name: "Latin",
+      selected: false,
+    }, {
+      name: "Ancient Greek",
+      selected: false,
+    }]
+
+    let nonFacilitatingSubjects = [{
+      name: "Sociology",
+      selected: false,
+    }, {
+      name: "Psychology",
+      selected: false,
+    }, {
+      name: "Media Studies",
+      selected: false,
+    }, {
+      name: "Criminology",
+      selected: false,
+    }, {
+      name: "Law",
+      selected: false,
+    }, {
+      name: "Accounting",
+      selected: false,
+    }, {
+      name: "Art and Design",
+      selected: false,
+    }, {
+      name: "Business Studies",
+      selected: false,
+    }, {
+      name: "Communication Studies",
+      selected: false,
+    }, {
+      name: "Design and Technology",
+      selected: false,
+    }, {
+      name: "Drama and Theatre Studies",
+      selected: false,
+    }, {
+      name: "Music",
+      selected: false,
+    }, {
+      name: "Music Technology",
+      selected: false,
+    }, {
+      name: "Sports Studies",
+      selected: false,
+    }, {
+      name: "Travel and Tourism",
+      selected: false,
+    }, {
+      name: "English Language",
+      selected: false,
+    }]
+
+    let tVocCoursesE1Part1 = [{
+      icon: 'six-frame2',
+      name: 'Design, Craftsmanship & Visual Arts ',
+      active: false,
+      subjects: [
+        { name: 'Photography' },
+        { name: 'Jewellery & Silversmithing' },
+        { name: 'Furniture Design & Build' },
+        { name: 'Fashion & Textiles' },
+        { name: 'Fashion Design and Production' },
+        { name: 'Fine Art' },
+        { name: 'Interior Design' }
+      ],
+    }, {
+      icon: 'six-frame23',
+      name: 'Catering, Travel & Hospitality',
+      active: false,
+      subjects: [
+        { name: 'Professional Cookery' },
+        { name: 'Food Industry Management' },
+        { name: 'International Travel & Tourism' },
+        { name: 'Hospitality Management' },
+      ],
+    }, {
+      icon: 'six-frame9',
+      name: 'Engineering',
+      active: false,
+      subjects: [
+        { name: 'Electrical & Electronic' },
+        { name: 'Mechanical' },
+        { name: 'Manufacturing' },
+        { name: 'Aeronautical' },
+        { name: 'Automotive' },
+        { name: 'Nuclear' },
+        { name: 'Rail' },
+        { name: 'Space Technologies' },
+        { name: 'Mechatronics' },
+      ],
+    }, {
+      icon: 'six-frame8',
+      name: 'Computing',
+      active: false,
+      subjects: [
+        { name: 'Computing' },
+        { name: 'Computing & Systems Development' },
+        { name: 'Business Computing (Web Design)' },
+        { name: 'Software Engineering' },
+        { name: 'Web Technology & Security' },
+        { name: 'Cloud Computing' },
+      ],
+    }, {
+      icon: 'six-frame4',
+      name: 'Creative Digital Media',
+      active: false,
+      subjects: [
+        { name: 'Computer Generated Animation' },
+        { name: 'Graphic and Digital Design' },
+        { name: 'Games Design' },
+        { name: 'Creative Media Production' },
+        { name: 'Film & Television' },
+        { name: 'Sound & Media' },
+        { name: 'Visual Effects' },
+      ],
+    }, {
+      icon: 'six-frame6',
+      name: 'Business & Management',
+      active: false,
+      subjects: [
+        { name: 'Business' },
+        { name: 'Business & Law' },
+        { name: 'Business & Accounting' },
+        { name: 'Business & Marketing' },
+        { name: 'Business and Management' },
+        { name: 'Leadership & Management' },
+      ],
+    }, {
+      icon: 'six-frame16',
+      name: 'Land-based Sector Studies',
+      active: false,
+      subjects: [
+        { name: 'Animal Welfare and Management' },
+        { name: 'Arboriculture' },
+        { name: 'Horticulture' },
+        { name: 'Landscape Management' },
+        { name: 'Agricultural Science' },
+        { name: 'Applied Bioscience' },
+        { name: 'LegAnimal Careal' },
+        { name: 'Countryside Management' },
+        { name: 'Equine Studies' },
+        { name: 'Garden Design' },
+        { name: 'Green Technology' },
+        { name: 'Wildlife Conservation' },
+        { name: 'Agriculture' },
+        { name: 'Veterinary Technician' },
+      ],
+    }, {
+      icon: 'six-frame22',
+      name: 'Sport & Exercise',
+      active: false,
+      subjects: [
+        { name: 'Coaching and Developing Sport' },
+        { name: 'Sport and Exercise Science' },
+        { name: 'Sports Therapy' },
+        { name: 'Community Coaching' }
+      ],
+    }];
+
+    let tVocCoursesE1Part2 = [{
+      icon: 'six-frame6',
+      name: 'Construction',
+      active: false,
+      subjects: [
+        { name: 'Building Services Engineering' },
+        { name: 'Electrical Installation' },
+        { name: 'Construction Management' },
+        { name: 'Civil Engineering' },
+        { name: 'Construction & Built Environment' },
+        { name: 'Architectural Design & Technology' },
+        { name: 'Future Homes Design & Construction' },
+        { name: 'Quantity Surveying' },
+      ],
+    }, {
+      icon: 'six-frame7',
+      name: 'Education',
+      active: false,
+      subjects: [
+        { name: 'Early Years Education' },
+        { name: 'Primary Education & Teaching' },
+      ]
+    }, {
+      icon: 'six-frame4',
+      name: 'Hair & Beauty',
+      active: false,
+      subjects: [
+        { name: 'Beauty' },
+        { name: 'Hairdressing' },
+      ],
+    }, {
+      icon: 'six-frame17',
+      active: false,
+      name: 'Health, Care & Social Services',
+      subjects: [
+        { name: 'Work with Children and Families' },
+        { name: 'Care Practice' },
+        { name: 'Applied Biology' },
+        { name: 'Forensic Science' },
+        { name: 'Nursing' },
+        { name: 'Public & Emergency Services' },
+        { name: 'Counselling & Applied Psychology' },
+        { name: 'Social & Community Work' },
+        { name: 'Healthcare Practice' },
+        { name: 'Policing' },
+      ],
+    }, {
+      icon: 'six-frame11',
+      active: false,
+      name: 'Media & Communications',
+      subjects: [{ name: 'Electronics & Communications' }, { name: 'Journalism' }],
+    }, {
+      icon: 'six-frame21',
+      active: false,
+      name: 'Performing Arts',
+      subjects: [
+        { name: 'Dance Performance' },
+        { name: 'Creative Production Arts' },
+        { name: 'Media make up' },
+        { name: 'Acting' },
+        { name: 'Musical Theatre' },
+        { name: 'Music' },
+      ]
+    }, {
+      icon: 'six-frame20',
+      active: false,
+      name: 'Retail & Distribution Industry',
+      subjects: [
+        { name: 'Retail Management' },
+        { name: 'Retail and Sales' },
+        { name: 'Supply Chain Management' },
+        { name: 'Vehicle Operations Management' },
+        { name: 'Logistics and Transport' },
+      ]
+    }];
+
     this.state = {
       categories: [],
       cetegoriesData: data,
+      facilitatingSubjects,
+      nonFacilitatingSubjects,
       hoveredCategory: -1,
       subStep: SubStep.sub4a,
+
+      tVocCoursesE1Part1,
+      tVocCoursesE1Part2,
     }
   }
 
@@ -371,50 +667,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         <div className="bold">Traditional Humanities</div>
       </div>
     );
-
-    /*
-
-    if (this.state.hoveredCategory === Category.Stem) {
-      return (
-        <div
-          className={className + " hovered-category"}
-          onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
-          onMouseLeave={this.leaveCategory.bind(this)}
-          onClick={() => this.selectCategory(Category.Stem)}
-        >
-          <div className="bold font-16 h-title-r24">Traditional STEM degrees</div>
-          <div className="font-14">
-            For many science courses there is an expectation that you will have done <br /> A-level Maths.
-          </div>
-          <div className="lozengies-container font-11 first-lozengies">
-            <div>Chemistry</div>
-            <div>Mathematics</div>
-            <div>Engineering</div>
-            <div>Biology</div>
-            <div>Physics</div>
-          </div>
-          <div className="lozengies-container font-11">
-            <div>Medicine (Human and Veterinary)</div>
-            <div>Computer Science</div>
-            <div>Geology</div>
-          </div>
-        </div>
-      );
-    }
-    return (<div
-      className={className + " flex-center"}
-      onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
-      onMouseLeave={this.leaveCategory.bind(this)}
-      onClick={() => this.selectCategory(Category.Stem)}
-    >
-      <div className="flex-center">
-        <SpriteIcon name="stem-icon" />
-      </div>
-      <div className="bold">
-        Traditional STEM degrees
-      </div>
-    </div>
-    );*/
   }
 
   renderLanguageCategory() {
@@ -563,44 +815,178 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     );
   }
 
+  renderList(className: string, list: TLevelCourse[], onChange: Function) {
+    return (
+      <div>
+        {list.map((course, i) => {
+          return (
+            <div key={i} className={"course-box-r-23 course-box-4e1 " + className + (course.active ? ' active' : "")} onClick={() => {
+              course.active = !course.active;
+              onChange();
+            }}>
+              <div className="font-16 bold flex">
+                <div className="flex-center big-r-23">
+                  <SpriteIcon name={course.icon} />
+                </div>
+                <div className="flex-y-center course-name-r23">
+                  {course.name}
+                </div>
+                <div className="flex-center coursor-pointer" onClick={e => {
+                  e.stopPropagation();
+                  course.expanded = !course.expanded;
+                  onChange();
+                }}>
+                  <SpriteIcon name={course.expanded ? "arrow-up" : "arrow-down"} />
+                </div>
+              </div>
+              {course.expanded && <div className="course-subjects-r23">
+                {course.subjects.map((subject, i) =>
+                  <span>
+                    {subject.name} {i !== course.subjects.length - 1 ? ", " : "."}
+                  </span>)}
+              </div>}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
   render() {
-    if (this.state.subStep === SubStep.sub4d) {
+    if (this.state.subStep === SubStep.sub4e2) {
+      return (
+        <div className="question">
+          <div className="bold font-32 question-text-3">
+            Your selected categories and courses
+          </div>
+          <div className="font-16">
+            View the courses available for the categories you’ve selected in the previous screen
+          </div>
+          <div className="categories-container">
+            <div>
+              <div
+                className="hovered-category"
+                onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
+                onMouseLeave={this.leaveCategory.bind(this)}
+                onClick={() => this.selectCategory(Category.Stem)}
+              >
+                <div className="bold font-16 h-title-r24">Design, Craft & Visual Arts</div>
+                <div className="font-14">
+                  For many science courses there is an expectation that you will have done <br /> A-level Maths.
+                </div>
+                <div className="lozengies-container font-11 first-lozengies">
+                  <div>Photography</div>
+                  <div>Jewellery & Silversmithing</div>
+                  <div>Fashion & Textiles</div>
+                </div>
+                <div className="lozengies-container font-11">
+                  <div>Furniture Design & Build</div>
+                  <div>Fashion Design & Production</div>
+                  <div>Fine Art</div>
+                  <div>Interior Design</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4e1 })} />
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.setState({ subStep: SubStep.sub4e2 });
+          }}>Continue</button>
+        </div>
+      );
+    } else if (this.state.subStep === SubStep.sub4e1) {
+      return (
+        <div className="font-16 question-4e1">
+          <div className="bold font-32 question-text-3">
+            Vocational Options in Higher Education
+          </div>
+          <div>
+            Many vocational students go straight into work and apprenticeships after the sixth form. But a large number proceed to vocational courses in higher education.
+          </div>
+          <div>
+            Among many options, there are hundreds of courses for Higher National Certificate (1 year undergraduate study) and Higher National Diploma (2 years undergraduate study).
+          </div>
+          <div>
+            It’s hard to know for sure where your thinking will be in a couple of years, but here are 15 broad categories of vocational courses in higher education. Try to Select the ONE, TWO or, at most, THREE categories that interest you most at present.
+          </div>
+          <div className="d3-table-scroll-container">
+            <div className="d3-table-leaf">
+              {this.renderList("first-b-r-23", this.state.tVocCoursesE1Part1, () => {
+                this.setState({ tVocCoursesE1Part1: [...this.state.tVocCoursesE1Part1] })
+              })}
+              {this.renderList("second-b-r-23", this.state.tVocCoursesE1Part2, () => {
+                this.setState({ tVocCoursesE1Part2: [...this.state.tVocCoursesE1Part2] })
+              })}
+            </div>
+          </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d2 })} />
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.setState({ subStep: SubStep.sub4e2 });
+          }}>Show me courses in the categories  which I have selected</button>
+        </div>
+      );
+    } else if (this.state.subStep === SubStep.sub4d2) {
       return (
         <div className="question">
           {this.renderProgressBar()}
           <div className="bold font-32 question-text-4">
-            A-levels D
+            Non-Facilitating Subjects
           </div>
           <div className="font-16 margin-bottom-1">
-            You have suggested that your eventual degree course might come from one of the following (one/ two) categories.
+            Note that the Russell Group have been criticised for not including several arts subjects. Now select the three subjects you would choose if you could only choose from non-facilitating subjects.
+          </div>
+          <div className="categories-container-4c-r23 non-facilitation-category font-16">
+            <div className="font-16">
+              <div className="text-4c">
+                <div className="bold">Russell Group’s Non-Facilitating Subjects:</div>
+              </div>
+              <div className="checkbox-container-r23">
+                {this.state.nonFacilitatingSubjects.map((subject: any) => <div>
+                  <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
+                    subject.selected = !subject.selected;
+                    this.setState({ cetegoriesData: this.state.cetegoriesData });
+                  }} />
+                </div>)}
+              </div>
+            </div>
+          </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d1 })} />
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.setState({ subStep: SubStep.sub4e1 });
+          }}>Continue</button>
+        </div>
+      );
+    } else if (this.state.subStep === SubStep.sub4d1) {
+      return (
+        <div className="question">
+          {this.renderProgressBar()}
+          <div className="bold font-32 question-text-4">
+            Prestige & Facilitating Subjects
           </div>
           <div className="font-16 margin-bottom-1">
-            Now highlight the individual courses which most appeal to you. Choose up to three.
+            Some universities can be a bit picky about A-levels. The Russell Group represents most of the UK’s top universities. It does not dismiss any A-level or sixth form qualification, but it has previously argued that certain subjects, often considered more academically rigorous, can be viewed as facilitating subjects. This means subjects which open doors onto a wide variety of degree courses.
           </div>
-          <div className="categories-container-4c-r23 font-16">
-            {this.state.categories.map((category, i) => {
-              let catData = this.state.cetegoriesData[category];
-              return (
-                <div key={i} className="font-16">
-                  <div className="text-4c">
-                    <div className="bold">{catData.name}</div>
-                    {catData.description ? <div className="font-14">{catData.description}</div> : ""}
-                  </div>
-                  <div className="checkbox-container-r23">
-                    {catData.subjects.map((subject: any) => <div>
-                      <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
-                        subject.selected = !subject.selected;
-                        this.setState({ cetegoriesData: this.state.cetegoriesData });
-                      }} />
-                    </div>)}
-                  </div>
-                </div>
-              );
-            })}
+          <div className="font-16 margin-bottom-1">
+            As an experiment, select the three subjects you would be most likely to choose if you could only choose from facilitating subjects.
+          </div>
+          <div className="categories-container-4c-r23 facilitation-category font-16">
+            <div className="font-16">
+              <div className="text-4c">
+                <div className="bold">Russell Group’s Facilitating Subjects:</div>
+              </div>
+              <div className="checkbox-container-r23">
+                {this.state.facilitatingSubjects.map((subject: any) => <div>
+                  <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
+                    subject.selected = !subject.selected;
+                    this.setState({ cetegoriesData: this.state.cetegoriesData });
+                  }} />
+                </div>)}
+              </div>
+            </div>
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.setState({ subStep: SubStep.sub4d });
+            this.setState({ subStep: SubStep.sub4d2 });
           }}>Continue</button>
         </div>
       );
@@ -640,7 +1026,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.setState({ subStep: SubStep.sub4d });
+            this.setState({ subStep: SubStep.sub4d1 });
           }}>Continue</button>
         </div>
       );

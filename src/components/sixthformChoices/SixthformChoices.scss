@@ -1767,6 +1767,164 @@
       background: #4C608A1A;
     }
   }
+
+  // step 4d1
+  .question .facilitation-category {
+    height: calc(100vh - 7.834vw - 4vh - 2vh - 9vh - 2vh - 3.4vh - 5vh - 2vh - 8vw);
+    > div {
+      margin-bottom: 0;
+    }
+  }
+
+  // step 4d2
+  .question .non-facilitation-category {
+    height: calc(100vh - 7.834vw - 4vh - 2vh - 9vh - 2vh - 3.4vh - 5vh - 2vh - 5vw);
+    > div {
+      margin-bottom: 0;
+    }
+  }
+
+  // step 4e1
+  .question-4e1 {
+    .button-step-d-r23 {
+      display: flex;
+      justify-content: center;
+      margin-top: 5vh;
+
+      >div {
+        cursor: pointer;
+        bottom: 5vh;
+        right: 5vw;
+        border: none;
+        outline: none;
+        color: white;
+        padding-left: 5vw;
+        padding-right: 5vw;
+        border-radius: 0.5vw;
+        padding-top: 1.7vh;
+        padding-bottom: 1.7vh;
+        font-family: "Brandon Grotesque Regular" !important;
+        background: var(--theme-light-blue);
+        transition: all 300ms ease-in-out;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+    }
+
+    .d3-table-scroll-container {
+      margin-top: 2vh;
+      overflow-y: scroll;
+      height: calc(100vh - 5.834vw - 2vw - 4vh - 2vh - 10vh - 5vw - 7vh - 2vw);
+    }
+
+    .coursor-pointer {
+      cursor: pointer;
+    }
+
+    .d3-table-leaf {
+      display: flex;
+      flex-direction: row;
+
+      >div {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+      }
+
+      svg {
+        width: 1vw;
+        height: 1vw;
+      }
+
+      .first-b-r-23 {
+        margin-right: 0.4vw;
+      }
+
+      .second-b-r-23 {
+        margin-left: 0.4vw;
+      }
+
+      .big-r-23 {
+        svg {
+          margin-left: 0.8vw;
+          margin-right: 0.4vw;
+          width: 1.5vw;
+          height: 1.5vw;
+        }
+      }
+    }
+
+    .course-box-r-23 {
+      padding-top: 2vh;
+      padding-bottom: 2vh;
+      margin-top: 0.4vh;
+      margin-bottom: 0.4vh;
+      border-radius: 0.4vw;
+      background: #4C608A1A;
+
+      .course-name-r23 {
+        width: 27.5vw;
+      }
+    }
+
+    .course-subjects-r23 {
+      margin-top: 2vh;
+    }
+
+    .course-subject-r23 {
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      margin-top: 1vh;
+      margin-bottom: 1vh;
+
+      svg {
+        margin-left: 0.8vw;
+        margin-right: 0.4vw;
+        width: 1vw;
+        height: 1vw;
+      }
+
+      .text-container-r23 {
+        width: 27vw;
+      }
+    }
+
+    .big-b-r-23 {
+      padding-left: 1vw;
+
+      .nothing-hint {
+        padding-left: 1.7vw;
+        color: #909CB6;
+      }
+    }
+
+    .top-label-r3-r23 {
+      padding-top: 10vh;
+      margin-bottom: 3vh;
+    }
+
+    .button-step-dl4-r23 {
+      margin-top: 2vh;
+
+      >div {
+        padding-left: 0;
+        padding-right: 0;
+        width: 40vw;
+        text-align: center;
+      }
+    }
+    .course-box-4e1 {
+      cursor: pointer;
+
+      &.active {
+        color: white;
+        background: #4C608A;
+      }
+    }
+  }
 }
 
 .SixthformChoicesPage~.beta-text {
