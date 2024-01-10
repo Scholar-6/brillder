@@ -13,6 +13,7 @@ import FirstStep from "./components/FirstStep";
 import SecondStep from "./components/SecondStep";
 import ThirdStep from "./components/thirdStep/ThirdStep";
 import FourthStep from "./components/FourthStep";
+import FifthStep from "./components/FifthStep";
 
 
 interface UserProfileProps {
@@ -281,6 +282,17 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }} moveBack={() => this.setState({ page: Pages.Question2 })} />
     } else if (this.state.page === Pages.Question4) {
       return <FourthStep
+        firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
+        answer={this.state.answers.find(a => a.step === Pages.Question3)}
+        moveNext={() => {
+          this.setState({ page: Pages.Question5});
+        }} moveBack={() => {
+          this.setState({ page: Pages.Question3});
+        }}
+        subjects={this.state.allSubjects}
+      />
+    } else if (this.state.page === Pages.Question5) {
+      return <FifthStep
         firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
         moveNext={() => {}} moveBack={() => {

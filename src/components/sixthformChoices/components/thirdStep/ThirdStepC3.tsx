@@ -63,8 +63,6 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
     }
   }
 
-  //.boldText, category.text, category.status
-
   renderBox(category: ThirdC3Category) {
     return (
       <div className="font-12 combo-block-c3-r23">
@@ -80,7 +78,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
               this.props.onChange({ categories: this.state.categories });
             }}
           >TRUE</div>
-          
+
           <SpriteIcon
             name="circled-question-icon-v1"
             className={category.status == ThirdC3Status.BETWEEN ? "orange" : "not-active"}
@@ -105,15 +103,23 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     return (
-      <div className="tick-container-c3-r23">
-        <div>
-          <div className="font-16 bold">
-            Tick your answer on the right for the following statements!
-          </div>
-          <div className="scrollbox-c3-r23">
-            {this.state.categories.map((category, i) => {
-              return this.renderBox(category);
-            })}
+      <div>
+        <div className="bold font-32 question-text-3">
+          Curve Balls
+        </div>
+        <div className="font-16 margin-text-c3">
+          There are a few A Levels which need careful thought because there may be more to them than first meets the eye. Decide whether the statement which follows each of the following subjects is ‘TRUE’, ‘FALSE’ or ‘SOMEWHERE IN BETWEEN’.
+        </div>
+        <div className="tick-container-c3-r23">
+          <div>
+            <div className="font-16 bold">
+              Tick your answer on the right for the following statements!
+            </div>
+            <div className="scrollbox-c3-r23">
+              {this.state.categories.map((category, i) => {
+                return this.renderBox(category);
+              })}
+            </div>
           </div>
         </div>
       </div>

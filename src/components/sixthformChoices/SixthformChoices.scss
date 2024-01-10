@@ -264,7 +264,7 @@
     cursor: pointer;
     position: absolute;
     bottom: 5vh;
-    right: 5vw;
+    right: 4vw;
     border: none;
     outline: none;
     color: white;
@@ -1633,6 +1633,13 @@
     .categories-container {
       display: flex;
 
+      &.categories-container-r342 {
+        display: flex;
+        max-width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
       >div {
         margin-right: 0.4vw;
         margin-left: 0.4vw;
@@ -1680,7 +1687,8 @@
       .hovered-category {
         padding-top: 1.5vh;
         padding-left: 1.6vw;
-        height: calc(8.6vw + 3vh);
+        height: auto;
+        min-height: calc(6vw + 2.6vh);
         text-align: left;
         display: block;
 
@@ -1712,7 +1720,20 @@
           .lozengies-container {
             >div {
               color: var(--theme-dark-blue);
-              background: white;
+              background: #4C608A66;
+            }
+          }
+
+          .lozengies-r232 {
+            margin-top: 1vh;
+            display: flex;
+            max-width: 100%;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            >div {
+              margin-top: 0.7vh;
+              margin-bottom: 0.7vh;
             }
           }
         }
@@ -1724,18 +1745,20 @@
   .question .categories-container-4c-r23 {
     height: calc(100vh - 7.834vw - 4vh - 2vh - 9vh - 2vh - 3.4vh - 5vh - 2vh - 5.1vw);
     overflow-y: scroll;
+
     .checkbox-container-r23 {
       display: flex;
       max-width: 100%;
       flex-direction: row;
       flex-wrap: wrap;
 
-      > div:nth-child(odd) {
+      >div:nth-child(odd) {
         margin-right: 1vw;
       }
     }
+
     .check-box-container {
-      width: 30vw;
+      width: 31vw;
       padding-top: 0.4vh;
       padding-bottom: 0.4vh;
       min-height: 2vw;
@@ -1754,7 +1777,8 @@
     .text-4c {
       margin-top: 1vh;
       margin-bottom: 1vh;
-      > div {
+
+      >div {
         margin-top: 0.3vh;
         margin-bottom: 0.3vh;
       }
@@ -1771,7 +1795,8 @@
   // step 4d1
   .question .facilitation-category {
     height: calc(100vh - 7.834vw - 4vh - 2vh - 9vh - 2vh - 3.4vh - 5vh - 2vh - 8vw);
-    > div {
+
+    >div {
       margin-bottom: 0;
     }
   }
@@ -1779,7 +1804,8 @@
   // step 4d2
   .question .non-facilitation-category {
     height: calc(100vh - 7.834vw - 4vh - 2vh - 9vh - 2vh - 3.4vh - 5vh - 2vh - 5vw);
-    > div {
+
+    >div {
       margin-bottom: 0;
     }
   }
@@ -1916,13 +1942,103 @@
         text-align: center;
       }
     }
+
     .course-box-4e1 {
       cursor: pointer;
+
+      .course-subjects-r23 {
+        padding-left: 2.7vw;
+        padding-right: 1vw;
+      }
 
       &.active {
         color: white;
         background: #4C608A;
       }
+    }
+  }
+
+  .question .drag-container-5a .container-r22 {
+    .left-part-r22 {
+      width: 20vw;
+      padding-bottom: 2vw;
+
+      .drag-boxv2-r22 {
+        cursor: pointer;
+        height: 2.5vw !important;
+        position: relative;
+        width: 20vw;
+
+        .absolute-correct-check {
+          position: absolute;
+          top: 0.7vw;
+          left: -1.5vw;
+          width: 1vw;
+          height: 1vw;
+        }
+      }
+    }
+
+    .right-part-r22 {
+      width: 43.5vw;
+      margin-left: 0.2vw;
+
+      .answer-item-r22 {
+        border-top-right-radius: 0.3vw;
+        border-bottom-right-radius: 0.3vw;
+        justify-content: center;
+        height: 2.5vw !important;
+      }
+    }
+
+    &.correct {
+      .left-part-r22 {
+        .drag-boxv2-r22 {
+          margin-left: 1vw;
+          border: 2px solid var(--theme-green);
+          border-right: none;
+        }
+      }
+
+      .right-part-r22 {
+        margin-left: 1vw;
+        width: 40vw;
+        .answer-item-r22 {
+          border: 2px solid var(--theme-green);
+          border-left: none;
+        }
+      }
+    }
+  }
+
+  .question .drag-container-5b .container-r22 {
+    .left-part-r22 {
+      padding-left: 1vw;
+      .drag-boxv2-r22.active {
+        color: var(--white);
+        background: #4C608A;
+      }
+    }
+    .right-part-r22 {
+      margin-left: 1.15vw;
+      width: 43vw;
+      .answer-item-r22 {
+        cursor: pointer;
+
+        &.active {
+          color: var(--white);
+          background: #4C608A;
+        }
+      }
+    }
+  }
+
+  .table-body-5c {
+    height: 20vh;
+    overflow-y: scroll;
+    svg {
+      width: 1vw;
+      height: 1vw;
     }
   }
 }

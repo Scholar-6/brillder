@@ -3150,4 +3150,23 @@
       <path d="M3 21H21" stroke="#001C58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     </g>
   </svg>
+  <svg id="six-frame24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_7101_12680)">
+      <g clip-path="url(#clip1_7101_12680)">
+        <path d="M15 8H15.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M3 6C3 5.20435 3.31607 4.44129 3.87868 3.87868C4.44129 3.31607 5.20435 3 6 3H18C18.7956 3 19.5587 3.31607 20.1213 3.87868C20.6839 4.44129 21 5.20435 21 6V18C21 18.7956 20.6839 19.5587 20.1213 20.1213C19.5587 20.6839 18.7956 21 18 21H6C5.20435 21 4.44129 20.6839 3.87868 20.1213C3.31607 19.5587 3 18.7956 3 18V6Z"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M3 15.9979L8 10.9979C8.928 10.1049 10.072 10.1049 11 10.9979L16 15.9979" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M14 13.9979L15 12.9979C15.928 12.1049 17.072 12.1049 18 12.9979L21 15.9979" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+    </g>
+  </svg>
+  <svg id="circle-check-six" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+      d="M0.5 8C0.5 3.85786 3.85786 0.5 8 0.5C9.98912 0.5 11.8968 1.29018 13.3033 2.6967C14.7098 4.10322 15.5 6.01088 15.5 8C15.5 12.1421 12.1421 15.5 8 15.5C3.85786 15.5 0.5 12.1421 0.5 8ZM7.7975 10.7075L11.225 6.2075V6.185C11.3884 5.97064 11.4251 5.68537 11.3212 5.43664C11.2173 5.1879 10.9886 5.01351 10.7212 4.97914C10.4538 4.94476 10.1884 5.05564 10.025 5.27L7.19 9.02L5.9675 7.46C5.80271 7.24832 5.53751 7.14063 5.2718 7.17751C5.00608 7.21438 4.78022 7.3902 4.6793 7.63876C4.57837 7.88731 4.61771 8.17082 4.7825 8.3825L6.6125 10.715C6.75562 10.8961 6.97416 11.0012 7.205 11C7.43712 10.9994 7.65591 10.8914 7.7975 10.7075Z"
+      fill="#30C474" />
+  </svg>
 </svg>
