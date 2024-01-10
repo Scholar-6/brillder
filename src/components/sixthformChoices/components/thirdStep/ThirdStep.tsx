@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { MenuItem, Select, TextField } from '@material-ui/core';
+import { MenuItem, TextField } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { KeyStage4Subject, PredicetedStrength, SixthformSubject, getKeyStage4Subjects } from "services/axios/sixthformChoices";
-import CheckBoxV2 from "../CheckBoxM1";
+import { KeyStage4Subject, SixthformSubject, getKeyStage4Subjects } from "services/axios/sixthformChoices";
 import ThirdStepC1 from "./ThirdStepC1";
 import ThirdStepC2 from "./ThirdStepC2";
 import ThirdStepC3, { ThirdC3Category } from "./ThirdStepC3";
@@ -13,6 +12,8 @@ import ThirdStepD from "./ThirdStepD";
 import ThirdStepE from "./ThirdStepE";
 import ThirdStepF from "./ThirdStepF";
 import { FirstChoice } from "../FirstStep";
+import ThirdStepBTable from "./ThirdStepBTable";
+import BackButtonSix from "../BackButtonSix";
 
 
 enum SubjectGroupR21 {
@@ -162,7 +163,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             found.predicedStrength = s.predicedStrength;
           }
           realSubjectSelections.push(found);
-        } else {}
+        } else { }
       });
 
       for (let s of realSubjectSelections) {
@@ -223,77 +224,51 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
     );
   }
 
-  renderValue(subject: KeyStage4Subject) {
-    /*
-    if (subject.predicedStrength === PredicetedStrength.veryWell) {
-      return (
-        <div className="result-container font-14">
-          <div>
-            9
-          </div>
-        </div>
-      );
-    } else if (subject.predicedStrength === PredicetedStrength.well) {
-      return (
-        <div className="result-container font-14">
-          <div>
-            7
-          </div>
-        </div>
-      );
-    } else if (subject.predicedStrength === PredicetedStrength.ok) {
-      return (
-        <div className="result-container font-14">
-          <div>
-            5
-          </div>
-        </div>
-      );
-    } else if (subject.predicedStrength === PredicetedStrength.notWell) {
-      return (
-        <div className="result-container font-14">
-          <div>
-            3
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div className="result-container default font-14">
-        <div>
-          Value
-        </div>
-      </div>
-    );
-    */
-    return <Select
-      className="selected-date"
-      value={subject.predicedStrength}
-      MenuProps={{ classes: { paper: 'select-time-list' } }}
-      onChange={e => {
-        subject.predicedStrength = e.target.value as any;
-        this.setState({ subjectSelections: this.state.subjectSelections });
-      }}
-    >
-      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((c, i) => <MenuItem value={c as any} key={i}>{c === 0 ? 'Value' : c}</MenuItem>)}
-    </Select>
-  }
-
-  renderNextBtn() {
-    let disabled = false;
-    return (
-      <button className={`absolute-contunue-btn font-24 ${disabled ? 'disabled' : ''}`} onClick={() => {
-        console.log('move next')
-        this.moveNext();
-      }}>Continue to Step 4</button>
-    )
-  }
-
   moveNext() {
     this.props.moveNext({
       subjectSelections: this.state.subjectSelections
     });
+  }
+
+  renderThirdStepBButton() {
+    let className = "absolute-contunue-btn font-24";
+    let disabled = false;
+
+    let found = this.state.subjectSelections.find(s => !s.predicedStrength);
+    if (found) {
+      className += " disabled";
+      disabled = true;
+    }
+
+    return (
+      <button className={className} disabled={disabled} onClick={() => {
+        this.props.saveThirdAnswer(this.getAnswer());
+        // all courses and A-levels can go to C1 else D
+        let choice = this.props.firstAnswer.answer.choice;
+        if (choice === FirstChoice.ALevel || choice === FirstChoice.ShowMeAll) {
+          this.setState({ subStep: SubStep.ThirdC1 });
+        } else {
+          this.setState({ subStep: SubStep.ThirdD });
+        }
+      }}>Continue</button>
+    );
+  }
+
+  renderThirdStepAButton() {
+    let className = "absolute-contunue-btn font-24";
+    let disabled = false;
+
+    if (this.state.subjectSelections.length < 3) {
+      className += " disabled";
+      disabled = true;
+    }
+
+    return (
+      <button className={className} disabled={disabled} onClick={() => {
+        this.props.saveThirdAnswer(this.getAnswer());
+        this.setState({ subStep: SubStep.Second });
+      }}>Continue</button>
+    );
   }
 
   render() {
@@ -311,14 +286,7 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
               this.moveNext();
             }}
           />
-          <div className="absolute-back-btn" onClick={() => {
-            this.setState({ subStep: SubStep.ThirdD });
-          }}>
-            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-25">Previous</span>
-          </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.ThirdE })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             this.moveNext();
@@ -329,29 +297,13 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question">
           {this.renderProgressBar()}
-          <div className="bold font-32 question-text-3">
-            VAPs
-          </div>
-          <div className="font-16">
-            Here are five VAPs which you may need to understand a little better before.
-          </div>
-          <div className="font-16">
-            Already ruled out all the subjects below? Skip to the next question.
-          </div>
           <ThirdStepE
             pairAnswers={this.state.ePairResults}
             onChange={(ePairResults: any[]) => {
               this.setState({ ePairResults });
             }}
           />
-          <div className="absolute-back-btn" onClick={() => {
-            this.setState({ subStep: SubStep.ThirdD });
-          }}>
-            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-25">Previous</span>
-          </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.ThirdD })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.ThirdF });
@@ -392,31 +344,18 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question question-c4">
           {this.renderProgressBar()}
-          <div className="bold font-32 question-text-3">
-            What YOU think
-          </div>
-          <div className="font-16">
-            Now consider whether you are genuinely interested in taking any of these subjects - all of which can be commenced in the sixth form. (Note that it’s also the case that none of them are absolutely essential in order to apply for a university degrees in the subject.)<br />
-            Sort them into one of the three categories:
-          </div>
           <ThirdStepC4
             subjects={this.props.subjects} answer={this.state.categoriesC4}
             onChange={categoriesC4 => this.setState({ categoriesC4 })}
           />
-          <div className="font-16 bottom-text-r23">
-            You can always try a taster lesson/ topic / brick in any of the above subjects you are interested in.
-          </div>
-          <div className="absolute-back-btn" onClick={() => {
-            this.setState({ subStep: SubStep.ThirdC3 });
-          }}>
-            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-25">Previous</span>
-          </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.ThirdC3 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.ThirdD });
+            if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
+              this.moveNext()
+            } else {
+              this.setState({ subStep: SubStep.ThirdD });
+            }
           }}>Continue</button>
         </div>
       );
@@ -424,24 +363,11 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question question-c3">
           {this.renderProgressBar()}
-          <div className="bold font-32 question-text-3">
-            Curve Balls
-          </div>
-          <div className="font-16 margin-text-c3">
-            There are a few A Levels which need careful thought because there may be more to them than first meets the eye. Decide whether the statement which follows each of the following subjects is ‘TRUE’, ‘FALSE’ or ‘SOMEWHERE IN BETWEEN’.
-          </div>
           <ThirdStepC3
             answer={this.state.categoriesC3}
             onChange={categoriesC3 => this.setState({ categoriesC3 })}
           />
-          <div className="absolute-back-btn" onClick={() => {
-            this.setState({ subStep: SubStep.ThirdC2 });
-          }}>
-            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-25">Previous</span>
-          </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.ThirdC2 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.ThirdC4 });
@@ -452,12 +378,6 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question step3question5">
           {this.renderProgressBar()}
-          <div className="bold font-32 question-text-3">
-            New Subjects
-          </div>
-          <div className="font-16">
-            Here are a few more subjects which are often new to students who begin them in the sixth form: Match the correct courses to the comments of students who chose them.
-          </div>
           <ThirdStepC2
             pairAnswers={this.state.secondPairResults}
             onChange={(secondPairResults: any[]) => {
@@ -482,27 +402,13 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question">
           {this.renderProgressBar()}
-          <div className="bold font-32 question-text-3">
-            New Subjects
-          </div>
-          <div className="font-16">
-            Some popular and highly regarded subjects are often not studied before the sixth form. It’s important you understand what they involve and reflect on whether any could be a fit for you.<br />
-            Here are six subjects which most students begin for the first time in the sixth form. First of all, can you work out what these subjects consist of? Match the subject description to the correct subject.
-          </div>
           <ThirdStepC1
             pairAnswers={this.state.firstPairResults}
             onChange={(firstPairResults: any[]) => {
               this.setState({ firstPairResults });
             }}
           />
-          <div className="absolute-back-btn" onClick={() => {
-            this.setState({ subStep: SubStep.Second });
-          }}>
-            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-25">Previous</span>
-          </div>
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.Second })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.ThirdC2 });
@@ -513,119 +419,12 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question">
           {this.renderProgressBar()}
-          <div className="flex-center">
-            <div className="bold font-32 question-text-3 question-title-sub-second">
-              What are your strengths?
-            </div>
-            <div className="font-16 question-text-sub-second">
-              Here are the subjects you selected. Now decide whether you think you are likely to do very well, well, okay (average) or poorly in each subject. If you prefer, with GCSEs, you can put your predicted grade (or, if you are doing this after your results, your actual grade).
-            </div>
-          </div>
-          <div className="subjects-table">
-            <div className="table-head bold font-16">
-              <div className="first-column center-y">Subject</div>
-              <div className="second-column center-column">
-                <div>Very Well</div>
-                <div className="hover-area font-14">
-                  <SpriteIcon name="help-icon-v4" className="info-icon" />
-                  <div className="hover-content">(e.g. an 8 or 9 at GCSE, or a<br /> distinction)</div>
-                  <div className="hover-arrow-bottom" />
-                </div>
-              </div>
-              <div className="third-column center-column">
-                <div>Well</div>
-                <div className="hover-area font-14">
-                  <SpriteIcon name="help-icon-v4" className="info-icon" />
-                  <div className="hover-content">(e.g. a 6 or 7 at GCSE or a merit)</div>
-                  <div className="hover-arrow-bottom" />
-                </div>
-              </div>
-              <div className="fourth-column center-column">
-                <div>OK</div>
-                <div className="hover-area font-14">
-                  <SpriteIcon name="help-icon-v4" className="info-icon" />
-                  <div className="hover-content">(e.g. 4 or 5 at GCSE or a pass)</div>
-                  <div className="hover-arrow-bottom" />
-                </div>
-              </div>
-              <div className="fifth-column center-column">
-                <div>Not so Well</div>
-                <div className="hover-area font-14">
-                  <SpriteIcon name="help-icon-v4" className="info-icon" />
-                  <div className="hover-content">(you might struggle to get a 4 or a pass)</div>
-                  <div className="hover-arrow-bottom" />
-                </div>
-              </div>
-              <div className="six-column center-column">
-                <div>Prediction or Grade (If Known)</div>
-              </div>
-            </div>
-            <div className="table-body">
-              {this.state.subjectSelections.map((subject, index) => {
-                return (
-                  <div key={index}>
-                    <div className="bold first-column subject-box-r21 font-12">
-                      <div className="subject-lozengue">{subject.name}</div>
-                    </div>
-                    <div className="second-column center-column">
-                      <div className="radio-container">
-                        <CheckBoxV2 minChoice={8} maxChoice={9} currentChoice={subject.predicedStrength} setChoice={() => {
-                          subject.predicedStrength = 8;
-                          this.setState({ subjectSelections: this.state.subjectSelections });
-                        }} />
-                      </div>
-                    </div>
-                    <div className="third-column center-column">
-                      <div className="radio-container">
-                        <CheckBoxV2 minChoice={6} maxChoice={7} currentChoice={subject.predicedStrength} setChoice={() => {
-                          subject.predicedStrength = 6;
-                          this.setState({ subjectSelections: this.state.subjectSelections });
-                        }} />
-                      </div>
-                    </div>
-                    <div className="fourth-column center-column">
-                      <div className="radio-container">
-                        <CheckBoxV2 minChoice={4} maxChoice={5} currentChoice={subject.predicedStrength} setChoice={(choice: number) => {
-                          subject.predicedStrength = 4;
-                          this.setState({ subjectSelections: this.state.subjectSelections });
-                        }} />
-                      </div>
-                    </div>
-                    <div className="fifth-column center-column">
-                      <div className="radio-container">
-                        <CheckBoxV2 minChoice={1} maxChoice={3} currentChoice={subject.predicedStrength} setChoice={() => {
-                          subject.predicedStrength = 2;
-                          this.setState({ subjectSelections: this.state.subjectSelections });
-                        }} />
-                      </div>
-                    </div>
-                    <div className="six-column">
-                      {this.renderValue(subject)}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="absolute-back-btn" onClick={() => {
-            this.setState({ subStep: SubStep.First });
-          }}>
-            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-25">Previous</span>
-          </div>
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveThirdAnswer(this.getAnswer());
-            // all courses and A-levels can go to C1 else D
-            console.log(this.props.firstAnswer)
-            let choice = this.props.firstAnswer.answer.choice;
-            if (choice === FirstChoice.ALevel || choice === FirstChoice.ShowMeAll) {
-              this.setState({ subStep: SubStep.ThirdC1 });
-            } else {
-              this.setState({ subStep: SubStep.ThirdD });
-            }
-          }}>Continue</button>
+          <ThirdStepBTable
+            subjectSelections={this.state.subjectSelections}
+            setSubjectSelections={subjectSelections => this.setState({ subjectSelections })}
+          />
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.First })} />
+          {this.renderThirdStepBButton()}
         </div>
       );
     }
@@ -736,18 +535,8 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
             })}
           </div>
         </div>
-        <div className="absolute-back-btn" onClick={() => {
-          this.props.moveBack();
-        }}>
-          <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className="font-25">Previous</span>
-        </div>
-        <button className="absolute-contunue-btn font-24" onClick={() => {
-          this.props.saveThirdAnswer(this.getAnswer());
-          this.setState({ subStep: SubStep.Second });
-        }}>Continue</button>
+        <BackButtonSix onClick={() => this.props.moveBack()} />
+        {this.renderThirdStepAButton()}
       </div>
     );
   }

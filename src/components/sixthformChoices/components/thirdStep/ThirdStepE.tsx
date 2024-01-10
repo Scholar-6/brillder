@@ -61,42 +61,53 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     return (
-      <div className="drag-container-r22">
-        <div className="title-r22 bold font-16">
-          Drag the subjects to match them with the right description!
+      <div>
+        <div className="bold font-32 question-text-3">
+          VAPs
         </div>
-        <div className="container-r22">
-          <div className="left-part-r22">
-            <ReactSortable
-              list={this.state.subjects}
-              animation={150}
-              group={{ name: "cloning-group-name", pull: "clone" }}
-              setList={newSubjects => {
-                this.props.onChange(newSubjects);
-                this.setState({ subjects: newSubjects });
-              }}
-            >
-              {this.state.subjects.map((subject: any, i: number) => {
-                return (
-                  <div className="drag-boxv2-r22">
-                    <div className="drag-box-r22">
-                      <div className="drag-item-r22 bold font-12" key={i + 1}>
-                        {subject.name}
+        <div className="font-16">
+          Here are five VAPs which you may need to understand a little better before.
+        </div>
+        <div className="font-16">
+          Already ruled out all the subjects below? Skip to the next question.
+        </div>
+        <div className="drag-container-r22">
+          <div className="title-r22 bold font-16">
+            Drag the subjects to match them with the right description!
+          </div>
+          <div className="container-r22">
+            <div className="left-part-r22">
+              <ReactSortable
+                list={this.state.subjects}
+                animation={150}
+                group={{ name: "cloning-group-name", pull: "clone" }}
+                setList={newSubjects => {
+                  this.props.onChange(newSubjects);
+                  this.setState({ subjects: newSubjects });
+                }}
+              >
+                {this.state.subjects.map((subject: any, i: number) => {
+                  return (
+                    <div className="drag-boxv2-r22">
+                      <div className="drag-box-r22">
+                        <div className="drag-item-r22 bold font-12" key={i + 1}>
+                          {subject.name}
+                        </div>
                       </div>
                     </div>
+                  );
+                })}
+              </ReactSortable>
+            </div>
+            <div className="right-part-r22">
+              {this.state.answers.map((answer: any, i: number) => {
+                return (
+                  <div className="answer-item-r22 font-12" key={i + 1}>
+                    {answer.name}
                   </div>
                 );
               })}
-            </ReactSortable>
-          </div>
-          <div className="right-part-r22">
-            {this.state.answers.map((answer: any, i: number) => {
-              return (
-                <div className="answer-item-r22 font-12" key={i + 1}>
-                  {answer.name}
-                </div>
-              );
-            })}
+            </div>
           </div>
         </div>
       </div>

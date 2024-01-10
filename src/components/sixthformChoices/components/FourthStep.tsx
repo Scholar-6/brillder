@@ -6,7 +6,6 @@ import CheckBoxV2 from "./CheckBox";
 import BackButtonSix from "./BackButtonSix";
 import { FirstChoice } from "./FirstStep";
 import CheckBoxB from "./CheckBoxB";
-import { ThirdStepDSubStep } from "./thirdStep/ThirdStepD";
 
 enum SubStep {
   sub4a,
@@ -282,7 +281,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
     let tVocCoursesE1Part1 = [{
       icon: 'six-frame2',
-      name: 'Design, Craftsmanship & Visual Arts ',
+      name: 'Design, Craftsmanship & Visual Arts',
       active: false,
       subjects: [
         { name: 'Photography' },
@@ -331,7 +330,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         { name: 'Cloud Computing' },
       ],
     }, {
-      icon: 'six-frame4',
+      icon: 'six-frame24',
       name: 'Creative Digital Media',
       active: false,
       subjects: [
@@ -356,7 +355,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         { name: 'Leadership & Management' },
       ],
     }, {
-      icon: 'six-frame16',
+      icon: 'six-frame15',
       name: 'Land-based Sector Studies',
       active: false,
       subjects: [
@@ -376,7 +375,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         { name: 'Veterinary Technician' },
       ],
     }, {
-      icon: 'six-frame22',
+      icon: 'six-frame16',
       name: 'Sport & Exercise',
       active: false,
       subjects: [
@@ -388,7 +387,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     }];
 
     let tVocCoursesE1Part2 = [{
-      icon: 'six-frame6',
+      icon: 'six-frame7',
       name: 'Construction',
       active: false,
       subjects: [
@@ -402,7 +401,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         { name: 'Quantity Surveying' },
       ],
     }, {
-      icon: 'six-frame7',
+      icon: 'six-frame3',
       name: 'Education',
       active: false,
       subjects: [
@@ -839,10 +838,10 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
                   <SpriteIcon name={course.expanded ? "arrow-up" : "arrow-down"} />
                 </div>
               </div>
-              {course.expanded && <div className="course-subjects-r23">
+              {course.expanded && <div className="course-subjects-r23 font-14">
                 {course.subjects.map((subject, i) =>
                   <span>
-                    {subject.name} {i !== course.subjects.length - 1 ? ", " : "."}
+                    {subject.name}{i !== course.subjects.length - 1 ? ", " : "."}
                   </span>)}
               </div>}
             </div>
@@ -854,43 +853,43 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     if (this.state.subStep === SubStep.sub4e2) {
+      let selected = this.state.tVocCoursesE1Part1.filter(a => a.active == true);
+      selected.push(...this.state.tVocCoursesE1Part2.filter(a => a.active == true));
+
       return (
         <div className="question">
+          {this.renderProgressBar()}
           <div className="bold font-32 question-text-3">
             Your selected categories and courses
           </div>
           <div className="font-16">
             View the courses available for the categories you’ve selected in the previous screen
           </div>
-          <div className="categories-container">
-            <div>
-              <div
-                className="hovered-category"
-                onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
-                onMouseLeave={this.leaveCategory.bind(this)}
-                onClick={() => this.selectCategory(Category.Stem)}
-              >
-                <div className="bold font-16 h-title-r24">Design, Craft & Visual Arts</div>
-                <div className="font-14">
-                  For many science courses there is an expectation that you will have done <br /> A-level Maths.
+
+          <div className="categories-container categories-container-r342">
+            {selected.map((course, i) => {
+              return (
+                <div>
+                  <div
+                    className="hovered-category"
+                    onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
+                    onMouseLeave={this.leaveCategory.bind(this)}
+                    onClick={() => this.selectCategory(Category.Stem)}
+                  >
+                    <div className="bold font-16">{course.name}</div>
+                    <div>
+                      <div className="lozengies-container font-11 first-lozengies lozengies-r232">
+                        {course.subjects.map(s => <div>{s.name}</div>)}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="lozengies-container font-11 first-lozengies">
-                  <div>Photography</div>
-                  <div>Jewellery & Silversmithing</div>
-                  <div>Fashion & Textiles</div>
-                </div>
-                <div className="lozengies-container font-11">
-                  <div>Furniture Design & Build</div>
-                  <div>Fashion Design & Production</div>
-                  <div>Fine Art</div>
-                  <div>Interior Design</div>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4e1 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.setState({ subStep: SubStep.sub4e2 });
+            this.props.moveNext({});
           }}>Continue</button>
         </div>
       );

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ReactSortable } from "react-sortablejs";
-import {shuffle} from "../../services/shuffle";
+import { shuffle } from "../../services/shuffle";
 
 
 interface ThirdProps {
@@ -74,42 +74,50 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     return (
-      <div className="drag-container-r22">
-        <div className="title-r22 bold font-16">
-          Drag the subjects to match them with the right description!
+      <div>
+        <div className="bold font-32 question-text-3">
+          New Subjects
         </div>
-        <div className="container-r22">
-          <div className="left-part-r22">
-            <ReactSortable
-              list={this.state.subjects}
-              animation={150}
-              group={{ name: "cloning-group-name", pull: "clone" }}
-              setList={newSubjects => {
-                this.props.onChange(newSubjects);
-                this.setState({ subjects: newSubjects });
-              }}
-            >
-              {this.state.subjects.map((subject: any, i: number) => {
-                return (
-                  <div className="drag-boxv2-r22" key={i}>
-                    <div className="drag-box-r22">
-                      <div className="drag-item-r22 bold font-12" key={i + 1}>
-                        {subject.name}
+        <div className="font-16">
+          Here are a few more subjects which are often new to students who begin them in the sixth form: Match the correct courses to the comments of students who chose them.
+        </div>
+        <div className="drag-container-r22">
+          <div className="title-r22 bold font-16">
+            Drag the subjects to match them with the right description!
+          </div>
+          <div className="container-r22">
+            <div className="left-part-r22">
+              <ReactSortable
+                list={this.state.subjects}
+                animation={150}
+                group={{ name: "cloning-group-name", pull: "clone" }}
+                setList={newSubjects => {
+                  this.props.onChange(newSubjects);
+                  this.setState({ subjects: newSubjects });
+                }}
+              >
+                {this.state.subjects.map((subject: any, i: number) => {
+                  return (
+                    <div className="drag-boxv2-r22" key={i}>
+                      <div className="drag-box-r22">
+                        <div className="drag-item-r22 bold font-12" key={i + 1}>
+                          {subject.name}
+                        </div>
                       </div>
                     </div>
+                  );
+                })}
+              </ReactSortable>
+            </div>
+            <div className="right-part-r22">
+              {this.state.answers.map((answer: any, i: number) => {
+                return (
+                  <div className="answer-item-r22 font-12" key={i + 1}>
+                    {answer.name}
                   </div>
                 );
               })}
-            </ReactSortable>
-          </div>
-          <div className="right-part-r22">
-            {this.state.answers.map((answer: any, i: number) => {
-              return (
-                <div className="answer-item-r22 font-12" key={i + 1}>
-                  {answer.name}
-                </div>
-              );
-            })}
+            </div>
           </div>
         </div>
       </div>

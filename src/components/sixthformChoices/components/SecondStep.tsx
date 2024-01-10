@@ -197,18 +197,19 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
   }
 
   render() {
-
     let disabled = false;
 
-    if (this.state.choice === null) {
-      disabled = true;
-    }
-
-    if (this.state.choice === SecondChoice.Other && this.state.otherChoice === null) {
-      disabled = true;
-    }
-
     if (this.state.subStep === SubStep.Second) {
+      if (this.state.sixthformChoice === null) {
+        disabled = true;
+      }
+
+      if (this.state.sixthformChoice === SixthformChoice.SixthForm) {
+        if (!this.state.databaseSchool) {
+          disabled = true;
+        }
+      }
+
       return (
         <div className="question">
           {this.renderProgressBar()}
@@ -251,6 +252,14 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           >Continue</button>
         </div>
       );
+    }
+
+    if (this.state.choice === null) {
+      disabled = true;
+    }
+
+    if (this.state.choice === SecondChoice.Other && this.state.otherChoice === null) {
+      disabled = true;
     }
 
     return (

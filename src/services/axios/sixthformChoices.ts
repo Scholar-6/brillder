@@ -28,13 +28,6 @@ export interface SixthformSubject {
   name: string;
 }
 
-export enum PredicetedStrength {
-  veryWell = 1,
-  well,
-  ok,
-  notWell
-}
-
 export interface KeyStage4Subject {
   id: number;
   name: string;

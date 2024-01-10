@@ -120,66 +120,78 @@ class ThirdQuestionSubStep5 extends Component<ThirdProps, ThirdQuestionState> {
     const ReactSortableV1 = ReactSortable as any;
 
     return (
-      <div className="drag-container-r23">
-        <div className="container-r23 first font-12 bold">
-          <div>
-            <div className="sort-category-r23 font-16">
-              Subjects
+      <div>
+        <div className="bold font-32 question-text-3">
+          What YOU think
+        </div>
+        <div className="font-16">
+          Now consider whether you are genuinely interested in taking any of these subjects - all of which can be commenced in the sixth form. (Note that it’s also the case that none of them are absolutely essential in order to apply for a university degrees in the subject.)<br />
+          Sort them into one of the three categories:
+        </div>
+        <div className="drag-container-r23">
+          <div className="container-r23 first font-12 bold">
+            <div>
+              <div className="sort-category-r23 font-16">
+                Subjects
+              </div>
+              <div className="sort-category-list-container-r23">
+                <ReactSortableV1
+                  list={this.state.subjects as any[]}
+                  animation={150}
+                  className="sortable-list-r23"
+                  group={{ name: "cloning-group-name" }}
+                  setList={(list: any[]) => this.updateSubjects(list)}
+                >
+                  {this.state.subjects.map(s => this.renderSubjectBox(s))}
+                </ReactSortableV1>
+              </div>
             </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.subjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateSubjects(list)}
-              >
-                {this.state.subjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
+          </div>
+          <div className="container-r23 second bold font-12">
+            <div>
+              <div className="sort-category-r23 font-16">
+                Very Interested
+              </div>
+              <div className="sort-category-list-container-r23">
+                <ReactSortableV1
+                  list={this.state.interestedSubjects as any[]}
+                  animation={150}
+                  className="sortable-list-r23"
+                  group={{ name: "cloning-group-name" }}
+                  setList={(list: any[]) => this.updateInterestedSubjects(list)}
+                >
+                  {this.state.interestedSubjects.map(s => this.renderSubjectBox(s))}
+                </ReactSortableV1>
+              </div>
+            </div>
+          </div>
+          <div className="container-r23 third bold font-12">
+            <div>
+              <div className="sort-category-r23 font-16">
+                Quite Interested
+              </div>
+              <div className="sort-category-list-container-r23">
+                <ReactSortableV1
+                  list={this.state.quiteInterestedSubjects as any[]}
+                  animation={150}
+                  className="sortable-list-r23"
+                  group={{ name: "cloning-group-name" }}
+                  setList={(list: any[]) => this.updateQuiteInterestedSubjects(list)}
+                >
+                  {this.state.quiteInterestedSubjects.map(s => this.renderSubjectBox(s))}
+                </ReactSortableV1>
+              </div>
+            </div>
+          </div>
+          <div className="container-r23 last bold font-16">
+            <div>
+              <div>I’m currently not interested in <br /> any of these subjects</div>
+              <div className="skip-btn-container font-14"><div onClick={() => { }}>Skip</div></div>
             </div>
           </div>
         </div>
-        <div className="container-r23 second bold font-12">
-          <div>
-            <div className="sort-category-r23 font-16">
-              Very Interested
-            </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.interestedSubjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateInterestedSubjects(list)}
-              >
-                {this.state.interestedSubjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
-            </div>
-          </div>
-        </div>
-        <div className="container-r23 third bold font-12">
-          <div>
-            <div className="sort-category-r23 font-16">
-              Quite Interested
-            </div>
-            <div className="sort-category-list-container-r23">
-              <ReactSortableV1
-                list={this.state.quiteInterestedSubjects as any[]}
-                animation={150}
-                className="sortable-list-r23"
-                group={{ name: "cloning-group-name" }}
-                setList={(list: any[]) => this.updateQuiteInterestedSubjects(list)}
-              >
-                {this.state.quiteInterestedSubjects.map(s => this.renderSubjectBox(s))}
-              </ReactSortableV1>
-            </div>
-          </div>
-        </div>
-        <div className="container-r23 last bold font-16">
-          <div>
-            <div>I’m currently not interested in <br/> any of these subjects</div>
-            <div className="skip-btn-container font-14"><div onClick={() => {}}>Skip</div></div>
-          </div>
+        <div className="font-16 bottom-text-r23">
+          You can always try a taster lesson/ topic / brick in any of the above subjects you are interested in.
         </div>
       </div>
     );
