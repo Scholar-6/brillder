@@ -80,7 +80,6 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
     let interestedSubjects: any[] = [];
     let quiteInterestedSubjects: any[] = [];
 
-    /*
     if (props.categoriesC4) {
       let categoriesC4 = props.categoriesC4;
       if (categoriesC4.subjects) {
@@ -92,7 +91,7 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
       if (categoriesC4.quiteInterestedSubjects) {
         quiteInterestedSubjects = categoriesC4.quiteInterestedSubjects;
       }
-    }*/
+    }
 
     this.state = {
       subjects,
