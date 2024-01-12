@@ -87,6 +87,7 @@ class ThirdStepBTable extends Component<ThirdProps> {
                     <div className="radio-container">
                       <CheckBoxV2 minChoice={8} maxChoice={9} currentChoice={subject.predicedStrength} setChoice={() => {
                         subject.predicedStrength = 8;
+                        console.log(subject);
                         this.props.setSubjectSelections(this.props.subjectSelections);
                       }} />
                     </div>
