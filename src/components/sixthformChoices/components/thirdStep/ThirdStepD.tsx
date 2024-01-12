@@ -22,6 +22,7 @@ interface ThirdProps {
   subjects: SixthformSubject[];
   answer: any;
   onChange(answer: any): void;
+  saveAnswer(answer: any): void;
   moveBack(): void;
   moveToStepE(): void;
   moveToStepF(): void;
@@ -38,6 +39,7 @@ interface TLevelCourse {
 interface ThirdQuestionState {
   choice: ThirdStepDChoice | null;
   subStep: ThirdStepDSubStep;
+  nothing: boolean;
   tLevelCoursesPart1: TLevelCourse[];
   tLevelCoursesPart2: TLevelCourse[];
 }
@@ -109,8 +111,21 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       subjects: [{ name: 'Marketing' }]
     }];
 
+    let choice = null;
+    if (props.answer) {
+      if (props.answer.choice !== null) {
+        choice = props.answer.choice;
+      }
+  
+      if (props.answer.tLevelCoursesPart1 && props.answer.tLevelCoursesPart2) {
+        tLevelCourses1 = props.answer.tLevelCoursesPart1;
+        tLevelCourses2 = props.answer.tLevelCoursesPart2;
+      }
+    }
+
     this.state = {
-      choice: null,
+      choice: choice,
+      nothing: false,
       tLevelCoursesPart1: tLevelCourses1,
       tLevelCoursesPart2: tLevelCourses2,
       subStep: ThirdStepDSubStep.Start
@@ -119,7 +134,27 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
 
   setChoice(choice: ThirdStepDChoice) {
     this.setState({ choice });
-    this.props.onChange({ choice: choice });
+    this.props.onChange({
+      choice:this.state.choice,
+    });
+  }
+
+  saveAnswer() {
+    this.props.saveAnswer({
+      choice:this.state.choice,
+      tLevelCoursesPart1: this.state.tLevelCoursesPart1,
+      tLevelCoursesPart2: this.state.tLevelCoursesPart2
+    });
+  }
+
+  addSelectedSubject(selected: any[], courses: TLevelCourse[]) {
+    for (let course of courses) {
+      for (let subject of course.subjects) {
+        if (subject.checked) {
+          selected.push(subject);
+        }
+      }
+    }
   }
 
   renderList(className: string, list: TLevelCourse[], onChange: Function) {
@@ -143,9 +178,18 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
                 </div>
               </div>
               {course.expanded && <div className="course-subjects-r23">
-                {course.subjects.map((subject, i) =>
-                  <div className="course-subject-r23" onClick={() => {
-                    subject.checked = !subject.checked;
+                {course.subjects.map((subject, r) =>
+                  <div className="course-subject-r23" key={r} onClick={() => {
+                    if (!subject.checked) {
+                      let selected: any[] = [];
+                      this.addSelectedSubject(selected, this.state.tLevelCoursesPart1);
+                      this.addSelectedSubject(selected, this.state.tLevelCoursesPart2);
+                      if (selected.length < 3) {
+                        subject.checked = true;
+                      }
+                    } else {
+                      subject.checked = false;
+                    }
                     onChange();
                   }}>
                     <div className="flex-center">
@@ -161,6 +205,26 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         })}
       </div>
     );
+  }
+
+  renderNextDButton() {
+    let disabled = false;
+    let className = 'absolute-contunue-btn font-24';
+    if (this.state.choice === null) {
+      disabled = true;
+      className += ' disabled';
+    }
+    return (
+      <button className={className} disabled={disabled} onClick={() => {
+        if (this.state.choice === ThirdStepDChoice.Forth) {
+          this.setState({ subStep: ThirdStepDSubStep.Message });
+        } else if (this.state.choice === ThirdStepDChoice.First) {
+          this.setState({ subStep: ThirdStepDSubStep.TableLeaf });
+        } else {
+          this.props.moveToStepF();
+        }
+      }}>Continue</button>
+    )
   }
 
   render() {
@@ -185,7 +249,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
               </div>
             </div>
           </div>
-          <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.TableLeaf })} />
         </div>
       );
     } else if (this.state.subStep === ThirdStepDSubStep.TableLeaf) {
@@ -206,7 +270,9 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
                 this.setState({ tLevelCoursesPart2: [...this.state.tLevelCoursesPart2] })
               })}
             </div>
-            <div className="course-box-r-23 big-b-r-23">
+            <div className="course-box-r-23 big-b-r-23" onClick={() => {
+
+            }}>
               <div className="font-16 bold flex">
                 <div className="flex-y-center bold">
                   NOTHING
@@ -220,6 +286,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.setState({ subStep: ThirdStepDSubStep.LastStep });
+            this.saveAnswer();
           }}>Continue</button>
         </div>
       );
@@ -275,15 +342,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           />
         </div>
         <BackButtonSix onClick={this.props.moveBack} />
-        <button className="absolute-contunue-btn font-24" onClick={() => {
-          if (this.state.choice === ThirdStepDChoice.Forth) {
-            this.setState({ subStep: ThirdStepDSubStep.Message });
-          } else if (this.state.choice === ThirdStepDChoice.First) {
-            this.setState({ subStep: ThirdStepDSubStep.TableLeaf });
-          } else {
-            this.props.moveToStepF();
-          }
-        }}>Continue</button>
+        {this.renderNextDButton()}
       </div>
     );
   }

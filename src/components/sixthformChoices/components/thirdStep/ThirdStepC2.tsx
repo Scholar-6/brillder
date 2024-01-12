@@ -36,7 +36,7 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
       correctIndex: 5,
       name: "Philosophy"
     }, {
-      correctIndex: 5,
+      correctIndex: 6,
       name: "History of Art"
     }];
 
@@ -97,8 +97,12 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
                 }}
               >
                 {this.state.subjects.map((subject: any, i: number) => {
+                  let correct = false;
+                  if (subject.correctIndex === i) {
+                    correct = true;
+                  }
                   return (
-                    <div className="drag-boxv2-r22" key={i}>
+                    <div className={`drag-boxv2-r22 drag-boxv3-r22 ${correct ? 'correct' : ''}`} key={i}>
                       <div className="drag-box-r22">
                         <div className="drag-item-r22 bold font-12" key={i + 1}>
                           {subject.name}
@@ -111,8 +115,13 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
             </div>
             <div className="right-part-r22">
               {this.state.answers.map((answer: any, i: number) => {
+                let correct = false;
+                let subject = this.state.subjects[i];
+                if (subject.correctIndex === i) {
+                  correct = true;
+                }
                 return (
-                  <div className="answer-item-r22 font-12" key={i + 1}>
+                  <div className={`answer-item-r22 answer-item-v3r22 font-12 ${correct ? 'correct' : ''}`} key={i + 1}>
                     {answer.name}
                   </div>
                 );

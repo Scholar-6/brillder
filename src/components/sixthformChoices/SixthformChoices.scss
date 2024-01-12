@@ -1213,6 +1213,7 @@
         overflow-y: scroll;
         height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh - 2vh - 1vw - 1vh - 1.1vw - 2vh);
 
+
         margin-top: 2vh;
         display: flex;
 
@@ -1220,11 +1221,17 @@
           margin-left: 0.8vw;
 
           .drag-boxv2-r22 {
-            border-top-left-radius: 0.3vw;
-            border-bottom-left-radius: 0.3vw;
+            border-top-left-radius: 0.5vw;
+            border-bottom-left-radius: 0.5vw;
             margin: 0.2vw 0;
             padding: 0.5vw;
             background: #F6F7F9;
+          }
+
+          .drag-boxv3-r22.correct {
+            height: 3.455vw;
+            border: 2px solid var(--theme-green);
+            border-right: none;
           }
 
           .drag-box-r22 {
@@ -1250,11 +1257,18 @@
           padding-left: 1vw;
           padding-right: 1vw;
           margin-top: 0.2vw;
+          border-top-right-radius: 0.5vw;
+          border-bottom-right-radius: 0.5vw;
           margin-bottom: 0.2vw;
           height: 3.455vw;
           background: #F6F7F9;
           display: flex;
           align-items: center;
+        }
+
+        .answer-item-v3r22.correct {
+          border: 2px solid var(--theme-green);
+          border-left: none;
         }
       }
     }
@@ -1265,6 +1279,7 @@
     .tick-container-c3-r23 {
       border-radius: 0.4vw;
       padding: 1vw;
+      padding-top: 0.5vw;
       padding-bottom: 0;
       background: #4C608A1A;
 
@@ -1277,11 +1292,31 @@
         padding-left: 0.5vw;
         margin-top: 0.4vw;
         margin-bottom: 0.4vw;
+        border-radius: 0.5vw;
         background: #F6F7F9;
         width: 100%;
         height: 3vw;
         display: flex;
         align-items: center;
+
+        &.orange {
+          height: 5vw;
+          border: 2px solid var(--theme-yellow);
+        }
+
+        &.green {
+          height: 5vw;
+          border: 2px solid var(--theme-green);
+        }
+
+        &.red {
+          height: 5vw;
+          border: 2px solid var(--theme-orange);
+        }
+        .help-text {
+          margin-top: 1vh;
+          color: #4C608A99;
+        }
       }
 
       .text-block-c3-r23 {
@@ -1289,10 +1324,10 @@
       }
 
       .icons-block-c3-r23 {
-        width: 8vw;
+        width: 15vw;
         height: 2vw;
         display: flex;
-        border-radius: 0.3vw;
+        border-radius: 0.4vw;
         align-items: center;
         justify-content: center;
         background: white;
@@ -1303,6 +1338,8 @@
         padding-bottom: 0.2vw;
 
         svg {
+          padding-left: 1vw;
+          padding-right: 1vw;
           cursor: pointer;
           margin-left: 0.2vw;
           margin-right: 0.2vw;
@@ -1399,6 +1436,10 @@
 
         &.first {
           margin-left: 0;
+          background: #4C608A1A;
+        }
+
+        &.second {
           background: #30C47433;
         }
 
@@ -1446,6 +1487,47 @@
 
               .drag-box-r23 {
                 display: flex;
+
+                &.other-language {
+                  .drag-item-r23 {
+                    padding-right: 1vw;
+                    border-radius: 0.5vw;
+                    color: var(--theme-dark-blue);
+                    background: #C43C304D;
+
+                    .other-language-label {
+                      display: flex;
+                      justify-content: center;
+                      margin-bottom: 0.4vw;
+                    }
+
+                    svg {
+                      transition: all 300ms ease-in-out;
+                      width: 1vw;
+                      height: 1vw;
+                    }
+                  }
+
+                  &.expanded {
+                    .subject-left {
+                      margin-top: 0.4vw;
+                      margin-bottom: 0.4vw;
+                      display: flex;
+                      > div {
+                        text-align: left;
+                        color: white;
+                        display: flex;
+                        padding: 0.4vw 0.7vw;
+                        border-radius: 2vw;
+                        background: var(--theme-orange);
+                      }
+                    }
+
+                    svg {
+                      rotate: -90deg;
+                    }
+                  }
+                }
               }
             }
           }
@@ -1592,6 +1674,7 @@
     }
 
     .big-b-r-23 {
+      cursor: pointer;
       padding-left: 1vw;
 
       .nothing-hint {
@@ -1915,15 +1998,6 @@
 
       .text-container-r23 {
         width: 27vw;
-      }
-    }
-
-    .big-b-r-23 {
-      padding-left: 1vw;
-
-      .nothing-hint {
-        padding-left: 1.7vw;
-        color: #909CB6;
       }
     }
 

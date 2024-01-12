@@ -13,6 +13,7 @@ export enum ThirdStepDSubStep {
 interface ThirdProps {
   subjects: SixthformSubject[];
   answer: any;
+  saveAnswer(answer: any): void;
   moveBack(): void;
   moveToStep4(): void;
 }
@@ -162,6 +163,23 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
     }
   }
 
+  saveAnswer() {
+    this.props.saveAnswer({
+      tLevelCoursesPart1: this.state.tLevelCoursesPart1,
+      tLevelCoursesPart2: this.state.tLevelCoursesPart2
+    });
+  }
+
+  addSelectedSubject(selected: any[], courses: TLevelCourse[]) {
+    for (let course of courses) {
+      for (let subject of course.subjects) {
+        if (subject.checked) {
+          selected.push(subject);
+        }
+      }
+    }
+  }
+
   renderList(className: string, list: TLevelCourse[], onChange: Function) {
     return (
       <div>
@@ -186,7 +204,16 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
               {course.expanded && <div className="course-subjects-r23">
                 {course.subjects.map((subject, i) =>
                   <div className="course-subject-r23" onClick={() => {
-                    subject.checked = !subject.checked;
+                    if (!subject.checked) {
+                      let selected: any[] = [];
+                      this.addSelectedSubject(selected, this.state.tLevelCoursesPart1);
+                      this.addSelectedSubject(selected, this.state.tLevelCoursesPart2);
+                      if (selected.length < 5) {
+                        subject.checked = true;
+                      }
+                    } else {
+                      subject.checked = false;
+                    }
                     onChange();
                   }}>
                     <div className="flex-center">

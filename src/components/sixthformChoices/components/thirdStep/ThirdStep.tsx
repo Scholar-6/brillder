@@ -58,14 +58,12 @@ interface ThirdQuestionState {
   secondPairResults: any[];
   categoriesC3: ThirdC3Category[] | null;
   categoriesC4: any | null;
-
+  coursesD: any | null;
   ePairResults: any[];
-
-  coursesD: any;
   coursesF: any;
 }
 
-class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
+class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
@@ -123,6 +121,12 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
       let categoriesC3: any = null;
       let categoriesC4: any = null;
       let ePairResults: any[] = [];
+
+      for (let subject of subjects) {
+        subject.predicedStrength = 0;
+      }
+
+      console.log('parse answer', this.props.answer);
 
       if (this.props.answer && this.props.answer.answer) {
         const { answer } = this.props.answer;
@@ -277,9 +281,16 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         <div className="question question-3d">
           {this.renderProgressBar()}
           <ThirdStepF
-            subjects={this.props.subjects} answer={this.state.categoriesC4}
+            subjects={this.props.subjects}
+            answer={this.state.coursesF}
             moveBack={() => {
               this.setState({ subStep: SubStep.ThirdE });
+            }}
+            saveAnswer={coursesF => {
+              this.setState({ coursesF });
+              let answer = this.getAnswer();
+              answer.coursesD = coursesF;
+              this.props.saveThirdAnswer(answer);
             }}
             moveToStep4={() => {
               this.props.saveThirdAnswer(this.getAnswer());
@@ -315,8 +326,15 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         <div className="question question-3d">
           {this.renderProgressBar()}
           <ThirdStepD
-            subjects={this.props.subjects} answer={this.state.categoriesC4}
-            onChange={categoriesC4 => this.setState({ categoriesC4 })}
+            subjects={this.props.subjects}
+            answer={this.state.coursesD}
+            onChange={coursesD => this.setState({ coursesD })}
+            saveAnswer={coursesD => {
+              this.setState({ coursesD });
+              let answer = this.getAnswer();
+              answer.coursesD = coursesD;
+              this.props.saveThirdAnswer(answer);
+            }}
             moveBack={() => {
               let choice = this.props.firstAnswer.answer.choice;
               if (choice === FirstChoice.ShowMeAll) {
@@ -345,8 +363,17 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
         <div className="question question-c4">
           {this.renderProgressBar()}
           <ThirdStepC4
-            subjects={this.props.subjects} answer={this.state.categoriesC4}
-            onChange={categoriesC4 => this.setState({ categoriesC4 })}
+            subjects={this.props.subjects} categoriesC4={this.state.categoriesC4}
+            onChange={categoriesC4 => {
+              this.setState({ categoriesC4 })
+            }}
+            onSkip={() => {
+              if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
+                this.moveNext()
+              } else {
+                this.setState({ subStep: SubStep.ThirdD });
+              }
+            }}
           />
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.ThirdC3 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
@@ -542,4 +569,4 @@ class ThirdQuestion extends Component<ThirdProps, ThirdQuestionState> {
   }
 }
 
-export default ThirdQuestion;
+export default ThirdStep;
