@@ -208,6 +208,9 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       name: "Geography",
       selected: false,
     }, {
+      name: "English Literature",
+      selected: false
+    }, {
       name: "History",
       selected: false,
     }, {
@@ -483,7 +486,12 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       const category = this.state.cetegoriesData[category4b];
       categories4c.push(category);
     }
-    const answer = { categories4bc: categories4bc, categories4c };
+    const answer = { 
+      categories4bc: categories4bc,
+      facilitatingSubjects: this.state.facilitatingSubjects,
+      nonFacilitatingSubjects: this.state.nonFacilitatingSubjects,
+      categories4c
+    };
     this.props.saveAnswer(answer);
   }
 
@@ -943,6 +951,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d1 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.saveAnswer();
             this.setState({ subStep: SubStep.sub4e1 });
           }}>Continue</button>
         </div>
@@ -976,6 +985,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.saveAnswer();
             this.setState({ subStep: SubStep.sub4d2 });
           }}>Continue</button>
         </div>
