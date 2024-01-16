@@ -490,7 +490,11 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       categories4bc: categories4bc,
       facilitatingSubjects: this.state.facilitatingSubjects,
       nonFacilitatingSubjects: this.state.nonFacilitatingSubjects,
-      categories4c
+      categories4c,
+      categories4e: {
+        tVocCoursesE1Part1: this.state.tVocCoursesE1Part1,
+        tVocCoursesE1Part2: this.state.tVocCoursesE1Part2
+      }
     };
     this.props.saveAnswer(answer);
   }
@@ -921,6 +925,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d2 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.saveAnswer();
             this.setState({ subStep: SubStep.sub4e2 });
           }}>Show me courses in the categories  which I have selected</button>
         </div>
