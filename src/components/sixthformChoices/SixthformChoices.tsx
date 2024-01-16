@@ -14,6 +14,8 @@ import SecondStep from "./components/SecondStep";
 import ThirdStep from "./components/thirdStep/ThirdStep";
 import FourthStep from "./components/FourthStep";
 import FifthStep from "./components/FifthStep";
+import { fileUrl } from "components/services/uploadFile";
+import ProgressBarSixthform from "./components/progressBar/ProgressBarSixthform";
 
 
 interface UserProfileProps {
@@ -23,13 +25,14 @@ interface UserProfileProps {
   match: any;
 }
 
-enum Pages {
+export enum Pages {
   Welcome = 0,
   Question1,
   Question2,
   Question3,
   Question4,
   Question5,
+  Question6
 }
 
 enum SubjectType {
@@ -156,7 +159,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         this.setState({
           answers: [...this.state.answers],
           allSubjects: this.sortByScore(this.state.allSubjects),
-          subjects: this.sortByScore(this.state.subjects) });
+          subjects: this.sortByScore(this.state.subjects)
+        });
       }
     }
   }
@@ -218,7 +222,23 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }
       }
       this.parseAnswer3(result, answer, Pages.Question3);
-      // do something here with subjects ranking should change
+    }
+  }
+
+  async saveFourthAnswer(answer: any) {
+    const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question4);
+    if (result) {
+      for (let subject of this.state.allSubjects) {
+        subject.score = 0;
+      }
+      let scores = result.subjectScores.filter(s => s.score !== 0);
+      for (let subject of this.state.allSubjects) {
+        let s2 = scores.find((s) => s.id == subject.id);
+        if (s2) {
+          subject.score = s2.score;
+        }
+      }
+      this.parseAnswer3(result, answer, Pages.Question3);
     }
   }
 
@@ -281,10 +301,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return <FourthStep
         firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
+        saveAnswer={answer => {
+          this.saveFourthAnswer(answer);
+        }}
         moveNext={() => {
-          this.setState({ page: Pages.Question5});
+          this.setState({ page: Pages.Question5 });
         }} moveBack={() => {
-          this.setState({ page: Pages.Question3});
+          this.setState({ page: Pages.Question3 });
         }}
         subjects={this.state.allSubjects}
       />
@@ -292,8 +315,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return <FifthStep
         firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
-        moveNext={() => {}} moveBack={() => {
-          this.setState({ page: Pages.Question3});
+        moveNext={() => { }} moveBack={() => {
+          this.setState({ page: Pages.Question3 });
         }}
         subjects={this.state.allSubjects}
       />
@@ -363,6 +386,28 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
+  renderBrick(subject: SixthformSubject) {
+    if (subject.name === 'Accounting') {
+      console.log(subject)
+    }
+    if (subject.brick) {
+      return (
+        <div className="brick-container">
+          <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
+          <div className="bottom-description-color" />
+          <div className="bottom-description font-8 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
+        </div>
+      );
+    }
+    return (
+      <div className="brick-container">
+        <div className="scroll-block" style={{ backgroundImage: `url(https://s3.eu-west-2.amazonaws.com/app.brillder.files.com/files/6c5bb9cb-28f0-4bb4-acc6-0169ef9ce9aa.png)` }}></div>
+        <div className="bottom-description-color" />
+        <div className="bottom-description font-8 bold">Introduction to Advanced Mathemathics</div>
+      </div>
+    );
+  }
+
   renderSubjectPopup(subject: SixthformSubject) {
     if (this.state.popupSubject && this.state.popupSubject === subject) {
       const { popupSubject } = this.state;
@@ -373,7 +418,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             {popupSubject.name} {popupSubject.score}
           </div>
           <div className="font-14">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            {subject.description ? subject.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
           </div>
           <div className="second-row">
             <div className="box-v32 m-r">
@@ -381,21 +426,21 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 <SpriteIcon name="user-custom-v3" />
               </div>
               <div className="font-12">Candidates</div>
-              <div className="bold font-15">220,000</div>
+              <div className="bold font-15">{subject.candidates > 0 ? subject.candidates : 1000}</div>
             </div>
             <div className="box-v32">
               <div>
                 <SpriteIcon name="facility-icon-hat" />
               </div>
               <div className="font-12">Facilitating Subject</div>
-              <div className="bold font-15">STEM</div>
+              <div className="bold font-12">{subject.facilitatingSubject ? subject.facilitatingSubject : 'STEM'}</div>
             </div>
             <div className="box-v32 m-l">
               <div>
                 <SpriteIcon name="bricks-icon-v3" />
               </div>
               <div className="font-12">Often taken with</div>
-              <div className="bold font-11">Accounting, Business</div>
+              <div className="bold font-11">{subject.oftenWith ? subject.oftenWith : 'Accounting, Business'}</div>
             </div>
           </div>
           {this.renderSwitchButton(subject)}
@@ -407,11 +452,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               </div>
             </div>
             <div>
-              <div className="brick-container">
-                <div className="scroll-block" style={{ backgroundImage: `url(https://s3.eu-west-2.amazonaws.com/app.brillder.files.com/files/6c5bb9cb-28f0-4bb4-acc6-0169ef9ce9aa.png)` }}></div>
-                <div className="bottom-description-color" />
-                <div className="bottom-description font-8 bold">Introduction to Advanced Mathemathics</div>
-              </div>
+              {this.renderBrick(subject)}
             </div>
           </div>
         </div>
@@ -425,24 +466,32 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       <React.Suspense fallback={<></>}>
         <div className="page1 dashboard-page SixthformChoicesPage">
           <div className="header-top">
-            <HomeButton link={"/home"} history={this.props.history} />
-            <div className="logout-container">
-              <div className="search-container font-32">
-                <div>
+            <div className="top-left-logo-container">
+              <div>
+                <div className="logo-container-r23">
+                  <SpriteIcon name="scholar6-white-logo" className="white-logo-r23" />
+                  <SpriteIcon name="red-shape-icon-r1" className="red-shape-r23" />
+                </div>
+                <div className="font-22 course-select-label">
                   Course Selector
                 </div>
+              </div>
+            </div>
+            <div className="logout-container">
+              <div className="search-container font-32">
+                <ProgressBarSixthform step={this.state.page} />
               </div>
             </div>
           </div>
           <div className="sorted-row">
             <div className="sort-and-filter-container">
               {this.state.page < Pages.Question2 &&
-              <div className="subjects-select-box">
-                <div className="bold sidebar-title font-18">Show me:</div>
-                {this.renderSidebarCheckbox(SubjectType.ALevels, 'A-Levels Only')}
-                {this.renderSidebarCheckbox(SubjectType.VocationalSubjects, 'Vocational Subjects Only')}
-                {this.renderSidebarCheckbox(SubjectType.AllSubjects, 'Showing All Subjects')}
-              </div>}
+                <div className="subjects-select-box">
+                  <div className="bold sidebar-title font-18">Show me:</div>
+                  {this.renderSidebarCheckbox(SubjectType.ALevels, 'A-Levels Only')}
+                  {this.renderSidebarCheckbox(SubjectType.VocationalSubjects, 'Vocational Subjects Only')}
+                  {this.renderSidebarCheckbox(SubjectType.AllSubjects, 'Showing All Subjects')}
+                </div>}
               <div className="font-18 ranking-label">Your subject rankings</div>
               <div className={`subjects-scrollbar font-16 ${this.state.page >= Pages.Question2 ? 'big-subjects-sidebar' : ''}`}>
                 {this.state.subjects.map((subject, i) => {

@@ -7,6 +7,47 @@
   $font-scale: 1.14;
   background: var(--theme-dark-blue);
 
+  .top-left-logo-container {
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    width: 23vw;
+    height: 5.834vw;
+    border-bottom-right-radius: 2vw;
+    background: var(--theme-light-blue);
+
+    .logo-container-r23 {
+      position: relative;
+
+      svg {
+        position: absolute;
+        top: 0;
+      }
+
+      .white-logo-r23 {
+        z-index: 2;
+        top: 0.5vw;
+        height: 5.334vw;
+        left: 1vw;
+        width: 8.5vw;
+      }
+  
+      .red-shape-r23 {
+        width: 3.6vw;
+        height: 5vw;
+        left: 3.5vw;
+      }
+    }
+    .course-select-label {
+      height: 5.834vw;
+      display: flex;
+      align-items: center;
+      color: white;
+      margin-left: 11.4vw;
+    }
+  }
+
   .logo-top-container {
     z-index: 2;
     position: absolute;
@@ -17,30 +58,16 @@
     color: #4C608A;
   }
 
-  .logo-top-container {
-    cursor: pointer;
-    position: absolute;
-    left: 0;
-    z-index: 20;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--theme-light-blue);
-    width: 5.834vw;
-    height: 5.834vw;
-    border-bottom-right-radius: 2vw;
-  }
-
   .logout-container {
     background: var(--theme-light-blue);
-    margin-left: 7.834vw;
+    margin-left: 25.434vw;
     height: 5.834vw;
     border-bottom-left-radius: 2vw;
     color: white;
     display: flex;
     align-items: center;
     padding-left: 2vw;
-    width: calc(100vw - 7.834vw);
+    width: calc(100vw - 25.434vw);
   }
 
   .header-top {
@@ -498,32 +525,6 @@
       margin-top: 4vh;
       margin-bottom: 3vh;
     }
-
-    .progress-bar {
-      display: flex;
-      margin-bottom: 2vh;
-
-      >div {
-        margin-right: 0.4vw;
-        margin-left: 0.4vw;
-        border-radius: 0.4vw;
-        width: 14.2%;
-        height: 0.3vw;
-        background: #BDC5CD;
-
-        &.active {
-          background: var(--theme-orange);
-        }
-
-        &.start {
-          margin-left: 0;
-        }
-
-        &.end {
-          margin-right: 0;
-        }
-      }
-    }
   }
 
   .question-popup {
@@ -710,7 +711,7 @@
           margin-top: 2vh;
           margin-bottom: 2vh;
           width: 9.5vw;
-          height: 7vw;
+          height: 6.4vw;
           border-radius: 1vw;
           background-size: cover;
           background-position: center center;
@@ -766,6 +767,10 @@
     font-size: calc(0.75vw * $font-scale);
   }
 
+  .font-13 {
+    font-size: calc(0.81vw * $font-scale);
+  }
+
   .font-14 {
     font-size: calc(0.875vw * $font-scale) !important;
   }
@@ -784,6 +789,10 @@
 
   .font-20 {
     font-size: calc(1.25vw * $font-scale);
+  }
+
+  .font-22 {
+    font-size: calc(1.35vw * $font-scale);
   }
 
   .font-24 {
@@ -1818,6 +1827,10 @@
               margin-top: 0.7vh;
               margin-bottom: 0.7vh;
             }
+          }
+
+          &.active .lozengies-container > div {
+            background: white;
           }
         }
       }

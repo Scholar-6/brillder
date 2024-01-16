@@ -40,12 +40,13 @@ interface ThirdProps {
   subjects: SixthformSubject[];
   moveNext(answer: any): void;
   moveBack(): void;
+  saveAnswer(answer: any): void;
 }
 
 interface ThirdQuestionState {
   subStep: SubStep;
   cetegoriesData: any[];
-  categories: Category[];
+  categories4bc: Category[];
   hoveredCategory: number;
   facilitatingSubjects: any[];
   nonFacilitatingSubjects: any[];
@@ -463,7 +464,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     }];
 
     this.state = {
-      categories: [],
+      categories4bc: [],
       cetegoriesData: data,
       facilitatingSubjects,
       nonFacilitatingSubjects,
@@ -475,22 +476,15 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     }
   }
 
-  renderProgressBar() {
-    return (
-      <div>
-        <div className="progress-bar">
-          <div className='start active' />
-          <div className='active' />
-          <div className='active' />
-          <div className='active' />
-          <div />
-          <div className="end" />
-        </div>
-        <div className="font-16">
-          STEP 4: HIGHER EDUCATION
-        </div>
-      </div>
-    );
+  saveAnswer() {
+    const { categories4bc } = this.state;
+    const categories4c:any[] = [];
+    for (let category4b of categories4bc) {
+      const category = this.state.cetegoriesData[category4b];
+      categories4c.push(category);
+    }
+    const answer = { categories4bc: categories4bc, categories4c };
+    this.props.saveAnswer(answer);
   }
 
   renderNextBtn() {
@@ -507,20 +501,20 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   selectCategory(category: Category) {
-    let { categories } = this.state;
-    if (categories.includes(category)) {
-      categories = categories.filter(c => c !== category);
+    let { categories4bc } = this.state;
+    if (categories4bc.includes(category)) {
+      categories4bc = categories4bc.filter(c => c !== category);
     } else {
-      if (categories.length < 3) {
-        categories.push(category);
+      if (categories4bc.length < 3) {
+        categories4bc.push(category);
       }
     }
-    this.setState({ categories });
+    this.setState({ categories4bc });
   }
 
   renderStemCategory() {
     let className = "";
-    let category = this.state.categories.includes(Category.Stem);
+    let category = this.state.categories4bc.includes(Category.Stem);
     if (category) {
       className += " active";
     }
@@ -570,7 +564,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
   renderScienceCategory() {
     let className = "";
-    let category = this.state.categories.includes(Category.Science);
+    let category = this.state.categories4bc.includes(Category.Science);
 
     if (category) {
       className += " active";
@@ -622,7 +616,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
   renderHumanityCategory() {
     let className = "";
-    let category = this.state.categories.includes(Category.Humanities);
+    let category = this.state.categories4bc.includes(Category.Humanities);
 
     if (category) {
       className += " active";
@@ -670,7 +664,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
   renderLanguageCategory() {
     let className = "";
-    let category = this.state.categories.includes(Category.Languages);
+    let category = this.state.categories4bc.includes(Category.Languages);
 
     if (category) {
       className += " active";
@@ -715,7 +709,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
   renderArtsCategory() {
     let className = "";
-    let category = this.state.categories.includes(Category.Arts);
+    let category = this.state.categories4bc.includes(Category.Arts);
 
     if (category) {
       className += " active";
@@ -762,7 +756,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
   renderVocationalCategory() {
     let className = "";
-    let category = this.state.categories.includes(Category.Vocational);
+    let category = this.state.categories4bc.includes(Category.Vocational);
 
     if (category) {
       className += " active";
@@ -803,7 +797,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
   renderContinueBtn() {
     let className = "absolute-contunue-btn font-24";
-    let disabled = this.state.categories.length === 0;
+    let disabled = this.state.categories4bc.length === 0;
     if (disabled) {
       className += " disabled";
     }
@@ -858,7 +852,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
       return (
         <div className="question">
-          {this.renderProgressBar()}
           <div className="bold font-32 question-text-3">
             Your selected categories and courses
           </div>
@@ -927,7 +920,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === SubStep.sub4d2) {
       return (
         <div className="question">
-          {this.renderProgressBar()}
           <div className="bold font-32 question-text-4">
             Non-Facilitating Subjects
           </div>
@@ -958,7 +950,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === SubStep.sub4d1) {
       return (
         <div className="question">
-          {this.renderProgressBar()}
           <div className="bold font-32 question-text-4">
             Prestige & Facilitating Subjects
           </div>
@@ -992,7 +983,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === SubStep.sub4c) {
       return (
         <div className="question">
-          {this.renderProgressBar()}
           <div className="bold font-32 question-text-4">
             A-levels
           </div>
@@ -1003,8 +993,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             Now highlight the individual courses which most appeal to you. Choose up to three.
           </div>
           <div className="categories-container-4c-r23 font-16">
-            {this.state.categories.map((category, i) => {
-              let catData = this.state.cetegoriesData[category];
+            {this.state.categories4bc.map((category, i) => {
+              const catData = this.state.cetegoriesData[category];
               return (
                 <div key={i} className="font-16">
                   <div className="text-4c">
@@ -1025,6 +1015,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.saveAnswer();
             this.setState({ subStep: SubStep.sub4d1 });
           }}>Continue</button>
         </div>
@@ -1032,7 +1023,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === SubStep.sub4b) {
       return (
         <div className="question">
-          {this.renderProgressBar()}
           <div className="bold font-32 question-text-4">
             A-levels
           </div>
@@ -1056,6 +1046,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4a })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.saveAnswer();
             this.setState({ subStep: SubStep.sub4c });
           }}>Continue</button>
         </div>
@@ -1064,7 +1055,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
     return (
       <div className="question">
-        {this.renderProgressBar()}
         <div className="font-16">
           What you choose to do in the sixth form invariably affects your options if you want to continue into higher education.
         </div>

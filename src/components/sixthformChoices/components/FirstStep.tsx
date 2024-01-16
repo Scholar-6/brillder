@@ -58,24 +58,6 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
     );
   }
 
-  renderProgressBar() {
-    return (
-      <div>
-        <div className="progress-bar">
-          <div className='start active' />
-          <div />
-          <div />
-          <div />
-          <div />
-          <div className="end" />
-        </div>
-        <div className="font-16">
-          STEP 1: TYPES OF COURSE
-        </div>
-      </div>
-    );
-  }
-
   setChoice(choice: FirstChoice) {
     this.setState({ choice });
     this.props.onChoiceChange({choice});
@@ -84,7 +66,6 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
   render() {
     return (
       <div className="question">
-        {this.renderProgressBar()}
         <div className="bold font-32 question-text">
           What type of course or courses are you considering for the sixth form?
         </div>

@@ -1,4 +1,5 @@
 
+import { Brick } from 'model/brick';
 import {get, post} from './index';
 
 export enum UserSubjectChoice {
@@ -23,9 +24,14 @@ export interface SixthformSubject {
   isALevel: boolean;
   isAcademic: boolean;
   isVocational: boolean;
+  description: string;
+  facilitatingSubject: string;
   userChoice?: UserSubjectChoice;
+  oftenWith: string;
+  candidates: number;
   score: number;
   name: string;
+  brick: Brick;
 }
 
 export interface KeyStage4Subject {
