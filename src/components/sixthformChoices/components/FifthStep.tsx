@@ -119,29 +119,10 @@ class FifthStep extends Component<ThirdProps, ThirdQuestionState> {
     }
   }
 
-  renderProgressBar() {
-    return (
-      <div>
-        <div className="progress-bar">
-          <div className='start active' />
-          <div className='active' />
-          <div className='active' />
-          <div className='active' />
-          <div className='active' />
-          <div className="end" />
-        </div>
-        <div className="font-16">
-          STEP 5: CAREERS
-        </div>
-      </div>
-    );
-  }
-
   render() {
     if (this.state.subStep === SubStep.sub5c) {
       return (
         <div className="question">
-          {this.renderProgressBar()}
           <div className="bold font-32 question-text-4">
             Careers with A-level Expectations
           </div>
@@ -203,7 +184,6 @@ class FifthStep extends Component<ThirdProps, ThirdQuestionState> {
 
     return (
       <div className="question">
-        {this.renderProgressBar()}
         <div className="bold font-32 question-text-4">
           Categories of Career
         </div>

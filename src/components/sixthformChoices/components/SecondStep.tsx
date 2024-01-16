@@ -84,24 +84,6 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     }
   }
 
-  renderProgressBar() {
-    return (
-      <div>
-        <div className="progress-bar">
-          <div className='start active' />
-          <div className='active' />
-          <div />
-          <div />
-          <div />
-          <div className="end" />
-        </div>
-        <div className="font-16">
-          STEP 2: INSTITUTIONS
-        </div>
-      </div>
-    );
-  }
-
   renderDatabaseSchool() {
     return (
       <div className={`check-box-container container ${this.state.sixthformChoice === SixthformChoice.SixthForm ? "bold" : ""}`}>
@@ -212,7 +194,6 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
 
       return (
         <div className="question">
-          {this.renderProgressBar()}
           <div className="bold font-32 question-text">
             Some schools and colleges share the courses they offer with our database.
           </div>
@@ -264,7 +245,6 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
 
     return (
       <div className="question">
-        {this.renderProgressBar()}
         <div className="bold font-32 question-text">
           Where are you planning to do your sixth form studies?
         </div>

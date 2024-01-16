@@ -50,7 +50,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
 
     let tLevelCourses1 = [{
       icon: 'six-frame0',
-      name: 'Agricultural, Environmental & Animal Care',
+      name: 'Agriculture, Environmental & Animal Care',
       subjects: [{ name: 'Agriculture, Land Management & Production' }, { name: 'Animal Care & Management' }],
     }, {
       icon: 'six-frame1',

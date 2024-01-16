@@ -191,24 +191,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     }
   }
 
-  renderProgressBar() {
-    return (
-      <div>
-        <div className="progress-bar">
-          <div className='start active' />
-          <div className='active' />
-          <div className='active' />
-          <div />
-          <div />
-          <div className="end" />
-        </div>
-        <div className="font-16">
-          STEP 3: SUBJECTS
-        </div>
-      </div>
-    );
-  }
-
   activateSubjectGroup(group: SubjectGroupR21) {
     this.setState({ subjectGroup: group });
   }
@@ -279,35 +261,27 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     if (this.state.subStep === SubStep.ThirdF) {
       return (
         <div className="question question-3d">
-          {this.renderProgressBar()}
           <ThirdStepF
             subjects={this.props.subjects}
             answer={this.state.coursesF}
             moveBack={() => {
               this.setState({ subStep: SubStep.ThirdE });
             }}
-            saveAnswer={coursesF => {
+            moveToStep4={coursesF => {
+              console.log('move next')
               this.setState({ coursesF });
               let answer = this.getAnswer();
-              answer.coursesD = coursesF;
+              answer.coursesF = coursesF;
+              console.log('save coursesF', coursesF);
               this.props.saveThirdAnswer(answer);
-            }}
-            moveToStep4={() => {
-              this.props.saveThirdAnswer(this.getAnswer());
               this.moveNext();
             }}
           />
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.ThirdE })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveThirdAnswer(this.getAnswer());
-            this.moveNext();
-          }}>Continue</button>
         </div>
       );
     } else if (this.state.subStep === SubStep.ThirdE) {
       return (
         <div className="question">
-          {this.renderProgressBar()}
           <ThirdStepE
             pairAnswers={this.state.ePairResults}
             onChange={(ePairResults: any[]) => {
@@ -324,7 +298,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === SubStep.ThirdD) {
       return (
         <div className="question question-3d">
-          {this.renderProgressBar()}
           <ThirdStepD
             subjects={this.props.subjects}
             answer={this.state.coursesD}
@@ -361,7 +334,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === SubStep.ThirdC4) {
       return (
         <div className="question question-c4">
-          {this.renderProgressBar()}
           <ThirdStepC4
             subjects={this.props.subjects} categoriesC4={this.state.categoriesC4}
             onChange={categoriesC4 => {
@@ -389,7 +361,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === SubStep.ThirdC3) {
       return (
         <div className="question question-c3">
-          {this.renderProgressBar()}
           <ThirdStepC3
             answer={this.state.categoriesC3}
             onChange={categoriesC3 => this.setState({ categoriesC3 })}
@@ -404,7 +375,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === SubStep.ThirdC2) {
       return (
         <div className="question step3question5">
-          {this.renderProgressBar()}
           <ThirdStepC2
             pairAnswers={this.state.secondPairResults}
             onChange={(secondPairResults: any[]) => {
@@ -428,7 +398,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === SubStep.ThirdC1) {
       return (
         <div className="question">
-          {this.renderProgressBar()}
           <ThirdStepC1
             pairAnswers={this.state.firstPairResults}
             onChange={(firstPairResults: any[]) => {
@@ -445,7 +414,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === SubStep.Second) {
       return (
         <div className="question">
-          {this.renderProgressBar()}
           <ThirdStepBTable
             subjectSelections={this.state.subjectSelections}
             setSubjectSelections={subjectSelections => this.setState({ subjectSelections })}
@@ -457,7 +425,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     }
     return (
       <div className="question">
-        {this.renderProgressBar()}
         <div className="bold font-32 question-text-3">
           What qualifications are you studying for at present?
         </div>

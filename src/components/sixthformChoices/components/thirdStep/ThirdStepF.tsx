@@ -13,9 +13,8 @@ export enum ThirdStepDSubStep {
 interface ThirdProps {
   subjects: SixthformSubject[];
   answer: any;
-  saveAnswer(answer: any): void;
   moveBack(): void;
-  moveToStep4(): void;
+  moveToStep4(answer: any): void;
 }
 
 interface TLevelCourse {
@@ -66,7 +65,7 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
       subjects: [
         { name: 'Digital Music Production' },
         { name: 'Dance' },
-        { name: 'Performing Arts (Acting' },
+        { name: 'Performing Arts (Acting)' },
         { name: 'Musical Theatre' },
         { name: 'Music Performance'},
         { name: 'Music' },
@@ -163,13 +162,6 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
     }
   }
 
-  saveAnswer() {
-    this.props.saveAnswer({
-      tLevelCoursesPart1: this.state.tLevelCoursesPart1,
-      tLevelCoursesPart2: this.state.tLevelCoursesPart2
-    });
-  }
-
   addSelectedSubject(selected: any[], courses: TLevelCourse[]) {
     for (let course of courses) {
       for (let subject of course.subjects) {
@@ -252,7 +244,11 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
         </div>
         <BackButtonSix onClick={() => this.props.moveBack()} />
         <button className="absolute-contunue-btn font-24" onClick={() => {
-          this.props.moveToStep4();
+          console.log('move next 3')
+          this.props.moveToStep4({
+            tLevelCoursesPart1: this.state.tLevelCoursesPart1,
+            tLevelCoursesPart2: this.state.tLevelCoursesPart2
+          });
         }}>Continue</button>
       </div>
     );
