@@ -298,7 +298,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         <div className="font-20 bold text-center text-d3-r23">
           Well, we’ll show you the T-level courses, then we’ll show you other VAPs. If you give some thought to your preferences, you’ll still get closer to an idea of what might suit you in the sixth form.
         </div>
-        <div className="button-step-d-r23">
+        <div className="button-step-d-r23 font-24">
           <div onClick={() => {
             this.setState({ subStep: ThirdStepDSubStep.TableLeaf })
           }}>

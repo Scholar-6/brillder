@@ -16,6 +16,7 @@ import FourthStep from "./components/FourthStep";
 import FifthStep from "./components/FifthStep";
 import { fileUrl } from "components/services/uploadFile";
 import ProgressBarSixthform from "./components/progressBar/ProgressBarSixthform";
+import SixthStep from "./components/SixthStep";
 
 
 interface UserProfileProps {
@@ -62,7 +63,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       answers: [],
       popupTimeout: -1,
       popupSubject: null,
-      page: Pages.Welcome,
+      page: Pages.Question6,
     }
 
     this.loadSubjects();
@@ -315,11 +316,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return <FifthStep
         firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
-        moveNext={() => { }} moveBack={() => {
-          this.setState({ page: Pages.Question3 });
+        moveNext={() => { 
+          this.setState({ page: Pages.Question6 });
+        }} moveBack={() => {
+          this.setState({ page: Pages.Question4 });
         }}
         subjects={this.state.allSubjects}
       />
+    } else if (this.state.page === Pages.Question6) {
+      return <SixthStep answer={null} onChoiceChange={() => {}} moveNext={() => {}} moveBack={() => this.setState({page: Pages.Question5})} />
     }
     return <div />;
   }
