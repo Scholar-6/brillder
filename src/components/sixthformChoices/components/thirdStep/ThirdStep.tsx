@@ -47,6 +47,7 @@ interface ThirdQuestionState {
   typedSubject: string;
   subjectGroup: SubjectGroupR21;
   GCSESubjects: KeyStage4Subject[];
+  GCSESexpanded: boolean;
   limit: number;
   allSubjects: KeyStage4Subject[];
   vocationalSubjects: KeyStage4Subject[];
@@ -72,6 +73,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       typedSubject: '',
       subjectGroup: SubjectGroupR21.GCSE,
       GCSESubjects: [],
+      GCSESexpanded: false,
       limit: 16,
       vocationalSubjects: [],
       subjectSelections: [],
@@ -125,8 +127,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       for (let subject of subjects) {
         subject.predicedStrength = 0;
       }
-
-      console.log('parse answer', this.props.answer);
 
       if (this.props.answer && this.props.answer.answer) {
         const { answer } = this.props.answer;
@@ -257,6 +257,72 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     );
   }
 
+  renderExpandButton() {
+    if (this.state.subjectGroup === SubjectGroupR21.GCSE && !this.state.GCSESexpanded) {
+      return <div
+        className="expand-subjects-button subjects-typer-r21 font-14 text-center"
+        onClick={() => this.setState({ GCSESexpanded: !this.state.GCSESexpanded })}
+      >
+        Click here if you’re doing subjects which are not on this list
+      </div>
+    }
+  }
+
+  renderSubjectsBox() {
+    if (this.state.subjectGroup === SubjectGroupR21.GCSE && this.state.GCSESexpanded) {
+      return (
+        <div className="subjects-typer-r21 font-14">
+          <Autocomplete
+            multiple={true}
+            value={this.state.selectedGSCESubjects}
+            options={this.state.otherGCSESubjects}
+            onChange={(e: any, vv: any) => {
+              let v = vv[0];
+              if (v) {
+                const subjects = this.state.GCSESubjects;
+                const found = subjects.find(s => s.name === v.name);
+                const selected = this.state.subjectSelections;
+                if (!found) {
+                  v.selected = true;
+                  subjects.push(v);
+                  selected.push(v);
+                  this.setState({ GCSESubjects: subjects, subjectSelections: selected, selectedGSCESubjects: [], typedSubject: '' });
+                  return;
+                }
+              }
+              this.setState({ selectedGSCESubjects: [], typedSubject: '' });
+            }}
+            noOptionsText="Sorry, try typing something else"
+            className="subject-autocomplete font-14"
+            getOptionLabel={(option: any) => option.name}
+            renderOption={(loopSchool: any) => (
+              <React.Fragment>
+                <MenuItem>
+                  {loopSchool.name}
+                </MenuItem>
+              </React.Fragment>
+            )}
+            renderInput={(params: any) => (
+              <TextField
+                {...params}
+                variant="standard"
+                label=""
+                className="font-14"
+                value={this.state.typedSubject}
+                onChange={() => this.setState({ typedSubject: params.inputProps.value })}
+                placeholder={
+                  this.state.subjectGroup === SubjectGroupR21.GCSE
+                    ? "If you are doing any other, rarer GCSEs, please add them here"
+                    : "If you are doing any other, rarer practical and vocational subjects, please add them here"
+                }
+              />
+            )}
+          />
+        </div>
+      );
+    }
+  }
+
   render() {
     if (this.state.subStep === SubStep.ThirdF) {
       return (
@@ -268,11 +334,9 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ subStep: SubStep.ThirdE });
             }}
             moveToStep4={coursesF => {
-              console.log('move next')
               this.setState({ coursesF });
               let answer = this.getAnswer();
               answer.coursesF = coursesF;
-              console.log('save coursesF', coursesF);
               this.props.saveThirdAnswer(answer);
               this.moveNext();
             }}
@@ -424,7 +488,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       );
     }
     return (
-      <div className="question">
+      <div className="question question3-first">
         <div className="bold font-32 question-text-3">
           What qualifications are you studying for at present?
         </div>
@@ -448,72 +512,49 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
                   Practical & Vocational Qualifications
                 </div>
               </div>
-              <div className="subjects-box-r21">
-                {this.renderSubjectLozenges(
-                  this.state.subjectGroup === SubjectGroupR21.GCSE ? this.state.GCSESubjects : this.state.vocationalSubjects,
-                  false,
-                  (subject: KeyStage4Subject) => {
-                    if (this.state.subjectSelections.length >= this.state.limit) {
-                      return;
-                    }
-                    const selections = this.state.subjectSelections;
-                    const found = selections.find((s: any) => s.name === subject.name);
-                    if (!found) {
-                      subject.selected = true;
-                      selections.push(subject);
-                      this.setState({ subjectSelections: selections });
-                    }
-                  })}
-              </div>
-              {this.state.subjectGroup === SubjectGroupR21.GCSE &&
-                <div className="subjects-typer-r21 font-14">
-                  <Autocomplete
-                    multiple={true}
-                    value={this.state.selectedGSCESubjects}
-                    options={this.state.otherGCSESubjects}
-                    onChange={(e: any, vv: any) => {
-                      let v = vv[0];
-                      if (v) {
-                        const subjects = this.state.GCSESubjects;
-                        const found = subjects.find(s => s.name === v.name);
-                        const selected = this.state.subjectSelections;
-                        if (!found) {
-                          v.selected = true;
-                          subjects.push(v);
-                          selected.push(v);
-                          this.setState({ GCSESubjects: subjects, subjectSelections: selected, selectedGSCESubjects: [], typedSubject: '' });
+              <div className="subjects-box-s6-r21">
+                <div className="subjects-box-r21">
+                  {this.renderSubjectLozenges(
+                    this.state.subjectGroup === SubjectGroupR21.GCSE ? this.state.GCSESubjects : this.state.vocationalSubjects,
+                    false,
+                    (subject: KeyStage4Subject) => {
+                      if (this.state.subjectSelections.length >= this.state.limit) {
+                        return;
+                      }
+                      const selections = this.state.subjectSelections;
+                      const found = selections.find((s: any) => s.name === subject.name);
+                      if (!found) {
+                        subject.selected = true;
+                        selections.push(subject);
+                        this.setState({ subjectSelections: selections });
+                      }
+                    })}
+                </div>
+                {this.state.subjectGroup === SubjectGroupR21.GCSE && this.state.GCSESexpanded && <div>
+                  <div className="expanded-label">
+                    <div className="line-r21" />
+                    <div className="expanded-text font-12">More GCSEs</div>
+                    <div className="line-r21" />
+                  </div>
+                  <div className="subjects-box-r21">
+                    {this.renderSubjectLozenges(this.state.otherGCSESubjects, false,
+                      (subject: KeyStage4Subject) => {
+                        if (this.state.subjectSelections.length >= this.state.limit) {
                           return;
                         }
-                      }
-                      this.setState({ selectedGSCESubjects: [], typedSubject: '' });
-                    }}
-                    noOptionsText="Sorry, try typing something else"
-                    className="subject-autocomplete font-14"
-                    getOptionLabel={(option: any) => option.name}
-                    renderOption={(loopSchool: any) => (
-                      <React.Fragment>
-                        <MenuItem>
-                          {loopSchool.name}
-                        </MenuItem>
-                      </React.Fragment>
-                    )}
-                    renderInput={(params: any) => (
-                      <TextField
-                        {...params}
-                        variant="standard"
-                        label=""
-                        className="font-14"
-                        value={this.state.typedSubject}
-                        onChange={() => this.setState({ typedSubject: params.inputProps.value })}
-                        placeholder={
-                          this.state.subjectGroup === SubjectGroupR21.GCSE
-                            ? "If you are doing any other, rarer GCSEs, please add them here"
-                            : "If you are doing any other, rarer practical and vocational subjects, please add them here"
+                        const selections = this.state.subjectSelections;
+                        const found = selections.find((s: any) => s.name === subject.name);
+                        if (!found) {
+                          subject.selected = true;
+                          selections.push(subject);
+                          this.setState({ subjectSelections: selections });
                         }
-                      />
-                    )}
-                  />
+                      })}
+                  </div>
                 </div>}
+                {this.state.subjectGroup === SubjectGroupR21.GCSE && this.renderSubjectsBox()}
+              </div>
+              {this.renderExpandButton()}
             </div>
           </div>
           <div className="second-box-R21">

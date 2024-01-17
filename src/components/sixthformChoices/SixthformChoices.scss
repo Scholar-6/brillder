@@ -1080,6 +1080,7 @@
       display: flex;
 
       .first-box-R21 {
+        position: relative;
         border-radius: 0.7vw;
         background: #4C608A1A;
         width: 43vw;
@@ -1117,10 +1118,27 @@
           }
         }
 
-        .subjects-box-r21 {
+        .subjects-box-s6-r21 {
+          position: relative;
           overflow-y: scroll;
           width: 100%;
-          height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh - 4vh - 1.4vh - 1vw - 2vw);
+          height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 9vw - 3vh - 3.4vh - 5vh - 3.5vh);
+          padding-bottom: calc(1vh);
+        }
+
+        .expand-subjects-button {
+          margin-top: 3vh;
+          width: calc(100% - 1.8vw);
+          position: absolute;
+          bottom: 1vh;
+          cursor: pointer;
+          color: white;
+          transition: all 200ms ease-in-out;
+          background: #4C608A !important;
+    
+          &:hover {
+            opacity: 0.8;
+          }
         }
 
         .subjects-typer-r21 {
@@ -1163,6 +1181,24 @@
               }
             }
           }
+        }
+      }
+
+      .expanded-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1.4vh;
+        margin-bottom: 1.4vh;
+        color: #919EAB;
+        .line-r21 {
+          height: 2px;
+          width: 18vw;
+          background: #BAC2D1;
+        }
+        .expanded-text {
+          margin-left: 0.5vw;
+          margin-right: 0.5vw;
         }
       }
 
@@ -1718,7 +1754,6 @@
       }
     }
   }
-
 
 
   // step 4
