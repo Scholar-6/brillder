@@ -72,17 +72,20 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
 
   renderBox(category: ThirdC3Category, i: number) {
     let className="font-12 combo-block-c3-r23";
-    if (category.status == ThirdC3Status.BETWEEN) {
-      className += " orange";
+    if (category.boldText === "English Language" || category.boldText === "Computer Science" || category.boldText === "Engineering") {
+      if (category.status === ThirdC3Status.True) {
+        className += " green";
+      } else {
+        className += " red";
+      }
     }
-    if (category.status === ThirdC3Status.True) {
-      className += " green";
+    if (category.boldText === "Modern Languages" || category.boldText === "Sport & Physical Education, Dance, Music, Theatre Studies") {
+      if (category.status === ThirdC3Status.BETWEEN) {
+        className += " green";
+      } else {
+        className += " red";
+      }
     }
-    if (category.status === ThirdC3Status.False) { 
-      className += " red";
-    }
-
-    console.log(category.status)
 
     return (
       <div className={className} key={i}>

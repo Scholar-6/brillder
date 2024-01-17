@@ -230,6 +230,29 @@
     overflow-y: scroll;
     transition: all 300ms ease-in-out;
 
+    > div {
+      position: relative;
+
+      .subject-name {
+        width: calc(100% - 5vw);
+      }
+      
+      .level-round {
+        position: absolute;
+        top: 0.5vw;
+        right: 0.5vw;
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        height: 1.5vw;
+        border-radius: 0.4vw;
+        background: #4C608A80;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
     >div:hover {
       background: $placeholder-color;
     }
@@ -1123,7 +1146,6 @@
           overflow-y: scroll;
           width: 100%;
           height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 9vw - 3vh - 3.4vh - 5vh - 3.5vh);
-          padding-bottom: calc(1vh);
         }
 
         .expand-subjects-button {

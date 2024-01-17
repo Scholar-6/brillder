@@ -466,6 +466,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return;
   }
 
+  renderSubjectGroup(subject: SixthformSubject) {
+    if (subject.isTLevel) {
+      return "T Level";
+    } else if (subject.isALevel) {
+      return "A Level";
+    } else {
+      return "VAP";
+    }
+  }
+
   render() {
     return (
       <React.Suspense fallback={<></>}>
@@ -513,7 +523,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                     this.setState({ popupSubject: null });
                   }}>
                     {this.renderCircle(subject)}
-                    <div>{subject.name}</div>
+                    <div className="subject-name">{subject.name}</div>
+                    <div className="level-round font-12">{this.renderSubjectGroup(subject)}</div>
                     {this.renderSubjectPopup(subject)}
                   </div>
                 })}
