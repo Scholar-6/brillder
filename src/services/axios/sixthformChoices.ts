@@ -21,6 +21,7 @@ export interface SixthformCalcResult {
 
 export interface SixthformSubject {
   id: number;  
+  isTLevel: boolean;
   isALevel: boolean;
   isAcademic: boolean;
   isVocational: boolean;
