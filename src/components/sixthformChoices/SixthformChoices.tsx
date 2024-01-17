@@ -3,10 +3,10 @@ import React, { Component } from "react";
 import "./SixthformChoices.scss";
 import { User } from "model/user";
 import {
-  SixthformSubject, UserSubjectChoice, getSixthformAnswers, getSixthformSubjects, saveSixthformAnswer, setSixthformSubjectChoice
+  SixthformSubject, UserSubjectChoice, getSixthformAnswers,
+  getSixthformSubjects, saveSixthformAnswer, setSixthformSubjectChoice
 } from "services/axios/sixthformChoices";
 
-import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 import FirstStep from "./components/FirstStep";
@@ -16,7 +16,7 @@ import FourthStep from "./components/FourthStep";
 import FifthStep from "./components/FifthStep";
 import { fileUrl } from "components/services/uploadFile";
 import ProgressBarSixthform from "./components/progressBar/ProgressBarSixthform";
-import SixthStep from "./components/SixthStep";
+import SixthStep from "./components/sixStep/SixthStep";
 
 
 interface UserProfileProps {
@@ -63,7 +63,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       answers: [],
       popupTimeout: -1,
       popupSubject: null,
-      page: Pages.Question6,
+      page: Pages.Welcome,
     }
 
     this.loadSubjects();
