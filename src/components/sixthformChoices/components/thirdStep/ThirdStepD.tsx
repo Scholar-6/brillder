@@ -141,7 +141,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
 
   saveAnswer() {
     this.props.saveAnswer({
-      choice:this.state.choice,
+      choice: this.state.choice,
       tLevelCoursesPart1: this.state.tLevelCoursesPart1,
       tLevelCoursesPart2: this.state.tLevelCoursesPart2
     });
@@ -221,6 +221,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         } else if (this.state.choice === ThirdStepDChoice.First) {
           this.setState({ subStep: ThirdStepDSubStep.TableLeaf });
         } else {
+          this.saveAnswer();
           this.props.moveToStepF();
         }
       }}>Continue</button>

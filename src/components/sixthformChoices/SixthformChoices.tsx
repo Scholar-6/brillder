@@ -17,6 +17,7 @@ import FifthStep from "./components/FifthStep";
 import { fileUrl } from "components/services/uploadFile";
 import ProgressBarSixthform from "./components/progressBar/ProgressBarSixthform";
 import SixthStep from "./components/sixStep/SixthStep";
+import { ThirdSubStep } from "./components/thirdStep/ThirdStep";
 
 
 interface UserProfileProps {
@@ -96,7 +97,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         subjectType = firstAnswer.answer.choice;
       }
 
-      this.setState({ answers, subjectType });
+      this.setState({ answers: [], subjectType });
     }
   }
 
@@ -113,12 +114,22 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   parseAnswer(result: any, answer: any, questionPage: Pages) {
+    /*
+    const answerR1 = this.state.answers.find(a => a.step === questionPage);
+    if (answerR1) {
+      answerR1.answer.choice = answer.choice;
+    } else {
+      this.state.answers.push(answer);
+      console.log(this.state.answers)
+      this.setState({ answers: [...this.state.answers] });
+    }*/
     if (result && result.result) {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
         answerR1.answer.choice = answer.choice;
       } else {
         result.result.answer = JSON.parse(result.result.answer);
+        console.log('parse answer', result.result.answer);
         this.state.answers.push(result.result);
         this.setState({ answers: [...this.state.answers] });
       }
@@ -147,9 +158,56 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (result) {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
-        answerR1.answer.firstPairResults = answer.firstPairResults;
-        answerR1.answer.secondPairResults = answer.secondPairResults;
-        answerR1.answer.subjectSelections = answer.subjectSelections;
+        if (answer.firstPairResults) {
+          answerR1.answer.firstPairResults = answer.firstPairResults;
+        }
+        if (answer.secondPairResults) {
+          answerR1.answer.secondPairResults = answer.secondPairResults;
+        }
+        if (answer.subjectSelections) {
+          answerR1.answer.subjectSelections = answer.subjectSelections;
+        }
+        if (answer.categoriesC3) {
+          answerR1.answer.categoriesC3 = answer.categoriesC3;
+        }
+        if (answer.categoriesC4) {
+          answerR1.answer.categoriesC4 = answer.categoriesC4;
+        }
+        if (answer.coursesD) {
+          answerR1.answer.coursesD = answer.coursesD;
+        }
+        if (answer.coursesF) {
+          answerR1.answer.coursesF = answer.coursesF;
+        }
+        if (answer.ePairResults) {
+          answerR1.answer.ePairResults = answer.ePairResults;
+        }
+        if (answer.subStep) {
+          answerR1.answer.subStep = answer.subStep;
+        }
+        console.log('parsedAnswer3', answerR1, answer)
+        this.setState({
+          allSubjects: this.sortByScore(this.state.allSubjects),
+          subjects: this.sortByScore(this.state.subjects)
+        });
+      } else {
+        result.result.answer = JSON.parse(result.result.answer);
+        this.state.answers.push(result.result);
+        this.setState({
+          answers: [...this.state.answers],
+          allSubjects: this.sortByScore(this.state.allSubjects),
+          subjects: this.sortByScore(this.state.subjects)
+        });
+      }
+    }
+  }
+
+  parseAnswer4(result: any, answer: any, questionPage: Pages) {
+    if (result) {
+      const answerR1 = this.state.answers.find(a => a.step === questionPage);
+      if (answerR1) {
+        answerR1.answer.categoriesC4 = answer.categoriesC4;
+        console.log('parsedAnswer4', answerR1)
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)
@@ -222,6 +280,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.score = s2.score;
         }
       }
+      console.log('parse answer 3 1')
       this.parseAnswer3(result, answer, Pages.Question3);
     }
   }
@@ -239,7 +298,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.score = s2.score;
         }
       }
-      this.parseAnswer3(result, answer, Pages.Question3);
+      //this.parseAnswer4(result, answer, Pages.Question4);
     }
   }
 
@@ -278,11 +337,17 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answer={this.state.answers.find(a => a.step === Pages.Question2)}
         moveNext={async (answer: any) => {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
-          this.parseAnswer2(result, answer, Pages.Question2);
-          this.setState({ page: Pages.Question3 });
+          if (result) {
+            this.parseAnswer2(result, answer, Pages.Question2);
+            this.setState({ page: Pages.Question3 });
+          }
         }}
-        moveBack={() => {
-          this.setState({ page: Pages.Question1, subjects: this.state.allSubjects });
+        moveBack={async (answer: any) => {
+          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
+          if (result) {
+            this.parseAnswer2(result, answer, Pages.Question2);
+            this.setState({ page: Pages.Question1, subjects: this.state.allSubjects });
+          }
         }}
       />
     } else if (this.state.page === Pages.Question3) {
@@ -291,17 +356,25 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
         saveThirdAnswer={async (answer: any) => {
+          console.log('save answer', answer);
           await this.saveThirdAnswer(answer);
         }}
         moveNext={async (answer: any) => {
+          console.log('move to step 4', answer);
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
-          this.parseAnswer3(result, answer, Pages.Question2);
-          this.setState({ page: Pages.Question4 });
-        }} moveBack={() => this.setState({ page: Pages.Question2 })} />
+          if (result) {
+            this.parseAnswer3(result, answer, Pages.Question3);
+            this.setState({ page: Pages.Question4 });
+          }
+        }}
+        moveBack={() => {
+          this.setState({ page: Pages.Question2 })}
+        } />
     } else if (this.state.page === Pages.Question4) {
+      console.log('4', this.state.answers);
       return <FourthStep
         firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
-        answer={this.state.answers.find(a => a.step === Pages.Question3)}
+        answer={this.state.answers.find(a => a.step === Pages.Question4)}
         saveAnswer={answer => {
           this.saveFourthAnswer(answer);
         }}
@@ -316,7 +389,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return <FifthStep
         firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
-        moveNext={() => { 
+        moveNext={() => {
           this.setState({ page: Pages.Question6 });
         }} moveBack={() => {
           this.setState({ page: Pages.Question4 });
@@ -324,7 +397,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         subjects={this.state.allSubjects}
       />
     } else if (this.state.page === Pages.Question6) {
-      return <SixthStep answer={null} onChoiceChange={() => {}} moveNext={() => {}} moveBack={() => this.setState({page: Pages.Question5})} />
+      return <SixthStep answer={null} onChoiceChange={() => { }} moveNext={() => { }} moveBack={() => this.setState({ page: Pages.Question5 })} />
     }
     return <div />;
   }

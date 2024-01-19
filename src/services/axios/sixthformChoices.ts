@@ -10,6 +10,7 @@ export enum UserSubjectChoice {
 
 export interface SixthformAnswer {
   step: number;
+  saveTime: number;
   answer: any;
 }
 

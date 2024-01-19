@@ -466,6 +466,11 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       ]
     }];
 
+    console.log(234234, props)
+    if (props.answer) {
+      console.log('answer4', props.answer);
+    }
+
     this.state = {
       categories4bc: [],
       cetegoriesData: data,

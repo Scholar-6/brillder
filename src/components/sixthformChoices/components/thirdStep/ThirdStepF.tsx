@@ -13,7 +13,7 @@ export enum ThirdStepDSubStep {
 interface ThirdProps {
   subjects: SixthformSubject[];
   answer: any;
-  moveBack(): void;
+  moveBack(answer: any): void;
   moveToStep4(answer: any): void;
 }
 
@@ -33,7 +33,7 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
-    let tLevelCourses1 = [{
+    let tLevelCoursesPart1 = [{
       icon: 'six-frame12',
       name: 'Maths & English',
       subjects: [
@@ -98,7 +98,7 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
         { name: 'Culinary Arts' },
       ]
     }]
-    let tLevelCourses2 = [{
+    let tLevelCoursesPart2 = [{
       icon: 'six-frame19',
       name: 'Science & Engineering',
       subjects: [
@@ -156,9 +156,18 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
       ]
     }];
 
+    console.log(props)
+    if (
+      props.answer && props.answer.tLevelCoursesPart1 && props.answer.tLevelCoursesPart1.length > 0 &&
+      props.answer.tLevelCoursesPart2 && props.answer.tLevelCoursesPart2.length > 0
+    ) {
+      tLevelCoursesPart1 = props.answer.tLevelCoursesPart1;
+      tLevelCoursesPart2 = props.answer.tLevelCoursesPart2;
+    }
+
     this.state = {
-      tLevelCoursesPart1: tLevelCourses1,
-      tLevelCoursesPart2: tLevelCourses2,
+      tLevelCoursesPart1,
+      tLevelCoursesPart2
     }
   }
 
@@ -242,9 +251,13 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
             })}
           </div>
         </div>
-        <BackButtonSix onClick={() => this.props.moveBack()} />
+        <BackButtonSix onClick={() => {
+          this.props.moveBack({
+            tLevelCoursesPart1: this.state.tLevelCoursesPart1,
+            tLevelCoursesPart2: this.state.tLevelCoursesPart2
+          })
+        }} />
         <button className="absolute-contunue-btn font-24" onClick={() => {
-          console.log('move next 3')
           this.props.moveToStep4({
             tLevelCoursesPart1: this.state.tLevelCoursesPart1,
             tLevelCoursesPart2: this.state.tLevelCoursesPart2

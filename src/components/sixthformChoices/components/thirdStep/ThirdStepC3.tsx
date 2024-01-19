@@ -61,6 +61,8 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
       status: ThirdC3Status.None,
     }];
 
+    console.log(props.answer);
+
     if (props.answer && props.answer.categories && props.answer.categories.length > 0) {
       categories = props.answer.categories;
     }
@@ -72,15 +74,27 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
 
   renderBox(category: ThirdC3Category, i: number) {
     let className="font-12 combo-block-c3-r23";
+
+    if (category.boldText === 'Further Mathematics') {
+      if (category.status === ThirdC3Status.None) {
+      }else if (category.status === ThirdC3Status.False) {
+        className += " green";
+      } else {
+        className += " red";
+      }
+    }
+
     if (category.boldText === "English Language" || category.boldText === "Computer Science" || category.boldText === "Engineering") {
-      if (category.status === ThirdC3Status.True) {
+      if (category.status === ThirdC3Status.None) {
+      } else if (category.status === ThirdC3Status.True) {
         className += " green";
       } else {
         className += " red";
       }
     }
     if (category.boldText === "Modern Languages" || category.boldText === "Sport & Physical Education, Dance, Music, Theatre Studies") {
-      if (category.status === ThirdC3Status.BETWEEN) {
+      if (category.status === ThirdC3Status.None) {
+      } else if (category.status === ThirdC3Status.BETWEEN) {
         className += " green";
       } else {
         className += " red";

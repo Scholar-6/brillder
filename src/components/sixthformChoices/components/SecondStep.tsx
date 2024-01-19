@@ -5,6 +5,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import CheckBoxV2 from "./CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getSixthformSchools } from "services/axios/sixthformChoices";
+import BackButtonSix from "./BackButtonSix";
 
 
 enum SubStep {
@@ -33,7 +34,7 @@ enum SixthformChoice {
 interface SecondQuestionProps {
   answer: any;
   moveNext(answer: any): void;
-  moveBack(): void;
+  moveBack(answer: any): void;
 }
 
 interface SecondQuestionState {
@@ -56,18 +57,21 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     let databaseSchool = null;
     let sixthformChoice = null;
 
+    let subStep = SubStep.First;
+
     if (props.answer) {
       choice = props.answer.answer.choice;
       otherChoice = props.answer.answer.otherChoice;
       currentSchool = props.answer.answer.currentSchool;
       databaseSchool = props.answer.answer.databaseSchool;
       sixthformChoice = props.answer.answer.sixthformChoice;
+      subStep = props.answer.answer.subStep;
     }
 
     this.state = {
       choice,
       otherChoice,
-      subStep: SubStep.First,
+      subStep,
       currentSchool,
       sixthformChoice,
       databaseSchool,
@@ -167,6 +171,17 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     );
   }
 
+  moveBack() {
+    this.props.moveBack({
+      choice: this.state.choice,
+      subStep: this.state.subStep,
+      otherChoice: this.state.otherChoice,
+      currentSchool: this.state.currentSchool,
+      databaseSchool: this.state.databaseSchool,
+      sixthformChoice: this.state.sixthformChoice,
+    });
+  }
+
   moveNext() {
     this.props.moveNext({
       choice: this.state.choice,
@@ -216,14 +231,9 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
               </div>
             }
           </div>
-          <div className="absolute-back-btn" onClick={() => {
-            this.props.moveBack();
-          }}>
-            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-25">Previous</span>
-          </div>
+          <BackButtonSix onClick={() => {
+            this.setState({ subStep: SubStep.First });
+          }} />
           <button
             className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`}
             disabled={disabled}
@@ -276,14 +286,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             <a href="mailto: admin@scholar6.org">admin@scholar6.org</a>
           </div>
         </div>}
-        <div className="absolute-back-btn" onClick={() => {
-          this.props.moveBack();
-        }}>
-          <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className="font-25">Previous</span>
-        </div>
+        <BackButtonSix onClick={() => this.moveBack()} />
         <button
           className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`}
           disabled={disabled}

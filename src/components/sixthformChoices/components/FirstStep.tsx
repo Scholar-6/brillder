@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CheckBoxV2 from "./CheckBox";
+import BackButtonSix from "./BackButtonSix";
 
 interface FirstQuestionProps {
   answer: any;
@@ -88,14 +89,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
             setChoice={() => this.setState({ choice: FirstChoice.Other, popup: true })}
           />
         </div>
-        <div className="absolute-back-btn" onClick={() => {
-          this.props.moveBack();
-        }}>
-          <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className="font-25">Previous</span>
-        </div>
+        <BackButtonSix onClick={this.props.moveBack} />
         <button className="absolute-contunue-btn font-24" onClick={this.props.moveNext}>Continue to Step 2</button>
         {this.state.popup && this.renderPopup()}
       </div>
