@@ -37,9 +37,8 @@ interface TLevelCourse {
 interface ThirdProps {
   firstAnswer: any;
   answer: any;
-  subjects: SixthformSubject[];
   moveNext(answer: any): void;
-  moveBack(): void;
+  moveBack(answer: any): void;
   saveAnswer(answer: any): void;
 }
 
@@ -59,7 +58,11 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
-    let data = [{
+    let subStep = SubStep.sub4a;
+
+    let categories4bc: any[] = [];
+
+    let cetegoriesData = [{
       name: "none",
       subjects: []
     }, {
@@ -466,32 +469,57 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       ]
     }];
 
-    console.log(234234, props)
     if (props.answer) {
-      console.log('answer4', props.answer);
+      const {answer} = props.answer;
+      console.log('answer4', answer);
+      if (answer.subStep) {
+        subStep = answer.subStep;
+      }
+      if (answer.categories4bc) {
+        categories4bc = answer.categories4bc;
+      }
+      if (answer.cetegoriesData) {
+        cetegoriesData = answer.cetegoriesData;
+      }
+      if (answer.facilitatingSubjects) {
+        facilitatingSubjects = answer.facilitatingSubjects;
+      }
+      if (answer.nonFacilitatingSubjects) {
+        nonFacilitatingSubjects = answer.nonFacilitatingSubjects;
+      }
+      if (answer.categories4e) {
+        if (answer.categories4e.tVocCoursesE1Part1) {
+          tVocCoursesE1Part1 = answer.categories4e.tVocCoursesE1Part1;
+        }
+        if (answer.categories4e.tVocCoursesE1Part2) {
+          tVocCoursesE1Part2 = answer.categories4e.tVocCoursesE1Part2;
+        }
+      }
     }
 
     this.state = {
-      categories4bc: [],
-      cetegoriesData: data,
+      categories4bc,
+      cetegoriesData,
       facilitatingSubjects,
       nonFacilitatingSubjects,
       hoveredCategory: -1,
-      subStep: SubStep.sub4a,
+      subStep,
 
       tVocCoursesE1Part1,
       tVocCoursesE1Part2,
     }
   }
-
-  saveAnswer() {
+  
+  getAnswer() {
     const { categories4bc } = this.state;
     const categories4c:any[] = [];
     for (let category4b of categories4bc) {
       const category = this.state.cetegoriesData[category4b];
       categories4c.push(category);
     }
-    const answer = { 
+    return {
+      subStep: this.state.subStep,
+      cetegoriesData: this.state.cetegoriesData,
       categories4bc: categories4bc,
       facilitatingSubjects: this.state.facilitatingSubjects,
       nonFacilitatingSubjects: this.state.nonFacilitatingSubjects,
@@ -500,15 +528,18 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         tVocCoursesE1Part1: this.state.tVocCoursesE1Part1,
         tVocCoursesE1Part2: this.state.tVocCoursesE1Part2
       }
-    };
-    this.props.saveAnswer(answer);
+    }
+  }
+
+  saveAnswer() {
+    this.props.saveAnswer(this.getAnswer());
   }
 
   renderNextBtn() {
     let disabled = false;
     return (
       <button className={`absolute-contunue-btn font-24 ${disabled ? 'disabled' : ''}`} onClick={() => {
-        this.props.moveNext({});
+        this.props.moveNext(this.getAnswer());
       }}>Continue</button>
     )
   }
@@ -899,7 +930,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4e1 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.moveNext({});
+            this.props.moveNext(this.getAnswer());
           }}>Continue</button>
         </div>
       );
@@ -1093,7 +1124,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           />
         </div>
         <div className="font-16 white-blue">If you’ve changed your mind click the category above which best applies to you.</div>
-        <BackButtonSix onClick={() => this.props.moveBack()} />
+        <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
         <button className="absolute-contunue-btn font-24" onClick={() => {
           this.setState({ subStep: SubStep.sub4b });
         }}>Continue</button>

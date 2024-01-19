@@ -23,7 +23,7 @@ interface ThirdProps {
   answer: any;
   onChange(answer: any): void;
   saveAnswer(answer: any): void;
-  moveBack(): void;
+  moveBack(answer: any): void;
   moveToStepE(): void;
   moveToStepF(): void;
   moveToStep4(): void;
@@ -139,12 +139,16 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     });
   }
 
-  saveAnswer() {
-    this.props.saveAnswer({
+  getAnswer() {
+    return {
       choice: this.state.choice,
       tLevelCoursesPart1: this.state.tLevelCoursesPart1,
       tLevelCoursesPart2: this.state.tLevelCoursesPart2
-    });
+    }
+  }
+
+  saveAnswer() {
+    this.props.saveAnswer(this.getAnswer());
   }
 
   addSelectedSubject(selected: any[], courses: TLevelCourse[]) {
@@ -342,7 +346,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
             setChoice={() => this.setState({ choice: ThirdStepDChoice.Forth })}
           />
         </div>
-        <BackButtonSix onClick={this.props.moveBack} />
+        <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
         {this.renderNextDButton()}
       </div>
     );

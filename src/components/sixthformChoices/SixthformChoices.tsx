@@ -17,7 +17,6 @@ import FifthStep from "./components/FifthStep";
 import { fileUrl } from "components/services/uploadFile";
 import ProgressBarSixthform from "./components/progressBar/ProgressBarSixthform";
 import SixthStep from "./components/sixStep/SixthStep";
-import { ThirdSubStep } from "./components/thirdStep/ThirdStep";
 
 
 interface UserProfileProps {
@@ -114,22 +113,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   parseAnswer(result: any, answer: any, questionPage: Pages) {
-    /*
-    const answerR1 = this.state.answers.find(a => a.step === questionPage);
-    if (answerR1) {
-      answerR1.answer.choice = answer.choice;
-    } else {
-      this.state.answers.push(answer);
-      console.log(this.state.answers)
-      this.setState({ answers: [...this.state.answers] });
-    }*/
     if (result && result.result) {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
         answerR1.answer.choice = answer.choice;
       } else {
         result.result.answer = JSON.parse(result.result.answer);
-        console.log('parse answer', result.result.answer);
         this.state.answers.push(result.result);
         this.setState({ answers: [...this.state.answers] });
       }
@@ -185,7 +174,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         if (answer.subStep) {
           answerR1.answer.subStep = answer.subStep;
         }
-        console.log('parsedAnswer3', answerR1, answer)
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)
@@ -206,8 +194,37 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (result) {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
-        answerR1.answer.categoriesC4 = answer.categoriesC4;
+        answerR1.answer.subStep = answer.subStep;
+        answerR1.answer.categories4bc = answer.categories4bc;
+        answerR1.answer.facilitatingSubjects = answer.facilitatingSubjects;
+        answerR1.answer.nonFacilitatingSubjects = answer.nonFacilitatingSubjects;
+        answerR1.answer.categories4c = answer.categories4c;
+        answerR1.answer.categories4e = answer.categories4e;
         console.log('parsedAnswer4', answerR1)
+        this.setState({
+          allSubjects: this.sortByScore(this.state.allSubjects),
+          subjects: this.sortByScore(this.state.subjects)
+        });
+      } else {
+        result.result.answer = JSON.parse(result.result.answer);
+        this.state.answers.push(result.result);
+        this.setState({
+          answers: [...this.state.answers],
+          allSubjects: this.sortByScore(this.state.allSubjects),
+          subjects: this.sortByScore(this.state.subjects)
+        });
+      }
+    }
+  }
+
+  parseAnswer5(result: any, answer: any, questionPage: Pages) {
+    if (result) {
+      const answerR1 = this.state.answers.find(a => a.step === questionPage);
+      if (answerR1) {
+        answerR1.answer.subStep = answer.subStep;
+        answerR1.answer.abAnswer = answer.abAnswer;
+        answerR1.answer.careers = answer.careers;
+        console.log('parsedAnswer5', answerR1)
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)
@@ -280,12 +297,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.score = s2.score;
         }
       }
-      console.log('parse answer 3 1')
       this.parseAnswer3(result, answer, Pages.Question3);
     }
   }
 
   async saveFourthAnswer(answer: any) {
+    console.log('save 4 answer', answer)
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question4);
     if (result) {
       for (let subject of this.state.allSubjects) {
@@ -298,7 +315,25 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.score = s2.score;
         }
       }
-      //this.parseAnswer4(result, answer, Pages.Question4);
+      this.parseAnswer4(result, answer, Pages.Question4);
+    }
+  }
+
+  async saveFifthAnswer(answer: any) {
+    console.log('save 5 answer', answer)
+    const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question5);
+    if (result) {
+      for (let subject of this.state.allSubjects) {
+        subject.score = 0;
+      }
+      let scores = result.subjectScores.filter(s => s.score !== 0);
+      for (let subject of this.state.allSubjects) {
+        let s2 = scores.find((s) => s.id == subject.id);
+        if (s2) {
+          subject.score = s2.score;
+        }
+      }
+      this.parseAnswer5(result, answer, Pages.Question5);
     }
   }
 
@@ -323,9 +358,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           <button className="absolute-contunue-btn font-24" onClick={() => this.setState({ page: Pages.Question1 })}>Continue</button>
         </div>
       );
-    }
-
-    if (this.state.page === Pages.Question1) {
+    } else if (this.state.page === Pages.Question1) {
       return <FirstStep
         answer={this.state.answers.find(a => a.step === Pages.Question1)}
         onChoiceChange={(answer: any) => this.saveFirstAnswer(answer)}
@@ -360,44 +393,57 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           await this.saveThirdAnswer(answer);
         }}
         moveNext={async (answer: any) => {
-          console.log('move to step 4', answer);
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
           if (result) {
             this.parseAnswer3(result, answer, Pages.Question3);
             this.setState({ page: Pages.Question4 });
           }
         }}
-        moveBack={() => {
-          this.setState({ page: Pages.Question2 })}
-        } />
+        moveBack={async (answer: any) => {
+          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
+          if (result) {
+            this.parseAnswer3(result, answer, Pages.Question3);
+            this.setState({ page: Pages.Question2, answers: [...this.state.answers] })
+          }
+        }} />
     } else if (this.state.page === Pages.Question4) {
-      console.log('4', this.state.answers);
       return <FourthStep
         firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
         answer={this.state.answers.find(a => a.step === Pages.Question4)}
         saveAnswer={answer => {
           this.saveFourthAnswer(answer);
         }}
-        moveNext={() => {
+        moveNext={answer => {
+          console.log('save 4 answer', answer)
+          this.saveFourthAnswer(answer);
           this.setState({ page: Pages.Question5 });
-        }} moveBack={() => {
+        }}
+        moveBack={answer => {
+          this.saveFourthAnswer(answer);
           this.setState({ page: Pages.Question3 });
         }}
-        subjects={this.state.allSubjects}
       />
     } else if (this.state.page === Pages.Question5) {
       return <FifthStep
-        firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
-        answer={this.state.answers.find(a => a.step === Pages.Question3)}
-        moveNext={() => {
+        answer={this.state.answers.find(a => a.step === Pages.Question5)}
+        saveAnswer={(answer: any) => {
+          this.saveFifthAnswer(answer);
+        }}
+        moveNext={answer => {
+          this.saveFifthAnswer(answer);
           this.setState({ page: Pages.Question6 });
-        }} moveBack={() => {
+        }}
+        moveBack={answer => {
+          this.saveFifthAnswer(answer);
           this.setState({ page: Pages.Question4 });
         }}
-        subjects={this.state.allSubjects}
       />
     } else if (this.state.page === Pages.Question6) {
-      return <SixthStep answer={null} onChoiceChange={() => { }} moveNext={() => { }} moveBack={() => this.setState({ page: Pages.Question5 })} />
+      return <SixthStep
+        answer={this.state.answers.find(a => a.step === Pages.Question6)}
+        onChoiceChange={() => { }}
+        moveNext={() => { }}
+        moveBack={() => this.setState({ page: Pages.Question5 })} />
     }
     return <div />;
   }
@@ -491,9 +537,18 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       const { popupSubject } = this.state;
       return (
         <div className="subject-sixth-popup">
+          {subject.facilitatingSubject &&
+            <div className="facilitation-container font-12">
+              <div>
+                <SpriteIcon name="facilitating-badge" />
+                <span>Facilitating Subject</span>
+              </div>
+            </div>}
           <div className="subject-name font-24 bold">
             {this.renderCircle(subject)}
-            {popupSubject.name} {popupSubject.score}
+            <span className="subject-name-only">
+              {popupSubject.name} {popupSubject.score}
+            </span>
           </div>
           <div className="font-14">
             {subject.description ? subject.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}

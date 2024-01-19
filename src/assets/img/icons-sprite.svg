@@ -3621,4 +3621,7 @@
       </clipPath>
     </defs>
   </svg>
+  <svg id="facilitating-badge" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8.75 10.75V1L5 3.25L1.25 1V10.75L5 13L8.75 10.75Z" stroke="#4C608A" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
 </svg>

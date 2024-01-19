@@ -23,7 +23,7 @@ enum SubjectGroupR21 {
 }
 
 export enum ThirdSubStep {
-  First,
+  First = 1,
   Second,
   ThirdC1,
   ThirdC2,
@@ -40,7 +40,7 @@ interface ThirdProps {
   subjects: SixthformSubject[];
   saveThirdAnswer(answer: any): void;
   moveNext(answer: any): void;
-  moveBack(): void;
+  moveBack(answer: any): void;
 }
 
 interface ThirdQuestionState {
@@ -71,19 +71,46 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
 
     let subStep = ThirdSubStep.First;
 
-    let coursesF: any = null;
+    let firstPairResults: any[] = [];
+    let secondPairResults: any[] = [];
+
+    let categoriesC3: any = null;
+    let categoriesC4: any = null;
+
+    let ePairResults: any[] = [];
+
     let coursesD: any = null;
+    let coursesF: any = null;
 
     if (this.props.answer) {
       const {answer} = props.answer;
+      console.log('third answer subStep', answer.subStep);
       subStep = answer.subStep;
 
-      if (answer.coursesF) {
-        coursesF = answer.coursesF;
+      if (answer.firstPairResults) {
+        firstPairResults = answer.firstPairResults;
+      }
+      if (answer.secondPairResults) {
+        secondPairResults = answer.secondPairResults;
+      }
+
+      if (answer.categoriesC3) {
+        categoriesC3 = answer.categoriesC3;
+      }
+      if (answer.categoriesC4) {
+        categoriesC4 = answer.categoriesC4;
       }
 
       if (answer.coursesD) {
         coursesD = answer.coursesD;
+      }
+
+      if (answer.ePairResults) {
+        ePairResults = answer.ePairResults;
+      }
+
+      if (answer.coursesF) {
+        coursesF = answer.coursesF;
       }
     }
 
@@ -100,13 +127,13 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       otherGCSESubjects: [],
       selectedGSCESubjects: [],
 
-      firstPairResults: [],
-      secondPairResults: [],
+      firstPairResults,
+      secondPairResults,
 
-      ePairResults: [],
+      ePairResults,
 
-      categoriesC3: null,
-      categoriesC4: null,
+      categoriesC3,
+      categoriesC4,
 
       coursesD,
       coursesF
@@ -137,13 +164,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     const subjects = await getKeyStage4Subjects();
     if (subjects) {
       let subjectSelections: KeyStage4Subject[] = [];
-
-      let firstPairResults: any[] = [];
-      let secondPairResults: any[] = [];
-      let categoriesC3: any = null;
-      let categoriesC4: any = null;
-      let ePairResults: any[] = [];
-
+      
       for (let subject of subjects) {
         subject.predicedStrength = 0;
       }
@@ -152,22 +173,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         const { answer } = this.props.answer;
         if (answer.subjectSelections) {
           subjectSelections = answer.subjectSelections;
-        }
-        if (answer.firstPairResults) {
-          firstPairResults = answer.firstPairResults;
-        }
-        if (answer.secondPairResults) {
-          secondPairResults = answer.secondPairResults;
-        }
-        if (answer.categoriesC3) {
-          categoriesC3 = answer.categoriesC3;
-        }
-        if (answer.categoriesC4) {
-          categoriesC4 = answer.categoriesC4;
-        }
-
-        if (answer.ePairResults) {
-          ePairResults = answer.ePairResults;
         }
       }
 
@@ -194,12 +199,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         subjectSelections: realSubjectSelections,
         GCSESubjects: subjects.filter(s => s.isGCSE && s.isPopular),
         vocationalSubjects: subjects.filter(s => s.isVocational && s.isPopular),
-        otherGCSESubjects: subjects.filter(s => s.isGCSE && !s.isPopular),
-        firstPairResults,
-        secondPairResults,
-        categoriesC3,
-        categoriesC4,
-        ePairResults,
+        otherGCSESubjects: subjects.filter(s => s.isGCSE && !s.isPopular)
       });
     }
   }
@@ -465,12 +465,12 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               answer.coursesD = coursesD;
               this.props.saveThirdAnswer(answer);
             }}
-            moveBack={() => {
+            moveBack={coursesD => {
               let choice = this.props.firstAnswer.answer.choice;
               if (choice === FirstChoice.ShowMeAll) {
-                this.setState({ subStep: ThirdSubStep.ThirdC4 });
+                this.setState({ subStep: ThirdSubStep.ThirdC4, coursesD });
               } else {
-                this.setState({ subStep: ThirdSubStep.Second });
+                this.setState({ subStep: ThirdSubStep.Second, coursesD });
               }
             }}
             moveToStepE={() => {
@@ -656,10 +656,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
             })}
           </div>
         </div>
-        <BackButtonSix onClick={() => {
-          this.props.saveThirdAnswer(this.getAnswer());
-          this.props.moveBack();
-        }} />
+        <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
         {this.renderThirdStepAButton()}
       </div>
     );

@@ -11,10 +11,10 @@ enum SubStep {
 }
 
 interface ThirdProps {
-  pairAnswers: any[];
-  onChange(pairAnswers: any[]): void;
-  moveBack(): void;
-  moveNext(): void;
+  abAnswer: any;
+  onChange(answer: any): void;
+  moveBack(answer: any): void;
+  moveNext(answer: any): void;
 }
 
 interface ThirdQuestionState {
@@ -26,6 +26,8 @@ interface ThirdQuestionState {
 class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
+
+    let subStep = SubStep.subStepA;
 
     let subjects = [{
       correctIndex: 0,
@@ -57,10 +59,18 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
       subName: "(e.g. nursing, social work, uniformed services)"
     }];
 
-    //subjects = shuffle(subjects);
+    subjects = shuffle(subjects);
 
-    if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
-      subjects = this.props.pairAnswers;
+    if (this.props.abAnswer) {
+      console.log(this.props.abAnswer);
+      const abAnswer = this.props.abAnswer;
+      if (abAnswer.abSubjects) {
+        subjects = abAnswer.abSubjects;
+      }
+      if (abAnswer.subStep) {
+        subStep = abAnswer.subStep;
+      }
+
     }
 
     let answers = [{
@@ -90,19 +100,28 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
     this.setState({ subjects });
   }
 
+  getAnswer() {
+    return {
+      subStep: this.state.subStep,
+      abSubjects: this.state.subjects
+    }
+  }
+
   renderNextAButton() {
+    let disabled = false;
     let className = 'absolute-contunue-btn font-24';
     if (this.state.subjects.length > 0) {
       const res = this.state.subjects.find((s, i) => {
         return s.correctIndex !== i
       });
       if (res) {
+        disabled = true;
         className += ' disabled';
       }
     }
 
     return (
-      <button className={className} onClick={() => {
+      <button className={className} disabled={disabled} onClick={() => {
         this.setState({ subStep: SubStep.subStepB });
       }}>Done matching!</button>
     );
@@ -157,9 +176,9 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
               })}
             </div>
           </div>
-          <BackButtonSix onClick={() => this.setState({subStep: SubStep.subStepA})} />
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.subStepA })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.moveNext();
+            this.props.moveNext(this.getAnswer());
           }}>Continue</button>
         </div>
       );
@@ -196,11 +215,19 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
                 animation={150}
                 group={{ name: "cloning-group-name", pull: "clone" }}
                 setList={newSubjects => {
-                  this.props.onChange(newSubjects);
+                  this.props.onChange(this.getAnswer());
                   this.setState({ subjects: newSubjects });
                 }}
               >
                 {this.state.subjects.map((subject: any, i: number) => {
+                  if (subject.correctIndex === i) {
+                    return (
+                      <div className="drag-boxv2-r22 correct font-13" key={i}>
+                        <div className="bold">{subject.name}</div>
+                        <div>{subject.subName}</div>
+                      </div>
+                    );
+                  }
                   return (
                     <div className="drag-boxv2-r22 font-13" key={i}>
                       <div className="bold">{subject.name}</div>
@@ -220,7 +247,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
             })}
           </div>
         </div>
-        <BackButtonSix onClick={() => this.props.moveBack()} />
+        <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
         {this.renderNextAButton()}
       </div>
     );

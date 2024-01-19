@@ -606,11 +606,34 @@
     border-radius: 0.5vw;
     padding: 2vh 1.2vw;
 
+    .facilitation-container {
+      width: 100%;
+      position: relative;
+      > div {
+        position: absolute;
+        top: 0.3vw;
+        right: 0;
+        display: flex;
+        align-items: center;
+      }
+
+      svg {
+        width: 1vw;
+        height: 1vw;
+      }
+    }
+
     .subject-name {
+      position: relative;
       display: flex;
       align-items: center;
+      width: 20vw !important;
 
       padding-bottom: 1vh;
+
+      .subject-name-only {
+        width: 20vw;
+      }
 
       .subject-circle {
         margin-right: 0.3vw;
@@ -1302,6 +1325,10 @@
             margin: 0.2vw 0;
             padding: 0.5vw;
             background: #F6F7F9;
+
+            &.correct {
+              border: 2px solid var(--theme-green);
+            }
           }
 
           .drag-boxv3-r22.correct {
@@ -2192,13 +2219,80 @@
     }
   }
 
-  .table-body-5c {
-    height: 20vh;
-    overflow-y: scroll;
+  // step 5
+  .question .subjects-table-5c {
+    height: auto;
+    //height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 9vw - 3vh - 4.4vh);
+    background:#4C608A1A;
 
-    svg {
-      width: 1vw;
-      height: 1vw;
+    .checkbox-column {
+      width: 4vw;
+    }
+
+    .table-head {
+      background: none;
+
+      .header-label {
+        padding-left: 0.8vw;
+        justify-content: flex-start;
+      }
+    }
+
+    .top-row {
+      padding-top: 1.4vh;
+      padding-left: 0.6vw;
+    }
+
+    .table-5c-body-row {
+      display: flex;
+      cursor: pointer;
+      padding-right: 1vw;
+    }
+
+    .table-5c-column {
+      width: 18vw;
+    }
+
+    .table-body-5c {
+      padding-bottom: 1vh;
+      height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 9vw - 3vh - 4.4vh - 2vh - 1.5vw);
+      overflow-y: scroll;
+  
+      svg {
+        width: 1vw;
+        height: 1vw;
+      }
+
+      .value-column-5c {
+        background: #F6F7F9;
+        display: flex;
+        padding-left: 1vw;
+        align-items: center;
+        min-height: 7vh;
+        margin-bottom: 0.4vh;
+
+        &.border-right {
+          border-right: 4px solid #4C608A1A;
+        }
+
+        &.first {
+          border-top-left-radius: 0.5vw;
+          border-bottom-left-radius: 0.5vw;
+        }
+        &.last {
+          border-top-right-radius: 0.5vw;
+          border-bottom-right-radius: 0.5vw;
+        }
+      }
+
+      .value-column-5c-big {
+        display: flex;
+        align-items: center;
+        width: 54.5vw;
+        min-height: 7vh;
+        background: #F6F7F9;
+        margin-bottom: 0.4vh;
+      }
     }
   }
 
