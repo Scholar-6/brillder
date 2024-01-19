@@ -15,7 +15,7 @@ interface FirstQuestionProps {
   answer: any;
   onChoiceChange(answer: any): void;
   moveNext(): void;
-  moveBack(): void;
+  moveBack(answer: any): void;
 }
 
 export enum SixthSubStep {
@@ -823,7 +823,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           Each of your answers in this final part helps us to evaluate your interests and instincts, the type of intelligence you possess and your character.
         </div>
         <SpriteIcon name="sixthform-sixth-description" className="big-svg-description" />
-        <BackButtonSix onClick={this.props.moveBack} />
+        <BackButtonSix onClick={() => this.props.moveBack({})} />
         <button className="absolute-contunue-btn font-24" onClick={() => {
           this.setState({
             subStep: SixthSubStep.sixA
