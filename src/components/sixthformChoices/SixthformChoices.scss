@@ -2267,6 +2267,12 @@
       }
     }
 
+    .big-svg-description {
+      margin-top: 2vh;
+      height: calc(40vh - 2vw);
+      width: 100%;
+    }
+
     .boxes-container {
       &.start {
         margin-right: 0.9vw;

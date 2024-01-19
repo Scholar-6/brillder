@@ -809,7 +809,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
       );
     }
     return (
-      <div className="question">
+      <div className="question question-6">
         <div className="bold font-32 question-text">
           This part is about YOU
         </div>
@@ -822,6 +822,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
         <div className="font-16">
           Each of your answers in this final part helps us to evaluate your interests and instincts, the type of intelligence you possess and your character.
         </div>
+        <SpriteIcon name="sixthform-sixth-description" className="big-svg-description" />
         <BackButtonSix onClick={this.props.moveBack} />
         <button className="absolute-contunue-btn font-24" onClick={() => {
           this.setState({

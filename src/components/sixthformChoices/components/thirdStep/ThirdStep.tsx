@@ -8,7 +8,7 @@ import ThirdStepC1 from "./ThirdStepC1";
 import ThirdStepC2 from "./ThirdStepC2";
 import ThirdStepC3, { ThirdC3Category } from "./ThirdStepC3";
 import ThirdStepC4 from "./ThirdStepC4";
-import ThirdStepD from "./ThirdStepD";
+import ThirdStepD, { ThirdStepDChoice } from "./ThirdStepD";
 import ThirdStepE from "./ThirdStepE";
 import ThirdStepF from "./ThirdStepF";
 import { FirstChoice } from "../FirstStep";
@@ -21,7 +21,7 @@ enum SubjectGroupR21 {
   PracticalVocational,
 }
 
-enum SubStep {
+export enum ThirdSubStep {
   First,
   Second,
   ThirdC1,
@@ -43,7 +43,7 @@ interface ThirdProps {
 }
 
 interface ThirdQuestionState {
-  subStep: SubStep;
+  subStep: ThirdSubStep;
   typedSubject: string;
   subjectGroup: SubjectGroupR21;
   GCSESubjects: KeyStage4Subject[];
@@ -68,8 +68,16 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
+    let subStep = ThirdSubStep.First;
+
+    if (this.props.answer) {
+      subStep = props.answer.answer.subStep;
+    }
+
+    console.log('answer', props.answer);
+
     this.state = {
-      subStep: SubStep.First,
+      subStep,
       typedSubject: '',
       subjectGroup: SubjectGroupR21.GCSE,
       GCSESubjects: [],
@@ -98,6 +106,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
 
   getAnswer() {
     return {
+      subStep: this.state.subStep,
       subjectSelections: this.state.subjectSelections,
       firstPairResults: this.state.firstPairResults,
       secondPairResults: this.state.secondPairResults,
@@ -123,6 +132,9 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       let categoriesC3: any = null;
       let categoriesC4: any = null;
       let ePairResults: any[] = [];
+
+      let coursesD: any = null;
+      let coursesF: any = null;
 
       for (let subject of subjects) {
         subject.predicedStrength = 0;
@@ -151,10 +163,10 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         }
 
         if (answer.coursesD) {
-          this.setState({ coursesD: answer.coursesD });
+          coursesD = answer.coursesD;
         }
         if (answer.coursesF) {
-          this.setState({ coursesF: answer.coursesF });
+          coursesF = answer.coursesF;
         }
       }
 
@@ -186,7 +198,9 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         secondPairResults,
         categoriesC3,
         categoriesC4,
-        ePairResults
+        ePairResults,
+        coursesD,
+        coursesF
       });
     }
   }
@@ -211,9 +225,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   moveNext() {
-    this.props.moveNext({
-      subjectSelections: this.state.subjectSelections
-    });
+    this.props.moveNext(this.getAnswer());
   }
 
   renderThirdStepBButton() {
@@ -232,9 +244,9 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         // all courses and A-levels can go to C1 else D
         let choice = this.props.firstAnswer.answer.choice;
         if (choice === FirstChoice.ALevel || choice === FirstChoice.ShowMeAll) {
-          this.setState({ subStep: SubStep.ThirdC1 });
+          this.setState({ subStep: ThirdSubStep.ThirdC1 });
         } else {
-          this.setState({ subStep: SubStep.ThirdD });
+          this.setState({ subStep: ThirdSubStep.ThirdD });
         }
       }}>Continue</button>
     );
@@ -252,7 +264,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <button className={className} disabled={disabled} onClick={() => {
         this.props.saveThirdAnswer(this.getAnswer());
-        this.setState({ subStep: SubStep.Second });
+        this.setState({ subStep: ThirdSubStep.Second });
       }}>Continue</button>
     );
   }
@@ -324,26 +336,30 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
-    if (this.state.subStep === SubStep.ThirdF) {
+    if (this.state.subStep === ThirdSubStep.ThirdF) {
       return (
         <div className="question question-3d">
           <ThirdStepF
             subjects={this.props.subjects}
             answer={this.state.coursesF}
-            moveBack={() => {
-              this.setState({ subStep: SubStep.ThirdE });
+            moveBack={coursesF => {
+              this.setState({ coursesF });
+              let thirdDChoice = this.state.coursesD.choice;
+              if (thirdDChoice === ThirdStepDChoice.Second || thirdDChoice === ThirdStepDChoice.Third) {
+                this.setState({ subStep: ThirdSubStep.ThirdD });
+              } else {
+                this.setState({ subStep: ThirdSubStep.ThirdE });
+              }
             }}
             moveToStep4={coursesF => {
-              this.setState({ coursesF });
               let answer = this.getAnswer();
               answer.coursesF = coursesF;
-              this.props.saveThirdAnswer(answer);
-              this.moveNext();
+              this.props.moveNext(answer);
             }}
           />
         </div>
       );
-    } else if (this.state.subStep === SubStep.ThirdE) {
+    } else if (this.state.subStep === ThirdSubStep.ThirdE) {
       return (
         <div className="question">
           <ThirdStepE
@@ -352,14 +368,14 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ ePairResults });
             }}
           />
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.ThirdD })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.ThirdD })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.ThirdF });
+            this.setState({ subStep: ThirdSubStep.ThirdF });
           }}>Continue</button>
         </div>
       );
-    } else if (this.state.subStep === SubStep.ThirdD) {
+    } else if (this.state.subStep === ThirdSubStep.ThirdD) {
       return (
         <div className="question question-3d">
           <ThirdStepD
@@ -375,18 +391,18 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
             moveBack={() => {
               let choice = this.props.firstAnswer.answer.choice;
               if (choice === FirstChoice.ShowMeAll) {
-                this.setState({ subStep: SubStep.ThirdC4 });
+                this.setState({ subStep: ThirdSubStep.ThirdC4 });
               } else {
-                this.setState({ subStep: SubStep.Second });
+                this.setState({ subStep: ThirdSubStep.Second });
               }
             }}
             moveToStepE={() => {
               this.props.saveThirdAnswer(this.getAnswer());
-              this.setState({ subStep: SubStep.ThirdE });
+              this.setState({ subStep: ThirdSubStep.ThirdE });
             }}
             moveToStepF={() => {
               this.props.saveThirdAnswer(this.getAnswer());
-              this.setState({ subStep: SubStep.ThirdF });
+              this.setState({ subStep: ThirdSubStep.ThirdF });
             }}
             moveToStep4={() => {
               this.props.saveThirdAnswer(this.getAnswer());
@@ -395,7 +411,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
           />
         </div>
       );
-    } else if (this.state.subStep === SubStep.ThirdC4) {
+    } else if (this.state.subStep === ThirdSubStep.ThirdC4) {
       return (
         <div className="question question-c4">
           <ThirdStepC4
@@ -407,36 +423,36 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
                 this.moveNext()
               } else {
-                this.setState({ subStep: SubStep.ThirdD });
+                this.setState({ subStep: ThirdSubStep.ThirdD });
               }
             }}
           />
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.ThirdC3 })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.ThirdC3 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
               this.moveNext()
             } else {
-              this.setState({ subStep: SubStep.ThirdD });
+              this.setState({ subStep: ThirdSubStep.ThirdD });
             }
           }}>Continue</button>
         </div>
       );
-    } else if (this.state.subStep === SubStep.ThirdC3) {
+    } else if (this.state.subStep === ThirdSubStep.ThirdC3) {
       return (
         <div className="question question-c3">
           <ThirdStepC3
             answer={this.state.categoriesC3}
             onChange={categoriesC3 => this.setState({ categoriesC3 })}
           />
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.ThirdC2 })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.ThirdC2 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.ThirdC4 });
+            this.setState({ subStep: ThirdSubStep.ThirdC4 });
           }}>Continue</button>
         </div>
       );
-    } else if (this.state.subStep === SubStep.ThirdC2) {
+    } else if (this.state.subStep === ThirdSubStep.ThirdC2) {
       return (
         <div className="question step3question5">
           <ThirdStepC2
@@ -445,21 +461,14 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ secondPairResults });
             }}
           />
-          <div className="absolute-back-btn" onClick={() => {
-            this.setState({ subStep: SubStep.ThirdC1 });
-          }}>
-            <svg viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 1L1 7L7 13" stroke="#4C608A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-25">Previous</span>
-          </div>
+          <BackButtonSix onClick={() => { this.setState({ subStep: ThirdSubStep.ThirdC1 }) }} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.ThirdC3 });
+            this.setState({ subStep: ThirdSubStep.ThirdC3 });
           }}>Continue</button>
         </div>
       );
-    } else if (this.state.subStep === SubStep.ThirdC1) {
+    } else if (this.state.subStep === ThirdSubStep.ThirdC1) {
       return (
         <div className="question">
           <ThirdStepC1
@@ -468,21 +477,21 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ firstPairResults });
             }}
           />
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.Second })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.Second })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.ThirdC2 });
+            this.setState({ subStep: ThirdSubStep.ThirdC2 });
           }}>Continue</button>
         </div>
       );
-    } else if (this.state.subStep === SubStep.Second) {
+    } else if (this.state.subStep === ThirdSubStep.Second) {
       return (
         <div className="question">
           <ThirdStepBTable
             subjectSelections={this.state.subjectSelections}
             setSubjectSelections={subjectSelections => this.setState({ subjectSelections })}
           />
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.First })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.First })} />
           {this.renderThirdStepBButton()}
         </div>
       );
@@ -570,7 +579,10 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
             })}
           </div>
         </div>
-        <BackButtonSix onClick={() => this.props.moveBack()} />
+        <BackButtonSix onClick={() => {
+          this.props.saveThirdAnswer(this.getAnswer());
+          this.props.moveBack();
+        }} />
         {this.renderThirdStepAButton()}
       </div>
     );
