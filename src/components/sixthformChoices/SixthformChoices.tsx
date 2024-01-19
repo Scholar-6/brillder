@@ -565,8 +565,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               <div>
                 <SpriteIcon name="facility-icon-hat" />
               </div>
-              <div className="font-12">Facilitating Subject</div>
-              <div className="bold font-12">{subject.facilitatingSubject ? subject.facilitatingSubject : 'STEM'}</div>
+              <div className="font-12">Subject Group</div>
+              <div className="bold font-12">{subject.subjectGroup ? subject.subjectGroup : 'STEM'}</div>
             </div>
             <div className="box-v32 m-l">
               <div>
