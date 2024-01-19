@@ -14,6 +14,7 @@ import ThirdStepF from "./ThirdStepF";
 import { FirstChoice } from "../FirstStep";
 import ThirdStepBTable from "./ThirdStepBTable";
 import BackButtonSix from "../BackButtonSix";
+import { enterPressed } from "components/services/key";
 
 
 enum SubjectGroupR21 {
@@ -70,11 +71,21 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
 
     let subStep = ThirdSubStep.First;
 
-    if (this.props.answer) {
-      subStep = props.answer.answer.subStep;
-    }
+    let coursesF: any = null;
+    let coursesD: any = null;
 
-    console.log('answer', props.answer);
+    if (this.props.answer) {
+      const {answer} = props.answer;
+      subStep = answer.subStep;
+
+      if (answer.coursesF) {
+        coursesF = answer.coursesF;
+      }
+
+      if (answer.coursesD) {
+        coursesD = answer.coursesD;
+      }
+    }
 
     this.state = {
       subStep,
@@ -97,8 +108,8 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       categoriesC3: null,
       categoriesC4: null,
 
-      coursesD: null,
-      coursesF: null
+      coursesD,
+      coursesF
     }
 
     this.loadSubjects();
@@ -133,9 +144,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       let categoriesC4: any = null;
       let ePairResults: any[] = [];
 
-      let coursesD: any = null;
-      let coursesF: any = null;
-
       for (let subject of subjects) {
         subject.predicedStrength = 0;
       }
@@ -160,13 +168,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
 
         if (answer.ePairResults) {
           ePairResults = answer.ePairResults;
-        }
-
-        if (answer.coursesD) {
-          coursesD = answer.coursesD;
-        }
-        if (answer.coursesF) {
-          coursesF = answer.coursesF;
         }
       }
 
@@ -199,8 +200,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         categoriesC3,
         categoriesC4,
         ePairResults,
-        coursesD,
-        coursesF
       });
     }
   }
@@ -242,11 +241,13 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       <button className={className} disabled={disabled} onClick={() => {
         this.props.saveThirdAnswer(this.getAnswer());
         // all courses and A-levels can go to C1 else D
+        if (this.props.firstAnswer && this.props.firstAnswer.answer) {
         let choice = this.props.firstAnswer.answer.choice;
-        if (choice === FirstChoice.ALevel || choice === FirstChoice.ShowMeAll) {
-          this.setState({ subStep: ThirdSubStep.ThirdC1 });
-        } else {
-          this.setState({ subStep: ThirdSubStep.ThirdD });
+          if (choice === FirstChoice.ALevel || choice === FirstChoice.ShowMeAll) {
+            this.setState({ subStep: ThirdSubStep.ThirdC1 });
+          } else {
+            this.setState({ subStep: ThirdSubStep.ThirdD });
+          }
         }
       }}>Continue</button>
     );
@@ -282,12 +283,13 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
 
   renderSubjectsBox() {
     if (this.state.subjectGroup === SubjectGroupR21.GCSE && this.state.GCSESexpanded) {
+      let subjects = [...this.state.otherGCSESubjects, ...this.state.GCSESubjects];
       return (
         <div className="subjects-typer-r21 font-14">
           <Autocomplete
             multiple={true}
             value={this.state.selectedGSCESubjects}
-            options={this.state.otherGCSESubjects}
+            options={subjects}
             onChange={(e: any, vv: any) => {
               let v = vv[0];
               if (v) {
@@ -321,12 +323,85 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
                 label=""
                 className="font-14"
                 value={this.state.typedSubject}
+                onKeyDown={(e: any) => {
+                  let pressed = enterPressed(e);
+                  if (pressed) {
+                    const value = e.target.value;
+                    this.state.subjectSelections.push({
+                      id: -1,
+                      name: value,
+                      isGCSE: true,
+                      isVocational: false,
+                      isPopular: false,
+                      selected: true,
+                    } as any);
+                    this.setState({ subjectSelections: this.state.subjectSelections, typedSubject: '' });
+                  }
+                }}
                 onChange={() => this.setState({ typedSubject: params.inputProps.value })}
-                placeholder={
-                  this.state.subjectGroup === SubjectGroupR21.GCSE
-                    ? "If you are doing any other, rarer GCSEs, please add them here"
-                    : "If you are doing any other, rarer practical and vocational subjects, please add them here"
+                placeholder="If you are doing any other, rarer GCSEs, please add them here"
+              />
+            )}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className="subjects-typer-r21 font-14">
+          <Autocomplete
+            multiple={true}
+            value={this.state.selectedGSCESubjects}
+            options={this.state.vocationalSubjects}
+            onChange={(e: any, vv: any) => {
+              let v = vv[0];
+              if (v) {
+                const subjects = this.state.GCSESubjects;
+                const found = subjects.find(s => s.name === v.name);
+                const selected = this.state.subjectSelections;
+                if (!found) {
+                  v.selected = true;
+                  subjects.push(v);
+                  selected.push(v);
+                  this.setState({ GCSESubjects: subjects, subjectSelections: selected, selectedGSCESubjects: [], typedSubject: '' });
+                  return;
                 }
+              }
+              this.setState({ selectedGSCESubjects: [], typedSubject: '' });
+            }}
+            noOptionsText="Sorry, try typing something else"
+            className="subject-autocomplete font-14"
+            getOptionLabel={(option: any) => option.name}
+            renderOption={(loopSchool: any) => (
+              <React.Fragment>
+                <MenuItem>
+                  {loopSchool.name}
+                </MenuItem>
+              </React.Fragment>
+            )}
+            renderInput={(params: any) => (
+              <TextField
+                {...params}
+                variant="standard"
+                label=""
+                className="font-14"
+                value={this.state.typedSubject}
+                onKeyDown={(e: any) => {
+                  let pressed = enterPressed(e);
+                  if (pressed) {
+                    const value = e.target.value;
+                    this.state.subjectSelections.push({
+                      id: -1,
+                      name: value,
+                      isGCSE: false,
+                      isVocational: true,
+                      isPopular: false,
+                      selected: true,
+                    } as any);
+                    this.setState({ subjectSelections: this.state.subjectSelections, typedSubject: '' });
+                  }
+                }}
+                onChange={() => this.setState({ typedSubject: params.inputProps.value })}
+                placeholder="If you are doing any other, rarer practical and vocational subjects, please add them here"
               />
             )}
           />
@@ -337,6 +412,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     if (this.state.subStep === ThirdSubStep.ThirdF) {
+      console.log('coursesF', this.state.coursesF)
       return (
         <div className="question question-3d">
           <ThirdStepF
@@ -354,6 +430,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
             moveToStep4={coursesF => {
               let answer = this.getAnswer();
               answer.coursesF = coursesF;
+              this.setState({ coursesF });
               this.props.moveNext(answer);
             }}
           />

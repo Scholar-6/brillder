@@ -90,7 +90,13 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
           />
         </div>
         <BackButtonSix onClick={this.props.moveBack} />
-        <button className="absolute-contunue-btn font-24" onClick={this.props.moveNext}>Continue to Step 2</button>
+        <button
+          className={`absolute-contunue-btn font-24 ${this.state.choice === null ? 'disabled' : ''}`}
+          disabled={this.state.choice === null}
+          onClick={this.props.moveNext}
+        >
+          Continue to Step 2
+        </button>
         {this.state.popup && this.renderPopup()}
       </div>
     );
