@@ -29,6 +29,7 @@ export interface SixthformSubject {
   description: string;
   facilitatingSubject: string;
   userChoice?: UserSubjectChoice;
+  subjectGroup: string;
   oftenWith: string;
   candidates: number;
   score: number;
