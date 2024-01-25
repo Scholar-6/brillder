@@ -68,9 +68,8 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
-    console.log('234234')
     return (
-      <div>
+      <div className="question-step-3c1">
         <div className="bold font-32 question-text-3">
           New Subjects
         </div>

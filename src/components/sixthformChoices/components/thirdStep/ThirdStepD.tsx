@@ -259,7 +259,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       );
     } else if (this.state.subStep === ThirdStepDSubStep.TableLeaf) {
       return (
-        <div className="font-16">
+        <div className="font-16 question-step-3d-tableleaf">
           <div className="bold font-32 question-text-3">
             T Levels
           </div>

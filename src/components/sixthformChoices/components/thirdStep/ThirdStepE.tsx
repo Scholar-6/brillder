@@ -63,7 +63,7 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     return (
-      <div>
+      <div className="question-step-3e">
         <div className="bold font-32 question-text-3">
           VAPs
         </div>

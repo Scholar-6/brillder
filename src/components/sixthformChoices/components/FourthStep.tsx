@@ -69,35 +69,77 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       name: "Traditional STEM degrees",
       description: "For many science courses there is an expectation that you will have done A-level Maths.",
       subjects: [{
-        name: "Chemistry",
-        selected: false,
-      }, {
-        name: "Mathematics",
-        selected: false,
-      }, {
-        name: "Engineering",
+        name: "Astronomy",
         selected: false,
       }, {
         name: "Biology",
         selected: false,
       }, {
-        name: "Physics",
+        name: "Computer Science",
+        selected: false,
+      }, {
+        name: "Chemistry",
+        selected: false,
+      },{
+        name: "Data Science",
+        selected: false,
+      },{
+        name: "Dentistry",
+        selected: false,
+      },{
+        name: "Ecology",
+        selected: false,
+      }, {
+        name: "Engineering",
+        selected: false,
+      }, {
+        name: "Geology",
+        selected: false,
+      }, {
+        name: "Mathematics",
         selected: false,
       }, {
         name: "Medicine (Human and Veterinary)",
         selected: false,
       }, {
-        name: "Computer Science",
+        name: "Pharmacology",
         selected: false,
       }, {
-        name: "Geology",
+        name: "Physics",
+        selected: false,
+      }, {
+        name: "Robotics",
+        selected: false,
+      }, {
+        name: "Zoology",
         selected: false,
       }]
     }, {
       name: "Interdisciplinary Sciences",
       description: "Some subjects fuse scientific or statistical method with aspects of Humanities and/or Arts",
       subjects: [{
+        name: "Agriculture & Forestry",
+        selected: false,
+      }, {
+        name: "Anthropology",
+        selected: false,
+      }, {
+        name: "Archaeology",
+        selected: false,
+      }, {
+        name: "Architecture",
+        selected: false,
+      }, {
+        name: "Criminology",
+        selected: false,
+      }, {
         name: "Economics",
+        selected: false,
+      }, {
+        name: "Environmental Science",
+        selected: false,
+      }, {
+        name: "Forensic Science",
         selected: false,
       }, {
         name: "Geography",
@@ -106,19 +148,25 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         name: "Psychology",
         selected: false,
       }, {
-        name: "Environmental Sciences",
-        selected: false,
-      }, {
         name: "Sociology",
-        selected: false,
-      }, {
-        name: "Architecture",
         selected: false,
       }]
     }, {
       name: "Traditional Humanities",
       subjects: [{
+        name: "Classics & Ancient History",
+        selected: false,
+      }, {
+        name: "Education",
+        selected: false,
+      }, {
+        name: "English Literature",
+        selected: false,
+      }, {
         name: "History",
+        selected: false,
+      }, {
+        name: "Law",
         selected: false,
       }, {
         name: "Politics",
@@ -126,26 +174,16 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       }, {
         name: "Religion, Philosophy & Ethics",
         selected: false,
-      }, {
-        name: "Law",
-        selected: false,
-      }, {
-        name: "English Literature",
-        selected: false,
       }]
     }, {
-      name: "Languages & Cultures",
       subjects: [{
         name: "Modern European Languages (French, Spanish etc.)",
         selected: false,
       }, {
-        name: "Linguistics",
+        name: "Other Modern Languages (Arabic, Mandarin, Japanese etc.)",
         selected: false,
       }, {
-        name: "Eastern and Oriental Languages (Arabic, Mandarin, Japanese etc.)",
-        selected: false,
-      }, {
-        name: "Classical Languages like Latin (also, Classical Civilisation / Archaeology)",
+        name: "Classics (Latin, Ancient Greek, and also, Classical Civilisation / Archaeology)",
         selected: false,
       }]
     }, {
@@ -553,9 +591,9 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     if (categories4bc.includes(category)) {
       categories4bc = categories4bc.filter(c => c !== category);
     } else {
-      if (categories4bc.length < 3) {
+      //if (categories4bc.length < 3) {
         categories4bc.push(category);
-      }
+      //}
     }
     this.setState({ categories4bc });
   }
@@ -968,7 +1006,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       );
     } else if (this.state.subStep === SubStep.sub4d2) {
       return (
-        <div className="question">
+        <div className="question question-step-4d2">
           <div className="bold font-32 question-text-4">
             Non-Facilitating Subjects
           </div>
@@ -999,7 +1037,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       );
     } else if (this.state.subStep === SubStep.sub4d1) {
       return (
-        <div className="question">
+        <div className="question question-step-4d1">
           <div className="bold font-32 question-text-4">
             Prestige & Facilitating Subjects
           </div>

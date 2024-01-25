@@ -239,7 +239,7 @@
       
       .level-round {
         position: absolute;
-        top: 0.5vw;
+        top: 0.3vw;
         right: 0.5vw;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
@@ -889,7 +889,7 @@
       margin-top: 2vh;
       background-color: #4C608A1A;
       width: 100%;
-      height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 6vw - 3vh - 3.4vh - 5vh);
+      height: auto;
 
       .table-head {
         display: flex;
@@ -1046,7 +1046,8 @@
       }
 
       .table-body {
-        height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 6vw - 3vh - 3.4vh - 5vh - 1.4vw - 2vh);
+        height: auto;
+        max-height: calc(100vh - 5.834vw - 23vh - 6.8vw);
         overflow-y: scroll;
 
         >div {
@@ -1454,13 +1455,24 @@
     }
   }
 
-  // step3 c2
-  .step3question5 {
+  .question-step-3c1 {
     .drag-container-r22 {
-      height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 8vh - 1vw);
+      height: auto;
 
       .container-r22 {
-        height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 8vh - 1vw - 1vh - 1.1vw - 2vh);
+        height: auto;
+        max-height: calc(100vh - 5.834vw - 25vh - 10.5vw);
+      }
+    }
+  }
+
+  .question-step-3c2 {
+    .drag-container-r22 {
+      height: auto;
+
+      .container-r22 {
+        height: auto;
+        max-height: calc(100vh - 5.834vw - 26vh - 8vw);
       }
     }
   }
@@ -1508,6 +1520,10 @@
       }
     }
 
+    .tick-container-c3-r23 .scrollbox-c3-r23 {
+      height: auto;
+      max-height: calc(100vh - 20vh - 16vw);
+    }
   }
 
   // step3 c4
@@ -1531,7 +1547,7 @@
         border-radius: 0.5vw;
         width: 17vw;
         overflow-y: scroll;
-        height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 8vw - 3vh - 3.4vh - 5vh - 2vh - 1vw);
+        height: calc(100vh - 5.834vw - 25.4vh - 9vw);
         background: #4C608A1A;
         margin-top: 2vh;
         display: flex;
@@ -1705,6 +1721,12 @@
       height: calc(100vh - 5.834vw - 2vw - 4vh - 2vh - 10vh - 5vw - 7vh - 2vw);
     }
 
+    .question-step-3d-tableleaf {
+      .d3-table-scroll-container {
+        height: calc(100vh - 5.834vw - 22vh - 7vw);
+      }
+    }
+
     .coursor-pointer {
       cursor: pointer;
     }
@@ -1802,6 +1824,22 @@
         width: 40vw;
         text-align: center;
       }
+    }
+  }
+
+  .question-step-3e {
+    .drag-container-r22 {
+      height: 100%;
+
+      .container-r22 {
+        height: auto !important;
+        max-height: calc(100vh - 5.834vw - 22vh - 8vw - 3.4vh);
+      }
+    }
+  }
+  .question .question-step-3f {
+    .d3-table-scroll-container {
+      height: calc(100vh - 5.834vw - 21vh - 7.6vw);
     }
   }
 
@@ -1934,7 +1972,7 @@
 
   // step 4c
   .question .categories-container-4c-r23 {
-    height: calc(100vh - 7.834vw - 4vh - 2vh - 9vh - 2vh - 3.4vh - 5vh - 2vh - 5.1vw);
+    height: calc(100vh - 7.834vw - 20vh - 7vw);
     overflow-y: scroll;
 
     .checkbox-container-r23 {
@@ -1984,8 +2022,8 @@
   }
 
   // step 4d1
-  .question .facilitation-category {
-    height: calc(100vh - 7.834vw - 4vh - 2vh - 9vh - 2vh - 3.4vh - 5vh - 2vh - 8vw);
+  .question-step-4d1 .facilitation-category {
+    height: calc(100vh - 7.834vw - 20vh - 9vw);
 
     >div {
       margin-bottom: 0;
@@ -1993,8 +2031,8 @@
   }
 
   // step 4d2
-  .question .non-facilitation-category {
-    height: calc(100vh - 7.834vw - 4vh - 2vh - 9vh - 2vh - 3.4vh - 5vh - 2vh - 5vw);
+  .question-step-4d2 .non-facilitation-category {
+    height: calc(100vh - 7.834vw - 18vh - 7vw);
 
     >div {
       margin-bottom: 0;
@@ -2140,14 +2178,23 @@
     }
   }
 
+  .question .drag-container-5a {
+      height: auto;
+      .container-r22 {
+        height: auto;
+        max-height: calc(100vh - 5.834vw - 22vh - 12.5vw);
+      }
+  }
   .question .drag-container-5a .container-r22 {
     .left-part-r22 {
       width: 20vw;
-      padding-bottom: 2vw;
+      padding-bottom: 0.4vw;
 
       .drag-boxv2-r22 {
         cursor: pointer;
-        height: 2.5vw !important;
+        padding-top: 0.3vw;
+        padding-bottom: 0;
+        height: 2.7vw !important;
         position: relative;
         width: 20vw;
 
@@ -2169,7 +2216,7 @@
         border-top-right-radius: 0.3vw;
         border-bottom-right-radius: 0.3vw;
         justify-content: center;
-        height: 2.5vw !important;
+        height: 2.7vw !important;
       }
     }
 

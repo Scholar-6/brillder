@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import { SixthformSubject } from "services/axios/sixthformChoices";
 import BackButtonSix from "./BackButtonSix";
 import FifthStepAB from "./FifthStepAB";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -253,7 +252,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
     }
 
     return (
-      <div className="question">
+      <div className="question question-step-5a">
         <div className="bold font-32 question-text-4">
           Categories of Career
         </div>
