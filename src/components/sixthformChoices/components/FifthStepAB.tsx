@@ -39,7 +39,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
       subName: "(e.g. electrician, automotive maintenance)"
     }, {
       correctIndex: 2,
-      name: "Discursive, Managerial and Strategic ",
+      name: "Discursive, Managerial and Strategic",
       subName: "(e.g. law, media, advertising, HR, civil service)"
     }, {
       correctIndex: 3,
@@ -55,14 +55,13 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
       subName: "(secondary school and university posts)"
     }, {
       correctIndex: 6,
-      name: "Skilled roles in health, social care, public service ",
+      name: "Skilled roles in health, social care, public service",
       subName: "(e.g. nursing, social work, uniformed services)"
     }];
 
     subjects = shuffle(subjects);
 
     if (this.props.abAnswer) {
-      console.log(this.props.abAnswer);
       const abAnswer = this.props.abAnswer;
       if (abAnswer.abSubjects) {
         subjects = abAnswer.abSubjects;
@@ -70,7 +69,6 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
       if (abAnswer.subStep) {
         subStep = abAnswer.subStep;
       }
-
     }
 
     let answers = [{
@@ -90,7 +88,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
     }];
 
     this.state = {
-      subStep: SubStep.subStepA,
+      subStep,
       subjects,
       answers
     }
@@ -140,7 +138,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
                 return (
                   <div className={"drag-boxv2-r22 font-13" + (subject.active ? ' active' : '')} key={i} onClick={() => {
                     let subjects = this.state.subjects.filter(s => s.active === true);
-                    if (subjects.length < 2 || subject.active === true) {
+                    if (subjects.length < 10 || subject.active === true) {
                       subject.active = !subject.active;
                       this.setState({ subjects: this.state.subjects });
                     }

@@ -46,7 +46,7 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
       subjects: [
         { name: 'Engineering' },
         { name: 'Mechanical Engineering' },
-        { name: 'Electrical and Electronic Engineering' },
+        { name: 'Electrical & Electronic Engineering' },
         { name: 'Manufacturing Engineering' },
         { name: 'Motor Vehicle Maintenance' },
       ],
@@ -84,7 +84,7 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
       icon: 'six-frame7',
       name: 'Built Environment',
       subjects: [
-        { name: 'Construction & Built Environment ' },
+        { name: 'Construction & Built Environment' },
         { name: 'Electrical Installation' },
         { name: 'Plumbing' },
         { name: 'Brickwork' },
@@ -234,7 +234,7 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     return (
-      <div className="font-16">
+      <div className="font-16 question-step-3f">
         <div className="bold font-32 question-text-3">
           Vocational, Applied and Practical Courses other than T-levels
         </div>

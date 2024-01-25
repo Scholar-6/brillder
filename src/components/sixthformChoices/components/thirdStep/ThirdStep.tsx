@@ -120,7 +120,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       subjectGroup: SubjectGroupR21.GCSE,
       GCSESubjects: [],
       GCSESexpanded: false,
-      limit: 16,
+      limit: 1300,
       vocationalSubjects: [],
       subjectSelections: [],
       allSubjects: [],
