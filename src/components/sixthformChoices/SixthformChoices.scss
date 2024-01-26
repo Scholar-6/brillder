@@ -2458,6 +2458,10 @@
       .check-box-container {
         padding-right: 0 !important;
       }
+
+      .table-body {
+        max-height: calc(100vh - 5.834vw - 23vh - 9vw);
+      }
     }
   }
 
@@ -2490,6 +2494,9 @@
       .check-box-container {
         padding-right: 0 !important;
       }
+      .table-body {
+        max-height: calc(100vh - 5.834vw - 23vh - 9vw);
+      }
     }
   }
 
@@ -2520,6 +2527,10 @@
 
       .check-box-container {
         padding-right: 0 !important;
+      }
+
+      .table-body {
+        max-height: calc(100vh - 5.834vw - 23vh - 9vw);
       }
     }
   }
@@ -2559,6 +2570,10 @@
       .check-box-container {
         padding-right: 0 !important;
       }
+
+      .table-body {
+        max-height: calc(100vh - 5.834vw - 23vh - 9vw);
+      }
     }
   }
 
@@ -2582,6 +2597,10 @@
 
       .check-box-container {
         padding-right: 0 !important;
+      }
+
+      .table-body {
+        max-height: calc(100vh - 5.834vw - 23vh - 10vw);
       }
     }
   }

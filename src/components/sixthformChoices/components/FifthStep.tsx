@@ -119,6 +119,8 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
       description: 'I could be ruling out, or making very difficult, the above career paths by choosing other A levels, and I’m happy with that.'
     }];
 
+    console.log(props.answer);
+
     if (props.answer) {
       const { answer } = props.answer;
       if (answer.abAnswer) {
@@ -132,6 +134,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
       }
     }
 
+
     
     this.state = {
       subStep,
@@ -141,6 +144,11 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
   }
 
   getAnswer() {
+    console.log('answer fifth', {
+      subStep: this.state.subStep,
+      abAnswer: this.state.abAnswer,
+      careers: this.state.careers
+    });
     return {
       subStep: this.state.subStep,
       abAnswer: this.state.abAnswer,

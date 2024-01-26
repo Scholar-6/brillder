@@ -63,7 +63,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       answers: [],
       popupTimeout: -1,
       popupSubject: null,
-      page: Pages.Welcome,
+      page: Pages.Question6,
     }
 
     this.loadSubjects();
@@ -224,7 +224,31 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answerR1.answer.subStep = answer.subStep;
         answerR1.answer.abAnswer = answer.abAnswer;
         answerR1.answer.careers = answer.careers;
-        console.log('parsedAnswer5', answerR1)
+        console.log('parsedAnswer5', answerR1, answer)
+        this.setState({
+          allSubjects: this.sortByScore(this.state.allSubjects),
+          subjects: this.sortByScore(this.state.subjects)
+        });
+      } else {
+        result.result.answer = JSON.parse(result.result.answer);
+        this.state.answers.push(result.result);
+        this.setState({
+          answers: [...this.state.answers],
+          allSubjects: this.sortByScore(this.state.allSubjects),
+          subjects: this.sortByScore(this.state.subjects)
+        });
+      }
+    }
+  }
+
+  parseAnswer6(result: any, answer: any, questionPage: Pages) {
+    if (result) {
+      const answerR1 = this.state.answers.find(a => a.step === questionPage);
+      if (answerR1) {
+        answerR1.answer.subStep = answer.subStep;
+        //answerR1.answer.abAnswer = answer.abAnswer;
+        //answerR1.answer.careers = answer.careers;
+        console.log('parsedAnswer6', answerR1, answer)
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)
@@ -320,7 +344,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   async saveFifthAnswer(answer: any) {
-    console.log('save 5 answer', answer)
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question5);
     if (result) {
       for (let subject of this.state.allSubjects) {
@@ -334,6 +357,23 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }
       }
       this.parseAnswer5(result, answer, Pages.Question5);
+    }
+  }
+
+  async saveSixthAnswer(answer: any) {
+    const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question6);
+    if (result) {
+      for (let subject of this.state.allSubjects) {
+        subject.score = 0;
+      }
+      let scores = result.subjectScores.filter(s => s.score !== 0);
+      for (let subject of this.state.allSubjects) {
+        let s2 = scores.find((s) => s.id == subject.id);
+        if (s2) {
+          subject.score = s2.score;
+        }
+      }
+      this.parseAnswer6(result, answer, Pages.Question6);
     }
   }
 
@@ -441,9 +481,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     } else if (this.state.page === Pages.Question6) {
       return <SixthStep
         answer={this.state.answers.find(a => a.step === Pages.Question6)}
-        onChoiceChange={() => { }}
-        moveNext={() => { }}
-        moveBack={() => this.setState({ page: Pages.Question5 })} />
+        saveAnswer={answer => this.saveSixthAnswer(answer)}
+        moveNext={answer => {
+          this.saveSixthAnswer(answer);
+        }}
+        moveBack={answer => {
+          this.saveSixthAnswer(answer);
+          this.setState({ page: Pages.Question5 });
+        }} />
     }
     return <div />;
   }
