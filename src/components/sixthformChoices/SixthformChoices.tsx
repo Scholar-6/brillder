@@ -63,7 +63,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       answers: [],
       popupTimeout: -1,
       popupSubject: null,
-      page: Pages.Question6,
+      page: Pages.Welcome,
     }
 
     this.loadSubjects();
