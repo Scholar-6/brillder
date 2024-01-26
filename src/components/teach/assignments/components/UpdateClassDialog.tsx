@@ -109,7 +109,7 @@ const UpdateClassDialog: React.FC<AssignClassProps> = (props) => {
   }
 
   return (<div>
-    {props.isOpen &&
+    {props.isOpen && classroom &&
       <Dialog
         open={props.isOpen}
         onClose={props.close}
